@@ -401,7 +401,7 @@ static void USB_HostHubProcessPortAttach(usb_host_hub_instance_t *hubInstance)
     uint8_t processSuccess                     = 0U;
     uint32_t specStatus;
     uint8_t feature;
-    uint32_t infoValue;
+    uint32_t infoValue               = 0U;
     usb_host_hub_global_t *hubGlobal = USB_HostHubGetHubList(hubInstance->hostHandle);
     usb_host_port_app_status_t appStatus;
     if (hubGlobal == NULL)
@@ -884,7 +884,7 @@ static void USB_HostHubControlCallback(void *param, uint8_t *data, uint32_t data
 usb_host_hub_instance_t *USB_HostHubGetHubDeviceHandle(usb_host_handle hostHandle, uint8_t parentHubNo)
 {
     usb_host_hub_instance_t *hubInstance;
-    uint32_t deviceAddress;
+    uint32_t deviceAddress           = 0U;
     usb_host_hub_global_t *hubGlobal = USB_HostHubGetHubList(hostHandle);
     if (hubGlobal == NULL)
     {
@@ -1164,8 +1164,8 @@ usb_status_t USB_HostHubDeviceEvent(usb_host_handle hostHandle,
     usb_host_interface_t *interface;
     uint8_t interfaceIndex;
     uint8_t id;
-    usb_status_t status = kStatus_USB_Success;
-    usb_host_class_handle hubClassHandle;
+    usb_status_t status                  = kStatus_USB_Success;
+    usb_host_class_handle hubClassHandle = NULL;
     usb_host_hub_instance_t *hubInstance;
     usb_host_hub_instance_t *prevInstance;
     uint32_t infoValue = 0U;
@@ -1378,7 +1378,7 @@ usb_status_t USB_HostHubDeviceEvent(usb_host_handle hostHandle,
 usb_status_t USB_HostHubRemovePort(usb_host_handle hostHandle, uint8_t hubNumber, uint8_t portNumber)
 {
     usb_host_hub_instance_t *hubInstance;
-    uint32_t infoValue;
+    uint32_t infoValue               = 0U;
     usb_host_hub_global_t *hubGlobal = USB_HostHubGetHubList(hostHandle);
     if (hubGlobal == NULL)
     {
@@ -1422,7 +1422,7 @@ usb_status_t USB_HostHubRemovePort(usb_host_handle hostHandle, uint8_t hubNumber
 uint32_t USB_HostHubGetHsHubNumber(usb_host_handle hostHandle, uint8_t parentHubNo)
 {
     usb_host_hub_instance_t *hubInstance;
-    uint32_t deviceInfo;
+    uint32_t deviceInfo              = 0U;
     uint32_t hubNumber               = 0U;
     usb_host_hub_global_t *hubGlobal = USB_HostHubGetHubList(hostHandle);
     if (hubGlobal == NULL)
@@ -1519,7 +1519,7 @@ uint32_t USB_HostHubGetHsHubPort(usb_host_handle hostHandle, uint8_t parentHubNo
 uint32_t USB_HostHubGetTotalThinkTime(usb_host_handle hostHandle, uint8_t parentHubNo)
 {
     usb_host_hub_instance_t *hubInstance;
-    uint32_t deviceAddress;
+    uint32_t deviceAddress           = 0U;
     usb_host_hub_global_t *hubGlobal = USB_HostHubGetHubList(hostHandle);
     if (hubGlobal == NULL)
     {

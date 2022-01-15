@@ -13,6 +13,7 @@
 #include "tfm_api.h"
 #include "tfm_hal_isolation.h"
 #include "tfm_secure_api.h"
+#include "tfm_sp_log.h"
 
 #define IPC_SERVICE_BUFFER_LEN                          32
 
@@ -263,6 +264,44 @@ static void ipc_service_programmer_error(void)
     }
 }
 
+static void ipc_service_stateless_rot(void)
+{
+    psa_status_t status;
+    uint32_t arg;
+    psa_msg_t msg;
+    size_t num;
+
+    /* Retrieve the message corresponding to the example service signal */
+    status = psa_get(IPC_SERVICE_TEST_STATELESS_ROT_SIGNAL, &msg);
+    if (status != PSA_SUCCESS) {
+        return;
+    }
+
+    /* Decode the message */
+    switch (msg.type) {
+    case PSA_IPC_CALL:
+        if (msg.in_size[0] != sizeof(arg)) {
+            status = PSA_ERROR_PROGRAMMER_ERROR;
+            break;
+        }
+        /* Print arg from client */
+        num = psa_read(msg.handle, 0, &arg, sizeof(arg));
+        if (num != msg.in_size[0]) {
+            status = PSA_ERROR_PROGRAMMER_ERROR;
+            break;
+        }
+        LOG_INFFMT("[IPC_SERVICE_TEST_STATELESS_ROT] Service called! arg=%x\r\n", arg);
+        status = PSA_SUCCESS;
+        break;
+    default:
+        /* Invalid message type */
+        status = PSA_ERROR_PROGRAMMER_ERROR;
+        break;
+    }
+    /* Reply with the message result status to unblock the client */
+    psa_reply(msg.handle, status);
+}
+
 /* Test thread */
 void ipc_service_test_main(void *param)
 {
@@ -286,6 +325,8 @@ void ipc_service_test_main(void *param)
 #endif
         } else if (signals & IPC_SERVICE_TEST_CLIENT_PROGRAMMER_ERROR_SIGNAL) {
             ipc_service_programmer_error();
+        } else if (signals & IPC_SERVICE_TEST_STATELESS_ROT_SIGNAL) {
+            ipc_service_stateless_rot();
         } else {
             /* Should not come here */
             tfm_abort();

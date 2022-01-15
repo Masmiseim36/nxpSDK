@@ -43,7 +43,7 @@ API_RESULT btsnoop_open_pl (void)
     UCHAR bt_snoop_file_name[48U];
 
     /* Add Prefix */
-    BT_str_n_copy(bt_snoop_file_name, BT_SNOOP_FILE_NAME, sizeof(bt_snoop_file_name));
+    BT_str_n_copy(bt_snoop_file_name, BT_SNOOP_FILE_NAME, sizeof(BT_SNOOP_FILE_NAME));
 
     retval = BT_fops_file_open
              (

@@ -29,6 +29,20 @@ Xtensa Audio Framework (XAF) - Hostless solution
 Revision History
 ======================================================================
 
+Version 2.6p2 API 2.0 : September 8, 2021
+
++ Patch Release
++ Built with RI.2 tools
++ Programmers Guide not updated
+
++ [J3023] Avoid scheduling of a component after a fatal error during 
+  initialization or execution which can lead to a potential hang 
+  during the component's next processing. An additional state is 
+  introduced in the base-class to record such fatal error which is 
+  checked to prevent any further scheduling of the component.
+
+----------------------------------------------------------------------
+
 Version 2.6p1 API 2.0 : June 16, 2021
 
 + Patch Release
@@ -529,4 +543,4 @@ Version 0.7 API 1.0 : December 17, 2015
 + Beta release.
 
 ----------------------------------------------------------------------
-2021-06-17:00:04:RI-2019.2:679604:653658:660711::
+2021-09-08:11:27:RI-2019.2:695074:687195:660711::

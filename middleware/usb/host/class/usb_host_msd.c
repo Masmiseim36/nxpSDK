@@ -897,7 +897,7 @@ static void USB_HostMsdSetInterfaceCallback(void *param, usb_host_transfer_t *tr
 
 usb_status_t USB_HostMsdInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandle)
 {
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
     usb_status_t status;
     uint32_t *temp;
     usb_host_msd_instance_t *msdInstance =

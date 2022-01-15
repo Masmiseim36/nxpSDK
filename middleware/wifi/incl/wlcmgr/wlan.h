@@ -143,7 +143,7 @@
 #include <wifi.h>
 #include <wlan_11d.h>
 
-#define WLAN_DRV_VERSION "v1.3.r35.p2"
+#define WLAN_DRV_VERSION "v1.3.r37.p3"
 
 /* Configuration */
 
@@ -1640,7 +1640,9 @@ uint16_t wlan_get_beacon_period();
  * Use this API to get the dtim period of associated BSS.
  *
  * \return dtim_period if operation is successful.
- * \return 0 if command fails.
+ * \return 0 if DTIM IE Is not found in AP's Probe response.
+ * \note This API should not be called from WLAN event handler
+ *        registered by application during \ref wlan_start.
  */
 uint8_t wlan_get_dtim_period();
 
@@ -2583,4 +2585,36 @@ void wlan_register_fw_dump_cb(void (*wlan_usb_init_cb)(void),
                               int (*wlan_usb_file_close_cb)());
 
 #endif
+
+/**
+ * This function sends the host command to f/w and copies back response to caller provided buffer in case of
+ * success Response from firmware is not parsed by this function but just copied back to the caller buffer.
+ *
+ *  \param[in]    cmd_buf         Buffer containing the host command with header
+ *  \param[in]    cmd_buf_len     length of valid bytes in cmd_buf
+ *  \param[out]   resp_buf        Caller provided buffer, in case of success command response is copied to this buffer
+ *                                Can be same as cmd_buf
+ *  \param[in]    resp_buf_len    resp_buf's allocated length
+ *  \param[out]   reqd_resp_len    length of valid bytes in response buffer if successful otherwise invalid.
+ *  \return                       WM_SUCCESS in case of success.
+ *  \return                       WM_E_INBIG in case cmd_buf_len is bigger than the commands that can be handled by
+ *                                driver.
+ *  \return                       WM_E_INSMALL in case cmd_buf_len is smaller than the minimum length. Minimum
+ *                                length is atleast the length of command header. Please see Note for same.
+ *  \return                       WM_E_OUTBIG in case the resp_buf_len is not sufficient to copy response from
+ *                                firmware. reqd_resp_len is updated with the response size.
+ *  \return                       WM_E_INVAL in case cmd_buf_len and resp_buf_len have invalid values.
+ *  \return                       WM_E_NOMEM in case cmd_buf, resp_buf and reqd_resp_len are NULL
+ *  \note                         Brief on the Command Header: Start 8 bytes of cmd_buf should have these values set.
+ *                                Firmware would update resp_buf with these 8 bytes at the start.\n
+ *                                2 bytes : Command.\n
+ *                                2 bytes : Size.\n
+ *                                2 bytes : Sequence number.\n
+ *                                2 bytes : Result.\n
+ *                                Rest of buffer length is Command/Response Body.
+ */
+
+int wlan_send_hostcmd(
+    void *cmd_buf, uint32_t cmd_buf_len, void *resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len);
+
 #endif /* __WLAN_H__ */

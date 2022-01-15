@@ -1,0 +1,57 @@
+                              CHANGELOG
+                              `````````
+
+Version 1.6.0 -- 2021-03-10
+---------------------------
+
+This release fixes a bug where litani would crash when given the
+`--timeout` option.
+
+
+Version 1.5.0 -- 2021-03-08
+---------------------------
+
+- The implementation of directory locking no longer releases the lock
+  upon creation. This fixes a problem where external processes could
+  release a lock that a different process had acquired.
+
+
+Version 1.4.0 -- 2021-03-02
+---------------------------
+
+- lib.litani now exposes a LockableDirectory API that can be used to
+  lock directories against concurrent access by more than one process.
+  External processes can use this API to lock report directories while
+  reading or copying them.
+
+- Litani now touches a file called `.litani-expired` in HTML report
+  directories as soon as a new report directory has been written, and
+  after the `html` symbolic link has been updated to point to the new
+  directory. Litani then deletes all report directories that are both
+  expired and unlocked.
+
+
+Version 1.3.0 -- 2021-02-24
+---------------------------
+
+- Litani now has a top-level command called `print-capabilities` that
+  prints out a list of features in either human or machine-readable format.
+  The intention is that any new API-changing features will be accompanied by a
+  new entry in this list
+
+
+Version 1.2.0 -- 2021-02-24
+---------------------------
+
+- Litani now renders the HTML directory atomically. The `html` directory is now
+  a symbolic link that is updated only after the report has been completely
+  written.
+- Added dark mode for all report pages
+
+
+Version 1.1.0 -- 2021-02-03
+---------------------------
+
+- Added a new top-level command, `litani graph`. This dumps a
+  Graphviz-formatted graph to stdout that describes the dependency graph
+  of the jobs that have been added so far.

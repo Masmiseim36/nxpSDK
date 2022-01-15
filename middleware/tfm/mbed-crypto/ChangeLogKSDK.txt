@@ -2,7 +2,13 @@
 @page middleware_log Middleware Change Log
  
 @section mbed-crypto Mbed Crypto library for MCUXpresso SDK
-  The current version of the Mbed-Crypto library is based on mbedTLS v.2.25.0, released 2020-12-10, snapshot(1c54b5410fd48d6bcada97e30cac417c5c7eea67) on https://github.com/ARMmbed/mbedtls
+  The current version of the Mbed-Crypto library is based on mbedTLS v.3.0.0, released 2021-07-06, snapshot(8df2f8e7b9c7bb9390ac74bb7bace27edca81a2b) on https://github.com/ARMmbed/mbedtls
+
+  - 3.0.0
+    - Ported Mbed-Crypto library, based on mbedTLS v.3.0.0, to MCUXpresso SDK. Released 2021-07-06, snapshot(8df2f8e7b9c7bb9390ac74bb7bace27edca81a2b).
+
+  - 2.26.0
+    - Ported Mbed-Crypto library, based on mbedTLS v.2.26.0, to MCUXpresso SDK. Released 2021-03-12, snapshot(e483a77c85e1f9c1dd2eb1c5a8f552d2617fe400).
 
   - 2.25.0
     - Ported Mbed-Crypto library, based on mbedTLS v.2.25.0, to MCUXpresso SDK. Released 2020-12-10, snapshot(1c54b5410fd48d6bcada97e30cac417c5c7eea67).

@@ -63,6 +63,11 @@ define block TFM_UNPRIV_CODE with alignment = 32 {
 // --------- NXP end --------------
        };
 
+    /**** Section for holding partition RO load data */
+define block TFM_SP_LOAD_LIST with alignment = 4 {
+    ro section .part_load object load_info_*.o,
+};
+
     /**** PSA RoT RO part (CODE + RODATA) start here */
     /*
      * This empty, zero long execution region is here to mark the start address
@@ -91,29 +96,40 @@ define block TFM_APP_CODE_START with alignment = 32, size = 0 { };
         ro object *tfm_app_rot_partition*,
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
-        ro object *tfm_partition_ps.*,
-        ro object *test_ps_nv_counters.*,
-        ro object *ps_encrypted_object.*,               //NXP
-        ro object *ps_object_system.*,                  //NXP
-        ro object *ps_object_table.*,                   //NXP
-        ro object *ps_utils.*,                          //NXP
-        ro object *tfm_protected_storage.*,             //NXP
-        ro object *tfm_ps_req_mngr.*,                   //NXP
-        ro object *ps_crypto_interface.*,               //NXP
-        ro object *ps_nv_counters.*,                    //NXP
-
+        ro object *tfm_ps_req_mngr.*,
+        ro object *tfm_protected_storage.*,
+        ro object *ps_object_system.*,
+        ro object *ps_object_table.*,
+        ro object *ps_utils.*,
+        ro object *ps_crypto_interface.*,
+        ro object *ps_encrypted_object.*,
+        ro object *ps_nv_counters.*,
+        ro object *intermedia_tfm_protected_storage.*,
+        ro object *load_info_tfm_protected_storage.*,
+        ro object *tfm_ps_secure_api.*,
+        ro object *tfm_ps_secure_api.*,
 // #ifdef TFM_PARTITION_TEST_CORE
         ro object *tfm_ss_core_test_2.*,
-
+        ro object *intermedia_tfm_ss_core_test_2.*,
+        ro object *load_info_tfm_ss_core_test_2.*,
 // #ifdef TFM_PARTITION_TEST_CORE_IPC
         ro object *tfm_ipc_client_test.*,
-
-// #ifdef TFM_ENABLE_IRQ_TEST
-        ro object *tfm_irq_test_service_1.*,
-        ro object *timer_cmsdk*,
-
+        ro object *intermedia_tfm_ipc_client_test.*,
+        ro object *load_info_tfm_ipc_client_test.*,
 // #ifdef TFM_PARTITION_TEST_SECURE_SERVICES
         ro object *tfm_secure_client_2.*,
+        ro object *intermedia_tfm_secure_client_2.*,
+        ro object *load_info_tfm_secure_client_2.*,
+        ro object *tfm_secure_client_2_api.*,
+        ro object *tfm_secure_client_2_api.*,
+// #ifdef TEST_NS_SLIH_IRQ
+        ro object *tfm_slih_test_service.*,
+        ro object *intermedia_tfm_slih_test_service.*,
+        ro object *load_info_tfm_slih_test_service.*,
+// #ifdef TEST_NS_FLIH_IRQ
+        ro object *tfm_flih_test_service.*,
+        ro object *intermedia_tfm_flih_test_service.*,
+        ro object *load_info_tfm_flih_test_service.*,
 // --------- NXP end --------------
     };
 
@@ -171,31 +187,40 @@ define block TFM_APP_RW_STACK_START with alignment = 32, size = 0 { };
 	
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
-        rw object *tfm_partition_ps.*,
-        rw object *test_ps_nv_counters.*,
-        
-        rw object *ps_encrypted_object.*,               //NXP
-        rw object *ps_object_system.*,                  //NXP
-        rw object *ps_object_table.*,                   //NXP
-        rw object *ps_utils.*,                          //NXP
-        rw object *tfm_protected_storage.*,             //NXP
-        rw object *tfm_ps_req_mngr.*,                   //NXP
-        rw object *ps_crypto_interface.*,               //NXP
-        rw object *ps_nv_counters.*,                    //NXP
-        rw object *intermedia_tfm_protected_storage.*,  //NXP
-
+        rw object *tfm_ps_req_mngr.*,
+        rw object *tfm_protected_storage.*,
+        rw object *ps_object_system.*,
+        rw object *ps_object_table.*,
+        rw object *ps_utils.*,
+        rw object *ps_crypto_interface.*,
+        rw object *ps_encrypted_object.*,
+        rw object *ps_nv_counters.*,
+        rw object *intermedia_tfm_protected_storage.*,
+        rw object *load_info_tfm_protected_storage.*,
+        rw object *tfm_ps_secure_api.*,
+        rw object *tfm_ps_secure_api.*,
 // #ifdef TFM_PARTITION_TEST_CORE
         rw object *tfm_ss_core_test_2.*,
-
+        rw object *intermedia_tfm_ss_core_test_2.*,
+        rw object *load_info_tfm_ss_core_test_2.*,
 // #ifdef TFM_PARTITION_TEST_CORE_IPC
         rw object *tfm_ipc_client_test.*,
-
-// #ifdef TFM_ENABLE_IRQ_TEST
-        rw object *tfm_irq_test_service_1.*,
-        rw object *timer_cmsdk*,
-
+        rw object *intermedia_tfm_ipc_client_test.*,
+        rw object *load_info_tfm_ipc_client_test.*,
 // #ifdef TFM_PARTITION_TEST_SECURE_SERVICES
         rw object *tfm_secure_client_2.*,
+        rw object *intermedia_tfm_secure_client_2.*,
+        rw object *load_info_tfm_secure_client_2.*,
+        rw object *tfm_secure_client_2_api.*,
+        rw object *tfm_secure_client_2_api.*,
+// #ifdef TEST_NS_SLIH_IRQ
+        rw object *tfm_slih_test_service.*,
+        rw object *intermedia_tfm_slih_test_service.*,
+        rw object *load_info_tfm_slih_test_service.*,
+// #ifdef TEST_NS_FLIH_IRQ
+        rw object *tfm_flih_test_service.*,
+        rw object *intermedia_tfm_flih_test_service.*,
+        rw object *load_info_tfm_flih_test_service.*,
 // --------- NXP end --------------
     };
 
@@ -238,6 +263,16 @@ keep {block HEAP, block ARM_LIB_HEAP};
 
 define block ER_TFM_DATA          with alignment = 8 {readwrite};
 
+define block ER_PART_RT_POOL      with alignment = 4 {
+    zi section .bss.part_runtime
+};
+
+define block ER_SERV_RT_POOL      with alignment = 4 {
+    zi section .bss.serv_runtime
+};
+
+keep {block ER_PART_RT_POOL, block ER_SERV_RT_POOL};
+
     /**** PSA RoT DATA start here */
     /*
      * This empty, zero long execution region is here to mark the start address
@@ -275,6 +310,9 @@ define block SRAM_WATERMARK with size = 0 { };
 define block LR_CODE with fixed order {
        block ER_TFM_CODE,
        block TFM_UNPRIV_CODE,
+
+       block TFM_SP_LOAD_LIST,
+
        block TFM_PSA_CODE_START,
 
        block TFM_PSA_ROT_LINKER,
@@ -386,6 +424,10 @@ define block PRIV_DATA with fixed order {
     section CodeQuickAccess, section DataQuickAccess, //NXP
 
     block ER_TFM_DATA,
+
+    block ER_PART_RT_POOL,
+
+    block ER_SERV_RT_POOL,
 
     /**** PSA RoT DATA start here */
     /*

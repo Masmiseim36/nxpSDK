@@ -1957,6 +1957,7 @@ static shell_status_t cmd_info(shell_handle_t shell, int32_t argc, char *argv[])
 	bt_addr_le_t addr;
 	int err;
 
+    memset(&addr, 0, sizeof(addr));
 	switch (argc) {
 	case 1:
 		if (default_conn) {
@@ -2251,6 +2252,7 @@ static shell_status_t cmd_clear(shell_handle_t shell, int32_t argc, char *argv[]
 		return kStatus_SHELL_Success;
 	}
 
+    memset(&addr, 0, sizeof(addr));
 	if (argc < 3) {
 #if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0))
 		addr.type = BT_ADDR_LE_PUBLIC;
@@ -2976,7 +2978,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 #if (defined(CONFIG_BT_SETTINGS) && (CONFIG_BT_SETTINGS > 0))
 	SHELL_CMD_ARG(settings-load, NULL, HELP_NONE, cmd_settings_load, 1, 0),
 #endif
-#if defined(CONFIG_BT_HCI)
+#if (defined(CONFIG_BT_HCI) && (CONFIG_BT_HCI > 0U))
 	SHELL_CMD_ARG(hci-cmd, NULL, "<ogf> <ocf> [data]", cmd_hci_cmd, 3, 1),
 #endif
 	SHELL_CMD_ARG(id-create, NULL, "[addr]", cmd_id_create, 1, 1),

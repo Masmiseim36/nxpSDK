@@ -7,8 +7,9 @@ post-all:
 	@echo post all rule
 	@echo ${xt_sysargs}
 	@echo ${xt_project}
+	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_reset_$(build_target).bin \
+	--only-section=.ResetVector.text
 	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_text_$(build_target).bin \
-	--only-section=.ResetVector.text \
 	--only-section=.WindowVectors.text \
 	--only-section=.Level2InterruptVector.text \
 	--only-section=.Level3InterruptVector.text \
@@ -38,5 +39,6 @@ endif
 
 pre-clean:
 	@echo pre-clean rule
+	cmd /c if exist "$(bin_path)dsp_reset_$(build_target).bin" $(rm_cmd) "$(bin_path)dsp_reset_$(build_target).bin"
 	cmd /c if exist "$(bin_path)dsp_text_$(build_target).bin" $(rm_cmd) "$(bin_path)dsp_text_$(build_target).bin"
 	cmd /c if exist "$(bin_path)dsp_data_$(build_target).bin" $(rm_cmd) "$(bin_path)dsp_data_$(build_target).bin"

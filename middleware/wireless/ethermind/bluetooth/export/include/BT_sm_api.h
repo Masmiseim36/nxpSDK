@@ -229,15 +229,16 @@ extern "C"{
  *         The BD_ADDR of the remote Bluetooth Device
  *  \param [in,out] link_key
  *         The Link Key for the remote Bluetooth Device
+ *  \param [in,out] link_key_type
+ *         The Link Key Type for the remote Bluetooth Device
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  */
-API_RESULT sm_device_link_key
-           (UCHAR op_type, UCHAR *bd_addr, UCHAR *link_key);
 API_RESULT sm_device_link_key_and_type
            (UCHAR op_type, UCHAR *bd_addr, UCHAR *link_key, UCHAR *link_key_type);
+
 #ifdef SM_HAVE_MODE_2
 /** To modify/retrieve Service Attributes */
 /**
@@ -594,9 +595,33 @@ API_RESULT BT_sm_get_device_pin_code
  *          parameter.
  */
 #define BT_sm_set_device_link_key(bd, lk) \
-        sm_device_link_key(SM_OPERATION_SET, (bd), (lk))
+        sm_device_link_key_and_type(SM_OPERATION_SET, (bd), (lk), NULL)
 
-/** To Get Link Key (if any) for a remote Bluetooth device */
+/**
+ *  \brief  To specify Bluetooth Link Key and type for a remote Bluetooth device.
+ *
+ *  \par Description:
+ *       This API enables application to specify Link Key and type for a remote Bluetooth
+ *       device, which will be used by the Security Manager for link
+ *       authentication procedure during link-level or service-level
+ *       connection to/from the specified remote device. The specified remote
+ *       Bluetooth device must exist in the device database.
+ *
+ *  \param [in] bd_addr
+ *         The Bluetooth Device Address of the remote device for which Bluetooth
+ *         Link Key to be set.
+ *
+ *  \param [in] link_key
+ *          This parameter holds the Link Key to be set, and it must be a
+ *          pointer to an UCHAR buffer of 16 octets. NULL is not an acceptable
+ *          parameter.
+ *
+ *  \param [in] link_key_type
+ *          This parameter holds the Link Key Type to be set
+ */
+#define BT_sm_set_device_link_key_and_type(bd, lk, type) \
+        sm_device_link_key_and_type(SM_OPERATION_SET, (bd), (lk), (type))
+
 /**
  *  \brief To get Bluetooth Link Key for a remote Bluetooth device.
  *
@@ -615,9 +640,30 @@ API_RESULT BT_sm_get_device_pin_code
  *         Link Key will be copied. NULL is not an acceptable parameter.
  */
 #define BT_sm_get_device_link_key(bd, lk) \
-        sm_device_link_key(SM_OPERATION_GET, (bd), (lk))
+        sm_device_link_key_and_type(SM_OPERATION_GET, (bd), (lk), NULL)
 
-/** To Get Link Key (if any) for a remote Bluetooth device */
+/**
+ *  \brief  To get Bluetooth Link Key and type for a remote Bluetooth device.
+ *
+ *  \par Description:
+ *       This API enables application to retrieve Link Key and type for a remote Bluetooth
+ *       device, which is used by the Security Manager for link
+ *       authentication procedure during link-level or service-level
+ *       connection to/from the specified remote device. The specified remote
+ *       Bluetooth device must exist in the device database.
+ *
+ *  \param [in] bd_addr
+ *         The Bluetooth Device Address of the remote device for which Bluetooth
+ *         Link Key to be set.
+ *
+ *  \param [in] link_key
+ *          This parameter holds the Link Key to be set, and it must be a
+ *          pointer to an UCHAR buffer of 16 octets. NULL is not an acceptable
+ *          parameter.
+ *
+ *  \param [in] link_key_type
+ *          This parameter holds the Link Key Type to be set
+ */
 #define BT_sm_get_device_link_key_and_type(bd, lk, type) \
         sm_device_link_key_and_type(SM_OPERATION_GET, (bd), (lk), (type))
 
@@ -634,7 +680,7 @@ API_RESULT BT_sm_get_device_pin_code
  *         to be deleted.
  */
 #define BT_sm_delete_device_link_key(bd) \
-        sm_device_link_key(SM_OPERATION_RESET, (bd), NULL)
+        sm_device_link_key_and_type(SM_OPERATION_RESET, (bd), NULL, NULL)
 
 #ifdef BTSIG_ERRATA_11838
 /**
@@ -663,6 +709,13 @@ API_RESULT BT_sm_get_device_security_state
 #endif /* BTSIG_ERRATA_11838 */
 
 #else  /* SM_LITE */
+API_RESULT BT_sm_get_device_link_key_and_type
+           (
+               /* IN */    UCHAR *    bd_addr,
+               /* INOUT */ UCHAR *    link_key,
+               /* OUT   */ UCHAR *    link_key_type
+           );
+
 /** To Get Link Key (if any) for a remote Bluetooth device */
 /**
  *  \brief To get Bluetooth Link Key for a remote Bluetooth device.
@@ -685,17 +738,8 @@ API_RESULT BT_sm_get_device_security_state
  *         API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  */
-API_RESULT BT_sm_get_device_link_key
-           (
-               /* IN */    UCHAR *    bd_addr,
-               /* INOUT */ UCHAR *    link_key
-           );
-API_RESULT BT_sm_get_device_link_key_and_type
-           (
-               /* IN */    UCHAR *    bd_addr,
-               /* INOUT */ UCHAR *    link_key,
-               /* INOUT */ UCHAR *    link_key_type
-           );
+#define BT_sm_get_device_link_key(bd, lk)
+        BT_sm_get_device_link_key_and_type((bd), (lk), NULL)
 #endif /* SM_LITE */
 
 /**

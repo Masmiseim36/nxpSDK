@@ -26,13 +26,13 @@
 #ifndef _BAYES_FUNCTIONS_H_
 #define _BAYES_FUNCTIONS_H_
 
-#include "cmsis/CMSIS/DSP/Include/arm_math_types.h"
-#include "cmsis/CMSIS/DSP/Include/arm_math_memory.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_memory.h"
 
-#include "cmsis/CMSIS/DSP/Include/dsp/none.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/utils.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/none.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/utils.h"
 
-#include "cmsis/CMSIS/DSP/Include/dsp/statistics_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/statistics_functions.h"
 
 /**
  * @defgroup groupBayes Bayesian estimators

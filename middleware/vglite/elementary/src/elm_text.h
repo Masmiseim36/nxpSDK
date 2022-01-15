@@ -193,7 +193,7 @@ extern font_block_t *fontblockobj;
 
 int _load_font_data(uint8_t *data);
 
-ElmHandle _load_text(uint8_t *data, el_Obj_EVO *evo);
+ElmHandle _load_text_data(uint8_t *data, el_Obj_EVO *evo);
 void _unload_text(el_Obj_EVO *evo);
 void _init_transform(el_Transform *transform);
 void initialize_elm_text(void);

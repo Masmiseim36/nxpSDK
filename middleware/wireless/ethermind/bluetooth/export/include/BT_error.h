@@ -1174,6 +1174,7 @@ typedef UINT16    API_RESULT;
 #define AVCTP_CONNECTION_FAILED                 (0x0019U | AVCTP_ERR_ID)
 #define AVCTP_CONNECTION_DONT_EXISTS            (0x001AU | AVCTP_ERR_ID)
 #define AVCTP_PID_BIT_SET_IN_RSP                (0x001BU | AVCTP_ERR_ID)
+#define AVCTP_CONNECTION_ALREADY_EXISTS         (0x001CU | AVCTP_ERR_ID)
 
 
 /* ======================================= Section 'IrOBEX' */

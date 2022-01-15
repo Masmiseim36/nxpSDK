@@ -37,9 +37,9 @@ extern "C" {
 
 /* Macros *********************************************************************/
 
-#define MAX_FONT_NAME_LEN (64)
-#define INVALID_FONT       (-1)
-#define INVALID_FONT_PROPERTY_IDX (-1)
+#define MAX_FONT_NAME_LEN               (64)
+#define VG_LITE_INVALID_FONT            (-1)
+#define INVALID_FONT_PROPERTY_IDX       (-1)
 
 /* Types **********************************************************************/
 
@@ -135,8 +135,8 @@ extern "C" {
      */
     typedef struct vg_lite_font_params
     {
-        const char name[MAX_FONT_NAME_LEN]; /*! font-family name */
-        eFontType_t    font_type;    /*! Raster/Vector font */
+        char name[MAX_FONT_NAME_LEN]; /*! font-family name */
+        eFontType_t    font_type;     /*! Raster/Vector font */
         eFontWeight_t   font_weight;  /*! Font weight enum value */
         eFontStretch_t  font_stretch; /*! Font stretch enum value */
         eFontStyle_t    font_style;   /*! Font style enum value */
@@ -279,30 +279,27 @@ extern "C" {
      @param target
      Pointer to render target
 
+     @param text
+     ASCII text that needs to be rendered on render
+
      @param font
      Pointer to font handle
 
      @param x
      x position in pixels in X-axis for text rendering
 
-     @param Y
+     @param y
      y position in pixels in Y-axis for text rendering
-
-     @param blend
-     Specifies how text gets blened in text area. Typical value is ELM_BLEND_SRC_OVER
-
-     @param font
-     Active font handle
 
      @param matrix
      Translation matrix that is used while rendering text.
      @attention Scaling and rotation matrix are not supported.
 
+     @param blend
+     Specifies how text gets blened in text area. Typical value is ELM_BLEND_SRC_OVER
+
      @param attributes
      Font attributes that controls how text gets rendered in render buffer.
-
-     @param text
-     ASCII text that needs to be rendered on render
 
      @result
      Returns the status as defined by <code>vg_lite_error_t</code>.
@@ -311,13 +308,13 @@ extern "C" {
      */
     vg_lite_error_t vg_lite_draw_text(
                       vg_lite_buffer_t *target,
+                      char *text,
+                      vg_lite_font_t font,
                       int x,
-                      int y, 
-                      vg_lite_blend_t blend, 
-                      vg_lite_font_t font, 
+                      int y,
                       vg_lite_matrix_t *matrix,
-                      vg_lite_font_attributes_t  * attributes,
-                      char *text);
+                      vg_lite_blend_t blend,
+                      vg_lite_font_attributes_t *attributes);
 
     /*!
      @abstract This API searches registered font for given name with 
@@ -362,6 +359,11 @@ extern "C" {
         eFontStretch_t font_stretch,
         eFontStyle_t   font_style,
         int font_height);
+
+    /*!
+     @abstract Initializes support for text drawing.
+     */
+    void vg_lite_text_init(void);
 
 #ifdef __cplusplus
 }

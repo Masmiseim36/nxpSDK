@@ -257,7 +257,7 @@ void CRYPTO_ConfigureThreading( void )
                                aws_mbedtls_mutex_free,
                                aws_mbedtls_mutex_lock,
                                aws_mbedtls_mutex_unlock );
-#endif
+#endif // MBEDTLS_THREADING_ALT
 }
 
 /**

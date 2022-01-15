@@ -61,13 +61,9 @@ void KWS_MFCC::init_mfcc()
 
 void KWS_MFCC::store_features(uint8_t* out_data)
 {
-  /* <min, max> range for quantization of features. */
-  float min = -247.0;
-  float max = 30.0;
-
   for (int i = 0; i < MFCC_BUFFER_SIZE; i++)
   {
-    out_data[i] = (uint8_t)round((255.0 * (mfcc_buffer[(i + mfcc_buffer_head) % MFCC_BUFFER_SIZE] - min)) / (max - min));
+    reinterpret_cast<float*>(out_data)[i] = mfcc_buffer[(i + mfcc_buffer_head) % MFCC_BUFFER_SIZE];
   }
 }
 

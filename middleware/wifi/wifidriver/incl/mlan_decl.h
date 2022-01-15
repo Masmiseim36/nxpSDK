@@ -148,6 +148,8 @@ typedef t_s32 t_sval;
 /** Default Win size attached during ADDBA request */
 #define MLAN_STA_AMPDU_DEF_TXWINSIZE 16
 #endif
+
+#ifndef MLAN_STA_AMPDU_DEF_RXWINSIZE
 #ifdef SD8801
 /** Default Win size attached during ADDBA response */
 #define MLAN_STA_AMPDU_DEF_RXWINSIZE 16
@@ -155,6 +157,8 @@ typedef t_s32 t_sval;
 /** Default Win size attached during ADDBA response */
 #define MLAN_STA_AMPDU_DEF_RXWINSIZE 32
 #endif
+#endif
+
 #ifdef SD8801
 /** Default Win size attached during ADDBA request */
 #define MLAN_UAP_AMPDU_DEF_TXWINSIZE 8

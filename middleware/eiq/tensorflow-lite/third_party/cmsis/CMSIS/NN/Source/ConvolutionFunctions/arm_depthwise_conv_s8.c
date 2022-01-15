@@ -21,15 +21,15 @@
  * Title:        arm_depthwise_conv_s8.c
  * Description:	 s8 version of depthwise convolution.
  *
- * $Date:        May 14, 2020
- * $Revision:    V.2.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
-#include "cmsis/CMSIS/DSP/Include/arm_math.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
+
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -68,7 +68,8 @@ static void depthwise_conv_s8_mult_4(const int8_t *input,
     {
         for (int32_t in_w = -pad_x, out_w = 0, ker_h_start = MAX(0, -in_h); out_w < output_x; in_w += stride_x, ++out_w)
         {
-            for (int32_t in_ch = 0, out_ch = 0, ker_w_start = MAX(0, -in_w); out_ch < output_ch; ++in_ch, out_ch += ch_mult)
+            for (int32_t in_ch = 0, out_ch = 0, ker_w_start = MAX(0, -in_w); out_ch < output_ch;
+                 ++in_ch, out_ch += ch_mult)
             {
                 for (int mult_tile = 0; mult_tile < ch_mult; mult_tile += 4)
                 {
@@ -84,7 +85,8 @@ static void depthwise_conv_s8_mult_4(const int8_t *input,
                         int32_t ker_idx = ker_h * (output_ch * kernel_x) + ker_w_start * output_ch + out_ch;
                         int32_t in_idx = (in_h + ker_h) * (input_ch * input_x) + in_w * input_ch + in_ch;
 
-                        for (int32_t ker_w = ker_w_start; ker_w < MIN(kernel_x, input_x - in_w); ++ker_w, ker_idx += output_ch)
+                        for (int32_t ker_w = ker_w_start; ker_w < MIN(kernel_x, input_x - in_w);
+                             ++ker_w, ker_idx += output_ch)
                         {
                             int32_t in_val = input[in_idx + ker_w * input_ch] + input_offset;
                             out_buff[0] += in_val * kernel[ker_idx + 0 + mult_tile];
@@ -96,7 +98,9 @@ static void depthwise_conv_s8_mult_4(const int8_t *input,
 #if defined(ARM_MATH_MVEI)
                     (void)out_idx;
                     int32x4_t res = vldrwq_s32(out_buff);
-                    res = arm_requantize_mve_32x4(res, vldrwq_s32(&output_mult[out_ch + mult_tile]), vldrwq_s32(&output_shift[out_ch + mult_tile]));
+                    res = arm_requantize_mve_32x4(res,
+                                                  vldrwq_s32(&output_mult[out_ch + mult_tile]),
+                                                  vldrwq_s32(&output_shift[out_ch + mult_tile]));
                     res = vaddq_n_s32(res, output_offset);
 
                     res = vmaxq_s32(res, vdupq_n_s32(output_activation_min));
@@ -104,10 +108,14 @@ static void depthwise_conv_s8_mult_4(const int8_t *input,
                     vstrbq_s32(output, res);
                     output += 4;
 #else
-                    out_buff[0] = arm_nn_requantize(out_buff[0], output_mult[out_ch + 0 + mult_tile], output_shift[out_ch + 0 + mult_tile]);
-                    out_buff[1] = arm_nn_requantize(out_buff[1], output_mult[out_ch + 1 + mult_tile], output_shift[out_ch + 1 + mult_tile]);
-                    out_buff[2] = arm_nn_requantize(out_buff[2], output_mult[out_ch + 2 + mult_tile], output_shift[out_ch + 2 + mult_tile]);
-                    out_buff[3] = arm_nn_requantize(out_buff[3], output_mult[out_ch + 3 + mult_tile], output_shift[out_ch + 3 + mult_tile]);
+                    out_buff[0] = arm_nn_requantize(
+                        out_buff[0], output_mult[out_ch + 0 + mult_tile], output_shift[out_ch + 0 + mult_tile]);
+                    out_buff[1] = arm_nn_requantize(
+                        out_buff[1], output_mult[out_ch + 1 + mult_tile], output_shift[out_ch + 1 + mult_tile]);
+                    out_buff[2] = arm_nn_requantize(
+                        out_buff[2], output_mult[out_ch + 2 + mult_tile], output_shift[out_ch + 2 + mult_tile]);
+                    out_buff[3] = arm_nn_requantize(
+                        out_buff[3], output_mult[out_ch + 3 + mult_tile], output_shift[out_ch + 3 + mult_tile]);
 
                     out_buff[0] += output_offset;
                     out_buff[1] += output_offset;
@@ -204,12 +212,12 @@ static void depthwise_conv_s8_generic(const q7_t *input,
 }
 
 /*
-   *  Basic s8 depthwise convolution function.
-   *
-   *  Refer header file for details.
-   *  Optimization using DSP extension is not available for the generic case where channel multiplier is > 1.
-   *
-   */
+ *  Basic s8 depthwise convolution function.
+ *
+ *  Refer header file for details.
+ *  Optimization using DSP extension is not available for the generic case where channel multiplier is > 1.
+ *
+ */
 arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
                                  const cmsis_nn_dw_conv_params *dw_conv_params,
                                  const cmsis_nn_per_channel_quant_params *quant_params,
@@ -223,21 +231,60 @@ arm_status arm_depthwise_conv_s8(const cmsis_nn_context *ctx,
                                  q7_t *output)
 {
     (void)dw_conv_params->dilation;
+    (void)bias_dims;
     (void)ctx;
 
     if (dw_conv_params->ch_mult % 4 == 0)
     {
-        depthwise_conv_s8_mult_4(input, input_dims->w, input_dims->h, input_dims->c, kernel, output_dims->c, dw_conv_params->ch_mult, filter_dims->w, filter_dims->h,
-                                 dw_conv_params->padding.w, dw_conv_params->padding.h, dw_conv_params->stride.w, dw_conv_params->stride.h, bias, output,
-                                 quant_params->shift, quant_params->multiplier, output_dims->w, output_dims->h, dw_conv_params->output_offset,
-                                 dw_conv_params->input_offset, dw_conv_params->activation.min, dw_conv_params->activation.max);
+        depthwise_conv_s8_mult_4(input,
+                                 input_dims->w,
+                                 input_dims->h,
+                                 input_dims->c,
+                                 kernel,
+                                 output_dims->c,
+                                 dw_conv_params->ch_mult,
+                                 filter_dims->w,
+                                 filter_dims->h,
+                                 dw_conv_params->padding.w,
+                                 dw_conv_params->padding.h,
+                                 dw_conv_params->stride.w,
+                                 dw_conv_params->stride.h,
+                                 bias,
+                                 output,
+                                 quant_params->shift,
+                                 quant_params->multiplier,
+                                 output_dims->w,
+                                 output_dims->h,
+                                 dw_conv_params->output_offset,
+                                 dw_conv_params->input_offset,
+                                 dw_conv_params->activation.min,
+                                 dw_conv_params->activation.max);
     }
     else
     {
-        depthwise_conv_s8_generic(input, input_dims->w, input_dims->h, input_dims->c, kernel, output_dims->c, dw_conv_params->ch_mult, filter_dims->w, filter_dims->h,
-                                  dw_conv_params->padding.w, dw_conv_params->padding.h, dw_conv_params->stride.w, dw_conv_params->stride.h, bias, output,
-                                  quant_params->shift, quant_params->multiplier, output_dims->w, output_dims->h, dw_conv_params->output_offset,
-                                  dw_conv_params->input_offset, dw_conv_params->activation.min, dw_conv_params->activation.max);
+        depthwise_conv_s8_generic(input,
+                                  input_dims->w,
+                                  input_dims->h,
+                                  input_dims->c,
+                                  kernel,
+                                  output_dims->c,
+                                  dw_conv_params->ch_mult,
+                                  filter_dims->w,
+                                  filter_dims->h,
+                                  dw_conv_params->padding.w,
+                                  dw_conv_params->padding.h,
+                                  dw_conv_params->stride.w,
+                                  dw_conv_params->stride.h,
+                                  bias,
+                                  output,
+                                  quant_params->shift,
+                                  quant_params->multiplier,
+                                  output_dims->w,
+                                  output_dims->h,
+                                  dw_conv_params->output_offset,
+                                  dw_conv_params->input_offset,
+                                  dw_conv_params->activation.min,
+                                  dw_conv_params->activation.max);
     }
 
     /* Return to application */

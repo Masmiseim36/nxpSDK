@@ -52,14 +52,21 @@ extern clk_t vit_pre_proc_cycles;
 #include "VIT.h"
 
 //VIT Lib
-#ifdef CPU_MIMXRT685SFVKB_dsp
+#define NUMBER_OF_CHANNELS          BOARD_DMIC_NUM
+#if (BOARD_DMIC_NUM > 1)
 #define VIT_OPERATING_MODE          VIT_AFE_ENABLE  | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
-#define NUMBER_OF_CHANNELS          2
-#define DEVICE_ID                   VIT_IMXRT600
 #else
 #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
-#define NUMBER_OF_CHANNELS          1
-#define DEVICE_ID                   VIT_IMXRT500
+#define VIT_MIC1_MIC2_DISTANCE      0
+#define VIT_MIC1_MIC3_DISTANCE      0
+#endif
+
+#if (BOARD_DMIC_NUM == 2)
+#define VIT_MIC1_MIC2_DISTANCE      95
+#define VIT_MIC1_MIC3_DISTANCE      0
+#elif (BOARD_DMIC_NUM == 3)
+#define VIT_MIC1_MIC2_DISTANCE      70
+#define VIT_MIC1_MIC3_DISTANCE      49
 #endif
 
 #undef DSP_PRINTF
@@ -69,8 +76,8 @@ extern clk_t vit_pre_proc_cycles;
  * Tracing configuration
  ******************************************************************************/
 
-TRACE_TAG(INIT, 1);
-TRACE_TAG(PROCESS, 1);
+//TRACE_TAG(INIT, 1);
+//TRACE_TAG(PROCESS, 1);
 
 /*******************************************************************************
  * Internal functions definitions
@@ -232,11 +239,17 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
         VIT_InputBuffers.pBuffer_Chan2 = PL_NULL;
         VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
 #elif (NUMBER_OF_CHANNELS == 2)
-    	PL_INT16   DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME*NUMBER_OF_CHANNELS];
-    	DeInterleave(pIn, DeInterleavedBuffer, VITInstParams.SamplesPerFrame, VITInstParams.NumberOfChannel);
-		VIT_InputBuffers.pBuffer_Chan1 = &DeInterleavedBuffer[0];
-		VIT_InputBuffers.pBuffer_Chan2 = &DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME];
-		VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
+        PL_INT16   DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME*NUMBER_OF_CHANNELS];
+        DeInterleave(pIn, DeInterleavedBuffer, VITInstParams.SamplesPerFrame, VITInstParams.NumberOfChannel);
+        VIT_InputBuffers.pBuffer_Chan1 = &DeInterleavedBuffer[0];
+        VIT_InputBuffers.pBuffer_Chan2 = &DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME];
+        VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
+#elif (NUMBER_OF_CHANNELS == 3)
+        PL_INT16   DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME*NUMBER_OF_CHANNELS];
+        DeInterleave(pIn, DeInterleavedBuffer, VITInstParams.SamplesPerFrame, VITInstParams.NumberOfChannel);
+        VIT_InputBuffers.pBuffer_Chan1 = &DeInterleavedBuffer[0];
+        VIT_InputBuffers.pBuffer_Chan2 = &DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME];
+        VIT_InputBuffers.pBuffer_Chan3 = &DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME*2];
 #endif
 
     VIT_Status = VIT_Process ( VITHandle,
@@ -360,7 +373,7 @@ static XA_ERRORCODE xa_vit_pre_proc_init(vit_pre_proc_t *d, WORD32 i_idx, pVOID 
         XF_CHK_ERR(d->state & XA_VIT_PRE_PROC_FLAG_PREINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
 
         //compute buffer size
-        UWORD64 product = (UWORD64)d->sample_rate * d->channels * (d->pcm_width>>3) * d->frame_size_us;
+        UWORD64 product = (UWORD64)d->sample_rate * NUMBER_OF_CHANNELS * (d->pcm_width>>3) * d->frame_size_us;
         d->buffer_size = (UWORD32)(product/1000000);
 
         /* Align the computed buffer size to 8-byte */
@@ -838,7 +851,7 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
     if (VIT_Status != VIT_SUCCESS)
     {
         DSP_PRINTF("VIT_GetModelInfo error : %d\r\n", VIT_Status);
-        return VIT_INVALID_MODEL;                                        
+        return VIT_INVALID_MODEL;
     }
 
     DSP_PRINTF("VIT Model info \r\n");
@@ -890,13 +903,13 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
 
     if (VIT_Status != VIT_SUCCESS)
     {
-        return VIT_INVALID_MODEL;                                        
+        return VIT_INVALID_MODEL;
     }
 
     VIT_Status = VIT_ModelInfo();
     if (VIT_Status != VIT_SUCCESS)
     {
-        return VIT_INVALID_MODEL;                                        
+        return VIT_INVALID_MODEL;
     }
     /*
      *   Configure VIT Instance Parameters
@@ -915,7 +928,7 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
     if (VIT_Status != VIT_SUCCESS)
     {
         // DSP_PRINTF("VIT_GetMemoryTable error : %d\n", Status);
-        return VIT_INVALID_BUFFER_MEMORY_ALIGNMENT;     
+        return VIT_INVALID_BUFFER_MEMORY_ALIGNMENT;
     }
 
     /*
@@ -967,6 +980,8 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
     *   Set and Apply VIT control parameters
     */
     VITControlParams.OperatingMode   = VIT_OPERATING_MODE;
+    VITControlParams.MIC1_MIC2_Distance = VIT_MIC1_MIC2_DISTANCE;
+    VITControlParams.MIC1_MIC3_Distance = VIT_MIC1_MIC3_DISTANCE;
 
     if (!InitPhase_Error)
     {

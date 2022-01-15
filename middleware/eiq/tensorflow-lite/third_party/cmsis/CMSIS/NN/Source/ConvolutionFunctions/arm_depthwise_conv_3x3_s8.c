@@ -22,16 +22,15 @@
  * Description:  Optimized s8 depthwise convolution function for channel
  *               multiplier of 1 and 3x3 kernel size.
  *
- * $Date:        May 14, 2020
- * $Revision:    V.2.0.0
+ * $Date:        09. October 2020
+ * $Revision:    V.2.0.1
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
-#include "cmsis/CMSIS/DSP/Include/arm_math.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -43,12 +42,12 @@
  */
 
 /*
-   * Optimized s8 depthwise convolution function with constraint that
-   * in_channel == out_channel and kernel_x == kernel_y == 3 with pads at most 1
-   *
-   *  Refer prototype header file for details.
-   *
-   */
+ * Optimized s8 depthwise convolution function with constraint that
+ * in_channel == out_channel and kernel_x == kernel_y == 3 with pads at most 1
+ *
+ *  Refer prototype header file for details.
+ *
+ */
 
 arm_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
                                      const cmsis_nn_dw_conv_params *dw_conv_params,

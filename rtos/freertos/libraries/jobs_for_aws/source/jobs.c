@@ -1,5 +1,5 @@
 /*
- * AWS IoT Jobs v1.0.0
+ * AWS IoT Jobs v1.1.0
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -359,6 +359,30 @@ static JobsStatus_t strnnEq( const char * a,
 }
 
 /**
+ * @brief Predicate returns true for a match to JOBS_API_JOBID_NEXT
+ *
+ * @param[in] jobId  character sequence to check
+ * @param[in] jobIdLength  length of the character sequence
+ *
+ * @return true if the job ID matches;
+ * false otherwise
+ */
+static bool_ isNextJobId( const char * jobId,
+                          uint16_t jobIdLength )
+{
+    bool_ ret = false;
+
+    if( ( jobId != NULL ) &&
+        ( strnnEq( JOBS_API_JOBID_NEXT, JOBS_API_JOBID_NEXT_LENGTH, jobId, jobIdLength ) == JobsSuccess ) )
+    {
+        ret = true;
+    }
+
+    return ret;
+}
+
+
+/**
  * @brief Parse a job ID and search for the API portion of a topic string in a table.
  *
  * @param[in] topic  The topic string to check.
@@ -403,7 +427,8 @@ static JobsStatus_t matchIdApi( char * topic,
     p = &p[ jobIdLength + 1U ];
     length = length - jobIdLength - 1U;
 
-    if( isValidJobId( jobId, jobIdLength ) == true )
+    if( ( isNextJobId( jobId, jobIdLength ) == true ) ||
+        ( isValidJobId( jobId, jobIdLength ) == true ) )
     {
         JobsTopic_t api;
 
@@ -600,6 +625,7 @@ JobsStatus_t Jobs_StartNext( char * buffer,
     return ret;
 }
 
+
 /**
  * See jobs.h for docs.
  *
@@ -617,7 +643,8 @@ JobsStatus_t Jobs_Describe( char * buffer,
     size_t start = 0U;
 
     if( checkCommonParams() &&
-        ( isValidJobId( jobId, jobIdLength ) == true ) )
+        ( ( isNextJobId( jobId, jobIdLength ) == true ) ||
+          ( isValidJobId( jobId, jobIdLength ) == true ) ) )
     {
         writePreamble( buffer, &start, length, thingName, thingNameLength );
 

@@ -18,7 +18,11 @@
 
 #ifndef __ASSERT
 #define __ASSERT(test, fmt, ...) assert(test)
-#endif
+#endif /* __ASSERT */
+
+#ifndef __ASSERT_NO_MSG
+#define __ASSERT_NO_MSG(test) assert(test)
+#endif /* __ASSERT_NO_MSG */
 
 /**
  * @def HAS_BUILTIN(x)

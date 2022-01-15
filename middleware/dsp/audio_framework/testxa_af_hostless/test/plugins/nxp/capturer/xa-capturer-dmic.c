@@ -51,16 +51,16 @@
 /*******************************************************************************
  * Tracing configuration
  ******************************************************************************/
-TRACE_TAG(INIT, 1);
-TRACE_TAG(PROCESS, 1);
-TRACE_TAG(UNDERRUN, 1);
+//TRACE_TAG(INIT, 1);
+//TRACE_TAG(PROCESS, 1);
+//TRACE_TAG(UNDERRUN, 1);
 
 /*******************************************************************************
  * Hardware parameters
  ******************************************************************************/
 #define DMA_CAPTURER DMA1
 
-#define BUFFER_LENGTH 512U
+#define BUFFER_LENGTH 160U
 #define BUFFER_COUNT 2U
 #define DMIC_CH_COUNT 8U
 #define DMAREQ_DMIC_CH0 16U

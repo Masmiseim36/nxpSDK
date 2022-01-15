@@ -468,12 +468,16 @@
  *  To be used in void function as it returns no error.
  */
 #define BT_MUTEX_INIT_VOID(mutex, MODULE)                                \
-    if (BT_thread_mutex_init(&(mutex), NULL) < 0)                        \
     {                                                                    \
-        COMMON_ERR(                                                      \
-        BT_MODULE_ID_##MODULE,                                           \
-        "FAILED to Initialize Mutex in " #MODULE ".\n");                 \
-        return;                                                          \
+        INT32 ret;                                                       \
+        ret = BT_thread_mutex_init(&(mutex), NULL);                      \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(                                                  \
+            BT_MODULE_ID_##MODULE,                                       \
+            "FAILED to Initialize Mutex in " #MODULE ".\n");             \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
     }
 
 /*
@@ -481,12 +485,16 @@
  *  It returns an error if mutex initialization fails.
  */
 #define BT_MUTEX_INIT(mutex, MODULE)                                     \
-    if (BT_thread_mutex_init(&(mutex), NULL) < 0)                        \
     {                                                                    \
-        COMMON_ERR(                                                      \
-        BT_MODULE_ID_##MODULE,                                           \
-        "FAILED to Initialize Mutex in " #MODULE ".\n");                 \
-        return MODULE##_MUTEX_INIT_FAILED;                               \
+        INT32 ret;                                                       \
+        ret = BT_thread_mutex_init(&(mutex), NULL);                      \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(                                                  \
+            BT_MODULE_ID_##MODULE,                                       \
+            "FAILED to Initialize Mutex in " #MODULE ".\n");             \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
     }
 
 /*
@@ -494,12 +502,16 @@
  *  To be used in void function as it returns no error.
  */
 #define BT_COND_INIT_VOID(cond, MODULE)                                  \
-    if (BT_thread_cond_init(&(cond), NULL) < 0)                          \
     {                                                                    \
-        COMMON_ERR(                                                      \
-        BT_MODULE_ID_##MODULE,                                           \
-        "FAILED to Initialize Conditional Variable in " #MODULE ".\n");  \
-        return;                                                          \
+        INT32 ret;                                                       \
+        ret = BT_thread_cond_init(&(cond), NULL);                        \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(                                                  \
+            BT_MODULE_ID_##MODULE,                                       \
+            "FAILED to Initialize CondVar in " #MODULE ".\n");           \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
     }
 
 /*
@@ -507,25 +519,16 @@
  *  It returns an error if conditional variable initialization fails.
  */
 #define BT_COND_INIT(cond, MODULE)                                       \
-    if (BT_thread_cond_init(&(cond), NULL) < 0)                          \
     {                                                                    \
-        COMMON_ERR(                                                      \
-        BT_MODULE_ID_##MODULE,                                           \
-        "FAILED to Initialize Conditional Variable in " #MODULE ".\n");  \
-        return MODULE##_COND_INIT_FAILED;                                \
-    }
-
-/*
- *  Locks the Module Specific Mutex which prevents any global variable being
- *  overwritten by any function. It returns an error if mutex lock fails.
- */
-#define BT_MUTEX_LOCK(mutex, MODULE)                                 \
-    if (BT_thread_mutex_lock(&(mutex)) < 0)                          \
-    {                                                                \
-        COMMON_ERR(                                                  \
-        BT_MODULE_ID_##MODULE,                                       \
-        "FAILED to Lock Mutex in " #MODULE ".\n");                   \
-        return MODULE##_MUTEX_LOCK_FAILED;                           \
+        INT32 ret;                                                       \
+        ret = BT_thread_cond_init(&(cond), NULL);                        \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(                                                  \
+            BT_MODULE_ID_##MODULE,                                       \
+            "FAILED to Initialize CondVar in " #MODULE ".\n");           \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
     }
 
 /*
@@ -533,53 +536,34 @@
  *  overwritten by any function. To be used in void function as it
  *  returns no error.
  */
-#define BT_MUTEX_LOCK_VOID(mutex, MODULE)                            \
-    if (BT_thread_mutex_lock(&(mutex)) < 0)                          \
-    {                                                                \
-        COMMON_ERR(                                                  \
-        BT_MODULE_ID_##MODULE,                                       \
-        "FAILED to Lock Mutex in " #MODULE ".\n");                   \
-        return;                                                      \
+#define BT_MUTEX_LOCK_VOID(mutex, MODULE)                                \
+    {                                                                    \
+        INT32 ret;                                                       \
+        ret = BT_thread_mutex_lock(&(mutex));                            \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(                                                  \
+            BT_MODULE_ID_##MODULE,                                       \
+            "FAILED to Lock Mutex in " #MODULE ".\n");                   \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
     }
 
 /*
  *  Locks the Module Specific Mutex which prevents any global variable being
- *  overwritten by any function.
- *  It returns the error 'value' if mutex lock failes.
+ *  overwritten by any function. It returns an error if mutex lock fails.
  */
-#define BT_MUTEX_LOCK_RETURN_ON_FAILURE(mutex, MODULE, value)        \
-    if (BT_thread_mutex_lock(&(mutex)) < 0)                          \
-    {                                                                \
-        COMMON_ERR(                                                  \
-        BT_MODULE_ID_##MODULE,                                       \
-        "FAILED to Lock Mutex in " #MODULE ".\n");                   \
-        return (value);                                              \
-    }
-
-/*
- *  Locks the Module Specific Mutex which prevents any global variable being
- *  overwritten by any function. On failure, only an Error is logged.
- *  It can be used from both void and non-void functions.
- */
-#define BT_MUTEX_LOCK_DONOT_RETURN_ON_FAILURE(mutex, MODULE)         \
-    if (BT_thread_mutex_lock(&(mutex)) < 0)                          \
-    {                                                                \
-        COMMON_ERR(                                                  \
-        BT_MODULE_ID_##MODULE,                                       \
-        "FAILED to Lock Mutex in " #MODULE ".\n");                   \
-    }
-
-/*
- *  Unlocks the Module Specific Mutex which realeses the global variables
- *  to be written into. It returns an error if mutex unlock fails.
- */
-#define BT_MUTEX_UNLOCK(mutex, MODULE)                               \
-    if (BT_thread_mutex_unlock(&(mutex)) < 0)                        \
-    {                                                                \
-        COMMON_ERR(                                                  \
-        BT_MODULE_ID_##MODULE,                                       \
-        "FAILED to Unlock Mutex in " #MODULE ".\n");                 \
-        return MODULE##_MUTEX_UNLOCK_FAILED;                         \
+#define BT_MUTEX_LOCK(mutex, MODULE)                                 \
+    {                                                                    \
+        INT32 ret;                                                       \
+        ret = BT_thread_mutex_lock(&(mutex));                            \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(                                                  \
+            BT_MODULE_ID_##MODULE,                                       \
+            "FAILED to Lock Mutex in " #MODULE ".\n");                   \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
     }
 
 /*
@@ -588,39 +572,33 @@
  *  no error.
  */
 #define BT_MUTEX_UNLOCK_VOID(mutex, MODULE)                          \
-    if (BT_thread_mutex_unlock(&(mutex)) < 0)                        \
-    {                                                                \
-        COMMON_ERR(                                                  \
-        BT_MODULE_ID_##MODULE,                                       \
-        "FAILED to Unlock Mutex in " #MODULE ".\n");                 \
-        return;                                                      \
+    {                                                                    \
+        INT32 ret;                                                       \
+        ret = BT_thread_mutex_unlock(&(mutex));                          \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(                                                  \
+            BT_MODULE_ID_##MODULE,                                       \
+            "FAILED to Unlock Mutex in " #MODULE ".\n");                 \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
     }
 
 /*
  *  Unlocks the Module Specific Mutex which realeses the global variables
- *  to be written into.
- *  It returns the error 'value' if mutex unlock failes.
+ *  to be written into. It returns an error if mutex unlock fails.
  */
-#define BT_MUTEX_UNLOCK_RETURN_ON_FAILURE(mutex, MODULE, value)      \
-    if (BT_thread_mutex_unlock(&(mutex)) < 0)                        \
-    {                                                                \
-        COMMON_ERR(                                                  \
-        BT_MODULE_ID_##MODULE,                                       \
-        "FAILED to Unlock Mutex in " #MODULE ".\n");                 \
-        return (value);                                              \
-    }
-
-/*
- *  Unlocks the Module Specific Mutex which realeses the global variables
- *  to be written into. On failure, only Error is logged.
- *  It can be used from both void and non-void functions.
- */
-#define BT_MUTEX_UNLOCK_DONOT_RETURN_ON_FAILURE(mutex, MODULE)       \
-    if (BT_thread_mutex_unlock(&(mutex)) < 0)                        \
-    {                                                                \
-        COMMON_ERR(                                                  \
-        BT_MODULE_ID_##MODULE,                                       \
-        "FAILED to Unlock Mutex in " #MODULE ".\n");                 \
+#define BT_MUTEX_UNLOCK(mutex, MODULE)                               \
+    {                                                                    \
+        INT32 ret;                                                       \
+        ret = BT_thread_mutex_unlock(&(mutex));                          \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(                                                  \
+            BT_MODULE_ID_##MODULE,                                       \
+            "FAILED to Unlock Mutex in " #MODULE ".\n");                 \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
     }
 
 #else  /* BT_DISABLE_MUTEX */
@@ -675,20 +653,6 @@
 #define BT_MUTEX_LOCK_VOID(mutex, MODULE)
 
 /*
- *  Locks the Module Specific Mutex which prevents any global variable being
- *  overwritten by any function.
- *  It returns the error 'value' if mutex lock failes.
- */
-#define BT_MUTEX_LOCK_RETURN_ON_FAILURE(mutex, MODULE, value)
-
-/*
- *  Locks the Module Specific Mutex which prevents any global variable being
- *  overwritten by any function. On failure, only an Error is logged.
- *  It can be used from both void and non-void functions.
- */
-#define BT_MUTEX_LOCK_DONOT_RETURN_ON_FAILURE(mutex, MODULE)
-
-/*
  *  Unlocks the Module Specific Mutex which realeses the global variables
  *  to be written into. It returns an error if mutex unlock fails.
  */
@@ -700,20 +664,6 @@
  *  no error.
  */
 #define BT_MUTEX_UNLOCK_VOID(mutex, MODULE)
-
-/*
- *  Unlocks the Module Specific Mutex which realeses the global variables
- *  to be written into.
- *  It returns the error 'value' if mutex unlock failes.
- */
-#define BT_MUTEX_UNLOCK_RETURN_ON_FAILURE(mutex, MODULE, value)
-
-/*
- *  Unlocks the Module Specific Mutex which realeses the global variables
- *  to be written into. On failure, only Error is logged.
- *  It can be used from both void and non-void functions.
- */
-#define BT_MUTEX_UNLOCK_DONOT_RETURN_ON_FAILURE(mutex, MODULE)
 
 #endif /* BT_DISABLE_MUTEX */
 

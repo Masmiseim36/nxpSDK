@@ -837,7 +837,7 @@ static void reset_a2dp_test(void)
     for (uint8_t index = 0; index < MAX_REGISTERED_EP; index++)
     {
         registered_eps[index].media_started = 0;
-        k_delayed_work_cancel(&registered_eps[index].consume_stream_work);
+        k_work_cancel_delayable(&registered_eps[index].consume_stream_work);
     }
 }
 
@@ -866,7 +866,7 @@ static void consume_stream_work_cb(struct bt_work *work)
 
     bt_a2dp_snk_media_sync(ep_test->ep, NULL, 0);
     if (ep_test->media_started) {
-        k_delayed_work_submit(&ep_test->consume_stream_work, BT_MSEC(ep_test->delay_ms));
+        k_work_schedule(&ep_test->consume_stream_work, BT_MSEC(ep_test->delay_ms));
     }
 }
 
@@ -916,7 +916,7 @@ static void sink_common_streamer_data(struct bt_a2dp_endpoint *ep, uint8_t *data
     if (ep_test->media_started) {
         if (ep_test->fisrt_media == 0u) {
             ep_test->fisrt_media = 1u;
-            k_delayed_work_submit(&ep_test->consume_stream_work, BT_MSEC(ep_test->delay_ms));
+            k_work_schedule(&ep_test->consume_stream_work, BT_MSEC(ep_test->delay_ms));
         }
     }
 }
@@ -1410,7 +1410,7 @@ static shell_status_t cmd_register_sink_ep(shell_handle_t shell, int32_t argc, c
         if (registered_index < MAX_REGISTERED_EP)
         {
             registered_eps[registered_index].ep = ep;
-            k_delayed_work_init(&registered_eps[registered_index].consume_stream_work, consume_stream_work_cb);
+            k_work_init_delayable(&registered_eps[registered_index].consume_stream_work, consume_stream_work_cb);
             registered_index++;
         }
         else

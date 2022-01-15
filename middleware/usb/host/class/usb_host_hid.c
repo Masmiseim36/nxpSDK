@@ -356,7 +356,7 @@ static void USB_HostHidSetInterfaceCallback(void *param, usb_host_transfer_t *tr
 
 usb_status_t USB_HostHidInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandle)
 {
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
     uint32_t *temp;
     usb_host_hid_instance_t *hidInstance =
         (usb_host_hid_instance_t *)OSA_MemoryAllocate(sizeof(usb_host_hid_instance_t)); /* malloc hid class instance */

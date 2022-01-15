@@ -6,8 +6,8 @@
 **
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    iMXRT500RM Rev.0, 01/2021
-**     Version:             rev. 4.0, 2020-05-12
-**     Build:               b210303
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b210728
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -57,7 +57,7 @@
 #define  m_text_start                  0x08001200
 #define  m_text_size                   0x001FEE00
 
-#define m_interrupts_ram_start         0x20080000
+#define m_interrupts_ram_start         0x20280000
 #define m_interrupts_ram_size          __ram_vector_table_size__
 
 #define  m_data_start                  (m_interrupts_ram_start + m_interrupts_ram_size)

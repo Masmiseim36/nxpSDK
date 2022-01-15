@@ -5,11 +5,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+#include "mbedtls/private_access.h"
+
+#include "mbedtls/build_info.h"
 
 #if defined(FSL_FEATURE_SOC_CASPER_COUNT) && (FSL_FEATURE_SOC_CASPER_COUNT > 0)
 #include "fsl_casper.h"
@@ -105,7 +103,7 @@ static int mbedtls_casper_mpi_exp_mod_shim(mbedtls_mpi *X,
     MBEDTLS_MPI_CHK(mbedtls_mpi_write_binary(N, ptrN, sizeN));
     reverse_array(ptrN, sizeN);
 
-    CASPER_ModExp(CASPER, ptrA, ptrN, sizeN / 4U, E->p[0], ptrX);
+    CASPER_ModExp(CASPER, ptrA, ptrN, sizeN / 4U, E->MBEDTLS_PRIVATE(p)[0], ptrX);
 
     reverse_array(ptrX, sizeN);
     MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(X, ptrX, sizeN));
@@ -146,16 +144,16 @@ int mbedtls_rsa_public( mbedtls_rsa_context *ctx,
     }
 #endif
 
-    MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&T, input, ctx->len));
+    MBEDTLS_MPI_CHK(mbedtls_mpi_read_binary(&T, input, ctx->MBEDTLS_PRIVATE(len)));
 
-    if (mbedtls_mpi_cmp_mpi(&T, &ctx->N) >= 0)
+    if (mbedtls_mpi_cmp_mpi(&T, &ctx->MBEDTLS_PRIVATE(N)) >= 0)
     {
         ret = MBEDTLS_ERR_MPI_BAD_INPUT_DATA;
         goto cleanup;
     }
 
-    olen = ctx->len;
-    MBEDTLS_MPI_CHK(mbedtls_casper_mpi_exp_mod_shim(&T, &T, &ctx->E, &ctx->N /*, &ctx->RN */));
+    olen = ctx->MBEDTLS_PRIVATE(len);
+    MBEDTLS_MPI_CHK(mbedtls_casper_mpi_exp_mod_shim(&T, &T, &ctx->MBEDTLS_PRIVATE(E), &ctx->MBEDTLS_PRIVATE(N) /*, &ctx->RN */));
     MBEDTLS_MPI_CHK(mbedtls_mpi_write_binary(&T, output, olen));
 
 cleanup:
@@ -231,8 +229,8 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
 
     
     //* Write MbedTLS mpi coordinates into binary buffer */
-    mbedtls_mpi_write_binary( &P->X, (unsigned char*)&X[0], size );
-    mbedtls_mpi_write_binary( &P->Y, (unsigned char*)&Y[0], size );
+    mbedtls_mpi_write_binary( &P->MBEDTLS_PRIVATE(X), (unsigned char*)&X[0], size );
+    mbedtls_mpi_write_binary( &P->MBEDTLS_PRIVATE(Y), (unsigned char*)&Y[0], size );
     
     /* Reverse endianness for CASPER */
     reverse_array((uint8_t *)X, size);
@@ -278,9 +276,9 @@ int ecp_mul_comb(mbedtls_ecp_group *grp,
     reverse_array((uint8_t *)Y, size);
 
     /* Write results into R MPI */
-    mbedtls_mpi_read_binary( &R->X, (void*)&X[0], size );
-    mbedtls_mpi_read_binary( &R->Y, (void*)&Y[0], size );
-    mbedtls_mpi_lset( &R->Z, 1 );
+    mbedtls_mpi_read_binary( &R->MBEDTLS_PRIVATE(X), (void*)&X[0], size );
+    mbedtls_mpi_read_binary( &R->MBEDTLS_PRIVATE(Y), (void*)&Y[0], size );
+    mbedtls_mpi_lset( &R->MBEDTLS_PRIVATE(Z), 1 );
 
 
     return 0;
@@ -327,8 +325,8 @@ int mbedtls_ecp_muladd_restartable(
     /* Write MbedTLS mpi coordinates into binary buffer */
     size = mbedtls_mpi_size(&grp->P);
        
-    mbedtls_mpi_write_binary( &P->X, (unsigned char*)&X1[0], size );
-    mbedtls_mpi_write_binary( &P->Y, (unsigned char*)&Y1[0], size );
+    mbedtls_mpi_write_binary( &P->MBEDTLS_PRIVATE(X), (unsigned char*)&X1[0], size );
+    mbedtls_mpi_write_binary( &P->MBEDTLS_PRIVATE(Y), (unsigned char*)&Y1[0], size );
     
     reverse_array((uint8_t *)X1, size);
     reverse_array((uint8_t *)Y1, size);
@@ -357,8 +355,8 @@ int mbedtls_ecp_muladd_restartable(
     reverse_array((void *)M, size);
 
     /* Write MbedTLS mpi coordinates into binary bufer */
-    mbedtls_mpi_write_binary( &Q->X, (unsigned char*)&X2[0], size );
-    mbedtls_mpi_write_binary( &Q->Y, (unsigned char*)&Y2[0], size );
+    mbedtls_mpi_write_binary( &Q->MBEDTLS_PRIVATE(X), (unsigned char*)&X2[0], size );
+    mbedtls_mpi_write_binary( &Q->MBEDTLS_PRIVATE(Y), (unsigned char*)&Y2[0], size );
     
     reverse_array((uint8_t *)X2, size);
     reverse_array((uint8_t *)Y2, size);
@@ -389,9 +387,9 @@ int mbedtls_ecp_muladd_restartable(
     reverse_array((uint8_t *)Y1, size);
 
     /* Write results into R MPI */
-    mbedtls_mpi_read_binary( &R->X, (void*)&X1[0], size );
-    mbedtls_mpi_read_binary( &R->Y, (void*)&Y1[0], size );
-    mbedtls_mpi_lset( &R->Z, 1 );
+    mbedtls_mpi_read_binary( &R->MBEDTLS_PRIVATE(X), (void*)&X1[0], size );
+    mbedtls_mpi_read_binary( &R->MBEDTLS_PRIVATE(Y), (void*)&Y1[0], size );
+    mbedtls_mpi_lset( &R->MBEDTLS_PRIVATE(Z), 1 );
     
     return 0;
 }

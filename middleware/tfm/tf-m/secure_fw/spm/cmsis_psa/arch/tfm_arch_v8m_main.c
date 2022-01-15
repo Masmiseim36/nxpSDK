@@ -14,7 +14,7 @@
 #include "exception_info.h"
 #include "tfm_secure_api.h"
 #include "spm_ipc.h"
-#include "tfm/tfm_core_svc.h"
+#include "svc_num.h"
 
 #if !defined(__ARM_ARCH_8M_MAIN__) && !defined(__ARM_ARCH_8_1M_MAIN__)
 #error "Unsupported ARM Architecture."
@@ -56,6 +56,9 @@
 __attribute__((naked)) void PendSV_Handler(void)
 {
     __ASM volatile(
+        "tst     lr, #0x40                  \n" /* Was NS interrupted by S? */
+        "it      eq                         \n"
+        "bxeq    lr                         \n" /* Yes, do not schedule */
         "mrs     r0, psp                    \n"
         "mrs     r1, psplim                 \n"
         "push    {r0, r1, r2, lr}           \n"
@@ -94,7 +97,8 @@ __attribute__((naked)) void SecureFault_Handler(void)
 }
 
 #if defined(__ICCARM__)
-uint32_t tfm_core_svc_handler(uint32_t *msp, uint32_t *psp, uint32_t exc_return);
+uint32_t tfm_core_svc_handler(uint32_t *msp, uint32_t exc_return,
+                              uint32_t *psp);
 #pragma required = tfm_core_svc_handler
 #endif
 
@@ -102,10 +106,37 @@ __attribute__((naked)) void SVC_Handler(void)
 {
     __ASM volatile(
     "MRS     r0, MSP                        \n"
-    "MRS     r1, PSP                        \n"
-    "MOV     r2, lr                         \n"
-    "BL      tfm_core_svc_handler           \n"
-    "BX      r0                             \n"
+    "MOV     r1, lr                         \n"
+    "MRS     r2, PSP                        \n"
+    "SUB     sp, #8                         \n" /* For FLIH PID and signal */
+    "PUSH    {r1, r2}                       \n" /* Orig_exc_return, PSP */
+    "BL      tfm_core_svc_handler           \n" /* New EXC_RET returned */
+    "MOV     lr, r0                         \n"
+    "LDR     r1, [sp]                       \n" /* Original EXC_RETURN */
+    "AND     r0, #8                         \n" /* Mode bit */
+    "AND     r1, #8                         \n"
+    "SUBS    r0, r1                         \n" /* Compare EXC_RETURN values */
+    "BGT     to_flih_func                   \n"
+    "BLT     from_flih_func                 \n"
+    "ADD     sp, #16                        \n"
+    "BX      lr                             \n"
+    "to_flih_func:                          \n"
+    "PUSH    {r4-r11}                       \n"
+    "LDR     r4, =0xFEF5EDA5                \n" /* clear r4-r11 */
+    "MOV     r5, r4                         \n"
+    "MOV     r6, r4                         \n"
+    "MOV     r7, r4                         \n"
+    "MOV     r8, r4                         \n"
+    "MOV     r9, r4                         \n"
+    "MOV     r10, r4                        \n"
+    "MOV     r11, r4                        \n"
+    "PUSH    {r4, r5}                       \n" /* Seal stack before EXC_RET */
+    "BX      lr                             \n"
+    "from_flih_func:                        \n"
+    "ADD     sp, #24                        \n"
+    "POP     {r4-r11}                       \n"
+    "ADD     sp, #16                        \n"
+    "BX      lr                             \n"
     );
 }
 
@@ -188,21 +219,20 @@ void tfm_arch_set_secure_exception_priorities(void)
      * When AIRCR.PRIS is set, the Non-Secure execution can act on
      * FAULTMASK_NS, PRIMASK_NS or BASEPRI_NS register to boost its priority
      * number up to the value 0x80.
-     * For this reason, set the priority of the PendSV interrupt to the next
-     * priority level configurable on the platform, just below 0x80.
+     * For this reason, set the priority of the PendSV interrupt to 0x80.
      */
-    NVIC_SetPriority(PendSV_IRQn, (1 << (__NVIC_PRIO_BITS - 1)) - 1);
+    NVIC_SetPriority(PendSV_IRQn, 1 << (__NVIC_PRIO_BITS - 1));
 #endif
 }
 
 void tfm_arch_config_extensions(void)
 {
-#if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
+#if defined(__FPU_PRESENT) && (__FPU_PRESENT == 1U)
     /* Configure Secure access to the FPU only if the secure image is being
      * built with the FPU in use. This avoids introducing extra interrupt
      * latency when the FPU is not used by the SPE.
      */
-#if defined (__FPU_USED) && (__FPU_USED == 1U)
+#if defined(__FPU_USED) && (__FPU_USED == 1U)
     /* Enable Secure privileged and unprivilged access to the FP Extension */
     SCB->CPACR |= (3U << 10U*2U)     /* enable CP10 full access */
                   | (3U << 11U*2U);  /* enable CP11 full access */

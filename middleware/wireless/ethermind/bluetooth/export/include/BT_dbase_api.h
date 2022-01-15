@@ -685,7 +685,7 @@ API_RESULT BT_dbase_get_attr_value
  *         Size, in octets, of the buffer containing the new value.
  *
  *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
  *
  */
 API_RESULT BT_dbase_update_attr_value
@@ -721,7 +721,7 @@ API_RESULT BT_dbase_update_attr_value
  *         Size, in octets, of the buffer containing the new value.
  *
  *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
  *
  *  \note
  */
@@ -745,7 +745,7 @@ API_RESULT BT_dbase_change_attr_value
  *         Identifies the Service Record in SDP Database.
  *
  *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
  *
  *  \note
  */
@@ -766,7 +766,7 @@ API_RESULT BT_dbase_activate_record
  *         Identifies the Service Record in SDP Database.
  *
  *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
  *
  *  \note
  */
@@ -797,7 +797,7 @@ API_RESULT BT_dbase_inactivate_record
  *         SDP Record Handle will be copied on return.
  *
  *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
  *
  *  \note
  */
@@ -807,6 +807,7 @@ API_RESULT BT_dbase_get_record_handle
                /* IN */  UCHAR service_instance,
                /* OUT */ UINT32 *rec_hdl
            );
+
 /**
  *  \brief To get a RFCOMM Server Channel present in an SDP Database Record.
  *
@@ -831,16 +832,96 @@ API_RESULT BT_dbase_get_record_handle
  *         RFCOMM Server Channel value on return.
  *
  *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
  *
  *  \note
  */
+#ifdef SDP_SERVER_ACCESS_RFCOMM_CH
+#define BT_dbase_get_server_channel(rh, aid, ch)                \
+        BT_dbase_access_server_channel((rh), (aid), 0x00, (ch))
+#else
 API_RESULT BT_dbase_get_server_channel
            (
                /* IN */  UINT32 record_handle,
                /* IN */  UINT16 attr_id,
                /* OUT */ UCHAR *server_channel
            );
+#endif /* SDP_SERVER_ACCESS_RFCOMM_CH */
+
+#ifdef SDP_SERVER_ACCESS_RFCOMM_CH
+/**
+ *  \brief To set a RFCOMM Server Channel present in an SDP Database Record.
+ *
+ *  \par Description:
+ *       This function enables to update the RFCOMM Server Channel corresponding to a SDP
+ *       Service Record and an Attribute ID. This API is useful only in the case
+ *       of profiles/application running over RFCOMM.
+ *
+ *  \param [in] record_handle
+ *         Identifies the SDP Database Service Record.
+ *
+ *  \param [in] attr_id
+ *         Attribute ID that the RFCOMM Server Channel is associated with.
+ *         For most of the cases, as per the Bluetooth specification Profiles over RFCOMM,
+ *         the Attribute ID needs to be the "Protocol Descriptor List".
+ *         Some profile (such as, the Basic Printing Profile), more than one RFCOMM Server Channel
+ *         may be used. This additional RFCOMM Server Channels, if any, are usually associated
+ *         with the "Additional Protocol Descriptor List" Attribute ID.
+ *
+ *  \param [in] server_channel
+ *         Pointer to a caller allocated UCHAR variable, that is filled with the
+ *         RFCOMM Server Channel value to be updated.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
+ *
+ *  \note
+ */
+
+#define BT_dbase_set_server_channel(rh, aid, ch)                \
+        BT_dbase_access_server_channel((rh), (aid), 0x01, (ch))
+
+/**
+ *  \brief To access a RFCOMM Server Channel present in an SDP Database Record.
+ *
+ *  \par Description:
+ *       This function enabables to access the RFCOMM Server Channel corresponding to a SDP
+ *       Service Record and an Attribute ID. This API is useful only in the case
+ *       of profiles/application running over RFCOMM.
+ *
+ *  \param [in] record_handle
+ *         Identifies the SDP Database Service Record.
+ *
+ *  \param [in] attr_id
+ *         Attribute ID that the RFCOMM Server Channel is associated with.
+ *         For most of the cases, as per the Bluetooth specification Profiles over RFCOMM,
+ *         the Attribute ID needs to be the "Protocol Descriptor List".
+ *         Some profile (such as, the Basic Printing Profile), more than one RFCOMM Server Channel
+ *         may be used. This additional RFCOMM Server Channels, if any, are usually associated
+ *         with the "Additional Protocol Descriptor List" Attribute ID.
+ *
+ *  \param [in] flag
+ *         Flag that indicate to get or set the RFCOMM channel number.
+ *          0x00 -> To get the rfcomm channel.
+ *          0x01 -> To set the rfcomm channel.
+ *
+ *  \param [inout] server_channel
+ *         Pointer to a caller allocated UCHAR variable, that is filled with the
+ *         RFCOMM Server Channel value on return or to be set.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
+ *
+ *  \note
+ */
+API_RESULT BT_dbase_access_server_channel
+           (
+               /* IN    */  UINT32     record_handle,
+               /* IN    */  UINT16     attr_id,
+               /* IN    */  UCHAR      flag,
+               /* INOUT */ UCHAR *    server_channel
+           );
+#endif /* SDP_SERVER_ACCESS_RFCOMM_CH */
 
 /**
  *  \brief To get OBEX PSM present in an SDDB Record
@@ -864,7 +945,7 @@ API_RESULT BT_dbase_get_server_channel
  *         The memory shall be provided by the caller.
  *
  *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
  *
  *  \note
  */

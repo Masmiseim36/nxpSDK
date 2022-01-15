@@ -348,6 +348,7 @@ static API_RESULT bt_hfp_ag_set_esco_channel_parameters(uint8_t set_sco_param, H
     uint8_t enable;
     HCI_SCO_IN_PARAMS esco_params;
 
+    memset(&esco_params, 0x0, sizeof(HCI_SCO_IN_PARAMS));
     /* Null Check for eSCO parameters */
     if ((BT_TRUE == set_sco_param) && (NULL == sco_params))
     {
@@ -1219,6 +1220,7 @@ int bt_hfp_ag_set_phnum_tag(struct bt_hfp_ag *hfp_ag, char *name)
         return -EINVAL;
     }
     BT_str_n_copy(hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum_tag, name, 16);
+    hfp_ag->bt_hfp_ag_config->bt_hfp_ag_phnum_tag[15] = '\0';
     bt_hfp_ag_send_at_rsp(HFAG_BINP, NULL);
     return 0;
 }
@@ -1233,6 +1235,7 @@ int bt_hfp_ag_set_cops(struct bt_hfp_ag *hfp_ag, char *name)
         return -EINVAL;
     }
     BT_str_n_copy(hfp_ag->ag_str_cops, name, 16);
+    hfp_ag->ag_str_cops[15] = '\0';
     bt_hfp_ag_send_at_rsp(HFAG_COPS_READ, NULL);
     return 0;
 }

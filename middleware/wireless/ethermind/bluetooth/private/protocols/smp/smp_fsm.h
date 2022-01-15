@@ -41,6 +41,7 @@ Your Option - ";
 #endif
 
 /* Event Defines */
+#if 0
 typedef enum
 {
     ev_smp_pairing_req = 0x01U,
@@ -62,8 +63,27 @@ typedef enum
     ev_smp_unknown = 0xFFU
 
 } SMP_EVENTS;
-
+#else
+#define ev_smp_pairing_req          0x01U
+#define ev_smp_pairing_rsp          0x02U
+#define ev_smp_pairing_rand         0x03U
+#define ev_smp_pairing_confirm      0x04U
+#define ev_smp_passkey              0x05U
+#define ev_smp_pairing_stk          0x06U
+#define ev_smp_encryption_complete  0x07U
+#define ev_smp_ltk_req              0x08U
+#define ev_smp_key_exchange_info    0x09U
+#define ev_smp_pairing_failure      0x0AU
+#define ev_smp_public_key           0x0BU
+#define ev_smp_nkey_gen             0x0CU
+#define ev_smp_dhkey_check          0x0DU
+#define ev_smp_lesc_key_gen         0x0EU
+#define ev_smp_pairing_key_press    0x0FU
+#define ev_smp_nkey_cnf             0x10U
+#define ev_smp_unknown              0xFFU
+#endif /* 0 */
 /* Level 0 State Defines */
+#if 0
 typedef enum
 {
     SL_0_CONNECTED = 0x00000001U,
@@ -92,7 +112,33 @@ typedef enum
     SL_0_IN_LESC_KEY_GEN = 0x00800000U,
     SL_0_W4_NKEY_DHKEY_CONF = 0x01000000U
 } SMP_STATES_LEVEL_0;
-
+#else /* 0 */
+#define SL_0_CONNECTED                  0x00000001U
+#define SL_0_IN_PAIRING_RSP             0x00000002U
+#define SL_0_W4_PAIRING_RSP             0x00000004U
+#define SL_0_IN_RAND                    0x00000008U
+#define SL_0_W4_RAND                    0x00000010U
+#define SL_0_IN_CONFIRM                 0x00000020U
+#define SL_0_W4_CONFIRM                 0x00000040U
+#define SL_0_W4_RAND_CONFIRM            0x00000080U
+#define SL_0_IN_CONFIRMING              0x00000100U
+#define SL_0_IN_STK                     0x00000200U
+#define SL_0_IN_PAIRING_ENC             0x00000400U
+#define SL_0_W4_PAIRING_ENC             0x00000800U
+#define SL_0_IN_ENCRYPTION              0x00001000U
+#define SL_0_IN_KEY_XCHG                0x00002000U
+#define SL_0_W4_KEY_XCHG                0x00004000U
+#define SL_0_IN_PUBLIC_KEY_XCHG         0x00008000U
+#define SL_0_W4_PUBLIC_KEY_XCHG         0x00010000U
+#define SL_0_W4_USER_PASSKEY            0x00020000U
+#define SL_0_IN_NKEY_GEN                0x00040000U
+#define SL_0_W4_NKEY_CONF               0x00080000U
+#define SL_0_IN_DHKEY_CHECK             0x00100000U
+#define SL_0_W4_DHKEY_CHECK             0x00200000U
+#define SL_0_IN_DHKEY_CHECK_CONFIRMING  0x00400000U
+#define SL_0_IN_LESC_KEY_GEN            0x00800000U
+#define SL_0_W4_NKEY_DHKEY_CONF         0x01000000U
+#endif /* 0 */
 #define NOP    0xFFU
 
 #endif /* _H_SMP_FSM_ */

@@ -79,7 +79,8 @@ int settings_load_subtree_direct(
     {
         return -EINVAL;
     }
-
+    
+    memset((void *)&dir, 0, sizeof(dir));
     err = lfs_stat(lfs, subtree, &info);
     if (err < 0)
     {
@@ -125,6 +126,7 @@ static int settings_load_subtree_scan(struct settings_handler_static *set, const
     const char *next;
     int err = -EINVAL;
 
+    memset((void *)&dir, 0, sizeof(dir));
     err = lfs_stat(lfs, key, &info);
     if (err < 0)
     {

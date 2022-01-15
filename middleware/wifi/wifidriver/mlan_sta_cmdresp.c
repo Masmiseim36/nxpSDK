@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides the handling of command
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -274,7 +274,7 @@ static mlan_status wlan_ret_tx_power_cfg(IN pmlan_private pmpriv,
 
     ENTER();
 
-    ppg_tlv = (MrvlTypes_Power_Group_t *)((t_u8 *)ptxp_cfg + sizeof(HostCmd_DS_TXPWR_CFG));
+    ppg_tlv = (MrvlTypes_Power_Group_t *)((t_u8 *)&resp->params + sizeof(HostCmd_DS_TXPWR_CFG));
     pg      = (Power_Group_t *)((t_u8 *)ppg_tlv + sizeof(MrvlTypes_Power_Group_t));
 
     switch (action)
@@ -342,9 +342,9 @@ static mlan_status wlan_ret_tx_power_cfg(IN pmlan_private pmpriv,
                     data[2] = pg->power_min;
                     data[3] = pg->power_max;
                     data[4] = pg->power_step;
-                    (void)memcpy(pmpriv->adapter,
-                                 (t_u8 *)(&power->param.power_ext.power_data[power->param.power_ext.len]), (t_u8 *)data,
-                                 sizeof(data));
+                    (void)__memcpy(pmpriv->adapter,
+                                   (t_u8 *)(&power->param.power_ext.power_data[power->param.power_ext.len]),
+                                   (t_u8 *)data, sizeof(data));
                     power->param.power_ext.len += 5;
                     pg++;
                     ppg_tlv->length -= sizeof(Power_Group_t);

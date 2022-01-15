@@ -48,10 +48,11 @@ void device_queue_free_pl (DEVICE_HANDLE    * hndl)
 
 void device_queue_full_pl(DEVICE_LINK_TYPE    link_type)
 {
-    UINT32 sm_index;
+
     UCHAR  smp_index;
 
 #ifdef BT_DUAL_MODE
+    UINT32 sm_index;
     API_RESULT retval;
 
     /*

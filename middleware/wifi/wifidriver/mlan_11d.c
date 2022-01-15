@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides functions for 802.11D
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -310,11 +310,11 @@ static mlan_status wlan_11d_generate_domain_info(pmlan_adapter pmadapter, parsed
     ENTER();
 
     /* Should be only place that clear domain_reg (besides init) */
-    (void)memset(pmadapter, domain_info, 0, sizeof(wlan_802_11d_domain_reg_t));
+    (void)__memset(pmadapter, domain_info, 0, sizeof(wlan_802_11d_domain_reg_t));
 
     /* Set country code */
-    (void)memcpy(pmadapter, domain_info->country_code, wlan_11d_code_2_region(pmadapter, (t_u8)pmadapter->region_code),
-                 COUNTRY_CODE_LEN);
+    (void)__memcpy(pmadapter, domain_info->country_code,
+                   wlan_11d_code_2_region(pmadapter, (t_u8)pmadapter->region_code), COUNTRY_CODE_LEN);
 
     PRINTM(MINFO, "11D: Number of channel = %d\n", no_of_chan);
     HEXDUMP("11D: parsed_region_chan", (t_u8 *)parsed_region_chan, sizeof(parsed_region_chan_11d_t));
@@ -500,7 +500,7 @@ static mlan_status wlan_11d_process_country_info(mlan_private *pmpriv, BSSDescri
 
     ENTER();
 
-    (void)memset(pmadapter, &region_chan, 0, sizeof(parsed_region_chan_11d_t));
+    (void)__memset(pmadapter, &region_chan, 0, sizeof(parsed_region_chan_11d_t));
 
     /* Parse 11D country info */
     if (wlan_11d_parse_domain_info(pmadapter, &pbss_desc->country_info, (t_u8)pbss_desc->bss_band, &region_chan) !=
@@ -553,7 +553,7 @@ static mlan_status wlan_11d_process_country_info(mlan_private *pmpriv, BSSDescri
     else
     {
         /* Parsed region is empty, copy the first one */
-        (void)memcpy(pmadapter, parsed_region_chan, &region_chan, sizeof(parsed_region_chan_11d_t));
+        (void)__memcpy(pmadapter, parsed_region_chan, &region_chan, sizeof(parsed_region_chan_11d_t));
     }
 
     LEAVE();
@@ -661,12 +661,12 @@ static mlan_status wlan_11d_set_domain_info(mlan_private *pmpriv,
 
     ENTER();
 
-    (void)memset(pmadapter, pdomain, 0, sizeof(wlan_802_11d_domain_reg_t));
-    (void)memcpy(pmadapter, pdomain->country_code, country_code, COUNTRY_CODE_LEN);
+    (void)__memset(pmadapter, pdomain, 0, sizeof(wlan_802_11d_domain_reg_t));
+    (void)__memcpy(pmadapter, pdomain->country_code, country_code, COUNTRY_CODE_LEN);
     pdomain->band           = band;
     pdomain->no_of_sub_band = num_sub_band;
-    (void)memcpy(pmadapter, pdomain->sub_band, sub_band_list,
-                 MIN(MRVDRV_MAX_SUBBAND_802_11D, num_sub_band) * sizeof(IEEEtypes_SubbandSet_t));
+    (void)__memcpy(pmadapter, pdomain->sub_band, sub_band_list,
+                   MIN(MRVDRV_MAX_SUBBAND_802_11D, num_sub_band) * sizeof(IEEEtypes_SubbandSet_t));
 
     LEAVE();
     return ret;
@@ -807,9 +807,9 @@ t_void wlan_11d_init(mlan_adapter *pmadapter)
 {
     ENTER();
 
-    (void)memset(pmadapter, &(pmadapter->parsed_region_chan), 0, sizeof(parsed_region_chan_11d_t));
-    (void)memset(pmadapter, &(pmadapter->universal_channel), 0, sizeof(region_chan_t));
-    (void)memset(pmadapter, &(pmadapter->domain_reg), 0, sizeof(wlan_802_11d_domain_reg_t));
+    (void)__memset(pmadapter, &(pmadapter->parsed_region_chan), 0, sizeof(parsed_region_chan_11d_t));
+    (void)__memset(pmadapter, &(pmadapter->universal_channel), 0, sizeof(region_chan_t));
+    (void)__memset(pmadapter, &(pmadapter->domain_reg), 0, sizeof(wlan_802_11d_domain_reg_t));
 
     LEAVE();
     return;
@@ -849,14 +849,14 @@ mlan_status wlan_cmd_802_11d_domain_info(mlan_private *pmpriv, HostCmd_DS_COMMAN
 
     /* Set domain info fields */
     domain->header.type = wlan_cpu_to_le16(TLV_TYPE_DOMAIN);
-    (void)memcpy(pmadapter, domain->country_code, pmadapter->domain_reg.country_code, sizeof(domain->country_code));
+    (void)__memcpy(pmadapter, domain->country_code, pmadapter->domain_reg.country_code, sizeof(domain->country_code));
 
     domain->header.len = ((no_of_sub_band * sizeof(IEEEtypes_SubbandSet_t)) + sizeof(domain->country_code));
 
     if (no_of_sub_band)
     {
-        (void)memcpy(pmadapter, domain->sub_band, pmadapter->domain_reg.sub_band,
-                     MIN(MRVDRV_MAX_SUBBAND_802_11D, no_of_sub_band) * sizeof(IEEEtypes_SubbandSet_t));
+        (void)__memcpy(pmadapter, domain->sub_band, pmadapter->domain_reg.sub_band,
+                       MIN(MRVDRV_MAX_SUBBAND_802_11D, no_of_sub_band) * sizeof(IEEEtypes_SubbandSet_t));
 
         pcmd->size = wlan_cpu_to_le16(sizeof(pdomain_info->action) + domain->header.len + sizeof(MrvlIEtypesHeader_t) +
                                       S_DS_GEN);
@@ -1021,7 +1021,7 @@ mlan_status wlan_11d_set_universaltable(mlan_private *pmpriv, t_u8 band)
 
     ENTER();
 
-    (void)memset(pmadapter, pmadapter->universal_channel, 0, sizeof(pmadapter->universal_channel));
+    (void)__memset(pmadapter, pmadapter->universal_channel, 0, sizeof(pmadapter->universal_channel));
 
     if (band & (BAND_B | BAND_G | BAND_GN))
     /* If band B, G or N */
@@ -1121,7 +1121,7 @@ mlan_status wlan_11d_clear_parsedtable(mlan_private *pmpriv)
     ENTER();
 
     if (wlan_11d_is_enabled(pmpriv))
-        (void)memset(pmadapter, &(pmadapter->parsed_region_chan), 0, sizeof(parsed_region_chan_11d_t));
+        (void)__memset(pmadapter, &(pmadapter->parsed_region_chan), 0, sizeof(parsed_region_chan_11d_t));
     else
         ret = MLAN_STATUS_FAILURE;
 
@@ -1209,7 +1209,7 @@ mlan_status wlan_11d_create_dnld_countryinfo(mlan_private *pmpriv, t_u8 band)
         }
 
         /* Generate parsed region channel info from region channel */
-        (void)memset(pmadapter, &parsed_region_chan, 0, sizeof(parsed_region_chan_11d_t));
+        (void)__memset(pmadapter, &parsed_region_chan, 0, sizeof(parsed_region_chan_11d_t));
         wlan_11d_generate_parsed_region_chan(pmadapter, region_chan, &parsed_region_chan);
 
         /* Generate domain info from parsed region channel info */
@@ -1249,10 +1249,10 @@ mlan_status wlan_11d_parse_dnld_countryinfo(mlan_private *pmpriv, BSSDescriptor_
     /* Only valid if 11D is enabled */
     if (wlan_11d_is_enabled(pmpriv))
     {
-        (void)memset(pmadapter, &region_chan, 0, sizeof(parsed_region_chan_11d_t));
-        (void)memset(pmadapter, &bssdesc_region_chan, 0, sizeof(parsed_region_chan_11d_t));
+        (void)__memset(pmadapter, &region_chan, 0, sizeof(parsed_region_chan_11d_t));
+        (void)__memset(pmadapter, &bssdesc_region_chan, 0, sizeof(parsed_region_chan_11d_t));
 
-        (void)memcpy(pmadapter, &region_chan, &pmadapter->parsed_region_chan, sizeof(parsed_region_chan_11d_t));
+        (void)__memcpy(pmadapter, &region_chan, &pmadapter->parsed_region_chan, sizeof(parsed_region_chan_11d_t));
 
         if (pbss_desc)
         {

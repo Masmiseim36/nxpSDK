@@ -374,6 +374,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/libjpeg/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -1434,6 +1435,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/libjpeg/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -2493,6 +2495,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/libjpeg/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -3553,6 +3556,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/libjpeg/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -4509,6 +4513,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd/fsl_dc_fb_dsi_cmd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/fsl_dc_fb.h</name>

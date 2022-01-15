@@ -5,21 +5,20 @@
  *
  */
 
+#include "psa/client.h"
 #include "tfm_veneers.h"
 #include "tfm_crypto_defs.h"
 #include "psa/crypto.h"
 #include "tfm_ns_interface.h"
 
-#define ARRAY_SIZE(arr) (sizeof(arr)/sizeof(arr[0]))
-
 #define API_DISPATCH(sfn_name, sfn_id)                               \
-        tfm_ns_interface_dispatch((veneer_fn)tfm_##sfn_name##_veneer,\
-        (uint32_t)in_vec, ARRAY_SIZE(in_vec),                        \
-        (uint32_t)out_vec, ARRAY_SIZE(out_vec))
+        tfm_ns_interface_dispatch((veneer_fn)sfn_name##_veneer,      \
+        (uint32_t)in_vec, IOVEC_LEN(in_vec),                         \
+        (uint32_t)out_vec, IOVEC_LEN(out_vec))
 
 #define API_DISPATCH_NO_OUTVEC(sfn_name, sfn_id)                     \
-        tfm_ns_interface_dispatch((veneer_fn)tfm_##sfn_name##_veneer,\
-        (uint32_t)in_vec, ARRAY_SIZE(in_vec),                        \
+        tfm_ns_interface_dispatch((veneer_fn)sfn_name##_veneer,      \
+        (uint32_t)in_vec, IOVEC_LEN(in_vec),                         \
         (uint32_t)NULL, 0)
 
 psa_status_t psa_crypto_init(void)
@@ -862,16 +861,63 @@ psa_status_t psa_aead_decrypt(psa_key_id_t key,
     return status;
 }
 
-psa_status_t psa_asymmetric_sign(psa_key_id_t key,
-                                 psa_algorithm_t alg,
-                                 const uint8_t *hash,
-                                 size_t hash_length,
-                                 uint8_t *signature,
-                                 size_t signature_size,
-                                 size_t *signature_length)
+psa_status_t psa_sign_message(psa_key_id_t key,
+                              psa_algorithm_t alg,
+                              const uint8_t *input,
+                              size_t input_length,
+                              uint8_t *signature,
+                              size_t signature_size,
+                              size_t *signature_length)
 {
-    return psa_sign_hash(key, alg, hash, hash_length, signature,
-                         signature_size, signature_length);
+    psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_SIGN_MESSAGE_SID,
+        .key_id = key,
+        .alg = alg,
+    };
+
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+    };
+    psa_outvec out_vec[] = {
+        {.base = signature, .len = signature_size},
+    };
+
+    status = API_DISPATCH(tfm_crypto_sign_message,
+                          TFM_CRYPTO_SIGN_MESSAGE);
+
+    if (status == PSA_SUCCESS) {
+        *signature_length = out_vec[0].len;
+    }
+
+    return status;
+}
+
+psa_status_t psa_verify_message(psa_key_id_t key,
+                                psa_algorithm_t alg,
+                                const uint8_t *input,
+                                size_t input_length,
+                                const uint8_t *signature,
+                                size_t signature_length)
+{
+    psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_VERIFY_MESSAGE_SID,
+        .key_id = key,
+        .alg = alg
+    };
+
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+        {.base = signature, .len = signature_length}
+    };
+
+    status = API_DISPATCH_NO_OUTVEC(tfm_crypto_verify_message,
+                                    TFM_CRYPTO_VERIFY_MESSAGE);
+
+    return status;
 }
 
 psa_status_t psa_sign_hash(psa_key_id_t key,
@@ -903,17 +949,6 @@ psa_status_t psa_sign_hash(psa_key_id_t key,
     *signature_length = out_vec[0].len;
 
     return status;
-}
-
-psa_status_t psa_asymmetric_verify(psa_key_id_t key,
-                                   psa_algorithm_t alg,
-                                   const uint8_t *hash,
-                                   size_t hash_length,
-                                   const uint8_t *signature,
-                                   size_t signature_length)
-{
-    return psa_verify_hash(key, alg, hash, hash_length,
-                           signature, signature_length);
 }
 
 psa_status_t psa_verify_hash(psa_key_id_t key,
@@ -1191,31 +1226,6 @@ psa_status_t psa_generate_key(const psa_key_attributes_t *attributes,
     return status;
 }
 
-psa_status_t psa_set_key_domain_parameters(psa_key_attributes_t *attributes,
-                                           psa_key_type_t type,
-                                           const uint8_t *data,
-                                           size_t data_length)
-{
-    psa_status_t status;
-
-    status = PSA_ERROR_NOT_SUPPORTED;
-
-    return status;
-}
-
-psa_status_t psa_get_key_domain_parameters(
-                                         const psa_key_attributes_t *attributes,
-                                         uint8_t *data,
-                                         size_t data_size,
-                                         size_t *data_length)
-{
-    psa_status_t status;
-
-    status = PSA_ERROR_NOT_SUPPORTED;
-
-    return status;
-}
-
 psa_status_t psa_aead_update_ad(psa_aead_operation_t *operation,
                                 const uint8_t *input,
                                 size_t input_length)
@@ -1274,8 +1284,26 @@ psa_status_t psa_mac_compute(psa_key_id_t key,
                              size_t *mac_length)
 {
     psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_MAC_COMPUTE_SID,
+        .key_id = key,
+        .alg = alg,
+    };
 
-    status = PSA_ERROR_NOT_SUPPORTED;
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+    };
+    psa_outvec out_vec[] = {
+        {.base = mac, .len = mac_size},
+    };
+
+    status = API_DISPATCH(tfm_crypto_mac_compute,
+                          TFM_CRYPTO_MAC_COMPUTE);
+
+    if (status == PSA_SUCCESS) {
+        *mac_length = out_vec[0].len;
+    }
 
     return status;
 }
@@ -1288,8 +1316,20 @@ psa_status_t psa_mac_verify(psa_key_id_t key,
                             const size_t mac_length)
 {
     psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_MAC_VERIFY_SID,
+        .key_id = key,
+        .alg = alg,
+    };
 
-    status = PSA_ERROR_NOT_SUPPORTED;
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+        {.base = mac, .len = mac_length},
+    };
+
+    status = API_DISPATCH_NO_OUTVEC(tfm_crypto_mac_verify,
+                                    TFM_CRYPTO_MAC_VERIFY);
 
     return status;
 }
@@ -1303,8 +1343,26 @@ psa_status_t psa_cipher_encrypt(psa_key_id_t key,
                                 size_t *output_length)
 {
     psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_CIPHER_ENCRYPT_SID,
+        .key_id = key,
+        .alg = alg,
+    };
 
-    status = PSA_ERROR_NOT_SUPPORTED;
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+    };
+    psa_outvec out_vec[] = {
+        {.base = output, .len = output_size},
+    };
+
+    status = API_DISPATCH(tfm_crypto_cipher_encrypt,
+                          TFM_CRYPTO_CIPHER_ENCRYPT);
+
+    if (status == PSA_SUCCESS) {
+        *output_length = out_vec[0].len;
+    }
 
     return status;
 }
@@ -1318,8 +1376,26 @@ psa_status_t psa_cipher_decrypt(psa_key_id_t key,
                                 size_t *output_length)
 {
     psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_CIPHER_DECRYPT_SID,
+        .key_id = key,
+        .alg = alg,
+    };
 
-    status = PSA_ERROR_NOT_SUPPORTED;
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+    };
+    psa_outvec out_vec[] = {
+        {.base = output, .len = output_size},
+    };
+
+    status = API_DISPATCH(tfm_crypto_cipher_decrypt,
+                          TFM_CRYPTO_CIPHER_DECRYPT);
+
+    if (status == PSA_SUCCESS) {
+        *output_length = out_vec[0].len;
+    }
 
     return status;
 }

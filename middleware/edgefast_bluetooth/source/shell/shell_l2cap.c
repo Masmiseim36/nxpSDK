@@ -51,7 +51,7 @@ osa_msgq_handle_t l2cap_recv_fifo;
 OSA_MSGQ_HANDLE_DEFINE(l2cap_recv_fifo_handle, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(void*));
 struct l2ch {
 	bool used;
-	struct k_delayed_work recv_work;
+	struct k_work_delayable recv_work;
 	struct bt_l2cap_le_chan ch;
 };
 #define L2CH_CHAN(_chan) CONTAINER_OF(_chan, struct l2ch, ch.chan)

@@ -1,11 +1,11 @@
 /**************************************************************************//**
  * @file     cmsis_armclang.h
  * @brief    CMSIS compiler armclang (Arm Compiler 6) header file
- * @version  V5.3.1
- * @date     26. March 2020
+ * @version  V5.4.1
+ * @date     19. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2009-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -136,6 +136,26 @@
 #define __VECTOR_TABLE_ATTRIBUTE  __attribute__((used, section("RESET")))
 #endif
 
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+#ifndef __STACK_SEAL
+#define __STACK_SEAL              Image$$STACKSEAL$$ZI$$Base
+#endif
+
+#ifndef __TZ_STACK_SEAL_SIZE
+#define __TZ_STACK_SEAL_SIZE      8U
+#endif
+
+#ifndef __TZ_STACK_SEAL_VALUE
+#define __TZ_STACK_SEAL_VALUE     0xFEF5EDA5FEF5EDA5ULL
+#endif
+
+
+__STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
+  *((uint64_t *)stackTop) = __TZ_STACK_SEAL_VALUE;
+}
+#endif
+
+
 /* ###########################  Core Function Access  ########################### */
 /** \ingroup  CMSIS_Core_FunctionInterface
     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
@@ -144,7 +164,7 @@
 
 /**
   \brief   Enable IRQ Interrupts
-  \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  \details Enables IRQ interrupts by clearing special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
 /* intrinsic void __enable_irq();  see arm_compat.h */
@@ -152,7 +172,7 @@
 
 /**
   \brief   Disable IRQ Interrupts
-  \details Disables IRQ interrupts by setting the I-bit in the CPSR.
+  \details Disables IRQ interrupts by setting special-purpose register PRIMASK.
            Can only be executed in Privileged modes.
  */
 /* intrinsic void __disable_irq();  see arm_compat.h */
@@ -449,7 +469,7 @@ __STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
      (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1))     )
 /**
   \brief   Enable FIQ
-  \details Enables FIQ interrupts by clearing the F-bit in the CPSR.
+  \details Enables FIQ interrupts by clearing special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
 #define __enable_fault_irq                __enable_fiq   /* see arm_compat.h */
@@ -457,7 +477,7 @@ __STATIC_FORCEINLINE void __TZ_set_PRIMASK_NS(uint32_t priMask)
 
 /**
   \brief   Disable FIQ
-  \details Disables FIQ interrupts by setting the F-bit in the CPSR.
+  \details Disables FIQ interrupts by setting special-purpose register FAULTMASK.
            Can only be executed in Privileged modes.
  */
 #define __disable_fault_irq               __disable_fiq   /* see arm_compat.h */
@@ -597,7 +617,7 @@ __STATIC_FORCEINLINE void __TZ_set_FAULTMASK_NS(uint32_t faultMask)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
   Stack Pointer Limit register hence zero is returned always in non-secure
   mode.
-  
+
   \details Returns the current value of the Process Stack Pointer Limit (PSPLIM).
   \return               PSPLIM Register value
  */
@@ -645,7 +665,7 @@ __STATIC_FORCEINLINE uint32_t __TZ_get_PSPLIM_NS(void)
   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
   Stack Pointer Limit register hence the write is silently ignored in non-secure
   mode.
-  
+
   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
  */
@@ -1228,7 +1248,7 @@ __STATIC_FORCEINLINE uint32_t __USAT(int32_t val, uint32_t sat)
 #if ((defined (__ARM_ARCH_8M_MAIN__  ) && (__ARM_ARCH_8M_MAIN__   == 1)) || \
      (defined (__ARM_ARCH_8M_BASE__  ) && (__ARM_ARCH_8M_BASE__   == 1)) || \
      (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1))     )
-           
+
 /**
   \brief   Load-Acquire (8 bit)
   \details Executes a LDAB instruction for 8 bit value.
@@ -1451,6 +1471,8 @@ __STATIC_FORCEINLINE void __STL(uint32_t value, volatile uint32_t *ptr)
                                            ((((uint32_t)(ARG2)) >> (ARG3)) & 0x0000FFFFUL)  )
 
 #define __SXTB16_RORn(ARG1, ARG2)        __SXTB16(__ROR(ARG1, ARG2))
+
+#define __SXTAB16_RORn(ARG1, ARG2, ARG3) __SXTAB16(ARG1, __ROR(ARG2, ARG3))
 
 __STATIC_FORCEINLINE int32_t __SMMLA (int32_t op1, int32_t op2, int32_t op3)
 {

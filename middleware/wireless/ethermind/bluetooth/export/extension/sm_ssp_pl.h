@@ -17,7 +17,7 @@
 /* ----------------------------------------- Header File Inclusion */
 /* EtherMind Common Header Files */
 #include "BT_common.h"
-#include "BT_device_queue.h"
+
 
 /* ----------------------------------------- Global Definitions */
 /** IO Capability Constants */
@@ -72,13 +72,6 @@ typedef struct
 
 
 /* ----------------------------------------- API Declarations */
-/** To return IO Capability to caller */
-API_RESULT BT_sm_get_remote_io_cap
-           (
-               /* IN */  DEVICE_HANDLE    * device_handle,
-               /* OUT */ SM_IO_CAPS *    io_cap
-           );
-
 #ifdef SM_IO_CAP_DYNAMIC
 /**
  *  API to set local IO Capability from application.
@@ -105,12 +98,24 @@ API_RESULT BT_sm_set_device_oob_data
 #endif /* BT_SSP_OOB */
 
 #ifdef SM_AUTHREQ_DYNAMIC
+/**
+ *  API to set local Authentication Requirements for IOCAPS.
+ */
 API_RESULT BT_sm_set_local_authreq
            (
                /* IN */  UCHAR    valid,
                /* IN */  UCHAR    authreq
            );
 #endif /* SM_AUTHREQ_DYNAMIC */
+
+/**
+ *  API to return IO Capability to caller
+ */
+API_RESULT BT_sm_get_remote_iocaps_pl
+           (
+               /* IN */  UCHAR      * bd_addr,
+               /* OUT */ SM_IO_CAPS * io_caps
+           );
 
 /* ----------------------------------------- Function Declarations */
 /** To return IO Capability to SM Core */

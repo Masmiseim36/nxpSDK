@@ -376,6 +376,9 @@ static usb_status_t USB_DeviceResetNotification(usb_device_struct_t *handle,
                                                 usb_device_callback_message_struct_t *message)
 {
     uint32_t count;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    usb_status_t status;
+#endif
 
 #if (defined(USB_DEVICE_CONFIG_USE_TASK) && (USB_DEVICE_CONFIG_USE_TASK > 0U))
     OSA_SR_ALLOC();
@@ -394,7 +397,15 @@ static usb_status_t USB_DeviceResetNotification(usb_device_struct_t *handle,
     OSA_EXIT_CRITICAL();
 #endif
     /* Set the controller to default status. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    status = USB_DeviceControl(handle, kUSB_DeviceControlSetDefaultStatus, NULL);
+    if (kStatus_USB_Success != status)
+    {
+        return status;
+    }
+#else
     (void)USB_DeviceControl(handle, kUSB_DeviceControlSetDefaultStatus, NULL);
+#endif
 #if (defined(USB_DEVICE_CONFIG_USE_TASK) && (USB_DEVICE_CONFIG_USE_TASK > 0U))
     OSA_ENTER_CRITICAL();
     handle->epCallbackDirectly = 0U;
@@ -413,7 +424,15 @@ static usb_status_t USB_DeviceResetNotification(usb_device_struct_t *handle,
 
     /* Call device callback to notify the application that the USB bus reset signal detected.
     the deviceCallback is the second parameter of USB_DeviceInit */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    status = handle->deviceCallback(handle, kUSB_DeviceEventBusReset, NULL);
+    if (kStatus_USB_Success != status)
+    {
+        return status;
+    }
+#else
     (void)handle->deviceCallback(handle, kUSB_DeviceEventBusReset, NULL);
+#endif
 
     handle->isResetting = 0U;
     return kStatus_USB_Success;
@@ -472,8 +491,14 @@ static usb_status_t USB_DeviceSleepNotification(usb_device_struct_t *handle,
 {
     /* Call device callback to notify the application that the USB bus suspend signal detected.
     the deviceCallback is the second parameter of USB_DeviceInit */
-
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceSetStatus(handle, kUSB_DeviceStatusRemoteWakeup, message->buffer))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceSetStatus(handle, kUSB_DeviceStatusRemoteWakeup, message->buffer);
+#endif
 
     return handle->deviceCallback(handle, kUSB_DeviceEventSleeped, NULL);
 }
@@ -742,12 +767,26 @@ usb_status_t USB_DeviceInit(uint8_t controllerId, usb_device_callback_t deviceCa
     error = USB_DeviceGetControllerInterface(controllerId, &deviceHandle->controllerInterface);
     if (kStatus_USB_Success != error)
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceFreeHandle(deviceHandle))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceFreeHandle(deviceHandle);
+#endif
         return error;
     }
     if (NULL == deviceHandle->controllerInterface)
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceFreeHandle(deviceHandle))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceFreeHandle(deviceHandle);
+#endif
         return kStatus_USB_ControllerNotFound;
     }
     if (((usb_device_controller_init_t)NULL == deviceHandle->controllerInterface->deviceInit) ||
@@ -757,7 +796,14 @@ usb_status_t USB_DeviceInit(uint8_t controllerId, usb_device_callback_t deviceCa
         ((usb_device_controller_cancel_t)NULL == deviceHandle->controllerInterface->deviceCancel) ||
         ((usb_device_controller_control_t)NULL == deviceHandle->controllerInterface->deviceControl))
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceFreeHandle(deviceHandle))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceFreeHandle(deviceHandle);
+#endif
         return kStatus_USB_InvalidControllerInterface;
     }
 
@@ -767,7 +813,15 @@ usb_status_t USB_DeviceInit(uint8_t controllerId, usb_device_callback_t deviceCa
     if (KOSA_StatusSuccess !=
         OSA_MsgQCreate(deviceHandle->notificationQueue, USB_DEVICE_CONFIG_MAX_MESSAGES, USB_DEVICE_MESSAGES_SIZE))
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        error = USB_DeviceDeinit(deviceHandle);
+        if (kStatus_USB_Success != error)
+        {
+            return error;
+        }
+#else
         (void)USB_DeviceDeinit(deviceHandle);
+#endif
         return kStatus_USB_Error;
     }
 #endif
@@ -778,7 +832,14 @@ usb_status_t USB_DeviceInit(uint8_t controllerId, usb_device_callback_t deviceCa
     error = deviceHandle->controllerInterface->deviceInit(controllerId, deviceHandle, &deviceHandle->controllerHandle);
     if (kStatus_USB_Success != error)
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceDeinit(deviceHandle))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceDeinit(deviceHandle);
+#endif
         *handle = NULL;
         return error;
     }
@@ -843,7 +904,14 @@ usb_status_t USB_DeviceDeinit(usb_device_handle handle)
     if (NULL != deviceHandle->controllerInterface)
     {
         /* the callbackFn is initialized in USB_DeviceGetControllerInterface */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != deviceHandle->controllerInterface->deviceDeinit(deviceHandle->controllerHandle))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)deviceHandle->controllerInterface->deviceDeinit(deviceHandle->controllerHandle);
+#endif
         deviceHandle->controllerInterface = (usb_device_controller_interface_struct_t *)NULL;
     }
 
@@ -851,13 +919,27 @@ usb_status_t USB_DeviceDeinit(usb_device_handle handle)
     /* Destroy the message queue. */
     if (NULL != deviceHandle->notificationQueue)
     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (KOSA_StatusSuccess != OSA_MsgQDestroy(deviceHandle->notificationQueue))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)OSA_MsgQDestroy(deviceHandle->notificationQueue);
+#endif
         deviceHandle->notificationQueue = NULL;
     }
 #endif
 
     /* Free the device handle. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceFreeHandle(deviceHandle))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceFreeHandle(deviceHandle);
+#endif
     return kStatus_USB_Success;
 }
 
@@ -1329,7 +1411,16 @@ void USB_DeviceTaskFunction(void *deviceHandle)
             OSA_MsgQGet(handle->notificationQueue, (osa_msg_handle_t)&message, USB_OSA_WAIT_TIMEOUT))
         {
             /* Handle the message */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceNotification(handle, &message))
+            {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                usb_echo("notification error\n");
+#endif
+            }
+#else
             (void)USB_DeviceNotification(handle, &message);
+#endif
         }
     }
 }
@@ -1391,7 +1482,7 @@ usb_status_t USB_DeviceUpdateHwTick(usb_device_handle handle, uint64_t tick)
 #elif (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
     tempValue = deviceHandle->hwTick;
-    status    = USB_DeviceControl(handle, kUSB_DeviceControlUpdateHwTick, (void *)(&tempValue));
+    status = USB_DeviceControl(handle, kUSB_DeviceControlUpdateHwTick, (void *)(&tempValue));
 #endif
     return status;
 }

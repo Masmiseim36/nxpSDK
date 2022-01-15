@@ -44,6 +44,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../../dsp/binary/dsp_reset_release.bin"
 "${ProjDirPath}/../../dsp/binary/dsp_text_release.bin"
 "${ProjDirPath}/../../dsp/binary/dsp_data_release.bin"
 )
@@ -122,7 +123,7 @@ include(component_serial_manager_uart_MIMXRT595S_cm33)
 
 include(driver_flexcomm_usart_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 

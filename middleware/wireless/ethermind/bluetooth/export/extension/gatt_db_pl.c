@@ -59,21 +59,24 @@ API_RESULT gatt_char_handler
                GATT_DB_PARAMS * param
            )
 {
+    API_RESULT retval;
+
+    /* Init */
+    retval = API_SUCCESS;
+
     /**
      * Invoke the registered Profile Specific GATT Char Handler.
      */
     if (NULL != gatt_db_ext_handler_pl)
     {
-        return gatt_db_ext_handler_pl
-               (
-                   handle,
-                   param
-               );
+        retval = gatt_db_ext_handler_pl
+                 (
+                     handle,
+                     param
+                 );
     }
-    else
-    {
-        return API_SUCCESS;
-    }
+
+    return retval;
 }
 
 #endif /* GATT_DB */

@@ -68,6 +68,7 @@
 extern "C" {
 #endif
 
+/* NXP added for HW accelerators support */
 #if !defined(MBEDTLS_ECDSA_ALT)
 /**
  * \brief           The ECDSA context structure.

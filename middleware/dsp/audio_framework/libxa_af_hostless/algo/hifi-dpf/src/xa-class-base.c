@@ -1002,6 +1002,12 @@ void xa_base_schedule(XACodecBase *base, UWORD32 dts)
 {
     if ((base->state & XA_BASE_FLAG_SCHEDULE) == 0)
     {
+        if(base->state & XA_BASE_FLAG_COMP_FATAL_ERROR)
+        {
+            TRACE(EXEC, _b("codec[%p] skip processing after fatal error"), base);
+            return; /* ...skip scheduling after fatal error, TENA_3023. */
+        }
+
         /* ...and put scheduling flag */
         base->state |= XA_BASE_FLAG_SCHEDULE;
 

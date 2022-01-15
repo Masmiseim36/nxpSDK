@@ -21,9 +21,9 @@
  ******************************************************************************/
 
 #if defined(SAI_XFER_QUEUE_SIZE)
-#define HAL_AUDIO_QUEUE_SIZE (SAI_XFER_QUEUE_SIZE)
+#define HAL_AUDIO_QUEUE_SIZE ((uint32_t)SAI_XFER_QUEUE_SIZE)
 #elif defined(I2S_NUM_BUFFERS)
-#define HAL_AUDIO_QUEUE_SIZE (I2S_NUM_BUFFERS)
+#define HAL_AUDIO_QUEUE_SIZE ((uint32_t)I2S_NUM_BUFFERS)
 #else
 #define HAL_AUDIO_QUEUE_SIZE (4U)
 #endif
@@ -281,7 +281,7 @@ typedef struct _hal_audio_ip_config
         {
             uint32_t lineMask; /*!< Writing one to the corresponding bit reprsents the corresponding data line is
                                   enabled. lineMask = 0x1U, represents RX0/TX0 data line is enabled.
-                                    lineMask = 0xFU which represents RX0-3/TX0-3 data line are enabled. */
+                                    lineMask = 0xFU, represents RX0-3/TX0-3 data line are enabled. */
             hal_audio_sai_sync_mode_t syncMode; /*!< SAI sync mode, control Tx/Rx clock sync */
         } sai;
     };
@@ -297,7 +297,7 @@ typedef struct _hal_audio_config
 
     uint32_t srcClock_Hz;   /*!< Source clock  */
     uint32_t sampleRate_Hz; /*!< Sample rate */
-    uint32_t frameLength;   /*!< Only flexcomm_i2s uses this field. In most cases, frameLength is equal to bitWidth
+    uint16_t frameLength;   /*!< Only flexcomm_i2s uses this field. In most cases, frameLength is equal to bitWidth
                                  times lineChannels. In some cases, frameLength needs to be set to other value.
                                  For example, when the number of bit clock on the bus between two neighboring WS
                                  value is greater than bitWidth times lineChannels, frameLength needs to be set to

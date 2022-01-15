@@ -13,7 +13,7 @@
 #include "its_flash_fs_dblock.h"
 #include "tfm_memory_utils.h"
 #include "its_utils.h"
-#include "log/tfm_log.h" //DM
+#include "log/tfm_log.h" //NXP DM
 
 /* Filesystem-internal flags, which cannot be passed by the caller */
 #define ITS_FLASH_FS_INTERNAL_FLAGS_MASK  (UINT32_MAX - ((1U << 24) - 1))

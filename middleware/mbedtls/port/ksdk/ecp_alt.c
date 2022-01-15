@@ -81,7 +81,7 @@
 
 #if defined(MBEDTLS_ECP_ALT)
 
-#if SSS_HAVE_ALT_SSS
+#if defined(SSS_HAVE_MBEDTLS_ALT_SSS) && (SSS_HAVE_MBEDTLS_ALT_SSS == 1)
 #  include "sss_mbedtls.h"
 #endif
 
@@ -91,7 +91,7 @@
 #define ECP_VALIDATE( cond )        \
     MBEDTLS_INTERNAL_VALIDATE( cond )
 
-#if defined(TGT_A71CH)
+#if defined(SSS_HAVE_MBEDTLS_ALT_A71CH) && (SSS_HAVE_MBEDTLS_ALT_A71CH == 1)
 #include <ax_mbedtls.h>
 #endif
 
@@ -778,7 +778,7 @@ void mbedtls_ecp_keypair_free_o( mbedtls_ecp_keypair *key )
 /*
  * Secure element hostlib handling
  */
-#if defined(TGT_A71CH)
+#if defined(SSS_HAVE_MBEDTLS_ALT_A71CH) && (SSS_HAVE_MBEDTLS_ALT_A71CH == 1)
 void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )
 {
     if( key == NULL )
@@ -790,7 +790,7 @@ void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )
     }
     mbedtls_ecp_keypair_free_o(key);
 }
-#elif SSS_HAVE_ALT_SSS
+#elif defined(SSS_HAVE_MBEDTLS_ALT_SSS) && (SSS_HAVE_MBEDTLS_ALT_SSS == 1)
 #else
 void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )
 {
@@ -1120,7 +1120,7 @@ int mbedtls_ecp_tls_read_group_o( mbedtls_ecp_group *grp,
 /*
  *  Use modified handling for secure element hostlib
  */
-#if defined(TGT_A71CH)
+#if defined(SSS_HAVE_MBEDTLS_ALT_A71CH) && (SSS_HAVE_MBEDTLS_ALT_A71CH == 1)
 int mbedtls_ecp_tls_read_group( mbedtls_ecp_group *grp, const unsigned char **buf, size_t len )
 {
     int ret;
@@ -1130,7 +1130,7 @@ int mbedtls_ecp_tls_read_group( mbedtls_ecp_group *grp, const unsigned char **bu
     grp->hlse_handle = backup_type_ax_index;
     return ret;
 }
-#elif SSS_HAVE_ALT_SSS
+#elif defined(SSS_HAVE_MBEDTLS_ALT_SSS) && (SSS_HAVE_MBEDTLS_ALT_SSS == 1)
 #else
 int mbedtls_ecp_tls_read_group( mbedtls_ecp_group *grp, const unsigned char **buf, size_t len )
 {

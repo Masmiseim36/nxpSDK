@@ -185,8 +185,9 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
         for(semaphore_id = 0; semaphore_id < TASK_LENGTH ; semaphore_id++)
         {
             if (vg_lite_os_init_event(&context->async_event[0],
-	                              semaphore_id,
-	                              VG_LITE_IDLE) == VG_LITE_SUCCESS)
+                                 semaphore_id,
+                                 VG_LITE_IDLE) == VG_LITE_SUCCESS)
+
             {
                 for (i = 1; i < CMDBUF_COUNT; i++)
                     vg_lite_os_config_event(&context->async_event[i],
@@ -214,7 +215,7 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
     /* Allocate the command buffer. */
     if (data->command_buffer_size) {
         int32_t i;
-        for (i = 0; i < 2; i ++)
+        for (i = 0; i < CMDBUF_COUNT; i ++)
         {
             /* Allocate the memory. */
             vg_lite_os_lock();
@@ -239,6 +240,35 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
         }
     }
 
+    /* Allocate the context buffer. */
+    if (data->context_buffer_size) {
+        int32_t i;
+        for (i = 0; i < CMDBUF_COUNT; i ++)
+        {
+            /* Allocate the memory. */
+            vg_lite_os_lock();
+            error = vg_lite_hal_allocate_contiguous(data->context_buffer_size,
+                                                                         &context->context_buffer_logical[i],
+                                                                         &context->context_buffer_physical[i],
+                                                                         &context->context_buffer[i]);
+            vg_lite_os_unlock();
+
+            if (error != VG_LITE_SUCCESS) {
+                /* Free any allocated memory. */
+                vg_lite_kernel_terminate_t terminate = { context };
+                do_terminate(&terminate);
+
+                /* Out of memory. */
+                return error;
+            }
+
+            /* Return context buffer logical pointer and GPU address. */
+            data->context_buffer[i] = context->context_buffer_logical[i];
+            data->context_buffer_gpu[i] = context->context_buffer_physical[i];
+        }
+    }
+
+
     /* Allocate the tessellation buffer. */
     if ((data->tessellation_width > 0) && (data->tessellation_height > 0)) 
     {
@@ -258,21 +288,7 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
 
         if(ts_init++ == 0)
         {
-            int width = data->tessellation_width;
-            int height = 0;
             unsigned long stride, buffer_size, l1_size, l2_size;
-
-            height = VG_LITE_ALIGN(data->tessellation_height, 16);
-
-            chip_id = vg_lite_hal_peek(0x20);
-            if(chip_id == GPU_CHIP_ID_GC355)
-                width = VG_LITE_ALIGN(width, 128);
-            /* Check if we can used tiled tessellation (128x16). */
-            if (((width & 127) == 0) && ((height & 15) == 0)) {
-                data->capabilities.cap.tiled = 0x3;
-            } else {
-                data->capabilities.cap.tiled = 0x2;
-            }
 
             /* Compute tessellation buffer size. */
             stride = VG_LITE_ALIGN(width * 8, 64);
@@ -369,6 +385,7 @@ static vg_lite_error_t terminate_vglite(vg_lite_kernel_terminate_t * data)
     vg_lite_kernel_context_t *context = NULL;
     vg_lite_error_t error = VG_LITE_SUCCESS;
     int32_t i;
+
 #if defined(__linux__) && !EMULATOR
     vg_lite_kernel_context_t mycontext = {0};
     if (copy_from_user(&mycontext, data->context, sizeof(vg_lite_kernel_context_t)) != 0) {
@@ -390,6 +407,18 @@ static vg_lite_error_t terminate_vglite(vg_lite_kernel_terminate_t * data)
         /* Free the command buffer. */
         vg_lite_hal_free_contiguous(context->command_buffer[1]);
         context->command_buffer[1] = NULL;
+    }
+
+    if (context->context_buffer[0]) {
+        /* Free the context buffer. */
+        vg_lite_hal_free_contiguous(context->context_buffer[0]);
+        context->context_buffer[0] = NULL;
+    }
+
+    if (context->context_buffer[1]) {
+        /* Free the context buffer. */
+        vg_lite_hal_free_contiguous(context->context_buffer[1]);
+        context->context_buffer[1] = NULL;
     }
 
     if((error = (vg_lite_error_t)vg_lite_os_lock()) == VG_LITE_SUCCESS){
@@ -492,7 +521,7 @@ static vg_lite_error_t do_submit(vg_lite_kernel_submit_t * data)
     offset = (uint8_t *) data->commands - (uint8_t *)context->command_buffer_logical[data->command_id];
 
     /* Send the current command buffer to the command queue. */
-    error = vg_lite_hal_submit(physical, offset, data->command_size,
+    error = vg_lite_hal_submit((uint32_t)context, physical, offset, data->command_size,
                                &data->context->async_event[data->command_id]);
     if(error != VG_LITE_SUCCESS)
         return error;
@@ -554,6 +583,12 @@ static vg_lite_error_t do_query_mem(vg_lite_kernel_mem_t * data)
     error = vg_lite_hal_query_mem(data);
 
     return error;
+}
+
+static vg_lite_error_t do_query_context_switch(vg_lite_kernel_context_switch_t * data)
+{
+    data->isContextSwitched = vg_lite_os_query_context_switch(data->context);
+    return VG_LITE_SUCCESS;
 }
 
 static void soft_reset(void)
@@ -642,6 +677,10 @@ vg_lite_error_t vg_lite_kernel(vg_lite_kernel_command_t command, void * data)
         case VG_LITE_UNLOCK:
             /* Mutex unlock */
             return do_mutex_unlock();
+
+        case VG_LITE_QUERY_CONTEXT_SWITCH:
+            /* query context switch */
+            return do_query_context_switch(data);
 
         default:
             break;

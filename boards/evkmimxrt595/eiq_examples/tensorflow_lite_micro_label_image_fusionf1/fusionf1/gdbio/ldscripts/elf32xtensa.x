@@ -2,20 +2,18 @@
 /* Linker Script for default link */
 MEMORY
 {
-  iram1_0_seg :                       	org = 0x00400000, len = 0x400
-  iram1_1_seg :                       	org = 0x00400400, len = 0x17C
-  iram1_2_seg :                       	org = 0x0040057C, len = 0x20
-  iram1_3_seg :                       	org = 0x0040059C, len = 0x20
-  iram1_4_seg :                       	org = 0x004005BC, len = 0x20
-  iram1_5_seg :                       	org = 0x004005DC, len = 0x20
-  iram1_6_seg :                       	org = 0x004005FC, len = 0x20
-  iram1_7_seg :                       	org = 0x0040061C, len = 0x20
-  iram1_8_seg :                       	org = 0x0040063C, len = 0x400
-  iram1_9_seg :                       	org = 0x00400A3C, len = 0xFF5C4
-/* placeholder for rpmsg shared memory */
-  rpmsg_seg   :                       	org = 0x00820000, len = 0x20000
-  dram0_0_seg :                       	org = 0x00A00000, len = 0x1FE000
-  dram0_1_seg :                       	org = 0x00BFE000, len = 0x2000
+  iram1_0_seg :                       	org = 0x00000000, len = 0x400
+  iram1_1_seg :                       	org = 0x00180400, len = 0x17C
+  iram1_2_seg :                       	org = 0x0018057C, len = 0x20
+  iram1_3_seg :                       	org = 0x0018059C, len = 0x20
+  iram1_4_seg :                       	org = 0x001805BC, len = 0x20
+  iram1_5_seg :                       	org = 0x001805DC, len = 0x20
+  iram1_6_seg :                       	org = 0x001805FC, len = 0x20
+  iram1_7_seg :                       	org = 0x0018061C, len = 0x20
+  iram1_8_seg :                       	org = 0x0018063C, len = 0x400
+  iram1_9_seg :                       	org = 0x00180A3C, len = 0xFF5C4
+  dram0_0_seg :                       	org = 0x00810000, len = 0x16E000
+  dram0_1_seg :                       	org = 0x0097E000, len = 0x2000
 }
 
 PHDRS
@@ -43,7 +41,7 @@ ENTRY(_ResetVector)
 
 
 /*  Memory boundary addresses:  */
-_memmap_mem_iram0_start = 0x4;
+_memmap_mem_iram0_start = 0x0;
 _memmap_mem_iram0_end   = 0x400000;
 _memmap_mem_iram1_start = 0x400000;
 _memmap_mem_iram1_end   = 0x800000;
@@ -53,34 +51,34 @@ _memmap_mem_dram1_start = 0xc00000;
 _memmap_mem_dram1_end   = 0x1000000;
 
 /*  Memory segment boundary addresses:  */
-_memmap_seg_iram1_0_start = 0x400000;
-_memmap_seg_iram1_0_max   = 0x400400;
-_memmap_seg_iram1_1_start = 0x400400;
-_memmap_seg_iram1_1_max   = 0x40057c;
-_memmap_seg_iram1_2_start = 0x40057c;
-_memmap_seg_iram1_2_max   = 0x40059c;
-_memmap_seg_iram1_3_start = 0x40059c;
-_memmap_seg_iram1_3_max   = 0x4005bc;
-_memmap_seg_iram1_4_start = 0x4005bc;
-_memmap_seg_iram1_4_max   = 0x4005dc;
-_memmap_seg_iram1_5_start = 0x4005dc;
-_memmap_seg_iram1_5_max   = 0x4005fc;
-_memmap_seg_iram1_6_start = 0x4005fc;
-_memmap_seg_iram1_6_max   = 0x40061c;
-_memmap_seg_iram1_7_start = 0x40061c;
-_memmap_seg_iram1_7_max   = 0x40063c;
-_memmap_seg_iram1_8_start = 0x40063c;
-_memmap_seg_iram1_8_max   = 0x400a3c;
-_memmap_seg_iram1_9_start = 0x400a3c;
-_memmap_seg_iram1_9_max   = 0x500000;
-_memmap_seg_dram0_0_start = 0xb00000;
-_memmap_seg_dram0_0_max   = 0xbfe000;
-_memmap_seg_dram0_1_start = 0xbfe000;
-_memmap_seg_dram0_1_max   = 0xc00000;
+_memmap_seg_iram1_0_start = 0x000000;
+_memmap_seg_iram1_0_max   = 0x000400;
+_memmap_seg_iram1_1_start = 0x180400;
+_memmap_seg_iram1_1_max   = 0x18057c;
+_memmap_seg_iram1_2_start = 0x18057c;
+_memmap_seg_iram1_2_max   = 0x18059c;
+_memmap_seg_iram1_3_start = 0x18059c;
+_memmap_seg_iram1_3_max   = 0x1805bc;
+_memmap_seg_iram1_4_start = 0x1805bc;
+_memmap_seg_iram1_4_max   = 0x1805dc;
+_memmap_seg_iram1_5_start = 0x1805dc;
+_memmap_seg_iram1_5_max   = 0x1805fc;
+_memmap_seg_iram1_6_start = 0x1805fc;
+_memmap_seg_iram1_6_max   = 0x18061c;
+_memmap_seg_iram1_7_start = 0x18061c;
+_memmap_seg_iram1_7_max   = 0x18063c;
+_memmap_seg_iram1_8_start = 0x18063c;
+_memmap_seg_iram1_8_max   = 0x180a3c;
+_memmap_seg_iram1_9_start = 0x180a3c;
+_memmap_seg_iram1_9_max   = 0x280000;
+_memmap_seg_dram0_0_start = 0x880000;
+_memmap_seg_dram0_0_max   = 0x97e000;
+_memmap_seg_dram0_1_start = 0x97e000;
+_memmap_seg_dram0_1_max   = 0x980000;
 
 _rom_store_table = 0;
-PROVIDE(_memmap_reset_vector = 0x400000);
-PROVIDE(_memmap_vecbase_reset = 0x400400);
+PROVIDE(_memmap_reset_vector = 0x000000);
+PROVIDE(_memmap_vecbase_reset = 0x180400);
 /* Various memory-map dependent cache attribute settings: */
 _memmap_cacheattr_wb_base = 0x00021002;
 _memmap_cacheattr_wt_base = 0x00021002;
@@ -502,8 +500,8 @@ SECTIONS
     _memmap_seg_dram0_0_end = ALIGN(0x8);
   } >dram0_0_seg :dram0_0_bss_phdr
 
-  PROVIDE(__stack = 0xbfe000);
-  _heap_sentry = 0xbfe000;
+  PROVIDE(__stack = 0x97e000);
+  _heap_sentry = 0x97e000;
 
   .dram1.rodata : ALIGN(4)
   {

@@ -223,6 +223,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MMC_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -1269,6 +1270,7 @@
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MMC_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -2314,6 +2316,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MMC_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -3360,6 +3363,7 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MMC_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -4316,6 +4320,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>

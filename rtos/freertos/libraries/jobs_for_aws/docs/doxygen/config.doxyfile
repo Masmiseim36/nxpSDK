@@ -38,7 +38,7 @@ PROJECT_NAME           = "AWS IoT Jobs"
 # could be handy for archiving the generated documentation or if some version
 # control system is used.
 
-PROJECT_NUMBER         = "v1.0.0"
+PROJECT_NUMBER         = "v1.1.0"
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer a
@@ -797,7 +797,7 @@ EXCLUDE_SYMLINKS       = NO
 # that contain example code fragments that are included (see the \include
 # command).
 
-EXAMPLE_PATH           = source/include
+EXAMPLE_PATH           = source/include docs/doxygen/include
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the
 # EXAMPLE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp and
@@ -927,13 +927,6 @@ VERBATIM_HEADERS       = YES
 # The default value is: YES.
 
 ALPHABETICAL_INDEX     = YES
-
-# The COLS_IN_ALPHA_INDEX tag can be used to specify the number of columns in
-# which the alphabetical index list will be split.
-# Minimum value: 1, maximum value: 20, default value: 5.
-# This tag requires that the tag ALPHABETICAL_INDEX is set to YES.
-
-COLS_IN_ALPHA_INDEX    = 5
 
 #---------------------------------------------------------------------------
 # Configuration options related to the HTML output

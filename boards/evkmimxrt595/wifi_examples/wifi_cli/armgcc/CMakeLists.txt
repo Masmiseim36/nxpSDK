@@ -32,32 +32,35 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../main.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../lwipopts.h"
 "${ProjDirPath}/../lwippools.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
-"${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../app_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../..
     ${ProjDirPath}/../../common
+    ${ProjDirPath}/../../..
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
     ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../components/pca9420
@@ -82,6 +85,8 @@ include(utility_debug_console_MIMXRT595S_cm33)
 include(middleware_wifi_MIMXRT595S_cm33)
 
 include(middleware_lwip_apps_lwiperf_MIMXRT595S_cm33)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT595S_cm33)
 
 include(middleware_wifi_cli_MIMXRT595S_cm33)
 
@@ -125,7 +130,7 @@ include(component_serial_manager_uart_MIMXRT595S_cm33)
 
 include(driver_flexcomm_usart_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 

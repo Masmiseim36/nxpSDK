@@ -2875,6 +2875,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_reset_release.bin,__dsp_reset_bin,__dsp_reset_section,4</state>
+          <state>--keep=__dsp_reset_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -3912,6 +3914,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_reset_release.bin,__dsp_reset_bin,__dsp_reset_section,4</state>
+          <state>--keep=__dsp_reset_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../dsp/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -4192,6 +4196,9 @@
   </group>
   <group>
     <name>dsp_binary</name>
+    <file>
+      <name>$PROJ_DIR$/../../dsp/binary/dsp_reset_release.bin</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</name>
     </file>

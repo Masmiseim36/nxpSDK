@@ -2,12 +2,12 @@
 ; * @file:    startup_MIMXRT595S_cm33.s
 ; * @purpose: CMSIS Cortex-M33 Core Device Startup File
 ; *           MIMXRT595S_cm33
-; * @version: 4.0
-; * @date:    2020-5-18
+; * @version: 5.0
+; * @date:    2020-8-27
 ; *----------------------------------------------------------------------------
 ; *
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2020 NXP
+; Copyright 2016-2021 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -59,7 +59,7 @@ __vector_table
         DCD     UsageFault_Handler
 __vector_table_0x1c
         DCD     SecureFault_Handler
-#if (__ARM_FEATURE_CMSE & 0x2)
+#if (defined(__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE & 0x2))
         DCD     0x280000 ;Image length
 #else
         DCD     sfe(RO) - __vector_table ;Image length

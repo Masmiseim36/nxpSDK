@@ -1,17 +1,15 @@
-## AWS IoT Jobs Client library
-*(part of the AWS IoT Device SDK for Embedded C)*
+## AWS IoT Jobs library
 
-AWS IoT Jobs is a service that notifies one or more connected devices of a
-pending “Job”.  A Job can be used to manage your fleet of devices, update
-firmware and security certificates on your devices, or perform administrative
-tasks such as restarting devices and performing diagnostics. For documentation
-of the service, please see the [AWS IoT Developer
-Guide](https://docs.aws.amazon.com/iot/latest/developerguide/iot-jobs.html).
-Interactions with the Jobs service use MQTT, a lightweight
-publish-subscribe protocol.  This library provides a convenience API to
-compose and recognize the MQTT topic strings used by the Jobs service.
-The library is written in C compliant with ISO C90 and MISRA C:2012,
-and is distributed under the [MIT Open Source License](LICENSE).
+The AWS IoT Jobs library helps you notify connected IoT devices of a
+pending [Job](https://freertos.org/jobs/jobs-terminology.html). A Job
+can be used to manage your fleet of devices, update firmware and security
+certificates on your devices, or perform administrative tasks such as
+restarting devices and performing diagnostics. It interacts with the
+[AWS IoT Jobs service](https://docs.aws.amazon.com/iot/latest/developerguide/iot-jobs.html)
+using MQTT, a lightweight publish-subscribe protocol. This library provides
+a convenience API to compose and recognize the MQTT topic strings used
+by the Jobs service. The library is written in C compliant with ISO C90
+and MISRA C:2012, and is distributed under the [MIT Open Source License](LICENSE).
 
 This library has gone through code quality checks
 including verification that no function has a [GNU Complexity
@@ -24,7 +22,9 @@ Deviations](MISRA.md). This library has also undergone both static code
 analysis from [Coverity](https://scan.coverity.com/), and validation of
 memory safety with the [CBMC bounded model checker](https://www.cprover.org/cbmc/).
 
-See memory requirements for this library [here](https://docs.aws.amazon.com/embedded-csdk/202012.00/lib-ref/libraries/aws/jobs-for-aws-iot-embedded-sdk/docs/doxygen/output/html/index.html#jobs_memory_requirements).
+See memory requirements for this library [here](https://docs.aws.amazon.com/embedded-csdk/202103.00/lib-ref/libraries/aws/jobs-for-aws-iot-embedded-sdk/docs/doxygen/output/html/index.html#jobs_memory_requirements).
+
+**AWS IoT Jobs  v1.1.0 [source code](https://github.com/aws/Jobs-for-AWS-IoT-embedded-sdk/tree/v1.1.0/source) is part of the [FreeRTOS 202012.01 LTS](https://github.com/FreeRTOS/FreeRTOS-LTS/tree/202012.01-LTS) release.**
 
 ## Building the Jobs library
 

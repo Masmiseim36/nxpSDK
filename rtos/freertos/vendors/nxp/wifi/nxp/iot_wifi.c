@@ -36,10 +36,25 @@
 /* Wi-Fi configuration includes. */
 #include "aws_wifi_config.h"
 
-#include "wlan.h"
-#include "wmlog.h"
-#include "wm_net.h"
-#include "wlan_bt_fw.h"
+#include <wlan.h>
+#include <wmlog.h>
+#include <wm_net.h>
+
+#if defined(SD8801)
+#include "sd8801_wlan.h"
+#elif defined(SD8977)
+#include "sduart8977_wlan_bt.h"
+#elif defined(SD8978)
+#include "sduartIW416_wlan_bt.h"
+#elif defined(SD8987)
+#include "sduart8987_wlan_bt.h"
+#elif defined(SD8997)
+#include "sduart8997_wlan_bt.h"
+#elif defined(SD9097)
+#include "pvt_sd9097_wlan.h"
+#elif defined(SD9098)
+#include "pvt_sd9098_wlan.h"
+#endif
 
 #include "fsl_debug_console.h"
 

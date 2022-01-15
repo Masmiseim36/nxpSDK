@@ -26,7 +26,7 @@
 
 #define _ARM_MATH_UTILS_H_
 
-#include "cmsis/CMSIS/DSP/Include/arm_math_types.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h"
 
 #ifdef   __cplusplus
 extern "C"
@@ -42,6 +42,7 @@ extern "C"
 
 #define SQ(x) ((x) * (x))
 
+#define ROUND_UP(N, S) ((((N) + (S) - 1) / (S)) * (S))
 
 
   /**

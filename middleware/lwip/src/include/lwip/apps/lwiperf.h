@@ -44,7 +44,11 @@
 extern "C" {
 #endif
 
+/* @TEST_ANCHOR */
+
+#ifndef LWIPERF_TCP_PORT_DEFAULT
 #define LWIPERF_TCP_PORT_DEFAULT  5001
+#endif
 
 /** lwIPerf test results */
 enum lwiperf_report_type

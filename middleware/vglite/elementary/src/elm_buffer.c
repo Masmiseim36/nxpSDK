@@ -153,7 +153,7 @@ ElmBuffer ElmWrapBuffer(int width, int height, int stride,
 
     do {
         /* open framebuffer. */
-        buffer_obj = (el_Obj_Buffer *)calloc(1,sizeof(el_Obj_Buffer));
+        buffer_obj = (el_Obj_Buffer *)elm_alloc(1, sizeof(el_Obj_Buffer));
         if (buffer_obj != NULL) {
             buffer_obj->object.type = ELM_OBJECT_TYPE_BUF;
             buffer = &buffer_obj->buffer;
@@ -166,7 +166,6 @@ ElmBuffer ElmWrapBuffer(int width, int height, int stride,
             buffer->address = physical;
             buffer->format = _buffer_format_to_vglite(format);
             buffer->tiled  = VG_LITE_LINEAR;
-
             JUMP_IF_NON_ZERO_VALUE(add_object((el_Object *)buffer_obj), error_exit);
             handle = buffer_obj->object.handle;
         }
@@ -239,7 +238,7 @@ BOOL ElmDestroyBuffer(ElmBuffer buffer)
         }
 
         remove_object((el_Object*)buff);
-        free(buff);
+        elm_free(buff);
 
         return TRUE;
     }
@@ -258,13 +257,15 @@ BOOL ElmSaveBuffer(ElmBuffer buffer, const char *name)
 
     /* If found, delete the vg_lite_buffer object. Otherwise, return FALSE. */
     if (buff != NULL) {
+#if !RTOS
         /*
             "vg_lite_save_png" function does not exist (anymore). Probably a left
             over from an older driver.
+        */
             if (buff->buffer.memory != NULL) {
                 vg_lite_save_png(name, &buff->buffer);
             }
-        */
+#endif
         return TRUE;
     }
     else {

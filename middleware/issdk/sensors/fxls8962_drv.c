@@ -66,7 +66,7 @@ void FXLS8962_SPI_WritePreprocess(void *pCmdOut, uint32_t offset, uint32_t size,
 }
 
 int32_t FXLS8962_SPI_Initialize(
-    fxls8962_spi_sensorhandle_t *pSensorHandle, ARM_DRIVER_SPI *pBus, uint8_t index, void *pSlaveSelect, uint8_t whoAmi)
+    fxls8962_spi_sensorhandle_t *pSensorHandle, ARM_DRIVER_SPI *pBus, uint8_t index, void *pSlaveSelect, uint8_t *whoami)
 {
     int32_t status;
     uint8_t reg;
@@ -104,12 +104,18 @@ int32_t FXLS8962_SPI_Initialize(
     /*!  Read and store the device's WHO_AM_I.*/
     status = Register_SPI_Read(pSensorHandle->pCommDrv, &pSensorHandle->deviceInfo, &pSensorHandle->slaveParams,
                                FXLS8962_WHO_AM_I, 1, &reg);
-    if ((ARM_DRIVER_OK != status) || (whoAmi != reg))
+    //if ((ARM_DRIVER_OK != status) || (whoAmi != reg))
+	(*whoami) = reg;
+    if (ARM_DRIVER_OK != status)
     {
+    	if ((FXLS8962_WHOAMI_VALUE != reg) || (FXLS8964_WHOAMI_VALUE != reg) || (FXLS8967_WHOAMI_VALUE != reg) || (FXLS8974_WHOAMI_VALUE != reg))
+    	{
         pSensorHandle->isInitialized = false;
+    		return SENSOR_ERROR_BAD_ADDRESS;
+    	}
+		pSensorHandle->isInitialized = false;
         return SENSOR_ERROR_INIT;
     }
-
     pSensorHandle->isInitialized = true;
     return SENSOR_ERROR_NONE;
 }
@@ -232,7 +238,7 @@ int32_t FXLS8962_SPI_Deinit(fxls8962_spi_sensorhandle_t *pSensorHandle)
 }
 
 int32_t FXLS8962_I2C_Initialize(
-    fxls8962_i2c_sensorhandle_t *pSensorHandle, ARM_DRIVER_I2C *pBus, uint8_t index, uint16_t sAddress, uint8_t whoAmi)
+    fxls8962_i2c_sensorhandle_t *pSensorHandle, ARM_DRIVER_I2C *pBus, uint8_t index, uint16_t sAddress, uint8_t *whoami)
 {
     int32_t status;
     uint8_t reg;
@@ -249,8 +255,15 @@ int32_t FXLS8962_I2C_Initialize(
 
     /*!  Read and store the device's WHO_AM_I.*/
     status = Register_I2C_Read(pBus, &pSensorHandle->deviceInfo, sAddress, FXLS8962_WHO_AM_I, 1, &reg);
-    if ((ARM_DRIVER_OK != status) || (whoAmi != reg))
+    //if ((ARM_DRIVER_OK != status) || (whoAmi != reg))
+	(*whoami) = reg;
+    if (ARM_DRIVER_OK != status)
     {
+    	if ((FXLS8962_WHOAMI_VALUE != reg) || (FXLS8964_WHOAMI_VALUE != reg) || (FXLS8967_WHOAMI_VALUE != reg) || (FXLS8974_WHOAMI_VALUE != reg))
+    	{
+    		pSensorHandle->isInitialized = false;
+    		return SENSOR_ERROR_BAD_ADDRESS;
+    	}
         pSensorHandle->isInitialized = false;
         return SENSOR_ERROR_INIT;
     }

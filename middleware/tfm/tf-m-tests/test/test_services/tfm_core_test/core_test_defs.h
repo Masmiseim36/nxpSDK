@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -25,25 +25,10 @@ extern "C" {
 #define CORE_TEST_ID_SS_TO_SS_BUFFER      1010
 #define CORE_TEST_ID_PERIPHERAL_ACCESS    1012
 #define CORE_TEST_ID_GET_CALLER_CLIENT_ID 1013
-#define CORE_TEST_ID_SPM_REQUEST          1014
-#define CORE_TEST_ID_IOVEC_SANITIZATION   1015
-#define CORE_TEST_ID_OUTVEC_WRITE         1016
-#define CORE_TEST_ID_SECURE_IRQ           1017
+#define CORE_TEST_ID_IOVEC_SANITIZATION   1014
+#define CORE_TEST_ID_OUTVEC_WRITE         1015
+#define CORE_TEST_ID_SECURE_IRQ           1016
 #define CORE_TEST_ID_BLOCK                2001
-
-enum irq_test_scenario_t {
-    IRQ_TEST_SCENARIO_NONE,
-    IRQ_TEST_SCENARIO_1,
-    IRQ_TEST_SCENARIO_2,
-    IRQ_TEST_SCENARIO_3,
-    IRQ_TEST_SCENARIO_4,
-    IRQ_TEST_SCENARIO_5,
-};
-
-struct irq_test_execution_data_t {
-    volatile int32_t timer0_triggered;
-    volatile int32_t timer1_triggered;
-};
 
 /* Use lower 16 bits in return value for error code, upper 16 for line number
  * in test service

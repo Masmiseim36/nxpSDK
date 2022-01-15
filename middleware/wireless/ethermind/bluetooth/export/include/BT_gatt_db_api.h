@@ -349,7 +349,7 @@
 #define GATT_CHARACTERISTIC_TYPE_OFFSET       6U
 
 #define GATT_VERIFY_UUID_VALUE(v,o,l)\
-        ((0U == BT_mem_cmp((v),GATT_GET_UUID_VALUE(o),(l)))? BT_TRUE : BT_FALSE)
+        ((0 == BT_mem_cmp((v),GATT_GET_UUID_VALUE(o),(l)))? BT_TRUE : BT_FALSE)
 
 #define GATT_GET_UUID_VALUE(o)\
         &gatt_const_uuid_arr_g[(o)]

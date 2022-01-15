@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_NETIF_API=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE=2048, SDK_DEBUGCONSOLE_UART, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_NETIF_API=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, SDK_DEBUGCONSOLE_UART, SDIO_ENABLED, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/lwip/src/apps/httpsrv;../../..;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../devices/MIMXRT595S/drivers;../../../../../components/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../rtos/freertos/freertos_kernel/include;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../..;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../rtos/freertos/freertos_kernel/include;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../middleware/edgefast_wifi/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +352,7 @@
               <MiscControls/>
               <Define>DEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../src/wifi_common/webconfig</IncludePath>
+              <IncludePath>..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -375,51 +375,6 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sdmmc_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sdmmc_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -477,6 +432,61 @@
               <FileName>app_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../app_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../sdmmc_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -611,21 +621,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wpl</GroupName>
-          <Files>
-            <File>
-              <FileName>wpl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../wpl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wpl_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../wpl_nxp.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -636,43 +631,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
-          <Files>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
-            </File>
-            <File>
-              <FileName>portasm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
-            </File>
-            <File>
-              <FileName>portasm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
-            </File>
-            <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -692,6 +652,16 @@
               <FileName>fsl_usdhc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -722,16 +692,6 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -789,6 +749,16 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
@@ -797,56 +767,6 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt595</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2131,6 +2051,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -2202,6 +2212,91 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast_wifi/source</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/source/wpl_nxp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt595</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2439,6 +2534,11 @@
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
@@ -2534,9 +2634,9 @@
               <FilePath>../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>
@@ -2992,6 +3092,16 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast_wifi/include</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/include/wpl.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3326,9 +3436,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_NETIF_API=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE=2048, SDK_DEBUGCONSOLE_UART, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_NETIF_API=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, SDK_DEBUGCONSOLE_UART, SDIO_ENABLED, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/lwip/src/apps/httpsrv;../../..;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../devices/MIMXRT595S/drivers;../../../../../components/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../rtos/freertos/freertos_kernel/include;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../..;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../rtos/freertos/freertos_kernel/include;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../middleware/edgefast_wifi/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3346,7 +3456,7 @@
               <MiscControls/>
               <Define>DEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../src/wifi_common/webconfig</IncludePath>
+              <IncludePath>..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3369,51 +3479,6 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sdmmc_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sdmmc_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -3471,6 +3536,61 @@
               <FileName>app_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../app_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../sdmmc_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3605,21 +3725,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wpl</GroupName>
-          <Files>
-            <File>
-              <FileName>wpl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../wpl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wpl_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../wpl_nxp.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -3630,43 +3735,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
-          <Files>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
-            </File>
-            <File>
-              <FileName>portasm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
-            </File>
-            <File>
-              <FileName>portasm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
-            </File>
-            <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -3686,6 +3756,16 @@
               <FileName>fsl_usdhc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -3716,16 +3796,6 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -3783,6 +3853,16 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
@@ -3791,56 +3871,6 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt595</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5125,6 +5155,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -5196,6 +5316,91 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast_wifi/source</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/source/wpl_nxp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt595</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5433,6 +5638,11 @@
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
@@ -5528,9 +5738,9 @@
               <FilePath>../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>
@@ -5986,6 +6196,16 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast_wifi/include</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/include/wpl.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6320,9 +6540,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_NETIF_API=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE=2048, SDK_DEBUGCONSOLE_UART, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_NETIF_API=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, SDK_DEBUGCONSOLE_UART, SDIO_ENABLED, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/lwip/src/apps/httpsrv;../../..;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../devices/MIMXRT595S/drivers;../../../../../components/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../rtos/freertos/freertos_kernel/include;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../..;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../rtos/freertos/freertos_kernel/include;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../middleware/edgefast_wifi/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6340,7 +6560,7 @@
               <MiscControls/>
               <Define>NDEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../src/wifi_common/webconfig</IncludePath>
+              <IncludePath>..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -6363,51 +6583,6 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sdmmc_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sdmmc_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -6465,6 +6640,61 @@
               <FileName>app_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../app_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../sdmmc_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6599,21 +6829,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wpl</GroupName>
-          <Files>
-            <File>
-              <FileName>wpl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../wpl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wpl_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../wpl_nxp.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -6624,43 +6839,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
-          <Files>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
-            </File>
-            <File>
-              <FileName>portasm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
-            </File>
-            <File>
-              <FileName>portasm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
-            </File>
-            <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -6680,6 +6860,16 @@
               <FileName>fsl_usdhc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -6710,16 +6900,6 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -6777,6 +6957,16 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
@@ -6785,56 +6975,6 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt595</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8119,6 +8259,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -8190,6 +8420,91 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast_wifi/source</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/source/wpl_nxp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt595</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8427,6 +8742,11 @@
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
@@ -8522,9 +8842,9 @@
               <FilePath>../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>
@@ -8980,6 +9300,16 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast_wifi/include</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/include/wpl.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9314,9 +9644,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-include ../app_config.h -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_NETIF_API=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE=2048, SDK_DEBUGCONSOLE_UART, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, SDIO_ENABLED, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_NETIF_API=1, HTTPSRV_CFG_WEBSOCKET_ENABLED=1, HTTPSRV_CFG_DEFAULT_SES_CNT=8, SDK_DEBUGCONSOLE_UART, SDIO_ENABLED, SDK_I2C_BASED_COMPONENT_USED=1, MFLASH_FILE_BASEADDR=7340032, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../middleware/lwip/src/apps/httpsrv;../../..;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../devices/MIMXRT595S/drivers;../../../../../components/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../rtos/freertos/freertos_kernel/include;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../..;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../devices/MIMXRT595S/drivers;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../devices/MIMXRT595S/utilities/str;../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../middleware/wifi/dhcpd;../../../../../middleware/wifi/incl/port/lwip;../../../../../middleware/wifi/port/lwip;../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits;../../../../../components/wifi_bt_module/Murata/tx_pwr_limits;../../../../../middleware/sdmmc/sdio;../../../../../middleware/sdmmc/common;../../../../../middleware/sdmmc/host/usdhc;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../components/pca9420;../../../../../components/flash/mflash;../../../../../components/flash/mflash/mimxrt595;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../flash_config;../../../../../rtos/freertos/freertos_kernel/include;../../../../../CMSIS/Core/Include;../../../../../middleware/wifi/incl;../../../../../middleware/wifi/incl/port/os;../../../../../middleware/wifi/incl/wifidriver;../../../../../middleware/wifi/incl/wlcmgr;../../../../../middleware/wifi/wifi_bt_firmware;../../../../../middleware/wifi/wifidriver;../../../../../middleware/wifi/wifidriver/incl;../../../../../middleware/sdmmc/osa;../../../../../components/osa;../../../../../middleware/edgefast_wifi/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9334,7 +9664,7 @@
               <MiscControls/>
               <Define>NDEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../src/wifi_common/webconfig</IncludePath>
+              <IncludePath>..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -9357,51 +9687,6 @@
         </TargetArmAds>
       </TargetOption>
       <Groups>
-        <Group>
-          <GroupName>board</GroupName>
-          <Files>
-            <File>
-              <FileName>pin_mux.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../pin_mux.c</FilePath>
-            </File>
-            <File>
-              <FileName>pin_mux.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../pin_mux.h</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../sdmmc_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>sdmmc_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../sdmmc_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>board.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board.c</FilePath>
-            </File>
-            <File>
-              <FileName>board.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
         <Group>
           <GroupName>source</GroupName>
           <Files>
@@ -9459,6 +9744,61 @@
               <FileName>app_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../app_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../sdmmc_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>sdmmc_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../sdmmc_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../wifi_bt_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_bt_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_bt_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>board.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board.c</FilePath>
+            </File>
+            <File>
+              <FileName>board.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9593,21 +9933,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>wpl</GroupName>
-          <Files>
-            <File>
-              <FileName>wpl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../wpl.h</FilePath>
-            </File>
-            <File>
-              <FileName>wpl_nxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../wpl_nxp.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>doc</GroupName>
           <Files>
             <File>
@@ -9618,43 +9943,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
-          <Files>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
-            </File>
-            <File>
-              <FileName>portasm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
-            </File>
-            <File>
-              <FileName>portasm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
-            </File>
-            <File>
-              <FileName>portmacro.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>drivers</GroupName>
           <Files>
-            <File>
-              <FileName>fsl_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
-            </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
@@ -9674,6 +9964,16 @@
               <FileName>fsl_usdhc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -9704,16 +10004,6 @@
               <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_power.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_reset.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -9771,6 +10061,16 @@
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_reset.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</FilePath>
@@ -9779,56 +10079,6 @@
               <FileName>fsl_iap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_file.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_file.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>flash/mflash/mimxrt595</GroupName>
-          <Files>
-            <File>
-              <FileName>mflash_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>mflash_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11113,6 +11363,96 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/wifi_bt_module/AzureWave/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/wifi_bt_module/Murata/tx_pwr_limits</GroupName>
+          <Files>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1XK_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_CA.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_EU.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_JP.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_US.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</FilePath>
+            </File>
+            <File>
+              <FileName>wlan_txpwrlimit_cfg_murata_2DS_WW.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>sdmmc/src</GroupName>
           <Files>
             <File>
@@ -11184,6 +11524,91 @@
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast_wifi/source</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/source/wpl_nxp.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
+            </File>
+            <File>
+              <FileName>portasm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
+            <File>
+              <FileName>portmacro.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_file.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_file.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_file.c</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mflash_common.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>flash/mflash/mimxrt595</GroupName>
+          <Files>
+            <File>
+              <FileName>mflash_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</FilePath>
+            </File>
+            <File>
+              <FileName>mflash_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11421,6 +11846,11 @@
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
+            </File>
+            <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
@@ -11516,9 +11946,9 @@
               <FilePath>../../../../../middleware/wifi/incl/dhcp-server.h</FilePath>
             </File>
             <File>
-              <FileName>wifi_cal_data_ext.h</FileName>
+              <FileName>WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</FilePath>
+              <FilePath>../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</FilePath>
             </File>
             <File>
               <FileName>wm_utils.h</FileName>
@@ -11974,6 +12404,16 @@
               <FileName>fsl_os_abstraction_free_rtos.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>edgefast_wifi/include</GroupName>
+          <Files>
+            <File>
+              <FileName>wpl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/edgefast_wifi/include/wpl.h</FilePath>
             </File>
           </Files>
         </Group>

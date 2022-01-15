@@ -11,7 +11,7 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -32,7 +32,7 @@ The 1-2 connected for JP7, JP8, JP27, JP28, JP29.
 Prepare the Demo
 ================
 1.  Connect headphones to Audio HP / Line-Out connector (J4).
-2.  Connect a micro USB cable between the PC host and the debug USB port (J5) on the board
+2.  Connect a micro USB cable between the PC host and the debug USB port (J40) on the board
 3.  Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits

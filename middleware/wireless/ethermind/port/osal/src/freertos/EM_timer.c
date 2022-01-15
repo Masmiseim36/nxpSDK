@@ -18,12 +18,12 @@
 
 /* ----------------------------------------------- Global Definitions */
 /* Timer Elements */
-TIMER_ENTITY timer_entity[EM_TIMER_MAX_ENTITIES];
-TIMER_ENTITY *timer_q_start = NULL;
-TIMER_ENTITY *timer_q_end   = NULL;
+DECL_STATIC TIMER_ENTITY timer_entity[EM_TIMER_MAX_ENTITIES];
+DECL_STATIC TIMER_ENTITY *timer_q_start = NULL;
+DECL_STATIC TIMER_ENTITY *timer_q_end   = NULL;
 
 /* Timer Library Mutex */
-EM_thread_mutex_type timer_mutex;
+DECL_STATIC EM_thread_mutex_type timer_mutex;
 
 /* ----------------------------------------------- Static Global Variables */
 

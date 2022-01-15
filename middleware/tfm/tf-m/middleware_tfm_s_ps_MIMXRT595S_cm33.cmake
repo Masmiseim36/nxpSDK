@@ -3,6 +3,7 @@ message("middleware_tfm_s_ps component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/protected_storage/auto_generated/intermedia_tfm_protected_storage.c
+    ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/protected_storage/auto_generated/load_info_tfm_protected_storage.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/protected_storage/crypto/ps_crypto_interface.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/protected_storage/ps_encrypted_object.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/protected_storage/ps_object_system.c

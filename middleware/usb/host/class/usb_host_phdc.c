@@ -529,6 +529,7 @@ static usb_status_t USB_HostPhdcOpenInterface(usb_host_phdc_instance_t *phdcInst
             pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
                                                   USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
             pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = 0U;
             status                   = USB_HostOpenPipe(phdcInstance->hostHandle, &phdcInstance->bulkInPipe, &pipeInit);
             if (status != kStatus_USB_Success)
             {
@@ -554,6 +555,7 @@ static usb_status_t USB_HostPhdcOpenInterface(usb_host_phdc_instance_t *phdcInst
             pipeInit.numberPerUframe = (uint8_t)((USB_SHORT_FROM_LITTLE_ENDIAN_ADDRESS(epDesc->wMaxPacketSize) &
                                                   USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK));
             pipeInit.nakCount        = USB_HOST_CONFIG_MAX_NAK;
+            pipeInit.interval        = 0U;
             status = USB_HostOpenPipe(phdcInstance->hostHandle, &phdcInstance->bulkOutPipe, &pipeInit);
             if (status != kStatus_USB_Success)
             {
@@ -737,7 +739,7 @@ usb_status_t USB_HostPhdcInit(usb_host_handle deviceHandle, usb_host_class_handl
 {
     usb_host_phdc_instance_t *phdcInstance =
         (usb_host_phdc_instance_t *)OSA_MemoryAllocate(sizeof(usb_host_phdc_instance_t));
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
     uint32_t *temp;
     if (NULL == phdcInstance)
     {

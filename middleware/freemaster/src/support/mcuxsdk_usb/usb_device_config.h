@@ -116,7 +116,7 @@
     /*! @brief LPC USB IP3511 HS instance count */
     #define USB_DEVICE_CONFIG_LPCIP3511HS (0U)
 
-#elif defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S28JBD100)
+#elif defined(CPU_LPC55S69JBD100_cm33_core0) || defined(CPU_LPC55S28JBD100) || defined(CPU_LPC55S36JBD100)
 
     /*! brief USB interrupt vector name */
     #define USB_MCU_INT_HANDLER USB0_IRQHandler

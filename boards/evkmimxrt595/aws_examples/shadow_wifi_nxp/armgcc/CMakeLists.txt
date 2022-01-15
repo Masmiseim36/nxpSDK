@@ -33,18 +33,17 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
+"${ProjDirPath}/../wifi_bt_config.c"
+"${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
-"${ProjDirPath}/../config_files/aws_bufferpool_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
-"${ProjDirPath}/../config_files/aws_mqtt_config.h"
-"${ProjDirPath}/../config_files/aws_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/aws_shadow_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
-"${ProjDirPath}/../config_files/iot_config.h"
-"${ProjDirPath}/../config_files/iot_mqtt_agent_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
+"${ProjDirPath}/../config_files/iot_config.h"
+"${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
 "${ProjDirPath}/../config_files/shadow_config.h"
 "${ProjDirPath}/../config_files/shadow_demo_config.h"
 "${ProjDirPath}/../config_files/aws_iot_network_config.h"
@@ -53,12 +52,12 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
-"${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../app_config.h"
+"${ProjDirPath}/../wifi_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -84,6 +83,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
     ${ProjDirPath}/../../../../../middleware/wifi
     ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../components/flash/mflash
@@ -123,25 +124,29 @@ include(middleware_sdmmc_host_usdhc_MIMXRT595S_cm33)
 
 include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
 
+include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT595S_cm33)
+
 include(middleware_freertos-kernel_MIMXRT595S_cm33)
 
-include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
+include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_shadow_MIMXRT595S_cm33)
+include(middleware_freertos-aws_iot_libraries_logging_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_serializer_MIMXRT595S_cm33)
+include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT595S_cm33)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT595S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_pkcs11_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_mbedtls_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_logging_MIMXRT595S_cm33)
+include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_config_MIMXRT595S_cm33)
+include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
 
 include(middleware_mbedtls_MIMXRT595S_cm33)
 
@@ -189,7 +194,7 @@ include(component_serial_manager_uart_MIMXRT595S_cm33)
 
 include(driver_flexcomm_usart_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 
@@ -203,19 +208,23 @@ include(driver_reset_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT595S_cm33)
-
 include(middleware_freertos-kernel_extension_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT595S_cm33)
 
 include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(middleware_wifi_wifidriver_MIMXRT595S_cm33)
 
 include(middleware_wifi_fwdnld_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
+
+include(component_osa_free_rtos_MIMXRT595S_cm33)
+
+include(driver_usdhc_MIMXRT595S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT595S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT595S_cm33)
 
@@ -227,27 +236,15 @@ include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXR
 
 include(middleware_freertos-aws_iot_network_manager_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_mqtt_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT595S_cm33)
+include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT595S_cm33)
-
 include(middleware_freertos-aws_iot_mqtt_demo_helpers_MIMXRT595S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_pkcs11_helpers_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
-
-include(component_osa_free_rtos_MIMXRT595S_cm33)
-
-include(driver_usdhc_MIMXRT595S_cm33)
 
 include(component_mflash_common_MIMXRT595S_cm33)
 

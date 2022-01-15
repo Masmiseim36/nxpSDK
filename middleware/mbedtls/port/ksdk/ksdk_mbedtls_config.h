@@ -23,8 +23,6 @@
  *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *
- *  This file is part of mbed TLS (https://tls.mbed.org)
  */
 
 #ifndef KSDK_MBEDTLS_CONFIG_H
@@ -771,7 +769,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *       be overridden, but the wrapper functions mbedtls_aes_decrypt and mbedtls_aes_encrypt
  *       must stay untouched.
  *
- * \note If you use the AES_xxx_ALT macros, then is is recommended to also set
+ * \note If you use the AES_xxx_ALT macros, then it is recommended to also set
  *       MBEDTLS_AES_ROM_TABLES in order to help the linker garbage-collect the AES
  *       tables.
  *
@@ -1684,6 +1682,22 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  */
 #define MBEDTLS_PKCS1_V21
 
+/** \def MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS
+ *
+ * Enable support for platform built-in keys. If you enable this feature,
+ * you must implement the function mbedtls_psa_platform_get_builtin_key().
+ * See the documentation of that function for more information.
+ *
+ * Built-in keys are typically derived from a hardware unique key or
+ * stored in a secure element.
+ *
+ * Requires: MBEDTLS_PSA_CRYPTO_C.
+ *
+ * \warning This interface is experimental and may change or be removed
+ * without notice.
+ */
+//#define MBEDTLS_PSA_CRYPTO_BUILTIN_KEYS
+
 /** \def MBEDTLS_PSA_CRYPTO_CLIENT
  *
  * Enable support for PSA crypto client.
@@ -2227,7 +2241,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
 /**
  * \def MBEDTLS_SSL_DTLS_SRTP
  *
- * Enable support for negotation of DTLS-SRTP (RFC 5764)
+ * Enable support for negotiation of DTLS-SRTP (RFC 5764)
  * through the use_srtp extension.
  *
  * \note This feature provides the minimum functionality required
@@ -2960,6 +2974,11 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
  *
  * Enable the CMAC (Cipher-based Message Authentication Code) mode for block
  * ciphers.
+ *
+ * \note When #MBEDTLS_CMAC_ALT is active, meaning that the underlying
+ *       implementation of the CMAC algorithm is provided by an alternate
+ *       implementation, that alternate implementation may opt to not support
+ *       AES-192 or 3DES as underlying block ciphers for the CMAC operation.
  *
  * Module:  library/cmac.c
  *

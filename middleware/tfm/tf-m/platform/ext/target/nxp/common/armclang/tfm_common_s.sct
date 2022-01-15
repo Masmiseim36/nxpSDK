@@ -32,34 +32,19 @@ LR_CODE S_CODE_START S_CODE_SIZE {
     /****  This initial section contains common code for secure binary */
     ER_TFM_CODE S_CODE_START {
         *.o (.isr_vector,+FIRST)        //NXP
-        * (+RO)
+        *libplatform_s* (.text*, .rodata*)
+        *libtfm_spm* (+RO)
     }
 
     /**** Unprivileged Secure code start here */
     TFM_UNPRIV_CODE +0 ALIGN 32 {
         *(SFN)
-        *armlib*
-        *libtfm_sprt.a (+RO)
-// --------- NXP --------------
-        tfm_sprt.* (+RO)                //NXP
-        service_api.* (+RO)             //NXP
-        tfm_crypto_secure_api.* (+RO)   //NXP
-        tfm_audit_secure_api.* (+RO)    //NXP
-        tfm_its_secure_api.* (+RO)      //NXP
-        tfm_platform_secure_api.* (+RO) //NXP
-        tfm_ps_secure_api.* (+RO)       //NXP
-        tfm_ps_test_service_api.* (+RO) //NXP
-        tfm_secure_client_2_api.* (+RO) //NXP
-        tfm_attest_secure_api.* (+RO)   //NXP
-        sprt_partition_metadata_indicator.* (+RO)   //NXP
-        tfm_log_raw.* (+RO)                         //NXP
-        tfm_sp_log_raw.* (+RO)                      //NXP
-        tfm_hal_sp_logdev_periph.* (+RO)            //NXP
+        * (+RO)
+    }
 
-        *psa_client.* (+RO)
-        *psa_service.* (+RO)
-        *psa_lifecycle.* (+RO)
-// --------- NXP end --------------
+    /**** Section for holding partition RO load data */
+    TFM_SP_LOAD_LIST +0 ALIGN 4 {
+        *(.part_load)
     }
 
     /**** PSA RoT RO part (CODE + RODATA) start here */
@@ -71,8 +56,9 @@ LR_CODE S_CODE_START S_CODE_SIZE {
     }
 
     TFM_PSA_ROT_LINKER +0 ALIGN 32 {
-        *tfm_psa_rot_partition* (+RO)
-        *.o(TFM_*_PSA-ROT_ATTR_FN)
+        *tfm_psa_rot_partition* (+RO-CODE, +RO-DATA)
+        *libplatform_s* (TFM_*_PSA-ROT_ATTR_FN)
+        *.o (TFM_*_PSA-ROT_ATTR_FN)
     }
 
     /*
@@ -91,38 +77,57 @@ LR_CODE S_CODE_START S_CODE_SIZE {
     }
 
     TFM_APP_ROT_LINKER +0 ALIGN 32 {
-        *tfm_app_rot_partition* (+RO)
-        *.o(TFM_*_APP-ROT_ATTR_FN)
+        *tfm_app_rot_partition* (+RO-CODE, +RO-DATA)
+        *libplatform_s* (TFM_*_APP-ROT_ATTR_FN)
+        *.o (TFM_*_APP-ROT_ATTR_FN)
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
-        *tfm_partition_ps.* (+RO)
-        *test_ps_nv_counters.* (+RO)
+        *tfm_ps_req_mngr.*  (+RO)
+        *tfm_protected_storage.*  (+RO)
+        *ps_object_system.*  (+RO)
+        *ps_object_table.*  (+RO)
+        *ps_utils.*  (+RO)
+        *ps_crypto_interface.*  (+RO)
+        *ps_encrypted_object.*  (+RO)
+        *ps_nv_counters.*  (+RO)
+        *intermedia_tfm_protected_storage.*  (+RO)
+        *load_info_tfm_protected_storage.*  (+RO)
+        *tfm_ps_secure_api.*  (+RO)
+        *tfm_ps_secure_api.*  (+RO)
         *(TFM_SP_PS_ATTR_FN)
-        ps_encrypted_object.*  (+RO)               //NXP
-        ps_object_system.*  (+RO)                  //NXP
-        ps_object_table.*  (+RO)                   //NXP
-        ps_utils.*  (+RO)                          //NXP
-        tfm_protected_storage.*  (+RO)             //NXP
-        tfm_ps_req_mngr.*  (+RO)                   //NXP
-        ps_crypto_interface.*  (+RO)               //NXP
-        ps_nv_counters.*  (+RO)                    //NXP
 
 // #ifdef TFM_PARTITION_TEST_CORE
-        *tfm_ss_core_test_2.* (+RO)
+        *tfm_ss_core_test_2.*  (+RO)
+        *intermedia_tfm_ss_core_test_2.*  (+RO)
+        *load_info_tfm_ss_core_test_2.*  (+RO)
         *(TFM_SP_CORE_TEST_2_ATTR_FN)
 
 // #ifdef TFM_PARTITION_TEST_CORE_IPC
-        *tfm_ipc_client_test.* (+RO)
+        *tfm_ipc_client_test.*  (+RO)
+        *intermedia_tfm_ipc_client_test.*  (+RO)
+        *load_info_tfm_ipc_client_test.*  (+RO)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_FN)
 
-// #ifdef TFM_ENABLE_IRQ_TEST
-        *tfm_irq_test_service_1.* (+RO)
-        *timer_cmsdk* (+RO)
-        *(TFM_IRQ_TEST_1_ATTR_FN)
-
 // #ifdef TFM_PARTITION_TEST_SECURE_SERVICES
-        *tfm_secure_client_2.* (+RO)
+        *tfm_secure_client_2.*  (+RO)
+        *intermedia_tfm_secure_client_2.*  (+RO)
+        *load_info_tfm_secure_client_2.*  (+RO)
+        *tfm_secure_client_2_api.*  (+RO)
+        *tfm_secure_client_2_api.*  (+RO)
         *(TFM_SP_SECURE_CLIENT_2_ATTR_FN)
+
+// #ifdef TEST_NS_SLIH_IRQ
+        *tfm_slih_test_service.*  (+RO)
+        *intermedia_tfm_slih_test_service.*  (+RO)
+        *load_info_tfm_slih_test_service.*  (+RO)
+        *(TFM_SP_SLIH_TEST_ATTR_FN)
+
+// #ifdef TEST_NS_FLIH_IRQ
+        *tfm_flih_test_service.*  (+RO)
+        *intermedia_tfm_flih_test_service.*  (+RO)
+        *load_info_tfm_flih_test_service.*  (+RO)
+        *(TFM_SP_FLIH_TEST_ATTR_FN)
+
 // --------- NXP end --------------
     }
 
@@ -136,9 +141,9 @@ LR_CODE S_CODE_START S_CODE_SIZE {
 #if defined(S_CODE_SRAM_ALIAS_BASE)
     /* eFlash driver code that gets copied from Flash to SRAM */
     ER_CODE_SRAM S_CODE_SRAM_ALIAS_BASE ALIGN 4 {
-        Driver_GFC100_EFlash.o (+RO)
-        gfc100_eflash_drv.o (+RO)
-        musca_b1_eflash_drv.o (+RO)
+        Driver_GFC100_EFlash.o (.text, .text.*, .rodata, .rodata.*)
+        gfc100_eflash_drv.o (.text, .text.*, .rodata, .rodata.*)
+        musca_b1_eflash_drv.o (.text, .text.*, .rodata, .rodata.*)
     }
 #endif
 
@@ -213,41 +218,58 @@ LR_CODE S_CODE_START S_CODE_SIZE {
         *.o(TFM_*_APP-ROT_ATTR_ZI)
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
-        *tfm_partition_ps.* (+RW +ZI)
-        *test_ps_nv_counters.* (+RW +ZI)
+        *tfm_ps_req_mngr.*  (+RW +ZI)
+        *tfm_protected_storage.*  (+RW +ZI)
+        *ps_object_system.*  (+RW +ZI)
+        *ps_object_table.*  (+RW +ZI)
+        *ps_utils.*  (+RW +ZI)
+        *ps_crypto_interface.*  (+RW +ZI)
+        *ps_encrypted_object.*  (+RW +ZI)
+        *ps_nv_counters.*  (+RW +ZI)
+        *intermedia_tfm_protected_storage.*  (+RW +ZI)
+        *load_info_tfm_protected_storage.*  (+RW +ZI)
+        *tfm_ps_secure_api.*  (+RW +ZI)
+        *tfm_ps_secure_api.*  (+RW +ZI)
         *(TFM_SP_PS_ATTR_RW)
         *(TFM_SP_PS_ATTR_ZI)
-        
-        ps_encrypted_object.*  (+RW +ZI)               //NXP
-        ps_object_system.*  (+RW +ZI)                  //NXP
-        ps_object_table.*  (+RW +ZI)                   //NXP
-        ps_utils.*  (+RW +ZI)                          //NXP
-        tfm_protected_storage.*  (+RW +ZI)             //NXP
-        tfm_ps_req_mngr.*  (+RW +ZI)                   //NXP
-        ps_crypto_interface.*  (+RW +ZI)               //NXP
-        ps_nv_counters.*  (+RW +ZI)                    //NXP
-        intermedia_tfm_protected_storage.*  (+RW +ZI)  //NXP
 
-//#ifdef TFM_PARTITION_TEST_CORE
-        *tfm_ss_core_test_2.* (+RW +ZI)
+// #ifdef TFM_PARTITION_TEST_CORE
+        *tfm_ss_core_test_2.*  (+RW +ZI)
+        *intermedia_tfm_ss_core_test_2.*  (+RW +ZI)
+        *load_info_tfm_ss_core_test_2.*  (+RW +ZI)
         *(TFM_SP_CORE_TEST_2_ATTR_RW)
         *(TFM_SP_CORE_TEST_2_ATTR_ZI)
 
 // #ifdef TFM_PARTITION_TEST_CORE_IPC
-        *tfm_ipc_client_test.* (+RW +ZI)
+        *tfm_ipc_client_test.*  (+RW +ZI)
+        *intermedia_tfm_ipc_client_test.*  (+RW +ZI)
+        *load_info_tfm_ipc_client_test.*  (+RW +ZI)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_RW)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_ZI)
 
-// #ifdef TFM_ENABLE_IRQ_TEST
-        *tfm_irq_test_service_1.* (+RW +ZI)
-        *timer_cmsdk* (+RW +ZI)
-        *(TFM_IRQ_TEST_1_ATTR_RW)
-        *(TFM_IRQ_TEST_1_ATTR_ZI)
-
 // #ifdef TFM_PARTITION_TEST_SECURE_SERVICES
-        *tfm_secure_client_2.* (+RW +ZI)
+        *tfm_secure_client_2.*  (+RW +ZI)
+        *intermedia_tfm_secure_client_2.*  (+RW +ZI)
+        *load_info_tfm_secure_client_2.*  (+RW +ZI)
+        *tfm_secure_client_2_api.*  (+RW +ZI)
+        *tfm_secure_client_2_api.*  (+RW +ZI)
         *(TFM_SP_SECURE_CLIENT_2_ATTR_RW)
         *(TFM_SP_SECURE_CLIENT_2_ATTR_ZI)
+
+// #ifdef TEST_NS_SLIH_IRQ
+        *tfm_slih_test_service.*  (+RW +ZI)
+        *intermedia_tfm_slih_test_service.*  (+RW +ZI)
+        *load_info_tfm_slih_test_service.*  (+RW +ZI)
+        *(TFM_SP_SLIH_TEST_ATTR_RW)
+        *(TFM_SP_SLIH_TEST_ATTR_ZI)
+
+// #ifdef TEST_NS_FLIH_IRQ
+        *tfm_flih_test_service.*  (+RW +ZI)
+        *intermedia_tfm_flih_test_service.*  (+RW +ZI)
+        *load_info_tfm_flih_test_service.*  (+RW +ZI)
+        *(TFM_SP_FLIH_TEST_ATTR_RW)
+        *(TFM_SP_FLIH_TEST_ATTR_ZI)
+
 // --------- NXP end --------------
     }
 
@@ -289,6 +311,14 @@ LR_CODE S_CODE_START S_CODE_SIZE {
         * (CodeQuickAccess)         //NXP
         * (DataQuickAccess)         //NXP
         * (+RW +ZI)
+    }
+
+    ER_PART_RT_POOL +0 ALIGN 4 {
+        *(.bss.part_runtime)
+    }
+
+    ER_SERV_RT_POOL +0 ALIGN 4 {
+        *(.bss.serv_runtime)
     }
 
     /**** PSA RoT DATA start here */
@@ -350,7 +380,7 @@ LR_VENEER CMSE_VENEER_REGION_START {
      * 32 bytes aligned region so that the SAU can be programmed to
      * just set this region as Non-Secure Callable.
      */
-    ER_CODE_CMSE_VENEER CMSE_VENEER_REGION_START CMSE_VENEER_REGION_SIZE {
+    CMSE_VENEER CMSE_VENEER_REGION_START CMSE_VENEER_REGION_SIZE {
         *(Veneer$$CMSE)
     }
 }

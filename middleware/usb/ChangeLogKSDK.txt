@@ -2,7 +2,16 @@
 @page middleware_log Middleware Change Log
 
 @section USB USB stack for MCUXpresso SDK  
-  The current version of USB stack is 2.8.0.
+  The current version of USB stack is 2.8.1.
+  - 2.8.1
+    - Improvement:
+      - update USB audio demos to use audio component (components\audio).
+      - Add the checking of function call return value.
+      - Add audio multiple channels demo (usb_device_composite_audio_multi_ch_unified) on RT600 audio board.
+      - Fix audio noise on sync mode and improve overflow/underflow checking method.
+      - Support UAC 3.1 and 7.1 on audio speaker demo.
+      - Set USB device CDC demo not to depend on DTR setting from host.
+      - Support MCUX toolchain on some RTxxxx platforms.
   - 2.8.0
     - Improvement:
       - Fix the USB device stack vulnerability issues.
@@ -17,6 +26,7 @@
       - Use new feeback solution and low latency playback for usb device speaker demo and unified demos. Add underflow and overflow protection.
       - Optimize hard code for usb audio demos.
       - Update Unconstrained Power field in the Sink Capabilities Message according to the external power state.
+      - Fix CVE-2021-38258 and CVE-2021-38260
     - New features:
       - Enable USB host video demo for mutilple boards.
       - Enable USB device MTP demo for mutilple boards.

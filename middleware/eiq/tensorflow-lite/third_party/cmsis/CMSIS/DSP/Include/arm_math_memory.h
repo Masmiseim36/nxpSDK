@@ -2,10 +2,10 @@
  * @file     arm_math_memory.h
  * @brief    Public header file for CMSIS DSP Library
  * @version  V1.9.0
- * @date     20. July 2020
+ * @date     17. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -26,7 +26,7 @@
 
 #define _ARM_MATH_MEMORY_H_
 
-#include "cmsis/CMSIS/DSP/Include/arm_math_types.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h"
 
 
 #ifdef   __cplusplus

@@ -971,7 +971,7 @@ static void avrcp_target_handle_vendor_dependent_msg(struct bt_conn *conn, struc
             rsp->song_pos    = 0;
             rsp->play_status = 0;
 
-            rsp_param = &rsp;
+            rsp_param = rsp;
             rsp_len   = sizeof(rsp);
             break;
         }
@@ -2913,8 +2913,8 @@ void avrcp_cover_art_cmd_received(uint8_t handle, struct bt_avrcp_cover_art_cmd 
                 {
                     rsp.response = BT_AVRCP_CA_BAD_REQ_RSP;
                 }
-
-                sprintf((char *)img_properties,
+                memset(&img_properties[0], 0, sizeof(img_properties));
+                snprintf((char *)img_properties, sizeof(img_properties) - 1,
                         "<image-properties version=\"1.0\" handle="
                         "\"%s\"> \n"
                         "<native encoding=\"JPEG\" pixel=\"640*480\" size=\"10240\"/>\n"
@@ -2936,6 +2936,11 @@ void avrcp_cover_art_cmd_received(uint8_t handle, struct bt_avrcp_cover_art_cmd 
             else if (remaining != 0)
             {
                 rsp.get_prop.length = (uint16_t)remaining;
+                rsp.response        = BT_AVRCP_CA_SUCCESS_RSP;
+            }
+            else
+            {
+                rsp.get_prop.length = 0u;
                 rsp.response        = BT_AVRCP_CA_SUCCESS_RSP;
             }
 
@@ -2981,6 +2986,11 @@ void avrcp_cover_art_cmd_received(uint8_t handle, struct bt_avrcp_cover_art_cmd 
                 rsp.get_image.length = (uint16_t)remaining;
                 rsp.response         = BT_AVRCP_CA_SUCCESS_RSP;
             }
+            else
+            {
+                rsp.get_image.length = 0u;
+                rsp.response        = BT_AVRCP_CA_SUCCESS_RSP;
+            }
 
             rsp.get_image.data = &image_data[0];
             sent += rsp.get_image.length;
@@ -3018,6 +3028,11 @@ void avrcp_cover_art_cmd_received(uint8_t handle, struct bt_avrcp_cover_art_cmd 
             {
                 rsp.get_thumb.length = (uint16_t)remaining;
                 rsp.response         = BT_AVRCP_CA_SUCCESS_RSP;
+            }
+            else
+            {
+                rsp.get_thumb.length = 0u;
+                rsp.response        = BT_AVRCP_CA_SUCCESS_RSP;
             }
 
             rsp.get_thumb.data = &image_data[0];

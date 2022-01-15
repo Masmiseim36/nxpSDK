@@ -115,7 +115,9 @@
 
 /*! @brief Whether device compliance test is enabled. If the macro is enabled,
     the test mode and CV test macroes will be set.*/
+#ifndef USB_DEVICE_CONFIG_COMPLIANCE_TEST
 #define USB_DEVICE_CONFIG_COMPLIANCE_TEST (0U)
+#endif
 
 #if ((defined(USB_DEVICE_CONFIG_COMPLIANCE_TEST)) && (USB_DEVICE_CONFIG_COMPLIANCE_TEST > 0U))
 

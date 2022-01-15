@@ -11,6 +11,8 @@
 
 #include "fsl_adapter_flash.h"
 
+#include "fsl_os_abstraction.h"
+
 #include "littlefs_pl.h"
 
 #ifdef LITTLEFS_PL_DEBUG
@@ -99,6 +101,7 @@ static struct lfs_config LittleFS_config = {
 };
 
 static lfs_t lfs_pl;
+static OSA_MUTEX_HANDLE_DEFINE(s_flashOpsLock);
 
 static int lfs_mflash_read(const struct lfs_config *lfsc, lfs_block_t block, lfs_off_t off, void *buffer, lfs_size_t size)
 {
@@ -108,10 +111,13 @@ static int lfs_mflash_read(const struct lfs_config *lfsc, lfs_block_t block, lfs
 
     flash_addr = ((uint32_t)LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size + off;
 
+    (void)OSA_MutexLock((osa_mutex_handle_t)s_flashOpsLock, osaWaitForever_c);
     if (HAL_FlashRead(flash_addr, size, buffer) != kStatus_HAL_Flash_Success)
     {
+        (void)OSA_MutexUnlock((osa_mutex_handle_t)s_flashOpsLock);
         return LFS_ERR_IO;
     }
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)s_flashOpsLock);
 
     return LFS_ERR_OK;
 }
@@ -129,6 +135,7 @@ static int lfs_mflash_prog(
 
     flash_addr = ((uint32_t)LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size + off;
 
+    (void)OSA_MutexLock((osa_mutex_handle_t)s_flashOpsLock, osaWaitForever_c);
     for (uint32_t page_ofs = 0; page_ofs < size; page_ofs += LITTLEFS_PROG_SIZE)
     {
 #ifdef LITTLEFS_PL_DEBUG
@@ -145,6 +152,7 @@ static int lfs_mflash_prog(
             break;
         }
     }
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)s_flashOpsLock);
 
     if (status != kStatus_Success)
     {
@@ -166,6 +174,7 @@ static int lfs_mflash_erase(const struct lfs_config *lfsc, lfs_block_t block)
 
     flash_addr = ((uint32_t)LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size;
 
+    (void)OSA_MutexLock((osa_mutex_handle_t)s_flashOpsLock, osaWaitForever_c);
     for (uint32_t sector_ofs = 0; sector_ofs < lfsc->block_size; sector_ofs += LITTLEFS_BLOCK_SIZE)
     {
 #ifdef LITTLEFS_PL_DEBUG
@@ -183,6 +192,7 @@ static int lfs_mflash_erase(const struct lfs_config *lfsc, lfs_block_t block)
             break;
         }
     }
+    (void)OSA_MutexUnlock((osa_mutex_handle_t)s_flashOpsLock);
 
     if (status != kStatus_Success)
     {
@@ -201,6 +211,7 @@ lfs_t * lfs_pl_init(void)
 {
     static uint8_t initialized = 0;
     int error = 0;
+    osa_status_t ret;
 
     if (0 == initialized)
     {
@@ -209,19 +220,28 @@ lfs_t * lfs_pl_init(void)
         CoreDebug->DEMCR |= (1 << CoreDebug_DEMCR_TRCENA_Pos);
 #endif /* LITTLEFS_PL_DEBUG */
 
-        HAL_FlashInit();
-
-        error = lfs_mount(&lfs_pl, &LittleFS_config);
-        if (LFS_ERR_CORRUPT == error)
+        ret = OSA_MutexCreate((osa_mutex_handle_t)s_flashOpsLock);
+        assert(KOSA_StatusSuccess == ret);
+        if (KOSA_StatusSuccess != ret)
         {
-            error = lfs_format(&lfs_pl, &LittleFS_config);
-            if (0 <= error)
-            {
-                error = lfs_mount(&lfs_pl, &LittleFS_config);
-                assert(0 <= error);
-            }
+            error = -1;
         }
-        initialized = 1;
+        else
+        {
+            HAL_FlashInit();
+
+            error = lfs_mount(&lfs_pl, &LittleFS_config);
+            if (LFS_ERR_CORRUPT == error)
+            {
+                error = lfs_format(&lfs_pl, &LittleFS_config);
+                if (0 <= error)
+                {
+                    error = lfs_mount(&lfs_pl, &LittleFS_config);
+                    assert(0 <= error);
+                }
+            }
+            initialized = 1;
+        }
     }
 
     if (0 == error)

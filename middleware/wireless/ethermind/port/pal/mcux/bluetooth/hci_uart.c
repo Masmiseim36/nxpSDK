@@ -358,7 +358,7 @@ void hci_uart_transmit_cb
             if (BT_FALSE == hci_uart_rx_state)
             {
                 /* Point the place holder for next data reception */
-                hci_uart_rx.data     = hci_uart_rx_data_buff + hci_uart_rx_bytes;
+                hci_uart_rx.data     = &hci_uart_rx_data_buff[hci_uart_rx_bytes];
                 hci_uart_rx.dataSize = ht.packet_expected_len;
 
                 /* Invoke Receive Non-Blocking over UART again for expected length */

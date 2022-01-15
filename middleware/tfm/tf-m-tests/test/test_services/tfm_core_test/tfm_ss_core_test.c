@@ -1,18 +1,16 @@
 /*
- * Copyright (c) 2017-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
 #include <stddef.h>
-#include "tfm_ss_core_test.h"
-#include "tfm_api.h"
 #include "core_test_defs.h"
+#include "tfm_ss_core_test.h"
 #include "test_framework.h"
 #include "tfm_veneers.h"
 #include "tfm_secure_api.h"
-#include "tfm/tfm_spm_services.h"
 #include "psa/service.h"
 #include "tfm_plat_test.h"
 #include "psa_manifest/pid.h"
@@ -26,8 +24,6 @@ static int32_t partition_init_done;
 #define INVALID_NS_CLIENT_ID  0x49abcdef
 #define EXPECTED_NS_CLIENT_ID (-1)
 
-#define IRQ_TEST_TOOL_CODE_LOCATION(name)
-
 #ifndef TFM_PSA_API
 /* Don't initialise caller_partition_id_zi and expect it to be linked in the
  * zero-initialised data area
@@ -40,7 +36,6 @@ static int32_t caller_client_id_zi;
 static int32_t caller_client_id_rw = INVALID_NS_CLIENT_ID;
 
 static int32_t* invalid_addresses [] = {(int32_t*)0x0, (int32_t*)0xFFF12000};
-
 #else /* !defined(TFM_PSA_API) */
 
 static psa_status_t psa_test_common(uint32_t sid, uint32_t version,
@@ -273,7 +268,6 @@ static psa_status_t test_ss_to_ss(void)
 {
     int32_t ret;
     /* Call to a different service, should be successful */
-    IRQ_TEST_TOOL_CODE_LOCATION(example_secure_service_start);
 #ifdef TFM_PSA_API
     ret = psa_test_common(SPM_CORE_TEST_2_SLAVE_SERVICE_SID,
                           SPM_CORE_TEST_2_SLAVE_SERVICE_VERSION,
@@ -281,7 +275,6 @@ static psa_status_t test_ss_to_ss(void)
 #else /* defined(TFM_PSA_API) */
     ret = tfm_spm_core_test_2_slave_service_veneer(NULL, 0, NULL, 0);
 #endif /* defined(TFM_PSA_API) */
-    IRQ_TEST_TOOL_CODE_LOCATION(example_secure_service_end);
     if (ret == CORE_TEST_ERRNO_SUCCESS_2) {
         return CORE_TEST_ERRNO_SUCCESS;
     } else {
@@ -308,7 +301,7 @@ static psa_status_t test_get_caller_client_id(void)
     for (i = 0; i < sizeof(invalid_addresses)/sizeof(invalid_addresses[0]); ++i)
     {
         ret = tfm_core_get_caller_client_id(invalid_addresses[i]);
-        if (ret != TFM_ERROR_INVALID_PARAMETER) {
+        if (ret == TFM_SUCCESS) {
             return CORE_TEST_ERRNO_TEST_FAULT;
         }
     }
@@ -333,17 +326,6 @@ static psa_status_t test_get_caller_client_id(void)
     return CORE_TEST_ERRNO_SUCCESS;
 }
 
-static psa_status_t test_spm_request(void)
-{
-    /* Request a reset vote, should be successful */
-    int32_t ret = tfm_spm_request_reset_vote();
-
-    if (ret != TFM_SUCCESS) {
-        return CORE_TEST_ERRNO_SLAVE_SP_CALL_FAILURE;
-    }
-
-    return CORE_TEST_ERRNO_SUCCESS;
-}
 #endif /* !defined(TFM_PSA_API) */
 
 #ifdef CORE_TEST_INTERACTIVE
@@ -415,8 +397,6 @@ psa_status_t spm_core_test_sfn(struct psa_invec *in_vec, size_t in_len,
         return test_peripheral_access();
     case CORE_TEST_ID_GET_CALLER_CLIENT_ID:
         return test_get_caller_client_id();
-    case CORE_TEST_ID_SPM_REQUEST:
-        return test_spm_request();
     case CORE_TEST_ID_BLOCK:
         return test_block();
     case CORE_TEST_ID_NS_THREAD:
@@ -501,11 +481,6 @@ static psa_status_t tfm_core_test_sfn_wrap_get_caller_client_id(psa_msg_t *msg)
     return CORE_TEST_ERRNO_TEST_NOT_SUPPORTED;
 }
 
-static psa_status_t tfm_core_test_sfn_wrap_spm_request(psa_msg_t *msg)
-{
-    return CORE_TEST_ERRNO_TEST_NOT_SUPPORTED;
-}
-
 static psa_status_t tfm_core_test_sfn_wrap_block(psa_msg_t *msg)
 {
     return test_block();
@@ -575,9 +550,6 @@ psa_status_t core_test_init(void)
         } else if (signals & SPM_CORE_TEST_GET_CALLER_CLIENT_ID_SIGNAL) {
             core_test_signal_handle(SPM_CORE_TEST_GET_CALLER_CLIENT_ID_SIGNAL,
                                    tfm_core_test_sfn_wrap_get_caller_client_id);
-        } else if (signals & SPM_CORE_TEST_SPM_REQUEST_SIGNAL) {
-            core_test_signal_handle(SPM_CORE_TEST_SPM_REQUEST_SIGNAL,
-                                    tfm_core_test_sfn_wrap_spm_request);
         } else if (signals & SPM_CORE_TEST_BLOCK_SIGNAL) {
             core_test_signal_handle(SPM_CORE_TEST_BLOCK_SIGNAL,
                                     tfm_core_test_sfn_wrap_block);

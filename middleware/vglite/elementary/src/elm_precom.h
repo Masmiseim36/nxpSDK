@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*    Copyright 2012 - 2020 Vivante Corporation, Santa Clara, California.
+*    Copyright 2012 - 2021 Vivante Corporation, Santa Clara, California.
 *    All Rights Reserved.
 *
 *    Permission is hereby granted, free of charge, to any person obtaining
@@ -43,5 +43,13 @@
 
 #define JUMP_IF_NON_ZERO_VALUE(x, label) { int ret = x; if ( (ret) != 1 ) { goto label; }  }
 #define JUMP_IF_NULL(x, label) { if (x == NULL) { goto label;} }
+#define JUMP_IF_LOWER(x, y, label) {if (x < y) {goto label;} }
+#define JUMP_IF_GREATER(x, y, label) {if (x > y) {goto label;} }
+#define JUMP_IF_EQUAL(x, y, label) {if (x == y) {goto label;} }
+#define JUMP_IF_LOWER_OR_EQUAL(x, y, label) {if (x <= y) {goto label;} }
+#define JUMP_IF_GREATER_OR_EQUAL(x, y, label) {if (x => y) {goto label;} }
+
+#define MIN(a, b) ((a) > (b) ? (b) : (a))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 #endif /* elm_precom_h */

@@ -220,7 +220,7 @@
         <debug>1</debug>
         <option>
           <name>CCDefines</name>
-          <state>DEMO_CODE_START_NS=786432</state>
+          <state>DEMO_CODE_START_NS=2883584</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
@@ -2291,7 +2291,7 @@
         <debug>0</debug>
         <option>
           <name>CCDefines</name>
-          <state>DEMO_CODE_START_NS=786432</state>
+          <state>DEMO_CODE_START_NS=2883584</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>

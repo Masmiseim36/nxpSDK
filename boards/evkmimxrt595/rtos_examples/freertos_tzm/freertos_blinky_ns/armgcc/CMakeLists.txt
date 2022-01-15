@@ -49,7 +49,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities

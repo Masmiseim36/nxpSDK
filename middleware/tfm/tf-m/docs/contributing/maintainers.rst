@@ -111,8 +111,8 @@ Michel JAOUEN
     :github: `jamike <https://github.com/jamike>`__
 
 
-Infineon/Cypress Platform:
-~~~~~~~~~~~~~~~~~
+Infineon/Cypress Platforms
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Chris Brand
     :email: `Chris Brand@cypress.com <chris.brand@cypress.com>`__
@@ -122,6 +122,12 @@ Raymond Ngun
     :email: `Raymond.Ngunn@cypress.com <raymond.ngunn@cypress.com>`__
     :github: `RaymondNgun <https://github.com/RaymondNgun>`__
 
+Laird Connectivity Platforms:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Jamie McCrae
+    :email: `Jamie.McCrae@lairdconnect.com <jamie.mccrae@lairdconnect.com>`__
+    :github: `thedjnk <https://github.com/thedjnk>`__
 
 Nordic Semiconductor Platforms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -130,11 +136,11 @@ Ioannis Glaropoulos
     :email: `ioannis.glaropoulos@nordicsemi.no <ioannis.glaropoulos@nordicsemi.no>`__
     :github: `ioannisg <https://github.com/ioannisg>`__
 
-Andrzej Glabek
+Andrzej Głąbek
     :email: `andrzej.glabek@nordicsemi.no <andrzej.glabek@nordicsemi.no>`__
     :github: `anangl <https://github.com/anangl>`__
 
-�yvind R�nningstad
+Øyvind Rønningstad
     :email: `oyvind.ronningstad@nordicsemi.no <oyvind.ronningstad@nordicsemi.no>`__
     :github: `oyvindronningstad <https://github.com/oyvindronningstad>`__
 

@@ -217,7 +217,7 @@ static void bt_gatt_wu_start_service_discovery(struct bt_conn *conn)
     {
         return;
     }
-    memcpy(&s_WuState.peer[i].serivceDiscoveryUuid.uuid, WIRELESS_UART_SERIVCE, sizeof(s_WuState.peer[i].serivceDiscoveryUuid));
+    memcpy(&s_WuState.peer[i].serivceDiscoveryUuid, WIRELESS_UART_SERIVCE, sizeof(s_WuState.peer[i].serivceDiscoveryUuid));
     s_WuState.peer[i].discoverParams.uuid = &s_WuState.peer[i].serivceDiscoveryUuid.uuid;
     s_WuState.peer[i].discoverParams.func = bt_gatt_wu_discovery_service;
     s_WuState.peer[i].discoverParams.start_handle = 0x0001;

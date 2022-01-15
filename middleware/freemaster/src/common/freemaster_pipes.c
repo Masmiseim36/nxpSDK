@@ -375,17 +375,17 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle,
 
 FMSTR_BOOL FMSTR_PipePuts(FMSTR_HPIPE pipeHandle, const char *text)
 {
-    FMSTR_PIPE *pp         = (FMSTR_PIPE *)pipeHandle;
-    FMSTR_PIPE_BUFF *pbuff = &pp->tx;
-    FMSTR_PIPE_SIZE free   = _FMSTR_PipeGetBytesFree(pbuff);
-    FMSTR_PIPE_SIZE slen   = (FMSTR_PIPE_SIZE)FMSTR_StrLen(text);
+    FMSTR_PIPE *pp            = (FMSTR_PIPE *)pipeHandle;
+    FMSTR_PIPE_BUFF *pbuff    = &pp->tx;
+    FMSTR_PIPE_SIZE bytesFree = _FMSTR_PipeGetBytesFree(pbuff);
+    FMSTR_PIPE_SIZE strLen    = (FMSTR_PIPE_SIZE)FMSTR_StrLen(text);
 
-    if (slen > free)
+    if (strLen > bytesFree)
     {
         return FMSTR_FALSE;
     }
 
-    return FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)text, slen, 0) >= slen ? FMSTR_TRUE : FMSTR_FALSE;
+    return FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)text, strLen, 0) >= strLen ? FMSTR_TRUE : FMSTR_FALSE;
 }
 
 /******************************************************************************
@@ -407,7 +407,7 @@ static FMSTR_CHAR _FMSTR_XDigit(FMSTR_U8 digit, FMSTR_BOOL uppercase)
     }
     else
     {
-        if (uppercase != 0U)
+        if (uppercase != FMSTR_FALSE)
         {
             c = 'A' - 10;
         }
@@ -1085,25 +1085,25 @@ static const char *FMSTR_PipeParseFormat(const char *format, FMSTR_PIPE_PRINTF_C
     {
         /* short modifier (char for hh)*/
         case 'h':
-            pctx->dtsize = sizeof(short);
+            pctx->dtsize = (FMSTR_U8)sizeof(short);
             format++;
 
             /* one more 'h' means 'char' */
             if (*format == 'h')
             {
-                pctx->dtsize = sizeof(char);
+                pctx->dtsize = (FMSTR_U8)sizeof(char);
                 format++;
             }
             break;
 
         case 'l':
-            pctx->dtsize = sizeof(long);
+            pctx->dtsize = (FMSTR_U8)sizeof(long);
             format++;
             break;
 
         default:
             /* default data type is 'int' */
-            pctx->dtsize = sizeof(int);
+            pctx->dtsize = (FMSTR_U8)sizeof(int);
             break;
     }
 
@@ -1146,13 +1146,13 @@ static const char *FMSTR_PipeParseFormat(const char *format, FMSTR_PIPE_PRINTF_C
         /* character */
         case 'c':
             pctx->radix  = FMSTR_PIPE_ITOAFMT_CHAR;
-            pctx->dtsize = sizeof(char);
+            pctx->dtsize = (FMSTR_U8)sizeof(char);
             break;
 
         /* string */
         case 's':
             pctx->flags.flg.isstring = 1U;
-            pctx->dtsize             = sizeof(void *);
+            pctx->dtsize             = (FMSTR_U8)sizeof(void *);
             break;
 
         /* unknown */
@@ -1572,42 +1572,42 @@ FMSTR_INDEX FMSTR_FindPipeIndex(FMSTR_PIPE_PORT pipePort)
 
 static FMSTR_PIPE_SIZE _FMSTR_PipeGetBytesFree(FMSTR_PIPE_BUFF *pipeBuff)
 {
-    FMSTR_PIPE_SIZE free;
+    FMSTR_PIPE_SIZE szFree;
 
     if (pipeBuff->flags.flg.bIsFull != 0U)
     {
-        free = 0;
+        szFree = 0;
     }
     else if (pipeBuff->wp < pipeBuff->rp)
     {
-        free = (FMSTR_PIPE_SIZE)(pipeBuff->rp - pipeBuff->wp);
+        szFree = (FMSTR_PIPE_SIZE)(pipeBuff->rp - pipeBuff->wp);
     }
     else
     {
-        free = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->wp + pipeBuff->rp);
+        szFree = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->wp + pipeBuff->rp);
     }
 
-    return (FMSTR_PIPE_SIZE)(free * FMSTR_CFG_BUS_WIDTH);
+    return (FMSTR_PIPE_SIZE)(szFree * FMSTR_CFG_BUS_WIDTH);
 }
 
 static FMSTR_PIPE_SIZE _FMSTR_PipeGetBytesReady(FMSTR_PIPE_BUFF *pipeBuff)
 {
-    FMSTR_PIPE_SIZE full;
+    FMSTR_PIPE_SIZE szFull;
 
     if (pipeBuff->flags.flg.bIsFull != 0U)
     {
-        full = (FMSTR_PIPE_SIZE)pipeBuff->size;
+        szFull = (FMSTR_PIPE_SIZE)pipeBuff->size;
     }
     else if (pipeBuff->wp >= pipeBuff->rp)
     {
-        full = (FMSTR_PIPE_SIZE)(pipeBuff->wp - pipeBuff->rp);
+        szFull = (FMSTR_PIPE_SIZE)(pipeBuff->wp - pipeBuff->rp);
     }
     else
     {
-        full = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->rp + pipeBuff->wp);
+        szFull = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->rp + pipeBuff->wp);
     }
 
-    return (FMSTR_PIPE_SIZE)(full * FMSTR_CFG_BUS_WIDTH);
+    return (FMSTR_PIPE_SIZE)(szFull * FMSTR_CFG_BUS_WIDTH);
 }
 
 static void _FMSTR_PipeDiscardBytes(FMSTR_PIPE_BUFF *pipeBuff, FMSTR_SIZE8 countBytes)

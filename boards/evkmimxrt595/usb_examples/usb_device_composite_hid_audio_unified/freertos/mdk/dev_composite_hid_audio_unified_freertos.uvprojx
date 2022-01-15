@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=1, DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT595SEVKA=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>_DEBUG=1, DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_FREERTOS, CPU_MIMXRT595SEVKA=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/audio;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -791,6 +791,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_flexcomm_i2s.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -922,6 +937,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -1651,9 +1671,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT595SEVKA=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_FREERTOS, CPU_MIMXRT595SEVKA=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/audio;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2110,6 +2130,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_flexcomm_i2s.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -2241,6 +2276,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -2970,9 +3010,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT595SEVKA=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_FREERTOS, CPU_MIMXRT595SEVKA=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/audio;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3429,6 +3469,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_flexcomm_i2s.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -3560,6 +3615,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
@@ -4289,9 +4349,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT595SEVKA=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, HAL_AUDIO_ISR_PRIORITY=0, USB_STACK_FREERTOS, CPU_MIMXRT595SEVKA=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/codec/wm8904;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/audio;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT595S;../../../../../../devices/MIMXRT595S/utilities/str;../../../../../../devices/MIMXRT595S/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../flash_config;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4748,6 +4808,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/audio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_audio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/audio/fsl_adapter_audio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_flexcomm_i2s.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/audio/fsl_adapter_flexcomm_i2s.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -4879,6 +4954,11 @@
               <FileName>StackMacros.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
+            </File>
+            <File>
+              <FileName>stdint.readme</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>

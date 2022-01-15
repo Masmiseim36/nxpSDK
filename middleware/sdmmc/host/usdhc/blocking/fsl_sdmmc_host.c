@@ -84,7 +84,7 @@ uint32_t SDMMCHOST_CardDetectStatus(sdmmchost_t *host)
         if (sdCD->dat3PullFunc != NULL)
         {
             sdCD->dat3PullFunc(kSD_DAT3PullDown);
-            SDMMC_OSADelay(1U);
+            SDMMC_OSADelay(SDMMCHOST_DATA3_DETECT_CARD_DELAY);
         }
     }
     else

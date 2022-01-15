@@ -85,7 +85,7 @@
 #define BT_AVDTP_ERR_UNSUPPORTED_CONFIGURAION   0x29
 #define BT_AVDTP_ERR_BAD_STATE                  0x31
 
-#define BT_AVDTP_MAX_MTU CONFIG_BT_L2CAP_RX_MTU
+#define BT_AVDTP_MAX_MTU CONFIG_BT_BUF_ACL_RX_SIZE
 
 #define BT_AVDTP_MIN_SEID 0x01
 #define BT_AVDTP_MAX_SEID 0x3E
@@ -101,7 +101,7 @@ struct bt_avdtp_req {
 	uint8_t tid;
 	bt_avdtp_func_t func;
 #if 0
-	struct k_delayed_work timeout_work;
+	struct k_work_delayable timeout_work;
 #endif
 };
 

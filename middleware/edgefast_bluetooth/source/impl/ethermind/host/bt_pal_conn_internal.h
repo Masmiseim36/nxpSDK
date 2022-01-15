@@ -106,10 +106,23 @@ struct bt_conn_sco {
 struct bt_conn_iso {
 	/* Reference to ACL Connection */
 	struct bt_conn          *acl;
-	/* CIG ID */
-	uint8_t			cig_id;
-	/* CIS ID */
-	uint8_t			cis_id;
+	union {
+		/* CIG ID */
+		uint8_t			cig_id;
+		/* BIG handle */
+		uint8_t			big_handle;
+	};
+
+	union {
+		/* CIS ID */
+		uint8_t			cis_id;
+
+		/* BIS ID */
+		uint8_t			bis_id;
+	};
+
+	/** If true, this is a ISO for a BIS, else it is a ISO for a CIS */
+	bool is_bis;
 };
 
 typedef void (*bt_conn_tx_cb_t)(struct bt_conn *conn, void *user_data);
@@ -145,8 +158,8 @@ struct bt_conn {
 	/* Which local identity address this connection uses */
 	uint8_t                    id;
 
-	bt_security_t		sec_level;
 #if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
+	bt_security_t		sec_level;
 	bt_security_t		required_sec_level;
 	uint8_t			encrypt;
 #endif /* CONFIG_BT_SMP || CONFIG_BT_BREDR */
@@ -183,7 +196,7 @@ struct bt_conn {
 	 * - Initiator connect create cancel.
 	 * - Connection cleanup.
 	 */
-	struct k_delayed_work	deferred_work;
+	struct k_work_delayable	deferred_work;
 
 #if 0
 	union {
@@ -220,7 +233,13 @@ void bt_conn_reset_rx_state(struct bt_conn *conn);
 /* Process incoming data for a connection */
 void bt_conn_recv(struct bt_conn *conn, struct net_buf *buf, uint8_t flags);
 
-/* Send data over a connection */
+/* Send data over a connection
+ *
+ * Buffer ownership is transferred to stack in case of success.
+ *
+ * Calling this from RX thread is assumed to never fail so the return can be
+ * ignored.
+ */
 int bt_conn_send_cb(struct bt_conn *conn, struct net_buf *buf,
 		    bt_conn_tx_cb_t cb, void *user_data);
 
@@ -320,6 +339,8 @@ struct bt_conn *bt_conn_lookup_state_le(uint8_t id, const bt_addr_le_t *peer,
 /* Set connection object in certain state and perform action related to state */
 void bt_conn_set_state(struct bt_conn *conn, bt_conn_state_t state);
 
+void bt_conn_connected(struct bt_conn *conn);
+
 int bt_conn_le_conn_update(struct bt_conn *conn,
 			   const struct bt_le_conn_param *param);
 
@@ -352,7 +373,7 @@ void bt_conn_security_changed(struct bt_conn *conn, uint8_t hci_err,
 #if (defined(CONFIG_NET_BUF_LOG) && ((CONFIG_NET_BUF_LOG) > 0U))
 struct net_buf *bt_conn_create_pdu_timeout_debug(struct net_buf_pool *pool,
 						 size_t reserve,
-						 size_t timeout,
+						 k_timeout_t timeout,
 						 const char *func, int line);
 #define bt_conn_create_pdu_timeout(_pool, _reserve, _timeout) \
 	bt_conn_create_pdu_timeout_debug(_pool, _reserve, _timeout, \
@@ -360,10 +381,10 @@ struct net_buf *bt_conn_create_pdu_timeout_debug(struct net_buf_pool *pool,
 
 #define bt_conn_create_pdu(_pool, _reserve) \
 	bt_conn_create_pdu_timeout_debug(_pool, _reserve, osaWaitForever_c, \
-					 __func__, __LINE__)
+					 __func__, __line__)
 #else
 struct net_buf *bt_conn_create_pdu_timeout(struct net_buf_pool *pool,
-					   size_t reserve, size_t timeout);
+					   size_t reserve, k_timeout_t timeout);
 
 #define bt_conn_create_pdu(_pool, _reserve) \
 	bt_conn_create_pdu_timeout(_pool, _reserve, osaWaitForever_c)
@@ -372,7 +393,7 @@ struct net_buf *bt_conn_create_pdu_timeout(struct net_buf_pool *pool,
 /* Prepare a PDU to be sent over a connection */
 #if (defined(CONFIG_NET_BUF_LOG) && ((CONFIG_NET_BUF_LOG) > 0U))
 struct net_buf *bt_conn_create_frag_timeout_debug(size_t reserve,
-						  size_t timeout,
+						  k_timeout_t timeout,
 						  const char *func, int line);
 
 #define bt_conn_create_frag_timeout(_reserve, _timeout) \
@@ -384,7 +405,7 @@ struct net_buf *bt_conn_create_frag_timeout_debug(size_t reserve,
 					  __func__, __LINE__)
 #else
 struct net_buf *bt_conn_create_frag_timeout(size_t reserve,
-					    size_t timeout);
+					    k_timeout_t timeout);
 
 #define bt_conn_create_frag(_reserve) \
 	bt_conn_create_frag_timeout(_reserve, osaWaitForever_c)

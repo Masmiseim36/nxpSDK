@@ -329,7 +329,7 @@ static usb_status_t USB_HostProcessState(usb_host_device_instance_t *deviceInsta
     {
         case kStatus_DEV_GetDes8:
         case kStatus_DEV_GetDes: /* get descriptor state */
-            getDescriptorParam.descriptorLength = sizeof(usb_descriptor_device_t);
+            getDescriptorParam.descriptorLength = (uint16_t)sizeof(usb_descriptor_device_t);
             if (deviceInstance->state == (uint8_t)kStatus_DEV_GetDes8)
             {
                 getDescriptorParam.descriptorLength = 8U;

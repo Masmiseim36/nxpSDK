@@ -1,11 +1,11 @@
 /******************************************************************************
  * @file     arm_math.h
  * @brief    Public header file for CMSIS DSP Library
- * @version  V1.7.0
- * @date     18. March 2019
+ * @version  V1.9.0
+ * @date     17. March 2021
  ******************************************************************************/
 /*
- * Copyright (c) 2010-2019 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -45,9 +45,18 @@
    * - Support Vector Machine functions (SVM)
    * - Bayes classifier functions
    * - Distance functions
+   * - Quaternion functions
    *
    * The library has generally separate functions for operating on 8-bit integers, 16-bit integers,
    * 32-bit integer and 32-bit floating-point values.
+   *
+   * The library is providing vectorized versions of most algorthms for Helium
+   * and of most f32 algorithms for Neon.
+   *
+   * When using a vectorized version, provide a little bit of padding after the end of
+   * a buffer (3 words) because the vectorized code may read a little bit after the end
+   * of a buffer. You don't have to modify your buffers but just ensure that the
+   * end of buffer + padding is not outside of a memory region.
    *
    * \section using Using the Library
    *
@@ -134,7 +143,13 @@
    *
    * - ARM_MATH_HELIUM:
    *
-   * It implies the flags ARM_MATH_MVEF and ARM_MATH_MVEI and ARM_MATH_FLOAT16.
+   * It implies the flags ARM_MATH_MVEF and ARM_MATH_MVEI and ARM_MATH_MVE_FLOAT16.
+   *
+   * - ARM_MATH_HELIUM_EXPERIMENTAL:
+   *
+   * Only taken into account when ARM_MATH_MVEF, ARM_MATH_MVEI or ARM_MATH_MVE_FLOAT16 are defined.
+   * Enable some vector versions which may have worse performance than scalar
+   * depending on the core / compiler configuration.
    *
    * - ARM_MATH_MVEF:
    *
@@ -152,7 +167,9 @@
    * - DISABLEFLOAT16:
    *
    * Disable float16 algorithms when __fp16 is not supported for a
-   * specific compiler / core configuration
+   * specific compiler / core configuration.
+   * This is only valid for scalar. When vector architecture is
+   * supporting f16 then it can't be disabled.
    *
    * <hr>
    * \section pack CMSIS-DSP in ARM::CMSIS Pack
@@ -196,25 +213,26 @@
 #define _ARM_MATH_H
 
 
-#include "cmsis/CMSIS/DSP/Include/arm_math_types.h"
-#include "cmsis/CMSIS/DSP/Include/arm_math_memory.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_memory.h"
 
-#include "cmsis/CMSIS/DSP/Include/dsp/none.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/utils.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/none.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/utils.h"
 
-#include "cmsis/CMSIS/DSP/Include/dsp/basic_math_functions.h"  
-#include "cmsis/CMSIS/DSP/Include/dsp/interpolation_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/bayes_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/matrix_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/complex_math_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/statistics_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/controller_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/support_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/distance_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/svm_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/fast_math_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/transform_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/filtering_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/basic_math_functions.h"  
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/interpolation_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/bayes_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/matrix_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/complex_math_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/statistics_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/controller_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/support_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/distance_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/svm_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/fast_math_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/transform_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/filtering_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/quaternion_math_functions.h"
 
 
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 *
-*    Copyright 2012 - 2020 Vivante Corporation, Santa Clara, California.
+*    Copyright 2012 - 2021 Vivante Corporation, Santa Clara, California.
 *    All Rights Reserved.
 *
 *    Permission is hereby granted, free of charge, to any person obtaining
@@ -29,6 +29,7 @@
 #include "elm_os.h"
 #include "vg_lite_text.h"
 #include "vft_debug.h"
+#include "elm_headers.h"
 
 #if (VG_RENDER_TEXT==1)
 #include "elm_text.h"
@@ -457,6 +458,7 @@ int destroy_evo(el_Obj_EVO *evo)
        ;
 #endif /* VG_RENDER_TEXT */
     } else {
+    /* TODO: EVO destroy not done yet. */
     if (evo->defaultAttrib.paint.grad != NULL) {
         vg_lite_clear_grad(&evo->defaultAttrib.paint.grad->data.grad);
         elm_free(evo->defaultAttrib.paint.grad);
@@ -599,10 +601,48 @@ static el_Obj_EVO* _get_evo(el_Obj_Group *group, int32_t id)
     }
 }
 
-static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
+#if (VG_RENDER_TEXT==1)
+static int _load_font(uint8_t *data,
+                      unsigned size)
 {
-    int i = 0, j = 0;
-    ELM_ELEMENT_TYPE element_type;
+    ElmHandle ret = ELM_NULL_HANDLE;
+    el_Font_Header *font_header = (el_Font_Header *)data;
+
+
+    if (font_header->size_font_block != size)
+        return ret;
+
+    return _load_font_data(data);
+}
+
+static ElmHandle _load_text(uint8_t *data,
+                            unsigned size,
+                            el_Obj_EVO *evo)
+{
+    ElmHandle ret = ELM_NULL_HANDLE;
+    el_Text_Header *text_header = (el_Text_Header *)data;
+
+
+    if (text_header->size_text_block != size)
+        return ret;
+
+    return _load_text_data(data, evo);
+}
+#endif /* VG_RENDER_TEXT */
+
+#if (defined(__ICCARM__))
+/*
+ * Disable the unaligned structure attribute warning. Due to the packed data
+ * structures used to interpret ELM objects data the IAR compiler issues a
+ * number of warnings that certain attributes of the headers might be unaligned.
+ * This is not true, however, as all atributes are manually aligned to 4 bytes.
+ */
+#pragma diag_suppress = Pa039
+#endif
+
+static ElmHandle _load_evo(const uint8_t *data, unsigned size, el_Obj_EVO *evo)
+{
+    int i = 0;
 #if (RTOS && DDRLESS) || BAREMETAL
     uint32_t colors[VLC_MAX_GRAD];
     void *path_data;
@@ -611,11 +651,7 @@ static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
     uint8_t *path_data = NULL;
 #endif
     el_Obj_EVO *local_evo = NULL;
-
-    uint8_t *p_base_addr = (uint8_t *) void_data;
-    uint8_t *data = (uint8_t *) void_data;
-    int ret = -1;
-    uint32_t is_image;
+    el_EVO_Header *evo_header = (el_EVO_Header *) data;
 
     if (evo == NULL) {
 #if (RTOS && DDRLESS) || BAREMETAL
@@ -628,125 +664,73 @@ static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
     JUMP_IF_NULL(evo, error_exit);
     memset(evo, 0, sizeof(el_Obj_EVO));
 
-    element_type = (ELM_ELEMENT_TYPE)*(uint32_t *)(p_base_addr + 3 * 4);
-    DBG_READ_32B("element_type", element_type, (DBG_OFFSET() + 3 * 4));
-    if(element_type == ELEMENT_FONT) {
-#if (VG_RENDER_TEXT==1)
-        ret = _load_font_data((uint8_t *)(p_base_addr + 2 * 4));
-#else
-        ret = 0;
-#endif /* VG_RENDER_TEXT */
-        if(ret == 0)
-        {
-            uint32_t size_font_block = *(uint32_t *)((int8_t *)p_base_addr + 2*4);
-            DBG_READ_32B("font_block_size", size_font_block, (DBG_OFFSET() + 2*4));
-            data = (uint8_t *)(p_base_addr + size_font_block);
-        }
-    }
+    /*
+     * Check if object size is valid. The size parameter
+     * needs to be a value greater or equal to the
+     * size of the current object to be loaded.
+     * This check needs to be done in order to ensure
+     * that the is_image field is correctly read and
+     * we do not read from invalid memory.
+     */
+    JUMP_IF_LOWER(size,
+                  MIN(sizeof(el_EVO_Polygon), sizeof(el_EVO_Image)),
+                  error_exit);
 
-    element_type = (ELM_ELEMENT_TYPE)*(uint32_t *)(data + 3 * 4);
-    DBG_READ_32B("element_type", element_type, (DBG_OFFSET() + 3 * 4));
-    if(element_type == ELEMENT_TEXT) {
-        ret = ELM_NULL_HANDLE;
-#if (VG_RENDER_TEXT==1)
-        ret = _load_text((uint8_t *)(data + 2 * 4), evo);
-#endif /* VG_RENDER_TEXT */
-        return ret;
-    }
-    data = (uint8_t *)(data + 8);
-    DBG_INC_OFFSET(8);
-
-    /* the offset of is_image relative to evo_data is 76*/
-    is_image = (*(uint32_t *)(data + 84)) >> 29 & 1;
-
-    if(is_image)
+    if(evo_header->polygon.paint_type.is_image)
     {
-        vg_lite_matrix_t path_matrix;
-        uint32_t imagelength = *(uint32_t *)(data + 2 * 4);
-        /* the offset of img_width relative to evo_data is 116*/
-        uint32_t img_width = *(uint32_t *)(data + 31*4);
-        /* the offset of img_height relative to evo_data is 120*/
-        uint32_t img_height = *(uint32_t *)(data + 32*4);
-        memcpy(evo->eboname,data + 3 * 4,imagelength);
-        evo->is_image = is_image;
-        vg_lite_identity(&path_matrix);
-        for (i = 0 ;i < 3; i++)
-            for (j = 0; j < 3; j++)
-            {
-                /* the offset of transform relative to evo_data is 80*/
-                path_matrix.m[i][j] = *(float *)(data + (22 + i *3 + j)*4);
-            }
+        /*
+         * Check if object size is valid
+         * (greater or equal to el_EVO_Image size).
+         */
+        JUMP_IF_LOWER(size,
+                      sizeof(el_EVO_Image),
+                      error_exit);
+        memcpy(evo->eboname,
+               evo_header->image.eboname,
+               evo_header->image.namelength);
+        evo->is_image = evo_header->image.paint_type.is_image;
         _init_transform(&evo->defaultAttrib.transform);
-        memcpy(&evo->defaultAttrib.transform.matrix, &path_matrix, sizeof(path_matrix));
-        evo->img_width = img_width;
-        evo->img_height = img_height;
+        memcpy(&evo->defaultAttrib.transform.matrix,
+               &(evo_header->image.matrix),
+               sizeof(vg_lite_matrix_t));
+        evo->img_width = evo_header->image.width;
+        evo->img_height = evo_header->image.height;
     }
     else
     {
-        uint32_t stop_count,stop_offset,color_offset;
-        vg_lite_radial_gradient_spreadmode_t spread_mode = VG_LITE_RADIAL_GRADIENT_SPREAD_FILL;
-        vg_lite_radial_gradient_parameter_t radialGradient;
-
-        vg_lite_float_t min_x = *(vg_lite_float_t *)(data + 2 * 4);
-        vg_lite_float_t min_y = *(vg_lite_float_t *)(data + 3 * 4);
-        vg_lite_float_t max_x = *(vg_lite_float_t *)(data + 4 * 4);
-        vg_lite_float_t max_y = *(vg_lite_float_t *)(data + 5 * 4);
-        vg_lite_format_t data_format = *(vg_lite_format_t *)(data + 6 * 4);
-        uint32_t path_length = *(uint32_t *)(data + 7 * 4);
-        uint32_t path_offset = *(uint32_t *)(data + 8 * 4);
-        vg_lite_matrix_t path_matrix;
-        vg_lite_quality_t quality = *(vg_lite_quality_t *)(data + 18 * 4);
-        ELM_EVO_FILL fill_rule =  *(ELM_EVO_FILL *)(data + 19 * 4);
-        ELM_BLEND blend = *(ELM_BLEND *)(data + 20 * 4);
-        ELM_PAINT_TYPE type = (ELM_PAINT_TYPE)((*(uint32_t *)(data + 21 * 4)) & 0x0fffffff);
-        uint32_t has_pattern = (*(uint32_t *)(data + 21 * 4)) >> 31 & 1;
-        uint32_t is_pattern = (*(uint32_t *)(data + 21 * 4)) >> 30 & 1;
-        uint32_t color = *(uint32_t *)(data + 22 * 4);
-        vg_lite_matrix_t grad_matrix;
-
+        /*
+         * Check if object size is valid
+         * (greater or equal to el_EVO_Polygon size).
+         */
+        JUMP_IF_LOWER(size,
+                      sizeof(el_EVO_Polygon),
+                      error_exit);
         el_Transform *transform = NULL;
         el_Transform *grad_transform = NULL;
+        el_EVO_Polygon *object_data = (el_EVO_Polygon *) &(evo_header->polygon);
+        el_EVO_GradData *grad_data = (el_EVO_GradData *) &(evo_header->polygon.grad);
 
+        /* Get path data from the object. */
 #if (RTOS && DDRLESS) || BAREMETAL
-        path_data = (void *)(data + path_offset);
+        path_data = (void *) (data + object_data->offset);
 #else
-        if(type == ELM_PAINT_RADIAL_GRADIENT)
-        {
-            radialGradient.cx = *(vg_lite_float_t *)(data + 23 * 4);
-            radialGradient.cy = *(vg_lite_float_t *)(data + 24 * 4);
-            radialGradient.r = *(vg_lite_float_t *)(data + 25 * 4);
-            radialGradient.fx = *(vg_lite_float_t *)(data + 26 * 4);
-            radialGradient.fy = *(vg_lite_float_t *)(data + 27 * 4);
-            spread_mode = *(vg_lite_radial_gradient_spreadmode_t *)(data + 28 * 4);
-
-            stop_count = *(uint32_t *)(data + 38 * 4);
-            stop_offset = *(uint32_t *)(data + 39 * 4);
-            color_offset = *(uint32_t *)(data + 40 * 4);
-        }
-        else
-        {
-            stop_count = *(uint32_t *)(data + 32 * 4);
-            stop_offset = *(uint32_t *)(data + 33 * 4);
-            color_offset = *(uint32_t *)(data + 34 * 4);
-        }
-
-        path_data = (uint8_t *)elm_alloc(1, path_length);
+        path_data = (uint8_t *)elm_alloc(1, object_data->length);
         JUMP_IF_NULL(path_data, error_exit);
 
 #ifdef ENABLE_STRICT_DEBUG_MEMSET
-        memset(path_data, 0, path_length);
+        memset(path_data, 0, object_data->length);
 #endif
-        memcpy(path_data, (void *)(data + path_offset), path_length);
+        JUMP_IF_LOWER(size,
+                      object_data->offset + object_data->length,
+                      error_exit);
+        /* Get path data. */
+        memcpy(path_data, (void *)(data + object_data->offset),
+               object_data->length);
 #endif
-#if (VG_RENDER_TEXT==1)
-        dbg_float_ary_no_offset_update("path_data", (float *)path_data, 
-                                       path_length/4, path_offset);
-        DBG_TRACE(("\n"));
-#endif /* VG_RENDER_TEXT */
 
-        if(has_pattern)
+        if(object_data->paint_type.has_pattern)
             evo->has_pattern = 1;
-        if(is_pattern)
+        if(object_data->paint_type.is_pattern)
             evo->is_pattern = 1;
 
         _init_transform(&evo->defaultAttrib.transform);
@@ -755,34 +739,8 @@ static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
         evo->object.type = ELM_OBJECT_TYPE_EVO;
         evo->object.reference = 0;
 
-        vg_lite_identity(&path_matrix);
-        vg_lite_identity(&grad_matrix);
-        for (i = 0 ;i < 3; i++)
-            for (j = 0; j < 3; j++)
-            {
-                path_matrix.m[i][j] = *(float *)(data + (9 + i *3 + j)*4);
-                if(type == ELM_PAINT_RADIAL_GRADIENT)
-                    grad_matrix.m[i][j] = *(float *)(data + (29 + i *3 + j)*4);
-                else 
-                    grad_matrix.m[i][j] = *(float *)(data + (23 + i *3 + j)*4);
-
-            }
-        dbg_float_ary_no_offset_update("path_matrix", 
-                                       &path_matrix.m[0][0], 9, (DBG_OFFSET() + 9*4));
-        DBG_TRACE(("\n"));
-        if(type == ELM_PAINT_RADIAL_GRADIENT)
-        {
-            dbg_float_ary_no_offset_update("grad_matrix", 
-                                           &grad_matrix.m[0][0], 9, (DBG_OFFSET() + 29*4));
-        }
-        else
-        {
-            dbg_float_ary_no_offset_update("grad_matrix", 
-                                           &grad_matrix.m[0][0], 9, (DBG_OFFSET() + 23*4));
-        }
-        DBG_TRACE(("\n"));
-
-        if ((type == ELM_PAINT_RADIAL_GRADIENT) || (type == ELM_PAINT_GRADIENT)) {
+        if ((object_data->paint_type.paint == ELM_PAINT_RADIAL_GRADIENT) ||
+            (object_data->paint_type.paint == ELM_PAINT_GRADIENT)) {
 #if (RTOS && DDRLESS) || BAREMETAL
             evo->defaultAttrib.paint.grad = alloc_grad();
 #else
@@ -799,58 +757,70 @@ static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
 
             _init_transform(&evo->defaultAttrib.paint.grad->data.transform);
             grad_transform = &evo->defaultAttrib.paint.grad->data.transform;
-            memcpy(&grad_transform->matrix, &grad_matrix, sizeof(grad_matrix));
-
-            colors = (uint32_t *)elm_alloc(stop_count, sizeof(uint32_t));
+            memcpy(&grad_transform->matrix, &(grad_data->matrix),
+                   sizeof(vg_lite_matrix_t));
+            colors = (uint32_t *)elm_alloc(grad_data->stop_count, sizeof(uint32_t));
             JUMP_IF_NULL(colors, error_exit);
-            for (i = 0 ;i < stop_count; i++)
-                colors[i] = *(uint32_t *)(data + color_offset + i*4);
+            memcpy(colors,
+                   data + grad_data->color_offset,
+                   grad_data->stop_count * sizeof(uint32_t));
         }
 
-        // fill path
-#ifdef ENABLE_DEBUG_TRACE
-        float bounds[4];
-        bounds[0] = min_x;
-        bounds[1] = min_y;
-        bounds[2] = max_x;
-        bounds[3] = max_y;
-        vft_dbg_path_bounds("EVO_INIT PATH_BOUNDS", bounds, 4);
-        vft_dbg_path("EVO_INIT PATH_DATA", evo->data.path.path, evo->data.path.path_length/4);
-#endif
-        vg_lite_init_path(&evo->data.path, data_format, (vg_lite_quality_t)quality, path_length, path_data,
-                          min_x, min_y, max_x, max_y);
+        if (object_data->arc_flag)
+           vg_lite_init_arc_path(&evo->data.path,
+                                 (vg_lite_format_t) object_data->format,
+                                 (vg_lite_quality_t) object_data->quality,
+                                 object_data->length,
+                                 path_data,
+                                 object_data->min_x,
+                                 object_data->min_y,
+                                 object_data->max_x,
+                                 object_data->max_y);
+        else
+          vg_lite_init_path(&evo->data.path,
+                            (vg_lite_format_t) object_data->format,
+                            (vg_lite_quality_t) object_data->quality,
+                            object_data->length,
+                            path_data,
+                            object_data->min_x,
+                            object_data->min_y,
+                            object_data->max_x,
+                            object_data->max_y);
 
-        memcpy(&transform->matrix, &path_matrix, sizeof(path_matrix));
-        evo->defaultAttrib.quality = ELM_QUALITY_LOW;
-        evo->defaultAttrib.fill_rule = fill_rule;
-        evo->defaultAttrib.blend = blend;
-        evo->defaultAttrib.paint.type = type;
+        memcpy(&transform->matrix, &(object_data->matrix), sizeof(vg_lite_matrix_t));
 
-        switch (type) {
+        evo->defaultAttrib.quality      = ELM_QUALITY_LOW;
+        evo->defaultAttrib.fill_rule    = (ELM_EVO_FILL) object_data->fill_rule;
+        evo->defaultAttrib.blend        = (ELM_BLEND) object_data->blend;
+        evo->defaultAttrib.paint.type   = (ELM_PAINT_TYPE) object_data->paint_type.paint;
+
+        switch (object_data->paint_type.paint) {
         case ELM_PAINT_GRADIENT:
         {
 #if (RTOS && DDRLESS) || BAREMETAL
             uint32_t stops[VLC_MAX_GRAD];
 #else
-            uint32_t *stops;
+            uint32_t *stops = NULL;
 
-            stops = (uint32_t *)malloc(stop_count * sizeof(uint32_t));
+            stops = (uint32_t *)elm_alloc(sizeof(uint32_t), grad_data->stop_count);
             JUMP_IF_NULL(stops, error_exit);
 #endif
-            for (i = 0 ;i < stop_count; i++)
+            for (i = 0 ;i < grad_data->stop_count; i++)
             {
-                stops[i] = (uint32_t)((*(float *)(data + stop_offset + i*4))*255);
+                stops[i] = (uint32_t)((*(float *) (data +
+                           grad_data->stop_offset + i * 4)) * 255);
             }
+
             vg_lite_init_grad(&evo->defaultAttrib.paint.grad->data.grad);
-            vg_lite_set_grad(&evo->defaultAttrib.paint.grad->data.grad, stop_count, colors, stops);
-            if (stop_count > 0)
+            vg_lite_set_grad(&evo->defaultAttrib.paint.grad->data.grad,
+                             grad_data->stop_count, colors, stops);
+            if (grad_data->stop_count > 0)
             {
                 vg_lite_update_grad(&evo->defaultAttrib.paint.grad->data.grad);
             }
-
 #if (RTOS && DDRLESS) || BAREMETAL
 #else
-            free(stops);
+            elm_free(stops);
 #endif
             break;
         }
@@ -858,33 +828,41 @@ static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
         {
             float *stops;
             vg_lite_color_ramp_t *vgColorRamp;
+            el_EVO_RadGradDataExt *rad_grad = (el_EVO_RadGradDataExt *) (data + sizeof(el_EVO_Header));
 
-            stops = (float *)elm_alloc(stop_count, sizeof(float));
+            JUMP_IF_LOWER(size,
+                          sizeof(el_EVO_Polygon) + sizeof(el_EVO_RadGradDataExt),
+                          error_exit);
+
+            stops = (float *)elm_alloc(grad_data->stop_count, sizeof(float));
             JUMP_IF_NULL(stops, error_exit);
-            memset(stops, 0, stop_count * sizeof(float));
-            vgColorRamp = (vg_lite_color_ramp_t *)elm_alloc(stop_count, sizeof(vg_lite_color_ramp_t));
+            memset(stops, 0, grad_data->stop_count * sizeof(float));
+            vgColorRamp = (vg_lite_color_ramp_t *) elm_alloc(grad_data->stop_count,
+                           sizeof(vg_lite_color_ramp_t));
             if (vgColorRamp == NULL) {
                 elm_free(stops);
                 goto error_exit;
             }
-            memset(vgColorRamp, 0, sizeof(vg_lite_color_ramp_t) * stop_count);
-            for (i = 0; i < stop_count; i++)
+            memset(vgColorRamp, 0,
+                   sizeof(vg_lite_color_ramp_t) * grad_data->stop_count);
+            for (i = 0; i < grad_data->stop_count; i++)
             {
-                stops[i] = (*(float *)(data + stop_offset + i*4));
+                stops[i] = (*(float *) (data + grad_data->stop_offset + i * 4));
                 vgColorRamp[i].alpha = (float)(colors[i] >> 24) / 255.0f;
                 vgColorRamp[i].red = (float)(colors[i] >> 16 & 0xFF) / 255.0f;
                 vgColorRamp[i].green = (float)(colors[i] >> 8 & 0xFF) / 255.0f;
                 vgColorRamp[i].blue = (float)(colors[i] & 0xFF) / 255.0f;
                 vgColorRamp[i].stop = stops[i];
             }
-            dbg_int_ary_no_offset_update("stops", &stops[0],
-                                     stop_count, (DBG_OFFSET() + stop_offset) );
-            dbg_int_ary_no_offset_update("colors", &colors[0],
-                                     stop_count, (DBG_OFFSET() + color_offset) );
 
-            memset(&evo->defaultAttrib.paint.grad->data.rad_grad, 0, sizeof(evo->defaultAttrib.paint.grad->data.rad_grad));
-            vg_lite_set_rad_grad(&evo->defaultAttrib.paint.grad->data.rad_grad, stop_count,vgColorRamp,radialGradient,spread_mode,1);
-            vg_lite_update_rad_grad(&evo->defaultAttrib.paint.grad->data.rad_grad);
+            memset(&evo->defaultAttrib.paint.radgrad->data.rad_grad, 0, sizeof(evo->defaultAttrib.paint.radgrad->data.rad_grad));
+            vg_lite_set_rad_grad(&evo->defaultAttrib.paint.radgrad->data.rad_grad,
+                                 grad_data->stop_count,
+                                 vgColorRamp,
+                                 rad_grad->params,
+                                 rad_grad->spread_mode,
+                                 0);
+            vg_lite_update_rad_grad(&evo->defaultAttrib.paint.radgrad->data.rad_grad);
 
             elm_free(stops);
             elm_free(vgColorRamp);
@@ -895,9 +873,8 @@ static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
             break;
         }
 
-        evo->defaultAttrib.paint.color = color;
+        evo->defaultAttrib.paint.color = object_data->color;
         evo->attribute = evo->defaultAttrib;
-
         ref_object(&evo->object);
         JUMP_IF_NON_ZERO_VALUE(add_object(&evo->object), error_exit);
 
@@ -910,7 +887,6 @@ static ElmHandle _load_evo(uint8_t *void_data, int size, el_Obj_EVO *evo)
     return evo->object.handle;
 
 error_exit:
-
 #if (RTOS && DDRLESS) || BAREMETAL
 #else
     if ( colors != NULL )
@@ -918,20 +894,24 @@ error_exit:
     if ( path_data != NULL)
         elm_free(path_data);
 #endif
+
     if ( (evo != NULL) && (evo->defaultAttrib.paint.grad != NULL) )
         elm_free(evo->defaultAttrib.paint.grad);
+    if ( (evo != NULL) && (evo->defaultAttrib.paint.radgrad != NULL) )
+        elm_free(evo->defaultAttrib.paint.radgrad);
     if ( local_evo != NULL )
         elm_free(local_evo);
 
     return ELM_NULL_HANDLE;
 }
 
-static ElmHandle _load_ebo(uint8_t *data, int size)
+static ElmHandle _load_ebo(const uint8_t *data, int size, uint32_t version)
 {
     vg_lite_error_t error;
     vg_lite_buffer_t *buffer;
-    uint32_t data_offset, clut_count, clut_data_offset, *colors;
-    uint32_t version;
+    uint32_t *colors, bytes = 0;
+
+    el_EBO_Header *ebo_header = (el_EBO_Header *) data;
 
 #if (RTOS && DDRLESS) || BAREMETAL
     el_Obj_EBO *ebo = alloc_ebo();
@@ -944,81 +924,118 @@ static ElmHandle _load_ebo(uint8_t *data, int size)
 #endif
     buffer = &ebo->data.buffer;
 
-    version = *(uint32_t *)(data);
+    /*
+     * Check if object size is valid. "size" needs to be a value greater than or
+     * equal to the size of the current object header.
+     */
+    JUMP_IF_LOWER(size, sizeof(el_EBO_Header), error_exit);
+    bytes += sizeof(el_EBO_Header);
+
     if(version == 1)
     {
-        ebo->object.type = (ELM_OBJECT_TYPE)(*(uint32_t *)(data + 1 * 4));
+        el_EBO_Palette *clut_header = (el_EBO_Palette *) (data + sizeof(el_EBO_Header));
+
+        /* Make sure object size includes the CLUT header */
+        bytes += sizeof(el_EBO_Palette);
+        JUMP_IF_LOWER(size, bytes, error_exit);
+
+        ebo->object.type = (ELM_OBJECT_TYPE) ebo_header->type;
         ebo->object.reference = 0;
 
-        buffer->width  = *(int32_t *)(data + 2 * 4);
-        buffer->height = *(int32_t *)(data + 3 * 4);
-        buffer->format = *(vg_lite_buffer_format_t *)(data + 6 * 4);
+        buffer->width  = ebo_header->width;
+        buffer->height = ebo_header->height;
+        buffer->format = (vg_lite_buffer_format_t) ebo_header->format;
         buffer->stride = 0;
+
         error = vg_lite_allocate(buffer);
         if (error != VG_LITE_SUCCESS)
         {
             destroy_ebo(ebo);
             return 0;
         }
-        buffer->stride = *(int32_t *)(data + 4 * 4);
-        buffer->tiled = (vg_lite_buffer_layout_t)(*(int32_t *)(data + 5 * 4));
-        data_offset = *(uint32_t *)(data + 7 * 4);
-        clut_count = *(uint32_t *)(data + 8 * 4);
-        clut_data_offset = *(uint32_t *)(data + 9 * 4);
-        colors = (uint32_t *)(data + clut_data_offset);
-        memcpy(buffer->memory, data + data_offset, buffer->stride * buffer->height);
+
+        buffer->stride = ebo_header->stride;
+        buffer->tiled  = (vg_lite_buffer_layout_t) ebo_header->tiled;
+        colors = (uint32_t *)(data + clut_header->clut_data_offset);
+
+        /* Make sure the object size includes image data */
+        JUMP_IF_LOWER(size,
+                      ebo_header->data_offset +
+                          (buffer->stride * buffer->height),
+                      error_exit);
+
+        memcpy(buffer->memory,
+               data + ebo_header->data_offset,
+               buffer->stride * buffer->height);
+
         /* Save CLUT infomation. */
-        ebo->clut_count = clut_count;
-        memcpy(ebo->clut, colors, sizeof(uint32_t) * clut_count);
+        ebo->clut_count = clut_header->clut_count;
+
+        /* Make sure object size includes CLUT data */
+        JUMP_IF_LOWER(size,
+                      clut_header->clut_data_offset +
+                          (sizeof(uint32_t) * clut_header->clut_count),
+                      error_exit);
+
+        memcpy(ebo->clut, colors, sizeof(uint32_t) * clut_header->clut_count);
     }
     else if(version == 2)
     {
-        ebo->object.type = (ELM_OBJECT_TYPE)(*(uint32_t *)(data + 1 * 4));
+        ebo->object.type = (ELM_OBJECT_TYPE) ebo_header->type;
         ebo->object.reference = 0;
 
-        buffer->width  = *(int32_t *)(data + 2 * 4);
-        buffer->height = *(int32_t *)(data + 3 * 4);
-        buffer->format = *(vg_lite_buffer_format_t *)(data + 6 * 4);
+        buffer->width  = ebo_header->width;
+        buffer->height = ebo_header->height;
+        buffer->format = (vg_lite_buffer_format_t) ebo_header->format;
         buffer->stride = 0;
+
         error = vg_lite_allocate(buffer);
         if (error != VG_LITE_SUCCESS)
         {
             destroy_ebo(ebo);
             return 0;
         }
-        buffer->stride = *(int32_t *)(data + 4 * 4);
-        buffer->tiled = (vg_lite_buffer_layout_t)(*(int32_t *)(data + 5 * 4));
-        data_offset = *(uint32_t *)(data + 7 * 4);
-        memcpy(buffer->memory, data + data_offset, buffer->stride * buffer->height);
+
+        buffer->stride = ebo_header->stride;
+        buffer->tiled  = (vg_lite_buffer_layout_t) ebo_header->tiled;
+
+        /* Make sure the object size includes image data */
+        JUMP_IF_LOWER(size,
+                      ebo_header->data_offset +
+                          (buffer->stride * buffer->height),
+                      error_exit);
+
+        memcpy(buffer->memory,
+               data + ebo_header->data_offset,
+               buffer->stride * buffer->height);
     }
     /* Set transformation to identity. */
-    ebo->defaultAttrib.transform.dirty = 1;
+    ebo->defaultAttrib.transform.dirty    = 1;
     ebo->defaultAttrib.transform.identity = 1;
+
     _init_transform(&ebo->defaultAttrib.transform);
     ebo->attribute = ebo->defaultAttrib;
 
     ref_object(&ebo->object);
     JUMP_IF_NON_ZERO_VALUE(add_object(&ebo->object), error_exit);
+
     return ebo->object.handle;
+
 error_exit:
     if (ebo != NULL ) {
         elm_free(ebo);
     }
+
     return ELM_NULL_HANDLE;
 }
 
-static ElmHandle _load_ego(void *void_data, int size)
+static ElmHandle _load_ego(const uint8_t *data, int size)
 {
-    int i,j;
-    unsigned int evoDataSize = 0;
-    unsigned int evo_offset, invalid_count = 0;
-    /* el_Object *obj; */
-    ELM_ELEMENT_TYPE element_type;
-    uint32_t size_font_block = 0;
-    uint32_t offs = 0;
-    int ret = 0;
-    uint8_t *p_base_addr = (uint8_t *) void_data;
-    uint8_t * data = (uint8_t *) void_data;
+    int i;
+    unsigned int invalid_count = 0;
+    uint32_t *obj_size, *obj_offset, *obj_type;
+    void *obj_data;
+    el_EGO_Header *ego_header = (el_EGO_Header *) data;
 
 #if (RTOS && DDRLESS) || BAREMETAL
     el_Obj_Group *ego = alloc_ego();
@@ -1030,41 +1047,14 @@ static ElmHandle _load_ego(void *void_data, int size)
     memset(ego, 0, sizeof(el_Obj_Group));
 #endif
 
-    ego->object.type = (ELM_OBJECT_TYPE)*(uint32_t *)(p_base_addr + 1*4);
-    DBG_READ_32B("group_obj_type", ego->object.type, (DBG_OFFSET() + 1*4));
-
-    ret = -1;
-
-    element_type = (ELM_ELEMENT_TYPE)*(uint32_t *)(p_base_addr + 3 * 4); 
-    DBG_READ_32B("group_obj_type", ego->object.type, (DBG_OFFSET() + 3*4));
-
-    if(element_type == ELEMENT_FONT) {
-#if (VG_RENDER_TEXT==1)
-        ret = _load_font_data((uint8_t *)(p_base_addr + 2 * 4));
-#else
-        ret = 0;
-#endif /* VG_RENDER_TEXT */
-        if(ret == 0)
-        {
-            size_font_block = *(uint32_t *)((int8_t *)p_base_addr + 2*4);
-            DBG_READ_32B("font_block_size", size_font_block, (DBG_OFFSET() + 2*4));
-            data = (uint8_t *)(p_base_addr + size_font_block);
-        }
-    }
-
+    ego->object.type = (ELM_OBJECT_TYPE) ego_header->type;
     ego->object.reference = 0;
 
     _init_transform(&ego->defaultTrans);
-    for (i = 0; i < 3; i++)
-      for (j = 0; j < 3; j++)
-      {
-          ego->defaultTrans.matrix.m[i][j] = *(float *)((int8_t *)data + (2 + i * 3 + j)*4);
-      }
-    dbg_float_ary_no_offset_update("group_transform", 
-                                   &ego->defaultTrans.matrix.m[0][0], 9, 
-                                   (DBG_OFFSET() + 2*4));
-
-    ego->group.count = *(unsigned int *)((int8_t *)data + 11 * 4);
+    memcpy(&(ego->defaultTrans.matrix.m),
+           &(ego_header->matrix),
+           sizeof(vg_lite_matrix_t));
+    ego->group.count = ego_header->count;
 #if (RTOS && DDRLESS) || BAREMETAL
     ego->group.objects = alloc_evo(ego->group.count);
 #else
@@ -1074,49 +1064,43 @@ static ElmHandle _load_ego(void *void_data, int size)
 #ifdef ENABLE_STRICT_DEBUG_MEMSET
     memset(ego->group.objects, 0, ego->group.count * sizeof(el_Obj_EVO));
 #endif
-    for (i = 0; i < ego->group.count && offs < size; i++)
+
+    obj_size = (uint32_t *)((unsigned)data + sizeof(el_EGO_Header));
+    obj_offset = (uint32_t *)((unsigned)obj_size + \
+                              (ego_header->count * sizeof(uint32_t)));
+
+    for (i = 0; i < ego->group.count && obj_offset[i] < size; i++)
     {
-        /* Check if "evoDataSize" is inside the EGO data */
-        if ((12 + i) * 4 > size - 4)
-            goto error_exit;
-        evoDataSize = *(unsigned int *)((int8_t *)data + (12 + i) * 4);
-
-        /* Check if "evo_offset" is inside the EGO data */
-        if ((12 + i + ego->group.count) * 4 > size - 4)
-            goto error_exit;
-
-        evo_offset = *(unsigned int *)((int8_t *)data + (12 + i + ego->group.count) * 4);
-
-        /* Check whether EVO object is truncated */
-        offs = evo_offset + evoDataSize;
-        if (offs > size)
-            goto error_exit;
-
-        evo_offset -= size_font_block;
-
-        if (evoDataSize == 0)
-        {
+        if (obj_size[i] == 0) {
             invalid_count++;
             continue;
         }
 
-        element_type = (ELM_ELEMENT_TYPE)*(uint32_t *)(data + evo_offset + 1 * 4);
-        if(element_type == ELEMENT_PATH)
-        {
-        /*recompute path_data_offset and stop_offset and color_offset*/
-        *(unsigned int *)((int8_t *)data + evo_offset + 8 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2*4);//path_data offset
-        if(*(unsigned int *)((int8_t *)data + evo_offset + 19 * 4) == ELM_PAINT_RADIAL_GRADIENT){
-            *(unsigned int *)((int8_t *)data + evo_offset + 39 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2 * 4);/*stop_offset*/
-            *(unsigned int *)((int8_t *)data + evo_offset + 40 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2 * 4);/*color_offset*/
-        }else {
-            *(unsigned int *)((int8_t *)data + evo_offset + 33 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2 * 4);/*stop_offset*/
-            *(unsigned int *)((int8_t *)data + evo_offset + 34 * 4) -= ((evo_offset - 2 * 4) + size_font_block + 2 * 4);/*color_offset*/
-        }
-        }
+        /* Check whether EVO object is truncated */
+        JUMP_IF_GREATER(obj_offset[i] + obj_size[i], size, error_exit);
 
-        ego->group.objects[i].object.handle = _load_evo((uint8_t *)(data + evo_offset - 2 * 4), evoDataSize, &ego->group.objects[i]);
-/*      obj = get_object(ego->group.objects[i].object.handle);
-        ego->group.objects[i] = *(el_Obj_EVO *)obj;*/
+        /* Call appropriate object loader according to object type */
+        obj_data = (void*)((unsigned)data + obj_offset[i]);
+        obj_type = obj_data;
+        switch (*obj_type) {
+            case ELM_OBJECT_TYPE_EVO:
+                ego->group.objects[i].object.handle = _load_evo(obj_data,
+                        obj_size[i],
+                        &ego->group.objects[i]);
+                break;
+#if (VG_RENDER_TEXT==1)
+            case ELM_OBJECT_TYPE_FONT:
+                _load_font(obj_data, obj_size[i]);
+                break;
+            case ELM_OBJECT_TYPE_TEXT:
+                ego->group.objects[i].object.handle = _load_text(obj_data,
+                        obj_size[i],
+                        &ego->group.objects[i]);
+                break;
+#endif /* VG_RENDER_TEXT */
+            default:
+                break;
+        }
     }
 
     ego->group.count -= invalid_count;
@@ -1124,6 +1108,7 @@ static ElmHandle _load_ego(void *void_data, int size)
 
     ref_object(&ego->object);
     JUMP_IF_NON_ZERO_VALUE(add_object(&ego->object), error_exit);
+
     return ego->object.handle;
 
 error_exit:
@@ -1133,8 +1118,14 @@ error_exit:
         }
         elm_free(ego);
     }
+
     return ELM_NULL_HANDLE;
 }
+
+#if (defined(__ICCARM__))
+/* Restore the unaligned data structure attribute warning */
+#pragma diag_default = Pa039
+#endif
 
 static BOOL _scale(ElmHandle obj, float x, float y)
 {
@@ -1668,6 +1659,10 @@ static BOOL _verify_header(ELM_OBJECT_TYPE *type, uint32_t *version, void *data)
 {
     uint32_t *p32_data = (uint32_t *)data;
 
+    if (type != NULL) {
+        *type = (ELM_OBJECT_TYPE)(*(p32_data + 1));
+    }
+
     if (version != NULL) {
         *version = *p32_data;
 
@@ -1677,10 +1672,6 @@ static BOOL _verify_header(ELM_OBJECT_TYPE *type, uint32_t *version, void *data)
         else {
             return FALSE;   /* Verified Failed, API version is lower. */
         }
-    }
-
-    if (type != NULL) {
-        *type = (ELM_OBJECT_TYPE)(*(p32_data + 1));
     }
 
     return TRUE;
@@ -1693,13 +1684,14 @@ static ElmHandle _create_object_from_data(ELM_OBJECT_TYPE type, void *data, int 
 {
     ELM_OBJECT_TYPE real_type;
     uint32_t p_data = (uint32_t)data;
+    uint32_t version;
 
     if(p_data % BASE_ADDRESS_ALIGNMENT != 0) {
         DEBUG_ASSERT(0, "Error: data address don't align with 32 bytes!");
         return ELM_NULL_HANDLE;
     }
 
-    if (FALSE == _verify_header(&real_type, NULL, data)) {
+    if (FALSE == _verify_header(&real_type, &version, data)) {
         DEBUG_ASSERT(0, "Error: Incompatible file.");
         return ELM_NULL_HANDLE;
     }
@@ -1707,6 +1699,9 @@ static ElmHandle _create_object_from_data(ELM_OBJECT_TYPE type, void *data, int 
     if (real_type != type) {
         DEBUG_ASSERT(0, "Warning: Specified type mismatched.\n");
     }
+
+    /* Jump over the version field to get to the start of the first ELM object */
+    data = (void *)((unsigned)data + sizeof(uint32_t));
 
     switch (real_type) {
         case ELM_OBJECT_TYPE_EVO:
@@ -1717,8 +1712,14 @@ static ElmHandle _create_object_from_data(ELM_OBJECT_TYPE type, void *data, int 
             return _load_ego(data, size);
 
         case ELM_OBJECT_TYPE_EBO:
-            return _load_ebo(data, size);
+            return _load_ebo(data, size, version);
+#if (VG_RENDER_TEXT==1)
+        case ELM_OBJECT_TYPE_FONT:
+            return _load_font(data, size);
 
+        case ELM_OBJECT_TYPE_TEXT:
+            return _load_text(data, size, NULL);
+#endif
         default:
             DEBUG_ASSERT(0, "Bad object type");
             break;
@@ -1777,7 +1778,7 @@ static el_Transform *_get_paint_transform(ElmHandle handle)
 }
 
 /*********************** ELM API *********************/
-#ifdef ENABLE_ELM_CRATE_OBJECT_FROM_FILE
+#if !RTOS
 /*!
  @abstract Create an elementary object from an existing binary file.
 

@@ -19,26 +19,25 @@ status_t MODEL_ProcessOutput(const uint8_t* data, const tensor_dims_t* dims,
     const float kThreshold = (float)DETECTION_TRESHOLD / 100;
     result_t topResults[NUM_RESULTS];
     static result_t lastTopResult = {.score = 0.0, .index = -1};
-    bool print = false;
     static int lastPrintTime = 0;
+    static int counter = 1; /* Inference counter for first static inputs */
     const int kUsInSecond = 1000000;
 
     /* Find the best label candidates. */
     MODEL_GetTopN(data, dims->data[dims->size - 1], type, NUM_RESULTS, kThreshold, topResults);
 
     auto result = topResults[0];
-    if (result.index >= 0 && result.score > kThreshold)
+    if (result.index >= 0 && result.score > lastTopResult.score)
     {
-        print = lastTopResult.index != result.index;
         lastTopResult = result;
     }
 
     int time = TIMER_GetTimeInUS();
-    if (print)
+    if ((counter <= 2 || (time - lastPrintTime) >= kUsInSecond) && inferenceTime > 0)
     {
-        int index = result.index;
+        int index = lastTopResult.index;
         const char* label = index >= 0 ? labels[index] : "No word detected";
-        int score = (int)(result.score * 100);
+        int score = (int)(lastTopResult.score * 100);
 
         printf("----------------------------------------" EOL);
         printf("     Inference time: %d ms" EOL, inferenceTime / 1000);
@@ -46,11 +45,13 @@ status_t MODEL_ProcessOutput(const uint8_t* data, const tensor_dims_t* dims,
         printf("----------------------------------------" EOL EOL);
 
         lastPrintTime = time;
+        lastTopResult = {.score = 0.0, .index = -1};
+        counter++;
     }
-
-    if ((time - lastPrintTime) > kUsInSecond)
+    /* Handle timer overflow */
+    if (time < lastPrintTime)
     {
-    	lastTopResult = {.score = 0.0, .index = -1};
+        lastPrintTime = time;
     }
 
     return kStatus_Success;

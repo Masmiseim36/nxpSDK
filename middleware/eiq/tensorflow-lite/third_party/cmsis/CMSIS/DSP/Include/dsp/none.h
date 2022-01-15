@@ -37,7 +37,7 @@ of intrinsics.
 #ifndef _NONE_H_
 #define _NONE_H_
 
-#include "cmsis/CMSIS/DSP/Include/arm_math_types.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h"
 
 #ifdef   __cplusplus
 extern "C"

@@ -520,6 +520,11 @@ typedef struct _SMP_PVT_ADDR
 /** Security Manager Protocol device persistent information */
 typedef struct _SMP_DEVICE_DB
 {
+#ifdef SMP_SAVE_REMOTE_IOCAP
+    /** Remote IO Capabilites */
+    SMP_IOCAPS iocaps;
+#endif /* SMP_SAVE_REMOTE_IOCAP */
+
     /** Device platform attribute */
     SMP_DEVICE_ATTR_PL     device_attr_pl;
 
@@ -1113,7 +1118,7 @@ API_RESULT smp_enqueue_cmd_op_to_wt
 #if ((defined SMP_DATA_SIGNING) || (defined SMP_LESC))
 void smp_clear_aes_cmac_context(UCHAR reset);
 void smp_reset_aes_cmac_context(void);
-void smp_tbx_aes_cmac_128_encryption_complete (UCHAR status, UCHAR * data, UINT16 datalen);
+void smp_tbx_aes_cmac_128_encryption_complete (UCHAR index, UCHAR status, UCHAR * data, UINT16 datalen);
 #endif /* ((defined SMP_DATA_SIGNING) || (defined SMP_LESC)) */
 
 #endif /* _H_SMP_INTERNAL_ */

@@ -201,6 +201,9 @@ EM_RESULT EM_fops_get_file_attributes
     retval = EM_SUCCESS;
     *file_attribute   = 0U;
 
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    EM_mem_set(&fileInfo, 0, sizeof(FILINFO));
+
     /* Get the Attributes of the file/directory */
     ret = f_stat((TCHAR*)object_name, &fileInfo);
 
@@ -297,6 +300,10 @@ EM_RESULT EM_fops_access_first
     FILINFO fi;
 
     retval = EM_SUCCESS;
+
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    EM_mem_set(&fi, 0, sizeof(FILINFO));
+
     ret = f_opendir(object, (const TCHAR*)dir);
     if(0 != ret)
     {
@@ -355,6 +362,10 @@ EM_RESULT EM_fops_access_next
     FILINFO fi;
 
     retval = EM_SUCCESS;
+
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    EM_mem_set(&fi, 0, sizeof(FILINFO));
+
     ret = f_readdir(object, &fi);
     if ((ret) || (!fi.fname[0U]))
     {
@@ -1551,6 +1562,10 @@ static void fops_list_directory (CHAR *path)
     /* fileInfo.fname = fileNameBuffer; */
     fileInfo.fsize = FF_MAX_LFN;
 #endif /* FF_USE_LFN */
+
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    EM_mem_set(&dir, 0, sizeof(DIR));
+    EM_mem_set(&fileInfo, 0, sizeof(FILINFO));
 
     fatfsCode = f_opendir(&dir, path);
     if (0 != fatfsCode)

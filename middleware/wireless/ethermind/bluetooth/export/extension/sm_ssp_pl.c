@@ -27,7 +27,7 @@
 /* ----------------------------------------- Static Global Variables */
 #ifdef SM_IO_CAP_DYNAMIC
 /** Local IO Capability */
-DECL_STATIC volatile UCHAR sm_local_io_cap = SM_IO_CAPABILITY_DEFAULT;
+DECL_STATIC UCHAR sm_local_io_cap = SM_IO_CAPABILITY_DEFAULT;
 #endif /* SM_IO_CAP_DYNAMIC */
 
 #ifdef BT_SSP_OOB
@@ -62,6 +62,11 @@ API_RESULT BT_sm_set_local_io_cap
                /* IN */  UCHAR    io_cap
            )
 {
+    API_RESULT retval;
+
+    /* Init */
+    retval = API_SUCCESS;
+
     /* Check parameters */
     if (SM_IO_CAPABILITY_NO_INPUT_NO_OUTPUT < io_cap)
     {
@@ -69,23 +74,25 @@ API_RESULT BT_sm_set_local_io_cap
         "[SM] Invalid Device IO Capability = 0x%02X\n",
         io_cap);
 
-        return SM_INVALID_PARAMETERS;
+        retval = SM_INVALID_PARAMETERS; /* return SM_INVALID_PARAMETERS; */
+    }
+    else
+    {
+        /* Lock SM */
+        sm_lock();
+
+        /* Store IO Cap */
+        sm_local_io_cap = io_cap;
+
+        SM_TRC(
+        "[SM] Updated Local IO Capability = 0x%02X\n",
+        sm_local_io_cap);
+
+        /* Unlock SM */
+        sm_unlock();
     }
 
-    /* Lock SM */
-    sm_lock();
-
-    /* Store IO Cap */
-    sm_local_io_cap = io_cap;
-
-    SM_TRC(
-    "[SM] Updated Local IO Capability = 0x%02X\n",
-    sm_local_io_cap);
-
-    /* Unlock SM */
-    sm_unlock();
-
-    return API_SUCCESS;
+    return retval;
 }
 #endif /* SM_IO_CAP_DYNAMIC */
 
@@ -126,52 +133,6 @@ API_RESULT BT_sm_set_device_oob_data
 }
 #endif /* BT_SSP_OOB */
 
-API_RESULT BT_sm_get_remote_io_cap
-           (
-               /* IN */  DEVICE_HANDLE    * device_handle,
-               /* OUT */ SM_IO_CAPS *    io_cap
-           )
-{
-    UINT32 di;
-
-    /* Search for the Device Database entry */
-    for (di = 0; di < SM_MAX_DEVICES; di ++)
-    {
-        if (SM_DEVICE_INVALID != sm_devices[di].valid)
-        {
-            if (NULL != device_handle)
-            {
-                if ((*device_handle) == sm_devices[di].device_handle)
-                {
-                    break;
-                }
-            }
-        }
-    }
-
-    if (SM_MAX_DEVICES <= di)
-    {
-        return API_FAILURE;
-    }
-
-    /*
-     *  Set remote Authentication Requirements.
-     */
-    io_cap->auth_reqs = sm_devices[di].remote_io_cap.auth_reqs;
-
-    /* Set Local IO Cap */
-    io_cap->io_cap = sm_devices[di].remote_io_cap.io_cap;
-
-    /* Set authentication */
-    io_cap->oob_present = sm_devices[di].remote_io_cap.oob_present;
-
-    SM_INF(
-    "[SM] Local IO Cap Generated: IO Cap %02X, OOB %02X, AuthReqs %02X\n",
-    io_cap->io_cap, io_cap->oob_present, io_cap->auth_reqs);
-
-    return API_SUCCESS;
-}
-
 #ifdef SM_AUTHREQ_DYNAMIC
 API_RESULT BT_sm_set_local_authreq
            (
@@ -206,6 +167,67 @@ API_RESULT BT_sm_set_local_authreq
 #endif /* SM_AUTHREQ_DYNAMIC */
 
 
+API_RESULT BT_sm_get_remote_iocaps_pl
+           (
+               /* IN */  UCHAR      * bd_addr,
+               /* OUT */ SM_IO_CAPS * io_caps
+           )
+{
+    UINT32 di;
+    API_RESULT retval;
+    DEVICE_HANDLE handle;
+
+    /* Lock SM */
+    sm_lock();
+
+    /* Get the device handle for the device */
+    retval = sm_get_device_handle (bd_addr,&handle);
+    if (API_SUCCESS != retval)
+    {
+        SM_ERR(
+        "[SM_PL] Failed to find device handle for BD_ADDR. Retval - 0x%04X\n",
+        retval);
+    }
+    else
+    {
+        /* Search for the device with the specified BD_ADDR */
+        di = sm_search_device_entity (NULL, 0x0U, &handle);
+
+        if (SM_MAX_DEVICES == di)
+        {
+            SM_ERR(
+            "[SM_PL] Failed to find SM device entity for BD_ADDR.\n");
+
+            retval = SM_NO_DEVICE_ENTRY;
+        }
+        else
+        {
+            io_caps->valid = 0x00U;
+
+            /* Check validity of remote io capabilities */
+            if (SM_TRUE == sm_devices[di].remote_io_cap.valid)
+            {
+                *io_caps = sm_devices[di].remote_io_cap;
+
+                SM_TRC(
+                "[SM_PL] Valid IOCAPS returned for entity.\n");
+            }
+            else
+            {
+                SM_ERR(
+                "[SM_PL] No valid remote IOCAPS for entity.\n");
+
+                retval = API_FAILURE;
+            }
+        }
+    }
+
+    /* Unlock SM */
+    sm_unlock();
+
+    return retval;
+}
+
 /* ----------------------------------------- Internal Functions */
 /** To return IO Capability to SM Core */
 API_RESULT sm_get_io_capability_pl
@@ -222,6 +244,9 @@ API_RESULT sm_get_io_capability_pl
     UCHAR sc_only_mode;
 #endif /* BT_BRSC */
 
+    /* Initialize MISRA C-2012 Rule 9.1 */
+    BT_INIT_BD_ADDR(&device_addr);
+
     (BT_IGNORE_RETURN_VALUE) device_queue_get_remote_addr (&sm_devices[di].device_handle,&device_addr);
 
 #ifdef SM_IO_CAP_DYNAMIC
@@ -234,7 +259,7 @@ API_RESULT sm_get_io_capability_pl
 
 #ifdef BT_SSP_OOB
     /* Set Local OOB */
-    if (0U == BT_mem_cmp(sm_oob_info.bd_addr, BT_BD_ADDR(&device_addr), BT_BD_ADDR_SIZE))
+    if (0 == BT_mem_cmp(sm_oob_info.bd_addr, BT_BD_ADDR(&device_addr), BT_BD_ADDR_SIZE))
     {
         io_cap->oob_present = 0x1U;
     }

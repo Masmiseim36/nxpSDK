@@ -114,13 +114,10 @@ vg_lite_error_t vg_lite_register_font(vg_lite_font_t *font,
     vg_lite_font_params_t *params)
 {
   int i;
-  int free_entry = INVALID_FONT;
+  int free_entry = VG_LITE_INVALID_FONT;
 
-  if (font == NULL) {
-    return VG_LITE_INVALID_ARGUMENT;
-  }
-  
-  *font = INVALID_FONT;
+  if (font != NULL)
+    *font = VG_LITE_INVALID_FONT;
 
   /* Check if font is already registered */
   for (i=0; i<MAX_SYSTEM_FONTS; i++) {
@@ -145,7 +142,7 @@ vg_lite_error_t vg_lite_register_font(vg_lite_font_t *font,
   }
   
   /* Check if list is completely full or not */
-  if ( i == MAX_SYSTEM_FONTS && free_entry == INVALID_FONT) {
+  if ( i == MAX_SYSTEM_FONTS && free_entry == VG_LITE_INVALID_FONT) {
       /* Font List descriptor exhausted */
       return VG_LITE_OUT_OF_RESOURCES;
   } else {
@@ -164,8 +161,10 @@ vg_lite_error_t vg_lite_register_font(vg_lite_font_t *font,
       }
 #endif
   }
-  
-  *font = free_entry;
+
+  if (font != NULL)
+    *font = free_entry;
+
   return VG_LITE_SUCCESS;
 }
 
@@ -175,7 +174,7 @@ int vg_lite_is_font_valid(vg_lite_font_t font)
         if (s_device_fonts[font].valid == 1)
             return 0;
     }
-    return VG_LITE_INVALID_ARGUMENT;;
+    return VG_LITE_INVALID_ARGUMENT;
 }
 
 int vg_lite_is_vector_font(vg_lite_font_t font)
@@ -338,6 +337,9 @@ vg_lite_font_t vg_lite_find_font(
 
         /* Search for exact font-name match */
         for (i=0; i<__COUNTOF(s_device_fonts); i++) {
+           if (s_device_fonts[i].valid == 0)
+               continue;
+
            /* For vector font only compare name */
            if (s_device_fonts[i].font_params.font_type == eFontTypeVector ) {
                 if ( strlen(font_name) > 0 &&
@@ -376,7 +378,19 @@ vg_lite_font_t vg_lite_find_font(
     }
     printf("WARNING: [%s] Font not found\r\n",font_name_list);
 
-    return INVALID_FONT;  
+    return VG_LITE_INVALID_FONT;
+}
+
+void vg_lite_text_init(void)
+{
+    static int font_table_ready = 0;
+
+    if (font_table_ready)
+        return;
+
+    /* Initialize font table */
+    memset(s_device_fonts, 0, MAX_SYSTEM_FONTS * sizeof(font_info_internal_t));
+    font_table_ready = 1;
 }
 
 /* Read-Write 8-bit unsigned int data */

@@ -271,6 +271,10 @@ INT16 storage_write_signature_pl (UCHAR type)
     INT16 nbytes;
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
+    if (STORAGE_NUM_TYPES <= type)
+    {
+        return -1;
+    }
     nbytes = STORAGE_SKEY_SIZE;
     BT_mem_copy(NvmSaveBuf, ssign[type], STORAGE_SKEY_SIZE);
     nv_offset += STORAGE_SKEY_SIZE;
@@ -297,12 +301,16 @@ INT16 storage_read_signature_pl (UCHAR type)
     INT16 nbytes;
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
+    if (STORAGE_NUM_TYPES <= type)
+    {
+        return -1;
+    }
     nbytes = STORAGE_SKEY_SIZE;
     nv_offset += STORAGE_SKEY_SIZE;
-	if (BT_mem_cmp (ssign[type], NvmSaveBuf, STORAGE_SKEY_SIZE))
-	{
-		nbytes = -1;
-	}
+    if (BT_mem_cmp (ssign[type], NvmSaveBuf, STORAGE_SKEY_SIZE))
+    {
+        nbytes = -1;
+    }
 #else
     UCHAR sign[STORAGE_SKEY_SIZE];
 

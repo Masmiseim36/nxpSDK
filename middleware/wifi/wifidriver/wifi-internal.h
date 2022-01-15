@@ -46,6 +46,15 @@ typedef struct mcast_filter
     struct mcast_filter *next;
 } mcast_filter;
 
+/* User response buffer parameters for hostcmd */
+typedef struct _hostcmd_cfg
+{
+    void *resp_buf;
+    uint32_t resp_buf_len;
+    uint32_t *reqd_resp_len;
+    bool is_hostcmd;
+} hostcmd_cfg_t;
+
 typedef struct
 {
     os_thread_t wm_wifi_main_thread;
@@ -170,6 +179,10 @@ typedef struct
      */
     int (*wifi_usb_file_close_cb)();
 #endif
+    /** Structure to store the response from WiFi firmware in
+     * response buffer provided by application layers
+     * structure also stores lengths for usage and validation internally*/
+    hostcmd_cfg_t hostcmd_cfg;
 } wm_wifi_t;
 
 extern wm_wifi_t wm_wifi;

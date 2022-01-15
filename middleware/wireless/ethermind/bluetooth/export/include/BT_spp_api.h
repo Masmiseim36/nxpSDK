@@ -96,11 +96,11 @@ typedef UINT32 SPP_HANDLE;
  */
 typedef API_RESULT (* SPP_APPL_EVENT_NOTIFY_CB)
                    (
-                       /* IN */  SPP_HANDLE handle,        /* Handle */
-                       /* IN */  SPP_EVENTS event_type,    /* Event Type */
-                       /* IN */  API_RESULT result,        /* Event Result */
-                       /* IN */  void     * data,          /* Event Data */
-                       /* IN */  UINT16     len            /* Event Data Size */
+                       /* IN */  SPP_HANDLE    spp_handle,
+                       /* IN */  SPP_EVENTS    spp_event,
+                       /* IN */  API_RESULT    status,
+                       /* IN */  void *        data,
+                       /* IN */  UINT16        data_length
                    );
 /** \} */
 

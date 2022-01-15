@@ -4,6 +4,7 @@
 
 /*
  * Copyright (c) 2015-2016 Intel Corporation
+ * Copyright 2021 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -32,7 +33,7 @@ struct bt_rfcomm_session {
 	struct bt_l2cap_br_chan br_chan;
 	/* Response Timeout eXpired (RTX) timer */
 #if 0
-	struct k_delayed_work rtx_work;
+	struct k_work_delayable rtx_work;
 #endif
 	/* Binary sem for aggregate fc */
 	osa_semaphore_handle_t fc;

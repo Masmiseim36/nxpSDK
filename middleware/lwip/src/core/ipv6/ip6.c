@@ -1311,6 +1311,7 @@ ip6_output(struct pbuf *p, const ip6_addr_t *src, const ip6_addr_t *dest,
     ip6_addr_copy_from_packed(src_addr, ip6hdr->src);
     ip6_addr_copy_from_packed(dest_addr, ip6hdr->dest);
     netif = ip6_route(&src_addr, &dest_addr);
+    dest = &dest_addr;
   }
 
   if (netif == NULL) {
@@ -1370,6 +1371,7 @@ ip6_output_hinted(struct pbuf *p, const ip6_addr_t *src, const ip6_addr_t *dest,
     ip6_addr_copy_from_packed(src_addr, ip6hdr->src);
     ip6_addr_copy_from_packed(dest_addr, ip6hdr->dest);
     netif = ip6_route(&src_addr, &dest_addr);
+    dest = &dest_addr;
   }
 
   if (netif == NULL) {

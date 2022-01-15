@@ -1,5 +1,5 @@
 /*
- * AWS IoT Jobs v1.0.0
+ * AWS IoT Jobs v1.1.0
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -73,7 +73,10 @@
     #error "The value of JOBID_MAX_LENGTH exceeds the AWS IoT Jobs Service limit."
 #endif
 
-/** @cond DO_NOT_DOCUMENT */
+/**
+ * @cond DOXYGEN_IGNORE
+ * Doxygen should ignore these macros as they are private.
+ */
 
 #define JOBS_API_PREFIX                   "$aws/things/"
 #define JOBS_API_PREFIX_LENGTH            ( sizeof( JOBS_API_PREFIX ) - 1U )
@@ -105,10 +108,98 @@
 #define JOBS_API_UPDATE                   "update"
 #define JOBS_API_UPDATE_LENGTH            ( sizeof( JOBS_API_UPDATE ) - 1U )
 
+#define JOBS_API_JOBID_NEXT               "$next"
+#define JOBS_API_JOBID_NEXT_LENGTH        ( sizeof( JOBS_API_JOBID_NEXT ) - 1U )
+
+#define JOBS_API_JOBID_NULL               ""
+#define JOBS_API_LEVEL_SEPARATOR          "/"
+
 #define JOBS_API_COMMON_LENGTH( thingNameLength ) \
     ( JOBS_API_PREFIX_LENGTH + ( thingNameLength ) + JOBS_API_BRIDGE_LENGTH )
 
 /** @endcond */
+
+
+/**
+ * @cond DOXYGEN_IGNORE
+ * Doxygen should ignore this macro as it is private.
+ */
+
+/* AWS IoT Jobs API topics. */
+#define JOBS_TOPIC_COMMON( thingName, jobId, jobsApi ) \
+    ( JOBS_API_PREFIX                                  \
+      thingName                                        \
+      JOBS_API_BRIDGE                                  \
+      jobId                                            \
+      jobsApi )
+/** @endcond */
+
+/**
+ * @ingroup jobs_constants
+ * @brief Topic string for subscribing to the NextJobExecutionChanged API.
+ *
+ * This macro should be used when the thing name is known at the compile time.
+ * If the thing name is not known at compile time, the #Jobs_GetTopic API
+ * should be used instead.
+ *
+ * @param thingName The thing name as registered with AWS IoT Core.
+ */
+#define JOBS_API_SUBSCRIBE_NEXTJOBCHANGED( thingName ) \
+    JOBS_TOPIC_COMMON( thingName, JOBS_API_JOBID_NULL, JOBS_API_NEXTJOBCHANGED )
+
+/**
+ * @ingroup jobs_constants
+ * @brief Topic string for subscribing to the JobExecutionsChanged API.
+ *
+ * This macro should be used when the thing name is known at the compile time.
+ * If the thing name is not known at compile time, the #Jobs_GetTopic API
+ * should be used instead.
+ *
+ * @param thingName The thing name as registered with AWS IoT Core.
+ */
+#define JOBS_API_SUBSCRIBE_JOBSCHANGED( thingName ) \
+    JOBS_TOPIC_COMMON( thingName, JOBS_API_JOBID_NULL, JOBS_API_JOBSCHANGED )
+
+/**
+ * @ingroup jobs_constants
+ * @brief Topic string for publishing to the StartNextPendingJobExecution API.
+ *
+ * This macro should be used when the thing name is known at the compile time.
+ * If the thing name is not known at compile time, the #Jobs_StartNext API
+ * should be used instead.
+ *
+ * @param thingName The thing name as registered with AWS IoT Core.
+ */
+#define JOBS_API_PUBLISH_STARTNEXT( thingName ) \
+    JOBS_TOPIC_COMMON( thingName, JOBS_API_JOBID_NULL, JOBS_API_STARTNEXT )
+
+/**
+ * @ingroup jobs_constants
+ * @brief Topic string for publishing to the GetPendingJobExecutions API.
+ *
+ * This macro should be used when the thing name is known at the compile time.
+ * If the thing name is not known at compile time, the #Jobs_GetPending API
+ * should be used instead.
+ *
+ * @param thingName The thing name as registered with AWS IoT Core.
+ */
+#define JOBS_API_PUBLISH_GETPENDING( thingName ) \
+    JOBS_TOPIC_COMMON( thingName, JOBS_API_JOBID_NULL, JOBS_API_GETPENDING )
+
+/**
+ * @ingroup jobs_constants
+ * @brief Topic string for querying the next pending job from the
+ * DescribeJobExecution API.
+ *
+ * This macro should be used when the thing name and jobID are known at the
+ * compile time. If next pending job is being queried, use $next as job ID.
+ * If the thing name or job ID are not known at compile time, the #Jobs_Describe API
+ * should be used instead.
+ *
+ * @param thingName The thing name as registered with AWS IoT Core.
+ */
+#define JOBS_API_PUBLISH_DESCRIBENEXTJOB( thingName ) \
+    JOBS_TOPIC_COMMON( thingName, JOBS_API_JOBID_NEXT JOBS_API_LEVEL_SEPARATOR, JOBS_API_DESCRIBE )
 
 /**
  * @ingroup jobs_constants
@@ -184,7 +275,45 @@ typedef enum
  * the buffer up to one less than the buffer size.  The topic is
  * ended with a NUL character.
  *
- * @note The thingName parameter does not need a NULL terminator.
+ * @note The thingName parameter does not need a NUL terminator.
+ *
+ * @note The AWS IoT Jobs service does not require clients to subscribe
+ * to the "/accepted" and "/rejected" response topics for the APIs that
+ * accept requests on PUBLISH topics. The Jobs service will send responses
+ * to requests from clients irrespective of whether they have subscribed to
+ * response topics or not. For more information, refer to the AWS docs here:
+ * https://docs.aws.amazon.com/iot/latest/developerguide/jobs-mqtt-api.html
+ *
+ * <b>Example</b>
+ * @code{c}
+ *
+ * // The following example shows usage of the Jobs_GetTopic API to
+ * // generate topic string for the NextJobExecutionChanged API
+ * // of AWS IoT Jobs service.
+ *
+ * // Every device should have a unique thing name registered with AWS IoT Core.
+ * // This example uses a dummy serial number for the thing name.
+ * #define THING_NAME           "11223445566"
+ * #define THING_NAME_LENGTH    ( sizeof( THING_NAME ) - 1U )
+ *
+ * // This example allocates a buffer of maximum length for a Jobs topic
+ * // possible for the thing name using the JOBS_API_MAX_LENGTH macro.
+ * char topicBuffer[ JOBS_API_MAX_LENGTH( THING_NAME_LENGTH ) ] = { 0 };
+ * uint16_t topicLength = 0U;
+ * JobsStatus_t status = JobsSuccess;
+ * status = Jobs_GetTopic( topicBuffer,
+ *                         sizeof( topicBuffer ),
+ *                         THING_NAME,
+ *                         THING_NAME_LENGTH,
+ *                         &( topicLength ) );
+ *
+ * if( status == JobsSuccess )
+ * {
+ *     // The topic string of length, topicLength, has been
+ *     // generated in the buffer, topicBuffer, for the NextJobExecutionChanged API.
+ *     // Subscribe to this topic using an MQTT client of your choice.
+ * }
+ * @endcode
  */
 /* @[declare_jobs_gettopic] */
 JobsStatus_t Jobs_GetTopic( char * buffer,
@@ -213,11 +342,96 @@ JobsStatus_t Jobs_GetTopic( char * buffer,
  *   (parameter outApi gets JobsInvalidTopic );
  * #JobsBadParameter if invalid parameters are passed.
  *
- * @note The topic and thingName parameters do not need a NULL terminator.
+ * @note The topic and thingName parameters do not need a NUL terminator.
  *
  * @note Not all Jobs APIs have jobIDs within the topic string.
  * NULL and 0 are output when no jobID is present.
  * The parameters jobId and jobIdLength may be NULL.
+ *
+ * <b>Example</b>
+ * @code{c}
+ *
+ * // The following example shows how to use the Jobs_MatchTopic API to
+ * // check if an incoming MQTT publish message is from the AWS IoT Jobs
+ * // service.
+ *
+ * // Assuming that these variables contain incoming topic data received
+ * // from the MQTT client used.
+ * char * pIncomingTopic;
+ * size_t topicLength;
+ *
+ * // Every device should have a unique thing name registered with AWS IoT Core.
+ * // This example uses a dummy serial number for the thing name.
+ * // The Jobs_MatchTopic API will check that the incoming message topic contains
+ * // this thing name.
+ * #define THING_NAME           "11223445566"
+ * #define THING_NAME_LENGTH    ( sizeof( THING_NAME ) - 1U )
+ *
+ * JobsTopic_t api;
+ * char * pJobId = NULL;
+ * uint16_t jobIdLength;
+ * JobsStatus_t status = JobsSuccess;
+ *
+ * status = Jobs_MatchTopic( pIncomingTopic,
+ *                           topicLength,
+ *                           THING_NAME,
+ *                           THING_NAME_LENGTH,
+ *                           &api,
+ *                           &pJobId,
+ *                           &jobIdLength );
+ *
+ * if( status == JobsSuccess )
+ * {
+ *     // The Jobs_MatchTopic API has determined that the incoming topic is from
+ *     // AWS IoT Jobs service for the expected thing name.
+ *     // If the topic contains a jobID, then the pJobId and jobIdLength parameters
+ *     // populated by the API.
+ *
+ *     if( api == JobsJobsChanged )
+ *     { // Message from JobExecutionsChanged API.
+ *     }
+ *
+ *     else if( api == JobsNextJobChanged )
+ *     { // Message from NextJobExecutionChanged API.
+ *     }
+ *
+ *     else if( api == JobsGetPendingSuccess )
+ *     { // Received accepted response for request to GetPendingJobExecutions API.
+ *     }
+ *
+ *     else if( api == JobsGetPendingFailed )
+ *     { // Received rejected response for request to GetPendingJobExecutions API.
+ *     }
+ *
+ *     else if( api == JobsStartNextSuccess )
+ *     { // Received accepted response for request to StartNextPendingJobExecution API.
+ *     }
+ *
+ *     else if( api == JobsStartNextFailed )
+ *     { // Received rejected response for request to StartNextPendingJobExecution API.
+ *     }
+ *
+ *     else if( api == JobsDescribeSuccess )
+ *     { // Received accepted response for request to DescribeJobExecution API.
+ *     }
+ *
+ *     else if( api == JobsDescribeFailed )
+ *     { // Received rejected response for request to DescribeJobExecution API.
+ *     }
+ *
+ *     else if( api == JobsUpdateSuccess )
+ *     { // Received accepted response for request to UpdateJobExecution API.
+ *     }
+ *
+ *     else if( api == JobsUpdateFailed )
+ *     { // Received rejected response for request to UpdateJobExecution API.
+ *     }
+ *     else
+ *     {
+ *         // Unexpected response.
+ *     }
+ * }
+ * @endcode
  */
 /* @[declare_jobs_matchtopic] */
 JobsStatus_t Jobs_MatchTopic( char * topic,
@@ -246,7 +460,46 @@ JobsStatus_t Jobs_MatchTopic( char * topic,
  * the buffer up to one less than the buffer size.  The topic is
  * ended with a NUL character.
  *
- * @note The thingName parameter does not need a NULL terminator.
+ * @note The thingName parameter does not need a NUL terminator.
+ *
+ * @note The AWS IoT Jobs service does not require clients to subscribe
+ * to the "/accepted" and "/rejected" response topics of the
+ * GetPendingJobExecutions API.
+ * The Jobs service will send responses to requests published to the API
+ * from clients irrespective of whether they have subscribed to response topics
+ * or not. For more information, refer to the AWS docs here:
+ * https://docs.aws.amazon.com/iot/latest/developerguide/jobs-mqtt-api.html
+ *
+ * <b>Example</b>
+ * @code{c}
+ *
+ * // The following example shows usage of the Jobs_GetPending API to
+ * // generate topic string for the GetPendingJobExecutions API
+ * // of the AWS IoT Jobs service.
+ *
+ * // Every device should have a unique thing name registered with AWS IoT Core.
+ * // This example uses a dummy serial number for the thing name.
+ * #define THING_NAME           "11223445566"
+ * #define THING_NAME_LENGTH    ( sizeof( THING_NAME ) - 1U )
+ *
+ * // This example allocates a buffer of maximum length for a Jobs topic
+ * // possible for the thing name using the JOBS_API_MAX_LENGTH macro.
+ * char topicBuffer[ JOBS_API_MAX_LENGTH( THING_NAME_LENGTH ) ] = { 0 };
+ * uint16_t topicLength = 0U;
+ * JobsStatus_t status = JobsSuccess;
+ * status = Jobs_GetPending( topicBuffer,
+ *                           sizeof( topicBuffer ),
+ *                           THING_NAME,
+ *                           THING_NAME_LENGTH,
+ *                           &( topicLength ) );
+ *
+ * if( status == JobsSuccess )
+ * {
+ *     // The topic string of length, topicLength, has been
+ *     // generated in the buffer, topicBuffer, for the GetPendingJobExecutions API.
+ *     // Publish to this topic using an MQTT client of your choice.
+ * }
+ * @endcode
  */
 /* @[declare_jobs_getpending] */
 JobsStatus_t Jobs_GetPending( char * buffer,
@@ -273,7 +526,46 @@ JobsStatus_t Jobs_GetPending( char * buffer,
  * the buffer up to one less than the buffer size.  The topic is
  * ended with a NUL character.
  *
- * @note The thingName parameter does not need a NULL terminator.
+ * @note The thingName parameter does not need a NUL terminator.
+ *
+ * @note The AWS IoT Jobs service does not require clients to subscribe
+ * to the "/accepted" and "/rejected" response topics of the
+ * StartNextPendingJobExecution API.
+ * The Jobs service will send responses to requests published to the API
+ * from clients irrespective of whether they have subscribed to response topics
+ * or not. For more information, refer to the AWS docs here:
+ * https://docs.aws.amazon.com/iot/latest/developerguide/jobs-mqtt-api.html
+ *
+ * <b>Example</b>
+ * @code{c}
+ *
+ * // The following example shows usage of the Jobs_StartNext API to
+ * // generate topic string for the StartNextPendingJobExecution API
+ * // of the AWS IoT Jobs service.
+ *
+ * // Every device should have a unique thing name registered with AWS IoT Core.
+ * // This example uses a dummy serial number for the thing name.
+ * #define THING_NAME           "11223445566"
+ * #define THING_NAME_LENGTH    ( sizeof( THING_NAME ) - 1U )
+ *
+ * // This example allocates a buffer of maximum length for a Jobs topic
+ * // possible for the thing name using the JOBS_API_MAX_LENGTH macro.
+ * char topicBuffer[ JOBS_API_MAX_LENGTH( THING_NAME_LENGTH ) ] = { 0 };
+ * uint16_t topicLength = 0U;
+ * JobsStatus_t status = JobsSuccess;
+ * status = Jobs_StartNext( topicBuffer,
+ *                          sizeof( topicBuffer ),
+ *                          THING_NAME,
+ *                          THING_NAME_LENGTH,
+ *                          &( topicLength ) );
+ *
+ * if( status == JobsSuccess )
+ * {
+ *     // The topic string of length, topicLength, has been generated in
+ *     // the buffer, topicBuffer, for the StartNextPendingJobExecution API.
+ *     // Publish to this topic using an MQTT client of your choice.
+ * }
+ * @endcode
  */
 /* @[declare_jobs_startnext] */
 JobsStatus_t Jobs_StartNext( char * buffer,
@@ -302,7 +594,56 @@ JobsStatus_t Jobs_StartNext( char * buffer,
  * the buffer up to one less than the buffer size.  The topic is
  * ended with a NUL character.
  *
- * @note The thingName and jobId parameters do not need a NULL terminator.
+ * @note A jobId consisting of the string, "$next", is supported to generate
+ * a topic string to request the next pending job.
+ *
+ * @note The thingName and jobId parameters do not need a NUL terminator.
+ *
+ * @note The AWS IoT Jobs service does not require clients to subscribe
+ * to the "/accepted" and "/rejected" response topics of the
+ * DescribeJobExecution API.
+ * The Jobs service will send responses to requests published to the API
+ * from clients irrespective of whether they have subscribed to response topics
+ * or not. For more information, refer to the AWS docs here:
+ * https://docs.aws.amazon.com/iot/latest/developerguide/jobs-mqtt-api.html
+ *
+ * <b>Example</b>
+ * @code{c}
+ *
+ * // The following example shows usage of the Jobs_Describe API to
+ * // generate topic string for the DescribeJobExecution API
+ * // of the AWS IoT Jobs service.
+ *
+ * // Every device should have a unique thing name registered with AWS IoT Core.
+ * // This example uses a dummy serial number for the thing name.
+ * #define THING_NAME           "11223445566"
+ * #define THING_NAME_LENGTH    ( sizeof( THING_NAME ) - 1U )
+ *
+ * // The job ID is required to send a status update for a job to the AWS IoT
+ * // Jobs service.
+ * #define JOB_ID               "My_Job"
+ * #define JOB_ID_LENGTH        ( sizeof( JOB_ID ) - 1U )
+ *
+ * // This example allocates a buffer of maximum length for a Jobs topic
+ * // possible for the thing name using the JOBS_API_MAX_LENGTH macro.
+ * char topicBuffer[ JOBS_API_MAX_LENGTH( THING_NAME_LENGTH ) ] = { 0 };
+ * uint16_t topicLength = 0U;
+ * JobsStatus_t status = JobsSuccess;
+ * status = Jobs_Describe( topicBuffer,
+ *                         sizeof( topicBuffer ),
+ *                         THING_NAME,
+ *                         THING_NAME_LENGTH,
+ *                         JOB_ID,
+ *                         JOB_ID_LENGTH,
+ *                         &( topicLength ) );
+ *
+ * if( status == JobsSuccess )
+ * {
+ *     // The topic string of length, topicLength, has been generated in
+ *     // the buffer, topicBuffer, for the DescribeJobExecution API.
+ *     // Publish to this topic using an MQTT client of your choice.
+ * }
+ * @endcode
  */
 /* @[declare_jobs_describe] */
 JobsStatus_t Jobs_Describe( char * buffer,
@@ -333,7 +674,53 @@ JobsStatus_t Jobs_Describe( char * buffer,
  * the buffer up to one less than the buffer size.  The topic is
  * ended with a NUL character.
  *
- * @note The thingName and jobId parameters do not need a NULL terminator.
+ * @note The thingName and jobId parameters do not need a NUL terminator.
+ *
+ * @note The AWS IoT Jobs service does not require clients to subscribe
+ * to the "/accepted" and "/rejected" response topics of the
+ * UpdateJobExecution API.
+ * The Jobs service will send responses to requests published to the API
+ * from clients irrespective of whether they have subscribed to response topics
+ * or not. For more information, refer to the AWS docs here:
+ * https://docs.aws.amazon.com/iot/latest/developerguide/jobs-mqtt-api.html
+ *
+ * <b>Example</b>
+ * @code{c}
+ *
+ * // The following example shows usage of the Jobs_Update API to
+ * // generate topic string for the UpdateJobExecution API
+ * // of the AWS IoT Jobs service.
+ *
+ * // Every device should have a unique thing name registered with AWS IoT Core.
+ * // This example uses a dummy serial number for the thing name.
+ * #define THING_NAME           "11223445566"
+ * #define THING_NAME_LENGTH    ( sizeof( THING_NAME ) - 1U )
+ *
+ * // The job ID is required to send a status update for a job to the AWS IoT
+ * // Jobs service.
+ * #define JOB_ID               "My_Job"
+ * #define JOB_ID_LENGTH        ( sizeof( JOB_ID ) - 1U )
+ *
+ * // This example allocates a buffer of maximum length for a Jobs topic
+ * // possible for the thing name using the JOBS_API_MAX_LENGTH macro.
+ * char topicBuffer[ JOBS_API_MAX_LENGTH( THING_NAME_LENGTH ) ] = { 0 };
+ * uint16_t topicLength = 0U;
+ * JobsStatus_t status = JobsSuccess;
+ * status = Jobs_Update( topicBuffer,
+ *                         sizeof( topicBuffer ),
+ *                         THING_NAME,
+ *                         THING_NAME_LENGTH,
+ *                         JOB_ID,
+ *                         JOB_ID_LENGTH,
+ *                         &( topicLength ) );
+ *
+ * if( status == JobsSuccess )
+ * {
+ *     // The topic string of length, topicLength, has been
+ *     // generated in the buffer, topicBuffer, for the UpdateJobExecution API.
+ *     // Publish to this topic using an MQTT client of your choice.
+ * }
+ * @endcode
  */
 /* @[declare_jobs_update] */
 JobsStatus_t Jobs_Update( char * buffer,

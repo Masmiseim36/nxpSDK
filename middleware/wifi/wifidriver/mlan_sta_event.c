@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides Function for STA event handling
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -102,7 +102,7 @@ t_void wlan_reset_connect_state(pmlan_private priv, t_u8 drv_disconnect)
         wlan_clean_txrx(priv);
 
         /* Need to erase the current SSID and BSSID info */
-        (void)memset(priv->adapter, &priv->curr_bss_params, 0x00, sizeof(priv->curr_bss_params));
+        (void)__memset(priv->adapter, &priv->curr_bss_params, 0x00, sizeof(priv->curr_bss_params));
     }
 
     LEAVE();

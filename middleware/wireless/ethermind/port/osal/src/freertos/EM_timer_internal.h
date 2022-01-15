@@ -61,14 +61,14 @@
 #define timer_null_check(p)     if (NULL == (p)) return -1;
 
 /* Timer Task State Values */
-#define TIMER_INIT              0x00
-#define TIMER_WAITING           0x01
-#define TIMER_RUNNING           0x02
-#define TIMER_SHUTDOWN          0x03
-#define TIMER_IMMEDIATE         0x04
+#define TIMER_INIT              0x00U
+#define TIMER_WAITING           0x01U
+#define TIMER_RUNNING           0x02U
+#define TIMER_SHUTDOWN          0x03U
+#define TIMER_IMMEDIATE         0x04U
 
 /* One Timer Tick => 10 MilliSecond */
-#define TIMER_TICK              10
+#define TIMER_TICK              10U
 
 /* Timer task yield period (in Microsecond) */
 #define TIMER_YIELD_PERIOD      (1 * 1000)

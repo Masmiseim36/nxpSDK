@@ -176,7 +176,7 @@ usb_status_t USB_HostHubInit(usb_device_handle deviceHandle, usb_host_class_hand
     usb_host_hub_instance_t *hubInstance =
         (usb_host_hub_instance_t *)OSA_MemoryAllocate(sizeof(usb_host_hub_instance_t));
     uint32_t *temp;
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
 
     if (hubInstance == NULL)
     {

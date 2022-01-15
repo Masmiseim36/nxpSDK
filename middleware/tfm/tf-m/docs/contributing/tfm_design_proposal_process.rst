@@ -49,7 +49,7 @@ Example document fragment::
 Design documents are kept in three different sections of the documentation
 reflecting the status of the document. The status of the document determines
 the section it is in. Open (*Draft* and *Detailed* status) and accepted design
-documents shall be put to the ``docs/design_documents`` directory.
+documents shall be put to the ``docs/technical_references`` directory.
 
 .. important::
   - 'Author' and 'Organization' can be *OPTIONAL* but at least one of them is
@@ -69,16 +69,16 @@ In order to work on TF-M documentation the TF-M git repository has to be
 available locally. Setting up the documentation tools will allow pre-viewing the
 documentation file in preparation.
 For information on what tools are needed please refer to
-:doc:`sw requirements </docs/getting_started/tfm_sw_requirement>`. To see how to get
-a local copy of the TF-M repository please see
-:doc:`build instructions </docs/getting_started/tfm_build_instruction>`
+:doc:`TF-M getting started </docs/getting_started/tfm_getting_started>`. To see
+how to get a local copy of the TF-M repository please see
+:doc:`build instructions </docs/technical_references/instructions/tfm_build_instruction>`
 
 Process steps
 -------------
 
 - Write the design proposal in the format that is described in this document
   with the *Status* set to *Draft* if *Status* field is provided. Put it to the
-  ``docs/design_documents`` directory and create a pull request.
+  ``docs/technical_references`` directory and create a pull request.
 - Start an e-mail thread on the
   `TF-M mailing list <mailto:tf-m@lists.trustedfirmware.org>`_ for discussing
   the proposal.
@@ -98,8 +98,8 @@ Process steps
 .. uml::
 
   @startuml
-  !define DRAFT_DIR **docs/design_documents/**
-  !define REJECTED_DIR **docs/design_documents/rejected/**
+  !define DRAFT_DIR **docs/technical_references/**
+  !define REJECTED_DIR **docs/technical_references/rejected/**
   !define GERRIT_URL https://review.trustedfirmware.org
   !define GERRIT_LINK [[GERRIT_URL trustedfirmware.org]]
   !define MAINTAINER_RST_URL https://git.trustedfirmware.org/TF-M/trusted-firmware-m.git/tree/docs/maintainers.rst
@@ -153,4 +153,4 @@ Process steps
 
 --------------
 
-*Copyright (c) 2019-2020, Arm Limited. All rights reserved.*
+*Copyright (c) 2019-2021, Arm Limited. All rights reserved.*

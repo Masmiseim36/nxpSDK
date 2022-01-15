@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -14,11 +14,12 @@
 extern "C" {
 #endif
 
-#define TFM_PS_SET_SIGNAL                                       (1U << (0 + 4))
-#define TFM_PS_GET_SIGNAL                                       (1U << (1 + 4))
-#define TFM_PS_GET_INFO_SIGNAL                                  (1U << (2 + 4))
-#define TFM_PS_REMOVE_SIGNAL                                    (1U << (3 + 4))
-#define TFM_PS_GET_SUPPORT_SIGNAL                               (1U << (4 + 4))
+#define TFM_SP_PS_MODEL_IPC                                     1
+#define TFM_SP_PS_MODEL_SFN                                     0
+
+
+#define TFM_PROTECTED_STORAGE_SERVICE_SIGNAL                    (1U << 4)
+
 
 #ifdef __cplusplus
 }

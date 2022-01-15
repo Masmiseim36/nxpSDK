@@ -2004,7 +2004,7 @@ CK_DEFINE_FUNCTION( CK_RV, C_GetAttributeValue )( CK_SESSION_HANDLE xSession,
                             pxTemplate[ iAttrib ].ulValueLen = ulLength + 2;
                             *(( CK_BYTE *)(pxTemplate[ iAttrib ].pValue)) = 0x04;
                             *(( CK_BYTE *)(pxTemplate[ iAttrib ].pValue) + 1) = ulLength;
-                            memcpy( pxTemplate[ iAttrib ].pValue + 2, pxObjectValue, ulLength );
+                            memcpy( ( CK_BYTE *)(pxTemplate[ iAttrib ].pValue) + 2, pxObjectValue, ulLength );
                         }
                     }
 
@@ -2971,7 +2971,6 @@ CK_DEFINE_FUNCTION( CK_RV, C_VerifyInit )( CK_SESSION_HANDLE xSession,
     CK_OBJECT_HANDLE xPalHandle = CK_INVALID_HANDLE;
     uint8_t * pcLabel = NULL;
     size_t xLabelLength = 0;
-    psa_key_policy_t policy;
     psa_status_t uxStatus;
     psa_key_handle_t uxKeyHandle;
 
@@ -3449,7 +3448,6 @@ CK_DEFINE_FUNCTION( CK_RV, C_GenerateKeyPair )( CK_SESSION_HANDLE xSession,
     psa_key_handle_t key_handle_public;
     psa_key_type_t uxKeyType;
     psa_algorithm_t uxAlgorithm;
-    psa_key_policy_t policy = psa_key_policy_init();
     CK_ATTRIBUTE_PTR pxPrivateLabel = NULL;
     CK_ATTRIBUTE_PTR pxPublicLabel = NULL;
     uint8_t * pUncompressedECPoint = pvPortMalloc( pkcs11KEY_ECPOINT_LENGTH );

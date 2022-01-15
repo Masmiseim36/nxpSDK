@@ -578,9 +578,18 @@ void USB_DevicePrimeBulkInAndOutStall(usb_device_mtp_struct_t *mtpHandle, uint16
         mtpHandle->deviceStatus->wLength = 4U;
     }
     mtpHandle->deviceStatus->code = code;
-
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if ((kStatus_USB_Success != USB_DeviceStallEndpoint(mtpHandle->handle, mtpHandle->bulkInEndpoint)) ||
+        (kStatus_USB_Success != USB_DeviceStallEndpoint(mtpHandle->handle, mtpHandle->bulkOutEndpoint)))
+    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+        usb_echo("stall endpoint error\r\n");
+#endif
+    }
+#else
     (void)USB_DeviceStallEndpoint(mtpHandle->handle, mtpHandle->bulkInEndpoint);
     (void)USB_DeviceStallEndpoint(mtpHandle->handle, mtpHandle->bulkOutEndpoint);
+#endif
 }
 
 /*!
@@ -943,8 +952,18 @@ void USB_DeviceMtpProcessCommand(usb_device_mtp_struct_t *mtpHandle, usb_device_
         if (USB_DEVICE_MTP_STATE_RESPONSE == mtpHandle->mtpState) /* C */
         {
             /* Command-Response or Command-Data-Response transaction, prime response block here. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceMtpPrimeResponse(mtpHandle, dataInfo->code,
+                                                                  (uint32_t *)&dataInfo->param[0], dataInfo->curSize))
+            {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                usb_echo("prime response error\r\n");
+#endif
+            }
+#else
             (void)USB_DeviceMtpPrimeResponse(mtpHandle, dataInfo->code, (uint32_t *)&dataInfo->param[0],
                                              dataInfo->curSize);
+#endif
         }
         else
         {
@@ -974,9 +993,18 @@ usb_status_t USB_DeviceMtpCancelCurrentTransaction(usb_device_mtp_struct_t *mtpH
         return kStatus_USB_InvalidHandle;
     }
 
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if ((kStatus_USB_Success != USB_DeviceCancel(mtpHandle->handle, mtpHandle->bulkInEndpoint)) ||
+        (kStatus_USB_Success != USB_DeviceCancel(mtpHandle->handle, mtpHandle->bulkOutEndpoint)) ||
+        (kStatus_USB_Success != USB_DeviceCancel(mtpHandle->handle, mtpHandle->interruptInEndpoint)))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceCancel(mtpHandle->handle, mtpHandle->bulkInEndpoint);
     (void)USB_DeviceCancel(mtpHandle->handle, mtpHandle->bulkOutEndpoint);
     (void)USB_DeviceCancel(mtpHandle->handle, mtpHandle->interruptInEndpoint);
+#endif
 
     /* callback to cancel current transaction */
     dataInfo.curSize  = 0;

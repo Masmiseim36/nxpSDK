@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides functions for 11n handling.
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -319,9 +319,9 @@ void wlan_fill_ht_cap_tlv(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, t_u8
 
     rx_mcs_supp = GET_RXMCSSUPP(pmadapter->usr_dev_mcs_support);
     /* Set MCS for 1x1/2x2 */
-    (void)memset(pmadapter, (t_u8 *)pht_cap->ht_cap.supported_mcs_set, 0xff, rx_mcs_supp);
+    (void)__memset(pmadapter, (t_u8 *)pht_cap->ht_cap.supported_mcs_set, 0xff, rx_mcs_supp);
     /* Clear all the other values */
-    (void)memset(pmadapter, (t_u8 *)&pht_cap->ht_cap.supported_mcs_set[rx_mcs_supp], 0, NUM_MCS_FIELD - rx_mcs_supp);
+    (void)__memset(pmadapter, (t_u8 *)&pht_cap->ht_cap.supported_mcs_set[rx_mcs_supp], 0, NUM_MCS_FIELD - rx_mcs_supp);
     /* Set MCS32 with 40MHz support */
     /* if current channel only support 20MHz, we should not set 40Mz supprot*/
     if (ISSUPP_CHANWIDTH40(usr_dot_11n_dev_cap))
@@ -716,11 +716,11 @@ int wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_de
     if (pbss_desc->pht_cap)
     {
         pht_cap = (MrvlIETypes_HTCap_t *)*ppbuffer;
-        (void)memset(pmadapter, pht_cap, 0, sizeof(MrvlIETypes_HTCap_t));
+        (void)__memset(pmadapter, pht_cap, 0, sizeof(MrvlIETypes_HTCap_t));
         pht_cap->header.type = wlan_cpu_to_le16(HT_CAPABILITY);
         pht_cap->header.len  = sizeof(HTCap_t);
-        (void)memcpy(pmadapter, (t_u8 *)pht_cap + sizeof(MrvlIEtypesHeader_t),
-                     (t_u8 *)pbss_desc->pht_cap + sizeof(IEEEtypes_Header_t), pht_cap->header.len);
+        (void)__memcpy(pmadapter, (t_u8 *)pht_cap + sizeof(MrvlIEtypesHeader_t),
+                       (t_u8 *)pbss_desc->pht_cap + sizeof(IEEEtypes_Header_t), pht_cap->header.len);
 
         pht_cap->ht_cap.ht_cap_info = wlan_le16_to_cpu(pht_cap->ht_cap.ht_cap_info);
         pht_cap->ht_cap.ht_ext_cap  = wlan_le16_to_cpu(pht_cap->ht_cap.ht_ext_cap);
@@ -737,12 +737,12 @@ int wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_de
         if (pmpriv->bss_mode == MLAN_BSS_MODE_IBSS)
         {
             pht_info = (MrvlIETypes_HTInfo_t *)*ppbuffer;
-            (void)memset(pmadapter, pht_info, 0, sizeof(MrvlIETypes_HTInfo_t));
+            (void)__memset(pmadapter, pht_info, 0, sizeof(MrvlIETypes_HTInfo_t));
             pht_info->header.type = wlan_cpu_to_le16(HT_OPERATION);
             pht_info->header.len  = sizeof(HTInfo_t);
 
-            (void)memcpy(pmadapter, (t_u8 *)pht_info + sizeof(MrvlIEtypesHeader_t),
-                         (t_u8 *)pbss_desc->pht_info + sizeof(IEEEtypes_Header_t), pht_info->header.len);
+            (void)__memcpy(pmadapter, (t_u8 *)pht_info + sizeof(MrvlIEtypesHeader_t),
+                           (t_u8 *)pbss_desc->pht_info + sizeof(IEEEtypes_Header_t), pht_info->header.len);
 
             if (!ISSUPP_CHANWIDTH40(usr_dot_11n_dev_cap))
             {
@@ -755,7 +755,7 @@ int wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_de
         }
 
         pchan_list = (MrvlIEtypes_ChanListParamSet_t *)*ppbuffer;
-        (void)memset(pmadapter, pchan_list, 0, sizeof(MrvlIEtypes_ChanListParamSet_t));
+        (void)__memset(pmadapter, pchan_list, 0, sizeof(MrvlIEtypes_ChanListParamSet_t));
         pchan_list->header.type = wlan_cpu_to_le16(TLV_TYPE_CHANLIST);
         pchan_list->header.len  = sizeof(MrvlIEtypes_ChanListParamSet_t) - sizeof(MrvlIEtypesHeader_t);
         pchan_list->chan_scan_param[0].chan_number = pbss_desc->pht_info->ht_info.pri_chan;
@@ -779,6 +779,7 @@ int wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_de
         {
             SET_SECONDARYCHAN(pchan_list->chan_scan_param[0].radio_type,
                               GET_SECONDARYCHAN(pbss_desc->pht_info->ht_info.field2));
+            pchan_list->chan_scan_param[0].radio_type |= MBIT(3);
             pbss_desc->curr_bandwidth = BW_40MHZ;
         }
 
@@ -793,12 +794,12 @@ int wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_de
     if ((pbss_desc->bss_band & (BAND_A | BAND_AN)) && pbss_desc->pbss_co_2040)
     {
         p2040_bss_co = (MrvlIETypes_2040BSSCo_t *)*ppbuffer;
-        (void)memset(pmadapter, p2040_bss_co, 0, sizeof(MrvlIETypes_2040BSSCo_t));
+        (void)__memset(pmadapter, p2040_bss_co, 0, sizeof(MrvlIETypes_2040BSSCo_t));
         p2040_bss_co->header.type = wlan_cpu_to_le16(BSSCO_2040);
         p2040_bss_co->header.len  = sizeof(BSSCo2040_t);
 
-        (void)memcpy(pmadapter, (t_u8 *)p2040_bss_co + sizeof(MrvlIEtypesHeader_t),
-                     (t_u8 *)pbss_desc->pbss_co_2040 + sizeof(IEEEtypes_Header_t), p2040_bss_co->header.len);
+        (void)__memcpy(pmadapter, (t_u8 *)p2040_bss_co + sizeof(MrvlIEtypesHeader_t),
+                       (t_u8 *)pbss_desc->pbss_co_2040 + sizeof(IEEEtypes_Header_t), p2040_bss_co->header.len);
 
         HEXDUMP("20/40 BSS Coexistence IE", (t_u8 *)p2040_bss_co, sizeof(MrvlIETypes_2040BSSCo_t));
         *ppbuffer += sizeof(MrvlIETypes_2040BSSCo_t);
@@ -810,12 +811,12 @@ int wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_de
     if (pbss_desc->pext_cap)
     {
         pext_cap = (MrvlIETypes_ExtCap_t *)*ppbuffer;
-        (void)memset(pmadapter, pext_cap, 0, sizeof(MrvlIETypes_ExtCap_t));
+        (void)__memset(pmadapter, pext_cap, 0, sizeof(MrvlIETypes_ExtCap_t));
         pext_cap->header.type = wlan_cpu_to_le16(EXT_CAPABILITY);
         pext_cap->header.len  = sizeof(ExtCap_t);
 
-        (void)memcpy(pmadapter, (t_u8 *)pext_cap + sizeof(MrvlIEtypesHeader_t),
-                     (t_u8 *)pbss_desc->pext_cap + sizeof(IEEEtypes_Header_t), pbss_desc->pext_cap->ieee_hdr.len);
+        (void)__memcpy(pmadapter, (t_u8 *)pext_cap + sizeof(MrvlIEtypesHeader_t),
+                       (t_u8 *)pbss_desc->pext_cap + sizeof(IEEEtypes_Header_t), pbss_desc->pext_cap->ieee_hdr.len);
         if (pmpriv->hotspot_cfg & HOTSPOT_ENABLED)
         {
             if (((t_u8)(pmpriv->hotspot_cfg >> 8)) & HOTSPOT_ENABLE_INTERWORKING_IND)
@@ -1022,7 +1023,7 @@ int wlan_send_addba(mlan_private *priv, int tid, t_u8 *peer_mac)
         dialog_tok = 1;
 
     add_ba_req.dialog_token = dialog_tok;
-    (void)memcpy(priv->adapter, &add_ba_req.peer_mac_addr, peer_mac, MLAN_MAC_ADDR_LENGTH);
+    (void)__memcpy(priv->adapter, &add_ba_req.peer_mac_addr, peer_mac, MLAN_MAC_ADDR_LENGTH);
 #ifdef DUMP_PACKET_MAC
     wmprintf("wlan_send_addba bss_type:%d\r\n", priv->bss_type);
     dump_mac_addr(NULL, peer_mac);
@@ -1051,7 +1052,7 @@ int wlan_send_delba(mlan_private *priv, int tid, t_u8 *peer_mac, int initiator)
 
     ENTER();
 
-    (void)memset(priv->adapter, &delba, 0, sizeof(delba));
+    (void)__memset(priv->adapter, &delba, 0, sizeof(delba));
     delba.del_ba_param_set = (tid << DELBA_TID_POS);
 
     if (initiator)
@@ -1059,7 +1060,7 @@ int wlan_send_delba(mlan_private *priv, int tid, t_u8 *peer_mac, int initiator)
     else
         DELBA_RECIPIENT(delba.del_ba_param_set);
 
-    (void)memcpy(priv->adapter, &delba.peer_mac_addr, peer_mac, MLAN_MAC_ADDR_LENGTH);
+    (void)__memcpy(priv->adapter, &delba.peer_mac_addr, peer_mac, MLAN_MAC_ADDR_LENGTH);
 
     /* We don't wait for the response of this command */
     ret = wifi_prepare_and_send_cmd(priv, HostCmd_CMD_11N_DELBA, HostCmd_ACT_GEN_SET, 0, MNULL, &delba, priv->bss_type,

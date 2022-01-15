@@ -1,7 +1,7 @@
-# AWS IoT Device Defender Client Library
+# AWS IoT Device Defender Library
 
-This repository contains the AWS IoT Device Defender client library for interacting
-with the [AWS IoT Device Defender Service](https://aws.amazon.com/iot-device-defender/).
+The Device Defender library enables you to send device metrics to the [AWS IoT Device Defender Service](https://aws.amazon.com/iot-device-defender/).
+This library also supports custom metrics, a feature that helps you monitor operational health metrics that are unique to your fleet or use case. For example, you can define a new metric to monitor the memory usage or CPU usage on your devices.
 This library has no dependencies on any additional libraries other than the
 standard C library, and therefore, can be used with any MQTT client library.
 This library is distributed under the [MIT Open Source License](LICENSE).
@@ -14,7 +14,9 @@ Deviations from the MISRA C:2012 guidelines are documented under [MISRA Deviatio
 This library has also undergone static code analysis using [Coverity static analysis](https://scan.coverity.com/),
 and validation of memory safety through the [CBMC automated reasoning tool](https://www.cprover.org/cbmc/).
 
-See memory requirements for this library [here](https://docs.aws.amazon.com/embedded-csdk/202012.00/lib-ref/libraries/aws/device-defender-for-aws-iot-embedded-sdk/docs/doxygen/output/html/index.html#defender_memory_requirements).
+See memory requirements for this library [here](https://docs.aws.amazon.com/embedded-csdk/202103.00/lib-ref/libraries/aws/device-defender-for-aws-iot-embedded-sdk/docs/doxygen/output/html/index.html#defender_memory_requirements).
+
+**AWS IoT Device Defender v1.1.0 [source code](https://github.com/aws/Device-Defender-for-AWS-IoT-embedded-sdk/tree/v1.1.0/source) is part of the [FreeRTOS 202012.01 LTS](https://github.com/FreeRTOS/FreeRTOS-LTS/tree/202012.01-LTS) release.**
 
 ## AWS IoT Device Defender Client Config File
 

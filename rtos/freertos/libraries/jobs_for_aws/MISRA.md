@@ -15,6 +15,7 @@ Deviations from the MISRA standard are listed below:
 ### Flagged by Coverity
 | Deviation | Category | Justification |
 | :-: | :-: | :-: |
+| Rule 2.5 | Advisory | A macro is not used by the library; however, it exists to be used by an application. |
 | Rule 8.7 | Advisory | API functions are not used by the library; however, they must be externally visible in order to be used by an application. |
 
 ### Suppressed with Coverity Comments

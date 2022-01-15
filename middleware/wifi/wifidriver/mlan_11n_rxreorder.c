@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides handling of RxReordering in wlan
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -394,7 +394,7 @@ static t_void wlan_11n_create_rxreorder_tbl(mlan_private *priv, t_u8 *ta, int ti
 
         util_init_list((pmlan_linked_list)new_node);
         new_node->tid = tid;
-        (void)memcpy(pmadapter, new_node->ta, ta, MLAN_MAC_ADDR_LENGTH);
+        (void)__memcpy(pmadapter, new_node->ta, ta, MLAN_MAC_ADDR_LENGTH);
         new_node->start_win = seq_num;
         new_node->pkt_count = 0;
         if (queuing_ra_based(priv))
@@ -500,7 +500,7 @@ mlan_status wlan_cmd_11n_addba_req(mlan_private *priv, HostCmd_DS_COMMAND *cmd, 
     cmd->command = wlan_cpu_to_le16(HostCmd_CMD_11N_ADDBA_REQ);
     cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_11N_ADDBA_REQ) + S_DS_GEN);
 
-    (void)memcpy(priv->adapter, padd_ba_req, pdata_buf, sizeof(HostCmd_DS_11N_ADDBA_REQ));
+    (void)__memcpy(priv->adapter, padd_ba_req, pdata_buf, sizeof(HostCmd_DS_11N_ADDBA_REQ));
     padd_ba_req->block_ack_param_set = wlan_cpu_to_le16(padd_ba_req->block_ack_param_set);
     padd_ba_req->block_ack_tmo       = wlan_cpu_to_le16(padd_ba_req->block_ack_tmo);
     padd_ba_req->ssn                 = wlan_cpu_to_le16(padd_ba_req->ssn);
@@ -536,7 +536,7 @@ mlan_status wlan_cmd_11n_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND *cm
     cmd->command = wlan_cpu_to_le16(HostCmd_CMD_11N_ADDBA_RSP);
     cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_11N_ADDBA_RSP) + S_DS_GEN);
 
-    (void)memcpy(NULL, padd_ba_rsp->peer_mac_addr, pevt_addba_req->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)__memcpy(NULL, padd_ba_rsp->peer_mac_addr, pevt_addba_req->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
     padd_ba_rsp->dialog_token   = pevt_addba_req->dialog_token;
     padd_ba_rsp->block_ack_tmo  = wlan_cpu_to_le16(pevt_addba_req->block_ack_tmo);
     padd_ba_rsp->ssn            = wlan_cpu_to_le16(pevt_addba_req->ssn);
@@ -588,7 +588,7 @@ mlan_status wlan_cmd_11n_uap_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND
     cmd->command = wlan_cpu_to_le16(HostCmd_CMD_11N_ADDBA_RSP);
     cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_11N_ADDBA_RSP) + S_DS_GEN);
 
-    (void)memcpy(NULL, padd_ba_rsp->peer_mac_addr, pevt_addba_req->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)__memcpy(NULL, padd_ba_rsp->peer_mac_addr, pevt_addba_req->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
     padd_ba_rsp->dialog_token  = pevt_addba_req->dialog_token;
     padd_ba_rsp->block_ack_tmo = wlan_cpu_to_le16(pevt_addba_req->block_ack_tmo);
     padd_ba_rsp->ssn           = wlan_cpu_to_le16(pevt_addba_req->ssn);
@@ -625,7 +625,7 @@ mlan_status wlan_cmd_11n_delba(mlan_private *priv, HostCmd_DS_COMMAND *cmd, void
     cmd->command = wlan_cpu_to_le16(HostCmd_CMD_11N_DELBA);
     cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_11N_DELBA) + S_DS_GEN);
 
-    (void)memcpy(priv->adapter, pdel_ba, pdata_buf, sizeof(HostCmd_DS_11N_DELBA));
+    (void)__memcpy(priv->adapter, pdel_ba, pdata_buf, sizeof(HostCmd_DS_11N_DELBA));
     pdel_ba->del_ba_param_set = wlan_cpu_to_le16(pdel_ba->del_ba_param_set);
     pdel_ba->reason_code      = wlan_cpu_to_le16(pdel_ba->reason_code);
 
@@ -966,8 +966,8 @@ void wlan_11n_ba_stream_timeout(mlan_private *priv, HostCmd_DS_11N_BATIMEOUT *ev
 
     DBG_HEXDUMP(MCMD_D, "Event:", (t_u8 *)event, 20);
 
-    (void)memset(priv->adapter, &delba, 0, sizeof(HostCmd_DS_11N_DELBA));
-    (void)memcpy(priv->adapter, delba.peer_mac_addr, event->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)__memset(priv->adapter, &delba, 0, sizeof(HostCmd_DS_11N_DELBA));
+    (void)__memcpy(priv->adapter, delba.peer_mac_addr, event->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
 
     delba.del_ba_param_set |= (t_u16)event->tid << DELBA_TID_POS;
     delba.del_ba_param_set |= (t_u16)event->origninator << DELBA_INITIATOR_POS;
@@ -1000,7 +1000,7 @@ void wlan_11n_cleanup_reorder_tbl(mlan_private *priv)
 
     util_init_list((pmlan_linked_list)&priv->rx_reorder_tbl_ptr);
 
-    (void)memset(priv->adapter, priv->rx_seq, 0xff, sizeof(priv->rx_seq));
+    (void)__memset(priv->adapter, priv->rx_seq, 0xff, sizeof(priv->rx_seq));
     LEAVE();
 }
 

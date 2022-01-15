@@ -249,9 +249,9 @@ void httpsrv_process_cgi(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session
     if (session->request.content_length)
     {
         char tmp[HTTPSRV_TMP_BUFFER_SIZE];
-        uint32_t length = session->request.content_length;
+        int32_t length = session->request.content_length;
 
-        while (length)
+        while (length > 0)
         {
             int32_t retval;
             int32_t chunk;
@@ -262,14 +262,14 @@ void httpsrv_process_cgi(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session
                 chunk = length;
             }
             retval = httpsrv_read(session, tmp, chunk);
-            if (retval < 0)
+            if (retval <= 0)
             {
                 break;
             }
             length -= retval;
         }
 
-        session->request.content_length = 0;
+        session->request.content_length = length;
     }
     return;
 }

@@ -3,15 +3,15 @@
 **     Processors:          MIMXRT595SFAWC_cm33
 **                          MIMXRT595SFFOC_cm33
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    RT500 Reference Manual. Rev.A, 3/2020
-**     Version:             rev. 3.0, 2019-12-10
-**     Build:               b200410
+**     Reference manual:    iMXRT500RM Rev.0, 01/2021
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b210728
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -42,14 +42,14 @@ if (isdefinedsymbol(__heap_size__)) {
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
 
 
-define symbol m_interrupts_start               = 0x00080000;
-define symbol m_interrupts_end                 = 0x0008017F;
+define symbol m_interrupts_start               = 0x00280000;
+define symbol m_interrupts_end                 = 0x0028017F;
 
-define symbol m_text_start                     = 0x00080180;
-define symbol m_text_end                       = 0x001BFFFF;
+define symbol m_text_start                     = 0x00280180;
+define symbol m_text_end                       = 0x003BFFFF;
 
-define symbol m_data_start                     = 0x201C0000;
-define symbol m_data_end                       = 0x202FFFFF;
+define symbol m_data_start                     = 0x203C0000;
+define symbol m_data_end                       = 0x204FFFFF;
 
 define symbol m_usb_sram_start                 = 0x40140000;
 define symbol m_usb_sram_end                   = 0x40143FFF;

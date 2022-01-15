@@ -1,5 +1,5 @@
 /*
- * AWS IoT Jobs v1.0.0
+ * AWS IoT Jobs v1.1.0
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -42,6 +42,9 @@
 #define jobId_          "1234"
 #define jobIdLength_    ( sizeof( jobId_ ) - 1 )
 
+/* Common prefix of Jobs topics. */
+#define PREFIX          JOBS_API_PREFIX name_ JOBS_API_BRIDGE
+
 /* ============================   UNITY FIXTURES ============================ */
 
 /* Called before each test method. */
@@ -66,6 +69,35 @@ int suiteTearDown( int numFailures )
 }
 
 /* ========================================================================== */
+
+/**
+ * @brief Test that the topic generating macros are valid.
+ */
+void test_JobsPUBLISH__API_macros_are_v( void )
+{
+    char * expectedTopic = NULL;
+
+    /* Test for NextJobExecutionChanged API topic. */
+    expectedTopic = PREFIX JOBS_API_NEXTJOBCHANGED;
+    TEST_ASSERT_EQUAL_STRING( expectedTopic, JOBS_API_SUBSCRIBE_NEXTJOBCHANGED( name_ ) );
+
+    /* Test for JobExecutionsChanged API topic. */
+    expectedTopic = PREFIX JOBS_API_JOBSCHANGED;
+    TEST_ASSERT_EQUAL_STRING( expectedTopic, JOBS_API_SUBSCRIBE_JOBSCHANGED( name_ ) );
+
+    /* Test for StartNextPendingJobExecution API topic. */
+    expectedTopic = PREFIX JOBS_API_STARTNEXT;
+    TEST_ASSERT_EQUAL_STRING( expectedTopic, JOBS_API_PUBLISH_STARTNEXT( name_ ) );
+
+    /* Test for GetPendingJobExecutions API topic. */
+    expectedTopic = PREFIX JOBS_API_GETPENDING;
+    TEST_ASSERT_EQUAL_STRING( expectedTopic, JOBS_API_PUBLISH_GETPENDING( name_ ) );
+
+    /* Test for DescribeJobExecution API topic for the "$next" job ID. */
+    expectedTopic = PREFIX JOBS_API_JOBID_NEXT "/" JOBS_API_DESCRIBE;
+    TEST_ASSERT_EQUAL_STRING( expectedTopic, JOBS_API_PUBLISH_DESCRIBENEXTJOB( name_ ) );
+}
+
 
 /**
  * @brief Test that all topic enums are contiguous
@@ -162,6 +194,10 @@ void test_Jobs_bad_parameters( void )
     TEST_BAD_PARAMETER( Jobs_Describe( buf, sizeof( buf ), name_, ( THINGNAME_MAX_LENGTH + 1 ), jobId_, jobIdLength_, &outLength ) );
     TEST_BAD_PARAMETER( Jobs_Update( buf, sizeof( buf ), name_, ( THINGNAME_MAX_LENGTH + 1 ), jobId_, jobIdLength_, &outLength ) );
 
+    /* job ID is NULL */
+    TEST_BAD_PARAMETER( Jobs_Describe( buf, sizeof( buf ), name_, nameLength_, NULL, jobIdLength_, &outLength ) );
+    TEST_BAD_PARAMETER( Jobs_Update( buf, sizeof( buf ), name_, nameLength_, NULL, jobIdLength_, &outLength ) );
+
     /* bad job ID - variations tested separately */
     TEST_BAD_PARAMETER( Jobs_Describe( buf, sizeof( buf ), name_, nameLength_, "!", jobIdLength_, &outLength ) );
     TEST_BAD_PARAMETER( Jobs_Update( buf, sizeof( buf ), name_, nameLength_, "!", jobIdLength_, &outLength ) );
@@ -229,6 +265,10 @@ void test_Jobs_valid_identifiers( void )
             TEST_ASSERT_EQUAL( JobsBadParameter, ret );
         }
     }
+
+    /* Test additional valid jobId, $next */
+    ret = Jobs_Describe( buf, sizeof( buf ), name_, nameLength_, JOBS_API_JOBID_NEXT, JOBS_API_JOBID_NEXT_LENGTH, &outLength );
+    TEST_ASSERT_EQUAL( JobsSuccess, ret );
 }
 
 /**
@@ -243,7 +283,7 @@ void test_Jobs_buffer_lengths( void )
     JobsStatus_t ret;
     size_t len;
     unsigned i = 0;
-    char expected1[] = JOBS_API_PREFIX name_ JOBS_API_BRIDGE JOBS_API_JOBSCHANGED;
+    char expected1[] = JOBS_API_SUBSCRIBE_JOBSCHANGED( name_ );
     char expected2[] = JOBS_API_PREFIX name_ JOBS_API_BRIDGE "+/" JOBS_API_UPDATE JOBS_API_SUCCESS;
 
     ret = Jobs_GetTopic( buf, sizeof( buf ), name_, nameLength_, JobsJobsChanged, NULL );
@@ -273,7 +313,6 @@ void test_Jobs_happy_path( void )
     char buf[ JOBS_API_MAX_LENGTH( nameLength_ ) ];
     size_t outLength;
 
-#define PREFIX    JOBS_API_PREFIX name_ JOBS_API_BRIDGE
     char prefix[] = PREFIX;
 
 #define TEST_SUCCESS( x )                          \
@@ -292,7 +331,7 @@ void test_Jobs_happy_path( void )
     TEST_ASSERT_EQUAL( ( sizeof( x ) - 1 ), outLength )
 
     {
-        char expected[] = PREFIX JOBS_API_GETPENDING;
+        char expected[] = JOBS_API_PUBLISH_GETPENDING( name_ );
 
         TEST_SUCCESS( Jobs_GetPending( buf, sizeof( buf ), name_, nameLength_, NULL ) );
         TEST_SUCCESS( Jobs_GetPending( buf, sizeof( buf ), name_, nameLength_, &outLength ) );
@@ -304,7 +343,7 @@ void test_Jobs_happy_path( void )
     }
 
     {
-        char expected[] = PREFIX JOBS_API_STARTNEXT;
+        char expected[] = JOBS_API_PUBLISH_STARTNEXT( name_ );
 
         TEST_SUCCESS( Jobs_StartNext( buf, sizeof( buf ), name_, nameLength_, NULL ) );
         TEST_SUCCESS( Jobs_StartNext( buf, sizeof( buf ), name_, nameLength_, &outLength ) );
@@ -423,6 +462,16 @@ void test_Jobs_match_topic( void )
     TEST_JOBID();
 
     setVars( JobsDescribeFailed, PREFIX "ab224-z/get/rejected", "ab224-z" );
+    TEST_SUCCESS( Jobs_MatchTopic( topic, topicLength, name_, nameLength_, &outApi, NULL, NULL ) );
+    TEST_SUCCESS( Jobs_MatchTopic( topic, topicLength, name_, nameLength_, &outApi, &outJobId, &outJobIdLength ) );
+    TEST_JOBID();
+
+    setVars( JobsDescribeSuccess, PREFIX "$next/get/accepted", "$next" );
+    TEST_SUCCESS( Jobs_MatchTopic( topic, topicLength, name_, nameLength_, &outApi, NULL, NULL ) );
+    TEST_SUCCESS( Jobs_MatchTopic( topic, topicLength, name_, nameLength_, &outApi, &outJobId, &outJobIdLength ) );
+    TEST_JOBID();
+
+    setVars( JobsDescribeFailed, PREFIX "$next/get/rejected", "$next" );
     TEST_SUCCESS( Jobs_MatchTopic( topic, topicLength, name_, nameLength_, &outApi, NULL, NULL ) );
     TEST_SUCCESS( Jobs_MatchTopic( topic, topicLength, name_, nameLength_, &outApi, &outJobId, &outJobIdLength ) );
     TEST_JOBID();

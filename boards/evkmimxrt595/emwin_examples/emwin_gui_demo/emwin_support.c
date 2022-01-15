@@ -85,7 +85,7 @@ void APP_InitDisplay(void)
  * Implementation of communication with the touch controller
  ******************************************************************************/
 #if ((DEMO_PANEL == DEMO_PANEL_RM67162) || (DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || \
-     (DEMO_PANEL_RK055IQH091 == DEMO_PANEL))
+     (DEMO_PANEL_RK055IQH091 == DEMO_PANEL) || (DEMO_PANEL_RK055MHD091 == DEMO_PANEL))
 static void BOARD_PullTouchPanelResetPin(bool pullUp)
 {
     if (pullUp)
@@ -181,7 +181,8 @@ int BOARD_Touch_Poll(void)
     return ret;
 }
 
-#elif ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || (DEMO_PANEL_RK055IQH091 == DEMO_PANEL))
+#elif ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || (DEMO_PANEL_RK055IQH091 == DEMO_PANEL) || \
+       (DEMO_PANEL_RK055MHD091 == DEMO_PANEL))
 static void BOARD_ConfigMIPIPanelTouchIntPin(gt911_int_pin_mode_t mode);
 
 static gt911_handle_t s_touchHandle;

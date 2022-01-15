@@ -31,11 +31,6 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../fusionf1/binary/dsp_text_release.bin"
-"${ProjDirPath}/../../fusionf1/binary/dsp_data_release.bin"
-"${ProjDirPath}/../main.c"
-"${ProjDirPath}/../pin_mux.c"
-"${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -46,8 +41,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../dsp_config.h"
 "${ProjDirPath}/../dsp_support.c"
 "${ProjDirPath}/../dsp_support.h"
+"${ProjDirPath}/../../fusionf1/binary/dsp_reset_release.bin"
+"${ProjDirPath}/../../fusionf1/binary/dsp_text_release.bin"
+"${ProjDirPath}/../../fusionf1/binary/dsp_data_release.bin"
 "${ProjDirPath}/../pmic_support.c"
 "${ProjDirPath}/../pmic_support.h"
+"${ProjDirPath}/../main.c"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -56,21 +57,39 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 set(CMAKE_MODULE_PATH
-    ${ProjDirPath}/../../../../../../components/lists
+    ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
+    ${ProjDirPath}/../../../../../../components/i2c
+    ${ProjDirPath}/../../../../../../components/codec
+    ${ProjDirPath}/../../../../../../components/codec/wm8904
+    ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../flash_config
     ${ProjDirPath}/../../../../../../components/pca9420
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
 )
 
 # include modules
-include(component_lists_MIMXRT595S_cm33)
+include(component_codec_i2c_MIMXRT595S_cm33)
 
 include(driver_common_MIMXRT595S_cm33)
+
+include(component_i3c_adapter_MIMXRT595S_cm33)
+
+include(driver_codec_MIMXRT595S_cm33)
+
+include(component_wm8904_adapter_MIMXRT595S_cm33)
+
+include(driver_flexcomm_i2c_MIMXRT595S_cm33)
+
+include(driver_i3c_MIMXRT595S_cm33)
+
+include(driver_wm8904_MIMXRT595S_cm33)
+
+include(component_lists_MIMXRT595S_cm33)
 
 include(component_usart_adapter_MIMXRT595S_cm33)
 
@@ -86,11 +105,9 @@ include(driver_clock_MIMXRT595S_cm33)
 
 include(driver_dsp_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(driver_flexcomm_MIMXRT595S_cm33)
-
-include(driver_flexcomm_i2c_MIMXRT595S_cm33)
 
 include(driver_flexspi_MIMXRT595S_cm33)
 
@@ -110,9 +127,9 @@ include(utility_debug_console_lite_MIMXRT595S_cm33)
 
 include(utility_assert_lite_MIMXRT595S_cm33)
 
-include(utilities_misc_utilities_MIMXRT595S_cm33)
-
 include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
+
+include(utilities_misc_utilities_MIMXRT595S_cm33)
 
 include(driver_iap_MIMXRT595S_cm33)
 

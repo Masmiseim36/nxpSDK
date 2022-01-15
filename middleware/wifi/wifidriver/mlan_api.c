@@ -2,7 +2,7 @@
  *
  *  @brief This file provides more APIs for mlan.
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -66,7 +66,7 @@ static const char driver_version_format[] = "SD878x-%s-%s-WM";
 static const char driver_version[]        = "702.1.0";
 
 static unsigned int mgmt_ie_index_bitmap = 0x00;
-static int wifi_11d_country              = 0x00;
+int wifi_11d_country                     = 0x00;
 
 /* This were static functions in mlan file */
 mlan_status wlan_cmd_802_11_deauthenticate(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND *cmd, IN t_void *pdata_buf);
@@ -169,7 +169,7 @@ int wifi_mem_access(uint16_t action, uint32_t addr, uint32_t *value)
 
 int wifi_get_tsf(uint32_t *tsf_high, uint32_t *tsf_low)
 {
-    t_u64 tsf;
+    t_u64 tsf = 0x00;
 
     wifi_get_command_lock();
     HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
@@ -1712,7 +1712,7 @@ char *wifi_get_country_str(int country)
     }
 }
 
-static wifi_domain_param_t *get_11d_domain_params(int country, wifi_sub_band_set_t *sub_band, int nr_sb)
+wifi_domain_param_t *get_11d_domain_params(int country, wifi_sub_band_set_t *sub_band, int nr_sb)
 {
     wifi_domain_param_t *dp = os_mem_alloc(sizeof(wifi_domain_param_t) + (sizeof(wifi_sub_band_set_t) * (nr_sb - 1)));
 
@@ -1733,21 +1733,18 @@ int wifi_set_country(int country)
 {
     int ret, nr_sb;
 
+    if (wlan_enable_11d() != WM_SUCCESS)
+    {
+        wifi_e("unable to enabled 11d feature\r\n");
+        return WM_FAIL;
+    }
+
     wifi_11d_country = country;
 
     wifi_sub_band_set_t *sub_band = get_sub_band_from_country(country, &nr_sb);
 
     wifi_domain_param_t *dp = get_11d_domain_params(country, sub_band, nr_sb);
 
-#if 0
-	ret = wifi_uap_set_domain_params(dp);
-
-	if (ret != WM_SUCCESS) {
-		wifi_11d_country = 0x00;
-		os_mem_free(dp);
-		return ret;
-	}
-#endif
     ret = wifi_set_domain_params(dp);
 
     if (ret != WM_SUCCESS)
@@ -2366,4 +2363,41 @@ int wifi_stop_smart_mode()
     wifi_wait_for_cmdresp(NULL);
 
     return WM_SUCCESS;
+}
+
+int wifi_send_hostcmd(
+    void *cmd_buf, uint32_t cmd_buf_len, void *resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len)
+{
+    uint32_t ret = WM_SUCCESS;
+    /* Store IN & OUT params to be used by driver to update internaally*/
+    /* These variables are updated from reponse handlers */
+    wm_wifi.hostcmd_cfg.resp_buf      = resp_buf;
+    wm_wifi.hostcmd_cfg.resp_buf_len  = resp_buf_len;
+    wm_wifi.hostcmd_cfg.reqd_resp_len = reqd_resp_len;
+
+    /* Check if command is larger than the command size that can be handled by firmware */
+    if (cmd_buf_len > WIFI_FW_CMDBUF_SIZE)
+    {
+        *reqd_resp_len = 0;
+        return WM_E_INBIG;
+    }
+    else if (cmd_buf_len < WIFI_HOST_CMD_FIXED_HEADER_LEN)
+    /* Check if command is smaller than the minimum command size needed, which is WIFI_HOST_CMD_FIXED_HEADER_LEN */
+    {
+        *reqd_resp_len = 0;
+        return WM_E_INSMALL;
+    }
+    wifi_get_command_lock();
+    /* Copy command buffer to driver command buffer */
+    HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
+    memcpy(cmd, cmd_buf, cmd_buf_len);
+
+    /* Set global variable to say that this command is from user invocation */
+    wm_wifi.hostcmd_cfg.is_hostcmd = true;
+    wifi_wait_for_cmdresp(&wm_wifi.hostcmd_cfg);
+
+    if (*reqd_resp_len > resp_buf_len)
+        ret = WM_E_OUTBIG;
+    /*Response fail check not checked here, as thats caller's responsibility */
+    return ret;
 }

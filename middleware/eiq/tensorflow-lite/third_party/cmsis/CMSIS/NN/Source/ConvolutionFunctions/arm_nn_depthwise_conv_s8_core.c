@@ -21,22 +21,21 @@
  * Title:        arm_nn_depthwise_conv_s8_core.c
  * Description:  Depthwise convolution on im2col buffers.
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.3
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.4
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
 
-#include "cmsis/CMSIS/DSP/Include/arm_math.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
 
 /*
-   * Depthwise conv on an im2col buffer where the input channel equals
-   * output channel.
-   *
-   * Refer header file for details.
-   *
-   */
+ * Depthwise conv on an im2col buffer where the input channel equals
+ * output channel.
+ *
+ * Refer header file for details.
+ *
+ */
 
 q7_t *arm_nn_depthwise_conv_s8_core(const q7_t *row,
                                     const q15_t *col,

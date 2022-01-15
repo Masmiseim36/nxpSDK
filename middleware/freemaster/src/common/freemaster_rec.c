@@ -446,7 +446,7 @@ FMSTR_BOOL FMSTR_RecorderAddVariable(FMSTR_INDEX recIndex, FMSTR_INDEX recVarIx,
 
     if ((recorder = _FMSTR_GetRecorderByRecIx(recIndex)) == NULL)
     {
-        return FMSTR_STC_INSTERR;
+        return FMSTR_FALSE;
     }
 
     return (FMSTR_BOOL)((_FMSTR_RecVarCfg(recorder, recVarIx, recVarCfg) == FMSTR_STS_OK) ? FMSTR_TRUE : FMSTR_FALSE);
@@ -478,13 +478,13 @@ static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_REC *recorder, FMSTR_INDEX recVarIx, FMST
     }
 
     /* valid numeric variable sizes only */
-    if (_FMSTR_RecIsValidVarSize(recVarCfg->size) == 0U)
+    if (_FMSTR_RecIsValidVarSize(recVarCfg->size) == FMSTR_FALSE)
     {
         return FMSTR_STC_INVSIZE;
     }
 
 #if FMSTR_USE_TSA > 0 && FMSTR_USE_TSA_SAFETY > 0
-    if (FMSTR_CheckTsaSpace(recVarCfg->addr, recVarCfg->size, 0U) == FMSTR_FALSE)
+    if (FMSTR_CheckTsaSpace(recVarCfg->addr, recVarCfg->size, FMSTR_FALSE) == FMSTR_FALSE)
     {
         return FMSTR_STC_EACCESS;
     }
@@ -497,7 +497,7 @@ static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_REC *recorder, FMSTR_INDEX recVarIx, FMST
 #if FMSTR_USE_TSA > 0 && FMSTR_USE_TSA_SAFETY > 0
         if ((recVarCfg->triggerMode & FMSTR_REC_TRG_F_VARTHR) != 0U)
         {
-            if (FMSTR_CheckTsaSpace(recVarCfg->trgAddr, recVarCfg->size, 0U) == FMSTR_FALSE)
+            if (FMSTR_CheckTsaSpace(recVarCfg->trgAddr, recVarCfg->size, FMSTR_FALSE) == FMSTR_FALSE)
             {
                 return FMSTR_STC_EACCESS;
             }
@@ -720,7 +720,7 @@ FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_
             return response;
         }
 
-        inputLen -= opLen + 2UL;
+        inputLen -= opLen + 2U;
 
         switch (opCode)
         {

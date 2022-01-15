@@ -369,7 +369,7 @@ int mbedtls_cipher_cmac_reset( mbedtls_cipher_context_t *ctx )
 
     return( 0 );
 }
-
+/* NXP added for HW accelerators support */
 #if !defined(MBEDTLS_CIPHER_CMAC_ALT)
 int mbedtls_cipher_cmac( const mbedtls_cipher_info_t *cipher_info,
                          const unsigned char *key, size_t keylen,
@@ -403,6 +403,7 @@ exit:
     return( ret );
 }
 #endif /* MBEDTLS_CIPHER_CMAC_ALT */
+/* NXP added for HW accelerators support */
 
 #if defined(MBEDTLS_AES_C)
 /*
@@ -533,6 +534,7 @@ static const unsigned char aes_128_expected_result[NB_CMAC_TESTS_PER_KEY][MBEDTL
     }
 };
 
+/* NXP added for HW accelerators support */
 #ifndef MBEDTLS_AES_ALT_NO_192
 /* CMAC-AES192 Test Data */
 static const unsigned char aes_192_key[24] = {
@@ -575,8 +577,10 @@ static const unsigned char aes_192_expected_result[NB_CMAC_TESTS_PER_KEY][MBEDTL
     }
 };
 #endif /* MBEDTLS_AES_ALT_NO_192 */
+/* NXP added for HW accelerators support */
 
 /* CMAC-AES256 Test Data */
+/* NXP added for HW accelerators support */
 #if defined(MBEDTLS_CIPHER_CMAC_ALT)
 static const unsigned char aes_256_key[32] = {
     0x60, 0x3d, 0xeb, 0x10,     0x15, 0xca, 0x71, 0xbe,
@@ -619,6 +623,7 @@ static const unsigned char aes_256_expected_result[NB_CMAC_TESTS_PER_KEY][MBEDTL
     }
 };
 #endif /* MBEDTLS_CIPHER_CMAC_ALT */
+/* NXP added for HW accelerators support */
 #endif /* MBEDTLS_AES_C */
 
 #if defined(MBEDTLS_DES_C) && defined(MBEDTLS_CIPHER_CMAC_ALT)
@@ -873,11 +878,12 @@ static int cmac_test_wth_cipher( int verbose,
         {
             /* When CMAC is implemented by an alternative implementation, or
              * the underlying primitive itself is implemented alternatively,
-             * AES-192 may be unavailable. This should not cause the selftest
-             * function to fail. */
+             * AES-192 and/or 3DES may be unavailable. This should not cause
+             * the selftest function to fail. */
             if( ( ret == MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED ||
                   ret == MBEDTLS_ERR_CIPHER_FEATURE_UNAVAILABLE ) &&
-                  cipher_type == MBEDTLS_CIPHER_AES_192_ECB ) {
+                ( cipher_type == MBEDTLS_CIPHER_AES_192_ECB ||
+                  cipher_type == MBEDTLS_CIPHER_DES_EDE3_ECB ) ) {
                 if( verbose != 0 )
                     mbedtls_printf( "skipped\n" );
                 continue;
@@ -964,6 +970,7 @@ int mbedtls_cmac_self_test( int verbose )
     {
         return( ret );
     }
+/* NXP added for HW accelerators support */	
 #if defined(MBEDTLS_CIPHER_CMAC_ALT) && !defined(MBEDTLS_AES_ALT_NO_192)
     /* AES-192 */
     if( ( ret = cmac_test_subkeys( verbose,
@@ -992,7 +999,7 @@ int mbedtls_cmac_self_test( int verbose )
         return( ret );
     }
 #endif /* MBEDTLS_CIPHER_CMAC_ALT && !MBEDTLS_AES_ALT_NO_192 */
-
+/* NXP added for HW accelerators support */
 #if defined(MBEDTLS_CIPHER_CMAC_ALT) && defined(MBEDTLS_CIPHER_CMAC_AES_256_ENABLED)
     /* AES-256 */
     if( ( ret = cmac_test_subkeys( verbose,
@@ -1024,6 +1031,7 @@ int mbedtls_cmac_self_test( int verbose )
 #endif /* MBEDTLS_AES_C */
 
 #if defined(MBEDTLS_DES_C)
+/* NXP added for HW accelerators support */
 #if defined(MBEDTLS_CIPHER_CMAC_ALT) && defined(MBEDTLS_CIPHER_CMAC_TDES_ENABLED)
     /* 3DES 2 key */
     if( ( ret = cmac_test_subkeys( verbose,
@@ -1079,6 +1087,7 @@ int mbedtls_cmac_self_test( int verbose )
         return( ret );
     }
 #endif /* MBEDTLS_CIPHER_CMAC_ALT && MBEDTLS_CIPHER_CMAC_TDES_ENABLED */
+/* NXP added for HW accelerators support */
 #endif /* MBEDTLS_DES_C */
 
 #if defined(MBEDTLS_AES_C)

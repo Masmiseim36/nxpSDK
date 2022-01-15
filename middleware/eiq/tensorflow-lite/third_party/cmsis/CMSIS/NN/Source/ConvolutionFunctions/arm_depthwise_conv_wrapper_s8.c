@@ -22,15 +22,14 @@
  * Description:  Wrapper API to select appropriate depthwise conv API based
  *               on dimensions.
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.2
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
-#include "cmsis/CMSIS/DSP/Include/arm_math.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
+
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -42,11 +41,11 @@
  */
 
 /*
-   *  s8 Depthwise conv wrapper function
-   *
-   *  Refer header file for details.
-   *
-   */
+ *  s8 Depthwise conv wrapper function
+ *
+ *  Refer header file for details.
+ *
+ */
 arm_status arm_depthwise_conv_wrapper_s8(const cmsis_nn_context *ctx,
                                          const cmsis_nn_dw_conv_params *dw_conv_params,
                                          const cmsis_nn_per_channel_quant_params *quant_params,

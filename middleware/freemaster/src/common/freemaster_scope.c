@@ -142,7 +142,7 @@ static FMSTR_U8 _FMSTR_SetScope_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE *scope,
 
     /* Check the TSA safety */
 #if FMSTR_USE_TSA && FMSTR_USE_TSA_SAFETY
-    if (FMSTR_CheckTsaSpace(addr, size, 0U) == 0U)
+    if (FMSTR_CheckTsaSpace(addr, size, FMSTR_FALSE) == FMSTR_FALSE)
     {
         return FMSTR_STC_EACCESS;
     }
@@ -205,7 +205,7 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SI
         msgBuffIO = FMSTR_ValueFromBuffer8(&opCode, msgBuffIO);
         msgBuffIO = FMSTR_ValueFromBuffer8(&opLen, msgBuffIO);
 
-        if ((opLen + 2UL) > inputLen)
+        if ((opLen + 2U) > inputLen)
         {
             *retStatus = FMSTR_STC_INVSIZE;
             return response;
@@ -228,7 +228,7 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SI
                 break;
         }
 
-        inputLen -= opLen + 2UL;
+        inputLen -= opLen + 2U;
         msgBuffIO += opLen;
     }
 

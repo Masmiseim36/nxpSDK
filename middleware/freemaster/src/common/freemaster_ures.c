@@ -175,7 +175,7 @@ static FMSTR_BPTR _FMSTR_UresControlRead(
 
     /* Call user function */
     ret = uresFunc(FMSTR_URES_OP_READ, &uresBuffRWI, (void *)ures->info.p);
-    if (ret == 0U)
+    if (ret == FMSTR_FALSE)
     {
         /* User resource function error */
         /* return status */
@@ -265,7 +265,7 @@ static FMSTR_BPTR _FMSTR_UresControlWrite(
 
     /* Call user function */
     ret = uresFunc(FMSTR_URES_OP_WRITE, &uresBuffRWI, (void *)ures->info.p);
-    if (ret == 0U)
+    if (ret == FMSTR_FALSE)
     {
         /* User resource function error */
         /* return status */

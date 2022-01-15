@@ -5,8 +5,8 @@
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    iMXRT500RM Rev.0, 01/2021
-**     Version:             rev. 4.0, 2020-05-12
-**     Build:               b210303
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b210810
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -41,6 +41,7 @@ if (isdefinedsymbol(__heap_size__)) {
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
 /* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x80000-0x27FFFF] is reserved for DSP code and data. */
 /* Only the first 1MB is used as secure flash memory. */
 
 define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000180 : 0;
@@ -53,11 +54,12 @@ define symbol m_text_start                     = 0x18001180;
 define symbol m_text_end                       = 0x180FFDFF;
 
 /* Only first 256kB of data RAM is used as secure memory. */
-define symbol m_interrupts_ram_start           = 0x30140000;
-define symbol m_interrupts_ram_end             = 0x30140000 + __ram_vector_table_offset__;
+/* Use the same SRAM partition with ram_s linker to share the same SAU configuration. */
+define symbol m_interrupts_ram_start           = 0x30340000;
+define symbol m_interrupts_ram_end             = 0x30340000 + __ram_vector_table_offset__;
 
 define symbol m_data_start                     = m_interrupts_ram_start + __ram_vector_table_size__;
-define symbol m_data_end                       = 0x3017FFFF;
+define symbol m_data_end                       = 0x3037FFFF;
 
 /* 512B - memory for veneer table (NSC - secure, non-secure callable memory) */
 define symbol m_veneer_table_start             = 0x180FFE00;

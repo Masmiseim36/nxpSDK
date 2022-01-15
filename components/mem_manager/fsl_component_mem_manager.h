@@ -282,6 +282,14 @@ void *MEM_BufferRealloc(void *buffer, uint32_t new_size);
  */
 uint32_t MEM_GetHeapUpperLimit(void);
 
+/*!
+ * @brief Get the free space in the heap.
+ *
+ * @retval FreeHeapSize  Return the free space in the heap if MemManagerLight is used.
+ * @retval 0             Return 0 in case of the legacy MemManager.
+ */
+uint32_t MEM_GetFreeHeapSize(void);
+
 #if !defined(gMemManagerLight) || (gMemManagerLight == 0)
 #if (defined(MEM_MANAGER_ENABLE_TRACE) && (MEM_MANAGER_ENABLE_TRACE > 0U))
 /*!

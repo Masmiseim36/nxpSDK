@@ -20,9 +20,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define FIFO_DEPTH (15U)
+#define FIFO_DEPTH  (15U)
 #define BUFFER_SIZE (128)
-#define BUFFER_NUM (2U)
+#define BUFFER_NUM  (2U)
 
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -123,8 +123,9 @@ void dmic_Callback(DMIC_Type *base, dmic_dma_handle_t *handle, status_t status, 
 void Board_DMIC_DMA_Init(void)
 {
     dmic_channel_config_t dmic_channel_cfg;
-
-    DMA_Init(DEMO_DMA);
+    /* Audio component has already initialized the DMA, if init it twice, it will cause audio has no callback and
+     * sound. */
+    /* DMA_Init(DEMO_DMA); */
 
     DMA_EnableChannel(DEMO_DMA, DEMO_DMIC_RX_CHANNEL);
     DMA_SetChannelPriority(DEMO_DMA, DEMO_DMIC_RX_CHANNEL, kDMA_ChannelPriority2);

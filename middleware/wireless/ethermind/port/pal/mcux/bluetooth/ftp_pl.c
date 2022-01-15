@@ -74,7 +74,11 @@ API_RESULT BT_ftp_server_create_xml_dir_listing
         return FTP_INVALID_PARAMETERS;
     }
 
-    BT_str_n_copy(dir, dir_entry, sizeof(dir));
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    BT_mem_set(&h, 0, sizeof(BT_fops_object_handle));
+    BT_mem_set(&info, 0, sizeof(BT_FOPS_FILINFO));
+
+    BT_str_n_copy(dir, dir_entry, (sizeof(dir) - 1));
 
     FTP_PL_TRC(
     "[FTP_PL] Path = %s\n", dir_entry);

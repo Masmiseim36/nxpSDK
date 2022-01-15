@@ -24,7 +24,7 @@
  *  to identify one concerned Protocol Entity. The following defines the
  *  Maximum number of supported Remote Devices in all the modules except HCI.
  */
-#define BT_MAX_REMOTE_DEVICES                           16
+#define BT_MAX_REMOTE_DEVICES                           16U
 
 /*
  *  Static Data Size used in EtherMind Modules.
@@ -515,7 +515,7 @@
  * Minimum Value:   1.
  * Maximum Value: 255.
  */
-#define ATT_MAX_CONNECTION_INSTANCES                      16
+#define ATT_MAX_CONNECTION_INSTANCES                      16U
 
 /**
  * ATT_MAX_MTU
@@ -1231,7 +1231,7 @@
  *  Minimum Value: 4
  *  Maximum Value: depends on type of codec
  */
-#define AVDTP_MAX_CODEC_IE_LEN                          7
+#define AVDTP_MAX_CODEC_IE_LEN                          7U
 
 /*
  *  Maximum number of bytes in packed Content Protection capability

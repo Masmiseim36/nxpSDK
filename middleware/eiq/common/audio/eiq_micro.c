@@ -191,7 +191,8 @@ static bool isReady(void)
  */
 static void AUDIO_EnableSaiMclkOutput(bool enable)
 {
-#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 ) ||\
+    defined( CPU_MIMXRT1176DVMAA_cm4 ) || defined( CPU_MIMXRT1166DVM6A_cm4 )
   if(enable)
   {
     IOMUXC_GPR->GPR0 |= IOMUXC_GPR_GPR0_SAI1_MCLK_DIR_MASK;
@@ -218,7 +219,9 @@ static void AUDIO_EnableSaiMclkOutput(bool enable)
  */
 static void AUDIO_InitClock(void)
 {
-#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 ) ||\
+    defined( CPU_MIMXRT1176DVMAA_cm4 ) || defined( CPU_MIMXRT1166DVM6A_cm4 )
+
     /* Clock setting for LPI2C */
     CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c5, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
 
@@ -252,7 +255,8 @@ static void init(void)
     wm8960Config.i2cConfig.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE;
     wm8960Config.i2cConfig.codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ;
     wm8960Config.route            = kWM8960_RoutePlaybackandRecord;
-#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 ) ||\
+    defined( CPU_MIMXRT1166DVM6A_cm4 ) || defined( CPU_MIMXRT1176DVMAA_cm4 )
     wm8960Config.leftInputSource  = kWM8960_InputDifferentialMicInput3,
     wm8960Config.rightInputSource = kWM8960_InputDifferentialMicInput2,
 #else

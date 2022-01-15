@@ -954,6 +954,7 @@ typedef struct _SMP_AUTH_INFO
      */
     UCHAR xtx_info;
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
+
 } SMP_AUTH_INFO;
 
 
@@ -1187,10 +1188,10 @@ API_RESULT BT_smp_authenticate
  *
  */
 API_RESULT BT_smp_get_pairing_req_pdu
-           (
-               /* IN */ SMP_BD_HANDLE   * bd_handle,
-               /* OUT */ UCHAR *preq
-           );
+	(
+	 /* IN */ SMP_BD_HANDLE   * bd_handle,
+	 /* OUT */ UCHAR *preq
+	);
 
 /**
  * \brief To intiate encryption procedure

@@ -9,4 +9,4 @@
 
 #include <stdint.h>
 
-uint8_t tfm_sp_its_stack[0x900] __attribute__((aligned(8)));  //NXP was 0x680
+uint8_t tfm_sp_its_stack[0x900] __attribute__((aligned(8)));

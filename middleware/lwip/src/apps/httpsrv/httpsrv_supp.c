@@ -1345,7 +1345,7 @@ int32_t httpsrv_req_hdr(HTTPSRV_SESSION_STRUCT *session, char *buffer)
         {
             session->flags &= ~HTTPSRV_FLAG_IS_KEEP_ALIVE;
         }
-        if (strstr(param_ptr, "Upgrade"))
+        if (strstr(param_ptr, "Upgrade") || strstr(param_ptr, "upgrade"))
         {
             session->flags |= HTTPSRV_FLAG_DO_UPGRADE;
         }

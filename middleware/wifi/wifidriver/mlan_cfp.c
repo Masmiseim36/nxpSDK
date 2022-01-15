@@ -1238,7 +1238,7 @@ mlan_status wlan_set_regiontable(mlan_private *pmpriv, t_u8 region, t_u8 band)
 
     ENTER();
 
-    (void)memset(pmadapter, pmadapter->region_channel, 0, sizeof(pmadapter->region_channel));
+    (void)__memset(pmadapter, pmadapter->region_channel, 0, sizeof(pmadapter->region_channel));
 
     if (band & (BAND_B | BAND_G | BAND_GN))
     {
@@ -1797,7 +1797,7 @@ void wlan_add_fw_cfp_tables(pmlan_private pmpriv, t_u8 *buf, t_u16 buf_left)
                 /* Save region info values from OTP in the otp_region
                  * structure
                  */
-                (void)memcpy(pmadapter, pmadapter->otp_region, data, sizeof(otp_region_info_t));
+                (void)__memcpy(pmadapter, pmadapter->otp_region, data, sizeof(otp_region_info_t));
 
                 data += sizeof(otp_region_info_t);
                 /* Get pre-defined cfp tables corresponding to the region code
@@ -1938,7 +1938,7 @@ void wlan_add_fw_cfp_tables(pmlan_private pmpriv, t_u8 *buf, t_u16 buf_left)
                         break;
                     }
                 }
-                (void)memcpy(pmadapter, pmadapter->tx_power_table_bg, data, i);
+                (void)__memcpy(pmadapter, pmadapter->tx_power_table_bg, data, i);
                 pmadapter->tx_power_table_bg_size = i;
                 data += i;
 #ifdef CONFIG_5GHz_SUPPORT
@@ -1960,7 +1960,7 @@ void wlan_add_fw_cfp_tables(pmlan_private pmpriv, t_u8 *buf, t_u16 buf_left)
                         break;
                     }
                 }
-                (void)memcpy(pmadapter, pmadapter->tx_power_table_a, data, i);
+                (void)__memcpy(pmadapter, pmadapter->tx_power_table_a, data, i);
                 pmadapter->tx_power_table_a_size = i;
 #endif
                 break;

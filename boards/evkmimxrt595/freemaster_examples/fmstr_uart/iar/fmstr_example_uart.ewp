@@ -225,9 +225,6 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
-          <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>USB_STACK_BM</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -360,7 +357,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
@@ -1265,9 +1261,6 @@
           <state>CPU_MIMXRT595SFFOC_cm33</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
-          <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>USB_STACK_BM</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1400,7 +1393,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
@@ -2304,9 +2296,6 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
-          <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>USB_STACK_BM</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -2439,7 +2428,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
@@ -3344,9 +3332,6 @@
           <state>NDEBUG</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>CPU_MIMXRT595SEVKA=1</state>
-          <state>USB_STACK_USE_DEDICATED_RAM=1</state>
-          <state>USB_STACK_BM</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -3479,7 +3464,6 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
@@ -4430,6 +4414,12 @@
         <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_segger_rtt.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/network/freemaster_net_lwip_udp.c</name>
       </file>
       <file>
@@ -4482,24 +4472,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_usart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>

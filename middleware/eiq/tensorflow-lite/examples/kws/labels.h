@@ -8,19 +8,19 @@
 #ifndef _LABELS_H_
 #define _LABELS_H_
 
-static const char* labels[] = {
-    "Silence",
-    "Unknown",
-    "yes",
-    "no",
-    "up",
+static const char* const labels[] = {
     "down",
+    "go",
     "left",
-    "right",
-    "on",
+    "no",
     "off",
+    "on",
+    "right",
     "stop",
-    "go"
+    "up",
+    "yes",
+    "Silence",
+    "Unknown"
 };
 
 #endif // _LABELS_H_ 

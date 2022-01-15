@@ -93,9 +93,9 @@
 /*! @brief WM8904 I2C bit rate. */
 #define WM8904_I2C_BITRATE (400000U)
 
-/*!@brief WM8904 maximum headphone/lineout volume */
+/*!@brief WM8904 maximum volume */
 #define WM8904_MAP_HEADPHONE_LINEOUT_MAX_VOLUME 0x3FU
-
+#define WM8904_DAC_MAX_VOLUME                   0xC0U
 /*! @brief WM8904 status return codes.
  * @anchor _wm8904_status
  */
@@ -498,15 +498,25 @@ status_t WM8904_PrintRegisters(wm8904_handle_t *handle);
 #endif
 
 /*!
- * brief SET the module output power.
+ * @brief SET the module output power.
  *
- * param handle WM8904 handle structure.
- * param module wm8904 module.
- * param isEnabled, true is power on, false is power down.
+ * @param handle WM8904 handle structure.
+ * @param module wm8904 module.
+ * @param isEnabled, true is power on, false is power down.
  *
- * return kStatus_WM8904_Success if successful, different code otherwise..
+ * @return kStatus_WM8904_Success if successful, different code otherwise..
  */
 status_t WM8904_SetModulePower(wm8904_handle_t *handle, wm8904_module_t module, bool isEnabled);
+
+/*!
+ * @brief SET the DAC module volume.
+ *
+ * @param handle WM8904 handle structure.
+ * @param volume volume to be configured.
+ *
+ * @return kStatus_WM8904_Success if successful, different code otherwise..
+ */
+status_t WM8904_SetDACVolume(wm8904_handle_t *handle, uint8_t volume);
 
 /*!
  * @brief Sets the channel output volume.

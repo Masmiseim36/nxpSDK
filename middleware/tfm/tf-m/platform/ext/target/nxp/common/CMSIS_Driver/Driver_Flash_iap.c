@@ -24,6 +24,7 @@
 #include "flash_layout.h"
 #include "fsl_iap.h"
 #include "fsl_cache.h"
+#include "tfm_memory_utils.h"
 #include "log/tfm_log.h"
 
 #ifndef ARG_UNUSED
@@ -218,10 +219,12 @@ static int32_t ARM_Flash_Initialize(ARM_Flash_SignalEvent_t cb_event)
             return ARM_DRIVER_ERROR;
         }
         
+        CACHE64_InvalidateCache(CACHE_BASE); /* Without this MIMXRT685-AUD-EVK is not stable */
+
     #if TARGET_DEBUG_LOG
         LOG_MSG("\r\n***NOR Flash Initialization Success!***\r\n");
     #endif
-    
+
         flash_init_is_done = true;
     }
 
@@ -347,14 +350,15 @@ static int32_t ARM_Flash_ReadData(uint32_t addr, void *data, uint32_t cnt)
 
 static int32_t ARM_Flash_ProgramData(uint32_t addr, const void *data, uint32_t cnt)
 {
-
     static uint32_t status;
     uint32_t        pages;
     uint32_t        i;
+    const uint32_t  *src;
+    static uint32_t write_buffer[FLASH0_PAGE_SIZE/sizeof(uint32_t)]; /* Aligned temporary buffer. IAP requires that the source address must be aligned to 4 bytes.*/
+    bool            data_is_aligned;
 
     /* Check Flash memory boundaries and alignment with minimum write size
-    * (program_unit), data size also needs to be a multiple of program_unit.
-    */
+    * (program_unit), data size also needs to be a multiple of program_unit. */
     if(!(is_range_valid(FLASH0_DEV, addr + cnt) &&
          is_write_aligned(FLASH0_DEV, addr)     &&
          is_write_aligned(FLASH0_DEV, cnt)      )) {
@@ -365,20 +369,31 @@ static int32_t ARM_Flash_ProgramData(uint32_t addr, const void *data, uint32_t c
     }
 
     pages = cnt / FLASH0_DEV->data->page_size;
-    for (i = 0; i < pages; i++)
+    data_is_aligned = ((uint32_t)data % (sizeof(uint32_t)) != 0) ? (false) : (true);
+    
+    for (i = 0; i < pages; i++, data = (uint8_t*)data + FLASH0_PAGE_SIZE, addr += FLASH0_PAGE_SIZE)
     {
-        status = IAP_FlexspiNorPageProgram(NOR_FLASH_INSTANCE, &FLASH0_DEV->flash_config,
-                                        addr + i * FLASH0_DEV->data->page_size, 
-                                        (const uint32_t *)((uint32_t)data + i * FLASH0_DEV->data->page_size));
+        if(data_is_aligned)
+        {
+            src = data;
+        }
+        else
+        {
+            src = tfm_memcpy(write_buffer, data, FLASH0_PAGE_SIZE);
+        }
+
+        status = IAP_FlexspiNorPageProgram(NOR_FLASH_INSTANCE, &FLASH0_DEV->flash_config, addr, src);
 
         if (status != kStatus_Success)
         {
         #if TARGET_DEBUG_LOG
-            LOG_MSG("\r\n***NOR Flash Page %d Program Failed!*** Status = %d Dest = 0x%x Src = 0x%x \r\n", i, status, addr + i * FLASH0_DEV->data->page_size, data + i * FLASH0_DEV->data->page_size );
+            LOG_MSG("\r\n***NOR Flash Page %d Program Failed!*** Status = %d Dest = 0x%x Src = 0x%x \r\n", i, status, addr, data);
         #endif
             return ARM_DRIVER_ERROR;
         }
     }
+
+    CACHE64_InvalidateCache(CACHE_BASE);
 
 #if 0 /* Check result */
     {

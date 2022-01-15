@@ -1,6 +1,6 @@
 
 ----------------------------------------------------------------------
-REL 4.02.00 - LA_OPT_NXP_Software_License
+REL 4.04.00 - LA_OPT_NXP_Software_License
 ----------------------------------------------------------------------
 VIT integrating LP_VAD, WakeWordEngine Text2Model and Voice Commands Text2Model features.
 Core supported : FusionF1
@@ -14,6 +14,4 @@ See VIT_Model.h for the list of commands supported.
 
 Dependencies : 
     - Fusion naturedsp lib : libfusion_library
-
-
-Changes : -
+    - Cadence DSP NN lib

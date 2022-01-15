@@ -23,7 +23,6 @@
  *  express and approved by NXP in writing.
  *
  */
-#include <inttypes.h>
 #include <stdio.h>
 #include <wm_os.h>
 #include <wmlog.h>

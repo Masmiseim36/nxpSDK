@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides Miscellaneous functions for MLAN module
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -70,7 +70,7 @@ pmlan_buffer wlan_alloc_mlan_buffer(mlan_adapter *pmadapter, t_u32 data_len, t_u
             pmbuf = MNULL;
             goto exit;
         }
-        (void)memset(pmadapter, pmbuf, 0, sizeof(mlan_buffer));
+        (void)__memset(pmadapter, pmbuf, 0, sizeof(mlan_buffer));
 
         pmbuf->pdesc = MNULL;
         /* Align address */
@@ -112,7 +112,7 @@ void wlan_add_ext_capa_info_ie(IN mlan_private *pmpriv, OUT t_u8 **pptlv_out)
     ENTER();
 
     pext_cap = (MrvlIETypes_ExtCap_t *)*pptlv_out;
-    (void)memset(pmpriv->adapter, pext_cap, 0, sizeof(MrvlIETypes_ExtCap_t));
+    (void)__memset(pmpriv->adapter, pext_cap, 0, sizeof(MrvlIETypes_ExtCap_t));
     pext_cap->header.type = wlan_cpu_to_le16(EXT_CAPABILITY);
     pext_cap->header.len  = wlan_cpu_to_le16(sizeof(ExtCap_t));
     if (((t_u8)(pmpriv->hotspot_cfg >> 8)) & HOTSPOT_ENABLE_INTERWORKING_IND)
@@ -185,7 +185,7 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
 
     if (ds_rate->param.rate_cfg.is_rate_auto)
     {
-        (void)memset(pmadapter, bitmap_rates, 0, sizeof(bitmap_rates));
+        (void)__memset(pmadapter, bitmap_rates, 0, sizeof(bitmap_rates));
         /* Rates talbe [0]: HR/DSSS;[1]: OFDM; [2..9] HT; */
         /* Support all HR/DSSS rates */
         bitmap_rates[0] = 0x000F;
@@ -209,7 +209,7 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
     {
         PRINTM(MINFO, "Rate index is %d\n", rate_index);
 
-        (void)memset(pmadapter, bitmap_rates, 0, sizeof(bitmap_rates));
+        (void)__memset(pmadapter, bitmap_rates, 0, sizeof(bitmap_rates));
         if (rate_format == MLAN_RATE_FORMAT_LG)
         {
             /* Bitmap of HR/DSSS rates */

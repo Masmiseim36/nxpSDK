@@ -16,7 +16,6 @@
 /*******************************************************************/
 /* Include */
 /*******************************************************************/
-#include "LVM.h" // EAP library
 
 /***********************************************************************/
 /* 							EQUALISER CONFIG 						   */
@@ -70,7 +69,7 @@ LVM_InstParams_t InstParams_allEffectOff = {
 	.PSA_HistorySize 			= 1000,         	  /* PSA History size in ms: 200 to 5000 */
 	.PSA_MaxBands 				= LVM_PSA_MAX_NUMBANDS,  /* Maximum number of bands: 6 to 64 */
 	.PSA_SpectrumUpdateRate 	= 25,  				  /* Spectrum update rate : 10 to 25*/
-	.PSA_Included 				= LVM_PSA_OFF,        /* Controls the instance memory allocation for PSA: ON/OFF */
+	.PSA_Included 				= LVM_PSA_ON,        /* Controls the instance memory allocation for PSA: ON/OFF */
 #endif /* ALGORITHM_PSA */
 };
 
@@ -106,7 +105,7 @@ LVM_HeadroomParams_t HeadroomParams_allEffectOff = {
 LVM_ControlParams_t	ControlParamSet_allEffectOff = {
 	/* General parameters */
 	.OperatingMode	 	 = LVM_MODE_ON, 			// LVM_MODE_ON or LVM_MODE_OFF / Bundle operating mode On/Bypass
-	.SampleRate 		 = LVM_FS_48000, 			// LVM_FS_8000, LVM_FS_11025, LVM_FS_12000, LVM_FS_16000, LVM_FS_22050, LVM_FS_24000, LVM_FS_32000, LVM_FS_44100, LVM_FS_48000
+	.SampleRate 		 = LVM_FS_48000, 			// LVM_FS_8000, LVM_FS_11025, LVM_FS_12000, LVM_FS_16000, LVM_FS_22050, LVM_FS_24000, LVM_FS_32000, LVM_FS_44100, LVM_FS_48000, LVM_FS_96000
 	.SourceFormat		 = LVM_STEREO, 				// LVM_MONO or LVM_MONOINSTEREO or LVM_STEREO
 	.SpeakerType 		 = LVM_HEADPHONES, 			// LVM_HEADPHONES or LVM_MOBILE_SPEAKERS_SMALL or LVM_MOBILE_SPEAKERS_MEDIUM or LVM_MOBILE_SPEAKERS_LARGE
 	.SpeakerTypeInternal = LVM_SPEAKER_STEREO,		// Device speaker type, LVM_SPEAKER_MONO or LVM_SPEAKER_STEREO
@@ -150,7 +149,7 @@ LVM_ControlParams_t	ControlParamSet_allEffectOff = {
 #endif /* ALGORITHM_DBE */
 
 	/* Volume Control parameters */
-	.VC_EffectLevel = (LVM_INT16)0, 				// Volume Control setting in dBs -96 to 0 dB
+	.VC_EffectLevel = (LVM_INT16)-10, 				// Volume Control setting in dBs -96 to 0 dB
 	.VC_Balance = (LVM_INT16)0,   					// Left Right Balance control in dB (-96 to 96 dB)
 
 #ifdef ALGORITHM_TE

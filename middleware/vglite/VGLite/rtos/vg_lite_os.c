@@ -23,6 +23,14 @@
 #define QUEUE_LENGTH     8
 #define MAX_QUEUE_WAIT_NUM  10
 
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+#ifndef TURE
+#define TURE 1
+#endif
+
 typedef struct vg_lite_queue{
     uint32_t  cmd_physical;
     uint32_t  cmd_offset;
@@ -44,6 +52,7 @@ SemaphoreHandle_t semaphore[TASK_LENGTH] = {NULL};
 SemaphoreHandle_t command_semaphore = NULL;
 SemaphoreHandle_t int_queue;
 volatile uint32_t int_flags;
+uint32_t curContext;
 
 void __attribute__((weak)) vg_lite_bus_error_handler()
 {
@@ -81,14 +90,55 @@ void command_queue(void * parameters)
                                   TASK_WAIT_TIME/portTICK_PERIOD_MS);
                 if(ret == pdPASS)
                 {
+#if defined(PRINT_COMMAND_BUFFER)
+                    int i = 0;
+                    for(i=0;i < (peek_queue->cmd_size + 3) / 4; i++)
+                    {
+                        if(i % 4 == 0)
+                            printf("\r\n");
+                        printf("0x%08x ",((uint32_t*)(peek_queue->cmd_physical + peek_queue->cmd_offset))[i]);
+                    }
+#endif
                     vg_lite_hal_poke(VG_LITE_HW_CMDBUF_ADDRESS, peek_queue->cmd_physical + peek_queue->cmd_offset);
                     vg_lite_hal_poke(VG_LITE_HW_CMDBUF_SIZE, (peek_queue->cmd_size +7)/8 );
 
                     if(vg_lite_hal_wait_interrupt(ISR_WAIT_TIME, (uint32_t)~0, &even_got))
                         peek_queue->event->signal = VG_LITE_HW_FINISHED;
                     else
+#if defined(PRINT_DEBUG_REGISTER)
+                    {
+                        unsigned int debug;
+                        unsigned int iter;
+                        for(iter =0; iter < 16 ; iter ++)
+                        {
+                             vg_lite_hal_poke(0x470, iter);
+                             debug = vg_lite_hal_peek(0x450);
+                             printf("0x450[%d] = 0x%x\n", iter,debug);
+                        }
+                        for(iter =0; iter < 16 ; iter ++)
+                        {
+                             vg_lite_hal_poke(0x470, iter <<16);
+                             debug = vg_lite_hal_peek(0x454);
+                             printf("0x454[%d] = 0x%x\n", iter,debug);
+                        }
+                        for(iter =0; iter < 16 ; iter ++)
+                        {
+                             vg_lite_hal_poke(0x478, iter);
+                             debug = vg_lite_hal_peek(0x468);
+                             printf("0x468[%d] = 0x%x\n", iter,debug);
+                        }
+                        for(iter =0; iter < 16 ; iter ++)
+                        {
+                             vg_lite_hal_poke(0x478, iter);
+                             debug = vg_lite_hal_peek(0x46C);
+                             printf("0x46C[%d] = 0x%x\n", iter,debug);
+                        }
+#endif
                         /* wait timeout */
                         peek_queue->event->signal = VG_LITE_IDLE;
+#if defined(PRINT_DEBUG_REGISTER)
+                    }
+#endif
                     if(semaphore[peek_queue->event->semaphore_id]){
                         xSemaphoreGive(semaphore[peek_queue->event->semaphore_id]);
                     }
@@ -199,7 +249,7 @@ int32_t vg_lite_os_unlock()
     return VG_LITE_SUCCESS;
 }
 
-int32_t vg_lite_os_submit(uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event)
+int32_t vg_lite_os_submit(uint32_t context, uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event)
 {
     vg_lite_queue_t* queue_node;
 
@@ -222,6 +272,7 @@ int32_t vg_lite_os_submit(uint32_t physical, uint32_t offset, uint32_t size, vg_
                   (void *) &queue_node,
                   ISR_WAIT_TIME/portTICK_PERIOD_MS) != pdTRUE)
         return VG_LITE_MULTI_THREAD_FAIL;
+    curContext = context;
 
     if (vg_lite_os_wait_event(event) == VG_LITE_SUCCESS) {
         if(xSemaphoreGive(command_semaphore) != pdTRUE)
@@ -358,4 +409,11 @@ int32_t vg_lite_os_signal_event(vg_lite_os_async_event_t *event)
 
     xSemaphoreGive(semaphore[event->semaphore_id]);
     return VG_LITE_SUCCESS;
+}
+
+int8_t vg_lite_os_query_context_switch(uint32_t context)
+{
+   if(!curContext || curContext == context)
+        return FALSE;
+    return TURE;
 }

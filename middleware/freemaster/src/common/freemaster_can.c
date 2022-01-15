@@ -513,7 +513,7 @@ static FMSTR_BOOL _FMSTR_RxCan(FMSTR_SIZE8 rxLen)
     }
 
     /* was it the last frame? */
-    if (last == 0U)
+    if (last == FMSTR_FALSE)
     {
         goto frame_contd;
     }

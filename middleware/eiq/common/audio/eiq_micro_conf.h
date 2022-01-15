@@ -26,10 +26,14 @@
 #define DEMO_SAI_IRQ SAI1_IRQn
 
 /* DMA */
-#define DEMO_DMA             DMA0
 #if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
+#define DEMO_DMA             DMA0
 #define DEMO_DMAMUX          DMAMUX0
+#elif defined( CPU_MIMXRT1176DVMAA_cm4 ) || defined( CPU_MIMXRT1166DVM6A_cm4 )
+#define DEMO_DMA             DMA1
+#define DEMO_DMAMUX          DMAMUX1
 #else
+#define DEMO_DMA             DMA0
 #define DEMO_DMAMUX          DMAMUX
 #endif
 
@@ -38,7 +42,8 @@
 #define DEMO_SAI_TX_SOURCE   kDmaRequestMuxSai1Tx
 #define DEMO_SAI_RX_SOURCE   kDmaRequestMuxSai1Rx
 
-#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 ) || \
+    defined( CPU_MIMXRT1176DVMAA_cm4 ) || defined( CPU_MIMXRT1166DVM6A_cm4 )
 /* Select Audio/Video PLL (393.24 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (4U)
 /* Clock pre divider for sai1 clock source */
@@ -58,6 +63,8 @@
 #if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
 #define DEMO_SAI_CLK_FREQ \
     (CLOCK_GetFreq(kCLOCK_AudioPll) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))
+#elif defined( CPU_MIMXRT1176DVMAA_cm4 ) || defined( CPU_MIMXRT1166DVM6A_cm4 )
+#define DEMO_SAI_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Sai1)
 #else
 #define DEMO_SAI_CLK_FREQ \
     (CLOCK_GetFreq(kCLOCK_AudioPllClk) / (DEMO_SAI1_CLOCK_SOURCE_DIVIDER + 1U) / (DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER + 1U))

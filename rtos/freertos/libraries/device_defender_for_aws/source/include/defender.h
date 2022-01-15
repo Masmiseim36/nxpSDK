@@ -1,5 +1,5 @@
 /*
- * AWS IoT Device Defender Client v1.0.1
+ * AWS IoT Device Defender Client v1.1.0
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -599,6 +599,66 @@ typedef enum
  * @brief Length of the "packets_out" key in the defender report.
  */
 #define DEFENDER_REPORT_LENGTH_PKS_OUT_KEY                    STRING_LITERAL_LENGTH( DEFENDER_REPORT_LENGTH_PKS_OUT_KEY )
+
+/**
+ * @ingroup defender_constants
+ * @brief "custom_metrics" key in the defender report.
+ */
+#define DEFENDER_REPORT_CUSTOM_METRICS_KEY                    DEFENDER_REPORT_SELECT_KEY( "custom_metrics", "cmet" )
+
+/**
+ * @ingroup defender_constants
+ * @brief Length of the "custom_metrics" key in the defender report.
+ */
+#define DEFENDER_REPORT_LENGTH_CUSTOM_METRICS_KEY             STRING_LITERAL_LENGTH( DEFENDER_REPORT_LENGTH_CUSTOM_METRICS_KEY )
+
+/**
+ * @ingroup defender_constants
+ * @brief "number" key in the defender report.
+ */
+#define DEFENDER_REPORT_NUMBER_KEY                            "number"
+
+/**
+ * @ingroup defender_constants
+ * @brief Length of the "number" key in the defender report.
+ */
+#define DEFENDER_REPORT_LENGTH_NUMBER_KEY                     STRING_LITERAL_LENGTH( DEFENDER_REPORT_LENGTH_NUMBER_KEY )
+
+/**
+ * @ingroup defender_constants
+ * @brief "number_list" key in the defender report.
+ */
+#define DEFENDER_REPORT_NUMBER_LIST_KEY                       "number_list"
+
+/**
+ * @ingroup defender_constants
+ * @brief Length of the "number_list" key in the defender report.
+ */
+#define DEFENDER_REPORT_LENGTH_NUMBER_LIST_KEY                STRING_LITERAL_LENGTH( DEFENDER_REPORT_LENGTH_NUMBER_LIST_KEY )
+
+/**
+ * @ingroup defender_constants
+ * @brief "string_list" key in the defender report.
+ */
+#define DEFENDER_REPORT_STRING_LIST_KEY                       "string_list"
+
+/**
+ * @ingroup defender_constants
+ * @brief Length of the "string_list" key in the defender report.
+ */
+#define DEFENDER_REPORT_LENGTH_STRING_LIST_KEY                STRING_LITERAL_LENGTH( DEFENDER_REPORT_LENGTH_STRING_LIST_KEY )
+
+/**
+ * @ingroup defender_constants
+ * @brief "ip_list" key in the defender report.
+ */
+#define DEFENDER_REPORT_IP_LIST_KEY                           "ip_list"
+
+/**
+ * @ingroup defender_constants
+ * @brief Length of the "ip_list" key in the defender report.
+ */
+#define DEFENDER_REPORT_LENGTH_IP_LIST_KEY                    STRING_LITERAL_LENGTH( DEFENDER_REPORT_LENGTH_IP_LIST_KEY )
 
 /*-----------------------------------------------------------*/
 

@@ -1525,7 +1525,7 @@ static int ssl_parse_max_fragment_length_ext( mbedtls_ssl_context *ssl,
         mbedtls_ssl_send_alert_message(
             ssl,
             MBEDTLS_SSL_ALERT_LEVEL_FATAL,
-            MBEDTLS_SSL_ALERT_MSG_HANDSHAKE_FAILURE );
+            MBEDTLS_SSL_ALERT_MSG_ILLEGAL_PARAMETER );
         return( MBEDTLS_ERR_SSL_BAD_HS_SERVER_HELLO );
     }
 
@@ -1572,7 +1572,7 @@ static int ssl_parse_cid_ext( mbedtls_ssl_context *ssl,
     {
         MBEDTLS_SSL_DEBUG_MSG( 1, ( "CID extension unexpected" ) );
         mbedtls_ssl_send_alert_message( ssl, MBEDTLS_SSL_ALERT_LEVEL_FATAL,
-                                     MBEDTLS_SSL_ALERT_MSG_HANDSHAKE_FAILURE );
+                                     MBEDTLS_SSL_ALERT_MSG_UNSUPPORTED_EXT );
         return( MBEDTLS_ERR_SSL_BAD_HS_SERVER_HELLO );
     }
 
@@ -1628,7 +1628,7 @@ static int ssl_parse_encrypt_then_mac_ext( mbedtls_ssl_context *ssl,
         mbedtls_ssl_send_alert_message(
             ssl,
             MBEDTLS_SSL_ALERT_LEVEL_FATAL,
-            MBEDTLS_SSL_ALERT_MSG_HANDSHAKE_FAILURE );
+            MBEDTLS_SSL_ALERT_MSG_UNSUPPORTED_EXT );
         return( MBEDTLS_ERR_SSL_BAD_HS_SERVER_HELLO );
     }
 
@@ -1654,7 +1654,7 @@ static int ssl_parse_extended_ms_ext( mbedtls_ssl_context *ssl,
         mbedtls_ssl_send_alert_message(
             ssl,
             MBEDTLS_SSL_ALERT_LEVEL_FATAL,
-            MBEDTLS_SSL_ALERT_MSG_HANDSHAKE_FAILURE );
+            MBEDTLS_SSL_ALERT_MSG_UNSUPPORTED_EXT );
         return( MBEDTLS_ERR_SSL_BAD_HS_SERVER_HELLO );
     }
 
@@ -1679,7 +1679,7 @@ static int ssl_parse_session_ticket_ext( mbedtls_ssl_context *ssl,
         mbedtls_ssl_send_alert_message(
             ssl,
             MBEDTLS_SSL_ALERT_LEVEL_FATAL,
-            MBEDTLS_SSL_ALERT_MSG_HANDSHAKE_FAILURE );
+            MBEDTLS_SSL_ALERT_MSG_UNSUPPORTED_EXT );
         return( MBEDTLS_ERR_SSL_BAD_HS_SERVER_HELLO );
     }
 
@@ -1785,7 +1785,7 @@ static int ssl_parse_alpn_ext( mbedtls_ssl_context *ssl,
         mbedtls_ssl_send_alert_message(
             ssl,
             MBEDTLS_SSL_ALERT_LEVEL_FATAL,
-            MBEDTLS_SSL_ALERT_MSG_HANDSHAKE_FAILURE );
+            MBEDTLS_SSL_ALERT_MSG_UNSUPPORTED_EXT );
         return( MBEDTLS_ERR_SSL_BAD_HS_SERVER_HELLO );
     }
 
@@ -2610,6 +2610,7 @@ static int ssl_parse_server_dh_params( mbedtls_ssl_context *ssl,
                                        unsigned char *end )
 {
     int ret = MBEDTLS_ERR_SSL_FEATURE_UNAVAILABLE;
+    size_t dhm_actual_bitlen;
 
     /*
      * Ephemeral DH parameters:
@@ -2627,10 +2628,11 @@ static int ssl_parse_server_dh_params( mbedtls_ssl_context *ssl,
         return( ret );
     }
 
-    if( ssl->handshake->dhm_ctx.len * 8 < ssl->conf->dhm_min_bitlen )
+    dhm_actual_bitlen = mbedtls_mpi_bitlen( &ssl->handshake->dhm_ctx.P );
+    if( dhm_actual_bitlen < ssl->conf->dhm_min_bitlen )
     {
         MBEDTLS_SSL_DEBUG_MSG( 1, ( "DHM prime too short: %" MBEDTLS_PRINTF_SIZET " < %u",
-                                    ssl->handshake->dhm_ctx.len * 8,
+                                    dhm_actual_bitlen,
                                     ssl->conf->dhm_min_bitlen ) );
         return( MBEDTLS_ERR_SSL_BAD_HS_SERVER_KEY_EXCHANGE );
     }

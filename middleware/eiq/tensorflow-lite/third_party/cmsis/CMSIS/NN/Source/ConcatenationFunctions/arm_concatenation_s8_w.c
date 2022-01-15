@@ -28,7 +28,7 @@
  *
  * -------------------------------------------------------------------- */
 
-#include "cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -39,12 +39,12 @@
  * @{
  */
 
-  /*
-   *  s8 version of concatenation along the W axis
-   *
-   * Refer to header file for details.
-   *
-   */
+/*
+ *  s8 version of concatenation along the W axis
+ *
+ * Refer to header file for details.
+ *
+ */
 void arm_concatenation_s8_w(const int8_t *input,
                             const uint16_t input_x,
                             const uint16_t input_y,

@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -647,6 +647,16 @@
               <FileName>fsl_rm68200.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1143,7 +1153,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1456,6 +1466,16 @@
               <FileName>fsl_rm68200.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1952,7 +1972,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2265,6 +2285,16 @@
               <FileName>fsl_rm68200.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2761,7 +2791,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../..;../../../../../../devices/MIMXRT595S/drivers;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../devices/MIMXRT595S;../../../../../../components/uart;../../../../../../components/lists;../../../../flash_config;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3074,6 +3104,16 @@
               <FileName>fsl_rm68200.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/video/display/rm68200/fsl_rm68200.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
           </Files>
         </Group>

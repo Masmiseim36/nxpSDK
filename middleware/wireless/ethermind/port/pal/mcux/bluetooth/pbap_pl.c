@@ -171,8 +171,8 @@ API_RESULT BT_pbap_build_xml_vcard_listing_pl
 
     /* Append the path of the new directory */
     BT_str_n_copy (obj_name, dir_entry, (sizeof(obj_name) - 1));
-    BT_str_n_cat (obj_name, BT_FOPS_PATH_SEP, (sizeof(obj_name) - BT_str_len(obj_name) - 1));
-    BT_str_n_cat (obj_name, listingfile, (sizeof(obj_name) - BT_str_len(obj_name) - 1));
+    BT_str_n_cat (obj_name, BT_FOPS_PATH_SEP, (sizeof(obj_name) - BT_str_len(obj_name)- 1));
+    BT_str_n_cat (obj_name, listingfile, (sizeof(obj_name) - BT_str_len(obj_name)- 1));
 
     /* Open the file */
     (BT_IGNORE_RETURN_VALUE) BT_fops_file_open (obj_name, (UCHAR *)"wb", &xml_fd);
@@ -269,6 +269,10 @@ API_RESULT BT_pbap_get_vcard_list_pl
 
         return PBAP_INVALID_PARAMETERS;
     }
+
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    BT_mem_set(&h, 0, sizeof(BT_fops_object_handle));
+    BT_mem_set(&info, 0, sizeof(BT_FOPS_FILINFO));
 
     BT_str_n_copy(dir, dir_entry, (sizeof(dir) - 1));
 

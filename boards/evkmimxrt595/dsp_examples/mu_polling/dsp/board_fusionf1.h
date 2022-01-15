@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2021 NXP
  * All rights reserved.
  *
  *
@@ -58,9 +58,9 @@
 #ifndef BOARD_LED_BLUE_GPIO
 #define BOARD_LED_BLUE_GPIO GPIO
 #endif
-#define BOARD_LED_BLUE_GPIO_PORT 0U
+#define BOARD_LED_BLUE_GPIO_PORT 3U
 #ifndef BOARD_LED_BLUE_GPIO_PIN
-#define BOARD_LED_BLUE_GPIO_PIN 31U
+#define BOARD_LED_BLUE_GPIO_PIN 17U
 #endif
 
 #define LED_RED_INIT(output)                                                          \

@@ -268,6 +268,22 @@ typedef struct _SMP_LESC_OOB_DATA_PL
 
 } SMP_LESC_OOB_DATA_PL;
 
+#ifdef SMP_SAVE_REMOTE_IOCAP
+/** IO Capabilities of a device */
+typedef struct _SMP_IOCAPS
+{
+    /** I/O Capability */
+    UCHAR iocap;
+
+    /** OOB Availability */
+    UCHAR oob;
+
+    /** Max Keysize exchanged */
+    UCHAR ekey_size;
+
+} SMP_IOCAPS;
+#endif /* SMP_SAVE_REMOTE_IOCAP */
+
 /**
  * SMP LESC OOB data generation complete callback.
  * Security Manager Protocol PL calls the registered callback
@@ -589,6 +605,27 @@ API_RESULT BT_smp_get_local_capability_pl
                /* OUT */ UCHAR  * keys,
                /* OUT */ UCHAR  * ekey_size
            );
+
+#ifdef SMP_SAVE_REMOTE_IOCAP
+/**
+ * \brief To get remote platform capabilities
+ *
+ * \par Description:
+ *      This API retrieves remote platform IO capabilities,
+ *      OOB Support and maximum encryption key size.
+ *
+ * \param [in] bd_addr  Pointer to Peer device address
+ * \param [out] iocaps  Pointer to SMP_IOCAPS structure
+ *
+ * \return API_SUCCESS if Successful else an Error code describing
+ * cause of failure.
+ */
+API_RESULT BT_smp_get_remote_iocaps_pl
+           (
+               /* IN */  BT_DEVICE_ADDR * bd_addr,
+               /* OUT */ SMP_IOCAPS     * iocaps
+           );
+#endif /* SMP_SAVE_REMOTE_IOCAP */
 
 /**
  * \brief To get local keys for exchange

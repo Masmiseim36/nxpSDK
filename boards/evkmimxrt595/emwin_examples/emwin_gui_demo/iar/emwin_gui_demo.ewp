@@ -370,6 +370,7 @@
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
@@ -1423,6 +1424,7 @@
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
@@ -2475,6 +2477,7 @@
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
@@ -3528,6 +3531,7 @@
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_header</state>
           <state>$PROJ_DIR$/../../../../../middleware/emwin/emWin_Config</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
@@ -4466,6 +4470,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd/fsl_dc_fb_dsi_cmd.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/fsl_dc_fb.h</name>

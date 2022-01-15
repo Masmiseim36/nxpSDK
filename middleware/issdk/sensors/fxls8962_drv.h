@@ -84,7 +84,7 @@ typedef struct
  *  @return      ::FXLS8962_I2C_Initialize() returns the status .
  */
 int32_t FXLS8962_I2C_Initialize(
-    fxls8962_i2c_sensorhandle_t *pSensorHandle, ARM_DRIVER_I2C *pBus, uint8_t index, uint16_t sAddress, uint8_t whoAmi);
+    fxls8962_i2c_sensorhandle_t *pSensorHandle, ARM_DRIVER_I2C *pBus, uint8_t index, uint16_t sAddress, uint8_t *whoAmi);
 
 /*! @brief      :  The interface function to set the I2C Idle Task.
  *  @param[in]  :  fxls8962_i2c_sensorhandle_t *pSensorHandle, handle to the sensor handle.
@@ -151,7 +151,7 @@ int32_t FXLS8962_SPI_Initialize(fxls8962_spi_sensorhandle_t *pSensorHandle,
                                 ARM_DRIVER_SPI *pBus,
                                 uint8_t index,
                                 void *pSlaveSelect,
-                                uint8_t whoAmi);
+                                uint8_t *whoAmi);
 
 /*! @brief      :  The interface function to set the SPI Idle Task.
  *  @param[in]  :  fxls8962_spi_sensorhandle_t *pSensorHandle, handle to the sensor handle.

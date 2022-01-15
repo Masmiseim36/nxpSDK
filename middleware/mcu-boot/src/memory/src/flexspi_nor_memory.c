@@ -218,7 +218,7 @@ uint32_t flexspi_nor_get_amba_addr()
 }
 
 #if BL_FEATURE_GEN_KEYBLOB
-status_t check_update_keyblob_info(void *config)
+static status_t check_update_keyblob_info(void *config)
 {
     status_t status = kStatus_InvalidArgument;
 
@@ -796,7 +796,7 @@ status_t flexspi_nor_mem_fill(uint32_t address, uint32_t length, uint32_t patter
     return flexspi_nor_mem_flush();
 }
 
-bool is_flexspi_nor_mem_erased(uint32_t start, uint32_t length)
+static bool is_flexspi_nor_mem_erased(uint32_t start, uint32_t length)
 {
     bool is_erased = true;
     uint32_t read_length;
@@ -820,7 +820,7 @@ bool is_flexspi_nor_mem_erased(uint32_t start, uint32_t length)
     return is_erased;
 }
 
-bool flexspi_nor_memory_check(uint32_t start, uint8_t *data_to_check, uint32_t length)
+static bool flexspi_nor_memory_check(uint32_t start, uint8_t *data_to_check, uint32_t length)
 {
     uint32_t buffer[kFlexSpiNorMemory_MaxPageSize / sizeof(uint32_t)];
 
@@ -1192,7 +1192,7 @@ static void flexspi_nor_memory_clear_cache(void)
     flexspi_clear_cache(FLEXSPI_NOR_INSTANCE);
 }
 
-status_t flexspi_nor_memory_read(uint32_t *dst, uint32_t start, uint32_t bytes)
+static status_t flexspi_nor_memory_read(uint32_t *dst, uint32_t start, uint32_t bytes)
 {
     return flexspi_nor_flash_read(FLEXSPI_NOR_INSTANCE, &s_flexspiNorConfigBlock, dst, start, bytes);
 }

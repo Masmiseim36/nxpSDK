@@ -43,8 +43,8 @@
     (SYSCTL0_PDSLEEPCFG1_FLEXSPI0_SRAM_APD_MASK | SYSCTL0_PDSLEEPCFG1_FLEXSPI1_SRAM_APD_MASK | \
      SYSCTL0_PDSLEEPCFG1_FLEXSPI0_SRAM_PPD_MASK | SYSCTL0_PDSLEEPCFG1_FLEXSPI1_SRAM_PPD_MASK | \
      SYSCTL0_PDSLEEPCFG1_USBHS_SRAM_PPD_MASK | SYSCTL0_PDSLEEPCFG1_USBHS_SRAM_APD_MASK)
-#define APP_DEEPSLEEP_RAM_APD 0x00FFF000U /* 0x80000 - 0x2FFFFF keep powered */
-#define APP_DEEPSLEEP_RAM_PPD 0x00FFF000U
+#define APP_DEEPSLEEP_RAM_APD 0xFFC00000U /* 0x280000 - 0x4FFFFF keep powered */
+#define APP_DEEPSLEEP_RAM_PPD 0xFFC00000U
 #define APP_EXCLUDE_FROM_DEEPSLEEP \
     (((const uint32_t[]){APP_DEEPSLEEP_RUNCFG0, APP_DEEPSLEEP_RUNCFG1, APP_DEEPSLEEP_RAM_APD, APP_DEEPSLEEP_RAM_PPD}))
 /*******************************************************************************
@@ -403,7 +403,7 @@ usb_status_t USB_HostControlRemoteWakeup(usb_host_handle hostHandle,
                                          uint8_t enable)
 {
     usb_host_transfer_t *transfer;
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
 
     if (hostHandle == NULL)
     {

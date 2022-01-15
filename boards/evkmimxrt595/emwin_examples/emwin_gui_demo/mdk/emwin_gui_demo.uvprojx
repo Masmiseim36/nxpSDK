@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -802,6 +802,16 @@
               <FileName>fsl_dc_fb_dsi_cmd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/video/display/dc/dsi_cmd/fsl_dc_fb_dsi_cmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dc_fb.h</FileName>
@@ -2013,7 +2023,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2481,6 +2491,16 @@
               <FileName>fsl_dc_fb_dsi_cmd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/video/display/dc/dsi_cmd/fsl_dc_fb_dsi_cmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dc_fb.h</FileName>
@@ -3692,7 +3712,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4160,6 +4180,16 @@
               <FileName>fsl_dc_fb_dsi_cmd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/video/display/dc/dsi_cmd/fsl_dc_fb_dsi_cmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dc_fb.h</FileName>
@@ -5371,7 +5401,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT595SFFOC_cm33, BOOT_HEADER_ENABLE=1, BOARD_ENABLE_PSRAM_CACHE=0, SSD1963_DATA_WITDH=8, FLEXIO_MCULCD_DATA_BUS_WIDTH=8, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT595S/drivers;../../../../../components/ssd1963;../../../../../components/video/display/dbi;../../../../../components/video/display/dbi/flexio;../../../../../components/video/display/dc/ssd1963;../../../../../components/video/display/dc/lcdif;../../../../../components/video;../../../../../components/video/display;../../../../../components/video/display/rm68191;../../../../../components/video/display/mipi_dsi_cmd;../../../../../components/video/display/rm68200;../../../../../components/video/display/rm67162;../../../../../components/video/display/dc/dsi_cmd;../../../../../components/ft3267;../../../../../components/gt911;../../../../../components/ft5406;../../../../../devices/MIMXRT595S/utilities/debug_console_lite;../../../../../components/video/display/hx8394;../../../../../middleware/emwin/emWin_header;../../../../../middleware/emwin/emWin_Config;../../../../../devices/MIMXRT595S;../../../../../components/uart;../../../../../components/lists;../../../flash_config;../../../../../CMSIS/Core/Include;../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5839,6 +5869,16 @@
               <FileName>fsl_dc_fb_dsi_cmd.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/video/display/dc/dsi_cmd/fsl_dc_fb_dsi_cmd.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_hx8394.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/hx8394/fsl_hx8394.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dc_fb.h</FileName>

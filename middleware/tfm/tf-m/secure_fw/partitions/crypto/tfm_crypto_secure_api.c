@@ -5,44 +5,35 @@
  *
  */
 
-#include "tfm_veneers.h"
+#include "array.h"
 #include "tfm_crypto_defs.h"
 #include "psa/crypto.h"
 #ifdef TFM_PSA_API
+#include "psa/client.h"
 #include "psa_manifest/sid.h"
+#else
+#include "tfm_veneers.h"
 #endif
 
-#define ARRAY_SIZE(arr) (sizeof(arr)/sizeof(arr[0]))
-
 #ifdef TFM_PSA_API
-#include "psa/client.h"
-
-#define PSA_CONNECT(service)                                    \
-    psa_handle_t ipc_handle;                                    \
-    ipc_handle = psa_connect(service##_SID, service##_VERSION); \
-    if (!PSA_HANDLE_IS_VALID(ipc_handle)) {                     \
-        return PSA_ERROR_GENERIC_ERROR;                         \
-    }                                                           \
-
-#define PSA_CLOSE() psa_close(ipc_handle)
 
 #define API_DISPATCH(sfn_name, sfn_id)                         \
-    psa_call(ipc_handle, PSA_IPC_CALL,                         \
+    psa_call(TFM_CRYPTO_HANDLE, PSA_IPC_CALL,                  \
         in_vec, ARRAY_SIZE(in_vec),                            \
         out_vec, ARRAY_SIZE(out_vec))
 
 #define API_DISPATCH_NO_OUTVEC(sfn_name, sfn_id)               \
-    psa_call(ipc_handle, PSA_IPC_CALL,                         \
+    psa_call(TFM_CRYPTO_HANDLE, PSA_IPC_CALL,                  \
         in_vec, ARRAY_SIZE(in_vec),                            \
         (psa_outvec *)NULL, 0)
 #else
 #define API_DISPATCH(sfn_name, sfn_id)                         \
-    tfm_##sfn_name##_veneer(                                   \
+    sfn_name##_veneer(                                         \
         in_vec, ARRAY_SIZE(in_vec),                            \
         out_vec, ARRAY_SIZE(out_vec))
 
 #define API_DISPATCH_NO_OUTVEC(sfn_name, sfn_id)               \
-    tfm_##sfn_name##_veneer(                                   \
+    sfn_name##_veneer(                                         \
         in_vec, ARRAY_SIZE(in_vec),                            \
         NULL, 0)
 #endif /* TFM_PSA_API */
@@ -73,16 +64,8 @@ psa_status_t psa_open_key(psa_key_id_t id,
         {.base = key_id, .len = sizeof(psa_key_id_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_open_key,
                           TFM_CRYPTO_OPEN_KEY);
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -102,16 +85,8 @@ psa_status_t psa_close_key(psa_key_id_t key_id)
         {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH_NO_OUTVEC(tfm_crypto_close_key,
                                     TFM_CRYPTO_CLOSE_KEY);;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -138,15 +113,8 @@ psa_status_t psa_import_key(const psa_key_attributes_t *attributes,
         {.base = key_id, .len = sizeof(psa_key_id_t)}
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_import_key,
                           TFM_CRYPTO_IMPORT_KEY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -166,15 +134,8 @@ psa_status_t psa_destroy_key(psa_key_id_t key_id)
         {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH_NO_OUTVEC(tfm_crypto_destroy_key,
                                     TFM_CRYPTO_DESTROY_KEY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -198,15 +159,8 @@ psa_status_t psa_get_key_attributes(psa_key_id_t key_id,
         {.base = attributes, .len = sizeof(psa_key_attributes_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_get_key_attributes,
                           TFM_CRYPTO_GET_KEY_ATTRIBUTES);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -227,19 +181,8 @@ void psa_reset_key_attributes(psa_key_attributes_t *attributes)
         {.base = attributes, .len = sizeof(psa_key_attributes_t)},
     };
 
-#ifdef TFM_PSA_API
-    psa_handle_t ipc_handle;
-    ipc_handle = psa_connect(TFM_CRYPTO_SID, TFM_CRYPTO_VERSION);
-    if (!PSA_HANDLE_IS_VALID(ipc_handle)) {
-        return;
-    }
-#endif
-
     (void)API_DISPATCH(tfm_crypto_reset_key_attributes,
-                          TFM_CRYPTO_RESET_KEY_ATTRIBUTES);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
+                       TFM_CRYPTO_RESET_KEY_ATTRIBUTES);
 
     return;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -265,18 +208,10 @@ psa_status_t psa_export_key(psa_key_id_t key_id,
         {.base = data, .len = data_size}
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_export_key,
                           TFM_CRYPTO_EXPORT_KEY);
 
     *data_length = out_vec[0].len;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -303,18 +238,10 @@ psa_status_t psa_export_public_key(psa_key_id_t key_id,
         {.base = data, .len = data_size}
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_export_public_key,
                           TFM_CRYPTO_EXPORT_PUBLIC_KEY);
 
     *data_length = out_vec[0].len;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -334,15 +261,8 @@ psa_status_t psa_purge_key(psa_key_id_t key_id)
         {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH_NO_OUTVEC(tfm_crypto_purge_key,
                                     TFM_CRYPTO_PURGE_KEY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -370,15 +290,8 @@ psa_status_t psa_copy_key(psa_key_id_t source_key_id,
         {.base = target_key_id, .len = sizeof(psa_key_id_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_copy_key,
                           TFM_CRYPTO_COPY_KEY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
@@ -406,18 +319,10 @@ psa_status_t psa_cipher_generate_iv(psa_cipher_operation_t *operation,
         {.base = iv, .len = iv_size},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_cipher_generate_iv,
                           TFM_CRYPTO_CIPHER_GENERATE_IV);
 
     *iv_length = out_vec[1].len;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_CIPHER_MODULE_DISABLED */
@@ -444,15 +349,8 @@ psa_status_t psa_cipher_set_iv(psa_cipher_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_cipher_set_iv,
                           TFM_CRYPTO_CIPHER_SET_IV);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_CIPHER_MODULE_DISABLED */
@@ -480,15 +378,8 @@ psa_status_t psa_cipher_encrypt_setup(psa_cipher_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_cipher_encrypt_setup,
                           TFM_CRYPTO_CIPHER_ENCRYPT_SETUP);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_CIPHER_MODULE_DISABLED */
@@ -516,15 +407,9 @@ psa_status_t psa_cipher_decrypt_setup(psa_cipher_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
 
     status = API_DISPATCH(tfm_crypto_cipher_decrypt_setup,
                           TFM_CRYPTO_CIPHER_DECRYPT_SETUP);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_CIPHER_MODULE_DISABLED */
@@ -555,18 +440,10 @@ psa_status_t psa_cipher_update(psa_cipher_operation_t *operation,
         {.base = output, .len = output_size}
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_cipher_update,
                           TFM_CRYPTO_CIPHER_UPDATE);
 
     *output_length = out_vec[1].len;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_CIPHER_MODULE_DISABLED */
@@ -590,15 +467,8 @@ psa_status_t psa_cipher_abort(psa_cipher_operation_t *operation)
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_cipher_abort,
                           TFM_CRYPTO_CIPHER_ABORT);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_CIPHER_MODULE_DISABLED */
@@ -626,18 +496,10 @@ psa_status_t psa_cipher_finish(psa_cipher_operation_t *operation,
         {.base = output, .len = output_size},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_cipher_finish,
                           TFM_CRYPTO_CIPHER_FINISH);
 
     *output_length = out_vec[1].len;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_CIPHER_MODULE_DISABLED */
@@ -663,16 +525,8 @@ psa_status_t psa_hash_setup(psa_hash_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_hash_setup,
                           TFM_CRYPTO_HASH_SETUP);
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_HASH_MODULE_DISABLED */
@@ -699,16 +553,8 @@ psa_status_t psa_hash_update(psa_hash_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_hash_update,
                           TFM_CRYPTO_HASH_UPDATE);
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_HASH_MODULE_DISABLED */
@@ -736,18 +582,10 @@ psa_status_t psa_hash_finish(psa_hash_operation_t *operation,
         {.base = hash, .len = hash_size},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_hash_finish,
                           TFM_CRYPTO_HASH_FINISH);
 
     *hash_length = out_vec[1].len;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_HASH_MODULE_DISABLED */
@@ -774,15 +612,8 @@ psa_status_t psa_hash_verify(psa_hash_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_hash_verify,
                           TFM_CRYPTO_HASH_VERIFY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_HASH_MODULE_DISABLED */
@@ -806,15 +637,8 @@ psa_status_t psa_hash_abort(psa_hash_operation_t *operation)
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_hash_abort,
                           TFM_CRYPTO_HASH_ABORT);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_HASH_MODULE_DISABLED */
@@ -843,15 +667,8 @@ psa_status_t psa_hash_clone(const psa_hash_operation_t *source_operation,
         return PSA_ERROR_BAD_STATE;
     }
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_hash_clone,
                           TFM_CRYPTO_HASH_CLONE);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_HASH_MODULE_DISABLED */
@@ -882,18 +699,10 @@ psa_status_t psa_hash_compute(psa_algorithm_t alg,
         {.base = hash, .len = hash_size}
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_hash_compute,
                           TFM_CRYPTO_HASH_COMPUTE);
 
     *hash_length = out_vec[0].len;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_HASH_MODULE_DISABLED */
@@ -920,16 +729,8 @@ psa_status_t psa_hash_compare(psa_algorithm_t alg,
         {.base = hash, .len = hash_length},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH_NO_OUTVEC(tfm_crypto_hash_compare,
-                          TFM_CRYPTO_HASH_COMPARE);
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
+                                    TFM_CRYPTO_HASH_COMPARE);
 
     return status;
 #endif /* TFM_CRYPTO_HASH_MODULE_DISABLED */
@@ -957,15 +758,8 @@ psa_status_t psa_mac_sign_setup(psa_mac_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_mac_sign_setup,
                           TFM_CRYPTO_MAC_SIGN_SETUP);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_MAC_MODULE_DISABLED */
@@ -993,15 +787,8 @@ psa_status_t psa_mac_verify_setup(psa_mac_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_mac_verify_setup,
                           TFM_CRYPTO_MAC_VERIFY_SETUP);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_MAC_MODULE_DISABLED */
@@ -1028,15 +815,8 @@ psa_status_t psa_mac_update(psa_mac_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_mac_update,
                           TFM_CRYPTO_MAC_UPDATE);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_MAC_MODULE_DISABLED */
@@ -1064,18 +844,10 @@ psa_status_t psa_mac_sign_finish(psa_mac_operation_t *operation,
         {.base = mac, .len = mac_size},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_mac_sign_finish,
                           TFM_CRYPTO_MAC_SIGN_FINISH);
 
     *mac_length = out_vec[1].len;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_MAC_MODULE_DISABLED */
@@ -1102,16 +874,8 @@ psa_status_t psa_mac_verify_finish(psa_mac_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_mac_verify_finish,
                           TFM_CRYPTO_MAC_VERIFY_FINISH);
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_MAC_MODULE_DISABLED */
@@ -1135,15 +899,8 @@ psa_status_t psa_mac_abort(psa_mac_operation_t *operation)
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_mac_abort,
                           TFM_CRYPTO_MAC_ABORT);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_MAC_MODULE_DISABLED */
@@ -1198,15 +955,11 @@ psa_status_t psa_aead_encrypt(psa_key_id_t key_id,
     }
 
 #ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
-#ifdef TFM_PSA_API
     size_t in_len = ARRAY_SIZE(in_vec);
     if (additional_data == NULL) {
         in_len--;
     }
-    status = psa_call(ipc_handle, PSA_IPC_CALL, in_vec, in_len,
+    status = psa_call(TFM_CRYPTO_HANDLE, PSA_IPC_CALL, in_vec, in_len,
                       out_vec, ARRAY_SIZE(out_vec));
 #else
     status = API_DISPATCH(tfm_crypto_aead_encrypt,
@@ -1214,10 +967,6 @@ psa_status_t psa_aead_encrypt(psa_key_id_t key_id,
 #endif
 
     *ciphertext_length = out_vec[0].len;
-
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
 #endif /* TFM_CRYPTO_AEAD_MODULE_DISABLED */
@@ -1272,15 +1021,11 @@ psa_status_t psa_aead_decrypt(psa_key_id_t key_id,
     }
 
 #ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
-#ifdef TFM_PSA_API
     size_t in_len = ARRAY_SIZE(in_vec);
     if (additional_data == NULL) {
         in_len--;
     }
-    status = psa_call(ipc_handle, PSA_IPC_CALL, in_vec, in_len,
+    status = psa_call(TFM_CRYPTO_HANDLE, PSA_IPC_CALL, in_vec, in_len,
                       out_vec, ARRAY_SIZE(out_vec));
 #else
     status = API_DISPATCH(tfm_crypto_aead_decrypt,
@@ -1289,24 +1034,75 @@ psa_status_t psa_aead_decrypt(psa_key_id_t key_id,
 
     *plaintext_length = out_vec[0].len;
 
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
-
     return status;
 #endif /* TFM_CRYPTO_AEAD_MODULE_DISABLED */
 }
 
-psa_status_t psa_asymmetric_sign(psa_key_id_t key_id,
-                                 psa_algorithm_t alg,
-                                 const uint8_t *hash,
-                                 size_t hash_length,
-                                 uint8_t *signature,
-                                 size_t signature_size,
-                                 size_t *signature_length)
+psa_status_t psa_sign_message(psa_key_id_t key_id,
+                              psa_algorithm_t alg,
+                              const uint8_t *input,
+                              size_t input_length,
+                              uint8_t *signature,
+                              size_t signature_size,
+                              size_t *signature_length)
 {
-    return psa_sign_hash(key_id, alg, hash, hash_length, signature,
-                         signature_size, signature_length);
+#ifdef TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED
+    return PSA_ERROR_NOT_SUPPORTED;
+#else
+    psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_SIGN_MESSAGE_SID,
+        .key_id = key_id,
+        .alg = alg,
+    };
+
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+    };
+    psa_outvec out_vec[] = {
+        {.base = signature, .len = signature_size},
+    };
+
+    status = API_DISPATCH(tfm_crypto_sign_message,
+                          TFM_CRYPTO_SIGN_MESSAGE);
+
+    if (status == PSA_SUCCESS) {
+        *signature_length = out_vec[0].len;
+    }
+
+    return status;
+#endif /* TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED */
+}
+
+psa_status_t psa_verify_message(psa_key_id_t key_id,
+                                psa_algorithm_t alg,
+                                const uint8_t *input,
+                                size_t input_length,
+                                const uint8_t *signature,
+                                size_t signature_length)
+{
+#ifdef TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED
+    return PSA_ERROR_NOT_SUPPORTED;
+#else
+    psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_VERIFY_MESSAGE_SID,
+        .key_id = key_id,
+        .alg = alg
+    };
+
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+        {.base = signature, .len = signature_length}
+    };
+
+    status = API_DISPATCH_NO_OUTVEC(tfm_crypto_verify_message,
+                                    TFM_CRYPTO_VERIFY_MESSAGE);
+
+    return status;
+#endif /* TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED */
 }
 
 psa_status_t psa_sign_hash(psa_key_id_t key_id,
@@ -1317,7 +1113,7 @@ psa_status_t psa_sign_hash(psa_key_id_t key_id,
                            size_t signature_size,
                            size_t *signature_length)
 {
-#ifdef TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED
+#ifdef TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1335,31 +1131,13 @@ psa_status_t psa_sign_hash(psa_key_id_t key_id,
         {.base = signature, .len = signature_size},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
     status = API_DISPATCH(tfm_crypto_sign_hash,
                           TFM_CRYPTO_SIGN_HASH);
 
     *signature_length = out_vec[0].len;
 
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
-
     return status;
-#endif /* TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED */
-}
-
-psa_status_t psa_asymmetric_verify(psa_key_id_t key_id,
-                                   psa_algorithm_t alg,
-                                   const uint8_t *hash,
-                                   size_t hash_length,
-                                   const uint8_t *signature,
-                                   size_t signature_length)
-{
-    return psa_verify_hash(key_id, alg, hash, hash_length,
-                           signature, signature_length);
+#endif /* TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED */
 }
 
 psa_status_t psa_verify_hash(psa_key_id_t key_id,
@@ -1369,7 +1147,7 @@ psa_status_t psa_verify_hash(psa_key_id_t key_id,
                              const uint8_t *signature,
                              size_t signature_length)
 {
-#ifdef TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED
+#ifdef TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1385,18 +1163,11 @@ psa_status_t psa_verify_hash(psa_key_id_t key_id,
         {.base = signature, .len = signature_length}
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH_NO_OUTVEC(tfm_crypto_verify_hash,
                                     TFM_CRYPTO_VERIFY_HASH);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED */
 }
 
 psa_status_t psa_asymmetric_encrypt(psa_key_id_t key_id,
@@ -1409,7 +1180,7 @@ psa_status_t psa_asymmetric_encrypt(psa_key_id_t key_id,
                                     size_t output_size,
                                     size_t *output_length)
 {
-#ifdef TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED
+#ifdef TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1435,15 +1206,11 @@ psa_status_t psa_asymmetric_encrypt(psa_key_id_t key_id,
     };
 
 #ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
-#ifdef TFM_PSA_API
     size_t in_len = ARRAY_SIZE(in_vec);
     if (salt == NULL) {
         in_len--;
     }
-    status = psa_call(ipc_handle, PSA_IPC_CALL, in_vec, in_len,
+    status = psa_call(TFM_CRYPTO_HANDLE, PSA_IPC_CALL, in_vec, in_len,
                       out_vec, ARRAY_SIZE(out_vec));
 #else
     status = API_DISPATCH(tfm_crypto_asymmetric_encrypt,
@@ -1452,12 +1219,8 @@ psa_status_t psa_asymmetric_encrypt(psa_key_id_t key_id,
 
     *output_length = out_vec[0].len;
 
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
-
     return status;
-#endif /* TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED */
 }
 
 psa_status_t psa_asymmetric_decrypt(psa_key_id_t key_id,
@@ -1470,7 +1233,7 @@ psa_status_t psa_asymmetric_decrypt(psa_key_id_t key_id,
                                     size_t output_size,
                                     size_t *output_length)
 {
-#ifdef TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED
+#ifdef TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1496,15 +1259,11 @@ psa_status_t psa_asymmetric_decrypt(psa_key_id_t key_id,
     };
 
 #ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
-#ifdef TFM_PSA_API
     size_t in_len = ARRAY_SIZE(in_vec);
     if (salt == NULL) {
         in_len--;
     }
-    status = psa_call(ipc_handle, PSA_IPC_CALL, in_vec, in_len,
+    status = psa_call(TFM_CRYPTO_HANDLE, PSA_IPC_CALL, in_vec, in_len,
                       out_vec, ARRAY_SIZE(out_vec));
 #else
     status = API_DISPATCH(tfm_crypto_asymmetric_decrypt,
@@ -1513,19 +1272,15 @@ psa_status_t psa_asymmetric_decrypt(psa_key_id_t key_id,
 
     *output_length = out_vec[0].len;
 
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
-
     return status;
-#endif /* TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED */
 }
 
 psa_status_t psa_key_derivation_get_capacity(
                                 const psa_key_derivation_operation_t *operation,
                                 size_t *capacity)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1542,18 +1297,11 @@ psa_status_t psa_key_derivation_get_capacity(
         {.base = capacity, .len = sizeof(size_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_key_derivation_get_capacity,
                           TFM_CRYPTO_KEY_DERIVATION_GET_CAPACITY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_key_derivation_output_bytes(
@@ -1561,7 +1309,7 @@ psa_status_t psa_key_derivation_output_bytes(
                                       uint8_t *output,
                                       size_t output_length)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1578,18 +1326,11 @@ psa_status_t psa_key_derivation_output_bytes(
         {.base = output, .len = output_length},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_key_derivation_output_bytes,
                           TFM_CRYPTO_KEY_DERIVATION_OUTPUT_BYTES);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_key_derivation_input_key(
@@ -1597,7 +1338,7 @@ psa_status_t psa_key_derivation_input_key(
                                       psa_key_derivation_step_t step,
                                       psa_key_id_t key_id)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1612,23 +1353,16 @@ psa_status_t psa_key_derivation_input_key(
         {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH_NO_OUTVEC(tfm_crypto_key_derivation_input_key,
                                     TFM_CRYPTO_KEY_DERIVATION_INPUT_KEY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_key_derivation_abort(psa_key_derivation_operation_t *operation)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1645,18 +1379,11 @@ psa_status_t psa_key_derivation_abort(psa_key_derivation_operation_t *operation)
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_key_derivation_abort,
                           TFM_CRYPTO_KEY_DERIVATION_ABORT);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_key_derivation_key_agreement(
@@ -1666,7 +1393,7 @@ psa_status_t psa_key_derivation_key_agreement(
                                       const uint8_t *peer_key,
                                       size_t peer_key_length)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1686,25 +1413,17 @@ psa_status_t psa_key_derivation_key_agreement(
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_key_derivation_key_agreement,
                           TFM_CRYPTO_KEY_DERIVATION_KEY_AGREEMENT);
 
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
-
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_generate_random(uint8_t *output,
                                  size_t output_size)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_RNG_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1724,25 +1443,17 @@ psa_status_t psa_generate_random(uint8_t *output,
         return PSA_SUCCESS;
     }
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_generate_random,
                           TFM_CRYPTO_GENERATE_RANDOM);
 
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
-
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_RNG_MODULE_DISABLED */
 }
 
 psa_status_t psa_generate_key(const psa_key_attributes_t *attributes,
                               psa_key_id_t *key_id)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_KEY_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1759,43 +1470,11 @@ psa_status_t psa_generate_key(const psa_key_attributes_t *attributes,
         {.base = key_id, .len = sizeof(psa_key_id_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_generate_key,
                           TFM_CRYPTO_GENERATE_KEY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
-}
-
-psa_status_t psa_set_key_domain_parameters(psa_key_attributes_t *attributes,
-                                           psa_key_type_t type,
-                                           const uint8_t *data,
-                                           size_t data_length)
-{
-    psa_status_t status;
-
-    status = PSA_ERROR_NOT_SUPPORTED;
-
-    return status;
-}
-
-psa_status_t psa_get_key_domain_parameters(
-                                         const psa_key_attributes_t *attributes,
-                                         uint8_t *data,
-                                         size_t data_size,
-                                         size_t *data_length)
-{
-    psa_status_t status;
-
-    status = PSA_ERROR_NOT_SUPPORTED;
-
-    return status;
+#endif /* TFM_CRYPTO_KEY_MODULE_DISABLED */
 }
 
 psa_status_t psa_aead_update_ad(psa_aead_operation_t *operation,
@@ -1855,11 +1534,33 @@ psa_status_t psa_mac_compute(psa_key_id_t key_id,
                              size_t mac_size,
                              size_t *mac_length)
 {
+#ifdef TFM_CRYPTO_MAC_MODULE_DISABLED
+    return PSA_ERROR_NOT_SUPPORTED;
+#else
     psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_MAC_COMPUTE_SID,
+        .key_id = key_id,
+        .alg = alg,
+    };
 
-    status = PSA_ERROR_NOT_SUPPORTED;
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+    };
+    psa_outvec out_vec[] = {
+        {.base = mac, .len = mac_size},
+    };
+
+    status = API_DISPATCH(tfm_crypto_mac_compute,
+                          TFM_CRYPTO_MAC_COMPUTE);
+
+    if (status == PSA_SUCCESS) {
+        *mac_length = out_vec[0].len;
+    }
 
     return status;
+#endif /* TFM_CRYPTO_MAC_MODULE_DISABLED */
 }
 
 psa_status_t psa_mac_verify(psa_key_id_t key_id,
@@ -1869,11 +1570,27 @@ psa_status_t psa_mac_verify(psa_key_id_t key_id,
                             const uint8_t *mac,
                             const size_t mac_length)
 {
+#ifdef TFM_CRYPTO_MAC_MODULE_DISABLED
+    return PSA_ERROR_NOT_SUPPORTED;
+#else
     psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_MAC_VERIFY_SID,
+        .key_id = key_id,
+        .alg = alg,
+    };
 
-    status = PSA_ERROR_NOT_SUPPORTED;
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+        {.base = mac, .len = mac_length},
+    };
+
+    status = API_DISPATCH_NO_OUTVEC(tfm_crypto_mac_verify,
+                                    TFM_CRYPTO_MAC_VERIFY);
 
     return status;
+#endif /* TFM_CRYPTO_MAC_MODULE_DISABLED */
 }
 
 psa_status_t psa_cipher_encrypt(psa_key_id_t key_id,
@@ -1884,11 +1601,33 @@ psa_status_t psa_cipher_encrypt(psa_key_id_t key_id,
                                 size_t output_size,
                                 size_t *output_length)
 {
+#ifdef TFM_CRYPTO_CIPHER_MODULE_DISABLED
+    return PSA_ERROR_NOT_SUPPORTED;
+#else
     psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_CIPHER_ENCRYPT_SID,
+        .key_id = key_id,
+        .alg = alg,
+    };
 
-    status = PSA_ERROR_NOT_SUPPORTED;
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+    };
+    psa_outvec out_vec[] = {
+        {.base = output, .len = output_size},
+    };
+
+    status = API_DISPATCH(tfm_crypto_cipher_encrypt,
+                          TFM_CRYPTO_CIPHER_ENCRYPT);
+
+    if (status == PSA_SUCCESS) {
+        *output_length = out_vec[0].len;
+    }
 
     return status;
+#endif /* TFM_CRYPTO_CIPHER_MODULE_DISABLED */
 }
 
 psa_status_t psa_cipher_decrypt(psa_key_id_t key_id,
@@ -1899,11 +1638,33 @@ psa_status_t psa_cipher_decrypt(psa_key_id_t key_id,
                                 size_t output_size,
                                 size_t *output_length)
 {
+#ifdef TFM_CRYPTO_CIPHER_MODULE_DISABLED
+    return PSA_ERROR_NOT_SUPPORTED;
+#else
     psa_status_t status;
+    struct tfm_crypto_pack_iovec iov = {
+        .sfn_id = TFM_CRYPTO_CIPHER_DECRYPT_SID,
+        .key_id = key_id,
+        .alg = alg,
+    };
 
-    status = PSA_ERROR_NOT_SUPPORTED;
+    psa_invec in_vec[] = {
+        {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
+        {.base = input, .len = input_length},
+    };
+    psa_outvec out_vec[] = {
+        {.base = output, .len = output_size},
+    };
+
+    status = API_DISPATCH(tfm_crypto_cipher_decrypt,
+                          TFM_CRYPTO_CIPHER_DECRYPT);
+
+    if (status == PSA_SUCCESS) {
+        *output_length = out_vec[0].len;
+    }
 
     return status;
+#endif /* TFM_CRYPTO_CIPHER_MODULE_DISABLED */
 }
 
 psa_status_t psa_raw_key_agreement(psa_algorithm_t alg,
@@ -1914,7 +1675,7 @@ psa_status_t psa_raw_key_agreement(psa_algorithm_t alg,
                                    size_t output_size,
                                    size_t *output_length)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1933,26 +1694,19 @@ psa_status_t psa_raw_key_agreement(psa_algorithm_t alg,
         {.base = output, .len = output_size},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
     status = API_DISPATCH(tfm_crypto_raw_key_agreement,
                           TFM_CRYPTO_RAW_KEY_AGREEMENT);
 
     *output_length = out_vec[0].len;
 
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
-
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_key_derivation_setup(psa_key_derivation_operation_t *operation,
                                       psa_algorithm_t alg)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -1969,25 +1723,18 @@ psa_status_t psa_key_derivation_setup(psa_key_derivation_operation_t *operation,
         {.base = &(operation->handle), .len = sizeof(uint32_t)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_key_derivation_setup,
                           TFM_CRYPTO_KEY_DERIVATION_SETUP);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_key_derivation_set_capacity(
                                       psa_key_derivation_operation_t *operation,
                                       size_t capacity)
 {
-#ifdef TFM_CRYPTO_GENERATOR_MODULE_DISABLED
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -2001,18 +1748,11 @@ psa_status_t psa_key_derivation_set_capacity(
         {.base = &iov, .len = sizeof(struct tfm_crypto_pack_iovec)},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH_NO_OUTVEC(tfm_crypto_key_derivation_set_capacity,
                                     TFM_CRYPTO_KEY_DERIVATION_SET_CAPACITY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_key_derivation_input_bytes(
@@ -2021,7 +1761,7 @@ psa_status_t psa_key_derivation_input_bytes(
                                       const uint8_t *data,
                                       size_t data_length)
 {
-#if (TFM_CRYPTO_GENERATOR_MODULE_DISABLED != 0)
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -2036,18 +1776,11 @@ psa_status_t psa_key_derivation_input_bytes(
         {.base = data, .len = data_length},
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH_NO_OUTVEC(tfm_crypto_key_derivation_input_bytes,
                                     TFM_CRYPTO_KEY_DERIVATION_INPUT_BYTES);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_key_derivation_output_key(
@@ -2055,7 +1788,7 @@ psa_status_t psa_key_derivation_output_key(
                                       psa_key_derivation_operation_t *operation,
                                       psa_key_id_t *key_id)
 {
-#if (TFM_CRYPTO_GENERATOR_MODULE_DISABLED != 0)
+#ifdef TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -2073,18 +1806,11 @@ psa_status_t psa_key_derivation_output_key(
         {.base = key_id, .len = sizeof(psa_key_id_t)}
     };
 
-#ifdef TFM_PSA_API
-    PSA_CONNECT(TFM_CRYPTO);
-#endif
-
     status = API_DISPATCH(tfm_crypto_key_derivation_output_key,
                           TFM_CRYPTO_KEY_DERIVATION_OUTPUT_KEY);
-#ifdef TFM_PSA_API
-    PSA_CLOSE();
-#endif
 
     return status;
-#endif /* TFM_CRYPTO_GENERATOR_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_KEY_DERIVATION_MODULE_DISABLED */
 }
 
 psa_status_t psa_aead_encrypt_setup(psa_aead_operation_t *operation,

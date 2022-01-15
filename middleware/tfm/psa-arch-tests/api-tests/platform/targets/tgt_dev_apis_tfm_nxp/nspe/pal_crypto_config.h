@@ -56,7 +56,7 @@
  */
 #ifndef TF_M_PROFILE_SMALL
 #define ARCH_TEST_ECC
-//NXP #define ARCH_TEST_ECC_CURVE_SECP192R1
+//NXP #define ARCH_TEST_ECC_CURVE_SECP192R1 // Disabled in the TFM medium profile
 #ifndef TF_M_PROFILE_MEDIUM
 #define ARCH_TEST_ECC_CURVE_SECP224R1
 #endif
@@ -123,12 +123,11 @@
  *
  * Requires: ARCH_TEST_CIPHER
  */
-//NXP always enable cuase of IAR
-//NXP #ifndef TF_M_PROFILE_SMALL
-//NXP #ifndef TF_M_PROFILE_MEDIUM
+#ifndef TF_M_PROFILE_SMALL
+#ifndef TF_M_PROFILE_MEDIUM
 #define ARCH_TEST_CIPHER_MODE_CTR
-//NXP #endif
-//NXP #endif
+#endif
+#endif
 
 /**
  * \def ARCH_TEST_CIPHER_MODE_CFB
@@ -137,7 +136,11 @@
  *
  * Requires: ARCH_TEST_CIPHER
  */
+#ifndef TF_M_PROFILE_SMALL
+#ifndef TF_M_PROFILE_MEDIUM
 #define ARCH_TEST_CIPHER_MODE_CFB
+#endif
+#endif
 
 /**
  * \def ARCH_TEST_CIPHER_MODE_CBC
@@ -146,7 +149,11 @@
  *
  * Requires: ARCH_TEST_CIPHER
  */
+#ifndef TF_M_PROFILE_SMALL
+#ifndef TF_M_PROFILE_MEDIUM
 #define ARCH_TEST_CIPHER_MODE_CBC
+#endif
+#endif
 
 /**
  * \def ARCH_TEST_CTR_AES
@@ -166,8 +173,12 @@
  *
  * Comment macros to disable the types
  */
+#ifndef TF_M_PROFILE_SMALL
+#ifndef TF_M_PROFILE_MEDIUM
 #define ARCH_TEST_CBC_AES
 #define ARCH_TEST_CBC_AES_NO_PADDING
+#endif
+#endif
 
 /**
  * \def ARCH_TEST_CBC_NO_PADDING
@@ -187,7 +198,11 @@
  *
  * Requires: ARCH_TEST_CIPHER, ARCH_TEST_AES, ARCH_TEST_CIPHER_MODE_CFB
  */
+#ifndef TF_M_PROFILE_SMALL
+#ifndef TF_M_PROFILE_MEDIUM
 #define ARCH_TEST_CFB_AES
+#endif
+#endif
 
 /**
  * \def ARCH_TEST_PKCS1V15_*
@@ -264,7 +279,7 @@
 //#define ARCH_TEST_RIPEMD160
 //#define ARCH_TEST_SHA1
 #ifndef TF_M_PROFILE_SMALL
-//NXP #define ARCH_TEST_SHA224
+//NXP #define ARCH_TEST_SHA224 //Not suported by HashCrypt
 #endif
 #define ARCH_TEST_SHA256
 #ifndef TF_M_PROFILE_SMALL
@@ -287,6 +302,7 @@
  *
  * Requires: ARCH_TEST_HASH
 */
+
 #define ARCH_TEST_HKDF
 
 /**
@@ -347,7 +363,7 @@
  * Requires: ARCH_TEST_ECC
  */
 #ifndef TF_M_PROFILE_SMALL
-//NXP #define ARCH_TEST_ECDH
+//NXP #define ARCH_TEST_ECDH //Disabled to save space >30KB
 #endif
 
 /**

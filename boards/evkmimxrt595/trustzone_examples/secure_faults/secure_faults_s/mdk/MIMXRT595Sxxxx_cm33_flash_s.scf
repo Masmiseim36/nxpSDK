@@ -6,8 +6,8 @@
 **
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    iMXRT500RM Rev.0, 01/2021
-**     Version:             rev. 4.0, 2020-05-12
-**     Build:               b210303
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b210810
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -43,6 +43,7 @@
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
 /* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x80000-0x27FFFF] is reserved for DSP code and data. */
 
 #if (defined(__ram_vector_table__))
   #define __ram_vector_table_size__    0x00000200
@@ -59,7 +60,8 @@
 #define  m_veneer_table_start          0x180FFE00
 #define  m_veneer_table_size           0x00000200
 
-#define m_interrupts_ram_start         0x30140000
+/* Use the same SRAM partition with ram_s linker to share the same SAU configuration. */
+#define m_interrupts_ram_start         0x30340000
 #define m_interrupts_ram_size          __ram_vector_table_size__
 
 #define  m_data_start                  (m_interrupts_ram_start + m_interrupts_ram_size)

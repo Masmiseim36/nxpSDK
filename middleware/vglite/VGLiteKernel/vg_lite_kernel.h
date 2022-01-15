@@ -91,8 +91,8 @@ typedef enum vg_lite_error
     VG_LITE_GENERIC_IO,         /*! Cannot communicate with the kernel driver. */
     VG_LITE_NOT_SUPPORT,        /*! Function call not supported. */
     VG_LITE_MULTI_THREAD_FAIL,  /*! Multi-thread/tasks fail. */
-    VG_LITE_ALREADY_EXISTS,     /*! Element already exists (e.g. font exists) */
-    VG_LITE_NOT_ALIGNED         /*! Data alignment error */
+    VG_LITE_ALREADY_EXISTS,     /*! Object already exists */
+    VG_LITE_NOT_ALIGNED,        /*! Data alignment error */
 }
 vg_lite_error_t;
 #endif
@@ -164,6 +164,9 @@ typedef enum vg_lite_kernel_command
 
     /* Mutex unlock. */
     VG_LITE_UNLOCK,
+
+    /* query context switch. */
+    VG_LITE_QUERY_CONTEXT_SWITCH,
 }
 vg_lite_kernel_command_t;
 
@@ -178,6 +181,12 @@ struct vg_lite_kernel_context {
     void      * tessellation_buffer;
     void      * tessellation_buffer_logical;
     uint32_t    tessellation_buffer_physical;
+
+    /* context buffer. */
+    void      * context_buffer[CMDBUF_COUNT];
+    void      * context_buffer_logical[CMDBUF_COUNT];
+    uint32_t    context_buffer_physical[CMDBUF_COUNT];
+
 };
 
 /* Context structure. */
@@ -202,6 +211,9 @@ typedef struct vg_lite_kernel_initialize
     /* Command buffer size. */
     uint32_t command_buffer_size;
 
+    /* Context buffer size. */
+    uint32_t context_buffer_size;
+
     /* Tessellation buffer width. */
     int32_t tessellation_width;
 
@@ -221,6 +233,12 @@ typedef struct vg_lite_kernel_initialize
 
     /* GPU address for command buffer. */
     uint32_t command_buffer_gpu[CMDBUF_COUNT];
+
+    /* Allocated context buffer. */
+    void * context_buffer[CMDBUF_COUNT];
+
+    /* GPU address for context buffer. */
+    uint32_t context_buffer_gpu[CMDBUF_COUNT];
 
     /* GPU addresses for tesselation buffers. */
     uint32_t tessellation_buffer_gpu[3];
@@ -386,6 +404,13 @@ typedef struct vg_lite_kernel_mem
     uint32_t bytes;
 }
 vg_lite_kernel_mem_t;
+
+typedef struct vg_lite_kernel_context_switch
+{
+    uint8_t isContextSwitched;
+    uint32_t context;
+}
+vg_lite_kernel_context_switch_t;
 
 vg_lite_error_t vg_lite_kernel(vg_lite_kernel_command_t command, void * data);
 

@@ -431,6 +431,7 @@ static API_RESULT bt_hfp_hf_set_esco_channel_parameters(uint8_t set_sco_param, H
     uint8_t enable;
     HCI_SCO_IN_PARAMS esco_params;
 
+    memset(&esco_params, 0x0, sizeof(HCI_SCO_IN_PARAMS));
     /* Null Check for eSCO parameters */
     if ((BT_TRUE == set_sco_param) && (NULL == sco_params))
     {
@@ -912,14 +913,7 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
             {
                 hfp_hf->bt_hf_cb->call(hfp_hf->bt_conn, 1U);
             }
-             BT_hfp_unit_set_gain
-             (
-                 hfp_hf->handle,
-                 hf_volume_type_speaker,
-                 hfp_hf->bt_hfp_hp_speaker_volume,
-                 (UCHAR)BT_str_len(hfp_hf->bt_hfp_hp_speaker_volume)
-             );
-             sco_audio_set_speaker_volume_pl(atoi((char const *)(const char *)hfp_hf->bt_hfp_hp_speaker_volume));
+
             break;
         case HFP_UNIT_NO_CALL:
             BT_DBG("\n> Event    : HFP_UNIT_NO_CALL\n");
@@ -943,6 +937,15 @@ static API_RESULT bt_hfp_hf_callback_registered_with_hfu(HFP_UNIT_HANDLE handle,
                 hfp_hf->bt_hf_cb->call_setup(hfp_hf->bt_conn, *(uint8_t *)data);
             }
             sco_audio_play_ringtone_exit_pl();
+            BT_hfp_unit_set_gain
+            (
+                hfp_hf->handle,
+                hf_volume_type_speaker,
+                hfp_hf->bt_hfp_hp_speaker_volume,
+                (UCHAR)BT_str_len(hfp_hf->bt_hfp_hp_speaker_volume)
+            );
+            sco_audio_set_speaker_volume_pl(atoi((char const *)(const char *)hfp_hf->bt_hfp_hp_speaker_volume));
+
             break;
 
         case HFP_UNIT_AG_SERVICE_IND:

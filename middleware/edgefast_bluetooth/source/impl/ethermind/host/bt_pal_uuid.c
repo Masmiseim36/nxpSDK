@@ -46,16 +46,18 @@ static void uuid_to_uuid128(const struct bt_uuid *src, struct bt_uuid_128 *dst)
 		(void)memcpy((void *)dst, (const void *)src, sizeof(*dst));
 		break;
 	default:
-    /* Misra */
-    break;
+		/* Misra */
+		break;
 	}
-  return;
+	return;
 }
 
 static int uuid128_cmp(const struct bt_uuid *u1, const struct bt_uuid *u2)
 {
 	struct bt_uuid_128 uuid1, uuid2;
 
+    memset(&uuid1, 0, sizeof(uuid1));
+    memset(&uuid2, 0, sizeof(uuid2));
 	uuid_to_uuid128(u1, &uuid1);
 	uuid_to_uuid128(u2, &uuid2);
 

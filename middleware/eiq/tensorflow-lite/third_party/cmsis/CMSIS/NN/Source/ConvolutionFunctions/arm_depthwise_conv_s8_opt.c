@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2021 Arm Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -22,16 +22,15 @@
  * Description:  Optimized s8 depthwise separable convolution function for
  *               channel multiplier of 1.
  *
- * $Date:        May 29, 2020
- * $Revision:    V.2.0.1
+ * $Date:        January 26, 2021
+ * $Revision:    V.2.0.3
  *
  * Target Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
 
-#include "cmsis/CMSIS/DSP/Include/arm_math.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
 
 /**
  *  @ingroup groupNN
@@ -43,11 +42,11 @@
  */
 
 /*
-   * Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
-   *
-   *  Refer prototype header file for details.
-   *
-   */
+ * Optimized s8 depthwise convolution function with constraint that in_channel equals out_channel
+ *
+ *  Refer prototype header file for details.
+ *
+ */
 
 arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
                                      const cmsis_nn_dw_conv_params *dw_conv_params,
@@ -61,10 +60,18 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
                                      const cmsis_nn_dims *output_dims,
                                      q7_t *output)
 {
-    const int32_t input_x = input_dims->w;
-    const int32_t input_y = input_dims->h;
+
     const int32_t input_ch = input_dims->c;
     const int32_t output_ch = output_dims->c;
+
+    /* Check input constraints input_ch == output_ch */
+    if (input_ch != output_ch)
+    {
+        return ARM_MATH_SIZE_MISMATCH;
+    }
+#ifdef ARM_MATH_DSP
+    const int32_t input_x = input_dims->w;
+    const int32_t input_y = input_dims->h;
     const int32_t kernel_x = filter_dims->w;
     const int32_t kernel_y = filter_dims->h;
     const int32_t pad_x = dw_conv_params->padding.w;
@@ -81,11 +88,6 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     const int32_t output_activation_max = dw_conv_params->activation.max;
     q15_t *buffer_a = (q15_t *)ctx->buf;
 
-    /* Check input constraints input_ch == output_ch */
-    if (input_ch != output_ch)
-    {
-        return ARM_MATH_SIZE_MISMATCH;
-    }
 #ifdef ARM_MATH_MVEI
     (void)bias_dims;
     /* Generate two columns from the input tensor */
@@ -165,8 +167,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
         int32_t loop_count = (input_ch + 3) / 4;
 
         int32_t num_ch_to_process = input_ch;
-        for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count;
-             num_ch_to_process -= 4, offset += 4, i_loop_cnt++)
+        for (int i_loop_cnt = 0, offset = 0; i_loop_cnt < loop_count; num_ch_to_process -= 4, offset += 4, i_loop_cnt++)
         {
             const int8_t *col_0 = lhs_buffer + (kernel_size * input_ch * i_buf) + offset;
             const int8_t *row_0 = kernel + offset;
@@ -204,7 +205,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
         }
     }
 
-#elif defined(ARM_MATH_DSP)
+#else // ARM_MATH_DSP
     (void)bias_dims;
     /* Run the following code in cores using DSP extension */
     q15_t *const col_buffer_start = buffer_a;
@@ -222,8 +223,8 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
         {
             const int16_t base_idx_x = (i_out_x * stride_x) - pad_x;
 
-            /* Out of bounds is only considered for the y axis as it provides a contiguous zero'ing opportunity than along
-               the x axis */
+            /* Out of bounds is only considered for the y axis as it provides a contiguous zero'ing opportunity than
+               along the x axis */
             const int ker_y_start = MAX(0, -base_idx_y);
             /* Condition for kernel end dimension: (base_idx_y + ker_y_end) < input_y */
             const int ker_y_end = MIN(kernel_y, input_y - base_idx_y);
@@ -248,7 +249,10 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
                     }
                     else
                     {
-                        arm_q7_to_q15_with_offset((q7_t *)input + (idx_y * input_x + idx_x) * input_ch, &col_buffer[index], input_ch, input_offset);
+                        arm_q7_to_q15_with_offset((q7_t *)input + (idx_y * input_x + idx_x) * input_ch,
+                                                  &col_buffer[index],
+                                                  input_ch,
+                                                  input_offset);
                     }
                     index += input_ch;
                 }
@@ -385,7 +389,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
             col_buffer = col_buffer_start;
         }
     }
-
+#endif
 #else
     /* Run the following code as reference implementation for Cortex-M0 and Cortex-M3 */
     return arm_depthwise_conv_s8(ctx,
@@ -405,8 +409,7 @@ arm_status arm_depthwise_conv_s8_opt(const cmsis_nn_context *ctx,
     return ARM_MATH_SUCCESS;
 }
 
-int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const cmsis_nn_dims *input_dims,
-                                                  const cmsis_nn_dims *filter_dims)
+int32_t arm_depthwise_conv_s8_opt_get_buffer_size(const cmsis_nn_dims *input_dims, const cmsis_nn_dims *filter_dims)
 {
 #if defined(ARM_MATH_MVEI)
     /* The + 4 accounts for out of bounds read of the lhs buffers in the *_nt_t_* functions.  */

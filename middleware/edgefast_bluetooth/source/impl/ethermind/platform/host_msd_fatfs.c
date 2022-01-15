@@ -491,6 +491,7 @@ static FRESULT USB_HostMsdFatfsListDirectory(const TCHAR *path)
     fileInfo.lfsize = _MAX_LFN;
 #endif /* _USE_LFN */
 
+    memset(&dir, 0, sizeof(dir));
     fatfsCode = f_opendir(&dir, path);
     if (fatfsCode != FR_OK)
     {
@@ -915,6 +916,11 @@ void USB_IRQHandler(void)
     USB_HostIp3516HsIsrFunction(g_HostMsdFatfsHandle);
     SDK_ISR_EXIT_BARRIER;
 }
+void USB0_IRQHandler(void)
+{
+    USB_HostIp3516HsIsrFunction(g_HostMsdFatfsHandle);
+    SDK_ISR_EXIT_BARRIER;
+}           
 #endif
 
 int USB_HostMsdFatfsInit(void)

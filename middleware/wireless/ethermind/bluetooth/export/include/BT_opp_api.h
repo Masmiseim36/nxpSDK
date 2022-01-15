@@ -619,35 +619,6 @@ API_RESULT opp_client_pull_object
            );
 
 /**
- *  \brief To pull business card from the remote OPP server.
- *
- *  \par Description:
- *       This API pulls the specified business card from the already connected
- *       OPP server device.
- *
- *       The application is notified each time the server responds with the data
- *       through the following notification along with the data.
- *       OPP_CLIENT_PULL_BUSINESS_CARD_CNF
- *
- *  \param [in] opp_handle
- *         Valid OPP instance handle.
- *
- *  \param [in] opp_req_info
- *         This structure contains the type the business card to be pulled.
- *
- *  \return
- *       API_SUCCESS or one of the error codes as defined in \ref BT_error.h.
- *
- *  \note Establish the OPP connection to a OPP server through
- *        BT_opp_client_connect() API before using this API.
- */
-API_RESULT BT_opp_client_pull_business_card
-           (
-               /* IN */ OPP_HANDLE           *opp_handle,
-               /* IN */ OPP_REQUEST_STRUCT   *opp_req_info
-           );
-
-/**
  *  \brief To push an object to the remote OPP server.
  *
  *  \par Description:

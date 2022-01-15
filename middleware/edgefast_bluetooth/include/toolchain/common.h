@@ -63,7 +63,7 @@
       #define PERFOPT_ALIGN .balign  1
     #endif
 
-  #elif defined(CONFIG_ARM)
+  #elif defined(CONFIG_ARM) || defined(CONFIG_ARM64)
 
     #define PERFOPT_ALIGN .balign  4
 
@@ -108,7 +108,7 @@
      * priv_stacks_hash.c. These are built without compiler flags
      * used for coverage. ALWAYS_INLINE cannot be empty as compiler
      * would complain about unused functions. Attaching unused
-     * attribute would result in their text sections ballon more than
+     * attribute would result in their text sections balloon more than
      * 10 times in size, as those functions are kept in text section.
      * So just keep "inline" here.
      */
@@ -138,7 +138,7 @@
 #define __syscall static inline
 #else
 #define __syscall
-#endif /* #ifndef ZTEST_UNITTEST */
+#endif /* ZTEST_UNITTEST */
 
 /* Definitions for struct declaration tags. These are sentinel values used by
  * parse_syscalls.py to gather a list of names of struct declarations that
@@ -167,7 +167,7 @@
 
 /*
  * This is meant to be used in conjunction with __in_section() and similar
- * where scattered structure instances are concatened together by the linker
+ * where scattered structure instances are concatenated together by the linker
  * and walked by the code at run time just like a contiguous array of such
  * structures.
  *
@@ -205,7 +205,7 @@
 	__in_section(_##out_type, static, name) __used
 
 /*
- * Itterator for structure instances gathered by Z_STRUCT_SECTION_ITERABLE().
+ * Iterator for structure instances gathered by Z_STRUCT_SECTION_ITERABLE().
  * The linker must provide a _<struct_type>_list_start symbol and a
  * _<struct_type>_list_end symbol to mark the start and the end of the
  * list of struct objects to iterate over.

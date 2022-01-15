@@ -176,4 +176,7 @@ static inline mlan_status wifi_check_bss_entry_wpa2_entp_only(BSSDescriptor_t *p
     }
     return MLAN_STATUS_SUCCESS;
 }
+
+int wifi_send_hostcmd(
+    void *cmd_buf, uint32_t cmd_buf_len, void *resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len);
 #endif /* __MLAN_API_H__ */

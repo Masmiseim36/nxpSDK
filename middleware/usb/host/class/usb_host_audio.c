@@ -62,7 +62,7 @@ static usb_audio_request_t s_usbAudioEpRequests[NUMBER_OF_ENDPOINT_COMMANDS] = {
 usb_status_t USB_HostAudioInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandlePtr)
 {
     audio_instance_t *audioPtr = (audio_instance_t *)OSA_MemoryAllocate(sizeof(audio_instance_t));
-    uint32_t info_value;
+    uint32_t info_value        = 0U;
     uint32_t *temp;
 
     if (audioPtr == NULL)

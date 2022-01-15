@@ -50,9 +50,9 @@
 /*******************************************************************************
  * Tracing configuration
  ******************************************************************************/
-TRACE_TAG(INIT, 1);
-TRACE_TAG(PROCESS, 1);
-TRACE_TAG(UNDERRUN, 1);
+//TRACE_TAG(INIT, 1);
+//TRACE_TAG(PROCESS, 1);
+//TRACE_TAG(UNDERRUN, 1);
 
 /*******************************************************************************
  * Hardware parameters
@@ -115,11 +115,20 @@ typedef struct XARenderer
     /* ...size of one frame, in bytes */
     UWORD32                     frame_size;
 
-    /* ...number of channels */
+    /* ...size of one frame, in bytes for HW codec*/
+    UWORD32                     codec_frame_size;
+
+    /* ...number of channels in application */
     UWORD32                     channels;
 
-    /* ...sample width */
+    /* ...number of channels for HW codec */
+    UWORD32                     codec_channels;
+
+    /* ...sample width in application */
     UWORD32                     pcm_width;
+
+    /* ...sample width for HW codec */
+    UWORD32                     codec_pcm_width;
 
     /* ...current sampling rate */
     UWORD32                     rate;
@@ -143,6 +152,7 @@ typedef struct XARenderer
     i2s_mode_t                  i2s_mode;
     UWORD32                     i2s_sck_polarity;
     UWORD32                     i2s_ws_polarity;
+    UWORD32                     position;
 
     UWORD32                     renderIndex;
 
@@ -205,24 +215,24 @@ static const uint8_t dma_channel_map[] = { 1, 3, 5, 7, 9, 11 };
  *
  * Return 0 if the frame size cannot be evenly divided.
  */
-static uint32_t dma_calc_num_descriptors(XARenderer *d)
+static uint32_t dma_calc_num_descriptors(uint32_t frame_size)
 {
     uint32_t num_descriptors;
 
-    if (d->frame_size <= MAX_DMA_TRANSFER_SIZE)
+    if (frame_size <= MAX_DMA_TRANSFER_SIZE)
     {
         num_descriptors = 1;
     }
     else
     {
         /* Need to setup multiple DMA descriptors for each frame. */
-        num_descriptors = (d->frame_size / MAX_DMA_TRANSFER_SIZE);
-        if (d->frame_size % MAX_DMA_TRANSFER_SIZE)
+        num_descriptors = (frame_size / MAX_DMA_TRANSFER_SIZE);
+        if (frame_size % MAX_DMA_TRANSFER_SIZE)
         {
             num_descriptors += 1;
         }
 
-        if (d->frame_size % num_descriptors)
+        if (frame_size % num_descriptors)
         {
             /* Invalid frame size - not even divisible into descriptors. */
             num_descriptors = 0;
@@ -317,14 +327,14 @@ int TxRenderCallback(void *arg, int wake_value)
         xTaskNotifyWait(pdFALSE, 0xffffff, NULL, portMAX_DELAY);
 #else
         err = xos_sem_get(&d->irq_sem);
-        if(err == XOS_ERR_INVALID_PARAMETER)
+        if (err == XOS_ERR_INVALID_PARAMETER)
         {
             return -1;
         }
 #endif
 
         /* ...zero out buffer just completed */
-        memset(d->fifo_head[(d->rendered - 1) % 2], 0, d->frame_size);
+        memset(d->fifo_head[(d->rendered - 1) % 2], 0, d->codec_frame_size);
 
         d->cdata->cb(d->cdata, 0);
     }
@@ -385,23 +395,26 @@ static void evk_hw_renderer_init(void* ptr)
     XARenderer *d = (XARenderer*) ptr;
     uint32_t num_descriptors, tx_size, buf_index, next_desc, fifo_index;
     bool mono, enable_int;
+    uint8_t channelNum = d->codec_channels == 1 ? 2 : d->codec_channels;
+    uint8_t dmaWidth = d->pcm_width * d->codec_channels > 16 ? 4 : 2;
 
     I2S_TxGetDefaultConfig(&s_TxConfig);
 
-    s_TxConfig.dataLength = d->pcm_width;
+    s_TxConfig.dataLength = d->codec_pcm_width;
     /* Set 32 bit frameLength even for mono channel.
      * Use may vary with different hardware codecs. */
-    s_TxConfig.frameLength = d->channels == 1 ? d->pcm_width * 2 : d->pcm_width * d->channels;
+    s_TxConfig.frameLength = d->codec_pcm_width * channelNum;
     s_TxConfig.mode = d->i2s_mode;
     s_TxConfig.sckPol = d->i2s_sck_polarity;
     s_TxConfig.wsPol = d->i2s_ws_polarity;
+    s_TxConfig.position = d->position;
 
     /* Configure I2S master/slave based on configured input */
     if (d->i2s_master)
     {
         s_TxConfig.masterSlave = kI2S_MasterSlaveNormalMaster;
         /* Configure I2S divider based on the configured data format. */
-        s_TxConfig.divider = (I2S_MCLK_FREQ / d->rate / d->pcm_width / d->channels);
+        s_TxConfig.divider = (I2S_MCLK_FREQ / d->rate / d->codec_pcm_width / channelNum);
     }
     else
     {
@@ -417,22 +430,22 @@ static void evk_hw_renderer_init(void* ptr)
 
     I2S_TxInit(i2s_device_map[d->i2s_device], &s_TxConfig);
 
-    if (d->channels > 2)
+    if (d->codec_channels > 2)
     {
-        mono = d->channels == 3 ? true : false;
-        I2S_EnableSecondaryChannel(i2s_device_map[d->i2s_device], kI2S_SecondaryChannel1, mono, d->pcm_width * 2);
+        mono = d->codec_channels == 3 ? true : false;
+        I2S_EnableSecondaryChannel(i2s_device_map[d->i2s_device], kI2S_SecondaryChannel1, mono, d->codec_pcm_width * 2 + d->position);
     }
 
-    if (d->channels >= 5)
+    if (d->codec_channels >= 5)
     {
-        mono = d->channels == 5 ? true : false;
-        I2S_EnableSecondaryChannel(i2s_device_map[d->i2s_device], kI2S_SecondaryChannel2, mono, d->pcm_width * 4);
+        mono = d->codec_channels == 5 ? true : false;
+        I2S_EnableSecondaryChannel(i2s_device_map[d->i2s_device], kI2S_SecondaryChannel2, mono, d->codec_pcm_width * 4 + d->position);
     }
 
-    if (d->channels >= 7)
+    if (d->codec_channels >= 7)
     {
-        mono = d->channels == 7 ? true : false;
-        I2S_EnableSecondaryChannel(i2s_device_map[d->i2s_device], kI2S_SecondaryChannel3, mono, d->pcm_width * 6);
+        mono = d->codec_channels == 7 ? true : false;
+        I2S_EnableSecondaryChannel(i2s_device_map[d->i2s_device], kI2S_SecondaryChannel3, mono, d->codec_pcm_width * 6 + d->position);
     }
 
     DMA_SetChannelPriority(DMA_RENDERER, dma_channel_map[d->i2s_device], kDMA_ChannelPriority3);
@@ -441,17 +454,17 @@ static void evk_hw_renderer_init(void* ptr)
     DMA_SetCallback(&d->i2sTxDmaHandle, TxRenderCallbackISR, ptr);
 
     /* Calculate how many DMA descriptors will be needed per frame transfer */
-    num_descriptors = dma_calc_num_descriptors(d);
+    num_descriptors = dma_calc_num_descriptors(d->codec_frame_size);
     /* Calculate fixed size per DMA transfer.  Must be evenly divisible by
      * number of descriptors. */
-    tx_size = d->frame_size / num_descriptors;
+    tx_size = d->codec_frame_size / num_descriptors;
     /* Only enable DMA interrupt on initial transfer if using one descriptor */
     enable_int = (num_descriptors == 1);
 
     DMA_PrepareChannelTransfer(&transferConfig,
                                d->fifo_head[0],
                                (void *)&i2s_device_map[d->i2s_device]->FIFOWR,
-                               DMA_CHANNEL_XFER(true, false, enable_int, false, 4U, kDMA_AddressInterleave1xWidth, kDMA_AddressInterleave0xWidth, tx_size),
+                               DMA_CHANNEL_XFER(true, false, enable_int, false, dmaWidth, kDMA_AddressInterleave1xWidth, kDMA_AddressInterleave0xWidth, tx_size),
                                kDMA_MemoryToPeripheral,
                                NULL,
                                &d->dmaDescriptor[0]);
@@ -478,7 +491,7 @@ static void evk_hw_renderer_init(void* ptr)
         }
 
         DMA_SetupDescriptor(&d->dmaDescriptor[i],
-                            DMA_CHANNEL_XFER(true, false, enable_int, false, 4U, kDMA_AddressInterleave1xWidth,
+                            DMA_CHANNEL_XFER(true, false, enable_int, false, dmaWidth, kDMA_AddressInterleave1xWidth,
                             kDMA_AddressInterleave0xWidth, tx_size),
                             d->fifo_head[fifo_index] + buf_index,
                             (void *)&i2s_device_map[d->i2s_device]->FIFOWR,
@@ -514,8 +527,8 @@ static XA_ERRORCODE xa_hw_renderer_init(XARenderer *d)
         return XA_RENDERER_CONFIG_FATAL_HW;
     }
 
-    memset(d->fifo_head[0], 0, d->frame_size);
-    memset(d->fifo_head[1], 0, d->frame_size);
+    memset(d->fifo_head[0], 0, d->codec_frame_size);
+    memset(d->fifo_head[1], 0, d->codec_frame_size);
 
     d->dmaDescriptor = &s_dmaDescriptorPingpongI2S[MAX_RENDERERS * i];
 
@@ -535,17 +548,61 @@ static XA_ERRORCODE xa_hw_renderer_init(XARenderer *d)
 /* ...submit data (in bytes) into internal renderer ring-buffer */
 static UWORD32 xa_hw_renderer_submit(XARenderer *d, void *b, UWORD32 n)
 {
-    UWORD32 bytes_write;
+    UWORD32 bytes_write, i;
     UWORD32 buffer_available;
+    UWORD8 *input_buffer = b;
+    UWORD8 *fifo_head = d->fifo_head[d->submitted % 2];
+    UWORD8 input_buffer_step, fifo_head_step, k;
+    int j, o;
+
+    input_buffer_step = d->pcm_width >> 3;
+    fifo_head_step    = d->codec_pcm_width >> 3;
 
     /* ...reset optional output-bytes produced */
     d->bytes_produced = 0;
 
     buffer_available = (2 - (d->submitted - d->rendered)) * d->frame_size;
     bytes_write = (n > buffer_available ? buffer_available : n);
+
     if (bytes_write > 0)
     {
-        memcpy(d->fifo_head[d->submitted % 2], b, bytes_write);
+        /* ...Processing loop - filling fifo head buffer */
+        if ((d->channels == d->codec_channels) && (d->pcm_width == d->codec_pcm_width))
+        {
+            /*... For the same num of channels and pcm_width values copy data with faster method */
+            memcpy(fifo_head, input_buffer, bytes_write);
+        }
+        else
+        {
+            /*... For the different num of channels or pcm_width values interleave the actual data with zeros  */
+            for (i = 0; i < (bytes_write / input_buffer_step); )
+            {
+                /* Copy bytes from input buffer to fifo head buffer */
+                for (k = 0; k < d->channels; k++)
+                {
+                    for (j = (fifo_head_step - 1), o = (input_buffer_step - 1); j >= 0; j--, o--)
+                    {
+                        fifo_head[j] = o >= 0 ? input_buffer[o] : 0xFF;
+                    }
+
+                    /* Update pointers */
+                    input_buffer = input_buffer + input_buffer_step;
+                    fifo_head    = fifo_head + fifo_head_step;
+                    i++;
+                }
+
+                /* If the codec has more channels than the application, add zeros to the fifo head buffer ... */
+                for (k = 0; k < (d->codec_channels - d->channels); k++)
+                {
+                    for (j = 0; j < fifo_head_step; j++)
+                    {
+                        fifo_head[j] = 0x00;
+                    }
+                    /* Update fifo head pointer */
+                    fifo_head = fifo_head + fifo_head_step;
+                }
+            }
+        }
 
         /* ...write to optional output port buffer */
         if (d->output)
@@ -697,12 +754,17 @@ static XA_ERRORCODE xa_renderer_init(XARenderer *d, WORD32 i_idx, pVOID pv_value
         /* ...default to 4k  */
         d->frame_size = MAX_DMA_TRANSFER_SIZE;
 
+        d->codec_channels = 0;
+        d->codec_pcm_width = 0;
+        d->codec_frame_size = 0;
+
         /* ...hardware defaults */
         d->i2s_device = 1;
         d->i2s_master = 1;
         d->i2s_mode = kI2S_ModeI2sClassic;
         d->i2s_sck_polarity = 0;
         d->i2s_ws_polarity = 0;
+        d->position = 0;
 
         /* ...and mark renderer has been created */
         d->state = XA_RENDERER_FLAG_PREINIT_DONE;
@@ -715,6 +777,17 @@ static XA_ERRORCODE xa_renderer_init(XARenderer *d, WORD32 i_idx, pVOID pv_value
         /* ...post-configuration initialization (all parameters are set) */
         XF_CHK_ERR(d->state & XA_RENDERER_FLAG_PREINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
 
+        /* Fill in the codec parameters - it may differ from the application parameters, because some HW codecs only support 2 or 8 channel transmission */
+        d->codec_channels   = d->codec_channels == 0 ? d->channels : d->codec_channels;
+        d->codec_pcm_width  = d->codec_pcm_width == 0 ? d->pcm_width : d->codec_pcm_width;
+        d->codec_frame_size = d->codec_frame_size == 0 ? d->frame_size: d->codec_frame_size;
+
+        /* ...check calculated codec parameters */
+        XF_CHK_ERR(d->codec_channels >= d->channels, XA_RENDERER_CONFIG_NONFATAL_RANGE);
+        XF_CHK_ERR(d->codec_pcm_width >= d->pcm_width, XA_RENDERER_CONFIG_NONFATAL_RANGE);
+        XF_CHK_ERR(d->codec_frame_size >= d->frame_size, XA_RENDERER_CONFIG_NONFATAL_RANGE);
+
+        /* Renderer initialization */
         XF_CHK_ERR(xa_hw_renderer_init(d) == 0, XA_RENDERER_CONFIG_FATAL_HW);
 
         /* ...mark post-initialization is complete */
@@ -771,6 +844,18 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
 
         return XA_NO_ERROR;
 
+    case XA_RENDERER_CONFIG_PARAM_CODEC_PCM_WIDTH:
+            /* ...command is valid only in configuration state */
+            XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
+            /* ...get requested PCM width */
+            i_value = (UWORD32) *(WORD32 *)pv_value;
+            /* ...check value is permitted  */
+            XF_CHK_ERR(i_value == 16 || i_value == 32, XA_RENDERER_CONFIG_NONFATAL_RANGE);
+            /* ...apply setting */
+            d->codec_pcm_width = i_value;
+
+            return XA_NO_ERROR;
+
     case XA_RENDERER_CONFIG_PARAM_CHANNELS:
         /* ...command is valid only in configuration state */
         XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
@@ -783,6 +868,18 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
 
         return XA_NO_ERROR;
 
+    case XA_RENDERER_CONFIG_PARAM_CODEC_CHANNELS:
+            /* ...command is valid only in configuration state */
+            XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
+            /* ...get requested channel number */
+            i_value = (UWORD32) *(WORD32 *)pv_value;
+            /* ...allow 1-8 channels */
+            XF_CHK_ERR(i_value >= 1 && i_value <= 8, XA_RENDERER_CONFIG_NONFATAL_RANGE);
+            /* ...apply setting */
+            d->codec_channels = (UWORD32)i_value;
+
+            return XA_NO_ERROR;
+
     case XA_RENDERER_CONFIG_PARAM_SAMPLE_RATE:
         /* ...command is valid only in configuration state */
         XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
@@ -792,8 +889,8 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         /* ...allow 11,025, 22,05, 44,1 kHz */
         XF_CHK_ERR(i_value == 44100 || i_value == 22050 || i_value == 11025, XA_RENDERER_CONFIG_NONFATAL_RANGE);
 #else
-        /* ...allow 8, 16, 24, 32, 48 kHz */
-        XF_CHK_ERR(i_value == 48000 || i_value == 32000 || i_value == 24000 || i_value == 16000 || i_value == 8000,
+        /* ...allow 8, 16, 24, 32, 48, 96 kHz */
+        XF_CHK_ERR(i_value == 96000 || i_value == 48000 || i_value == 32000 || i_value == 24000 || i_value == 16000 || i_value == 8000,
                    XA_RENDERER_CONFIG_NONFATAL_RANGE);
 #endif
         /* ...apply setting */
@@ -808,12 +905,26 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         i_value = (UWORD32) *(WORD32 *)pv_value;
         /* ...check it is below max supported value */
         XF_CHK_ERR(i_value <= MAX_FRAME_SIZE, XA_RENDERER_CONFIG_NONFATAL_RANGE);
-        /* ...check it is evenly divisible into DMA transfers */
-        XF_CHK_ERR(dma_calc_num_descriptors(d) > 0, XA_RENDERER_CONFIG_NONFATAL_RANGE);
         /* ...apply setting */
         d->frame_size = i_value;
+        /* ...check it is evenly divisible into DMA transfers */
+        XF_CHK_ERR(dma_calc_num_descriptors(d->frame_size) > 0, XA_RENDERER_CONFIG_NONFATAL_RANGE);
 
         return XA_NO_ERROR;
+
+    case XA_RENDERER_CONFIG_PARAM_CODEC_FRAME_SIZE:
+            /* ...command is valid only in configuration state */
+            XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
+            /* ...get requested frame size */
+            i_value = (UWORD32) *(WORD32 *)pv_value;
+            /* ...check it is below max supported value */
+            XF_CHK_ERR(i_value <= MAX_FRAME_SIZE, XA_RENDERER_CONFIG_NONFATAL_RANGE);
+            /* ...apply setting */
+            d->codec_frame_size = i_value;
+            /* ...check it is evenly divisible into DMA transfers */
+            XF_CHK_ERR(dma_calc_num_descriptors(d->codec_frame_size) > 0, XA_RENDERER_CONFIG_NONFATAL_RANGE);
+
+            return XA_NO_ERROR;
 
     case XA_RENDERER_CONFIG_PARAM_CB:
         /* ...set opaque callback data function */
@@ -882,6 +993,16 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         d->i2s_ws_polarity = i_value;
 
         return XA_NO_ERROR;
+
+    case XA_RENDERER_CONFIG_PARAM_I2S_POSITION:
+            /* ...command is valid only in configuration state */
+            XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
+            /* ...get requested boolean value */
+            i_value = (UWORD32) *(WORD32 *)pv_value;
+            /* ...apply setting */
+            d->position = i_value;
+
+            return XA_NO_ERROR;
 
     case XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_1:
         /* ...command is valid only in configuration state */

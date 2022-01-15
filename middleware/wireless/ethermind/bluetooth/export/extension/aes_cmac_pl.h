@@ -38,7 +38,7 @@ void aes_cmac_init_pl (void);
 
 /* Platform Encrypt */
 API_RESULT aes_cmac_128B_encrypt_pl (UCHAR * key, UCHAR * data, UCHAR * encout);
-void aes_cmac_128B_encrypt_complete_pl(UCHAR status, UCHAR * data, UINT16 length);
+void aes_cmac_128B_encrypt_complete_pl(UCHAR index, UCHAR status, UCHAR * data, UINT16 length);
 
 #endif /* _H_AES_CMAC_PL_ */
 

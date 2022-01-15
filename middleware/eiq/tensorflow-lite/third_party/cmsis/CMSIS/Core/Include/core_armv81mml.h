@@ -62,7 +62,7 @@
   @{
  */
 
-#include "cmsis_version.h"
+#include "third_party/cmsis/CMSIS/Core/Include/cmsis_version.h"
 
 /*  CMSIS ARMV81MML definitions */
 #define __ARMv81MML_CMSIS_VERSION_MAIN  (__CM_CMSIS_VERSION_MAIN)                   /*!< \deprecated [31:16] CMSIS HAL main version */
@@ -181,7 +181,7 @@
 
 #endif
 
-#include "cmsis/CMSIS/Core/Include/cmsis_compiler.h"               /* CMSIS compiler specific defines */
+#include "third_party/cmsis/CMSIS/Core/Include/cmsis_compiler.h"               /* CMSIS compiler specific defines */
 
 
 #ifdef __cplusplus
@@ -3820,7 +3820,7 @@ __STATIC_INLINE uint32_t TZ_NVIC_GetPriority_NS(IRQn_Type IRQn)
 
 #if defined (__MPU_PRESENT) && (__MPU_PRESENT == 1U)
 
-#include "mpu_armv8.h"
+#include "third_party/cmsis/CMSIS/Core/Include/mpu_armv8.h"
 
 #endif
 
@@ -3828,7 +3828,7 @@ __STATIC_INLINE uint32_t TZ_NVIC_GetPriority_NS(IRQn_Type IRQn)
 
 #if defined (__PMU_PRESENT) && (__PMU_PRESENT == 1U)
 
-#include "pmu_armv8.h"
+#include "third_party/cmsis/CMSIS/Core/Include/pmu_armv8.h"
 
 #endif
 
@@ -3911,7 +3911,7 @@ __STATIC_INLINE uint32_t SCB_GetMVEType(void)
 
 #if ((defined (__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)) || \
      (defined (__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)))
-#include "cachel1_armv7.h"
+#include "third_party/cmsis/CMSIS/Core/Include/cachel1_armv7.h"
 #endif
 
 

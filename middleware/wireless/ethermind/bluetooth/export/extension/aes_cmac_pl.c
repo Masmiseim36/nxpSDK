@@ -73,6 +73,8 @@ API_RESULT aes_cmac_128B_encrypt_pl (UCHAR * key, UCHAR * data, UCHAR * encout)
     API_RESULT retval;
     UCHAR counter;
 
+    /* Init */
+    retval = API_SUCCESS;
 
     BT_debug_trace(EM_MODULE_ID_AES_CMAC, "[AES_CMAC] Enc Input.\n");
     BT_debug_dump_bytes(EM_MODULE_ID_AES_CMAC, data, 16U);
@@ -96,8 +98,8 @@ API_RESULT aes_cmac_128B_encrypt_pl (UCHAR * key, UCHAR * data, UCHAR * encout)
         BT_MUTEX_UNLOCK_VOID(aes_mutex, AES_PL);
 #else /* AES_HAVE_ENC_RETURN */
 
-        BT_IGNORE_UNUSED_PARAM(encout);
-        return AES_CMAC_PROC_PENDING;
+        *encout = counter;
+        retval = AES_CMAC_PROC_PENDING; /* return AES_CMAC_PROC_PENDING; */
 #endif /* AES_HAVE_ENC_RETURN */
     }
 
@@ -112,7 +114,7 @@ API_RESULT aes_cmac_128B_encrypt_pl (UCHAR * key, UCHAR * data, UCHAR * encout)
 }
 
 #ifndef AES_CMAC_PERFORMANCE_ANALYSIS
-void aes_cmac_128B_encrypt_complete_pl (UCHAR status, UCHAR * data, UINT16 length)
+void aes_cmac_128B_encrypt_complete_pl (UCHAR index, UCHAR status, UCHAR * data, UINT16 length)
 {
 #ifdef AES_HAVE_ENC_RETURN
 
@@ -129,7 +131,7 @@ void aes_cmac_128B_encrypt_complete_pl (UCHAR status, UCHAR * data, UINT16 lengt
     BT_debug_trace(EM_MODULE_ID_AES_CMAC, "[AES_CMAC] Enc Out.\n");
     BT_debug_dump_bytes(EM_MODULE_ID_AES_CMAC, data, 16U);
 
-    aes_cmac_aes_128_encryption_complete (status, data, length);
+    aes_cmac_aes_128_encryption_complete (index, status, data, length);
 #endif /* AES_HAVE_ENC_RETURN */
 }
 #endif /* AES_CMAC_PERFORMANCE_ANALYSIS */

@@ -5,15 +5,15 @@
 **                          MIMXRT595SFFOC_cm33
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    iMXRT500RM Rev.D, 11/2020
-**     Version:             rev. 4.0, 2020-05-12
-**     Build:               b201117
+**     Reference manual:    iMXRT500RM Rev.0, 01/2021
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b210728
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -46,22 +46,22 @@
 
 #define  m_flash_image_start           0x08041000
 
-#define  m_interrupts_start            0x000C0000
+#define  m_interrupts_start            0x002C0000
 #define  m_interrupts_size             0x00000200
 
-#define  priv_func_start               0x000C0200
+#define  priv_func_start               0x002C0200
 #define  priv_func_size                0x00008000
 
-#define  sys_calls_start               0x000C8200
+#define  sys_calls_start               0x002C8200
 #define  sys_calls_size                0x00004000
 
-#define  m_text_start                  0x000CC200
+#define  m_text_start                  0x002CC200
 #define  m_text_size                   0x00033E00
 
-#define  priv_data_start               0x20180000
+#define  priv_data_start               0x20380000
 #define  priv_data_size                0x0000D000
 
-#define  m_data_start                  0x2018D000
+#define  m_data_start                  0x2038D000
 #define  m_data_size                   0x00073000
 
 #define  m_usb_sram_start              0x40140000

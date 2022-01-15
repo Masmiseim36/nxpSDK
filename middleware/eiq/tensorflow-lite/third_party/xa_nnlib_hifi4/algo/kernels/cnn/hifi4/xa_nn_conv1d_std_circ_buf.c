@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2018-2020 Cadence Design Systems, Inc.
+* Copyright (c) 2018-2021 Cadence Design Systems, Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -19,13 +19,10 @@
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************************/
-#include "xa_type_def.h"
-#include <string.h>
-#include "common.h"
-#include "xa_nn_conv1d_std_state.h"
-#include "xa_nnlib_err_chk.h"
-
 #include "xa_nnlib_common.h"
+#include "xa_nnlib_common_macros.h"
+#include "xa_nn_conv1d_std_state.h"
+#include <string.h>
 
 WORD32 xa_nn_conv1d_std_getsize(
     WORD32 kernel_height,

@@ -12,26 +12,15 @@ The library is written in C and designed to be compliant with ISO C90 and MISRA 
 It has proofs showing safe memory use and no heap allocation, making it suitable for IoT microcontrollers, but also fully portable to other platforms.
 </p>
 
+> **NOTE**:
+> If your application uses both AWS IoT Jobs library and [OTA library](https://github.com/aws/ota-for-aws-iot-embedded-sdk) to communicate with AWS IoT through a shared MQTT connection, we suggest that you keep the application logic that uses these libraries within a single task/thread.
+> As the OTA agent also makes calls to the AWS IoT Jobs service, keeping the use of libraries within the same thread context will avoid complexity of synchronizing communication with AWS IoT Jobs topics between multiple tasks/threads.
+> However, if you choose to use different tasks/threads for calling these libraries, please be aware that the OTA library will subscribe and configurably, unsubscribe from AWS IoT Jobs topics, and also attempt to send status updates for incoming non-OTA jobs, if your application configures the OTA library to handle custom jobs.
+
 @section jobs_memory_requirements Memory Requirements
 @brief Memory requirements of the jobs library.
 
-<table>
-    <tr>
-        <td colspan="4"><center><b>Code size of Jobs library files (sizes generated with [GCC for ARM Cortex-M toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads/9-2020-q2-update))</b></center></td>
-    </tr>
-    <tr>
-        <td><b>File</b></td>
-        <td><b>No Optimization (asserts enabled)</b></td>
-        <td><b>With -O1 Optimization (asserts disabled)</b></td>
-        <td><b>With -Os Optimization (asserts disabled)</b></td>
-    </tr>
-    <tr>
-        <td>jobs.c</td>
-        <td>4.8K</td>
-        <td>3.1K</td>
-        <td>2.8K</td>
-    </tr>
-</table>
+@include{doc} size_table.html
  */
 
 /**

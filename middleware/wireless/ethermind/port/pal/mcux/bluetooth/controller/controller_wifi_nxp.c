@@ -7,13 +7,19 @@
 
 #include "fsl_common.h"
 
-#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA))
+#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_BOARD_IW61x) || \
+     defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM510MA) || \
+     defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
+     defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined (WIFI_88W8987_BOARD_MURATA_1ZM_M2))
 
 #ifndef CONTROLLER_INIT_ESCAPE
 #if defined(SD8978)
 #include "sduartIW416_wlan_bt.h"
 #elif defined(SD8987)
 #include "sduart8987_wlan_bt.h"
+#elif defined(IW61x)
+#include "sduart_nw61x.h"
 #else
 #error The Wi-Fi module is unsupported
 #endif
@@ -76,7 +82,13 @@ static void controller_hci_uart_init(void)
     memset(sendingBuffer, 0, sizeof(sendingBuffer));
     memset(recvBuffer, 0, sizeof(recvBuffer));
     memset(&hciUartConfig, 0, sizeof(hciUartConfig));
-
+    memset(&config, 0, sizeof(config));
+#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM510MA) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
+     defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined (WIFI_88W8987_BOARD_MURATA_1ZM_M2))
+    /*delay to make sure controller is ready to receive command*/
+    OSA_TimeDelay(100);
+#endif
     if (0 != controller_hci_uart_get_configuration(&hciUartConfig))
     {
         return;
@@ -115,7 +127,8 @@ static void controller_hci_uart_init(void)
     *opcode                                   = (uint16_t)BT_OP(BT_OGF_VS, 0x09);
     *param_len                                = sizeof(hciUartConfig.runningBaudrate);
     *((uint32_t *)(&sendingBuffer[4])) = hciUartConfig.runningBaudrate;
-
+    /*delay to make sure controller is ready to receive command*/
+    OSA_TimeDelay(60);
     error = HAL_UartSendBlocking((hal_uart_handle_t)s_controllerHciUartHandle, &sendingBuffer[0], 8);
     assert(kStatus_HAL_UartSuccess == error);
     error = HAL_UartReceiveBlocking((hal_uart_handle_t)s_controllerHciUartHandle, &recvBuffer[0], 7);
@@ -131,4 +144,4 @@ static void controller_hci_uart_init(void)
     (void)error;
 }
 
-#endif /* (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA)) */
+#endif

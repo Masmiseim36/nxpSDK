@@ -158,7 +158,8 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
         /* no action */
     }
 
-    i2sConfig.divider = config->srcClock_Hz / (uint32_t)config->sampleRate_Hz / (uint32_t)config->bitWidth / channelNum;
+    i2sConfig.divider =
+        (uint16_t)(config->srcClock_Hz / (uint32_t)config->sampleRate_Hz / (uint32_t)config->bitWidth / channelNum);
     i2sConfig.dataLength = config->bitWidth;
     if (0U == config->frameLength)
     {
@@ -209,7 +210,7 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
             i2sConfig.mode  = kI2S_ModeI2sClassic;
             i2sConfig.wsPol = false;
 
-            if (channelNum == (uint8_t)kHAL_AudioMonoRight)
+            if ((uint8_t)config->lineChannels == (uint8_t)kHAL_AudioMonoRight)
             {
                 i2sConfig.position += 0x100U; /* Special case for i2s classic mode */
             }
@@ -227,7 +228,7 @@ static hal_audio_status_t HAL_AudioCommonInit(hal_audio_handle_t handle,
 
             if ((uint8_t)config->dataFormat == (uint8_t)kHAL_AudioDataFormatDspModeA)
             {
-                i2sConfig.position += 1;
+                i2sConfig.position += 1U;
             }
 
             if ((uint8_t)config->frameSyncWidth == (uint8_t)kHAL_AudioFrameSyncWidthOneBitClk)

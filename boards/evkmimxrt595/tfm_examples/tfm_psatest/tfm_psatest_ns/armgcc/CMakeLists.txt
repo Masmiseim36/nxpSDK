@@ -71,7 +71,7 @@ set(CMAKE_MODULE_PATH
 )
 
 # include modules
-include(middleware_tfm_ns_MIMXRT595S_cm33)
+include(middleware_tfm_ns_evkmimxrt595_MIMXRT595S_cm33)
 
 include(middleware_tfm_ns_rtx_MIMXRT595S_cm33)
 
@@ -117,13 +117,15 @@ include(component_serial_manager_uart_MIMXRT595S_cm33)
 
 include(driver_flexcomm_usart_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(driver_flexcomm_MIMXRT595S_cm33)
 
 include(driver_lpc_iopctl_MIMXRT595S_cm33)
 
 include(driver_lpc_gpio_MIMXRT595S_cm33)
+
+include(middleware_tfm_ns_MIMXRT595S_cm33)
 
 include(middleware_tfmtests_ns_MIMXRT595S_cm33)
 

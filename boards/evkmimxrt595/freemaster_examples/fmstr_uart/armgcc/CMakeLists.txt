@@ -39,14 +39,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../freemaster_cfg.h"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.c"
 "${ProjDirPath}/../../common/fmstr_example/freemaster_example.h"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
 "${ProjDirPath}/../../common/fmstr_example/data_example_pmp.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_logo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_file.h"
 "${ProjDirPath}/../../common/fmstr_example/data_img_fmstrlogo.h"
 "${ProjDirPath}/../../common/fmstr_example/data_html_index.h"
 "${ProjDirPath}/../../common/fmstr_example/example_data.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -60,7 +60,6 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../components/uart
-    ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../flash_config
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
@@ -90,13 +89,9 @@ include(driver_flexspi_MIMXRT595S_cm33)
 
 include(driver_cache_cache64_MIMXRT595S_cm33)
 
-include(component_serial_manager_MIMXRT595S_cm33)
-
 include(component_lists_MIMXRT595S_cm33)
 
-include(component_serial_manager_uart_MIMXRT595S_cm33)
-
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 

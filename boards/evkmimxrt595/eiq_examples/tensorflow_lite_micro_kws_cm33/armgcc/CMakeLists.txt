@@ -54,7 +54,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../middleware/eiq/common/timer.c"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../middleware/eiq/common/audio/audio_load.cpp"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"
@@ -68,20 +67,28 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/audio
     ${ProjDirPath}/../../../../../middleware/eiq/common/audio
     ${ProjDirPath}/../../../../../middleware/eiq/common/model
+    ${ProjDirPath}/../../../../../middleware/eiq/common
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../middleware/eiq
-    ${ProjDirPath}/../../../../../components/lists
+    ${ProjDirPath}/../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/drivers
+    ${ProjDirPath}/../../../../../components/i2c
+    ${ProjDirPath}/../../../../../components/codec
+    ${ProjDirPath}/../../../../../components/codec/wm8904
+    ${ProjDirPath}/../../../../../middleware/eiq/common/audio
+    ${ProjDirPath}/../../../../../CMSIS/DSP
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite
+    ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../flash_config
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../middleware/eiq
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
-    ${ProjDirPath}/../../../../../CMSIS/DSP
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis
 )
 
 # include modules
@@ -89,15 +96,47 @@ include(utility_debug_console_lite_MIMXRT595S_cm33)
 
 include(utility_assert_lite_MIMXRT595S_cm33)
 
+include(component_codec_i2c_MIMXRT595S_cm33)
+
+include(driver_common_MIMXRT595S_cm33)
+
+include(component_i3c_adapter_MIMXRT595S_cm33)
+
+include(driver_codec_MIMXRT595S_cm33)
+
+include(component_wm8904_adapter_MIMXRT595S_cm33)
+
+include(driver_dmic_MIMXRT595S_cm33)
+
+include(driver_dmic_dma_MIMXRT595S_cm33)
+
+include(driver_flexcomm_i2c_MIMXRT595S_cm33)
+
+include(driver_flexcomm_i2s_MIMXRT595S_cm33)
+
+include(driver_flexcomm_i2s_dma_MIMXRT595S_cm33)
+
+include(driver_flexcomm_usart_MIMXRT595S_cm33)
+
+include(driver_i3c_MIMXRT595S_cm33)
+
+include(driver_inputmux_MIMXRT595S_cm33)
+
+include(driver_inputmux_connections_MIMXRT595S_cm33)
+
+include(driver_lpc_dma_MIMXRT595S_cm33)
+
+include(driver_wm8904_MIMXRT595S_cm33)
+
+include(middleware_eiq_audio_MIMXRT595S_cm33)
+
+include(CMSIS_DSP_Library_MIMXRT595S_cm33)
+
 include(middleware_eiq_tensorflow_lite_micro_MIMXRT595S_cm33)
 
 include(component_lists_MIMXRT595S_cm33)
 
-include(driver_common_MIMXRT595S_cm33)
-
 include(component_usart_adapter_MIMXRT595S_cm33)
-
-include(driver_flexcomm_usart_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_CMSIS_MIMXRT595S_cm33)
 
@@ -107,7 +146,7 @@ include(driver_cache_cache64_MIMXRT595S_cm33)
 
 include(driver_clock_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(driver_flexcomm_MIMXRT595S_cm33)
 
@@ -125,8 +164,6 @@ include(middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT595S_cm33)
 
 include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
-include(middleware_eiq_worker_MIMXRT595S_cm33)
-
 include(middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers_MIMXRT595S_cm33)
 
 include(middleware_eiq_tensorflow_lite_micro_third_party_gemmlowp_MIMXRT595S_cm33)
@@ -138,8 +175,6 @@ include(utilities_misc_utilities_MIMXRT595S_cm33)
 include(driver_iap_MIMXRT595S_cm33)
 
 include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT595S_cm33)
-
-include(CMSIS_DSP_Library_MIMXRT595S_cm33)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

@@ -5,6 +5,10 @@
       <name>all</name>
       <member>
         <project>wifi_webconfig</project>
+        <configuration>release</configuration>
+      </member>
+      <member>
+        <project>wifi_webconfig</project>
         <configuration>flash_debug</configuration>
       </member>
       <member>
@@ -13,11 +17,14 @@
       </member>
       <member>
         <project>wifi_webconfig</project>
-        <configuration>release</configuration>
+        <configuration>debug</configuration>
       </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
       <member>
         <project>wifi_webconfig</project>
-        <configuration>debug</configuration>
+        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>
@@ -32,13 +39,6 @@
       <member>
         <project>wifi_webconfig</project>
         <configuration>flash_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
-      <member>
-        <project>wifi_webconfig</project>
-        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

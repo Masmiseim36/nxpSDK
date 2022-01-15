@@ -14,6 +14,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 #define USB_DEVICE_VID (0x1FC9U)
 #define USB_DEVICE_PID (0x00A4U)
 
@@ -27,7 +30,9 @@
     2. usb host is Windows OS that supports USB audio 2.0, like Win 10
     3. use feedback endpoint
 */
+#ifndef USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS
 #define USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS (0U)
+#endif
 
 /* usb descriptor length */
 #define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL     (sizeof(g_UsbDeviceConfigurationDescriptor))
@@ -90,7 +95,7 @@
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #else
 /*If multiple data endpoints are to be serviced by the same feedback endpoint, the data endpoints must have ascending
-ordered–but not necessarily consecutive–endpoint numbers. The first data endpoint and the feedback endpoint must have
+ordered-but not necessarily consecutive-endpoint numbers. The first data endpoint and the feedback endpoint must have
 the same endpoint number (and opposite direction). For more information, please refer to Universal Serial Bus
 Specification, Revision 2.0 chapter 9.6.6*/
 #define USB_AUDIO_SPEAKER_FEEDBACK_ENDPOINT (2)
@@ -142,28 +147,6 @@ to initialize out and in sample rate respectively*/
 #endif
 #define AUDIO_FORMAT_CHANNELS (AUDIO_OUT_FORMAT_CHANNELS)
 
-/* Packet size and interval.
- * note: if ISO out endpoint interval is changed, please change AUDIO_UPDATE_FEEDBACK_DATA accordingly.
- */
-#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
-#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
-#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
-#define HS_ISO_OUT_ENDP_INTERVAL (0x01)
-#else
-#define HS_ISO_OUT_ENDP_INTERVAL (0x02) /* consider the capbility of CPU for some Socs, use 2 microframes interval */
-#endif
-#elif (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
-#if (defined(USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL) && (USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL > 0U))
-#define HS_ISO_OUT_ENDP_INTERVAL (0x02)
-#else
-#define HS_ISO_OUT_ENDP_INTERVAL (0x01)
-#endif
-#else
-#define HS_ISO_OUT_ENDP_INTERVAL (0x04)
-#endif
-#else
-#define HS_ISO_OUT_ENDP_INTERVAL (0x04) /*interval must be 1ms for usb audio 1.0 */
-#endif
 #define HS_ISO_IN_ENDP_INTERVAL (0x04)
 #if ((!USB_DEVICE_CONFIG_AUDIO_CLASS_2_0) && ((HS_ISO_OUT_ENDP_INTERVAL != 4) || (HS_ISO_IN_ENDP_INTERVAL != 4)))
 #error "iso data and sync endpoint interval must be 1 ms for usb audio 1.0"

@@ -498,7 +498,11 @@ static usb_status_t USB_DeviceLpc3511IpEndpointInit(usb_device_lpc3511ip_state_s
     uint8_t endpointIndex = USB_LPC3511IP_ENDPOINT_DES_INDEX(epInit->endpointAddress);
     usb_device_lpc3511ip_endpoint_state_struct_t *epState =
         USB_DeviceLpc3511IpGetEndpointStateStruct(lpc3511IpState, endpointIndex);
-    uint16_t maxPacketSize = epInit->maxPacketSize;
+    uint16_t maxPacketSize =
+        (uint16_t)((((epInit->maxPacketSize & USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_MASK) >>
+                     USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_MULT_TRANSACTIONS_SHFIT) +
+                    1U) *
+                   (epInit->maxPacketSize & USB_DESCRIPTOR_ENDPOINT_MAXPACKETSIZE_SIZE_MASK));
 #if (defined USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)
     uint32_t allocateLength;
     uint8_t *maxPacketBuffer;
@@ -623,7 +627,14 @@ static usb_status_t USB_DeviceLpc3511IpEndpointDeinit(usb_device_lpc3511ip_state
         USB_DeviceLpc3511IpGetEndpointStateStruct(lpc3511IpState, endpointIndex);
 
     /* Cancel the transfer of the endpoint */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceLpc3511IpCancel(lpc3511IpState, ep))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, ep);
+#endif
 
 #if (defined USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)
     if (0U != USB_DeviceLpcIp3511MaxPacketNeedCopy(lpc3511IpState))
@@ -704,10 +715,18 @@ static usb_status_t USB_DeviceLpc3511IpEndpointStall(usb_device_lpc3511ip_state_
         USB_LPC3511IP_ENDPOINT_SET_ENDPOINT(lpc3511IpState, 1, 0U, USB_LPC3511IP_ENDPOINT_STALL_MASK, 0U, 0U);
         /* Exit critical */
         OSA_EXIT_CRITICAL();
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if ((kStatus_USB_Success != USB_DeviceLpc3511IpCancel(lpc3511IpState, 0)) ||
+            (kStatus_USB_Success != USB_DeviceLpc3511IpCancel(lpc3511IpState, 0x80)))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         /* cancel the transfer in the endpoint */
         (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, 0);
         /* cancel the transfer in the endpoint */
         (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, 0x80);
+#endif
     }
     else
     {
@@ -753,7 +772,14 @@ static usb_status_t USB_DeviceLpc3511IpEndpointStall(usb_device_lpc3511ip_state_
 #endif
 
         /* cancel the transfer in the endpoint */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceLpc3511IpCancel(lpc3511IpState, ep))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, ep);
+#endif
     }
     return kStatus_USB_Success;
 }
@@ -816,10 +842,24 @@ static usb_status_t USB_DeviceLpc3511IpEndpointUnstall(usb_device_lpc3511ip_stat
     if (0U != epState->stateUnion.stateBitField.stallPrimed)
     {
         epState->stateUnion.stateBitField.stallPrimed = 0u;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex);
+#endif
     }
     /* cancel the transfer in the endpoint */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceLpc3511IpCancel(lpc3511IpState, ep))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, ep);
+#endif
     return kStatus_USB_Success;
 }
 
@@ -844,7 +884,14 @@ static usb_status_t USB_DeviceLpc3511IpInterruptSuspend(usb_device_lpc3511ip_sta
     message.isSetup = 0U;
 
     /* Notify up layer the USB suspend signal detected. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
+#endif
 
     return kStatus_USB_Success;
 }
@@ -869,7 +916,14 @@ static usb_status_t USB_DeviceLpc3511IpInterruptResume(usb_device_lpc3511ip_stat
     message.isSetup = 0U;
 
     /* Notify up layer the USB suspend signal detected. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
+#endif
 
     return kStatus_USB_Success;
 }
@@ -898,7 +952,14 @@ static usb_status_t USB_DeviceLpc3511IpInterruptLPMSleep(usb_device_lpc3511ip_st
                   USB_LPC3511IP_DEVCMDSTAT_LPM_REWP_SHIFT);
 
     /* Notify up layer the USB suspend signal detected. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
+#endif
 
     return kStatus_USB_Success;
 }
@@ -1091,7 +1152,16 @@ static void USB_DeviceLpc3511IpInterruptToken(usb_device_lpc3511ip_state_struct_
                 epState->stateUnion.stateBitField.epControlDefault |=
                     ((USB_LPC3511IP_ENDPOINT_RFTV_MASK | USB_LPC3511IP_ENDPOINT_ENDPOINT_TYPE_MASK) >>
                      USB_LPC3511IP_ENDPOINT_CONFIGURE_BITS_SHIFT);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex))
+                {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                    usb_echo("prime transaction error\n");
+#endif
+                }
+#else
                 (void)USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex);
+#endif
 #endif
             }
             return;
@@ -1117,7 +1187,14 @@ static void USB_DeviceLpc3511IpInterruptToken(usb_device_lpc3511ip_state_struct_
             epState->stateUnion.stateBitField.transferring = 0U;
             if (0U != (lpc3511IpState->epCommandStatusList[0] & USB_LPC3511IP_ENDPOINT_ACTIVE_MASK))
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_DeviceLpc3511IpCancel(lpc3511IpState, USB_CONTROL_ENDPOINT))
+                {
+                    return;
+                }
+#else
                 (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, USB_CONTROL_ENDPOINT);
+#endif
             }
         }
         if (0U != (lpc3511IpState->endpointState[1].stateUnion.stateBitField.transferring))
@@ -1125,7 +1202,16 @@ static void USB_DeviceLpc3511IpInterruptToken(usb_device_lpc3511ip_state_struct_
             lpc3511IpState->endpointState[1].stateUnion.stateBitField.transferring = 0U;
             if (0U != (lpc3511IpState->epCommandStatusList[2] & USB_LPC3511IP_ENDPOINT_ACTIVE_MASK))
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_DeviceLpc3511IpCancel(lpc3511IpState, (0x80u | USB_CONTROL_ENDPOINT)))
+                {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                    usb_echo("cancel the pending transfer error\n");
+#endif
+                }
+#else
                 (void)USB_DeviceLpc3511IpCancel(lpc3511IpState, (0x80u | USB_CONTROL_ENDPOINT));
+#endif
             }
         }
 
@@ -1197,18 +1283,43 @@ static void USB_DeviceLpc3511IpInterruptToken(usb_device_lpc3511ip_state_struct_
             {
                 /* do memcpy firstly */
                 USB_DeviceLpc3511IpDoPreviousTransactionMemcpy(lpc3511IpState, epState, len, endpointIndex, 0U);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex))
+                {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                    usb_echo("prime transaction error\n");
+#endif
+                }
+#else
                 (void)USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex);
+#endif
             }
             else
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex))
+                {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                    usb_echo("prime transaction error\n");
+#endif
+                }
+#else
                 (void)USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex);
+#endif
 
                 USB_DeviceLpc3511IpDoPreviousTransactionMemcpy(
                     lpc3511IpState, epState, len, endpointIndex,
                     (uint8_t)(epState->stateUnion.stateBitField.consumerOdd ^ 1U));
             }
 #else
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex))
+            {
+                return kStatus_USB_Error;
+            }
+#else
             (void)USB_DeviceLpc3511IpTransaction(lpc3511IpState, epState, endpointIndex);
+#endif
 #endif
             return;
         }
@@ -1234,13 +1345,33 @@ static void USB_DeviceLpc3511IpInterruptToken(usb_device_lpc3511ip_state_struct_
                      */
                     if (USB_SHORT_FROM_LITTLE_ENDIAN(setupPacket->wLength) > epState->transferLength)
                     {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                        if (kStatus_USB_Success !=
+                            USB_DeviceLpc3511IpEndpointPrime(lpc3511IpState, epState, 1U, NULL, 0U))
+                        {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                            usb_echo("prime error\n");
+#endif
+                        }
+#else
                         (void)USB_DeviceLpc3511IpEndpointPrime(lpc3511IpState, epState, 1U, NULL, 0U);
+#endif
                         return;
                     }
                 }
                 else if ((0U != epState->stateUnion.stateBitField.zlt))
                 {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                    if (kStatus_USB_Success !=
+                        USB_DeviceLpc3511IpEndpointPrime(lpc3511IpState, epState, endpointIndex, NULL, 0U))
+                    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+                        usb_echo("prime error\n");
+#endif
+                    }
+#else
                     (void)USB_DeviceLpc3511IpEndpointPrime(lpc3511IpState, epState, endpointIndex, NULL, 0U);
+#endif
                     return;
                 }
                 else
@@ -1259,7 +1390,16 @@ static void USB_DeviceLpc3511IpInterruptToken(usb_device_lpc3511ip_state_struct_
                                                    (uint8_t)(epState->stateUnion.stateBitField.consumerOdd ^ 1U));
 #endif
     /* Notify the up layer the controller status changed. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message))
+    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+        usb_echo("notification error\n");
+#endif
+    }
+#else
     (void)USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
+#endif
 }
 
 /*!
@@ -1306,7 +1446,16 @@ static void USB_DeviceLpc3511IpInterruptReset(usb_device_lpc3511ip_state_struct_
     message.length  = 0U;
     message.isSetup = 0U;
     /* Notify up layer the USB bus reset signal detected. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message))
+    {
+#if (defined(DEVICE_ECHO) && (DEVICE_ECHO > 0U))
+        usb_echo("notification error\n");
+#endif
+    }
+#else
     (void)USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
+#endif
 }
 
 #if (defined(USB_DEVICE_CONFIG_DETACH_ENABLE) && (USB_DEVICE_CONFIG_DETACH_ENABLE))
@@ -1328,7 +1477,14 @@ static void USB_DeviceLpc3511IpInterruptDetach(usb_device_lpc3511ip_state_struct
     message.isSetup = 0U;
 
     /* Notify up layer the USB VBUS falling signal detected. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
+#endif
 }
 
 /*!
@@ -1349,7 +1505,14 @@ static void USB_DeviceLpc3511IpInterruptAttach(usb_device_lpc3511ip_state_struct
     message.isSetup = 0U;
 
     /* Notify up layer the USB VBUS rising signal detected. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
+#endif
 }
 #endif
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
@@ -1371,7 +1534,14 @@ static usb_hsdcd_status_t USB_DeviceLpcIp3511IsrHSDCDCallback(void *handle, uint
     message.length  = 0U;
     message.isSetup = 0U;
     message.code    = (uint8_t)kUSB_DeviceNotifyDcdDetectFinished;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
+#endif
     return error;
 }
 
@@ -1559,7 +1729,14 @@ usb_status_t USB_DeviceLpc3511IpDeinit(usb_device_controller_handle controllerHa
            USB_LPC3511IP_DEVCMDSTAT_FORCE_NEEDCLK_MASK));
 #if (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U))
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_HSDCD_Deinit(lpc3511IpState->dcdHandle))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_HSDCD_Deinit(lpc3511IpState->dcdHandle);
+#endif
 #endif
 
 #if defined(USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY) && (USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY)
@@ -2054,7 +2231,14 @@ usb_status_t USB_DeviceLpc3511IpCancel(usb_device_controller_handle controllerHa
         message.buffer  = epState->transferBuffer;
         message.code    = ep;
         message.isSetup = 0U;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        if (kStatus_USB_Success != USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message))
+        {
+            return kStatus_USB_Error;
+        }
+#else
         (void)USB_DeviceNotificationTrigger(lpc3511IpState->deviceHandle, &message);
+#endif
     }
     else
     {
@@ -2288,8 +2472,17 @@ usb_status_t USB_DeviceLpc3511IpControl(usb_device_controller_handle controllerH
         case kUSB_DeviceControlSetDefaultStatus:
             for (tmp32Value = 0U; tmp32Value < (uint32_t)USB_DEVICE_IP3511_ENDPOINTS_NUM; tmp32Value++)
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if ((kStatus_USB_Success !=
+                     USB_DeviceLpc3511IpEndpointDeinit(lpc3511IpState, (uint8_t)(tmp32Value | (USB_IN << 0x07U)))) ||
+                    (USB_DeviceLpc3511IpEndpointDeinit(lpc3511IpState, (uint8_t)(tmp32Value | (USB_OUT << 0x07U)))))
+                {
+                    return kStatus_USB_Error;
+                }
+#else
                 (void)USB_DeviceLpc3511IpEndpointDeinit(lpc3511IpState, (uint8_t)(tmp32Value | (USB_IN << 0x07U)));
                 (void)USB_DeviceLpc3511IpEndpointDeinit(lpc3511IpState, (uint8_t)(tmp32Value | (USB_OUT << 0x07U)));
+#endif
             }
             USB_DeviceLpc3511IpSetDefaultState(lpc3511IpState);
             error = kStatus_USB_Success;
@@ -2438,7 +2631,14 @@ void USB_DeviceLpcIp3511IsrFunction(void *deviceHandle)
                 USB_DeviceLpc3511IpInterruptAttach(lpc3511IpState);
 #if (defined(FSL_FEATURE_SOC_USBHSDCD_COUNT) && (FSL_FEATURE_SOC_USBHSDCD_COUNT > 0U)) && \
     (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U))
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_HSDCD_Control(lpc3511IpState->dcdHandle, kUSB_DeviceHSDcdRun, NULL))
+                {
+                    return kStatus_USB_Error;
+                }
+#else
                 (void)USB_HSDCD_Control(lpc3511IpState->dcdHandle, kUSB_DeviceHSDcdRun, NULL);
+#endif
 #endif
             }
         }
@@ -2496,17 +2696,38 @@ void USB_DeviceLpcIp3511IsrFunction(void *deviceHandle)
         {
             if (0U != (lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_DSUS_MASK))
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_DeviceLpc3511IpInterruptSuspend(lpc3511IpState))
+                {
+                    return kStatus_USB_Error;
+                }
+#else
                 (void)USB_DeviceLpc3511IpInterruptSuspend(lpc3511IpState);
+#endif
             }
 #if (defined(USB_DEVICE_CONFIG_LPM_L1) && (USB_DEVICE_CONFIG_LPM_L1 > 0U))
             else if (0U != (lpc3511IpState->registerBase->DEVCMDSTAT & USB_LPC3511IP_DEVCMDSTAT_LPM_SUS_MASK))
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != (void)USB_DeviceLpc3511IpInterruptLPMSleep(lpc3511IpState))
+                {
+                    return kStatus_USB_Error;
+                }
+#else
                 (void)USB_DeviceLpc3511IpInterruptLPMSleep(lpc3511IpState);
+#endif
             }
 #endif
             else
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_DeviceLpc3511IpInterruptResume(lpc3511IpState))
+                {
+                    return kStatus_USB_Error;
+                }
+#else
                 (void)USB_DeviceLpc3511IpInterruptResume(lpc3511IpState);
+#endif
             }
         }
 

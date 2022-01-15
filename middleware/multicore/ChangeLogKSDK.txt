@@ -2,7 +2,25 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.10.0.
+  The current version of Multicore SDK is 2.11.0.
+  - 2.11.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.9.0
+      - eRPC generator (erpcgen) v.1.9.0
+      - Multicore Manager (MCMgr) v4.1.1
+      - RPMsg-Lite v3.2.0
+    - New features:
+      - eRPC: Improving template usage, GitHub PR #153.
+      - eRPC: run_clang_format.py cleanup, GitHub PR #177.
+      - eRPC: Build TCP transport setup code into liberpc, GitHub PR #179.
+      - eRPC: Fix multiple definitions of g_client error, GitHub PR #180.
+      - eRPC: Fix memset past end of buffer in erpc_setup_mbf_static.cpp, GitHub PR #184.
+      - eRPC: Fix deprecated error with newer pytest version, GitHub PR #203.
+      - eRPC: Allow used LIBUSBSIO device index being specified from the Python command line argument.
+      - eRPC, erpcgen: Static allocation support and usage of rpmsg static FreeRTOSs related APi, GitHub PR #168, #169.
+      - erpcgen: Remove redundant module imports in erpcgen, GitHub PR #196.
+      - RPMsg-Lite: Improve static allocations - allow OS-specific objects being allocated statically, GitHub PR #14.
+      - RPMsg-Lite: Minor Misra and typo corrections, GitHub PR #19, #20.
   - 2.10.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.8.1

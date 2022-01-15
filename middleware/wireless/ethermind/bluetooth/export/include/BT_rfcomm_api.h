@@ -517,7 +517,7 @@ typedef struct
 #define BT_rfcomm_compare_handles(hdl_1, hdl_2) \
         (((hdl_1)->dlci == (hdl_2)->dlci) && \
          ((hdl_1)->server_channel == (hdl_2)->server_channel) && \
-         (0U == BT_mem_cmp((hdl_1)->bd_addr, (hdl_2)->bd_addr, BT_BD_ADDR_SIZE)))
+         (0 == BT_mem_cmp((hdl_1)->bd_addr, (hdl_2)->bd_addr, BT_BD_ADDR_SIZE)))
 
 /**
  *  This utility macro sets the Notification Callback in a RFCOMM Handle

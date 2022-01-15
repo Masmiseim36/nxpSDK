@@ -116,6 +116,7 @@ struct bt_l2cap_chan *bt_l2cap_br_lookup_rx_cid(struct bt_conn *conn,
 	return NULL;
 }
 
+#if 0
 static struct bt_l2cap_chan *bt_l2cap_br_lookup_tx_cid(struct bt_conn *conn,
 						uint16_t cid)
 {
@@ -129,7 +130,7 @@ static struct bt_l2cap_chan *bt_l2cap_br_lookup_tx_cid(struct bt_conn *conn,
 
 	return NULL;
 }
-#if 0
+
 static struct bt_l2cap_br_chan*
 l2cap_br_chan_alloc_cid(struct bt_conn *conn, struct bt_l2cap_chan *chan)
 {
@@ -170,7 +171,7 @@ static void l2cap_br_chan_destroy(struct bt_l2cap_chan *chan)
 	BT_DBG("chan %p cid 0x%04x", BR_CHAN(chan), BR_CHAN(chan)->rx.cid);
 #if 0
 	/* Cancel ongoing work */
-	k_delayed_work_cancel(&chan->rtx_work);
+	k_work_cancel_delayable(&chan->rtx_work);
 #endif
 	atomic_clear(BR_CHAN(chan)->flags);
 }
@@ -216,7 +217,7 @@ static bool l2cap_br_chan_add(struct bt_conn *conn, struct bt_l2cap_chan *chan,
 		return false;
 	}
 #if 0
-	k_delayed_work_init(&chan->rtx_work, l2cap_br_rtx_timeout);
+	k_work_init_delayable(&chan->rtx_work, l2cap_br_rtx_timeout);
 #endif
 	bt_l2cap_chan_add(conn, chan, destroy);
 
@@ -249,7 +250,7 @@ static void l2cap_br_chan_send_req(struct bt_l2cap_br_chan *chan,
 	 * link is lost.
 	 */
 #if 0
-	k_delayed_work_submit(&chan->chan.rtx_work, timeout);
+	k_work_schedule(&chan->chan.rtx_work, timeout);
 #endif
 	bt_l2cap_send(chan->chan.conn, BT_L2CAP_CID_BR_SIG, buf);
 }
@@ -335,7 +336,7 @@ static int l2cap_br_info_rsp(struct bt_l2cap_br *l2cap, uint8_t ident,
 		 * command request.
 		 */
 #if 0
-		k_delayed_work_cancel(&l2cap->chan.chan.rtx_work);
+		k_work_cancel_delayable(&l2cap->chan.chan.rtx_work);
 #endif
 	}
 
@@ -837,7 +838,7 @@ static void l2cap_br_send_conn_rsp(struct bt_l2cap_chan *chan, uint16_t scid,
 
 	config_pref = L2CAP_CONFIG_PREF_BASIC;
 #if (defined(CONFIG_BT_L2CAP_IFRAME_SUPPORT) && (CONFIG_BT_L2CAP_IFRAME_SUPPORT > 0U))
-	if (chan->ops->get_cfg != NULL) {
+	if ((chan != NULL) && (chan->ops->get_cfg != NULL)) {
 		struct bt_l2cap_cfg_options cfg;
 
 		memset(&cfg, 0, sizeof(cfg));
@@ -874,11 +875,12 @@ static int l2cap_br_conn_req_reply(struct bt_l2cap_chan *chan, uint16_t result)
 static void l2cap_br_conn_req(struct bt_conn *conn,
 				  uint16_t psm, uint16_t scid, uint16_t dcid)
 {
-	struct bt_l2cap_chan *chan;
+	struct bt_l2cap_chan *chan = NULL;
 	struct bt_l2cap_server *server;
 	uint16_t result;
-
+#if 0
 	BT_DBG("psm 0x%02x scid 0x%04x", psm, scid);
+#endif
 
 	/* Check if there is a server registered */
 	server = l2cap_br_server_lookup_psm(psm);
@@ -896,7 +898,7 @@ static void l2cap_br_conn_req(struct bt_conn *conn,
 		result = BT_L2CAP_BR_ERR_SEC_BLOCK;
 		goto no_chan;
 	}
-
+#if 0
 	if (!L2CAP_BR_CID_IS_DYN(scid)) {
 		result = BT_L2CAP_BR_ERR_INVALID_SCID;
 		goto no_chan;
@@ -912,6 +914,7 @@ static void l2cap_br_conn_req(struct bt_conn *conn,
 		result = BT_L2CAP_BR_ERR_SCID_IN_USE;
 		goto no_chan;
 	}
+#endif
 
 	/*
 	 * Request server to accept the new connection and allocate the
@@ -926,14 +929,16 @@ static void l2cap_br_conn_req(struct bt_conn *conn,
 	chan->required_sec_level = server->sec_level;
 
 	l2cap_br_chan_add(conn, chan, l2cap_br_chan_destroy, dcid);
+#if 0
 	BR_CHAN(chan)->tx.cid = scid;
+#endif
 	chan->ident = 0;
 	bt_l2cap_chan_set_state(chan, BT_L2CAP_CONNECT);
 	atomic_set_bit(BR_CHAN(chan)->flags, L2CAP_FLAG_CONN_ACCEPTOR);
 
 	/* Disable fragmentation of l2cap rx pdu */
 	BR_CHAN(chan)->rx.mtu = MIN(BR_CHAN(chan)->rx.mtu,
-					CONFIG_BT_L2CAP_RX_MTU);
+					CONFIG_BT_BUF_ACL_RX_SIZE);
 
 	switch (l2cap_br_conn_security(chan, psm)) {
 	case L2CAP_CONN_SECURITY_PENDING:
@@ -982,7 +987,7 @@ static void l2cap_br_conf_rsp(struct bt_conn *conn,
 	}
 #if 0
 	/* Release RTX work since got the response */
-	k_delayed_work_cancel(&chan->rtx_work);
+	k_work_cancel_delayable(&chan->rtx_work);
 #endif
 	/*
 	 * TODO: handle other results than success and parse response data if
@@ -1512,7 +1517,7 @@ static void l2cap_br_disconnected(struct bt_l2cap_chan *chan)
 				      L2CAP_FLAG_SIG_INFO_PENDING)) {
 		/* Cancel RTX work on signal channel */
 #if 0
-		k_delayed_work_cancel(&chan->rtx_work);
+		k_work_cancel_delayable(&chan->rtx_work);
 #endif
 	}
 }
@@ -1684,26 +1689,27 @@ static void l2cap_br_conn_rsp(struct bt_conn *conn, uint16_t dcid,
 	BT_DBG("dcid 0x%04x scid 0x%04x result %u status %u", dcid, scid,
 		   result, status);
 
-	/* find the first one that is 0xFFFFu that is connecting by ethermind */
-	chan = bt_l2cap_br_lookup_rx_cid(conn, 0xFFFFu);
-	if (!chan) {
-		BT_ERR("No scid 0x%04x channel found", scid);
-		return;
-	}
-
-	BR_CHAN(chan)->rx.cid = scid;
 #if 0
 	/* Release RTX work since got the response */
-	k_delayed_work_cancel(&chan->rtx_work);
+	k_work_cancel_delayable(&chan->rtx_work);
 #endif
-	if (chan->state != BT_L2CAP_CONNECT) {
-		BT_DBG("Invalid channel %p state %s", chan,
-			   bt_l2cap_chan_state_str(chan->state));
-		return;
-	}
 
 	switch (result) {
 	case BT_L2CAP_BR_SUCCESS:
+        /* find the first one that is 0xFFFFu that is connecting by ethermind */
+        chan = bt_l2cap_br_lookup_rx_cid(conn, 0xFFFFu);
+        if (!chan) {
+            BT_ERR("No scid 0x%04x channel found", scid);
+            return;
+        }
+
+        BR_CHAN(chan)->rx.cid = scid;
+        if (chan->state != BT_L2CAP_CONNECT) {
+            BT_DBG("Invalid channel %p state %s", chan,
+                   bt_l2cap_chan_state_str(chan->state));
+            return;
+        }
+
 		chan->ident = 0U;
 		BR_CHAN(chan)->tx.cid = dcid;
 		l2cap_br_conf(chan);
@@ -1712,11 +1718,15 @@ static void l2cap_br_conn_rsp(struct bt_conn *conn, uint16_t dcid,
 		break;
 	case BT_L2CAP_BR_PENDING:
 #if 0
-		k_delayed_work_submit(&chan->rtx_work, L2CAP_BR_CONN_TIMEOUT);
+		k_work_schedule(&chan->rtx_work, L2CAP_BR_CONN_TIMEOUT);
 #endif
 		break;
 	default:
-		l2cap_br_chan_cleanup(chan);
+        chan = bt_l2cap_br_lookup_rx_cid(conn, scid);
+        if(NULL != chan)
+        {
+            l2cap_br_chan_cleanup(chan);
+        }
 		break;
 	}
 }

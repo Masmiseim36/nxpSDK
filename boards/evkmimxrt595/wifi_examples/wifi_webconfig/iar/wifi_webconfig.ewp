@@ -228,11 +228,10 @@
           <state>LWIP_NETIF_API=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
           <state>HTTPSRV_CFG_DEFAULT_SES_CNT=8</state>
-          <state>HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE=2048</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
+          <state>SDIO_ENABLED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>MFLASH_FILE_BASEADDR=7340032</state>
-          <state>SDIO_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MCUXPRESSO_SDK</state>
@@ -361,13 +360,9 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
@@ -376,9 +371,15 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/dhcpd</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/port/lwip</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../components/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -395,6 +396,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -661,8 +663,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../src/wifi_common/webconfig</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1302,11 +1302,10 @@
           <state>LWIP_NETIF_API=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
           <state>HTTPSRV_CFG_DEFAULT_SES_CNT=8</state>
-          <state>HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE=2048</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
+          <state>SDIO_ENABLED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>MFLASH_FILE_BASEADDR=7340032</state>
-          <state>SDIO_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MCUXPRESSO_SDK</state>
@@ -1435,13 +1434,9 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
@@ -1450,9 +1445,15 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/dhcpd</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/port/lwip</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../components/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -1469,6 +1470,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1735,8 +1737,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../src/wifi_common/webconfig</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2374,11 +2374,10 @@
           <state>LWIP_NETIF_API=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
           <state>HTTPSRV_CFG_DEFAULT_SES_CNT=8</state>
-          <state>HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE=2048</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
+          <state>SDIO_ENABLED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>MFLASH_FILE_BASEADDR=7340032</state>
-          <state>SDIO_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MCUXPRESSO_SDK</state>
@@ -2507,13 +2506,9 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
@@ -2522,9 +2517,15 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/dhcpd</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/port/lwip</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../components/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -2541,6 +2542,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2807,8 +2809,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../src/wifi_common/webconfig</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3448,11 +3448,10 @@
           <state>LWIP_NETIF_API=1</state>
           <state>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</state>
           <state>HTTPSRV_CFG_DEFAULT_SES_CNT=8</state>
-          <state>HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE=2048</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
+          <state>SDIO_ENABLED</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>MFLASH_FILE_BASEADDR=7340032</state>
-          <state>SDIO_ENABLED</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
           <state>MCUXPRESSO_SDK</state>
@@ -3581,13 +3580,9 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lwip/src/apps/httpsrv</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/pca9420</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
-          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/port</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include</state>
@@ -3596,9 +3591,15 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/dhcpd</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/port/lwip</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sdio</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM33_NTZ/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../components/pca9420</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash</state>
+          <state>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
@@ -3615,6 +3616,7 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/wifidriver/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3880,8 +3882,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../src/wifi_common/webconfig</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4293,33 +4293,6 @@
     </settings>
   </configuration>
   <group>
-    <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../sdmmc_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../sdmmc_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../board.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
-  </group>
-  <group>
     <name>source</name>
     <file>
       <name>$PROJ_DIR$/../lwipopts.h</name>
@@ -4353,6 +4326,39 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../app_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sdmmc_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../sdmmc_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../wifi_bt_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../wifi_bt_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../board.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
     </file>
   </group>
   <group>
@@ -5139,18 +5145,93 @@
     </group>
   </group>
   <group>
-    <name>wpl</name>
-    <file>
-      <name>$PROJ_DIR$/../wpl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../wpl_nxp.c</name>
-    </file>
-  </group>
-  <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_power.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_power.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</name>
     </file>
   </group>
   <group>
@@ -5159,6 +5240,15 @@
       <name>freertos_kernel</name>
       <group>
         <name>portable</name>
+        <group>
+          <name>MemMang</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+          </file>
+        </group>
         <group>
           <name>IAR</name>
           <group>
@@ -5179,15 +5269,6 @@
               </file>
             </group>
           </group>
-        </group>
-        <group>
-          <name>MemMang</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_3.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
-          </file>
         </group>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
@@ -5247,6 +5328,9 @@
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
@@ -5273,123 +5357,6 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/timers.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
-    <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_common_arm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_power.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_power.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_reset.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_reset.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_flexspi.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_cache.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_cache.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usart.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_iap.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_iap.c</name>
-    </file>
-  </group>
-  <group>
-    <name>pmic_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/pca9420/fsl_pca9420.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../components/pca9420/fsl_pca9420.c</name>
-    </file>
-  </group>
-  <group>
-    <name>flash</name>
-    <group>
-      <name>mflash</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/flash/mflash/mflash_file.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/flash/mflash/mflash_file.c</name>
-      </file>
-      <group>
-        <name>mimxrt595</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</name>
-        </file>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/flash/mflash/mflash_common.h</name>
       </file>
     </group>
   </group>
@@ -5458,7 +5425,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/dhcp-server.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
       </file>
       <group>
         <name>wlcmgr</name>
@@ -5730,6 +5697,123 @@
     </group>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>wifi_bt_module</name>
+      <group>
+        <name>AzureWave</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>Murata</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_usart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>sdmmc</name>
     <group>
       <name>src</name>
@@ -5787,6 +5871,54 @@
     </group>
   </group>
   <group>
+    <name>edgefast_wifi</name>
+    <group>
+      <name>source</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/source/wpl_nxp.c</name>
+      </file>
+    </group>
+    <group>
+      <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/edgefast_wifi/include/wpl.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>pmic_driver</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/pca9420/fsl_pca9420.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/pca9420/fsl_pca9420.c</name>
+    </file>
+  </group>
+  <group>
+    <name>flash</name>
+    <group>
+      <name>mflash</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/flash/mflash/mflash_file.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/flash/mflash/mflash_file.c</name>
+      </file>
+      <group>
+        <name>mimxrt595</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595/mflash_drv.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../components/flash/mflash/mimxrt595/mflash_drv.c</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/flash/mflash/mflash_common.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>device</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/fsl_device_registers.h</name>
@@ -5803,60 +5935,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/system_MIMXRT595S_cm33.h</name>
     </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_usart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>flash_config</name>

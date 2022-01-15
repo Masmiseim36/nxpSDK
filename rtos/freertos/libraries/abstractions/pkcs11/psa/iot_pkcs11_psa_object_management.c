@@ -46,6 +46,49 @@ extern int convert_pem_to_der( const unsigned char * pucInput, size_t xLen,
 P11KeyConfig_t P11KeyConfig __attribute__(( section( "tasks_share" ) ));
 
 /**
+* @brief Helper function to convert MBedtls ECP group to PSA ECC group ID
+*
+* @param[in] grpid         MBedtls ECP group ID.
+*
+* @return PSA ECC group ID.
+*/
+
+static psa_ecc_curve_t mbedtls_ecc_group_to_psa( mbedtls_ecp_group_id grpid )
+{
+    switch( grpid )
+    {
+        case MBEDTLS_ECP_DP_SECP192R1:
+            return( PSA_ECC_CURVE_SECP192R1 );
+        case MBEDTLS_ECP_DP_SECP224R1:
+            return( PSA_ECC_CURVE_SECP224R1 );
+        case MBEDTLS_ECP_DP_SECP256R1:
+            return( PSA_ECC_CURVE_SECP256R1 );
+        case MBEDTLS_ECP_DP_SECP384R1:
+            return( PSA_ECC_CURVE_SECP384R1 );
+        case MBEDTLS_ECP_DP_SECP521R1:
+            return( PSA_ECC_CURVE_SECP521R1 );
+        case MBEDTLS_ECP_DP_BP256R1:
+            return( PSA_ECC_CURVE_BRAINPOOL_P256R1 );
+        case MBEDTLS_ECP_DP_BP384R1:
+            return( PSA_ECC_CURVE_BRAINPOOL_P384R1 );
+        case MBEDTLS_ECP_DP_BP512R1:
+            return( PSA_ECC_CURVE_BRAINPOOL_P512R1 );
+        case MBEDTLS_ECP_DP_CURVE25519:
+            return( PSA_ECC_CURVE_CURVE25519 );
+        case MBEDTLS_ECP_DP_SECP192K1:
+            return( PSA_ECC_CURVE_SECP192K1 );
+        case MBEDTLS_ECP_DP_SECP224K1:
+            return( PSA_ECC_CURVE_SECP224K1 );
+        case MBEDTLS_ECP_DP_SECP256K1:
+            return( PSA_ECC_CURVE_SECP256K1 );
+        case MBEDTLS_ECP_DP_CURVE448:
+            return( PSA_ECC_CURVE_CURVE448 );
+        default:
+            return( 0 );
+    }
+}
+
+/**
 * @brief Writes a file to local storage.
 *
 * Port-specific file write for crytographic information.
@@ -192,8 +235,8 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
                 case MBEDTLS_PK_ECKEY:
                 case MBEDTLS_PK_ECDSA:
                     ec = (mbedtls_ecp_keypair *) (pvContext->pk_ctx );
-                    curve_id = mbedtls_ecp_curve_info_from_grp_id( ec->grp.id )->tls_id;
-                    uxKeyType = PSA_KEY_TYPE_ECC_KEY_PAIR(curve_id);
+                    curve_id = mbedtls_ecp_curve_info_from_grp_id( ec->grp.id )->grp_id;
+                    uxKeyType = PSA_KEY_TYPE_ECC_KEY_PAIR(mbedtls_ecc_group_to_psa(curve_id));
                     uxAlgorithm = PSA_ALG_ECDSA( PSA_ALG_SHA_256 );
                     xPrivateKeyRawSize = ( ec->grp.nbits + 7 ) / 8;
                     if( 0 != mbedtls_mpi_write_binary( &ec->d,
@@ -255,8 +298,8 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
                 case MBEDTLS_PK_ECKEY:
                 case MBEDTLS_PK_ECDSA:
                     ec = (mbedtls_ecp_keypair *) (pvContext->pk_ctx );
-                    curve_id = mbedtls_ecp_curve_info_from_grp_id( ec->grp.id )->tls_id;
-                    uxKeyType = PSA_KEY_TYPE_ECC_PUBLIC_KEY(curve_id);
+                    curve_id = mbedtls_ecp_curve_info_from_grp_id( ec->grp.id )->grp_id;
+                    uxKeyType = PSA_KEY_TYPE_ECC_PUBLIC_KEY(mbedtls_ecc_group_to_psa(curve_id));
                     uxAlgorithm = PSA_ALG_ECDSA( PSA_ALG_SHA_256 );
                     if( 0 !=get_public_key_ECPoint( pucData,
                                                     ulDataSize,
@@ -311,8 +354,8 @@ CK_OBJECT_HANDLE PKCS11PSASaveObject( CK_ATTRIBUTE_PTR pxClass,
                 case MBEDTLS_PK_ECKEY:
                 case MBEDTLS_PK_ECDSA:
                     ec = (mbedtls_ecp_keypair *) (pvContext->pk_ctx );
-                    curve_id = mbedtls_ecp_curve_info_from_grp_id( ec->grp.id )->tls_id;
-                    uxKeyType = PSA_KEY_TYPE_ECC_PUBLIC_KEY(curve_id);
+                    curve_id = mbedtls_ecp_curve_info_from_grp_id( ec->grp.id )->grp_id;
+                    uxKeyType = PSA_KEY_TYPE_ECC_PUBLIC_KEY(mbedtls_ecc_group_to_psa(curve_id));
                     uxAlgorithm = PSA_ALG_ECDSA( PSA_ALG_SHA_256 );
                     if( 0 !=get_public_key_ECPoint( pucData,
                                                     ulDataSize,

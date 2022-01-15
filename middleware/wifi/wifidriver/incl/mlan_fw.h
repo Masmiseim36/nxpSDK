@@ -4,7 +4,7 @@
  *  structures and declares global function prototypes used
  *  in MLAN module.
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -35,7 +35,8 @@ Change log:
 #define _MLAN_FW_H_
 
 /** Interface header length */
-#define INTF_HEADER_LEN 4
+#define INTF_HEADER_LEN                4
+#define WIFI_HOST_CMD_FIXED_HEADER_LEN 8
 
 /** Ethernet header */
 typedef struct
@@ -344,6 +345,9 @@ typedef enum _WLAN_802_11_WEP_STATUS
 /** TLV type : WPA3 SAE Password */
 #define TLV_TYPE_WPA3_SAE_PASSWORD (PROPRIETARY_TLV_BASE_ID + 0x141) // 0x0241
 
+/** TLV type : SAE PWE Derivation Mode */
+#define TLV_TYPE_WPA3_SAE_PWE_DERIVATION_MODE (PROPRIETARY_TLV_BASE_ID + 339) /* 0x0100 + 0x153 */
+
 /** TLV type : Encryption Protocol TLV */
 #define TLV_TYPE_ENCRYPTION_PROTO (PROPRIETARY_TLV_BASE_ID + 0x40) // 0x0140
 /** TLV type : Cipher TLV */
@@ -625,10 +629,6 @@ typedef enum _WLAN_802_11_WEP_STATUS
 
 /* fw_cap_info bit18 for ecsa support*/
 #define FW_CAPINFO_ECSA MBIT(18)
-/** fw_cap_info bit30 for Embedded OWE Support*/
-#define FW_CAPINFO_EMBEDDED_OWE_SUPPORT MBIT(30)
-/** Check if Embedded OWE is supported by firmware */
-#define IS_FW_SUPPORT_EMBEDDED_OWE(_adapter) (_adapter->fw_cap_info & FW_CAPINFO_EMBEDDED_OWE_SUPPORT)
 
 /** LLC/SNAP header len   */
 #define LLC_SNAP_LEN 8
@@ -3855,6 +3855,18 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_Password_t
     char password[1];
 } MLAN_PACK_END MrvlIEtypes_Password_t;
 
+/** MrvlIEtypes_SAE_PWE_Mode_t */
+typedef MLAN_PACK_START struct _MrvlIEtypes_SAE_PWE_Mode_t
+{
+    /** Header */
+    MrvlIEtypesHeader_t header;
+    /** WPA3 SAE mechanism for PWE derivation */
+    char pwe[1];
+} MLAN_PACK_END MrvlIEtypes_SAE_PWE_Mode_t;
+
+/** SAE H2E capability bit in RSNX */
+#define SAE_H2E_BIT 5
+
 /* unicastCipher -
  *      Bit 0   : RFU
  *      Bit 1   : RFU
@@ -5286,6 +5298,7 @@ typedef MLAN_PACK_START struct
 } MLAN_PACK_END MrvlIEtypes_LinkQualityThreshold_t;
 
 /** HostCmd_DS_COMMAND */
+/* Note in case the fixed header of 8 bytes is modified please modify WIFI_HOST_CMD_FIXED_HEADER_LEN too */
 typedef MLAN_PACK_START struct _HostCmd_DS_COMMAND
 {
     /** Command Header : Command */

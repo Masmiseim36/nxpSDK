@@ -358,7 +358,7 @@ static void USB_HostPrinterSetInterfaceCallback(void *param, usb_host_transfer_t
 
 usb_status_t USB_HostPrinterInit(usb_device_handle deviceHandle, usb_host_class_handle *classHandle)
 {
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
     uint32_t *temp;
     /* malloc printer class instance */
     usb_host_printer_instance_t *printerInstance =

@@ -1,28 +1,14 @@
 /*
- * Copyright (c) 2018-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
+#include "svc_num.h"
 #include "tfm_arch.h"
 #include "tfm_core_utils.h"
-#include "tfm/tfm_core_svc.h"
-#include "tfm/tfm_spm_services.h"
 
-__attribute__((naked))
-static int32_t tfm_spm_request(int32_t request_type)
-{
-    __ASM volatile(
-        "SVC    %0\n"
-        "BX     lr\n"
-        : : "I" (TFM_SVC_SPM_REQUEST));
-}
-
-int32_t tfm_spm_request_reset_vote(void)
-{
-    return tfm_spm_request((int32_t)TFM_SPM_REQUEST_RESET_VOTE);
-}
 
 static void tfm_arch_init_state_ctx(struct tfm_state_context_t *p_stat_ctx,
                                     void *param, uintptr_t pfn)
@@ -42,7 +28,7 @@ void tfm_arch_init_context(struct tfm_arch_ctx_t *p_actx,
                            void *param, uintptr_t pfn,
                            uintptr_t stk_btm, uintptr_t stk_top)
 {
-    struct tfm_state_context_t *p_stat_ctx=
+    struct tfm_state_context_t *p_stat_ctx =
             (struct tfm_state_context_t *)tfm_arch_seal_thread_stack(stk_top);
 
     /*

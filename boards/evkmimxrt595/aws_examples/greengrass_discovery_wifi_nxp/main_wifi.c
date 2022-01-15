@@ -53,6 +53,13 @@
  * Definitions
  ******************************************************************************/
 
+#define APP_DEBUG_UART_TYPE     kSerialPort_Uart
+#define APP_DEBUG_UART_INSTANCE 12U
+#define APP_DEBUG_UART_CLK_FREQ CLOCK_GetFlexcommClkFreq(12)
+#define APP_DEBUG_UART_FRG_CLK \
+    (&(const clock_frg_clk_config_t){12U, kCLOCK_FrgPllDiv, 255U, 0U}) /*!< Select FRG0 mux as frg_pll */
+#define APP_DEBUG_UART_CLK_ATTACH kFRG_to_FLEXCOMM12
+#define APP_DEBUG_UART_BAUDRATE   115200
 #define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 #define LOGGING_TASK_STACK_SIZE (240)
 #define LOGGING_QUEUE_LENGTH    (16)
@@ -77,6 +84,20 @@ extern int vStartGreenGrassDiscoveryTask(bool awsIotMqttMode,
 /*******************************************************************************
  * Code
  ******************************************************************************/
+/* Initialize debug console. */
+void APP_InitAppDebugConsole(void)
+{
+    uint32_t uartClkSrcFreq;
+
+    /* attach FRG0 clock to FLEXCOMM12 (debug console) */
+    CLOCK_SetFRGClock(APP_DEBUG_UART_FRG_CLK);
+    CLOCK_AttachClk(APP_DEBUG_UART_CLK_ATTACH);
+
+    uartClkSrcFreq = APP_DEBUG_UART_CLK_FREQ;
+
+    DbgConsole_Init(APP_DEBUG_UART_INSTANCE, APP_DEBUG_UART_BAUDRATE, APP_DEBUG_UART_TYPE, uartClkSrcFreq);
+}
+
 void print_string(const char *string)
 {
     PRINTF(string);
@@ -104,7 +125,7 @@ int main(void)
 {
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
-    BOARD_InitDebugConsole();
+    APP_InitAppDebugConsole();
 
     /* Define the init structure for the OSPI reset pin*/
     gpio_pin_config_t reset_config = {

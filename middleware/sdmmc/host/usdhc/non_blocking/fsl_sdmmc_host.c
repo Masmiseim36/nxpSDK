@@ -211,11 +211,11 @@ uint32_t SDMMCHOST_CardDetectStatus(sdmmchost_t *host)
         if (sdCD->dat3PullFunc != NULL)
         {
             sdCD->dat3PullFunc(kSD_DAT3PullDown);
-            SDMMC_OSADelay(1U);
+            SDMMC_OSADelay(SDMMCHOST_DATA3_DETECT_CARD_DELAY);
         }
         USDHC_CardDetectByData3(host->hostController.base, true);
         /* Added 1ms delay after host enabled the DAT3 function to avoid CPU missing synchronization with host */
-        SDMMC_OSADelay(1U);
+        SDMMC_OSADelay(SDMMCHOST_DATA3_DETECT_CARD_DELAY);
     }
     else
     {

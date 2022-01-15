@@ -47,9 +47,6 @@ extern clk_t enc_cycles;
 /*******************************************************************************
  * Tracing configuration
  ******************************************************************************/
-TRACE_TAG(INIT, 1);
-TRACE_TAG(INFO, 1);
-
 /* ...API structure */
 typedef struct XASbcEnc
 {   

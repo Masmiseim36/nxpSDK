@@ -2,7 +2,30 @@
 @page middleware_log Middleware Change Log
 
 @section vglite VGLite GPU Driver
-  The current version of the VGLite GPU Driver is 3.0.11_rev3.
+  The current version of the VGLite GPU Driver is 3.0.13_rev2.
+  - version 3.0.13_rev2
+    - Fixed:
+      - (MGG-793) Fixed clipping issue when using the RT500 blit output quality workaround
+      - (MGG-830) Disabled RT500 blit output quality workaround for non-affine graphic transformations
+      - (IMX-2701) Fixed memory leak in vector arc drawing API
+      - (IMX-2699) Fixed build warnings in vector arc drawing API
+      - (MGG-836) Fixed the font/text support via main VGLite driver API
+    - Changed:
+      - (IMX-1724) Changed image width 16 pixels alignment to stride 16 byte alignment
+      - (MCUX-46210) Dropped useless "const" qualifier for the "name" attribute of "vg_lite_font_params_t" data structure
+      - (MGG-836) Reordered "vg_lite_draw_text" API arguments
+  - version 3.0.13_rev1
+    - Fixed:
+      - (IMX-2577) Fixed support for colour palettes (CLUT) in multithread mode
+      - (MGG-735) Fixed Elementary library instability caused by using calloc/free in ElmWrapBuffer
+    - Changed:
+      - (IMX-2600) Updated "vg_lite_finish" to wait for all frames previously submitted with "vg_lite_flush"
+      - Aligned "vg_lite_radial_gradient_parameter" data struct with parameters in Elementary EVO object
+    - Added:
+      - Added support for drawing vector arcs/circles
+      - Added support for i.MXRT6Q GPU
+      - Added support for GCNanoliteV GPU Rev. 0x1322
+      - Added vector arcs support in Elementary library
   - version 3.0.11_rev3
     - Fixed:
       - Fix async event reset after being initialized

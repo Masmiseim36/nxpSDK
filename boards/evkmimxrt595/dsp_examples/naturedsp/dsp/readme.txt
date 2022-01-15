@@ -32,7 +32,7 @@ Board settings
 
 Prepare the Demo
 ================
-1.  Connect a micro USB cable between the PC host and the debug USB port (J5) on the board
+1.  Connect a micro USB cable between the PC host and the debug USB port (J40) on the board
 2.  Open a serial terminal on PC for OpenSDA serial device with these settings:
     - 115200 baud rate
     - 8 data bits

@@ -2,7 +2,7 @@
  *
  *  @brief This file declares the IOCTL data structures and APIs.
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -1489,7 +1489,6 @@ enum _mlan_auth_mode
     MLAN_AUTH_MODE_OPEN       = 0x00,
     MLAN_AUTH_MODE_SHARED     = 0x01,
     MLAN_AUTH_MODE_SAE        = 0x03,
-    MLAN_AUTH_MODE_OWE        = 0x04,
     MLAN_AUTH_MODE_NETWORKEAP = 0x80,
     MLAN_AUTH_MODE_AUTO       = 0xFF,
 };
@@ -1499,16 +1498,7 @@ typedef enum
 {
     AssocAgentAuth_Open,
     AssocAgentAuth_Shared,
-/* Updating the auth type with respect to latest changes in firmware.
- * Changes are available only for CA2.
- * TODO: update when release is made from ToT fw for other SoCs.
- */
-#if defined(SD8987)
     AssocAgentAuth_Wpa3Sae = 6,
-#else
-    AssocAgentAuth_Wpa3Sae = 5,
-#endif
-    AssocAgentAuth_Owe,
     AssocAgentAuth_Auto,
 } AssocAgentAuthType_e;
 

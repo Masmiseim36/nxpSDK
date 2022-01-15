@@ -720,7 +720,7 @@ FMSTR_BPTR FMSTR_ULebFromBuffer(FMSTR_U32 *pnum, FMSTR_BPTR src)
 FMSTR_BPTR FMSTR_ValueFromBuffer16BE(FMSTR_U16 *pnum, FMSTR_BPTR src)
 {
     *pnum = (FMSTR_U16)((((FMSTR_U16)(src[0])) << 8) | (src[1]));
-    return (src+2);
+    return (src + 2);
 }
 
 /******************************************************************************
@@ -731,12 +731,11 @@ FMSTR_BPTR FMSTR_ValueFromBuffer16BE(FMSTR_U16 *pnum, FMSTR_BPTR src)
 
 FMSTR_BPTR FMSTR_ValueToBuffer16BE(FMSTR_BPTR dest, FMSTR_U16 num)
 {
-    dest[0] = (FMSTR_BCHR)((num>>8) & 0xffU);
+    dest[0] = (FMSTR_BCHR)((num >> 8) & 0xffU);
     dest[1] = (FMSTR_BCHR)(num & 0xffU);
-    
-    return (dest+2);
-}
 
+    return (dest + 2);
+}
 
 /******************************************************************************
  *
@@ -818,16 +817,18 @@ static FMSTR_BPTR FMSTR_LebDecode(FMSTR_BPTR in, void *result, FMSTR_SIZE size, 
     /* negative number? */
     if (sleb != FMSTR_FALSE && (b & 0x40U) != 0U)
     {
-        if (size-- > 0U)
+        if (size > 0U)
         {
             *dest |= (FMSTR_U8)(0xffU << shift);
             dest += dadd;
+            size--;
         }
 
-        while (size-- > 0U)
+        while (size > 0U)
         {
             *dest = 0xffU;
             dest += dadd;
+            size--;
         }
     }
 

@@ -62,6 +62,9 @@
 	(__STDC_VERSION__) >= 201100
 #define BUILD_ASSERT(EXPR, MSG...) _Static_assert(EXPR, "" MSG)
 #define BUILD_ASSERT_MSG(EXPR, MSG) __DEPRECATED_MACRO BUILD_ASSERT(EXPR, MSG)
+#else
+#define BUILD_ASSERT(EXPR, MSG...)
+#define BUILD_ASSERT_MSG(EXPR, MSG)
 #endif
 
 #include <toolchain/common.h>
@@ -112,7 +115,7 @@
 /* The GNU assembler for Cortex-M3 uses # for immediate values, not
  * comments, so the @nobits# trick does not work.
  */
-#if defined(CONFIG_ARM)
+#if defined(CONFIG_ARM) || defined(CONFIG_ARM64)
 #define _NODATA_SECTION(segment)  __attribute__((section(#segment)))
 #else
 #define _NODATA_SECTION(segment)				\
@@ -129,7 +132,7 @@ __extension__ ({							\
 })
 
 
-#if __GNUC__ >= 7 && defined(CONFIG_ARM)
+#if __GNUC__ >= 7 && (defined(CONFIG_ARM) || defined(CONFIG_ARM64))
 
 /* Version of UNALIGNED_PUT() which issues a compiler_barrier() after
  * the store. It is required to workaround an apparent optimization
@@ -166,6 +169,10 @@ do {                                                                    \
  */
 #define __GENERIC_SECTION(segment) __attribute__((section(STRINGIFY(segment))))
 #define Z_GENERIC_SECTION(segment) __GENERIC_SECTION(segment)
+
+#define __GENERIC_DOT_SECTION(segment) \
+	__attribute__((section("." STRINGIFY(segment))))
+#define Z_GENERIC_DOT_SECTION(segment) __GENERIC_DOT_SECTION(segment)
 
 #define ___in_section(a, b, c) \
 	__attribute__((section("." Z_STRINGIFY(a)			\
@@ -257,6 +264,9 @@ typedef int off_t; /* file offset */
 #ifndef __deprecated
 #define __deprecated	__attribute__((deprecated))
 #endif
+#ifndef __attribute_const__
+#define __attribute_const__ __attribute__((__const__))
+#endif
 #define ARG_UNUSED(x) (void)(x)
 
 #define likely(x)   __builtin_expect((bool)!!(x), true)
@@ -313,7 +323,7 @@ typedef int off_t; /* file offset */
 
 #if defined(_ASMLANGUAGE)
 
-#if defined(CONFIG_ARM) && !defined(CONFIG_ARM64)
+#if defined(CONFIG_ARM)
 
 #if defined(CONFIG_ASSEMBLER_ISA_THUMB2)
 
@@ -332,7 +342,7 @@ typedef int off_t; /* file offset */
 #define FUNC_CODE()
 #define FUNC_INSTR(a)
 
-#endif /* CONFIG_ARM && !CONFIG_ARM64 */
+#endif /* CONFIG_ARM */
 
 #endif /* _ASMLANGUAGE */
 
@@ -346,7 +356,7 @@ typedef int off_t; /* file offset */
 #if defined(_ASMLANGUAGE)
 
 #if defined(CONFIG_ARM) || defined(CONFIG_NIOS2) || defined(CONFIG_RISCV) \
-	|| defined(CONFIG_XTENSA)
+	|| defined(CONFIG_XTENSA) || defined(CONFIG_ARM64)
 #define GTEXT(sym) .global sym; .type sym, %function
 #define GDATA(sym) .global sym; .type sym, %object
 #define WTEXT(sym) .weak sym; .type sym, %function
@@ -425,7 +435,7 @@ typedef int off_t; /* file offset */
 	section_subsec_func sect, subsec, sym
 #else /* !CONFIG_ARC */
 
-#define SECTION_VAR(sect, sym)  .section .sect.##sym; sym :
+#define SECTION_VAR(sect, sym)  .section .sect.sym; sym:
 #define SECTION_FUNC(sect, sym)						\
 	.section .sect.sym, "ax";					\
 				FUNC_CODE()				\
@@ -439,7 +449,7 @@ typedef int off_t; /* file offset */
 #endif /* _ASMLANGUAGE */
 
 #if defined(_ASMLANGUAGE)
-#if defined(CONFIG_ARM) && !defined(CONFIG_ARM64)
+#if defined(CONFIG_ARM)
 #if defined(CONFIG_ASSEMBLER_ISA_THUMB2)
 /* '.syntax unified' is a gcc-ism used in thumb-2 asm files */
 #define _ASM_FILE_PROLOGUE .text; .syntax unified; .thumb
@@ -448,7 +458,7 @@ typedef int off_t; /* file offset */
 #endif /* CONFIG_ASSEMBLER_ISA_THUMB2 */
 #elif defined(CONFIG_ARM64)
 #define _ASM_FILE_PROLOGUE .text
-#endif /* CONFIG_ARM64 || (CONFIG_ARM && !CONFIG_ARM64)*/
+#endif /* CONFIG_ARM64 || CONFIG_ARM */
 #endif /* _ASMLANGUAGE */
 
 /*
@@ -483,7 +493,7 @@ typedef int off_t; /* file offset */
  * to generate named symbol/value pairs for kconfigs.
  */
 
-#if defined(CONFIG_ARM) && !defined(CONFIG_ARM64)
+#if defined(CONFIG_ARM)
 
 /*
  * GNU/ARM backend does not have a proper operand modifier which does not

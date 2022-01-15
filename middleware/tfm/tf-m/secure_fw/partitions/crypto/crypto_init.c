@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -16,6 +16,10 @@
  *        inside the Mbed TLS layer of Mbed Crypto
  */
 #include "mbedtls/memory_buffer_alloc.h"
+
+#ifdef PLATFORM_DUMMY_NV_SEED
+#include "tfm_plat_crypto_dummy_nv_seed.h"
+#endif
 
 #ifndef TFM_PSA_API
 #include "tfm_secure_api.h"
@@ -226,10 +230,6 @@ static void tfm_crypto_ipc_handler(void)
 
             /* Process the message type */
             switch (msg.type) {
-            case PSA_IPC_CONNECT:
-            case PSA_IPC_DISCONNECT:
-                psa_reply(msg.handle, PSA_SUCCESS);
-                break;
             case PSA_IPC_CALL:
                 /* Parse the message */
                 status = tfm_crypto_parse_msg(&msg, &iov, &sfn_id);
@@ -276,9 +276,11 @@ static uint8_t mbedtls_mem_buf[TFM_CRYPTO_ENGINE_BUF_SIZE] = {0};
 
 static psa_status_t tfm_crypto_engine_init(void)
 {
-    /* Log unsafe entropy source */
-#if defined (MBEDTLS_TEST_NULL_ENTROPY)
-    LOG_INFFMT("\033[1;34m[Crypto] MBEDTLS_TEST_NULL_ENTROPY is not suitable for production!\033[0m\r\n");
+#ifdef PLATFORM_DUMMY_NV_SEED
+    LOG_INFFMT("\033[1;34m[Crypto] Dummy Entropy NV Seed is not suitable for production!\033[0m\r\n");
+    if (tfm_plat_crypto_create_entropy_seed() != TFM_CRYPTO_NV_SEED_SUCCESS) {
+        return PSA_ERROR_GENERIC_ERROR;
+    }
 #endif
 
     /* Initialise the Mbed Crypto memory allocator to use static

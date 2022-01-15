@@ -82,6 +82,7 @@ int bt_addr_le_from_str(const char *str, const char *type, bt_addr_le_t *addr)
 {
 	int err;
 
+    memset(addr, 0, sizeof(*addr));
 	err = bt_addr_from_str(str, &addr->a);
 	if (err < 0) {
 		return err;

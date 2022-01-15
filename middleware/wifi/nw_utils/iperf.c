@@ -55,7 +55,7 @@ struct iperf_test_context
 static struct iperf_test_context ctx;
 TimerHandle_t timer;
 ip4_addr_t server_address;
-ip4_addr_t multicast_address;
+ip4_addr_t bind_address;
 bool multicast;
 int amount = IPERF_CLIENT_AMOUNT;
 #ifdef CONFIG_WMM
@@ -153,17 +153,17 @@ static void iperf_test_start(void *arg)
         {
             if (multicast)
             {
-                wifi_get_ipv4_multicast_mac(ntohl(multicast_address.addr), mcast_mac);
-                wifi_add_mcast_filter(mcast_mac);
+                wifi_get_ipv4_multicast_mac(ntohl(bind_address.addr), mcast_mac);
+                if (wifi_add_mcast_filter(mcast_mac) != WM_SUCCESS)
+                {
+                    (void)PRINTF("IPERF session init failed\r\n");
+                    lwiperf_abort(ctx->iperf_session);
+                    ctx->iperf_session = NULL;
+                    return;
+                }
                 mcast_mac_valid = true;
-                ctx->iperf_session =
-                    lwiperf_start_udp_server(&multicast_address, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
             }
-            else
-            {
-                ctx->iperf_session = lwiperf_start_udp_server(netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT,
-                                                              lwiperf_report, 0);
-            }
+            ctx->iperf_session = lwiperf_start_udp_server(&bind_address, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, 0);
         }
     }
     else
@@ -184,7 +184,7 @@ static void iperf_test_start(void *arg)
                     mcast_mac_valid = true;
                 }
                 ctx->iperf_session =
-                    lwiperf_start_udp_client(netif_ip_addr4(netif_default), LWIPERF_TCP_PORT_DEFAULT, &server_address,
+                    lwiperf_start_udp_client(&bind_address, LWIPERF_TCP_PORT_DEFAULT, &server_address,
                                              LWIPERF_TCP_PORT_DEFAULT, ctx->client_type, amount, IPERF_UDP_CLIENT_RATE,
 #ifdef CONFIG_WMM
                                              qos,
@@ -333,7 +333,7 @@ static void display_iperf_usage()
     (void)PRINTF("\r\n");
     (void)PRINTF("\tClient/Server:\r\n");
     (void)PRINTF("\t   -u             use UDP rather than TCP\r\n");
-    (void)PRINTF("\t   -B    <host>   bind to <host>, a multicast address\r\n");
+    (void)PRINTF("\t   -B    <host>   bind to ip addr (including multicast address)\r\n");
     (void)PRINTF("\t   -a             abort ongoing iperf session\r\n");
     (void)PRINTF("\tServer specific:\r\n");
     (void)PRINTF("\t   -s             run in server mode\r\n");
@@ -434,13 +434,13 @@ void cmd_iperf(int argc, char **argv)
 
             if (!info.bhost && argv[arg] != NULL)
             {
-                inet_aton(argv[arg], &multicast_address);
+                inet_aton(argv[arg], &bind_address);
 
-                if ((ip4_addr_ismulticast(&multicast_address)) && IP_IS_V4(&multicast_address))
-                {
-                    multicast  = true;
+                if (IP_IS_V4(&bind_address))
                     info.bhost = 1;
-                }
+
+                if (ip4_addr_ismulticast(&bind_address))
+                    multicast = true;
 
                 arg += 1;
             }
@@ -487,10 +487,12 @@ void cmd_iperf(int argc, char **argv)
     } while (arg < argc);
 
     if ((!info.abort && !info.server && !info.client) || (info.client && !info.chost) || (info.server && info.client) ||
-        (info.bind && (!info.udp || !info.server || !info.bhost)) || ((info.dual || info.tradeoff) && !info.client) ||
+        (info.udp && (!info.bind || !info.bhost)) || ((info.dual || info.tradeoff) && !info.client) ||
         (info.dual && info.tradeoff))
     {
         (void)PRINTF("Incorrect usage\r\n");
+        if (info.udp && (!info.bind || !info.bhost))
+            (void)PRINTF("For UDP tests please specify local interface ip address using -B option\r\n");
         display_iperf_usage();
         return;
     }

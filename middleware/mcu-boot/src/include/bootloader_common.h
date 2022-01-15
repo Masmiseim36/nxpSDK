@@ -76,12 +76,15 @@
 #define BL_SECTION(x)
 #endif
 
-#ifndef ALIGN_DOWN
-#define ALIGN_DOWN(x, a) ((x) & -(a))
+/*! @brief Alignment(down) utility. */
+#if !defined(ALIGN_DOWN)
+#define ALIGN_DOWN(x, a) (((uint32_t)(x)) & ~((uint32_t)(a)-1u))
 #endif
-#ifndef ALIGN_UP
-#define ALIGN_UP(x, a) (-(-(x) & -(a)))
-#endif
+
+/*! @brief Alignment(up) utility. */
+#if !defined(ALIGN_UP)
+#define ALIGN_UP(x, a) ALIGN_DOWN((uint32_t)(x) + (uint32_t)(a)-1u, a)
+#endif      
 //@}
 
 //! @brief Build a 32-bit code from four character values.

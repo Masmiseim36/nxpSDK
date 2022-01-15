@@ -39,6 +39,7 @@
 #include "Elm.h"
 #include "velm.h"
 #include "vg_lite_text.h"
+#include "elm_headers.h"
 #include "elm_text.h"
 #include "elm_precom.h"
 #include "vft_draw.h"
@@ -190,7 +191,7 @@ vg_lite_error_t draw_text(el_Obj_Buffer *buff,
     vg_lite_error_t error = VG_LITE_INVALID_ARGUMENT;
     el_Obj_TEXT *text = (el_Obj_TEXT *)evo;
     vg_lite_blend_t blend = (vg_lite_blend_t)text->attribute.blend;
-    vg_lite_font_t curr_font = INVALID_FONT;
+    vg_lite_font_t curr_font = VG_LITE_INVALID_FONT;
     int curr_font_attrib_idx = INVALID_FONT_PROPERTY_IDX;
 
     vg_lite_font_attributes_t *font_attribs = &g_font_attribs;
@@ -204,7 +205,7 @@ vg_lite_error_t draw_text(el_Obj_Buffer *buff,
     if ( vg_lite_is_font_valid(g_last_font) == 1 ) {
       /* recycle font objects */
       vg_lite_free_font_memory(g_last_font);
-      g_last_font = INVALID_FONT;
+      g_last_font = VG_LITE_INVALID_FONT;
     }
 
     if(curr_font_attrib_idx != INVALID_FONT_PROPERTY_IDX)
@@ -221,7 +222,7 @@ vg_lite_error_t draw_text(el_Obj_Buffer *buff,
             );
     }
 
-    if (curr_font == INVALID_FONT) {
+    if (curr_font == VG_LITE_INVALID_FONT) {
         //printf("ERROR: Font not found. Rendering with default configuration\n");
         font_fields = &g_default_font_properties[0];
             curr_font = vg_lite_find_font(
@@ -231,7 +232,7 @@ vg_lite_error_t draw_text(el_Obj_Buffer *buff,
                 (eFontStyle_t)font_fields[eFontStyleProperty].value.i_value,
                 font_fields[eFontHeightProperty].value.i_value);
     }
-    if (curr_font == INVALID_FONT) {
+    if (curr_font == VG_LITE_INVALID_FONT) {
         printf("Font[%s] not found\n", font_fields[eFontNameProperty].value.data);
         return VG_LITE_INVALID_ARGUMENT;
     }
@@ -243,12 +244,12 @@ vg_lite_error_t draw_text(el_Obj_Buffer *buff,
     font_attribs->tspan_has_dx_dy = text->tspan_has_dx_dy;
 
     error = vg_lite_draw_text(&buff->buffer,
-               text->x_pos, text->y_pos,
-               blend,
+               (char *)text->msg,
                curr_font,
+               text->x_pos, text->y_pos,
                &text->attribute.transform.matrix,
-               font_attribs,
-               (char *)text->msg);
+               blend,
+               font_attribs);
 
     g_last_font = curr_font;
     g_last_font_attrib_idx = curr_font_attrib_idx;
@@ -259,9 +260,9 @@ vg_lite_error_t draw_text(el_Obj_Buffer *buff,
 static int _process_font_field_data( uint8_t *data_start, uint8_t *data, int num_fields, font_fields_t* fields)
 {
     eFontFields_t eName;
-    
+
     if (g_total_system_font >= MAX_FONT_ATTRIB_COMBINATIONS) {
-      printf("WARNING: Font property buffer overflowing..\n"
+      printf("WARNING: Font property buffer overflowing...\n"
              "Increase MAX_FONT_ATTRIB_COMBINATIONS\n");
       return -1;
     }
@@ -373,6 +374,7 @@ font_block_t *fontblockobj = NULL;
 /* load font-data */
 int _load_font_data(uint8_t *data)
 {
+    el_Font_Header *font_header = (el_Font_Header *)data;
 
     if ( fontblockobj != NULL )
     {
@@ -382,19 +384,19 @@ int _load_font_data(uint8_t *data)
     fontblockobj = (font_block_t *)elm_alloc(1, sizeof(font_block_t));
     memset(fontblockobj, 0, sizeof(font_block_t));
 
-    fontblockobj->size = *(uint32_t *)(data + 0 * 4);
-    fontblockobj->type = (eElemType_t)*(uint32_t *)(data + 1 * 4);
-    fontblockobj->num_ttf_fonts = *(uint32_t *)(data + 2 * 4);
-    fontblockobj->num_vector_fonts = *(uint32_t *)(data + 3 * 4);
-    fontblockobj->num_text_fonts = *(uint32_t *)(data + 4 * 4);
-    fontblockobj->ttf_fonts_block_offset = *(uint32_t *)(data + 5 * 4);
-    fontblockobj->ttf_fonts_block_length = *(uint32_t *)(data + 6 * 4);
-    fontblockobj->vector_fonts_block_offset = *(uint32_t *)(data + 7 * 4);
-    fontblockobj->vector_fonts_block_length = *(uint32_t *)(data + 8 * 4);
-    fontblockobj->text_fonts_block_offset = *(uint32_t *)(data + 9 * 4);
-    fontblockobj->text_fonts_block_length = *(uint32_t *)(data + 10 * 4);
-    fontblockobj->property_block_offset = *(uint32_t *)(data + 11 * 4);
-    fontblockobj->property_block_length = *(uint32_t *)(data + 12 * 4);
+    fontblockobj->size                          = font_header->size_font_block;
+    fontblockobj->type                          = eElemTypeFont;
+    fontblockobj->num_ttf_fonts                 = font_header->num_ttf_fonts;
+    fontblockobj->num_vector_fonts              = font_header->num_vector_fonts;
+    fontblockobj->num_text_fonts                = font_header->num_text_fonts;
+    fontblockobj->ttf_fonts_block_offset        = font_header->ttf_fonts_block_offset;
+    fontblockobj->ttf_fonts_block_length        = font_header->ttf_fonts_block_length;
+    fontblockobj->vector_fonts_block_offset     = font_header->vector_fonts_block_offset;
+    fontblockobj->vector_fonts_block_length     = font_header->vector_fonts_block_length;
+    fontblockobj->text_fonts_block_offset       = font_header->text_fonts_block_offset;
+    fontblockobj->text_fonts_block_length       = font_header->text_fonts_block_length;
+    fontblockobj->property_block_offset         = font_header->property_block_offset;
+    fontblockobj->property_block_length         = font_header->property_block_length;
 #ifdef ENABLE_DEBUG_TRACE
     printf("size: %d(%0x)\n", fontblockobj->size, fontblockobj->size);
     printf("type: %d\n", fontblockobj->type);
@@ -526,26 +528,23 @@ error_exit:
     return -1;
 }
 
+#if (defined(__ICCARM__))
+/*
+ * Disable the unaligned structure attribute warning. Due to the packed data
+ * structures used to interpret ELM objects data the IAR compiler issues a
+ * number of warnings that certain attributes of the headers might be unaligned.
+ * This is not true, however, as all atributes are manually aligned to 4 bytes.
+ */
+#pragma diag_suppress = Pa039
+#endif
+
 #define TEXT_CONTENT_OFFSET_WITHOUT_TRANSFORM   9 * 4
 #define TRANSFORM_MATRIX_LENGTH                 9 * 4
-ElmHandle _load_text(uint8_t *data, el_Obj_EVO *evo)
+ElmHandle _load_text_data(uint8_t *data, el_Obj_EVO *evo)
 {
-    int i = 0, j = 0;
     el_Obj_TEXT *evo_text = NULL;
-    uint32_t text_offset = 0;
-    //uint32_t block_length = 0;
-    //uint32_t obj_type = 0;
-    uint32_t tspan_has_dx_dy = 0;
-    float x_pos = 0;
-    float y_pos = 0;
-    float font_size = 0;
-    uint32_t text_anchor = 0;
-    uint32_t font_id = 0;
-    uint32_t color = 0;
-    uint32_t is_transform_present = 0;
-    uint16_t text_content_length = 0;
-    uint32_t text_flags;
     uint8_t *text_data = NULL;
+    el_Text_Header *text_header = (el_Text_Header *)data;
 
     if (evo == NULL) {
 #if (RTOS && DDRLESS) || BAREMETAL
@@ -560,20 +559,6 @@ ElmHandle _load_text(uint8_t *data, el_Obj_EVO *evo)
 #endif
     evo_text = (el_Obj_TEXT *)evo;
 
-    text_offset = TEXT_CONTENT_OFFSET_WITHOUT_TRANSFORM;
-    //block_length = *(uint32_t *)(data + 0 * 4);
-    //obj_type = *(uint32_t *)(data + 1 * 4);
-    tspan_has_dx_dy = *(uint32_t *)(data + 2 * 4);
-    x_pos = *(float *)(data + 3 * 4);
-    y_pos = *(float *)(data + 4 * 4);
-    font_size = *(float *)(data + 5 * 4);
-    font_id = *(uint32_t *)(data + 6 * 4);
-    color = *(uint32_t *)(data + 7 * 4);
-    text_flags = *(uint32_t *)(data + 8 * 4);
-
-    is_transform_present = (text_flags & 1); // BIT0
-    text_anchor = ((text_flags>>1) & 3);     //BIT1,BIT2 (eTextAlign_t)
-
     /*
      Default transform matrix is,
        identity matrix
@@ -581,41 +566,26 @@ ElmHandle _load_text(uint8_t *data, el_Obj_EVO *evo)
        zero-translate
     */
     _init_transform(&evo_text->defaultAttrib.transform);
+    memcpy(&evo_text->defaultAttrib.transform.matrix, &text_header->matrix,
+        sizeof(vg_lite_matrix_t));
 
-    if(is_transform_present == 1)
-    {
-        el_Transform *transform = NULL;
+    text_data = (uint8_t *)elm_alloc(1, text_header->data_length);
 
-        transform = &evo_text->defaultAttrib.transform;
-        /* Update matrix from coded matrix */
-        for (i = 0 ;i < 3; i++)
-            for (j = 0; j < 3; j++)
-            {
-                transform->matrix.m[i][j] = *(float *)(data + (9 + i *3 + j)*4);
-            }
+    memcpy(text_data, (void *)(data + sizeof(el_Text_Header)), text_header->data_length);
 
-        text_offset += TRANSFORM_MATRIX_LENGTH;
-    }
-
-    text_content_length = *(uint16_t *)(data + text_offset);
-    text_data = (uint8_t *)elm_alloc(1, text_content_length);
-
-    memcpy(text_data, (void *)(data + text_offset + 2), text_content_length);
-    //printf("text_data: %s\n", text_data);
-
-    evo_text->tspan_has_dx_dy = tspan_has_dx_dy;
-    evo_text->x_pos = (int)x_pos;
-    evo_text->y_pos = (int)y_pos;
-    evo_text->text_anchor = text_anchor;
-    evo_text->font_id = (int)font_id;
-    evo_text->font_size = (int)font_size;
-    evo_text->msg = text_data;
+    evo_text->tspan_has_dx_dy   = text_header->tspan_has_dx_dy;
+    evo_text->x_pos             = (int)text_header->x_pos;
+    evo_text->y_pos             = (int)text_header->y_pos;
+    evo_text->text_anchor       = text_header->text_flags.text_anchor;
+    evo_text->font_id           = (int)text_header->font_id;
+    evo_text->font_size         = (int)text_header->font_size;
+    evo_text->msg               = text_data;
 
     evo_text->defaultAttrib.quality = (ELM_QUALITY)VG_LITE_HIGH;
     evo_text->defaultAttrib.fill_rule = ELM_EVO_FILL_NZ;
     evo_text->defaultAttrib.blend = ELM_BLEND_SRC_OVER;
     evo_text->defaultAttrib.paint.type = ELM_PAINT_TEXT;
-    evo_text->defaultAttrib.paint.color = color;
+    evo_text->defaultAttrib.paint.color = text_header->color;
 
     evo_text->object.type = ELM_OBJECT_TYPE_EVO;
     evo_text->object.reference = 0;
@@ -637,6 +607,11 @@ error_exit:
 
     return ELM_NULL_HANDLE;
 }
+
+#if (defined(__ICCARM__))
+/* Restore the unaligned data structure attribute warning */
+#pragma diag_default = Pa039
+#endif
 
 void _unload_text(el_Obj_EVO *evo)
 {

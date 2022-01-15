@@ -392,6 +392,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
           </Files>
         </Group>
@@ -463,6 +475,11 @@
         <Group>
           <GroupName>dsp_binary</GroupName>
           <Files>
+            <File>
+              <FileName>dsp_reset_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
+            </File>
             <File>
               <FileName>dsp_text_release.bin</FileName>
               <FileType>5</FileType>
@@ -1336,6 +1353,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
           </Files>
         </Group>
@@ -1407,6 +1436,11 @@
         <Group>
           <GroupName>dsp_binary</GroupName>
           <Files>
+            <File>
+              <FileName>dsp_reset_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
+            </File>
             <File>
               <FileName>dsp_text_release.bin</FileName>
               <FileType>5</FileType>
@@ -2280,6 +2314,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
           </Files>
         </Group>
@@ -2351,6 +2397,11 @@
         <Group>
           <GroupName>dsp_binary</GroupName>
           <Files>
+            <File>
+              <FileName>dsp_reset_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
+            </File>
             <File>
               <FileName>dsp_text_release.bin</FileName>
               <FileType>5</FileType>
@@ -3224,6 +3275,18 @@
               <FileName>incbin.S</FileName>
               <FileType>2</FileType>
               <FilePath>../incbin.S</FilePath>
+              <FileOption>
+                                  <CommonProperty>
+                                    <IncludeInBuild>2</IncludeInBuild>
+                                    <AlwaysBuild>1</AlwaysBuild>
+                                    <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                                    <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                                    <PublicsOnly>2</PublicsOnly>
+                                    <StopOnExitCode>11</StopOnExitCode>
+                                  </CommonProperty>
+                                  <FileArmAds>
+                                  </FileArmAds>
+                                </FileOption>
             </File>
           </Files>
         </Group>
@@ -3295,6 +3358,11 @@
         <Group>
           <GroupName>dsp_binary</GroupName>
           <Files>
+            <File>
+              <FileName>dsp_reset_release.bin</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../dsp/binary/dsp_reset_release.bin</FilePath>
+            </File>
             <File>
               <FileName>dsp_text_release.bin</FileName>
               <FileType>5</FileType>

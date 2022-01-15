@@ -24,12 +24,11 @@
 
 #include "bt_ble_settings.h"
 
-#define k_timeout_t size_t
-
 #include <bluetooth/buf.h>
 
 #define k_sleep OSA_TimeDelay
 
+#define K_MSEC BT_MSEC
 #define K_NO_WAIT osaWaitNone_c
 
 /* TODO: K_KERNEL_STACK_MEMBER */
@@ -53,6 +52,11 @@
 static inline char *log_strdup(const char *str)
 {
 	return (char *)str;
+}
+
+static inline uint32_t k_ticks_to_ms_floor32(uint32_t t)
+{
+	return t;
 }
 
 #define BT_HEXDUMP_DBG(data, length, msg)                           \

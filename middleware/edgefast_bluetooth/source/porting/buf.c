@@ -16,6 +16,8 @@
 #include <string.h>
 #include <sys/byteorder.h>
 
+#include <porting.h>
+
 #include <net/buf.h>
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_NET_BUF_LOG)
@@ -23,7 +25,7 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#if defined(CONFIG_NET_BUF_LOG)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
 #define NET_BUF_DBG(fmt, ...) LOG_DBG(fmt, ##__VA_ARGS__)
 #define NET_BUF_ERR(fmt, ...) LOG_ERR(fmt, ##__VA_ARGS__)
 #define NET_BUF_WARN(fmt, ...) LOG_WRN(fmt, ##__VA_ARGS__)
@@ -86,8 +88,8 @@ static inline struct net_buf *pool_get_uninit(struct net_buf_pool *pool,
 
 void net_buf_reset(struct net_buf *buf)
 {
-	assert(buf->flags == 0U);
-	assert(buf->frags == NULL);
+	__ASSERT_NO_MSG(buf->flags == 0U);
+	__ASSERT_NO_MSG(buf->frags == NULL);
 
 	net_buf_simple_reset(&buf->b);
 }
@@ -103,7 +105,7 @@ static uint8_t *generic_data_ref(struct net_buf *buf, uint8_t *data)
 }
 
 static uint8_t *mem_pool_data_alloc(struct net_buf *buf, size_t *size,
-				 size_t timeout)
+				 k_timeout_t timeout)
 {
 #if 0
 	struct net_buf_pool *buf_pool = net_buf_pool_get(buf->pool_id);
@@ -155,7 +157,7 @@ const struct net_buf_data_cb net_buf_var_cb = {
 };
 
 static uint8_t *fixed_data_alloc(struct net_buf *buf, size_t *size,
-			      size_t timeout)
+			      k_timeout_t timeout)
 {
 	struct net_buf_pool *pool = net_buf_pool_get(buf->pool_id);
 	const struct net_buf_pool_fixed *fixed = (const struct net_buf_pool_fixed *)pool->alloc->alloc_data;
@@ -178,7 +180,7 @@ const struct net_buf_data_cb net_buf_fixed_cb = {
 #if (CONFIG_HEAP_MEM_POOL_SIZE > 0)
 
 static uint8_t *heap_data_alloc(struct net_buf *buf, size_t *size,
-			     size_t timeout)
+			     k_timeout_t timeout)
 {
 	uint8_t *ref_count;
 
@@ -216,7 +218,7 @@ const struct net_buf_data_alloc net_buf_heap_alloc = {
 
 #endif /* CONFIG_HEAP_MEM_POOL_SIZE > 0 */
 
-static uint8_t *data_alloc(struct net_buf *buf, size_t *size, size_t timeout)
+static uint8_t *data_alloc(struct net_buf *buf, size_t *size, k_timeout_t timeout)
 {
 	struct net_buf_pool *pool = net_buf_pool_get(buf->pool_id);
 
@@ -241,13 +243,13 @@ static void data_unref(struct net_buf *buf, uint8_t *data)
 	pool->alloc->cb->unref(buf, data);
 }
 
-#if defined(CONFIG_NET_BUF_LOG)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
 struct net_buf *net_buf_alloc_len_debug(struct net_buf_pool *pool, size_t size,
-					size_t timeout, const char *func,
+					k_timeout_t timeout, const char *func,
 					int line)
 #else
 struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
-				  size_t timeout)
+				  k_timeout_t timeout)
 #endif
 {
 	uint32_t alloc_start = OSA_TimeGetMsec();
@@ -255,7 +257,7 @@ struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
 	unsigned int key;
 	osa_status_t ret;
 
-	assert(pool);
+	__ASSERT_NO_MSG(pool);
 
 	NET_BUF_DBG("%s():%d: pool %p size %lu timeout %d", func, line, pool,
 		    size, timeout);
@@ -263,7 +265,7 @@ struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
 	if (NULL == pool->free)
 	{
 		ret = OSA_MsgQCreate((osa_msgq_handle_t)pool->freeHandle, pool->buf_count, sizeof(void *));
-		assert(KOSA_StatusSuccess == ret);
+		__ASSERT_NO_MSG(KOSA_StatusSuccess == ret);
         if (KOSA_StatusSuccess == ret)
         {
             pool->free = (osa_msgq_handle_t)pool->freeHandle;
@@ -283,7 +285,7 @@ struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
 
 		/* If this is not the first access to the pool, we can
 		 * be opportunistic and try to fetch a previously used
-		 * buffer from the LIFO with osaWaitNone_c.
+		 * buffer from the LIFO with K_NO_WAIT.
 		 */
 		if (pool->uninit_count < pool->buf_count) {
             osa_status_t ret;
@@ -304,12 +306,12 @@ struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
 
 	EnableGlobalIRQ(key);
 
-#if defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG_LEVEL >= LOG_LEVEL_WRN)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG_LEVEL >= LOG_LEVEL_WRN))
 	if (timeout == osaWaitForever_c) {
 		uint32_t ref = OSA_TimeGetMsec();
 		ret = OSA_MsgQGet(pool->free, &buf, osaWaitNone_c);
 		while (KOSA_StatusSuccess != ret) {
-#if defined(CONFIG_NET_BUF_POOL_USAGE)
+#if (defined(CONFIG_NET_BUF_POOL_USAGE) && (CONFIG_NET_BUF_POOL_USAGE > 0U))
 			NET_BUF_WARN("%s():%d: Pool %s low on buffers.",
 				     func, line, pool->name);
 #else
@@ -317,7 +319,7 @@ struct net_buf *net_buf_alloc_len(struct net_buf_pool *pool, size_t size,
 				     func, line, pool);
 #endif
 			ret = OSA_MsgQGet(pool->free, &buf, WARN_ALLOC_INTERVAL);
-#if defined(CONFIG_NET_BUF_POOL_USAGE)
+#if (defined(CONFIG_NET_BUF_POOL_USAGE) && (CONFIG_NET_BUF_POOL_USAGE > 0U))
 			NET_BUF_WARN("%s():%d: Pool %s blocked for %u secs",
 				     func, line, pool->name,
 				     (OSA_TimeGetMsec() - ref) / MSEC_PER_SEC);
@@ -370,18 +372,18 @@ success:
 	buf->size  = size;
 	net_buf_reset(buf);
 
-#if defined(CONFIG_NET_BUF_POOL_USAGE)
+#if (defined(CONFIG_NET_BUF_POOL_USAGE) && (CONFIG_NET_BUF_POOL_USAGE > 0U))
 	pool->avail_count--;
-	assert(pool->avail_count >= 0);
+	__ASSERT_NO_MSG(pool->avail_count >= 0);
     NET_BUF_WARN("%s():%d: Pool %p available count %d",
              func, line, pool, pool->avail_count);
 #endif
 	return buf;
 }
 
-#if defined(CONFIG_NET_BUF_LOG)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
 struct net_buf *net_buf_alloc_fixed_debug(struct net_buf_pool *pool,
-					  size_t timeout, const char *func,
+					  k_timeout_t timeout, const char *func,
 					  int line)
 {
 	const struct net_buf_pool_fixed *fixed = pool->alloc->alloc_data;
@@ -391,7 +393,7 @@ struct net_buf *net_buf_alloc_fixed_debug(struct net_buf_pool *pool,
 }
 #else
 struct net_buf *net_buf_alloc_fixed(struct net_buf_pool *pool,
-				    size_t timeout)
+				    k_timeout_t timeout)
 {
 	const struct net_buf_pool_fixed *fixed = (const struct net_buf_pool_fixed *)pool->alloc->alloc_data;
 
@@ -399,20 +401,20 @@ struct net_buf *net_buf_alloc_fixed(struct net_buf_pool *pool,
 }
 #endif
 
-#if defined(CONFIG_NET_BUF_LOG)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
 struct net_buf *net_buf_alloc_with_data_debug(struct net_buf_pool *pool,
 					      void *data, size_t size,
-					      size_t timeout,
+					      k_timeout_t timeout,
 					      const char *func, int line)
 #else
 struct net_buf *net_buf_alloc_with_data(struct net_buf_pool *pool,
 					void *data, size_t size,
-					size_t timeout)
+					k_timeout_t timeout)
 #endif
 {
 	struct net_buf *buf;
 
-#if defined(CONFIG_NET_BUF_LOG)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
 	buf = net_buf_alloc_len_debug(pool, 0, timeout, func, line);
 #else
 	buf = net_buf_alloc_len(pool, 0, timeout);
@@ -427,11 +429,11 @@ struct net_buf *net_buf_alloc_with_data(struct net_buf_pool *pool,
 	return buf;
 }
 
-#if defined(CONFIG_NET_BUF_LOG)
-struct net_buf *net_buf_get_debug(osa_msgq_handle_t fifo, size_t timeout,
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
+struct net_buf *net_buf_get_debug(osa_msgq_handle_t fifo, k_timeout_t timeout,
 				  const char *func, int line)
 #else
-struct net_buf *net_buf_get(osa_msgq_handle_t fifo, size_t timeout)
+struct net_buf *net_buf_get(osa_msgq_handle_t fifo, k_timeout_t timeout)
 #endif
 {
 	struct net_buf *buf, *frag;
@@ -449,7 +451,7 @@ struct net_buf *net_buf_get(osa_msgq_handle_t fifo, size_t timeout)
 	/* Get any fragments belonging to this buffer */
 	for (frag = buf; (frag->flags & NET_BUF_FRAGS); frag = frag->frags) {
 		ret = OSA_MsgQGet(fifo, &frag->frags, osaWaitNone_c);
-		assert(KOSA_StatusSuccess == ret);
+		__ASSERT_NO_MSG(KOSA_StatusSuccess == ret);
 
 		/* The fragments flag is only for FIFO-internal usage */
 		frag->flags &= ~NET_BUF_FRAGS;
@@ -472,8 +474,8 @@ void net_buf_simple_init_with_data(struct net_buf_simple *buf,
 
 void net_buf_simple_reserve(struct net_buf_simple *buf, size_t reserve)
 {
-	assert(buf);
-	assert(buf->len == 0U);
+	__ASSERT_NO_MSG(buf);
+	__ASSERT_NO_MSG(buf->len == 0U);
 	NET_BUF_DBG("buf %p reserve %lu", buf, reserve);
 
 	buf->data = buf->__buf + reserve;
@@ -485,8 +487,8 @@ void net_buf_slist_put(sys_slist_t *list, struct net_buf *buf)
 	struct net_buf *tail;
 	unsigned int key;
 
-	assert(list);
-	assert(buf);
+	__ASSERT_NO_MSG(list);
+	__ASSERT_NO_MSG(buf);
 
 	for (tail = buf; tail->frags; tail = tail->frags) {
 		tail->flags |= NET_BUF_FRAGS;
@@ -502,7 +504,7 @@ struct net_buf *net_buf_slist_get(sys_slist_t *list)
 	struct net_buf *buf, *frag;
 	unsigned int key;
 
-	assert(list);
+	__ASSERT_NO_MSG(list);
 
 	key = DisableGlobalIRQ();
 	buf = (void *)bt_list_get(list);
@@ -518,7 +520,7 @@ struct net_buf *net_buf_slist_get(sys_slist_t *list)
 		frag->frags = (void *)bt_list_get(list);
 		EnableGlobalIRQ(key);
 
-		assert(frag->frags);
+		__ASSERT_NO_MSG(frag->frags);
 
 		/* The fragments flag is only for list-internal usage */
 		frag->flags &= ~NET_BUF_FRAGS;
@@ -536,31 +538,31 @@ void net_buf_put(osa_msgq_handle_t fifo, struct net_buf *buf)
 	struct net_buf *tail;
 	osa_status_t ret;
 
-	assert(fifo);
-	assert(buf);
+	__ASSERT_NO_MSG(fifo);
+	__ASSERT_NO_MSG(buf);
 
 	for (tail = buf; tail->frags; tail = tail->frags) {
 		tail->flags |= NET_BUF_FRAGS;
 	}
 
 	ret = OSA_MsgQPut(fifo, &buf);
-	assert(KOSA_StatusSuccess == ret);
+	__ASSERT_NO_MSG(KOSA_StatusSuccess == ret);
     (void)ret;
 }
 
-#if defined(CONFIG_NET_BUF_LOG)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
 void net_buf_unref_debug(struct net_buf *buf, const char *func, int line)
 #else
 void net_buf_unref(struct net_buf *buf)
 #endif
 {
-	assert(buf);
+	__ASSERT_NO_MSG(buf);
 
 	while (buf) {
 		struct net_buf *frags = buf->frags;
 		struct net_buf_pool *pool;
 
-#if defined(CONFIG_NET_BUF_LOG)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
 		if (!buf->ref) {
 			NET_BUF_ERR("%s():%d: buf %p double free", func, line,
 				    buf);
@@ -584,9 +586,9 @@ void net_buf_unref(struct net_buf *buf)
 
 		pool = net_buf_pool_get(buf->pool_id);
 
-#if defined(CONFIG_NET_BUF_POOL_USAGE)
+#if (defined(CONFIG_NET_BUF_POOL_USAGE) && (CONFIG_NET_BUF_POOL_USAGE > 0U))
 		pool->avail_count++;
-		assert(pool->avail_count <= pool->buf_count);
+		__ASSERT_NO_MSG(pool->avail_count <= pool->buf_count);
         NET_BUF_WARN("%s():%d: Pool %p available count %d",
                  func, line, pool, pool->avail_count);
 #endif
@@ -603,7 +605,7 @@ void net_buf_unref(struct net_buf *buf)
 
 struct net_buf *net_buf_ref(struct net_buf *buf)
 {
-	assert(buf);
+	__ASSERT_NO_MSG(buf);
 
 	NET_BUF_DBG("buf %p (old) ref %u pool_id %u",
 		    buf, buf->ref, buf->pool_id);
@@ -611,13 +613,13 @@ struct net_buf *net_buf_ref(struct net_buf *buf)
 	return buf;
 }
 
-struct net_buf *net_buf_clone(struct net_buf *buf, size_t timeout)
+struct net_buf *net_buf_clone(struct net_buf *buf, k_timeout_t timeout)
 {
 	uint32_t alloc_start = OSA_TimeGetMsec();
 	struct net_buf_pool *pool;
 	struct net_buf *clone;
 
-	assert(buf);
+	__ASSERT_NO_MSG(buf);
 
 	pool = net_buf_pool_get(buf->pool_id);
 
@@ -659,7 +661,7 @@ struct net_buf *net_buf_clone(struct net_buf *buf, size_t timeout)
 
 struct net_buf *net_buf_frag_last(struct net_buf *buf)
 {
-	assert(buf);
+	__ASSERT_NO_MSG(buf);
 
 	while (buf->frags) {
 		buf = buf->frags;
@@ -670,8 +672,8 @@ struct net_buf *net_buf_frag_last(struct net_buf *buf)
 
 void net_buf_frag_insert(struct net_buf *parent, struct net_buf *frag)
 {
-	assert(parent);
-	assert(frag);
+	__ASSERT_NO_MSG(parent);
+	__ASSERT_NO_MSG(frag);
 
 	if (parent->frags) {
 		net_buf_frag_last(frag)->frags = parent->frags;
@@ -682,7 +684,7 @@ void net_buf_frag_insert(struct net_buf *parent, struct net_buf *frag)
 
 struct net_buf *net_buf_frag_add(struct net_buf *head, struct net_buf *frag)
 {
-	assert(frag);
+	__ASSERT_NO_MSG(frag);
 
 	if (!head) {
 		return net_buf_ref(frag);
@@ -693,7 +695,7 @@ struct net_buf *net_buf_frag_add(struct net_buf *head, struct net_buf *frag)
 	return head;
 }
 
-#if defined(CONFIG_NET_BUF_LOG)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
 struct net_buf *net_buf_frag_del_debug(struct net_buf *parent,
 				       struct net_buf *frag,
 				       const char *func, int line)
@@ -703,11 +705,11 @@ struct net_buf *net_buf_frag_del(struct net_buf *parent, struct net_buf *frag)
 {
 	struct net_buf *next_frag;
 
-	assert(frag);
+	__ASSERT_NO_MSG(frag);
 
 	if (parent) {
-		assert(parent->frags);
-		assert(parent->frags == frag);
+		__ASSERT_NO_MSG(parent->frags);
+		__ASSERT_NO_MSG(parent->frags == frag);
 		parent->frags = frag->frags;
 	}
 
@@ -715,7 +717,7 @@ struct net_buf *net_buf_frag_del(struct net_buf *parent, struct net_buf *frag)
 
 	frag->frags = NULL;
 
-#if defined(CONFIG_NET_BUF_LOG)
+#if (defined(CONFIG_NET_BUF_LOG) && (CONFIG_NET_BUF_LOG > 0U))
 	net_buf_unref_debug(frag, func, line);
 #else
 	net_buf_unref(frag);
@@ -765,7 +767,7 @@ size_t net_buf_linearize(void *dst, size_t dst_len, struct net_buf *src,
  * the buffer. It assumes that the buffer has at least one fragment.
  */
 size_t net_buf_append_bytes(struct net_buf *buf, size_t len,
-			    const void *value, size_t timeout,
+			    const void *value, k_timeout_t timeout,
 			    net_buf_allocator_cb allocate_cb, void *user_data)
 {
 	struct net_buf *frag = net_buf_frag_last(buf);
@@ -784,7 +786,18 @@ size_t net_buf_append_bytes(struct net_buf *buf, size_t len,
 			return added_len;
 		}
 
-		frag = allocate_cb(timeout, user_data);
+		if (allocate_cb) {
+			frag = allocate_cb(timeout, user_data);
+		} else {
+			struct net_buf_pool *pool;
+
+			/* Allocate from the original pool if no callback has
+			 * been provided.
+			 */
+			pool = net_buf_pool_get(buf->pool_id);
+			frag = net_buf_alloc_len(pool, len, timeout);
+		}
+
 		if (!frag) {
 			return added_len;
 		}
@@ -798,7 +811,7 @@ size_t net_buf_append_bytes(struct net_buf *buf, size_t len,
 #endif
 }
 
-#if defined(CONFIG_NET_BUF_SIMPLE_LOG)
+#if (defined(CONFIG_NET_BUF_SIMPLE_LOG) && (CONFIG_NET_BUF_SIMPLE_LOG > 0U))
 #define NET_BUF_SIMPLE_DBG(fmt, ...) NET_BUF_DBG(fmt, ##__VA_ARGS__)
 #define NET_BUF_SIMPLE_ERR(fmt, ...) NET_BUF_ERR(fmt, ##__VA_ARGS__)
 #define NET_BUF_SIMPLE_WARN(fmt, ...) NET_BUF_WARN(fmt, ##__VA_ARGS__)
@@ -822,7 +835,7 @@ void *net_buf_simple_add(struct net_buf_simple *buf, size_t len)
 
 	NET_BUF_SIMPLE_DBG("buf %p len %lu", buf, len);
 
-	assert(net_buf_simple_tailroom(buf) >= len);
+	__ASSERT_NO_MSG(net_buf_simple_tailroom(buf) >= len);
 
 	buf->len += len;
 	return tail;
@@ -918,15 +931,240 @@ void net_buf_simple_add_be64(struct net_buf_simple *buf, uint64_t val)
 	sys_put_be64(val, (uint8_t *)net_buf_simple_add(buf, sizeof(val)));
 }
 
+void *net_buf_simple_remove_mem(struct net_buf_simple *buf, size_t len)
+{
+	NET_BUF_SIMPLE_DBG("buf %p len %zu", buf, len);
+
+	__ASSERT_NO_MSG(buf->len >= len);
+
+	buf->len -= len;
+	return buf->data + buf->len;
+}
+
+uint8_t net_buf_simple_remove_u8(struct net_buf_simple *buf)
+{
+	uint8_t val;
+	void *ptr;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+	val = *(uint8_t *)ptr;
+
+	return val;
+}
+
+uint16_t net_buf_simple_remove_le16(struct net_buf_simple *buf)
+{
+	uint16_t val;
+	void *ptr;
+	STRUCT_PACKED_PRE
+	struct __temp_struct{
+		uint16_t __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((uint16_t *)ptr);
+	val = __p->__v;
+
+	return sys_le16_to_cpu(val);
+}
+
+uint16_t net_buf_simple_remove_be16(struct net_buf_simple *buf)
+{
+	uint16_t val;
+	void *ptr;
+    STRUCT_PACKED_PRE
+	struct __temp_struct{
+		uint16_t __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((uint16_t *)ptr);
+	val = __p->__v;
+
+	return sys_be16_to_cpu(val);
+}
+
+uint32_t net_buf_simple_remove_le24(struct net_buf_simple *buf)
+{
+	STRUCT_PACKED_PRE
+    struct uint24 {
+		uint32_t u24 : 24;
+	} STRUCT_PACKED_POST;
+    struct uint24 val;
+	void *ptr;
+    STRUCT_PACKED_PRE
+	struct __temp_struct{
+		struct uint24 __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((struct uint24 *)ptr);
+	val = __p->__v;
+
+	return sys_le24_to_cpu(val.u24);
+}
+
+uint32_t net_buf_simple_remove_be24(struct net_buf_simple *buf)
+{
+	STRUCT_PACKED_PRE
+    struct uint24 {
+		uint32_t u24 : 24;
+	} STRUCT_PACKED_POST;
+    struct uint24 val;
+	void *ptr;
+    STRUCT_PACKED_PRE
+	struct __temp_struct{
+		struct uint24 __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((struct uint24 *)ptr);
+	val = __p->__v;
+
+	return sys_be24_to_cpu(val.u24);
+}
+
+uint32_t net_buf_simple_remove_le32(struct net_buf_simple *buf)
+{
+	uint32_t val;
+	void *ptr;
+    STRUCT_PACKED_PRE
+	struct __temp_struct{
+		uint32_t __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((uint32_t *)ptr);
+	val = __p->__v;
+
+	return sys_le32_to_cpu(val);
+}
+
+uint32_t net_buf_simple_remove_be32(struct net_buf_simple *buf)
+{
+	uint32_t val;
+	void *ptr;
+    STRUCT_PACKED_PRE
+	struct __temp_struct{
+		uint32_t __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((uint32_t *)ptr);
+	val = __p->__v;
+
+	return sys_be32_to_cpu(val);
+}
+
+uint64_t net_buf_simple_remove_le48(struct net_buf_simple *buf)
+{
+    STRUCT_PACKED_PRE
+    struct uint48 {
+		uint64_t u48 : 48;
+	} STRUCT_PACKED_POST;
+    struct uint48 val;
+	void *ptr;
+    STRUCT_PACKED_PRE
+	struct __temp_struct{
+		struct uint48 __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((struct uint48 *)ptr);
+	val = __p->__v;
+
+	return sys_le48_to_cpu(val.u48);
+}
+
+uint64_t net_buf_simple_remove_be48(struct net_buf_simple *buf)
+{
+    STRUCT_PACKED_PRE
+    struct uint48 {
+		uint64_t u48 : 48;
+	} STRUCT_PACKED_POST;
+    struct uint48 val;
+	void *ptr;
+    STRUCT_PACKED_PRE
+	struct __temp_struct{
+		struct uint48 __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((struct uint48 *)ptr);
+	val = __p->__v;
+
+	return sys_be48_to_cpu(val.u48);
+}
+
+uint64_t net_buf_simple_remove_le64(struct net_buf_simple *buf)
+{
+	uint64_t val;
+	void *ptr;
+    STRUCT_PACKED_PRE
+	struct __temp_struct{
+		uint64_t __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((uint64_t *)ptr);
+	val = __p->__v;
+
+	return sys_le64_to_cpu(val);
+}
+
+uint64_t net_buf_simple_remove_be64(struct net_buf_simple *buf)
+{
+	uint64_t val;
+	void *ptr;
+    STRUCT_PACKED_PRE
+	struct __temp_struct{
+		uint64_t __v;
+	} STRUCT_PACKED_POST;
+	struct __temp_struct *__p;
+
+	ptr = net_buf_simple_remove_mem(buf, sizeof(val));
+
+    __p = (struct __temp_struct *) ((uint64_t *)ptr);
+	val = __p->__v;
+
+	return sys_be64_to_cpu(val);
+}
+
 void *net_buf_simple_push(struct net_buf_simple *buf, size_t len)
 {
 	NET_BUF_SIMPLE_DBG("buf %p len %lu", buf, len);
 
-	assert(net_buf_simple_headroom(buf) >= len);
+	__ASSERT_NO_MSG(net_buf_simple_headroom(buf) >= len);
 
 	buf->data -= len;
 	buf->len += len;
 	return buf->data;
+}
+
+void *net_buf_simple_push_mem(struct net_buf_simple *buf, const void *mem,
+			      size_t len)
+{
+	NET_BUF_SIMPLE_DBG("buf %p len %zu", buf, len);
+
+	return memcpy(net_buf_simple_push(buf, len), mem, len);
 }
 
 void net_buf_simple_push_le16(struct net_buf_simple *buf, uint16_t val)
@@ -1010,7 +1248,7 @@ void *net_buf_simple_pull(struct net_buf_simple *buf, size_t len)
 {
 	NET_BUF_SIMPLE_DBG("buf %p len %lu", buf, len);
 
-	assert(buf->len >= len);
+	__ASSERT_NO_MSG(buf->len >= len);
 
 	buf->len -= len;
 	return buf->data += len;
@@ -1022,7 +1260,7 @@ void *net_buf_simple_pull_mem(struct net_buf_simple *buf, size_t len)
 
 	NET_BUF_SIMPLE_DBG("buf %p len %lu", buf, len);
 
-	assert(buf->len >= len);
+	__ASSERT_NO_MSG(buf->len >= len);
 
 	buf->len -= len;
 	buf->data += len;
@@ -1214,4 +1452,9 @@ size_t net_buf_simple_headroom(struct net_buf_simple *buf)
 size_t net_buf_simple_tailroom(struct net_buf_simple *buf)
 {
 	return buf->size - net_buf_simple_headroom(buf) - buf->len;
+}
+
+uint16_t net_buf_simple_max_len(struct net_buf_simple *buf)
+{
+	return buf->size - net_buf_simple_headroom(buf);
 }

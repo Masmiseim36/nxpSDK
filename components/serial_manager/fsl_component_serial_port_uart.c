@@ -79,6 +79,7 @@ typedef struct _serial_uart_state
 } serial_uart_state_t;
 #endif
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
+#if (defined(SERIAL_PORT_TYPE_UART_DMA) && (SERIAL_PORT_TYPE_UART_DMA > 0U))
 typedef struct _serial_uart_dma_state
 {
     UART_HANDLE_DEFINE(usartHandleBuffer);
@@ -88,6 +89,7 @@ typedef struct _serial_uart_dma_state
     serial_uart_dma_recv_state_t rx;
 #endif
 } serial_uart_dma_state_t;
+#endif
 #endif
 
 /*******************************************************************************
@@ -139,7 +141,7 @@ static void Serial_UartCallback(hal_uart_handle_t handle, hal_uart_status_t stat
 
     if ((hal_uart_status_t)kStatus_HAL_UartRxIdle == status)
     {
-        HAL_UartAbortReceive(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]));
+        (void)HAL_UartAbortReceive(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]));
         if ((NULL != serialUartHandle->rx.callback))
         {
             msg.buffer = &serialUartHandle->rx.readBuffer[0];
@@ -303,19 +305,6 @@ serial_manager_status_t Serial_UartWrite(serial_handle_t serialHandle, uint8_t *
 
     return kStatus_SerialManager_Success;
 }
-serial_manager_status_t Serial_UartWriteBlocking(serial_handle_t serialHandle, uint8_t *buffer, uint32_t length)
-{
-    serial_uart_state_t *serialUartHandle;
-
-    assert(serialHandle);
-    assert(buffer);
-    assert(length);
-
-    serialUartHandle = (serial_uart_state_t *)serialHandle;
-
-    return (serial_manager_status_t)HAL_UartSendBlocking(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]),
-                                                         buffer, length);
-}
 
 serial_manager_status_t Serial_UartRead(serial_handle_t serialHandle, uint8_t *buffer, uint32_t length)
 {
@@ -478,9 +467,8 @@ serial_manager_status_t Serial_UartExitLowpower(serial_handle_t serialHandle)
 }
 
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
-
+#if (defined(SERIAL_PORT_TYPE_UART_DMA) && (SERIAL_PORT_TYPE_UART_DMA > 0U))
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
-
 static serial_manager_status_t Serial_UartDmaEnableReceiving(serial_uart_dma_state_t *serialUartHandle)
 {
     if (1U == serialUartHandle->rx.rxEnable)
@@ -553,7 +541,7 @@ static void Serial_UartDmaCallback(hal_uart_dma_handle_t handle, hal_dma_callbac
 serial_manager_status_t Serial_UartDmaInit(serial_handle_t serialHandle, void *serialConfig)
 {
     serial_uart_dma_state_t *serialUartHandle;
-#if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
+#if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
     serial_port_uart_dma_config_t *uartConfig = (serial_port_uart_dma_config_t *)serialConfig;
 #endif
     serial_manager_status_t serialManagerStatus = kStatus_SerialManager_Success;
@@ -588,15 +576,15 @@ serial_manager_status_t Serial_UartDmaInit(serial_handle_t serialHandle, void *s
     dmaConfig.dma_channel_mux_configure = uartConfig->dma_channel_mux_configure;
 
     // Init uart dma
-    HAL_UartDMAInit(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]),
-                    (hal_uart_dma_handle_t *)serialUartHandle->uartDmaHandle, &dmaConfig);
+    (void)HAL_UartDMAInit(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]),
+                          (hal_uart_dma_handle_t *)serialUartHandle->uartDmaHandle, &dmaConfig);
 
 #endif
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
 
     serialUartHandle->rx.rxEnable = uartConfig->enableRx;
-    HAL_UartDMATransferInstallCallback(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]),
-                                       Serial_UartDmaCallback, serialUartHandle);
+    (void)HAL_UartDMATransferInstallCallback(((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]),
+                                             Serial_UartDmaCallback, serialUartHandle);
 
 #endif
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
@@ -779,5 +767,5 @@ serial_manager_status_t Serial_UartDmaExitLowpower(serial_handle_t serialHandle)
 
     return status;
 }
-
+#endif
 #endif

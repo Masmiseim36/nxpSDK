@@ -209,7 +209,8 @@ typedef enum
     LVM_FS_32000 = 6,              ///< 32k sampling rate
     LVM_FS_44100 = 7,              ///< 44.1k sampling rate
     LVM_FS_48000 = 8,              ///< 48k sampling rate
-    LVM_FS_COUNT = 9,             ///< Max sampling rate count
+	LVM_FS_96000 = 9,
+    LVM_FS_COUNT = 10,             ///< Max sampling rate count
     LVM_FS_INVALID = LVM_MAXENUM-1,
     LVM_FS_DUMMY = LVM_MAXENUM
 } LVM_Fs_en;

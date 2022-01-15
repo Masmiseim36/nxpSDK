@@ -407,6 +407,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
@@ -1500,6 +1501,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
@@ -2592,6 +2594,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
@@ -3685,6 +3688,7 @@
           <state>$PROJ_DIR$/../../../../../components/video/display/rm68200</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/rm67162</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd</state>
+          <state>$PROJ_DIR$/../../../../../components/video/display/hx8394</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/fbdev</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT595S</state>
@@ -4634,6 +4638,12 @@
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/dsi_cmd/fsl_dc_fb_dsi_cmd.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/display/hx8394/fsl_hx8394.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/fbdev/fsl_fbdev.h</name>
     </file>
     <file>
@@ -4741,6 +4751,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
@@ -4964,6 +4977,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/vglite/elementary/src/velm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/elementary/src/elm_headers.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/vglite/elementary/src/elm_precom.h</name>

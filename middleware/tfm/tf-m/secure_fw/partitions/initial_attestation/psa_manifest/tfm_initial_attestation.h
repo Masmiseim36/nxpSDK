@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -14,9 +14,12 @@
 extern "C" {
 #endif
 
-#define TFM_ATTEST_GET_TOKEN_SIGNAL                             (1U << (0 + 4))
-#define TFM_ATTEST_GET_TOKEN_SIZE_SIGNAL                        (1U << (1 + 4))
-#define TFM_ATTEST_GET_PUBLIC_KEY_SIGNAL                        (1U << (2 + 4))
+#define TFM_SP_INITIAL_ATTESTATION_MODEL_IPC                    1
+#define TFM_SP_INITIAL_ATTESTATION_MODEL_SFN                    0
+
+
+#define TFM_ATTESTATION_SERVICE_SIGNAL                          (1U << 4)
+
 
 #ifdef __cplusplus
 }

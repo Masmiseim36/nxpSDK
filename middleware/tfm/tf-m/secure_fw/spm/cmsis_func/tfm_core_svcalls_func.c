@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -7,7 +7,6 @@
 
 #include <string.h>
 
-#include "tfm/tfm_core_svc.h"
 #include "tfm_secure_api.h"
 #include "region_defs.h"
 #include "spm_func.h"
@@ -20,7 +19,7 @@
 #include "ffm/tfm_boot_data.h"
 
 #ifdef PLATFORM_SVC_HANDLERS
-extern int32_t platform_svc_handlers(tfm_svc_number_t svc_num,
+extern int32_t platform_svc_handlers(uint8_t svc_num,
                                      uint32_t *svc_args, uint32_t lr);
 #endif
 
@@ -28,7 +27,6 @@ extern int32_t platform_svc_handlers(tfm_svc_number_t svc_num,
  * model
  */
 #include "tfm_secure_irq_handlers.inc"
-
 
 uint32_t tfm_core_svc_handler(uint32_t *msp, uint32_t *psp, uint32_t exc_return)
 {
@@ -62,16 +60,13 @@ uint32_t tfm_core_svc_handler(uint32_t *msp, uint32_t *psp, uint32_t exc_return)
     }
     switch (svc_number) {
     case TFM_SVC_SFN_REQUEST:
-        retval = tfm_spm_partition_request_svc_handler(svc_args, exc_return);
+        tfm_spm_partition_request_return_handler(svc_args, exc_return, msp);
         break;
     case TFM_SVC_SFN_RETURN:
-        retval = tfm_spm_partition_return_handler(exc_return);
+        tfm_spm_partition_request_return_handler(NULL, exc_return, msp);
         break;
-    case TFM_SVC_GET_CALLER_CLIENT_ID:
-        tfm_spm_get_caller_client_id_handler(svc_args);
-        break;
-    case TFM_SVC_SPM_REQUEST:
-        tfm_spm_request_handler((struct tfm_state_context_t *)svc_args);
+    case TFM_SVC_SFN_COMPLETION:
+        tfm_spm_partition_completion_handler(svc_args[0], svc_args[1], msp);
         break;
     case TFM_SVC_DEPRIV_REQ:
         retval = tfm_spm_depriv_req_handler(svc_args, exc_return);
@@ -94,9 +89,17 @@ uint32_t tfm_core_svc_handler(uint32_t *msp, uint32_t *psp, uint32_t exc_return)
     case TFM_SVC_GET_BOOT_DATA:
         tfm_core_get_boot_data_handler(svc_args);
         break;
+#if (TFM_SPM_LOG_LEVEL > TFM_SPM_LOG_LEVEL_SILENCE)
+    case TFM_SVC_OUTPUT_UNPRIV_STRING:
+        svc_args[0] = tfm_hal_output_spm_log((const char *)svc_args[0],
+                                             svc_args[1]);
+        break;
+#endif
     default:
 #ifdef PLATFORM_SVC_HANDLERS
         svc_args[0] = platform_svc_handlers(svc_num, svc_args, exc_return);
+#else
+        SPMLOG_ERRMSG("Unknown SVC number requested!\r\n");
 #endif
         break;
     }

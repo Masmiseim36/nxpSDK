@@ -547,14 +547,6 @@ int __scan_cb(unsigned int count)
         (void)PRINTF("\r\n");
 
         (void)PRINTF("\tWMM: %s\r\n", res.wmm ? "YES" : "NO");
-        if (res.trans_ssid_len != 0U)
-        {
-            (void)PRINTF("\tOWE BSSID: ");
-            print_mac(res.trans_bssid);
-            (void)PRINTF("\r\n\tOWE SSID:");
-            if (res.trans_ssid_len != 0U)
-                (void)PRINTF(" \"%s\"\r\n", res.trans_ssid);
-        }
     }
 
     return 0;
@@ -767,6 +759,7 @@ void test_wlan_stop_network(int argc, char **argv)
     int ret;
     struct wlan_network network;
 
+    (void)memset(&network, 0x00, sizeof(struct wlan_network));
     wlan_get_current_uap_network(&network);
     ret = wlan_stop_network(network.name);
     if (ret != WM_SUCCESS)
@@ -1060,6 +1053,31 @@ static void test_wlan_deep_sleep_ps(int argc, char **argv)
     }
 }
 
+#define HOSTCMD_RESP_BUFF_SIZE 1024
+u8_t resp_buf[HOSTCMD_RESP_BUFF_SIZE] = {0};
+/* Command taken from Robust_btc.conf*/
+u8_t cmd_buf[] = {0xe0, 0,    0x18, 0, 0x29, 0, 0,    0, 0x01, 0,    0, 0,
+                  0x38, 0x02, 0x08, 0, 0x05, 0, 0x01, 0, 0x02, 0x01, 0, 0x01};
+
+static void test_wlan_send_hostcmd(int argc, char **argv)
+{
+    int ret           = -WM_FAIL;
+    uint32_t reqd_len = 0;
+
+    ret = wlan_send_hostcmd(cmd_buf, sizeof(cmd_buf) / sizeof(u8_t), resp_buf, HOSTCMD_RESP_BUFF_SIZE, &reqd_len);
+
+    if (ret == WM_SUCCESS)
+    {
+        (void)PRINTF("Hostcmd success, response is");
+        for (ret = 0; ret < reqd_len; ret++)
+            (void)PRINTF("%x\t", resp_buf[ret]);
+    }
+    else
+    {
+        (void)PRINTF("Hostcmd failed error: %d", ret);
+    }
+}
+
 static struct cli_command tests[] = {
     {"wlan-scan", NULL, test_wlan_scan},
     {"wlan-scan-opt", "ssid <ssid> bssid ...", test_wlan_scan_opt},
@@ -1077,6 +1095,7 @@ static struct cli_command tests[] = {
     {"wlan-get-uap-sta-list", NULL, test_wlan_get_uap_sta_list},
     {"wlan-ieee-ps", "<0/1>", test_wlan_ieee_ps},
     {"wlan-deep-sleep-ps", "<0/1>", test_wlan_deep_sleep_ps},
+    {"wlan-send-hostcmd", NULL, test_wlan_send_hostcmd},
 };
 
 /* Register our commands with the MTF. */

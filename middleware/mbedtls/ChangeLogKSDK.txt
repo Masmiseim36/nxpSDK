@@ -2,11 +2,23 @@
 @page middleware_log Middleware Change Log
  
 @section mbedtls mbedTLS for MCUXpresso SDK
-  The current version of mbedTLS is based on mbedTLS 2.26.0 released 2021-03-08
+  The current version of mbedTLS is based on mbed TLS 2.27.0 branch released 2021-07-07
   
+  - 2.27.0
+    - New features:
+      - Ported mbedTLS 2.27.0 to SDK.
+	  
   - 2.26.0
     - New features:
       - Ported mbedTLS 2.26.0 to SDK.
+
+ - 2.16.6_rev7
+    - Bug fixes:
+      - Corrected definition of global variable g_isCryptoHWInitialized to be only internal static variable in sssapi_mbedtls.c file.  
+
+  - 2.16.6_rev6
+    - Bug fixes:
+      - Adding #ifdef in ecdsa.c to remove warning: "function "derive_mpi" was declared but never referenced", when alternative implementation of ECDSA sign and verify is used and not used Deterministic ECDSA, then was derive_mpi function never used.*/
 
   - 2.16.6_rev5
     - New features:

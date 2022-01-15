@@ -22,5 +22,9 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 include(middleware_freertos-kernel_MIMXRT595S_cm33)
 
+include(middleware_sdmmc_common_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
+
 include(middleware_sdmmc_sdio_MIMXRT595S_cm33)
 

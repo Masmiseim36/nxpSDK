@@ -43,9 +43,9 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 #define L2CAP_ECRED_MIN_MTU		64
 
 #if (defined(CONFIG_BT_HCI_ACL_FLOW_CONTROL) && ((CONFIG_BT_HCI_ACL_FLOW_CONTROL) > 0U))
-#define L2CAP_LE_MAX_CREDITS		(CONFIG_BT_ACL_RX_COUNT - 1)
+#define L2CAP_LE_MAX_CREDITS		(CONFIG_BT_BUF_ACL_RX_COUNT - 1)
 #else
-#define L2CAP_LE_MAX_CREDITS		(CONFIG_BT_RX_BUF_COUNT - 1)
+#define L2CAP_LE_MAX_CREDITS		(CONFIG_BT_BUF_EVT_RX_COUNT - 1)
 #endif
 
 #define L2CAP_LE_CID_DYN_START	0x0040
@@ -71,7 +71,7 @@ NET_BUF_POOL_FIXED_DEFINE(disc_pool, 1,
 			  BT_L2CAP_BUF_SIZE(CONFIG_BT_L2CAP_TX_MTU), NULL);
 
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && ((CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) > 0U))
-#define L2CAP_MAX_LE_MPS	CONFIG_BT_L2CAP_RX_MTU
+#define L2CAP_MAX_LE_MPS	CONFIG_BT_BUF_ACL_RX_SIZE
 /* For now use MPS - SDU length to disable segmentation */
 #define L2CAP_MAX_LE_MTU	(L2CAP_MAX_LE_MPS - 2)
 
@@ -368,7 +368,7 @@ static bool l2cap_chan_add(struct bt_conn *conn, struct bt_l2cap_chan *chan,
 		return false;
 	}
 #if 0
-	k_delayed_work_init(&chan->rtx_work, l2cap_rtx_timeout);
+	k_work_init_delayable(&chan->rtx_work, l2cap_rtx_timeout);
 #endif
 	atomic_clear(chan->status);
 
@@ -483,7 +483,7 @@ static int l2cap_chan_send_req(struct bt_l2cap_chan *chan,
 	 * link is lost.
 	 */
 #if 0
-	k_delayed_work_submit(&chan->rtx_work, timeout);
+	k_work_schedule(&chan->rtx_work, timeout);
 #endif
     L2CAP_PSM_CBFC l2cap_psm =
     {
@@ -1032,7 +1032,7 @@ static void l2cap_chan_destroy(struct bt_l2cap_chan *chan)
 
 	/* Cancel ongoing work */
 #if 0
-	k_delayed_work_cancel(&chan->rtx_work);
+	k_work_cancel_delayable(&chan->rtx_work);
 #endif
 
 	if (ch->tx_buf) {
@@ -1135,8 +1135,11 @@ static bool l2cap_check_security(struct bt_conn *conn,
 	if (IS_ENABLED(CONFIG_BT_CONN_DISABLE_SECURITY)) {
 		return true;
 	}
-
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
 	return conn->sec_level >= server->sec_level;
+#else
+    return true;
+#endif
 }
 
 static void le_conn_req(struct bt_l2cap *l2cap, uint8_t ident,
@@ -1225,10 +1228,11 @@ static void le_ecred_conn_req(struct bt_l2cap *l2cap, uint8_t ident,
 	uint16_t scid, dcid[L2CAP_ECRED_CHAN_MAX];
 	int i = 0;
 
+    memset(&dcid, 0, sizeof(dcid));
 	if (buf->len < sizeof(*req)) {
 		BT_ERR("Too small LE conn req packet size");
 		result = BT_L2CAP_LE_ERR_INVALID_PARAMS;
-		goto response;
+		return;
 	}
 
 	req = net_buf_pull_mem(buf, sizeof(*req));
@@ -1459,7 +1463,9 @@ static void le_disconn_req(struct bt_l2cap *l2cap, uint8_t ident,
 
 static int l2cap_change_security(struct bt_l2cap_le_chan *chan, uint16_t err)
 {
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
 	struct bt_conn *conn = chan->chan.conn;
+#endif
 	bt_security_t sec;
 	int ret = 0;
 
@@ -1467,7 +1473,7 @@ static int l2cap_change_security(struct bt_l2cap_le_chan *chan, uint16_t err)
 			    BT_L2CAP_STATUS_ENCRYPT_PENDING)) {
 		return -EINPROGRESS;
 	}
-
+#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
 	switch (err) {
 	case BT_L2CAP_LE_ERR_ENCRYPTION:
 		if (conn->sec_level >= BT_SECURITY_L2) {
@@ -1490,7 +1496,7 @@ static int l2cap_change_security(struct bt_l2cap_le_chan *chan, uint16_t err)
 	default:
 		return -EINVAL;
 	}
-#if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
+
 	ret = bt_conn_set_security(chan->chan.conn, sec);
 	if (ret < 0) {
 		return ret;
@@ -1534,7 +1540,7 @@ static void le_ecred_conn_rsp(struct bt_l2cap *l2cap, uint8_t ident,
 		while ((chan = l2cap_lookup_ident(conn, ident))) {
 			/* Cancel RTX work */
 #if 0
-			k_delayed_work_cancel(&chan->chan.rtx_work);
+			k_work_cancel_delayable(&chan->chan.rtx_work);
 #endif
 
 			/* If security needs changing wait it to be completed */
@@ -1557,7 +1563,7 @@ static void le_ecred_conn_rsp(struct bt_l2cap *l2cap, uint8_t ident,
 
 			/* Cancel RTX work */
 #if 0
-			k_delayed_work_cancel(&chan->chan.rtx_work);
+			k_work_cancel_delayable(&chan->chan.rtx_work);
 #endif
 
 			dcid = net_buf_pull_le16(buf);
@@ -1655,7 +1661,7 @@ static void le_conn_rsp(struct bt_l2cap *l2cap, uint8_t ident,
 
 	/* Cancel RTX work */
 #if 0
-	k_delayed_work_cancel(&chan->chan.rtx_work);
+	k_work_cancel_delayable(&chan->chan.rtx_work);
 #endif
 
 	/* Reset ident since it got a response */
@@ -3049,7 +3055,7 @@ API_RESULT ethermind_l2ca_connect_cnf_cb
 
 	/* Cancel RTX work */
 #if 0
-	k_delayed_work_cancel(&chan->chan.rtx_work);
+	k_work_cancel_delayable(&chan->chan.rtx_work);
 #endif
 
 	/* Reset ident since it got a response */

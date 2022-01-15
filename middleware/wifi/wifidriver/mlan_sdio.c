@@ -27,7 +27,7 @@
 #include <mlan_sdio_api.h>
 #include <wm_os.h>
 #include <board.h>
-#include <sdmmc_config.h>
+#include <wifi_bt_config.h>
 #include <fsl_common.h>
 #include <fsl_clock.h>
 #include <fsl_sdio.h>
@@ -151,10 +151,6 @@ int sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, ui
     return 1;
 }
 
-static void SDIOCARD_DetectCallBack(bool isInserted, void *userData)
-{
-}
-
 static void SDIO_CardInterruptCallBack(void *userData)
 {
     SDMMCHOST_EnableCardInt(wm_g_sd.host, false);
@@ -173,8 +169,7 @@ static void sdio_controller_init(void)
 {
     (void)memset(&wm_g_sd, 0, sizeof(sdio_card_t));
 
-    BOARD_SDIO_Config(&wm_g_sd, SDIOCARD_DetectCallBack, BOARD_SDMMC_SDIO_HOST_IRQ_PRIORITY,
-                      SDIO_CardInterruptCallBack);
+    BOARD_WIFI_BT_Config(&wm_g_sd, SDIO_CardInterruptCallBack);
 
 #if defined(SD_TIMING_MAX)
     wm_g_sd.currentTiming = SD_TIMING_MAX;
@@ -213,10 +208,7 @@ static int sdio_card_init(void)
     wm_g_sd.operationVoltage = kSDMMC_OperationVoltage180V;
 #endif
 
-    /* power off card */
-    SDIO_SetCardPower(&wm_g_sd, false);
-    /* power on card */
-    SDIO_SetCardPower(&wm_g_sd, true);
+    BOARD_WIFI_BT_Enable(true);
 
     ret = SDIO_CardInit(&wm_g_sd);
     if (ret != WM_SUCCESS)

@@ -145,6 +145,7 @@ void mbedtls_ccm_free( mbedtls_ccm_context *ctx )
 /*
  * Authenticated encryption or decryption
  */
+/* NXP added for HW accelerators support */ 
 #if !defined(MBEDTLS_CCM_CRYPT_ALT)
 /* CCM selftest fails on ARM Cortex M with IAR 8.11 with common subexpression elimination optimalization enabled */
 #if defined(__ICCARM__)
@@ -428,6 +429,11 @@ int mbedtls_ccm_auth_decrypt( mbedtls_ccm_context *ctx, size_t length,
 #define NB_TESTS 3
 #define CCM_SELFTEST_PT_MAX_LEN 24
 #define CCM_SELFTEST_CT_MAX_LEN 32
+
+#ifndef AT_NONCACHEABLE_SECTION_INIT
+#define AT_NONCACHEABLE_SECTION_INIT(var) var
+#endif // AT_NONCACHEABLE_SECTION_INIT
+
 /*
  * The data is the same for all tests, only the used length changes
  */

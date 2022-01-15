@@ -32,14 +32,11 @@
 
 #ifndef PSA_CRYPTO_PLATFORM_H
 #define PSA_CRYPTO_PLATFORM_H
+#include "mbedtls/private_access.h"
 
 /* Include the Mbed TLS configuration file, the way Mbed TLS does it
  * in each of its header files. */
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+#include "mbedtls/build_info.h"
 
 /* Translate between classic MBEDTLS_xxx feature symbols and PSA_xxx
  * feature symbols. */
@@ -80,5 +77,32 @@ static inline int mbedtls_key_owner_id_equal( mbedtls_key_owner_id_t id1,
 }
 
 #endif /* MBEDTLS_PSA_CRYPTO_KEY_ID_ENCODES_OWNER */
+
+/*
+ * When MBEDTLS_PSA_CRYPTO_SPM is defined, the code is being built for SPM
+ * (Secure Partition Manager) integration which separates the code into two
+ * parts: NSPE (Non-Secure Processing Environment) and SPE (Secure Processing
+ * Environment). When building for the SPE, an additional header file should be
+ * included.
+ */
+#if defined(MBEDTLS_PSA_CRYPTO_SPM)
+#define PSA_CRYPTO_SECURE 1
+#include "crypto_spe.h"
+#endif // MBEDTLS_PSA_CRYPTO_SPM
+
+#if defined(MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG)
+/** The type of the context passed to mbedtls_psa_external_get_random().
+ *
+ * Mbed TLS initializes the context to all-bits-zero before calling
+ * mbedtls_psa_external_get_random() for the first time.
+ *
+ * The definition of this type in the Mbed TLS source code is for
+ * demonstration purposes. Implementers of mbedtls_psa_external_get_random()
+ * are expected to replace it with a custom definition.
+ */
+typedef struct {
+    uintptr_t MBEDTLS_PRIVATE(opaque)[2];
+} mbedtls_psa_external_random_context_t;
+#endif /* MBEDTLS_PSA_CRYPTO_EXTERNAL_RNG */
 
 #endif /* PSA_CRYPTO_PLATFORM_H */

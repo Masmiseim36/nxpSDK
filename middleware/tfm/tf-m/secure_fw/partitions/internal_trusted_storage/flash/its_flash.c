@@ -19,7 +19,7 @@ uint8_t its_block_data[ITS_RAM_FS_SIZE];
 #ifndef ITS_FLASH_NAND_BUF_SIZE
 #error "ITS_FLASH_NAND_BUF_SIZE must be defined by the target in flash_layout.h"
 #endif
-static uint8_t its_write_buf[ITS_FLASH_NAND_BUF_SIZE] __attribute__((aligned(4))); //NXP required by RT IAP 
+static uint8_t its_write_buf[ITS_FLASH_NAND_BUF_SIZE];
 struct its_flash_nand_dev_t its_flash_nand_dev = {
     .driver = &TFM_HAL_ITS_FLASH_DRIVER,
     .buf_block_id = ITS_BLOCK_INVALID_ID,
@@ -39,7 +39,7 @@ uint8_t ps_block_data[PS_RAM_FS_SIZE];
 #ifndef PS_FLASH_NAND_BUF_SIZE
 #error "PS_FLASH_NAND_BUF_SIZE must be defined by the target in flash_layout.h"
 #endif
-static uint8_t ps_write_buf[PS_FLASH_NAND_BUF_SIZE] __attribute__((aligned(4))); //NXP required by RT IAP 
+static uint8_t ps_write_buf[PS_FLASH_NAND_BUF_SIZE];
 struct its_flash_nand_dev_t ps_flash_nand_dev = {
     .driver = &TFM_HAL_PS_FLASH_DRIVER,
     .buf_block_id = ITS_BLOCK_INVALID_ID,

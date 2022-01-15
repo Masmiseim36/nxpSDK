@@ -180,14 +180,14 @@ static vg_lite_error_t draw_evo(el_Obj_Buffer *buff, el_Obj_EVO *evo, vg_lite_ma
 #endif
         break;
     case ELM_PAINT_RADIAL_GRADIENT:
-        memcpy(&evo->attribute.paint.grad->data.rad_grad.matrix,
-               &evo->attribute.paint.grad->data.transform.matrix,
-               sizeof(evo->attribute.paint.grad->data.transform.matrix));
+        memcpy(&evo->attribute.paint.radgrad->data.rad_grad.matrix,
+               &evo->attribute.paint.radgrad->data.transform.matrix,
+               sizeof(evo->attribute.paint.radgrad->data.transform.matrix));
 
         error = vg_lite_draw_radial_gradient(&buff->buffer, &evo->data.path,
                                       rule,
                                       mat,
-                                      &evo->attribute.paint.grad->data.rad_grad,
+                                      &evo->attribute.paint.radgrad->data.rad_grad,
                                       0,
                                       blend,
                                       VG_LITE_FILTER_LINEAR);
@@ -398,6 +398,11 @@ BOOL ElmDraw(ElmBuffer buffer, ElmHandle object)
             for (i = 0; i < ego->group.count; i++)
             {
                 evo = &ego->group.objects[i];
+
+                /* Font objects may generate empty objects */
+                if (evo->object.handle == ELM_NULL_HANDLE)
+                    continue;
+
                 if(evo->is_image)
                 {
                     ElmHandle ebo_handle;

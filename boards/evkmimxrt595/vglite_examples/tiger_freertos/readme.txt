@@ -4,7 +4,7 @@ This application draw a tiger on the screen.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 - IAR embedded Workbench  9.10.2
 - GCC ARM Embedded  10.2.1
 
@@ -15,6 +15,7 @@ Hardware requirements
 - EVK-MIMXRT595
 - Personal Computer
 - RK055AHD091 MIPI panel (Not necessary if use other panel)
+- RK055MHD091 MIPI panel (Not necessary if use other panel)
 - RM67162 smart MIPI panel (Not necessary if use other panel)
 
 Board settings
@@ -30,6 +31,8 @@ Prepare the Demo
 The demo use SSD1963 panel by default, to use MIPI RK055AHD091 panel, change the macro
 DEMO_PANEL to DEMO_PANEL_RK055AHD091 in display_support.h. To use RM67162 MIPI
 smart panel, change the macro DEMO_PANEL to DEMO_PANEL_RM67162 in display_support.h.
+To use MIPI RK055MHD091 panel, change the macro DEMO_PANEL to DEMO_PANEL_RK055AHD091
+in display_support.h.
 
 1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Open a serial terminal with the following settings:

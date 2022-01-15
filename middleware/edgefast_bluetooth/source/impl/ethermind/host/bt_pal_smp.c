@@ -160,14 +160,14 @@ struct bt_smp {
 
 #if 0
 	/* Delayed work for timeout handling */
-	struct k_delayed_work		work;
+	struct k_work_delayable		work;
 #endif
 
 	/* Delayed work for auth complete handling */
-	struct k_delayed_work		auth_complete;
+	struct k_work_delayable		auth_complete;
 
 	/* Delayed work for auth start handling */
-	struct k_delayed_work		auth_starting;
+	struct k_work_delayable		auth_starting;
 
 	/* status of auth complete */
 	API_RESULT 					status;
@@ -302,7 +302,7 @@ struct bt_smp_br {
 
 #if 0
 	/* Delayed work for timeout handling */
-	struct k_delayed_work 	work;
+	struct k_work_delayable 	work;
 #endif
 };
 
@@ -1059,7 +1059,7 @@ static void sc_derive_link_key(struct bt_smp *smp)
 static void smp_br_reset(struct bt_smp_br *smp)
 {
 #if 0
-	k_delayed_work_cancel(&smp->work);
+	k_work_cancel_delayable(&smp->work);
 #endif
 
 	atomic_set(smp->flags, 0);
@@ -1125,7 +1125,7 @@ static void smp_br_send(struct bt_smp_br *smp, struct net_buf *buf,
 	bt_l2cap_send_cb(smp->chan.chan.conn, BT_L2CAP_CID_BR_SMP, buf, cb,
 			 NULL);
 #if 0
-	k_delayed_work_submit(&smp->work, SMP_TIMEOUT);
+	k_work_schedule(&smp->work, SMP_TIMEOUT);
 #endif
 }
 
@@ -1154,7 +1154,7 @@ static void bt_smp_br_disconnected(struct bt_l2cap_chan *chan)
 	BT_DBG("chan %p cid 0x%04x", chan,
 	       CONTAINER_OF(chan, struct bt_l2cap_br_chan, chan)->tx.cid);
 #if 0
-	k_delayed_work_cancel(&smp->work);
+	k_work_cancel_delayable(&smp->work);
 #endif
 	(void)memset(smp, 0, sizeof(*smp));
 }
@@ -1779,7 +1779,7 @@ static int bt_smp_br_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan)
 
 		*chan = &smp->chan.chan;
 #if 0
-		k_delayed_work_init(&smp->work, smp_br_timeout);
+		k_work_init_delayable(&smp->work, smp_br_timeout);
 #endif
 		smp_br_reset(smp);
 
@@ -1883,10 +1883,10 @@ static void smp_reset(struct bt_smp *smp)
 {
 	struct bt_conn *conn = smp->chan.chan.conn;
 #if 0
-	k_delayed_work_cancel(&smp->work);
+	k_work_cancel_delayable(&smp->work);
 #endif
-    k_delayed_work_cancel(&smp->auth_complete);
-    k_delayed_work_cancel(&smp->auth_starting);
+    k_work_cancel_delayable(&smp->auth_complete);
+    k_work_cancel_delayable(&smp->auth_starting);
 
 	smp->method = JUST_WORKS;
 	atomic_set(&smp->allowed_cmds, 0);
@@ -2034,7 +2034,7 @@ static void smp_send(struct bt_smp *smp, struct net_buf *buf,
     net_buf_unref(buf);
 #endif
 #if 0
-	k_delayed_work_submit(&smp->work, SMP_TIMEOUT);
+	k_work_schedule(&smp->work, SMP_TIMEOUT);
 #endif
 }
 
@@ -4500,10 +4500,10 @@ static void bt_smp_connected(struct bt_l2cap_chan *chan)
 	BT_DBG("chan %p cid 0x%04x", chan,
 	       CONTAINER_OF(chan, struct bt_l2cap_le_chan, chan)->tx.cid);
 #if 0
-	k_delayed_work_init(&smp->work, smp_timeout);
+	k_work_init_delayable(&smp->work, smp_timeout);
 #endif
-	k_delayed_work_init(&smp->auth_complete, smp_auth_complete);
-	k_delayed_work_init(&smp->auth_starting, smp_auth_starting);
+	k_work_init_delayable(&smp->auth_complete, smp_auth_complete);
+	k_work_init_delayable(&smp->auth_starting, smp_auth_starting);
 	smp_reset(smp);
 }
 
@@ -4515,10 +4515,10 @@ static void bt_smp_disconnected(struct bt_l2cap_chan *chan)
 	BT_DBG("chan %p cid 0x%04x", chan,
 	       CONTAINER_OF(chan, struct bt_l2cap_le_chan, chan)->tx.cid);
 #if 0
-	k_delayed_work_cancel(&smp->work);
+	k_work_cancel_delayable(&smp->work);
 #endif
-	k_delayed_work_cancel(&smp->auth_complete);
-	k_delayed_work_cancel(&smp->auth_starting);
+	k_work_cancel_delayable(&smp->auth_complete);
+	k_work_cancel_delayable(&smp->auth_starting);
 	if (keys) {
 		/*
 		 * If debug keys were used for pairing remove them.
@@ -6409,7 +6409,7 @@ static void hci_acl_smp_handler(struct net_buf *buf)
         }
 
         smp->status = hdr->pdu.status;
-		k_delayed_work_submit(&smp->auth_complete, BT_MSEC(1));
+		k_work_schedule(&smp->auth_complete, BT_MSEC(1));
         break;
 
     case SMP_AUTHENTICATION_REQUEST:
@@ -6518,7 +6518,7 @@ static void hci_acl_smp_handler(struct net_buf *buf)
 		}
 
         memcpy(&smp->auth, auth, sizeof(smp->auth));
-        k_delayed_work_submit(&smp->auth_starting, BT_MSEC(1));
+        k_work_schedule(&smp->auth_starting, BT_MSEC(1));
 
         break;
 
@@ -6587,6 +6587,8 @@ static void hci_acl_smp_handler(struct net_buf *buf)
         BT_mem_copy(&local_key_info,key_info,sizeof(local_key_info));
 #if (defined(CONFIG_BT_PRIVACY) && ((CONFIG_BT_PRIVACY) > 0U))
         BT_mem_copy(local_key_info.id_info, &bt_dev.irk[conn->id][0],sizeof(local_key_info.id_info));
+#else
+        BT_mem_set(local_key_info.id_info, 0x00,sizeof(local_key_info.id_info));
 #endif /* CONFIG_BT_PRIVACY */
         /* Mask the to be exchanged LTK according to the negotiated key size */
         BT_mem_set
@@ -6705,7 +6707,7 @@ static void hci_acl_smp_handler(struct net_buf *buf)
 							SMP_FALSE
 						);
 			smp->status = SMP_REMOTE_SIDE_PIN_KEY_MISSING;
-			k_delayed_work_submit(&smp->auth_complete, BT_MSEC(1));
+			k_work_schedule(&smp->auth_complete, BT_MSEC(1));
 		}
         break;
 
@@ -7098,9 +7100,19 @@ static int ethermind_bt_smp_init(void)
 {
     SMP_BD_ADDR localAddr;
     API_RESULT retVal;
+    UCHAR keyDistribution = 0;
+
+    /* for Local */
+    keyDistribution = SEND_KEYS_SC;
+    /* for Remote */
+    keyDistribution |= (RECV_KEYS_SC) << 4;
+    retVal = BT_smp_set_key_distribution_flag_pl(keyDistribution);
+    if (API_SUCCESS != retVal)
+    {
+        return -EIO;
+    }
 
     retVal = BT_smp_set_io_cap_pl(SMP_IO_CAPABILITY_NO_INPUT_NO_OUTPUT);
-
     if (API_SUCCESS == retVal)
     {
         /* Setting the local Public Address as Identity Address */

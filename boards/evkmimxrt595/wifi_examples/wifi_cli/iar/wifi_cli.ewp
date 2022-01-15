@@ -367,6 +367,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/cli</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr</state>
@@ -655,8 +657,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../common</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1434,6 +1434,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/cli</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr</state>
@@ -1722,8 +1724,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../common</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2500,6 +2500,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/cli</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr</state>
@@ -2788,8 +2790,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../common</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3567,6 +3567,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/port/lwip</state>
           <state>$PROJ_DIR$/../../../../../middleware/lwip/src/include/lwip/apps</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits</state>
+          <state>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/cli</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl</state>
           <state>$PROJ_DIR$/../../../../../middleware/wifi/incl/wlcmgr</state>
@@ -3854,8 +3856,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../common</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4281,10 +4281,10 @@
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../app_config.h</name>
+      <name>$PROJ_DIR$/../wifi_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../wifi_config.h</name>
+      <name>$PROJ_DIR$/../app_config.h</name>
     </file>
   </group>
   <group>
@@ -4300,6 +4300,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../sdmmc_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../wifi_bt_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../wifi_bt_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
@@ -4376,6 +4382,9 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stdint.readme</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
@@ -5252,7 +5261,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/dhcp-server.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/wifi_cal_data_ext.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/wifi/incl/WIFI_IW416_BOARD_AW_AM457_CAL_DATA_EXT.h</name>
       </file>
       <group>
         <name>wifidriver</name>
@@ -5551,6 +5560,123 @@
     </group>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>wifi_bt_module</name>
+      <group>
+        <name>AzureWave</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/AzureWave/tx_pwr_limits/wlan_txpwrlimit_cfg_WW.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>Murata</name>
+        <group>
+          <name>tx_pwr_limits</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1XK_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_1ZM_WW.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_CA.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_EU.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_JP.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_US.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../components/wifi_bt_module/Murata/tx_pwr_limits/wlan_txpwrlimit_cfg_murata_2DS_WW.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_usart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/drivers/fsl_usdhc.c</name>
@@ -5717,60 +5843,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT595S/system_MIMXRT595S_cm33.h</name>
     </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_usart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
-      </file>
-    </group>
-    <group>
-      <name>osa</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_free_rtos.c</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>flash_config</name>

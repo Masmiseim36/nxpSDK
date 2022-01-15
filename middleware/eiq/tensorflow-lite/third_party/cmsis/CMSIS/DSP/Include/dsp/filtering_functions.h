@@ -26,18 +26,21 @@
 #ifndef _FILTERING_FUNCTIONS_H_
 #define _FILTERING_FUNCTIONS_H_
 
-#include "cmsis/CMSIS/DSP/Include/arm_math_types.h"
-#include "cmsis/CMSIS/DSP/Include/arm_math_memory.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_memory.h"
 
-#include "cmsis/CMSIS/DSP/Include/dsp/none.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/utils.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/none.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/utils.h"
 
-#include "cmsis/CMSIS/DSP/Include/dsp/support_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/support_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/fast_math_functions.h"
 
 #ifdef   __cplusplus
 extern "C"
 {
 #endif
+
+
 
 #define DELTA_Q31          ((q31_t)(0x100))
 #define DELTA_Q15          ((q15_t)0x5)
@@ -2430,8 +2433,33 @@ void arm_correlate_fast_q31(
   }
 
 
+/**
+  @brief         Levinson Durbin
+  @param[in]     phi      autocovariance vector starting with lag 0 (length is nbCoefs + 1)
+  @param[out]    a        autoregressive coefficients
+  @param[out]    err      prediction error (variance)
+  @param[in]     nbCoefs  number of autoregressive coefficients
+  @return        none
+ */
+void arm_levinson_durbin_f32(const float32_t *phi,
+  float32_t *a, 
+  float32_t *err,
+  int nbCoefs);
 
- 
+
+/**
+  @brief         Levinson Durbin
+  @param[in]     phi      autocovariance vector starting with lag 0 (length is nbCoefs + 1)
+  @param[out]    a        autoregressive coefficients
+  @param[out]    err      prediction error (variance)
+  @param[in]     nbCoefs  number of autoregressive coefficients
+  @return        none
+ */
+void arm_levinson_durbin_q31(const q31_t *phi,
+  q31_t *a, 
+  q31_t *err,
+  int nbCoefs);
+
 #ifdef   __cplusplus
 }
 #endif

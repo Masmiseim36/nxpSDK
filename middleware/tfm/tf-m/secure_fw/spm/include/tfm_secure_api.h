@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -12,11 +12,15 @@
 #include <arm_cmse.h>
 #endif
 #include "tfm_arch.h"
-#include "tfm/tfm_core_svc.h"
 #include "tfm_api.h"
 #include "utilities.h"
 #include "tfm_boot_status.h"
 #include "psa/service.h"
+#ifdef TFM_PSA_API
+#include "svc_num.h"
+#else
+#include "tfm_core_svc.h"
+#endif /* TFM_PSA_API */
 
 #ifndef TFM_MULTI_CORE_TOPOLOGY
 #ifndef TFM_PSA_API
@@ -82,7 +86,7 @@ struct tfm_sfn_req_s {
     bool ns_caller;
 };
 
-extern int32_t tfm_core_get_caller_client_id(int32_t *caller_client_id);
+enum tfm_status_e tfm_core_get_caller_client_id(int32_t *caller_client_id);
 
 int32_t tfm_core_sfn_request(const struct tfm_sfn_req_s *desc_ptr);
 

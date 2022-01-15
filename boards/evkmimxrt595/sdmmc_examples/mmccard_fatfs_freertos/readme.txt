@@ -10,7 +10,7 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -38,8 +38,6 @@ Running the demo
 ================
 When the demo runs successfully, the log would be seen on the terminal like:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
 MMCCARD fatfs freertos example.
 
 
@@ -48,13 +46,8 @@ Make file system......The time may be long if the card capacity is big.
 Create directory......
 
 TASK1: write file successed.
-TASK2: write file successed.
 TASK1: finished.
+TASK2: write file successed.
 TASK2: finished.
-
-Input 'q' to quit read/write/erase process.
-
-Input other char to read/write/erase data blocks again.
-
-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Note:This log is not constant, it depends on the SOC environment/software configuration, such as the SOC core clock, the task priority.

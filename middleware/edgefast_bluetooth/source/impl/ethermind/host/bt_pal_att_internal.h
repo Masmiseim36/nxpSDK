@@ -16,11 +16,7 @@
 #define BT_ATT_REQ_SENT_TIMEOUT		BT_MSEC(1)
 
 /* ATT MTU must be equal for RX and TX, so select the smallest value */
-#if CONFIG_BT_L2CAP_RX_MTU < CONFIG_BT_L2CAP_TX_MTU
-#define BT_ATT_MTU CONFIG_BT_L2CAP_RX_MTU
-#else
-#define BT_ATT_MTU CONFIG_BT_L2CAP_TX_MTU
-#endif
+#define BT_ATT_MTU (MIN(BT_L2CAP_RX_MTU, BT_L2CAP_TX_MTU))
 
 STRUCT_PACKED_PRE
 struct bt_att_hdr {
@@ -309,7 +305,7 @@ struct bt_att_req {
 	sys_snode_t node;
 	bt_att_func_t func;
 	struct net_buf *buf;
-#if defined(CONFIG_BT_SMP)
+#if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0U))
 	bt_att_encode_t encode;
 	uint8_t retrying : 1;
 	uint8_t att_op;
@@ -326,7 +322,7 @@ struct net_buf *bt_att_create_pdu(struct bt_conn *conn, uint8_t op,
 				  size_t len);
 
 /* Allocate a new request */
-struct bt_att_req *bt_att_req_alloc(size_t timeout);
+struct bt_att_req *bt_att_req_alloc(k_timeout_t timeout);
 
 /* Free a request */
 void bt_att_req_free(struct bt_att_req *req);

@@ -347,7 +347,6 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     return ret;
 }
 
-#if LWIP_IGMP
 /* Below struct is used for creating IGMP IPv4 multicast list */
 typedef struct group_ip4_addr
 {
@@ -457,119 +456,6 @@ static err_t igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, enum 
 done:
     return result;
 }
-#endif /* #if LWIP_IGMP */
-
-#if LWIP_IPV6 && LWIP_IPV6_MLD
-/* Below struct is used for creating IGMP IPv6 multicast list */
-typedef struct group_ip6_addr
-{
-    struct group_ip6_addr *next;
-    uint32_t group_ip;
-} group_ip6_addr_t;
-
-/* Head of list that will contain IPv6 multicast IP's */
-static group_ip6_addr_t *mld_ip6_list;
-
-/* Callback called by LwiP to add or delete an entry in the IPv6 multicast filter table */
-static err_t mld_mac_filter(struct netif *netif, const ip6_addr_t *group, enum netif_mac_filter_action action)
-{
-    uint8_t mcast_mac[6];
-    err_t result;
-    int error;
-
-    /* IPv6 to MAC conversion as per section 7 of rfc2464 */
-    wifi_get_ipv6_multicast_mac(ntohl(group->addr[3]), mcast_mac);
-    group_ip6_addr_t *curr, *prev;
-
-    switch (action)
-    {
-        case NETIF_ADD_MAC_FILTER:
-            /* LwIP takes care of duplicate IP addresses and it always send
-             * unique IP address. Simply add IP to top of list*/
-            curr = (group_ip6_addr_t *)os_mem_alloc(sizeof(group_ip6_addr_t));
-            if (curr == NULL)
-            {
-                result = ERR_IF;
-                goto done;
-            }
-            curr->group_ip = group->addr[3];
-            curr->next     = mld_ip6_list;
-            mld_ip6_list   = curr;
-            /* Add multicast MAC filter */
-            error = wifi_add_mcast_filter(mcast_mac);
-            if (error == 0)
-            {
-                result = ERR_OK;
-            }
-            else if (error == -WM_E_EXIST)
-            {
-                result = ERR_OK;
-            }
-            else
-            {
-                /* In case of failure remove IP from list */
-                curr         = mld_ip6_list;
-                mld_ip6_list = mld_ip6_list->next;
-                os_mem_free(curr);
-                curr   = NULL;
-                result = ERR_IF;
-            }
-            break;
-        case NETIF_DEL_MAC_FILTER:
-            /* Remove multicast IP address from list */
-            curr = mld_ip6_list;
-            prev = curr;
-            while (curr != NULL)
-            {
-                if (curr->group_ip == group->addr[3])
-                {
-                    if (prev == curr)
-                    {
-                        mld_ip6_list = curr->next;
-                        os_mem_free(curr);
-                    }
-                    else
-                    {
-                        prev->next = curr->next;
-                        os_mem_free(curr);
-                    }
-                    curr = NULL;
-                    break;
-                }
-                prev = curr;
-                curr = curr->next;
-            }
-            /* Check if other IP is mapped to same MAC */
-            curr = mld_ip6_list;
-            while (curr != NULL)
-            {
-                /* If other IP is mapped to same MAC than skip Multicast MAC removal */
-                if ((ntohl(curr->group_ip) & 0xFFFFFF) == (ntohl(group->addr[3]) & 0xFFFFFF))
-                {
-                    result = ERR_OK;
-                    goto done;
-                }
-                curr = curr->next;
-            }
-            /* Remove Multicast MAC filter */
-            error = wifi_remove_mcast_filter(mcast_mac);
-            if (error == 0)
-            {
-                result = ERR_OK;
-            }
-            else
-            {
-                result = ERR_IF;
-            }
-            break;
-        default:
-            result = ERR_IF;
-            break;
-    }
-done:
-    return result;
-}
-#endif /* #if LWIP_IPV6 && LWIP_IPV6_MLD */
 
 /**
  * Should be called at the beginning of the program to set up the
@@ -613,14 +499,8 @@ err_t lwip_netif_init(struct netif *netif)
      * is available...) */
     netif->output     = etharp_output;
     netif->linkoutput = low_level_output;
-#if LWIP_IGMP
     netif_set_igmp_mac_filter(netif, igmp_mac_filter);
     netif->flags |= NETIF_FLAG_IGMP;
-#endif
-#if LWIP_IPV6 && LWIP_IPV6_MLD
-    netif_set_mld_mac_filter(netif, mld_mac_filter);
-    netif->flags |= NETIF_FLAG_MLD6;
-#endif
 
     ethernetif->ethaddr = (struct eth_addr *)&(netif->hwaddr[0]);
 

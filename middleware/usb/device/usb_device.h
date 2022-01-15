@@ -64,8 +64,10 @@ typedef enum _usb_endpoint_status
 /*! @brief Control endpoint maxPacketSize */
 #define USB_CONTROL_MAX_PACKET_SIZE (64U)
 
-#if (USB_DEVICE_CONFIG_EHCI && (USB_CONTROL_MAX_PACKET_SIZE != (64U)))
+#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if (USB_CONTROL_MAX_PACKET_SIZE != (64U))
 #error For high speed, USB_CONTROL_MAX_PACKET_SIZE must be 64!!!
+#endif
 #endif
 
 /*! @brief The setup packet size of USB control transfer. */

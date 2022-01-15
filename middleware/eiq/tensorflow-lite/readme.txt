@@ -1,4 +1,4 @@
-eIQ TensorFlow Lite for Microcontrollers library 2.4.1
+eIQ TensorFlow Lite for Microcontrollers library 2.6.0
 
 Content
 -------
@@ -17,7 +17,7 @@ inference. Models trained by TensorFlow can be converted into a binary
 FlatBuffers format with the TensorFlow Lite Converter (available in
 the TensorFlow distributions). Converted .tflite files can be then downloaded
 into an embedded device. The eIQ TensorFlow Lite for Microcontrollers library
-is based on TensorFlow Lite for Microcontrollers 2.4.1 and is therefore
+is based on TensorFlow Lite for Microcontrollers 2.6.0 and is therefore
 fully compatible.
 Note: TensorFlow Lite supports only a subset of operators available in
       TensorFlow. The conversion tool reports any unsupported operators during
@@ -70,84 +70,69 @@ Operator         |Operator  |i.MX RT685  |i.MX RT595     |i.MX RT1170
                  |          |            |               |i.MX RT685 (Cortex-M33 core)
                  |          |            |               |i.MX RT595 (Cortex-M33 core)
 -----------------+----------+------------+---------------+----------------------------
-ADD              |FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |No
+ADD              |FP        |No          |No             |No
+                 |PTQ       |No          |No             |No
                  |PCQ       |No          |No             |Yes
 -----------------+----------+------------+---------------+----------------------------
-AVERAGE_POOL_2D  |FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |No
+AVERAGE_POOL_2D  |FP        |No          |No             |No
+                 |PTQ       |No          |No             |No
                  |PCQ       |No          |No             |Yes
 -----------------+----------+------------+---------------+----------------------------
 CONV_2D          |FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |No
-                 |PCQ       |No          |No             |Yes
+                 |PTQ       |No          |No             |No
+                 |PCQ       |Yes         |Yes            |Yes
 -----------------+----------+------------+---------------+----------------------------
 DEPTHWISE_CONV_2D|FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |Yes
-                 |PCQ       |No          |No             |Yes
------------------+----------+------------+---------------+----------------------------
-FLOOR            |FP        |Yes         |No             |No
-                 |PTQ       |N/A         |N/A            |N/A
-                 |PCQ       |N/A         |N/A            |N/A
+                 |PTQ       |No          |No             |Yes
+                 |PCQ       |Yes         |Yes            |Yes
 -----------------+----------+------------+---------------+----------------------------
 FULLY_CONNECTED  |FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |No
-                 |PCQ       |No          |No             |Yes
------------------+----------+------------+---------------+----------------------------
-LOGISTIC         |FP        |Yes         |No             |No
                  |PTQ       |No          |No             |No
-                 |PCQ       |N/A         |N/A            |N/A
+                 |PCQ       |Yes         |Yes            |Yes
 -----------------+----------+------------+---------------+----------------------------
-MAX_POOL_2D      |FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |No
+MAX_POOL_2D      |FP        |No          |No             |No
+                 |PTQ       |No          |No             |No
                  |PCQ       |No          |No             |Yes
 -----------------+----------+------------+---------------+----------------------------
-MUL              |FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |No
+MUL              |FP        |No          |No             |No
+                 |PTQ       |No          |No             |No
                  |PCQ       |No          |No             |Yes
 -----------------+----------+------------+---------------+----------------------------
-RELU             |FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |No
-                 |PCQ       |No          |No             |No
+SOFTMAX          |FP        |No          |No             |No
+                 |PTQ       |No          |No             |No
+                 |PCQ       |Yes         |Yes            |Yes
 -----------------+----------+------------+---------------+----------------------------
-RELU6            |FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |No
-                 |PCQ       |No          |No             |No
------------------+----------+------------+---------------+----------------------------
-SOFTMAX          |FP        |Yes         |No             |No
-                 |PTQ       |Yes         |Yes            |No
-                 |PCQ       |No          |No             |Yes
------------------+----------+------------+---------------+----------------------------
-SVDF             |FP        |Yes         |No             |No
+SVDF             |FP        |No          |No             |No
                  |PTQ       |N/A         |N/A            |N/A
-                 |PCQ       |No          |No             |Yes
+                 |PCQ       |Yes         |Yes            |Yes
 
 FP - 32-bit floating point
 PTQ - per-tensor quantized (asymmetric 8-bit quantization)
 PCQ - per-channel quantized (symmetric 8-bit quantization)
 
 Operators not listed here are reference C++ implementations only.
-Optimized kernels for ARM Cortex-M cores leverage the ARM CMSIS-NN library.
+Optimized kernels for ARM Cortex-M cores leverage the ARM CMSIS-NN library
+(for more details see third_party/cmsis/CMSIS/NN/README.md)
 Optimized kernels for Cadence Xtensa cores leverage the Xtensa HiFi4 NN library.
 
 6. Release notes
 ----------------
-The library is based on TensorFlow Lite for Microcontrollers (TFLM) version 2.4.1
-available at https://github.com/tensorflow/tensorflow/tree/v2.4.1/tensorflow/lite/micro.
+The library is based on TensorFlow Lite for Microcontrollers (TFLM) version 2.6.0
+available at https://github.com/tensorflow/tensorflow/tree/v2.6.0/tensorflow/lite/micro.
 Main modifications introduced to the original library source code:
   * Removed files not containing the TFLM library source codes
     or not needed for building the TFLM library
   * Added third party library source codes
-    * CMSIS-NN (https://github.com/ARM-software/CMSIS_5/archive/01f5b32badf7b78c85a24a7149b56400fa6a2999.zip)
+    * CMSIS-NN (https://github.com/ARM-software/CMSIS_5/archive/59d62498924a20bd77d519d5b7d3a184a3783244.zip)
       * Removed files not needed for compiling the TFLM library
-    * Xtensa HiFi4 NN (https://github.com/foss-xtensa/nnlib-hifi4/blob/master/archive/xa_nnlib_06_27.zip)
+    * Xtensa HiFi4 NN (https://github.com/foss-xtensa/nnlib-hifi4/blob/master/archive/xa_nnlib_hifi4_07_27_2021.zip)
     * FFT2D (http://mirror.tensorflow.org/www.kurims.kyoto-u.ac.jp/~ooura/fft.tgz)
       * Removed files not needed for compiling the TFLM library
     * FlatBuffers (https://github.com/google/flatbuffers/archive/dca12522a9f9e37f126ab925fd385c807ab4f84e.zip)
       * Removed files not needed for compiling the TFLM library
     * Gemmlowp (https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip)
       * Removed files not needed for compiling the TFLM library
-    * Ruy (https://github.com/google/ruy/archive/5bb02fbf90824c2eb6cd7418f766c593106a332b.zip)
+    * Ruy (https://github.com/google/ruy/archive/e6c1b8dc8a8b00ee74e7268aac8b18d7260ab1ce.zip)
       * Removed files not needed for compiling the TFLM library
   * Added build projects for MCUXpresso SDK supported toolchains
 

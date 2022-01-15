@@ -15,23 +15,7 @@ AWS IoT Device Defender lets you continuously monitor security metrics from devi
 @section defender_memory_requirements Memory Requirements
 @brief Memory requirements of the AWS IoT Device Defender Client Library.
 
-<table>
-    <tr>
-        <td colspan="4"><center><b>Code size of AWS IoT Device Defender Client Library files (sizes generated with [GCC for ARM Cortex-M toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads/9-2020-q2-update))</b></center></td>
-    </tr>
-    <tr>
-        <td><b>File</b></td>
-        <td><b>No Optimization (asserts enabled)</b></td>
-        <td><b>With -O1 Optimization (asserts disabled)</b></td>
-        <td><b>With -Os Optimization (asserts disabled)</b></td>
-    </tr>
-    <tr>
-        <td>defender.c</td>
-        <td>3.1K</td>
-        <td>1.2K</td>
-        <td>0.9K</td>
-    </tr>
-</table>
+@include{doc} size_table.html
  */
 
 /**

@@ -83,6 +83,8 @@ API_RESULT BT_ctn_build_object_listing_pl
 
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     xml_fd                          = NULL;
+    BT_mem_set(&h, 0, sizeof(BT_fops_object_handle));
+    BT_mem_set(&info, 0, sizeof(BT_FOPS_FILINFO));
 
     /* open the listing file */
     (BT_IGNORE_RETURN_VALUE) BT_fops_file_open(listingfile, (UCHAR *)"wb", &xml_fd);
@@ -395,6 +397,10 @@ API_RESULT BT_ctn_get_object_list
         return CTN_INVALID_PARAMETERS;
     }
 
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    BT_mem_set(&h, 0, sizeof(BT_fops_object_handle));
+    BT_mem_set(&info, 0, sizeof(BT_FOPS_FILINFO));
+
     /* init */
     object_count = 0x00U;
 
@@ -505,6 +511,7 @@ API_RESULT ctn_get_object_attributes_pl
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     fd = NULL;
     fsize = 0U;
+    BT_mem_set(object_full_name, 0, sizeof(object_full_name));
 
     /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
     (void)BT_vfops_create_object_name
@@ -568,7 +575,7 @@ API_RESULT ctn_get_object_attributes_pl
         }
 
         /* Handle */
-        if (0 == BT_mem_cmp("HANDLE:", readstr, 7U))
+        if (NULL != BT_str_str(readstr, "HANDLE:"))
         {
             BT_str_print(attr->handle, "%s", &readstr[7U]);
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_HANDLE;
@@ -576,7 +583,7 @@ API_RESULT ctn_get_object_attributes_pl
         }
 
         /* update field */
-        if (0 == BT_mem_cmp("UPDATE", readstr, 6U))
+        if (NULL != BT_str_str(readstr, "UPDATE"))
         {
             offset = 6U;
 
@@ -607,7 +614,7 @@ API_RESULT ctn_get_object_attributes_pl
         }
 
         /* cal-type */
-        if (0 == BT_mem_cmp("BEGIN:VEVENT", readstr, 12U))
+        if (NULL != BT_str_str(readstr, "BEGIN:VEVENT"))
         {
             /* sprintf(attr->cal_type, "%s", "VEVENT"); */
             BT_str_print(attr->cal_type, "%s", "event");
@@ -616,7 +623,7 @@ API_RESULT ctn_get_object_attributes_pl
             continue;
         }
 
-        if (0 == BT_mem_cmp("BEGIN:VTODO", readstr, 11U))
+        if (NULL != BT_str_str(readstr, "BEGIN:VTODO"))
         {
             /* sprintf(attr->cal_type, "%s", "VTODO"); */
             BT_str_print(attr->cal_type, "%s", "task");
@@ -625,7 +632,7 @@ API_RESULT ctn_get_object_attributes_pl
             continue;
         }
 
-        if (0 == BT_mem_cmp("BEGIN:VJOURNAL", readstr, 14U))
+        if (NULL != BT_str_str(readstr, "BEGIN:VJOURNAL"))
         {
             /* sprintf(attr->cal_type, "%s", "VJOURNAL"); */
             BT_str_print(attr->cal_type, "%s", "note");
@@ -635,7 +642,7 @@ API_RESULT ctn_get_object_attributes_pl
         }
 
         /* summary */
-        if (0 == BT_mem_cmp("SUMMARY:", readstr, 8U))
+        if (NULL != BT_str_str(readstr, "SUMMARY:"))
         {
             BT_str_print(attr->summary, "%s", &readstr[8U]);
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_SUMMARY;
@@ -643,14 +650,14 @@ API_RESULT ctn_get_object_attributes_pl
         }
 
         /* alarm */
-        if (0 == BT_mem_cmp("BEGIN:VALARM:", readstr, 8U))
+        if (NULL != BT_str_str(readstr, "BEGIN:VALARM:"))
         {
             BT_str_print(attr->alarm_status, "%s", "yes");
             attr->obj_param_mask |= CTN_OBJ_PROP_MASK_ALARMSTATUS;
             continue;
         }
 
-        if (0 == BT_mem_cmp("ORGANIZER;", readstr, 10U))
+        if (NULL != BT_str_str(readstr, "ORGANIZER;"))
         {
             str_ptr = BT_str_str(readstr, "CN=\"");
             str_ptr += 4U;
@@ -672,7 +679,7 @@ API_RESULT ctn_get_object_attributes_pl
         }
 
         /* start time */
-        if (0 == BT_mem_cmp("DTSTART", readstr, 7U))
+        if (NULL != BT_str_str(readstr, "DTSTART"))
         {
             offset = 7U;
             if (':' == readstr[offset])
@@ -702,7 +709,7 @@ API_RESULT ctn_get_object_attributes_pl
         }
 
         /* end time */
-        if (0 == BT_mem_cmp("DTEND", readstr, 5U))
+        if (NULL != BT_str_str(readstr, "DTEND"))
         {
             offset = 5U;
             if (':' == readstr[offset])
@@ -731,7 +738,7 @@ API_RESULT ctn_get_object_attributes_pl
         }
 
         /* pstatus */
-        if (0 == BT_mem_cmp("ATTENDEE", readstr, 8U))
+        if (NULL != BT_str_str(readstr, "ATTENDEE"))
         {
             str_ptr = BT_str_str(readstr, "PARTSTAT=");
             str_ptr += 9U;
@@ -1093,6 +1100,7 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
     BT_LOOP_FOREVER()
     {
         /* Read one line */
+        count = sizeof(ctn_msg_readline);
         BT_mem_set(readstr, 0, count);
         if (API_SUCCESS != (BT_fops_file_get(src_fd, (UCHAR *)readstr, &count)))
         {
@@ -1112,7 +1120,7 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
                 (
                     handle_field,
                     "HANDLE:",
-                    sizeof(handle_field)
+                    (sizeof("HANDLE:"))
                 );
 
                 /* Append handle value */

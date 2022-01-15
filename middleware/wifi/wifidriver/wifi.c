@@ -1050,6 +1050,8 @@ int wifi_add_mcast_filter(uint8_t *mac_addr)
      * mac_addr[4] = 44
      * mac_addr[5] = 55
      */
+
+    (void)memset(&mlist, 0x00, MAX_MCAST_LEN);
     ret = add_mcast_ip(mac_addr);
     if (ret != WM_SUCCESS)
         return ret;
@@ -1070,6 +1072,8 @@ int wifi_remove_mcast_filter(uint8_t *mac_addr)
      * mac_addr[4] = 44
      * mac_addr[5] = 55
      */
+
+    (void)memset(&mlist, 0x00, MAX_MCAST_LEN);
     ret = remove_mcast_ip(mac_addr);
     if (ret != WM_SUCCESS)
         return ret;

@@ -83,6 +83,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/video/display/dc/dsi_cmd
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../middleware/libjpeg
     ${ProjDirPath}/../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../components/video/display/dc
@@ -158,6 +159,8 @@ include(utility_debug_console_lite_MIMXRT595S_cm33)
 
 include(utility_assert_lite_MIMXRT595S_cm33)
 
+include(driver_display-hx8394_MIMXRT595S_cm33)
+
 include(driver_usdhc_MIMXRT595S_cm33)
 
 include(middleware_libjpeg_MIMXRT595S_cm33)
@@ -182,7 +185,7 @@ include(component_lists_MIMXRT595S_cm33)
 
 include(driver_flexcomm_usart_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 

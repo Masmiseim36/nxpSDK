@@ -28,7 +28,7 @@
 #define LIBNAME "Audio Framework"
 
 /* LIB/API version information is directly modified by the packing script, do not change */
-#define LIBVERSION "2.6p1"
+#define LIBVERSION "2.6p2"
 #define LIB_APIVERSION_MAJOR 2
 #define LIB_APIVERSION_MINOR 0
 

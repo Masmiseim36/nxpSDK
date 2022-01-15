@@ -308,6 +308,9 @@ dhcp_conflict_callback(struct netif *netif, acd_callback_enum_t state)
   struct dhcp *dhcp = netif_dhcp_data(netif);
   u16_t msecs;
 
+  LWIP_ASSERT("DHCP should be enabled at this point, but it is not!",
+              (dhcp != NULL) && (dhcp->state != DHCP_STATE_OFF));
+
   switch (state) {
     case ACD_IP_OK:
       dhcp_bind(netif);
@@ -791,7 +794,7 @@ dhcp_start(struct netif *netif)
 
     /* store this dhcp client in the netif */
     netif_set_client_data(netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP, dhcp);
-    LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE, ("dhcp_start(): allocated dhcp"));
+    LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE, ("dhcp_start(): allocated dhcp\n"));
     /* already has DHCP client attached */
   } else {
     LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE, ("dhcp_start(): restarting DHCP configuration\n"));
@@ -1110,13 +1113,6 @@ dhcp_bind(struct netif *netif)
   }
 
   ip4_addr_copy(gw_addr, dhcp->offered_gw_addr);
-  /* gateway address not given? */
-  if (ip4_addr_isany_val(gw_addr)) {
-    /* copy network address */
-    ip4_addr_get_network(&gw_addr, &dhcp->offered_ip_addr, &sn_mask);
-    /* use first host address on network as gateway */
-    ip4_addr_set_u32(&gw_addr, ip4_addr_get_u32(&gw_addr) | PP_HTONL(0x00000001UL));
-  }
 
   LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_STATE, ("dhcp_bind(): IP: 0x%08"X32_F" SN: 0x%08"X32_F" GW: 0x%08"X32_F"\n",
               ip4_addr_get_u32(&dhcp->offered_ip_addr), ip4_addr_get_u32(&sn_mask), ip4_addr_get_u32(&gw_addr)));
@@ -1360,6 +1356,11 @@ dhcp_release_and_stop(struct netif *netif)
   } else {
      dhcp_set_state(dhcp, DHCP_STATE_OFF);
   }
+
+#if LWIP_DHCP_DOES_ACD_CHECK
+  /* stop acd because we may be in checking state and the callback would trigger a bind */
+  acd_remove(netif, &dhcp->acd);
+#endif
 
   if (dhcp->pcb_allocated != 0) {
     dhcp_dec_pcb_refcount(); /* free DHCP PCB if not needed any more */

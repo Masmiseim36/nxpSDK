@@ -72,15 +72,16 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../middleware/eiq
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../flash_config
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../middleware/eiq
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
-    ${ProjDirPath}/../../../../../CMSIS/DSP
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis
 )
 
 # include modules
@@ -106,7 +107,7 @@ include(driver_cache_cache64_MIMXRT595S_cm33)
 
 include(driver_clock_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(driver_flexcomm_MIMXRT595S_cm33)
 
@@ -136,8 +137,6 @@ include(driver_iap_MIMXRT595S_cm33)
 
 include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT595S_cm33)
 
-include(CMSIS_DSP_Library_MIMXRT595S_cm33)
-
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
@@ -148,14 +147,6 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
-if(CMAKE_BUILD_TYPE STREQUAL flash_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

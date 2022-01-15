@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -14,7 +14,12 @@
 extern "C" {
 #endif
 
-#define TFM_SECURE_CLIENT_SFN_RUN_TESTS_SIGNAL                  (1U << (0 + 4))
+#define TFM_SP_SECURE_TEST_PARTITION_MODEL_IPC                  1
+#define TFM_SP_SECURE_TEST_PARTITION_MODEL_SFN                  0
+
+
+#define TFM_SECURE_CLIENT_SFN_RUN_TESTS_SIGNAL                  (1U << 4)
+
 
 #ifdef __cplusplus
 }

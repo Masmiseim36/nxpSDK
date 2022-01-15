@@ -4,7 +4,7 @@
  *  structures and declares global function prototypes used
  *  in MLAN module.
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -486,9 +486,9 @@ static mlan_status wlan_11ac_ioctl_supported_mcs_set(
     }
     rx_mcs_supp = GET_11ACRXMCSSUPP(pmadapter->usr_dot_11ac_mcs_support);
     /* Set MCS */
-    (void)memset(pmadapter, (t_u8 *) mcs_set, 0xff, rx_mcs_supp);
+    (void)__memset(pmadapter, (t_u8 *) mcs_set, 0xff, rx_mcs_supp);
     /* Clear all the other values */
-    (void)memset(pmadapter, (t_u8 *) &mcs_set[rx_mcs_supp], 0,
+    (void)__memset(pmadapter, (t_u8 *) &mcs_set[rx_mcs_supp], 0,
                  NUM_MCS_FIELD - rx_mcs_supp);
     /* Set MCS32 with 40MHz support */
     if (ISSUPP_CHANWIDTH80(pmadapter->usr_dot_11ac_dev_cap_bg)
@@ -499,7 +499,7 @@ static mlan_status wlan_11ac_ioctl_supported_mcs_set(
         SETHT_MCS32(mcs_set);
 
     cfg = (mlan_ds_11ac_cfg *)pioctl_req->pbuf;
-    (void)memcpy(pmadapter, cfg->param.supported_mcs_set, mcs_set, NUM_MCS_SUPP);
+    (void)__memcpy(pmadapter, cfg->param.supported_mcs_set, mcs_set, NUM_MCS_SUPP);
 
 #endif
     LEAVE();
@@ -867,11 +867,11 @@ int wlan_cmd_append_11ac_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
     if (pbss_desc->pvht_cap && wlan_get_nss_vht_mcs(pbss_desc->pvht_cap->vht_cap.mcs_sets.rx_mcs_map))
     {
         pvht_cap = (MrvlIETypes_VHTCap_t *)*ppbuffer;
-        (void)memset(pmadapter, pvht_cap, 0, sizeof(MrvlIETypes_VHTCap_t));
+        (void)__memset(pmadapter, pvht_cap, 0, sizeof(MrvlIETypes_VHTCap_t));
         pvht_cap->header.type = wlan_cpu_to_le16(VHT_CAPABILITY);
         pvht_cap->header.len  = sizeof(VHT_capa_t);
-        (void)memcpy(pmadapter, (t_u8 *)pvht_cap + sizeof(MrvlIEtypesHeader_t),
-                     (t_u8 *)pbss_desc->pvht_cap + sizeof(IEEEtypes_Header_t), pvht_cap->header.len);
+        (void)__memcpy(pmadapter, (t_u8 *)pvht_cap + sizeof(MrvlIEtypesHeader_t),
+                       (t_u8 *)pbss_desc->pvht_cap + sizeof(IEEEtypes_Header_t), pvht_cap->header.len);
 
         wlan_fill_vht_cap_tlv(pmpriv, pvht_cap, pbss_desc->bss_band, MTRUE);
 
@@ -888,7 +888,7 @@ int wlan_cmd_append_11ac_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
 
     /* Operating Mode Notification IE */
     pmrvl_oper_mode = (MrvlIETypes_OperModeNtf_t *)*ppbuffer;
-    (void)memset(pmadapter, pmrvl_oper_mode, 0, sizeof(MrvlIETypes_OperModeNtf_t));
+    (void)__memset(pmadapter, pmrvl_oper_mode, 0, sizeof(MrvlIETypes_OperModeNtf_t));
     pmrvl_oper_mode->header.type = wlan_cpu_to_le16(OPER_MODE_NTF);
     pmrvl_oper_mode->header.len  = sizeof(t_u8);
 
@@ -1011,9 +1011,9 @@ mlan_status wlan_cmd_11ac_cfg(IN pmlan_private pmpriv,
 
     vhtcfg->vht_cap_info = wlan_cpu_to_le32(vht_cfg->vht_cap_info);
     vht_cfg->vht_rx_mcs  = wlan_cpu_to_le32(vht_cfg->vht_rx_mcs);
-    (void)memcpy(pmadapter, &vhtcfg->vht_supp_mcs_set[0], &vht_cfg->vht_rx_mcs, sizeof(t_u32));
+    (void)__memcpy(pmadapter, &vhtcfg->vht_supp_mcs_set[0], &vht_cfg->vht_rx_mcs, sizeof(t_u32));
     vht_cfg->vht_tx_mcs = wlan_cpu_to_le32(vht_cfg->vht_tx_mcs);
-    (void)memcpy(pmadapter, &vhtcfg->vht_supp_mcs_set[4], &vht_cfg->vht_tx_mcs, sizeof(t_u32));
+    (void)__memcpy(pmadapter, &vhtcfg->vht_supp_mcs_set[4], &vht_cfg->vht_tx_mcs, sizeof(t_u32));
     LEAVE();
     return MLAN_STATUS_SUCCESS;
 }
@@ -1048,11 +1048,11 @@ mlan_status wlan_ret_11ac_cfg(
             cfg->param.vht_cfg.bwcfg = 0;
 
         cfg->param.vht_cfg.vht_cap_info = wlan_le32_to_cpu(vhtcfg->vht_cap_info);
-        (void)memcpy(pmadapter, &cfg->param.vht_cfg.vht_rx_mcs,
+        (void)__memcpy(pmadapter, &cfg->param.vht_cfg.vht_rx_mcs,
                           &vhtcfg->vht_supp_mcs_set[0], sizeof(t_u32));
         cfg->param.vht_cfg.vht_rx_mcs =
             wlan_le32_to_cpu(cfg->param.vht_cfg.vht_rx_mcs);
-        (void)memcpy(pmadapter, &cfg->param.vht_cfg.vht_tx_mcs,
+        (void)__memcpy(pmadapter, &cfg->param.vht_cfg.vht_tx_mcs,
                           &vhtcfg->vht_supp_mcs_set[4], sizeof(t_u32));
         cfg->param.vht_cfg.vht_tx_mcs =
             wlan_le32_to_cpu(cfg->param.vht_cfg.vht_tx_mcs);

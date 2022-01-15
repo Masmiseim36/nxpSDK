@@ -112,7 +112,7 @@ int main(void)
     PRINTF("\r\n Successfully Initiliazed Sensor\r\n");
 
     /*!  Set the task to be executed while waiting for I2C transactions to complete. */
-    FXAS21002_I2C_SetIdleTask(&FXAS21002drv, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);
+    //FXAS21002_I2C_SetIdleTask(&FXAS21002drv, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);
 
     /*! Configure the FXAS21002 sensor driver. */
     status = FXAS21002_I2C_Configure(&FXAS21002drv, fxas21002_Config_with_Fifo);

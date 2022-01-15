@@ -15,8 +15,6 @@ include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT595S_c
 
 include(middleware_freertos-aws_iot_libraries_abstractions_pkcs11_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT595S_cm33)
-
 include(middleware_freertos-kernel_MIMXRT595S_cm33)
 
 include(middleware_mbedtls_MIMXRT595S_cm33)

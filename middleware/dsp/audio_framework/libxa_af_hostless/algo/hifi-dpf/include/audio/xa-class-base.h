@@ -155,11 +155,14 @@ struct XACodecBase
 /* ...data processing scheduling flag */
 #define XA_BASE_FLAG_SCHEDULE           (1 << 4)
 
+/* ...component processing fatal-error flag */
+#define XA_BASE_FLAG_COMP_FATAL_ERROR   (1 << 5)
+
 /* ...base codec flags accessor */
-#define __XA_BASE_FLAGS(flags)          ((flags) & ((1 << 5) - 1))
+#define __XA_BASE_FLAGS(flags)          ((flags) & ((1 << 6) - 1))
 
 /* ...custom execution flag */
-#define __XA_BASE_FLAG(f)               ((f) << 5)
+#define __XA_BASE_FLAG(f)               ((f) << 6)
 
 /*******************************************************************************
  * Local macros definitions
@@ -208,6 +211,7 @@ struct XACodecBase
     {                                                                                       \
         if (XA_ERROR_SEVERITY(__e))                                                         \
         {                                                                                   \
+            codec->state |= XA_BASE_FLAG_COMP_FATAL_ERROR;                                  \
             TRACE(ERROR, _x("[%p]:(%d, %d, %p): %X"), (codec), (cmd), (idx), (void *)(pv), __e);    \
             return __e;                                                                     \
         }                                                                                   \
@@ -231,6 +235,7 @@ struct XACodecBase
     {                                                                                       \
         if (XA_ERROR_SEVERITY(__e))                                                         \
         {                                                                                   \
+            codec->state |= XA_BASE_FLAG_COMP_FATAL_ERROR;                                  \
             TRACE(ERROR, _x("[%p]:(%d, %d, %p): %X"), (codec), (cmd), (idx), (void *)(pv), __e);    \
             return __e;                                                                     \
         }                                                                                   \

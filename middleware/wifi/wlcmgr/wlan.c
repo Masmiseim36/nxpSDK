@@ -33,8 +33,8 @@
 #include <wifi-debug.h>
 #include <stdint.h>
 #include <mlan_sdio_api.h>
-#if defined(SD8978)
-#include <wifi_cal_data_ext.h>
+#ifdef OVERRIDE_CALIBRATION_DATA
+#include OVERRIDE_CALIBRATION_DATA
 #endif
 #include <fsl_common.h>
 
@@ -735,14 +735,6 @@ static int security_profile_matches(const struct wlan_network *network, const st
     /* No security: just check that the scan result doesn't specify security */
     if (config->type == WLAN_SECURITY_NONE)
     {
-        if (res->trans_mode == OWE_TRANS_MODE_OPEN)
-            return res->trans_ssid_len;
-        else if (res->trans_mode == OWE_TRANS_MODE_OWE)
-            return res->WPA_WPA2_WEP.wpa2;
-        else
-        { /* Do Nothing */
-        }
-
         if (res->WPA_WPA2_WEP.wepStatic || res->WPA_WPA2_WEP.wpa2 || res->WPA_WPA2_WEP.wpa)
             return WM_SUCCESS;
 
@@ -2115,20 +2107,7 @@ static void wlcm_process_net_if_config_event(struct wifi_message *msg, enum cm_s
 
     wrapper_wlan_cmd_get_hw_spec();
 
-    wlan_ed_mac_ctrl_t wlan_ed_mac_ctrl;
-
-#ifdef SD8801
-    wlan_ed_mac_ctrl.ed_ctrl_2g   = 0x1;
-    wlan_ed_mac_ctrl.ed_offset_2g = 0x1b;
-#elif defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098)
-    wlan_ed_mac_ctrl.ed_ctrl_2g   = 0x1;
-    wlan_ed_mac_ctrl.ed_offset_2g = 0x9;
-#ifdef CONFIG_5GHz_SUPPORT
-    wlan_ed_mac_ctrl.ed_ctrl_5g   = 0x1;
-    wlan_ed_mac_ctrl.ed_offset_5g = 0xC;
-#endif
-#endif
-
+    wlan_ed_mac_ctrl_t wlan_ed_mac_ctrl = WLAN_ED_MAC_CTRL;
     wlan_set_ed_mac_mode(wlan_ed_mac_ctrl);
 
     wifi_enable_ecsa_support();
@@ -2823,8 +2802,8 @@ int wlan_init(const uint8_t *fw_ram_start_addr, const size_t size)
     if (wlan.status != WLCMGR_INACTIVE)
         return WM_SUCCESS;
 
-#ifdef SD8978
-    wlan_set_cal_data(cal_data_qfn_1A, sizeof(cal_data_qfn_1A));
+#ifdef OVERRIDE_CALIBRATION_DATA
+    wlan_set_cal_data(ext_cal_data, sizeof(ext_cal_data));
 #endif
 
     ret = os_rwlock_create_with_cb(&ps_rwlock, "ps_mutex", "ps_lock", ps_wakeup_card_cb);
@@ -2888,7 +2867,7 @@ int wlan_start(int (*cb)(enum wlan_event_reason reason, void *data))
 {
     int ret;
 
-    if (wlan.status != WLCMGR_INIT_DONE)
+    if (!((wlan.status == WLCMGR_INIT_DONE) || (wlan.status == WLCMGR_INACTIVE)))
     {
         wlcm_e("cannot start wlcmgr. unexpected status: %d", wlan.status);
         return WLAN_ERROR_STATE;
@@ -4234,6 +4213,7 @@ static int pscan_cb(unsigned int count)
     if (count == 0)
     {
         (void)PRINTF("networks not found\r\n");
+        os_semaphore_put(&wlan_dtim_sem);
         return 0;
     }
 
@@ -4276,7 +4256,12 @@ uint8_t wlan_get_dtim_period()
     }
 
     /* Wait till scan for DTIM is complete */
-    os_semaphore_get(&wlan_dtim_sem, OS_WAIT_FOREVER);
+    /*TODO:This need to be handled in better way. */
+    if (os_semaphore_get(&wlan_dtim_sem, os_msec_to_ticks(500)))
+    {
+        wlcm_e("Do not call this API from wlan event handler\r\n");
+        dtim_period = 0;
+    }
     os_semaphore_delete(&wlan_dtim_sem);
 
     return dtim_period;
@@ -4531,3 +4516,18 @@ void wlan_register_fw_dump_cb(void (*wlan_usb_init_cb)(void),
     wifi_register_fw_dump_cb(wlan_usb_mount_cb, wlan_usb_file_open_cb, wlan_usb_file_write_cb, wlan_usb_file_close_cb);
 }
 #endif
+
+int wlan_send_hostcmd(
+    void *cmd_buf, uint32_t cmd_buf_len, void *resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len)
+{
+    if ((cmd_buf == NULL) || (resp_buf == NULL) || (reqd_resp_len == NULL))
+    {
+        return WM_E_NOMEM;
+    }
+    if (!cmd_buf_len || !resp_buf_len)
+    {
+        return WM_E_INVAL;
+    }
+
+    return wifi_send_hostcmd(cmd_buf, cmd_buf_len, resp_buf, resp_buf_len, reqd_resp_len);
+}

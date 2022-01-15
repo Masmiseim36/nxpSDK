@@ -2,7 +2,11 @@
 @page middleware_log Middleware Change Log
 
 @section host_usdhc Host USDHC driver for MCUXpresso SDK
-The current driver version is 2.6.0.
+The current driver version is 2.6.1.
+
+  - 2.6.1
+    - Improvements
+      - Increased the delay after enable DAT3 detect card feature to fix the misdetect issue.
 
   - 2.6.0
     - Improvements

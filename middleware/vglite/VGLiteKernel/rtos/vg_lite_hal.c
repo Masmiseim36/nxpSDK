@@ -390,9 +390,9 @@ void vg_lite_hal_unmap(void * handle)
     (void) handle;
 }
 
-vg_lite_error_t vg_lite_hal_submit(uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event)
+vg_lite_error_t vg_lite_hal_submit(uint32_t context,uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event)
 {
-    return (vg_lite_error_t)vg_lite_os_submit(physical,offset,size,event);
+    return (vg_lite_error_t)vg_lite_os_submit(context,physical,offset,size,event);
 }
 
 vg_lite_error_t vg_lite_hal_wait(uint32_t timeout, vg_lite_os_async_event_t *event)

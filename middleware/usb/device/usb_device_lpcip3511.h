@@ -114,7 +114,7 @@ typedef struct _usb_device_lpc3511ip_endpoint_state_struct
         uint32_t state; /*!< The state of the endpoint */
         struct
         {
-            uint32_t maxPacketSize : 11U; /*!< The maximum packet size of the endpoint */
+            uint32_t maxPacketSize : 12U; /*!< The maximum packet size of the endpoint */
             uint32_t stalled : 1U;        /*!< The endpoint is stalled or not */
             uint32_t transferring : 1U;   /*!< The endpoint is transferring */
             uint32_t zlt : 1U;            /*!< zlt flag */
@@ -127,9 +127,9 @@ typedef struct _usb_device_lpc3511ip_endpoint_state_struct
             uint32_t endpointType : 2U;
 #if (defined(USB_DEVICE_CONFIG_ROOT2_TEST) && (USB_DEVICE_CONFIG_ROOT2_TEST > 0U))
             uint32_t isOpened : 1U; /*!< whether the endpoint is initialized */
-            uint32_t reserved1 : 4U;
+            uint32_t reserved1 : 3U;
 #else
-            uint32_t reserved1 : 5U;
+            uint32_t reserved1 : 4U;
 #endif
         } stateBitField;
     } stateUnion;

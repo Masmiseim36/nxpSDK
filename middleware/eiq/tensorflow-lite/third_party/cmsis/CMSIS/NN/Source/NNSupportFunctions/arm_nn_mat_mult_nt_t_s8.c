@@ -21,23 +21,14 @@
  * Title:        arm_nn_mat_mult_s8_nt_t_s8
  * Description:  Matrix multiplication support function with the right-hand-side (rhs) matrix transposed
  *
- * $Date:        July 27 2020
- * $Revision:    V.1.0.2
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.3
  *
  * Target Processor:  Cortex-M
  *
  * -------------------------------------------------------------------- */
 
-#include "cmsis/CMSIS/DSP/Include/arm_math.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
-
-// Work around for https://github.com/ARMmbed/mbed-os/issues/12568
-__STATIC_FORCEINLINE uint32_t __patched_SXTB16_RORn(uint32_t op1, const uint32_t rotate) {
-  uint32_t result;
-  __ASM ("sxtb16 %0, %1, ROR %2" : "=r" (result) : "r" (op1), "i" (rotate) );
-  return result;
-}
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
 
 /**
  * @ingroup groupSupport
@@ -49,11 +40,11 @@ __STATIC_FORCEINLINE uint32_t __patched_SXTB16_RORn(uint32_t op1, const uint32_t
  */
 
 /*
-   * s8 matrix multiplication with the right-hand-side matrix transposed
-   *
-   * Refer header file for details.
-   *
-   */
+ * s8 matrix multiplication with the right-hand-side matrix transposed
+ *
+ * Refer header file for details.
+ *
+ */
 arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
                                    const q7_t *rhs,
                                    const q31_t *bias,
@@ -74,7 +65,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
     for (int32_t rhs_rows_idx = 0; rhs_rows_idx <= (rhs_rows - 2); rhs_rows_idx += 2)
     {
         const q7_t *lhs_ptr = &lhs[0];
-        q7_t       *dst_ptr = &dst[0];
+        q7_t *dst_ptr = &dst[0];
 
         q31_t lhs_offset_contribution0 = 0;
         q31_t lhs_offset_contribution1 = 0;
@@ -115,96 +106,96 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
                 val0 = arm_nn_read_q7x4_ia((const q7_t **)&lhs_ptr);
                 val3 = __SXTB16(val0);
                 val4 = arm_nn_read_q7x4((const q7_t *)&rhs_ptr[off0]);
-                val1 = __patched_SXTB16_RORn(val1, 8);
-                val0 = __patched_SXTB16_RORn(val0, 8);
+                val1 = __SXTB16_RORn(val1, 8);
+                val0 = __SXTB16_RORn(val0, 8);
 
                 // 4 x MAC res00, res01
                 res00 = __SMLAD(val3, val2, res00);
-                val5  = __SXTB16(val4);
+                val5 = __SXTB16(val4);
                 res00 = __SMLAD(val0, val1, res00);
-                val4  = __patched_SXTB16_RORn(val4, 8);
+                val4 = __SXTB16_RORn(val4, 8);
                 res01 = __SMLAD(val3, val5, res01);
                 res01 = __SMLAD(val0, val4, res01);
 
                 // 4 x MAC res10, res11
-                val0  = arm_nn_read_q7x4((const q7_t *)&lhs_ptr[off0]);
-                val3  = __SXTB16(val0);
-                val0  = __patched_SXTB16_RORn(val0, 8);
+                val0 = arm_nn_read_q7x4((const q7_t *)&lhs_ptr[off0]);
+                val3 = __SXTB16(val0);
+                val0 = __SXTB16_RORn(val0, 8);
                 res10 = __SMLAD(val3, val2, res10);
                 res11 = __SMLAD(val3, val5, res11);
                 res10 = __SMLAD(val0, val1, res10);
-                val1  = arm_nn_read_q7x4_ia((const q7_t **)&rhs_ptr);
+                val1 = arm_nn_read_q7x4_ia((const q7_t **)&rhs_ptr);
                 res11 = __SMLAD(val0, val4, res11);
 
                 val4 = arm_nn_read_q7x4((const q7_t *)&rhs_ptr[off0]);
                 val2 = __SXTB16(val1);
                 val0 = arm_nn_read_q7x4_ia((const q7_t **)&lhs_ptr);
                 val3 = __SXTB16(val0);
-                val1 = __patched_SXTB16_RORn(val1, 8);
-                val0 = __patched_SXTB16_RORn(val0, 8);
+                val1 = __SXTB16_RORn(val1, 8);
+                val0 = __SXTB16_RORn(val0, 8);
 
                 // 4 x MAC res00, res01
                 res00 = __SMLAD(val3, val2, res00);
-                val5  = __SXTB16(val4);
+                val5 = __SXTB16(val4);
                 res00 = __SMLAD(val0, val1, res00);
-                val4  = __patched_SXTB16_RORn(val4, 8);
+                val4 = __SXTB16_RORn(val4, 8);
                 res01 = __SMLAD(val3, val5, res01);
                 res01 = __SMLAD(val0, val4, res01);
 
                 // 4 x MAC res10, res11
-                val0  = arm_nn_read_q7x4((const q7_t *)&lhs_ptr[off0]);
-                val3  = __SXTB16(val0);
-                val0  = __patched_SXTB16_RORn(val0, 8);
+                val0 = arm_nn_read_q7x4((const q7_t *)&lhs_ptr[off0]);
+                val3 = __SXTB16(val0);
+                val0 = __SXTB16_RORn(val0, 8);
                 res10 = __SMLAD(val3, val2, res10);
                 res11 = __SMLAD(val3, val5, res11);
                 res10 = __SMLAD(val0, val1, res10);
-                val1  = arm_nn_read_q7x4_ia((const q7_t **)&rhs_ptr);
+                val1 = arm_nn_read_q7x4_ia((const q7_t **)&rhs_ptr);
                 res11 = __SMLAD(val0, val4, res11);
 
                 val4 = arm_nn_read_q7x4((const q7_t *)&rhs_ptr[off0]);
                 val2 = __SXTB16(val1);
                 val0 = arm_nn_read_q7x4_ia((const q7_t **)&lhs_ptr);
                 val3 = __SXTB16(val0);
-                val1 = __patched_SXTB16_RORn(val1, 8);
-                val0 = __patched_SXTB16_RORn(val0, 8);
+                val1 = __SXTB16_RORn(val1, 8);
+                val0 = __SXTB16_RORn(val0, 8);
 
                 // 4 x MAC res00, res01
                 res00 = __SMLAD(val3, val2, res00);
-                val5  = __SXTB16(val4);
+                val5 = __SXTB16(val4);
                 res00 = __SMLAD(val0, val1, res00);
-                val4  = __patched_SXTB16_RORn(val4, 8);
+                val4 = __SXTB16_RORn(val4, 8);
                 res01 = __SMLAD(val3, val5, res01);
                 res01 = __SMLAD(val0, val4, res01);
 
                 // 4 x MAC res10, res11
-                val0  = arm_nn_read_q7x4((const q7_t *)&lhs_ptr[off0]);
-                val3  = __SXTB16(val0);
-                val0  = __patched_SXTB16_RORn(val0, 8);
+                val0 = arm_nn_read_q7x4((const q7_t *)&lhs_ptr[off0]);
+                val3 = __SXTB16(val0);
+                val0 = __SXTB16_RORn(val0, 8);
                 res10 = __SMLAD(val3, val2, res10);
                 res11 = __SMLAD(val3, val5, res11);
                 res10 = __SMLAD(val0, val1, res10);
-                val1  = arm_nn_read_q7x4_ia((const q7_t **)&rhs_ptr);
+                val1 = arm_nn_read_q7x4_ia((const q7_t **)&rhs_ptr);
                 res11 = __SMLAD(val0, val4, res11);
 
                 val4 = arm_nn_read_q7x4((const q7_t *)&rhs_ptr[off0]);
                 val2 = __SXTB16(val1);
                 val0 = arm_nn_read_q7x4_ia((const q7_t **)&lhs_ptr);
                 val3 = __SXTB16(val0);
-                val1 = __patched_SXTB16_RORn(val1, 8);
-                val0 = __patched_SXTB16_RORn(val0, 8);
+                val1 = __SXTB16_RORn(val1, 8);
+                val0 = __SXTB16_RORn(val0, 8);
 
                 // 4 x MAC res00, res01
                 res00 = __SMLAD(val3, val2, res00);
-                val5  = __SXTB16(val4);
+                val5 = __SXTB16(val4);
                 res00 = __SMLAD(val0, val1, res00);
-                val4  = __patched_SXTB16_RORn(val4, 8);
+                val4 = __SXTB16_RORn(val4, 8);
                 res01 = __SMLAD(val3, val5, res01);
                 res01 = __SMLAD(val0, val4, res01);
 
                 // 4 x MAC res10, res11
-                val0  = arm_nn_read_q7x4((const q7_t *)&lhs_ptr[off0]);
-                val3  = __SXTB16(val0);
-                val0  = __patched_SXTB16_RORn(val0, 8);
+                val0 = arm_nn_read_q7x4((const q7_t *)&lhs_ptr[off0]);
+                val3 = __SXTB16(val0);
+                val0 = __SXTB16_RORn(val0, 8);
                 res10 = __SMLAD(val3, val2, res10);
                 res11 = __SMLAD(val3, val5, res11);
                 res10 = __SMLAD(val0, val1, res10);
@@ -215,12 +206,12 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             {
                 q7_t rhs_value0 = rhs_ptr[0];
                 q7_t rhs_value1 = rhs_ptr[rhs_cols];
-                q7_t lhs_value  = lhs_ptr[0];
+                q7_t lhs_value = lhs_ptr[0];
 
                 res00 += lhs_value * rhs_value0;
                 res01 += lhs_value * rhs_value1;
 
-                lhs_value  = lhs_ptr[rhs_cols];
+                lhs_value = lhs_ptr[rhs_cols];
                 res10 += lhs_value * rhs_value0;
                 res11 += lhs_value * rhs_value1;
 
@@ -229,9 +220,9 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             }
 
             // Quantize down
-            res00 = arm_nn_requantize(res00, dst_multipliers[rhs_rows_idx],     dst_shifts[rhs_rows_idx]);
+            res00 = arm_nn_requantize(res00, dst_multipliers[rhs_rows_idx], dst_shifts[rhs_rows_idx]);
             res01 = arm_nn_requantize(res01, dst_multipliers[rhs_rows_idx + 1], dst_shifts[rhs_rows_idx + 1]);
-            res10 = arm_nn_requantize(res10, dst_multipliers[rhs_rows_idx],     dst_shifts[rhs_rows_idx]);
+            res10 = arm_nn_requantize(res10, dst_multipliers[rhs_rows_idx], dst_shifts[rhs_rows_idx]);
             res11 = arm_nn_requantize(res11, dst_multipliers[rhs_rows_idx + 1], dst_shifts[rhs_rows_idx + 1]);
 
             // Add offset
@@ -281,9 +272,9 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
                 val3 = __SXTB16(val0);
                 val5 = __SXTB16(val2);
                 val4 = __SXTB16(val1);
-                val0 = __patched_SXTB16_RORn(val0, 8);
-                val2 = __patched_SXTB16_RORn(val2, 8);
-                val1 = __patched_SXTB16_RORn(val1, 8);
+                val0 = __SXTB16_RORn(val0, 8);
+                val2 = __SXTB16_RORn(val2, 8);
+                val1 = __SXTB16_RORn(val1, 8);
 
                 // 4 x MAC res00, res01
                 res00 = __SMLAD(val5, val3, res00);
@@ -297,9 +288,9 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
                 val3 = __SXTB16(val0);
                 val5 = __SXTB16(val2);
                 val4 = __SXTB16(val1);
-                val0 = __patched_SXTB16_RORn(val0, 8);
-                val2 = __patched_SXTB16_RORn(val2, 8);
-                val1 = __patched_SXTB16_RORn(val1, 8);
+                val0 = __SXTB16_RORn(val0, 8);
+                val2 = __SXTB16_RORn(val2, 8);
+                val1 = __SXTB16_RORn(val1, 8);
 
                 // 4 x MAC res00, res01
                 res00 = __SMLAD(val5, val3, res00);
@@ -313,9 +304,9 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
                 val3 = __SXTB16(val0);
                 val5 = __SXTB16(val2);
                 val4 = __SXTB16(val1);
-                val0 = __patched_SXTB16_RORn(val0, 8);
-                val2 = __patched_SXTB16_RORn(val2, 8);
-                val1 = __patched_SXTB16_RORn(val1, 8);
+                val0 = __SXTB16_RORn(val0, 8);
+                val2 = __SXTB16_RORn(val2, 8);
+                val1 = __SXTB16_RORn(val1, 8);
 
                 // 4 x MAC res00, res01
                 res00 = __SMLAD(val5, val3, res00);
@@ -329,9 +320,9 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
                 val3 = __SXTB16(val0);
                 val5 = __SXTB16(val2);
                 val4 = __SXTB16(val1);
-                val0 = __patched_SXTB16_RORn(val0, 8);
-                val2 = __patched_SXTB16_RORn(val2, 8);
-                val1 = __patched_SXTB16_RORn(val1, 8);
+                val0 = __SXTB16_RORn(val0, 8);
+                val2 = __SXTB16_RORn(val2, 8);
+                val1 = __SXTB16_RORn(val1, 8);
 
                 // 4 x MAC res00, res01
                 res00 = __SMLAD(val5, val3, res00);
@@ -345,7 +336,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             {
                 q7_t rhs_value0 = rhs_ptr[0];
                 q7_t rhs_value1 = rhs_ptr[rhs_cols];
-                q7_t lhs_value  = lhs_ptr[0];
+                q7_t lhs_value = lhs_ptr[0];
 
                 res00 += lhs_value * rhs_value0;
                 res01 += lhs_value * rhs_value1;
@@ -355,7 +346,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             }
 
             // Quantize down
-            res00 = arm_nn_requantize(res00, dst_multipliers[rhs_rows_idx],     dst_shifts[rhs_rows_idx]);
+            res00 = arm_nn_requantize(res00, dst_multipliers[rhs_rows_idx], dst_shifts[rhs_rows_idx]);
             res01 = arm_nn_requantize(res01, dst_multipliers[rhs_rows_idx + 1], dst_shifts[rhs_rows_idx + 1]);
 
             // Add offset
@@ -419,7 +410,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
     for (int32_t rhs_rows_idx = 0; rhs_rows_idx <= (rhs_rows - 2); rhs_rows_idx += 2)
     {
         const q7_t *lhs_ptr = &lhs[0];
-        q7_t       *dst_ptr = &dst[0];
+        q7_t *dst_ptr = &dst[0];
 
         q31_t lhs_offset_contribution0 = 0;
         q31_t lhs_offset_contribution1 = 0;
@@ -449,16 +440,16 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             q31_t res10 = lhs_offset_contribution0;
             q31_t res11 = lhs_offset_contribution1;
 
-            for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
+            for (int32_t rhs_cols_idx = rhs_cols; rhs_cols_idx != 0; rhs_cols_idx--)
             {
                 q7_t rhs_value0 = rhs_ptr[0];
                 q7_t rhs_value1 = rhs_ptr[rhs_cols];
-                q7_t lhs_value  = lhs_ptr[0];
+                q7_t lhs_value = lhs_ptr[0];
 
                 res00 += lhs_value * rhs_value0;
                 res01 += lhs_value * rhs_value1;
 
-                lhs_value  = lhs_ptr[rhs_cols];
+                lhs_value = lhs_ptr[rhs_cols];
                 res10 += lhs_value * rhs_value0;
                 res11 += lhs_value * rhs_value1;
 
@@ -467,9 +458,9 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             }
 
             // Quantize down
-            res00 = arm_nn_requantize(res00, dst_multipliers[rhs_rows_idx],     dst_shifts[rhs_rows_idx]);
+            res00 = arm_nn_requantize(res00, dst_multipliers[rhs_rows_idx], dst_shifts[rhs_rows_idx]);
             res01 = arm_nn_requantize(res01, dst_multipliers[rhs_rows_idx + 1], dst_shifts[rhs_rows_idx + 1]);
-            res10 = arm_nn_requantize(res10, dst_multipliers[rhs_rows_idx],     dst_shifts[rhs_rows_idx]);
+            res10 = arm_nn_requantize(res10, dst_multipliers[rhs_rows_idx], dst_shifts[rhs_rows_idx]);
             res11 = arm_nn_requantize(res11, dst_multipliers[rhs_rows_idx + 1], dst_shifts[rhs_rows_idx + 1]);
 
             // Add offset
@@ -508,11 +499,11 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             q31_t res00 = lhs_offset_contribution0;
             q31_t res01 = lhs_offset_contribution1;
 
-            for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
+            for (int32_t rhs_cols_idx = rhs_cols; rhs_cols_idx != 0; rhs_cols_idx--)
             {
                 q7_t rhs_value0 = rhs_ptr[0];
                 q7_t rhs_value1 = rhs_ptr[rhs_cols];
-                q7_t lhs_value  = lhs_ptr[0];
+                q7_t lhs_value = lhs_ptr[0];
 
                 res00 += lhs_value * rhs_value0;
                 res01 += lhs_value * rhs_value1;
@@ -522,7 +513,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
             }
 
             // Quantize down
-            res00 = arm_nn_requantize(res00, dst_multipliers[rhs_rows_idx],     dst_shifts[rhs_rows_idx]);
+            res00 = arm_nn_requantize(res00, dst_multipliers[rhs_rows_idx], dst_shifts[rhs_rows_idx]);
             res01 = arm_nn_requantize(res01, dst_multipliers[rhs_rows_idx + 1], dst_shifts[rhs_rows_idx + 1]);
 
             // Add offset
@@ -557,7 +548,7 @@ arm_status arm_nn_mat_mult_nt_t_s8(const q7_t *lhs,
                 res00 = bias[rhs_rows - 1];
             }
 
-            for (int32_t rhs_cols_idx = 0; rhs_cols_idx < rhs_cols; ++rhs_cols_idx)
+            for (int32_t rhs_cols_idx = rhs_cols; rhs_cols_idx != 0; rhs_cols_idx--)
             {
                 q31_t rhs_value = rhs_ptr[0];
                 q31_t lhs_value = lhs_ptr[0] + lhs_offset;

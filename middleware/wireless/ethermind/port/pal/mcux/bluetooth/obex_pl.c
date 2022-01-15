@@ -75,22 +75,28 @@ void obex_md5
  */
 API_RESULT  BT_obex_generate_digest_string ( /* OUT */ UCHAR * digest_string )
 {
-    CHAR * pts = "Randomize me";
+    API_RESULT retval;
+    const CHAR * pts = "Randomize me";
 
     if (NULL == digest_string)
     {
         OBEX_PL_ERR(
         "[OBEX_PL] Output Buffer is NULL.\n");
-        return OBEX_AUTH_FAILED;
+
+        retval = OBEX_AUTH_FAILED;
+    }
+    else
+    {
+        OBEX_PL_INF(
+        "[OBEX_PL] Generating the Digest String\n");
+
+        /* Apply an hashing algorithm on the nonce */
+        obex_md5 (digest_string, (CHAR *)pts, BT_str_len(pts));
+
+        retval = API_SUCCESS;
     }
 
-    OBEX_PL_INF(
-    "[OBEX_PL] Generating the Digest String\n");
-
-    /* Apply an hashing algorithm on the nonce */
-    obex_md5 (digest_string, pts, BT_str_len(pts));
-
-    return API_SUCCESS;
+    return retval;
 }
 
 #endif /* OBEX */

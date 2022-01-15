@@ -82,7 +82,7 @@ include(driver_cache_cache64_MIMXRT595S_cm33)
 
 include(component_lists_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 

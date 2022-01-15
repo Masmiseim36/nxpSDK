@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -11,13 +11,14 @@
 #include "attest.h"
 
 #ifdef TFM_PSA_API
-#include "psa_manifest/tfm_initial_attestation.h"
+#include "array.h"
 #include "psa/client.h"
 #include "psa/service.h"
+#include "psa_manifest/tfm_initial_attestation.h"
 #include "region_defs.h"
+#include "tfm_attest_defs.h"
 
 #define ECC_P256_PUBLIC_KEY_SIZE PSA_KEY_EXPORT_ECC_PUBLIC_KEY_MAX_SIZE(256)
-#define IOVEC_LEN(x) (sizeof(x)/sizeof(x[0]))
 
 typedef psa_status_t (*attest_func_t)(const psa_msg_t *msg);
 
@@ -98,43 +99,6 @@ static psa_status_t psa_attest_get_token_size(const psa_msg_t *msg)
     return status;
 }
 
-static psa_status_t tfm_attest_get_public_key(const psa_msg_t *msg)
-{
-    psa_status_t status = PSA_SUCCESS;
-    uint8_t key_buf[ECC_P256_PUBLIC_KEY_SIZE];
-    size_t key_len;
-    psa_ecc_family_t curve_type;
-
-    psa_outvec out_vec[] = {
-        {.base = key_buf,     .len = sizeof(key_buf)},
-        {.base = &curve_type, .len = sizeof(curve_type)},
-        {.base = &key_len,    .len = sizeof(key_len)}
-    };
-
-    if (msg->out_size[1] != out_vec[1].len ||
-        msg->out_size[2] != out_vec[2].len) {
-        return PSA_ERROR_INVALID_ARGUMENT;
-    }
-
-    /* Store the client ID here for later use in service. */
-    g_attest_caller_id = msg->client_id;
-
-    status = initial_attest_get_public_key(NULL, 0,
-                                           out_vec, IOVEC_LEN(out_vec));
-
-    if (msg->out_size[0] < key_len) {
-        return PSA_ERROR_BUFFER_TOO_SMALL;
-    }
-
-    if (status == PSA_SUCCESS) {
-        psa_write(msg->handle, 0, key_buf, key_len);
-        psa_write(msg->handle, 1, &curve_type, out_vec[1].len);
-        psa_write(msg->handle, 2, &key_len, out_vec[2].len);
-    }
-
-    return status;
-}
-
 /*
  * Fixme: Temporarily implement abort as infinite loop,
  * will replace it later.
@@ -145,22 +109,20 @@ static void tfm_abort(void)
         ;
 }
 
-static void attest_signal_handle(psa_signal_t signal, attest_func_t pfn)
+static void attest_signal_handle(psa_signal_t signal)
 {
     psa_msg_t msg;
     psa_status_t status;
 
     status = psa_get(signal, &msg);
     switch (msg.type) {
-    case PSA_IPC_CONNECT:
-        psa_reply(msg.handle, PSA_SUCCESS);
-        break;
-    case PSA_IPC_CALL:
-        status = (psa_status_t)pfn(&msg);
+    case TFM_ATTEST_GET_TOKEN:
+        status = psa_attest_get_token(&msg);
         psa_reply(msg.handle, status);
         break;
-    case PSA_IPC_DISCONNECT:
-        psa_reply(msg.handle, PSA_SUCCESS);
+    case TFM_ATTEST_GET_TOKEN_SIZE:
+        status = psa_attest_get_token_size(&msg);
+        psa_reply(msg.handle, status);
         break;
     default:
         tfm_abort();
@@ -180,15 +142,8 @@ psa_status_t attest_partition_init(void)
 
     while (1) {
         signals = psa_wait(PSA_WAIT_ANY, PSA_BLOCK);
-        if (signals & TFM_ATTEST_GET_TOKEN_SIGNAL) {
-            attest_signal_handle(TFM_ATTEST_GET_TOKEN_SIGNAL,
-                                 psa_attest_get_token);
-        } else if (signals & TFM_ATTEST_GET_TOKEN_SIZE_SIGNAL) {
-            attest_signal_handle(TFM_ATTEST_GET_TOKEN_SIZE_SIGNAL,
-                                 psa_attest_get_token_size);
-        } else if (signals & TFM_ATTEST_GET_PUBLIC_KEY_SIGNAL) {
-            attest_signal_handle(TFM_ATTEST_GET_PUBLIC_KEY_SIGNAL,
-                                 tfm_attest_get_public_key);
+        if (signals & TFM_ATTESTATION_SERVICE_SIGNAL) {
+            attest_signal_handle(TFM_ATTESTATION_SERVICE_SIGNAL);
         } else {
             tfm_abort();
         }

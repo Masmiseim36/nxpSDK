@@ -11,5 +11,6 @@
 
 void bt_hci_ecc_init(void);
 int bt_hci_ecc_send(struct net_buf *buf);
+void bt_hci_ecc_supported_commands(uint8_t *supported_commands);
 
 #endif /* __HCI_ECC_H__ */

@@ -1,0 +1,12 @@
+<map id="imxsdk_gpio_handle_interrupt" name="imxsdk_gpio_handle_interrupt">
+<area shape="rect" id="node2" href="$a04591.html#aa120295265cd1dd6be2e069279517256" title="GPIO1_Combined_0_15\l_IRQHandler" alt="" coords="197,5,358,47"/>
+<area shape="rect" id="node3" href="$a04591.html#a5f11092371b6d0f4c75609a99081c62a" title="GPIO1_Combined_16_31\l_IRQHandler" alt="" coords="193,71,361,112"/>
+<area shape="rect" id="node4" href="$a04591.html#a51cc0508a958d00b67e93045abd1d3ec" title="GPIO2_Combined_0_15\l_IRQHandler" alt="" coords="197,136,358,177"/>
+<area shape="rect" id="node5" href="$a04591.html#ac31bdc20e9f1464c4dd04b960e954af6" title="GPIO2_Combined_16_31\l_IRQHandler" alt="" coords="193,201,361,243"/>
+<area shape="rect" id="node6" href="$a04591.html#a3c4cc543e64f2b68cfed6036feb92d8c" title="GPIO3_Combined_0_15\l_IRQHandler" alt="" coords="197,267,358,308"/>
+<area shape="rect" id="node7" href="$a04591.html#a3d1aa0d9d72e9a11449eb796066fd66a" title="GPIO3_Combined_16_31\l_IRQHandler" alt="" coords="193,332,361,373"/>
+<area shape="rect" id="node8" href="$a04591.html#a9f8701f37024cfe30034aa0198432910" title="GPIO4_Combined_0_15\l_IRQHandler" alt="" coords="197,397,358,439"/>
+<area shape="rect" id="node9" href="$a04591.html#a6741900f06f2f7562ddde964b3861dc2" title="GPIO4_Combined_16_31\l_IRQHandler" alt="" coords="193,463,361,504"/>
+<area shape="rect" id="node10" href="$a04591.html#afd79e755aea11e767ea8be5ca5654b88" title="GPIO5_Combined_0_15\l_IRQHandler" alt="" coords="197,528,358,569"/>
+<area shape="rect" id="node11" href="$a04591.html#ac4ef3a5f8f65f70b337efb158329e947" title="GPIO5_Combined_16_31\l_IRQHandler" alt="" coords="193,593,361,635"/>
+</map>

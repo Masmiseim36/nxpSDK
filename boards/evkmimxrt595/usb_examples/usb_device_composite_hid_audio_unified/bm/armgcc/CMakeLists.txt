@@ -68,6 +68,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
+    ${ProjDirPath}/../../../../../../components/audio
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../middleware
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
@@ -114,6 +115,8 @@ include(component_codec_i2c_MIMXRT595S_cm33)
 
 include(component_i3c_adapter_MIMXRT595S_cm33)
 
+include(component_audio_flexcomm_i2s_dma_adapter_MIMXRT595S_cm33)
+
 include(utility_debug_console_lite_MIMXRT595S_cm33)
 
 include(utility_assert_lite_MIMXRT595S_cm33)
@@ -134,7 +137,7 @@ include(driver_cache_cache64_MIMXRT595S_cm33)
 
 include(component_lists_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 

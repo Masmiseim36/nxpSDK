@@ -7,9 +7,10 @@
 
 #include <inttypes.h>
 #include <stdio.h>
-#include "tfm/tfm_core_svc.h"
 #include "psa/client.h"
 #include "psa/service.h"
+#include "svc_num.h"
+#include "tfm_hal_device_header.h"
 
 __attribute__((naked))
 psa_signal_t psa_wait(psa_signal_t signal_mask, uint32_t timeout)
@@ -117,4 +118,12 @@ psa_irq_status_t psa_irq_disable(psa_signal_t irq_signal)
     __ASM volatile("SVC %0           \n"
                    "BX LR            \n"
                    : : "I" (TFM_SVC_PSA_IRQ_DISABLE));
+}
+
+__attribute__((naked))
+void psa_reset_signal(psa_signal_t irq_signal)
+{
+    __ASM volatile("SVC %0           \n"
+                   "BX LR            \n"
+                   : : "I" (TFM_SVC_PSA_RESET_SIGNAL));
 }

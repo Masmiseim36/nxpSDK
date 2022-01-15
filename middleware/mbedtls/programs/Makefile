@@ -56,7 +56,6 @@ LOCAL_LDFLAGS += -lz
 endif
 
 APPS = \
-	aes/aescrypt2$(EXEXT) \
 	aes/crypt_and_hash$(EXEXT) \
 	hash/generic_sum$(EXEXT) \
 	hash/hello$(EXEXT) \
@@ -138,10 +137,6 @@ $(MBEDLIBS):
 
 ${MBEDTLS_TEST_OBJS}:
 	$(MAKE) -C ../tests mbedtls_test
-
-aes/aescrypt2$(EXEXT): aes/aescrypt2.c $(DEP)
-	echo "  CC    aes/aescrypt2.c"
-	$(CC) $(LOCAL_CFLAGS) $(CFLAGS) aes/aescrypt2.c    $(LOCAL_LDFLAGS) $(LDFLAGS) -o $@
 
 aes/crypt_and_hash$(EXEXT): aes/crypt_and_hash.c $(DEP)
 	echo "  CC    aes/crypt_and_hash.c"
@@ -239,7 +234,7 @@ psa/key_ladder_demo$(EXEXT): psa/key_ladder_demo.c $(DEP)
 	echo "  CC    psa/key_ladder_demo.c"
 	$(CC) $(LOCAL_CFLAGS) $(CFLAGS) psa/key_ladder_demo.c    $(LOCAL_LDFLAGS) $(LDFLAGS) -o $@
 
-psa/psa_constant_names$(EXEXT): psa/psa_constant_names.c $(DEP)
+psa/psa_constant_names$(EXEXT): psa/psa_constant_names.c psa/psa_constant_names_generated.c $(DEP)
 	echo "  CC    psa/psa_constant_names.c"
 	$(CC) $(LOCAL_CFLAGS) $(CFLAGS) psa/psa_constant_names.c    $(LOCAL_LDFLAGS) $(LDFLAGS) -o $@
 

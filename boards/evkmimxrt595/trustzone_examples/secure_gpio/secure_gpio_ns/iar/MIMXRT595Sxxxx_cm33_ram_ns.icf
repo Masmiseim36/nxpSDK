@@ -5,8 +5,8 @@
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    iMXRT500RM Rev.0, 01/2021
-**     Version:             rev. 4.0, 2020-05-12
-**     Build:               b210303
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b210730
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -41,16 +41,17 @@ if (isdefinedsymbol(__heap_size__)) {
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
 /* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x80000-0x27FFFF] is reserved for DSP code and data. */
 
 
-define symbol m_interrupts_start               = 0x000C0000;
-define symbol m_interrupts_end                 = 0x000C017F;
+define symbol m_interrupts_start               = 0x002C0000;
+define symbol m_interrupts_end                 = 0x002C017F;
 
-define symbol m_text_start                     = 0x000C0180;
-define symbol m_text_end                       = 0x0013FFFF;
+define symbol m_text_start                     = 0x002C0180;
+define symbol m_text_end                       = 0x0033FFFF;
 
-define symbol m_data_start                     = 0x20180000;
-define symbol m_data_end                       = 0x201FFFFF;
+define symbol m_data_start                     = 0x20380000;
+define symbol m_data_end                       = 0x203FFFFF;
 
 define symbol m_usb_sram_start                 = 0x40140000;
 define symbol m_usb_sram_end                   = 0x40143FFF;

@@ -26,14 +26,14 @@
 #ifndef _TRANSFORM_FUNCTIONS_H_
 #define _TRANSFORM_FUNCTIONS_H_
 
-#include "cmsis/CMSIS/DSP/Include/arm_math_types.h"
-#include "cmsis/CMSIS/DSP/Include/arm_math_memory.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/arm_math_memory.h"
 
-#include "cmsis/CMSIS/DSP/Include/dsp/none.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/utils.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/none.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/utils.h"
 
-#include "cmsis/CMSIS/DSP/Include/dsp/basic_math_functions.h"
-#include "cmsis/CMSIS/DSP/Include/dsp/complex_math_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/basic_math_functions.h"
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/complex_math_functions.h"
 
 #ifdef   __cplusplus
 extern "C"
@@ -217,7 +217,7 @@ extern "C"
     const q15_t *pTwiddle;             /**< points to the Twiddle factor table. */
     const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
    const uint32_t *rearranged_twiddle_tab_stride1_arr;        /**< Per stage reordered twiddle pointer (offset 1) */                                                       \
    const uint32_t *rearranged_twiddle_tab_stride2_arr;        /**< Per stage reordered twiddle pointer (offset 2) */                                                       \
    const uint32_t *rearranged_twiddle_tab_stride3_arr;        /**< Per stage reordered twiddle pointer (offset 3) */                                                       \
@@ -246,7 +246,7 @@ void arm_cfft_q15(
     const q31_t *pTwiddle;             /**< points to the Twiddle factor table. */
     const uint16_t *pBitRevTable;      /**< points to the bit reversal table. */
           uint16_t bitRevLength;             /**< bit reversal table length. */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
    const uint32_t *rearranged_twiddle_tab_stride1_arr;        /**< Per stage reordered twiddle pointer (offset 1) */                                                       \
    const uint32_t *rearranged_twiddle_tab_stride2_arr;        /**< Per stage reordered twiddle pointer (offset 2) */                                                       \
    const uint32_t *rearranged_twiddle_tab_stride3_arr;        /**< Per stage reordered twiddle pointer (offset 3) */                                                       \
@@ -330,7 +330,7 @@ void arm_cfft_q31(
           uint32_t twidCoefRModifier;               /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     const q15_t *pTwiddleAReal;                     /**< points to the real twiddle factor table. */
     const q15_t *pTwiddleBReal;                     /**< points to the imag twiddle factor table. */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
     arm_cfft_instance_q15 cfftInst;
 #else
     const arm_cfft_instance_q15 *pCfft;       /**< points to the complex FFT instance. */
@@ -359,7 +359,7 @@ void arm_cfft_q31(
           uint32_t twidCoefRModifier;                 /**< twiddle coefficient modifier that supports different size FFTs with the same twiddle factor table. */
     const q31_t *pTwiddleAReal;                       /**< points to the real twiddle factor table. */
     const q31_t *pTwiddleBReal;                       /**< points to the imag twiddle factor table. */
-#if defined(ARM_MATH_MVEI)
+#if defined(ARM_MATH_MVEI) && !defined(ARM_MATH_AUTOVECTORIZE)
     arm_cfft_instance_q31 cfftInst;
 #else
     const arm_cfft_instance_q31 *pCfft;         /**< points to the complex FFT instance. */

@@ -113,6 +113,7 @@ typedef MLAN_PACK_START enum _IEEEtypes_ElementId_e {
     RSN_IE  = 48,
     VS_IE   = VENDOR_SPECIFIC_221,
     WAPI_IE = 68,
+    RSNX_IE = 244,
 } MLAN_PACK_END IEEEtypes_ElementId_e;
 
 /** IEEE IE header */
@@ -1352,11 +1353,6 @@ typedef MLAN_PACK_START struct
     wlan_user_scan_chan chan_list[WLAN_BG_SCAN_CHAN_MAX];
 } MLAN_PACK_END wlan_bgscan_cfg;
 
-/** The open AP in OWE transmition Mode */
-#define OWE_TRANS_MODE_OPEN 1
-/** The security AP in OWE trsnsition Mode */
-#define OWE_TRANS_MODE_OWE 2
-
 #ifdef PRAGMA_PACK
 #pragma pack(pop)
 #endif
@@ -1537,6 +1533,10 @@ typedef struct _BSSDescriptor_t
     t_u16 wps_session;
 
     bool wpa2_entp_IE_exist;
+    /** RSNX IE */
+    IEEEtypes_Generic_t *prsnx_ie;
+    /** RSNX IE offset in the beacon buffer */
+    t_u16 rsnx_offset;
 } BSSDescriptor_t, *pBSSDescriptor_t;
 
 #endif /* !_MLAN_IEEE_H_ */

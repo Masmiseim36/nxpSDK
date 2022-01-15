@@ -506,9 +506,7 @@ typedef struct
 
     /** Callback for l2ca_get_fec_params (CID, FEC) */
     API_RESULT (* l2ca_get_fec_params_cb) (UINT16 lcid, L2CAP_FEC_OPTION *fec_option);
-#endif /* L2CAP_TX_QUEUE_FLOW_ON_CALLBACK */
 
-#ifdef BT_ENH_L2CAP
     /* Bitmap to indicate support for L2CAP extended features */
     UINT32 feature_mask;
 #endif /* BT_ENH_L2CAP */
@@ -565,11 +563,12 @@ typedef struct
     /**
      * Callback to inform UL/application of Unicast Connectionless data reception.
      *
-     * l2ca_data_write_cb provides following parameters to the application:
-     *     1. data: Data Buffer Pointer containing receiving UCD payload
-     *     2. datalen: Received UCD payload length
+     * l2ca_ucd_data_read_cb provides following parameters to the application:
+     *     1. Pointer to Device Queue Handle: the peer device sending the request.
+     *     2. data: Data Buffer Pointer containing receiving UCD payload
+     *     3. datalen: Received UCD payload length
      */
-    API_RESULT (* l2ca_ucd_data_cb)(UCHAR *data, UINT16 datalen);
+    API_RESULT (* l2ca_ucd_data_cb)(DEVICE_HANDLE *handle, UCHAR *data, UINT16 datalen);
 
 } L2CAP_UCD_STRUCT;
 #endif /* BT_UCD */
@@ -822,7 +821,22 @@ typedef void (* L2CAP_LE_EVENT_HANDLER)
 /** \} */
 
 /* ---------------------------------------------- Macros */
-
+/**
+ *  Check if L2CA Data Write API returned success. This macro
+ *  takes in the actual retval from the API and evaluates based
+ *  on whether the retval is any of the flow control error codes
+ *  that eventually mean a success.
+ *
+ *  It's not really a failure, but a warning that next
+ *  write on this L2CAP CID will fail, and the flow is
+ *  off till L2CA_TxFlowIND indicates flow on again.
+ *
+ *  \param ret
+ */
+#define L2CA_IS_DATA_WRITE_SUCCESS(ret) \
+    ((API_SUCCESS != (ret)) && \
+     (L2CAP_TX_FLOW_OFF != (ret)) && \
+     (L2CAP_FEC_TX_WINDOW_FULL != (ret)))? (ret): (API_SUCCESS)
 
 /* ---------------------------------------------- API Declarations */
 /**
@@ -1426,14 +1440,12 @@ API_RESULT l2ca_disconnect_req
 
 #ifdef L2CAP_SUPPORT_CBFC_MODE
 /**
- *  \fn l2ca_cbfc_disconnect_req
- *
  *  \par Description:
  *  This API implements the L2CAP_DisconnectREQ service primitive for CBFC mode,
  *  which is used by the L2CAP upper layers to disconnect a L2CAP connection-oriented
  *  data channel.
  *
- *  \param local_cid (IN)
+ *  \param [in] local_cid
  *         Local Channel Identifier for the L2CAP CBFC channel
  *
  *  \return API_RESULT:
@@ -1448,8 +1460,6 @@ API_RESULT l2ca_cbfc_disconnect_req
 #endif /* L2CAP_SUPPORT_CBFC_MODE */
 
 /**
- *  \fn l2cap_get_remote_cid
- *
  *  \par Description:
  *  This API return the Remote CID associated with the provided Local CID.
  *
@@ -1515,6 +1525,42 @@ API_RESULT l2ca_data_write
                /* IN */  UINT16    buffer_len,
                /* IN */  UCHAR  *  buffer,
                /* OUT */ UINT16 *  actual
+           );
+
+/**
+ *  \brief To request transmission of Unicast Connectionless Data.
+ *
+ *  \par Description:
+ *  This API implements the L2CA_DataWriteREQ service for the Unicast
+ *  Connectionless Data to the L2CAP's upper layers.
+ *  This service primitive is offered to enable upper
+ *  layers to request transmission of upper layer payload over an
+ *  Unicast L2CAP channel.
+ *
+ *  \param [in] handle
+ *         Pointer to Device Queue Handle: the peer device to send data to.
+ *  \param [in] buffer_len
+ *         Size of the upper layer payload to be transmitted
+ *  \param [in] buffer
+ *         Buffer containing the upper layer payload
+ *  \param [out] actual
+ *         Actual number of octets transmitted
+ *
+ *  \return API_RESULT:
+ *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
+ *          describing the cause of failure.
+ *
+ *  \note
+ *  The upper layer must allocate for L2CAP Header while requesting
+ *  for data transmission. For, connection-less data channels,
+ *  L2CAP Header consists of 6 octets.
+ */
+API_RESULT l2ca_ucd_write
+           (
+               /* IN */  DEVICE_HANDLE * handle,
+               /* IN */  UINT16          buffer_len,
+               /* IN */  UCHAR         * buffer,
+               /* OUT */ UINT16        * actual
            );
 
 /** L2CA Ping/Echo Request - BD_ADDR, Echo Data, Data Length */

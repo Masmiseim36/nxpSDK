@@ -115,7 +115,7 @@ struct bt_att_chan {
     OSA_MSGQ_HANDLE_DEFINE(rx_queue_handle, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(void *));
 	ATT_HANDLE handle;
 	struct k_work	rx_work;
-	struct k_delayed_work	timeout_work;
+	struct k_work_delayable	timeout_work;
 	void (*sent)(struct bt_att_chan *chan);
 	sys_snode_t		node;
 };
@@ -464,7 +464,7 @@ static void chan_req_sent(struct bt_att_chan *chan)
 
 	/* Start timeout work */
 	if (chan->req) {
-		k_delayed_work_submit(&chan->timeout_work, BT_ATT_TIMEOUT);
+		k_work_schedule(&chan->timeout_work, BT_ATT_TIMEOUT);
 	}
 }
 
@@ -1191,7 +1191,7 @@ static uint8_t att_handle_rsp(struct bt_att_chan *chan, void *pdu, uint16_t len,
 	       bt_hex(pdu, len));
 
 	/* Cancel timeout if ongoing */
-	k_delayed_work_cancel(&chan->timeout_work);
+	k_work_cancel_delayable(&chan->timeout_work);
 
 	if (!chan->req) {
 		BT_WARN("No pending ATT request");
@@ -3398,7 +3398,7 @@ static void bt_att_connected(struct bt_l2cap_chan *chan)
 		ch->tx.mtu = BT_ATT_DEFAULT_LE_MTU;
 		ch->rx.mtu = BT_ATT_DEFAULT_LE_MTU;
 	}
-	k_delayed_work_init(&att_chan->timeout_work, att_timeout);
+	k_work_init_delayable(&att_chan->timeout_work, att_timeout);
 }
 
 static void bt_att_disconnected(struct bt_l2cap_chan *chan)

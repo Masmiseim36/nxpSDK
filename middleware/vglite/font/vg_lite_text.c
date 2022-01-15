@@ -55,7 +55,7 @@ int vg_lite_is_font_valid(vg_lite_font_t font);
 
 /** Globals */
 vg_lite_font_attributes_t g_font_attribs;
-vg_lite_font_t g_last_font;
+vg_lite_font_t g_last_font = VG_LITE_INVALID_FONT;
 int g_last_font_attrib_idx;
 
 /** Externs if any */
@@ -204,12 +204,14 @@ void matrix_multiply(vg_lite_matrix_t * matrix, vg_lite_matrix_t * mult)
     memcpy(matrix, &temp, sizeof(temp));
 }
 
-vg_lite_error_t vg_lite_draw_text(vg_lite_buffer_t *target, int x, int y, 
-                      vg_lite_blend_t blend, 
-                      vg_lite_font_t font, 
-                      vg_lite_matrix_t *matrix,
-                      vg_lite_font_attributes_t  * attributes,
-                      char *text)
+vg_lite_error_t vg_lite_draw_text(vg_lite_buffer_t *target,
+                                  char *text,
+                                  vg_lite_font_t font,
+                                  int x,
+                                  int y,
+                                  vg_lite_matrix_t *matrix,
+                                  vg_lite_blend_t blend,
+                                  vg_lite_font_attributes_t *attributes)
 {
     vg_lite_error_t error;
     int height;

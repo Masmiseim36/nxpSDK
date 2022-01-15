@@ -71,7 +71,7 @@ FMSTR_BOOL FMSTR_SetUpTsaBuff(FMSTR_ADDR buffAddr, FMSTR_SIZE buffSize)
 {
 #if FMSTR_USE_TSA_DYNAMIC > 0
     /* only allow to clear or set when cleared */
-    if (FMSTR_ADDR_VALID(buffAddr) == 0U || FMSTR_ADDR_VALID(fmstr_tsaBuffAddr) == 0U)
+    if (FMSTR_ADDR_VALID(buffAddr) == FMSTR_FALSE || FMSTR_ADDR_VALID(fmstr_tsaBuffAddr) == FMSTR_FALSE)
     {
         /* TSA table must be aligned on pointer size */
         FMSTR_SIZE alignment = FMSTR_GetAlignmentCorrection(buffAddr, sizeof(void *));
@@ -394,7 +394,7 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
 
     /* allow reading of recorder buffer */
 #if FMSTR_USE_RECORDER > 0
-    if (FMSTR_IsInRecBuffer(varAddr, varSize) != 0U)
+    if (FMSTR_IsInRecBuffer(varAddr, varSize) != FMSTR_FALSE)
     {
         return FMSTR_TRUE;
     }

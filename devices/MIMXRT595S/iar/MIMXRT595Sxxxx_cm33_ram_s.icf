@@ -5,8 +5,8 @@
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    iMXRT500RM Rev.0, 01/2021
-**     Version:             rev. 4.0, 2020-05-12
-**     Build:               b210303
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b210730
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -41,26 +41,27 @@ if (isdefinedsymbol(__heap_size__)) {
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
 /* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x80000-0x27FFFF] is reserved for DSP code and data. */
 /* Only the first 256kB is used as secure SRAM memory. */
 
-define symbol m_interrupts_start               = 0x10080000;
-define symbol m_interrupts_end                 = 0x1008017F;
+define symbol m_interrupts_start               = 0x10280000;
+define symbol m_interrupts_end                 = 0x1028017F;
 
-define symbol m_text_start                     = 0x10080180;
-define symbol m_text_end                       = 0x100BFDFF;
+define symbol m_text_start                     = 0x10280180;
+define symbol m_text_end                       = 0x102BFDFF;
 
 /* Only first 256kB of data RAM is used as secure memory. */
-define symbol m_data_start                     = 0x30140000;
-define symbol m_data_end                       = 0x3017FFFF;
+define symbol m_data_start                     = 0x30340000;
+define symbol m_data_end                       = 0x3037FFFF;
 
 /* 512B - memory for veneer table (NSC - secure, non-secure callable memory) */
-define symbol m_veneer_table_start             = 0x100BFE00;
+define symbol m_veneer_table_start             = 0x102BFE00;
 define symbol m_veneer_table_size              = 0x00000200;
 
 define symbol m_usb_sram_start                 = 0x50140000;
 define symbol m_usb_sram_end                   = 0x50143FFF;
 
-define symbol m_boot_flash_conf_start          = 0x1007F400;
+define symbol m_boot_flash_conf_start          = 0x1027F400;
 
 define exported symbol __VECTOR_TABLE          = m_interrupts_start;
 define exported symbol __VECTOR_RAM            = m_interrupts_start;

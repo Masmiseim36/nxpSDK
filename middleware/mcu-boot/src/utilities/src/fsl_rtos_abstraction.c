@@ -7,9 +7,9 @@
  */
 
 #include "fsl_assert.h"
-#include "fsl_rtos_abstraction.h"
-#include "fsl_os_abstraction.h"
 #include "fsl_device_registers.h"
+#include "fsl_os_abstraction.h"
+#include "fsl_rtos_abstraction.h"
 #include "microseconds.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,7 @@ enum _sync_constants
     kSyncLocked = 1
 };
 
-OSA_SR_ALLOC();
+static OSA_SR_ALLOC();
 
 static uint64_t s_ticksPerMs = 0;
 
@@ -40,7 +40,6 @@ static uint32_t ms_diff(uint64_t tickStart, uint64_t tickStop)
 {
     return ((tickStop - tickStart) / s_ticksPerMs);
 }
-
 
 void sync_init(sync_object_t *obj, bool state)
 {
@@ -79,9 +78,7 @@ void sync_reset(sync_object_t *obj)
     OSA_EXIT_CRITICAL();
 }
 
-void lock_init(void)
-{
-}
+void lock_init(void) {}
 
 void lock_acquire(void)
 {

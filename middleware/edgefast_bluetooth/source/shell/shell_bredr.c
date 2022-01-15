@@ -91,6 +91,7 @@ static shell_status_t cmd_connect(shell_handle_t shell, int32_t argc, char *argv
 	bt_addr_t addr;
 	int err;
 
+    memset(&addr, 0, sizeof(addr));
 	err = bt_addr_from_str(argv[1], &addr);
 	if (err) {
 		shell_print(shell, "Invalid peer address (err %d)", err);

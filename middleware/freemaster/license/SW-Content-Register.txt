@@ -30,3 +30,7 @@ bernii gauge.js component                   Used as minified version in demo pro
                                             License: MIT 
                                             Original location: http://bernii.github.io/gauge.js
 
+SEGGER RTT support                          Version: 7.22b 
+                                            Author: SEGGER Microcontroller GmbH
+                                            License: public use permitted
+                                            Location: src/support/segger_rtt/*

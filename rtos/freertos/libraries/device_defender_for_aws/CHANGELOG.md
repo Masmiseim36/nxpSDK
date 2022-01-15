@@ -1,4 +1,9 @@
-# Changelog for AWS IoT Device Defender Client Library
+# Changelog for AWS IoT Device Defender Library
+
+## v1.1.0 (March 2021)
+
+### Updates
+ - [#36](https://github.com/aws/device-defender-for-aws-iot-embedded-sdk/pull/36) Add macros to API for [custom metrics](https://docs.aws.amazon.com/iot/latest/developerguide/dd-detect-custom-metrics.html) feature of AWS IoT Device Defender service.
 
 ## v1.0.1 (December 2020)
 

@@ -24,7 +24,6 @@
  *
  */
 
-#include <inttypes.h>
 #include <wifi.h>
 #include <wm_os.h>
 #include <wm_net.h>
@@ -297,7 +296,7 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
      * address configuration.
      */
     netif_set_status_callback(&if_handle->netif, NULL);
-    if (if_handle == &g_mlan || if_handle == &g_uap)
+    if (if_handle == &g_mlan)
         netifapi_netif_set_default(&if_handle->netif);
     switch (addr->ipv4.addr_type)
     {

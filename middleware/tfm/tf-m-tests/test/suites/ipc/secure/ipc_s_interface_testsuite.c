@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
-#ifdef TFM_PARTITION_FFM11 //NXP 
 
 #include "ipc_s_tests.h"
 #include "psa/client.h"
@@ -12,15 +11,11 @@
 #include "test_framework_helpers.h"
 
 /* List of tests */
-#ifdef TFM_PARTITION_FFM11
 static void tfm_ipc_test_1001(struct test_result_t *ret);
-#endif
 
 static struct test_t ipc_veneers_tests[] = {
-#ifdef TFM_PARTITION_FFM11
-    {&tfm_ipc_test_1001, "TFM_IPC_TEST_1001",
+    {&tfm_ipc_test_1001, "TFM_S_IPC_TEST_1001",
      "Accessing stateless service from secure partition", {TEST_PASSED}},
-#endif
 };
 
 void register_testsuite_s_ipc_interface(struct test_suite_t *p_test_suite)
@@ -29,11 +24,10 @@ void register_testsuite_s_ipc_interface(struct test_suite_t *p_test_suite)
 
     list_size = (sizeof(ipc_veneers_tests) / sizeof(ipc_veneers_tests[0]));
 
-    set_testsuite("IPC secure interface test (TFM_IPC_TEST_1XXX)",
+    set_testsuite("IPC secure interface test (TFM_S_IPC_TEST_1XXX)",
                   ipc_veneers_tests, list_size, p_test_suite);
 }
 
-#ifdef TFM_PARTITION_FFM11
 /**
  * \brief Accessing a stateless service
  *
@@ -42,7 +36,6 @@ void register_testsuite_s_ipc_interface(struct test_suite_t *p_test_suite)
 static void tfm_ipc_test_1001(struct test_result_t *ret)
 {
     uint32_t data = 0xFFFFABCD;
-    psa_handle_t handle;
     psa_status_t status;
     psa_invec in_vec[] = { {&data, sizeof(uint32_t)} };
 
@@ -51,7 +44,7 @@ static void tfm_ipc_test_1001(struct test_result_t *ret)
      * partition will cause panic. Test calling a stateless service only.
      * The test should succeed.
      */
-    status = psa_call(TFM_FFM11_SERVICE1_HANDLE, PSA_IPC_CALL,
+    status = psa_call(IPC_SERVICE_TEST_STATELESS_ROT_HANDLE, PSA_IPC_CALL,
                       in_vec, 1, NULL, 0);
     if (status < 0) {
         TEST_FAIL("Calling a stateless service test fail.\r\n");
@@ -60,6 +53,3 @@ static void tfm_ipc_test_1001(struct test_result_t *ret)
 
     ret->val = TEST_PASSED;
 }
-#endif
-
-#endif //NXP 

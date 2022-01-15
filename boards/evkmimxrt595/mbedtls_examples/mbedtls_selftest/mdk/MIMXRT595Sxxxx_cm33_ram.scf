@@ -6,8 +6,8 @@
 **
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    iMXRT500RM Rev.0, 01/2021
-**     Version:             rev. 4.0, 2020-05-12
-**     Build:               b210303
+**     Version:             rev. 5.0, 2021-07-28
+**     Build:               b210730
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -43,6 +43,7 @@
 /* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
 /* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] are reserved for app-specific use cases. */
 /* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x80000-0x27FFFF] is reserved for DSP code and data. */
 
 #define  m_flash_start                 0x08000000
 
@@ -51,13 +52,13 @@
 
 #define  m_boot_interrupts_start       0x08001000
 
-#define  m_interrupts_start            0x00080000
+#define  m_interrupts_start            0x00280000
 #define  m_interrupts_size             0x00000200
 
-#define  m_text_start                  0x00080200
+#define  m_text_start                  0x00280200
 #define  m_text_size                   0x0013FE00
 
-#define  m_data_start                  0x201C0000
+#define  m_data_start                  0x203C0000
 #define  m_data_size                   0x00140000
 
 #define  m_usb_sram_start              0x40140000

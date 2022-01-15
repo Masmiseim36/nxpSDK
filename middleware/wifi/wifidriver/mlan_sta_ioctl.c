@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides functions for station ioctl
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -287,7 +287,7 @@ static mlan_status wlan_power_ioctl_set_power(IN pmlan_adapter pmadapter, IN pml
         ret                     = MLAN_STATUS_FAILURE;
         goto exit;
     }
-    (void)memset(pmadapter, buf, 0, MRVDRV_SIZE_OF_CMD_BUFFER);
+    (void)__memset(pmadapter, buf, 0, MRVDRV_SIZE_OF_CMD_BUFFER);
     txp_cfg         = (HostCmd_DS_TXPWR_CFG *)buf;
     txp_cfg->action = HostCmd_ACT_GEN_SET;
     if (!power->param.power_cfg.is_power_auto)
@@ -414,10 +414,10 @@ static mlan_status wlan_power_ioctl_set_power_ext(IN pmlan_adapter pmadapter, IN
         ret                     = MLAN_STATUS_FAILURE;
         goto exit;
     }
-    (void)memset(pmadapter, buf, 0, MRVDRV_SIZE_OF_CMD_BUFFER);
+    (void)__memset(pmadapter, buf, 0, MRVDRV_SIZE_OF_CMD_BUFFER);
     txp_cfg         = (HostCmd_DS_TXPWR_CFG *)buf;
     txp_cfg->action = HostCmd_ACT_GEN_SET;
-    (void)memcpy(pmadapter, (t_u8 *)&data, (t_u8 *)power->param.power_ext.power_data, sizeof(data));
+    (void)__memcpy(pmadapter, (t_u8 *)&data, (t_u8 *)power->param.power_ext.power_data, sizeof(data));
     switch (power->param.power_ext.len)
     {
         case 1:
@@ -582,8 +582,8 @@ static mlan_status wlan_sec_ioctl_set_wep_key(IN pmlan_adapter pmadapter, IN pml
     mlan_private *pmpriv     = pmadapter->priv[pioctl_req->bss_index];
     mlan_ds_sec_cfg *sec     = MNULL;
     mrvl_wep_key_t *pwep_key = MNULL;
-    int index;
-    int i = 0;
+    unsigned int index;
+    unsigned int i = 0;
 
     ENTER();
 
@@ -620,7 +620,7 @@ static mlan_status wlan_sec_ioctl_set_wep_key(IN pmlan_adapter pmadapter, IN pml
         /* remove key */
         if (sec->param.encrypt_key.key_remove == MTRUE)
         {
-            (void)memset(pmadapter, &pmpriv->wep_key[index], 0, sizeof(mrvl_wep_key_t));
+            (void)__memset(pmadapter, &pmpriv->wep_key[index], 0, sizeof(mrvl_wep_key_t));
             /* call firmware remove key */
             ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, 0, MNULL,
                                    &sec->param.encrypt_key);
@@ -646,11 +646,11 @@ static mlan_status wlan_sec_ioctl_set_wep_key(IN pmlan_adapter pmadapter, IN pml
             }
             pwep_key = &pmpriv->wep_key[index];
             /* Cleanup */
-            (void)memset(pmadapter, pwep_key, 0, sizeof(mrvl_wep_key_t));
+            (void)__memset(pmadapter, pwep_key, 0, sizeof(mrvl_wep_key_t));
             /* Copy the key in the driver */
 
-            (void)memcpy(pmadapter, pwep_key->key_material, sec->param.encrypt_key.key_material,
-                         sec->param.encrypt_key.key_len);
+            (void)__memcpy(pmadapter, pwep_key->key_material, sec->param.encrypt_key.key_material,
+                           sec->param.encrypt_key.key_len);
             pwep_key->key_index  = index;
             pwep_key->key_length = sec->param.encrypt_key.key_len;
             if (pmpriv->sec_info.wep_status != Wlan802_11WEPEnabled)
@@ -711,8 +711,8 @@ static mlan_status wlan_sec_ioctl_set_wep_key(IN pmlan_adapter pmadapter, IN pml
         {
             sec->param.encrypt_key.key_index = pwep_key->key_index;
             sec->param.encrypt_key.key_len   = pwep_key->key_length;
-            (void)memcpy(pmadapter, sec->param.encrypt_key.key_material, pwep_key->key_material,
-                         sec->param.encrypt_key.key_len);
+            (void)__memcpy(pmadapter, sec->param.encrypt_key.key_material, pwep_key->key_material,
+                           sec->param.encrypt_key.key_len);
         }
         ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, 0, (t_void *)pioctl_req,
                                &sec->param.encrypt_key);
@@ -725,8 +725,8 @@ static mlan_status wlan_sec_ioctl_set_wep_key(IN pmlan_adapter pmadapter, IN pml
             {
                 sec->param.encrypt_key.key_index = pwep_key->key_index;
                 sec->param.encrypt_key.key_len   = pwep_key->key_length;
-                (void)memcpy(pmadapter, sec->param.encrypt_key.key_material, pwep_key->key_material,
-                             sec->param.encrypt_key.key_len);
+                (void)__memcpy(pmadapter, sec->param.encrypt_key.key_material, pwep_key->key_material,
+                               sec->param.encrypt_key.key_len);
             }
             ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_KEY_MATERIAL, HostCmd_ACT_GEN_SET, 0, MNULL,
                                    &sec->param.encrypt_key);
@@ -847,7 +847,7 @@ static mlan_status wlan_sec_ioctl_passphrase(IN pmlan_adapter pmadapter, IN pmla
                 /* fixme: We do not need this functionality right now. */
             }
             else
-                (void)memset(pmadapter, &sec->param.passphrase.bssid, 0, MLAN_MAC_ADDR_LENGTH);
+                (void)__memset(pmadapter, &sec->param.passphrase.bssid, 0, MLAN_MAC_ADDR_LENGTH);
         }
         cmd_action = HostCmd_ACT_GEN_GET;
     }
@@ -898,7 +898,7 @@ static mlan_status wlan_sec_ioctl_password(IN pmlan_adapter pmadapter, IN pmlan_
                 /* fixme: We do not need this functionality right now. */
             }
             else
-                (void)memset(pmadapter, &sec->param.passphrase.bssid, 0, MLAN_MAC_ADDR_LENGTH);
+                (void)__memset(pmadapter, &sec->param.passphrase.bssid, 0, MLAN_MAC_ADDR_LENGTH);
         }
         cmd_action = HostCmd_ACT_GEN_GET;
     }

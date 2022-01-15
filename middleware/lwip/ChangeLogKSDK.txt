@@ -8,6 +8,17 @@
   The development versions (X.Y.Z.dev) do not refer to a single source code snapshots. To avoid ambiguity,
   change log below contains SHA-1 hashes of GIT commits used when importing the code into the SDK.
 
+  - 2.2.0_rev5
+    - New features:
+      - Ported lwIP 2.2.0.dev (2021-05-11, branch: master, SHA-1: 7ec4e9be304e7f8953740f10b2c810a292e89449) to MCUXpresso SDK.
+      - LPC ENET adaptation layer allocates more buffers for frame reception now.
+        Previously the number of receive buffers was determined by ENET_RXBD_NUM, which defaults to 5.
+        It is determined by ENET_RXBUFF_NUM now, which is 2 * ENET_RXBD_NUM by default.
+        Increase was needed because the actual version of LPC ENET driver always hold ENET_RXBD_NUM number of buffers
+        and few additional buffers are needed for passing zero-copy frame data to lwIP.
+        If this takes too much memory in your application, you can counteract by decreasing PBUF_POOL_SIZE,
+        since PBUF_POOL is used only for transmission when LPC ENET, Kinetis ENET or ENET QOS is used.
+
   - 2.2.0_rev4
     - New features:
       - Ported lwIP 2.2.0.dev (2021-03-05, branch: master, SHA-1: 0056522cc974d2be2005c324f37187b5b3695765) to KSDK 2.0.0.

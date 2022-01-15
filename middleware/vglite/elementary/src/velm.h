@@ -118,9 +118,19 @@ typedef enum {
      */
     typedef struct {
         vg_lite_linear_gradient_t   grad;
-        vg_lite_radial_gradient_t   rad_grad;
         el_Transform                transform;
     } el_GradData;
+
+    /*!
+     @typedef el_RadgradData
+     Radial gradient definition.
+     !rad_grad  the native vg_lite_radial_gradient data;
+     !gransform the grad's transformation. matrix is synced to grad's.
+     */
+    typedef struct {
+        vg_lite_radial_gradient_t   rad_grad;
+        el_Transform                transform;
+    } el_RadgradData;
 
     /*!
      @typedef el_Obj_Grad
@@ -130,6 +140,15 @@ typedef enum {
         el_Object           object;
         el_GradData         data;
     } el_Obj_Grad;
+
+    /*!
+     @typedef el_Obj_Radgrad
+     The radial gradient object definition.
+     */
+    typedef struct {
+        el_Object           object;
+        el_RadgradData         data;
+    } el_Obj_Radgrad;
 
     /*!
      @typedef el_Obj_Pattern
@@ -155,6 +174,7 @@ typedef enum {
         ELM_PAINT_TYPE      type;
         uint32_t            color;
         el_Obj_Grad *       grad;
+        el_Obj_Radgrad *    radgrad;
         el_Obj_Pattern      pattern;
     } el_Paint;
 

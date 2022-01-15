@@ -70,7 +70,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../components/audio
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
     ${ProjDirPath}/../../../../../../components/uart
@@ -116,6 +117,8 @@ include(component_codec_i2c_MIMXRT595S_cm33)
 
 include(component_i3c_adapter_MIMXRT595S_cm33)
 
+include(component_audio_flexcomm_i2s_dma_adapter_MIMXRT595S_cm33)
+
 include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
 
 include(middleware_freertos-kernel_MIMXRT595S_cm33)
@@ -142,7 +145,7 @@ include(component_lists_MIMXRT595S_cm33)
 
 include(component_serial_manager_uart_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 

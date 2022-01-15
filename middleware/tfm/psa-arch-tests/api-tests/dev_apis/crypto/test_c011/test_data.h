@@ -147,7 +147,7 @@ static const test_data check1[] = {
 {
     .test_desc       = "Test psa_hash_setup with Invalid hash algorithm\n",
     .alg             = PSA_HASH_ALG_INVALID,
-    .expected_status = PSA_ERROR_INVALID_ARGUMENT, //NXP was PSA_ERROR_NOT_SUPPORTED
+    .expected_status = PSA_ERROR_NOT_SUPPORTED,
 },
 
 {

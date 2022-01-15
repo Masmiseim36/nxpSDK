@@ -69,7 +69,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED
         }
 
         status = val->attestation_function(VAL_INITIAL_ATTEST_GET_TOKEN, challenge,
-                     challenge_size, token_buffer, token_buffer_size, &token_size);
+                     challenge_size, token_buffer, token_buffer_size, &token_size);   //NXP
         TEST_ASSERT_EQUAL(status, check1[i].expected_status, TEST_CHECKPOINT_NUM(1));
 
         if (check1[i].expected_status != PSA_SUCCESS)
@@ -77,7 +77,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED
 
         /* Validate the token */
         status = val->attestation_function(VAL_INITIAL_ATTEST_VERIFY_TOKEN, challenge,
-                    challenge_size, token_buffer, token_size);
+                    challenge_size, token_buffer, token_size);                         //NXP 
         TEST_ASSERT_EQUAL(status, PSA_SUCCESS, TEST_CHECKPOINT_NUM(2));
     }
 

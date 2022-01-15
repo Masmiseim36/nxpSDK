@@ -471,7 +471,7 @@ usb_status_t USB_HostCdcInit(usb_device_handle deviceHandle, usb_host_class_hand
 {
     usb_host_cdc_instance_struct_t *control_ptr =
         (usb_host_cdc_instance_struct_t *)OSA_MemoryAllocate(sizeof(usb_host_cdc_instance_struct_t));
-    uint32_t info_value;
+    uint32_t info_value = 0U;
     void *temp;
 
     if (control_ptr == NULL)
@@ -1105,6 +1105,32 @@ usb_status_t USB_HostCdcGetAcmLineCoding(usb_host_class_handle classHandle,
     return USB_HostCdcControl(
         classHandle, USB_REQUEST_TYPE_DIR_IN | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,
         USB_HOST_CDC_GET_LINE_CODING, 0, 0, 7, (uint8_t *)uartLineCoding, callbackFn, callbackParam);
+}
+
+/*!
+ * @brief cdc set line coding.
+ *
+ * This function implements cdc SetLineCoding request.refer to pstn spec.
+ *
+ * @param classHandle    the class handle.
+ * @param buffer         the buffer pointer.
+ * @param bufferLength   the buffer length.
+ * @param callbackFn     this callback is called after this function completes.
+ * @param callbackParam  the first parameter in the callback function.
+ *
+ * @retval kStatus_USB_Success        request successfully.
+ * @retval kStatus_USB_InvalidHandle  The classHandle is NULL pointer.
+ * @retval kStatus_USB_Busy           There is no idle transfer.
+ * @retval kStatus_USB_Error          send transfer fail, please reference to USB_HostSendSetup.
+ */
+usb_status_t USB_HostCdcSetAcmLineCoding(usb_host_class_handle classHandle,
+                                         usb_host_cdc_line_coding_struct_t *uartLineCoding,
+                                         transfer_callback_t callbackFn,
+                                         void *callbackParam)
+{
+    return USB_HostCdcControl(
+        classHandle, USB_REQUEST_TYPE_DIR_OUT | USB_REQUEST_TYPE_TYPE_CLASS | USB_REQUEST_TYPE_RECIPIENT_INTERFACE,
+        USB_HOST_CDC_SET_LINE_CODING, 0, 0, 7, (uint8_t *)uartLineCoding, callbackFn, callbackParam);
 }
 
 /*!

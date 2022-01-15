@@ -1,14 +1,6 @@
 <map id="driverexamples/fxas21002" name="driverexamples/fxas21002">
-<area shape="rect" id="node1" href="dir_7f709eeecfc0a86c028437d22cedea1b.html" title="fxas21002" alt="" coords="49,52,130,100"/>
-<area shape="rect" id="node2" href="dir_14bc92f4b96c8519b376567118ac28b3.html" title="drivers" alt="" coords="53,148,125,196"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000040_000051.html" title="6" alt="" coords="94,122,102,137"/>
-<area shape="rect" id="node3" href="dir_c77a8e2546a9c75bbba96be2ef542c8e.html" title="sensors" alt="" coords="5,244,77,292"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000040_000060.html" title="4" alt="" coords="40,217,48,232"/>
-<area shape="rect" id="node4" href="dir_6994211064bad48d3d63a6227f5100d6.html" title="boardkit" alt="" coords="101,244,173,292"/>
-<area shape="rect" id="edge3-headlabel" href="dir_000040_000007.html" title="4" alt="" coords="148,219,156,234"/>
-<area shape="rect" id="edge4-headlabel" href="dir_000051_000060.html" title="28" alt="" coords="53,223,68,238"/>
-<area shape="rect" id="edge5-headlabel" href="dir_000051_000007.html" title="6" alt="" coords="112,217,120,231"/>
-<area shape="rect" id="edge6-headlabel" href="dir_000060_000051.html" title="14" alt="" coords="63,202,78,217"/>
-<area shape="rect" id="edge7-headlabel" href="dir_000007_000051.html" title="12" alt="" coords="104,209,118,224"/>
-<area shape="rect" id="clust1" href="dir_63958a0a083234c4c5a126855d7f4594.html" title="driverexamples" alt="" coords="36,16,144,111"/>
+<area shape="rect" id="node1" href="dir_7f709eeecfc0a86c028437d22cedea1b.html" title="fxas21002" alt="" coords="29,52,110,100"/>
+<area shape="rect" id="node2" href="dir_c77a8e2546a9c75bbba96be2ef542c8e.html" title="sensors" alt="" coords="33,148,105,196"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000079_000113.html" title="4" alt="" coords="74,122,82,137"/>
+<area shape="rect" id="clust1" href="dir_63958a0a083234c4c5a126855d7f4594.html" title="driverexamples" alt="" coords="16,16,124,111"/>
 </map>

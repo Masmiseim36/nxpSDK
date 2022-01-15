@@ -15,6 +15,7 @@
 #include <bluetooth/direction.h>
 
 #include "bt_pal_hci_core.h"
+#include "bt_pal_scan.h"
 #include "bt_pal_conn_internal.h"
 #include "bt_pal_direction_internal.h"
 
@@ -36,6 +37,9 @@ struct bt_le_df_ant_info {
 };
 
 static struct bt_le_df_ant_info df_ant_info;
+#if (defined(CONFIG_BT_DF_CONNECTIONLESS_CTE_RX) && (CONFIG_BT_DF_CONNECTIONLESS_CTE_RX > 0U))
+const static uint8_t df_dummy_switch_pattern[BT_HCI_LE_SWITCH_PATTERN_LEN_MIN] = { 0, 0 };
+#endif /* CONFIG_BT_DF_CONNECTIONLESS_CTE_RX */
 
 #define DF_SUPP_TEST(feat, n)                   ((feat) & BIT((n)))
 
@@ -45,6 +49,17 @@ static struct bt_le_df_ant_info df_ant_info;
 						BT_HCI_LE_1US_AOD_RX))
 #define DF_AOA_RX_1US_SUPPORT(supp)             (DF_SUPP_TEST(supp, \
 						BT_HCI_LE_1US_AOA_RX))
+#define DF_SAMPLING_ANTENNA_NUMBER_MIN 0x2
+
+#if (defined(CONFIG_BT_DF_CONNECTIONLESS_CTE_RX) && (CONFIG_BT_DF_CONNECTIONLESS_CTE_RX > 0U))
+static int validate_cte_rx_params(const struct bt_df_per_adv_sync_cte_rx_param *params);
+static void prepare_cte_rx_enable_cmd_params(struct bt_hci_cp_le_set_cl_cte_sampling_enable *cp,
+					     struct net_buf *buf, struct bt_le_per_adv_sync *sync,
+					     const struct bt_df_per_adv_sync_cte_rx_param *params,
+					     bool enable);
+static int hci_df_set_cl_cte_rx_enable(struct bt_le_per_adv_sync *sync, bool enable,
+				       const struct bt_df_per_adv_sync_cte_rx_param *params);
+#endif /* CONFIG_BT_DF_CONNECTIONLESS_CTE_RX */
 
 static int hci_df_set_cl_cte_tx_params(const struct bt_le_ext_adv *adv,
 				    const struct bt_df_adv_cte_tx_param *params)
@@ -127,10 +142,10 @@ static int hci_df_read_ant_info(uint8_t *switch_sample_rates,
 				uint8_t *max_switch_pattern_len,
 				uint8_t *max_cte_len)
 {
-	assert(switch_sample_rates);
-	assert(num_ant);
-	assert(max_switch_pattern_len);
-	assert(max_cte_len);
+	__ASSERT_NO_MSG(switch_sample_rates);
+	__ASSERT_NO_MSG(num_ant);
+	__ASSERT_NO_MSG(max_switch_pattern_len);
+	__ASSERT_NO_MSG(max_cte_len);
 
 	struct bt_hci_rp_le_read_ant_info *rp;
 	struct net_buf *rsp;
@@ -184,14 +199,172 @@ static int hci_df_set_adv_cte_tx_enable(struct bt_le_ext_adv *adv,
 	cp->handle = adv->handle;
 	cp->cte_enable = enable ? 1 : 0;
 
-	bt_hci_cmd_state_set_init(&state, adv->flags, BT_PER_ADV_CTE_ENABLED,
+	bt_hci_cmd_state_set_init(buf, &state, adv->flags, BT_PER_ADV_CTE_ENABLED,
 				  enable);
-	bt_hci_cmd_data_state_set(buf, &state);
 
 	return bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_CL_CTE_TX_ENABLE,
 				   buf, NULL);
 }
-#if 0
+
+#if (defined(CONFIG_BT_DF_CONNECTIONLESS_CTE_RX) && (CONFIG_BT_DF_CONNECTIONLESS_CTE_RX > 0U))
+static int validate_cte_rx_params(const struct bt_df_per_adv_sync_cte_rx_param *params)
+{
+	if (!(params->cte_type &
+	      (BT_DF_CTE_TYPE_AOA | BT_DF_CTE_TYPE_AOD_1US | BT_DF_CTE_TYPE_AOD_2US))) {
+		return -EINVAL;
+	}
+
+	if (params->cte_type & BT_DF_CTE_TYPE_AOA) {
+		if (df_ant_info.num_ant < DF_SAMPLING_ANTENNA_NUMBER_MIN ||
+		    !BT_FEAT_LE_ANT_SWITCH_RX_AOA(bt_dev.le.features)) {
+			return -EINVAL;
+		}
+
+		if (!(params->slot_durations == BT_HCI_LE_ANTENNA_SWITCHING_SLOT_2US ||
+		      (params->slot_durations == BT_HCI_LE_ANTENNA_SWITCHING_SLOT_1US &&
+		       DF_AOA_RX_1US_SUPPORT(df_ant_info.switch_sample_rates)))) {
+			return -EINVAL;
+		}
+
+		if (params->num_ant_ids < BT_HCI_LE_SWITCH_PATTERN_LEN_MIN ||
+		    params->num_ant_ids > df_ant_info.max_switch_pattern_len || !params->ant_ids) {
+			return -EINVAL;
+		}
+	}
+
+	return 0;
+}
+
+static void prepare_cte_rx_enable_cmd_params(struct bt_hci_cp_le_set_cl_cte_sampling_enable *cp,
+					     struct net_buf *buf, struct bt_le_per_adv_sync *sync,
+					     const struct bt_df_per_adv_sync_cte_rx_param *params,
+					     bool enable)
+{
+	const uint8_t *ant_ids;
+
+	cp = net_buf_add(buf, sizeof(*cp));
+	(void)memset(cp, 0, sizeof(*cp));
+
+	cp->sync_handle = sys_cpu_to_le16(sync->handle);
+	cp->sampling_enable = enable ? 1 : 0;
+
+	if (enable) {
+		uint8_t *dest_ant_ids;
+
+		cp->max_sampled_cte = params->max_cte_count;
+
+		if (params->cte_type & BT_DF_CTE_TYPE_AOA) {
+			cp->slot_durations = params->slot_durations;
+			cp->switch_pattern_len = params->num_ant_ids;
+			ant_ids = params->ant_ids;
+		} else {
+			/* Those values are put here due to constraints from HCI command
+			 * specification: Bluetooth Core Spec. Vol 4,Part E, sec 7.8.82.
+			 * There is no right way to successfully send the command to enable CTE
+			 * receive for AoD mode (e.g. device equipped with single antenna).
+			 */
+			cp->slot_durations = BT_HCI_LE_ANTENNA_SWITCHING_SLOT_2US;
+			cp->switch_pattern_len = ARRAY_SIZE(df_dummy_switch_pattern);
+			ant_ids = &df_dummy_switch_pattern[0];
+		}
+
+		dest_ant_ids =	net_buf_add(buf, params->num_ant_ids);
+		memcpy(dest_ant_ids, params->ant_ids, params->num_ant_ids);
+	}
+}
+
+static int hci_df_set_cl_cte_rx_enable(struct bt_le_per_adv_sync *sync, bool enable,
+				       const struct bt_df_per_adv_sync_cte_rx_param *params)
+{
+	struct bt_hci_cp_le_set_cl_cte_sampling_enable *cp;
+	struct bt_hci_rp_le_set_cl_cte_sampling_enable *rp;
+	struct bt_hci_cmd_state_set state;
+	struct net_buf *buf, *rsp;
+	int err;
+
+	if (enable) {
+		err = validate_cte_rx_params(params);
+		if (err != 0) {
+			return err;
+		}
+	}
+
+	/* If CTE Rx is enabled, command parameters total length must include
+	 * antenna ids, so command size if extended by num_and_ids.
+	 */
+	buf = bt_hci_cmd_create(BT_HCI_OP_LE_SET_CL_CTE_SAMPLING_ENABLE,
+				sizeof(*cp) + (enable ? params->num_ant_ids : 0));
+	if (!buf) {
+		return -ENOBUFS;
+	}
+
+	prepare_cte_rx_enable_cmd_params(cp, buf, sync, params, enable);
+
+	bt_hci_cmd_state_set_init(buf, &state, sync->flags, BT_PER_ADV_SYNC_CTE_ENABLED, enable);
+
+	err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_CL_CTE_SAMPLING_ENABLE, buf, &rsp);
+	if (err) {
+		return err;
+	}
+
+	rp = (void *)rsp->data;
+	if (sync->handle != sys_le16_to_cpu(rp->sync_handle)) {
+		err = -EIO;
+	} else {
+		sync->cte_type = (enable ? params->cte_type : 0);
+	}
+
+	net_buf_unref(rsp);
+
+	return err;
+}
+
+void hci_df_prepare_connectionless_iq_report(struct net_buf *buf,
+					     struct bt_df_per_adv_sync_iq_samples_report *report,
+					     struct bt_le_per_adv_sync **per_adv_sync_to_report)
+{
+	struct bt_hci_evt_le_connectionless_iq_report *evt;
+	struct bt_le_per_adv_sync *per_adv_sync;
+
+	if (buf->len < sizeof(*evt)) {
+		BT_ERR("Unexpected end of buffer");
+		return;
+	}
+
+	evt = net_buf_pull_mem(buf, sizeof(*evt));
+
+	per_adv_sync = bt_hci_get_per_adv_sync(sys_le16_to_cpu(evt->sync_handle));
+
+	if (!per_adv_sync) {
+		BT_ERR("Unknown handle 0x%04X for iq samples report",
+		       sys_le16_to_cpu(evt->sync_handle));
+		return;
+	}
+
+	if (!atomic_test_bit(per_adv_sync->flags, BT_PER_ADV_SYNC_CTE_ENABLED)) {
+		BT_ERR("Received PA CTE report when CTE receive disabled");
+		return;
+	}
+
+	if (!(per_adv_sync->cte_type & BIT(evt->cte_type))) {
+		BT_DBG("CTE filtered out by cte_type: %u", evt->cte_type);
+		return;
+	}
+
+	report->chan_idx = evt->chan_idx;
+	report->rssi = evt->rssi;
+	report->rssi_ant_id = evt->rssi_ant_id;
+	report->cte_type = BIT(evt->cte_type);
+	report->packet_status = evt->packet_status;
+	report->slot_durations = evt->slot_durations;
+	report->sample_count = evt->sample_count;
+	report->sample = &evt->sample[0];
+
+	*per_adv_sync_to_report = per_adv_sync;
+}
+#endif /* CONFIG_BT_DF_CONNECTIONLESS_CTE_RX */
+
+#if (defined(CONFIG_BT_CTLR_DF_CONN_CTE_RSP) && (CONFIG_BT_CTLR_DF_CONN_CTE_RSP > 0U))
 /* @brief Function sets CTE parameters for connection object
  *
  * @param[in] cte_types         Allowed response CTE types
@@ -204,8 +377,8 @@ static int hci_df_set_adv_cte_tx_enable(struct bt_le_ext_adv *adv,
 static int hci_df_set_conn_cte_tx_param(struct bt_conn *conn, uint8_t cte_types,
 					uint8_t num_ant_id, uint8_t *ant_id)
 {
-	assert(conn);
-	assert(cte_types != 0);
+	__ASSERT_NO_MSG(conn);
+	__ASSERT_NO_MSG(cte_types != 0);
 
 	struct bt_hci_cp_le_set_conn_cte_tx_params *cp;
 	struct bt_hci_rp_le_set_conn_cte_tx_params *rp;
@@ -223,7 +396,7 @@ static int hci_df_set_conn_cte_tx_param(struct bt_conn *conn, uint8_t cte_types,
 		    !ant_id) {
 			return -EINVAL;
 		}
-		assert((sizeof(*cp) + num_ant_id) <  UINT8_MAX);
+		__ASSERT_NO_MSG((sizeof(*cp) + num_ant_id) <  UINT8_MAX);
 	}
 
 	buf = bt_hci_cmd_create(BT_HCI_OP_LE_SET_CONN_CTE_TX_PARAMS,
@@ -260,7 +433,7 @@ static int hci_df_set_conn_cte_tx_param(struct bt_conn *conn, uint8_t cte_types,
 
 	return err;
 }
-#endif
+#endif /* CONFIG_BT_CTLR_DF_CONN_CTE_RSP */
 
 /* @brief Function initializes Direction Finding in Host
  *
@@ -292,8 +465,8 @@ int le_df_init(void)
 int bt_df_set_adv_cte_tx_param(struct bt_le_ext_adv *adv,
 				const struct bt_df_adv_cte_tx_param *params)
 {
-	assert(adv);
-	assert(params);
+	__ASSERT_NO_MSG(adv);
+	__ASSERT_NO_MSG(params);
 
 	int err;
 
@@ -341,12 +514,56 @@ static int bt_df_set_adv_cte_tx_enabled(struct bt_le_ext_adv *adv, bool enable)
 
 int bt_df_adv_cte_tx_enable(struct bt_le_ext_adv *adv)
 {
-	assert(adv);
+	__ASSERT_NO_MSG(adv);
 	return bt_df_set_adv_cte_tx_enabled(adv, true);
 }
 
 int bt_df_adv_cte_tx_disable(struct bt_le_ext_adv *adv)
 {
-	assert(adv);
+	__ASSERT_NO_MSG(adv);
 	return bt_df_set_adv_cte_tx_enabled(adv, false);
 }
+
+#if (defined(CONFIG_BT_DF_CONNECTIONLESS_CTE_RX) && (CONFIG_BT_DF_CONNECTIONLESS_CTE_RX > 0U))
+static int
+bt_df_set_per_adv_sync_cte_rx_enable(struct bt_le_per_adv_sync *sync, bool enable,
+				     const struct bt_df_per_adv_sync_cte_rx_param *params)
+{
+	if (!BT_FEAT_LE_CONNECTIONLESS_CTE_RX(bt_dev.le.features)) {
+		return -ENOTSUP;
+	}
+
+	if (!atomic_test_bit(sync->flags, BT_PER_ADV_SYNC_SYNCED)) {
+		return -EINVAL;
+	}
+
+	if (!enable &&
+	    !atomic_test_bit(sync->flags, BT_PER_ADV_SYNC_CTE_ENABLED)) {
+		return -EALREADY;
+	}
+
+	return hci_df_set_cl_cte_rx_enable(sync, enable, params);
+}
+
+int bt_df_per_adv_sync_cte_rx_enable(struct bt_le_per_adv_sync *sync,
+				     const struct bt_df_per_adv_sync_cte_rx_param *params)
+{
+	CHECKIF(!sync) {
+		return -EINVAL;
+	}
+	CHECKIF(!params) {
+		return -EINVAL;
+	}
+
+	return bt_df_set_per_adv_sync_cte_rx_enable(sync, true, params);
+}
+
+int bt_df_per_adv_sync_cte_rx_disable(struct bt_le_per_adv_sync *sync)
+{
+	CHECKIF(!sync) {
+		return -EINVAL;
+	}
+
+	return bt_df_set_per_adv_sync_cte_rx_enable(sync, false, NULL);
+}
+#endif /* CONFIG_BT_DF_CONNECTIONLESS_CTE_RX */

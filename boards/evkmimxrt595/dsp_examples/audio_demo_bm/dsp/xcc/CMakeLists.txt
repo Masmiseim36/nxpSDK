@@ -214,10 +214,16 @@ target_link_libraries(dsp_audio_demo_bm_fusionf1.elf optimized xos)
 TARGET_LINK_LIBRARIES(dsp_audio_demo_bm_fusionf1.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET dsp_audio_demo_bm_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
---xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_audio_demo_bm_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin
+--xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_audio_demo_bm_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_reset_${CMAKE_BUILD_TYPE}.bin
 --xtensa-core=nxp_rt500_RI2020_5_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.ResetVector.text
+)
+
+ADD_CUSTOM_COMMAND(TARGET dsp_audio_demo_bm_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+--xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_audio_demo_bm_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin
+--xtensa-core=nxp_rt500_RI2020_5_newlib
+--xtensa-system=${XTENSA_SYSTEM}
 --only-section=.WindowVectors.text
 --only-section=.Level2InterruptVector.text
 --only-section=.Level3InterruptVector.text

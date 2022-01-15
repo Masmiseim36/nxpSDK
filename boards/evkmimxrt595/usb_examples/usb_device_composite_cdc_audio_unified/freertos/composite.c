@@ -16,7 +16,7 @@
 #include "usb_device_audio.h"
 #include "usb_device_ch9.h"
 #include "usb_device_descriptor.h"
-
+#include "fsl_adapter_audio.h"
 #include "composite.h"
 
 #include "fsl_device_registers.h"
@@ -33,6 +33,7 @@
 #endif
 
 
+#include "usb_audio_config.h"
 #include "fsl_i2c.h"
 #include "fsl_i2s.h"
 #include "fsl_i2s_dma.h"
@@ -46,14 +47,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_I2S_DEMO_I2C_BASEADDR     (I2C4)
-#define DEMO_I2C_MASTER_CLOCK_FREQUENCY CLOCK_GetMclkClkFreq()
-#define DEMO_I2S_TX                     (I2S3)
-#define DEMO_I2S_TX_MODE                (kI2S_MasterSlaveNormalSlave)
-#define DEMO_DMA                        (DMA0)
-#define DEMO_I2S_TX_CHANNEL             (7U)
-#define I2S_CLOCK_DIVIDER               16
-
+#define DEMO_I2S_TX_INSTANCE_INDEX (3U)
+#define DEMO_DMA_INSTANCE_INDEX    (0U)
+#define DEMO_I2S_TX_CHANNEL        (7)
+#define DEMO_I2S_TX_MODE           kHAL_AudioSlave
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -71,22 +68,25 @@ void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
-extern void Init_Board_Audio(void);
+
 extern void USB_AudioSpeakerResetTask(void);
 extern void Board_DMIC_DMA_Init(void);
 extern void USB_DeviceAudioSpeakerStatusReset(void);
+extern void AUDIO_DMA_EDMA_Start();
+extern void BOARD_Codec_Init();
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 extern usb_device_composite_struct_t g_composite;
 extern uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT_NORMAL * AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME];
-
-static dma_handle_t s_DmaTxHandle;
-static i2s_config_t s_TxConfig;
-static i2s_dma_handle_t s_TxHandle;
-static i2s_transfer_t s_TxTransfer;
+hal_audio_transfer_t s_TxTransfer;
+HAL_AUDIO_HANDLE_DEFINE(audioTxHandle);
+hal_audio_config_t audioTxConfig;
+hal_audio_dma_config_t dmaTxConfig;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioPlayDMATempBuff[AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME];
+codec_handle_t codecHandle;
+
 wm8904_config_t wm8904Config = {
     .i2cConfig          = {.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE, .codecI2CSourceClock = 19000000U},
     .recordSource       = kWM8904_RecordSourceLineInput,
@@ -100,12 +100,12 @@ wm8904_config_t wm8904Config = {
     .master             = true,
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8904, .codecDevConfig = &wm8904Config};
-codec_handle_t codecHandle;
 
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 ctimer_callback_t *cb_func_pll[] = {(ctimer_callback_t *)CTIMER_SOF_TOGGLE_HANDLER_PLL};
 static ctimer_config_t ctimerInfoPll;
 #endif
+
 /* Composite device structure. */
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 usb_device_composite_struct_t g_composite;
@@ -116,7 +116,8 @@ extern volatile bool g_ButtonPress;
 extern usb_device_composite_struct_t *g_UsbDeviceComposite;
 extern usb_device_composite_struct_t *g_deviceAudioComposite;
 extern uint8_t audioFeedBackBuffer[4];
-
+extern hal_audio_config_t audioTxConfig;
+extern HAL_AUDIO_HANDLE_DEFINE(audioTxHandle);
 /* USB device class information */
 static usb_device_class_config_struct_t g_CompositeClassConfig[3] = {{
                                                                          USB_DeviceCdcVcomCallback,
@@ -208,37 +209,11 @@ void BOARD_Codec_Init()
     }
 }
 
-void I2S_USB_Audio_TxInit(I2S_Type *SAIBase)
+static void TxCallback(hal_audio_handle_t handle, hal_audio_status_t completionStatus, void *callbackParam)
 {
-    /*
-     * masterSlave = kI2S_MasterSlaveNormalMaster;
-     * mode = kI2S_ModeI2sClassic;
-     * rightLow = false;
-     * leftJust = false;
-     * pdmData = false;
-     * sckPol = false;
-     * wsPol = false;
-     * divider = 1;
-     * oneChannel = false;
-     * dataLength = 16;
-     * frameLength = 32;
-     * position = 0;
-     * watermark = 4;
-     * txEmptyZero = true;
-     * pack48 = false;
-     */
-    I2S_TxGetDefaultConfig(&s_TxConfig);
-    s_TxConfig.divider = I2S_CLOCK_DIVIDER;
-    I2S_TxInit(DEMO_I2S_TX, &s_TxConfig);
-}
+    uint32_t audioSpeakerPreReadDataCount = 0U;
+    uint32_t preAudioSendCount            = 0U;
 
-void BOARD_USB_Audio_TxInit(uint32_t samplingRate)
-{
-    I2S_USB_Audio_TxInit(DEMO_I2S_TX);
-}
-
-static void TxCallback(I2S_Type *base, i2s_dma_handle_t *handle, status_t completionStatus, void *userData)
-{
     if ((USB_AudioSpeakerBufferSpaceUsed() < (g_composite.audioUnified.audioPlayTransferSize)) &&
         (g_composite.audioUnified.startPlayFlag == 1U))
     {
@@ -253,12 +228,23 @@ static void TxCallback(I2S_Type *base, i2s_dma_handle_t *handle, status_t comple
 #endif
         s_TxTransfer.dataSize = g_composite.audioUnified.audioPlayTransferSize;
         s_TxTransfer.data     = audioPlayDataBuff + g_composite.audioUnified.tdReadNumberPlay;
-        g_composite.audioUnified.audioSendCount += g_composite.audioUnified.audioPlayTransferSize;
+        preAudioSendCount     = g_composite.audioUnified.audioSendCount[0];
+        g_composite.audioUnified.audioSendCount[0] += g_composite.audioUnified.audioPlayTransferSize;
+        if (preAudioSendCount > g_composite.audioUnified.audioSendCount[0])
+        {
+            g_composite.audioUnified.audioSendCount[1] += 1U;
+        }
         g_composite.audioUnified.audioSendTimes++;
         g_composite.audioUnified.tdReadNumberPlay += g_composite.audioUnified.audioPlayTransferSize;
         if (g_composite.audioUnified.tdReadNumberPlay >= g_composite.audioUnified.audioPlayBufferSize)
         {
             g_composite.audioUnified.tdReadNumberPlay = 0;
+        }
+        audioSpeakerPreReadDataCount = g_composite.audioUnified.audioSpeakerReadDataCount[0];
+        g_composite.audioUnified.audioSpeakerReadDataCount[0] += g_composite.audioUnified.audioPlayTransferSize;
+        if (audioSpeakerPreReadDataCount > g_composite.audioUnified.audioSpeakerReadDataCount[0])
+        {
+            g_composite.audioUnified.audioSpeakerReadDataCount[1] += 1U;
         }
     }
     else
@@ -273,49 +259,19 @@ static void TxCallback(I2S_Type *base, i2s_dma_handle_t *handle, status_t comple
         }
         s_TxTransfer.data = audioPlayDMATempBuff;
     }
-    I2S_TxTransferSendDMA(base, handle, s_TxTransfer);
+    HAL_AudioTransferSendNonBlocking(handle, &s_TxTransfer);
 }
 
-void BOARD_DMA_EDMA_Config()
+void AUDIO_DMA_EDMA_Start()
 {
-    /* Since in the audio_data_dmic.c has already init the DMA, so if init it twice will cause DMIC no callback and
-     * sound. */
-    /* DMA_Init(DEMO_DMA); */
-
-    DMA_EnableChannel(DEMO_DMA, DEMO_I2S_TX_CHANNEL);
-    DMA_SetChannelPriority(DEMO_DMA, DEMO_I2S_TX_CHANNEL, kDMA_ChannelPriority3);
-    DMA_CreateHandle(&s_DmaTxHandle, DEMO_DMA, DEMO_I2S_TX_CHANNEL);
-}
-
-void BOARD_DMA_EDMA_Start()
-{
+    usb_echo("Init Audio SAI and CODEC\r\n");
     s_TxTransfer.dataSize = HS_ISO_OUT_ENDP_PACKET_SIZE;
     s_TxTransfer.data     = audioPlayDMATempBuff;
 
-    I2S_TxTransferCreateHandleDMA(DEMO_I2S_TX, &s_TxHandle, &s_DmaTxHandle, TxCallback, (void *)&s_TxTransfer);
-    I2S_TxTransferSendDMA(DEMO_I2S_TX, &s_TxHandle, s_TxTransfer);
+    HAL_AudioTxInstallCallback((hal_audio_handle_t)&audioTxHandle[0], TxCallback, (void *)&s_TxTransfer);
+    HAL_AudioTransferSendNonBlocking((hal_audio_handle_t)&audioTxHandle[0], &s_TxTransfer);
 }
 
-void BOARD_DMA_EDMA_Set_AudioFormat()
-{
-}
-
-void BOARD_DMA_EDMA_Enable_Audio_Interrupts()
-{
-}
-/*Initialize audio interface and codec.*/
-void Init_Board_Audio(void)
-{
-    usb_echo("Init Audio SAI and CODEC\r\n");
-
-    BOARD_USB_Audio_TxInit(AUDIO_SAMPLING_RATE);
-    BOARD_Codec_Init();
-
-    BOARD_DMA_EDMA_Config();
-    BOARD_DMA_EDMA_Set_AudioFormat();
-    BOARD_DMA_EDMA_Enable_Audio_Interrupts();
-    BOARD_DMA_EDMA_Start();
-}
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 void USB_AudioPllChange(void)
 {
@@ -495,7 +451,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 AUDIO_UPDATE_FEEDBACK_DATA(audioFeedBackBuffer, AUDIO_SAMPLING_RATE_TO_10_14);
 #endif
 #endif /* USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 */
-                g_deviceAudioComposite->audioUnified.speed = USB_SPEED_HIGH;
+                g_composite.audioUnified.speed = USB_SPEED_HIGH;
             }
             else
             {
@@ -723,7 +679,12 @@ void APPInit(void)
         USB_DeviceCdcVcomInit(&g_composite);
     }
 
-    Init_Board_Audio();
+    /*Initialize audio interface and codec.*/
+    HAL_AudioTxInit((hal_audio_handle_t)audioTxHandle, &audioTxConfig);
+    BOARD_Codec_Init();
+    AUDIO_DMA_EDMA_Start();
+    /* init dmic */
+    Board_DMIC_DMA_Init();
 
     USB_DeviceIsrEnable();
 
@@ -826,7 +787,20 @@ void main(void)
     g_composite.audioUnified.curAudioPllFrac = CLKCTL1->AUDIOPLL0NUM;
 #endif
 
-    Board_DMIC_DMA_Init();
+    dmaTxConfig.instance            = DEMO_DMA_INSTANCE_INDEX;
+    dmaTxConfig.channel             = DEMO_I2S_TX_CHANNEL;
+    dmaTxConfig.priority            = kHAL_AudioDmaChannelPriority3;
+    audioTxConfig.dmaConfig         = &dmaTxConfig;
+    audioTxConfig.instance          = DEMO_I2S_TX_INSTANCE_INDEX;
+    audioTxConfig.srcClock_Hz       = 24576000;
+    audioTxConfig.sampleRate_Hz     = 48000;
+    audioTxConfig.msaterSlave       = DEMO_I2S_TX_MODE;
+    audioTxConfig.bclkPolarity      = kHAL_AudioSampleOnRisingEdge;
+    audioTxConfig.frameSyncPolarity = kHAL_AudioBeginAtFallingEdge;
+    audioTxConfig.frameSyncWidth    = kHAL_AudioFrameSyncWidthHalfFrame;
+    audioTxConfig.dataFormat        = kHAL_AudioDataFormatI2sClassic;
+    audioTxConfig.bitWidth          = (uint8_t)kHAL_AudioWordWidth16bits;
+    audioTxConfig.lineChannels      = kHAL_AudioStereo;
 
     if (xTaskCreate(APPTask,                           /* pointer to the task */
                     (char const *)"usb device task",   /* task name for kernel awareness debugging */

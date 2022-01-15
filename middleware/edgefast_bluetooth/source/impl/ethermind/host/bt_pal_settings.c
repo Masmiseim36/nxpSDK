@@ -21,18 +21,18 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
 #include "bt_ble_settings.h"
 
-#if defined(CONFIG_BT_SETTINGS_USE_PRINTK)
+#if (defined(CONFIG_BT_SETTINGS_USE_PRINTK) && (CONFIG_BT_SETTINGS_USE_PRINTK > 0U))
 void bt_settings_encode_key(char *path, size_t path_size, const char *subsys,
 			    const bt_addr_le_t *addr, const char *key)
 {
 	if (NULL != key) {
-		snprintf(path, path_size,
+		snprintk(path, path_size,
 			 "bt/%s/%02x%02x%02x%02x%02x%02x%u/%s", subsys,
 			 addr->a.val[5], addr->a.val[4], addr->a.val[3],
 			 addr->a.val[2], addr->a.val[1], addr->a.val[0],
 			 addr->type, key);
 	} else {
-		snprintf(path, path_size,
+		snprintk(path, path_size,
 			 "bt/%s/%02x%02x%02x%02x%02x%02x%u", subsys,
 			 addr->a.val[5], addr->a.val[4], addr->a.val[3],
 			 addr->a.val[2], addr->a.val[1], addr->a.val[0],
@@ -128,7 +128,7 @@ static int set(const char *name, size_t len_rd, settings_read_cb read_cb,
 
 	len = settings_name_next(name, &next);
 
-	if (!strncmp(name, "id", len)) {
+	if (!strncmp(name, "id", sizeof("id"))) {
 		/* Any previously provided identities supersede flash */
 		if (atomic_test_bit(bt_dev.flags, BT_DEV_PRESET_ID)) {
 			BT_WARN("Ignoring identities stored in flash");
@@ -162,7 +162,7 @@ static int set(const char *name, size_t len_rd, settings_read_cb read_cb,
 	}
 
 #if (defined(CONFIG_BT_DEVICE_NAME_DYNAMIC) && (CONFIG_BT_DEVICE_NAME_DYNAMIC > 0))
-	if (!strncmp(name, "name", len)) {
+	if (!strncmp(name, "name", sizeof("name"))) {
 		len = read_cb(cb_arg, &bt_dev.name, sizeof(bt_dev.name) - 1);
 		if (len < 0) {
 			BT_ERR("Failed to read device name from storage"
@@ -177,7 +177,7 @@ static int set(const char *name, size_t len_rd, settings_read_cb read_cb,
 #endif
 
 #if (defined(CONFIG_BT_PRIVACY) && (CONFIG_BT_PRIVACY > 0))
-	if (!strncmp(name, "irk", len)) {
+	if (!strncmp(name, "irk", sizeof("irk"))) {
 		len = read_cb(cb_arg, bt_dev.irk, sizeof(bt_dev.irk));
 		if (len < sizeof(bt_dev.irk[0])) {
 			if (len < 0) {
@@ -290,8 +290,6 @@ static int commit(void)
 	 */
 	if (atomic_test_and_clear_bit(bt_dev.flags, BT_DEV_STORE_ID)) {
 		BT_DBG("Storing Identity Information");
-		/* TODO: Save ID */
-		/* TODO: Save IRK */
 		bt_settings_save_id();
 	}
 

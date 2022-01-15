@@ -9,21 +9,24 @@
 #ifndef __FREEMASTER_CFG_H
 #define __FREEMASTER_CFG_H
 
-/* This is a generic configuration file of the FreeMASTER driver. You need to edit the file.
- * See all options marked as TODO: below.
- *
- * Make sure the FMSTR_TRANSPORT and related low-level communication driver is selected below.
- * Also make sure the low-level module and device pins are properly initialized in the main()
- * function and that FMSTR_Init() and FMSTR_Poll() functions are called from the main application loop.
- * See demo applications like fmstr_uart for more information and code example.
- *
- * See the fmstr_any demo application if it is available for your target platform. This
- * application is ready to be cloned and edited in the MCUXpresso ConfigTools (V9 or later).
- * It enables the FreeMASTER driver to be configured graphically in the Peripherals Tool.
- * Also the Clocks and Pins Tools can be used to setup the target platform as demonstrated in:
- * https://www.nxp.com/design/training/whats-new-in-freemaster:TIP-NEW-FREEMASTER-VIDEO
- *
- * Remove this warning statement after this file is edited.
+/* This is a generic configuration file of the FreeMASTER driver. 
+ * You need to edit this file before using FreeMASTER in this application.
+ * 
+ * RECOMMENDED: Use the MCUXpresso ConfigTools to configure FreeMASTER driver graphically and 
+ * to generate this file automatically. Refer to 'Middleware' configuration components in 
+ * the Peripheral tool. The ConfigTools will also help you to configure the physical communication 
+ * interface, device pins and clocks.
+ * 
+ * EDIT MANUALLY: Alternatively, you may edit this file manually. See options marked as “TODO:” 
+ * below. The FMSTR_TRANSPORT and related low-level communication driver options must be set. 
+ * Also ensure that the configuration, device pins and clocks are initialized by the application.
+ * 
+ * ALWAYS: Call FMSTR_Init() in your application code and call FMSTR_Poll() in the application loop. 
+ * 
+ * SEE MORE INFORMATION: in fmstr_uart, fmstr_can and other example applications. Reach out to 
+ * FreeMASTER community at https://community.nxp.com/t5/FreeMASTER/bd-p/freemaster to get more support.
+ * 
+ * Remove the warning statement below after this file is edited. 
  */
 #warning This freemaster_cfg.h file needs to be edited to configure low-level communication.
 #define FMSTR_DISABLE 1 // TODO: set to 0 after this configuration is ready to be used
@@ -57,12 +60,16 @@
 //    FMSTR_CAN_MCUX_FLEXCAN   -   MCUXSDK driver for FlexCAN peripheral
 //    FMSTR_CAN_MCUX_MCAN      -   MCUXSDK driver for MCAN peripheral
 //    FMSTR_CAN_MCUX_MSCAN     -   MCUXSDK driver for msCAN peripheral
+// FMSTR_NET      -   Network interface supporting TCP or UDP protocols
+//    FMSTR_NET_LWIP_TCP       -   TCP using lwIP stack
+//    FMSTR_NET_LWIP_UDP       -   UDP using lwIP stack
 // FMSTR_PDBDM    -   Packet Driven BDM (direct memory access via JTAG/BDM debug probes). No low-level driver used.
 
 // Select communication interface
 #define FMSTR_TRANSPORT  FMSTR_SERIAL // TODO: select FMSTR_SERIAL, FMSTR_CAN or FMSTR_PDBDM transport interface
 #define FMSTR_SERIAL_DRV // TODO: when using FMSTR_SERIAL: select Serial low-level communication driver
 #define FMSTR_CAN_DRV    // TODO: when using FMSTR_CAN: select CAN low-level communication driver
+#define FMSTR_NET_DRV    // TODO: when using FMSTR_NET: select TCP, UDP or other low-level communication driver
 
 // Define communication interface base address or leave undefined for runtime setting
 #undef FMSTR_SERIAL_BASE // Serial base will be assigned in runtime (when FMSTR_USE_UART)
@@ -72,11 +79,16 @@
 #define FMSTR_FLEXCAN_TXMB 0
 #define FMSTR_FLEXCAN_RXMB 1
 
+// Network-specific communication options
+#define FMSTR_NET_PORT 3344            // FreeMASTER server port number (used for both TCP or UDP)
+#define FMSTR_NET_BLOCKING_TIMEOUT 250 // Blocking timeout (ms) of network calls used in FMSTR_Poll
+#define FMSTR_NET_AUTODISCOVERY 1      // Enable automatic board discovery via UDP protocol
+
+// SERIAL communication options
+#define FMSTR_COMM_RQUEUE_SIZE 32 // Receive FIFO queue size - FMSTR_SHORT_INTR mode
+
 // Input/output communication buffer size
 #define FMSTR_COMM_BUFFER_SIZE 0 // Set to 0 for "automatic"
-
-// Receive FIFO queue size (use with FMSTR_SHORT_INTR only)
-#define FMSTR_COMM_RQUEUE_SIZE 32 // Set to 0 for "default"
 
 // Support for Application Commands
 #define FMSTR_USE_APPCMD       1  // Enable/disable App.Commands support

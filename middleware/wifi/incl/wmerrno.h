@@ -144,6 +144,12 @@ enum wm_errno
     WM_E_CRC,     /* 36: Error in CRC check */
     WM_E_UNINIT,  /* 37: Module is not yet initialized */
     WM_E_TIMEOUT, /* 38: Timeout occurred during operation */
+
+    /* Defined for Hostcmd specific API*/
+    WM_E_INBIG,   /* 39: Input buffer too big */
+    WM_E_INSMALL, /* 40: A finer version for WM_E_INVAL, where it clearly specifies that input is much smaller than
+                     minimum requirement */
+    WM_E_OUTBIG,  /* 41: Data output exceeds the size provided */
 };
 
 #endif /* ! WM_ERRNO_H */

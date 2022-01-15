@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2018-2020 Cadence Design Systems, Inc.
+* Copyright (c) 2018-2021 Cadence Design Systems, Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -19,20 +19,17 @@
 * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************************/
-#include "xa_type_def.h"
 #include "common_fpu.h"
-#include "xtensa/tie/xt_hifi2.h"
-#include <xa_nnlib_kernels_api.h>
+#include "xa_nnlib_common.h"
 
-    #ifdef ROW_UNROLL
-        #undef ROW_UNROLL
-        #define ROW_UNROLL 4
-    #else
-        #define ROW_UNROLL 4
-    #endif
+#ifdef ROW_UNROLL
+    #undef ROW_UNROLL
+    #define ROW_UNROLL 4
+#else
+    #define ROW_UNROLL 4
+#endif
 
 #include "xa_nnlib_common_macros.h"
-#include "xa_nnlib_err_chk.h"
 
 /*----------------------------Main function---------------------------------*/
 #if !HAVE_VFPU

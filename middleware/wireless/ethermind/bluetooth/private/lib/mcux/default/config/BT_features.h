@@ -2480,6 +2480,18 @@
  */
 #define SDP_SERVER_HAVE_NO_MAX_REC_DEPENDENCY
 
+/*
+ * SDP_SERVER_ACCESS_RFCOMM_CH
+ *
+ * This flag enables to access the RFCOMM channel in the SDP record.
+ * Enable this flag to add support updating the RFCOMM chnnel in the SDP record.
+ *
+ * Dependency: SDP_SERVER must be defined.
+ *
+ * Default: Enable
+ */
+#define SDP_SERVER_ACCESS_RFCOMM_CH
+
 #endif /* SDP_SERVER */
 #endif /* SDP */
 
@@ -2763,6 +2775,16 @@
  *  EtherMind AVCTP module.
  */
 /* #define HAVE_AVRCP_MSG_COPY */
+
+/*
+ *  AVCTP_SUPPORT_MULTIPLE_CHANNELS
+ *
+ *  This flag enables the stack to accept and create multiple AVCTP channels
+ *  for the Control/Browsing PSM with a same remote device.
+ *
+ *  This flag is disabled by default.
+ */
+/* #define AVCTP_SUPPORT_MULTIPLE_CHANNELS */
 #endif /* AVCTP */
 
 /* ----------------------------------------------------------------------- */
@@ -3224,6 +3246,17 @@
  *  Dependency: OBEX_OVER_L2CAP
  */
 #define OPP_1_2
+
+/*
+ *  OPP_SUPPORT_ANY_OBJECT_TYPE_PULL
+ *
+ *  If defined, this flag enables OPP client to request
+ *  pull for any object other than business card. This is disabled
+ *  by default as it is not a part of specification.
+ *
+ *  Dependency: OPP
+ */
+/* #define OPP_SUPPORT_ANY_OBJECT_TYPE_PULL */
 #endif /* OPP */
 
 /* ----------------------------------------------------------------------- */
@@ -3923,6 +3956,15 @@
  */
 #define SMP_ENABLE_BLURTOOTH_VU_UPDATE
 
+/*
+ *  SMP_SAVE_REMOTE_IOCAP
+ *
+ *  This flag enables the stack to save the remote IO capabilities
+ *  and also enables the application interfaces to access the same
+ *
+ *  Dependency: BT_LE && SMP
+ */
+#define SMP_SAVE_REMOTE_IOCAP
 #endif /* SMP */
 
 

@@ -47,8 +47,8 @@ static vg_lite_matrix_t matrix;
 #else
 #define VGLITE_COMMAND_BUFFER_SZ (128 * 1024)
 /* On RT595S */
-#if defined(MIMXRT595S_cm33_SERIES)
-#define VGLITE_HEAP_SZ 3955776 /* 3.8 MB */
+#if defined(CPU_MIMXRT595SFFOC_cm33)
+#define VGLITE_HEAP_SZ 0x400000 /* 4 MB */
 /* On RT1170 */
 #elif defined(CPU_MIMXRT1176DVMAA_cm7) || defined(CPU_MIMXRT1166DVM6A_cm7)
 #define VGLITE_HEAP_SZ 8912896 /* 8.5 MB */
@@ -58,7 +58,7 @@ static vg_lite_matrix_t matrix;
 #if (720 * 1280 == (DEMO_PANEL_WIDTH) * (DEMO_PANEL_HEIGHT))
 #define TW 720
 /* On RT595S */
-#if defined(MIMXRT595S_cm33_SERIES)
+#if defined(CPU_MIMXRT595SFFOC_cm33)
 /* Tessellation window = 720 x 640 */
 #define TH 640
 /* On RT1170 */
@@ -173,21 +173,21 @@ static vg_lite_error_t init_vg_lite(void)
     error = VGLITE_CreateDisplay(&display);
     if (error)
     {
-        PRINTF("VGLITE_CreateDisplay failed: VGLITE_CreateDisplay() returned error %d\n", error);
+        PRINTF("VGLITE_CreateDisplay failed: VGLITE_CreateDisplay() returned error %d\r\n", error);
         return error;
     }
     // Initialize the window.
     error = VGLITE_CreateWindow(&display, &window);
     if (error)
     {
-        PRINTF("VGLITE_CreateWindow failed: VGLITE_CreateWindow() returned error %d\n", error);
+        PRINTF("VGLITE_CreateWindow failed: VGLITE_CreateWindow() returned error %d\r\n", error);
         return error;
     }
     // Initialize the draw.
     error = vg_lite_init(TW, TH);
     if (error)
     {
-        PRINTF("vg_lite engine init failed: vg_lite_init() returned error %d\n", error);
+        PRINTF("vg_lite engine init failed: vg_lite_init() returned error %d\r\n", error);
         cleanup();
         return error;
     }
@@ -195,7 +195,7 @@ static vg_lite_error_t init_vg_lite(void)
     error = vg_lite_set_command_buffer_size(VGLITE_COMMAND_BUFFER_SZ);
     if (error)
     {
-        PRINTF("vg_lite_set_command_buffer_size() returned error %d\n", error);
+        PRINTF("vg_lite_set_command_buffer_size() returned error %d\r\n", error);
         cleanup();
         return error;
     }
@@ -248,7 +248,7 @@ static void redraw()
         error = vg_lite_draw(rt, &path[count], VG_LITE_FILL_EVEN_ODD, &matrix, VG_LITE_BLEND_NONE, color_data[count]);
         if (error)
         {
-            PRINTF("vg_lite_draw() returned error %d\n", error);
+            PRINTF("vg_lite_draw() returned error %d\r\n", error);
             cleanup();
             return;
         }
@@ -283,7 +283,7 @@ static void vglite_task(void *pvParameters)
     error = init_vg_lite();
     if (error)
     {
-        PRINTF("init_vg_lite failed: init_vg_lite() returned error %d\n", error);
+        PRINTF("init_vg_lite failed: init_vg_lite() returned error %d\r\n", error);
         while (1)
             ;
     }

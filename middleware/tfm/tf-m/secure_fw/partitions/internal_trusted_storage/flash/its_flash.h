@@ -19,7 +19,7 @@
 #include "its_flash_ram.h"
 extern uint8_t its_block_data[];
 #define ITS_FLASH_DEV its_block_data
-#define ITS_FLASH_ALIGNMENT 1 //NXP was TFM_HAL_ITS_PROGRAM_UNIT. Emulation in RAM does nor require aligning.
+#define ITS_FLASH_ALIGNMENT 1 //NXP was TFM_HAL_ITS_PROGRAM_UNIT. Emulation in RAM does not require alignment.
 #define ITS_FLASH_OPS its_flash_fs_ops_ram
 
 #elif (TFM_HAL_ITS_PROGRAM_UNIT > 16)
@@ -49,7 +49,7 @@ extern struct its_flash_nand_dev_t its_flash_nand_dev;
 #include "its_flash_ram.h"
 extern uint8_t ps_block_data[];
 #define PS_FLASH_DEV ps_block_data
-#define PS_FLASH_ALIGNMENT 1 //NXP was TFM_HAL_PS_PROGRAM_UNIT. Emulation in RAM does nor require aligning.
+#define PS_FLASH_ALIGNMENT 1 //NXP was TFM_HAL_PS_PROGRAM_UNIT. Emulation in RAM does not require alignment.
 #define PS_FLASH_OPS its_flash_fs_ops_ram
 
 #elif (TFM_HAL_PS_PROGRAM_UNIT > 16)

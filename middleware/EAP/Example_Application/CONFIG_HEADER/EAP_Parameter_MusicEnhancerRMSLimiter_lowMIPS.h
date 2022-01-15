@@ -14,7 +14,7 @@
 /*******************************************************************/
 /* Include */
 /*******************************************************************/
-#include "LVM.h" // EAP library
+
 
 /***********************************************************************/
 /* 							EQUALISER CONFIG 						   */
@@ -104,7 +104,7 @@ LVM_HeadroomParams_t HeadroomParams_musicEnhancerRmsLimiter_lowMIPS = {
 LVM_ControlParams_t	ControlParamSet_musicEnhancerRmsLimiter_lowMIPS = {
 	/* General parameters */
 	.OperatingMode	 	 = LVM_MODE_ON, 							// LVM_MODE_ON or LVM_MODE_OFF / Bundle operating mode On/Bypass
-	.SampleRate 		 = LVM_FS_48000, 							// LVM_FS_8000, LVM_FS_11025, LVM_FS_12000, LVM_FS_16000, LVM_FS_22050, LVM_FS_24000, LVM_FS_32000, LVM_FS_44100, LVM_FS_48000
+	.SampleRate 		 = LVM_FS_48000, 							// LVM_FS_8000, LVM_FS_11025, LVM_FS_12000, LVM_FS_16000, LVM_FS_22050, LVM_FS_24000, LVM_FS_32000, LVM_FS_44100, LVM_FS_48000,LVM_FS_96000
 	.SourceFormat		 = LVM_STEREO, 								// LVM_MONO or LVM_MONOINSTEREO or LVM_STEREO or LVM_5DOT1 or LVM_7DOT1
 	.SpeakerType 		 = LVM_HEADPHONES, 							// LVM_HEADPHONES or LVM_MOBILE_SPEAKERS_SMALL or LVM_MOBILE_SPEAKERS_MEDIUM or LVM_MOBILE_SPEAKERS_LARGE
 	.SpeakerTypeInternal = LVM_SPEAKER_STEREO,						// Device speaker type, LVM_SPEAKER_MONO or LVM_SPEAKER_STEREO

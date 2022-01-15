@@ -267,6 +267,24 @@ __packed struct  __iar_u32 { uint32_t v; };
 #define __VECTOR_TABLE_ATTRIBUTE  @".intvec"
 #endif
 
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+#ifndef __STACK_SEAL
+#define __STACK_SEAL              STACKSEAL$$Base
+#endif
+
+#ifndef __TZ_STACK_SEAL_SIZE
+#define __TZ_STACK_SEAL_SIZE      8U
+#endif
+
+#ifndef __TZ_STACK_SEAL_VALUE
+#define __TZ_STACK_SEAL_VALUE     0xFEF5EDA5FEF5EDA5ULL
+#endif
+
+__STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
+  *((uint64_t *)stackTop) = __TZ_STACK_SEAL_VALUE;
+}
+#endif
+
 #ifndef __ICCARM_INTRINSICS_VERSION__
   #define __ICCARM_INTRINSICS_VERSION__  0
 #endif
@@ -965,5 +983,7 @@ __packed struct  __iar_u32 { uint32_t v; };
 #pragma diag_default=Pe177
 
 #define __SXTB16_RORn(ARG1, ARG2) __SXTB16(__ROR(ARG1, ARG2))
+
+#define __SXTAB16_RORn(ARG1, ARG2, ARG3) __SXTAB16(ARG1, __ROR(ARG2, ARG3))
 
 #endif /* __CMSIS_ICCARM_H__ */

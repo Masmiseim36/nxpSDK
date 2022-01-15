@@ -96,6 +96,7 @@ extern "C" {
  * - Add it at the end of this enum, otherwise you'll break the ABI by
  *   changing the numerical value for existing curves.
  * - Increment MBEDTLS_ECP_DP_MAX below if needed.
+ * - Update the calculation of MBEDTLS_ECP_MAX_BITS_MIN below.
  * - Add the corresponding MBEDTLS_ECP_DP_xxx_ENABLED macro definition to
  *   config.h.
  * - List the curve as a dependency of MBEDTLS_ECP_C and
@@ -171,6 +172,40 @@ typedef struct mbedtls_ecp_point
 }
 mbedtls_ecp_point;
 
+/* Determine the minimum safe value of MBEDTLS_ECP_MAX_BITS. */
+#if !defined(MBEDTLS_ECP_C)
+#define MBEDTLS_ECP_MAX_BITS_MIN 0
+/* Note: the curves must be listed in DECREASING size! */
+#elif defined(MBEDTLS_ECP_DP_SECP521R1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 521
+#elif defined(MBEDTLS_ECP_DP_BP512R1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 512
+#elif defined(MBEDTLS_ECP_DP_CURVE448_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 448
+#elif defined(MBEDTLS_ECP_DP_BP384R1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 384
+#elif defined(MBEDTLS_ECP_DP_SECP384R1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 384
+#elif defined(MBEDTLS_ECP_DP_BP256R1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 256
+#elif defined(MBEDTLS_ECP_DP_SECP256K1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 256
+#elif defined(MBEDTLS_ECP_DP_SECP256R1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 256
+#elif defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 255
+#elif defined(MBEDTLS_ECP_DP_SECP224K1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 225 // n is slightly above 2^224
+#elif defined(MBEDTLS_ECP_DP_SECP224R1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 224
+#elif defined(MBEDTLS_ECP_DP_SECP192K1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 192
+#elif defined(MBEDTLS_ECP_DP_SECP192R1_ENABLED)
+#define MBEDTLS_ECP_MAX_BITS_MIN 192
+#else
+#error "MBEDTLS_ECP_C enabled, but no curve?"
+#endif
+
 #if !defined(MBEDTLS_ECP_ALT)
 /*
  * default mbed TLS elliptic curve arithmetic implementation
@@ -245,11 +280,23 @@ mbedtls_ecp_group;
  * \{
  */
 
-#if !defined(MBEDTLS_ECP_MAX_BITS)
+#if defined(MBEDTLS_ECP_MAX_BITS)
+
+#if MBEDTLS_ECP_MAX_BITS < MBEDTLS_ECP_MAX_BITS_MIN
+#error "MBEDTLS_ECP_MAX_BITS is smaller than the largest supported curve"
+#endif
+
+#elif defined(MBEDTLS_ECP_C)
 /**
  * The maximum size of the groups, that is, of \c N and \c P.
  */
-#define MBEDTLS_ECP_MAX_BITS     521   /**< The maximum size of groups, in bits. */
+#define MBEDTLS_ECP_MAX_BITS     MBEDTLS_ECP_MAX_BITS_MIN
+
+#else
+/* MBEDTLS_ECP_MAX_BITS is not relevant without MBEDTLS_ECP_C, but set it
+ * to a nonzero value so that code that unconditionally allocates an array
+ * of a size based on it keeps working if built without ECC support. */
+#define MBEDTLS_ECP_MAX_BITS 1
 #endif
 
 #define MBEDTLS_ECP_MAX_BYTES    ( ( MBEDTLS_ECP_MAX_BITS + 7 ) / 8 )
@@ -258,7 +305,8 @@ mbedtls_ecp_group;
 #if !defined(MBEDTLS_ECP_WINDOW_SIZE)
 /*
  * Maximum "window" size used for point multiplication.
- * Default: 6.
+ * Default: a point where higher memory usage yields disminishing performance
+ *          returns.
  * Minimum value: 2. Maximum value: 7.
  *
  * Result is an array of at most ( 1 << ( MBEDTLS_ECP_WINDOW_SIZE - 1 ) )
@@ -275,7 +323,7 @@ mbedtls_ecp_group;
  *      224       475     475     453     398     342
  *      192       640     640     633     587     476
  */
-#define MBEDTLS_ECP_WINDOW_SIZE    6   /**< The maximum window size used. */
+#define MBEDTLS_ECP_WINDOW_SIZE    4   /**< The maximum window size used. */
 #endif /* MBEDTLS_ECP_WINDOW_SIZE */
 
 #if !defined(MBEDTLS_ECP_FIXED_POINT_OPTIM)
@@ -466,8 +514,7 @@ mbedtls_ecp_curve_type mbedtls_ecp_get_type( const mbedtls_ecp_group *grp );
 
 /**
  * \brief           This function retrieves the information defined in
- *                  mbedtls_ecp_curve_info() for all supported curves in order
- *                  of preference.
+ *                  mbedtls_ecp_curve_info() for all supported curves.
  *
  * \note            This function returns information about all curves
  *                  supported by the library. Some curves may not be
@@ -1180,7 +1227,7 @@ int mbedtls_ecp_gen_key( mbedtls_ecp_group_id grp_id, mbedtls_ecp_keypair *key,
  *
  * \param grp_id    The ECP group identifier.
  * \param key       The destination key.
- * \param buf       The the buffer containing the binary representation of the
+ * \param buf       The buffer containing the binary representation of the
  *                  key. (Big endian integer for Weierstrass curves, byte
  *                  string for Montgomery curves.)
  * \param buflen    The length of the buffer in bytes.

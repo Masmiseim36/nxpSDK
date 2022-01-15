@@ -1,0 +1,24 @@
+<map id="Register_I2C_Write" name="Register_I2C_Write">
+<area shape="rect" id="node2" href="$a00032.html#abef3b2c3849b49331142f7a6266fde9a" title="The interface function to configure he sensor. " alt="" coords="392,53,569,79"/>
+<area shape="rect" id="node3" href="$a00032.html#a8a1d6a2e0e6f3b38de621553409faeab" title="The interface function to De Initialize sensor.. " alt="" coords="188,559,344,586"/>
+<area shape="rect" id="node4" href="$a00059.html#a1b62cba67669ae79f5f3c2e5f846a6c7" title="The interface function to configure he sensor. " alt="" coords="397,103,565,130"/>
+<area shape="rect" id="node5" href="$a00329.html#adc709b747f2b14694b4fac4fd080f75c" title="Function to perform FXLS896x self test. " alt="" coords="617,53,732,79"/>
+<area shape="rect" id="node6" href="$a00059.html#a13160308eebd2dce90198d9f1388ad27" title="The interface function to De Initialize sensor.. " alt="" coords="193,610,339,637"/>
+<area shape="rect" id="node7" href="$a00068.html#adc8ae229a44c0a20d100948b37627f55" title="The interface function to configure he sensor. " alt="" coords="397,161,565,187"/>
+<area shape="rect" id="node8" href="$a00068.html#a49e7f7cd7bfced26acd32836bfd8e2a9" title="The interface function to De Initialize sensor.. " alt="" coords="193,661,339,687"/>
+<area shape="rect" id="node9" href="$a00077.html#adcb4dbaa31a6b4ccd6031ee6cc97bb66" title="The interface function to configure he sensor. " alt="" coords="395,223,566,250"/>
+<area shape="rect" id="node10" href="$a00077.html#a896c2090120ad89a351b7f80c876f4c3" title="The interface function to De Initialize sensor.. " alt="" coords="191,711,341,738"/>
+<area shape="rect" id="node11" href="$a00086.html#a02cdde2f932058060c53dc8314e8d03f" title="The interface function to configure he sensor. " alt="" coords="395,299,566,326"/>
+<area shape="rect" id="node12" href="$a00086.html#ab898c401d995d37ccbc8be97131e0097" title="The interface function to De Initialize sensor.. " alt="" coords="191,762,341,789"/>
+<area shape="rect" id="node13" href="$a00101.html#a0f976578dc6fcb91186ecbbae243681c" title="The interface function to De Initialize sensor.. " alt="" coords="195,813,337,839"/>
+<area shape="rect" id="node14" href="$a00110.html#a2de85bf13cfe26dbc0ca9be7f4625cba" title="The interface function to configure he sensor. " alt="" coords="397,354,564,381"/>
+<area shape="rect" id="node15" href="$a00110.html#af4f06a390266db7f33a22ee8a04e510a" title="The interface function to De Initialize sensor.. " alt="" coords="193,863,339,890"/>
+<area shape="rect" id="node16" href="$a00395.html#a840291bc02cba5474a4cb46a9b9566fe" title="Main function. " alt="" coords="241,914,291,941"/>
+<area shape="rect" id="node17" href="$a00119.html#a6c537b63c09b23480c1a3d6ef6e29fef" title="The interface function to configure he sensor. " alt="" coords="397,406,565,433"/>
+<area shape="rect" id="node18" href="$a00119.html#aa6e01fe35fe4ec4f9795338bb2f127e9" title="The interface function to De Initialize sensor.. " alt="" coords="193,965,339,991"/>
+<area shape="rect" id="node19" href="$a00137.html#a5944d87d922a1bdbbf5f2574acc1e143" title="The interface function to configure he sensor. " alt="" coords="397,458,565,485"/>
+<area shape="rect" id="node20" href="$a00137.html#a4deef976b1d013420ddec7c627fb43ce" title="The interface function to De Initialize sensor.. " alt="" coords="193,1015,339,1042"/>
+<area shape="rect" id="node21" href="$a00155.html#a8dce7c0e6c9d7ef6cf9c6c2fd3c093ae" title="The interface function to configure he sensor. " alt="" coords="399,509,563,535"/>
+<area shape="rect" id="node22" href="$a00155.html#a57d98d2cdcc4e6ca85b6efc8f863ce9f" title="The interface function to De Initialize sensor.. " alt="" coords="195,1066,337,1093"/>
+<area shape="rect" id="node23" href="$a00176.html#aaac4c4f34b4dd37d3f202a1dbb4b000b" title="Write register data to a sensor. " alt="" coords="203,255,329,282"/>
+</map>

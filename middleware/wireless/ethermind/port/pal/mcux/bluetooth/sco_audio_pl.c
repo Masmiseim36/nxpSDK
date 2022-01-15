@@ -14,6 +14,13 @@
 /* --------------------------------------------- Header File Inclusion */
 #include "sco_audio_pl.h"
 
+#ifndef CONFIG_BR_SCO_PCM_DIRECTION
+/* PCM direction, default 0
+ * 0 = port A receive, port B transmit
+ * 1 = port A transmit, port B receive
+ */
+#define CONFIG_BR_SCO_PCM_DIRECTION 0
+#endif /* CONFIG_BR_SCO_PCM_DIRECTION */
 
 /* --------------------------------------------- External Global Variables */
 
@@ -168,6 +175,7 @@ void sco_audio_set_wideband_pl (UCHAR enable)
 
     printf("Sending Vendor command 0007 now\n");
     UCHAR new1[1U] = {0x02U};
+    new1[0] |= (CONFIG_BR_SCO_PCM_DIRECTION > 0) ? 1 : 0;
     (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x0007U, new1, sizeof(new1));
 
     UCHAR new2[2U] = {0x04U, 0x00U};

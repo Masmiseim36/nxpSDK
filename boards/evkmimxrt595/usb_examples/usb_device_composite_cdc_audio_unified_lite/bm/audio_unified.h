@@ -86,8 +86,9 @@ typedef struct _usb_audio_composite_struct
     volatile uint8_t startPlayHalfFull;
     volatile uint32_t tdReadNumberPlay;
     volatile uint32_t tdWriteNumberPlay;
-    volatile uint32_t audioSendCount;
-    volatile uint32_t lastAudioSendCount;
+    volatile uint32_t audioSpeakerReadDataCount[2];
+    volatile uint32_t audioSpeakerWriteDataCount[2];
+    volatile uint32_t audioSendCount[2];
     volatile uint32_t usbRecvCount;
     volatile uint32_t audioSendTimes;
     volatile uint32_t usbRecvTimes;

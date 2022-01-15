@@ -319,15 +319,15 @@ status_t WM8904_Init(wm8904_handle_t *handle, wm8904_config_t *wm8904Config)
         return result;
     }
 
-    /* HPOUTL_MUTE=0, HPOUT_VU=0, HPOUTLZC=0, HPOUTL_VOL=11_1001 */
-    result = WM8904_WriteRegister(handle, WM8904_ANALOG_OUT1_LEFT, 0x0039);
+    /* HPOUTL_MUTE=0, HPOUT_VU=0, HPOUTLZC=0, HPOUTL_VOL=10_1101 */
+    result = WM8904_WriteRegister(handle, WM8904_ANALOG_OUT1_LEFT, 0x00AD);
     if (result != kStatus_WM8904_Success)
     {
         return result;
     }
 
-    /* HPOUTR_MUTE=0, HPOUT_VU=0, HPOUTRZC=0, HPOUTR_VOL=11_1001 */
-    result = WM8904_WriteRegister(handle, WM8904_ANALOG_OUT1_RIGHT, 0x0039);
+    /* HPOUTR_MUTE=0, HPOUT_VU=0, HPOUTRZC=0, HPOUTR_VOL=10_1101 */
+    result = WM8904_WriteRegister(handle, WM8904_ANALOG_OUT1_RIGHT, 0x00AD);
     if (result != kStatus_WM8904_Success)
     {
         return result;
@@ -369,7 +369,8 @@ status_t WM8904_Init(wm8904_handle_t *handle, wm8904_config_t *wm8904Config)
         return result;
     }
 
-    result = WM8904_ModifyRegister(handle, WM8904_CLK_RATES_2, (1U << 14U), (uint16_t)(config->sysClkSource));
+    result =
+        WM8904_ModifyRegister(handle, WM8904_CLK_RATES_2, (uint16_t)(1UL << 14U), (uint16_t)(config->sysClkSource));
     if (kStatus_WM8904_Success != result)
     {
         return result;
@@ -413,7 +414,7 @@ status_t WM8904_Init(wm8904_handle_t *handle, wm8904_config_t *wm8904Config)
             return result;
         }
 
-        result = WM8904_ModifyRegister(handle, WM8904_AUDIO_IF_3, 1UL << 11U, 0U);
+        result = WM8904_ModifyRegister(handle, WM8904_AUDIO_IF_3, (uint16_t)(1UL << 11U), 0U);
         if (kStatus_WM8904_Success != result)
         {
             return result;
@@ -632,7 +633,7 @@ status_t WM8904_SetMasterClock(wm8904_handle_t *handle, uint32_t sysclk, uint32_
         return result;
     }
     /* LRCLK direction and divider */
-    audioInterface = (uint16_t)((1U << 11U) | (bclk / sampleRate));
+    audioInterface = (uint16_t)((1UL << 11U) | (bclk / sampleRate));
     result         = WM8904_ModifyRegister(handle, WM8904_AUDIO_IF_3, 0xFFFU, audioInterface);
     if (kStatus_WM8904_Success != result)
     {
@@ -1267,6 +1268,27 @@ status_t WM8904_SetChannelMute(wm8904_handle_t *handle, uint32_t channel, bool i
     }
 
     return ret;
+}
+
+/*!
+ * brief SET the DAC module volume.
+ *
+ * param handle WM8904 handle structure.
+ * param volume volume to be configured.
+ *
+ * return kStatus_WM8904_Success if successful, different code otherwise..
+ */
+status_t WM8904_SetDACVolume(wm8904_handle_t *handle, uint8_t volume)
+{
+    status_t error = kStatus_WM8904_Success;
+
+    error = WM8904_WriteRegister(handle, WM8904_DAC_DIGITAL_VOLUME_LEFT, (uint16_t)(volume | 0x100UL));
+    if (error == kStatus_WM8904_Success)
+    {
+        error = WM8904_WriteRegister(handle, WM8904_DAC_DIGITAL_VOLUME_RIGHT, (uint16_t)(volume | 0x100UL));
+    }
+
+    return error;
 }
 
 /*!

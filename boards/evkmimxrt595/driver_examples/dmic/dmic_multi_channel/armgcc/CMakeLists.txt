@@ -49,13 +49,13 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite
-    ${ProjDirPath}/../../../../../../components/codec/cs42888
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../flash_config
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../../components/codec/cs42448
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
 )
 
@@ -80,8 +80,6 @@ include(driver_flexcomm_i2s_MIMXRT595S_cm33)
 
 include(driver_flexcomm_usart_MIMXRT595S_cm33)
 
-include(driver_cs42888_MIMXRT595S_cm33)
-
 include(driver_dmic_dma_MIMXRT595S_cm33)
 
 include(driver_lpc_dma_MIMXRT595S_cm33)
@@ -90,7 +88,7 @@ include(driver_flexcomm_i2s_dma_MIMXRT595S_cm33)
 
 include(driver_codec_MIMXRT595S_cm33)
 
-include(component_cs42888_adapter_MIMXRT595S_cm33)
+include(component_cs42448_adapter_MIMXRT595S_cm33)
 
 include(driver_clock_MIMXRT595S_cm33)
 
@@ -110,7 +108,7 @@ include(driver_cache_cache64_MIMXRT595S_cm33)
 
 include(component_lists_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 
@@ -121,6 +119,8 @@ include(driver_lpc_iopctl_MIMXRT595S_cm33)
 include(driver_reset_MIMXRT595S_cm33)
 
 include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
+
+include(driver_cs42448_MIMXRT595S_cm33)
 
 include(driver_inputmux_connections_MIMXRT595S_cm33)
 

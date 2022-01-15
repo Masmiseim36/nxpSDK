@@ -39,7 +39,7 @@ static const test_data check1[] = {
 {
     .test_desc       = "Test psa_key_derivation_setup - bad key derivation algorithm\n",
     .alg             = PSA_ALG_KEY_AGREEMENT(PSA_ALG_ECDH, PSA_HASH_ALG_INVALID),
-    .expected_status = PSA_ERROR_NOT_SUPPORTED //NXP was PSA_ERROR_INVALID_ARGUMENT
+    .expected_status = PSA_ERROR_INVALID_ARGUMENT
 },
 
 {

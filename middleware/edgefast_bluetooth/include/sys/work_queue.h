@@ -107,10 +107,10 @@ int bt_delayed_work_cancel(struct bt_delayed_work *work);
 #define k_work_init bt_work_init
 #define k_work_submit bt_work_submit
 
-#define k_delayed_work bt_delayed_work
-#define k_delayed_work_init bt_delayed_work_init
-#define k_delayed_work_remaining_get bt_delayed_work_remaining_get
-#define k_delayed_work_submit bt_delayed_work_submit
-#define k_delayed_work_cancel bt_delayed_work_cancel
+#define k_work_delayable bt_delayed_work
+#define k_work_init_delayable bt_delayed_work_init
+#define k_work_delayable_remaining_get bt_delayed_work_remaining_get
+#define k_work_schedule bt_delayed_work_submit
+#define k_work_cancel_delayable bt_delayed_work_cancel
 
 #endif /* _WORK_QUEUE_H_ */

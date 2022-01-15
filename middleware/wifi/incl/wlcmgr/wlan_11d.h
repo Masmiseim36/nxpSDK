@@ -103,7 +103,26 @@ static inline int wlan_get_country()
 /** Set country code in WLAN Driver.
  *
  * \note This API should be called after WLAN is initialized
- * but before starting uAP or making any connection attempts on station
+ * but before starting uAP interface.
+ *
+ * \note Either this function or wlan_enable_11d() should be used
+ * at a time. If both functions are called in the application, then WLAN
+ * Driver properties will be set as per the wlan_uap_set_country() function.
+ *
+ * \param[in] country Country code. Refer to \ref country_code_t.
+ *
+ * \return -WM_FAIL if operation was failed.
+ * \return WM_SUCCESS if operation was successful.
+ */
+static inline int wlan_uap_set_country(country_code_t country)
+{
+    return wifi_uap_set_country(country);
+}
+
+/** Set country code in WLAN Driver.
+ *
+ * \note This API should be called after WLAN is initialized
+ * but before making any connection attempts on station
  * interface.
  *
  * \note Either this function or wlan_enable_11d() should be used

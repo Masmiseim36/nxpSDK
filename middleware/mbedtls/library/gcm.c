@@ -459,6 +459,7 @@ int mbedtls_gcm_finish( mbedtls_gcm_context *ctx,
     return( 0 );
 }
 
+/* NXP added for HW accelerators support */
 #if !defined(MBEDTLS_GCM_CRYPT_ALT)
 int mbedtls_gcm_crypt_and_tag( mbedtls_gcm_context *ctx,
                        int mode,
@@ -536,6 +537,7 @@ int mbedtls_gcm_auth_decrypt( mbedtls_gcm_context *ctx,
     return( 0 );
 }
 #endif /* !MBEDTLS_GCM_CRYPT_ALT */
+/* NXP added for HW accelerators support */
 
 void mbedtls_gcm_free( mbedtls_gcm_context *ctx )
 {
@@ -557,6 +559,14 @@ void mbedtls_gcm_free( mbedtls_gcm_context *ctx )
 
 static const int key_index_test_data[MAX_TESTS] =
     { 0, 0, 1, 1, 1, 1 };
+
+#ifndef AT_NONCACHEABLE_SECTION_ALIGN_INIT
+#define AT_NONCACHEABLE_SECTION_ALIGN_INIT(var,alignbytes) var
+#endif // AT_NONCACHEABLE_SECTION_ALIGN_INIT
+
+#ifndef AT_NONCACHEABLE_SECTION_INIT
+#define AT_NONCACHEABLE_SECTION_INIT(var) var
+#endif // AT_NONCACHEABLE_SECTION_INIT
 
 /* NXP: AT_NONCACHEABLE_SECTION for DCACHE compatibility */
 AT_NONCACHEABLE_SECTION_ALIGN_INIT(static unsigned char key_test_data[MAX_TESTS][32],8U) =

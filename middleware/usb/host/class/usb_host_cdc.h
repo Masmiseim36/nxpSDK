@@ -430,6 +430,27 @@ extern usb_status_t USB_HostCdcGetAcmLineCoding(usb_host_class_handle classHandl
                                                 void *callbackParam);
 
 /*!
+ * @brief cdc set line coding.
+ *
+ * This function implements cdc SetLineCoding request.refer to pstn spec.
+ *
+ * @param classHandle    the class handle.
+ * @param buffer         the buffer pointer.
+ * @param bufferLength   the buffer length.
+ * @param callbackFn     this callback is called after this function completes.
+ * @param callbackParam  the first parameter in the callback function.
+ *
+ * @retval kStatus_USB_Success        request successfully.
+ * @retval kStatus_USB_InvalidHandle  The classHandle is NULL pointer.
+ * @retval kStatus_USB_Busy           There is no idle transfer.
+ * @retval kStatus_USB_Error          send transfer fail, please reference to USB_HostSendSetup.
+ */
+extern usb_status_t USB_HostCdcSetAcmLineCoding(usb_host_class_handle classHandle,
+                                         usb_host_cdc_line_coding_struct_t *uartLineCoding,
+                                         transfer_callback_t callbackFn,
+                                         void *callbackParam);
+
+/*!
  * @brief CDC setControlLineState.
  *
  * This function implements the CDC etControlLineState request. See PSTN specification.

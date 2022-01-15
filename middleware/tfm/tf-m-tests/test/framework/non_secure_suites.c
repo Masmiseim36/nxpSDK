@@ -10,93 +10,102 @@
 #include "test_framework.h"
 
 /* Service specific includes */
-#if defined(TFM_PARTITION_PROTECTED_STORAGE) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_PS
 #include "ps_ns_tests.h"
 #endif
-#if defined(TFM_PARTITION_INTERNAL_TRUSTED_STORAGE) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_ITS
 #include "its_ns_tests.h"
 #endif
-#if defined(TFM_PARTITION_CRYPTO) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_CRYPTO
 #include "crypto_ns_tests.h"
 #endif
-#if defined(TFM_PARTITION_FIRMWARE_UPDATE)
+#ifdef TEST_NS_FWU
 #include "fwu_ns_tests.h"
 #endif
-#if defined(TFM_PARTITION_INITIAL_ATTESTATION) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_ATTESTATION
 #include "attest_ns_tests.h"
-#include "qcbor_ns_tests.h"
-#ifndef SYMMETRIC_INITIAL_ATTESTATION
-#include "t_cose_ns_tests.h"
-#endif /* !SYMMETRIC_INITIAL_ATTESTATION */
 #endif
-#if defined(TFM_PARTITION_PLATFORM) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_QCBOR
+#include "qcbor_ns_tests.h"
+#endif
+#ifdef TEST_NS_T_COSE
+#include "t_cose_ns_tests.h"
+#endif
+#ifdef TEST_NS_PLATFORM
 #include "platform_ns_tests.h"
 #endif
+#ifdef TEST_NS_CORE
 #include "core_ns_tests.h"
-#ifdef TFM_PSA_API
+#endif
+#ifdef TEST_NS_IPC
 #include "ipc_ns_tests.h"
 #else
-#ifdef TFM_PARTITION_AUDIT_LOG
+#ifdef TEST_NS_AUDIT
 #include "audit_ns_tests.h"
 #endif
 #endif /* TFM_PSA_API */
-#ifdef TFM_MULTI_CORE_TOPOLOGY
+#ifdef TEST_NS_MULTI_CORE
 #include "multi_core_ns_test.h"
 #endif /* TFM_MULTI_CORE_TOPOLOGY */
+#ifdef TFM_FUZZER_TOOL_TESTS
+#include "tf_fuzz_testsuite.h"
+#endif /* TFM_FUZZER_TOOL_TESTS */
+#if defined(TEST_NS_SLIH_IRQ) || defined(TEST_NS_FLIH_IRQ)
+#include "irq_testsuite.h"
+#endif
 
 static struct test_suite_t test_suites[] = {
     /* List test cases which are compliant with level 1 isolation */
 
-#ifdef ENABLE_PROTECTED_STORAGE_SERVICE_TESTS //NXP defined(TFM_PARTITION_PROTECTED_STORAGE) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_PS
     {&register_testsuite_ns_psa_ps_interface, 0, 0, 0},
 #endif
 
-#if defined(TFM_PARTITION_INTERNAL_TRUSTED_STORAGE) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_ITS
     /* Non-secure ITS test cases */
     {&register_testsuite_ns_psa_its_interface, 0, 0, 0},
 #endif
 
-#if defined(TFM_PARTITION_CRYPTO) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_CRYPTO
     /* Non-secure Crypto test cases */
     {&register_testsuite_ns_crypto_interface, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_PLATFORM_SERVICE_TESTS //NXP defined(TFM_PARTITION_PLATFORM) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_PLATFORM
     /* Non-secure platform service test cases */
     {&register_testsuite_ns_platform_interface, 0, 0, 0},
 #endif
 
-#if defined(TFM_PARTITION_INITIAL_ATTESTATION) || defined(FORWARD_PROT_MSG)
+#ifdef TEST_NS_ATTESTATION
     /* Non-secure initial attestation service test cases */
     {&register_testsuite_ns_attestation_interface, 0, 0, 0},
+#endif
 
-#ifdef ENABLE_QCBOR_TESTS //NXP
-#ifndef __IAR_SYSTEMS_ICC__ //NXP IAR is failed on QCBOR tests, this known issue.
+#ifdef TEST_NS_QCBOR
+#ifndef __IAR_SYSTEMS_ICC__ //NXP IAR is failed on QCBOR tests, this is the known issue.
     /* Non-secure QCBOR library test cases */
     {&register_testsuite_ns_qcbor, 0, 0, 0},
 #endif
 #endif
 
-//NXP #ifndef SYMMETRIC_INITIAL_ATTESTATION
-#ifdef ENABLE_T_COSE_TESTS //NXP TBD enable it   //DM
+#ifdef TEST_NS_T_COSE
     /* Non-secure T_COSE library test cases */
     {&register_testsuite_ns_t_cose, 0, 0, 0},
-#endif /* !SYMMETRIC_INITIAL_ATTESTATION */
 #endif
 
-#ifdef TFM_PARTITION_AUDIT_LOG
+#ifdef TEST_NS_AUDIT
     /* Non-secure Audit Logging test cases */
     {&register_testsuite_ns_audit_interface, 0, 0, 0},
 #endif
 
-#ifdef TFM_PARTITION_FIRMWARE_UPDATE
+#ifdef TEST_NS_FWU
     /* Non-secure Firmware Update test cases */
     {&register_testsuite_ns_psa_fwu_interface, 0, 0, 0},
 #endif
 
-#ifdef CORE_TEST_POSITIVE //NXP
-/* Non-secure core test cases */
-{&register_testsuite_ns_core_positive, 0, 0, 0},
+#ifdef TEST_NS_CORE
+    /* Non-secure core test cases */
+    {&register_testsuite_ns_core_positive, 0, 0, 0},
 #endif
 
 #ifdef CORE_TEST_INTERACTIVE
@@ -104,14 +113,22 @@ static struct test_suite_t test_suites[] = {
     {&register_testsuite_ns_core_interactive, 0, 0, 0},
 #endif
 
-#ifdef ENABLE_IPC_TEST //NXP TFM_PSA_API
+#ifdef TEST_NS_IPC
     /* Non-secure IPC test cases */
     {&register_testsuite_ns_ipc_interface, 0, 0, 0},
 #endif
 
-#ifdef TFM_MULTI_CORE_TOPOLOGY
+#ifdef TEST_NS_MULTI_CORE
     /* Multi-core topology test cases */
     {&register_testsuite_multi_core_ns_interface, 0, 0, 0},
+#endif
+
+#ifdef TFM_FUZZER_TOOL_TESTS
+    {&register_testsuite_tf_fuzz_test, 0, 0, 0},
+#endif /* TFM_FUZZER_TOOL_TESTS */
+
+#if defined(TEST_NS_SLIH_IRQ) || defined(TEST_NS_FLIH_IRQ)
+    {&register_testsuite_irq_test, 0, 0, 0},
 #endif
 
     /* End of test suites */

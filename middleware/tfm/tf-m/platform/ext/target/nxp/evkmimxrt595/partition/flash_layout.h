@@ -25,8 +25,8 @@
  *    0x0005_0000 Non-secure image primary (256 kB)
  * Reserved area:
  * 0xXXXX_XXXX Secure Binary tail Area (4 KB), if SB is used.
- * 0xXXXX_XXXX Protected Storage Area (32 KB)
- * 0xXXXX_XXXX Internal Trusted Storage Area (32 KB)
+ * 0xXXXX_XXXX Protected Storage Area (8 KB)
+ * 0xXXXX_XXXX Internal Trusted Storage Area (8 KB)
  * 0xXXXX_XXXX NV counters area (4 KB)
  * 0xXXXX_XXXX Unused
  */
@@ -78,12 +78,12 @@
 /* Protected Storage (PS) Service definitions */
 #define FLASH_PS_AREA_OFFSET            (FLASH_AREA_SCRATCH_OFFSET + \
                                          FLASH_AREA_SCRATCH_SIZE)
-#define FLASH_PS_AREA_SIZE              0x8000 /* 32 KB */
+#define FLASH_PS_AREA_SIZE              (0x2000) /* 8 KB */
 
 /* Internal Trusted Storage (ITS) Service definitions */
 #define FLASH_ITS_AREA_OFFSET           (FLASH_PS_AREA_OFFSET + \
                                          FLASH_PS_AREA_SIZE)
-#define FLASH_ITS_AREA_SIZE             0x8000 /* 32 KB */
+#define FLASH_ITS_AREA_SIZE             (0x2000) /* 8 KB */
 
 /* NV Counters definitions */
 #define FLASH_NV_COUNTERS_AREA_OFFSET   (FLASH_ITS_AREA_OFFSET + \
@@ -101,27 +101,27 @@
 /* Flash device name used by BL2
  * Name is defined in flash driver file: Driver_Flash.c
  */
-#define FLASH_DEV_NAME Driver_FLASH0
+#define FLASH_DEV_NAME                  Driver_FLASH0
 
 /* Protected Storage (PS) Service definitions
  * Note: Further documentation of these definitions can be found in the
  * TF-M PS Integration Guide.
  */
-#define TFM_HAL_PS_FLASH_DRIVER Driver_FLASH0
+#define TFM_HAL_PS_FLASH_DRIVER         Driver_FLASH0
 
 /* In this target the CMSIS driver requires only the offset from the base
  * address instead of the full memory address.
  */
 /* Base address of dedicated flash area for PS */
-#define TFM_HAL_PS_FLASH_AREA_ADDR    FLASH_PS_AREA_OFFSET
+#define TFM_HAL_PS_FLASH_AREA_ADDR      FLASH_PS_AREA_OFFSET
 /* Size of dedicated flash area for PS */
-#define TFM_HAL_PS_FLASH_AREA_SIZE    FLASH_PS_AREA_SIZE
-#define PS_RAM_FS_SIZE                TFM_HAL_PS_FLASH_AREA_SIZE
+#define TFM_HAL_PS_FLASH_AREA_SIZE      FLASH_PS_AREA_SIZE
+#define PS_RAM_FS_SIZE                  TFM_HAL_PS_FLASH_AREA_SIZE
 /* Number of physical erase sectors per logical FS block */
-#define TFM_HAL_PS_SECTORS_PER_BLOCK   1 //RAM (0x3)
+#define TFM_HAL_PS_SECTORS_PER_BLOCK    (1)
 /* Smallest flash programmable unit in bytes */
-#define TFM_HAL_PS_PROGRAM_UNIT       FLASH_AREA_PROGRAM_SIZE
-#define PS_FLASH_NAND_BUF_SIZE        (FLASH_AREA_IMAGE_SECTOR_SIZE * \
+#define TFM_HAL_PS_PROGRAM_UNIT         FLASH_AREA_PROGRAM_SIZE
+#define PS_FLASH_NAND_BUF_SIZE          (FLASH_AREA_IMAGE_SECTOR_SIZE * \
                                         TFM_HAL_ITS_SECTORS_PER_BLOCK)
 
 /* Internal Trusted Storage (ITS) Service definitions
@@ -130,34 +130,34 @@
  * allocated in the external flash just for development platforms that don't
  * have internal flash available.
  */
-#define TFM_HAL_ITS_FLASH_DRIVER Driver_FLASH0
+#define TFM_HAL_ITS_FLASH_DRIVER        Driver_FLASH0
 
 /* In this target the CMSIS driver requires only the offset from the base
  * address instead of the full memory address.
  */
 /* Base address of dedicated flash area for ITS */
-#define TFM_HAL_ITS_FLASH_AREA_ADDR    FLASH_ITS_AREA_OFFSET
+#define TFM_HAL_ITS_FLASH_AREA_ADDR     FLASH_ITS_AREA_OFFSET
 /* Size of dedicated flash area for ITS */
-#define TFM_HAL_ITS_FLASH_AREA_SIZE    FLASH_ITS_AREA_SIZE
-#define ITS_RAM_FS_SIZE                TFM_HAL_ITS_FLASH_AREA_SIZE
+#define TFM_HAL_ITS_FLASH_AREA_SIZE     FLASH_ITS_AREA_SIZE
+#define ITS_RAM_FS_SIZE                 TFM_HAL_ITS_FLASH_AREA_SIZE
 /* Number of physical erase sectors per logical FS block */
-#define TFM_HAL_ITS_SECTORS_PER_BLOCK  1 //RAM (0x3)
+#define TFM_HAL_ITS_SECTORS_PER_BLOCK   (1)
 /* Smallest flash programmable unit in bytes */
-#define TFM_HAL_ITS_PROGRAM_UNIT       FLASH_AREA_PROGRAM_SIZE
-#define ITS_FLASH_NAND_BUF_SIZE        (FLASH_AREA_IMAGE_SECTOR_SIZE * \
+#define TFM_HAL_ITS_PROGRAM_UNIT        FLASH_AREA_PROGRAM_SIZE
+#define ITS_FLASH_NAND_BUF_SIZE         (FLASH_AREA_IMAGE_SECTOR_SIZE * \
                                         TFM_HAL_ITS_SECTORS_PER_BLOCK)
 
 /* NV Counters definitions */
-#define TFM_NV_COUNTERS_AREA_ADDR    FLASH_NV_COUNTERS_AREA_OFFSET
-#define TFM_NV_COUNTERS_AREA_SIZE    FLASH_NV_COUNTERS_AREA_SIZE
-#define TFM_NV_COUNTERS_SECTOR_ADDR  FLASH_NV_COUNTERS_AREA_OFFSET
-#define TFM_NV_COUNTERS_SECTOR_SIZE  FLASH_AREA_IMAGE_SECTOR_SIZE
+#define TFM_NV_COUNTERS_AREA_ADDR       FLASH_NV_COUNTERS_AREA_OFFSET
+#define TFM_NV_COUNTERS_AREA_SIZE       FLASH_NV_COUNTERS_AREA_SIZE
+#define TFM_NV_COUNTERS_SECTOR_ADDR     FLASH_NV_COUNTERS_AREA_OFFSET
+#define TFM_NV_COUNTERS_SECTOR_SIZE     FLASH_AREA_IMAGE_SECTOR_SIZE
 
 /* Use Flash memory to store Code data */
 
 /* 0x08000000 is the FlexSPI memory-mapped AHB address */
-#define S_ROM_ALIAS_BASE  (0x18000000)
-#define NS_ROM_ALIAS_BASE (0x08000000)
+#define S_ROM_ALIAS_BASE    (0x18000000)
+#define NS_ROM_ALIAS_BASE   (0x08000000)
 
 /* Use SRAM memory to store RW data */
 #define S_RAM_ALIAS_BASE    (0x10000000) /* 5 MB Shared RAM via the CM33 code bus (secure access) */

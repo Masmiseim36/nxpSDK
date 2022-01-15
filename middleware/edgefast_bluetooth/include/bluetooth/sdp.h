@@ -583,13 +583,13 @@ int bt_sdp_get_proto_param(const struct net_buf *buf, enum bt_sdp_proto proto,
  *  @param buf Original buffered raw record data.
  *  @param proto Known protocol to be checked like RFCOMM or L2CAP.
  *  @param param_index There may be more than one parameter realted to the
- *         given protocol UUID. This function returns the result that is
- *         indexed by this parameter. It's value is from 0, 0 means the
- *         first matched result, 1 means the second matched result.
+ *  given protocol UUID. This function returns the result that is
+ *  indexed by this parameter. It's value is from 0, 0 means the
+ *  first matched result, 1 means the second matched result.
  *  @param[out] param On success populated by found parameter value.
  *
  *  @return 0 on success when a specific parameter associated with a given protocol
- *          value is found, or negative if error occurred during processing.
+ *  value is found, or negative if error occurred during processing.
  */
 int bt_sdp_get_addl_proto_param(const struct net_buf *buf, enum bt_sdp_proto proto,
 			uint8_t param_index, uint16_t *param);

@@ -235,6 +235,9 @@ int32_t vg_lite_hal_wait_interrupt(uint32_t timeout, uint32_t mask, uint32_t * v
 /*!
  @brief Submit the current command buffer to the command queue.
 
+ @param context
+ Address of kernel context.
+
  @param physical
  Current command buffer physical address.
 
@@ -246,11 +249,8 @@ int32_t vg_lite_hal_wait_interrupt(uint32_t timeout, uint32_t mask, uint32_t * v
 
  @param event
  The async event to use to track the response for this request.
-
- @param semaphore_id
- Current thread semaphore id.
  */
-vg_lite_error_t vg_lite_hal_submit(uint32_t physical, uint32_t offset, uint32_t size,  vg_lite_os_async_event_t *event);
+vg_lite_error_t vg_lite_hal_submit(uint32_t context,uint32_t physical, uint32_t offset, uint32_t size,  vg_lite_os_async_event_t *event);
 
 /*!
  @brief Wait for the current command buffer to be executed.

@@ -23,7 +23,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware adapter version. */
-#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 6U, 0U)) /*2.6.0*/
+#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 6U, 1U)) /*2.6.1*/
 
 #if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
 #define SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER 0
@@ -121,6 +121,10 @@ enum
 
 #ifndef SDMMCHOST_DMA_MODE
 #define SDMMCHOST_DMA_MODE kUSDHC_DmaModeAdma2
+#endif
+/*! @brief sdmmchost delay for DAT3 detect card */
+#ifndef SDMMCHOST_DATA3_DETECT_CARD_DELAY
+#define SDMMCHOST_DATA3_DETECT_CARD_DELAY (10U)
 #endif
 /*!@brief SDMMC host dma descriptor buffer address align size */
 #define SDMMCHOST_DMA_DESCRIPTOR_BUFFER_ALIGN_SIZE (4U)

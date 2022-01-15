@@ -173,6 +173,9 @@ struct bt_a2dp_endpoint_state
     uint8_t multiplexing_config;
 #endif
     struct bt_a2dp_codec_state *codec;
+    uint8_t *buffer_points[JPL_INITIAL_NUM_DATA_READ_IND];
+    uint8_t buffer_produce;
+    uint8_t buffer_consume;
 };
 
 struct bt_a2dp
@@ -469,6 +472,11 @@ static void a2dp_control_ind_callback_call(struct bt_a2dp_endpoint_state *ep_sta
         case A2DP_CONTROL_START_PLAY:
             if (cbs->start_play != NULL)
             {
+                if (ep_state->endpoint->codec_id == BT_A2DP_SBC)
+                {
+                    ep_state->buffer_produce = 0u;
+                    ep_state->buffer_consume = 0u;
+                }
                 cbs->start_play(result);
             }
             break;
@@ -482,6 +490,14 @@ static void a2dp_control_ind_callback_call(struct bt_a2dp_endpoint_state *ep_sta
         case A2DP_CONTROL_SINK_STREAMER_DATA:
             if (cbs->sink_streamer_data != NULL)
             {
+                if (ep_state->endpoint->codec_id == BT_A2DP_SBC)
+                {
+                    ep_state->buffer_points[ep_state->buffer_produce++] = ((a2dp_streamer_data_t *)parameter)->data;
+                    if (ep_state->buffer_produce == (sizeof (ep_state->buffer_points) / sizeof (ep_state->buffer_points[0])))
+                    {
+                        ep_state->buffer_produce = 0u;
+                    }
+                }
                 cbs->sink_streamer_data(((a2dp_streamer_data_t *)parameter)->data, ((a2dp_streamer_data_t *)parameter)->data_length);
             }
             break;
@@ -709,7 +725,7 @@ static void a2dp_set_delay_work(struct bt_a2dp *a2dp,
     }
     else
     {
-        k_delayed_work_submit(&a2dp->retry_work, BT_MSEC(delayMs));
+        k_work_schedule(&a2dp->retry_work, BT_MSEC(delayMs));
     }
 }
 
@@ -1820,6 +1836,7 @@ static API_RESULT ethermind_a2dp_avdtp_notify_cb
                 struct bt_a2dp_codec_ie_internal peer_recovery_cap;
 #endif
 
+                memset(&peer_endpoint, 0, sizeof (peer_endpoint));
                 peer_endpoint.codec_id = sep_cap.codec_cap.codec_type;
                 peer_endpoint.info.sep = a2dp->current_seid_info;
                 peer_endpoint.config = NULL;
@@ -2070,7 +2087,7 @@ static API_RESULT ethermind_a2dp_notify_cb
                 if (a2dp->auto_configure_enabled)
                 {
                     a2dp->retry_count = 0U;
-                    k_delayed_work_cancel(&a2dp->retry_work);
+                    k_work_cancel_delayable(&a2dp->retry_work);
                     if (a2dp->discover_done)
                     {
                         a2dp->discover_done = 0U;
@@ -2465,7 +2482,7 @@ int bt_a2dp_init(void)
     for (uint8_t index = 0; index < CONFIG_BT_A2DP_MAX_CONN; ++index)
     {
         a2dp_instances[index].allocated = 0U;
-        k_delayed_work_init(&a2dp_instances[index].retry_work, a2dp_retry_work_timeout);
+        k_work_init_delayable(&a2dp_instances[index].retry_work, a2dp_retry_work_timeout);
     }
 
     memset(&a2dp_endpoint_states[0], 0, sizeof (a2dp_endpoint_states));
@@ -2967,10 +2984,22 @@ int bt_a2dp_snk_media_sync(struct bt_a2dp_endpoint *endpoint,
 
     if (endpoint->codec_id == BT_A2DP_SBC)
     {
-        BT_IGNORE_UNUSED_PARAM(data);
-        BT_IGNORE_UNUSED_PARAM(datalen);
+        if (data == NULL)
+        {
+            BT_IGNORE_UNUSED_PARAM(data);
+            BT_IGNORE_UNUSED_PARAM(datalen);
+            BT_jpl_remove_frames(ep_state->buffer_points[ep_state->buffer_consume], sbc_decoder->a2dp_jpl_poflen);
+        }
+        else
+        {
+            BT_jpl_remove_frames(data, datalen);
+        }
 
-        BT_jpl_remove_frames(sbc_decoder->a2dp_jpl_pof, sbc_decoder->a2dp_jpl_poflen);
+        ep_state->buffer_consume++;
+        if (ep_state->buffer_consume == (sizeof (ep_state->buffer_points) / sizeof (ep_state->buffer_points[0])))
+        {
+            ep_state->buffer_consume = 0u;
+        }
     }
 
     return 0;

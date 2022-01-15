@@ -125,6 +125,8 @@ extern "C" {
         ELM_OBJECT_TYPE_EGO = 1,    /*! elementary group object, containing multiple path objects. */
         ELM_OBJECT_TYPE_EBO = 2,    /*! elementary bitmap object, representing image data. */
         ELM_OBJECT_TYPE_BUF = 3,    /*! rendering buffer object, created by application. */
+        ELM_OBJECT_TYPE_FONT = 4,    /*! elementary font object, representing character data. */
+        ELM_OBJECT_TYPE_TEXT = 5,    /*! elementary text object, representing text data. */
     } ELM_OBJECT_TYPE;
 
     /*!

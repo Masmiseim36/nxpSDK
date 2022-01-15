@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-// File modified by NXP. Changes are described in file
-// /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes"
-
 #ifndef FLATBUFFERS_UTIL_H_
 #define FLATBUFFERS_UTIL_H_
 
 #include <errno.h>
 
 #include "flatbuffers/base.h"
+#include "flatbuffers/stl_emulation.h"
 
 #ifndef FLATBUFFERS_PREFER_PRINTF
 #  include <sstream>
@@ -33,10 +31,6 @@
 
 #include <iomanip>
 #include <string>
-#if !defined(__ICCARM__) && !defined(__ARMCC_VERSION)
-#include <sys/types.h>
-#include <sys/stat.h>
-#endif
 
 namespace flatbuffers {
 
@@ -78,6 +72,14 @@ inline bool is_xdigit(char c) {
 
 // Case-insensitive isalnum
 inline bool is_alnum(char c) { return is_alpha(c) || is_digit(c); }
+
+inline char CharToUpper(char c) {
+  return static_cast<char>(::toupper(static_cast<unsigned char>(c)));
+}
+
+inline char CharToLower(char c) {
+  return static_cast<char>(::tolower(static_cast<unsigned char>(c)));
+}
 
 // @end-locale-independent functions for ASCII character set
 
@@ -453,7 +455,7 @@ std::string StripPath(const std::string &filepath);
 // Strip the last component of the path + separator.
 std::string StripFileName(const std::string &filepath);
 
-// Concatenates a path with a filename, regardless of wether the path
+// Concatenates a path with a filename, regardless of whether the path
 // ends in a separator or not.
 std::string ConCatPathFileName(const std::string &path,
                                const std::string &filename);

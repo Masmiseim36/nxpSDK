@@ -1848,7 +1848,7 @@ int mbedtls_aes_self_test( int verbose )
         }
 
         /*
-         * AES-192 is an optional feature that may be unavailable when
+         * AES-192 and AES-256 is an optional feature that may be unavailable when
          * there is an alternative underlying implementation i.e. when
          * MBEDTLS_AES_ALT is defined.
          */

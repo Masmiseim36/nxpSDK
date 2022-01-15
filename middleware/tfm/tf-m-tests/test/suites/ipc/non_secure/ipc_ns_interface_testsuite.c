@@ -37,45 +37,41 @@ static void tfm_ipc_test_1010(struct test_result_t *ret);
 static void tfm_ipc_test_1011(struct test_result_t *ret);
 #endif
 
-#ifdef TFM_PARTITION_FFM11
 static void tfm_ipc_test_1012(struct test_result_t *ret);
-#endif
 
 static struct test_t ipc_veneers_tests[] = {
-    {&tfm_ipc_test_1001, "TFM_IPC_TEST_1001",
+    {&tfm_ipc_test_1001, "TFM_NS_IPC_TEST_1001",
      "Get PSA framework version", {TEST_PASSED}},
-    {&tfm_ipc_test_1002, "TFM_IPC_TEST_1002",
+    {&tfm_ipc_test_1002, "TFM_NS_IPC_TEST_1002",
      "Get version of an RoT Service", {TEST_PASSED}},
-    {&tfm_ipc_test_1003, "TFM_IPC_TEST_1003",
+    {&tfm_ipc_test_1003, "TFM_NS_IPC_TEST_1003",
      "Connect to an RoT Service", {TEST_PASSED}},
-    {&tfm_ipc_test_1004, "TFM_IPC_TEST_1004",
+    {&tfm_ipc_test_1004, "TFM_NS_IPC_TEST_1004",
      "Call an RoT Service", {TEST_PASSED}},
-    {&tfm_ipc_test_1005, "TFM_IPC_TEST_1005",
+    {&tfm_ipc_test_1005, "TFM_NS_IPC_TEST_1005",
      "Call IPC_INIT_BASIC_TEST service", {TEST_PASSED}},
-    {&tfm_ipc_test_1006, "TFM_IPC_TEST_1006",
+    {&tfm_ipc_test_1006, "TFM_NS_IPC_TEST_1006",
      "Call PSA RoT access APP RoT memory test service", {TEST_PASSED}},
 #ifdef TFM_IPC_ISOLATION_2_TEST_READ_ONLY_MEM
-    {&tfm_ipc_test_1007, "TFM_IPC_TEST_1007",
+    {&tfm_ipc_test_1007, "TFM_NS_IPC_TEST_1007",
      "Call PSA RoT access APP RoT readonly memory test service", {TEST_PASSED}},
 #endif
 #ifdef TFM_IPC_ISOLATION_2_APP_ACCESS_PSA_MEM
-    {&tfm_ipc_test_1008, "TFM_IPC_TEST_1008",
+    {&tfm_ipc_test_1008, "TFM_NS_IPC_TEST_1008",
      "Call APP RoT access PSA RoT memory test service", {TEST_PASSED}},
 #endif
 #ifdef TFM_IPC_ISOLATION_2_MEM_CHECK
-    {&tfm_ipc_test_1009, "TFM_IPC_TEST_1009",
+    {&tfm_ipc_test_1009, "TFM_NS_IPC_TEST_1009",
      "Call APP RoT memory check test service", {TEST_PASSED}},
 #endif
-    {&tfm_ipc_test_1010, "TFM_IPC_TEST_1010",
+    {&tfm_ipc_test_1010, "TFM_NS_IPC_TEST_1010",
      "Test psa_call with the status of PSA_ERROR_PROGRAMMER_ERROR", {TEST_PASSED}},
 #ifdef TFM_IPC_ISOLATION_3_RETRIEVE_APP_MEM
-    {&tfm_ipc_test_1011, "TFM_IPC_TEST_1011",
+    {&tfm_ipc_test_1011, "TFM_NS_IPC_TEST_1011",
      "Call APP RoT access another APP RoT memory test service", {TEST_PASSED}},
 #endif
-#ifdef TFM_PARTITION_FFM11
-    {&tfm_ipc_test_1012, "TFM_IPC_TEST_1012",
+    {&tfm_ipc_test_1012, "TFM_NS_IPC_TEST_1012",
      "Accessing stateless service from non-secure client", {TEST_PASSED}},
-#endif
 };
 
 void register_testsuite_ns_ipc_interface(struct test_suite_t *p_test_suite)
@@ -84,7 +80,7 @@ void register_testsuite_ns_ipc_interface(struct test_suite_t *p_test_suite)
 
     list_size = (sizeof(ipc_veneers_tests) / sizeof(ipc_veneers_tests[0]));
 
-    set_testsuite("IPC non-secure interface test (TFM_IPC_TEST_1XXX)",
+    set_testsuite("IPC non-secure interface test (TFM_NS_IPC_TEST_1XXX)",
                   ipc_veneers_tests, list_size, p_test_suite);
 }
 
@@ -412,7 +408,6 @@ static void tfm_ipc_test_1011(struct test_result_t *ret)
 }
 #endif
 
-#ifdef TFM_PARTITION_FFM11
 /**
  * \brief Accessing a stateless service
  *
@@ -426,14 +421,15 @@ static void tfm_ipc_test_1012(struct test_result_t *ret)
     psa_invec in_vec[] = { {&data, sizeof(uint32_t)} };
 
     /* Connecting to a stateless service should fail. */
-    handle = psa_connect(TFM_FFM11_SERVICE1_SID, TFM_FFM11_SERVICE1_VERSION);
+    handle = psa_connect(IPC_SERVICE_TEST_STATELESS_ROT_SID,
+                         IPC_SERVICE_TEST_STATELESS_ROT_VERSION);
     if (handle > 0) {
         TEST_FAIL("Connecting to stateless service test should fail.\r\n");
         return;
     }
 
     /* Calling a stateless service should succeed. */
-    status = psa_call(TFM_FFM11_SERVICE1_HANDLE, PSA_IPC_CALL,
+    status = psa_call(IPC_SERVICE_TEST_STATELESS_ROT_HANDLE, PSA_IPC_CALL,
                       in_vec, 1, NULL, 0);
     if (status < 0) {
         TEST_FAIL("Calling a stateless service test fail.\r\n");
@@ -442,4 +438,3 @@ static void tfm_ipc_test_1012(struct test_result_t *ret)
 
     ret->val = TEST_PASSED;
 }
-#endif

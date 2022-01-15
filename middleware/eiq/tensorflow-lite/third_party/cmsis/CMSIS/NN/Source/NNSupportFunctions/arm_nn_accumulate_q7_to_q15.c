@@ -21,14 +21,15 @@
  * Title:        arm_nn_accumulate_q7_to_q15.c
  * Description:  Accumulate q7 vector into q15 one.
  *
- * $Date:        May 29, 2020
- * $Revision:    V.1.0.1
+ * $Date:        09. October 2020
+ * $Revision:    V.1.0.2
  *
  * pSrc Processor:  Cortex-M CPUs
  *
  * -------------------------------------------------------------------- */
-#include "cmsis/CMSIS/DSP/Include/arm_math.h"
-#include "cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
+
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnfunctions.h"
+#include "third_party/cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h"
 
 /**
  * @ingroup groupSupport
@@ -61,10 +62,10 @@ void arm_nn_accumulate_q7_to_q15(q15_t *pDst, const q7_t *pSrc, uint32_t length)
 #endif
 
         in = arm_nn_read_q15x2(pCnt);
-        write_q15x2_ia(&pCnt, __QADD16(vo1, in));
+        arm_nn_write_q15x2_ia(&pCnt, __QADD16(vo1, in));
 
         in = arm_nn_read_q15x2(pCnt);
-        write_q15x2_ia(&pCnt, __QADD16(vo2, in));
+        arm_nn_write_q15x2_ia(&pCnt, __QADD16(vo2, in));
 
         cnt--;
     }

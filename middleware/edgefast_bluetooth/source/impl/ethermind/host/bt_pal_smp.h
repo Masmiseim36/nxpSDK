@@ -46,7 +46,7 @@ struct bt_smp_hdr {
 #define BT_SMP_OOB_NOT_PRESENT			0x00
 #define BT_SMP_OOB_PRESENT			0x01
 
-#define BT_SMP_MIN_ENC_KEY_SIZE			7
+#define BT_SMP_MIN_ENC_KEY_SIZE			CONFIG_BT_SMP_MIN_ENC_KEY_SIZE
 #define BT_SMP_MAX_ENC_KEY_SIZE			16
 
 #define BT_SMP_DIST_ENC_KEY			0x01
@@ -148,6 +148,8 @@ STRUCT_PACKED_PRE
 struct bt_smp_keypress_notif {
 	uint8_t type;
 } STRUCT_PACKED_POST;
+
+#define BT_SMP_NUM_CMDS                         0x0f
 
 int bt_smp_start_security(struct bt_conn *conn);
 bool bt_smp_request_ltk(struct bt_conn *conn, uint64_t rand, uint16_t ediv,

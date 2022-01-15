@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides functions for 802.11H
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -122,7 +122,7 @@ t_void wlan_11h_init(mlan_adapter *adapter)
     pstate_11h->is_slave_radar_det_active       = MFALSE;
 
     /* Initialize quiet_ie */
-    (void)memset(adapter, pquiet, 0, sizeof(IEEEtypes_Quiet_t));
+    (void)__memset(adapter, pquiet, 0, sizeof(IEEEtypes_Quiet_t));
     pquiet->element_id = QUIET;
     pquiet->len        = (sizeof(pquiet->quiet_count) + sizeof(pquiet->quiet_period) + sizeof(pquiet->quiet_duration) +
                    sizeof(pquiet->quiet_offset));
@@ -142,7 +142,7 @@ t_void wlan_11h_init(mlan_adapter *adapter)
     pstate_rdh->new_channel     = 0;
     pstate_rdh->uap_band_cfg    = 0;
     pstate_rdh->max_bcn_dtim_ms = 0;
-    (void)memset(adapter, pstate_rdh->priv_list, 0, sizeof(pstate_rdh->priv_list));
+    (void)__memset(adapter, pstate_rdh->priv_list, 0, sizeof(pstate_rdh->priv_list));
 
     LEAVE();
 }

@@ -21,15 +21,15 @@
 
 /* ----------------------------------------- Global Definitions */
 /** Events for Security Access Contest State Machine */
-#define SM_PIN_CODE_REQUEST                     0x01
-#define SM_AUTHORIZE_REQUEST                    0x02
-#define SM_CONNECTION_REQUEST                   0x03
-#define SM_L2CAP_REQUEST                        0x04
-#define SM_RFCOMM_REQUEST                       0x05
-#define SM_AUTHORIZATION_COMPLETE               0x06
-#define SM_AUTHENTICATION_COMPLETE              0x07
-#define SM_ENCRYPTION_COMPLETE                  0x08
-#define SM_DISCONNECTION_COMPLETE               0x09
+#define SM_PIN_CODE_REQUEST                     0x01U
+#define SM_AUTHORIZE_REQUEST                    0x02U
+#define SM_CONNECTION_REQUEST                   0x03U
+#define SM_L2CAP_REQUEST                        0x04U
+#define SM_RFCOMM_REQUEST                       0x05U
+#define SM_AUTHORIZATION_COMPLETE               0x06U
+#define SM_AUTHENTICATION_COMPLETE              0x07U
+#define SM_ENCRYPTION_COMPLETE                  0x08U
+#define SM_DISCONNECTION_COMPLETE               0x09U
 
 
 /* ----------------------------------------- Internal Functions */

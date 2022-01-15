@@ -1,0 +1,7 @@
+Littlefs is a little fail-safe filesystem designed for microcontrollers.
+
+Requirements of littlefs regarding KSDK and MCUXpresso:
+Littlefs does not build with Redlib library, due to some missing headers,
+namely intypes.h, that Redlib does not provide.
+It is recommended to link you application utilizing littlefs against Newlib: NewlibNano (nohost) would suffice.
+Please observe the library options especially when creating new project including littlefs using MCUX wizard.

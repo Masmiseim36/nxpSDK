@@ -169,6 +169,7 @@ static FMSTR_BOOL _FMSTR_MCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx)
 #endif
 
     /* RX fifo config. */
+    FMSTR_MemSet(&rxFifo, 0, sizeof(rxFifo));
     rxFifo.address       = FMSTR_MCAN_RXMB_OFFSET;
     rxFifo.elementSize   = 1U;
     rxFifo.watermark     = 0;
@@ -185,6 +186,8 @@ static FMSTR_BOOL _FMSTR_MCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx)
 #endif
 
     /* TX buffer config. */
+    FMSTR_MemSet(&txBuffer, 0, sizeof(txBuffer));
+    txBuffer.mode          = kMCAN_txQueue;
     txBuffer.address       = FMSTR_MCAN_TXMB_OFFSET;
     txBuffer.dedicatedSize = 1U;
     txBuffer.fqSize        = 0;

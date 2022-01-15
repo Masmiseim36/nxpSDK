@@ -70,6 +70,14 @@ extern "C" {
 #define VLC_OP_QUAD_REL     0x07
 #define VLC_OP_CUBIC        0x08
 #define VLC_OP_CUBIC_REL    0x09
+#define VLC_OP_SCCWARC      0x0A
+#define VLC_OP_SCCWARC_REL  0x0B
+#define VLC_OP_SCWARC       0x0C
+#define VLC_OP_SCWARC_REL   0x0D
+#define VLC_OP_LCCWARC      0x0E
+#define VLC_OP_LCCWARC_REL  0x0F
+#define VLC_OP_LCWARC       0x10
+#define VLC_OP_LCWARC_REL   0x11
 
 /* Macros for path manipulating: See path definitions. "VLM" means "VGLite Macros" */
 #define VLM_PATH_ENABLE_UPLOAD(path)    (path).uploaded.property |= 1
@@ -98,7 +106,7 @@ extern "C" {
         VG_LITE_GENERIC_IO,         /*! Cannot communicate with the kernel driver. */
         VG_LITE_NOT_SUPPORT,        /*! Function call not supported. */
         VG_LITE_MULTI_THREAD_FAIL,  /*! Multi-thread/tasks fail. */
-        VG_LITE_ALREADY_EXISTS,     /*! Element already exists (e.g. font exists) */
+        VG_LITE_ALREADY_EXISTS,     /*! Object already exists */
         VG_LITE_NOT_ALIGNED,        /*! Data alignment error */
     }
     vg_lite_error_t;
@@ -455,7 +463,8 @@ extern "C" {
         vg_lite_hw_memory_t uploaded;       /*! Path data that has been upload into GPU addressable memory. */
         int32_t path_length;                /*! Number of bytes in the path data. */
         void *path;                         /*! Pointer to the physical description of the path. */
-        int32_t path_changed;               /* Indicate whether path data is synced with command buffer (uploaded) or not. */
+        int8_t path_changed;               /* Indicate whether path data is synced with command buffer (uploaded) or not. */
+        int8_t pdata_internal;             /*! Indicate whether path data memory is allocated by driver. */
     } vg_lite_path_t;
 
     /*!
@@ -532,9 +541,9 @@ extern "C" {
     {
         vg_lite_float_t cx;        /* the x coordinate of the center point. */
         vg_lite_float_t cy;        /* the y coordinate of the center point. */
+        vg_lite_float_t r;         /* the radius. */
         vg_lite_float_t fx;        /* the x coordinate of the focal point. */
         vg_lite_float_t fy;        /* the y coordinate of the focal point. */
-        vg_lite_float_t r;         /* the radius. */
     }
     vg_lite_radial_gradient_parameter_t;
 
@@ -944,6 +953,47 @@ extern "C" {
                            vg_lite_quality_t quality,
                            uint32_t path_length,
                            void *path_data,
+                           vg_lite_float_t min_x, vg_lite_float_t min_y,
+                           vg_lite_float_t max_x, vg_lite_float_t max_y);
+
+     /*!
+     @abstract This api initializes a path object which include arc command by given member values.
+
+     @param path
+     The path object.
+
+     @param data_format
+     The coordinate data format of the path. Should be FP32.
+
+     @param quality
+     The rendering quality (AA level) of the path.
+
+     @param path_length
+     The memory length of the path data.
+
+     @param path_data
+     The given path data which inlcude arc command.
+
+     @param min_x
+     The min x of the bounding box.
+
+     @param min_y
+     The min y of the bounding box.
+
+     @param max_x
+     The max x of the bounding box.
+
+     @param max_y
+     The max y of the bounding box.
+
+     @result
+     Returns the status as defined by <code>vg_lite_error_t</code>.
+     */
+    vg_lite_error_t vg_lite_init_arc_path(vg_lite_path_t * path,
+                           vg_lite_format_t data_format,
+                           vg_lite_quality_t quality,
+                           uint32_t path_length,
+                           void *   path_data,
                            vg_lite_float_t min_x, vg_lite_float_t min_y,
                            vg_lite_float_t max_x, vg_lite_float_t max_y);
 

@@ -13,7 +13,7 @@
 #define CONFIG_UAP_AMPDU_RX   1
 #define CONFIG_WIFI_MAX_PRIO (configMAX_PRIORITIES - 1)
 
-#if defined(SD8977) || defined(SD8978)
+#if defined(SD8977) || defined(SD8978) || defined(SD8987)
 #define CONFIG_5GHz_SUPPORT 1
 #endif
 

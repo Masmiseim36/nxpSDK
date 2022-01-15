@@ -444,12 +444,13 @@ usb_status_t USB_HostVideoStreamSetInterface(usb_host_class_handle classHandle,
 
     videoInstance->streamIntfHandle = interfaceHandle;
 
-    status = USB_HostOpenDeviceInterface(videoInstance->deviceHandle, interfaceHandle); /* save the application callback function */
+    status = USB_HostOpenDeviceInterface(videoInstance->deviceHandle,
+                                         interfaceHandle); /* save the application callback function */
     if (status != kStatus_USB_Success)
     {
         return status;
     }
-    
+
     /* cancel transfers */
     if (videoInstance->streamIsoInPipe != NULL)
     {
@@ -612,7 +613,8 @@ usb_status_t USB_HostVideoControlSetInterface(usb_host_class_handle classHandle,
     videoInstance->controlIntfHandle = interfaceHandle;
     interface_ptr                    = (usb_host_interface_t *)interfaceHandle;
 
-    status = USB_HostOpenDeviceInterface(videoInstance->deviceHandle, interfaceHandle); /* notify host driver the interface is open */
+    status = USB_HostOpenDeviceInterface(videoInstance->deviceHandle,
+                                         interfaceHandle); /* notify host driver the interface is open */
     if (status != kStatus_USB_Success)
     {
         return status;
@@ -789,13 +791,13 @@ usb_status_t USB_HostVideoInit(usb_device_handle deviceHandle, usb_host_class_ha
 {
     usb_host_video_instance_struct_t *videoInstance =
         (usb_host_video_instance_struct_t *)OSA_MemoryAllocate(sizeof(usb_host_video_instance_struct_t));
-    uint32_t info_value;
+    uint32_t info_value = 0U;
     uint32_t *temp;
     if (videoInstance == NULL)
     {
         return kStatus_USB_AllocFail;
     }
-    
+
     /* initialize video instance */
     videoInstance->deviceHandle      = deviceHandle;
     videoInstance->controlIntfHandle = NULL;
@@ -926,7 +928,7 @@ usb_status_t USB_HostVideoStreamGetFormatDescriptor(usb_host_class_handle classH
     {
         return kStatus_USB_InvalidHandle;
     }
-    
+
     /* get the steam interface handle */
     interface_ptr = (usb_host_interface_t *)videoInstance->streamIntfHandle;
 

@@ -10110,6 +10110,38 @@ API_RESULT BT_hci_read_enhanced_transmit_power_level
 /* ------------------------------------------------------------------------- */
 
 /* HCI Vendor Specific Commands APIs --------------------------------------- */
+/**
+ *  \brief To send a generic HCI command to the local Bluetooth device.
+ *
+ *  \par Description:
+ *       This API can be used to send generic HCI commands to the local
+ *       Bluetooth device. The HCI Group, Command Opcode and parameters are
+ *       specific to the command. Refer to the documentation of
+ *       the Bluetooth device to find out the details of available commands.
+ *
+ *  \param [in] ogf
+ *         Opcode Group Field for the Opcode.
+ *
+ *  \param [in] ocf
+ *         Opcode Command Field for the Opcode.
+ *
+ *  \param [in] params
+ *         Parameters to be framed for the HCI command.
+ *
+ *  \param [in] params_length
+ *         Total length of the parameters passed.
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  BT_error.h or Host Controller Error Codes section.
+ */
+API_RESULT BT_hci_send_command
+           (
+               UCHAR    ogf,
+               UINT16   ocf,
+               UCHAR *  params,
+               UCHAR    params_length
+           );
 
 /**
  *  \brief To send a vendor specific HCI command to the local Bluetooth device.
@@ -10134,53 +10166,11 @@ API_RESULT BT_hci_read_enhanced_transmit_power_level
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  BT_error.h or Host Controller Error Codes section.
  */
-API_RESULT BT_hci_vendor_specific_command
-           (
-               UINT16   ocf,
-               UCHAR *  params,
-               UCHAR    params_length
-           );
+#define BT_hci_vendor_specific_command(ocf, params, params_length) \
+        BT_hci_send_command(0x3FU, (ocf), (params), (params_length))
 
 /* ------------------------------------------------------------------------- */
 
-
-/* ------------------------------------------------------------------------- */
-
-/* HCI Generic Command API --------------------------------------- */
-
-/**
- *  \brief To send a generic HCI command to the local Bluetooth device.
- *
- *  \par Description:
- *       This API can be used to send vendor specific HCI commands to the local
- *       Bluetooth device. The HCI Opcode and parameters are specific to
- *       the vendor specific command. Refer to the documentation of
- *       the Bluetooth device to find out the details of available vendor
- *       specific commands.
- *
- *
- *  \param [in] ogf
- *         Opcode Group Field.
- *  \param [in] ocf
- *         Opcode Command Field.
- *
- *  \param [in] params
- *         Parameters to be framed for the vendor specific HCI command.
- *
- *  \param [in] params_length
- *         Total length of the parameters passed.
- *
- *  \return
- *      API_RESULT: API_SUCCESS or one of the error codes as defined in
- *                  BT_error.h or Host Controller Error Codes section.
- */
-API_RESULT BT_hci_generic_command
-           (
-               UCHAR    ogf,
-               UINT16   ocf,
-               UCHAR *  params,
-               UCHAR    params_length
-           );
 
 /* APIs for EtherMind Security Manager ------------------------------------- */
 /**

@@ -10,7 +10,7 @@
 
 #define EXAMPLE_NAME       "Keyword spotting"
 #define FRAMEWORK_NAME     "TensorFlow Lite Micro"
-#define DETECTION_TRESHOLD 75
+#define DETECTION_TRESHOLD 95
 #define NUM_RESULTS        1
 #define DEMO_VERBOSE       false
 #define EOL                "\r\n"

@@ -11,13 +11,15 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT595S_cm33)
+include(middleware_freertos-aws_iot_demos_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_pkcs11_helpers_MIMXRT595S_cm33)
+include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT595S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT595S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT595S_cm33)
+include(middleware_freertos-aws_iot_pkcs11_helpers_MIMXRT595S_cm33)
 

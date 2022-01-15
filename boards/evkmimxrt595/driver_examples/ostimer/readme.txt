@@ -9,7 +9,7 @@ Toolchain supported
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 
 Hardware requirements
 =====================
@@ -36,6 +36,8 @@ Running the demo
 ================
 The log below shows the output of the hello world demo in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Press any key to start example.
+
 Board will enter power deep sleep mode, and then wakeup by OS timer after about 5 seconds.
 After Board wakeup, the OS timer will trigger the match interrupt about every 2 seconds.
 Board wakeup from deep sleep mode.

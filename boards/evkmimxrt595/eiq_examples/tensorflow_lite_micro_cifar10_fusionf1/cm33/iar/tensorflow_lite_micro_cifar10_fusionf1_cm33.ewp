@@ -810,6 +810,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../fusionf1/binary/dsp_reset_release.bin,__dsp_reset_bin,__dsp_reset_section,4</state>
+          <state>--keep=__dsp_reset_bin</state>
           <state>--image_input=$PROJ_DIR$/../../fusionf1/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../fusionf1/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -1848,6 +1850,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state>--image_input=$PROJ_DIR$/../../fusionf1/binary/dsp_reset_release.bin,__dsp_reset_bin,__dsp_reset_section,4</state>
+          <state>--keep=__dsp_reset_bin</state>
           <state>--image_input=$PROJ_DIR$/../../fusionf1/binary/dsp_text_release.bin,__dsp_text_bin,__dsp_text_section,4</state>
           <state>--keep=__dsp_text_bin</state>
           <state>--image_input=$PROJ_DIR$/../../fusionf1/binary/dsp_data_release.bin,__dsp_data_bin,__dsp_data_section,4</state>
@@ -2079,31 +2083,7 @@
     </settings>
   </configuration>
   <group>
-    <name>dsp_binary</name>
-    <file>
-      <name>$PROJ_DIR$/../../fusionf1/binary/dsp_text_release.bin</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../fusionf1/binary/dsp_data_release.bin</name>
-    </file>
-  </group>
-  <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../main.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../dsp_config.h</name>
-    </file>
-  </group>
-  <group>
     <name>board</name>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../pin_mux.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../board.c</name>
     </file>
@@ -2123,6 +2103,12 @@
       <name>$PROJ_DIR$/../board_init.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../dsp_support.c</name>
     </file>
     <file>
@@ -2133,6 +2119,27 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../pmic_support.h</name>
+    </file>
+  </group>
+  <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../dsp_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../main.c</name>
+    </file>
+  </group>
+  <group>
+    <name>dsp_binary</name>
+    <file>
+      <name>$PROJ_DIR$/../../fusionf1/binary/dsp_reset_release.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../fusionf1/binary/dsp_text_release.bin</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../fusionf1/binary/dsp_data_release.bin</name>
     </file>
   </group>
   <group>

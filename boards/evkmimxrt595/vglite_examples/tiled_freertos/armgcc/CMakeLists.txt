@@ -59,7 +59,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/video/display/dbi
     ${ProjDirPath}/../../../../../components/video/display/dbi/flexio
     ${ProjDirPath}/../../../../../components/video/display/dc/ssd1963
-    ${ProjDirPath}/../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/vglite
     ${ProjDirPath}/../../../../../components/video/display/dc/lcdif
     ${ProjDirPath}/../../../../../components/video/display
@@ -68,6 +68,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/video/display/rm68200
     ${ProjDirPath}/../../../../../components/video/display/rm67162
     ${ProjDirPath}/../../../../../components/video/display/dc/dsi_cmd
+    ${ProjDirPath}/../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../components/video/display/fbdev
     ${ProjDirPath}/../../../../../components/video
     ${ProjDirPath}/../../../../../devices/MIMXRT595S
@@ -133,6 +134,8 @@ include(driver_dc-fb-dsi-cmd_MIMXRT595S_cm33)
 
 include(driver_mipi_dsi_smartdma_MIMXRT595S_cm33)
 
+include(driver_display-hx8394_MIMXRT595S_cm33)
+
 include(driver_fbdev_MIMXRT595S_cm33)
 
 include(driver_video-common_MIMXRT595S_cm33)
@@ -159,7 +162,7 @@ include(component_serial_manager_uart_MIMXRT595S_cm33)
 
 include(driver_flexcomm_usart_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 

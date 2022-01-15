@@ -2,7 +2,7 @@
  *
  *  @brief This file provides UAP related APIs.
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -44,6 +44,7 @@
 #ifdef CONFIG_5GHz_SUPPORT
 uint8_t rates_5ghz[] = {0x8c, 0x98, 0xb0, 0x12, 0x24, 0x48, 0x60, 0x6c};
 #endif
+extern int wifi_11d_country;
 
 int wifi_uap_prepare_and_send_cmd(mlan_private *pmpriv,
                                   t_u16 cmd_no,
@@ -70,6 +71,35 @@ int wifi_uap_prepare_and_send_cmd(mlan_private *pmpriv,
 
     wifi_wait_for_cmdresp(priv);
     return wm_wifi.cmd_resp_status;
+}
+
+int wifi_uap_set_country(int country)
+{
+    int ret, nr_sb;
+
+    if (wifi_uap_enable_11d() != WM_SUCCESS)
+    {
+        wifi_e("unable to enabled 11d feature\r\n");
+        return WM_FAIL;
+    }
+
+    wifi_11d_country = country;
+
+    wifi_sub_band_set_t *sub_band = get_sub_band_from_country(country, &nr_sb);
+
+    wifi_domain_param_t *dp = get_11d_domain_params(country, sub_band, nr_sb);
+
+    ret = wifi_uap_set_domain_params(dp);
+
+    if (ret != WM_SUCCESS)
+    {
+        wifi_11d_country = 0x00;
+        os_mem_free(dp);
+        return ret;
+    }
+
+    os_mem_free(dp);
+    return WM_SUCCESS;
 }
 
 /*

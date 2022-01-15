@@ -608,6 +608,9 @@ struct bt_conn_le_create_param {
  *
  *  This uses the General Connection Establishment procedure.
  *
+ *  The application must disable explicit scanning before initiating
+ *  a new LE connection.
+ *
  *  @param[in]  peer         Remote address.
  *  @param[in]  create_param Create connection parameters.
  *  @param[in]  conn_param   Initial connection parameters.
@@ -776,6 +779,11 @@ struct bt_conn_cb {
 	 *  In case the err parameter is non-zero it means that the
 	 *  connection establishment failed.
 	 *
+	 *  @note If the connection was established from an advertising set then
+	 *        the advertising set cannot be restarted directly from this
+	 *        callback. Instead use the connected callback of the
+	 *        advertising set.
+	 *
 	 *  @param conn New connection object.
 	 *  @param err HCI error. Zero for success, non-zero otherwise.
 	 *
@@ -825,6 +833,9 @@ struct bt_conn_cb {
 	 *  requirements for each callback. Each callback gets the
 	 *  parameters as returned by previous callbacks, i.e. they are not
 	 *  necessarily the same ones as the remote originally sent.
+	 *
+	 *  If the application does not have this callback then the default
+	 *  is to accept the parameters.
 	 *
 	 *  @param conn Connection object.
 	 *  @param param Proposed connection parameters.

@@ -23,6 +23,11 @@
 /* XML header for folder & message listing object */
 static UCHAR xml_hdr[] = "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>\n";
 
+/*
+static UCHAR conv_sample_participant_id[] =
+"<participant uci = \"sample@email.de\" display_name = \"Sample\" chat_state = \"2\" last_activity = \"20140801T012900+01:00\" x_bt_uid = \"K1A2A3A4B1B2C1C2D1D2E1E2E3E4F1F2\" />\n";
+*/
+
 static UCHAR msg_readline[512U];
 
 /* --------------------------------------------- Functions */
@@ -58,8 +63,11 @@ API_RESULT BT_map_create_xml_folder_listing_pl
     UCHAR first;
 
     *num_entity = 0U;
+
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     xml_fd = NULL;
+    BT_mem_set(&h, 0, sizeof(BT_fops_object_handle));
+    BT_mem_set(&info, 0, sizeof(BT_FOPS_FILINFO));
 
     if (NULL == dir_entry)
     {
@@ -78,7 +86,7 @@ API_RESULT BT_map_create_xml_folder_listing_pl
         return API_FAILURE;
     }
 
-    BT_str_n_copy(dir, dir_entry, sizeof(dir));
+    BT_str_n_copy(dir, dir_entry, (sizeof(dir) - 1));
 
     BT_debug_trace(BT_MODULE_ID_MAP,
     "[MAP_PL] Path = %s\n", dir_entry);
@@ -188,8 +196,12 @@ API_RESULT BT_map_create_xml_messages_listing_pl
     UCHAR first;
 
     *num_entity = 0U;
+
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     xml_fd = NULL;
+    BT_mem_set(&h, 0, sizeof(BT_fops_object_handle));
+    BT_mem_set(&info, 0, sizeof(BT_FOPS_FILINFO));
+    BT_mem_set(&msg_attr, 0, sizeof(MAP_MSG_ATTR_PL));
 
     if (NULL == dir_entry)
     {
@@ -208,7 +220,7 @@ API_RESULT BT_map_create_xml_messages_listing_pl
         return API_FAILURE;
     }
 
-    BT_str_n_copy(dir, dir_entry, sizeof(dir));
+    BT_str_n_copy(dir, dir_entry, (sizeof(dir) - 1));
 
     BT_debug_trace(BT_MODULE_ID_MAP,
     "[MAP_PL] Path = %s\n", dir_entry);
@@ -384,6 +396,7 @@ API_RESULT BT_map_update_inbox_pl
 
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     fd = NULL;
+    BT_mem_set(file_object, 0, sizeof(file_object));
 
     /* Form the file handle */
     BT_str_print((CHAR *)fn, "sample.msg");
@@ -510,11 +523,14 @@ API_RESULT BT_map_push_message_pl
     BT_fops_file_handle fp;
     int i;
 
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    BT_mem_set(file_object, 0, sizeof(file_object));
     fp = NULL;
 
     for (i = 1U; i < item_id; i ++)
     {
         BT_str_print((CHAR *)fn, "l123456789%07X.vmg", i);
+
         /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
         (void)BT_vfops_create_object_name
         (
@@ -527,6 +543,7 @@ API_RESULT BT_map_push_message_pl
         if (NULL == fp)
         {
             BT_str_print((CHAR *)fn, "h123456789%07X.vmg", i);
+
             /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
             (void)BT_vfops_create_object_name
             (
@@ -584,6 +601,7 @@ API_RESULT map_get_message_attributes_pl
 
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     fd = NULL;
+    BT_mem_set(file_object, 0, sizeof(file_object));
 
     /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
     (void)BT_vfops_create_object_name
@@ -605,7 +623,7 @@ API_RESULT map_get_message_attributes_pl
     message = 0x00U;
 
     readstr = msg_readline;
-    count = sizeof(msg_readline);
+    count = sizeof(msg_readline) - 1;
 
     /* Get the Message Handle. This will be from the filename */
     BT_mem_copy (attr->handle, &filename[1U], 16U);
@@ -631,7 +649,7 @@ API_RESULT map_get_message_attributes_pl
 
     BT_LOOP_FOREVER()
     {
-        BT_mem_set(readstr, 0, count);
+        BT_mem_set(readstr, 0, sizeof(msg_readline));
         retval = BT_fops_file_get(fd, readstr, &count);
 
         if (API_SUCCESS != retval)
@@ -658,8 +676,8 @@ API_RESULT map_get_message_attributes_pl
         }
 
         /* Get Type */
-        if ((0 == BT_mem_cmp("TYPE:", readstr, 5U)) ||
-            (0 == BT_mem_cmp("type:", readstr, 5U)))
+        if ((NULL != BT_str_str(readstr, "TYPE:")) ||
+            (NULL != BT_str_str(readstr, "type:")))
         {
             BT_str_print(attr->type, "%s", &readstr[5U]);
 
@@ -693,16 +711,16 @@ API_RESULT map_get_message_attributes_pl
         }
 
         /* Get Size */
-        if ((0 == BT_mem_cmp("LENGTH:", readstr, 7U)) ||
-            (0 == BT_mem_cmp("length:", readstr, 7U)))
+        if ((NULL != BT_str_str(readstr, "LENGTH:")) ||
+            (NULL != BT_str_str(readstr, "length:")))
         {
             BT_str_print(attr->size, "%s", &readstr[7U]);
             continue;
         }
 
         /* Get Read Status */
-        if ((0 == BT_mem_cmp("STATUS:", readstr, 7U)) ||
-            (0 == BT_mem_cmp("status:", readstr, 7U)))
+        if ((NULL != BT_str_str(readstr, "STATUS:")) ||
+            (NULL != BT_str_str(readstr, "status:")))
         {
             if ((0 == BT_str_cmp(&readstr[7U], "UNREAD")) ||
                 (0 == BT_str_cmp(&readstr[7U], "unread")))
@@ -721,8 +739,8 @@ API_RESULT map_get_message_attributes_pl
             continue;
         }
 
-        if ((0 == BT_mem_cmp("BEGIN:VCARD", readstr, 11U)) ||
-            (0 == BT_mem_cmp("begin:vcard", readstr, 11U)))
+        if ((NULL != BT_str_str(readstr, "BEGIN:VCARD")) ||
+            (NULL != BT_str_str(readstr, "begin:vcard")))
         {
             vcard_count ++;
 
@@ -742,8 +760,8 @@ API_RESULT map_get_message_attributes_pl
             }
         }
 
-        if ((0 == BT_mem_cmp("N:", readstr, 2U)) ||
-            (0 == BT_mem_cmp("n:", readstr, 2U)))
+        if ((NULL != BT_str_str(readstr, "N:")) ||
+            (NULL != BT_str_str(readstr, "n:")))
         {
             if (0x01U == sender)
             {
@@ -761,8 +779,8 @@ API_RESULT map_get_message_attributes_pl
             }
         }
 
-        if ((0 == BT_mem_cmp("FN:", readstr, 3U)) ||
-            (0 == BT_mem_cmp("fn:", readstr, 3U)))
+        if ((NULL != BT_str_str(readstr, "FN:")) ||
+            (NULL != BT_str_str(readstr, "fn:")))
         {
             if (0x01U == sender)
             {
@@ -780,8 +798,8 @@ API_RESULT map_get_message_attributes_pl
             }
         }
 
-        if ((0 == BT_mem_cmp("TEL:", readstr, 4U)) ||
-            (0 == BT_mem_cmp("tel:", readstr, 4U)))
+        if ((NULL != BT_str_str(readstr, "TEL:")) ||
+            (NULL != BT_str_str(readstr, "tel:")))
         {
             if (0x01U == sender)
             {
@@ -802,8 +820,8 @@ API_RESULT map_get_message_attributes_pl
             recipient = 0x00U;
         }
 
-        if ((0 == BT_mem_cmp("EMAIL:", readstr, 6U)) ||
-            (0 == BT_mem_cmp("email:", readstr, 6U)))
+        if ((NULL != BT_str_str(readstr, "EMAIL:")) ||
+            (NULL != BT_str_str(readstr, "email:")))
         {
             if (0x01U == sender)
             {
@@ -825,8 +843,8 @@ API_RESULT map_get_message_attributes_pl
         }
 
         /* Get Subject */
-        if ((0 == BT_mem_cmp("BEGIN:MSG", readstr, 9U)) ||
-            (0 == BT_mem_cmp("begin:msg", readstr, 9U)))
+        if ((NULL != BT_str_str(readstr, "BEGIN:MSG")) ||
+            (NULL != BT_str_str(readstr, "begin:msg")))
         {
             message = 0x01U;
             continue;
@@ -879,8 +897,10 @@ API_RESULT BT_map_set_message_status_pl
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     fd = NULL;
     fp = NULL;
+    BT_mem_set(file_object, 0, sizeof(file_object));
+    BT_mem_set(new_object, 0, sizeof(new_object));
 
-    BT_str_n_copy (fn, "l", sizeof(fn));
+    BT_str_n_copy (fn, "l", sizeof("1"));
     BT_str_n_cat (fn, handle, (sizeof(fn) - BT_str_len(fn) - 1));
     BT_str_n_cat (fn, ".vmg", (sizeof(fn) - BT_str_len(fn) - 1));
 
@@ -921,7 +941,7 @@ API_RESULT BT_map_set_message_status_pl
         if (0x01U == ((UCHAR)status))
         {
             /* Backup current path */
-            BT_str_copy (curr_folder, idir);
+            BT_str_n_copy (curr_folder, idir, (sizeof(curr_folder) - 1));
 
             /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
             (void)BT_vfops_set_path_backward(idir);
@@ -952,7 +972,7 @@ API_RESULT BT_map_set_message_status_pl
             }
 
             /* Backup current path */
-            BT_str_copy (curr_folder, idir);
+            BT_str_n_copy (curr_folder, idir, (sizeof(curr_folder) - 1));
 
             /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
             (void)BT_vfops_set_path_backward(idir);
@@ -1104,15 +1124,18 @@ API_RESULT BT_map_get_message_file_pl
 
     BT_IGNORE_UNUSED_PARAM(idir);
 
-    BT_str_n_copy(rdir, MAP_ROOT_FOLDER_BASE, sizeof(rdir));
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    BT_mem_set(&h, 0, sizeof(BT_fops_object_handle));
+
+    BT_str_n_copy(rdir, MAP_ROOT_FOLDER_BASE, (sizeof(rdir) - 1));
     BT_str_n_cat
     (
         rdir,
-        BT_FOPS_PATH_SEP"root_0"BT_FOPS_PATH_SEP"telecom"BT_FOPS_PATH_SEP"msg"BT_FOPS_PATH_SEP,
+        BT_FOPS_PATH_SEP"root_0"BT_FOPS_PATH_SEP"telecom"BT_FOPS_PATH_SEP"msg",
         (sizeof(rdir) - BT_str_len(rdir) - 1)
     );
 
-    BT_str_n_copy(dir, rdir, sizeof(dir));
+    BT_str_n_copy(dir, rdir, (sizeof(dir) - 1));
 
     first = BT_FALSE;
 
@@ -1150,11 +1173,11 @@ API_RESULT BT_map_get_message_file_pl
 
             BT_mem_set (file_object, 0x00, sizeof(file_object));
 
-            BT_str_n_copy(cdir, rdir, sizeof(cdir));
+            BT_str_n_copy(cdir, rdir, sizeof(rdir));
             BT_str_n_cat(cdir, BT_FOPS_PATH_SEP, (sizeof(cdir) - BT_str_len(cdir) - 1));
             BT_str_n_cat(cdir, info.fname, (sizeof(cdir) - BT_str_len(cdir) - 1));
 
-            BT_str_n_copy(fn, "l", sizeof(fn));
+            BT_str_n_copy(fn, "l", sizeof("l"));
             BT_str_n_cat(fn, msg_handle, (sizeof(fn) - BT_str_len(fn) - 1));
             BT_str_n_cat(fn, ".vmg", (sizeof(fn) - BT_str_len(fn) - 1));
 
@@ -1172,6 +1195,7 @@ API_RESULT BT_map_get_message_file_pl
             if (API_SUCCESS != retval)
             {
                 fn[0U] = 'h';
+
                 /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
                 (void)BT_vfops_create_object_name
                 (

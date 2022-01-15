@@ -44,11 +44,6 @@
 
 #define MOD_GROUPS 7
 
-/** The open AP in OWE transmition Mode */
-#define OWE_TRANS_MODE_OPEN 1
-/** The security AP in OWE trsnsition Mode */
-#define OWE_TRANS_MODE_OWE 2
-
 #if 0
 /** channel_field.flags */
 #define CHANNEL_FLAGS_TURBO                   0x0010

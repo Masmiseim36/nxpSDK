@@ -1,53 +1,60 @@
-Platforms
-=========
+Supported Platforms
+===================
 
 .. toctree::
     :maxdepth: 1
     :caption: Information
 
-    readme
     /platform/readme
-    /docs/contributing/platform_deprecation.rst
+    readme
+    /platform/ext/platform_introduction.rst
+    /platform/ext/platform_deprecation.rst
 
 .. toctree::
-    :maxdepth: 4
+    :maxdepth: 1
     :caption: arm
     :glob:
 
-    target/musca_*/**
-    target/mps*/**
+    target/arm/**
     otp_provisioning.rst
 
 .. toctree::
-    :maxdepth: 4
+    :maxdepth: 1
     :caption: NXP
     :glob:
 
     target/nxp/**
 
 .. toctree::
-    :maxdepth: 4
+    :maxdepth: 1
     :caption: Cypress
     :glob:
 
     target/cypress/**
 
 .. toctree::
-    :maxdepth: 4
+    :maxdepth: 1
     :caption: STM
     :glob:
 
-    target/stm/**
+    target/stm/index
 
 .. toctree::
-    :maxdepth: 4
+    :maxdepth: 1
     :caption: Nordic
     :glob:
 
     target/nordic_nrf/**
 
 .. toctree::
-    :maxdepth: 4
+    :maxdepth: 1
+    :caption: Laird Connectivity
+    :glob:
+
+    target/lairdconnectivity/**
+
+.. toctree::
+    :maxdepth: 1
     :caption: Nuvoton
     :glob:
 
@@ -55,4 +62,4 @@ Platforms
 
 --------------
 
-*Copyright (c) 2020, Arm Limited. All rights reserved.*
+*Copyright (c) 2020-2021, Arm Limited. All rights reserved.*

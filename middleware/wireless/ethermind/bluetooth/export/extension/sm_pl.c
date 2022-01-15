@@ -60,53 +60,58 @@ API_RESULT BT_sm_get_device_attr_pl
     UINT32 di;
     API_RESULT retval;
 
+    /* Init */
+    retval = API_SUCCESS;
+
     if (NULL == bd_addr)
     {
         SM_ERR(
         "[SM-PL] NULL Unacceptable for BD_ADDR\n");
 
-        return SM_INVALID_PARAMETERS;
-    }
-
-    /* Lock SM */
-    sm_lock();
-
-    SM_INF(
-    "[SM-PL] Searching for Device with Rank = %u\n",
-    (unsigned int) attr);
-
-    for (di = 0U; di < SM_MAX_DEVICES; di ++)
-    {
-        if ((SM_DEVICE_USED == sm_devices[di].valid) &&
-            (attr == sm_devices[di].device_attr_pl))
-        {
-            SM_INF(
-            "[SM-PL] Rank %u -> Loc %u, Device = %02X\n",
-            (unsigned int) attr, (unsigned int) di,
-            sm_devices[di].device_handle);
-
-            /* Found match. Copy BD_ADDR */
-            sm_get_device_address (di, bd_addr);
-
-            break;
-        }
-    }
-
-    if (SM_MAX_DEVICES == di)
-    {
-        SM_ERR(
-        "[SM-PL] FAILED to Match Rank %u in Device Database\n",
-        (unsigned int) attr);
-
-        retval = SM_NO_DEVICE_ENTRY;
+        retval = SM_INVALID_PARAMETERS; /* return SM_INVALID_PARAMETERS; */
     }
     else
     {
-        retval = API_SUCCESS;
-    }
+        /* Lock SM */
+        sm_lock();
 
-    /* Unlock SM */
-    sm_unlock();
+        SM_INF(
+        "[SM-PL] Searching for Device with Rank = %u\n",
+        (unsigned int) attr);
+
+        for (di = 0U; di < SM_MAX_DEVICES; di ++)
+        {
+            if ((SM_DEVICE_USED == sm_devices[di].valid) &&
+                (attr == sm_devices[di].device_attr_pl))
+            {
+                SM_INF(
+                "[SM-PL] Rank %u -> Loc %u, Device = %02X\n",
+                (unsigned int) attr, (unsigned int) di,
+                sm_devices[di].device_handle);
+
+                /* Found match. Copy BD_ADDR */
+                sm_get_device_address (di, bd_addr);
+
+                break;
+            }
+        }
+
+        if (SM_MAX_DEVICES == di)
+        {
+            SM_ERR(
+            "[SM-PL] FAILED to Match Rank %u in Device Database\n",
+            (unsigned int) attr);
+
+            retval = SM_NO_DEVICE_ENTRY;
+        }
+        else
+        {
+            retval = API_SUCCESS;
+        }
+
+        /* Unlock SM */
+        sm_unlock();
+    }
 
     return retval;
 }
@@ -118,24 +123,31 @@ API_RESULT BT_sm_get_rank_count_pl
                /* OUT */ SM_DEVICE_ATTR_PL *    rank_count
            )
 {
+    API_RESULT retval;
+
+    /* Init */
+    retval = API_SUCCESS;
+
     if (NULL == rank_count)
     {
         SM_ERR(
         "[SM-PL] NULL Unacceptable for Rank Count\n");
 
-        return SM_INVALID_PARAMETERS;
+        retval = SM_INVALID_PARAMETERS; /* return SM_INVALID_PARAMETERS; */
+    }
+    else
+    {
+        /* Lock SM */
+        sm_lock();
+
+        /* Copy Rank Count offered so far */
+        *rank_count = sm_rank_count;
+
+        /* Unlock SM */
+        sm_unlock();
     }
 
-    /* Lock SM */
-    sm_lock();
-
-    /* Copy Rank Count offered so far */
-    *rank_count = sm_rank_count;
-
-    /* Unlock SM */
-    sm_unlock();
-
-    return API_SUCCESS;
+    return retval;
 }
 
 
@@ -322,10 +334,6 @@ API_RESULT sm_update_device_attr_pl
          *  of the Rank list - which is good enough for a device just set
          *  as trusted.
          */
-        if (SM_DEVICE_ATTR_PL_SET_TRUSTED == event)
-        {
-            break;
-        }
 
         /*
          *  If the Device already at the top of Rank List (Rank = 1),
@@ -333,7 +341,8 @@ API_RESULT sm_update_device_attr_pl
          *  hold Rank 1.
          */
         rank = 1U;
-        if (1U != sm_devices[di].device_attr_pl)
+
+        if ((1U != sm_devices[di].device_attr_pl) && (SM_DEVICE_ATTR_PL_SET_TRUSTED != event))
         {
             /* Save current Rank of the Device */
             rank = sm_devices[di].device_attr_pl;
@@ -377,8 +386,7 @@ API_RESULT sm_update_device_attr_pl
          *  from the previous value.
          */
     #ifdef SM_STORAGE
-        if ((SM_DEVICE_ATTR_PL_PAIRING_COMPLETE == event) ||
-            ((1U != rank) && (SM_DEVICE_ATTR_PL_ACL_COMPLETE == event)))
+        if(!((1U == rank) && (SM_DEVICE_ATTR_PL_ACL_COMPLETE == event)))
         {
             UINT16            storage_type;
 

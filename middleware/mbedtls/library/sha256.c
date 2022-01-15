@@ -545,6 +545,7 @@ int mbedtls_sha256_self_test( int verbose )
 
     mbedtls_sha256_init( &ctx );
 
+/* NXP added for HW accelerators support */
 #ifdef MBEDTLS_SHA256_ALT_NO_224 /* Skip SHA-224 tests, it would fail. */
     for( i = 3; i < 6; i++ )
 #else

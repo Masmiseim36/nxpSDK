@@ -13,7 +13,6 @@
         (event)->signal = state; \
     }
 
-
 typedef struct vg_lite_os_async_event
 {
     uint32_t    semaphore_id; /*! The Id of the semaphore assigned to this event */
@@ -75,7 +74,7 @@ int32_t vg_lite_os_unlock();
 /*!
 @brief  Submit the current command buffer to the command queue.
 */
-int32_t vg_lite_os_submit(uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event);
+int32_t vg_lite_os_submit(uint32_t context, uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event);
 
 /*!
 @brief  Wait for the current command buffer to be executed.
@@ -113,5 +112,10 @@ int32_t vg_lite_os_wait_event(vg_lite_os_async_event_t *event);
 @brief
 */
 int32_t vg_lite_os_signal_event(vg_lite_os_async_event_t *event);
+
+/*!
+@brief
+*/
+int8_t vg_lite_os_query_context_switch(uint32_t context);
 
 #endif

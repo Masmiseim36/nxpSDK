@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2021, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +16,8 @@
 **/
 
 #include "val_crypto.h"
+
+#include "test_crypto_common.h"
 
 typedef struct {
     char                        test_desc[75];
@@ -46,7 +48,6 @@ static const test_data check1[] = {
  PSA_ALG_CTR,
  PSA_SUCCESS
 },
-
 {"Test psa_key_derivation_output_key - Info\n", PSA_KEY_TYPE_DERIVE,
 {0x49, 0x8E, 0xC7, 0x7D, 0x01, 0x95, 0x0D, 0x94, 0x2C, 0x16, 0xA5, 0x3E, 0x99,
  0x5F, 0xC9, 0x77},
@@ -97,8 +98,8 @@ static const test_data check1[] = {
  AES_16B_KEY_SIZE, PSA_KEY_USAGE_DERIVE,
  PSA_ALG_KEY_AGREEMENT(PSA_ALG_ECDH, PSA_ALG_HKDF(PSA_ALG_SHA_256)),
  PSA_KEY_DERIVATION_INPUT_SECRET, 256, {0}, 0,
- PSA_KEY_TYPE_ECC_PUBLIC_KEY(PSA_ECC_CURVE_SECP256R1), 256, PSA_KEY_USAGE_EXPORT,
- PSA_ALG_CATEGORY_ASYMMETRIC_ENCRYPTION,
+ PSA_KEY_TYPE_ECC_PUBLIC_KEY(PSA_ECC_FAMILY_SECP_R1), 256, PSA_KEY_USAGE_EXPORT,
+ PSA_ALG_ECDSA_ANY,
  PSA_ERROR_NOT_SUPPORTED
 },
 
@@ -108,8 +109,8 @@ static const test_data check1[] = {
  AES_16B_KEY_SIZE, PSA_KEY_USAGE_DERIVE,
  PSA_ALG_KEY_AGREEMENT(PSA_ALG_ECDH, PSA_ALG_HKDF(PSA_ALG_SHA_256)),
  PSA_KEY_DERIVATION_INPUT_SECRET, 224, {0}, 0,
- PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_CURVE_SECP224R1), 224, PSA_KEY_USAGE_EXPORT,
- PSA_ALG_CATEGORY_ASYMMETRIC_ENCRYPTION,
+ PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1), 224, PSA_KEY_USAGE_EXPORT,
+ PSA_ALG_ECDSA_ANY,
  PSA_SUCCESS
 },
 
@@ -130,7 +131,7 @@ static const test_data check1[] = {
  AES_16B_KEY_SIZE, PSA_KEY_USAGE_DERIVE,
  PSA_ALG_KEY_AGREEMENT(PSA_ALG_ECDH, PSA_ALG_HKDF(PSA_ALG_SHA_256)),
  PSA_KEY_DERIVATION_INPUT_SECRET, 256, {0}, 0,
- PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_CURVE_SECP224R1), 2046, PSA_KEY_USAGE_EXPORT,
+ PSA_KEY_TYPE_ECC_KEY_PAIR(PSA_ECC_FAMILY_SECP_R1), 2046, PSA_KEY_USAGE_EXPORT,
  PSA_ALG_RSA_PKCS1V15_SIGN_RAW,
  PSA_SUCCESS
 },

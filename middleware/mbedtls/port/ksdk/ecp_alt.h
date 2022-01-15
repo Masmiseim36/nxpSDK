@@ -44,10 +44,10 @@ extern "C" {
 
 #if defined(MBEDTLS_ECP_ALT)
 
-#if SSS_HAVE_ALT_SSS
+#if defined(SSS_HAVE_MBEDTLS_ALT_SSS) && (SSS_HAVE_MBEDTLS_ALT_SSS == 1)
 #include <fsl_sss_api.h>
 #endif
-#if SSS_HAVE_ALT_A71CH
+#if defined(SSS_HAVE_MBEDTLS_ALT_A71CH) && (SSS_HAVE_MBEDTLS_ALT_A71CH == 1)
 #include "HLSETypes.h"
 #endif
 
@@ -110,11 +110,11 @@ typedef struct mbedtls_ecp_group
     mbedtls_ecp_point *T;       /*!< Pre-computed points for ecp_mul_comb(). */
     size_t T_size;              /*!< The number of pre-computed points. */
 
-#if SSS_HAVE_ALT_A71CH
+#if defined(SSS_HAVE_MBEDTLS_ALT_A71CH) && (SSS_HAVE_MBEDTLS_ALT_A71CH == 1)
     /** Reference to object mapped between HLSE Layer of A71CH Host library         */
     HLSE_OBJECT_HANDLE hlse_handle;
 #endif
-#if SSS_HAVE_ALT_SSS
+#if defined(SSS_HAVE_MBEDTLS_ALT_SSS) && (SSS_HAVE_MBEDTLS_ALT_SSS == 1)
     /** Reference to object mapped between SSS Layer        */
     sss_object_t* pSSSObject;
     sss_key_store_t* hostKs;

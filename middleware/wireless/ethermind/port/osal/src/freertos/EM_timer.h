@@ -21,7 +21,7 @@
 
 /* --------------------------------------------------- Global Definitions */
 /* Maximum number of timer entities */
-#define EM_TIMER_MAX_ENTITIES                       10
+#define EM_TIMER_MAX_ENTITIES                       10U
 
 /* Mask to indicate millisecond timeout */
 #define EM_TIMEOUT_MILLISEC                         0x80000000U
@@ -29,34 +29,34 @@
 /* Timer Handles must be initialized to this value */
 #define EM_TIMER_HANDLE_INIT_VAL                    NULL
 
-#define EM_TIMER_STATIC_DATA_SIZE                   32
+#define EM_TIMER_STATIC_DATA_SIZE                   32U
 
 /* Flag: Timer Entity State */
-#define TIMER_ENTITY_FREE                           0x00
-#define TIMER_ENTITY_IN_USE                         0x01
-#define TIMER_ENTITY_IN_FREE                        0x02
+#define TIMER_ENTITY_FREE                           0x00U
+#define TIMER_ENTITY_IN_USE                         0x01U
+#define TIMER_ENTITY_IN_FREE                        0x02U
 
 /* Flag: Timer Entity Data to be freed or not */
-#define TIMER_ENTITY_HOLD_ALLOC_DATA                0x00
-#define TIMER_ENTITY_FREE_ALLOC_DATA                0x01
+#define TIMER_ENTITY_HOLD_ALLOC_DATA                0x00U
+#define TIMER_ENTITY_FREE_ALLOC_DATA                0x01U
 
 /* Timer module ID and Error codes */
-#define EM_TIMER_ERR_ID                            0xC000
+#define EM_TIMER_ERR_ID                            0xC000U
 
-#define EM_TIMER_MUTEX_INIT_FAILED                 (0x0001 | EM_TIMER_ERR_ID)
-#define EM_TIMER_COND_INIT_FAILED                  (0x0002 | EM_TIMER_ERR_ID)
-#define EM_TIMER_MUTEX_LOCK_FAILED                 (0x0003 | EM_TIMER_ERR_ID)
-#define EM_TIMER_MUTEX_UNLOCK_FAILED               (0x0004 | EM_TIMER_ERR_ID)
-#define EM_TIMER_MEMORY_ALLOCATION_FAILED          (0x0005 | EM_TIMER_ERR_ID)
+#define EM_TIMER_MUTEX_INIT_FAILED                 (0x0001U | EM_TIMER_ERR_ID)
+#define EM_TIMER_COND_INIT_FAILED                  (0x0002U | EM_TIMER_ERR_ID)
+#define EM_TIMER_MUTEX_LOCK_FAILED                 (0x0003U | EM_TIMER_ERR_ID)
+#define EM_TIMER_MUTEX_UNLOCK_FAILED               (0x0004U | EM_TIMER_ERR_ID)
+#define EM_TIMER_MEMORY_ALLOCATION_FAILED          (0x0005U | EM_TIMER_ERR_ID)
 
-#define EM_TIMER_HANDLE_IS_NULL                    (0x0011 | EM_TIMER_ERR_ID)
-#define EM_TIMER_CALLBACK_IS_NULL                  (0x0012 | EM_TIMER_ERR_ID)
-#define EM_TIMER_QUEUE_EMPTY                       (0x0013 | EM_TIMER_ERR_ID)
-#define EM_TIMER_QUEUE_FULL                        (0x0014 | EM_TIMER_ERR_ID)
-#define EM_TIMER_ENTITY_SEARCH_FAILED              (0x0015 | EM_TIMER_ERR_ID)
-#define EM_TIMER_NULL_PARAMETER_NOT_ALLOWED        (0x0016 | EM_TIMER_ERR_ID)
-#define EM_TIMER_TIMEOUT_ZERO_NOT_ALLOWED          (0x0017 | EM_TIMER_ERR_ID)
-#define EM_TIMER_FAILED_SET_TIME_EVENT             (0x0018 | EM_TIMER_ERR_ID)
+#define EM_TIMER_HANDLE_IS_NULL                    (0x0011U | EM_TIMER_ERR_ID)
+#define EM_TIMER_CALLBACK_IS_NULL                  (0x0012U | EM_TIMER_ERR_ID)
+#define EM_TIMER_QUEUE_EMPTY                       (0x0013U | EM_TIMER_ERR_ID)
+#define EM_TIMER_QUEUE_FULL                        (0x0014U | EM_TIMER_ERR_ID)
+#define EM_TIMER_ENTITY_SEARCH_FAILED              (0x0015U | EM_TIMER_ERR_ID)
+#define EM_TIMER_NULL_PARAMETER_NOT_ALLOWED        (0x0016U | EM_TIMER_ERR_ID)
+#define EM_TIMER_TIMEOUT_ZERO_NOT_ALLOWED          (0x0017U | EM_TIMER_ERR_ID)
+#define EM_TIMER_FAILED_SET_TIME_EVENT             (0x0018U | EM_TIMER_ERR_ID)
 
 /* ----------------------------------------------- Structures/Data Types */
 
@@ -126,7 +126,8 @@ EM_RESULT EM_start_timer
               EM_timer_handle *handle,
               UINT32 timeout,
               void (* callback) (void *data, UINT16 datalen),
-              void *args, UINT16 size_args
+              void *data,
+              UINT16 data_length
           );
 
 EM_RESULT EM_restart_timer

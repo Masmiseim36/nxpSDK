@@ -27,7 +27,9 @@
 /* Lower value has higher priority */
 #define THRD_PRIOR_MASK           0xFF
 #define THRD_PRIOR_HIGHEST        0x0
-#define THRD_PRIOR_MEDIUM         0x7F
+#define THRD_PRIOR_HIGH           0xF
+#define THRD_PRIOR_MEDIUM         0x1F
+#define THRD_PRIOR_LOW            0x7F
 #define THRD_PRIOR_LOWEST         0xFF
 
 /* Error code */
@@ -43,6 +45,7 @@ struct tfm_core_thread_t {
     void            *param;             /* entry parameter              */
     uintptr_t       stk_btm;            /* stack bottom (lower address) */
     uintptr_t       stk_top;            /* stack top    (higher address)*/
+    uintptr_t       flih_ctx;           /* FLIH context pointer         */
     uint32_t        prior;              /* priority                     */
     uint32_t        state;              /* state                        */
 
@@ -79,7 +82,7 @@ void tfm_core_thrd_init(struct tfm_core_thread_t *pth,
  *  Set thread priority. Priority is set to THRD_PRIOR_MEDIUM in
  *  tfm_core_thrd_init().
  */
-void __STATIC_INLINE tfm_core_thrd_set_priority(struct tfm_core_thread_t *pth,
+__STATIC_INLINE void tfm_core_thrd_set_priority(struct tfm_core_thread_t *pth,
                                                 uint32_t prior)
 {
     pth->prior &= ~THRD_PRIOR_MASK;
@@ -96,7 +99,7 @@ void __STATIC_INLINE tfm_core_thrd_set_priority(struct tfm_core_thread_t *pth,
  * Notes
  *  Reuse prior of thread context to shift down non-secure thread priority.
  */
-void __STATIC_INLINE tfm_core_thrd_set_secure(struct tfm_core_thread_t *pth,
+__STATIC_INLINE void tfm_core_thrd_set_secure(struct tfm_core_thread_t *pth,
                                               uint32_t attr_secure)
 {
     pth->prior &= ~THRD_ATTR_NON_SECURE;
@@ -127,7 +130,7 @@ void tfm_core_thrd_set_state(struct tfm_core_thread_t *pth, uint32_t new_state);
  * Return :
  *  State of thread
  */
-uint32_t __STATIC_INLINE tfm_core_thrd_get_state(struct tfm_core_thread_t *pth)
+__STATIC_INLINE uint32_t tfm_core_thrd_get_state(struct tfm_core_thread_t *pth)
 {
     return pth->state;
 }
@@ -143,7 +146,7 @@ uint32_t __STATIC_INLINE tfm_core_thrd_get_state(struct tfm_core_thread_t *pth)
  *  This API is useful for blocked syscall blocking thread. Syscall
  *  could set its return value to the caller before caller goes.
  */
-void __STATIC_INLINE tfm_core_thrd_set_retval(struct tfm_core_thread_t *pth,
+__STATIC_INLINE void tfm_core_thrd_set_retval(struct tfm_core_thread_t *pth,
                                               uint32_t retval)
 {
     TFM_STATE_RET_VAL(&pth->arch_ctx) = retval;
@@ -160,7 +163,7 @@ void __STATIC_INLINE tfm_core_thrd_set_retval(struct tfm_core_thread_t *pth,
  *
  * Notes :
  *  This function validates thread info. It returns error if thread info
- *  is not correct. Thread is avaliable after successful tfm_core_thrd_start().
+ *  is not correct. Thread is available after successful tfm_core_thrd_start().
  */
 uint32_t tfm_core_thrd_start(struct tfm_core_thread_t *pth);
 
@@ -171,6 +174,18 @@ uint32_t tfm_core_thrd_start(struct tfm_core_thread_t *pth);
  *  Current running thread context pointer.
  */
 struct tfm_core_thread_t *tfm_core_thrd_get_curr(void);
+
+/*
+ * Set the current running thread
+ * Note:
+ *  This API is intended to update the current thread in FLIH handling.
+ *  So that in nested FLIH interrupts, the handler knows which isolation
+ *  boundary was preempted.
+ *  Although the CURR_THRD is updated, it does not mean the running Partition
+ *  thread is changed. It could also be the FLIH function which runs with the
+ *  same isolation boundary of the CURR_THRD.
+ */
+void tfm_core_thrd_set_curr(struct tfm_core_thread_t *pth);
 
 /*
  * Get next thread to run in list.

@@ -1,7 +1,18 @@
 /*!
 @page middleware_log Middleware Change Log
 @section tensorflow_lite eIQ TensorFlow Lite for Microcontrollers library
-  Current version is 2.4.1
+  Current version is 2.6.0
+
+  - 2.6.0
+    - New Features
+      - Updated eIQ TensorFlow Lite for Microcontrollers library to version 2.6.0
+      - Updated third party library source codes:
+        - CMSIS-NN
+        - FFT2D
+        - FlatBuffers
+        - Gemmlowp
+        - Ruy
+        - Xtensa NN library
 
   - 2.4.1
     - New Features

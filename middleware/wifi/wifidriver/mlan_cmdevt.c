@@ -2,7 +2,7 @@
  *
  *  @brief  This file provides the handling of CMD/EVENT in MLAN
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2021 NXP
  *
  *  NXP CONFIDENTIAL
  *  The source code contained or described herein and all documents related to
@@ -648,7 +648,7 @@ mlan_status wlan_cmd_get_hw_spec(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND 
 
     pcmd->command = wlan_cpu_to_le16(HostCmd_CMD_GET_HW_SPEC);
     pcmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_GET_HW_SPEC) + S_DS_GEN);
-    (void)memcpy(pmpriv->adapter, hw_spec->permanent_addr, pmpriv->curr_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)__memcpy(pmpriv->adapter, hw_spec->permanent_addr, pmpriv->curr_addr, MLAN_MAC_ADDR_LENGTH);
 
     LEAVE();
     return MLAN_STATUS_SUCCESS;
@@ -948,28 +948,29 @@ mlan_status wlan_ret_chan_region_cfg(IN pmlan_private pmpriv,
     {
         cfg         = (mlan_ds_misc_chnrgpwr_cfg *)&(misc_cfg->param.rgchnpwr_cfg);
         cfg->length = wlan_le16_to_cpu(resp->size);
-        (void)memcpy(pmpriv->adapter, cfg->chnrgpwr_buf, (t_u8 *)resp, cfg->length);
+        (void)__memcpy(pmpriv->adapter, cfg->chnrgpwr_buf, (t_u8 *)resp, cfg->length);
     }
     else
     {
-        (void)memset(pmpriv->adapter, &misc_cfg->param.custom_reg_domain, 0, sizeof(mlan_ds_custom_reg_domain));
+        (void)__memset(pmpriv->adapter, &misc_cfg->param.custom_reg_domain, 0, sizeof(mlan_ds_custom_reg_domain));
         if (pmadapter->otp_region)
-            (void)memcpy(pmpriv->adapter, &misc_cfg->param.custom_reg_domain.region, pmadapter->otp_region,
-                         sizeof(otp_region_info_t));
+            (void)__memcpy(pmpriv->adapter, &misc_cfg->param.custom_reg_domain.region, pmadapter->otp_region,
+                           sizeof(otp_region_info_t));
         if (pmadapter->cfp_otp_bg)
         {
             misc_cfg->param.custom_reg_domain.num_bg_chan = pmadapter->tx_power_table_bg_rows;
-            (void)memcpy(pmpriv->adapter, (t_u8 *)misc_cfg->param.custom_reg_domain.cfp_tbl,
-                         (t_u8 *)pmadapter->cfp_otp_bg, pmadapter->tx_power_table_bg_rows * sizeof(chan_freq_power_t));
+            (void)__memcpy(pmpriv->adapter, (t_u8 *)misc_cfg->param.custom_reg_domain.cfp_tbl,
+                           (t_u8 *)pmadapter->cfp_otp_bg,
+                           pmadapter->tx_power_table_bg_rows * sizeof(chan_freq_power_t));
         }
 #ifdef CONFIG_5GHz_SUPPORT
         if (pmadapter->cfp_otp_a)
         {
             misc_cfg->param.custom_reg_domain.num_a_chan = pmadapter->tx_power_table_a_rows;
-            (void)memcpy(pmpriv->adapter,
-                         (t_u8 *)misc_cfg->param.custom_reg_domain.cfp_tbl +
-                             pmadapter->tx_power_table_bg_rows * sizeof(chan_freq_power_t),
-                         (t_u8 *)pmadapter->cfp_otp_a, pmadapter->tx_power_table_a_rows * sizeof(chan_freq_power_t));
+            (void)__memcpy(pmpriv->adapter,
+                           (t_u8 *)misc_cfg->param.custom_reg_domain.cfp_tbl +
+                               pmadapter->tx_power_table_bg_rows * sizeof(chan_freq_power_t),
+                           (t_u8 *)pmadapter->cfp_otp_a, pmadapter->tx_power_table_a_rows * sizeof(chan_freq_power_t));
         }
 #endif
     }

@@ -52,8 +52,6 @@ extern clk_t dec_cycles;
 /*******************************************************************************
  * Tracing configuration
  ******************************************************************************/
-TRACE_TAG(INIT, 1);
-TRACE_TAG(INFO, 1);
 
 typedef struct XA_OPUS_Decoder
 {

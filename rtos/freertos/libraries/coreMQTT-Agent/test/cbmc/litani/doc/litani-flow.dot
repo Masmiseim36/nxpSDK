@@ -1,0 +1,12 @@
+digraph G {
+  rankdir = LR;
+  fontname=Helvetica;
+  1 -> 2 [label="litani init", fontname=Helvetica];
+  2 -> 3 [label="litani add-job", fontname=Helvetica];
+  3 -> 3 [label="litani add-job", fontname=Helvetica];
+  3 -> 4 [label="litani run-builds", fontname=Helvetica];
+  1 [label="", shape=point];
+  2 [label="", shape=point];
+  3 [label="", shape=point];
+  4 [label="", shape=point];
+}

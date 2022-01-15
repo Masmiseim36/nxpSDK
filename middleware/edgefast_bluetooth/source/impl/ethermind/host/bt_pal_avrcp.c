@@ -1181,6 +1181,7 @@ int bt_avrcp_send_vendor_dependent(struct bt_conn *conn, uint8_t pdu_id, void *p
     pdu_info.packet_type = BT_AVRCP_PACKET_TYPE_SINGLE;
     pdu_info.pdu_id      = pdu_id;
     pdu_info.cmd_type    = BT_AVRCP_COMMAND_TYPE_STATUS;
+    ret                  = API_SUCCESS;
 
     switch (pdu_id)
     {
@@ -1368,7 +1369,13 @@ int bt_avrcp_send_vendor_dependent(struct bt_conn *conn, uint8_t pdu_id, void *p
         }
 
         default:
+            ret = API_FAILURE;
             break;
+    }
+
+    if (ret != API_SUCCESS)
+    {
+        return -EIO;
     }
 
     ret = BT_avrcp_al_send_metadata_pdu(&avrcp->ethermind_avrcp, &pdu_info, 0x00);

@@ -6,13 +6,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#if !defined(MBEDTLS_CONFIG_FILE)
-#include "mbedtls/config.h"
-#else
-#include MBEDTLS_CONFIG_FILE
-#endif
+#include "mbedtls/build_info.h"
 
-#if defined(MBEDTLS_ENTROPY_HARDWARE_ALT)
+#if defined(MBEDTLS_MCUX_ENTROPY) && (MBEDTLS_MCUX_ENTROPY == 1)
 
 #include "fsl_common.h"
 
@@ -120,5 +116,5 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
 #endif /* TRNG_IGNORE */
 }
 
-#endif /* MBEDTLS_ENTROPY_HARDWARE_ALT */
+#endif /* MBEDTLS_MCUX_ENTROPY */
 

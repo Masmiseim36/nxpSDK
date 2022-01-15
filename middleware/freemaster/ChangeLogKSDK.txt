@@ -33,4 +33,12 @@
   - 3.0.4
     - Fixed component dependency logic of FreeMASTER driver. 
     - Use with FreeMASTER PC Host tool version 3.1.x
+
+  - 3.0.5
+    - General update for SDK 2.11 and 2.12
+    - New TCP and UDP support with lwIP stack
+    - New communication over Segger RTT interface
+    - Add fmstr_net and fmstr_wifi examples for selected i.MX-RT platforms
+    - Add fmstr_rtt example for selected platforms
+    - Fixed negative recorder threshold trigger processing
 */

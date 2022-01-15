@@ -20,12 +20,81 @@
  */
 
 /*!@{*/
+psa_status_t tfm_crypto_sign_message(psa_invec in_vec[],
+                                     size_t in_len,
+                                     psa_outvec out_vec[],
+                                     size_t out_len)
+{
+#ifdef TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED
+    return PSA_ERROR_NOT_SUPPORTED;
+#else
+    CRYPTO_IN_OUT_LEN_VALIDATE(in_len, 1, 2, out_len, 0, 1);
+
+    if ((in_vec[0].len != sizeof(struct tfm_crypto_pack_iovec))) {
+        return PSA_ERROR_PROGRAMMER_ERROR;
+    }
+
+    const struct tfm_crypto_pack_iovec *iov = in_vec[0].base;
+    psa_key_id_t key_id = iov->key_id;
+    psa_algorithm_t alg = iov->alg;
+    const uint8_t *input = in_vec[1].base;
+    size_t input_length = in_vec[1].len;
+    uint8_t *signature = out_vec[0].base;
+    size_t signature_size = out_vec[0].len;
+    mbedtls_svc_key_id_t encoded_key;
+    psa_status_t status;
+
+    status = tfm_crypto_encode_id_and_owner(key_id, &encoded_key);
+    if (status != PSA_SUCCESS) {
+        return status;
+    }
+
+    return psa_sign_message(encoded_key, alg, input, input_length,
+                            signature, signature_size, &(out_vec[0].len));
+#endif /* TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED */
+}
+
+psa_status_t tfm_crypto_verify_message(psa_invec in_vec[],
+                                       size_t in_len,
+                                       psa_outvec out_vec[],
+                                       size_t out_len)
+{
+#ifdef TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED
+    return PSA_ERROR_NOT_SUPPORTED;
+#else
+    CRYPTO_IN_OUT_LEN_VALIDATE(in_len, 1, 3, out_len, 0, 0);
+
+    if ((in_vec[0].len != sizeof(struct tfm_crypto_pack_iovec))) {
+        return PSA_ERROR_PROGRAMMER_ERROR;
+    }
+
+    const struct tfm_crypto_pack_iovec *iov = in_vec[0].base;
+
+    psa_key_id_t key_id = iov->key_id;
+    psa_algorithm_t alg = iov->alg;
+    const uint8_t *input = in_vec[1].base;
+    size_t input_length = in_vec[1].len;
+    const uint8_t *signature = in_vec[2].base;
+    size_t signature_length = in_vec[2].len;
+    mbedtls_svc_key_id_t encoded_key;
+    psa_status_t status;
+
+    status = tfm_crypto_encode_id_and_owner(key_id, &encoded_key);
+    if (status != PSA_SUCCESS) {
+        return status;
+    }
+
+    return psa_verify_message(encoded_key, alg, input, input_length,
+                              signature, signature_length);
+#endif /* TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED */
+}
+
 psa_status_t tfm_crypto_sign_hash(psa_invec in_vec[],
                                   size_t in_len,
                                   psa_outvec out_vec[],
                                   size_t out_len)
 {
-#ifdef TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED
+#ifdef TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     CRYPTO_IN_OUT_LEN_VALIDATE(in_len, 1, 2, out_len, 0, 1);
@@ -42,11 +111,7 @@ psa_status_t tfm_crypto_sign_hash(psa_invec in_vec[],
     uint8_t *signature = out_vec[0].base;
     size_t signature_size = out_vec[0].len;
     mbedtls_svc_key_id_t encoded_key;
-
-    psa_status_t status = tfm_crypto_check_handle_owner(key_id, NULL);
-    if (status != PSA_SUCCESS) {
-        return status;
-    }
+    psa_status_t status;
 
     status = tfm_crypto_encode_id_and_owner(key_id, &encoded_key);
     if (status != PSA_SUCCESS) {
@@ -55,7 +120,7 @@ psa_status_t tfm_crypto_sign_hash(psa_invec in_vec[],
 
     return psa_sign_hash(encoded_key, alg, hash, hash_length,
                          signature, signature_size, &(out_vec[0].len));
-#endif /* TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED */
 }
 
 psa_status_t tfm_crypto_verify_hash(psa_invec in_vec[],
@@ -63,7 +128,7 @@ psa_status_t tfm_crypto_verify_hash(psa_invec in_vec[],
                                     psa_outvec out_vec[],
                                     size_t out_len)
 {
-#ifdef TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED
+#ifdef TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     CRYPTO_IN_OUT_LEN_VALIDATE(in_len, 1, 3, out_len, 0, 0);
@@ -81,11 +146,7 @@ psa_status_t tfm_crypto_verify_hash(psa_invec in_vec[],
     const uint8_t *signature = in_vec[2].base;
     size_t signature_length = in_vec[2].len;
     mbedtls_svc_key_id_t encoded_key;
-    psa_status_t status = tfm_crypto_check_handle_owner(key_id, NULL);
-
-    if (status != PSA_SUCCESS) {
-        return status;
-    }
+    psa_status_t status;
 
     status = tfm_crypto_encode_id_and_owner(key_id, &encoded_key);
     if (status != PSA_SUCCESS) {
@@ -94,7 +155,7 @@ psa_status_t tfm_crypto_verify_hash(psa_invec in_vec[],
 
     return psa_verify_hash(encoded_key, alg, hash, hash_length,
                            signature, signature_length);
-#endif /* TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_ASYM_SIGN_MODULE_DISABLED */
 }
 
 psa_status_t tfm_crypto_asymmetric_encrypt(psa_invec in_vec[],
@@ -102,7 +163,7 @@ psa_status_t tfm_crypto_asymmetric_encrypt(psa_invec in_vec[],
                                            psa_outvec out_vec[],
                                            size_t out_len)
 {
-#ifdef TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED
+#ifdef TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
     psa_status_t status;
@@ -127,11 +188,6 @@ psa_status_t tfm_crypto_asymmetric_encrypt(psa_invec in_vec[],
     psa_key_attributes_t key_attributes = PSA_KEY_ATTRIBUTES_INIT;
     mbedtls_svc_key_id_t encoded_key;
 
-    status = tfm_crypto_check_handle_owner(key_id, NULL);
-    if (status != PSA_SUCCESS) {
-        return status;
-    }
-
     status = tfm_crypto_encode_id_and_owner(key_id, &encoded_key);
     if (status != PSA_SUCCESS) {
         return status;
@@ -155,7 +211,7 @@ psa_status_t tfm_crypto_asymmetric_encrypt(psa_invec in_vec[],
     return psa_asymmetric_encrypt(encoded_key, alg, input, input_length,
                                   salt, salt_length,
                                   output, output_size, &(out_vec[0].len));
-#endif /* TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED */
 }
 
 psa_status_t tfm_crypto_asymmetric_decrypt(psa_invec in_vec[],
@@ -163,7 +219,7 @@ psa_status_t tfm_crypto_asymmetric_decrypt(psa_invec in_vec[],
                                            psa_outvec out_vec[],
                                            size_t out_len)
 {
-#ifdef TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED
+#ifdef TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED
     return PSA_ERROR_NOT_SUPPORTED;
 #else
 
@@ -185,11 +241,6 @@ psa_status_t tfm_crypto_asymmetric_decrypt(psa_invec in_vec[],
     psa_status_t status;
     mbedtls_svc_key_id_t encoded_key;
 
-    status = tfm_crypto_check_handle_owner(key_id, NULL);
-    if (status != PSA_SUCCESS) {
-        return status;
-    }
-
     status = tfm_crypto_encode_id_and_owner(key_id, &encoded_key);
     if (status != PSA_SUCCESS) {
         return status;
@@ -198,6 +249,6 @@ psa_status_t tfm_crypto_asymmetric_decrypt(psa_invec in_vec[],
     return psa_asymmetric_decrypt(encoded_key, alg, input, input_length,
                                   salt, salt_length,
                                   output, output_size, &(out_vec[0].len));
-#endif /* TFM_CRYPTO_ASYMMETRIC_MODULE_DISABLED */
+#endif /* TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED */
 }
 /*!@}*/

@@ -55,6 +55,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/mipi_dsi_cmd
     ${ProjDirPath}/../../../../../../components/video/display/rm68200
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
@@ -90,6 +91,8 @@ include(utility_debug_console_lite_MIMXRT595S_cm33)
 
 include(utility_assert_lite_MIMXRT595S_cm33)
 
+include(driver_display-hx8394_MIMXRT595S_cm33)
+
 include(driver_lcdif_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_CMSIS_MIMXRT595S_cm33)
@@ -104,7 +107,7 @@ include(component_lists_MIMXRT595S_cm33)
 
 include(driver_flexcomm_usart_MIMXRT595S_cm33)
 
-include(driver_flash_config_MIMXRT595S_cm33)
+include(driver_flash_config_evkmimxrt595_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_startup_MIMXRT595S_cm33)
 

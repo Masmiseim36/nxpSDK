@@ -633,7 +633,7 @@ INT32 EM_get_time_ms(void)
 /* Microseconds from 01-Jan-0000 till epoch(in ISO 8601: 1970 - 01 - 01T00 : 00 : 00Z). */
 #define EM_uS_TILL_EPOCH           0x00DCDDB30F2F8000ULL
 /* Microseconds from 01-Jan-0000 till epoch(in ISO 8601: 2021 - 04 - 30T00 : 00 : 00Z). */
-#define EM_uS_TIMESTAMP_PSUEDO     0x00E29EE5C36CE000ULL
+#define EM_uS_TIMESTAMP_PSEUDO     0x00E29EE5C36CE000ULL
 /**
  *  \fn EM_get_us_timestamp
  *
@@ -660,7 +660,7 @@ UINT64 EM_get_us_timestamp(void)
     timestamp += EM_uS_TILL_EPOCH;
 #endif
 
-    timestamp = timestamp + EM_uS_TIMESTAMP_PSUEDO;
+    timestamp = timestamp + EM_uS_TIMESTAMP_PSEUDO;
 
     return timestamp;
 }

@@ -35,18 +35,17 @@
 #include "core_pkcs11_config.h"
 #include "core_pkcs11.h"
 #include "task.h"
-
-#if SSS_HAVE_ALT_A71CH
-#  include "ax_mbedtls.h"
-#endif
-#if SSS_HAVE_ALT_SSS
-#  include "ex_sss.h"
-#  include "sss_mbedtls.h"
-#endif
-
 #include "aws_clientcredential_keys.h"
 #include "iot_default_root_certificates.h"
 #include "core_pki_utils.h"
+
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
+#  include "ax_mbedtls.h"
+#endif
+#if SSS_HAVE_MBEDTLS_ALT_SSS
+#  include "ex_sss.h"
+#  include "sss_mbedtls.h"
+#endif
 
 /* mbedTLS includes. */
 #include "mbedtls/platform.h"
@@ -162,6 +161,11 @@ typedef struct TLSContext
 
 #define TLS_PRINT( X )    configPRINTF( X )
 
+static BaseType_t prvDefault_DateIsInThePast( BaseType_t day,
+                                              BaseType_t month,
+                                              BaseType_t year );
+static DateIsInThePast_t pDateIsInThePast = prvDefault_DateIsInThePast;
+
 /*-----------------------------------------------------------*/
 
 /*
@@ -194,6 +198,13 @@ static void prvFreeContext( TLSContext_t * pxCtx )
 
         pxCtx->xTLSHandshakeState = TLS_HANDSHAKE_NOT_STARTED;
     }
+}
+
+static BaseType_t prvDefault_DateIsInThePast( BaseType_t day,
+                                              BaseType_t month,
+                                              BaseType_t year )
+{
+    return 0; /* Assume the certificate is valid. */
 }
 
 /*-----------------------------------------------------------*/
@@ -280,61 +291,20 @@ static int prvGenerateRandomBytes( void * pvCtx,
  *
  * @return Zero on success.
  */
-static int prvCheckCertificate( void * pvCtx,
+static int prvCheckCertificate( void * pvContext,
                                 mbedtls_x509_crt * pxCertificate,
                                 int lPathCount,
                                 uint32_t * pulFlags )
 {
-    int lCompilationYear = 0;
-
-#define tlsCOMPILER_DATE_STRING_MONTH_LENGTH    4
-#define tlsDATE_STRING_FIELD_COUNT              3
-    char cCompilationMonth[ tlsCOMPILER_DATE_STRING_MONTH_LENGTH ];
-    int lCompilationMonth = 0;
-    int lCompilationDay = 0;
-    const char cMonths[] = "JanFebMarAprMayJunJulAugSepOctNovDec";
-
     /* Unreferenced parameters. */
-    ( void ) ( pvCtx );
+    ( void ) ( pvContext );
     ( void ) ( lPathCount );
 
-    /* Parse the date string fields. */
-    if( tlsDATE_STRING_FIELD_COUNT == sscanf( __DATE__,
-                                              "%3s %d %d",
-                                              cCompilationMonth,
-                                              &lCompilationDay,
-                                              &lCompilationYear ) )
-    {
-        cCompilationMonth[ tlsCOMPILER_DATE_STRING_MONTH_LENGTH - 1 ] = '\0';
+    BaseType_t day = pxCertificate->valid_to.day;
+    BaseType_t month = pxCertificate->valid_to.mon;
+    BaseType_t year = pxCertificate->valid_to.year;
 
-        /* Check for server expiration. First check the year. */
-        if( pxCertificate->valid_to.year < lCompilationYear )
-        {
-            *pulFlags |= MBEDTLS_X509_BADCERT_EXPIRED;
-        }
-        else if( pxCertificate->valid_to.year == lCompilationYear )
-        {
-            /* Convert the month. */
-            lCompilationMonth =
-                ( ( strstr( cMonths, cCompilationMonth ) - cMonths ) /
-                  ( tlsCOMPILER_DATE_STRING_MONTH_LENGTH - 1 ) ) + 1;
-
-            /* Check the month. */
-            if( pxCertificate->valid_to.mon < lCompilationMonth )
-            {
-                *pulFlags |= MBEDTLS_X509_BADCERT_EXPIRED;
-            }
-            else if( pxCertificate->valid_to.mon == lCompilationMonth )
-            {
-                /* Check the day. */
-                if( pxCertificate->valid_to.day < lCompilationDay )
-                {
-                    *pulFlags |= MBEDTLS_X509_BADCERT_EXPIRED;
-                }
-            }
-        }
-    }
-    else
+    if( pDateIsInThePast( day, month, year ) != 0 )
     {
         *pulFlags |= MBEDTLS_X509_BADCERT_EXPIRED;
     }
@@ -571,6 +541,7 @@ static int prvInitializeClientCredential( TLSContext_t * pxCtx )
                                                                     ( CK_UTF8CHAR_PTR ) configPKCS11_DEFAULT_USER_PIN,
                                                                     sizeof( configPKCS11_DEFAULT_USER_PIN ) - 1 );
     }
+
 #if SSS_HAVE_SSS
     char keyLabel[20];
     memset(keyLabel, 0, sizeof(keyLabel));
@@ -579,6 +550,7 @@ static int prvInitializeClientCredential( TLSContext_t * pxCtx )
 #else
     char * pcKeyLabelName = pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS;
 #endif
+
     if( CKR_OK == xResult )
     {
         /* Get the handle of the device private key. */
@@ -635,6 +607,7 @@ static int prvInitializeClientCredential( TLSContext_t * pxCtx )
         pxCtx->xMbedPkCtx.pk_info = &pxCtx->xMbedPkInfo;
         pxCtx->xMbedPkCtx.pk_ctx = pxCtx;
     }
+
 #if SSS_HAVE_SSS
     char certLabel[20];
     memset(certLabel, 0, sizeof(certLabel));
@@ -643,6 +616,7 @@ static int prvInitializeClientCredential( TLSContext_t * pxCtx )
 #else
     char * pcCertLabelName = pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS;
 #endif
+
     /* Get the handle of the device client certificate. */
     if( xResult == CKR_OK )
     {
@@ -832,6 +806,7 @@ BaseType_t TLS_Init( void ** ppvContext,
 BaseType_t TLS_Connect( void * pvContext )
 {
     BaseType_t xResult = 0;
+    CK_RV xPKCSResult = CKR_OK;
     TLSContext_t * pxCtx = ( TLSContext_t * ) pvContext; /*lint !e9087 !e9079 Allow casting void* to other types. */
 
     /* Initialize mbedTLS structures. */
@@ -868,8 +843,15 @@ BaseType_t TLS_Connect( void * pvContext )
             if( 0 == xResult )
             {
                 xResult = mbedtls_x509_crt_parse( &pxCtx->xMbedX509CA,
-                                                  ( const unsigned char * ) tlsSTARFIELD_ROOT_CERTIFICATE_PEM,
-                                                  tlsSTARFIELD_ROOT_CERTIFICATE_LENGTH );
+                                                  ( const unsigned char * ) tlsATS3_ROOT_CERTIFICATE_PEM,
+                                                  tlsATS3_ROOT_CERTIFICATE_LENGTH );
+
+                if( 0 == xResult )
+                {
+                    xResult = mbedtls_x509_crt_parse( &pxCtx->xMbedX509CA,
+                                                      ( const unsigned char * ) tlsSTARFIELD_ROOT_CERTIFICATE_PEM,
+                                                      tlsSTARFIELD_ROOT_CERTIFICATE_LENGTH );
+                }
             }
         }
 
@@ -898,7 +880,7 @@ BaseType_t TLS_Connect( void * pvContext )
         }
     }
 
- #if SSS_HAVE_SSS
+#if SSS_HAVE_SSS
     if (0 == xResult)
     {
         sss_status_t sss_status = sss_key_object_init(&pex_sss_demo_tls_ctx->obj, &pex_sss_demo_boot_ctx->ks);
@@ -928,8 +910,15 @@ BaseType_t TLS_Connect( void * pvContext )
         /* Set issuer certificate. */
         mbedtls_ssl_conf_ca_chain( &pxCtx->xMbedSslConfig, &pxCtx->xMbedX509CA, NULL );
 
-        /* Configure the SSL context for the device credentials. */
-        xResult = prvInitializeClientCredential( pxCtx );
+        /* Configure the SSL context to contain device credentials (eg device cert
+         * and private key) obtained from the PKCS #11 layer.  The result of
+         * loading device key and certificate is placed in a separate variable
+         * (xPKCSResult instead of xResult). The reason is that we want to
+         * attempt TLS handshake, even if the device key and certificate
+         * are not loaded. This allows the TLS layer to still connect to servers
+         * that do not require mutual authentication. If the server does
+         * require mutual authentication, the handshake will fail. */
+        xPKCSResult = prvInitializeClientCredential( pxCtx );
     }
 
     if( ( 0 == xResult ) && ( NULL != pxCtx->ppcAlpnProtocols ) )
@@ -955,16 +944,15 @@ BaseType_t TLS_Connect( void * pvContext )
         xResult = mbedtls_ssl_setup( &pxCtx->xMbedSslCtx, &pxCtx->xMbedSslConfig );
     }
 
-	if( 0 == xResult )
+#if SSS_HAVE_MBEDTLS_ALT_SSS
+    if( 0 == xResult )
     {
-#if SSS_HAVE_ALT_SSS
             pex_sss_demo_tls_ctx->pHost_ks = &pex_sss_demo_boot_ctx->host_ks;
            if (pex_sss_demo_tls_ctx->obj.cipherType == kSSS_CipherType_EC_NIST_P) {
                 xResult = sss_mbedtls_associate_ecdhctx(pxCtx->xMbedSslCtx.handshake, &pex_sss_demo_tls_ctx->obj, pex_sss_demo_tls_ctx->pHost_ks);
             }
-#endif  /*SSS_HAVE_ALT_SSS*/
-
     }
+#endif  /*SSS_HAVE_MBEDTLS_ALT_SSS*/
 
     #ifdef MBEDTLS_SSL_MAX_FRAGMENT_LENGTH
         if( 0 == xResult )
@@ -1003,9 +991,25 @@ BaseType_t TLS_Connect( void * pvContext )
                  * ensure that upstream clean-up code doesn't accidentally use
                  * a context that failed the handshake. */
                 prvFreeContext( pxCtx );
-                TLS_PRINT( ( "ERROR: Handshake failed with error code %s : %s \r\n",
-                             mbedtlsHighLevelCodeOrDefault( xResult ),
-                             mbedtlsLowLevelCodeOrDefault( xResult ) ) );
+
+                if( xPKCSResult != CKR_OK )
+                {
+                    TLS_PRINT( ( "ERROR: The handshake failed and it is likely "
+                                 "due to a failure in PKCS #11. Consider enabling "
+                                 "error logging in PKCS #11 or checking if your device "
+                                 "is properly provisioned with client credentials. "
+                                 "PKCS #11 error=0x(%0X). TLS handshake error=%s : %s \r\n",
+                                 xPKCSResult,
+                                 mbedtlsHighLevelCodeOrDefault( xResult ),
+                                 mbedtlsLowLevelCodeOrDefault( xResult ) ) );
+                }
+                else
+                {
+                    TLS_PRINT( ( "ERROR: TLS handshake failed trying to connect. %s : %s \r\n",
+                                 mbedtlsHighLevelCodeOrDefault( xResult ),
+                                 mbedtlsLowLevelCodeOrDefault( xResult ) ) );
+                }
+
                 break;
             }
         }
@@ -1146,3 +1150,9 @@ void TLS_Cleanup( void * pvContext )
     }
 }
 
+/*-----------------------------------------------------------*/
+
+void TLS_setDateIsInThePastFunction( DateIsInThePast_t DateIsInThePast )
+{
+    pDateIsInThePast = DateIsInThePast;
+}

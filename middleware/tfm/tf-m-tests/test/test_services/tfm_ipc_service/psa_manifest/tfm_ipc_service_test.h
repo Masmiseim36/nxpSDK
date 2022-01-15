@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -14,11 +14,17 @@
 extern "C" {
 #endif
 
-#define IPC_SERVICE_TEST_BASIC_SIGNAL                           (1U << (0 + 4))
-#define IPC_SERVICE_TEST_PSA_ACCESS_APP_MEM_SIGNAL              (1U << (1 + 4))
-#define IPC_SERVICE_TEST_PSA_ACCESS_APP_READ_ONLY_MEM_SIGNAL    (1U << (2 + 4))
-#define IPC_SERVICE_TEST_APP_ACCESS_PSA_MEM_SIGNAL              (1U << (3 + 4))
-#define IPC_SERVICE_TEST_CLIENT_PROGRAMMER_ERROR_SIGNAL         (1U << (4 + 4))
+#define TFM_SP_IPC_SERVICE_TEST_MODEL_IPC                       1
+#define TFM_SP_IPC_SERVICE_TEST_MODEL_SFN                       0
+
+
+#define IPC_SERVICE_TEST_BASIC_SIGNAL                           (1U << 4)
+#define IPC_SERVICE_TEST_PSA_ACCESS_APP_MEM_SIGNAL              (1U << 5)
+#define IPC_SERVICE_TEST_PSA_ACCESS_APP_READ_ONLY_MEM_SIGNAL    (1U << 6)
+#define IPC_SERVICE_TEST_APP_ACCESS_PSA_MEM_SIGNAL              (1U << 7)
+#define IPC_SERVICE_TEST_CLIENT_PROGRAMMER_ERROR_SIGNAL         (1U << 8)
+#define IPC_SERVICE_TEST_STATELESS_ROT_SIGNAL                   (1U << 9)
+
 
 #ifdef __cplusplus
 }

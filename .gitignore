@@ -4,3 +4,9 @@
 *.opt
 *.hzs
 *.positions
+*.d
+*.o
+*.ind
+*.map
+*.asm
+*.ld

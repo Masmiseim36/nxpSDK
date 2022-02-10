@@ -1,0 +1,168 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="semc" target="8" version="2">
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None"
+    hidden="Yes" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="None"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 1"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB"
+    Platform="ARM"
+    arm_instruction_set="Thumb"
+    arm_library_instruction_set="Thumb"
+    c_preprocessor_definitions="__THUMB"
+    hidden="Yes" />
+  <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />
+  <configuration
+    Name="THUMB Release"
+    inherited_configurations="THUMB;Release" />
+  <project Name="semc">
+    <configuration
+      CMSIS_CORE="Yes"
+      Name="Common"
+      Placement="FlexSPI (QuadSPI)"
+      Target="MIMXRT1176DVMAA_cm7"
+      arm_architecture="v7EM"
+      arm_core_type="Cortex-M7"
+      arm_fp_abi="Hard"
+      arm_fpu_type="FPv5-D16"
+      arm_linker_heap_size="0"
+      arm_linker_stack_size="2048"
+      arm_simulator_memory_simulation_parameter="RAM;0x00000000;0x00040000;RAM;0x20000000;0x00040000;RAM;0x20240000;0x00100000;RAM;0x80000000;0x02000000;0x30000000;0x04000000"
+      arm_target_connect_with_reset="No"
+      arm_target_loader_applicable_loaders="Flash"
+      arm_target_loader_default_loader="Flash"
+      arm_target_loader_reset_after_download="No"
+      c_preprocessor_definitions="SERIAL_PORT_TYPE_UART=1;SERIAL_MANAGER_NON_BLOCKING_MODE=0;XIP_BOOT_HEADER_DCD_ENABLE=1;VECTORS_IN_RAM=1"
+      c_system_include_directories="$(StudioDir)/include;$(PackagesDir)/include;$(TargetsDir)/iMXRT"
+      c_user_include_directories="./..;./../../../..;./../../../../../../CMSIS/Include;./../../../../../../devices;./../../../../../../devices/MIMXRT1176/drivers;./../../../../../../devices/MIMXRT1176/drivers/cm7;./../../../../../../devices/MIMXRT1176;./../../../../../../devices/MIMXRT1176/utilities/str;./../../../../../../devices/MIMXRT1176/utilities/debug_console;./../../../../../../components/uart;./../../../../../../components/serial_manager;./../../../../../../components/lists;./../../../../../../devices/MIMXRT1176/xip;./../../../../xip"
+      debug_register_definition_file="$(TargetsDir)/iMXRT/XML/$(DeviceName)_registers.xml"
+      debug_startup_completion_point="main"
+      default_code_section=".text_tcm"
+      default_const_section=".rodata_tcm"
+      default_data_section=".data_tcm"
+      default_isr_section=".text_tcm"
+      default_vector_section=".vectors_tcm"
+      default_zeroed_section=".bss_tcm"
+      linker_memory_map_file="$(TargetsDir)/iMXRT/MemoryMap_MIMXRT117x_cm7.xml"
+      linker_section_placement_file="$(TargetsDir)/iMXRT/placement_flexspi.xml"
+      linker_section_placement_macros="FLASH_NAME=FlexSPI"
+      macros="DeviceName=MIMXRT1176_cm7;Family=iMXRT1170;Core=CM7"
+      project_directory=""
+      project_type="Executable"
+      property_groups_file_path="$(TargetsDir)/iMXRT/propertyGroups.xml"
+      target_connect_script="Connect()"
+      target_get_partname_script="GetPartName()"
+      target_reset_script="Reset()"
+      target_script_file="$(TargetsDir)/iMXRT/iMXRT_Target.js"
+      target_stop_script="OnTargetStop_11xx()" />
+    <configuration
+      Name="Flash"
+      arm_target_flash_loader_file_path="$(TargetsDir)/iMXRT/Loader2/Loader_$(Family)_$(Core).elf"
+      arm_target_loader_parameter="5" />
+    <folder Name="CMSIS">
+      <file file_name="./../../../../../../CMSIS/Include/arm_common_tables.h" />
+      <file file_name="./../../../../../../CMSIS/Include/arm_const_structs.h" />
+      <file file_name="./../../../../../../CMSIS/Include/arm_math.h" />
+      <file file_name="./../../../../../../CMSIS/Include/cmsis_armcc.h" />
+      <file file_name="./../../../../../../CMSIS/Include/cmsis_armclang.h" />
+      <file file_name="./../../../../../../CMSIS/Include/cmsis_compiler.h" />
+      <file file_name="./../../../../../../CMSIS/Include/cmsis_gcc.h" />
+      <file file_name="./../../../../../../CMSIS/Include/cmsis_iccarm.h" />
+      <file file_name="./../../../../../../CMSIS/Include/cmsis_version.h" />
+      <file file_name="./../../../../../../CMSIS/Include/core_armv8mbl.h" />
+      <file file_name="./../../../../../../CMSIS/Include/core_armv8mml.h" />
+      <file file_name="./../../../../../../CMSIS/Include/core_cm7.h" />
+      <file file_name="./../../../../../../CMSIS/Include/mpu_armv7.h" />
+      <file file_name="./../../../../../../CMSIS/Include/mpu_armv8.h" />
+    </folder>
+    <folder Name="System Files">
+      <file file_name="$(TargetsDir)/iMXRT/$(DeviceName).h" />
+      <file file_name="$(TargetsDir)/iMXRT/$(DeviceName)_features.h" />
+      <file file_name="$(TargetsDir)/iMXRT/fsl_device_registers.h" />
+      <file file_name="$(TargetsDir)/iMXRT/startup_$(DeviceName).s" />
+      <file file_name="$(TargetsDir)/iMXRT/system_$(DeviceName).c" />
+      <file file_name="$(TargetsDir)/iMXRT/system_$(DeviceName).h" />
+      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
+      <file file_name="$(TargetsDir)/iMXRT/iMXRT_Target.js" />
+      <configuration Name="Common" default_code_section=".init" />
+      <file file_name="placement_flexspi.xml">
+        <configuration Name="Common" build_exclude_from_build="Yes" />
+      </file>
+    </folder>
+    <folder Name="board">
+      <file file_name="./../board.c" />
+      <file file_name="./../board.h" />
+      <file file_name="./../clock_config.c" />
+      <file file_name="./../clock_config.h" />
+      <file file_name="./../dcd.c" />
+      <file file_name="./../dcd.h" />
+      <file file_name="./../pin_mux.c" />
+      <file file_name="./../pin_mux.h" />
+    </folder>
+    <folder Name="component">
+      <folder Name="lists">
+        <file file_name="./../../../../../../components/lists/fsl_component_generic_list.c" />
+        <file file_name="./../../../../../../components/lists/fsl_component_generic_list.h" />
+      </folder>
+      <folder Name="uart">
+        <file file_name="./../../../../../../components/uart/fsl_adapter_lpuart.c" />
+        <file file_name="./../../../../../../components/uart/fsl_adapter_uart.h" />
+      </folder>
+    </folder>
+    <folder Name="doc">
+      <file file_name="./../readme.txt" />
+    </folder>
+    <folder Name="drivers">
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/cm7/fsl_cache.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_clock.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_clock.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_common.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_common.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_common_arm.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_dcdc.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_gpio.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_lpuart.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_pmu.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_semc.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/drivers/fsl_semc.h" />
+    </folder>
+    <folder Name="source">
+      <file file_name="./../semc_sdram.c" />
+    </folder>
+    <folder Name="utilities">
+      <file file_name="./../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_assert.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h" />
+    </folder>
+    <folder Name="xip">
+      <file file_name="./../../../../xip/evkmimxrt1170_flexspi_nor_config.c" />
+      <file file_name="./../../../../xip/evkmimxrt1170_flexspi_nor_config.h" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.c" />
+      <file file_name="./../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.h" />
+    </folder>
+    <configuration
+      Name="Release"
+      c_preprocessor_definitions="STARTUP_FROM_RESET=1"
+      gcc_optimization_level="Level 3" />
+    <configuration Name="Debug" gcc_optimization_level="Debug" />
+  </project>
+</solution>

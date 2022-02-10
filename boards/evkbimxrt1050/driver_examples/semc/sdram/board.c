@@ -244,15 +244,20 @@ void BOARD_ConfigMPU(void)
                         0 :
                         ((uint32_t)Image$$RW_m_ncache_unused$$ZI$$Limit - nonCacheStart);
 #elif defined(__MCUXPRESSO)
-    extern uint32_t __base_NCACHE_REGION;
-    extern uint32_t __top_NCACHE_REGION;
-    uint32_t nonCacheStart = (uint32_t)(&__base_NCACHE_REGION);
-    uint32_t size          = (uint32_t)(&__top_NCACHE_REGION) - nonCacheStart;
+	extern uint32_t __base_NCACHE_REGION;
+	extern uint32_t __top_NCACHE_REGION;
+	uint32_t nonCacheStart = (uint32_t)(&__base_NCACHE_REGION);
+	uint32_t size          = (uint32_t)(&__top_NCACHE_REGION) - nonCacheStart;
+#elif defined(__CROSSWORKS_ARM)
+	extern uint32_t __DTCM_segment_start__;
+	extern uint32_t __DTCM_segment_size__;
+	uint32_t nonCacheStart = (uint32_t)&__DTCM_segment_start__;
+	uint32_t size          = (uint32_t)&__DTCM_segment_size__;
 #elif defined(__ICCARM__) || defined(__GNUC__)
-    extern uint32_t __NCACHE_REGION_START[];
-    extern uint32_t __NCACHE_REGION_SIZE[];
-    uint32_t nonCacheStart = (uint32_t)__NCACHE_REGION_START;
-    uint32_t size          = (uint32_t)__NCACHE_REGION_SIZE;
+	extern uint32_t __NCACHE_REGION_START[];
+	extern uint32_t __NCACHE_REGION_SIZE[];
+	uint32_t nonCacheStart = (uint32_t)__NCACHE_REGION_START;
+	uint32_t size          = (uint32_t)__NCACHE_REGION_SIZE;
 #endif
     volatile uint32_t i = 0;
 

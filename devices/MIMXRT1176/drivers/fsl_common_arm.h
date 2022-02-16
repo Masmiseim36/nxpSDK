@@ -434,7 +434,7 @@ _Pragma("diag_suppress=Pm120")
 #define AT_QUICKACCESS_SECTION_DATA_ALIGN(var, alignbytes) \
     __attribute__((section("DataQuickAccess"))) __attribute__((aligned(alignbytes))) var
 #elif (defined(__GNUC__))
-#define AT_QUICKACCESS_SECTION_CODE(func) __attribute__((section("CodeQuickAccess"), __noinline__)) func
+#define AT_QUICKACCESS_SECTION_CODE(func) __attribute__((section(".fast"), __noinline__)) func
 #define AT_QUICKACCESS_SECTION_DATA(var)  __attribute__((section("DataQuickAccess"))) var
 #define AT_QUICKACCESS_SECTION_DATA_ALIGN(var, alignbytes) \
     __attribute__((section("DataQuickAccess"))) var __attribute__((aligned(alignbytes)))

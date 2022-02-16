@@ -24,6 +24,7 @@ processor_version: 0.9.6
 #include "fsl_common.h"
 #include "fsl_iomuxc.h"
 #include "pin_mux.h"
+#include "board.h"
 
 /* FUNCTION ************************************************************************************************************
  * 
@@ -183,11 +184,31 @@ void BOARD_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
 
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_24_LPUART1_TXD,          /* GPIO_AD_24 is configured as LPUART1_TXD */
+      BOARD_UART_TX_PIN,          /* GPIO_AD_24 is configured as LPUART1_TXD */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_25_LPUART1_RXD,          /* GPIO_AD_25 is configured as LPUART1_RXD */
+      BOARD_UART_RX_PIN,          /* GPIO_AD_25 is configured as LPUART1_RXD */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+
+  IOMUXC_SetPinConfig(
+      BOARD_UART_TX_PIN,          /* GPIO_AD_24 PAD functional properties : */
+      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+                                                 Drive Strength Field: high drive strength
+                                                 Pull / Keep Select Field: Pull Enable
+                                                 Pull Up / Down Config. Field: Weak pull down
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
+  IOMUXC_SetPinConfig(
+      BOARD_UART_RX_PIN,          /* GPIO_AD_25 PAD functional properties : */
+      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
+                                                 Drive Strength Field: high drive strength
+                                                 Pull / Keep Select Field: Pull Enable
+                                                 Pull Up / Down Config. Field: Weak pull down
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
+#if 0
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_EMC_B1_00_SEMC_DATA00,      /* GPIO_EMC_B1_00 is configured as SEMC_DATA00 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
@@ -377,24 +398,7 @@ void BOARD_InitPins(void) {
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_EMC_B2_20_SEMC_CLKX01,      /* GPIO_EMC_B2_20 is configured as SEMC_CLKX01 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_24_LPUART1_TXD,          /* GPIO_AD_24 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high drive strength
-                                                 Pull / Keep Select Field: Pull Enable
-                                                 Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled
-                                                 Domain write protection: Both cores are allowed
-                                                 Domain write protection lock: Neither of DWP bits is locked */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_25_LPUART1_RXD,          /* GPIO_AD_25 PAD functional properties : */
-      0x06U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high drive strength
-                                                 Pull / Keep Select Field: Pull Enable
-                                                 Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled
-                                                 Domain write protection: Both cores are allowed
-                                                 Domain write protection lock: Neither of DWP bits is locked */
+
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_EMC_B1_00_SEMC_DATA00,      /* GPIO_EMC_B1_00 PAD functional properties : */
       0x08U);                                 /* PDRV Field: high drive strength
@@ -836,6 +840,7 @@ void BOARD_InitPins(void) {
                                                  Open Drain Field: Disabled
                                                  Domain write protection: Both cores are allowed
                                                  Domain write protection lock: Neither of DWP bits is locked */
+#endif
 }
 
 /***********************************************************************************************************************

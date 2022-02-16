@@ -2239,7 +2239,7 @@ uint32_t CLOCK_GetFreq(clock_name_t name);
  */
 static inline uint32_t CLOCK_GetRootClockFreq(clock_root_t root)
 {
-    uint32_t freq, mux;
+    volatile uint32_t freq, mux;
     mux  = CLOCK_GetRootClockMux(root);
     freq = CLOCK_GetFreq(s_clockSourceName[root][mux]) / (CLOCK_GetRootClockDiv(root));
     assert(freq);

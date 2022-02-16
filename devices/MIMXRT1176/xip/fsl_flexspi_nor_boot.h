@@ -96,8 +96,8 @@ extern uint32_t Reset_Handler[];
 #define IVT_ADDRESS         &image_vector_table
 #define DCD_DATA_ADDRESS    dcd_data
 #elif defined(__GNUC__)
-extern uint32_t Reset_Handler[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)Reset_Handler)
+extern uint32_t reset_handler[];
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)reset_handler)
 #define BOOT_IMAGE_BASE     ((uint32_t)FLASH_BASE)
 #define BOOT_IMAGE_SIZE     ((uint32_t)FLASH_SIZE)
 #define BOOT_DATA_ADDRESS   &g_boot_data

@@ -66,7 +66,7 @@ void UpdateSemcClock(void)
     * want to switch from 166MHz to 200MHz, extra SEMC configuration might need to be
     * adjusted here to fine tune the SDRAM performance
     */
-    CCM->CLOCK_ROOT[kCLOCK_Root_Semc].CONTROL = 0x602;
+//    CCM->CLOCK_ROOT[kCLOCK_Root_Semc].CONTROL = 0x602;
 }
 #endif
 #endif
@@ -406,7 +406,7 @@ void BOARD_BootClockRUN(void)
     CLOCK_InitSysPll3();
 
     /* Init System Pll3 pfd0. */
-    CLOCK_InitPfd(kCLOCK_PllSys3, kCLOCK_Pfd0, 13);
+    CLOCK_InitPfd(kCLOCK_PllSys3, kCLOCK_Pfd0, 15);
 
     /* Init System Pll3 pfd1. */
     CLOCK_InitPfd(kCLOCK_PllSys3, kCLOCK_Pfd1, 17);
@@ -453,7 +453,7 @@ void BOARD_BootClockRUN(void)
 
     /* Configure SEMC using SYS_PLL2_PFD1_CLK */
 #ifndef SKIP_SEMC_INIT
-    rootCfg.mux = kCLOCK_SEMC_ClockRoot_MuxSysPll2Pfd1;
+    rootCfg.mux = kCLOCK_SEMC_ClockRoot_MuxSysPll3Pfd0;
     rootCfg.div = 3;
     CLOCK_SetRootClock(kCLOCK_Root_Semc, &rootCfg);
 #endif

@@ -29,14 +29,14 @@
     <configuration
       CMSIS_CORE="Yes"
       Name="Common"
-      Placement="FlexSPI (QuadSPI)"
+      Placement="FlexSPI (OctaSPI)"
       Target="MIMXRT1176DVMAA_cm7"
       arm_architecture="v7EM"
       arm_core_type="Cortex-M7"
       arm_fp_abi="Hard"
       arm_fpu_type="FPv5-D16"
       arm_linker_heap_size="0"
-      arm_linker_stack_size="3072"
+      arm_linker_stack_size="4096"
       arm_simulator_memory_simulation_parameter="RAM;0x00000000;0x00040000;RAM;0x20000000;0x00040000;RAM;0x20240000;0x00100000;RAM;0x80000000;0x02000000;0x30000000;0x04000000"
       arm_target_connect_with_reset="No"
       arm_target_loader_applicable_loaders="Flash"
@@ -68,7 +68,7 @@
     <configuration
       Name="Flash"
       arm_target_flash_loader_file_path="$(TargetsDir)/iMXRT/Loader2/Loader_$(Family)_$(Core).elf"
-      arm_target_loader_parameter="5" />
+      arm_target_loader_parameter="2" />
     <folder Name="CMSIS">
       <file file_name="./../../../../../../CMSIS/Include/arm_common_tables.h" />
       <file file_name="./../../../../../../CMSIS/Include/arm_const_structs.h" />
@@ -156,15 +156,20 @@
       <file file_name="./../../../../../../devices/MIMXRT1176/utilities/debug_console_lite/fsl_debug_console.h" />
     </folder>
     <folder Name="xip">
-      <file file_name="./../../../../xip/evkmimxrt1170_flexspi_nor_config.c" />
+      <file file_name="./../../../../xip/evkmimxrt1170_flexspi_nor_config.c">
+        <configuration Name="Common" build_exclude_from_build="Yes" />
+      </file>
       <file file_name="./../../../../xip/evkmimxrt1170_flexspi_nor_config.h" />
       <file file_name="./../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.c" />
       <file file_name="./../../../../../../devices/MIMXRT1176/xip/fsl_flexspi_nor_boot.h" />
+      <file file_name="../../../../xip/flexspi_flash_OSPI_Adesto.c">
+        <configuration Name="Common" build_exclude_from_build="No" />
+      </file>
     </folder>
     <configuration
       Name="Release"
       c_preprocessor_definitions="STARTUP_FROM_RESET=1"
       gcc_optimization_level="Level 3" />
-    <configuration Name="Debug" gcc_optimization_level="Debug" />
+    <configuration Name="Debug" gcc_optimization_level="None" />
   </project>
 </solution>

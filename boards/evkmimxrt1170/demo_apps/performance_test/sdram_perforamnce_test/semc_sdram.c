@@ -34,6 +34,8 @@ void MeassureSpeed (uint32_t coreclk, uint32_t dsize);
 void MeassureSpeed_Memcopy (uint32_t coreclk, uint32_t dsize);
 void MeassureSpeed_CleanInvalidateCache (uint32_t coreclk, uint32_t dsize);
 void MeassureSpeed_DMA (uint32_t coreclk, uint32_t dsize);
+void MeassureSpeed_FlexSPI (uint32_t coreclk, uint32_t dsize);
+void MeassureSpeed_FlexSPI_memcopy (uint32_t coreclk, uint32_t dsize);
 
 /*******************************************************************************
  * Variables
@@ -101,6 +103,7 @@ status_t BOARD_InitSEMC(void)
 	semc_config_t config;
 	semc_sdram_config_t sdramconfig;
 	uint32_t clockFrq = EXAMPLE_SEMC_CLK_FREQ;
+	PRINTF("SEMC clock frequenzy %d Hz\r\n", clockFrq);
 
 	/* Initializes the MAC configure structure to zero. */
 	memset(&config, 0, sizeof(semc_config_t));
@@ -135,7 +138,7 @@ status_t BOARD_InitSEMC(void)
 	sdramconfig.refreshBurstLen		= 1;
 	sdramconfig.delayChain			 = 2;
 
-	return SEMC_ConfigureSDRAM(SEMC, kSEMC_SDRAM_CS0, &sdramconfig, clockFrq);
+	return SEMC_ConfigureSDRAM (SEMC, kSEMC_SDRAM_CS0, &sdramconfig, clockFrq);
 }
 
 static volatile uint32_t g_msCount = 0;
@@ -185,21 +188,21 @@ int main(void)
 	PRINTF("Prefetch is enable!\r\n");
 #endif  
 
-	PRINTF("\r\n SEMC SDRAM Performance test Start!\r\n");
+/*	PRINTF("\r\n SEMC SDRAM Performance test Start!\r\n");
 	if (BOARD_InitSEMC() != kStatus_Success)
 	{
 		PRINTF("\r\n SEMC SDRAM Init Failed\r\n");
 	}
-	
+*/	
 	for (uint32_t i = 0; i < SEMC_EXAMPLE_DATALEN; i ++)
 	{
 	  sdram_writeBuffer[i] = i;
 	}
 	
-	/* configure system tick */
+	// configure system tick
 	SysTick_Config(coreclk / 1000); // 1ms for one interrupt
 	__enable_irq ();
-	
+/*	
 	PRINTF("\r\n #####################################################");
 	PRINTF("\r\n With Cache enabled, copy in a loop with 32-bit access");
 	PRINTF("\r\n #####################################################\r\n");
@@ -252,7 +255,7 @@ int main(void)
 	PRINTF("\r\n With Cache enabled and invalidated, copy in a loop with 32-bit access");
 	PRINTF("\r\n #####################################################################\r\n");
 	#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-		SCB_EnableDCache(); /* Enable D cache. */
+		SCB_EnableDCache(); // Enable D cache.
 	#endif
 	while (SysTick->VAL > 0xFFFFFF-100);
 	MeassureSpeed_CleanInvalidateCache (coreclk, dsize);
@@ -282,6 +285,41 @@ int main(void)
 	while (SysTick->VAL > 0xFFFFFF-100);
 	MeassureSpeed_DMA (coreclk, 96);
 //*/
+
+	PRINTF("\r\n #####################################################################");
+	PRINTF("\r\n FlexSPI With Cache enabled, copy in a loop with 32-bit access");
+	PRINTF("\r\n #####################################################################\r\n");
+	while (SysTick->VAL > 0xFFFFFF-100);
+	MeassureSpeed_FlexSPI (coreclk, dsize);
+	while (SysTick->VAL > 0xFFFFFF-100);
+	MeassureSpeed_FlexSPI (coreclk, 256);
+	while (SysTick->VAL > 0xFFFFFF-100);
+	MeassureSpeed_FlexSPI (coreclk, 96);
+
+	PRINTF("\r\n #####################################################################");
+	PRINTF("\r\n FlexSPI With Cache disabled, copy in a loop with 32-bit access");
+	PRINTF("\r\n #####################################################################\r\n");
+	if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
+	{
+		SCB_DisableDCache();
+	}
+	FLEXSPI1->AHBCR &= ~FLEXSPI_AHBCR_PREFETCHEN_MASK;
+	while (SysTick->VAL > 0xFFFFFF-100);
+	MeassureSpeed_FlexSPI (coreclk, dsize);
+	while (SysTick->VAL > 0xFFFFFF-100);
+	MeassureSpeed_FlexSPI (coreclk, 256);
+	while (SysTick->VAL > 0xFFFFFF-100);
+	MeassureSpeed_FlexSPI (coreclk, 96);
+
+	PRINTF("\r\n ######################################");
+	PRINTF("\r\n With Cache disabled, copy with memcopy");
+	PRINTF("\r\n ######################################\r\n");
+	while (SysTick->VAL > 0xFFFFFF-100);
+	MeassureSpeed_FlexSPI_memcopy (coreclk, dsize);
+	while (SysTick->VAL > 0xFFFFFF-100);
+	MeassureSpeed_FlexSPI_memcopy (coreclk, 256);
+	while (SysTick->VAL > 0xFFFFFF-100);
+	MeassureSpeed_FlexSPI_memcopy (coreclk, 96);
 
 	while (1)
 	{
@@ -522,10 +560,10 @@ void MeassureSpeed_DMA (uint32_t coreclk, uint32_t dsize)
 	uint32_t errCount = 0;
 	for (uint32_t i=0;i<dsize/4;i++)
 	{
-	  if (sdram_readBuffer[i] != sdram_writeBuffer[i])
-	  {
-		errCount++;
-	  }
+		if (sdram_readBuffer[i] != sdram_writeBuffer[i])
+		{
+			errCount++;
+		}
 	}
 	if (!errCount)
 	{
@@ -538,3 +576,51 @@ void MeassureSpeed_DMA (uint32_t coreclk, uint32_t dsize)
 	PRINTF("##SDRAM read performance: t1: %06d; t2: %06d; diff: %d; ns: %d, datasize: %d byte; perf: %dMB/s; g_ms: %d\r\n",
 		   t1, t2, t1 - t2, time, dsize, (dsize * 1000)/time, g_ms);
 }
+
+
+void MeassureSpeed_FlexSPI (uint32_t coreclk, uint32_t dsize)
+{
+	/* hyper flash read test, need to ensure code programming to hyper flash with this test,
+	   otherwise, it will lead to hard fault */
+//	PRINTF("\r\n Start test Hyper Flash read performance!\r\n");   
+	g_msCount = 0;
+	uint32_t *ahb_addr = (uint32_t *)FlexSPI1_AMBA_BASE;
+	uint32_t t1 = SysTick->VAL;
+
+	for (uint32_t i = 0; i < dsize/4; i ++)
+	{
+		sdram_readBuffer[i] = ahb_addr[i];
+	}
+	__asm("DSB");
+
+	uint32_t t2 = SysTick->VAL;
+	uint32_t g_ms = g_msCount;
+	uint32_t time = (((uint64_t)(t1 - t2) * 1000000000) / coreclk);
+	PRINTF("##Hyper flash AHB read perf###t1: %d; t2: %d; diff: %d; ns: %d, datasize: %d byte; perf: %dMB/s; g_ms: %d\r\n",
+		   t1, t2, t1 - t2, time, dsize, (dsize * 1000)/time, g_ms);
+
+	/* invlide the cache range ahb_addr to ahb_addr+dsize */
+	DCACHE_InvalidateByRange((uint32_t )ahb_addr,dsize);
+}
+
+void MeassureSpeed_FlexSPI_memcopy (uint32_t coreclk, uint32_t dsize)
+{
+	/* hyper flash read test, need to ensure code programming to hyper flash with this test,
+	   otherwise, it will lead to hard fault */
+//	PRINTF("\r\n Start test Hyper Flash read performance!\r\n");   
+	g_msCount = 0;
+	uint32_t *ahb_addr = (uint32_t *)FlexSPI1_AMBA_BASE;
+	uint32_t t1 = SysTick->VAL;
+
+	memcpy(&sdram_readBuffer[0],(uint32_t *)(ahb_addr),dsize);
+	__asm("DSB");
+
+	uint32_t t2 = SysTick->VAL;
+	uint32_t g_ms = g_msCount;
+	uint32_t time = (((uint64_t)(t1 - t2) * 1000000000) / coreclk);
+	PRINTF("##Hyper flash AHB read perf###t1: %d; t2: %d; diff: %d; ns: %d, datasize: %d byte; perf: %dMB/s; g_ms: %d\r\n",
+		   t1, t2, t1 - t2, time, dsize, (dsize * 1000)/time, g_ms);
+
+	/* invlide the cache range ahb_addr to ahb_addr+dsize */
+	DCACHE_InvalidateByRange((uint32_t )ahb_addr,dsize);
+	}

@@ -59,6 +59,13 @@ def usage():
     return args
 
 
+def decode_hex_key(hex_key_string):
+    key = hex_key_string.replace(" 0x", "")
+    key = key.replace("0x", "")
+    key = key.decode('hex')
+    return key
+
+
 def nvm_erase_bitmask(start_sector=KW_NVM_SECTOR_START, end_sector=KW_NVM_SECTOR_END):
     result = bytearray()
     index = 0
@@ -139,11 +146,11 @@ def flash_image(args, size, contents):
         'FSCIFirmware_PushImageChunkConfirm'), cb_push_image_cnf)
 
     if (authenticated_image or encrypted_image) and args.decryption_key is not None:
-        hex_key = args.decryption_key.decode("hex")
+        hex_key = decode_hex_key(args.decryption_key)
         FSCIOTASupportSetKey(args.dev, KeyType=FSCIOTASupportSetKeyRequestKeyType.SBKEK, Key=hex_key)
 
     if authenticated_image and args.authentication_key is not None:
-        hex_hash = args.authentication_key.decode("hex")
+        hex_hash = decode_hex_key(args.authentication_key)
         FSCIOTASupportSetKey(args.dev, KeyType=FSCIOTASupportSetKeyRequestKeyType.RHK, Key=hex_hash)
 
     while True:
@@ -219,17 +226,9 @@ def flash_image(args, size, contents):
 def image_extension_verification(args):
 
     # verify the image extension
-    if ((args.decryption_key is not None) or (args.authentication_key is not None)):
-        if not args.bin.endswith(".sbin"):
-            print '[FAILED] Not the correct image format. If DECRYPTION_KEY or AUTHENTICATION_KEY are'\
-                ' present then the image must be a secured one so only ".sbin" image are accepted'
-            return False
-    else:
-        if not args.bin.endswith(".bin"):
-            print '[FAILED] Not the correct image format. If DECRYPTION_KEY or AUTHENTICATION_KEY are'\
-                ' not present then the image must be an unsecured secured one so only ".bin" image are accepted'
-            return False
 
+    if not args.bin.endswith(".sbin") and not args.bin.endswith(".bin"):
+        return False
     return True
 
 

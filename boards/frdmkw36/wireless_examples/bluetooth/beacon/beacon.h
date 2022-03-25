@@ -43,7 +43,14 @@
 ********************************************************************************** */
 
 extern const gapAdvertisingParameters_t gAppAdvParams;
+#if gBeaconAE_c
+extern gapAdvertisingData_t             gAppExtAdvertisingNoData;
+extern gapExtAdvertisingParameters_t    gExtAdvParams;
+extern gapAdvertisingData_t             gAppExtAdvertisingData;
+extern gapPeriodicAdvParameters_t       gPeriodicAdvParams;
+#endif
 
+extern gapAdvertisingData_t             gAppAdvertisingData;
 /************************************************************************************
 *************************************************************************************
 * Public prototypes

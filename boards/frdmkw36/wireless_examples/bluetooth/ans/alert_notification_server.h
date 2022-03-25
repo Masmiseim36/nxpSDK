@@ -29,6 +29,8 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapConnectionRequestParameters_t gConnReqParams;
+extern gapScanningParameters_t          gScanParams;
 
 /************************************************************************************
 *************************************************************************************
@@ -44,7 +46,7 @@ void BleApp_Start(void);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 
 #endif /* ALERT_NOTIFICATION_SERVER_H */

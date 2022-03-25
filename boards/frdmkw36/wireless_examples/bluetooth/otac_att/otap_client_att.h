@@ -25,17 +25,30 @@
 
 /* Profile Parameters */
 
+#define gFastConnMinAdvInterval_c       32 /* 20 ms */
+#define gFastConnMaxAdvInterval_c       48 /* 30 ms */
+
 #define gReducedPowerMinAdvInterval_c   1600 /* 1 s */
 #define gReducedPowerMaxAdvInterval_c   4000 /* 2.5 s */
 
-#define gAdvTime_c                      10 /* 10 s*/
+#define gFastConnAdvTime_c              30  /* s */
+#define gReducedPowerAdvTime_c          300 /* s */
 
+#if gAppUseBonding_d
+#define gFastConnWhiteListAdvTime_c     10 /* s */
+#else
+#define gFastConnWhiteListAdvTime_c     0
+#endif
 
 /************************************************************************************
 *************************************************************************************
 * Public memory declarations
 *************************************************************************************
 ********************************************************************************** */
+extern gapAdvertisingData_t             gAppAdvertisingData;
+extern gapScanResponseData_t            gAppScanRspData;
+extern gapAdvertisingParameters_t       gAdvParams;
+extern gapPairingParameters_t           gPairingParameters;
 
 /************************************************************************************
 *************************************************************************************

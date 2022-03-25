@@ -40,6 +40,17 @@
 /*! Number of credit-based channels supported */
 #define gL2caMaxLeCbChannels_c         2
 
+/*! Repeated Attempts - Mitigation for pairing attacks */
+#define gRepeatedAttempts_d             0
+
+/* Number of devices identified by address to keep track of for Repeated Attempts */
+#define gRepeatedAttemptsNoOfDevices_c  (4U)
+
+/* Minimum timeout after a pairing failure before the same peer can re-attempt it */
+#define gRepeatedAttemptsTimeoutMin_c   (10U) /* seconds */
+
+/* Maximum timeout after a pairing failure before the same peer can re-attempt it */
+#define gRepeatedAttemptsTimeoutMax_c   (640U) /* seconds */
 /*! *********************************************************************************
  *  Framework Configuration
  ********************************************************************************** */
@@ -65,7 +76,11 @@
          _block_size_ 512  _number_of_blocks_    8 _eol_
 
 /* Defines number of timers needed by the application */
+#if gRepeatedAttempts_d
+#define gTmrApplicationTimers_c         5
+#else
 #define gTmrApplicationTimers_c         4
+#endif
 
 /* Defines number of timers needed by the protocol stack */
 #if defined(gAppMaxConnections_c) && defined(gL2caMaxLeCbChannels_c)
@@ -79,9 +94,6 @@
 
 /* Enables / Disables the precision timers platform component */
 #define gTimestamp_Enabled_d            1
-
-/* Enable/Disable Low Power Timer */
-#define gTMR_EnableLowPowerTimers       0
 
 /* Number of commands the shell supports*/
 #define SHELL_MAX_COMMANDS  6

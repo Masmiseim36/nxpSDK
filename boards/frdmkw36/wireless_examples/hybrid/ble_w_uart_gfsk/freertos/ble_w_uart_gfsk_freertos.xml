@@ -22,6 +22,8 @@
     <definition extID="middleware.wireless.framework.keyboard.MKW36Z4"/>
     <definition extID="middleware.wireless.framework.led.MKW36Z4"/>
     <definition extID="middleware.wireless.framework.linkscripts_KW36.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.lpm_MKW36Z.MKW36Z4"/>
+    <definition extID="middleware.wireless.framework.lpm_ble_MKW36Z.MKW36Z4"/>
     <definition extID="middleware.wireless.framework.mem_manager.MKW36Z4"/>
     <definition extID="middleware.wireless.framework.messaging.MKW36Z4"/>
     <definition extID="middleware.wireless.framework.module_info.MKW36Z4"/>
@@ -65,7 +67,7 @@
     <definition extID="iar"/>
     <definition extID="drt"/>
   </externalDefinitions>
-  <example id="frdmkw36_wireless_examples_hybrid_ble_w_uart_gfsk_freertos" name="freertos" category="wireless_examples/hybrid/ble_w_uart_gfsk" dependency="middleware.freertos.heap_4.MKW36Z4 middleware.wireless.framework.osa_freertos.MKW36Z4 middleware.freertos.MKW36Z4 middleware.wireless.framework.flash.internal.MKW36Z4 middleware.wireless.framework.gpio_adapter.MKW36Z4 middleware.wireless.framework.keyboard.MKW36Z4 middleware.wireless.framework.led.MKW36Z4 middleware.wireless.framework.reset.MKW36Z4 middleware.wireless.framework.common.MKW36Z4 middleware.wireless.framework.mem_manager.MKW36Z4 middleware.wireless.framework.messaging.MKW36Z4 middleware.wireless.framework.osa.MKW36Z4 middleware.wireless.framework.panic.MKW36Z4 middleware.wireless.framework.rng.MKW36Z4 middleware.wireless.framework.nvm.MKW36Z4 middleware.wireless.framework.smgr.MKW36Z4 middleware.wireless.framework.smgr.uart_adapter.MKW36Z4 middleware.wireless.framework.smgr.spi_adapter.MKW36Z4 middleware.wireless.framework.tmr.MKW36Z4 middleware.wireless.framework.module_info.MKW36Z4 middleware.wireless.framework.function_lib.MKW36Z4 middleware.framework.generic_lists.MKW36Z4 middleware.wireless.framework.sec_lib.MKW36Z4 middleware.wireless.ble_host.MKW36Z4 middleware.wireless.ble_controller.MKW36Z4 middleware.wireless.ble_appl_main.MKW36Z4 middleware.wireless.ble_gatt_db.MKW36Z4 middleware.wireless.ble_gatt_service_discovery.MKW36Z4 middleware.wireless.ble_profiles.battery_service.MKW36Z4 middleware.wireless.ble_profiles.device_info_service.MKW36Z4 middleware.wireless.ble_profiles.wireless_uart.MKW36Z4 middleware.wireless.framework.coexistence.MKW36Z4 middleware.wireless.framework.linkscripts_KW36.MKW36Z4 platform.drivers.common.MKW36Z4 platform.drivers.trng.MKW36Z4 platform.drivers.flash.MKW36Z4 platform.drivers.lpuart.MKW36Z4 platform.drivers.gpio.MKW36Z4 platform.drivers.port.MKW36Z4 platform.drivers.tpm.MKW36Z4 platform.drivers.dspi.MKW36Z4 platform.drivers.i2c.MKW36Z4 platform.drivers.lptmr.MKW36Z4 platform.drivers.rtc.MKW36Z4 platform.drivers.llwu.MKW36Z4 platform.drivers.ltc.MKW36Z4 platform.drivers.pmc.MKW36Z4 platform.drivers.adc16.MKW36Z4 middleware.wireless.framework.dcdc_MKW36Z.MKW36Z4 middleware.wireless.xcvr_kw36z.MKW36Z4 middleware.wireless.xcvr_test_kw36z.MKW36Z4 middleware.wireless.genfsk.MKW36Z4 platform.drivers.smc.MKW36Z4 platform.drivers.clock.MKW36Z4 platform.devices.MKW36Z4_CMSIS.MKW36Z4 platform.utilities.debug_console.MKW36Z4 platform.devices.MKW36Z4_startup.MKW36Z4" toolchain="iar mcuxpresso drt">
+  <example id="frdmkw36_wireless_examples_hybrid_ble_w_uart_gfsk_freertos" name="freertos" category="wireless_examples/hybrid/ble_w_uart_gfsk" dependency="middleware.freertos.heap_4.MKW36Z4 middleware.wireless.framework.osa_freertos.MKW36Z4 middleware.freertos.MKW36Z4 middleware.wireless.framework.flash.internal.MKW36Z4 middleware.wireless.framework.gpio_adapter.MKW36Z4 middleware.wireless.framework.keyboard.MKW36Z4 middleware.wireless.framework.led.MKW36Z4 middleware.wireless.framework.reset.MKW36Z4 middleware.wireless.framework.common.MKW36Z4 middleware.wireless.framework.mem_manager.MKW36Z4 middleware.wireless.framework.messaging.MKW36Z4 middleware.wireless.framework.lpm_MKW36Z.MKW36Z4 middleware.wireless.framework.lpm_ble_MKW36Z.MKW36Z4 middleware.wireless.framework.osa.MKW36Z4 middleware.wireless.framework.panic.MKW36Z4 middleware.wireless.framework.rng.MKW36Z4 middleware.wireless.framework.nvm.MKW36Z4 middleware.wireless.framework.smgr.MKW36Z4 middleware.wireless.framework.smgr.uart_adapter.MKW36Z4 middleware.wireless.framework.smgr.spi_adapter.MKW36Z4 middleware.wireless.framework.tmr.MKW36Z4 middleware.wireless.framework.module_info.MKW36Z4 middleware.wireless.framework.function_lib.MKW36Z4 middleware.framework.generic_lists.MKW36Z4 middleware.wireless.framework.sec_lib.MKW36Z4 middleware.wireless.ble_host.MKW36Z4 middleware.wireless.ble_controller.MKW36Z4 middleware.wireless.ble_appl_main.MKW36Z4 middleware.wireless.ble_gatt_db.MKW36Z4 middleware.wireless.ble_gatt_service_discovery.MKW36Z4 middleware.wireless.ble_profiles.battery_service.MKW36Z4 middleware.wireless.ble_profiles.device_info_service.MKW36Z4 middleware.wireless.ble_profiles.wireless_uart.MKW36Z4 middleware.wireless.framework.coexistence.MKW36Z4 middleware.wireless.framework.linkscripts_KW36.MKW36Z4 platform.drivers.common.MKW36Z4 platform.drivers.trng.MKW36Z4 platform.drivers.flash.MKW36Z4 platform.drivers.lpuart.MKW36Z4 platform.drivers.gpio.MKW36Z4 platform.drivers.port.MKW36Z4 platform.drivers.tpm.MKW36Z4 platform.drivers.dspi.MKW36Z4 platform.drivers.i2c.MKW36Z4 platform.drivers.lptmr.MKW36Z4 platform.drivers.rtc.MKW36Z4 platform.drivers.llwu.MKW36Z4 platform.drivers.ltc.MKW36Z4 platform.drivers.pmc.MKW36Z4 platform.drivers.adc16.MKW36Z4 middleware.wireless.framework.dcdc_MKW36Z.MKW36Z4 middleware.wireless.xcvr_kw36z.MKW36Z4 middleware.wireless.xcvr_test_kw36z.MKW36Z4 middleware.wireless.genfsk.MKW36Z4 platform.drivers.smc.MKW36Z4 platform.drivers.clock.MKW36Z4 platform.devices.MKW36Z4_CMSIS.MKW36Z4 platform.utilities.debug_console.MKW36Z4 platform.devices.MKW36Z4_startup.MKW36Z4" toolchain="iar mcuxpresso drt">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
@@ -221,22 +223,22 @@
       <files mask="main.c"/>
       <files mask="wireless_uart.c"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.9/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.3.11/controller/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_kw36z_controller_gcc.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.9/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/bluetooth_1.3.11/host/lib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_ble_5-0_host_cm0p_gcc.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.4.8/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
+    <source path="middleware/wireless/framework_5.4.11/SecLib" type="lib" method="copy" toolchain="mcuxpresso">
       <files mask="lib_crypto_m0.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.9/controller/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.3.11/controller/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_kw36z_controller_iar.a"/>
     </source>
-    <source path="middleware/wireless/bluetooth_1.3.9/host/lib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/bluetooth_1.3.11/host/lib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_ble_5-0_host_cm0p_iar.a"/>
     </source>
-    <source path="middleware/wireless/framework_5.4.8/SecLib" type="lib" method="copy" toolchain="iar">
+    <source path="middleware/wireless/framework_5.4.11/SecLib" type="lib" method="copy" toolchain="iar">
       <files mask="lib_crypto_m0.a"/>
     </source>
   </example>

@@ -55,6 +55,7 @@ extern gapAdvertisingParameters_t   gAdvParams;
 extern gapSmpKeys_t                 gSmpKeys;
 extern gapPairingParameters_t       gPairingParameters;
 extern gapDeviceSecurityRequirements_t deviceSecurityRequirements;
+
 /************************************************************************************
 *************************************************************************************
 * Public prototypes

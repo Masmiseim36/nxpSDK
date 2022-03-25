@@ -453,11 +453,8 @@ static void FLEXCAN_Reset(CAN_Type *base)
     /* Clean Global Mask of Rx FIFO. */
     base->RXFGMASK = 0x3FFFFFFF;
 
-    /* Clean all Message Buffer CS fields. */
-    for (i = 0; i < FSL_FEATURE_FLEXCAN_HAS_MESSAGE_BUFFER_MAX_NUMBERn(base); i++)
-    {
-        base->MB[i].CS = 0x0;
-    }
+    /* Clean all Message Buffer memory. */
+    (void)memset((void *)&base->MB[0], 0, sizeof(base->MB));
 }
 
 static void FLEXCAN_SetBaudRate(CAN_Type *base,
@@ -633,6 +630,8 @@ void FLEXCAN_FDInit(CAN_Type *base, const flexcan_config_t *config, uint32_t sou
 #if defined(CAN_FDCTRL_MBDSR3_MASK)
     base->FDCTRL |= CAN_FDCTRL_MBDSR3(dataSize);
 #endif
+    /* Enable CAN FD ISO mode by default. */
+    base->CTRL2 |= CAN_CTRL2_ISOCANFDEN_MASK;
     /* Exit Freeze Mode. */
     FLEXCAN_ExitFreezeMode(base);
 }

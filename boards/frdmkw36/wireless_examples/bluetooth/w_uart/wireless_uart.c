@@ -299,7 +299,7 @@ void BleApp_Start(gapRole_t gapRole)
             mAppUartNewLine = TRUE;
 #if defined(gUseControllerNotifications_c) && (gUseControllerNotifications_c)
             Gap_ControllerEnhancedNotification(gNotifScanEventOver_c | gNotifScanAdvPktRx_c |
-                                               gNotifScanRspRx_c | gNotifScanReqTx_c, 0);
+                                               gNotifScanRspRx_c | gNotifScanReqTx_c | gNotifConnCreated_c, 0);
 #endif
             gPairingParameters.localIoCapabilities = gIoKeyboardDisplay_c;
             (void)App_StartScanning(&gScanParams, BleApp_ScanningCallback, gGapDuplicateFilteringEnable_c, gGapScanContinuously_d, gGapScanPeriodicDisabled_d);
@@ -313,10 +313,16 @@ void BleApp_Start(gapRole_t gapRole)
             mAppUartNewLine = TRUE;
 #if defined(gUseControllerNotifications_c) && (gUseControllerNotifications_c)
             Gap_ControllerEnhancedNotification(gNotifAdvEventOver_c | gNotifAdvTx_c |
-                                               gNotifAdvScanReqRx_c | gNotifAdvConnReqRx_c, 0);
+                                               gNotifAdvScanReqRx_c | gNotifAdvConnReqRx_c | gNotifConnCreated_c, 0);
 #endif
             gPairingParameters.localIoCapabilities = gIoDisplayOnly_c;
-            BleApp_Advertise();
+
+            /* start ADV only if it's not already started */
+            if (!mAdvState.advOn)
+            {
+                BleApp_Advertise();
+            }
+
             break;
         }
 #endif
@@ -725,6 +731,12 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
                     /* Restored custom connection information. Encrypt link */
                     (void)Gap_EncryptLink(peerDeviceId);
                 }
+                else
+                {
+                    /* Pair after connect if not bonded - it is possible that a
+                       Slave Security Request will not arrive. */
+                    (void)Gap_Pair(peerDeviceId, &gPairingParameters);
+                }
             }
 
 #endif /* gAppUseBonding_d*/
@@ -745,7 +757,7 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             mAppUartNewLine = TRUE;
 
 #if defined(gUseControllerNotifications_c) && (gUseControllerNotifications_c)
-            Gap_ControllerEnhancedNotification(gNotifConnRxPdu_c, peerDeviceId);
+            Gap_ControllerEnhancedNotification(gNotifConnRxPdu_c | gNotifConnEventOver_c | gNotifConnCreated_c, peerDeviceId);
 #endif
 
             maPeerInformation[peerDeviceId].gapRole = mGapRole;
@@ -817,6 +829,16 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             }
         }
         break;
+
+        case gConnEvtAuthenticationRejected_c:
+        {
+            if (mGapRole == gGapCentral_c)
+            {
+                (void)Gap_Pair(peerDeviceId, &gPairingParameters);
+            }
+        }
+        break;
+
 #endif /* gAppUsePairing_d */
 
         default:
@@ -1045,7 +1067,7 @@ static void BleApp_StoreServiceHandles(deviceId_t peerDeviceId, gattService_t *p
 
 static void BleApp_SendUartStream(uint8_t *pRecvStream, uint8_t streamSize)
 {
-    gattCharacteristic_t characteristic = {gGattCharPropNone_c, {0}, 0, 0};
+    gattCharacteristic_t characteristic = {(gattCharacteristicPropertiesBitFields_t)gGattCharPropNone_c, {0}, 0, 0};
     uint8_t              mPeerId = 0;
 
     /* send UART stream to all peers */
@@ -1297,7 +1319,7 @@ static void BleApp_ReceivedUartStream(deviceId_t peerDeviceId, uint8_t *pStream,
 
     if (mAppUartNewLine || (previousDeviceId != peerDeviceId))
     {
-        streamLength += (uint32_t)sizeof(additionalInfoBuff);
+        streamLength += (uint16_t)sizeof(additionalInfoBuff);
     }
 
     /* Allocate buffer for asynchronous write */

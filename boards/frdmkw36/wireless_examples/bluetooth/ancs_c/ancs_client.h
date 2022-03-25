@@ -48,6 +48,9 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapAdvertisingData_t             gAppAdvertisingData;
+extern gapScanResponseData_t            gAppScanRspData;
+extern gapAdvertisingParameters_t       gAdvParams;
 
 /************************************************************************************
 *************************************************************************************
@@ -63,7 +66,7 @@ void BleApp_Start(void);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 
 #endif /* ANCS_CLIENT_H */

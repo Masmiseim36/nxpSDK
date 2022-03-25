@@ -48,16 +48,16 @@
                         wait for a <em class="ph i">gExtAdvertisingParametersSetupComplete_c</em> event in the
                         Generic Callback. Only one advertising set can be configured at a
                         time.</p>
-<div class="p">Comparing with the legacy <em class="ph i">Gap_SetAdvertisingParameters</em>
-                        command, the new set of parameters is:
+<div class="p">Comparing with the legacy <em class="ph i">Gap_SetAdvertisingParameters</em> command, the new set of
+                        parameters is:
 <div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-4A7FA5FB-6FD4-479A-BC81-88EEC6F0C66C__TABLE_YK3_3HT_LHB" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. New extended advertising parameters</span></caption>
                                 
                                 
                                 <thead class="thead" align="left">
                                     <tr class="row">
-                                        <th class="entry" valign="top" id="d8972e103">Parameter</th>
+                                        <th class="entry" valign="top" id="d9462e103">Parameter</th>
 
-                                        <th class="entry" valign="top" id="d8972e106">Description</th>
+                                        <th class="entry" valign="top" id="d9462e106">Description</th>
 
                                     </tr>
 
@@ -65,107 +65,109 @@
 
                                 <tbody class="tbody">
                                     <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e103 ">SID</td>
+                                        <td class="entry" valign="top" headers="d9462e103 ">SID</td>
 
-                                        <td class="entry" valign="top" headers="d8972e106 ">Value of the Advertising SID subfield in the ADI
-                                            field of the PDU.</td>
-
-                                    </tr>
-
-                                    <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e103 ">handle</td>
-
-                                        <td class="entry" valign="top" headers="d8972e106 ">Used to identify an advertising set. Possible values
-                                            are 0x00 or 0x01 since the current implementation
-                                            supports two advertising sets.</td>
+                                        <td class="entry" valign="top" headers="d9462e106 ">Value of the Advertising SID subfield in
+                                            the ADI field of the PDU.</td>
 
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e103 ">extAdvProperties</td>
+                                        <td class="entry" valign="top" headers="d9462e103 ">handle</td>
 
-                                        <td class="entry" valign="top" headers="d8972e106 ">
+                                        <td class="entry" valign="top" headers="d9462e106 ">Used to identify an advertising set.
+                                            Possible values are 0x00 or 0x01 since the current
+                                            implementation supports two advertising sets.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d9462e103 ">extAdvProperties</td>
+
+                                        <td class="entry" valign="top" headers="d9462e106 ">
                                             <p class="p">BIT0 - Connectable advertising</p>
 
                                             <p class="p">BIT1 - Scannable advertising</p>
 
                                             <p class="p">BIT2 - Directed advertising</p>
 
-                                            <p class="p">BIT3 - High Duty Cycle Directed Connectable
-                                                advertising (≤ 3.75 ms Advertising Interval)</p>
+                                            <p class="p">BIT3 - High Duty Cycle Directed
+                                                Connectable advertising (≤ 3.75 ms Advertising
+                                                Interval)</p>
 
                                             <p class="p">BIT4 - Use legacy advertising PDUs</p>
 
-                                            <p class="p">BIT5 - Omit advertiser's address from all PDUs
-                                                ("anonymous advertising")</p>
+                                            <p class="p">BIT5 - Omit advertiser's address from
+                                                all PDUs ("anonymous advertising")</p>
 
-                                            <p class="p">BIT6 - Include TxPower in the extended header of the
-                                                advertising PDU</p>
+                                            <p class="p">BIT6 - Include TxPower in the extended
+                                                header of the advertising PDU</p>
 
                                             <p class="p"> </p>
 
-                                            <p class="p">If legacy advertising PDU types are being used (BIT4
-                                                = 1), permitted properties values are presented in
-                                                the next table. If the advertising set already
-                                                contains data, the type shall be one that supports
-                                                advertising data and the amount of data shall not
-                                                exceed 31 octets.</p>
+                                            <p class="p">If legacy advertising PDU types are
+                                                being used (BIT4 = 1), permitted properties values
+                                                are presented in the next table. If the advertising
+                                                set already contains data, the type shall be one
+                                                that supports advertising data and the amount of
+                                                data shall not exceed 31 octets.</p>
 
-                                            <p class="p">If extended advertising PDU types are being used
-                                                (BIT4 = 0), then the advertisement shall <strong class="ph b">not be
-                                                  both connectable and scannable</strong>. While high
-                                                duty cycle directed connectable advertising (≤ 3.75
-                                                ms advertising interval) shall not be used (BIT3 =
-                                                0).</p>
+                                            <p class="p">If extended advertising PDU types are
+                                                being used (BIT4 = 0), then the advertisement shall
+                                                  <strong class="ph b">not be both connectable and scannable</strong>.
+                                                While high duty cycle directed connectable
+                                                advertising (≤ 3.75 ms advertising interval) shall
+                                                not be used (BIT3 = 0).</p>
 
                                         </td>
 
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e103 ">txPower</td>
+                                        <td class="entry" valign="top" headers="d9462e103 ">txPower</td>
 
-                                        <td class="entry" valign="top" headers="d8972e106 ">Maximum power level at which the advertising packets
-                                            are to be transmitted, the Controller can choose any
-                                            power level &lt;= txPower. Value 127 to be used if Host
-                                            has no preference.</td>
-
-                                    </tr>
-
-                                    <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e103 ">primaryPHY</td>
-
-                                        <td class="entry" valign="top" headers="d8972e106 ">PHY for ADV_EXT_IND: LE 1 M or LE Coded</td>
+                                        <td class="entry" valign="top" headers="d9462e106 ">Maximum power level at which the
+                                            advertising packets are to be transmitted, the
+                                            Controller can choose any power level &lt;= txPower.
+                                            Value 127 to be used if Host has no preference.</td>
 
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e103 ">secondaryPHY</td>
+                                        <td class="entry" valign="top" headers="d9462e103 ">primaryPHY</td>
 
-                                        <td class="entry" valign="top" headers="d8972e106 ">PHY for AUX_ADV_IND and periodic advertising: LE 1 M,
-                                            LE 2 M or LE Coded. Ignored for legacy
-                                            advertising.</td>
-
-                                    </tr>
-
-                                    <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e103 ">secondaryAdvMaxSkip</td>
-
-                                        <td class="entry" valign="top" headers="d8972e106 ">Maximum advertising events that the Controller can
-                                            skip before sending the AUX_ADV_IND packets on the
-                                            secondary advertising channel. Higher values may result
-                                            in lower power consumption. Ignored for legacy
-                                            advertising.</td>
+                                        <td class="entry" valign="top" headers="d9462e106 ">PHY for ADV_EXT_IND: LE 1 M or LE
+                                            Coded</td>
 
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e103 ">enableScanReqNotification</td>
+                                        <td class="entry" valign="top" headers="d9462e103 ">secondaryPHY</td>
 
-                                        <td class="entry" valign="top" headers="d8972e106 ">Whether to enable notifications when scanning PDUs
-                                            (SCAN_REQ, AUX_SCAN_REQ) are received. If enabled, the
-                                            application is notified upon scan requests by
-                                                g<em class="ph i">ExtScanNotification_c</em> events in the
+                                        <td class="entry" valign="top" headers="d9462e106 ">PHY for AUX_ADV_IND and periodic
+                                            advertising: LE 1 M, LE 2 M or LE Coded. Ignored for
+                                            legacy advertising.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d9462e103 ">secondaryAdvMaxSkip</td>
+
+                                        <td class="entry" valign="top" headers="d9462e106 ">Maximum advertising events that the
+                                            Controller can skip before sending the AUX_ADV_IND
+                                            packets on the secondary advertising channel. Higher
+                                            values may result in lower power consumption. Ignored
+                                            for legacy advertising.</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d9462e103 ">enableScanReqNotification</td>
+
+                                        <td class="entry" valign="top" headers="d9462e106 ">Whether to enable notifications when
+                                            scanning PDUs (SCAN_REQ, AUX_SCAN_REQ) are received. If
+                                            enabled, the application is notified upon scan requests
+                                            by g<em class="ph i">ExtScanNotification_c</em> events in the
                                             Advertising Callback.</td>
 
                                     </tr>
@@ -175,20 +177,38 @@
                             </table>
 </div>
 
-<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-4A7FA5FB-6FD4-479A-BC81-88EEC6F0C66C__TABLE_QGR_MHT_LHB" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. Advertising Event Properties values for legacy PDUs</span></caption>
+                        <div class="note note"><span class="notetitle">Note:</span>  When using LE Coded PHY for advertising, the default coding scheme
+                            chosen by link layer is S=8 (125 kb/s data rate). To change the default
+                            coding scheme, the user has two options: <ul class="ul" id="GUID-4A7FA5FB-6FD4-479A-BC81-88EEC6F0C66C__UL_JZY_5XN_NNB">
+                                <li class="li">At compile time by defining
+                                        <samp class="ph codeph">mLongRangeAdvCodingScheme_c</samp>, or</li>
+
+                                <li class="li">At run time by calling the API
+                                        <samp class="ph codeph">Controller_ConfigureAdvCodingScheme()</samp>.</li>
+
+                            </ul>
+ In both cases, the value of the define or the parameter of the API
+                            has to be an appropriate value for primary and secondary PHYs as defined
+                            by the enumeration <samp class="ph codeph">advCodingScheme_tag</samp> found in
+                                <samp class="ph codeph">controller_interface.h</samp>. </div>
+
+                        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-4A7FA5FB-6FD4-479A-BC81-88EEC6F0C66C__TABLE_QGR_MHT_LHB" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 2. Advertising Event Properties values for legacy
+                                PDUs</span></caption>
                                 
                                 
                                 
                                 
                                 <thead class="thead" align="left">
                                     <tr class="row">
-                                        <th class="entry" valign="top" id="d8972e244"><strong class="ph b">Event Type</strong></th>
+                                        <th class="entry" valign="top" id="d9462e269"><strong class="ph b">Event Type</strong></th>
 
-                                        <th class="entry" valign="top" id="d8972e248"><strong class="ph b">PDU Type</strong></th>
+                                        <th class="entry" valign="top" id="d9462e273"><strong class="ph b">PDU Type</strong></th>
 
-                                        <th class="entry" valign="top" id="d8972e252"><strong class="ph b">Advertising Event Properties</strong></th>
+                                        <th class="entry" valign="top" id="d9462e277"><strong class="ph b">Advertising Event
+                                            Properties</strong></th>
 
-                                        <th class="entry" valign="top" id="d8972e256"><strong class="ph b">Advertising Data</strong></th>
+                                        <th class="entry" valign="top" id="d9462e281"><strong class="ph b">Advertising Data</strong></th>
 
                                     </tr>
 
@@ -196,57 +216,61 @@
 
                                 <tbody class="tbody">
                                     <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e244 ">Connectable and scannable undirected</td>
+                                        <td class="entry" valign="top" headers="d9462e269 ">Connectable and scannable
+                                            undirected</td>
 
-                                        <td class="entry" valign="top" headers="d8972e248 ">ADV_IND</td>
+                                        <td class="entry" valign="top" headers="d9462e273 ">ADV_IND</td>
 
-                                        <td class="entry" valign="top" headers="d8972e252 ">00010011b</td>
+                                        <td class="entry" valign="top" headers="d9462e277 ">00010011b</td>
 
-                                        <td class="entry" valign="top" headers="d8972e256 ">Supported</td>
-
-                                    </tr>
-
-                                    <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e244 ">Connectable directed (low duty cycle)</td>
-
-                                        <td class="entry" valign="top" headers="d8972e248 ">ADV_DIRECT_IND</td>
-
-                                        <td class="entry" valign="top" headers="d8972e252 ">00010101b</td>
-
-                                        <td class="entry" valign="top" headers="d8972e256 ">Not allowed</td>
+                                        <td class="entry" valign="top" headers="d9462e281 ">Supported</td>
 
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e244 ">Connectable directed (high duty cycle)</td>
+                                        <td class="entry" valign="top" headers="d9462e269 ">Connectable directed (low duty
+                                            cycle)</td>
 
-                                        <td class="entry" valign="top" headers="d8972e248 ">ADV_DIRECT_IND</td>
+                                        <td class="entry" valign="top" headers="d9462e273 ">ADV_DIRECT_IND</td>
 
-                                        <td class="entry" valign="top" headers="d8972e252 ">00011101b</td>
+                                        <td class="entry" valign="top" headers="d9462e277 ">00010101b</td>
 
-                                        <td class="entry" valign="top" headers="d8972e256 ">Not allowed</td>
-
-                                    </tr>
-
-                                    <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e244 ">Scannable undirected</td>
-
-                                        <td class="entry" valign="top" headers="d8972e248 ">ADV_SCAN_IND</td>
-
-                                        <td class="entry" valign="top" headers="d8972e252 ">00010010b</td>
-
-                                        <td class="entry" valign="top" headers="d8972e256 ">Supported</td>
+                                        <td class="entry" valign="top" headers="d9462e281 ">Not allowed</td>
 
                                     </tr>
 
                                     <tr class="row">
-                                        <td class="entry" valign="top" headers="d8972e244 ">Non-connectable and nonscannable undirected</td>
+                                        <td class="entry" valign="top" headers="d9462e269 ">Connectable directed (high duty
+                                            cycle)</td>
 
-                                        <td class="entry" valign="top" headers="d8972e248 ">ADV_NONCONN_IND</td>
+                                        <td class="entry" valign="top" headers="d9462e273 ">ADV_DIRECT_IND</td>
 
-                                        <td class="entry" valign="top" headers="d8972e252 ">00010000b</td>
+                                        <td class="entry" valign="top" headers="d9462e277 ">00011101b</td>
 
-                                        <td class="entry" valign="top" headers="d8972e256 ">Supported</td>
+                                        <td class="entry" valign="top" headers="d9462e281 ">Not allowed</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d9462e269 ">Scannable undirected</td>
+
+                                        <td class="entry" valign="top" headers="d9462e273 ">ADV_SCAN_IND</td>
+
+                                        <td class="entry" valign="top" headers="d9462e277 ">00010010b</td>
+
+                                        <td class="entry" valign="top" headers="d9462e281 ">Supported</td>
+
+                                    </tr>
+
+                                    <tr class="row">
+                                        <td class="entry" valign="top" headers="d9462e269 ">Non-connectable and nonscannable
+                                            undirected</td>
+
+                                        <td class="entry" valign="top" headers="d9462e273 ">ADV_NONCONN_IND</td>
+
+                                        <td class="entry" valign="top" headers="d9462e277 ">00010000b</td>
+
+                                        <td class="entry" valign="top" headers="d9462e281 ">Supported</td>
 
                                     </tr>
 

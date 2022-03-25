@@ -93,6 +93,7 @@ privileged Vs unprivileged linkage and placement. */
 /* Constants used with the cRxLock and cTxLock structure members. */
 #define queueUNLOCKED					( ( int8_t ) -1 )
 #define queueLOCKED_UNMODIFIED			( ( int8_t ) 0 )
+#define queueINT8_MAX					( ( int8_t ) 127 )
 
 /* When the Queue_t structure is used to represent a base queue its pcHead and
 pcTail members are used as pointers into the queue storage area.  When the
@@ -402,6 +403,12 @@ Queue_t * const pxQueue = ( Queue_t * ) xQueue;
 			can be in the queue at any time. */
 			xQueueSizeInBytes = ( size_t ) ( uxQueueLength * uxItemSize ); /*lint !e961 MISRA exception as the casts are only redundant for some ports. */
 		}
+
+		/* Check for multiplication overflow. */
+		configASSERT( ( uxItemSize == 0 ) || ( uxQueueLength == ( xQueueSizeInBytes / uxItemSize ) ) );
+
+		/* Check for addition overflow. */
+		configASSERT( ( sizeof( Queue_t ) + xQueueSizeInBytes ) > xQueueSizeInBytes );
 
 		pxNewQueue = ( Queue_t * ) pvPortMalloc( sizeof( Queue_t ) + xQueueSizeInBytes );
 
@@ -1052,6 +1059,7 @@ Queue_t * const pxQueue = ( Queue_t * ) xQueue;
 			{
 				/* Increment the lock count so the task that unlocks the queue
 				knows that data was posted while it was locked. */
+				configASSERT( cTxLock != queueINT8_MAX );
 				pxQueue->cTxLock = ( int8_t ) ( cTxLock + 1 );
 			}
 
@@ -1217,6 +1225,7 @@ Queue_t * const pxQueue = ( Queue_t * ) xQueue;
 			{
 				/* Increment the lock count so the task that unlocks the queue
 				knows that data was posted while it was locked. */
+				configASSERT( cTxLock != queueINT8_MAX );
 				pxQueue->cTxLock = ( int8_t ) ( cTxLock + 1 );
 			}
 
@@ -1505,6 +1514,7 @@ Queue_t * const pxQueue = ( Queue_t * ) xQueue;
 			{
 				/* Increment the lock count so the task that unlocks the queue
 				knows that data was removed while it was locked. */
+				configASSERT( cRxLock != queueINT8_MAX );
 				pxQueue->cRxLock = ( int8_t ) ( cRxLock + 1 );
 			}
 
@@ -2540,6 +2550,7 @@ BaseType_t xReturn;
 			}
 			else
 			{
+				configASSERT( cTxLock != queueINT8_MAX );
 				pxQueueSetContainer->cTxLock = ( int8_t ) ( cTxLock + 1 );
 			}
 		}

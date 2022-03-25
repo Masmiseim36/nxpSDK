@@ -202,7 +202,7 @@ static int8_t ShellGattDb_Read(uint8_t argc, char * argv[])
     {
         /* print error reason */
         shell_write("\r\n-->  GATTDB Event: Procedure Error ");
-        if (result <= (gGattDbDescriptorNotFound_c & 0xFF))
+        if (result <= (gGattDbDescriptorNotFound_c & 0xFFU))
         {
             /* GattDb errors */
             shell_write(mGattDbStatus[result]);
@@ -261,11 +261,11 @@ static int8_t ShellGattDb_Write(uint8_t argc, char * argv[])
     result =  (uint8_t)GattDb_WriteAttribute(handle, length, (uint8_t*)argv[1]);
     result &= 0xFFU;
 
-    if ((bleResult_t)result != gGattDbSuccess_c)
+    if (result != (uint8_t)gGattDbSuccess_c)
     {
         /* Print error reason */
         shell_write("\r\n-->  GATTDB Event: Procedure Error ");
-        if (result <= (gGattDbDescriptorNotFound_c & 0xFF))
+        if (result <= ((uint8_t)gGattDbDescriptorNotFound_c & 0xFFU))
         {
             /* GattDb errors */
             shell_write(mGattDbStatus[result]);

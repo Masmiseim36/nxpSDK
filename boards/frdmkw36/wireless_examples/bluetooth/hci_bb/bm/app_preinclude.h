@@ -74,9 +74,6 @@
 /* Enables / Disables the precision timers platform component */
 #define gTimestamp_Enabled_d            1
 
-/* Enable/Disable Low Power Timer */
-#define gTMR_EnableLowPowerTimers       0
-
 /*! *********************************************************************************
  * 	RTOS Configuration
  ********************************************************************************** */

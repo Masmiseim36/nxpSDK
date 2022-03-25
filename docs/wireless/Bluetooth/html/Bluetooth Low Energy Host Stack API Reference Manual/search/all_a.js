@@ -9,6 +9,7 @@ var searchData=
   ['l2ca_5fregisterlepsm',['L2ca_RegisterLePsm',['../group___l2_c_a.html#ga5c2cc4596c6c7dc6a0a8979ce1daf3fa',1,'l2ca_cb_interface.h']]],
   ['l2ca_5fsendlecbdata',['L2ca_SendLeCbData',['../group___l2_c_a.html#ga57acad48637f31c8fc104840e7abdd7f',1,'l2ca_cb_interface.h']]],
   ['l2ca_5fsendlecredit',['L2ca_SendLeCredit',['../group___l2_c_a.html#ga66c75ebaa71f52f3df9886ebaa2f897c',1,'l2ca_cb_interface.h']]],
+  ['l2calecbchannelstatusnotification_5ft',['l2caLeCbChannelStatusNotification_t',['../group___l2_c_a.html#structl2ca_le_cb_channel_status_notification__t',1,'']]],
   ['l2calecbconnectioncomplete_5ft',['l2caLeCbConnectionComplete_t',['../group___l2_c_a.html#structl2ca_le_cb_connection_complete__t',1,'']]],
   ['l2calecbconnectionrequest_5ft',['l2caLeCbConnectionRequest_t',['../group___l2_c_a.html#structl2ca_le_cb_connection_request__t',1,'']]],
   ['l2calecbdisconnection_5ft',['l2caLeCbDisconnection_t',['../group___l2_c_a.html#structl2ca_le_cb_disconnection__t',1,'']]],

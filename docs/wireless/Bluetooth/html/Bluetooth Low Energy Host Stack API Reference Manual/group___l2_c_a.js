@@ -33,6 +33,11 @@ var group___l2_c_a =
       [ "result", "group___l2_c_a.html#a3e00dddd8cf9718e6a5fd1f2620fbda5", null ],
       [ "errorSource", "group___l2_c_a.html#ad9e5863c89043a68042e92621cd37d25", null ]
     ] ],
+    [ "l2caLeCbChannelStatusNotification_t", "group___l2_c_a.html#structl2ca_le_cb_channel_status_notification__t", [
+      [ "deviceId", "group___l2_c_a.html#ae0d9b6ea7c1a01798e0960484dd45bf9", null ],
+      [ "cId", "group___l2_c_a.html#ac8fb55733767b4465fc9e32318156b95", null ],
+      [ "status", "group___l2_c_a.html#af9df154fa2cf71e9f4fc6dd3d2a9c5f3", null ]
+    ] ],
     [ "l2capControlMessage_t", "group___l2_c_a.html#structl2cap_control_message__t", [
       [ "messageType", "group___l2_c_a.html#a43c0be5a1ab6f363581b408fd067305a", null ],
       [ "messageData", "group___l2_c_a.html#a07b33451c5075138a54504c7aea4fbbf", null ]
@@ -43,7 +48,8 @@ var group___l2_c_a =
       [ "disconnection", "group___l2_c_a.html#aedb9d033d7e1866da7bd79abdeca6f66", null ],
       [ "noPeerCredits", "group___l2_c_a.html#a2ca45dec08f3cc23be29ec91a4f50b44", null ],
       [ "localCreditsNotification", "group___l2_c_a.html#a0b5ff9798eabc318f210c20f8e8cd61e", null ],
-      [ "error", "group___l2_c_a.html#acb5e100e5a9a3e7f6d1fd97512215282", null ]
+      [ "error", "group___l2_c_a.html#acb5e100e5a9a3e7f6d1fd97512215282", null ],
+      [ "channelStatusNotification", "group___l2_c_a.html#a40b2a8a42be2cf7fa97ff358306581d0", null ]
     ] ],
     [ "L2ca_RegisterLeCbCallbacks", "group___l2_c_a.html#ga0655d819f0939145728acdfebd4309b1", null ],
     [ "L2ca_RegisterLePsm", "group___l2_c_a.html#ga5c2cc4596c6c7dc6a0a8979ce1daf3fa", null ],

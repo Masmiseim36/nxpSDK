@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -479,6 +479,14 @@ class GATTDBDynamicAddCharDescriptorWithUniqueValueOperation(FsciOperation):
         self.spec = Spec.GATTDBDynamicAddCharDescriptorWithUniqueValueRequestFrame
         self.observers = [GATTDBDynamicAddCharDescriptorWithUniqueValueIndicationObserver('GATTDBDynamicAddCharDescriptorWithUniqueValueIndication'), ]
         super(GATTDBDynamicAddCharDescriptorWithUniqueValueOperation, self).subscribeToEvents()
+
+class GATTDBDynamicEndDatabaseUpdateOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GATTDBDynamicEndDatabaseUpdateRequestFrame
+        self.observers = []
+        super(GATTDBDynamicEndDatabaseUpdateOperation, self).subscribeToEvents()
+
 class BLEHostInitializeOperation(FsciOperation):
 
     def subscribeToEvents(self):
@@ -1011,13 +1019,47 @@ class GAPSetPrivacyModeOperation(FsciOperation):
         self.observers = []
         super(GAPSetPrivacyModeOperation, self).subscribeToEvents()
 
+class ControllerSetScanDupFiltModeOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.ControllerSetScanDupFiltModeRequestFrame
+        self.observers = []
+        super(ControllerSetScanDupFiltModeOperation, self).subscribeToEvents()
+
+class GAPReadControllerLocalRPAOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPReadControllerLocalRPARequestFrame
+        self.observers = []
+        super(GAPReadControllerLocalRPAOperation, self).subscribeToEvents()
+
+class WritePublicDeviceAddressOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.WritePublicDeviceAddressRequestFrame
+        self.observers = []
+        super(WritePublicDeviceAddressOperation, self).subscribeToEvents()
+
+class GAPCheckNvmIndexOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPCheckNvmIndexRequestFrame
+        self.observers = [GAPCheckNvmIndexIndicationObserver('GAPCheckNvmIndexIndication'), ]
+        super(GAPCheckNvmIndexOperation, self).subscribeToEvents()
+
+class GAPGetDeviceIdFromConnHandleOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.GAPGetDeviceIdFromConnHandleRequestFrame
+        self.observers = [GAPGetDeviceIdFromConnHandleIndicationObserver('GAPGetDeviceIdFromConnHandleIndication'), ]
+        super(GAPGetDeviceIdFromConnHandleOperation, self).subscribeToEvents()
+
 class GAPSetExtAdvertisingParametersOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GAPSetExtAdvertisingParametersRequestFrame
         self.observers = []
         super(GAPSetExtAdvertisingParametersOperation, self).subscribeToEvents()
-
 
 class GAPStartExtAdvertisingOperation(FsciOperation):
 
@@ -1026,14 +1068,12 @@ class GAPStartExtAdvertisingOperation(FsciOperation):
         self.observers = []
         super(GAPStartExtAdvertisingOperation, self).subscribeToEvents()
 
-
 class GAPRemoveAdvertisingSetOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GAPRemoveAdvertisingSetRequestFrame
         self.observers = []
         super(GAPRemoveAdvertisingSetOperation, self).subscribeToEvents()
-
 
 class GAPStopExtAdvertisingOperation(FsciOperation):
 
@@ -1042,14 +1082,12 @@ class GAPStopExtAdvertisingOperation(FsciOperation):
         self.observers = []
         super(GAPStopExtAdvertisingOperation, self).subscribeToEvents()
 
-
 class GAPUpdatePeriodicAdvListOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GAPUpdatePeriodicAdvListRequestFrame
         self.observers = []
         super(GAPUpdatePeriodicAdvListOperation, self).subscribeToEvents()
-
 
 class GAPSetPeriodicAdvParametersOperation(FsciOperation):
 
@@ -1058,14 +1096,12 @@ class GAPSetPeriodicAdvParametersOperation(FsciOperation):
         self.observers = []
         super(GAPSetPeriodicAdvParametersOperation, self).subscribeToEvents()
 
-
 class GAPStartPeriodicAdvertisingOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GAPStartPeriodicAdvertisingRequestFrame
         self.observers = []
         super(GAPStartPeriodicAdvertisingOperation, self).subscribeToEvents()
-
 
 class GAPStopPeriodicAdvertisingOperation(FsciOperation):
 
@@ -1074,14 +1110,12 @@ class GAPStopPeriodicAdvertisingOperation(FsciOperation):
         self.observers = []
         super(GAPStopPeriodicAdvertisingOperation, self).subscribeToEvents()
 
-
 class GAPSetExtAdvertisingDataOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GAPSetExtAdvertisingDataRequestFrame
         self.observers = []
         super(GAPSetExtAdvertisingDataOperation, self).subscribeToEvents()
-
 
 class GAPSetPeriodicAdvertisingDataOperation(FsciOperation):
 
@@ -1090,7 +1124,6 @@ class GAPSetPeriodicAdvertisingDataOperation(FsciOperation):
         self.observers = []
         super(GAPSetPeriodicAdvertisingDataOperation, self).subscribeToEvents()
 
-
 class GAPPeriodicAdvCreateSyncOperation(FsciOperation):
 
     def subscribeToEvents(self):
@@ -1098,13 +1131,19 @@ class GAPPeriodicAdvCreateSyncOperation(FsciOperation):
         self.observers = []
         super(GAPPeriodicAdvCreateSyncOperation, self).subscribeToEvents()
 
-
 class GAPPeriodicAdvTerminateSyncOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = Spec.GAPPeriodicAdvTerminateSyncRequestFrame
         self.observers = []
         super(GAPPeriodicAdvTerminateSyncOperation, self).subscribeToEvents()
+
+class ControllerConfigureAdvCodingSchemeOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = Spec.ControllerConfigureAdvCodingSchemeRequestFrame
+        self.observers = []
+        super(ControllerConfigureAdvCodingSchemeOperation, self).subscribeToEvents()
 
 class FSCICPUResetOperation(FsciOperation):
 
@@ -1221,6 +1260,13 @@ class L2CAPCBErrorOperation(FsciOperation):
         self.spec = None
         self.observers = [L2CAPCBErrorIndicationObserver('L2CAPCBErrorIndication'), ]
         super(L2CAPCBErrorOperation, self).subscribeToEvents()
+
+class L2CAPCBChannelStatusNotificationOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [L2CAPCBChannelStatusNotificationIndicationObserver('L2CAPCBChannelStatusNotificationIndication'), ]
+        super(L2CAPCBChannelStatusNotificationOperation, self).subscribeToEvents()
 
 class GATTClientProcedureExchangeMtuOperation(FsciOperation):
 
@@ -1898,12 +1944,12 @@ class GAPAdvertisingEventExtScanReqReceivedOperation(FsciOperation):
         self.observers = [GAPAdvertisingEventExtScanReqReceivedIndicationObserver('GAPAdvertisingEventExtScanReqReceivedIndication'), ]
         super(GAPAdvertisingEventExtScanReqReceivedOperation, self).subscribeToEvents()
 
-class GAPAdvertisingEventPeriodicAdvertisingStateChangedOperation(FsciOperation):
+class GAPGenericEventPeriodicAdvertisingStateChangedOperation(FsciOperation):
 
     def subscribeToEvents(self):
         self.spec = None
-        self.observers = [GAPAdvertisingEventPeriodicAdvertisingStateChangedIndicationObserver('GAPAdvertisingEventPeriodicAdvertisingStateChangedIndication'), ]
-        super(GAPAdvertisingEventPeriodicAdvertisingStateChangedOperation, self).subscribeToEvents()
+        self.observers = [GAPGenericEventPeriodicAdvertisingStateChangedIndicationObserver('GAPGenericEventPeriodicAdvertisingStateChangedIndication'), ]
+        super(GAPGenericEventPeriodicAdvertisingStateChangedOperation, self).subscribeToEvents()
 
 class GAPScanningEventExtDeviceScannedOperation(FsciOperation):
 
@@ -1953,6 +1999,27 @@ class GAPConnectionEventChannelSelectionAlgorithm2Operation(FsciOperation):
         self.spec = None
         self.observers = [GAPConnectionEventChannelSelectionAlgorithm2IndicationObserver('GAPConnectionEventChannelSelectionAlgorithm2Indication'), ]
         super(GAPConnectionEventChannelSelectionAlgorithm2Operation, self).subscribeToEvents()
+
+class GAPGenericEventTxEntryAvailableOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventTxEntryAvailableIndicationObserver('GAPGenericEventTxEntryAvailableIndication'), ]
+        super(GAPGenericEventTxEntryAvailableOperation, self).subscribeToEvents()
+
+class GAPGenericEventControllerLocalRPAReadOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGenericEventControllerLocalRPAReadIndicationObserver('GAPGenericEventControllerLocalRPAReadIndication'), ]
+        super(GAPGenericEventControllerLocalRPAReadOperation, self).subscribeToEvents()
+
+class GAPGetConnectionHandleFromDeviceIdOperation(FsciOperation):
+
+    def subscribeToEvents(self):
+        self.spec = None
+        self.observers = [GAPGetConnectionHandleFromDeviceIdIndicationObserver('GAPGetConnectionHandleFromDeviceIdIndication'), ]
+        super(GAPGetConnectionHandleFromDeviceIdOperation, self).subscribeToEvents()
 
 
 

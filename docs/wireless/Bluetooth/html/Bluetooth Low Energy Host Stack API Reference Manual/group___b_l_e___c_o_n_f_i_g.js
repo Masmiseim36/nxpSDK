@@ -5,7 +5,6 @@ var group___b_l_e___c_o_n_f_i_g =
     [ "gcGapMaximumSavedCccds_c", "group___b_l_e___c_o_n_f_i_g.html#gac12efe11956d95930749d0134b450fda", null ],
     [ "gcGapMaxAuthorizationHandles_c", "group___b_l_e___c_o_n_f_i_g.html#gaef7de30430ae0b0556803248e2732828", null ],
     [ "gBleBondDataSize_c", "group___b_l_e___c_o_n_f_i_g.html#gac55367c9f477fc10b8629cd211ba35e4", null ],
-    [ "gcGapMaxServiceSpecificSecurityRequirements_c", "group___b_l_e___c_o_n_f_i_g.html#ga095cd1a162348a31f90dd481250d26ed", null ],
     [ "gcBleLongUuidSize_c", "group___b_l_e___c_o_n_f_i_g.html#ga39e56532b3e95b7de4ed48004774dec1", null ],
     [ "gcSmpMaxLtkSize_c", "group___b_l_e___c_o_n_f_i_g.html#gad382060d66893773cb526a8864c276bf", null ],
     [ "gcSmpIrkSize_c", "group___b_l_e___c_o_n_f_i_g.html#gab3d23da733b9746609062f15a0e3f6bc", null ],

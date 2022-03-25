@@ -112,9 +112,9 @@ uint32_t Boot_GetInternalStorageStartAddr(void)
 uint8_t Boot_InitExternalStorage(void)
 {
     uint8_t status = 0;
-  
+
 #ifdef CPU_QN9080C
-#if (gEepromType_d != gEepromDevice_InternalFlash_c)  
+#if (gEepromType_d != gEepromDevice_InternalFlash_c)
     status = (EEPROM_Init());
 #endif /* gEepromDevice_InternalFlash_c */
 #else
@@ -156,8 +156,8 @@ uint8_t Boot_ReadExternalStorage(uint16_t NoOfBytes, uint32_t Addr, uint8_t *out
     {
         Addr += gBootStorageStartAddress;
         FLib_MemCpy(outbuf, (void*)Addr, NoOfBytes);
-    }    
-#endif    
+    }
+#endif
 
     return status;
 }
@@ -256,6 +256,14 @@ void Boot_LoadImage (void)
 #ifdef CPU_QN908X
     /* Ignore sector bitmap representing FLASH Configuration page (last 3 FLASH sectors) */
     bitmapBuffer[31] &= gFlashConfigPageMask_c;
+
+#if defined(gPreserveNvmStorage_c) && (gPreserveNvmStorage_c > 0)
+    /* User shall update the preserving mask if the NVM is increased/decreased as size or stored at different location.
+       The bitmap buffer contains 1 bit for each sector, 512/2k = 256 bits = 32 x uint8_t, little endian representation.
+       If the bit is zero, the corresponding sector will be preserved, otherwise it will be erased */
+    bitmapBuffer[31] &= gNvmPreserveMask_d;
+#endif
+
 #endif
 
     /* Start writing the image. Do not alter the last sector which contains HW specific data! */
@@ -493,7 +501,7 @@ void Boot_LoadImage (void)
     if(gpBootInfo->u2.internalStorageStart == 0xFFFFFFFFUL)
     {
         gpBootInfo->u2.internalStorageStart = gBootStorageStartAddress;
-      
+
 #if defined(FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD) && FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD
         status = FLASH_ProgramSection(&gFTFx_config,
                                   (uint32_t)&gpBootInfo->u2.aInternalStorageStart,

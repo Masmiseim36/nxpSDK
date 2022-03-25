@@ -101,7 +101,11 @@ static tmsConfig_t tmsServiceConfig = {(uint16_t)service_temperature, 0};
 static tmrTimerID_t appTimerId;
 
 static uint8_t gAppSerMgrIf;
-
+#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
+#if ( gAppStartAfterReset_d != 0) && (gAppStartAfterResetToLowPowerDelayMs_d != 0)
+static tmrTimerID_t mAllowDeviceToSleepTimerId;
+#endif
+#endif
 /************************************************************************************
 *************************************************************************************
 * Private functions prototypes
@@ -130,6 +134,12 @@ static void SleepTimeoutSequence(void);
 static void AppPrintString(const char* pBuff);
 #if defined(gAppPrintLePhyEvent_c) && (gAppPrintLePhyEvent_c)
 static void AppPrintLePhyEvent(gapPhyEvent_t* pPhyEvent);
+#endif
+
+#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
+#if ( gAppStartAfterReset_d != 0) && (gAppStartAfterResetToLowPowerDelayMs_d != 0)
+static void AllowDeviceToSleepTimerCallback(void *);
+#endif
 #endif
 /************************************************************************************
 *************************************************************************************
@@ -221,6 +231,9 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
         {
             /* Configure application and start services */
             BleApp_Config();
+#if (gAppStartAfterReset_d)            
+            BleApp_Start();
+#endif
         }
         break;
 
@@ -298,21 +311,34 @@ static void BleApp_Config(void)
 
     /* Allocate application timer */
     appTimerId = TMR_AllocateTimer();
-
+#if (gAppStartAfterReset_d == 0)
     AppPrintString("\r\nTemperature sensor -> Press switch to start advertising.\r\n");
-
+#endif
     /* Set low power mode */
 #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
     #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE)
         #if defined(gErpcLowPowerApiServiceIncluded_c) && (gErpcLowPowerApiServiceIncluded_c)
-            (void)PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
-            PWR_AllowBlackBoxToSleep();
+             #if (gAppStartAfterReset_d == 0)
+                 (void)PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
+             #endif
+
+             #if (gAppStartAfterReset_d == 0) || (gAppStartAfterResetToLowPowerDelayMs_d == 0)
+                  PWR_AllowBlackBoxToSleep();
+             #endif
         #endif
         (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
         PWR_AllowDeviceToSleep();
     #else
-        (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-        PWR_AllowDeviceToSleep();
+        #if (gAppStartAfterReset_d == 0)
+            (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
+        #endif
+        #if (gAppStartAfterReset_d == 0) || (gAppStartAfterResetToLowPowerDelayMs_d == 0)    
+            PWR_AllowDeviceToSleep();
+        #endif
+    #endif /* defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE) */
+    #if ( gAppStartAfterReset_d != 0) && (gAppStartAfterResetToLowPowerDelayMs_d != 0)
+        mAllowDeviceToSleepTimerId = TMR_AllocateTimer();
+        TMR_StartLowPowerTimer( mAllowDeviceToSleepTimerId, gTmrSingleShotTimer_c, gAppStartAfterResetToLowPowerDelayMs_d, AllowDeviceToSleepTimerCallback, NULL);
     #endif
 #endif
 }
@@ -428,7 +454,9 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
                 #endif
              #else
                 (void)PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
+#if (!defined(CPU_MKW37A512VFT4) && !defined(CPU_MKW37Z512VFT4) && !defined(CPU_MKW38A512VFT4) && !defined(CPU_MKW38Z512VFT4) && !defined(CPU_MKW39A512VFT4) && !defined(CPU_MKW39Z512VFT4))
                 PWR_AllowDeviceToSleep();
+#endif /* CPU_MKW37xxx, CPU_MKW38xxx and CPU_MKW39xxx*/
              #endif
 #else
             LED_StopFlashingAllLeds();
@@ -600,6 +628,27 @@ static void AppPrintLePhyEvent(gapPhyEvent_t* pPhyEvent)
     PrintLePhyEvent(AppPrintString, pPhyEvent);
 }
 #endif
+
+/*! *********************************************************************************
+* \brief        Handles mAllowDeviceToSleepTimerId timer callback.
+*
+* \param[in]    pParam        Callback parameters.
+********************************************************************************** */
+#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
+#if ( gAppStartAfterReset_d != 0) && (gAppStartAfterResetToLowPowerDelayMs_d != 0)
+static void AllowDeviceToSleepTimerCallback(void * pParam)
+{
+  (void)pParam;
+#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE)
+#if defined(gErpcLowPowerApiServiceIncluded_c) && (gErpcLowPowerApiServiceIncluded_c)
+  PWR_AllowBlackBoxToSleep();
+#endif
+#else
+  PWR_AllowDeviceToSleep();
+#endif
+}
+#endif /*defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)*/
+#endif /* ( gAppStartAfterReset_d != 0) && (gAppStartAfterResetToLowPowerDelayMs_d != 0) */
 /*! *********************************************************************************
 * @}
 ********************************************************************************** */

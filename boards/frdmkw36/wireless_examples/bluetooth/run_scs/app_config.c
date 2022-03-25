@@ -40,6 +40,12 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapAdvertisingData_t         gAppAdvertisingData;
+extern gapScanResponseData_t        gAppScanRspData;
+extern gapAdvertisingParameters_t   gAdvParams;
+extern gapSmpKeys_t                 gSmpKeys;
+extern gapPairingParameters_t       gPairingParameters;
+extern gapDeviceSecurityRequirements_t deviceSecurityRequirements;
 
 /* Default Advertising Parameters. Values can be changed at runtime 
     to align with profile requirements */
@@ -55,10 +61,10 @@ gapAdvertisingParameters_t gAdvParams = {
 };
 
 /* Scanning and Advertising Data */
-static const uint8_t adData0[1] =  { (gapAdTypeFlags_t)(gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
-static const uint8_t adData1[2] = { UuidArray(gBleSig_RunningSpeedAndCadenceService_d)};
-static const uint8_t adData2[2] = { UuidArray(gRunningWalkingSensorOnShoe_c) };
-static const gapAdStructure_t advScanStruct[] = {
+static uint8_t adData0[1] =  { (gapAdTypeFlags_t)(gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
+static uint8_t adData1[2] = { UuidArray(gBleSig_RunningSpeedAndCadenceService_d)};
+static uint8_t adData2[2] = { UuidArray(gRunningWalkingSensorOnShoe_c) };
+static gapAdStructure_t advScanStruct[] = {
   {
     .length = NumberOfElements(adData0) + 1,
     .adType = gAdFlags_c,

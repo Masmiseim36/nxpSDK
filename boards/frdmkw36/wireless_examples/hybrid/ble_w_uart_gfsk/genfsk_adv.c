@@ -19,7 +19,6 @@
 * Include
 *************************************************************************************
 ************************************************************************************/
-#include "EmbeddedTypes.h"
 
 /* Framework / Drivers */
 #include "EmbeddedTypes.h"
@@ -29,14 +28,11 @@
 #include "TimersManager.h"
 #include "FunctionLib.h"
 #include "MemManager.h"
-#include "Panic.h"
 #include "SerialManager.h"
 #include "MWS.h"
 
-#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
 #include "PWR_Interface.h"
-#include "PWR_Configuration.h"
-#endif
+
 
 /* Application */
 #include "board.h"
@@ -53,6 +49,14 @@
 * Private type definitions
 *************************************************************************************
 ************************************************************************************/
+
+#ifndef APP_DBG_LOG
+#define APP_DBG_LOG(...)
+#endif
+
+#if !((defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES)))
+#define BOARD_DBGAPPIOSET(x,y)
+#endif /* !((defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES))) */
 
 /************************************************************************************
 *************************************************************************************
@@ -171,7 +175,7 @@ void GfskApp_Init(uint8_t appSerMgrIf)
     if (status != gGenfskSuccess_c)
     {
         Serial_Print(gAppSerMgrIf, "\n\rGFSK initialization error!", gNoBlock_d);
-        panic(0, 0, 0, 0);
+        assert(0);
         return;
     }
 
@@ -219,9 +223,11 @@ void GfskApp_StartTx(void)
     uint32_t duration;
 
     (void)Serial_Print(gAppSerMgrIf, "\n\rGFSK: Start TX... ", gNoBlock_d);
-    (void)TMR_StartIntervalTimer(mAppGenfskTmr, gGenFskApp_TxInterval_c, GfskApp_Tx, NULL);
+    (void)TMR_StartLowPowerTimer(mAppGenfskTmr, gTmrIntervalTimer_c, gGenFskApp_TxInterval_c, GfskApp_Tx, NULL);
     mAppGenfskTxPending = TRUE;
     mAppGenfskTxOngoing = FALSE;
+    PWR_AllowDeviceToSleep();
+    BOARD_DBGAPPIOSET(5, 1);
 
     /* Check if GenFSK is the active protocol */
     if (MWS_GetActiveProtocol() != gMWS_GENFSK_c)
@@ -230,7 +236,8 @@ void GfskApp_StartTx(void)
         {
             /* The GenFSK acquired access to the resources. Program the release timer. */
             duration = MWS_GetInactivityDuration(gMWS_GENFSK_c) / 1000;
-            (void)TMR_StartSingleShotTimer(mAppGenfskCoexistenceTmr, duration, GfskApp_CoexistenceTimeout, NULL);
+            APP_DBG_LOG("acq_genfsk_dur=%d" , duration);
+            (void)TMR_StartLowPowerTimer(mAppGenfskCoexistenceTmr, gTmrSingleShotTimer_c, duration, GfskApp_CoexistenceTimeout, NULL);
         }
     }
 }
@@ -270,8 +277,9 @@ void GfskApp_StartRx(void)
             {
                 if (gMWS_Success_c == MWS_Acquire(gMWS_GENFSK_c, FALSE))
                 {
+                    (void)GENFSK_StartRx(mAppGenfskId, buffer, (uint16_t)sizeof(buffer), 0U, 0U);
                     /* The GenFSK acquired access to the resources. Program the release timer. */
-                    (void)TMR_StartSingleShotTimer(mAppGenfskCoexistenceTmr, duration, GfskApp_CoexistenceTimeout, NULL);
+                    (void)TMR_StartLowPowerTimer(mAppGenfskCoexistenceTmr, gTmrSingleShotTimer_c, duration, GfskApp_CoexistenceTimeout, NULL);
                 }
             }
         }
@@ -354,9 +362,14 @@ static void GFSK_EventNotify (genfskEvent_t event, genfskEventStatus_t eventStat
         /* Rx sequence complete. Restart it. */
         GfskApp_RestartRx();
     }
-    else if (event == gGenfskTxEvent)
+    if (event == gGenfskTxEvent)
     {
         mAppGenfskTxOngoing = FALSE;
+
+        PWR_AllowDeviceToSleep();
+        BOARD_DBGAPPIOSET(5, 1);
+        BOARD_DBGAPPIOSET(5, 0);
+        BOARD_DBGAPPIOSET(5, 1);
     }
 }
 
@@ -407,9 +420,30 @@ static void GfskApp_Tx(void * p)
         {
             genfskStatus_t status = GENFSK_StartTx(mAppGenfskId, buffer, len, 0U);
 
+#if (defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES))
+            /* Different possibilities:
+                - if only GENFSK TX is enabled the GENFSK_StartTx() function returns gGenfskSuccess_c 
+                - if both GENFSK RX and TX are enabled, the GENFSK_StartTx() function returns gGenfskBusyRx_c (the RX activity is not stopped until a valid RX packet is received).
+                  So to allow for TX activity, the RX activity needs first to be stopped (aborted) to map a GENFSK TX activity. 
+            */  
+            if (status != gGenfskSuccess_c)
+            {
+                /* This is a workaround to cope with abort issue during RX warmup, see CONNRF-767 */
+                if ((GENFSK->SEQ_STS & GENFSK_SEQ_STS_RX_IN_WARMUP_MASK) != 0x0U)
+                {
+                    /* If RX is in warmup then wait for warmup to complete before issuing abort to ensure ABORT does not crash RX */
+                    uint32_t end_of_wu = (XCVR_TSM->END_OF_SEQ & XCVR_TSM_END_OF_SEQ_END_OF_RX_WU_MASK) >> XCVR_TSM_END_OF_SEQ_END_OF_RX_WU_SHIFT;
+                    while ((( XCVR_MISC->XCVR_STATUS & XCVR_MISC_XCVR_STATUS_TSM_COUNT_MASK) >> XCVR_MISC_XCVR_STATUS_TSM_COUNT_SHIFT ) < end_of_wu) {}; /* Wait for TSM RX WU complete */
+                }
+                GENFSK_AbortAll();
+                status = GENFSK_StartTx(mAppGenfskId, buffer, len, 0U);
+            }
+#endif /* (defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES)) */
             if (status == gGenfskSuccess_c)
             {
                 mAppGenfskTxOngoing = TRUE;
+                PWR_DisallowDeviceToSleep();
+                BOARD_DBGAPPIOSET(5, 0);
             }
         }
     }
@@ -431,6 +465,7 @@ static void GfskApp_CoexistenceTimeout(void * p)
 * \remarks  This function should call the previously registered MWS callback
 *
 ********************************************************************************** */
+static uint32_t count_for_switch = 0; 
 static uint32_t App_MwsCallback ( mwsEvents_t event )
 {
     uint32_t status = 0;
@@ -441,6 +476,8 @@ static uint32_t App_MwsCallback ( mwsEvents_t event )
         status = mGFSK_LL_CB(event);
     }
 
+    APP_DBG_LOG("evt=%d", event);
+
     switch(event)
     {
     case gMWS_Idle_c:
@@ -448,24 +485,49 @@ static uint32_t App_MwsCallback ( mwsEvents_t event )
         {
             /* All other protocols are Idle. GenFSK can become active */
             duration = MWS_GetInactivityDuration(gMWS_GENFSK_c) / 1000;
-            if ((duration > gGenFskApp_GuardTime_c) && (gMWS_Success_c == MWS_Acquire(gMWS_GENFSK_c, FALSE)))
+            if(duration > gGenFskApp_GuardTime_c)
             {
-                if (mAppGenfskTxPending)
+                if (gMWS_Success_c == MWS_Acquire(gMWS_GENFSK_c, FALSE))
                 {
-                    mAppGenfskTxOngoing = FALSE;
-                    GfskApp_Tx(NULL);
-                }
-                else
-                {
-                    if (mAppGenfskRxOn)
+                    if ((mAppGenfskTxPending) && (mAppGenfskRxOn))
                     {
-                        (void)GENFSK_StartRx(mAppGenfskId, buffer, (uint16_t)sizeof(buffer), 0U, 0U);
+                        /* If both Rx and Tx enabled, alternate between Rx and Tx. */
+                        if (count_for_switch & 0x1)
+                        {
+                            BOARD_DBGAPPIOSET(5, 1);
+                            mAppGenfskTxOngoing = FALSE;
+                            PWR_AllowDeviceToSleep();
+                            GfskApp_Tx(NULL);
+                        }
+                        else
+                        {
+                            (void)GENFSK_StartRx(mAppGenfskId, buffer, (uint16_t)sizeof(buffer), 0U, 0U);
+                        }
+                        count_for_switch++;
                     }
+                    else if (mAppGenfskTxPending)
+                    {
+                        BOARD_DBGAPPIOSET(5, 1);
+                        mAppGenfskTxOngoing = FALSE;
+                        PWR_AllowDeviceToSleep();
+                        GfskApp_Tx(NULL);
+                    }
+                    else
+                    {
+                        if (mAppGenfskRxOn)
+                        {
+                            (void)GENFSK_StartRx(mAppGenfskId, buffer, (uint16_t)sizeof(buffer), 0U, 0U);
+                        }
+                    }
+					duration = MWS_GetInactivityDuration(gMWS_GENFSK_c) / 1000;
+                    duration -= gGenFskApp_GuardTime_c;
+                    /* The GenFSK acquired access to the resources. Program the release timer. */
+                    (void)TMR_StartLowPowerTimer(mAppGenfskCoexistenceTmr, gTmrSingleShotTimer_c, duration, GfskApp_CoexistenceTimeout, NULL);	
                 }
-                duration = MWS_GetInactivityDuration(gMWS_GENFSK_c) / 1000;
-                duration -= gGenFskApp_GuardTime_c;
-                /* The GenFSK acquired access to the resources. Program the release timer. */
-                (void)TMR_StartSingleShotTimer(mAppGenfskCoexistenceTmr, duration, GfskApp_CoexistenceTimeout, NULL);
+				else
+                {
+                    MWS_SignalIdle(gMWS_GENFSK_c);
+                }
             }
             else
             {
@@ -484,10 +546,13 @@ static uint32_t App_MwsCallback ( mwsEvents_t event )
         break;
 
     case gMWS_Release_c:
-        /* Another protocol has released the XCVR. GenFSK can become active */
+        /* GenFSK has released the XCVR. Another protocol can become active */
         break;
 
     default:
+        {
+            ; /* No action required */
+        }
         break;
     }
 

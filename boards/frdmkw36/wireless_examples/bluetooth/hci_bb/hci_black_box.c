@@ -43,12 +43,17 @@
 #include "controller_interface.h"
 #include "fsl_wdt.h"
 #endif
+
+#ifdef GCOV_DO_COVERAGE
+#include "gcov_support.h"
+#endif /* GCOV_DO_COVERAGE */
+
 /************************************************************************************
 *************************************************************************************
 * Private type definitions
 *************************************************************************************
 ************************************************************************************/
-#if !MULTICORE_APPLICATION_CORE
+#if !defined(MULTICORE_APPLICATION_CORE) || (defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 0))
 #define STATIC  static
 #else
 #define STATIC
@@ -57,6 +62,14 @@
 /* Application Events */
 #define gAppEvtMsgFromHostStack_c       (1 << 0)
 #define gAppEvtAppCallback_c            (1 << 1)
+
+#ifndef gAppUseNvm_d
+    #define gAppUseNvm_d                0
+#endif
+
+#ifndef cPWR_UsePowerDownMode
+    #define cPWR_UsePowerDownMode       0
+#endif
 
 /************************************************************************************
 *************************************************************************************
@@ -124,6 +137,10 @@ void main_task(uint32_t param)
     {
         platformInitialized = 1;
 
+#ifdef GCOV_DO_COVERAGE
+        gcov_init();
+#endif /* GCOV_DO_COVERAGE */
+
 #ifdef CPU_QN908X
         /* Initialize QN9080 Controller */
         BLE_Init(gAppMaxConnections_c);
@@ -134,13 +151,13 @@ void main_task(uint32_t param)
         TMR_Init();
         LED_Init();
 
-#if !MULTICORE_APPLICATION_CORE
+#if !defined(MULTICORE_APPLICATION_CORE) || (defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 0))
         /* Cryptographic and RNG hardware initialization */
         SecLib_Init();
         /* RNG software initialization and PRNG initial seeding (from hardware) */
         RNG_Init();
         RNG_SetPseudoRandomNoSeed(NULL);
-#endif /* MULTICORE_APPLICATION_CORE */
+#endif /* #if !defined(MULTICORE_APPLICATION_CORE) || (defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 0)) */
 
 #if gKeyBoardSupported_d && (gKBD_KeysCount_c > 0)
         KBD_Init(App_KeyboardCallBack);
@@ -189,17 +206,18 @@ void main_task(uint32_t param)
         /* Prepare callback input queue.*/
         MSG_InitQueue(&mAppCbInputQueue);
 
-#if !(MULTICORE_CONNECTIVITY_CORE)
+#if !defined(MULTICORE_CONNECTIVITY_CORE) || (defined(MULTICORE_CONNECTIVITY_CORE) && (MULTICORE_CONNECTIVITY_CORE == 0))
         /* BLE Host Stack Init */
         if (Ble_Initialize(App_GenericCallback) != gBleSuccess_c)
         {
             panic(0,0,0,0);
             return;
         }
-#endif /* MULTICORE_CONNECTIVITY_CORE */
+#endif /* !defined(MULTICORE_CONNECTIVITY_CORE) || (defined(MULTICORE_CONNECTIVITY_CORE) && (MULTICORE_CONNECTIVITY_CORE == 0)) */
 #if  (defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || \
       defined(KW39A4_SERIES))
         BOARD_InitDTM();
+        Controller_SetDTMBaudrate(gDTM_BaudRate_115200_c);
 #endif /* KW37A4_SERIES, KW37Z4_SERIES, KW38A4_SERIES, KW38Z4_SERIES, KW39A4_SERIES */
     }
 
@@ -232,7 +250,7 @@ void App_Thread (uint32_t param)
     while(1)
     {
         /* For BareMetal break the while(1) after 1 run */
-        if( gUseRtos_c == 0 )
+        if( gUseRtos_c == 0U )
         {
             break;
         }

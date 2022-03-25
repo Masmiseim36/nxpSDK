@@ -44,6 +44,12 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapAdvertisingData_t         gAppAdvertisingData;
+extern gapScanResponseData_t        gAppScanRspData;
+extern gapAdvertisingParameters_t   gAdvParams;
+extern gapSmpKeys_t                 gSmpKeys;
+extern gapPairingParameters_t       gPairingParameters;
+extern gapDeviceSecurityRequirements_t deviceSecurityRequirements;
 
 /* Default Advertising Parameters. Values can be changed at runtime
     to align with profile requirements */
@@ -59,8 +65,8 @@ gapAdvertisingParameters_t gAdvParams = {
 };
 
 /* Scanning and Advertising Data */
-static const uint8_t adData0[1] =  { (uint8_t)gLeGeneralDiscoverableMode_c | (uint8_t)gBrEdrNotSupported_c };
-static const gapAdStructure_t advScanStruct[3] = {
+static uint8_t adData0[1] =  { (uint8_t)gLeGeneralDiscoverableMode_c | (uint8_t)gBrEdrNotSupported_c };
+static gapAdStructure_t advScanStruct[3] = {
   {
     .length = NumberOfElements(adData0) + 1,
     .adType = gAdFlags_c,
@@ -135,8 +141,8 @@ gapSmpKeys_t gSmpKeys = {
 };
 
 /* Device Security Requirements */
-static const gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
-static const gapServiceSecurityRequirements_t serviceSecurity[3] = {
+static gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
+static gapServiceSecurityRequirements_t serviceSecurity[3] = {
   {
     .requirements = {
         .securityModeLevel = gSecurityMode_1_Level_3_c,

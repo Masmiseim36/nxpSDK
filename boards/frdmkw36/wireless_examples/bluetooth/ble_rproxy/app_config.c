@@ -33,6 +33,12 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapAdvertisingData_t             gAppAdvertisingData;
+extern gapScanResponseData_t            gAppScanRspData;
+extern gapAdvertisingParameters_t       gAdvParams;
+extern gapConnectionRequestParameters_t gConnReqParams;
+extern gapScanningParameters_t          gScanParams;
+extern gapPairingParameters_t           gPairingParameters;
 
 /* Default Advertising Parameters. Values can be changed at runtime
     to align with profile requirements */
@@ -131,7 +137,7 @@ gapSmpKeys_t gSmpKeys = {
 };
 
 /* Device Security Requirements */
-static const gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
+static gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
 
 gapDeviceSecurityRequirements_t deviceSecurityRequirements = {
     .pMasterSecurityRequirements    = (void*)&masterSecurity,

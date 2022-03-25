@@ -44,7 +44,7 @@ board: FRDM-KW36
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define RTC_OSC_CAP_LOAD_0PF                            0x0U  /*!< RTC oscillator capacity load: 0pF */
+#define RTC_OSC_CAP_LOAD_8PF                          0x800U  /*!< RTC oscillator capacity load: 8pF */
 #define SIM_LPUART_CLK_SEL_OSCERCLK_CLK                   2U  /*!< LPUART clock select: OSCERCLK clock */
 #define SIM_OSC32KSEL_OSC32KCLK_CLK                       0U  /*!< OSC32KSEL select: OSC32KCLK clock */
 #define SIM_TPM_CLK_SEL_OSCERCLK_CLK                      2U  /*!< TPM clock select: OSCERCLK clock */
@@ -117,7 +117,7 @@ static void CLOCK_CONFIG_EnableRtcOsc(uint32_t capLoad)
 /*FUNCTION**********************************************************************
  *
  * Function Name : BOARD_RfOscInit
- * Description   : This function is used to setup Ref oscillator for KW40_512.
+ * Description   : This function is used to setup Ref oscillator.
  *
  *END**************************************************************************/
 void BOARD_RfOscInit(void)
@@ -241,7 +241,9 @@ void BOARD_BootClockRUN(void)
     /* Set the system clock dividers in SIM to safe value. */
     CLOCK_SetSimSafeDivs();
     /* Enable RTC oscillator. */
-    CLOCK_CONFIG_EnableRtcOsc(RTC_OSC_CAP_LOAD_0PF);
+    CLOCK_CONFIG_EnableRtcOsc(RTC_OSC_CAP_LOAD_8PF);
+    /* Configure RTC clock. */
+    CLOCK_CONFIG_SetRtcClock();
     /* Initializes OSC0 according to Ref OSC needs. */
     BOARD_InitOsc0();
     /* Set MCG to FEE mode. */
@@ -256,8 +258,6 @@ void BOARD_BootClockRUN(void)
                                   mcgConfig_BOARD_BootClockRUN.fcrdiv);
     /* Set the clock configuration in SIM module. */
     CLOCK_SetSimConfig(&simConfig_BOARD_BootClockRUN);
-    /* Configure RTC clock. */
-    CLOCK_CONFIG_SetRtcClock();
     /* Set SystemCoreClock variable. */
     SystemCoreClock = BOARD_BOOTCLOCKRUN_CORE_CLOCK;
     /* Set LPUART0 clock source. */

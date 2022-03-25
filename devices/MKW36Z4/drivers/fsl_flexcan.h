@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexCAN driver version 2.2.6. */
-#define FSL_FLEXCAN_DRIVER_VERSION (MAKE_VERSION(2, 2, 6))
+/*! @brief FlexCAN driver version 2.2.7. */
+#define FSL_FLEXCAN_DRIVER_VERSION (MAKE_VERSION(2, 2, 7))
 /*@}*/
 
 /*! @brief FlexCAN Frame ID helper macro. */

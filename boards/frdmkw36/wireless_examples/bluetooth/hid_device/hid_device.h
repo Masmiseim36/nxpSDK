@@ -46,6 +46,10 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapAdvertisingData_t             gAppAdvertisingData;
+extern gapScanResponseData_t            gAppScanRspData;
+extern gapAdvertisingParameters_t       gAdvParams;
+extern gapPairingParameters_t           gPairingParameters;
 
 /************************************************************************************
 *************************************************************************************
@@ -61,7 +65,7 @@ void BleApp_Start(void);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 
 #endif /* HID_DEVICE_H */

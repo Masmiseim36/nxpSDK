@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en-us" lang="en-us">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="copyright" content="(C) Copyright 2005"/>
+<meta name="DC.rights.owner" content="(C) Copyright 2005"/>
+<meta name="DC.Type" content="topic"/>
+<meta name="DC.Title" content="GAP-ControllerNotification.Indication"/>
+<meta name="DC.Relation" scheme="URI" content="GUID-09963304-D0A4-4B1E-A3D3-21E0AD0B1D98.html"/>
+<meta name="prodname" content="MC56F825x"/>
+<meta name="version" content="1"/>
+<meta name="release" content="0"/>
+<meta name="modification" content="0"/>
+<meta name="DC.Publisher" content="NXP Semiconductors"/>
+<meta name="DC.Format" content="XHTML"/>
+<meta name="DC.Identifier" content="GUID-4B88F81F-DE1F-4F76-A145-DAEB04DC2982"/>
+<meta name="DC.Language" content="en-us"/>
+<link rel="stylesheet" type="text/css" href="commonltr.css"/>
+<title>GAP-ControllerNotification.Indication</title>
+</head>
+<body id="GUID-4B88F81F-DE1F-4F76-A145-DAEB04DC2982">
+
+
+    <h1 class="title topictitle1">GAP-ControllerNotification.Indication</h1>
+
+    <div class="body">
+        <p class="p"><strong class="ph b">Description</strong></p>
+
+        <p class="p">ADV/SCAN/CONN notification event from the controller</p>
+
+        <p class="p"><strong class="ph b">Parameters</strong></p>
+
+        
+<div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-4B88F81F-DE1F-4F76-A145-DAEB04DC2982__TABLE_H1M_G52_2HB" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. GAP-ControllerNotification.Indication Parameters</span></caption>
+                
+                
+                <thead class="thead" align="left">
+                    <tr class="row">
+                        <th class="entry" valign="top" id="d38297e55"><strong class="ph b">Parameter</strong></th>
+
+                        <th class="entry" valign="top" id="d38297e59"><strong class="ph b">Size (bytes)</strong></th>
+
+                        <th class="entry" valign="top" id="d38297e63"><strong class="ph b">Comments</strong></th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody class="tbody">
+                    
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d38297e55 ">OpGroup</td>
+
+                        <td class="entry" valign="top" headers="d38297e59 ">1</td>
+
+                        <td class="entry" valign="top" headers="d38297e63 ">0x48</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d38297e55 ">OpCode</td>
+
+                        <td class="entry" valign="top" headers="d38297e59 ">1</td>
+
+                        <td class="entry" valign="top" headers="d38297e63 ">0xBC</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d38297e55 ">Length</td>
+
+                        <td class="entry" valign="top" headers="d38297e59 ">1</td>
+
+                        <td class="entry" valign="top" headers="d38297e63 ">Length in bytes of the following parameters</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d38297e55 ">EventType</td>
+
+                        <td class="entry" valign="top" headers="d38297e59 ">2</td>
+
+                        <td class="entry" valign="top" headers="d38297e63 ">Events type.</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d38297e55 ">DeviceId</td>
+
+                        <td class="entry" valign="top" headers="d38297e59 ">1</td>
+
+                        <td class="entry" valign="top" headers="d38297e63 ">Device ID identifying the connection</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d38297e55 ">RSSI</td>
+
+                        <td class="entry" valign="top" headers="d38297e59 ">1</td>
+
+                        <td class="entry" valign="top" headers="d38297e63 ">RSSI, valid for Rx event types</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d38297e55 ">Channel</td>
+
+                        <td class="entry" valign="top" headers="d38297e59 ">1</td>
+
+                        <td class="entry" valign="top" headers="d38297e63 ">Channel, valid for conn event over or Rx/Tx events</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d38297e55 ">ConnEvCounter</td>
+
+                        <td class="entry" valign="top" headers="d38297e59 ">2</td>
+
+                        <td class="entry" valign="top" headers="d38297e63 ">Connection event counter, valid for conn event over or Conn Rx
+                            event</td>
+
+                    </tr>
+
+                    <tr class="row">
+                        <td class="entry" valign="top" headers="d38297e55 ">Status</td>
+
+                        <td class="entry" valign="top" headers="d38297e59 ">1</td>
+
+                        <td class="entry" valign="top" headers="d38297e63 ">Status of the request to select which events to be
+                            enabled/disabled</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+</div>
+
+    </div>
+
+<div class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-09963304-D0A4-4B1E-A3D3-21E0AD0B1D98.html">GAP Messages</a></div>
+</div>
+</div>
+
+</body>
+</html>

@@ -87,7 +87,12 @@ static uint8_t mSupressEvents = 0;
 #if (defined(gRFCalibration_d) && (gRFCalibration_d > 0))
 /*! Default trimming value for 32MHz crystal8 */
 #define DEFAULT_TRIM_VALUE      0x4B
-#endif
+
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d == 1)
+#include "board_extPA.h"
+#endif /* gBoard_ExtPaSupport_d*/
+
+#endif /* gRFCalibration_d */
 #endif /* (defined(CPU_MKW37A512VFT4) || defined(CPU_MKW38A512VFT4)) */
 /************************************************************************************
 *************************************************************************************
@@ -102,7 +107,7 @@ static int8_t ShellReset_Command(uint8_t argc, char * argv[]);
  *************************************************************************************
  ************************************************************************************/
 
-static const char mpGapHelp[] = "\r\n"
+static char mpGapHelp[] = "\r\n"
            "gap address [hexvalue] -peer [hexValue] -type \r\n"
            "gap devicename [devicename]\r\n"
            "gap advcfg [-interval intervalInMs]  [-type type]\r\n"
@@ -139,7 +144,7 @@ static const char mpGapHelp[] = "\r\n"
 #endif /* BLE_SHELL_AE_SUPPORT */
 ;
 
-static const char mpGattHelp[] = "\r\n"
+static char mpGattHelp[] = "\r\n"
            "gatt discover <peerID> [-all] [-service serviceUuid16InHex] \r\n"
            "gatt read <peerID> handle\r\n"
            "gatt write <peerID> handle valueInHex\r\n"
@@ -147,20 +152,20 @@ static const char mpGattHelp[] = "\r\n"
            "gatt notify <peerID> handle\r\n"
            "gatt indicate <peerID> handle\r\n";
 
-static const char mpGattDbHelp[] = "\r\n"
+static char mpGattDbHelp[] = "\r\n"
            "gattdb read handle\r\n"
            "gattdb write handle valueInHex\r\n"
            "gattdb addservice serviceUuid16InHex\r\n"
            "gattdb erase\r\n";
 
-static const char mpThrputHelp[]  = "\r\n"
+static char mpThrputHelp[]  = "\r\n"
            "thrput start <peerID> tx [-c packet count] [-s payload size]\r\n"
            "thrput start <peerID> rx [-ci min max]\r\n"
            "thrput stop\r\n";
 
 #if (defined(CPU_MKW37A512VFT4) || defined(CPU_MKW38A512VFT4))
 #if (defined(gRFCalibration_d) && (gRFCalibration_d > 0))
-static const char mpCalibrationHelp[]  = "\r\n"
+static char mpCalibrationHelp[]  = "\r\n"
            "calibration enable <0/1 - disable/enable> [frequency in Hz - default 2402000000 Hz]\r\n"
            "calibration getxtaltrim <regRead - 0/1> \r\n"
            "calibration setxtaltrim <trimvalue> <savehwparamas - 0/1> (accepted trim values: 0-127) \r\n"
@@ -703,6 +708,9 @@ static int8_t ShellCalibration_EnableRFCalibration(uint8_t argc, char * argv[])
             (void)XCVR_SetXtalTrim(gXtalTrimValue);
             /* Set RSSI Adjustment Value */
             (void)XCVR_SetRssiAdjustment(gRssiValue);
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d == 1)
+            (void) BOARD_ExtPaXcvrInit(TRUE);
+#endif
             mCalibrationEnabled = FALSE;
             shell_write("Calibration disabled!\r\n");
         }

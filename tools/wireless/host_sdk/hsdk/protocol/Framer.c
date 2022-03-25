@@ -501,7 +501,7 @@ static void *FramerThreadRoutine(void *lpParam)
                 }
 
                 /* keep the loop going if there's data left to process */
-                if (cbCrtAvailable > 0) {
+                if (cbCrtAvailable > 0 && status != INSUFFICIENT_DATA) {
                     HSDKSignalEvent(eventArray[1]);
                 }
 

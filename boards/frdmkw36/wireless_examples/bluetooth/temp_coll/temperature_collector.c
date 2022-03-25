@@ -113,6 +113,9 @@ static appPeerInfo_t mPeerInformation;
 
 #if defined(gAppUseBonding_d) && (gAppUseBonding_d)
 static bool_t mRestoringBondedLink = FALSE;
+#if gAppUsePrivacy_d
+static bool_t mAttemptRpaResolvingAtConnect = FALSE;
+#endif
 #endif
 
 static bool_t   mScanningOn = FALSE;
@@ -315,6 +318,7 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
         {
             AppPrintLePhyEvent(&pGenericEvent->eventData.phyEvent);
         }
+        break;
 #endif
     default:
         {
@@ -378,6 +382,10 @@ static void BleApp_Config(void)
 ********************************************************************************** */
 static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
 {
+#if gAppUsePrivacy_d && gAppUseBonding_d
+    uint8_t bondedDevicesCnt = 0;
+#endif
+
     switch (pScanningEvent->eventType)
     {
         case gDeviceScanned_c:
@@ -432,16 +440,52 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
             {
                 (void)TMR_StopTimer(mAppTimerId);
 
-                AppPrintString("Scan stopped.\r\n");
-
                 /* Connect with the previously scanned peer device */
                 if (mFoundDeviceToConnect)
                 {
+#if gAppUsePrivacy_d
+                    if(gConnReqParams.peerAddressType == gBleAddrTypeRandom_c)
+                    {
+#if gAppUseBonding_d
+                        /* Check if there are any bonded devices */
+                        Gap_GetBondedDevicesCount(&bondedDevicesCnt);
+
+                        if(bondedDevicesCnt == 0)
+                        {
+                            /* display the unresolved RPA address */
+                            (void)Serial_PrintHex(gAppSerMgrIf, gConnReqParams.peerAddress, gcBleDeviceAddressSize_c, gPrtHexNoFormat_c);
+                            AppPrintString("\r\n");
+                        }
+                        else
+                        {
+                            mAttemptRpaResolvingAtConnect = TRUE;
+                        }
+#else
+                        /* If bonding is disabled and we receive an RPA address there is nothing to do but display it */
+                        (void)Serial_PrintHex(gAppSerMgrIf, gConnReqParams.peerAddress, gcBleDeviceAddressSize_c, gPrtHexNoFormat_c);
+                        AppPrintString("\r\n");
+#endif /* gAppUseBonding_d */
+                    }
+                    else
+                    {
+                        /* display the public/resolved address */
+                        (void)Serial_PrintHex(gAppSerMgrIf, gConnReqParams.peerAddress, gcBleDeviceAddressSize_c, gPrtHexNoFormat_c);
+                        AppPrintString("\r\n");
+                    }
+#else
+                    /* Display the peer address */
+                    (void)Serial_PrintHex(gAppSerMgrIf, gConnReqParams.peerAddress, gcBleDeviceAddressSize_c, gPrtHexNoFormat_c);
+                    AppPrintString("\r\n");
+#endif /* gAppUsePrivacy_d */
+
+                    AppPrintString("Scan stopped.\r\n");
                     AppPrintString("Connecting...\r\n");
                     (void)App_Connect(&gConnReqParams, BleApp_ConnectionCallback);
                 }
                 else
                 {
+                    AppPrintString("Scan stopped.\r\n");
+
 #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
                     Led1Off();
                     /* Go to sleep */
@@ -493,6 +537,16 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
     {
         case gConnEvtConnected_c:
         {
+#if gAppUsePrivacy_d && gAppUseBonding_d
+            if(mAttemptRpaResolvingAtConnect == TRUE)
+            {
+                /* If the peer RPA was resolved, the IA is displayed, otherwise the peer RPA address is displayed */
+                (void)Serial_PrintHex(gAppSerMgrIf, pConnectionEvent->eventData.connectedEvent.peerAddress, gcBleDeviceAddressSize_c, gPrtHexNoFormat_c);
+                AppPrintString("\r\n");
+                /* clear the flag */
+                mAttemptRpaResolvingAtConnect = FALSE;
+            }
+#endif
             /* Update UI */
             LED_StopFlashingAllLeds();
             Led1On();
@@ -511,14 +565,17 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
                 #endif
             #else
                 (void)PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
+#if (!defined(CPU_MKW37A512VFT4) && !defined(CPU_MKW37Z512VFT4) && !defined(CPU_MKW38A512VFT4) && !defined(CPU_MKW38Z512VFT4) && !defined(CPU_MKW39A512VFT4) && !defined(CPU_MKW39Z512VFT4))
                 PWR_AllowDeviceToSleep();
+#endif /* CPU_MKW37xxx, CPU_MKW38xxx and CPU_MKW39xxx*/
             #endif
 #endif
 
 #if defined(gAppUseBonding_d) && (gAppUseBonding_d)
-            (void)Gap_CheckIfBonded(peerDeviceId, &mPeerInformation.isBonded, NULL);
+            bool_t isBonded = FALSE;
+            (void)Gap_CheckIfBonded(peerDeviceId, &isBonded, NULL);
 
-            if ((mPeerInformation.isBonded) &&
+            if (isBonded &&
                 (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId,
                     (void*) &mPeerInformation.customInfo, 0, sizeof (appCustomInfo_t))))
             {
@@ -540,6 +597,13 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             BleServDisc_Stop(peerDeviceId);
 
             AppPrintString("Disconnected!\r\n");
+
+            /* If peer device disconnects the link during Service Discovery, free the allocated buffer */
+            if(mpCharProcBuffer != NULL)
+            {
+                (void)MEM_BufferFree(mpCharProcBuffer);
+                mpCharProcBuffer = NULL;
+            }
 
 #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
             /* Go to sleep */
@@ -564,8 +628,19 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             /* Notify state machine handler on pairing complete */
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
             {
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                mPeerInformation.isBonded = TRUE;
+#endif
                 BleApp_StateMachineHandler(mPeerInformation.deviceId, mAppEvt_PairingComplete_c);
+                AppPrintString("\r\n-->  GAP Event: Device Paired.\r\n");
             }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            else
+            {
+                 mPeerInformation.isBonded = FALSE;
+                 AppPrintString("\r\n-->  GAP Event: Pairing Unsuccessful.\r\n");
+            }
+#endif
         }
         break;
 
@@ -577,6 +652,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
                 if( mRestoringBondedLink )
                 {
                     /* Try to enable temperature notifications, disconnect on failure */
+                    mPeerInformation.isBonded = TRUE;
                     if( gBleSuccess_c != BleApp_ConfigureNotifications() )
                     {
                         (void)Gap_Disconnect(peerDeviceId);
@@ -759,50 +835,59 @@ static void BleApp_GattClientCallback(
     bleResult_t             error
 )
 {
-    if (procedureResult == gGattProcError_c)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    /* Do not process GATT Server messages unless a trusted relationship was established */
+    if ((mPeerInformation.isBonded) || (mPeerInformation.appState != mAppRunning_c))
     {
-        attErrorCode_t attError = (attErrorCode_t)(uint8_t)(error);
-
-        if (attError == gAttErrCodeInsufficientEncryption_c     ||
-            attError == gAttErrCodeInsufficientAuthorization_c  ||
-            attError == gAttErrCodeInsufficientAuthentication_c)
+#endif
+        if (procedureResult == gGattProcError_c)
         {
-            /* Start Pairing Procedure */
-            (void)Gap_Pair(serverDeviceId, &gPairingParameters);
-        }
+            attErrorCode_t attError = (attErrorCode_t)(uint8_t)(error);
 
-        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
-    }
-    else
-    {
-        if (procedureResult == gGattProcSuccess_c)
-        {
-            switch(procedureType)
+            if (attError == gAttErrCodeInsufficientEncryption_c     ||
+                attError == gAttErrCodeInsufficientAuthorization_c  ||
+                attError == gAttErrCodeInsufficientAuthentication_c)
             {
-                case gGattProcReadCharacteristicDescriptor_c:
-                {
-                    if (mpCharProcBuffer != NULL)
-                    {
-                        /* Store the value of the descriptor */
-                        BleApp_StoreDescValues(mpCharProcBuffer);
-                    }
-                    break;
-                }
-
-                default:
-                {
-                    ; /* No action required */
-                    break;
-                }
+#if (defined(gAppUsePairing_d) && (gAppUsePairing_d == 1U))
+                /* Start Pairing Procedure */
+                (void)Gap_Pair(serverDeviceId, &gPairingParameters);
+#endif
             }
 
-            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
+            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
         }
+        else
+        {
+            if (procedureResult == gGattProcSuccess_c)
+            {
+                switch(procedureType)
+                {
+                    case gGattProcReadCharacteristicDescriptor_c:
+                    {
+                        if (mpCharProcBuffer != NULL)
+                        {
+                            /* Store the value of the descriptor */
+                            BleApp_StoreDescValues(mpCharProcBuffer);
+                        }
+                        break;
+                    }
+
+                    default:
+                    {
+                        ; /* No action required */
+                        break;
+                    }
+                }
+
+                BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
+            }
+        }
+
+        /* Signal Service Discovery Module */
+        BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType, procedureResult, error);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
-
-    /* Signal Service Discovery Module */
-    BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType, procedureResult, error);
-
+#endif
 }
 
 /*! *********************************************************************************
@@ -821,18 +906,26 @@ static void BleApp_GattNotificationCallback
     uint16_t    valueLength
 )
 {
-    if (characteristicValueHandle == mPeerInformation.customInfo.tempClientConfig.hTemperature)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    /* Do not process GATT Server notifications unless a trusted relationship was established */
+    if (mPeerInformation.isBonded == TRUE)
     {
-        BleApp_PrintTemperature(Utils_ExtractTwoByteValue(aValue));
-
-#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
-        /* Restart Wait For Data timer */
-        (void)TMR_StartLowPowerTimer(mAppTimerId,
-                       gTmrLowPowerSecondTimer_c,
-                       TmrSeconds(gWaitForDataTime_c),
-                       DisconnectTimerCallback, NULL);
 #endif
+        if (characteristicValueHandle == mPeerInformation.customInfo.tempClientConfig.hTemperature)
+        {
+            BleApp_PrintTemperature(Utils_ExtractTwoByteValue(aValue));
+
+    #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
+            /* Restart Wait For Data timer */
+            (void)TMR_StartLowPowerTimer(mAppTimerId,
+                           gTmrLowPowerSecondTimer_c,
+                           TmrSeconds(gWaitForDataTime_c),
+                           DisconnectTimerCallback, NULL);
+    #endif
+        }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
+#endif
 }
 
 /*! *********************************************************************************
@@ -909,8 +1002,6 @@ static bool_t CheckScanEvent(gapScannedDevice_t* pData)
         AppPrintString("Found device: \r\n");
         name[nameLength-1U] = 0;
         (void)Serial_Print(gAppSerMgrIf, (char*)name, gAllowToBlock_d);
-        AppPrintString("\r\n");
-        (void)Serial_PrintHex(gAppSerMgrIf, pData->aAddress, gcBleDeviceAddressSize_c, gPrtHexNoFormat_c);
         AppPrintString("\r\n");
     }
     return foundMatch;

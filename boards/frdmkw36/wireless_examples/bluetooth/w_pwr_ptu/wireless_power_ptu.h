@@ -28,6 +28,8 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapConnectionRequestParameters_t gConnReqParams;
+extern gapScanningParameters_t          gScanParams;
 
 /************************************************************************************
 *************************************************************************************
@@ -45,7 +47,7 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 
 #endif /* WIRELESS_POWER_PTU_H */

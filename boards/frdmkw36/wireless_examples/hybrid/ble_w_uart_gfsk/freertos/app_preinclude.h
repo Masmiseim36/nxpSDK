@@ -79,7 +79,7 @@
          _block_size_  64  _number_of_blocks_     5 _eol_  \
          _block_size_ 128  _number_of_blocks_     5 _eol_  \
          _block_size_ 268  _number_of_blocks_    25 _eol_  \
-         _block_size_ 512  _number_of_blocks_     2 _eol_
+         _block_size_ 512  _number_of_blocks_     3 _eol_
 
 /* Defines number of timers needed by the application */
 #define gTmrApplicationTimers_c         5
@@ -113,7 +113,7 @@
 #define gMainThreadStackSize_c  900
            
 /* Defines total heap size used by the OS */
-#define gTotalHeapSize_c        9000
+#define gTotalHeapSize_c        9500
            
 /*! *********************************************************************************
  *  BLE Stack Configuration

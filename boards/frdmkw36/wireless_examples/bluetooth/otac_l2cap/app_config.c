@@ -49,6 +49,11 @@
 #define gGapAdvertisingInterval_250ms_c 0x0190
 #define gGapAdvertisingInterval_500ms_c 0x0320
 
+extern gapAdvertisingData_t             gAppAdvertisingData;
+extern gapScanResponseData_t            gAppScanRspData;
+extern gapAdvertisingParameters_t       gAdvParams;
+extern gapPairingParameters_t           gPairingParameters;
+
 gapAdvertisingParameters_t gAdvParams =
 { 
     /* minInterval */         gGapAdvertisingInterval_050ms_c,
@@ -62,9 +67,9 @@ gapAdvertisingParameters_t gAdvParams =
 };
 
 /* Scanning and Advertising Data */
-static const uint8_t adData0[1] =  { (gapAdTypeFlags_t)(gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
-static const uint8_t adData1[] = { 0xE0, 0x1C, 0x4B, 0x5E, 0x1E, 0xEB, 0xA1, 0x5C, 0xEE, 0xF4, 0x5E, 0xBA, 0x50, 0x55, 0xFF, 0x01};
-static const gapAdStructure_t advScanStruct[3] = {
+static uint8_t adData0[1] =  { (gapAdTypeFlags_t)(gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
+static uint8_t adData1[] = { 0xE0, 0x1C, 0x4B, 0x5E, 0x1E, 0xEB, 0xA1, 0x5C, 0xEE, 0xF4, 0x5E, 0xBA, 0x50, 0x55, 0xFF, 0x01};
+static gapAdStructure_t advScanStruct[3] = {
   {
     .length = NumberOfElements(adData0) + 1,
     .adType = gAdFlags_c,
@@ -139,8 +144,8 @@ gapSmpKeys_t gSmpKeys = {
 };
 
 /* Device Security Requirements */
-static const gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
-static const gapServiceSecurityRequirements_t serviceSecurity[3] = {
+static gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
+static gapServiceSecurityRequirements_t serviceSecurity[3] = {
   {
     .requirements = {
         .securityModeLevel = gSecurityMode_1_Level_3_c,

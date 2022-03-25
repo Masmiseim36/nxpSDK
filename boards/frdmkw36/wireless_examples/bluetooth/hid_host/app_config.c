@@ -41,6 +41,9 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapConnectionRequestParameters_t gConnReqParams;
+extern gapScanningParameters_t          gScanParams;
+
 gapScanningParameters_t gScanParams =
 {
     /* type */              gScanTypePassive_c,
@@ -110,7 +113,7 @@ gapSmpKeys_t gSmpKeys = {
 };
 
 /* Device Security Requirements */
-static const gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
+static gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
 
 gapDeviceSecurityRequirements_t deviceSecurityRequirements = {
     .pMasterSecurityRequirements    = (void*)&masterSecurity,

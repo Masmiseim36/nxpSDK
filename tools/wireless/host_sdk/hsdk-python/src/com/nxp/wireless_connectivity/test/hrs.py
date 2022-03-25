@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -441,7 +441,7 @@ class BLEDevice(object):
             PairingParameters_WithBonding=False,
             PairingParameters_SecurityModeAndLevel=RequirementsSecurityModeLevel.gMode1Level3_c,
             PairingParameters_MaxEncryptionKeySize=0x10,
-            PairingParameters_LocalIoCapabilities=False,
+            PairingParameters_LocalIoCapabilities=PairingParametersLocalIoCapabilities.gIoDisplayOnly_c,
             PairingParameters_OobAvailable=False,
             PairingParameters_CentralKeys=0x02, # gIrk_c
             PairingParameters_PeripheralKeys=0x03, # gLtk_c | gIrk_c
@@ -501,23 +501,6 @@ class BLEDevice(object):
             protocol=self.protocol
         )
         sleep(.1)
-
-    def gap_set_adv_parameters():
-        '''
-        Set the advertising parameters.
-        '''
-        ind = GAPSetAdvertisingParameters(
-            self.serial_port,
-            AdvertisingParameters_MinInterval=0x0030,
-            AdvertisingParameters_MaxInterval=0x0030,
-            AdvertisingParameters_ChannelMap=0x7,
-            protocol=self.protocol
-        )
-        if ind is None and retries != 0:
-            return self.gap_set_adv_parameters(0)
-        if ind is None:
-            return None
-
 
     def gap_set_adv_data(self, retries=1):
         '''
@@ -828,8 +811,6 @@ def main(args):
         dev.gap_register_device_security_requirements()
         dev.gap_set_local_passkey()
 
-    dev.gap_set_adv_parameters()
-    dev.gap_set_adv_data()
     dev.gatt_server_register_for_write_notifications(gBleSig_BatteryService_d)
 
     # get characteristic value handles
@@ -854,7 +835,9 @@ def main(args):
     while True:
         try:
             dev.gap_set_adv_parameters()
+            dev.gap_set_adv_data()
             dev.gap_start_adv()
+
             while not dev.gap_event_connected.is_set():
                 sleep(.1)
 

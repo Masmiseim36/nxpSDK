@@ -31,6 +31,9 @@
 #include "MemManager.h"
 #include "board.h"
 
+#include "PWR_Interface.h"
+#include "PWR_Configuration.h"
+
 /* BLE Host Stack */
 #include "gatt_interface.h"
 #include "gatt_server_interface.h"
@@ -55,7 +58,6 @@
 #include "ble_conn_manager.h"
 #include "ble_service_discovery.h"
 
-#include "board.h"
 #include "ApplMain.h"
 #include "wireless_uart.h"
 
@@ -76,6 +78,11 @@
 #define mAppUartFlushIntervalInMs_c     (7)     /* Flush Timeout in Ms */
 
 #define mBatteryLevelReportInterval_c   (10)    /* battery level report interval in seconds  */
+
+#if !((defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES)))
+#define PWR_SetNewAppState(x)
+#endif
+
 /************************************************************************************
  *************************************************************************************
  * Private type definitions
@@ -259,6 +266,8 @@ void BleApp_Start(gapRole_t gapRole)
             gPairingParameters.localIoCapabilities = gIoKeyboardDisplay_c;
             mAppRetryScan = FALSE;
             (void)App_StartScanning(&gScanParams, BleApp_ScanningCallback, gGapDuplicateFilteringEnable_c, gGapScanContinuously_d, gGapScanPeriodicDisabled_d);
+
+            PWR_SetNewAppState(PWR_APP_STATE_SCAN);
             break;
         }
 
@@ -272,6 +281,9 @@ void BleApp_Start(gapRole_t gapRole)
 #endif
             gPairingParameters.localIoCapabilities = gIoDisplayOnly_c;
             BleApp_Advertise();
+
+            // TODO : check if connected or scanning, in this case, we shall not change */
+            PWR_SetNewAppState(PWR_APP_STATE_ADV);
             break;
         }
 
@@ -576,7 +588,7 @@ static void BleApp_ScanningCallback(gapScanningEvent_t *pScanningEvent)
             /* Node starts scanning */
             if (mScanningOn)
             {
-                /* Start advertising timer */
+                /* Start scanning timeout timer */
                 (void)TMR_StartLowPowerTimer(mAppTimerId,
                                              gTmrLowPowerSecondTimer_c,
                                              TmrSeconds(gScanningTime_c),
@@ -746,6 +758,8 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
 
             /* run the state machine */
             BleApp_StateMachineHandler(peerDeviceId, mAppEvt_PeerConnected_c);
+
+            PWR_SetNewAppState(PWR_APP_STATE_CONN);
         }
         break;
 
@@ -795,19 +809,29 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
 
             if (mGapRole == gGapPeripheral_c)
             {
+                /* start ADV again */
                 BleApp_Start(mGapRole);
+            }
+            else
+            {
+                /* if scan is not restarted, then go to lowpower RAM OFF */
+                PWR_SetNewAppState(PWR_APP_STATE_NO_ACTIVITY_RAM_RET);
             }
         }
         break;
 
 #if gAppUsePairing_d
-
         case gConnEvtPairingComplete_c:
         {
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
             {
                 BleApp_StateMachineHandler(peerDeviceId,
                                            mAppEvt_PairingComplete_c);
+                (void)Serial_Print(gAppSerMgrIf, "\r\n-->  GAP Event: Device Paired.\r\n", gAllowToBlock_d);
+            }
+            else
+            {
+                (void)Serial_Print(gAppSerMgrIf, "\r\n-->  GAP Event: Pairing Unsuccessful.\r\n", gAllowToBlock_d);
             }
         }
         break;

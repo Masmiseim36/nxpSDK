@@ -41,6 +41,13 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapAdvertisingData_t         gAppAdvertisingData;
+extern gapScanResponseData_t        gAppScanRspData;
+extern gapConnectionParameters_t    gAppFastConnParams;
+extern gapAdvertisingParameters_t   gAdvParams;
+extern gapSmpKeys_t                 gSmpKeys;
+extern gapPairingParameters_t       gPairingParameters;
+extern gapDeviceSecurityRequirements_t deviceSecurityRequirements;
 
 /* Default Advertising Parameters. Values can be changed at runtime 
     to align with profile requirements */
@@ -56,10 +63,10 @@ gapAdvertisingParameters_t gAdvParams = {
 };
 
 /* Scanning and Advertising Data */
-static const uint8_t adData0[1] =  { (gapAdTypeFlags_t)(gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
-static const uint8_t adData1[2] = { UuidArray(gBleSig_CyclingPowerService_d)};
-static const uint8_t adData2[2] = { UuidArray(gCyclingPowerSensor_c) };
-static const gapAdStructure_t advScanStruct[] = {
+static uint8_t adData0[1] =  { (gapAdTypeFlags_t)(gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
+static uint8_t adData1[2] = { UuidArray(gBleSig_CyclingPowerService_d)};
+static uint8_t adData2[2] = { UuidArray(gCyclingPowerSensor_c) };
+static gapAdStructure_t advScanStruct[] = {
   {
     .length = NumberOfElements(adData0) + 1,
     .adType = gAdFlags_c,
@@ -100,7 +107,7 @@ gapPairingParameters_t gPairingParameters = {
     .securityModeAndLevel = gSecurityMode_1_Level_3_c,
     .maxEncryptionKeySize = mcEncryptionKeySize_c,
     .localIoCapabilities = gIoDisplayOnly_c,
-    .oobAvailable = TRUE,
+    .oobAvailable = FALSE,
     .centralKeys = gIrk_c, 
     .peripheralKeys = (gapSmpKeyFlags_t)(gLtk_c | gIrk_c),
     .leSecureConnectionSupported = TRUE,
@@ -137,15 +144,15 @@ gapSmpKeys_t gSmpKeys = {
 };
 
 /* Device Security Requirements */
-static const gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
-static const gapServiceSecurityRequirements_t serviceSecurity[3] = {
+static gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
+static gapServiceSecurityRequirements_t serviceSecurity[3] = {
   {
     .requirements = {
         .securityModeLevel = gSecurityMode_1_Level_3_c,
         .authorization = FALSE,
         .minimumEncryptionKeySize = gDefaultEncryptionKeySize_d
     },
-    .serviceHandle = service_cp
+    .serviceHandle = (uint16_t)service_cp
   },
   {
     .requirements = {

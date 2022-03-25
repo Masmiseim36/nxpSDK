@@ -1,0 +1,106 @@
+/*
+** ###################################################################
+**     Processors:          MKW36Z512VFP4
+**                          MKW36Z512VHT4
+**
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Reference manual:    MKW36A512RM Rev. 2, 03/2017
+**     Version:             rev. 1.1, 2017-06-06
+**     Build:               b170713
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016 - 2017 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+/*-Memory Limits-*/
+define symbol __region_ROM_start__      = 0x00000000;
+define symbol __region_ROM_end__        = 0x0007FFFF;
+
+define symbol __region_SRAM_L_start__   = 0x1FFFC000;
+define symbol __region_SRAM_L_end__     = 0x1FFFFFFF;
+define symbol __region_SRAM_U_start__   = 0x20000000;
+define symbol __region_SRAM_U_end__     = 0x2000BFFF; 
+
+/* Sizes */
+define symbol m_sector_size             = 2*1024; /* 2k flash sector size */
+
+if (isdefinedsymbol(__stack_size__)) {
+  define symbol __size_cstack__        = __stack_size__;
+} else {
+  define symbol __size_cstack__        = 0x400;
+}
+
+if (isdefinedsymbol(__heap_size__)) {
+  define symbol __size_heap__          = __heap_size__;
+} else {
+  define symbol __size_heap__          = 0x0;
+}
+
+define symbol m_interrupts_start        = __region_SRAM_L_start__;
+define symbol m_interrupts_end          = m_interrupts_start + 0x1FF;
+
+define symbol m_text_start              = m_interrupts_end + 1;
+define symbol m_text_end                = __region_SRAM_L_end__;
+
+/* 2 x 256KB P-Flashes */
+define exported symbol __region_PFLASH_start_       = 0x00000000;
+define exported symbol __region_PFLASH_end_         = 0x0007FFFF;
+define exported symbol __region_DFLASH_start_       = 0x10000000;
+define exported symbol __region_DFLASH_end_         = 0x1003FFFF;
+define exported symbol __region_DFLASH_alias_start_ = 0x00040000;
+define exported symbol __region_DFLASH_alias_end_   = 0x0007FFFF;
+
+/*** FSL Product Info region ***/
+define symbol m_fsl_prodInfo_start     = __region_ROM_end__ - m_sector_size + 1;
+define symbol m_fsl_prodInfo_end       = __region_ROM_end__;
+define exported symbol FREESCALE_PROD_DATA_BASE_ADDR = m_fsl_prodInfo_start;
+
+define symbol __BDM_COMMANDS_START     =  __region_SRAM_U_start__;
+define symbol __BDM_COMMANDS_SIZE      = 0xF;
+define symbol __BDM_COMMANDS_END       = __BDM_COMMANDS_START + __BDM_COMMANDS_SIZE;
+
+define exported symbol __BDM_BUFFER_START   = __BDM_COMMANDS_END + 1;
+define symbol __BDM_BUFFER_END              = __region_SRAM_U_end__;
+define exported symbol __BDM_BUFFER_SIZE    =  __BDM_BUFFER_END - __BDM_BUFFER_START + 1;
+
+define exported symbol __VECTOR_TABLE  = m_interrupts_start;
+define exported symbol __VECTOR_RAM    = m_interrupts_start;
+define exported symbol __RAM_VECTOR_TABLE_SIZE = 0x0;
+
+define memory mem with size = 4G;
+define region TEXT_region               = mem:[from m_interrupts_start to m_interrupts_end]
+                                          | mem:[from m_text_start to m_text_end];
+define region BDM_CMD_region            = mem:[from __BDM_COMMANDS_START  to  __BDM_COMMANDS_END];
+define region BDM_BUFFER_region         = mem:[from __BDM_BUFFER_START to __BDM_BUFFER_END];
+
+define block CSTACK             with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
+
+define block BDM_CMD            {readwrite section .bdm_cmd};
+define block BDM_DATA           with alignment = 4, size = __BDM_BUFFER_SIZE {readwrite section .bdm_data};
+
+define block RW        { readwrite };
+define block ZI        { zi };
+
+initialize by copy { readwrite, section .textrw };
+do not initialize  { section .noinit };
+
+place at address mem: m_interrupts_start    { readonly section .intvec };
+place in TEXT_region                        { readonly };
+place in TEXT_region                        { block RW };
+place in TEXT_region                        { block ZI };
+place in TEXT_region                        { block CSTACK };
+place in TEXT_region                        { block HEAP };
+place in BDM_CMD_region {block BDM_CMD};
+place in BDM_BUFFER_region {block BDM_DATA};

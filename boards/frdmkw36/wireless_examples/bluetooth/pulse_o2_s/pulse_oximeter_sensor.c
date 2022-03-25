@@ -129,7 +129,7 @@ static bool_t isTimeSynchronized = FALSE;
 #endif
 
 static uint32_t localTime = mInitialTime_c;
-
+static uint32_t mAdvTimeout;
 /************************************************************************************
 *************************************************************************************
 * Private functions prototypes
@@ -341,8 +341,6 @@ static void BleApp_Config(void)
 ********************************************************************************** */
 static void BleApp_Advertise(void)
 {
-    uint32_t timeout = 0;
-
     switch (mAdvState.advType)
     {
 #if gAppUseBonding_d
@@ -351,7 +349,7 @@ static void BleApp_Advertise(void)
             gAdvParams.minInterval = gFastConnMinAdvInterval_c;
             gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessWhiteListOnly_c;
-            timeout = gFastConnWhiteListAdvTime_c;
+            mAdvTimeout = gFastConnWhiteListAdvTime_c;
         }
         break;
 #endif
@@ -360,7 +358,7 @@ static void BleApp_Advertise(void)
             gAdvParams.minInterval = gFastConnMinAdvInterval_c;
             gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
-            timeout = gFastConnAdvTime_c - gFastConnWhiteListAdvTime_c;
+            mAdvTimeout = gFastConnAdvTime_c - gFastConnWhiteListAdvTime_c;
         }
         break;
 
@@ -369,7 +367,7 @@ static void BleApp_Advertise(void)
             gAdvParams.minInterval = gReducedPowerMinAdvInterval_c;
             gAdvParams.maxInterval = gReducedPowerMinAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
-            timeout = gReducedPowerAdvTime_c;
+            mAdvTimeout = gReducedPowerAdvTime_c;
         }
         break;
 
@@ -380,10 +378,6 @@ static void BleApp_Advertise(void)
 
     /* Set advertising parameters*/
     (void)Gap_SetAdvertisingParameters(&gAdvParams);
-
-    /* Start advertising timer */
-    (void)TMR_StartLowPowerTimer(mAdvTimerId,gTmrLowPowerSecondTimer_c,
-               TmrSeconds(timeout), AdvertisingTimerCallback, NULL);
 }
 
 /*! *********************************************************************************
@@ -406,6 +400,12 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
                 Led2Flashing();
                 Led3Flashing();
                 Led4Flashing();
+            }
+            else
+            {
+                /* Start advertising timer */
+                (void)TMR_StartLowPowerTimer(mAdvTimerId,gTmrLowPowerSecondTimer_c,
+                           TmrSeconds(mAdvTimeout), AdvertisingTimerCallback, NULL);
             }
         }
         break;

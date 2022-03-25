@@ -33,11 +33,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v7.0
+product: Clocks v9.0
 processor: MKW36Z512xxx4
 package_id: MKW36Z512VHT4
 mcu_data: ksdk2_0
-processor_version: 0.8.3
+processor_version: 11.0.1
 board: FRDM-KW36
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -61,6 +61,24 @@ extern uint32_t SystemCoreClock;
 /*******************************************************************************
  * Code
  ******************************************************************************/
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : CLOCK_CONFIG_SetRtcClock
+ * Description   : This function is used to configuring RTC clock
+ *
+ *END**************************************************************************/
+static void CLOCK_CONFIG_SetRtcClock(void)
+{
+    /* RTC clock gate enable */
+    CLOCK_EnableClock(kCLOCK_Rtc0);
+    /* Set RTC_TSR if there is fault value in RTC */
+    if (RTC->SR & RTC_SR_TIF_MASK) {
+        RTC -> TSR = RTC -> TSR;
+    }
+    /* RTC clock gate disable */
+    CLOCK_DisableClock(kCLOCK_Rtc0);
+}
+
 /*FUNCTION**********************************************************************
 *
 * Function Name  : CLOCK_CONFIG_SysTickWaitMs
@@ -134,7 +152,7 @@ void BOARD_RfOscInit(void)
 /*FUNCTION**********************************************************************
  *
  * Function Name : BOARD_InitOsc0
- * Description   : This function is used to setup MCG OSC with Ref oscillator for KW40_512.
+ * Description   : This function is used to setup MCG OSC with Ref oscillator.
  *
  *END**************************************************************************/
 void BOARD_InitOsc0(void)
@@ -189,6 +207,8 @@ settings:
 - {id: MCG_C2_RANGE0_FRDIV_CFG, value: Very_high}
 - {id: MCG_C2_RANGE_CFG, value: Very_high}
 - {id: RTC_CR_OSCE_CFG, value: Oscillator_enabled}
+- {id: RTC_OSC_CAP_LOAD, value: SC8PF}
+- {id: RTC_OSC_STABILIZATION_DELAY_Config, value: '0'}
 - {id: SIM.LPUART0SRCSEL.sel, value: REFOSC.OSCCLK}
 - {id: SIM.LPUART1SRCSEL.sel, value: REFOSC.OSCCLK}
 - {id: SIM.TPMSRCSEL.sel, value: REFOSC.OSCCLK}
@@ -230,7 +250,7 @@ void BOARD_BootClockRUN(void)
     /* Initializes OSC0 according to Ref OSC needs. */
     BOARD_InitOsc0();
     /* Set MCG to FEI mode. */
-#if FSL_CLOCK_DRIVER_VERSION >= MAKE_VERSION(2, 2, 0)
+#if FSL_CLOCK_DRIVER_VERSION >= MAKE_VERSION(2, 0, 0)
     CLOCK_BootToFeiMode(mcgConfig_BOARD_BootClockRUN.dmx32,
                         mcgConfig_BOARD_BootClockRUN.drs,
                         CLOCK_CONFIG_FllStableDelay);
@@ -244,6 +264,8 @@ void BOARD_BootClockRUN(void)
                                   mcgConfig_BOARD_BootClockRUN.fcrdiv);
     /* Set the clock configuration in SIM module. */
     CLOCK_SetSimConfig(&simConfig_BOARD_BootClockRUN);
+    /* Configure RTC clock. */
+    CLOCK_CONFIG_SetRtcClock();
     /* Set SystemCoreClock variable. */
     SystemCoreClock = BOARD_BOOTCLOCKRUN_CORE_CLOCK;
     /* Set LPUART0 clock source. */
@@ -314,6 +336,8 @@ void BOARD_BootClockVLPR(void)
                          mcgConfig_BOARD_BootClockVLPR.irclkEnableMode);
     /* Set the clock configuration in SIM module. */
     CLOCK_SetSimConfig(&simConfig_BOARD_BootClockVLPR);
+    /* Configure RTC clock. */
+    CLOCK_CONFIG_SetRtcClock();
     /* Set VLPR power mode. */
     SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
 #if (defined(FSL_FEATURE_SMC_HAS_LPWUI) && FSL_FEATURE_SMC_HAS_LPWUI)

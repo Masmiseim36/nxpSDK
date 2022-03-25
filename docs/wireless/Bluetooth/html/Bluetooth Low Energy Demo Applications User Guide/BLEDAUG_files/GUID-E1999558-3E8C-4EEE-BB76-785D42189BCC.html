@@ -22,86 +22,82 @@
 
     <div class="body">
         <p class="p">To use the Beacon application with the advertising extensions capabilities,
-            the gBeaconAE_c define must be set to 1. Doing this enables the usage of extended
-            advertising and periodic advertising. The application cycles between these modes are in
-            the following manner (the EXTADVSW button for FRDM-KW38 is SW3):</p>
+            the <samp class="ph codeph">gBeaconAE_c define</samp> option must be set to 1. Doing this enables the
+            usage of extended advertising and periodic advertising. The application cycles between
+            these modes are in the following manner:</p>
 
-        <ol class="ol"><li class="li">First press EXTADVSW button starts legacy advertising</li>
+        <ol class="ol"><li class="li">The first <strong class="ph b">ADVSW</strong> press starts legacy advertising.</li>
 
-            <li class="li">Second press EXTADVSW starts extended advertising on the coded phy,
-                while also keeping the legacy advertising active.</li>
+            <li class="li">The second <strong class="ph b">ADVSW</strong> press stops legacy advertising and starts
+                extended advertising.</li>
 
-            <li class="li">Third press EXTADVSW starts periodic advertising on the coded phy,
-                while also keeping the legacy and the extended advertising previously started
-                active.</li>
+            <li class="li">The third <strong class="ph b">ADVSW</strong> press stops extended advertising carrying data
+                and then starts extended advertising without data and periodic advertising.</li>
 
-            <li class="li">Fourth press EXTADVSW stops periodic advertising. Legacy and extended
-                advertising remain active.</li>
+            <li class="li">The fourth <strong class="ph b">ADVSW</strong> press stops periodic advertising and extended
+                advertising without data and starts legacy advertising and extended
+                advertising.</li>
 
-            <li class="li">Fifth press EXTADVSW stops extended advertising. Legacy advertising
-                remains active.</li>
-
-            <li class="li">Sixth press EXTADVSW stops legacy advertising</li>
+            <li class="li">The fifth <strong class="ph b">ADVSW</strong> press stops all advertising types.</li>
               
         </ol>
 
-        <p class="p">As not all smartphones support extended advertising, a different method to
-            view the AE beacon is to use the ble_shell application. In order to do this, the
-            following steps must be taken:</p>
+        <p class="p">Not all smartphones support extended advertising, hence a different method
+            to view the AE beacon is to use the <samp class="ph codeph">ble_shell</samp> application. In order to
+            do this,perform the following steps:</p>
 
         <ol class="ol"><li class="li">Flash a board with the beacon application, as described above.</li>
 
             <li class="li">Flash a board with the ble_shell application, as described in <a class="xref" href="GUID-69DCE941-B29B-445D-AF65-13DA7D71E88A.html">Bluetooth LE Shell</a> and connect to
                 it using a serial port. </li>
 
-            <li class="li">Press the EXTADVSW button two times on the beacon to start extended
+            <li class="li">Press the <strong class="ph b">ADVSW</strong> button two times on the beacon to start extended
                 advertising on the coded phy.</li>
 
             <li class="li">To view the advertising data, enter the following commands in the shell
-                terminal to set the scanning phy to coded and start scanning. <div class="fig fignone"><span class="figcap">Figure 1. Shell commands to view extended advertising</span>
+                terminal to set the scanning phy to coded and start scanning. <div class="fig fignone" id="GUID-E1999558-3E8C-4EEE-BB76-785D42189BCC__FIG_PRV_2XQ_JNB"><span class="figcap">Figure 1. Shell commands to view extended advertising</span>
                     
-                    <img class="image" src="GUID-D60CFC7E-D48A-4272-8022-A2676DBD6FCB-high.png"/>
-                </div>
+                <p class="p"><img class="image" id="GUID-E1999558-3E8C-4EEE-BB76-785D42189BCC__IMAGE_X3N_JXQ_JNB" src="GUID-D8AB5F92-087E-441E-81E9-80DB29C57B68-high.png"/></p>
+</div>
 
             </li>
 
-            <li class="li">To start the periodic advertising, press EXTADVSW button again on the
-                beacon.</li>
+            <li class="li">To start the periodic advertising, press <strong class="ph b">ADVSW</strong> button again on
+                the beacon.</li>
 
-            <li class="li">To sync with the beacon, issue the following commands on the shell terminal:
-                <div class="fig fignone"><span class="figcap">Figure 2. Shell commands to view the periodic advertising</span>
+            <li class="li">To sync with the beacon, issue the following commands on the shell
+                terminal: <div class="fig fignone"><span class="figcap">Figure 2. Shell commands to view the periodic advertising</span>
                     
-                    <img class="image" src="GUID-11C67654-95B5-4CC5-A716-E76850F14515-high.png"/>
-                    
+                    <img class="image" id="GUID-E1999558-3E8C-4EEE-BB76-785D42189BCC__IMAGE_VM4_PXQ_JNB" src="GUID-C34871A7-AE64-43CE-9438-B0844F6D5A4D-high.png"/>
                 </div>
-                         
+
             </li>
         
         </ol>
 
-        <p class="p">As one can see, the extended advertising is still on when periodic advertising is started.</p>
-
-        <p class="p">The peer parameter of the periodicsync command is the public address of the beacon.</p>
+        <p class="p">The peer parameter of the <samp class="ph codeph">periodicsync</samp> command is the public
+            address of the beacon.</p>
 
     
     
     <div class="section" id="GUID-E1999558-3E8C-4EEE-BB76-785D42189BCC__GUID-9CD68BBF-E8CA-44B7-ACDC-F76AAF68FA05"><h2 class="title sectiontitle">Extended Advertising
                 with very large data</h2>To use very large advertising data for extended
-            advertising, set the gBeaconLargeExtAdvData_c define to 1. The same steps are used to
-            view the data using ble_shell:<ol class="ol">
-                <li class="li">Flash a board with the beacon application</li>
+            advertising, set the <samp class="ph codeph">gBeaconLargeExtAdvData_c</samp>
+            <samp class="ph codeph">define</samp> to 1. The same steps are used to view the data using
+                <samp class="ph codeph">ble_shell</samp>:<ol class="ol">
+                <li class="li">Flash a board with the beacon application.</li>
 
                 <li class="li">Flash a board with the ble_shell application, as described in <a class="xref" href="GUID-69DCE941-B29B-445D-AF65-13DA7D71E88A.html">Bluetooth LE Shell</a> and connect
                     to it using a serial port.</li>
 
-                <li class="li">Press the EXTADVSW button two times on the beacon to start extended
-                    advertising on the coded phy. </li>
+                <li class="li">Press the <strong class="ph b">ADVSW</strong> button two times on the beacon to start
+                    extended advertising on the coded PHY. </li>
 
                 <li class="li">To view the advertising data, enter the following commands in the
-                    shell terminal to set the scanning phy to coded and start scanning. <div class="fig fignone"><span class="figcap">Figure 3. Shell command to view extended advertisements with large
+                    shell terminal to set the scanning PHY to coded and start scanning. <div class="fig fignone"><span class="figcap">Figure 3. Shell command to view extended advertisements with large
                             data</span>
                         
-                        <img class="image" src="GUID-01B15B91-625C-4849-AB3C-19DA6532AEC6-high.png"/>
+                        <img class="image" id="GUID-E1999558-3E8C-4EEE-BB76-785D42189BCC__IMAGE_R3B_RXQ_JNB" src="GUID-AA5A84BC-B375-45B5-8E37-1D503B558ECC-high.png"/>
                     </div>
 
                 </li>

@@ -36,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="NXP_logo.bmp"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Bluetooth® Low Energy Host Stack API Reference Manual
-   &#160;<span id="projectnumber">Rev. 13</span>
+   &#160;<span id="projectnumber">Rev. 15</span>
    </div>
    <div id="projectbrief">BLEHSAPIRM</div>
   </td>
@@ -637,9 +637,7 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___g_a_p.html#gga32829540604505a535b45f228284e3b7aeda2c8b9438a157a73f8c450aab7e571">gAdvertisingSetTerminated_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___g_a_p.html#gga32829540604505a535b45f228284e3b7aae8e92b9a72a0f35d12ff1e289f36952">gExtScanNotification_c</a>, 
-<br />
-&#160;&#160;<a class="el" href="group___g_a_p.html#gga32829540604505a535b45f228284e3b7a3ca3d5a8230e42790703a8d1fbb64a32">gPeriodicAdvertisingStateChanged_c</a>
+&#160;&#160;<a class="el" href="group___g_a_p.html#gga32829540604505a535b45f228284e3b7aae8e92b9a72a0f35d12ff1e289f36952">gExtScanNotification_c</a>
 <br />
  }</td></tr>
 <tr class="separator:ga32829540604505a535b45f228284e3b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -715,7 +713,9 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a77d1a7db0b218ba0ee76cc362c7e9d40">gConnEvtChanSelectionAlgorithm2_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a01964aea82f7e8789d7ece396912131b">gConnEvtPairingNoLtk_c</a>
+&#160;&#160;<a class="el" href="group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a01964aea82f7e8789d7ece396912131b">gConnEvtPairingNoLtk_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___g_a_p.html#ggaf32d5b65cac64cbd2d0096ec83322a11a4937da23596f96dd8340ae700baa834a">gConnEvtPairingAlreadyStarted_c</a>
 <br />
  }</td></tr>
 <tr class="separator:gaf32d5b65cac64cbd2d0096ec83322a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -911,12 +911,14 @@ Functions</h2></td></tr>
 <tr class="separator:gadc6c618f1da0700ec2c12447f521d76a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab39eb35710e7bc4e134879282fe843b4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gab39eb35710e7bc4e134879282fe843b4">Gap_Disconnect</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId)</td></tr>
 <tr class="separator:gab39eb35710e7bc4e134879282fe843b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1ef1c6b3563005c62051a3de682c2cfe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga1ef1c6b3563005c62051a3de682c2cfe">Gap_SaveCustomPeerInformation</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, const uint8_t *aInfo, uint16_t offset, uint16_t infoSize)</td></tr>
-<tr class="separator:ga1ef1c6b3563005c62051a3de682c2cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac0a457f9bf3d21429383a7657f411240"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gac0a457f9bf3d21429383a7657f411240">Gap_LoadCustomPeerInformation</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint8_t *aOutInfo, uint16_t offset, uint16_t infoSize)</td></tr>
-<tr class="separator:gac0a457f9bf3d21429383a7657f411240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa641bb0b215046e5ff2e01033fd8acd0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gaa641bb0b215046e5ff2e01033fd8acd0">Gap_SaveCustomPeerInformation</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, const uint8_t *pInfo, uint16_t offset, uint16_t infoSize)</td></tr>
+<tr class="separator:gaa641bb0b215046e5ff2e01033fd8acd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga58f7445afa5f43429ec04b86c300de0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga58f7445afa5f43429ec04b86c300de0d">Gap_LoadCustomPeerInformation</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint8_t *pOutInfo, uint16_t offset, uint16_t infoSize)</td></tr>
+<tr class="separator:ga58f7445afa5f43429ec04b86c300de0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8403f4e3cc1265f1bdb87bb92ee6ae31"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga8403f4e3cc1265f1bdb87bb92ee6ae31">Gap_CheckIfBonded</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, bool_t *pOutIsBonded, uint8_t *pOutNvmIndex)</td></tr>
 <tr class="separator:ga8403f4e3cc1265f1bdb87bb92ee6ae31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga988b167a9ba2db3308684ef65f77c637"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga988b167a9ba2db3308684ef65f77c637">Gap_CheckNvmIndex</a> (uint8_t nvmIndex, bool_t *pOutIsFree)</td></tr>
+<tr class="separator:ga988b167a9ba2db3308684ef65f77c637"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafb3ed85966de5baafb65772ad07068f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gafb3ed85966de5baafb65772ad07068f1">Gap_ReadWhiteListSize</a> (void)</td></tr>
 <tr class="separator:gafb3ed85966de5baafb65772ad07068f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa7c1cedbb003472e8f5e90df9eed80fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gaa7c1cedbb003472e8f5e90df9eed80fb">Gap_ClearWhiteList</a> (void)</td></tr>
@@ -929,12 +931,12 @@ Functions</h2></td></tr>
 <tr class="separator:ga74073a34116d85441c153f863d5e483f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac08c63eccf6bd485a3bf74421d6d0f86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gac08c63eccf6bd485a3bf74421d6d0f86">Gap_CreateRandomDeviceAddress</a> (const uint8_t *aIrk, const uint8_t *aRandomPart)</td></tr>
 <tr class="separator:gac08c63eccf6bd485a3bf74421d6d0f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga884a61809d98dd14c2de71f6e6e161ab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga884a61809d98dd14c2de71f6e6e161ab">Gap_SaveDeviceName</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, const uchar_t *aName, uint8_t cNameSize)</td></tr>
-<tr class="separator:ga884a61809d98dd14c2de71f6e6e161ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaaf10c4c22f76b836a95e54db91f0ef7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gaaaf10c4c22f76b836a95e54db91f0ef7">Gap_SaveDeviceName</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, const uchar_t *pName, uint8_t cNameSize)</td></tr>
+<tr class="separator:gaaaf10c4c22f76b836a95e54db91f0ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9e04bc6645ee828a6a2442944bdc2693"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga9e04bc6645ee828a6a2442944bdc2693">Gap_GetBondedDevicesCount</a> (uint8_t *pOutBondedDevicesCount)</td></tr>
 <tr class="separator:ga9e04bc6645ee828a6a2442944bdc2693"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7a29cb47aca5d63bc27f399542f39688"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga7a29cb47aca5d63bc27f399542f39688">Gap_GetBondedDeviceName</a> (uint8_t nvmIndex, uchar_t *aOutName, uint8_t maxNameSize)</td></tr>
-<tr class="separator:ga7a29cb47aca5d63bc27f399542f39688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8aae06c9a4198c70e039a86362e060de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga8aae06c9a4198c70e039a86362e060de">Gap_GetBondedDeviceName</a> (uint8_t nvmIndex, uchar_t *pOutName, uint8_t maxNameSize)</td></tr>
+<tr class="separator:ga8aae06c9a4198c70e039a86362e060de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa76e63b101e26a0ccbd307c2883e2059"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gaa76e63b101e26a0ccbd307c2883e2059">Gap_RemoveBond</a> (uint8_t nvmIndex)</td></tr>
 <tr class="separator:gaa76e63b101e26a0ccbd307c2883e2059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabb5925d0868269f8954d908d4ccfd576"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gabb5925d0868269f8954d908d4ccfd576">Gap_RemoveAllBonds</a> (void)</td></tr>
@@ -947,6 +949,8 @@ Functions</h2></td></tr>
 <tr class="separator:ga40d9c9ba6fb87c77b6a22b6bf69adc4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacf792df7e6414d734714915c0a480dda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gacf792df7e6414d734714915c0a480dda">Gap_SetRandomAddress</a> (const <a class="el" href="group___b_l_e.html#ga79cc8c6684c289e11ab72e839ddbd32c">bleDeviceAddress_t</a> aAddress)</td></tr>
 <tr class="separator:gacf792df7e6414d734714915c0a480dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf80038b0669e1b525092aa410e4478a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gaf80038b0669e1b525092aa410e4478a8">Gap_ReadControllerLocalRPA</a> (const <a class="el" href="group___b_l_e.html#structble_identity_address__t">bleIdentityAddress_t</a> *pIdAddress)</td></tr>
+<tr class="separator:gaf80038b0669e1b525092aa410e4478a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabf4981bc38b357d75a1842561220591d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#gabf4981bc38b357d75a1842561220591d">Gap_SetDefaultPairingParameters</a> (const <a class="el" href="group___g_a_p.html#structgap_pairing_parameters__t">gapPairingParameters_t</a> *pPairingParameters)</td></tr>
 <tr class="separator:gabf4981bc38b357d75a1842561220591d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8423831269f9402b87db84919f253e13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga8423831269f9402b87db84919f253e13">Gap_UpdateConnectionParameters</a> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t intervalMin, uint16_t intervalMax, uint16_t slaveLatency, uint16_t timeoutMultiplier, uint16_t minCeLength, uint16_t maxCeLength)</td></tr>
@@ -1003,6 +1007,12 @@ Functions</h2></td></tr>
 <tr class="separator:gaedf77a79dc35bf0e4d5b748adec7fb38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga178795750537322d4e168052f59ad9e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___g_a_p.html#ga178795750537322d4e168052f59ad9e3">Gap_ResumeLeScStateMachine</a> (computeDhKeyParam_t *pData)</td></tr>
 <tr class="separator:ga178795750537322d4e168052f59ad9e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad244fa773f3d57af0a93e196b043ee45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad244fa773f3d57af0a93e196b043ee45"></a>
+<a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Gap_GetDeviceIdFromConnHandle</b> (uint16_t connHandle, <a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> *pDeviceId)</td></tr>
+<tr class="separator:gad244fa773f3d57af0a93e196b043ee45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga99fed3a9aa0cf0e33425d25c150f30b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga99fed3a9aa0cf0e33425d25c150f30b7"></a>
+<a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Gap_GetConnectionHandleFromDeviceId</b> (<a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a> deviceId, uint16_t *pConnHandle)</td></tr>
+<tr class="separator:ga99fed3a9aa0cf0e33425d25c150f30b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="structgap_smp_keys__t" id="structgap_smp_keys__t"></a>
@@ -4965,9 +4975,6 @@ The array of connection request parameters, of size equal to cNumAddresses. </td
 <tr><td class="fieldname"><a class="anchor" id="gga32829540604505a535b45f228284e3b7aae8e92b9a72a0f35d12ff1e289f36952"></a>gExtScanNotification_c&#160;</td><td class="fielddoc">
 <p>Event indicates that a SCAN_REQ PDU or an AUX_SCAN_REQ PDU has been received by the extended advertiser. </p>
 </td></tr>
-<tr><td class="fieldname"><a class="anchor" id="gga32829540604505a535b45f228284e3b7a3ca3d5a8230e42790703a8d1fbb64a32"></a>gPeriodicAdvertisingStateChanged_c&#160;</td><td class="fielddoc">
-<p>Event received when periodic advertising has been successfully enabled or disabled. </p>
-</td></tr>
 </table>
 
 </div>
@@ -5049,8 +5056,8 @@ The array of connection request parameters, of size equal to cNumAddresses. </td
 <p>Data in gapConnectionEvent_t.eventData.authenticationRejectedEvent. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggaf32d5b65cac64cbd2d0096ec83322a11aa7e93c194344a5fdf0ba60e2f492ac26"></a>gConnEvtPasskeyRequest_c&#160;</td><td class="fielddoc">
-<p>Peer Slave has requested a passkey (maximum 6 digit PIN) for the pairing procedure. </p>
-<p>Master should respond with Gap_EnterPasskey. Slave will not receive this event! Slave's application must call Gap_SetLocalPasskey before any connection. </p>
+<p>Peer has requested a passkey (maximum 6 digit PIN) for the pairing procedure. </p>
+<p>Device should respond with Gap_EnterPasskey. </p>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggaf32d5b65cac64cbd2d0096ec83322a11a7a8fc684ccaddc0e8e037dd75ea25029"></a>gConnEvtOobRequest_c&#160;</td><td class="fielddoc">
 <p>Out-of-Band data must be provided for the pairing procedure. </p>
@@ -5130,6 +5137,9 @@ The array of connection request parameters, of size equal to cNumAddresses. </td
 <tr><td class="fieldname"><a class="anchor" id="ggaf32d5b65cac64cbd2d0096ec83322a11a01964aea82f7e8789d7ece396912131b"></a>gConnEvtPairingNoLtk_c&#160;</td><td class="fielddoc">
 <p>No LTK was found for the Master peer. </p>
 <p>Pairing shall be performed again. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggaf32d5b65cac64cbd2d0096ec83322a11a4937da23596f96dd8340ae700baa834a"></a>gConnEvtPairingAlreadyStarted_c&#160;</td><td class="fielddoc">
+<p>Pairing process was already started. </p>
 </td></tr>
 </table>
 
@@ -6450,7 +6460,7 @@ GAP Central-only API function. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1ef1c6b3563005c62051a3de682c2cfe"></a>
+<a class="anchor" id="gaa641bb0b215046e5ff2e01033fd8acd0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -6464,7 +6474,7 @@ GAP Central-only API function. </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>aInfo</em>, </td>
+          <td class="paramname"><em>pInfo</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -6492,7 +6502,7 @@ GAP Central-only API function. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">deviceId</td><td>Device ID of the GAP peer. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">aInfo</td><td>Pointer to the beginning of the data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pInfo</td><td>Pointer to the beginning of the data. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset from the beginning of the reserved memory area. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">infoSize</td><td>Data size (maximum equal to gcReservedFlashSizeForCustomInformation_d).</td></tr>
   </table>
@@ -6505,7 +6515,7 @@ This function executes synchronously. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gac0a457f9bf3d21429383a7657f411240"></a>
+<a class="anchor" id="ga58f7445afa5f43429ec04b86c300de0d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -6519,7 +6529,7 @@ This function executes synchronously. </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>aOutInfo</em>, </td>
+          <td class="paramname"><em>pOutInfo</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -6547,7 +6557,7 @@ This function executes synchronously. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">deviceId</td><td>Device ID of the GAP peer. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">aOutInfo</td><td>Pointer to the beginning of the allocated memory. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pOutInfo</td><td>Pointer to the beginning of the allocated memory. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">offset</td><td>Offset from the beginning of the reserved memory area. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">infoSize</td><td>Data size (maximum equal to gcReservedFlashSizeForCustomInformation_d).</td></tr>
   </table>
@@ -6598,6 +6608,45 @@ This function executes synchronously. </dd></dl>
     <tr><td class="paramdir">[in]</td><td class="paramname">deviceId</td><td>Device ID of the GAP peer. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">pOutIsBonded</td><td>Boolean to be filled with the bonded flag. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">pOutNvmIndex</td><td>If bonded, to be filled optionally with the NVM index.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>This function executes synchronously. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga988b167a9ba2db3308684ef65f77c637"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a> Gap_CheckNvmIndex </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>nvmIndex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool_t *&#160;</td>
+          <td class="paramname"><em>pOutIsFree</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><hr/>
+ </p>
+<p>Returns whether or not the given NVM index is free.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nvmIndex</td><td>NVM index. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pOutIsFree</td><td>TRUE if free, FALSE if occupied.</td></tr>
   </table>
   </dd>
 </dl>
@@ -6787,7 +6836,7 @@ This function executes synchronously. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga884a61809d98dd14c2de71f6e6e161ab"></a>
+<a class="anchor" id="gaaaf10c4c22f76b836a95e54db91f0ef7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -6801,7 +6850,7 @@ This function executes synchronously. </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const uchar_t *&#160;</td>
-          <td class="paramname"><em>aName</em>, </td>
+          <td class="paramname"><em>pName</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -6823,13 +6872,13 @@ This function executes synchronously. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">deviceId</td><td>Device ID for the active peer which name is saved. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">aName</td><td>Array of characters holding the name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pName</td><td>Array of characters holding the name. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">cNameSize</td><td>Number of characters to be saved.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error. </dd></dl>
-<dl class="section remark"><dt>Remarks</dt><dd>This function copies cNameSize characters from the aName array and adds the NULL character to terminate the string.</dd>
+<dl class="section remark"><dt>Remarks</dt><dd>This function copies cNameSize characters from the pName array and adds the NULL character to terminate the string.</dd>
 <dd>
 This function executes synchronously. </dd></dl>
 
@@ -6863,7 +6912,7 @@ This function executes synchronously. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7a29cb47aca5d63bc27f399542f39688"></a>
+<a class="anchor" id="ga8aae06c9a4198c70e039a86362e060de"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -6877,7 +6926,7 @@ This function executes synchronously. </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uchar_t *&#160;</td>
-          <td class="paramname"><em>aOutName</em>, </td>
+          <td class="paramname"><em>pOutName</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -6899,7 +6948,7 @@ This function executes synchronously. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">nvmIndex</td><td>Index of the device in NVM bonding area. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">aOutName</td><td>Destination array to copy the name into. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">pOutName</td><td>Destination array to copy the name into. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">maxNameSize</td><td>Maximum number of characters to be copied, including the terminating NULL character.</td></tr>
   </table>
   </dd>
@@ -6991,9 +7040,15 @@ This function executes synchronously. </dd></dl>
 
 <p><hr/>
  </p>
-<p>Reads the power level of the controller's radio.</p>
-<dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
-<dl class="section remark"><dt>Remarks</dt><dd>The response is contained in the gConnEvtTxPowerLevelRead_c connection event when reading connection TX power level, the gAdvTxPowerLevelRead_c generic event when reading the advertising TX power level, or the gConnEvtRssiRead_c connection event when reading the RSSI. </dd></dl>
+<p>Reads the power level of the controller's radio. The response is contained in the gConnEvtTxPowerLevelRead_c connection event when reading connection TX power level, the gAdvTxPowerLevelRead_c generic event when reading the advertising TX power level, or the gConnEvtRssiRead_c connection event when reading the RSSI.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">txReadType</td><td>Adertising or connection Tx power </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">deviceId</td><td>Peer identifier (for connections only, otherwise ignored)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>bleResult_t gBleSuccess_c or error. </dd></dl>
 
 </div>
 </div>
@@ -7034,7 +7089,11 @@ This function executes synchronously. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>The application should listen for the gTxPowerLevelSetComplete_c generic event. </dd>
 <dd>
-This function executes synchronously. </dd></dl>
+This function executes synchronously. </dd>
+<dd>
+For QN908x platform this command is not supported by the controller. </dd>
+<dd>
+Instead, use RF_SetTxPowerLevel API to set the desired TX power level. </dd></dl>
 
 </div>
 </div>
@@ -7102,6 +7161,34 @@ This function executes synchronously. </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>The application should listen for the gRandomAddressSet_c generic event. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf80038b0669e1b525092aa410e4478a8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group___b_l_e.html#ga50b56ac2045dae012646ed0377e3412c">bleResult_t</a> Gap_ReadControllerLocalRPA </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="group___b_l_e.html#structble_identity_address__t">bleIdentityAddress_t</a> *&#160;</td>
+          <td class="paramname"><em>pIdAddress</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><hr/>
+ </p>
+<p>Reads the device's Local Private Address for a specific peer device from the controller.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">pIdAddress</td><td>pointer to the peer identity address the local private address should be retrieved for.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>gBleSuccess_c or error.</dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>The application should listen for the gControllerLocalRPARead_c generic event. </dd></dl>
 
 </div>
 </div>
@@ -7983,7 +8070,7 @@ GAP Peripheral-only API function. </dd></dl>
 
 <p><hr/>
  </p>
-<p>Commands the controller to remove the specified advertising set and all it's data.</p>
+<p>Commands the controller to remove the specified advertising set and all its data.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">handle</td><td>The ID of the advertising set</td></tr>

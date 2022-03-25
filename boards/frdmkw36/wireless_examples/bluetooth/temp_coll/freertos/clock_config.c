@@ -33,11 +33,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v5.0
+product: Clocks v9.0
 processor: MKW36Z512xxx4
 package_id: MKW36Z512VHT4
 mcu_data: ksdk2_0
-processor_version: 0.0.15
+processor_version: 11.0.1
 board: FRDM-KW36
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -49,7 +49,7 @@ board: FRDM-KW36
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define RTC_OSC_CAP_LOAD_0PF                            0x0U  /*!< RTC oscillator capacity load: 0pF */
+#define RTC_OSC_CAP_LOAD_8PF                          0x800U  /*!< RTC oscillator capacity load: 8pF */
 #define SIM_LPUART_CLK_SEL_OSCERCLK_CLK                   2U  /*!< LPUART clock select: OSCERCLK clock */
 #define SIM_OSC32KSEL_OSC32KCLK_CLK                       0U  /*!< OSC32KSEL select: OSC32KCLK clock */
 #define SIM_TPM_CLK_SEL_OSCERCLK_CLK                      2U  /*!< TPM clock select: OSCERCLK clock */
@@ -65,21 +65,6 @@ extern uint32_t SystemCoreClock;
  ******************************************************************************/
 /*FUNCTION**********************************************************************
  *
- * Function Name : CLOCK_CONFIG_FllStableDelay
- * Description   : This function is used to delay for FLL stable.
- *
- *END**************************************************************************/
-static void CLOCK_CONFIG_FllStableDelay(void)
-{
-    uint32_t i = 30000U;
-    while (i--)
-    {
-        __NOP();
-    }
-}
-
-/*FUNCTION**********************************************************************
- *
  * Function Name : CLOCK_CONFIG_SetRtcClock
  * Description   : This function is used to configuring RTC clock
  *
@@ -88,8 +73,6 @@ static void CLOCK_CONFIG_SetRtcClock(void)
 {
     /* RTC clock gate enable */
     CLOCK_EnableClock(kCLOCK_Rtc0);
-    /* Set the XTAL32/RTC_CLKIN frequency based on board setting. */
-    CLOCK_SetXtal32Freq(BOARD_XTAL32K_CLK_HZ);
     /* Set RTC_TSR if there is fault value in RTC */
     if (RTC->SR & RTC_SR_TIF_MASK) {
         RTC -> TSR = RTC -> TSR;
@@ -99,30 +82,87 @@ static void CLOCK_CONFIG_SetRtcClock(void)
 }
 
 /*FUNCTION**********************************************************************
+*
+* Function Name  : CLOCK_CONFIG_SysTickWaitMs
+* Description    : This function is used for waiting by SysTick
+* Param delay_ms : Delay [milliseconds]
+*
+*END**************************************************************************/
+static void CLOCK_CONFIG_SysTickWaitMs(uint32_t delay_ms)
+{
+	uint32_t ticks = 0UL;
+	uint32_t count = delay_ms;
+	/* Make a 1 milliseconds counter. */
+	ticks = CLOCK_GetCoreSysClkFreq() / 1000UL;
+	assert((ticks - 1UL) <= SysTick_LOAD_RELOAD_Msk);
+	/* Enable the SysTick for counting. */
+	SysTick->LOAD = (ticks > 1) ? (uint32_t)(ticks - 1UL) : 1;
+	SysTick->VAL  = 0UL;
+	SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
+	for (; count > 0U; count--)
+	{
+		/* Wait for the SysTick counter reach 0. */
+		while (!(SysTick->CTRL & SysTick_CTRL_COUNTFLAG_Msk))
+		{
+		}
+	}
+	/* Disable SysTick. */
+	SysTick->CTRL &= ~(SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk);
+	SysTick->LOAD = 0UL;
+	SysTick->VAL  = 0UL;
+}
+
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : CLOCK_CONFIG_FllStableDelay
+ * Description   : This function is used to delay for FLL stable.
+ *
+ *END**************************************************************************/
+static void CLOCK_CONFIG_FllStableDelay(void)
+{
+    /* Wait 1ms for FLL become stable. */
+    CLOCK_CONFIG_SysTickWaitMs(1UL);
+}
+
+/*FUNCTION**********************************************************************
  *
  * Function Name : CLOCK_CONFIG_EnableRtcOsc
  * Description   : This function is used to enabling RTC oscillator
  * Param capLoad : Oscillator capacity load
  *
  *END**************************************************************************/
-static void CLOCK_CONFIG_EnableRtcOsc(uint32_t capLoad)
+static void CLOCK_CONFIG_EnableRtcOsc(uint32_t capLoad, uint32_t stabilizationDelay)
 {
-    /* RTC clock gate enable */
-    CLOCK_EnableClock(kCLOCK_Rtc0);
-    if ((RTC->CR & RTC_CR_OSCE_MASK) == 0u) { /* Only if the Rtc oscillator is not already enabled */
-      /* Set the specified capacitor configuration for the RTC oscillator */
-      RTC_SetOscCapLoad(RTC, capLoad);
-      /* Enable the RTC 32KHz oscillator */
-      RTC->CR |= RTC_CR_OSCE_MASK;
-    }
-    /* RTC clock gate disable */
-    CLOCK_DisableClock(kCLOCK_Rtc0);
+    /* Set the XTAL32/RTC_CLKIN frequency based on board setting. */
+    CLOCK_SetXtal32Freq(BOARD_XTAL32K_CLK_HZ);
+
+	#if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
+    	rtc_config_t rtcConfig;
+    	/*Init the RTC with default configuration*/
+    	RTC_GetDefaultConfig(&rtcConfig);
+     	RTC_Init(RTC, &rtcConfig);
+     	/* If the oscillator has not been enabled. */
+     	if ((RTC->CR & RTC_CR_OSCE_MASK) == 0U)
+     	{
+			/* Set the specified capacitor configuration for the RTC oscillator */
+			RTC_SetOscCapLoad(RTC, capLoad);
+			/* Enable the RTC 32kHz oscillator */
+			RTC->CR |= RTC_CR_OSCE_MASK;
+			/* Start the RTC time counter */
+			RTC_StartTimer(RTC);
+			if (stabilizationDelay != 0UL) {
+			    /* Wait for OSC clock steady. */
+			    CLOCK_CONFIG_SysTickWaitMs(stabilizationDelay);
+			}
+    	}
+       RTC_Deinit(RTC);
+	#endif /* FSL_FEATURE_RTC_HAS_NO_CR_OSCE */
 }
 
 /*FUNCTION**********************************************************************
  *
  * Function Name : BOARD_RfOscInit
- * Description   : This function is used to setup Ref oscillator for KW40_512.
+ * Description   : This function is used to setup Ref oscillator.
  *
  *END**************************************************************************/
 void BOARD_RfOscInit(void)
@@ -143,12 +183,13 @@ void BOARD_RfOscInit(void)
     /* Enable clock gate to write to the XCVR registers */
     SIM->SCGC5 |= SIM_SCGC5_PHYDIG_MASK;
 
+
 }
 
 /*FUNCTION**********************************************************************
  *
  * Function Name : BOARD_InitOsc0
- * Description   : This function is used to setup MCG OSC with Ref oscillator for KW40_512.
+ * Description   : This function is used to setup MCG OSC with Ref oscillator.
  *
  *END**************************************************************************/
 void BOARD_InitOsc0(void)
@@ -203,6 +244,8 @@ settings:
 - {id: MCG_C2_RANGE0_FRDIV_CFG, value: Very_high}
 - {id: MCG_C2_RANGE_CFG, value: Very_high}
 - {id: RTC_CR_OSCE_CFG, value: Oscillator_enabled}
+- {id: RTC_OSC_CAP_LOAD, value: SC8PF}
+- {id: RTC_OSC_STABILIZATION_DELAY_Config, value: '0'}
 - {id: SIM.LPUART0SRCSEL.sel, value: REFOSC.OSCCLK}
 - {id: SIM.LPUART1SRCSEL.sel, value: REFOSC.OSCCLK}
 - {id: SIM.TPMSRCSEL.sel, value: REFOSC.OSCCLK}
@@ -243,11 +286,11 @@ void BOARD_BootClockRUN(void)
     /* Set the system clock dividers in SIM to safe value. */
     CLOCK_SetSimSafeDivs();
     /* Enable RTC oscillator. */
-    CLOCK_CONFIG_EnableRtcOsc(RTC_OSC_CAP_LOAD_0PF);
+    CLOCK_CONFIG_EnableRtcOsc(RTC_OSC_CAP_LOAD_8PF, 0UL);
     /* Initializes OSC0 according to Ref OSC needs. */
     BOARD_InitOsc0();
     /* Set MCG to FEI mode. */
-#if FSL_CLOCK_DRIVER_VERSION >= MAKE_VERSION(2, 2, 0)
+#if FSL_CLOCK_DRIVER_VERSION >= MAKE_VERSION(2, 0, 0)
     CLOCK_BootToFeiMode(mcgConfig_BOARD_BootClockRUN.dmx32,
                         mcgConfig_BOARD_BootClockRUN.drs,
                         CLOCK_CONFIG_FllStableDelay);
@@ -335,6 +378,8 @@ void BOARD_BootClockVLPR(void)
                          mcgConfig_BOARD_BootClockVLPR.irclkEnableMode);
     /* Set the clock configuration in SIM module. */
     CLOCK_SetSimConfig(&simConfig_BOARD_BootClockVLPR);
+    /* Configure RTC clock. */
+    CLOCK_CONFIG_SetRtcClock();
     /* Set VLPR power mode. */
     SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
 #if (defined(FSL_FEATURE_SMC_HAS_LPWUI) && FSL_FEATURE_SMC_HAS_LPWUI)

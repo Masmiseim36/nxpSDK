@@ -317,7 +317,7 @@
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.8/FunctionLib</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.11/FunctionLib</state>
           <state>$PROJ_DIR$/../../src/bootloader</state>
           <state>$PROJ_DIR$/../../src/eeprom</state>
           <state>$PROJ_DIR$/../../src/spi</state>
@@ -325,7 +325,7 @@
           <state>$PROJ_DIR$/../../src/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW36Z4/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW36Z4</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.8/Common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.11/Common</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW36Z4/utilities</state>
         </option>
         <option>
@@ -1292,7 +1292,7 @@
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../devices</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.8/FunctionLib</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.11/FunctionLib</state>
           <state>$PROJ_DIR$/../../src/bootloader</state>
           <state>$PROJ_DIR$/../../src/eeprom</state>
           <state>$PROJ_DIR$/../../src/spi</state>
@@ -1300,7 +1300,7 @@
           <state>$PROJ_DIR$/../../src/uart</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW36Z4/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW36Z4</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.8/Common</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.11/Common</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MKW36Z4/utilities</state>
         </option>
         <option>
@@ -2024,16 +2024,16 @@
     <group>
       <name>FunctionLib</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.8/FunctionLib/FunctionLib.c</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.11/FunctionLib/FunctionLib.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.8/FunctionLib/FunctionLib.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.11/FunctionLib/FunctionLib.h</name>
       </file>
     </group>
     <group>
       <name>Common</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.8/Common/EmbeddedTypes.h</name>
+        <name>$PROJ_DIR$/../../../../../../../middleware/wireless/framework_5.4.11/Common/EmbeddedTypes.h</name>
       </file>
     </group>
   </group>

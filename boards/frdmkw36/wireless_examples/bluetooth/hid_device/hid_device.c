@@ -64,9 +64,9 @@
 * Private macros
 *************************************************************************************
 ************************************************************************************/
-#define AXIS_MIN  100U
-#define AXIS_MAX  500U
-#define MOUSE_STEP 10U
+#define AXIS_MIN  100
+#define AXIS_MAX  500
+#define MOUSE_STEP 10
 
 #define mBatteryLevelReportInterval_c   (10U)        /* battery level report interval in seconds  */
 #define mHidReportInterval_c           (400U)        /* HID level report interval in msec  */
@@ -78,8 +78,10 @@
 ************************************************************************************/
 typedef enum
 {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
     fastWhiteListAdvState_c,
+#endif
 #endif
     fastAdvState_c,
     slowAdvState_c
@@ -92,8 +94,8 @@ typedef struct advState_tag{
 
 typedef struct mouseHidReport_tag{
   uint8_t buttonStatus;
-  uint8_t xAxis;
-  uint8_t yAxis;
+  int8_t xAxis;
+  int8_t yAxis;
 }mouseHidReport_t;
 /************************************************************************************
 *************************************************************************************
@@ -116,9 +118,10 @@ static uint16_t cpHandles[] = { (uint16_t)value_hid_control_point };
 static tmrTimerID_t mAdvTimerId;
 static tmrTimerID_t mHidDemoTimerId;
 static tmrTimerID_t mBatteryMeasurementTimerId;
+static uint32_t     mAdvTimeout;
 
-static uint16_t xAxis = AXIS_MIN;
-static uint16_t yAxis = AXIS_MIN;
+static int16_t xAxis = AXIS_MIN;
+static int16_t yAxis = AXIS_MIN;
 
 /************************************************************************************
 *************************************************************************************
@@ -141,10 +144,10 @@ static void BleApp_Advertise(void);
 
 /* Mouse events */
 static void SendReport(mouseHidReport_t * pReport);
-static void MoveMouseLeft(uint8_t pixels);
-static void MoveMouseRight(uint8_t pixels);
-static void MoveMouseUp(uint8_t pixels);
-static void MoveMouseDown(uint8_t pixels);
+static void MoveMouseLeft(int8_t pixels);
+static void MoveMouseRight(int8_t pixels);
+static void MoveMouseUp(int8_t pixels);
+static void MoveMouseDown(int8_t pixels);
 
 /************************************************************************************
 *************************************************************************************
@@ -175,16 +178,18 @@ void BleApp_Start(void)
 {
     if (mPeerDeviceId == gInvalidDeviceId_c)
     {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
         if (gcBondedDevices > 0U)
         {
             mAdvState.advType = fastWhiteListAdvState_c;
         }
         else
+#endif
         {
 #endif
             mAdvState.advType = fastAdvState_c;
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
         }
 #endif
 
@@ -327,26 +332,26 @@ static void BleApp_Config(void)
 ********************************************************************************** */
 static void BleApp_Advertise(void)
 {
-    uint32_t timeout = 0;
-
     switch (mAdvState.advType)
     {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
         case fastWhiteListAdvState_c:
         {
             gAdvParams.minInterval = gFastConnMinAdvInterval_c;
             gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessWhiteListOnly_c;
-            timeout = gFastConnWhiteListAdvTime_c;
+            mAdvTimeout = gFastConnWhiteListAdvTime_c;
         }
         break;
+#endif
 #endif
         case fastAdvState_c:
         {
             gAdvParams.minInterval = gFastConnMinAdvInterval_c;
             gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
-            timeout = gFastConnAdvTime_c - gFastConnWhiteListAdvTime_c;
+            mAdvTimeout = gFastConnAdvTime_c - gFastConnWhiteListAdvTime_c;
         }
         break;
 
@@ -355,7 +360,7 @@ static void BleApp_Advertise(void)
             gAdvParams.minInterval = gReducedPowerMinAdvInterval_c;
             gAdvParams.maxInterval = gReducedPowerMinAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
-            timeout = gReducedPowerAdvTime_c;
+            mAdvTimeout = gReducedPowerAdvTime_c;
         }
         break;
 
@@ -368,10 +373,6 @@ static void BleApp_Advertise(void)
 
     /* Set advertising parameters*/
     (void)Gap_SetAdvertisingParameters(&gAdvParams);
-
-    /* Start advertising timer */
-    (void)TMR_StartLowPowerTimer(mAdvTimerId,gTmrLowPowerSecondTimer_c,
-               TmrSeconds(timeout), AdvertisingTimerCallback, NULL);
 }
 
 /*! *********************************************************************************
@@ -394,6 +395,12 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
                 Led2Flashing();
                 Led3Flashing();
                 Led4Flashing();
+            }
+            else
+            {
+                /* Start advertising timer */
+                (void)TMR_StartLowPowerTimer(mAdvTimerId,gTmrLowPowerSecondTimer_c,
+                                        TmrSeconds(mAdvTimeout), AdvertisingTimerCallback, NULL);
             }
         }
         break;
@@ -513,12 +520,14 @@ static void AdvertisingTimerCallback(void * pParam)
 
     switch (mAdvState.advType)
     {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
         case fastWhiteListAdvState_c:
         {
             mAdvState.advType = fastAdvState_c;
         }
         break;
+#endif
 #endif
         case fastAdvState_c:
         {
@@ -607,28 +616,28 @@ static void SendReport(mouseHidReport_t *pReport)
     }
 }
 
-static void MoveMouseLeft(uint8_t pixels)
+static void MoveMouseLeft(int8_t pixels)
 {
     mouseHidReport_t mouseReport = {0,0,0};
-    mouseReport.xAxis = (uint8_t)(-pixels);
+    mouseReport.xAxis = -pixels;
     SendReport(&mouseReport);
 }
 
-static void MoveMouseRight(uint8_t pixels)
+static void MoveMouseRight(int8_t pixels)
 {
     mouseHidReport_t mouseReport = {0,0,0};
     mouseReport.xAxis = pixels;
     SendReport(&mouseReport);
 }
 
-static void MoveMouseUp(uint8_t pixels)
+static void MoveMouseUp(int8_t pixels)
 {
     mouseHidReport_t mouseReport = {0,0,0};
-    mouseReport.yAxis = (uint8_t)(-pixels);
+    mouseReport.yAxis = -pixels;
     SendReport(&mouseReport);
 }
 
-static void MoveMouseDown(uint8_t pixels)
+static void MoveMouseDown(int8_t pixels)
 {
     mouseHidReport_t mouseReport = {0,0,0};
     mouseReport.yAxis = pixels;

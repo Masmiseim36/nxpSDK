@@ -118,6 +118,11 @@ occurred while the SysTick counter is stopped during tickless idle
 calculations. */
 #define portMISSED_COUNTS_FACTOR			( 45UL )
 
+/* Adaptation for general low power timers */
+#define vPortSetupTimerInterrupt prvSetupTimerInterrupt
+#define portNVIC_SYSTICK_CTRL_REG (*(portNVIC_SYSTICK_CTRL))
+#define portNVIC_SYSTICK_LOAD_REG (*(portNVIC_SYSTICK_LOAD))
+
 /*
  * Setup the timer to generate the tick interrupts.
  */

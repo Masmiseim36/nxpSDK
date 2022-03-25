@@ -51,7 +51,7 @@
 #endif
    
 /* 1<<x to enable PINx as wakup source in LLWU */
-#define BOARD_LLWU_PIN_ENABLE_BITMAP ( 1<<12 | 1<<13 )
+#define BOARD_LLWU_PIN_ENABLE_BITMAP ( 1<<10 )
 
 /*! @brief TSI electrodes count */
 #ifndef gKBD_TsiElectdCount_c

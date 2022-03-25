@@ -76,7 +76,7 @@
 #define gPruAlertTime_c                 (200U)
 #define gPruOvpOutputDisableTimeout_c   (250U)
 #define gTemperatureLimitForOtp_c       (125U)       /* over temperature protection */
-#define gPruTemperatureOffset_c         (40)        /* temperature field starts at -40 deg */
+#define gPruTemperatureOffset_c         (40U)        /* temperature field starts at -40 deg */
 #define gMinPowerDraw_mW_c              (1000U)      /* mW power when output is disabled */
 
 #ifndef gAdjustPowerCommandSupport_d
@@ -248,10 +248,6 @@ void BleApp_Start(void)
         if (!mAdvState.advOn)
         {
             BleApp_Advertise();
-            (void)TMR_StartSingleShotTimer(mPruTimeoutTimerId,
-                                     TmrSeconds(gAdvTimeoutS_c),
-                                     BleApp_TimeoutCallback,
-                                     NULL);
         }
     }
 }
@@ -748,6 +744,10 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
             if(mAdvState.advOn)
             {
                 Led1Flashing();
+                (void)TMR_StartSingleShotTimer(mPruTimeoutTimerId,
+                                     TmrSeconds(gAdvTimeoutS_c),
+                                     BleApp_TimeoutCallback,
+                                     NULL);
             }
         }
         break;

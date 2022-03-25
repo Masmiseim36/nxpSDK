@@ -17,18 +17,17 @@ all: clean HeartRateSensor
 HeartRateSensor.o: HeartRateSensor.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-cmd_ble_1.6.6.o: ../src/cmd_ble_1.6.6.c
+cmd_ble_1.3.11.o: ../src/cmd_ble_1.3.11.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-evt_ble_1.6.6.o: ../src/evt_ble_1.6.6.c
+evt_ble_1.3.11.o: ../src/evt_ble_1.3.11.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-evt_printer_ble_1.6.6.o: ../src/evt_printer_ble_1.6.6.c
+evt_printer_ble_1.3.11.o: ../src/evt_printer_ble_1.3.11.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-HeartRateSensor: HeartRateSensor.o cmd_ble_1.6.6.o evt_ble_1.6.6.o evt_printer_ble_1.6.6.o
+HeartRateSensor: HeartRateSensor.o cmd_ble_1.3.11.o evt_ble_1.3.11.o evt_printer_ble_1.3.11.o
 	gcc -o $@ $^ $(CFLAGS) $(LDFLAGS)
-
 
 clean:
 	rm -f *.o HeartRateSensor

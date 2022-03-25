@@ -82,9 +82,9 @@ static uint32_t mFsciBleOtapInterfaceId = mFsciInvalidInterface_c;
 void FsciBleOtap_Register (uint32_t fsciInterfaceId)
 {
 #if gFsciBleOtapEnabled_d
-    if (gFsciSuccess_c != FSCI_RegisterOpGroup (gFsciBleOtapOpcodeGroup_c, 
-                                                gFsciMonitorMode_c, 
-                                                FsciBleOtap_Handler, 
+    if (gFsciSuccess_c != FSCI_RegisterOpGroup (gFsciBleOtapOpcodeGroup_c,
+                                                gFsciMonitorMode_c,
+                                                FsciBleOtap_Handler,
                                                 NULL,
                                                 fsciInterfaceId))
     {
@@ -103,13 +103,13 @@ void FsciBleOtap_Register (uint32_t fsciInterfaceId)
 * \details  BLE OTAP FSCI messages handler.
 *
 ********************************************************************************** */
-void FsciBleOtap_Handler (void*     pData, 
+void FsciBleOtap_Handler (void*     pData,
                           void*     param,
                           uint32_t  fsciInterface)
 {
     BleApp_HandleFsciBleOtapCommand ((clientPacket_t*)pData,
                                      fsciInterface);
-    
+
     (void)MEM_BufferFree (pData);
 }
 #endif /* gFsciBleOtapEnabled_d */
@@ -122,31 +122,31 @@ void FsciBleOtap_Handler (void*     pData,
 *           Allocated length: FSCI header size + data size + FSCI packet CRC size.
 *
 ********************************************************************************** */
-clientPacketStructured_t* FsciBleOtap_AllocatePacket (opCode_t  opCode, 
+clientPacketStructured_t* FsciBleOtap_AllocatePacket (opCode_t  opCode,
                                                       uint16_t  dataSize)
 {
     clientPacketStructured_t* pClientPacket;
-    
-    pClientPacket = (clientPacketStructured_t*)MEM_BufferAlloc (sizeof(clientPacketHdr_t) + 
-                                                                (uint32_t)dataSize + 
+
+    pClientPacket = (clientPacketStructured_t*)MEM_BufferAlloc (sizeof(clientPacketHdr_t) +
+                                                                (uint32_t)dataSize +
                                                                 sizeof(uint8_t));
-    
+
     if(NULL == pClientPacket)
     {
         /* If the buffer can not be allocated try to send a FSCI error if the
          * BLE OTAP FSCI interface was initialized. */
-        if (FsciBleOtap_IsInterfaceValid (mFsciBleOtapInterfaceId))
+        if (TRUE == FsciBleOtap_IsInterfaceValid (mFsciBleOtapInterfaceId))
         {
             FSCI_Error((uint8_t)gFsciOutOfMessages_c, mFsciBleOtapInterfaceId);
         }
         return NULL;
     }
-    
+
     /* Fill in the FSCI packet header components */
     pClientPacket->header.opGroup   = gFsciBleOtapOpcodeGroup_c;
     pClientPacket->header.opCode    = opCode;
     pClientPacket->header.len       = dataSize;
-    
+
     /* Return the allocated FSCI packet */
     return pClientPacket;
 }
@@ -167,21 +167,21 @@ void FsciBleOtap_SendPkt (opCode_t* pOpCode,
         clientPacketStructured_t*   pFsciOtapPktTemp;
         clientPacket_t*             clientPacketTemp;
     }clientPacketVars;
-    
+
     clientPacketStructured_t*   pFsciOtapPkt;
-    
+
     pFsciOtapPkt = FsciBleOtap_AllocatePacket (*pOpCode,
                                                payloadLen);
-    
+
     if (NULL != pFsciOtapPkt)
     {
-        /* If memory allocation for the packet was successful then fill in the 
+        /* If memory allocation for the packet was successful then fill in the
          * payload and try to send the packet. */
         FLib_MemCpy (pFsciOtapPkt->payload,
                      pPayload,
                      payloadLen);
-        
-        if (FsciBleOtap_IsInterfaceValid (mFsciBleOtapInterfaceId))
+
+        if (TRUE == FsciBleOtap_IsInterfaceValid (mFsciBleOtapInterfaceId))
         {
             clientPacketVars.pFsciOtapPktTemp = pFsciOtapPkt;
             FSCI_transmitFormatedPacket (clientPacketVars.clientPacketTemp, mFsciBleOtapInterfaceId);

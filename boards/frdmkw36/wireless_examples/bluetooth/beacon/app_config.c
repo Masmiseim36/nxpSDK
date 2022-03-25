@@ -48,9 +48,9 @@
 #define mDefaultTxPower               gBleAdvTxPowerNoPreference_c
 #define mBeaconExtHandleId_c          1
 
-#define gLePhy1M_c                    1
-#define gLePhy2M_c                    2
-#define gLePhyCoded_c                 3
+#define gLePhy1M_c                    1U
+#define gLePhy2M_c                    2U
+#define gLePhyCoded_c                 3U
 
 #endif /*gBeaconAE_c */
 
@@ -60,6 +60,16 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern const gapAdvertisingParameters_t gAppAdvParams;
+#if gBeaconAE_c
+extern gapAdvertisingData_t             gAppExtAdvertisingNoData;
+extern gapExtAdvertisingParameters_t    gExtAdvParams;
+extern gapAdvertisingData_t             gAppExtAdvertisingData;
+extern gapPeriodicAdvParameters_t       gPeriodicAdvParams;
+#endif
+
+extern gapAdvertisingData_t             gAppAdvertisingData;
+
 /* Advertising Parameters */
 const gapAdvertisingParameters_t gAppAdvParams = {
     /* minInterval */         800 /* 500 ms */, \
@@ -73,7 +83,7 @@ const gapAdvertisingParameters_t gAppAdvParams = {
 };
 
 /* Advertising Data */
-static const uint8_t adData0[1] = { (uint8_t)gLeGeneralDiscoverableMode_c | (uint8_t)gBrEdrNotSupported_c };
+static uint8_t adData0[1] = { (uint8_t)gLeGeneralDiscoverableMode_c | (uint8_t)gBrEdrNotSupported_c };
 #if defined(gIBeaconAdvData_c) && (gIBeaconAdvData_c)
 static uint8_t adData1[25] = {
                        /* Apple Company Identifier */
@@ -108,7 +118,7 @@ static uint8_t adData1[26] = {
                        0x1E};
 #endif /* gIBeaconAdvData_c */
 
-static const gapAdStructure_t advScanStruct[] = {
+static gapAdStructure_t advScanStruct[] = {
   {
     .length = NumberOfElements(adData0) + 1,
     .adType = gAdFlags_c,
@@ -132,7 +142,7 @@ gapAdvertisingData_t gAppAdvertisingData =
 #define extAdData3  "Departures 10:00 - 10:59: \n\r London :05, Barcelona :10, Madrid :15,  Rome :20, Milan :25, Berlin :30, Munich :35, Frankfurt :40, Bucharest :45, Vienna :50, Budapest :55\n\r"
 #define extAdData4  "Arrivals 10:00 - 10:59: \n\r London :05, Barcelona :10, Madrid :15,  Rome :20, Milan :25, Berlin :30, Munich :35, Frankfurt :40, Bucharest :45, Vienna :50, Budapest :55"
 
-static const gapAdStructure_t extAdvScanStruct[] = {
+static gapAdStructure_t extAdvScanStruct[] = {
   {
     .length = NumberOfElements(adData0) + 1,
     .adType = gAdFlags_c,
@@ -202,6 +212,20 @@ gapAdvertisingData_t gAppExtAdvertisingData =
 {
     NumberOfElements(extAdvScanStruct),
     (void *)extAdvScanStruct
+};
+
+static gapAdStructure_t extAdvScanStructNoData[] = {
+  {
+    .length = NumberOfElements(adData0) + 1,
+    .adType = gAdFlags_c,
+    .aData = (uint8_t*)adData0
+  }
+};
+
+gapAdvertisingData_t gAppExtAdvertisingNoData =
+{
+    NumberOfElements(extAdvScanStructNoData),
+    (void *)extAdvScanStructNoData
 };
 
 /*Default Extended Advertising Parameters */

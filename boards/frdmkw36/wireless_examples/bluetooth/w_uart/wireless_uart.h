@@ -61,6 +61,12 @@
 * Public memory declarations
 *************************************************************************************
 ********************************************************************************** */
+extern gapConnectionRequestParameters_t gConnReqParams;
+extern gapScanningParameters_t          gScanParams;
+extern gapPairingParameters_t           gPairingParameters;
+extern gapAdvertisingData_t             gAppAdvertisingData;
+extern gapScanResponseData_t            gAppScanRspData;
+extern gapAdvertisingParameters_t       gAdvParams;
 
 /************************************************************************************
 *************************************************************************************

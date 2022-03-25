@@ -4,7 +4,7 @@
 ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2020 NXP
+* Copyright 2016-2020, 2022 NXP
 * All rights reserved.
 *
 * \file
@@ -64,7 +64,16 @@
 * Private type definitions
 *************************************************************************************
 ************************************************************************************/
-
+#if defined(gBeaconAE_c) && (gBeaconAE_c)
+typedef enum 
+{
+  mAppState_NoAdv_c,
+  mAppState_LegacyAdv_c,
+  mAppState_ExtAdv_c,
+  mAppState_PeriodicAdv_c,
+  mAppState_Legacy_ExtAdv_c
+}mAppTargetState_t;
+#endif
 /************************************************************************************
 *************************************************************************************
 * Private memory declarations
@@ -78,7 +87,7 @@ static bool_t mAdvertisingOn = FALSE;
 #if defined(gBeaconAE_c) && (gBeaconAE_c)
 static bool_t mExtAdvertisingOn = FALSE;
 static bool_t mPeriodicAdvOn = FALSE;
-static bool_t mStopAdv = FALSE;
+mAppTargetState_t mAppTargetState = mAppState_NoAdv_c;
 #endif /*gBeaconAE_c */
 
 
@@ -153,13 +162,74 @@ void BleApp_Start(void)
 *
 * \param[in]    events    Key event structure.
 ********************************************************************************** */
+#if defined(gBeaconAE_c) && (gBeaconAE_c)
 void BleApp_HandleKeys(key_event_t events)
 {
     switch (events)
     {
-#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)        
+#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
         case gKBD_EventPB1_c:
-#endif            
+#endif
+        case gKBD_EventPB2_c:
+        {
+            /* First press starts legacy advertising */
+            if ((mAdvertisingOn == FALSE) && (mExtAdvertisingOn == FALSE) && (mPeriodicAdvOn == FALSE))
+            {
+                mAppTargetState = mAppState_LegacyAdv_c;
+                BleApp_Start();
+            }
+            /* Second press starts extended advertising  and stops legacy advertising */
+            else if ((mAdvertisingOn == TRUE) && (mExtAdvertisingOn == FALSE) && (mPeriodicAdvOn == FALSE))
+            {
+                mAppTargetState = mAppState_ExtAdv_c;   
+                if (gBleSuccess_c != Gap_StopAdvertising())
+                {
+                    panic(0, 0, 0, 0);
+                }
+            }     
+            /* Third press starts extended advertising without data and periodic advertising */
+            else if ((mAdvertisingOn == FALSE) && (mExtAdvertisingOn == TRUE) && (mPeriodicAdvOn == FALSE))
+            {
+                mAppTargetState = mAppState_PeriodicAdv_c;
+                if(gBleSuccess_c != Gap_StopExtAdvertising(gExtAdvParams.handle))
+                {
+                    panic(0, 0, 0, 0);
+                }
+            }
+            /* Fourth press starts legacy advertising and extended advertising */
+            else if ((mAdvertisingOn == FALSE) && (mExtAdvertisingOn == TRUE) && (mPeriodicAdvOn == TRUE))
+            {
+                mAppTargetState = mAppState_Legacy_ExtAdv_c;
+                (void)Gap_StopPeriodicAdvertising(gExtAdvParams.handle);
+            }
+            /* Fifth press stops extended advertising and legacy advertising*/
+            else if ((mAdvertisingOn == TRUE) && (mExtAdvertisingOn == TRUE) && (mPeriodicAdvOn == FALSE))  
+            {
+                mAppTargetState = mAppState_NoAdv_c;
+                if(gBleSuccess_c != Gap_StopExtAdvertising(gExtAdvParams.handle))
+                {
+                    panic(0, 0, 0, 0);
+                }
+            }
+        }
+        break;
+        
+        default:
+        {
+            ; /* No action required */
+        }
+        break;
+    }
+}
+
+#else /* defined(gBeaconAE_c) && (gBeaconAE_c) */
+void BleApp_HandleKeys(key_event_t events)
+{
+    switch (events)
+    {
+#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
+        case gKBD_EventPB1_c:
+#endif
         case gKBD_EventPB2_c:
         {
             /* First press starts legacy advertising */
@@ -169,56 +239,13 @@ void BleApp_HandleKeys(key_event_t events)
             }
             else
             {
-#if defined(gBeaconAE_c) && (gBeaconAE_c)
-                /* Second press starts extended advertising */
-                if ((mExtAdvertisingOn == FALSE) && (mStopAdv == FALSE))
+                if (gBleSuccess_c != Gap_StopAdvertising())
                 {
-#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
-    #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE)
-        #if defined(gErpcLowPowerApiServiceIncluded_c) && (gErpcLowPowerApiServiceIncluded_c)
-                    (void)PWR_ChangeBlackBoxDeepSleepMode(gAppDeepSleepMode_c);
-        #endif
-    #else
-                    (void)PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
-    #endif
-#endif
-                    if (gBleSuccess_c != Gap_SetExtAdvertisingParameters(&gExtAdvParams))
-                    {
-                        panic(0, 0, 0, 0);
-                    }
+                    panic(0, 0, 0, 0);
                 }
-                /* Third press starts periodic advertising */
-                else if ((mPeriodicAdvOn == FALSE) && (mStopAdv == FALSE))
-                {
-                    if (gBleSuccess_c != Gap_SetPeriodicAdvParameters(&gPeriodicAdvParams))
-                    {
-                        panic(0, 0, 0, 0);
-                    }
-                }
-                /* Fourth press stops periodic advertising */
-                else if (mPeriodicAdvOn == TRUE)
-                {
-                    (void)Gap_StopPeriodicAdvertising(gExtAdvParams.handle);
-                    mStopAdv = TRUE;
-                }
-                /* Fifth press stops extended advertising */
-                else if (mExtAdvertisingOn == TRUE)
-                {
-                    (void)Gap_StopExtAdvertising(gExtAdvParams.handle);
-                }
-                /* Sixth press stops legacy advertising */
-                else
-                {
-                    (void)Gap_StopAdvertising();
-                    mStopAdv = FALSE;
-                }
-#else
-                 (void)Gap_StopAdvertising();               
-#endif /*gBeaconAE_c */
             }
         }
         break;
-
         default:
         {
             ; /* No action required */
@@ -226,6 +253,7 @@ void BleApp_HandleKeys(key_event_t events)
         break;
     }
 }
+#endif /* defined(gBeaconAE_c) && (gBeaconAE_c) */
 
 /*! *********************************************************************************
 * \brief        Handles gap generic events.
@@ -272,7 +300,16 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
 #if defined(gBeaconAE_c) && (gBeaconAE_c)
         case gExtAdvertisingParametersSetupComplete_c:
         {
-            if(gBleSuccess_c != Gap_SetExtAdvertisingData(gExtAdvParams.handle, &gAppExtAdvertisingData, NULL))
+            gapAdvertisingData_t* pExtAdvData;
+            if(mAppTargetState == mAppState_PeriodicAdv_c)
+            {
+                pExtAdvData = &gAppExtAdvertisingNoData;
+            }
+            else
+            {
+                pExtAdvData = &gAppExtAdvertisingData;
+            }
+            if(gBleSuccess_c != Gap_SetExtAdvertisingData(gExtAdvParams.handle, pExtAdvData, NULL))
             {
                 panic(0, 0, 0, 0);
             }
@@ -286,6 +323,25 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
                 panic(0, 0, 0, 0);
             }
         }
+        break;
+        
+        case gExtAdvertisingSetRemoveComplete_c:
+        {
+            if((mAppTargetState == mAppState_PeriodicAdv_c) || (mAppTargetState == mAppState_Legacy_ExtAdv_c))
+            {
+                if (gBleSuccess_c != Gap_SetExtAdvertisingParameters(&gExtAdvParams))
+                {
+                    panic(0, 0, 0, 0);
+                }
+            }
+            else if((mAppTargetState == mAppState_NoAdv_c) && (mAdvertisingOn == TRUE))
+            {
+                if (gBleSuccess_c != Gap_StopAdvertising())
+                {
+                    panic(0, 0, 0, 0);
+                }
+            }
+        } 
         break;
 
         case gPeriodicAdvParamSetupComplete_c:
@@ -302,6 +358,27 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
             if(gBleSuccess_c != Gap_StartPeriodicAdvertising(gExtAdvParams.handle))
             {
                 panic(0, 0, 0, 0);
+            }
+        }
+        break;
+
+        case gPeriodicAdvertisingStateChanged_c:
+        {
+            mPeriodicAdvOn = !mPeriodicAdvOn;
+            if(mPeriodicAdvOn)
+            {
+                Led4On();
+            }
+            else
+            {
+                Led4Off();
+                if(mAppTargetState == mAppState_Legacy_ExtAdv_c)
+                {
+                    if(gBleSuccess_c != Gap_StopExtAdvertising(gExtAdvParams.handle))
+                    {
+                        panic(0, 0, 0, 0);
+                    }
+                }
             }
         }
         break;
@@ -366,6 +443,7 @@ static void BleApp_Config(void)
         PWR_AllowDeviceToSleep();
     #endif
 #endif
+        LED_StopFlashingAllLeds();
 }
 
 /*! *********************************************************************************
@@ -392,32 +470,37 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
         case gAdvertisingStateChanged_c:
         {
             mAdvertisingOn = !mAdvertisingOn;
-            LED_StopFlashingAllLeds();
-            Led1Flashing();
-
-            if(!mAdvertisingOn)
+            if(mAdvertisingOn)
             {
+                Led2On();
+            }
+            else
+            {
+                Led2Off();
+#if defined(gBeaconAE_c) && (gBeaconAE_c)
+                if(mAppTargetState == mAppState_ExtAdv_c)
+                {
+                    if (gBleSuccess_c != Gap_SetExtAdvertisingParameters(&gExtAdvParams))
+                    {
+                        panic(0, 0, 0, 0);
+                    }      
+                }  
+#endif              
 #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
 #if defined(gBeaconAE_c) && (gBeaconAE_c)
-                if (!mExtAdvertisingOn)
+                if ((mExtAdvertisingOn == FALSE) && (mAppTargetState == mAppState_NoAdv_c))
 #endif /* gBeaconAE_c*/
                 {
 #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE)
-    #if defined(gErpcLowPowerApiServiceIncluded_c) && (gErpcLowPowerApiServiceIncluded_c)
+#if defined(gErpcLowPowerApiServiceIncluded_c) && (gErpcLowPowerApiServiceIncluded_c)
                     (void)PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
-                    PWR_AllowBlackBoxToSleep();
-    #endif
+#endif
                     (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-                    PWR_AllowDeviceToSleep();
 #else
                     (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-                    PWR_AllowDeviceToSleep();
 #endif
                 }
 #endif /* cPWR_UsePowerDownMode */
-                Led2Flashing();
-                Led3Flashing();
-                Led4Flashing();
             }
         }
         break;
@@ -426,49 +509,32 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
         case gExtAdvertisingStateChanged_c:
         {
             mExtAdvertisingOn = !mExtAdvertisingOn;
-            LED_StopFlashingAllLeds();
-            Led1Flashing();
-
-            if(!mExtAdvertisingOn)
+            if(mExtAdvertisingOn)
             {
-#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
-                if (!mAdvertisingOn)
+                Led3On();
+                if(mAppTargetState == mAppState_PeriodicAdv_c)
                 {
-#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE)
-    #if defined(gErpcLowPowerApiServiceIncluded_c) && (gErpcLowPowerApiServiceIncluded_c)
-                    (void)PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
-                    PWR_AllowBlackBoxToSleep();
-    #endif
-                    (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-                    PWR_AllowDeviceToSleep();
-#else
-                    (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-                    PWR_AllowDeviceToSleep();
-#endif /* MULTICORE_APPLICATION_CORE */
+                    if (gBleSuccess_c != Gap_SetPeriodicAdvParameters(&gPeriodicAdvParams))
+                    {
+                        panic(0, 0, 0, 0);
+                    }
                 }
-#endif /* cPWR_UsePowerDownMode */
-                Led2Flashing();
-                Led3Flashing();
-                Led4Flashing();
-            }
-        }
-        break;
-
-        case gPeriodicAdvertisingStateChanged_c:
-        {
-            mPeriodicAdvOn = !mPeriodicAdvOn;
-            if(mPeriodicAdvOn)
-            {
-                Led2Flashing();
+                else if(mAppTargetState == mAppState_Legacy_ExtAdv_c)
+                {
+                    if (gBleSuccess_c !=Gap_StartAdvertising(BleApp_AdvertisingCallback, NULL))
+                    {
+                        panic(0, 0, 0, 0);
+                    }                  
+                }
             }
             else
             {
-                StopLed2Flashing();
+                Led3Off();
+                Gap_RemoveAdvSet(gExtAdvParams.handle);
             }
         }
         break;
 #endif /*gBeaconAE_c */
-
 
         /* Advertising command failed */
         case gAdvertisingCommandFailed_c:

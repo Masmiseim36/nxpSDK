@@ -2,8 +2,16 @@
 @page rtos_log RTOS Change Log
 
 @section FreeRTOS FreeRTOS for KSDK
-Current version is FreeRTOS 9.0.0. Original package is available at freertos.org.
+Current version is FreeRTOS 9.0.0_rev4. Original package is available at freertos.org.
 
+  - 9.0.0_rev4
+    - Integer Overflow or Wraparound vulnerability fixes. References: CVE-2021-31571 and CVE-2021-31572.
+  - 9.0.0_rev3
+    - New Features:
+      - Tickless idle mode support for Cortex-A7. Add fsl_tickless_epit.c and fsl_tickless_generic.h in portable/IAR/ARM_CA9 folder.
+      - Enable float context saving in IAR for Cortex-A7. Add configUSE_TASK_FPU_SUPPORT macros. Modify port.c and portmacro.h in portable/IAR/ARM_CA9 folder.
+    - Other changes:
+      - Transform ARM_CM core specific tickless low power support into generic form under freertos\Source\portable\low_power_tickless\.
   - 9.0.0_rev2
     - New Features:
       - Enable MCUXpresso thread aware debugging. Add freertos_tasks_c_additions.h and configINCLUDE_FREERTOS_TASK_C_ADDITIONS_H and configFRTOS_MEMORY_SCHEME macros.

@@ -36,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="NXP_logo.bmp"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Bluetooth® Low Energy Host Stack API Reference Manual
-   &#160;<span id="projectnumber">Rev. 13</span>
+   &#160;<span id="projectnumber">Rev. 15</span>
    </div>
    <div id="projectbrief">BLEHSAPIRM</div>
   </td>
@@ -136,6 +136,8 @@ Data Structures</h2></td></tr>
 <tr class="separator:structl2ca_le_cb_local_credits_notification__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structl2ca_le_cb_error__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_error__t">l2caLeCbError_t</a></td></tr>
 <tr class="separator:structl2ca_le_cb_error__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:structl2ca_le_cb_channel_status_notification__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_channel_status_notification__t">l2caLeCbChannelStatusNotification_t</a></td></tr>
+<tr class="separator:structl2ca_le_cb_channel_status_notification__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:structl2cap_control_message__t"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#structl2cap_control_message__t">l2capControlMessage_t</a></td></tr>
 <tr class="separator:structl2cap_control_message__t"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:unionl2cap_control_message__t_8message_data"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___l2_c_a.html#unionl2cap_control_message__t_8message_data">l2capControlMessage_t.messageData</a></td></tr>
@@ -240,7 +242,7 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>gSourceCidAreadyAllocated_c</b>, 
 <br />
-&#160;&#160;<b>gInvalidParameters_c</b>, 
+&#160;&#160;<b>gUnacceptableParameters_c</b>, 
 <br />
 &#160;&#160;<b>gCommandRejected_c</b>, 
 <br />
@@ -263,6 +265,13 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:ga72fcc7300a3afdb620eb3bf38e89afec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6d02fa46ab67d5a6ba1b786dbfae026d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6d02fa46ab67d5a6ba1b786dbfae026d"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>l2caChannelStatus_t</b> { <br />
+&#160;&#160;<b>gL2ca_ChannelIdle_c</b>, 
+<br />
+&#160;&#160;<b>gL2ca_ChannelBusy_c</b>
+<br />
+ }</td></tr>
+<tr class="separator:ga6d02fa46ab67d5a6ba1b786dbfae026d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2eaaffb7c080ff211d86774dd8e7f4fb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2eaaffb7c080ff211d86774dd8e7f4fb"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>l2capControlMessageType_t</b> { <br />
 &#160;&#160;<b>gL2ca_LePsmConnectRequest_c</b>, 
 <br />
@@ -274,7 +283,9 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>gL2ca_LocalCreditsNotification_c</b>, 
 <br />
-&#160;&#160;<b>gL2ca_Error_c</b>
+&#160;&#160;<b>gL2ca_Error_c</b>, 
+<br />
+&#160;&#160;<b>gL2ca_ChannelStatusNotification_c</b>
 <br />
  }</td></tr>
 <tr class="separator:ga2eaaffb7c080ff211d86774dd8e7f4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -515,6 +526,39 @@ errorSource</td>
 
 </div>
 </div>
+<a name="structl2ca_le_cb_channel_status_notification__t" id="structl2ca_le_cb_channel_status_notification__t"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct l2caLeCbChannelStatusNotification_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ae0d9b6ea7c1a01798e0960484dd45bf9"></a><a class="el" href="group___b_l_e.html#ga79037cf180936e7aa4ef278d2164b4d5">deviceId_t</a></td>
+<td class="fieldname">
+deviceId</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="ac8fb55733767b4465fc9e32318156b95"></a>uint16_t</td>
+<td class="fieldname">
+cId</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="af9df154fa2cf71e9f4fc6dd3d2a9c5f3"></a>l2caChannelStatus_t</td>
+<td class="fieldname">
+status</td>
+<td class="fielddoc">
+</td></tr>
+</table>
+
+</div>
+</div>
 <a name="structl2cap_control_message__t" id="structl2cap_control_message__t"></a>
 <div class="memitem">
 <div class="memproto">
@@ -587,6 +631,12 @@ localCreditsNotification</td>
 <a class="anchor" id="acb5e100e5a9a3e7f6d1fd97512215282"></a><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_error__t">l2caLeCbError_t</a></td>
 <td class="fieldname">
 error</td>
+<td class="fielddoc">
+</td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a40b2a8a42be2cf7fa97ff358306581d0"></a><a class="el" href="group___l2_c_a.html#structl2ca_le_cb_channel_status_notification__t">l2caLeCbChannelStatusNotification_t</a></td>
+<td class="fieldname">
+channelStatusNotification</td>
 <td class="fielddoc">
 </td></tr>
 </table>

@@ -39,6 +39,17 @@
 #define gAppPrintLePhyEvent_c    0
 #endif
 
+/* The application starts advertising without the need to press a button when this define is set*/
+#ifndef gAppStartAfterReset_d
+#define gAppStartAfterReset_d             0
+#endif
+
+/* When gAppStartAfterReset_d is set, this define configures the time the device is disallowed to enter low power 
+after the start of the advertising. This delay must be long enough to allow the 32KHZ oscillator to start. 
+The 32KHZ oscillator is known to have a slow start (about 400ms). Without it running the LL is not able to enter low power */
+#ifndef gAppStartAfterResetToLowPowerDelayMs_d
+#define gAppStartAfterResetToLowPowerDelayMs_d             (500)        
+#endif
 /************************************************************************************
 *************************************************************************************
 * Public memory declarations

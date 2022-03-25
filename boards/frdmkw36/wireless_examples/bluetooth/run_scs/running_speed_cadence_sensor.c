@@ -68,8 +68,10 @@
 ************************************************************************************/
 typedef enum
 {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
     fastWhiteListAdvState_c,
+#endif
 #endif
     fastAdvState_c,
     slowAdvState_c
@@ -111,6 +113,7 @@ static disConfig_t disServiceConfig = {(uint16_t)service_device_info};
 static tmrTimerID_t mAdvTimerId;
 static tmrTimerID_t mMeasurementTimerId;
 static tmrTimerID_t mBatteryMeasurementTimerId;
+static uint32_t     mAdvTimeout;
 
 static uint8_t mReportTotalDistanceCounter = 0U;
 static bool_t  mRunningStatus = TRUE;
@@ -165,16 +168,18 @@ void BleApp_Start(void)
 
     if (mPeerDeviceId == gInvalidDeviceId_c)
     {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
         if (gcBondedDevices > 0)
         {
             mAdvState.advType = fastWhiteListAdvState_c;
         }
         else
+#endif
         {
 #endif
             mAdvState.advType = fastAdvState_c;
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
         }
 #endif
 
@@ -323,26 +328,26 @@ static void BleApp_Config(void)
 ********************************************************************************** */
 static void BleApp_Advertise(void)
 {
-    uint32_t timeout = 0;
-
     switch (mAdvState.advType)
     {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
         case fastWhiteListAdvState_c:
         {
             gAdvParams.minInterval = gFastConnMinAdvInterval_c;
             gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessWhiteListOnly_c;
-            timeout = gFastConnWhiteListAdvTime_c;
+            mAdvTimeout = gFastConnWhiteListAdvTime_c;
         }
         break;
+#endif
 #endif
         case fastAdvState_c:
         {
             gAdvParams.minInterval = gFastConnMinAdvInterval_c;
             gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
-            timeout = gFastConnAdvTime_c - gFastConnWhiteListAdvTime_c;
+            mAdvTimeout = gFastConnAdvTime_c - gFastConnWhiteListAdvTime_c;
         }
         break;
 
@@ -351,7 +356,7 @@ static void BleApp_Advertise(void)
             gAdvParams.minInterval = gReducedPowerMinAdvInterval_c;
             gAdvParams.maxInterval = gReducedPowerMinAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
-            timeout = gReducedPowerAdvTime_c;
+            mAdvTimeout = gReducedPowerAdvTime_c;
         }
         break;
 
@@ -362,10 +367,6 @@ static void BleApp_Advertise(void)
 
     /* Set advertising parameters*/
     (void)Gap_SetAdvertisingParameters(&gAdvParams);
-
-    /* Start advertising timer */
-    (void)TMR_StartLowPowerTimer(mAdvTimerId,gTmrLowPowerSecondTimer_c,
-               TmrSeconds(timeout), AdvertisingTimerCallback, NULL);
 }
 
 /*! *********************************************************************************
@@ -388,6 +389,12 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
                 Led2Flashing();
                 Led3Flashing();
                 Led4Flashing();
+            }
+            else
+            {
+                /* Start advertising timer */
+                (void)TMR_StartLowPowerTimer(mAdvTimerId,gTmrLowPowerSecondTimer_c,
+                                TmrSeconds(mAdvTimeout), AdvertisingTimerCallback, NULL);
             }
         }
         break;
@@ -532,12 +539,14 @@ static void AdvertisingTimerCallback(void * pParam)
 
     switch (mAdvState.advType)
     {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
         case fastWhiteListAdvState_c:
         {
             mAdvState.advType = fastAdvState_c;
         }
         break;
+#endif
 #endif
         case fastAdvState_c:
         {

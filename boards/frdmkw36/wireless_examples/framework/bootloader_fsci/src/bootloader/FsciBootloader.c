@@ -146,8 +146,9 @@ void FSCI_BOOT_main(void)
     gFTFx_config.blockBase &= 0x000fffff; //In linker config file, flash addresses start from zero, do the same for flash configuration
 #endif
     /* Init the flash module */
+    __disable_irq();    
     FLASH_Init(&gFTFx_config);
-    
+    __enable_irq();    
 #if (defined(CPU_MKW36A512VHT4) || defined(CPU_MKW36A512VFP4) || defined(CPU_MKW36A512VFT4) || \
      defined(CPU_MKW36Z512VHT4) || defined(CPU_MKW36Z512VFP4) || defined(CPU_MKW34A512VFT4))
     /* KW36 has 256KB of FlexNVM mapped at adress 0x1000 0000 which also has an alias starting from address 0x0004 0000.
@@ -515,6 +516,7 @@ static void FSCI_BOOT_ProcessRxPkt (clientPacket_t* pPacket)
                         {
                             if (*pBitmap & bitMask)
                             {
+                                __disable_irq();                              
                                 status = FLASH_Erase(&gFTFx_config, 
                                                      mFlashAddr, 
                                                      FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE
@@ -522,7 +524,7 @@ static void FSCI_BOOT_ProcessRxPkt (clientPacket_t* pPacket)
                                                      ,kFLASH_ApiEraseKey  //skip this parameter for QN9080C
     #endif
                                                      );
-
+                                __enable_irq();
                                 if( kStatus_FLASH_Success != status )
                                 {
                                     break;
@@ -738,6 +740,7 @@ static uint8_t FSCI_BOOT_WriteBufferToFlash(void)
 
     if ( mFlashBufferOffset )
     {
+        __disable_irq();
         status = FLASH_Erase(&gFTFx_config, 
                              mFlashAddr, 
                              FSL_FEATURE_FLASH_PFLASH_BLOCK_SECTOR_SIZE
@@ -745,7 +748,7 @@ static uint8_t FSCI_BOOT_WriteBufferToFlash(void)
                              ,kFLASH_ApiEraseKey  //skip this parameter for QN9080C
 #endif
                              );
-
+        __enable_irq();
         if (kStatus_FLASH_Success == status)
         {
             uint32_t alignedSize = mFlashBufferOffset;
@@ -756,7 +759,7 @@ static uint8_t FSCI_BOOT_WriteBufferToFlash(void)
                 alignedSize &= ~(FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE - 1);
                 alignedSize += FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE;
             }
-
+            __disable_irq();
 #if defined(FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD) && FSL_FEATURE_FLASH_HAS_PROGRAM_SECTION_CMD
             status = FLASH_ProgramSection(&gFTFx_config, 
                                           mFlashAddr,
@@ -768,7 +771,7 @@ static uint8_t FSCI_BOOT_WriteBufferToFlash(void)
                                    (uint32_t*)mpFlashWriteBuffer, 
                                    alignedSize);
 #endif
-
+            __enable_irq();
             #if gFsciUseCRC_c
             if (kStatus_FLASH_Success == status)
             {

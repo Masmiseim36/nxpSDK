@@ -69,7 +69,6 @@
 
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
-
 /*-----------------------------------------------------------
  * Application specific definitions.
  *
@@ -83,11 +82,15 @@
  *----------------------------------------------------------*/
 
 #define configUSE_PREEMPTION                    1
+#ifndef configUSE_TICKLESS_IDLE
 #define configUSE_TICKLESS_IDLE                 0
+#endif
 #define configCPU_CLOCK_HZ                      (SystemCoreClock)
 #define configTICK_RATE_HZ                      ((TickType_t)1000)
 #define configMAX_PRIORITIES                    (18)
+#ifndef configMINIMAL_STACK_SIZE
 #define configMINIMAL_STACK_SIZE                ((unsigned short)90)
+#endif
 #define configMAX_TASK_NAME_LEN                 20
 #define configUSE_16_BIT_TICKS                  0
 #define configIDLE_SHOULD_YIELD                 1

@@ -42,7 +42,7 @@
 #include "gatt_client_interface.h"
 #include "gap_interface.h"
 
-#if MULTICORE_APPLICATION_CORE
+#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
 #include "dynamic_gatt_database.h"
 #else
 #include "gatt_db_handles.h"
@@ -60,7 +60,7 @@
 #include "ApplMain.h"
 #include "heart_rate_sensor.h"
 
-#if MULTICORE_APPLICATION_CORE
+#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
 #include "erpc_host.h"
 #include "dynamic_gatt_database.h"
 #endif
@@ -70,11 +70,11 @@
 * Private macros
 *************************************************************************************
 ************************************************************************************/
-#define mHeartRateLowerLimit_c          (40) /* Heart beat lower limit, 8-bit value */
-#define mHeartRateUpperLimit_c          (201) /* Heart beat upper limit, 8-bit value */
+#define mHeartRateLowerLimit_c          (40U) /* Heart beat lower limit, 8-bit value */
+#define mHeartRateUpperLimit_c          (201U) /* Heart beat upper limit, 8-bit value */
 #define mHeartRateRange_c               (mHeartRateUpperLimit_c - mHeartRateLowerLimit_c) /* Range = [ADC16_HB_LOWER_LIMIT .. ADC16_HB_LOWER_LIMIT + ADC16_HB_DYNAMIC_RANGE] */
-#define mHeartRateReportInterval_c      (1)        /* heart rate report interval in seconds  */
-#define mBatteryLevelReportInterval_c   (10)        /* battery level report interval in seconds  */
+#define mHeartRateReportInterval_c      (1U)        /* heart rate report interval in seconds  */
+#define mBatteryLevelReportInterval_c   (10U)        /* battery level report interval in seconds  */
 
 #if defined(cPWR_BleAppHandleKeyDirectCall_d) && (cPWR_BleAppHandleKeyDirectCall_d > 0)
 #define mStartApplication_c    (1<<0)
@@ -86,8 +86,10 @@
 ************************************************************************************/
 typedef enum
 {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
     fastWhiteListAdvState_c,
+#endif
 #endif
     fastAdvState_c,
     slowAdvState_c
@@ -112,10 +114,10 @@ static deviceId_t  mPeerDeviceId = gInvalidDeviceId_c;
 
 /* Service Data*/
 static bool_t           basValidClientList[gAppMaxConnections_c] = { FALSE };
-static basConfig_t      basServiceConfig = {service_battery, 0, basValidClientList, gAppMaxConnections_c};
+static basConfig_t      basServiceConfig = {(uint16_t)service_battery, 0, basValidClientList, gAppMaxConnections_c};
 static hrsUserData_t    hrsUserData;
-static hrsConfig_t hrsServiceConfig = {service_heart_rate, TRUE, TRUE, TRUE, gHrs_BodySensorLocChest_c, &hrsUserData};
-static uint16_t cpHandles[1] = { value_hr_ctrl_point };
+static hrsConfig_t hrsServiceConfig = {(uint16_t)service_heart_rate, TRUE, TRUE, TRUE, (uint8_t)gHrs_BodySensorLocChest_c, &hrsUserData};
+static uint16_t cpHandles[1] = { (uint16_t)value_hr_ctrl_point };
 
 /* Application specific data*/
 static bool_t mToggle16BitHeartRate = FALSE;
@@ -171,7 +173,7 @@ void BleApp_Init(void)
     /* Initialize application support for drivers */
     BOARD_InitAdc();
 
-#if MULTICORE_APPLICATION_CORE
+#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
     /* Init eRPC host */
     init_erpc_host();
 #endif
@@ -186,22 +188,24 @@ void BleApp_Start(void)
     /* Device is not connected and not advertising*/
     if (!mAdvState.advOn)
     {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
         if (gcBondedDevices > 0)
         {
             mAdvState.advType = fastWhiteListAdvState_c;
         }
         else
 #endif
+#endif
         {
             mAdvState.advType = fastAdvState_c;
         }
 #if (cPWR_UsePowerDownMode)
-    #if MULTICORE_APPLICATION_CORE
+    #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
         #if gErpcLowPowerApiServiceIncluded_c
             PWR_ChangeBlackBoxDeepSleepMode(gAppDeepSleepMode_c);
         #endif
-    #else
+    #else /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
         PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
     #endif
 #endif
@@ -279,7 +283,10 @@ void BleApp_HandleKeys(key_event_t events)
         break;
 
         default:
-            break;
+        {
+            ; /* No action required */
+        }
+        break;
     }
 #else
     switch (events)
@@ -316,7 +323,10 @@ void BleApp_HandleKeys(key_event_t events)
         break;
 
         default:
-            break;
+        {
+            ; /* No action required */
+        }
+        break;
     }
 #endif
 }
@@ -358,7 +368,10 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
         break;
 
         default:
-            break;
+        {
+            ; /* No action required */
+        }
+        break;
     }
 }
 
@@ -375,13 +388,13 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
 ********************************************************************************** */
 static void BleApp_Config()
 {
-#if MULTICORE_APPLICATION_CORE
+#if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
     if (GattDbDynamic_CreateDatabase() != gBleSuccess_c)
     {
         panic(0,0,0,0);
         return;
     }
-#endif /* MULTICORE_APPLICATION_CORE */
+#endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
 
     /* Common GAP configuration */
     BleConnManager_GapCommonConfig();
@@ -407,7 +420,7 @@ static void BleApp_Config()
     mMeasurementTimerId = TMR_AllocateTimer();
     mBatteryMeasurementTimerId = TMR_AllocateTimer();
 #if (cPWR_UsePowerDownMode)
-    #if MULTICORE_APPLICATION_CORE
+    #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
         #if gErpcLowPowerApiServiceIncluded_c
             PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
             PWR_AllowBlackBoxToSleep();
@@ -417,7 +430,7 @@ static void BleApp_Config()
     #else
         PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
         PWR_AllowDeviceToSleep();
-    #endif
+    #endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
 #endif
 }
 
@@ -430,7 +443,8 @@ static void BleApp_Advertise(void)
 {
     switch (mAdvState.advType)
     {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
         case fastWhiteListAdvState_c:
         {
             gAdvParams.minInterval = gFastConnMinAdvInterval_c;
@@ -439,6 +453,7 @@ static void BleApp_Advertise(void)
             mAdvTimeout = gFastConnWhiteListAdvTime_c;
         }
         break;
+#endif
 #endif
         case fastAdvState_c:
         {
@@ -455,6 +470,11 @@ static void BleApp_Advertise(void)
             gAdvParams.maxInterval = gReducedPowerMinAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
             mAdvTimeout = gReducedPowerAdvTime_c;
+        }
+        break;
+        default:
+        {
+            ; /* No action required */
         }
         break;
     }
@@ -487,13 +507,13 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
             if(!mAdvState.advOn)
             {
                 Led1Off();
-                #if MULTICORE_APPLICATION_CORE
+                #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
                     #if gErpcLowPowerApiServiceIncluded_c
                         PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
                     #endif
                 #else
                     PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-                #endif
+                #endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
             }
             else
             {
@@ -528,7 +548,10 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
         break;
 
         default:
-            break;
+        {
+            ; /* No action required */
+        }
+        break;
     }
 }
 
@@ -569,15 +592,17 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
                        TmrSeconds(mBatteryLevelReportInterval_c), BatteryMeasurementTimerCallback, NULL);
 
 #if (cPWR_UsePowerDownMode)
-             #if MULTICORE_APPLICATION_CORE
+            #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
                 #if gErpcLowPowerApiServiceIncluded_c
                     PWR_ChangeBlackBoxDeepSleepMode(gAppDeepSleepMode_c);
                     PWR_AllowBlackBoxToSleep();
                 #endif
-             #else
+            #else
                 PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
+#if (!defined(CPU_MKW37A512VFT4) && !defined(CPU_MKW37Z512VFT4) && !defined(CPU_MKW38A512VFT4) && !defined(CPU_MKW38Z512VFT4) && !defined(CPU_MKW39A512VFT4) && !defined(CPU_MKW39Z512VFT4))
                 PWR_AllowDeviceToSleep();
-             #endif
+#endif /* CPU_MKW37xxx, CPU_MKW38xxx and CPU_MKW39xxx*/
+            #endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
 #else
             /* UI */
             LED_StopFlashingAllLeds();
@@ -602,20 +627,24 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             Led1Off();
 
             /* Go to sleep */
-    #if MULTICORE_APPLICATION_CORE
+    #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1)
         #if gErpcLowPowerApiServiceIncluded_c
             PWR_ChangeBlackBoxDeepSleepMode(cPWR_DeepSleepMode);
         #endif
     #else
             PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
-    #endif
+    #endif /* #if defined(MULTICORE_APPLICATION_CORE) && (MULTICORE_APPLICATION_CORE == 1) */
 #else
             /* Restart advertising*/
             BleApp_Start();
 #endif
         }
         break;
-    default:
+
+        default:
+        {
+            ; /* No action required */
+        }
         break;
     }
 }
@@ -636,7 +665,7 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
         case gEvtAttributeWritten_c:
         {
             handle = pServerEvent->eventData.attributeWrittenEvent.handle;
-            status = gAttErrCodeNoError_c;
+            status = (uint8_t)gAttErrCodeNoError_c;
 
             if (handle == value_hr_ctrl_point)
             {
@@ -646,7 +675,11 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
             GattServer_SendAttributeWrittenStatus(deviceId, handle, status);
         }
         break;
-    default:
+        
+        default:
+        {
+            ; /* No action required */
+        }
         break;
     }
 }
@@ -664,13 +697,15 @@ static void AdvertisingTimerCallback(void * pParam)
 
     switch (mAdvState.advType)
     {
-#if gAppUseBonding_d
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
         case fastWhiteListAdvState_c:
         {
             mAdvState.advType = fastAdvState_c;
             mRestartAdv = TRUE;
         }
         break;
+#endif
 #endif
         case fastAdvState_c:
         {
@@ -695,23 +730,23 @@ static void AdvertisingTimerCallback(void * pParam)
 static void TimerMeasurementCallback(void * pParam)
 {
     uint16_t hr = BOARD_GetPotentiometerLevel();
-    hr = (hr * mHeartRateRange_c) >> 12;
+    hr = (hr * (uint16_t)mHeartRateRange_c) >> 12U;
 
 #if gHrs_EnableRRIntervalMeasurements_d
-    Hrs_RecordRRInterval(&hrsUserData, (hr & 0x0F));
-    Hrs_RecordRRInterval(&hrsUserData,(hr & 0xF0));
+    Hrs_RecordRRInterval(&hrsUserData, (uint16_t)(hr & 0x0FU));
+    Hrs_RecordRRInterval(&hrsUserData,(uint16_t)(hr & 0xF0U));
 #endif
 
     if (mToggle16BitHeartRate)
     {
-        Hrs_RecordHeartRateMeasurement(service_heart_rate, 0x0100 + (hr & 0xFF), &hrsUserData);
+        Hrs_RecordHeartRateMeasurement((uint16_t)service_heart_rate, (uint16_t)(0x0100U + (hr & 0xFFU)), &hrsUserData);
     }
     else
     {
-        Hrs_RecordHeartRateMeasurement(service_heart_rate, mHeartRateLowerLimit_c + hr, &hrsUserData);
+        Hrs_RecordHeartRateMeasurement((uint16_t)service_heart_rate, (uint16_t)mHeartRateLowerLimit_c + hr, &hrsUserData);
     }
 
-    Hrs_AddExpendedEnergy(&hrsUserData, 100);
+    Hrs_AddExpendedEnergy(&hrsUserData, 100U);
 }
 
 /*! *********************************************************************************

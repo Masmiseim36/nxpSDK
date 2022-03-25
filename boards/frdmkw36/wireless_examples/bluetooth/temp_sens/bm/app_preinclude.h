@@ -61,6 +61,25 @@
   #error "Enable pairing to make use of bonding"
 #endif
 
+/*! Repeated Attempts - Mitigation for pairing attacks */
+#define gRepeatedAttempts_d             0
+
+/* Number of devices identified by address to keep track of for Repeated Attempts */
+#define gRepeatedAttemptsNoOfDevices_c  (4U)
+
+/* Minimum timeout after a pairing failure before the same peer can re-attempt it */
+#define gRepeatedAttemptsTimeoutMin_c   (10U) /* seconds */
+
+/* Maximum timeout after a pairing failure before the same peer can re-attempt it */
+#define gRepeatedAttemptsTimeoutMax_c   (640U) /* seconds */
+
+/* The application starts advertising without the need to press a button when this define is set*/   
+#define gAppStartAfterReset_d             0
+
+/* When gAppStartAfterReset_d is set, this define configures the time the device is disallowed to enter low power 
+after the start of the advertising. This delay must be long enough to allow the 32KHZ oscillator to start. 
+The 32KHZ oscillator is known to have a slow start (about 400ms). Without it running the LL is not able to enter low power */
+#define gAppStartAfterResetToLowPowerDelayMs_d             (500)   
 /*! *********************************************************************************
  *  Framework Configuration
  ********************************************************************************** */
@@ -77,16 +96,6 @@
          _block_size_ 312  _number_of_blocks_    1 _eol_  \
          _block_size_ 392  _number_of_blocks_    1 _eol_
 
-/* Defines number of timers needed by the application */
-#define gTmrApplicationTimers_c         5
-
-/* Defines number of timers needed by the protocol stack */
-#if defined(gAppMaxConnections_c) && defined(gL2caMaxLeCbChannels_c)
-    #define gTmrStackTimers_c (3 + (gAppMaxConnections_c * 2) + gL2caMaxLeCbChannels_c)
-#else
-    #define gTmrStackTimers_c (7)
-#endif
-
 /* Set this define TRUE if the PIT frequency is an integer number of MHZ */
 #define gTMR_PIT_FreqMultipleOfMHZ_d    0
 
@@ -97,7 +106,7 @@
 #define cPWR_CheckLowPowerTimers        1
 
 /* Enable/Disable Low Power Timer */
-#define gTMR_EnableLowPowerTimers       1
+#define gTMR_EnableLowPowerTimers_d     1
 
 /* Enable/Disable PowerDown functionality in PwrLib */
 #define cPWR_UsePowerDownMode           1
@@ -151,6 +160,27 @@
 /* Default DCDC Battery Level Monitor interval */
 #define APP_DCDC_VBAT_MONITOR_INTERVAL  600000
 
+#if gRepeatedAttempts_d
+#define gRepeatedAttemptsTimers_d   1
+#else
+#define gRepeatedAttemptsTimers_d   0
+#endif
+           
+#if ( gAppStartAfterReset_d != 0) && (gAppStartAfterResetToLowPowerDelayMs_d != 0) && (cPWR_UsePowerDownMode != 0)
+#define gAppAllowDeviceToSleepTimers_d          1
+#else
+#define gAppAllowDeviceToSleepTimers_d          0
+#endif
+
+/* Defines number of timers needed by the application */
+#define gTmrApplicationTimers_c         (5 + gRepeatedAttemptsTimers_d + gAppAllowDeviceToSleepTimers_d)
+
+/* Defines number of timers needed by the protocol stack */
+#if defined(gAppMaxConnections_c) && defined(gL2caMaxLeCbChannels_c)
+    #define gTmrStackTimers_c (3 + (gAppMaxConnections_c * 2) + gL2caMaxLeCbChannels_c)
+#else
+    #define gTmrStackTimers_c (7)
+#endif
 /*! *********************************************************************************
  *  RTOS Configuration
  ********************************************************************************** */

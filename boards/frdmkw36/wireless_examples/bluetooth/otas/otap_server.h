@@ -30,12 +30,14 @@
 #define gMaxCharDescriptorsCount_d      2U
 
 
-#define gBoardBleOtapFsciInterface_c    0U   
+#define gBoardBleOtapFsciInterface_c    0U
 /************************************************************************************
 *************************************************************************************
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapConnectionRequestParameters_t gConnReqParams;
+extern gapScanningParameters_t          gScanParams;
 
 /************************************************************************************
 *************************************************************************************
@@ -53,7 +55,7 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 
 #endif /* OTAP_SERVER_H */

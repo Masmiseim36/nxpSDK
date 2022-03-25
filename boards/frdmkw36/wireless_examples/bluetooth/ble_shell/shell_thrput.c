@@ -144,8 +144,8 @@ static bool_t   mFoundDeviceToConnect = FALSE;
 static uint16_t mLastNotifRecv[gAppMaxConnections_c];
 
 /* Scanning and Advertising Data */
-static const uint8_t adData0[1] =  { (uint8_t)(gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
-static const gapAdStructure_t advScanStruct[3] =
+static uint8_t adData0[1] =  { (uint8_t)(gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
+static gapAdStructure_t advScanStruct[3] =
 {
     {
         .length = NumberOfElements(adData0) + 1,
@@ -504,7 +504,7 @@ static int8_t ShellThr_Start(uint8_t argc, char * argv[])
                     }
                     i++;
                 }
-                for (int32_t iCount = 0; iCount < gAppMaxConnections_c; iCount++)
+                for (uint32_t iCount = 0U; iCount < gAppMaxConnections_c; iCount++)
                 {
                     if(newBuffCnt != 0U)
                     {

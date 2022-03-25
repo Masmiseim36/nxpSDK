@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2019 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -823,6 +823,15 @@ def GATTDBDynamicAddCharDescriptorWithUniqueValue(
     request = Frames.GATTDBDynamicAddCharDescriptorWithUniqueValueRequest(UuidType, Uuid, DescriptorAccessPermissions)
     return GATTDBDynamicAddCharDescriptorWithUniqueValueOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
+def GATTDBDynamicEndDatabaseUpdate(
+    device,
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GATTDBDynamicEndDatabaseUpdateRequest()
+    return GATTDBDynamicEndDatabaseUpdateOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
 def BLEHostInitialize(
     device,
     ack_policy=FsciAckPolicy.GLOBAL,
@@ -1644,13 +1653,13 @@ def GAPLeSetPhy(
 
 def GAPControllerEnhancedNotification(
     device,
-    eventType=bytearray(2),
+    EventType=bytearray(2),
     DeviceId=bytearray(1),
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GAPControllerEnhancedNotificationRequest(eventType, DeviceId)
+    request = Frames.GAPControllerEnhancedNotificationRequest(EventType, DeviceId)
     return GAPControllerEnhancedNotificationOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -1685,13 +1694,13 @@ def GAPSaveKeys(
     Keys_AddressIncluded=[],
     # Array length depends on AddressIncluded. Mask: 0xFF. Shift: 0x00.
     Keys_AddressInfo=GAPSaveKeysRequest.Keys_AddressInfo(),
-    leSc=False,
-    auth=False,
+    LeSc=False,
+    Authenticated=False,
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GAPSaveKeysRequest(NvmIndex, Keys_LtkIncluded, Keys_LtkInfo, Keys_IrkIncluded, Keys_Irk, Keys_CsrkIncluded, Keys_Csrk, Keys_RandEdivInfo, Keys_AddressIncluded, Keys_AddressInfo, leSc, auth)
+    request = Frames.GAPSaveKeysRequest(NvmIndex, Keys_LtkIncluded, Keys_LtkInfo, Keys_IrkIncluded, Keys_Irk, Keys_CsrkIncluded, Keys_Csrk, Keys_RandEdivInfo, Keys_AddressIncluded, Keys_AddressInfo, LeSc, Authenticated)
     return GAPSaveKeysOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 
@@ -1728,6 +1737,60 @@ def GAPSetPrivacyMode(
     request = Frames.GAPSetPrivacyModeRequest(NvmIndex, PrivacyMode)
     return GAPSetPrivacyModeOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
+def ControllerSetScanDupFiltMode(
+    device,
+    Mode=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.ControllerSetScanDupFiltModeRequest(Mode)
+    return ControllerSetScanDupFiltModeOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+def GAPReadControllerLocalRPA(
+    device,
+    PeerIdentityAddressType=GAPReadControllerLocalRPARequestPeerIdentityAddressType.gPublic_c,
+    # Unit length: 6 bytes
+    PeerIdentityAddress=bytearray(6),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPReadControllerLocalRPARequest(PeerIdentityAddressType, PeerIdentityAddress)
+    return GAPReadControllerLocalRPAOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+def WritePublicDeviceAddress(
+    device,
+    CPUReset=False,
+    # Unit length: 6 bytes
+    BluetoothAddress=bytearray(6),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.WritePublicDeviceAddressRequest(CPUReset, BluetoothAddress)
+    return WritePublicDeviceAddressOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+def GAPCheckNvmIndex(
+    device,
+    NvmIndex=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPCheckNvmIndexRequest(NvmIndex)
+    return GAPCheckNvmIndexOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
+def GAPGetDeviceIdFromConnHandle(
+    device,
+    ConnHandle=bytearray(2),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.GAPGetDeviceIdFromConnHandleRequest(ConnHandle)
+    return GAPGetDeviceIdFromConnHandleOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
+
 def GAPSetExtAdvertisingParameters(
     device,
     SID=bytearray(1),
@@ -1755,7 +1818,6 @@ def GAPSetExtAdvertisingParameters(
     request = Frames.GAPSetExtAdvertisingParametersRequest(SID, Handle, MinInterval, MaxInterval, OwnAddressType, OwnRandomAddress, PeerAddressType, PeerAddress, ChannelMap, FilterPolicy, AdvProperties, AdvTxPowerLevel, PrimaryAdvPHY, SecondaryAdvPHY, SecondaryAdvMaxSkip, EnableScanReqNotification)
     return GAPSetExtAdvertisingParametersOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GAPStartExtAdvertising(
     device,
     Handle=bytearray(1),
@@ -1768,7 +1830,6 @@ def GAPStartExtAdvertising(
     request = Frames.GAPStartExtAdvertisingRequest(Handle, Duration, MaxExtAdvEvents)
     return GAPStartExtAdvertisingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GAPRemoveAdvertisingSet(
     device,
     Handle=bytearray(1),
@@ -1778,7 +1839,6 @@ def GAPRemoveAdvertisingSet(
 ):
     request = Frames.GAPRemoveAdvertisingSetRequest(Handle)
     return GAPRemoveAdvertisingSetOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
 
 def GAPStopExtAdvertising(
     device,
@@ -1790,21 +1850,17 @@ def GAPStopExtAdvertising(
     request = Frames.GAPStopExtAdvertisingRequest(Handle)
     return GAPStopExtAdvertisingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GAPUpdatePeriodicAdvList(
     device,
     Operation=GAPUpdatePeriodicAdvListRequestOperation.gAddDevice_c,
-    DeviceAddressType=GAPUpdatePeriodicAdvListRequestDeviceAddressType.gPublic_c,
-    # Unit length: 6 bytes
-    DeviceAddress=bytearray(6),
-    SID=bytearray(1),
+    # Array length depends on Operation. Mask: 0xFF. Shift: 0x00.
+    OperationValue=[],
     ack_policy=FsciAckPolicy.GLOBAL,
     protocol=Protocol.BLE,
     timeout=1
 ):
-    request = Frames.GAPUpdatePeriodicAdvListRequest(Operation, DeviceAddressType, DeviceAddress, SID)
+    request = Frames.GAPUpdatePeriodicAdvListRequest(Operation, OperationValue)
     return GAPUpdatePeriodicAdvListOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
 
 def GAPSetPeriodicAdvParameters(
     device,
@@ -1819,7 +1875,6 @@ def GAPSetPeriodicAdvParameters(
     request = Frames.GAPSetPeriodicAdvParametersRequest(Handle, IncludeTxPower, MinInterval, MaxInterval)
     return GAPSetPeriodicAdvParametersOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GAPStartPeriodicAdvertising(
     device,
     Handle=bytearray(1),
@@ -1830,7 +1885,6 @@ def GAPStartPeriodicAdvertising(
     request = Frames.GAPStartPeriodicAdvertisingRequest(Handle)
     return GAPStartPeriodicAdvertisingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GAPStopPeriodicAdvertising(
     device,
     Handle=bytearray(1),
@@ -1840,7 +1894,6 @@ def GAPStopPeriodicAdvertising(
 ):
     request = Frames.GAPStopPeriodicAdvertisingRequest(Handle)
     return GAPStopPeriodicAdvertisingOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
 
 def GAPSetExtAdvertisingData(
     device,
@@ -1858,7 +1911,6 @@ def GAPSetExtAdvertisingData(
     request = Frames.GAPSetExtAdvertisingDataRequest(Handle, AdvertisingDataIncluded, ExtAdvertisingData, ScanResponseDataIncluded, ExtScanResponseData)
     return GAPSetExtAdvertisingDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GAPSetPeriodicAdvertisingData(
     device,
     Handle=bytearray(1),
@@ -1871,7 +1923,6 @@ def GAPSetPeriodicAdvertisingData(
 ):
     request = Frames.GAPSetPeriodicAdvertisingDataRequest(Handle, PeriodicAdvertisingData_NbOfAdStructures, PeriodicAdvertisingData_AdStructures)
     return GAPSetPeriodicAdvertisingDataOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
 
 def GAPPeriodicAdvCreateSync(
     device,
@@ -1889,7 +1940,6 @@ def GAPPeriodicAdvCreateSync(
     request = Frames.GAPPeriodicAdvCreateSyncRequest(FilterPolicy, SID, DeviceAddressType, DeviceAddress, SkipCount, Timeout)
     return GAPPeriodicAdvCreateSyncOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
-
 def GAPPeriodicAdvTerminateSync(
     device,
     SyncHandle=bytearray(2),
@@ -1900,6 +1950,15 @@ def GAPPeriodicAdvTerminateSync(
     request = Frames.GAPPeriodicAdvTerminateSyncRequest(SyncHandle)
     return GAPPeriodicAdvTerminateSyncOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
+def ControllerConfigureAdvCodingScheme(
+    device,
+    CodingScheme=bytearray(1),
+    ack_policy=FsciAckPolicy.GLOBAL,
+    protocol=Protocol.BLE,
+    timeout=1
+):
+    request = Frames.ControllerConfigureAdvCodingSchemeRequest(CodingScheme)
+    return ControllerConfigureAdvCodingSchemeOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
 
 def FSCICPUReset(
     device,
@@ -1930,7 +1989,6 @@ def FSCIAllowDeviceToSleep(
 ):
     request = Frames.FSCIAllowDeviceToSleepRequest(SignalHostWhenWakeUp, DeepSleepDuration, DeepSleepMode)
     return FSCIAllowDeviceToSleepOperation(device, request, ack_policy=ack_policy, protocol=protocol, sync_request=True).begin(timeout)
-
 
 def FSCIGetWakeupReason(
     device,

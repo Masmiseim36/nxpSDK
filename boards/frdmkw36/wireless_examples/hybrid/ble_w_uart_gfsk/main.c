@@ -19,7 +19,6 @@
  * Include
  *************************************************************************************
  ************************************************************************************/
-#include "EmbeddedTypes.h"
 
 /* Framework / Drivers */
 #include "EmbeddedTypes.h"
@@ -31,6 +30,7 @@
 #include "Panic.h"
 #include "SerialManager.h"
 #include "MWS.h"
+#include "PWR_Interface.h"
 
 /* BLE Host Stack */
 #include "gatt_server_interface.h"
@@ -56,6 +56,15 @@
 **************************************************************************************
 *************************************************************************************/
 
+#ifndef APP_DBG_LOG
+#define APP_DBG_LOG(...)
+#endif
+
+/*!< Time to keep the device out of low power to allow application interaction */
+#ifndef APP_WAKE_UP_TIMEOUT
+#define APP_WAKE_UP_TIMEOUT 3000
+#endif
+
 /************************************************************************************
  *************************************************************************************
  * Private type definitions
@@ -68,6 +77,9 @@
  *************************************************************************************
  ************************************************************************************/
 static uint8_t gAppSerMgrIf;
+#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode == 1)
+static tmrTimerID_t mAppWakeUpTimerId;
+#endif /* # defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode == 1) */
 
 /************************************************************************************
  *************************************************************************************
@@ -88,16 +100,16 @@ static uint8_t gAppSerMgrIf;
 ********************************************************************************** */
 void App_Init(void)
 {
-    /* Init Serial interface */
 #if (defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES))
-    Serial_InitManager();
+    /* Get Serial Manager interface - Serial manager has been initialized in hardware_init.c file */
+    gAppSerMgrIf = BOARD_GetSerialManagerInterface();
 #else
     SerialManager_Init();
-#endif
 
     /* Register Serial Manager interface */
     (void)Serial_InitInterface(&gAppSerMgrIf, APP_SERIAL_INTERFACE_TYPE, APP_SERIAL_INTERFACE_INSTANCE);
     (void)Serial_SetBaudRate(gAppSerMgrIf, APP_SERIAL_INTERFACE_SPEED);
+#endif /* (defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES)) */
 
     (void)Serial_Print(gAppSerMgrIf, "\n\r=====================================", gAllowToBlock_d);
     (void)Serial_Print(gAppSerMgrIf, "\n\rHybrid Wireless Uart - GFSK Adv demo", gAllowToBlock_d);
@@ -108,6 +120,22 @@ void App_Init(void)
 
     /* init BLE serial interface */
     BleApp_InitSerialInterface(gAppSerMgrIf);
+
+#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode == 1)
+    mAppWakeUpTimerId = TMR_AllocateTimer();
+    if (mAppWakeUpTimerId == gTmrInvalidTimerID_c)
+    {
+        (void)Serial_Print(gAppSerMgrIf, "\n\rNot enough timers\n\r", gAllowToBlock_d);
+        panic(0, 0, 0, 0);
+    }
+#endif /* # defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode == 1) */
+
+#if (defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES))
+    PWR_SetNewAppState(PWR_APP_STATE_NO_ACTIVITY_RAM_RET);
+    PWR_AllowDeviceToSleep();
+
+    APP_DBG_LOG("");
+#endif /* (defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES)) */
 }
 
 
@@ -133,16 +161,26 @@ void BleApp_HandleKeys(key_event_t events)
             break;
 
         case gKBD_EventPressPB2_c:
-            /* start/stop GFSK TX */
-            if(!isGfskTxStarted)
+#if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode == 1)
+            if (TMR_IsTimerActive(mAppWakeUpTimerId) == FALSE)
             {
-                isGfskTxStarted = TRUE;
-                GfskApp_StartTx();
+                /* start a timer to keep the device out of low power to allow application actions */
+                TMR_StartSingleShotTimer(mAppWakeUpTimerId, APP_WAKE_UP_TIMEOUT, NULL, NULL);
             }
             else
+#endif /* # defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode == 1) */
             {
-                isGfskTxStarted = FALSE;
-                GfskApp_StopTx();
+                /* start/stop GFSK TX */
+                if(!isGfskTxStarted)
+                {
+                    isGfskTxStarted = TRUE;
+                    GfskApp_StartTx();
+                }
+                else
+                {
+                    isGfskTxStarted = FALSE;
+                    GfskApp_StopTx();
+                }
             }
             break;
 

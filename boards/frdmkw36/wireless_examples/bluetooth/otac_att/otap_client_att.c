@@ -84,17 +84,19 @@
 ************************************************************************************/
 typedef enum
 {
-#if gAppUseBonding_d
-    whiteListAdvState_c,
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
+    fastWhiteListAdvState_c,
 #endif
-    advState_c,
+#endif
+    fastAdvState_c,
+    slowAdvState_c
 }advType_t;
 
-typedef struct advState_tag
-{
+typedef struct advState_tag{
     bool_t      advOn;
     advType_t   advType;
-} advState_t;
+}advState_t;
 
 /************************************************************************************
 *************************************************************************************
@@ -104,9 +106,10 @@ typedef struct advState_tag
 
 static deviceId_t  mPeerDeviceId = gInvalidDeviceId_c;
 
-/* Adv Parameters */
-static advState_t  mAdvState;
-static tmrTimerID_t appTimerId;
+/* Advertising related local variables */
+static advState_t   mAdvState;
+static tmrTimerID_t mAdvTimerId;
+static uint32_t     mAdvTimerTimeout = 0;
 
 /* Service Data */
 static bool_t      basValidClientList[gAppMaxConnections_c] = { FALSE };
@@ -129,6 +132,7 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
 
 static void BleApp_Config(void);
 static void BleApp_Advertise (void);
+static void AdvertisingTimerCallback (void *pParam);
 static void BatteryMeasurementTimerCallback (void *pParam);
 /************************************************************************************
 *************************************************************************************
@@ -159,27 +163,24 @@ void BleApp_Init(void)
 ********************************************************************************** */
 void BleApp_Start(void)
 {
-    Led1On();
-
     if (mPeerDeviceId == gInvalidDeviceId_c)
     {
-        /* Device is not connected and not advertising*/
-        if (!mAdvState.advOn)
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
+        if (gcBondedDevices > 0)
         {
-#if gAppUseBonding_d
-            if (gcBondedDevices > 0)
-            {
-                mAdvState.advType = whiteListAdvState_c;
-            }
-            else
-            {
-#endif
-                mAdvState.advType = advState_c;
-#if gAppUseBonding_d
-            }
-#endif
-            BleApp_Advertise();
+            mAdvState.advType = fastWhiteListAdvState_c;
         }
+        else
+#endif
+        {
+#endif
+        mAdvState.advType = fastAdvState_c;
+#if gAppUseBonding_d && gAppUsePrivacy_d
+    }
+#endif
+
+        BleApp_Advertise();
     }
 }
 
@@ -287,7 +288,7 @@ static void BleApp_Config(void)
     }
 
     /* Allocate application timer */
-    appTimerId = TMR_AllocateTimer();
+    mAdvTimerId = TMR_AllocateTimer();
     mBatteryMeasurementTimerId = TMR_AllocateTimer();
 }
 
@@ -300,16 +301,33 @@ static void BleApp_Advertise(void)
 {
     switch (mAdvState.advType)
     {
-#if gAppUseBonding_d
-        case whiteListAdvState_c:
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
+        case fastWhiteListAdvState_c:
         {
+            gAdvParams.minInterval = gFastConnMinAdvInterval_c;
+            gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessWhiteListOnly_c;
+            mAdvTimerTimeout = gFastConnWhiteListAdvTime_c;
         }
         break;
 #endif
-        case advState_c:
+#endif
+        case fastAdvState_c:
         {
+            gAdvParams.minInterval = gFastConnMinAdvInterval_c;
+            gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
+            mAdvTimerTimeout = gFastConnAdvTime_c - gFastConnWhiteListAdvTime_c;
+        }
+        break;
+
+        case slowAdvState_c:
+        {
+            gAdvParams.minInterval = gReducedPowerMinAdvInterval_c;
+            gAdvParams.maxInterval = gReducedPowerMinAdvInterval_c;
+            gAdvParams.filterPolicy = gProcessAll_c;
+            mAdvTimerTimeout = gReducedPowerAdvTime_c;
         }
         break;
 
@@ -337,8 +355,12 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 
             if(mAdvState.advOn)
             {
+                /* UI */
                 LED_StopFlashingAllLeds();
                 Led1Flashing();
+                /* Start advertising timer */
+                (void)TMR_StartLowPowerTimer(mAdvTimerId,gTmrLowPowerSecondTimer_c,
+                      TmrSeconds(mAdvTimerTimeout), AdvertisingTimerCallback, NULL);
             }
         }
         break;
@@ -373,7 +395,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         {
             /* Advertising stops when connected */
             mAdvState.advOn = FALSE;
-            (void)TMR_StopTimer(appTimerId);
+            (void)TMR_StopTimer(mAdvTimerId);
 
             /* Subscribe client*/
             mPeerDeviceId = peerDeviceId;
@@ -421,7 +443,6 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
 #if gAppUsePairing_d
         case gConnEvtEncryptionChanged_c:
         {
-
 #if gAppUseBonding_d
             OtapClient_HandleEncryptionChangedEvent(peerDeviceId);
 #endif
@@ -485,7 +506,7 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
 
         case gEvtError_c:
         {
-            attErrorCode_t attError = (attErrorCode_t) (pServerEvent->eventData.procedureError.error & 0xFF);
+            attErrorCode_t attError = (attErrorCode_t) (pServerEvent->eventData.procedureError.error & 0xFFU);
             if (attError == gAttErrCodeInsufficientEncryption_c     ||
                 attError == gAttErrCodeInsufficientAuthorization_c  ||
                 attError == gAttErrCodeInsufficientAuthentication_c)
@@ -511,6 +532,41 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
             ; /* For MISRA compliance */
         break;
     }
+}
+
+/*! *********************************************************************************
+* \brief        Handles advertising timer callback.
+*
+* \param[in]    pParam        Callback parameters.
+********************************************************************************** */
+static void AdvertisingTimerCallback(void * pParam)
+{
+    /* Stop and restart advertising with new parameters */
+    (void)Gap_StopAdvertising();
+
+    switch (mAdvState.advType)
+    {
+#if gAppUseBonding_d && gAppUsePrivacy_d
+#if defined(gBleEnableControllerPrivacy_d) && (gBleEnableControllerPrivacy_d > 0)
+        case fastWhiteListAdvState_c:
+        {
+            mAdvState.advType = fastAdvState_c;
+        }
+        break;
+#endif
+#endif
+        case fastAdvState_c:
+        {
+            mAdvState.advType = slowAdvState_c;
+        }
+        break;
+
+        default:
+            ; /* For MISRA compliance */
+        break;
+    }
+
+    BleApp_Advertise();
 }
 
 /*! *********************************************************************************

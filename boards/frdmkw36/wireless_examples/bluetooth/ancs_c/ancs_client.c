@@ -250,6 +250,8 @@ static tmrTimerID_t     mRTUSReferenceUpdateTimerId;
 static tmrTimerID_t     mBatteryMeasurementTimerId;
 static tmrTimerID_t     mAllowNotificationsTimerId;
 
+static uint32_t         mAdvTimeout;
+
 /* Buffer used for Service Discovery */
 static gattService_t            *mpServiceDiscoveryBuffer = NULL;
 static uint8_t                  mcPrimaryServices = 0;
@@ -374,6 +376,7 @@ static void BleApp_StoreDescValues
     gattAttribute_t     *pDesc
 );
 
+static void BleApp_ServiceDiscoveryReset(void);
 static void BleApp_ServiceDiscoveryErrorHandler(void);
 
 /* Timer Callbacks */
@@ -395,7 +398,7 @@ static void AncsClient_ProcessDsNotification(deviceId_t deviceId, uint8_t *pDsDa
 static void AncsClient_DisplayNotifications(void);
 static void AncsClient_SendCommandToAncsServer(deviceId_t ancsServerDevId, void *pCommand, uint16_t cmdLength);
 
-static bool_t AncsClient_CheckNeedGetNotifOrAppAttribute(void);
+static uint8_t AncsClient_CheckNeedGetNotifOrAppAttribute(void);
 static void AncsClient_SendGetNotificationOrApplicationAttribute(void);
 /************************************************************************************
 *************************************************************************************
@@ -615,8 +618,6 @@ static void BleApp_Config(void)
 ********************************************************************************** */
 static void BleApp_Advertise(void)
 {
-    uint32_t timeout = 0;
-
     switch (mAdvState.advType)
     {
 #if gAppUseBonding_d
@@ -626,7 +627,7 @@ static void BleApp_Advertise(void)
             gAdvParams.minInterval = gFastConnMinAdvInterval_c;
             gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessWhiteListOnly_c;
-            timeout = gFastConnWhiteListAdvTime_c;
+            mAdvTimeout = gFastConnWhiteListAdvTime_c;
         }
         break;
 #endif
@@ -636,7 +637,7 @@ static void BleApp_Advertise(void)
             gAdvParams.minInterval = gFastConnMinAdvInterval_c;
             gAdvParams.maxInterval = gFastConnMaxAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
-            timeout = gFastConnAdvTime_c - gFastConnWhiteListAdvTime_c;
+            mAdvTimeout = gFastConnAdvTime_c - gFastConnWhiteListAdvTime_c;
         }
         break;
 
@@ -645,7 +646,7 @@ static void BleApp_Advertise(void)
             gAdvParams.minInterval = gReducedPowerMinAdvInterval_c;
             gAdvParams.maxInterval = gReducedPowerMinAdvInterval_c;
             gAdvParams.filterPolicy = gProcessAll_c;
-            timeout = gReducedPowerAdvTime_c;
+            mAdvTimeout = gReducedPowerAdvTime_c;
         }
         break;
 
@@ -656,10 +657,6 @@ static void BleApp_Advertise(void)
 
     /* Set advertising parameters*/
     (void)Gap_SetAdvertisingParameters(&gAdvParams);
-
-    /* Start advertising timer */
-    (void)TMR_StartLowPowerTimer(mAdvTimerId, gTmrLowPowerSecondTimer_c,
-                                 TmrSeconds(timeout), AdvertisingTimerCallback, NULL);
 }
 
 
@@ -689,6 +686,9 @@ static void BleApp_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent)
             else
             {
                 shell_write("\r\nAdvertising...\r\n");
+                /* Start advertising timer */
+                (void)TMR_StartLowPowerTimer(mAdvTimerId, gTmrLowPowerSecondTimer_c,
+                                             TmrSeconds(mAdvTimeout), AdvertisingTimerCallback, NULL);
             }
         }
         break;
@@ -734,11 +734,12 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             mPeerInformation.deviceId = peerDeviceId;
             mPeerInformation.isBonded = FALSE;
 
-#if gAppUseBonding_d
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            bool_t isBonded = FALSE;
             mSendDataAfterEncStart = FALSE;
 
-            if ((gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &mPeerInformation.isBonded, NULL)) &&
-                (TRUE == mPeerInformation.isBonded))
+            if ((gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &isBonded, NULL)) &&
+                (TRUE == isBonded))
             {
                 mSendDataAfterEncStart = TRUE;
                 Gap_LoadCustomPeerInformation(peerDeviceId, (void*) &mPeerInformation.customInfo, 0, sizeof (appCustomInfo_t));
@@ -781,6 +782,9 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
 
             /* Reset Service Discovery to be sure */
             BleServDisc_Stop(peerDeviceId);
+
+            /* If peer device disconnects the link during Service Discovery, free the allocated buffers */
+            BleApp_ServiceDiscoveryReset();
 
             /* Stop battery measurements */
             (void)TMR_StopTimer(mBatteryMeasurementTimerId);
@@ -857,6 +861,9 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
 
         case gConnEvtEncryptionChanged_c:
         {
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            mPeerInformation.isBonded = TRUE;
+#endif
 #if gAppUseTimeService_d
 
             if (isTimeSynchronized == FALSE)
@@ -921,6 +928,9 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
             {
                 shell_write("\r\nPairing was successful!\r\n");
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                mPeerInformation.isBonded = TRUE;
+#endif
                 BleApp_StateMachineHandler(peerDeviceId, mAppEvt_PairingComplete_c);
             }
             else
@@ -930,6 +940,9 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
                 shell_writeHex((uint8_t *)(&(pConnectionEvent->eventData.pairingCompleteEvent.pairingCompleteData.failReason)) + 1, 1);
                 shell_writeHex((uint8_t *)(&(pConnectionEvent->eventData.pairingCompleteEvent.pairingCompleteData.failReason)), 1);
                 shell_write("\r\n");
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                 mPeerInformation.isBonded = FALSE;
+#endif
             }
         }
         break;
@@ -1200,10 +1213,10 @@ static void BleApp_GattClientCallback(
     {
         attErrorCode_t attError = (attErrorCode_t)((uint8_t)error);
         uint16_t mask = 0xFF00U;
-        uint16_t receivedStatusBase = error;
+        uint16_t receivedStatusBase = (uint16_t)error;
         receivedStatusBase &= mask;
 
-        if(receivedStatusBase == gAttStatusBase_c)
+        if((bleResult_t)receivedStatusBase == gAttStatusBase_c)
         {
             if (attError == gAttErrCodeInsufficientEncryption_c         ||
             attError == gAttErrCodeInsufficientEncryptionKeySize_c  ||
@@ -1238,7 +1251,7 @@ static void BleApp_GattClientCallback(
         }
         else
         {
-            if(receivedStatusBase == gGattStatusBase_c)
+            if((bleResult_t)receivedStatusBase == gGattStatusBase_c)
             {
                 shell_write("\r\nGATT Procedure Error:");
                 shell_write(" 0x");
@@ -1364,10 +1377,17 @@ static void BleApp_GattNotificationCallback
     uint16_t    valueLength
 )
 {
-    BleApp_AttributeNotified(serverDeviceId,
-                             characteristicValueHandle,
-                             aValue,
-                             valueLength);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if (mPeerInformation.isBonded)
+    {
+#endif
+        BleApp_AttributeNotified(serverDeviceId,
+                                 characteristicValueHandle,
+                                 aValue,
+                                 valueLength);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    }
+#endif
 }
 
 
@@ -1379,19 +1399,22 @@ static void BleApp_AttributeNotified
     uint16_t    length
 )
 {
-    if (handle == mPeerInformation.customInfo.ancsClientConfig.hNotificationSource)
+    if (mPeerInformation.appState == mAppRunning_c)
     {
-        AncsClient_ProcessNsNotification(deviceId, pValue, length);
-        BleApp_StateMachineHandler(deviceId, mAppEvt_AncsNsNotificationReceived_c);
-    }
-    else if (handle == mPeerInformation.customInfo.ancsClientConfig.hDataSource)
-    {
-        AncsClient_ProcessDsNotification(deviceId, pValue, length);
-        BleApp_StateMachineHandler(deviceId, mAppEvt_AncsDsNotificationReceived_c);
-    }
-    else
-    {
-        ; /* For MISRA compliance */
+        if (handle == mPeerInformation.customInfo.ancsClientConfig.hNotificationSource)
+        {
+            AncsClient_ProcessNsNotification(deviceId, pValue, length);
+            BleApp_StateMachineHandler(deviceId, mAppEvt_AncsNsNotificationReceived_c);
+        }
+        else if (handle == mPeerInformation.customInfo.ancsClientConfig.hDataSource)
+        {
+            AncsClient_ProcessDsNotification(deviceId, pValue, length);
+            BleApp_StateMachineHandler(deviceId, mAppEvt_AncsDsNotificationReceived_c);
+        }
+        else
+        {
+            ; /* For MISRA compliance */
+        }
     }
 }
 
@@ -1441,7 +1464,7 @@ static void BleApp_ServiceDiscoveryCompleted(void)
     if (0U != mPeerInformation.customInfo.ancsClientConfig.hNotificationSourceCccd)
     {
         mPeerInformation.appState = mAppNsDescriptorSetup_c;
-        
+
         if (NULL == mpDescProcBuffer)
         {
             mpDescProcBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) + gAttDefaultMtu_c);
@@ -1834,12 +1857,12 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
             }
             else if (event == mAppEvt_AncsNsNotificationReceived_c)
             {
-                if(mReceivedNotificationsAndNeedToPrint == 0)
+                if(mReceivedNotificationsAndNeedToPrint == 0U)
                     AncsClient_DisplayNotifications();
             }
             else if (event == mAppEvt_AncsDsNotificationReceived_c)
             {
-                if(mReceivedNotificationsAndNeedToPrint == 0)
+                if(mReceivedNotificationsAndNeedToPrint == 0U)
                     AncsClient_DisplayNotifications();
             }
             else
@@ -2634,14 +2657,14 @@ static void AllowNotificationsTimerCallback(void *pParam)
 *               a get app attribute to the server and returns the first notification
 *               index with this need or mMaxDisplayNotifications_c if there is none
 ********************************************************************************** */
-static bool_t AncsClient_CheckNeedGetNotifOrAppAttribute(void)
+static uint8_t AncsClient_CheckNeedGetNotifOrAppAttribute(void)
 {
-  int notifUidIndex = 0;
+  uint8_t notifUidIndex = 0U;
   while(notifUidIndex < mMaxDisplayNotifications_c)
   {
     if(ancsClientData.notifications[notifUidIndex].needGetNotifAttribute == TRUE)
     {
-        mGetNotifOrAppAttribute = 0;
+        mGetNotifOrAppAttribute = 0U;
         return notifUidIndex;
     }
     else

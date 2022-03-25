@@ -55,6 +55,17 @@
   #error "Enable pairing to make use of bonding"
 #endif
 
+/*! Repeated Attempts - Mitigation for pairing attacks */
+#define gRepeatedAttempts_d             0
+
+/* Number of devices identified by address to keep track of for Repeated Attempts */
+#define gRepeatedAttemptsNoOfDevices_c  (4U)
+
+/* Minimum timeout after a pairing failure before the same peer can re-attempt it */
+#define gRepeatedAttemptsTimeoutMin_c   (10U) /* seconds */
+
+/* Maximum timeout after a pairing failure before the same peer can re-attempt it */
+#define gRepeatedAttemptsTimeoutMax_c   (640U) /* seconds */
 /*! *********************************************************************************
  * 	Framework Configuration
  ********************************************************************************** */
@@ -81,7 +92,11 @@
          _block_size_ 400  _number_of_blocks_    2 _eol_
 
 /* Defines number of timers needed by the application */
+#if gRepeatedAttempts_d
+#define gTmrApplicationTimers_c         6
+#else
 #define gTmrApplicationTimers_c         5
+#endif
 
 /* Defines number of timers needed by the protocol stack */
 #if defined(gAppMaxConnections_c) && defined(gL2caMaxLeCbChannels_c)
@@ -95,9 +110,6 @@
 
 /* Enables / Disables the precision timers platform component */
 #define gTimestamp_Enabled_d            0
-
-/* Enable/Disable Low Power Timer */
-#define gTMR_EnableLowPowerTimers       0
 
 /*! *********************************************************************************
  * 	RTOS Configuration

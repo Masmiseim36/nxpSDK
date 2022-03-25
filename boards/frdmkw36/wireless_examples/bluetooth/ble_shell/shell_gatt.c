@@ -711,7 +711,7 @@ static int8_t ShellGatt_Discover(uint8_t argc, char * argv[])
                         /* Allocate memory for Service Discovery */
                         mpServiceDiscoveryBuffer = MEM_BufferAlloc(sizeof(gattService_t) * mMaxServicesCount_d);
                         mpCharBuffer = MEM_BufferAlloc(sizeof(gattCharacteristic_t) * mMaxServiceCharCount_d);
-                        mpCharDescriptorBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) * mMaxCharDescriptorsCount_d);
+                        mpCharDescriptorBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) * mMaxServiceCharCount_d * mMaxCharDescriptorsCount_d);
 
                         if ((NULL == mpServiceDiscoveryBuffer) ||
                             (NULL == mpCharBuffer)             ||
@@ -1181,7 +1181,7 @@ static void ShellGatt_DiscoveryHandler
                     /* Check if we have handles available between adjacent characteristics */
                     if (pCurrentChar->value.handle + 2U < (pCurrentChar + 1U)->value.handle)
                     {
-                        pCurrentChar->aDescriptors = mpCharDescriptorBuffer;
+                        pCurrentChar->aDescriptors = mpCharDescriptorBuffer + mCurrentCharInDiscoveryIndex * mMaxCharDescriptorsCount_d;
                         (void)GattClient_DiscoverAllCharacteristicDescriptors(serverDeviceId,
                                                 pCurrentChar,
                                                 (pCurrentChar + 1U)->value.handle - 2U,
@@ -1201,7 +1201,7 @@ static void ShellGatt_DiscoveryHandler
                     /* Made it to the last characteristic. Check against service end handle*/
                     if (pCurrentChar->value.handle < pCurrentService->endHandle)
                     {
-                        pCurrentChar->aDescriptors = mpCharDescriptorBuffer;
+                        pCurrentChar->aDescriptors = mpCharDescriptorBuffer + mCurrentCharInDiscoveryIndex * mMaxCharDescriptorsCount_d;
                         (void)GattClient_DiscoverAllCharacteristicDescriptors(serverDeviceId,
                                                     pCurrentChar,
                                                     pCurrentService->endHandle,

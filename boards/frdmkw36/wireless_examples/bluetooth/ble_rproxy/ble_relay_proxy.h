@@ -35,9 +35,10 @@
 extern gapAdvertisingData_t             gAppAdvertisingData;
 extern gapScanResponseData_t            gAppScanRspData;
 extern gapAdvertisingParameters_t       gAdvParams;
-extern gapScanningParameters_t          gAppScanParams;
 extern gapConnectionRequestParameters_t gConnReqParams;
-extern gapConnectionParameters_t        gPrefferedConnectionParams;
+extern gapScanningParameters_t          gScanParams;
+extern gapPairingParameters_t           gPairingParameters;
+
 /************************************************************************************
 *************************************************************************************
 * Public prototypes
@@ -53,7 +54,7 @@ void BleApp_Start(void);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 
 #endif /* BLE_RELAY_PROXY_H */

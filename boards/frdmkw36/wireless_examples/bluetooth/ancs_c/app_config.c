@@ -42,6 +42,9 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapAdvertisingData_t             gAppAdvertisingData;
+extern gapScanResponseData_t            gAppScanRspData;
+extern gapAdvertisingParameters_t       gAdvParams;
 
 /* Default Advertising Parameters. Values can be changed at runtime
     to align with profile requirements */
@@ -57,9 +60,9 @@ gapAdvertisingParameters_t gAdvParams = {
 };
 
 /* Scanning and Advertising Data */
-static const uint8_t adData0[1] = { (gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
-static const uint8_t adData1[]  = { 0xD0, 0x00, 0x2D, 0x12, 0x1E, 0x4B, 0x0F, 0xA4, 0x99, 0x4E, 0xCE, 0xB5, 0x31, 0xF4, 0x05, 0x79}; // 7905F431-B5CE-4E99-A40F-4B1E122D00D0 - ANCS Service UUID 128
-static const gapAdStructure_t advScanStruct[] = {
+static uint8_t adData0[1] = { (gLeGeneralDiscoverableMode_c | gBrEdrNotSupported_c) };
+static uint8_t adData1[]  = { 0xD0, 0x00, 0x2D, 0x12, 0x1E, 0x4B, 0x0F, 0xA4, 0x99, 0x4E, 0xCE, 0xB5, 0x31, 0xF4, 0x05, 0x79}; // 7905F431-B5CE-4E99-A40F-4B1E122D00D0 - ANCS Service UUID 128
+static gapAdStructure_t advScanStruct[] = {
   {
     .length = NumberOfElements(adData0) + 1,
     .adType = gAdFlags_c,
@@ -132,7 +135,7 @@ gapSmpKeys_t gSmpKeys = {
 };
 
 /* Device Security Requirements */
-static const gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
+static gapSecurityRequirements_t        masterSecurity = gGapDefaultSecurityRequirements_d;
 
 gapDeviceSecurityRequirements_t deviceSecurityRequirements = {
     .pMasterSecurityRequirements    = (void*)&masterSecurity,

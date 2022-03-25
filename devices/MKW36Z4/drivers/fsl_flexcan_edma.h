@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FlexCAN EDMA driver version 2.2.6. */
-#define FSL_FLEXCAN_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 6))
+/*! @brief FlexCAN EDMA driver version 2.2.7. */
+#define FSL_FLEXCAN_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 7))
 /*@}*/
 
 /* Forward declaration of the handle typedef. */

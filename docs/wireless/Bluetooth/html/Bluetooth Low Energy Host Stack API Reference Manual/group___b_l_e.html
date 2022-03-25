@@ -36,7 +36,7 @@
   <td id="projectlogo"><img alt="Logo" src="NXP_logo.bmp"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">Bluetooth® Low Energy Host Stack API Reference Manual
-   &#160;<span id="projectnumber">Rev. 13</span>
+   &#160;<span id="projectnumber">Rev. 15</span>
    </div>
    <div id="projectbrief">BLEHSAPIRM</div>
   </td>
@@ -199,10 +199,6 @@ Macros</h2></td></tr>
 <tr class="separator:gab54e41763f6d63400ea81bb281260b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4fd451acb1c63ab0cc647bc4af46e5c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga4fd451acb1c63ab0cc647bc4af46e5c4">gcConnectionSupervisionTimeoutDefault_c</a></td></tr>
 <tr class="separator:ga4fd451acb1c63ab0cc647bc4af46e5c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac161e15f0609e02f2cdcaec3b1b5dc1a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gac161e15f0609e02f2cdcaec3b1b5dc1a">gcConnectionEventMinDefault_c</a></td></tr>
-<tr class="separator:gac161e15f0609e02f2cdcaec3b1b5dc1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad38a7d1745fd5c4f7cf444b222d472aa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gad38a7d1745fd5c4f7cf444b222d472aa">gcConnectionEventMaxDefault_c</a></td></tr>
-<tr class="separator:gad38a7d1745fd5c4f7cf444b222d472aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga10b2d890d871e1489bb02b7e70d9bdfb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga10b2d890d871e1489bb02b7e70d9bdfb">STATIC</a></td></tr>
 <tr class="separator:ga10b2d890d871e1489bb02b7e70d9bdfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5b82acd6c5c8081ba9bc823fcc2aed32"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga5b82acd6c5c8081ba9bc823fcc2aed32">gBleAddrTypePublic_c</a></td></tr>
@@ -501,8 +497,6 @@ Macros</h2></td></tr>
 <tr class="separator:gab5817958fecfb420e20f1fc9dfd47397"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafa9179779c676eed926a35c4ab5fe5b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gafa9179779c676eed926a35c4ab5fe5b5">PACKED_STRUCT</a></td></tr>
 <tr class="separator:gafa9179779c676eed926a35c4ab5fe5b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gade0c4ce3ba05e8b390eb52855e4a0e20"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gade0c4ce3ba05e8b390eb52855e4a0e20">global</a></td></tr>
-<tr class="separator:gade0c4ce3ba05e8b390eb52855e4a0e20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5b6df4fe38493e14648842364a76075f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga5b6df4fe38493e14648842364a76075f">__noreturn</a></td></tr>
 <tr class="separator:ga5b6df4fe38493e14648842364a76075f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga60c5a216a7a64a939e9cda74e1a672f0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga60c5a216a7a64a939e9cda74e1a672f0">Utils_ExtractTwoByteValue</a>(buf)</td></tr>
@@ -605,6 +599,8 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca4c019ea7e74661e6442cde18fde60c81">gBleInvalidState_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cae21dc632029b282f44556e1594b33ec6">gBleTimerError_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca41ba07f65d80fb43300c309633f007fe">gBleReassemblyInProgress_c</a>, 
 <br />
 &#160;&#160;<b>gHciStatusBase_c</b>, 
 <br />
@@ -876,6 +872,10 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>gSmPairingErrorTimeout_c</b>, 
 <br />
+&#160;&#160;<b>gSmPairingErrorAuthenticationRequirements_c</b>, 
+<br />
+&#160;&#160;<b>gSmPairingAlreadyStarted_c</b>, 
+<br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cad3cf2530e4a74fa3359e0d2187e765ea">gSmTbResolvableAddressDoesNotMatchIrk_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca0f2ddc899159e2968f900a0c8a15a4ae">gSmTbInvalidDataSignature_c</a>, 
@@ -905,6 +905,10 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca36008d8bb6adfc3984924795d1483b2d">gGattClientConfirmationTimeout_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca772ed62335c4a24d8ba6886f5ce78d1b">gGattInvalidPduReceived_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cac9490dc41e9f931310259fe794bad5f0">gGattPeerDisconnected_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412ca0ff52e871b14d5ffdb692a7ce8b7fc50">gGattMtuExchangeInProgress_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cab62739cf4b9cc0e1d45e8364746670f0">gGapStatusBase_c</a>, 
 <br />
@@ -938,7 +942,9 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cae6188e5de5db478e2c3c918690dcdd80">gGattDbServiceNotFound_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cae647aa281b53cda5920cc0935c70d599">gGattDbDescriptorNotFound_c</a>
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cae647aa281b53cda5920cc0935c70d599">gGattDbDescriptorNotFound_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#gga50b56ac2045dae012646ed0377e3412cad9cd57f3abe4fabd007dfefa7f516590">gGattDbServiceOrCharAlreadyDeclared_c</a>
 <br />
  }</td></tr>
 <tr class="separator:ga50b56ac2045dae012646ed0377e3412c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1235,11 +1241,15 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aad38f26df0b45dc4d7427d9514e3972f8">gPeriodicAdvDataSetupComplete_c</a>, 
 <br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa3ca3d5a8230e42790703a8d1fbb64a32">gPeriodicAdvertisingStateChanged_c</a>, 
+<br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aaed950429451ef180631a2fe8f5153517">gPeriodicAdvListUpdateComplete_c</a>, 
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aa5ad85d1408fffde3241608aa6e56e3d7">gPeriodicAdvCreateSyncCancelled_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aad8237f7739691ae10a2aeb7203a0b56d">gTxEntryAvailable_c</a>
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aad8237f7739691ae10a2aeb7203a0b56d">gTxEntryAvailable_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggae0321289c44dc1da99802a87a094884aafa685d4c4cfac0469273ae844652d0e9">gControllerLocalRPARead_c</a>
 <br />
  }</td></tr>
 <tr class="separator:gae0321289c44dc1da99802a87a094884a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1364,7 +1374,17 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<b>gL2capRxPacket_c</b>, 
 <br />
-&#160;&#160;<b>gExtAdvReportProcess_c</b>
+&#160;&#160;<b>gExtAdvReportProcess_c</b>, 
+<br />
+&#160;&#160;<b>gReadControllerLocalRPA_c</b>, 
+<br />
+&#160;&#160;<b>gHciEventReceiveHandler_c</b>, 
+<br />
+&#160;&#160;<b>gHciRecvFragmentOfPacket_c</b>, 
+<br />
+&#160;&#160;<b>gHciDataDiscardedAlloc_c</b>, 
+<br />
+&#160;&#160;<b>gHciDataDiscardedInvalidStateParam_c</b>
 <br />
  }</td></tr>
 <tr class="separator:ga7b9f3dfd81a9e2875412ad8cf01bbd97"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1434,7 +1454,17 @@ Enumerations</h2></td></tr>
 <br />
 &#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435ae71c14384b193f694ddd21f8491e8d8b">gNotifScanReqTx_c</a>, 
 <br />
-&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435af4cc6cb3724ffdeef8d0b4a5855fdd09">gNotifConnCreated_c</a>
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435af4cc6cb3724ffdeef8d0b4a5855fdd09">gNotifConnCreated_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435a2531d44ea2505827f41feb910ddb3c01">gNotifChannelMatrix_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435a7a5c9b968e4a70b80a3f8d8dae65f0b0">gNotifPhyReq_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435a4c7658f3fc5a17ade0f36c24223d7bf9">gNotifConnChannelMapUpdate_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435abdbed6d90bef8d327a6e63fdd69ce719">gNotifConnInd_c</a>, 
+<br />
+&#160;&#160;<a class="el" href="group___b_l_e.html#ggacf9282aee6f32393ff29804ade6f6435abfa7aca96007e9ac26e49ed2144955f9">gNotifPhyUpdateInd_c</a>
 <br />
  }</td></tr>
 <tr class="separator:gacf9282aee6f32393ff29804ade6f6435"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1490,6 +1520,12 @@ Variables</h2></td></tr>
 <tr class="memitem:gaf7ee097f4b34e03cfc3fc3fe272b542f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf7ee097f4b34e03cfc3fc3fe272b542f"></a>
 const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>gBleMaxActiveConnections</b></td></tr>
 <tr class="separator:gaf7ee097f4b34e03cfc3fc3fe272b542f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0e2abd1c02915d3efe4df0005a69a1f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0e2abd1c02915d3efe4df0005a69a1f2"></a>
+const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>gcConnectionEventMinDefault_c</b></td></tr>
+<tr class="separator:ga0e2abd1c02915d3efe4df0005a69a1f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc03bead3d3259517ceff8d4d670f7ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabc03bead3d3259517ceff8d4d670f7ec"></a>
+const uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>gcConnectionEventMaxDefault_c</b></td></tr>
+<tr class="separator:gabc03bead3d3259517ceff8d4d670f7ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8886d369f221fa7e7f2b60d846dc290a"><td class="memItemLeft" align="right" valign="top">msgQueue_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#ga8886d369f221fa7e7f2b60d846dc290a">gApp2Host_TaskQueue</a></td></tr>
 <tr class="separator:ga8886d369f221fa7e7f2b60d846dc290a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac3f4ff34d65e6ba08741e068584ab5b6"><td class="memItemLeft" align="right" valign="top">msgQueue_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___b_l_e.html#gac3f4ff34d65e6ba08741e068584ab5b6">gHci2Host_TaskQueue</a></td></tr>
@@ -2059,6 +2095,13 @@ bondCreatedEvent</td>
 <td class="fielddoc">
 Data for the gBondCreatedEvent_c event. <p>Contains the NVM index and the address of the bond. </p>
 </td></tr>
+<tr><td class="fieldtype">
+<a class="anchor" id="a2846f46911db103c30d0317bbafd8df3"></a><a class="el" href="group___b_l_e.html#ga79cc8c6684c289e11ab72e839ddbd32c">bleDeviceAddress_t</a></td>
+<td class="fieldname">
+aControllerLocalRPA</td>
+<td class="fielddoc">
+Data for the gControllerLocalRPARead_c event. <p>Contains the requested device address. </p>
+</td></tr>
 </table>
 
 </div>
@@ -2270,34 +2313,6 @@ bondDataBlobDeviceInfo</td>
 </div><div class="memdoc">
 
 <p>Time = N * 10 ms. </p>
-
-</div>
-</div>
-<a class="anchor" id="gac161e15f0609e02f2cdcaec3b1b5dc1a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define gcConnectionEventMinDefault_c</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Time = N * 0.625 ms. </p>
-
-</div>
-</div>
-<a class="anchor" id="gad38a7d1745fd5c4f7cf444b222d472aa"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define gcConnectionEventMaxDefault_c</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Time = N * 0.625 ms. </p>
 
 </div>
 </div>
@@ -4406,23 +4421,6 @@ bondDataBlobDeviceInfo</td>
 
 </div>
 </div>
-<a class="anchor" id="gade0c4ce3ba05e8b390eb52855e4a0e20"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define global</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Type qualifier - does not affect local variables of integral type. </p>
-<p>Type qualifier - does not affect local variables of integral type</p>
-<p>Storage class modifier - alignment of a variable. It does not affect the type of the function</p>
-<p>Marks that this variable is in the interface. </p>
-
-</div>
-</div>
 <a class="anchor" id="ga5b6df4fe38493e14648842364a76075f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4433,6 +4431,9 @@ bondDataBlobDeviceInfo</td>
       </table>
 </div><div class="memdoc">
 
+<p>Type qualifier - does not affect local variables of integral type. </p>
+<p>Type qualifier - does not affect local variables of integral type</p>
+<p>Storage class modifier - alignment of a variable. It does not affect the type of the function</p>
 <p>Marks a function that never returns. </p>
 
 </div>
@@ -5113,6 +5114,10 @@ bondDataBlobDeviceInfo</td>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412cae21dc632029b282f44556e1594b33ec6"></a>gBleTimerError_c&#160;</td><td class="fielddoc">
 <p>Timer allocation failed. </p>
 </td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca41ba07f65d80fb43300c309633f007fe"></a>gBleReassemblyInProgress_c&#160;</td><td class="fielddoc">
+<p>HCI Packet reassembly was in progress. </p>
+<p>The old packed was discarded </p>
+</td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca6984e2724927d653d8631488659ef386"></a>gSmCommandNotSupported_c&#160;</td><td class="fielddoc">
 <p>The Security Manager (SM) does not have the required features or version to support this command. </p>
 </td></tr>
@@ -5253,6 +5258,12 @@ bondDataBlobDeviceInfo</td>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca772ed62335c4a24d8ba6886f5ce78d1b"></a>gGattInvalidPduReceived_c&#160;</td><td class="fielddoc">
 <p>An invalid PDU length was received. </p>
 </td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412cac9490dc41e9f931310259fe794bad5f0"></a>gGattPeerDisconnected_c&#160;</td><td class="fielddoc">
+<p>An ongoing GATT procedure could not be finished due to peer's disconnection. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412ca0ff52e871b14d5ffdb692a7ce8b7fc50"></a>gGattMtuExchangeInProgress_c&#160;</td><td class="fielddoc">
+<p>A Server Indication is already waiting for Client Confirmation. </p>
+</td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412cab62739cf4b9cc0e1d45e8364746670f0"></a>gGapStatusBase_c&#160;</td><td class="fielddoc">
 <p>GAP status base. </p>
 </td></tr>
@@ -5303,6 +5314,9 @@ bondDataBlobDeviceInfo</td>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412cae647aa281b53cda5920cc0935c70d599"></a>gGattDbDescriptorNotFound_c&#160;</td><td class="fielddoc">
 <p>Characteristic Descriptor was not found. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="gga50b56ac2045dae012646ed0377e3412cad9cd57f3abe4fabd007dfefa7f516590"></a>gGattDbServiceOrCharAlreadyDeclared_c&#160;</td><td class="fielddoc">
+<p>Service or characteristic already declared. </p>
 </td></tr>
 </table>
 
@@ -5654,6 +5668,9 @@ bondDataBlobDeviceInfo</td>
 <tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aad38f26df0b45dc4d7427d9514e3972f8"></a>gPeriodicAdvDataSetupComplete_c&#160;</td><td class="fielddoc">
 <p>Periodic advertising data have been successfully set. </p>
 </td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aa3ca3d5a8230e42790703a8d1fbb64a32"></a>gPeriodicAdvertisingStateChanged_c&#160;</td><td class="fielddoc">
+<p>Periodic advertising has been successfully enabled or disabled. </p>
+</td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aaed950429451ef180631a2fe8f5153517"></a>gPeriodicAdvListUpdateComplete_c&#160;</td><td class="fielddoc">
 <p>Periodic advertiser list has been successfully updated. </p>
 </td></tr>
@@ -5662,6 +5679,10 @@ bondDataBlobDeviceInfo</td>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aad8237f7739691ae10a2aeb7203a0b56d"></a>gTxEntryAvailable_c&#160;</td><td class="fielddoc">
 <p>This event is generated when a TX entry becomes available after they were all in use. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggae0321289c44dc1da99802a87a094884aafa685d4c4cfac0469273ae844652d0e9"></a>gControllerLocalRPARead_c&#160;</td><td class="fielddoc">
+<p>Contains the resolvable private device address. </p>
+<p>Response to Gap_ReadControllerLocalRPA. </p>
 </td></tr>
 </table>
 
@@ -5835,6 +5856,21 @@ bondDataBlobDeviceInfo</td>
 </td></tr>
 <tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435af4cc6cb3724ffdeef8d0b4a5855fdd09"></a>gNotifConnCreated_c&#160;</td><td class="fielddoc">
 <p>Connection created. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435a2531d44ea2505827f41feb910ddb3c01"></a>gNotifChannelMatrix_c&#160;</td><td class="fielddoc">
+<p>Enable channel status monitoring (KW37 only) </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435a7a5c9b968e4a70b80a3f8d8dae65f0b0"></a>gNotifPhyReq_c&#160;</td><td class="fielddoc">
+<p>Phy Req Pdu ack received (KW37 only) </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435a4c7658f3fc5a17ade0f36c24223d7bf9"></a>gNotifConnChannelMapUpdate_c&#160;</td><td class="fielddoc">
+<p>Channel map update. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435abdbed6d90bef8d327a6e63fdd69ce719"></a>gNotifConnInd_c&#160;</td><td class="fielddoc">
+<p>Connect indication. </p>
+</td></tr>
+<tr><td class="fieldname"><a class="anchor" id="ggacf9282aee6f32393ff29804ade6f6435abfa7aca96007e9ac26e49ed2144955f9"></a>gNotifPhyUpdateInd_c&#160;</td><td class="fielddoc">
+<p>Phy update indication. </p>
 </td></tr>
 </table>
 

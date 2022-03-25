@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -22,6 +22,31 @@ from com.nxp.wireless_connectivity.hsdk.utils import Observer, overrides, print_
 fsciLibrary = LibraryLoader().CFsciLibrary
 fsciLibrary.DestroyFSCIFrame.argtypes = [c_void_p]
 Spec = _Spec()
+
+class GAPGetConnectionHandleFromDeviceIdObserver(Observer):
+
+    opGroup = Spec.GAPGetConnectionHandleFromDeviceIdFrame.opGroup
+    opCode = Spec.GAPGetConnectionHandleFromDeviceIdFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGetConnectionHandleFromDeviceIdFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPGetConnectionHandleFromDeviceId()
+        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
 
 class FSCIGetNumberOfFreeBuffersResponseObserver(Observer):
 
@@ -434,6 +459,7 @@ class L2CAPCBErrorIndicationObserver(Observer):
         curr = 0
         frame.InformationIncluded = data.contents[curr]
         curr += 1
+        frame.LeCbError = []
         if frame.InformationIncluded:
             # Create sub-object container
             LeCbError = L2CAPCBErrorIndication.LeCbError()
@@ -441,6 +467,38 @@ class L2CAPCBErrorIndicationObserver(Observer):
             curr += 1
             LeCbError.Error = list_to_int(data.contents[curr:curr + 2])
             curr += 2
+            LeCbError.l2caErrorSource_t = data.contents[curr]
+            curr += 1
+            frame.LeCbError = copy.deepcopy(LeCbError)
+
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class L2CAPCBChannelStatusNotificationIndicationObserver(Observer):
+
+    opGroup = Spec.L2CAPCBChannelStatusNotificationIndicationFrame.opGroup
+    opCode = Spec.L2CAPCBChannelStatusNotificationIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.L2CAPCBChannelStatusNotificationIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = L2CAPCBChannelStatusNotificationIndication()
+        frame.InformationIncluded = packet.getParamValueAsNumber("InformationIncluded")
+        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
+        frame.SrcCid = packet.getParamValueAsNumber("SrcCid")
+        frame.ChannelStatus = L2CAPCBChannelStatusNotificationIndicationChannelStatus.getEnumString(packet.getParamValueAsNumber("ChannelStatus"))
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -3667,8 +3725,6 @@ class GAPConnectionEventLeScKeypressNotificationIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-
-
 class GAPLeScPublicKeyRegeneratedIndicationObserver(Observer):
 
     opGroup = Spec.GAPLeScPublicKeyRegeneratedIndicationFrame.opGroup
@@ -3879,7 +3935,7 @@ class GAPControllerNotificationIndicationObserver(Observer):
         frame.RSSI = packet.getParamValueAsNumber("RSSI")
         frame.Channel = packet.getParamValueAsNumber("Channel")
         frame.ConnEvCounter = packet.getParamValueAsNumber("ConnEvCounter")
-        frame.Status = packet.getParamValueAsNumber("Status")
+        frame.Status = GAPControllerNotificationIndicationStatus.getEnumString(packet.getParamValueAsNumber("Status"))
         frame.Timestamp = packet.getParamValueAsNumber("Timestamp")
         frame.AdvHandle = packet.getParamValueAsNumber("AdvHandle")
         framer.event_queue.put(frame) if sync_request else None
@@ -3998,6 +4054,7 @@ class GAPGenericEventExtAdvertisingParamSetupCompleteIndicationObserver(Observer
     def observeEvent(self, framer, event, callback, sync_request):
         # Call super, print common information
         Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
         packet = Spec.GAPGenericEventExtAdvertisingParamSetupCompleteIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
@@ -4187,18 +4244,17 @@ class GAPAdvertisingEventExtScanReqReceivedIndicationObserver(Observer):
         fsciLibrary.DestroyFSCIFrame(event)
 
 
-class GAPAdvertisingEventPeriodicAdvertisingStateChangedIndicationObserver(Observer):
+class GAPGenericEventPeriodicAdvertisingStateChangedIndicationObserver(Observer):
 
-    opGroup = Spec.GAPAdvertisingEventPeriodicAdvertisingStateChangedIndicationFrame.opGroup
-    opCode = Spec.GAPAdvertisingEventPeriodicAdvertisingStateChangedIndicationFrame.opCode
+    opGroup = Spec.GAPGenericEventPeriodicAdvertisingStateChangedIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventPeriodicAdvertisingStateChangedIndicationFrame.opCode
 
     @overrides(Observer)
     def observeEvent(self, framer, event, callback, sync_request):
         # Call super, print common information
         Observer.observeEvent(self, framer, event, callback, sync_request)
-        # Get payload
         # Create frame object
-        frame = GAPAdvertisingEventPeriodicAdvertisingStateChangedIndication()
+        frame = GAPGenericEventPeriodicAdvertisingStateChangedIndication()
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:
@@ -4256,6 +4312,7 @@ class GAPScanningEventPeriodicAdvSyncEstablishedIndicationObserver(Observer):
     def observeEvent(self, framer, event, callback, sync_request):
         # Call super, print common information
         Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
         fsciFrame = cast(event, POINTER(FsciFrame))
         data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
         packet = Spec.GAPScanningEventPeriodicAdvSyncEstablishedIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
@@ -4407,6 +4464,106 @@ class GAPGenericEventTxEntryAvailableIndicationObserver(Observer):
         # Create frame object
         frame = GAPGenericEventTxEntryAvailableIndication()
         frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGenericEventControllerLocalRPAReadIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGenericEventControllerLocalRPAReadIndicationFrame.opGroup
+    opCode = Spec.GAPGenericEventControllerLocalRPAReadIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGenericEventControllerLocalRPAReadIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPGenericEventControllerLocalRPAReadIndication()
+        frame.Address = packet.getParamValueAsList("Address")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPCheckNvmIndexIndicationObserver(Observer):
+
+    opGroup = Spec.GAPCheckNvmIndexIndicationFrame.opGroup
+    opCode = Spec.GAPCheckNvmIndexIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPCheckNvmIndexIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPCheckNvmIndexIndication()
+        frame.IsFree = packet.getParamValueAsNumber("IsFree")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGetDeviceIdFromConnHandleIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGetDeviceIdFromConnHandleIndicationFrame.opGroup
+    opCode = Spec.GAPGetDeviceIdFromConnHandleIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGetDeviceIdFromConnHandleIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPGetDeviceIdFromConnHandleIndication()
+        frame.DeviceId = packet.getParamValueAsNumber("DeviceId")
+        framer.event_queue.put(frame) if sync_request else None
+
+        if callback is not None:
+            callback(self.deviceName, frame)
+        else:
+            print_event(self.deviceName, frame)
+        fsciLibrary.DestroyFSCIFrame(event)
+
+
+class GAPGetConnectionHandleFromDeviceIdIndicationObserver(Observer):
+
+    opGroup = Spec.GAPGetConnectionHandleFromDeviceIdIndicationFrame.opGroup
+    opCode = Spec.GAPGetConnectionHandleFromDeviceIdIndicationFrame.opCode
+
+    @overrides(Observer)
+    def observeEvent(self, framer, event, callback, sync_request):
+        # Call super, print common information
+        Observer.observeEvent(self, framer, event, callback, sync_request)
+        # Get payload
+        fsciFrame = cast(event, POINTER(FsciFrame))
+        data = cast(fsciFrame.contents.data, POINTER(fsciFrame.contents.length * c_uint8))
+        packet = Spec.GAPGetConnectionHandleFromDeviceIdIndicationFrame.getFsciPacketFromByteArray(data.contents, fsciFrame.contents.length)
+        # Create frame object
+        frame = GAPGetConnectionHandleFromDeviceIdIndication()
+        frame.ConnectionHandle = packet.getParamValueAsNumber("ConnectionHandle")
         framer.event_queue.put(frame) if sync_request else None
 
         if callback is not None:

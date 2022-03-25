@@ -4,7 +4,7 @@
 ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2020 NXP
+* Copyright 2016-2020, 2022 NXP
 * All rights reserved.
 *
 * \file
@@ -674,8 +674,8 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
 ********************************************************************************** */
 static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEvent_t* pConnectionEvent)
 {
-	/* Connection Manager to handle Host Stack interactions */
-	BleConnManager_GapCentralEvent(peerDeviceId, pConnectionEvent);
+    /* Connection Manager to handle Host Stack interactions */
+    BleConnManager_GapCentralEvent(peerDeviceId, pConnectionEvent);
 
     switch (pConnectionEvent->eventType)
     {
@@ -688,10 +688,11 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             mPeerInformation.deviceId = peerDeviceId;
             mPeerInformation.isBonded = FALSE;
 
-#if gAppUseBonding_d
-            (void)Gap_CheckIfBonded(peerDeviceId, &mPeerInformation.isBonded, NULL);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            bool_t isBonded = FALSE;
+            (void)Gap_CheckIfBonded(peerDeviceId, &isBonded, NULL);
 
-            if ((mPeerInformation.isBonded) &&
+            if ((isBonded) &&
                 (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId,
                     (void*) &mPeerInformation.customInfo, 0, sizeof (appCustomInfo_t))))
             {
@@ -731,8 +732,17 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         {
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
             {
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                mPeerInformation.isBonded = TRUE;
+#endif
                 BleApp_StateMachineHandler(peerDeviceId, mAppEvt_PairingComplete_c);
             }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            else
+            {
+                mPeerInformation.isBonded = FALSE;
+            }
+#endif
         }
         break;
 
@@ -747,6 +757,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         {
               if( pConnectionEvent->eventData.encryptionChangedEvent.newEncryptionState )
               {
+                    mPeerInformation.isBonded = TRUE;
                     /* After reset the exchanged MTU is lost */
                     (void)GattClient_ExchangeMtu(peerDeviceId, gAttMaxMtu_c);
                     mPeerInformation.appState = mAppRunning_c;
@@ -866,82 +877,89 @@ static void BleApp_GattClientCallback(
     bleResult_t             error
 )
 {
-    union
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if ((mPeerInformation.isBonded) || (mPeerInformation.appState != mAppRunning_c))
     {
-        uint8_t                     errorTemp;
-        attErrorCode_t              attErrorCodeTemp;
-    }attErrorCodeVars;
-
-    if (procedureResult == gGattProcError_c)
-    {
-        attErrorCodeVars.errorTemp = (uint8_t)error & 0xFFU;
-        attErrorCode_t attError = attErrorCodeVars.attErrorCodeTemp;
-        if (attError == gAttErrCodeInsufficientEncryption_c     ||
-            attError == gAttErrCodeInsufficientAuthorization_c  ||
-            attError == gAttErrCodeInsufficientAuthentication_c)
+#endif
+        union
         {
-            /* Start Pairing Procedure */
-            (void)Gap_Pair (serverDeviceId, &gPairingParameters);
-        }
+            uint8_t                     errorTemp;
+            attErrorCode_t              attErrorCodeTemp;
+        }attErrorCodeVars;
 
-        BleApp_StateMachineHandler (serverDeviceId, mAppEvt_GattProcError_c);
-    }
-    else if (procedureResult == gGattProcSuccess_c)
-    {
-        switch(procedureType)
+        if (procedureResult == gGattProcError_c)
         {
-            case gGattProcExchangeMtu_c:
+            attErrorCodeVars.errorTemp = (uint8_t)error & 0xFFU;
+            attErrorCode_t attError = attErrorCodeVars.attErrorCodeTemp;
+            if (attError == gAttErrCodeInsufficientEncryption_c     ||
+                attError == gAttErrCodeInsufficientAuthorization_c  ||
+                attError == gAttErrCodeInsufficientAuthentication_c)
             {
-                BleApp_HandleAttMtuChange (serverDeviceId);
+                /* Start Pairing Procedure */
+                (void)Gap_Pair (serverDeviceId, &gPairingParameters);
             }
-            break;
+
+            BleApp_StateMachineHandler (serverDeviceId, mAppEvt_GattProcError_c);
+        }
+        else if (procedureResult == gGattProcSuccess_c)
+        {
+            switch(procedureType)
+            {
+                case gGattProcExchangeMtu_c:
+                {
+                    BleApp_HandleAttMtuChange (serverDeviceId);
+                }
+                break;
 
             case gGattProcDiscoverAllPrimaryServices_c:         /* Fall-through */
-            case gGattProcWriteCharacteristicDescriptor_c:
-            break;
+                case gGattProcWriteCharacteristicDescriptor_c:
+                break;
 
 
-            case gGattProcDiscoverAllCharacteristics_c:
-            {
-                BleApp_StoreServiceHandles (mpServiceDiscoveryBuffer + mCurrentServiceInDiscoveryIndex);
-            }
-            break;
-
-            case gGattProcDiscoverAllCharacteristicDescriptors_c:
-            {
-                BleApp_StoreCharHandles (mpCharDiscoveryBuffer + mCurrentCharInDiscoveryIndex);
-
-                /* Move on to the next characteristic */
-                mCurrentCharInDiscoveryIndex++;
-            }
-            break;
-
-            case gGattProcReadCharacteristicDescriptor_c:
-            {
-                if (mpDescProcBuffer != NULL)
+                case gGattProcDiscoverAllCharacteristics_c:
                 {
-                    BleApp_StoreDescValues (mpDescProcBuffer);
+                    BleApp_StoreServiceHandles (mpServiceDiscoveryBuffer + mCurrentServiceInDiscoveryIndex);
                 }
-            }
-            break;
+                break;
 
-            case gGattProcWriteCharacteristicValue_c:
-            {
-                BleApp_HandleValueWriteConfirmations (serverDeviceId);
-            }
-            break;
+                case gGattProcDiscoverAllCharacteristicDescriptors_c:
+                {
+                    BleApp_StoreCharHandles (mpCharDiscoveryBuffer + mCurrentCharInDiscoveryIndex);
 
-            default:
-                ; /* For MISRA compliance */
-            break;
+                    /* Move on to the next characteristic */
+                    mCurrentCharInDiscoveryIndex++;
+                }
+                break;
+
+                case gGattProcReadCharacteristicDescriptor_c:
+                {
+                    if (mpDescProcBuffer != NULL)
+                    {
+                        BleApp_StoreDescValues (mpDescProcBuffer);
+                    }
+                }
+                break;
+
+                case gGattProcWriteCharacteristicValue_c:
+                {
+                    BleApp_HandleValueWriteConfirmations (serverDeviceId);
+                }
+                break;
+
+                default:
+                    ; /* For MISRA compliance */
+                break;
+            }
+
+            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
         }
-
-        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
+        else
+        {
+            ; /* For MISRA compliance */
+        }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
-    else
-    {
-        ; /* For MISRA compliance */
-    }
+#endif
 }
 
 
@@ -974,10 +992,17 @@ static void BleApp_GattIndicationCallback
     uint16_t    valueLength
 )
 {
-    BleApp_AttributeIndicated (serverDeviceId,
-                               characteristicValueHandle,
-                               aValue,
-                               valueLength);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if (mPeerInformation.isBonded)
+    {
+#endif
+        BleApp_AttributeIndicated (serverDeviceId,
+                                   characteristicValueHandle,
+                                   aValue,
+                                   valueLength);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    }
+#endif
 }
 
 static void BleApp_AttributeIndicated
@@ -1325,6 +1350,7 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
 
                 if ((mpServiceDiscoveryBuffer == NULL) || (mpCharDiscoveryBuffer == NULL) || (mpCharDescriptorBuffer == NULL))
                 {
+                    BleApp_ServiceDiscoveryErrorHandler();
                     return;
                 }
 

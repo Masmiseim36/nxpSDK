@@ -55,6 +55,10 @@ extern gapAdvertisingParameters_t   gAdvParams;
 extern gapSmpKeys_t                 gSmpKeys;
 extern gapPairingParameters_t       gPairingParameters;
 extern gapDeviceSecurityRequirements_t deviceSecurityRequirements;
+
+extern gapConnectionRequestParameters_t gConnReqParams;
+extern gapScanningParameters_t          gScanParams;
+
 /************************************************************************************
 *************************************************************************************
 * Public prototypes
@@ -71,7 +75,7 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent);
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 
 
 #endif /* LOCATION_AND_NAVIGATION_CLIENT_H */

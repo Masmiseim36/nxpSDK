@@ -55,6 +55,17 @@
   #error "Enable pairing to make use of bonding"
 #endif
 
+/*! Repeated Attempts - Mitigation for pairing attacks */
+#define gRepeatedAttempts_d             0
+
+/* Number of devices identified by address to keep track of for Repeated Attempts */
+#define gRepeatedAttemptsNoOfDevices_c  (4U)
+
+/* Minimum timeout after a pairing failure before the same peer can re-attempt it */
+#define gRepeatedAttemptsTimeoutMin_c   (10U) /* seconds */
+
+/* Maximum timeout after a pairing failure before the same peer can re-attempt it */
+#define gRepeatedAttemptsTimeoutMax_c   (640U) /* seconds */
 /*! *********************************************************************************
  *  Framework Configuration
  ********************************************************************************** */
@@ -75,7 +86,11 @@
          _block_size_ 392  _number_of_blocks_    1 _eol_
 
 /* Defines number of timers needed by the application */
+#if gRepeatedAttempts_d
+#define gTmrApplicationTimers_c         5
+#else
 #define gTmrApplicationTimers_c         4
+#endif
 
 /* Defines number of timers needed by the protocol stack */
 #if defined(gAppMaxConnections_c) && defined(gL2caMaxLeCbChannels_c)
@@ -94,7 +109,7 @@
 #define cPWR_CheckLowPowerTimers        1
 
 /* Enable/Disable Low Power Timer */
-#define gTMR_EnableLowPowerTimers       1
+#define gTMR_EnableLowPowerTimers_d     1
 
 /* Enable/Disable PowerDown functionality in PwrLib */
 #define cPWR_UsePowerDownMode           1
@@ -137,6 +152,20 @@
 
 /* Defines total heap size used by the OS */
 #define gTotalHeapSize_c        8500
+/* Defines if RTOS systicks are used and managed by the Low-power module */
+#define PWR_EnableRtosSysticks           0
+
+/* when RTOS systicks are used , Idle hook and freertos tickless mode shall be enabled for lowpower */
+#if defined(PWR_EnableRtosSysticks) && (PWR_EnableRtosSysticks == 1)
+#define configUSE_IDLE_HOOK              1
+#define configUSE_TICKLESS_IDLE          1
+#endif
+
+#if defined(configUSE_IDLE_HOOK) && (configUSE_IDLE_HOOK == 1)
+/* Freertos task stack shall be increased when App Idle task is not used (in ApplMain.c)
+   Requires 600 bytes, in words. */
+#define configMINIMAL_STACK_SIZE         ((unsigned short)150)
+#endif
 
 /*! *********************************************************************************
  *  BLE Stack Configuration

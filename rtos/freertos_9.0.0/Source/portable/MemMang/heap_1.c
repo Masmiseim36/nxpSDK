@@ -118,8 +118,15 @@ static uint8_t *pucAlignedHeap = NULL;
 	{
 		if( xWantedSize & portBYTE_ALIGNMENT_MASK )
 		{
-			/* Byte alignment required. */
-			xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
+			/* Byte alignment required. Check for overflow. */
+			if ( (xWantedSize + ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) )) > xWantedSize )
+			{
+				xWantedSize += ( portBYTE_ALIGNMENT - ( xWantedSize & portBYTE_ALIGNMENT_MASK ) );
+			}
+			else
+			{
+				xWantedSize = 0;
+			}
 		}
 	}
 	#endif
@@ -133,8 +140,9 @@ static uint8_t *pucAlignedHeap = NULL;
 		}
 
 		/* Check there is enough room left for the allocation. */
-		if( ( ( xNextFreeByte + xWantedSize ) < configADJUSTED_HEAP_SIZE ) &&
-			( ( xNextFreeByte + xWantedSize ) > xNextFreeByte )	)/* Check for overflow. */
+		if( ( xWantedSize > 0 ) && /* valid size */
+			( ( xNextFreeByte + xWantedSize ) < configADJUSTED_HEAP_SIZE ) &&
+			( ( xNextFreeByte + xWantedSize ) > xNextFreeByte ) ) /* Check for overflow. */
 		{
 			/* Return the next free byte then increment the index past this
 			block. */

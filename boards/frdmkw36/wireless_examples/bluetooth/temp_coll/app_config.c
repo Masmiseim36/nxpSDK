@@ -39,6 +39,9 @@
 * Public memory declarations
 *************************************************************************************
 ************************************************************************************/
+extern gapConnectionRequestParameters_t gConnReqParams;
+extern gapScanningParameters_t          gScanParams;
+
 gapScanningParameters_t gScanParams =
 {
     /* type */              gScanTypePassive_c,

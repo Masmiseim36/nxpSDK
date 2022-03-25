@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -2751,6 +2751,64 @@ class GAPSetPrivacyModeRequest(object):
         self.PrivacyMode = PrivacyMode
 
 
+class ControllerSetScanDupFiltModeRequest(object):
+
+    def __init__(self, Mode=bytearray(1)):
+        '''
+        @param Mode: Mode: 0: default behavior; 1: allow adv report on RPA update
+        '''
+        self.Mode = Mode
+
+
+class GAPReadControllerLocalRPARequest(object):
+
+    def __init__(self, PeerIdentityAddressType=GAPReadControllerLocalRPARequestPeerIdentityAddressType.gPublic_c, PeerIdentityAddress=bytearray(6)):
+        '''
+        @param PeerIdentityAddressType: The address type (public or random)
+        @param PeerIdentityAddress: The Identity Address of the Peer Device
+        '''
+        self.PeerIdentityAddressType = PeerIdentityAddressType
+        self.PeerIdentityAddress = PeerIdentityAddress
+
+
+class WritePublicDeviceAddressRequest(object):
+
+    def __init__(self, CPUReset=bytearray(1), BluetoothAddress=bytearray(6)):
+        '''
+        @param CPUReset: Reset CPU
+        @param BluetoothAddress: Public bluetooth address
+        '''
+        self.CPUReset = CPUReset
+        self.BluetoothAddress = BluetoothAddress
+
+
+class GAPCheckNvmIndexRequest(object):
+
+    def __init__(self, NvmIndex=bytearray(1)):
+        '''
+        @param NvmIndex: Index in NVM bonding area
+        '''
+        self.NvmIndex = NvmIndex
+
+
+class GAPGetDeviceIdFromConnHandleRequest(object):
+
+    def __init__(self, ConnHandle=bytearray(2)):
+        '''
+        @param ConnHandle: Connection Handle
+        '''
+        self.ConnHandle = ConnHandle
+
+
+class GAPGetConnectionHandleFromDeviceId(object):
+
+    def __init__(self, DeviceId=bytearray(1)):
+        '''
+        @param DeviceId: Device ID of the peer.
+        '''
+        self.DeviceId = DeviceId
+
+
 class GAPSetExtAdvertisingParametersRequest(object):
 
     class ChannelMap(object):
@@ -2843,17 +2901,55 @@ class GAPStopExtAdvertisingRequest(object):
 
 class GAPUpdatePeriodicAdvListRequest(object):
 
-    def __init__(self, Operation=GAPUpdatePeriodicAdvListRequestOperation.gAddDevice_c, DeviceAddressType=GAPUpdatePeriodicAdvListRequestDeviceAddressType.gPublic_c, DeviceAddress=bytearray(6), SID=bytearray(1)):
+    class gAddDevice_c(object):
+
+        def __init__(self, DeviceAddressType=gAddDevice_cDeviceAddressType.gPublic_c, DeviceAddress=bytearray(6), SID=bytearray(1)):
+            self.DeviceAddressType = DeviceAddressType
+            # Unit length: 6 bytes
+            self.DeviceAddress = DeviceAddress
+            self.SID = SID
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.DeviceAddressType, 1)
+            result += to_bytes(self.DeviceAddress, 6)
+            result += to_bytes(self.SID, 1)
+            return result
+
+    class gRemoveDevice_c(object):
+
+        def __init__(self, DeviceAddressType=gRemoveDevice_cDeviceAddressType.gPublic_c, DeviceAddress=bytearray(6), SID=bytearray(1)):
+            self.DeviceAddressType = DeviceAddressType
+            # Unit length: 6 bytes
+            self.DeviceAddress = DeviceAddress
+            self.SID = SID
+
+        def pickle(self):
+            result = bytearray()
+            result += to_bytes(self.DeviceAddressType, 1)
+            result += to_bytes(self.DeviceAddress, 6)
+            result += to_bytes(self.SID, 1)
+            return result
+
+    def __init__(self, Operation=GAPUpdatePeriodicAdvListRequestOperation.gAddDevice_c, OperationValue=[]):
         '''
         @param Operation: The operation to be executed on the list
-        @param DeviceAddressType: Bluetooth device address types
-        @param DeviceAddress: Bluetooth device address
-        @param SID: Advertising set ID
+        @param OperationValue: Depending on the Operation Value, the other parameters will be displayed in Test Tool
         '''
         self.Operation = Operation
-        self.DeviceAddressType = DeviceAddressType
-        self.DeviceAddress = DeviceAddress
-        self.SID = SID
+        self.OperationValue = OperationValue
+
+    def pickle(self):
+        result = bytearray()
+        result += to_bytes(self.Operation, 1)
+        if self.Operation == Operation.gAddDevice_c:
+            selected_len = 0
+        if self.Operation == Operation.gRemoveDevice_c:
+            selected_len = 0
+        if self.Operation == Operation.gRemoveAllDevices_c:
+            selected_len = 0
+        result += to_bytes(self.OperationValue, selected_len)
+        return result
 
 
 class GAPSetPeriodicAdvParametersRequest(object):
@@ -3037,6 +3133,18 @@ class GAPPeriodicAdvTerminateSyncRequest(object):
         @param SyncHandle: Sync_Handle to be used to identify the periodic advertiser
         '''
         self.SyncHandle = SyncHandle
+
+
+class ControllerConfigureAdvCodingSchemeRequest(object):
+
+    def __init__(self, CodingScheme=bytearray(1)):
+        '''
+        @param CodingScheme: Mode: 0: primary adv coding scheme S8, secondary adv coding scheme S8;
+                                        1: primary adv coding scheme S8, secondary adv coding scheme S2;
+                                        2: primary adv coding scheme S2, secondary adv coding scheme S8;
+                                        3: primary adv coding scheme S2, secondary adv coding scheme S2
+        '''
+        self.CodingScheme = CodingScheme
 
 
 class FSCICPUResetRequest(object):
@@ -3235,6 +3343,37 @@ class L2CAPCBLeCbDataIndication(object):
         self.Packet = Packet
 
 
+class L2CAPCBErrorIndication(object):
+
+    class LeCbError(object):
+
+        def __init__(self, DeviceId=bytearray(1), Error=LeCbErrorError.gBleSuccess_c, l2caErrorSource_t=LeCbErrorl2caErrorSource_t.gL2ca_CancelConnection_c):
+            self.DeviceId = DeviceId
+            self.Error = Error
+            self.l2caErrorSource_t = l2caErrorSource_t
+
+    def __init__(self, InformationIncluded=bytearray(1), LeCbError=LeCbError()):
+        '''
+        @param InformationIncluded: Information is included or not
+        @param LeCbError: Internal error event data
+        '''
+        self.InformationIncluded = InformationIncluded
+        self.LeCbError = LeCbError
+
+
+class L2CAPCBChannelStatusNotificationIndication(object):
+
+    def __init__(self, InformationIncluded=bytearray(1), DeviceId=bytearray(1), SrcCid=bytearray(2), ChannelStatus=L2CAPCBChannelStatusNotificationIndicationChannelStatus.gL2ca_ChannelIdle_c):
+        '''
+        @param InformationIncluded: Information is included or not
+        @param DeviceId: The DeviceId from which data packet is received
+        @param SrcCid: Source Channel Id
+        @param ChannelStatus: Channel status
+        '''
+        self.InformationIncluded = InformationIncluded
+        self.DeviceId = DeviceId
+        self.SrcCid = SrcCid
+        self.ChannelStatus = ChannelStatus
 
 
 class GATTConfirm(object):
@@ -4973,7 +5112,7 @@ class GAPAdvertisingEventExtScanReqReceivedIndication(object):
         self.ScannerAddressResolved = ScannerAddressResolved
 
 
-class GAPAdvertisingEventPeriodicAdvertisingStateChangedIndication(object):
+class GAPGenericEventPeriodicAdvertisingStateChangedIndication(object):
 
     pass
 
@@ -5060,6 +5199,8 @@ class GAPScanningEventPeriodicDeviceScannedIndication(object):
 class GAPGenericEventPeriodicAdvCreateSyncCancelledIndication(object):
 
     pass
+
+
 class GAPConnectionEventChannelSelectionAlgorithm2Indication(object):
 
     def __init__(self, DeviceId=bytearray(1)):
@@ -5069,22 +5210,48 @@ class GAPConnectionEventChannelSelectionAlgorithm2Indication(object):
         self.DeviceId = DeviceId
 
 
+class GAPGenericEventTxEntryAvailableIndication(object):
 
-
-class L2CAPCBErrorIndication(object):
-
-    class LeCbError(object):
-
-        def __init__(self, DeviceId=bytearray(1), Error=LeCbErrorError.gBleSuccess_c):
-            self.DeviceId = DeviceId
-            self.Error = Error
-
-    def __init__(self, InformationIncluded=bytearray(1), LeCbError=LeCbError()):
+    def __init__(self, DeviceId=bytearray(1)):
         '''
-        @param InformationIncluded: Information is included or not
-        @param LeCbError: Internal error event data
+        @param DeviceId: The DeviceId for which the command is intended
         '''
-        self.InformationIncluded = InformationIncluded
-        self.LeCbError = LeCbError
+        self.DeviceId = DeviceId
+
+
+class GAPGenericEventControllerLocalRPAReadIndication(object):
+
+    def __init__(self, Address=bytearray(6)):
+        '''
+        @param Address: Local Private Address
+        '''
+        self.Address = Address
+
+
+class GAPCheckNvmIndexIndication(object):
+
+    def __init__(self, IsFree=bytearray(1)):
+        '''
+        @param IsFree: Free flag
+        '''
+        self.IsFree = IsFree
+
+
+class GAPGetDeviceIdFromConnHandleIndication(object):
+
+    def __init__(self, DeviceId=bytearray(1)):
+        '''
+        @param DeviceId: The device ID of the connected peer
+        '''
+        self.DeviceId = DeviceId
+
+
+class GAPGetConnectionHandleFromDeviceIdIndication(object):
+
+    def __init__(self, ConnectionHandle=bytearray(2)):
+        '''
+        @param ConnectionHandle: The corresponding connection handle
+        '''
+        self.ConnectionHandle = ConnectionHandle
 
 

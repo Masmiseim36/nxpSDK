@@ -25,21 +25,53 @@
 	
 	<div class="body"><p class="shortdesc"/>
 
-		<p class="p">After flashing the board, the sensor is put in deep sleep (all LEDs are off). To
-			flash the board in case the sensor is put in deep sleep, press ADVSW or RESET. Also, any
-			attached debugger loses its connection. The application default configuration enables
-			low power, which disables LED support. The user can manually change the configuration
-			and enable the LED support, otherwise all subsequent LED behavior references shall be
-			ignored. First press of the ADVSW button starts legacy advertising. The following
-			applies to platforms capable of performing Extended Advertising - which excludes
-			QN9090/K32W061/KW35. Second press starts extended advertising, and the third press
-			starts periodic advertising. Another press stops the periodic advertising, and another
-			one stops the extended advertising as well. <span class="ph">For
-				FRDM-KW38 board, the default enabled low-power modes are 1 and 5. This means that
-				the MCU is put into VLLS2 or VLLS3 stop mode. In this mode, the LED module operation
-				is not implemented.</span></p>
+		<p class="p">After flashing the beacon, the sensor is put in deep sleep (all LEDs are off). To
+			flash the board in case the beacon is put in deep sleep, press <strong class="ph b">ADVSW</strong> or
+				<strong class="ph b">RESET</strong>. Also, any attached debugger loses its connection. The application
+			default configuration enables low power, which disables LED support. The user can
+			manually change the configuration and enable the LED support, otherwise all subsequent
+			LED behavior references shall be ignored.  </p>
 
-		<p class="p">See details below for hardware references.</p>
+		<p class="p">Extended advertising is supported only on KW38 platforms. For all the other
+			platforms, the application can only be configured to use legacy advertising (gBeaconAE_c
+			set to 0). In this configuration, first press of the advertising switch starts the
+			legacy advertising and the second press stops it. </p>
+
+		<div class="p">On the KW38 boards configured to use extended advertising also (gBeaconAE_c set to
+			1), the state machine has few more steps: <ul class="ul" id="GUID-49E6B597-7B5F-412F-8372-E58FBAF926D3__UL_NKN_YKP_JNB">
+				<li class="li">The first press starts legacy advertising.</li>
+
+				<li class="li">The second press stops legacy advertising and starts extended
+					advertising.</li>
+
+				<li class="li">The third press stops extended advertising carrying data and then
+					starts extended advertising without data and periodic advertising.</li>
+
+				<li class="li">The fourth press stops periodic advertising and extended
+					advertising without data and starts legacy advertising and extended
+					advertising.</li>
+
+				<li class="li">The fifth press stops them all. </li>
+
+			</ul>
+For FRDM-KW38 boards, the default enabled low-power modes are 8 and 5. This means
+			that the MCU is put into VLLS2 or VLLS3 stop mode. In this mode, the LED module
+			operation is not implemented. When low power is disabled, LEDs show the advertising
+			status (if they are on the board) as follows:<ul class="ul" id="GUID-49E6B597-7B5F-412F-8372-E58FBAF926D3__UL_Q23_GBN_KNB">
+				<li class="li">LED2 is ON while legacy advertising is ON,</li>
+
+				<li class="li">LED3 is ON while extended advertising is ON, and </li>
+
+				<li class="li">LED4 is ON while periodic advertising is ON.</li>
+
+			</ul>
+</div>
+
+		<p class="p">
+			
+		</p>
+
+		<p class="p">The details of the hardware references are listed below.</p>
 
 		
 <div class="tablenoborder"><table cellpadding="4" cellspacing="0" summary="" id="GUID-49E6B597-7B5F-412F-8372-E58FBAF926D3__GUID-927DC4B1-79B1-4854-A873-AC8C6DD300BB" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap">Table 1. Hardware references</span></caption>
@@ -48,11 +80,11 @@
 				
 				<thead class="thead" align="left">
 					<tr class="row">
-						<th class="entry" valign="top" width="33.33333333333333%" id="d5296e39">Platform</th>
+						<th class="entry" valign="top" width="33.33333333333333%" id="d4631e87">Platform</th>
 
-						<th class="entry" valign="top" width="33.33333333333333%" id="d5296e42">ADVSW</th>
+						<th class="entry" valign="top" width="33.33333333333333%" id="d4631e90">ADVSW</th>
 
-						<th class="entry" valign="top" width="33.33333333333333%" id="d5296e45">CONNLED</th>
+						<th class="entry" valign="top" width="33.33333333333333%" id="d4631e93">CONNLED</th>
 
 					</tr>
 
@@ -60,38 +92,47 @@
 
 				<tbody class="tbody">
 					<tr class="row">
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e39 ">FRDM-KW41Z</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e87 ">FRDM-KW41Z</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e42 ">SW4</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e90 ">SW4</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e45 ">LED3</td>
-
-					</tr>
-
-					<tr class="row">
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e39 ">QN9080CDK</td>
-
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e42 ">BUTTON1</td>
-
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e45 ">D5-RED</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e93 ">LED3</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e39 ">FRDM-KW36</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e87 ">QN9080CDK</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e42 ">SW2</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e90 ">BUTTON1</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e45 ">LED3</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e93 ">D5-RED</td>
 
 					</tr>
 
 					<tr class="row">
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e39 ">FRDM-KW38</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e87 ">FRDM-KW36</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e42 ">SW3</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e90 ">SW2</td>
 
-						<td class="entry" valign="top" width="33.33333333333333%" headers="d5296e45 ">LED3</td>
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e93 ">LED3</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e87 ">FRDM-KW38</td>
+
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e90 ">SW3</td>
+
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e93 ">LED3</td>
+
+					</tr>
+
+					<tr class="row">
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e87 ">KW38-ER-RD </td>
+
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e90 ">SW1 </td>
+
+						<td class="entry" valign="top" width="33.33333333333333%" headers="d4631e93 ">LED2</td>
 
 					</tr>
 

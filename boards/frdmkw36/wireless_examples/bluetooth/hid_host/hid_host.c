@@ -113,9 +113,13 @@ static appPeerInfo_t mPeerInformation[gAppMaxConnections_c];
 #if gAppUseBonding_d
 static bool_t mRestoringBondedLink = FALSE;
 static bool_t mAuthRejected = FALSE;
+#if gAppUsePrivacy_d
+static bool_t mAttemptRpaResolvingAtConnect = FALSE;
+#endif
 #endif
 
 static bool_t   mScanningOn = FALSE;
+static bool_t   mFoundDeviceToConnect = FALSE;
 
 /* Buffer used for Characteristic related procedures */
 static gattAttribute_t      *mpCharProcBuffer = NULL;
@@ -179,6 +183,37 @@ static void BleApp_StoreServiceHandles
 static bleResult_t BleApp_ConfigureNotifications
 (
     deviceId_t peerDeviceId
+);
+
+
+static void BleApp_StateMachineHandler_IdleState
+(
+    deviceId_t peerDeviceId,
+    uint8_t event
+);
+
+static void BleApp_StateMachineHandler_ExchangeMtuState
+(
+    deviceId_t peerDeviceId,
+    uint8_t event
+);
+
+static void BleApp_StateMachineHandler_ServiceDiscState
+(
+    deviceId_t peerDeviceId,
+    uint8_t event
+);
+
+static void BleApp_StateMachineHandler_ReadDescriptorState
+(
+    deviceId_t peerDeviceId,
+    uint8_t event
+);
+
+static void BleApp_StateMachineHandler_RunningState
+(
+    deviceId_t peerDeviceId,
+    uint8_t event
 );
 
 /************************************************************************************
@@ -306,6 +341,8 @@ static void BleApp_Config(void)
     }
 
     mScanningOn = FALSE;
+    mFoundDeviceToConnect = FALSE;
+
     /* UI */
     shell_write("\r\nPress SCANSW to connect to a HID Device!\r\n");
 }
@@ -317,36 +354,80 @@ static void BleApp_Config(void)
 ********************************************************************************** */
 static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
 {
+#if gAppUsePrivacy_d && gAppUseBonding_d
+    uint8_t bondedDevicesCnt = 0;
+#endif
+
     switch (pScanningEvent->eventType)
     {
         case gDeviceScanned_c:
         {
-            if (CheckScanEvent(&pScanningEvent->eventData.scannedDevice))
+            if(mFoundDeviceToConnect == FALSE)
             {
-                gConnReqParams.peerAddressType = pScanningEvent->eventData.scannedDevice.addressType;
-                FLib_MemCpy(gConnReqParams.peerAddress,
-                            pScanningEvent->eventData.scannedDevice.aAddress,
-                            sizeof(bleDeviceAddress_t));
+                mFoundDeviceToConnect = CheckScanEvent(&pScanningEvent->eventData.scannedDevice);
 
-                (void)Gap_StopScanning();
+                if (mFoundDeviceToConnect == TRUE)
+                {
+                    gConnReqParams.peerAddressType = pScanningEvent->eventData.scannedDevice.addressType;
+                    FLib_MemCpy(gConnReqParams.peerAddress,
+                                pScanningEvent->eventData.scannedDevice.aAddress,
+                                sizeof(bleDeviceAddress_t));
+
+                    (void)Gap_StopScanning();
 #if gAppUsePrivacy_d
-                gConnReqParams.usePeerIdentityAddress = pScanningEvent->eventData.scannedDevice.advertisingAddressResolved;
+                    gConnReqParams.usePeerIdentityAddress = pScanningEvent->eventData.scannedDevice.advertisingAddressResolved;
 #endif
-                (void)App_Connect(&gConnReqParams, BleApp_ConnectionCallback);
+                }
             }
         }
         break;
+
         case gScanStateChanged_c:
         {
             mScanningOn = !mScanningOn;
             if (mScanningOn)
             {
+                mFoundDeviceToConnect = FALSE;
                 LED_StopFlashingAllLeds();
                 Led1Flashing();
                 shell_write("\r\nScanning...\r\n");
             }
+            else /* Scanning is turned OFF */
+            {
+                if(mFoundDeviceToConnect == TRUE)
+                {
+#if gAppUsePrivacy_d
+                    if(gConnReqParams.peerAddressType == gBleAddrTypeRandom_c)
+                    {
+#if gAppUseBonding_d
+                        /* Check if there are any bonded devices */
+                        Gap_GetBondedDevicesCount(&bondedDevicesCnt);
+
+                        if(bondedDevicesCnt == 0)
+                        {
+                            /* display the unresolved RPA address */
+                            shell_writeHexLe(gConnReqParams.peerAddress, gcBleDeviceAddressSize_c);
+                        }
+                        else
+                        {
+                            mAttemptRpaResolvingAtConnect = TRUE;
+                        }
+#else
+                        /* If bonding is disabled and we receive an RPA address there is nothing to do but display it */
+                        shell_writeHexLe(gConnReqParams.peerAddress, gcBleDeviceAddressSize_c);
+#endif /* gAppUseBonding_d */
+                    }
+#else
+                    /* Display the peer address */
+                    shell_writeHexLe(gConnReqParams.peerAddress, gcBleDeviceAddressSize_c);
+#endif /* gAppUsePrivacy_d */
+
+                    (void)App_Connect(&gConnReqParams, BleApp_ConnectionCallback);
+                }
+            }
         }
         break;
+
     default:
         ; /* For MISRA Compliance */
         break;
@@ -368,6 +449,15 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
     {
         case gConnEvtConnected_c:
         {
+#if gAppUsePrivacy_d && gAppUseBonding_d
+            if(mAttemptRpaResolvingAtConnect == TRUE)
+            {
+                /* If the peer RPA was resolved, the IA is displayed, otherwise the peer RPA address is displayed */
+                shell_writeHexLe(pConnectionEvent->eventData.connectedEvent.peerAddress, gcBleDeviceAddressSize_c);
+                /* clear the flag */
+                mAttemptRpaResolvingAtConnect = FALSE;
+            }
+#endif
             /* UI */
             LED_StopFlashingAllLeds();
             Led1On();
@@ -378,10 +468,11 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             mPeerInformation[peerDeviceId].deviceId = peerDeviceId;
             mPeerInformation[peerDeviceId].isBonded = FALSE;
 
-#if gAppUseBonding_d
-            (void)Gap_CheckIfBonded(peerDeviceId, &mPeerInformation[peerDeviceId].isBonded, NULL);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            bool_t isBonded = FALSE;
+            (void)Gap_CheckIfBonded(peerDeviceId, &isBonded, NULL);
 
-            if ((mPeerInformation[peerDeviceId].isBonded) &&
+            if ((isBonded) &&
                 (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId,
                     (void*) &mPeerInformation[peerDeviceId].customInfo, 0, sizeof (appCustomInfo_t))))
             {
@@ -417,6 +508,13 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             shell_writeDec(peerDeviceId);
             shell_write("!\r\n");
 
+            /* If peer device disconnects the link during Service Discovery, free the allocated buffer */
+            if(mpCharProcBuffer != NULL)
+            {
+                (void)MEM_BufferFree(mpCharProcBuffer);
+                mpCharProcBuffer = NULL;
+            }
+
             /* Check if the last device was disconnected and if so re-enter GAP Limited Discovery Mode */
             uint8_t connectedDevicesNumber = 0U;
             for (uint8_t i = 0U; i < gAppMaxConnections_c; i++)
@@ -440,22 +538,34 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         {
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
             {
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                mPeerInformation[peerDeviceId].isBonded = TRUE;
+#endif
                 BleApp_StateMachineHandler(mPeerInformation[peerDeviceId].deviceId, mAppEvt_PairingComplete_c);
+                shell_write("\r\n-->  GAP Event: Device Paired.\r\n");
             }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            else
+            {
+                mPeerInformation[peerDeviceId].isBonded = FALSE;
+                shell_write("\r\n-->  GAP Event: Pairing Unsuccessful.\r\n");
+            }
+#endif
         }
         break;
 
-#if gAppUseBonding_d
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
         case gConnEvtEncryptionChanged_c:
         {
             if( pConnectionEvent->eventData.encryptionChangedEvent.newEncryptionState )
             {
+                mPeerInformation[peerDeviceId].isBonded = TRUE;
                 if ( (TRUE == mRestoringBondedLink) &&
                      (FALSE == mAuthRejected) )
                 {
                     if( gBleSuccess_c != BleApp_ConfigureNotifications(peerDeviceId) )
                     {
-                        Gap_Disconnect(peerDeviceId);
+                        (void)Gap_Disconnect(peerDeviceId);
                     }
                 }
                 else
@@ -470,14 +580,16 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         {
             /* Start Pairing Procedure */
             mAuthRejected = TRUE;
-            Gap_Pair(peerDeviceId, &gPairingParameters);
+            (void)Gap_Pair(peerDeviceId, &gPairingParameters);
         }
         break;
 #endif /* gAppUseBonding_d */
 #endif /* gAppUsePairing_d */
 
-    default:
-        ; /* For MISRA Compliance */
+        default:
+        {
+          ; /* For MISRA Compliance */
+        }
         break;
     }
 }
@@ -506,7 +618,9 @@ static void BleApp_ServiceDiscoveryCallback(deviceId_t deviceId, servDiscEvent_t
         break;
 
         default:
-            ; /* For MISRA Compliance */
+        {
+            ; /* No action required */
+        }
         break;
     }
 }
@@ -527,32 +641,40 @@ static void BleApp_GattClientCallback(
     bleResult_t             error
 )
 {
-
-    if (procedureResult == gGattProcError_c)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if ((mPeerInformation[serverDeviceId].isBonded) || (mPeerInformation[serverDeviceId].appState != mAppRunning_c))
     {
-        attErrorCode_t attError = (attErrorCode_t)((uint8_t)error);
-
-        if (attError == gAttErrCodeInsufficientEncryption_c     ||
-            attError == gAttErrCodeInsufficientAuthorization_c  ||
-            attError == gAttErrCodeInsufficientAuthentication_c)
+#endif
+        if (procedureResult == gGattProcError_c)
         {
-            /* Start Pairing Procedure */
-            (void)Gap_Pair(serverDeviceId, &gPairingParameters);
+            attErrorCode_t attError = (attErrorCode_t)((uint8_t)error);
+
+            if (attError == gAttErrCodeInsufficientEncryption_c     ||
+                attError == gAttErrCodeInsufficientAuthorization_c  ||
+                attError == gAttErrCodeInsufficientAuthentication_c)
+            {
+                /* Start Pairing Procedure */
+#if (defined(gAppUsePairing_d) && (gAppUsePairing_d == 1U))
+                (void)Gap_Pair(serverDeviceId, &gPairingParameters);
+#endif /* gAppUsePairing_d */
+            }
+
+            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
+        }
+        else if (procedureResult == gGattProcSuccess_c)
+        {
+            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
+        }
+        else
+        {
+            /* For MISRA Compliance */
         }
 
-        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
+        /* Signal Service Discovery Module */
+        BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType, procedureResult, error);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
-    else if (procedureResult == gGattProcSuccess_c)
-    {
-        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
-    }
-    else
-    {
-        /* For MISRA Compliance */
-    }
-
-    /* Signal Service Discovery Module */
-    BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType, procedureResult, error);
+#endif
 }
 
 /*! *********************************************************************************
@@ -571,22 +693,29 @@ static void BleApp_GattNotificationCallback
     uint16_t    valueLength
 )
 {
-    union {
-        uint8_t* aValueTemp;
-        mouseHidReport_t* pReportTemp;
-    }mouseValues;
-    mouseValues.aValueTemp = aValue;
-
-    if (characteristicValueHandle == mPeerInformation[serverDeviceId].customInfo.hidClientConfig.hHidReport)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if (mPeerInformation[serverDeviceId].isBonded)
     {
-        mouseHidReport_t *pReport = mouseValues.pReportTemp;
-        shell_write("\r\nReceived HID Report from device ");
-        shell_writeDec(serverDeviceId);
-        shell_write(": X: ");
-        shell_writeHex(&pReport->xAxis, sizeof(uint8_t));
-        shell_write(" Y: ");
-        shell_writeHex(&pReport->yAxis, sizeof(uint8_t));
+#endif
+      union {
+          uint8_t* aValueTemp;
+          mouseHidReport_t* pReportTemp;
+      }mouseValues;
+      mouseValues.aValueTemp = aValue;
+
+      if (characteristicValueHandle == mPeerInformation[serverDeviceId].customInfo.hidClientConfig.hHidReport)
+      {
+          mouseHidReport_t *pReport = mouseValues.pReportTemp;
+          shell_write("\r\nReceived HID Report from device ");
+          shell_writeDec(serverDeviceId);
+          shell_write(": X: ");
+          shell_writeHex(&pReport->xAxis, sizeof(uint8_t));
+          shell_write(" Y: ");
+          shell_writeHex(&pReport->yAxis, sizeof(uint8_t));
+      }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
+#endif
 }
 
 /*! *********************************************************************************
@@ -688,7 +817,6 @@ static bool_t CheckScanEvent(gapScannedDevice_t* pData)
             shell_writeN((char*)name, (uint16_t)nameLength-1U);
             SHELL_NEWLINE();
         }
-        shell_writeHexLe(pData->aAddress, 6);
     }
     return foundMatch;
 }
@@ -699,128 +827,31 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, uint8_t event)
     {
         case mAppIdle_c:
         {
-            if (event == mAppEvt_PeerConnected_c)
-            {
-#if gAppUseBonding_d
-                if ( mRestoringBondedLink &&
-                    (mPeerInformation[peerDeviceId].customInfo.hidClientConfig.hHidReportCccd != gGattDbInvalidHandle_d) )
-                {
-                    /* Moving to Running State and wait for Link encryption result */
-                    mPeerInformation[peerDeviceId].appState = mAppRunning_c;
-                }
-                else
-#endif
-                {
-                    /* Moving to Exchange MTU State */
-                    mPeerInformation[peerDeviceId].appState = mAppExchangeMtu_c;
-                (void)GattClient_ExchangeMtu(peerDeviceId, gAttMaxMtu_c);
-                }
-            }
+            BleApp_StateMachineHandler_IdleState(peerDeviceId, event);
         }
         break;
 
         case mAppExchangeMtu_c:
         {
-            if (event == mAppEvt_GattProcComplete_c)
-            {
-                /* Moving to Primary Service Discovery State*/
-                mPeerInformation[peerDeviceId].appState = mAppServiceDisc_c;
-
-                /* Start Service Discovery*/
-                if( gBleSuccess_c != BleServDisc_Start(peerDeviceId) )
-                {
-                    Gap_Disconnect(peerDeviceId);
-                }
-            }
-            else if (event == mAppEvt_GattProcError_c)
-            {
-                (void)Gap_Disconnect(peerDeviceId);
-            }
+            BleApp_StateMachineHandler_ExchangeMtuState(peerDeviceId, event);
         }
         break;
 
         case mAppServiceDisc_c:
         {
-            if (event == mAppEvt_ServiceDiscoveryComplete_c)
-            {
-            	/* Moving to Primary Service Discovery State*/
-                mPeerInformation[peerDeviceId].appState = mAppReadDescriptor_c;
-
-                if (mPeerInformation[peerDeviceId].customInfo.hidClientConfig.hHidReportCccd != gGattDbInvalidHandle_d)
-                {
-                    mpCharProcBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) + gAttDefaultMtu_c);
-                    if (mpCharProcBuffer == NULL)
-                    {
-                        Gap_Disconnect(peerDeviceId);
-                    }
-                    else
-                    {
-                        mpCharProcBuffer->handle = mPeerInformation[peerDeviceId].customInfo.hidClientConfig.hHidReportCccd;
-                        mpCharProcBuffer->paValue = (uint8_t*)(mpCharProcBuffer + 1);
-                    GattClient_ReadCharacteristicDescriptor(mPeerInformation[peerDeviceId].deviceId, mpCharProcBuffer ,23);
-                    }
-                }
-            }
-            else if (event == mAppEvt_ServiceDiscoveryFailed_c)
-            {
-                (void)Gap_Disconnect(peerDeviceId);
-            }
+            BleApp_StateMachineHandler_ServiceDiscState(peerDeviceId, event);
         }
         break;
 
         case mAppReadDescriptor_c:
         {
-            if (event == mAppEvt_GattProcComplete_c)
-            {
-                if (mPeerInformation[peerDeviceId].customInfo.hidClientConfig.hHidReportCccd != gGattDbInvalidHandle_d)
-                {
-                    if( gBleSuccess_c != BleApp_ConfigureNotifications(peerDeviceId) )
-                    {
-                        Gap_Disconnect(peerDeviceId);
-                    }
-                    else
-                    {
-                        /* Moving to Running State*/
-                        mPeerInformation[peerDeviceId].appState = mAppRunning_c;
-                    }
-                }
-            }
-            else if (event == mAppEvt_PairingComplete_c)
-            {
-                /* Continue after pairing is complete */
-                (void)GattClient_ReadCharacteristicDescriptor(peerDeviceId, mpCharProcBuffer ,23);
-            }
-            else
-            {
-                /* For MISRA Compliance */
-            }
+            BleApp_StateMachineHandler_ReadDescriptorState(peerDeviceId, event);
         }
         break;
 
         case mAppRunning_c:
         {
-            if (event == mAppEvt_GattProcComplete_c)
-            {
-                if (mpCharProcBuffer != NULL)
-                {
-                    (void)MEM_BufferFree(mpCharProcBuffer);
-                    mpCharProcBuffer = NULL;
-                }
-
-#if gAppUseBonding_d
-                /* Write data in NVM */
-                (void)Gap_SaveCustomPeerInformation(peerDeviceId,
-                                              (void*) &mPeerInformation[peerDeviceId].customInfo, 0,
-                                              sizeof (appCustomInfo_t));
-#endif
-            }
-            else if (event == mAppEvt_PairingComplete_c)
-            {
-                if( gBleSuccess_c != BleApp_ConfigureNotifications(peerDeviceId) )
-                {
-                    Gap_Disconnect(peerDeviceId);
-                }
-            }
+            BleApp_StateMachineHandler_RunningState(peerDeviceId, event);
         }
         break;
     default:
@@ -844,9 +875,9 @@ static bleResult_t BleApp_ConfigureNotifications(deviceId_t peerDeviceId)
         mpCharProcBuffer->handle = mPeerInformation[peerDeviceId].customInfo.hidClientConfig.hHidReportCccd;
         mpCharProcBuffer->uuid.uuid16 = gBleSig_CCCD_d;
         mpCharProcBuffer->valueLength = 0;
-        GattClient_WriteCharacteristicDescriptor(peerDeviceId,
-                                                 mpCharProcBuffer,
-                                                 sizeof(value), (void*)&value);
+        (void)GattClient_WriteCharacteristicDescriptor(peerDeviceId,
+                                                       mpCharProcBuffer,
+                                                       (uint16_t)sizeof(value), (void*)&value);
     }
     else
     {
@@ -856,6 +887,139 @@ static bleResult_t BleApp_ConfigureNotifications(deviceId_t peerDeviceId)
     return result;
 }
 
+static void BleApp_StateMachineHandler_IdleState(deviceId_t peerDeviceId, uint8_t event)
+{
+    if (event == mAppEvt_PeerConnected_c)
+    {
+#if gAppUseBonding_d
+        if (mRestoringBondedLink &&
+            (mPeerInformation[peerDeviceId].customInfo.hidClientConfig.hHidReportCccd != gGattDbInvalidHandle_d) )
+        {
+            /* Moving to Running State and wait for Link encryption result */
+            mPeerInformation[peerDeviceId].appState = mAppRunning_c;
+        }
+        else
+#endif
+        {
+            /* Moving to Exchange MTU State */
+            mPeerInformation[peerDeviceId].appState = mAppExchangeMtu_c;
+            (void)GattClient_ExchangeMtu(peerDeviceId, gAttMaxMtu_c);
+        }
+    }
+}
+
+static void BleApp_StateMachineHandler_ExchangeMtuState(deviceId_t peerDeviceId, uint8_t event)
+{
+    if (event == mAppEvt_GattProcComplete_c)
+    {
+        /* Moving to Primary Service Discovery State*/
+        mPeerInformation[peerDeviceId].appState = mAppServiceDisc_c;
+
+        /* Start Service Discovery*/
+        if (gBleSuccess_c != BleServDisc_Start(peerDeviceId) )
+        {
+            (void)Gap_Disconnect(peerDeviceId);
+        }
+    }
+    else if (event == mAppEvt_GattProcError_c)
+    {
+        (void)Gap_Disconnect(peerDeviceId);
+    }
+    else
+    {
+        ; /* For MISRA rule 15.7 compliance */
+    }
+}
+
+static void BleApp_StateMachineHandler_ServiceDiscState(deviceId_t peerDeviceId, uint8_t event)
+{
+    if (event == mAppEvt_ServiceDiscoveryComplete_c)
+    {
+        /* Moving to Primary Service Discovery State*/
+        mPeerInformation[peerDeviceId].appState = mAppReadDescriptor_c;
+
+        if (mPeerInformation[peerDeviceId].customInfo.hidClientConfig.hHidReportCccd != gGattDbInvalidHandle_d)
+        {
+            mpCharProcBuffer = MSG_Alloc(sizeof(gattAttribute_t) + gAttDefaultMtu_c);
+            if (mpCharProcBuffer == NULL)
+            {
+                (void)Gap_Disconnect(peerDeviceId);
+            }
+            else
+            {
+                mpCharProcBuffer->handle = mPeerInformation[peerDeviceId].customInfo.hidClientConfig.hHidReportCccd;
+                mpCharProcBuffer->paValue = (uint8_t*)(mpCharProcBuffer + 1);
+                (void)GattClient_ReadCharacteristicDescriptor(mPeerInformation[peerDeviceId].deviceId, mpCharProcBuffer ,23);
+            }
+        }
+    }
+    else if (event == mAppEvt_ServiceDiscoveryFailed_c)
+    {
+        (void)Gap_Disconnect(peerDeviceId);
+    }
+    else
+    {
+        ; /* For MISRA rule 15.7 compliance */
+    }
+}
+
+static void BleApp_StateMachineHandler_ReadDescriptorState(deviceId_t peerDeviceId, uint8_t event)
+{
+    if (event == mAppEvt_GattProcComplete_c)
+    {
+        if (mPeerInformation[peerDeviceId].customInfo.hidClientConfig.hHidReportCccd != gGattDbInvalidHandle_d)
+        {
+            if( gBleSuccess_c != BleApp_ConfigureNotifications(peerDeviceId) )
+            {
+                (void)Gap_Disconnect(peerDeviceId);
+            }
+            else
+            {
+                /* Moving to Running State*/
+                mPeerInformation[peerDeviceId].appState = mAppRunning_c;
+            }
+        }
+    }
+    else if (event == mAppEvt_PairingComplete_c)
+    {
+        /* Continue after pairing is complete */
+        (void)GattClient_ReadCharacteristicDescriptor(peerDeviceId, mpCharProcBuffer ,23);
+    }
+    else
+    {
+        ;/* For MISRA Compliance */
+    }
+}
+
+static void BleApp_StateMachineHandler_RunningState(deviceId_t peerDeviceId, uint8_t event)
+{
+    if (event == mAppEvt_GattProcComplete_c)
+    {
+        if (mpCharProcBuffer != NULL)
+        {
+            (void)MSG_Free(mpCharProcBuffer);
+            mpCharProcBuffer = NULL;
+        }
+
+#if gAppUseBonding_d
+        /* Write data in NVM */
+        (void)Gap_SaveCustomPeerInformation(peerDeviceId,
+                                      (void*) &mPeerInformation[peerDeviceId].customInfo, 0,
+                                      sizeof (appCustomInfo_t));
+#endif
+    }
+    else if (event == mAppEvt_PairingComplete_c)
+    {
+        if( gBleSuccess_c != BleApp_ConfigureNotifications(peerDeviceId) )
+        {
+            (void)Gap_Disconnect(peerDeviceId);
+        }
+    }
+    else
+    {
+        ;/* For MISRA Compliance */
+    }
+}
 /*! *********************************************************************************
 * @}
 ********************************************************************************** */

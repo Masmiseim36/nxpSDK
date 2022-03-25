@@ -1,6 +1,6 @@
 '''
 * Copyright 2014-2015 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
+* Copyright 2016-2020 NXP
 * All rights reserved.
 *
 * SPDX-License-Identifier: BSD-3-Clause
@@ -74,6 +74,7 @@ class Spec(object):
         self.GATTDBDynamicRemoveServiceRequestFrame = self.InitGATTDBDynamicRemoveServiceRequest()
         self.GATTDBDynamicRemoveCharacteristicRequestFrame = self.InitGATTDBDynamicRemoveCharacteristicRequest()
         self.GATTDBDynamicAddCharDescriptorWithUniqueValueRequestFrame = self.InitGATTDBDynamicAddCharDescriptorWithUniqueValueRequest()
+        self.GATTDBDynamicEndDatabaseUpdateRequestFrame = self.InitGATTDBDynamicEndDatabaseUpdateRequest()
         self.BLEHostInitializeRequestFrame = self.InitBLEHostInitializeRequest()
         self.GAPRegisterDeviceSecurityRequirementsRequestFrame = self.InitGAPRegisterDeviceSecurityRequirementsRequest()
         self.GAPSetAdvertisingParametersRequestFrame = self.InitGAPSetAdvertisingParametersRequest()
@@ -141,6 +142,12 @@ class Spec(object):
         self.GAPSetChannelMapRequestFrame = self.InitGAPSetChannelMapRequest()
         self.GAPReadChannelMapRequestFrame = self.InitGAPReadChannelMapRequest()
         self.GAPSetPrivacyModeRequestFrame = self.InitGAPSetPrivacyModeRequest()
+        self.ControllerSetScanDupFiltModeRequestFrame = self.InitControllerSetScanDupFiltModeRequest()
+        self.GAPReadControllerLocalRPARequestFrame = self.InitGAPReadControllerLocalRPARequest()
+        self.WritePublicDeviceAddressRequestFrame = self.InitWritePublicDeviceAddressRequest()
+        self.GAPCheckNvmIndexRequestFrame = self.InitGAPCheckNvmIndexRequest()
+        self.GAPGetDeviceIdFromConnHandleRequestFrame = self.InitGAPGetDeviceIdFromConnHandleRequest()
+        self.GAPGetConnectionHandleFromDeviceIdFrame = self.InitGAPGetConnectionHandleFromDeviceId()
         self.GAPSetExtAdvertisingParametersRequestFrame = self.InitGAPSetExtAdvertisingParametersRequest()
         self.GAPStartExtAdvertisingRequestFrame = self.InitGAPStartExtAdvertisingRequest()
         self.GAPRemoveAdvertisingSetRequestFrame = self.InitGAPRemoveAdvertisingSetRequest()
@@ -153,6 +160,7 @@ class Spec(object):
         self.GAPSetPeriodicAdvertisingDataRequestFrame = self.InitGAPSetPeriodicAdvertisingDataRequest()
         self.GAPPeriodicAdvCreateSyncRequestFrame = self.InitGAPPeriodicAdvCreateSyncRequest()
         self.GAPPeriodicAdvTerminateSyncRequestFrame = self.InitGAPPeriodicAdvTerminateSyncRequest()
+        self.ControllerConfigureAdvCodingSchemeRequestFrame = self.InitControllerConfigureAdvCodingSchemeRequest()
         self.FSCICPUResetRequestFrame = self.InitFSCICPUResetRequest()
         self.FSCIGetNumberOfFreeBuffersRequestFrame = self.InitFSCIGetNumberOfFreeBuffersRequest()
         self.FSCIAllowDeviceToSleepRequestFrame = self.InitFSCIAllowDeviceToSleepRequest()
@@ -171,6 +179,7 @@ class Spec(object):
         self.L2CAPCBLocalCreditsNotificationIndicationFrame = self.InitL2CAPCBLocalCreditsNotificationIndication()
         self.L2CAPCBLeCbDataIndicationFrame = self.InitL2CAPCBLeCbDataIndication()
         self.L2CAPCBErrorIndicationFrame = self.InitL2CAPCBErrorIndication()
+        self.L2CAPCBChannelStatusNotificationIndicationFrame = self.InitL2CAPCBChannelStatusNotificationIndication()
         self.GATTConfirmFrame = self.InitGATTConfirm()
         self.GATTGetMtuIndicationFrame = self.InitGATTGetMtuIndication()
         self.GATTClientProcedureExchangeMtuIndicationFrame = self.InitGATTClientProcedureExchangeMtuIndication()
@@ -283,7 +292,7 @@ class Spec(object):
         self.GAPAdvertisingEventAdvertisingSetTerminatedIndicationFrame = self.InitGAPAdvertisingEventAdvertisingSetTerminatedIndication()
         self.GAPAdvertisingEventExtAdvertisingSetRemoveCompletedIndicationFrame = self.InitGAPAdvertisingEventExtAdvertisingSetRemoveCompletedIndication()
         self.GAPAdvertisingEventExtScanReqReceivedIndicationFrame = self.InitGAPAdvertisingEventExtScanReqReceivedIndication()
-        self.GAPAdvertisingEventPeriodicAdvertisingStateChangedIndicationFrame = self.InitGAPAdvertisingEventPeriodicAdvertisingStateChangedIndication()
+        self.GAPGenericEventPeriodicAdvertisingStateChangedIndicationFrame = self.InitGAPGenericEventPeriodicAdvertisingStateChangedIndication()
         self.GAPScanningEventExtDeviceScannedIndicationFrame = self.InitGAPScanningEventExtDeviceScannedIndication()
         self.GAPScanningEventPeriodicAdvSyncEstablishedIndicationFrame = self.InitGAPScanningEventPeriodicAdvSyncEstablishedIndication()
         self.GAPScanningEventPeriodicAdvSyncTerminatedIndicationFrame = self.InitGAPScanningEventPeriodicAdvSyncTerminatedIndication()
@@ -292,6 +301,10 @@ class Spec(object):
         self.GAPGenericEventPeriodicAdvCreateSyncCancelledIndicationFrame = self.InitGAPGenericEventPeriodicAdvCreateSyncCancelledIndication()
         self.GAPConnectionEventChannelSelectionAlgorithm2IndicationFrame = self.InitGAPConnectionEventChannelSelectionAlgorithm2Indication()
         self.GAPGenericEventTxEntryAvailableIndicationFrame = self.InitGAPGenericEventTxEntryAvailableIndication()
+        self.GAPGenericEventControllerLocalRPAReadIndicationFrame = self.InitGAPGenericEventControllerLocalRPAReadIndication()
+        self.GAPCheckNvmIndexIndicationFrame = self.InitGAPCheckNvmIndexIndication()
+        self.GAPGetDeviceIdFromConnHandleIndicationFrame = self.InitGAPGetDeviceIdFromConnHandleIndication()
+        self.GAPGetConnectionHandleFromDeviceIdIndicationFrame = self.InitGAPGetConnectionHandleFromDeviceIdIndication()
 
 
     def InitL2CAPCBRegisterLeCbCallbacksRequest(self):
@@ -931,6 +944,10 @@ class Spec(object):
         cmdParams.append(DescriptorAccessPermissions)
         return FsciFrameDescription(0x46, 0x13, cmdParams)
 
+    def InitGATTDBDynamicEndDatabaseUpdateRequest(self):
+        cmdParams = []
+        return FsciFrameDescription(0x46, 0x14, cmdParams)
+
     def InitBLEHostInitializeRequest(self):
         cmdParams = []
         return FsciFrameDescription(0x48, 0x01, cmdParams)
@@ -1493,6 +1510,46 @@ class Spec(object):
         cmdParams.append(PrivacyMode)
         return FsciFrameDescription(0x48, 0x45, cmdParams)
 
+    def InitControllerSetScanDupFiltModeRequest(self):
+        cmdParams = []
+        Mode = FsciParameter("Mode", 1)
+        cmdParams.append(Mode)
+        return FsciFrameDescription(0x48, 0x46, cmdParams)
+
+    def InitGAPReadControllerLocalRPARequest(self):
+        cmdParams = []
+        PeerIdentityAddressType = FsciParameter("PeerIdentityAddressType", 1)
+        cmdParams.append(PeerIdentityAddressType)
+        PeerIdentityAddress = FsciParameter("PeerIdentityAddress", 6)
+        cmdParams.append(PeerIdentityAddress)
+        return FsciFrameDescription(0x48, 0x47, cmdParams)
+
+    def InitWritePublicDeviceAddressRequest(self):
+        cmdParams = []
+        CPUReset = FsciParameter("CPUReset", 1)
+        cmdParams.append(CPUReset)
+        BluetoothAddress = FsciParameter("BluetoothAddress", 6)
+        cmdParams.append(BluetoothAddress)
+        return FsciFrameDescription(0x48, 0x48, cmdParams)
+
+    def InitGAPCheckNvmIndexRequest(self):
+        cmdParams = []
+        NvmIndex = FsciParameter("NvmIndex", 1)
+        cmdParams.append(NvmIndex)
+        return FsciFrameDescription(0x48, 0x49, cmdParams)
+
+    def InitGAPGetDeviceIdFromConnHandleRequest(self):
+        cmdParams = []
+        ConnHandle = FsciParameter("ConnHandle", 2)
+        cmdParams.append(ConnHandle)
+        return FsciFrameDescription(0x48, 0x4A, cmdParams)
+
+    def InitGAPGetConnectionHandleFromDeviceId(self):
+        cmdParams = []
+        DeviceId = FsciParameter("DeviceId", 1)
+        cmdParams.append(DeviceId)
+        return FsciFrameDescription(0x48, 0x4B, cmdParams)
+
     def InitGAPSetExtAdvertisingParametersRequest(self):
         cmdParams = []
         SID = FsciParameter("SID", 1)
@@ -1553,14 +1610,7 @@ class Spec(object):
 
     def InitGAPUpdatePeriodicAdvListRequest(self):
         cmdParams = []
-        Operation = FsciParameter("Operation", 1)
-        cmdParams.append(Operation)
-        DeviceAddressType = FsciParameter("DeviceAddressType", 1)
-        cmdParams.append(DeviceAddressType)
-        DeviceAddress = FsciParameter("DeviceAddress", 6)
-        cmdParams.append(DeviceAddress)
-        SID = FsciParameter("SID", 1)
-        cmdParams.append(SID)
+        # not generated, pickle() is used instead; see frames.py
         return FsciFrameDescription(0x48, 0x54, cmdParams)
 
     def InitGAPSetPeriodicAdvParametersRequest(self):
@@ -1619,6 +1669,11 @@ class Spec(object):
         cmdParams.append(SyncHandle)
         return FsciFrameDescription(0x48, 0x5B, cmdParams)
 
+    def InitControllerConfigureAdvCodingSchemeRequest(self):
+        cmdParams = []
+        CodingScheme = FsciParameter("CodingScheme", 1)
+        cmdParams.append(CodingScheme)
+        return FsciFrameDescription(0x48, 0x5C, cmdParams)
 
     def InitFSCICPUResetRequest(self):
         cmdParams = []
@@ -1676,7 +1731,6 @@ class Spec(object):
         cmdParams.append(WakeUpReason)
         return FsciFrameDescription(0xA4, 0x72, cmdParams)
 
-
     def InitL2CAPCBConfirm(self):
         cmdParams = []
         Status = FsciParameter("Status", 2)
@@ -1724,6 +1778,18 @@ class Spec(object):
         cmdParams = []
         # not generated, cursor based approach in observer; see events.py
         return FsciFrameDescription(0x42, 0x87, cmdParams)
+
+    def InitL2CAPCBChannelStatusNotificationIndication(self):
+        cmdParams = []
+        InformationIncluded = FsciParameter("InformationIncluded", 1)
+        cmdParams.append(InformationIncluded)
+        DeviceId = FsciParameter("DeviceId", 1)
+        cmdParams.append(DeviceId)
+        SrcCid = FsciParameter("SrcCid", 2)
+        cmdParams.append(SrcCid)
+        ChannelStatus = FsciParameter("ChannelStatus", 1)
+        cmdParams.append(ChannelStatus)
+        return FsciFrameDescription(0x42, 0x88, cmdParams)
 
     def InitGATTConfirm(self):
         cmdParams = []
@@ -2501,7 +2567,6 @@ class Spec(object):
         cmdParams.append(GapLeScKeypressNotificationParams_keypressNotifType)
         return FsciFrameDescription(0x48, 0xB3, cmdParams)
 
-
     def InitGAPLeScPublicKeyRegeneratedIndication(self):
         cmdParams = []
         return FsciFrameDescription(0x48, 0xB5, cmdParams)
@@ -2647,7 +2712,7 @@ class Spec(object):
         cmdParams.append(ScannerAddressResolved)
         return FsciFrameDescription(0x48, 0xC9, cmdParams)
 
-    def InitGAPAdvertisingEventPeriodicAdvertisingStateChangedIndication(self):
+    def InitGAPGenericEventPeriodicAdvertisingStateChangedIndication(self):
         cmdParams = []
         return FsciFrameDescription(0x48, 0xCA, cmdParams)
 
@@ -2732,3 +2797,28 @@ class Spec(object):
         DeviceId = FsciParameter("DeviceId", 1)
         cmdParams.append(DeviceId)
         return FsciFrameDescription(0x48, 0xD2, cmdParams)
+
+    def InitGAPGenericEventControllerLocalRPAReadIndication(self):
+        cmdParams = []
+        Address = FsciParameter("Address", 6)
+        cmdParams.append(Address)
+        return FsciFrameDescription(0x48, 0xD3, cmdParams)
+
+    def InitGAPCheckNvmIndexIndication(self):
+        cmdParams = []
+        IsFree = FsciParameter("IsFree", 1)
+        cmdParams.append(IsFree)
+        return FsciFrameDescription(0x48, 0xD4, cmdParams)
+
+    def InitGAPGetDeviceIdFromConnHandleIndication(self):
+        cmdParams = []
+        DeviceId = FsciParameter("DeviceId", 1)
+        cmdParams.append(DeviceId)
+        return FsciFrameDescription(0x48, 0xD5, cmdParams)
+
+    def InitGAPGetConnectionHandleFromDeviceIdIndication(self):
+        cmdParams = []
+        ConnectionHandle = FsciParameter("ConnectionHandle", 2)
+        cmdParams.append(ConnectionHandle)
+        return FsciFrameDescription(0x48, 0xD6, cmdParams)
+

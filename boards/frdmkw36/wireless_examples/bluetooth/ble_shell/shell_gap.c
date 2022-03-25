@@ -4,7 +4,7 @@
  ********************************************************************************** */
 /*! *********************************************************************************
 * Copyright (c) 2015, Freescale Semiconductor, Inc.
-* Copyright 2016-2020 NXP
+* Copyright 2016-2020, 2022 NXP
 * All rights reserved.
 *
 * \file
@@ -2610,6 +2610,13 @@ void ShellGap_GenericCallback (gapGenericEvent_t* pGenericEvent)
             break;
         }
 
+        case gPeriodicAdvertisingStateChanged_c:
+        {
+            /* Operation succeeded */
+            shell_write("Periodic Advertising state changed successfully!\r\n");
+            break;
+        }
+
         case gPeriodicAdvCreateSyncCancelled_c:
         {
             /* Periodic advertising create sync command was successfully cancelled */
@@ -2702,7 +2709,6 @@ void ShellGap_AdvertisingCallback
     switch (pAdvertisingEvent->eventType)
     {
         case gAdvertisingStateChanged_c:
-        case gPeriodicAdvertisingStateChanged_c:
         case gExtAdvertisingStateChanged_c:
         {
             /* Operation succeeded */

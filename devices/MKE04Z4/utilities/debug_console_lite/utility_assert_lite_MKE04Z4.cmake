@@ -1,0 +1,12 @@
+include_guard(GLOBAL)
+message("utility_assert_lite component is included.")
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/fsl_assert.c
+)
+
+
+include(component_uart_adapter_MKE04Z4)
+
+include(utility_debug_console_lite_MKE04Z4)
+

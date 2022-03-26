@@ -253,9 +253,6 @@
     <source path="boards/evkmimxrt1160/aws_examples/greengrass_discovery_wifi_nxp/cm7" project_relative_path="source" type="c_preinclude">
       <files mask="app_config.h"/>
     </source>
-    <source path="boards/evkmimxrt1160/aws_examples/greengrass_discovery_wifi_nxp/cm7" project_relative_path="source" type="c_include">
-      <files mask="wifi_config.h"/>
-    </source>
     <source path="boards/evkmimxrt1160/aws_examples/greengrass_discovery_wifi_nxp/cm7" project_relative_path="board" type="src">
       <files mask="sdmmc_config.c"/>
       <files mask="wifi_bt_config.c"/>
@@ -275,6 +272,9 @@
     </source>
     <source path="boards/evkmimxrt1160/aws_examples/greengrass_discovery_wifi_nxp/cm7/config_files" project_relative_path="source" type="c_include">
       <files mask="aws_mbedtls_config.h"/>
+    </source>
+    <source path="boards/evkmimxrt1160/aws_examples/greengrass_discovery_wifi_nxp/cm7" project_relative_path="source" type="c_include">
+      <files mask="wifi_config.h"/>
     </source>
     <source path="boards/evkmimxrt1160/aws_examples/greengrass_discovery_wifi_nxp/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

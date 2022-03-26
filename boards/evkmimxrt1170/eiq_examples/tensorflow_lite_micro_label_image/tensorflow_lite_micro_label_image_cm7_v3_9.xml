@@ -241,10 +241,8 @@
       <files mask="labels.txt"/>
       <files mask="stopwatch.bmp"/>
     </source>
-    <source path="middleware/eiq/tensorflow-lite/examples/label_image" project_relative_path="source/model" type="src">
-      <files mask="model_mobilenet_ops_micro.cpp"/>
-    </source>
     <source path="middleware/eiq/tensorflow-lite/examples" project_relative_path="source/model" type="src">
+      <files mask="model_all_ops_micro.cpp"/>
       <files mask="model.cpp"/>
     </source>
     <source path="middleware/eiq/tensorflow-lite/examples/image" project_relative_path="source" type="src">

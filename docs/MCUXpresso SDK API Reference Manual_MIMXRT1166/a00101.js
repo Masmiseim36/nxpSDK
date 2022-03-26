@@ -1,6 +1,6 @@
 var a00101 =
 [
-    [ "xrdc2_master_domain_assignment_t", "a00101.html#a00712", [
+    [ "xrdc2_master_domain_assignment_t", "a00101.html#a00713", [
       [ "lock", "a00101.html#a97dc7cfb1ce5992a158ad7e35f816d8f", null ],
       [ "privilegeAttr", "a00101.html#ac573e4993fbe0bcbcb4f63b5144f5048", null ],
       [ "secureAttr", "a00101.html#aece0c44e2947be1ae89383f64acc704d", null ],
@@ -8,17 +8,17 @@ var a00101 =
       [ "mask", "a00101.html#a84aca3b53b113fde4e2ace646e1baa0a", null ],
       [ "match", "a00101.html#a73cc772104b8a8593dc13a321e07a609", null ]
     ] ],
-    [ "xrdc2_periph_access_config_t", "a00101.html#a00715", [
+    [ "xrdc2_periph_access_config_t", "a00101.html#a00716", [
       [ "lockMode", "a00101.html#a4291b029bc5d94c2aec144b4864f6d48", null ],
       [ "policy", "a00101.html#ab732f0519259dc8f4156767b8ccb1ab3", null ]
     ] ],
-    [ "xrdc2_mem_access_config_t", "a00101.html#a00713", [
+    [ "xrdc2_mem_access_config_t", "a00101.html#a00714", [
       [ "startAddr", "a00101.html#a4b665998884f8b4e8792de6f09115066", null ],
       [ "endAddr", "a00101.html#ad1f926f6021f8b1337de2750aa2c0b22", null ],
       [ "lockMode", "a00101.html#a8467a6a117051ac6a2fad5cd86ff15ca", null ],
       [ "policy", "a00101.html#a53fe927af53a40f1ee52f788a3154258", null ]
     ] ],
-    [ "xrdc2_mem_slot_access_config_t", "a00101.html#a00714", [
+    [ "xrdc2_mem_slot_access_config_t", "a00101.html#a00715", [
       [ "lockMode", "a00101.html#a34afa94bceafdb1170bd94975892b05c", null ],
       [ "policy", "a00101.html#a7922ad64bc07eab8312a31e5d82a03c1", null ]
     ] ],

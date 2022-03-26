@@ -1,6 +1,6 @@
 var a00100 =
 [
-    [ "xecc_config_t", "a00100.html#a00716", [
+    [ "xecc_config_t", "a00100.html#a00717", [
       [ "enableXECC", "a00100.html#af5cdb3d7afa8ddd6134f94329cd07407", null ],
       [ "enableWriteECC", "a00100.html#a730b714840994ca6bff7647585b75384", null ],
       [ "enableReadECC", "a00100.html#af6798bd6d4bbf37a0e9b82de53a4ef9c", null ],
@@ -14,14 +14,14 @@ var a00100 =
       [ "Region3BaseAddress", "a00100.html#aacec9aa3efca391b25bcb60dbebc5d9a", null ],
       [ "Region3EndAddress", "a00100.html#a7955903ef689e62300fc01157492d466", null ]
     ] ],
-    [ "xecc_single_error_info_t", "a00100.html#a00718", [
+    [ "xecc_single_error_info_t", "a00100.html#a00719", [
       [ "singleErrorAddress", "a00100.html#a7b41aa06671c0bca43a1db5980276ea6", null ],
       [ "singleErrorData", "a00100.html#a02b8cb0f493cb7d96921ea2085fdf2b4", null ],
       [ "singleErrorEccCode", "a00100.html#ac442e263d4069ee1f8aeeb1c33641c24", null ],
       [ "singleErrorBitPos", "a00100.html#a0079773797fc7c63daf5e43634d81ba6", null ],
       [ "singleErrorBitField", "a00100.html#a4330d9b53375d5174bade0ce32ab0a69", null ]
     ] ],
-    [ "xecc_multi_error_info_t", "a00100.html#a00717", [
+    [ "xecc_multi_error_info_t", "a00100.html#a00718", [
       [ "multiErrorAddress", "a00100.html#a83d0d9d720b7dbb036fe7fc5435f882c", null ],
       [ "multiErrorData", "a00100.html#a6e45cb1653531f4c19b09d5087f829a1", null ],
       [ "multiErrorEccCode", "a00100.html#a72c34a2de807dcf83cb9dde85fb189d8", null ],

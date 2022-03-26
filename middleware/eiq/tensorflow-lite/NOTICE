@@ -1,0 +1,4 @@
+This product includes Cadence HiFi4 Neural Network (NN) Library for devices with
+Xtensa core (i.MX RT685 and i.MX RT595), which is available under a proprietary
+license (see third_party/xa_nnlib_hifi4/license.txt) at
+https://github.com/foss-xtensa/nnlib-hifi4.

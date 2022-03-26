@@ -1,0 +1,70 @@
+SD8987 WIRELESS FIRMWARE
+========================
+
+Here are the details about the SD8987 firmware:
+
+1. Firmware Name:      SD-WLAN-UART-BT-8987-U16-MMC-W16.91.21.p32-16.91.21.p32-C4X16673-GPL
+
+SD8801 WIRELESS FIRMWARE
+========================
+
+Here are the details about the SD8801 firmware:
+
+1. Firmware Name:      SD-UAPSTA-8801-U16-MMC-W14.91.36.p191.3-C4X14679_R0-GPL
+
+SD8801 MANUFACTURING FIRMWARE
+==============================
+
+Here are the details of the SD8801 manufacturing firmware:
+
+1. Firmware Name:      MFG-W8801-MF-WIFI-BRG-FC13-WIN-X86-2.0.0.92-14.1.36.p140
+
+SD8977 WIRELESS FIRMWARE
+========================
+
+Here are the details about the SD8977 firmware:
+
+1. Firmware Name:      SD-WLAN-UART-BT-8977-U16-MMC-W16.91.10.p186.2-16.91.10.p186.2-C4X16679_V2-GPL
+
+SD8977 MANUFACTURING FIRMWARE
+==============================
+
+Here are the details of the SD8977 manufacturing firmware:
+
+1. Firmware Name:      MFG-W8977-MF-WIFI-BT-BRG-FC-VS2013-1.1.0.156-A1-16.80.207.p1
+
+IW416 WIRELESS FIRMWARE
+========================
+
+Here are the details about the SD8978 firmware:
+
+1. Firmware Name:      SD-WLAN-UART-BT-IW416-U16-MMC-W16.91.21.p11.3-16.91.21.p11.3-C4X16679_V0-GPL
+
+IW416 MANUFACTURING FIRMWARE
+==============================
+
+Here are the details of the SD8978 manufacturing firmware:
+
+1. Firmware Name:      MFG-W8978-MF-WIFI-BT-BRG-FC-VS2013-1.0.0.9-16.80.10.p78
+
+SD8997 WIRELESS FIRMWARE
+========================
+
+Here are the details about the SD8997 firmware:
+
+1. Firmware Name:      SD-WLAN-UART-BT-8997-U16-MMC-W16.68.1.p176-16.26.1.p176-C4X16604_V4-GPL
+
+NW61x WIRELESS FIRMWARE
+========================
+
+Here are the details about the NW61x firmware:
+
+1. Firmware Name:      SD-WLAN-UART-BT-NW61x-U16-MMC-W18.99.1.p61-18.99.1.p61-C4X16679_V2-GPL
+
+
+NW61x MANUFACTURING FIRMWARE
+==============================
+
+Here are the details of the NW61x manufacturing firmware:
+
+1. Firmware Name:      MFG-NW61X-MF-BRG-U16-WIN-X86-1.0.0.1-18.80.201.p9

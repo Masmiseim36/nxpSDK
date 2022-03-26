@@ -2130,7 +2130,7 @@ UCHAR value_arr[] = {
 };
 
 /* Attribute structure array */
-struct attr attr_arr[] = {
+struct SDP_ATTR attr_arr[] = {
     /** Service Record 0 */
 
     /* ServiceRecordHandle */

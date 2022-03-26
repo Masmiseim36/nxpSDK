@@ -48,7 +48,6 @@ BOARD_InitPins:
   - {pin_num: K14, peripheral: SAI1, signal: sai_tx_data00, pin_signal: GPIO_AD_21, software_input_on: Enable, pull_keeper_select: Keeper}
   - {pin_num: K12, peripheral: SAI1, signal: sai_tx_bclk, pin_signal: GPIO_AD_22, software_input_on: Enable, pull_keeper_select: Keeper}
   - {pin_num: J12, peripheral: SAI1, signal: sai_tx_sync, pin_signal: GPIO_AD_23, software_input_on: Enable, pull_keeper_select: Keeper}
-  - {pin_num: K13, peripheral: SAI1, signal: sai_rx_data00, pin_signal: GPIO_AD_20, software_input_on: Enable, pull_keeper_select: Keeper}
   - {pin_num: A16, peripheral: USDHC1, signal: 'usdhc_data, 3', pin_signal: GPIO_SD_B1_05, software_input_on: Enable, pull_down_pull_up_config: Pull_Up}
   - {pin_num: B15, peripheral: USDHC1, signal: 'usdhc_data, 2', pin_signal: GPIO_SD_B1_04, software_input_on: Enable, pull_down_pull_up_config: Pull_Up}
   - {pin_num: B17, peripheral: USDHC1, signal: 'usdhc_data, 1', pin_signal: GPIO_SD_B1_03, software_input_on: Enable, pull_down_pull_up_config: Pull_Up}
@@ -74,9 +73,6 @@ void BOARD_InitPins(void) {
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_17_SAI1_MCLK,            /* GPIO_AD_17 is configured as SAI1_MCLK */
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_17 */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_20_SAI1_RX_DATA00,       /* GPIO_AD_20 is configured as SAI1_RX_DATA00 */
-      1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_20 */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_21_SAI1_TX_DATA00,       /* GPIO_AD_21 is configured as SAI1_TX_DATA00 */
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_AD_21 */
@@ -135,15 +131,6 @@ void BOARD_InitPins(void) {
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_LPSR_05 */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_17_SAI1_MCLK,            /* GPIO_AD_17 PAD functional properties : */
-      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high drive strength
-                                                 Pull / Keep Select Field: Pull Disable, Highz
-                                                 Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled
-                                                 Domain write protection: Both cores are allowed
-                                                 Domain write protection lock: Neither of DWP bits is locked */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_20_SAI1_RX_DATA00,       /* GPIO_AD_20 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz

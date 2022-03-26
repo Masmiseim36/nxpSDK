@@ -71,8 +71,7 @@ void sys_assert( char *pcMessage )
 {
 //FSL:only needed for debugging
 #ifdef LWIP_DEBUG
-    PRINTF(pcMessage);
-    PRINTF("\n\r");
+    LWIP_PLATFORM_DIAG((pcMessage));
 #endif
 #if !NO_SYS
     portENTER_CRITICAL();

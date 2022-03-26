@@ -1,5 +1,6 @@
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
+    -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
@@ -19,6 +20,7 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
+    -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -D__STARTUP_CLEAR_BSS \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
@@ -174,7 +176,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     --defsym=__stack_size__=0x400 \
     -Xlinker \
     --defsym=__heap_size__=0x400 \
-    -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor.ld -static \
+    -T${ProjDirPath}/linker/MIMXRT1166xxxxx_cm7_flexspi_nor.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -206,5 +208,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     --defsym=__stack_size__=0x400 \
     -Xlinker \
     --defsym=__heap_size__=0x400 \
-    -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor.ld -static \
+    -T${ProjDirPath}/linker/MIMXRT1166xxxxx_cm7_flexspi_nor.ld -static \
 ")

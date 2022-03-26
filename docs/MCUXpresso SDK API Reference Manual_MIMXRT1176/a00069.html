@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.11.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -109,12 +109,12 @@ $(document).ready(function(){initNavTree('a00069.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00601"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00601">pgmc_bpc_cpu_power_mode_option_t</a></td></tr>
-<tr class="memdesc:a00601"><td class="mdescLeft">&#160;</td><td class="mdescRight">The control option of the power domain controlled by CPU power mode.  <a href="a00069.html#a00601">More...</a><br/></td></tr>
-<tr class="separator:a00601"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00602"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00602">pgmc_bpc_setpoint_mode_option_t</a></td></tr>
-<tr class="memdesc:a00602"><td class="mdescLeft">&#160;</td><td class="mdescRight">The control option of the power domain controlled by setpoint mode.  <a href="a00069.html#a00602">More...</a><br/></td></tr>
+<tr class="memitem:a00602"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00602">pgmc_bpc_cpu_power_mode_option_t</a></td></tr>
+<tr class="memdesc:a00602"><td class="mdescLeft">&#160;</td><td class="mdescRight">The control option of the power domain controlled by CPU power mode.  <a href="a00069.html#a00602">More...</a><br/></td></tr>
 <tr class="separator:a00602"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00603"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00603">pgmc_bpc_setpoint_mode_option_t</a></td></tr>
+<tr class="memdesc:a00603"><td class="mdescLeft">&#160;</td><td class="mdescRight">The control option of the power domain controlled by setpoint mode.  <a href="a00069.html#a00603">More...</a><br/></td></tr>
+<tr class="separator:a00603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -266,10 +266,10 @@ Driver version</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Basic Power Controller Related Interfaces</h2></td></tr>
-<tr class="memitem:gac56450b372529ebe5503bb76af1e7a32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gac56450b372529ebe5503bb76af1e7a32">PGMC_BPC_ControlPowerDomainByCpuPowerMode</a> (PGMC_BPC_Type *base, <a class="el" href="a00069.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a> mode, const <a class="el" href="a00069.html#a00601">pgmc_bpc_cpu_power_mode_option_t</a> *option)</td></tr>
+<tr class="memitem:gac56450b372529ebe5503bb76af1e7a32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gac56450b372529ebe5503bb76af1e7a32">PGMC_BPC_ControlPowerDomainByCpuPowerMode</a> (PGMC_BPC_Type *base, <a class="el" href="a00069.html#gaf55621830fc022f5ddd6a96bd6b25990">pgmc_cpu_mode_t</a> mode, const <a class="el" href="a00069.html#a00602">pgmc_bpc_cpu_power_mode_option_t</a> *option)</td></tr>
 <tr class="memdesc:gac56450b372529ebe5503bb76af1e7a32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the BPC module controlled by the target CPU power mode, such as Wait mode.  <a href="#gac56450b372529ebe5503bb76af1e7a32">More...</a><br/></td></tr>
 <tr class="separator:gac56450b372529ebe5503bb76af1e7a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ef18f55a947cf2fd137ecc87caae240"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga0ef18f55a947cf2fd137ecc87caae240">PGMC_BPC_ControlPowerDomainBySetPointMode</a> (PGMC_BPC_Type *base, uint32_t setPointMap, const <a class="el" href="a00069.html#a00602">pgmc_bpc_setpoint_mode_option_t</a> *option)</td></tr>
+<tr class="memitem:ga0ef18f55a947cf2fd137ecc87caae240"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga0ef18f55a947cf2fd137ecc87caae240">PGMC_BPC_ControlPowerDomainBySetPointMode</a> (PGMC_BPC_Type *base, uint32_t setPointMap, const <a class="el" href="a00069.html#a00603">pgmc_bpc_setpoint_mode_option_t</a> *option)</td></tr>
 <tr class="memdesc:ga0ef18f55a947cf2fd137ecc87caae240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes the BPC module controlled by the target set points.  <a href="#ga0ef18f55a947cf2fd137ecc87caae240">More...</a><br/></td></tr>
 <tr class="separator:ga0ef18f55a947cf2fd137ecc87caae240"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9f59b649d8706bed19fdcba6d67b5a1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga9f59b649d8706bed19fdcba6d67b5a1f">PGMC_BPC_ControlPowerDomainBySoftwareMode</a> (PGMC_BPC_Type *base, bool powerOff)</td></tr>
@@ -400,7 +400,7 @@ PMIC Power Related Interfaces</h2></td></tr>
 <tr class="separator:gaeda60b972deb916af8a8ecffd176494e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00601" id="a00601"></a>
+<a name="a00602" id="a00602"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -470,7 +470,7 @@ PMIC Power Related Interfaces</h2></td></tr>
 
 </div>
 </div>
-<a name="a00602" id="a00602"></a>
+<a name="a00603" id="a00603"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -823,7 +823,7 @@ PMIC Power Related Interfaces</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00069.html#a00601">pgmc_bpc_cpu_power_mode_option_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00069.html#a00602">pgmc_bpc_cpu_power_mode_option_t</a> *&#160;</td>
           <td class="paramname"><em>option</em>&#160;</td>
         </tr>
         <tr>
@@ -838,7 +838,7 @@ PMIC Power Related Interfaces</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
     <tr><td class="paramname">mode</td><td>Target CPU power mode. </td></tr>
-    <tr><td class="paramname">option</td><td>The pointer of <a class="el" href="a00069.html#a00601">pgmc_bpc_cpu_power_mode_option_t</a> structure. </td></tr>
+    <tr><td class="paramname">option</td><td>The pointer of <a class="el" href="a00069.html#a00602">pgmc_bpc_cpu_power_mode_option_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -864,7 +864,7 @@ PMIC Power Related Interfaces</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00069.html#a00602">pgmc_bpc_setpoint_mode_option_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00069.html#a00603">pgmc_bpc_setpoint_mode_option_t</a> *&#160;</td>
           <td class="paramname"><em>option</em>&#160;</td>
         </tr>
         <tr>
@@ -880,7 +880,7 @@ PMIC Power Related Interfaces</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">base</td><td>PGMC basic power controller base address. </td></tr>
     <tr><td class="paramname">setPointMap</td><td>Should be the OR'ed value of <a class="el" href="a00069.html#_pgmc_setpoint_map">_pgmc_setpoint_map</a>. </td></tr>
-    <tr><td class="paramname">option</td><td>The pointer of <a class="el" href="a00069.html#a00602">pgmc_bpc_setpoint_mode_option_t</a> structure. </td></tr>
+    <tr><td class="paramname">option</td><td>The pointer of <a class="el" href="a00069.html#a00603">pgmc_bpc_setpoint_mode_option_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>

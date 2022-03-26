@@ -7,7 +7,9 @@
 
 /*${header:start}*/
 #include "main.h"
+#ifdef OPUS_ENCODE
 #include "opusmem2mem_file.h"
+#endif
 /*${header:end}*/
 
 /*******************************************************************************
@@ -33,5 +35,7 @@ void shellCmd(void);
 /*${prototype:end}*/
 
 /** Constants **/
+#ifdef OPUS_ENCODE
 #define OPUSMEM2MEM_INBUF_SIZE  96100
 #define OPUSMEM2MEM_OUTBUF_SIZE 96100
+#endif

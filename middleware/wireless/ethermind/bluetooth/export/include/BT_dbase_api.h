@@ -545,7 +545,7 @@ enum attr_type
  * \{
  * Describes Structures defined by the module.
  */
-struct attr
+struct SDP_ATTR
 {
     UINT16 attr_id;
     UINT16 len;
@@ -553,14 +553,55 @@ struct attr
 };
 
 
-typedef struct sdp_record
+typedef struct _SDP_RECORD
 {
     UINT32 rec_handle;
     UINT16 active;
     UINT16 num_uuids;
     UINT16 num_attrs;
     UINT16 attr_offset;
+#ifdef SDP_DYNAMIC_DB
+    UINT8  service_type;
+    UINT8  service_instance;
+#endif /* SDP_DYNAMIC_DB */
 }SDP_RECORD;
+
+
+#ifdef SDP_DYNAMIC_DB
+/* TODO: define in BT_limits.h */
+#define DB_MAX_RECORDS     32U
+#define DB_MAX_REC_ATTR    25U
+#define DB_MAX_REC_UUID    10U
+#define DB_MAX_DYN_UUIDS   100U
+#define DB_MAX_ATTR_LEN    400U
+#define DB_SERVICE_CLASS_UUID_INDICES_MAX    100U
+
+#define DB_MAX_PROTOCOL_PARAMS 5U
+#define DB_MAX_LIST_ELEMS      5U
+
+typedef struct _DB_SERVICE_CLASS_UUID_ELEM
+{
+    UINT16      uuid_len;
+    UINT16      uuid_16;
+    UINT8       uuid_128[16U];
+} DB_SERVICE_CLASS_UUID_ELEM;
+
+typedef struct
+{
+    UINT16      protocol_uuid;
+    UINT16      num_params;
+    /* Sub-params always towards the end of list */
+    UINT16      num_sub_params;
+    UINT16      params[DB_MAX_PROTOCOL_PARAMS];
+} DB_PROTOCOL_ELEM;
+
+typedef struct
+{
+    UINT16              num_elems;
+    DB_PROTOCOL_ELEM    elem[DB_MAX_LIST_ELEMS];
+} DB_PROTO_LIST_ELEM;
+#endif /* SDP_DYNAMIC_DB */
+
 /** \} */
 /** \} */
 /*---------------------------------Function Declarations */
@@ -1012,6 +1053,447 @@ API_RESULT BT_dbase_get_service_class_uuids
                /* OUT */   UCHAR *     uuid_buffer,
                /* INOUT */ UINT32 *    uuid_buffer_length
            );
+
+#ifdef SDP_DYNAMIC_DB
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] service_type
+ *
+ *  \param [in] service_instance
+ *
+ *  \param [out] record_handle
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_create_record
+           (
+               UINT8 service_type,
+               UINT8 service_instance,
+               UINT32 * record_handle
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_delete_record(UINT32 record_handle);
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] attr_id
+ *
+ *  \param [in] attr_len
+ *
+ *  \param [in] attr_val
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_attribute
+           (
+               UINT32 record_handle,
+               UINT16 attr_id,
+               UINT32 attr_len,
+               UINT8 *attr_val
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] attr_id
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_delete_attribute
+           (
+               UINT32 record_handle,
+               UINT16 attr_id
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] num_services
+ *
+ *  \param [in] service_uuids
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_service_class_id_list
+           (
+               UINT32 record_handle,
+               UINT16 num_services,
+               UINT16 * service_uuids
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] num_services
+ *
+ *  \param [in] service_uuids
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_service_class_id_list_ex
+           (
+               UINT32 record_handle,
+               UINT16 num_services,
+               DB_SERVICE_CLASS_UUID_ELEM * service_uuids
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] version_number
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_version_numder
+           (
+               UINT32 record_handle,
+               UINT16 version_number
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] attr_id
+ *
+ *  \param [in] language
+ *
+ *  \param [in] char_enc
+ *
+ *  \param [in] base_id
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_languagebase_attr_id_list
+           (
+               UINT32 record_handle,
+               UINT16 language,
+               UINT16 char_enc,
+               UINT16 base_id
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] profile_uuid
+ *
+ *  \param [in] version
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_profile_descriptor_list
+           (
+               UINT32 record_handle,
+               UINT16 profile_uuid,
+               UINT16 version
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] num_elems
+ *
+ *  \param [in] elems
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_additional_proto_desc_list
+           (
+               UINT32 record_handle,
+               UINT16 num_elems,
+               DB_PROTO_LIST_ELEM * elems
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] num_elems
+ *
+ *  \param [in] elems
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_proto_desc_list
+           (
+               UINT32 record_handle,
+               UINT16 num_elems,
+               DB_PROTOCOL_ELEM * elems
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] num_uuids
+ *
+ *  \param [in] uuids
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_browse_group_list
+           (
+               UINT32 record_handle,
+               UINT16 num_uuids,
+               UINT16 * uuids
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] attr_id
+ *
+ *  \param [in] length
+ *
+ *  \param [in] text
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_attribute_type_text
+           (
+               UINT32 record_handle,
+               UINT16 attr_id,
+               UINT16 length,
+               UINT8 *text
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] attr_id
+ *
+ *  \param [in] length
+ *
+ *  \param [in] uri
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_attribute_type_url
+           (
+               UINT32 record_handle,
+               UINT16 attr_id,
+               UINT16 length,
+               UINT8 *url
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] service_name_length
+ *
+ *  \param [in] service_name
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_service_name
+           (
+               UINT32 record_handle,
+               UINT16 service_name_length,
+               UINT8 *service_name
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] provider_name_length
+ *
+ *  \param [in] provider_name
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_provider_name
+           (
+               UINT32 record_handle,
+               UINT16 provider_name_length,
+               UINT8 *provider_name
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] service_desc_length
+ *
+ *  \param [in] service_desc
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_service_description
+           (
+               UINT32 record_handle,
+               UINT16 service_desc_length,
+               UINT8 *service_desc
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] attr_id
+ *
+ *  \param [in] length
+ *
+ *  \param [in] value
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_attribute_type_uint
+           (
+               UINT32 record_handle,
+               UINT16 attr_id,
+               UINT16 length,
+               UINT8  * value
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] attr_id
+ *
+ *  \param [in] value
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_attribute_type_boolean
+           (
+               UINT32 record_handle,
+               UINT16 attr_id,
+               UINT8  value
+           );
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *  \param [in] record_handle
+ *
+ *  \param [in] supported_features
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_supported_features
+           (
+               UINT32 record_handle,
+               UINT16 supported_features
+           );
+#endif /* SDP_DYNAMIC_DB */
 
 #ifdef __cplusplus
 };

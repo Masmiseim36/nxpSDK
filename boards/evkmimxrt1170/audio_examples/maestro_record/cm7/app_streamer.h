@@ -12,8 +12,9 @@
 #include "streamer_api.h"
 #include "streamer_element_properties.h"
 #include "streamer_error.h"
+#ifdef OPUS_ENCODE
 #include "opus.h"
-
+#endif
 #include "cei.h"
 #include "cei_enctypes.h"
 
@@ -84,10 +85,12 @@ status_t STREAMER_Create(streamer_handle_t *handle);
 
 status_t STREAMER_mic_Create(streamer_handle_t *handle, out_sink_t out_sink, char *file_name);
 
+#ifdef OPUS_ENCODE
 status_t STREAMER_opusmem2mem_Create(streamer_handle_t *handle,
                                      CeiBitstreamInfo *info,
                                      MEMSRC_SET_BUFFER_T *inBuf,
                                      SET_BUFFER_DESC_T *outBuf);
+#endif
 
 /*!
  * @brief Destroy an Maestro streamer interface handle

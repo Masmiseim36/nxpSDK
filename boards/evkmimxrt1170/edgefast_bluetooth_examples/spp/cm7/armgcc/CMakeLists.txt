@@ -33,7 +33,6 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../main.c"
@@ -367,7 +366,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs
-    ${ProjDirPath}/../../../../../../middleware/wifi/wifi_bt_firmware
     ${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller
     ${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform
     ${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs
@@ -442,7 +440,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/rng
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../components/common_task
-    ${ProjDirPath}/../../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../../components/internal_flash
     ${ProjDirPath}/../../../../../../middleware/wireless
     ${ProjDirPath}/../../../../../../middleware/littlefs

@@ -4,7 +4,7 @@
 ;            MIMXRT1165_cm4
 ;  @version: 0.1
 ;  @date:    2020-12-29
-;  @build:   b210402
+;  @build:   b211122
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
@@ -269,8 +269,8 @@ __vector_table_0x1c
         DCD     Reserved213_IRQHandler                        ;Reserved interrupt
         DCD     Reserved214_IRQHandler                        ;Reserved interrupt
         DCD     Reserved215_IRQHandler                        ;Reserved interrupt
-        DCD     HWVAD_EVENT_IRQHandler                        ;HWVAD event interrupt
-        DCD     HWVAD_ERROR_IRQHandler                        ;HWVAD error interrupt
+        DCD     PDM_HWVAD_EVENT_IRQHandler                    ;HWVAD event interrupt
+        DCD     PDM_HWVAD_ERROR_IRQHandler                    ;HWVAD error interrupt
         DCD     PDM_EVENT_IRQHandler                          ;PDM event interrupt
         DCD     PDM_ERROR_IRQHandler                          ;PDM error interrupt
         DCD     EMVSIM1_IRQHandler                            ;EMVSIM1 interrupt
@@ -989,18 +989,18 @@ ENET_1G_1588_Timer_IRQHandler
         PUBWEAK Reserved213_IRQHandler
         PUBWEAK Reserved214_IRQHandler
         PUBWEAK Reserved215_IRQHandler
-        PUBWEAK HWVAD_EVENT_IRQHandler
-        PUBWEAK HWVAD_EVENT_DriverIRQHandler
+        PUBWEAK PDM_HWVAD_EVENT_IRQHandler
+        PUBWEAK PDM_HWVAD_EVENT_DriverIRQHandler
         SECTION .text:CODE:REORDER:NOROOT(2)
-HWVAD_EVENT_IRQHandler
-        LDR     R0, =HWVAD_EVENT_DriverIRQHandler
+PDM_HWVAD_EVENT_IRQHandler
+        LDR     R0, =PDM_HWVAD_EVENT_DriverIRQHandler
         BX      R0
 
-        PUBWEAK HWVAD_ERROR_IRQHandler
-        PUBWEAK HWVAD_ERROR_DriverIRQHandler
+        PUBWEAK PDM_HWVAD_ERROR_IRQHandler
+        PUBWEAK PDM_HWVAD_ERROR_DriverIRQHandler
         SECTION .text:CODE:REORDER:NOROOT(2)
-HWVAD_ERROR_IRQHandler
-        LDR     R0, =HWVAD_ERROR_DriverIRQHandler
+PDM_HWVAD_ERROR_IRQHandler
+        LDR     R0, =PDM_HWVAD_ERROR_DriverIRQHandler
         BX      R0
 
         PUBWEAK PDM_EVENT_IRQHandler
@@ -1257,8 +1257,8 @@ Reserved212_IRQHandler
 Reserved213_IRQHandler
 Reserved214_IRQHandler
 Reserved215_IRQHandler
-HWVAD_EVENT_DriverIRQHandler
-HWVAD_ERROR_DriverIRQHandler
+PDM_HWVAD_EVENT_DriverIRQHandler
+PDM_HWVAD_ERROR_DriverIRQHandler
 PDM_EVENT_DriverIRQHandler
 PDM_ERROR_DriverIRQHandler
 EMVSIM1_IRQHandler

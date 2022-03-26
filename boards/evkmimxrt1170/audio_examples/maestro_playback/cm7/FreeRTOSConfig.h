@@ -78,7 +78,7 @@
 #endif
 #define configAPPLICATION_ALLOCATED_HEAP        0
 
-#define configCHECK_FOR_STACK_OVERFLOW          1
+#define configCHECK_FOR_STACK_OVERFLOW          2
 #define configRECORD_STACK_HIGH_ADDRESS         1
 
 /* Hook function related definitions. */

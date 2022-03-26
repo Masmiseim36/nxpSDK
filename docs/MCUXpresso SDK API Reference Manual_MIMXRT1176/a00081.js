@@ -1,7 +1,7 @@
 var a00081 =
 [
-    [ "sdmmc_osa_event_t", "a00081.html#a00655", null ],
-    [ "sdmmc_osa_mutex_t", "a00081.html#a00656", null ],
+    [ "sdmmc_osa_event_t", "a00081.html#a00656", null ],
+    [ "sdmmc_osa_mutex_t", "a00081.html#a00657", null ],
     [ "SDMMC_OSA_EVENT_TRANSFER_CMD_SUCCESS", "a00081.html#ga40f9b09069955ad5d8745cdc54b2cf0e", null ],
     [ "SDMMC_OSA_EVENT_CARD_INSERTED", "a00081.html#ga18af4c8094d77d6b76b5a060234f66e9", null ],
     [ "SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE", "a00081.html#gae92d4284e8a077044fe31155c914121b", null ],

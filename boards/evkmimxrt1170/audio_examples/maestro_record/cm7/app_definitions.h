@@ -53,9 +53,12 @@
 /* Get frequency of sai1 clock */
 #define DEMO_SAI_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Sai1)
 
-#define DEMO_CHANNEL_NUM 2
+#define DEMO_CHANNEL_NUM   2
+#define DEMO_CODEC_CHANNEL kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight
 
 #define BOARD_MASTER_CLOCK_CONFIG()
+
+#define DEMO_VOLUME (75)
 /*${macro:end}*/
 
 #endif /* _APP_DEFINITIONS_H_ */

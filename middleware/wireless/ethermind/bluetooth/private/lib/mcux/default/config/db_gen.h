@@ -18,6 +18,8 @@
 #include "BT_common.h"
 #include "BT_dbase_api.h"
 
+#ifndef SDP_DYNAMIC_DB
+
 /* --------------------------------------- Global Definitions/Constants */
 /* Number of UUIDs present in the SDDB */
 #define DB_MAX_UUIDS                      65
@@ -29,6 +31,7 @@
 /* Number of Service Class UUIDs */
 #define SERVICE_CLASS_UUID_INDICES_MAX    46
 #endif /* BT_EIR */
+#endif /* SDP_DYNAMIC_DB */
 
 /* Service Record Indices */
 #define DB_RECORD_SDP  0

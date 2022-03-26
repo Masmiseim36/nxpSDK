@@ -2406,6 +2406,9 @@
         <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/LICENSE</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/NOTICE</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/ChangeLogKSDK.txt</name>
       </file>
       <file>

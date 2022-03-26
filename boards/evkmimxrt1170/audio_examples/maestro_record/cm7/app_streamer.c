@@ -14,12 +14,16 @@
 #ifdef VIT_PROC
 #include "vit_proc.h"
 #endif
+#include "app_definitions.h"
 
 #define APP_STREAMER_MSG_QUEUE     "app_queue"
 #define STREAMER_TASK_NAME         "Streamer"
 #define STREAMER_MESSAGE_TASK_NAME "StreamerMessage"
 
-#define STREAMER_TASK_STACK_SIZE         60 * 1024
+#ifdef OPUS_ENCODE
+#define STREAMER_OPUS_TASK_STACK_SIZE 60 * 1024
+#endif
+#define STREAMER_TASK_STACK_SIZE         4 * 1024
 #define STREAMER_MESSAGE_TASK_STACK_SIZE 512
 #define MAX_FILE_NAME_LENGTH             100
 
@@ -287,10 +291,17 @@ status_t STREAMER_mic_Create(streamer_handle_t *handle, out_sink_t out_sink, cha
 
     streamer_set_property(handle->streamer, prop, true);
 
-    prop.prop = PROP_AUDIOSRC_SET_CHUNK_SIZE;
-    prop.val  = 160;
+#if DEMO_CODEC_CS42448
+    prop.prop = PROP_AUDIOSRC_SET_NUM_CHANNELS;
+    prop.val  = 8;
 
     streamer_set_property(handle->streamer, prop, true);
+
+    prop.prop = PROP_AUDIOSRC_SET_BITS_PER_SAMPLE;
+    prop.val  = 32;
+
+    streamer_set_property(handle->streamer, prop, true);
+#endif
 
     if (out_sink == FILE_SINK)
     {
@@ -307,6 +318,7 @@ status_t STREAMER_mic_Create(streamer_handle_t *handle, out_sink_t out_sink, cha
     return kStatus_Success;
 }
 
+#ifdef OPUS_ENCODE
 status_t STREAMER_opusmem2mem_Create(streamer_handle_t *handle,
                                      CeiBitstreamInfo *info,
                                      MEMSRC_SET_BUFFER_T *inBuf,
@@ -330,7 +342,7 @@ status_t STREAMER_opusmem2mem_Create(streamer_handle_t *handle,
 
     /* Create streamer */
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
-    params.stack_size    = STREAMER_TASK_STACK_SIZE;
+    params.stack_size    = STREAMER_OPUS_TASK_STACK_SIZE;
     params.pipeline_type = STREAM_PIPELINE_OPUS_MEM2MEM;
     params.task_name     = STREAMER_TASK_NAME;
 
@@ -386,6 +398,7 @@ status_t STREAMER_opusmem2mem_Create(streamer_handle_t *handle,
 
     return kStatus_Success;
 }
+#endif
 
 void STREAMER_Destroy(streamer_handle_t *handle)
 {

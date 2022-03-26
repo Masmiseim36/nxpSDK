@@ -32,6 +32,8 @@ struct _pcm_rtos_t
     uint8_t num_channels;
 
     SemaphoreHandle_t semaphoreTX;
+
+    uint8_t isFirstTx;
 };
 
 #endif

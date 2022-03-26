@@ -50,63 +50,63 @@ typedef struct _eap_preset_t
     LVM_HeadroomParams_t *headroomParams;
 } eap_preset_t;
 
-eap_preset_t eap_presets[EAP_MAX_PRESET] = {{.name           = "AllEffectOff",
-                                             .controlParams  = &ControlParamSet_allEffectOff,
-                                             .instParams     = &InstParams_allEffectOff,
-                                             .headroomParams = &HeadroomParams_allEffectOff},
-                                            {.name = "VoiceEnhancer",
+eap_preset_t eap_presets[] = {{.name           = "AllEffectOff",
+                               .controlParams  = &ControlParamSet_allEffectOff,
+                               .instParams     = &InstParams_allEffectOff,
+                               .headroomParams = &HeadroomParams_allEffectOff},
+                              {.name = "VoiceEnhancer",
 #ifdef CPU_LPC55S69JBD100_cm33_core0
-                                             .controlParams  = &ControlParamSet_voiceEnhancer_lowMIPS,
-                                             .instParams     = &InstParams_voiceEnhancer_lowMIPS,
-                                             .headroomParams = &HeadroomParams_voiceEnhancer_lowMIPS},
+                               .controlParams  = &ControlParamSet_voiceEnhancer_lowMIPS,
+                               .instParams     = &InstParams_voiceEnhancer_lowMIPS,
+                               .headroomParams = &HeadroomParams_voiceEnhancer_lowMIPS},
 #else
                                .controlParams  = &ControlParamSet_voiceEnhancer,
                                .instParams     = &InstParams_voiceEnhancer,
                                .headroomParams = &HeadroomParams_voiceEnhancer},
 #endif
-                                            {.name = "MusicEnhancer",
+                              {.name = "MusicEnhancer",
 #ifdef CPU_LPC55S69JBD100_cm33_core0
-                                             .controlParams  = &ControlParamSet_musicEnhancerRmsLimiter_lowMIPS,
-                                             .instParams     = &InstParams_musicEnhancerRmsLimiter_lowMIPS,
-                                             .headroomParams = &HeadroomParams_musicEnhancerRmsLimiter_lowMIPS},
+                               .controlParams  = &ControlParamSet_musicEnhancerRmsLimiter_lowMIPS,
+                               .instParams     = &InstParams_musicEnhancerRmsLimiter_lowMIPS,
+                               .headroomParams = &HeadroomParams_musicEnhancerRmsLimiter_lowMIPS},
 #else
                                .controlParams  = &ControlParamSet_musicEnhancerRmsLimiter,
                                .instParams     = &InstParams_musicEnhancerRmsLimiter,
                                .headroomParams = &HeadroomParams_musicEnhancerRmsLimiter},
 #endif
-                                            {.name           = "AutoVolumeLeveler",
-                                             .controlParams  = &ControlParamSet_autoVolumeLeveler,
-                                             .instParams     = &InstParams_autoVolumeLeveler,
-                                             .headroomParams = &HeadroomParams_autoVolumeLeveler},
-                                            {.name           = "LoudnessMaximiser",
-                                             .controlParams  = &ControlParamSet_loudnessMaximiser,
-                                             .instParams     = &InstParams_loudnessMaximiser,
-                                             .headroomParams = &HeadroomParams_loudnessMaximiser},
+                              {.name           = "AutoVolumeLeveler",
+                               .controlParams  = &ControlParamSet_autoVolumeLeveler,
+                               .instParams     = &InstParams_autoVolumeLeveler,
+                               .headroomParams = &HeadroomParams_autoVolumeLeveler},
+                              {.name           = "LoudnessMaximiser",
+                               .controlParams  = &ControlParamSet_loudnessMaximiser,
+                               .instParams     = &InstParams_loudnessMaximiser,
+                               .headroomParams = &HeadroomParams_loudnessMaximiser},
 #if (ALGORITHM_CS == 1)
-                                            {.name           = "ConcertSound",
-                                             .controlParams  = &ControlParamSet_concertSound,
-                                             .instParams     = &InstParams_concertSound,
-                                             .headroomParams = &HeadroomParams_concertSound},
+                              {.name           = "ConcertSound",
+                               .controlParams  = &ControlParamSet_concertSound,
+                               .instParams     = &InstParams_concertSound,
+                               .headroomParams = &HeadroomParams_concertSound},
 #endif
 #ifndef CPU_LPC55S69JBD100_cm33_core0
-                                            {.name           = "Custom",
-                                             .controlParams  = &ControlParamSet_custom,
-                                             .instParams     = &InstParams_custom,
-                                             .headroomParams = &HeadroomParams_custom},
+                              {.name           = "Custom",
+                               .controlParams  = &ControlParamSet_custom,
+                               .instParams     = &InstParams_custom,
+                               .headroomParams = &HeadroomParams_custom},
 #endif
-                                            {.name           = "ToneGenerator",
-                                             .controlParams  = &ControlParamSet_toneGenerator,
-                                             .instParams     = &InstParams_toneGenerator,
-                                             .headroomParams = &HeadroomParams_toneGenerator},
+                              {.name           = "ToneGenerator",
+                               .controlParams  = &ControlParamSet_toneGenerator,
+                               .instParams     = &InstParams_toneGenerator,
+                               .headroomParams = &HeadroomParams_toneGenerator},
 #if (ALGORITHM_XO == 1)
-                                            {.name           = "Crossover2WaySpeakers",
-                                             .controlParams  = &ControlParamSet_Crossover2WaySpeaker,
-                                             .instParams     = &InstParams_Crossover2WaySpeaker,
-                                             .headroomParams = &HeadroomParams_Crossover2WaySpeaker},
-                                            {.name           = "CrossoverForSubwoofer",
-                                             .controlParams  = &ControlParamSet_CrossoverForSubwoofer,
-                                             .instParams     = &InstParams_CrossoverForSubwoofer,
-                                             .headroomParams = &HeadroomParams_CrossoverForSubwoofer}
+                              {.name           = "Crossover2WaySpeakers",
+                               .controlParams  = &ControlParamSet_Crossover2WaySpeaker,
+                               .instParams     = &InstParams_Crossover2WaySpeaker,
+                               .headroomParams = &HeadroomParams_Crossover2WaySpeaker},
+                              {.name           = "CrossoverForSubwoofer",
+                               .controlParams  = &ControlParamSet_CrossoverForSubwoofer,
+                               .instParams     = &InstParams_CrossoverForSubwoofer,
+                               .headroomParams = &HeadroomParams_CrossoverForSubwoofer}
 #endif
 };
 
@@ -142,8 +142,10 @@ static LVM_INT16 MallocAlign = 4; /* 4 byte Malloc alignment */
 int EAP_Init(void *arg)
 {
     LVM_ReturnStatus_en LVM_Status; /* Function call status */
-    LVM_UINT16 i;                   /* loop index */
+    LVM_UINT16 i, minIdx;           /* loop index */
     LVM_INT32 temp32;               /* temporary address */
+    LVM_INT16 j;
+    LVM_UINT16 order[LVM_NR_MEMORY_REGIONS];
 
     /******************************************************************************
     GET VERSION INFORMATION
@@ -224,17 +226,38 @@ int EAP_Init(void *arg)
         return LVM_Status;
     }
 
+    /* Initialize order variable */
     for (i = 0; i < LVM_NR_MEMORY_REGIONS; i++)
     {
+        order[i] = i;
+    }
+
+    /* Sort region indexes by region size */
+    for (i = 0; i < (LVM_NR_MEMORY_REGIONS - 1); i++)
+    {
+        minIdx = i;
+        for (j = i + 1; j < LVM_NR_MEMORY_REGIONS; j++)
+            if (EAP_MemTab.Region[order[j]].Size < EAP_MemTab.Region[order[minIdx]].Size)
+                minIdx = j;
+
+        /* Swap indexes */
+        temp32        = order[minIdx];
+        order[minIdx] = order[i];
+        order[i]      = temp32;
+    }
+
+    /* Allocate regions in order from largest to smallest */
+    for (j = (LVM_NR_MEMORY_REGIONS - 1); j >= 0; j--)
+    {
         /* Log the memory size */
-        if (EAP_MemTab.Region[i].Size != 0)
+        if (EAP_MemTab.Region[order[j]].Size != 0)
         {
-            temp32 = (LVM_INT32)osa_malloc(EAP_MemTab.Region[i].Size + (LVM_UINT32)MallocAlign);
+            temp32 = (LVM_INT32)osa_malloc(EAP_MemTab.Region[order[j]].Size + (LVM_UINT32)MallocAlign);
             if (!temp32)
             {
                 return LVM_NULLADDRESS;
             }
-            EAP_MemTab.Region[i].pBaseAddress = (LVM_INT8 *)(temp32 + MallocAlign);
+            EAP_MemTab.Region[order[j]].pBaseAddress = (LVM_INT8 *)(temp32 + MallocAlign);
         }
     }
 

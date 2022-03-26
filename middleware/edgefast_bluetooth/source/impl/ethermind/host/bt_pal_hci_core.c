@@ -2900,13 +2900,14 @@ static void read_supported_commands_complete(struct net_buf *buf)
 
 	memcpy(bt_dev.supported_commands, rp->commands,
 	       sizeof(bt_dev.supported_commands));
-
+#if (defined(CONFIG_BT_ECC) && ((CONFIG_BT_ECC) > 0U))
 	/* Report additional HCI commands used for ECDH as
 	 * supported if TinyCrypt ECC is used for emulation.
 	 */
 	if (IS_ENABLED(CONFIG_BT_TINYCRYPT_ECC)) {
 		bt_hci_ecc_supported_commands(bt_dev.supported_commands);
 	}
+#endif
 }
 
 static void read_local_features_complete(struct net_buf *buf)

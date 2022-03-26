@@ -175,10 +175,10 @@
     <include_paths>
       <include_path path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7" project_relative_path="board" type="c_include"/>
       <include_path path="boards/src/aws_examples/common/config_files_wifi_nxp" project_relative_path="source" type="c_include"/>
-      <include_path path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7" project_relative_path="source" type="c_include"/>
       <include_path path="boards/evkmimxrt1170" project_relative_path="configs" type="c_include"/>
       <include_path path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7/config_files" project_relative_path="configs" type="c_include"/>
       <include_path path="boards/evkmimxrt1170/aws_examples/common/cm7" project_relative_path="evkmimxrt1170/aws_examples/common/cm7" type="c_include"/>
+      <include_path path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7" project_relative_path="source" type="c_include"/>
       <include_path path="boards/evkmimxrt1170" project_relative_path="configs" type="asm_include"/>
       <include_path path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7/config_files" project_relative_path="configs" type="asm_include"/>
     </include_paths>
@@ -234,9 +234,6 @@
     <source path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7" project_relative_path="source" type="c_preinclude">
       <files mask="app_config.h"/>
     </source>
-    <source path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7" project_relative_path="source" type="c_include">
-      <files mask="wifi_config.h"/>
-    </source>
     <source path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7" project_relative_path="board" type="src">
       <files mask="sdmmc_config.c"/>
       <files mask="wifi_bt_config.c"/>
@@ -271,6 +268,9 @@
     </source>
     <source path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7/config_files" project_relative_path="configs" type="c_include">
       <files mask="lwipopts.h"/>
+    </source>
+    <source path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7" project_relative_path="source" type="c_include">
+      <files mask="wifi_config.h"/>
     </source>
     <source path="boards/evkmimxrt1170/aws_examples/aws_tests_wifi_nxp/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

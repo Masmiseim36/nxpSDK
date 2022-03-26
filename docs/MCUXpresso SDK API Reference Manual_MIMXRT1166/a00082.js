@@ -1,6 +1,6 @@
 var a00082 =
 [
-    [ "sdmmchost_t", "a00082.html#a00650", [
+    [ "sdmmchost_t", "a00082.html#a00651", [
       [ "hostController", "a00082.html#a71c2bc521cd1b46bb9702a438694fd0f", null ],
       [ "dmaDesBuffer", "a00082.html#afdbf757e35a244a36abd144ef6a221c7", null ],
       [ "dmaDesBufferWordsNum", "a00082.html#a4b1c5755001081eb0846e05bc7ae220d", null ],

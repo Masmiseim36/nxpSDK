@@ -31,8 +31,8 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
@@ -43,7 +43,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../config_files/core_http_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
 "${ProjDirPath}/../config_files/iot_config.h"
 "${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
@@ -57,6 +56,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../mcuboot_app_support.c"
 "${ProjDirPath}/../mcuboot_app_support.h"
 "${ProjDirPath}/../flash_partitioning.h"
+"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -67,8 +67,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../../..
     ${ProjDirPath}/../config_files
+    ${ProjDirPath}/../../../..
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../common/cm7
 )
@@ -90,7 +90,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
-    ${ProjDirPath}/../../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../components/wifi_bt_module

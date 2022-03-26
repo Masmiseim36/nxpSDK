@@ -9,9 +9,9 @@ PC.
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  10.2.1
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
+- GCC ARM Embedded  10.3.1
+- IAR embedded Workbench  9.20.2
+- Keil MDK  5.36
 
 Hardware requirements
 =====================

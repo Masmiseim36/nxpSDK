@@ -124,7 +124,7 @@
           <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
-          <value>&amp;Heap:Default;Default;0x20000&amp;Stack:Default;Default;0x400</value>
+          <value>&amp;Heap:Default;Default;0x30000&amp;Stack:Default;Default;0x400</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>

@@ -107,7 +107,7 @@ void ethernetif_phy_init(struct ethernetif *ethernetif,
         } while (--autoWaitCount);
         if (!autonego)
         {
-            PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
+            LWIP_PLATFORM_DIAG(("PHY Auto-negotiation failed. Please check the cable connection and link partner setting."));
         }
 
         initWaitCount++;

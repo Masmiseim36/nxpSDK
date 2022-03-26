@@ -5,7 +5,7 @@ var searchData=
   ['qtmr_3a_20quad_20timer_20driver',['QTMR: Quad Timer Driver',['../a00074.html',1,'']]],
   ['qtmr_5fchannel_5fselection_5ft',['qtmr_channel_selection_t',['../a00074.html#ga2493eb75ca8a9be865abc69c9c94c756',1,'fsl_qtmr.h']]],
   ['qtmr_5fclearstatusflags',['QTMR_ClearStatusFlags',['../a00074.html#gac453dce78b2f4079aacbb02d857273ae',1,'fsl_qtmr.h']]],
-  ['qtmr_5fconfig_5ft',['qtmr_config_t',['../a00074.html#a00618',1,'']]],
+  ['qtmr_5fconfig_5ft',['qtmr_config_t',['../a00074.html#a00619',1,'']]],
   ['qtmr_5fcounting_5fmode_5ft',['qtmr_counting_mode_t',['../a00074.html#ga397995409e23551319239ec333f00981',1,'fsl_qtmr.h']]],
   ['qtmr_5fdebug_5faction_5ft',['qtmr_debug_action_t',['../a00074.html#gabec85a2c9b17e3edb8a4c17ae3d4fa41',1,'fsl_qtmr.h']]],
   ['qtmr_5fdeinit',['QTMR_Deinit',['../a00074.html#gaa15a9d1613394d4715f3fc600626e3cc',1,'fsl_qtmr.h']]],

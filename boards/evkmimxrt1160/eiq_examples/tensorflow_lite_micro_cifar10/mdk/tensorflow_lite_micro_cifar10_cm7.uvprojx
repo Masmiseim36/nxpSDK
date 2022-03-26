@@ -1034,6 +1034,11 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/LICENSE</FilePath>
             </File>
             <File>
+              <FileName>NOTICE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/NOTICE</FilePath>
+            </File>
+            <File>
               <FileName>ChangeLogKSDK.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/ChangeLogKSDK.txt</FilePath>
@@ -4226,6 +4231,11 @@
               <FileName>LICENSE</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/LICENSE</FilePath>
+            </File>
+            <File>
+              <FileName>NOTICE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/NOTICE</FilePath>
             </File>
             <File>
               <FileName>ChangeLogKSDK.txt</FileName>

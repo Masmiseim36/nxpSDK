@@ -107,7 +107,9 @@ typedef u32_t          mem_ptr_t;
 #endif
 
 // Platform specific diagnostic output
-#include "sys_arch.h"//FSL
+//FSL
+#include "fsl_debug_console.h"
+#include "sys_arch.h"
 
 // non-fatal, print a message.
 #define LWIP_PLATFORM_DIAG(x)                     do {PRINTF x;PRINTF("\r\n");} while(0)

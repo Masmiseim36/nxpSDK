@@ -1,30 +1,30 @@
 var a00075 =
 [
-    [ "rdc_hardware_config_t", "a00075.html#a00620", [
+    [ "rdc_hardware_config_t", "a00075.html#a00621", [
       [ "domainNumber", "a00075.html#a739ea4a24186ac54d3d97ec1bcda5631", null ],
       [ "masterNumber", "a00075.html#a81842ff8d313ca38916e3226efdd3bde", null ],
       [ "periphNumber", "a00075.html#ac02b7c759b76aac047c8dfd86fd93a59", null ],
       [ "memNumber", "a00075.html#afb605761a847c152ab23a5790b44dee9", null ]
     ] ],
-    [ "rdc_domain_assignment_t", "a00075.html#a00619", [
+    [ "rdc_domain_assignment_t", "a00075.html#a00620", [
       [ "domainId", "a00075.html#a6e918db4f50ef773621e9f90a8dd0aa1", null ],
       [ "__pad0__", "a00075.html#a8d76c2ce9f3ab1bd748c21c409e14b08", null ],
       [ "lock", "a00075.html#add7373049bb837ae009d9d6f54d6c042", null ]
     ] ],
-    [ "rdc_periph_access_config_t", "a00075.html#a00623", [
+    [ "rdc_periph_access_config_t", "a00075.html#a00624", [
       [ "periph", "a00075.html#a7472e8b72f7646864b1244f491559d48", null ],
       [ "lock", "a00075.html#a9a39e94946c18bba0593a7d063e39ead", null ],
       [ "enableSema", "a00075.html#ae3359bd3ece8b0075310586208b0f18e", null ],
       [ "policy", "a00075.html#a8e401a7aabd8cd79807858b4eb89cd70", null ]
     ] ],
-    [ "rdc_mem_access_config_t", "a00075.html#a00621", [
+    [ "rdc_mem_access_config_t", "a00075.html#a00622", [
       [ "mem", "a00075.html#ad4e1e98d9c5b9bf9fbbadf2f90c46dfc", null ],
       [ "lock", "a00075.html#af7b74c739bdc6cf8d13c3a9679ea934b", null ],
       [ "baseAddress", "a00075.html#a9407a23678502889ab8eccd55cba8377", null ],
       [ "endAddress", "a00075.html#a2d4f63927e154de9e68610e77d1a5978", null ],
       [ "policy", "a00075.html#aa8fa0fa776b881c0b884461f4f96f827", null ]
     ] ],
-    [ "rdc_mem_status_t", "a00075.html#a00622", [
+    [ "rdc_mem_status_t", "a00075.html#a00623", [
       [ "hasViolation", "a00075.html#a64e77210e7d78eab8f492aec96ab1812", null ],
       [ "domainID", "a00075.html#a9cdb8148ebf80d343b95716e03964127", null ],
       [ "address", "a00075.html#ac26082e85ff1d7e0874fc5a2467a904c", null ]

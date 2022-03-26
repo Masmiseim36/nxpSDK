@@ -1,6 +1,6 @@
 var a00073 =
 [
-    [ "pxp_output_buffer_config_t", "a00073.html#a00621", [
+    [ "pxp_output_buffer_config_t", "a00073.html#a00622", [
       [ "pixelFormat", "a00073.html#a0deca125e283881a007a05aee7ea6efb", null ],
       [ "interlacedMode", "a00073.html#a983f72ad396f697c6d5fdc2afbf93b9a", null ],
       [ "buffer0Addr", "a00073.html#ac9d1564912a8f6f4c62bef43a1dcee7b", null ],
@@ -9,7 +9,7 @@ var a00073 =
       [ "width", "a00073.html#a32d454cca9fb74301ea15e4a2d3363de", null ],
       [ "height", "a00073.html#a6a8594be36bd9f42431fc7ab44ff7961", null ]
     ] ],
-    [ "pxp_ps_buffer_config_t", "a00073.html#a00624", [
+    [ "pxp_ps_buffer_config_t", "a00073.html#a00625", [
       [ "pixelFormat", "a00073.html#ac6f839fb877e8486f1ef072db0c4e979", null ],
       [ "swapByte", "a00073.html#af6622726470aa916d0ec226ffdb5762a", null ],
       [ "bufferAddr", "a00073.html#a5cd5c370c93dc709c97660050d8c9a14", null ],
@@ -17,18 +17,18 @@ var a00073 =
       [ "bufferAddrV", "a00073.html#ad86e8971220f0e848dccb2198cd29fc1", null ],
       [ "pitchBytes", "a00073.html#a8847ad0172f7d1253e17595d544067b5", null ]
     ] ],
-    [ "pxp_as_buffer_config_t", "a00073.html#a00617", [
+    [ "pxp_as_buffer_config_t", "a00073.html#a00618", [
       [ "pixelFormat", "a00073.html#a3699de23dbdd44e2c65bbfb64e8312e0", null ],
       [ "bufferAddr", "a00073.html#a02566da191c2afca63078e5a9775dad0", null ],
       [ "pitchBytes", "a00073.html#ad1c09ffd95ce3577d4f69c1d2c22c1c4", null ]
     ] ],
-    [ "pxp_as_blend_config_t", "a00073.html#a00616", [
+    [ "pxp_as_blend_config_t", "a00073.html#a00617", [
       [ "alpha", "a00073.html#aa415590154f2dc5c0908e7584680ae9d", null ],
       [ "invertAlpha", "a00073.html#aa9a78de3daf13cd9e7f1ac434eaf35f4", null ],
       [ "alphaMode", "a00073.html#a2853eea42dfa49d4808c897389a4db95", null ],
       [ "ropMode", "a00073.html#a5372f06c1ba811fe21d0c57585e3b4e0", null ]
     ] ],
-    [ "pxp_csc2_config_t", "a00073.html#a00618", [
+    [ "pxp_csc2_config_t", "a00073.html#a00619", [
       [ "mode", "a00073.html#aa7b69c2ffd0d96ef8aa6193fdddfed91", null ],
       [ "A1", "a00073.html#a9c2087938fd46e256bf78514f28b2ffc", null ],
       [ "A2", "a00073.html#a48daa2c65ee1d7739e34a37ed1ec262d", null ],
@@ -43,13 +43,13 @@ var a00073 =
       [ "D2", "a00073.html#ad55602dfc9c39d0caad5d86907f88c0d", null ],
       [ "D3", "a00073.html#a7903d01cbd981febfb970042b44c8172", null ]
     ] ],
-    [ "pxp_dither_final_lut_data_t", "a00073.html#a00620", [
+    [ "pxp_dither_final_lut_data_t", "a00073.html#a00621", [
       [ "data_3_0", "a00073.html#a066a74952b370e1db222cd4cb8a3ac89", null ],
       [ "data_7_4", "a00073.html#ab4a241b96c315a4f493cee9873eb9ef9", null ],
       [ "data_11_8", "a00073.html#ad6d4f2d0a9d1ad5f139d471286c98f44", null ],
       [ "data_15_12", "a00073.html#aab9d902401d5c68d6914eda645eb03bf", null ]
     ] ],
-    [ "pxp_dither_config_t", "a00073.html#a00619", [
+    [ "pxp_dither_config_t", "a00073.html#a00620", [
       [ "enableDither0", "a00073.html#ad8ccac7ba0070163e07fef68fb3d242f", null ],
       [ "enableDither1", "a00073.html#ab5bf30b5db413045d9b12ab7bb84c15d", null ],
       [ "enableDither2", "a00073.html#ae8ea85f4716bef3a9b9b9aa10c301c2c", null ],
@@ -63,7 +63,7 @@ var a00073 =
       [ "idxMatrixSize2", "a00073.html#a7168eed2130c670bc4b1adbd8b46a74a", null ],
       [ "enableFinalLut", "a00073.html#a1b2a40983fd36ac1746a969af5e74349", null ]
     ] ],
-    [ "pxp_porter_duff_config_t", "a00073.html#a00623", [
+    [ "pxp_porter_duff_config_t", "a00073.html#a00624", [
       [ "enable", "a00073.html#a787a1ba56d6618f3abc0c875187dddce", null ],
       [ "srcFactorMode", "a00073.html#a6ae62a90aa13889831af48c55a2f0290", null ],
       [ "dstGlobalAlphaMode", "a00073.html#ad5df0e514e1e9059e98d355d7113bfe3", null ],
@@ -76,7 +76,7 @@ var a00073 =
       [ "dstGlobalAlpha", "a00073.html#abbda0ccb9aca0abd018b137cd5ea75ff", null ],
       [ "srcGlobalAlpha", "a00073.html#a0a8ae0532dc1ae2d7429c4b13fe863be", null ]
     ] ],
-    [ "pxp_pic_copy_config_t", "a00073.html#a00622", [
+    [ "pxp_pic_copy_config_t", "a00073.html#a00623", [
       [ "srcPicBaseAddr", "a00073.html#af4b9022ffd77436071fc1e20d0947bee", null ],
       [ "srcPitchBytes", "a00073.html#a80c7f497f0437dc6b956c33a377ec662", null ],
       [ "srcOffsetX", "a00073.html#a5044298dc1c498f33d495221bc194b63", null ],

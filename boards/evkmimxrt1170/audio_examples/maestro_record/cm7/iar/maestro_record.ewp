@@ -184,14 +184,13 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>OPUS_ENCODE</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>MP3_DECODER=1</state>
-          <state>OPUS_DECODER=1</state>
           <state>SAI_XFER_QUEUE_SIZE=3</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -1209,14 +1208,13 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>OPUS_ENCODE</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>MP3_DECODER=1</state>
-          <state>OPUS_DECODER=1</state>
           <state>SAI_XFER_QUEUE_SIZE=3</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -2054,6 +2052,9 @@
   <group>
     <name>source</name>
     <file>
+      <name>$PROJ_DIR$/../opusmem2mem_file.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../app_streamer.c</name>
     </file>
     <file>
@@ -2076,9 +2077,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../ffconf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../opusmem2mem_file.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../streamer_pcm.c</name>

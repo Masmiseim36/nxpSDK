@@ -25,7 +25,7 @@
  */
 
 static wlan_chanlist_t chanlist_2g_cfg = {
-    .num_chans = 7,
+    .num_chans = 14,
     .chan_info[0] =
         {
             .chan_num                     = 1,
@@ -64,8 +64,50 @@ static wlan_chanlist_t chanlist_2g_cfg = {
         },
     .chan_info[6] =
         {
+            .chan_num                     = 7,
+            .chan_freq                    = 2442,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[7] =
+        {
+            .chan_num                     = 8,
+            .chan_freq                    = 2447,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[8] =
+        {
+            .chan_num                     = 9,
+            .chan_freq                    = 2452,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[9] =
+        {
+            .chan_num                     = 10,
+            .chan_freq                    = 2457,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[10] =
+        {
+            .chan_num                     = 11,
+            .chan_freq                    = 2462,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[11] =
+        {
             .chan_num                     = 12,
             .chan_freq                    = 2467,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[12] =
+        {
+            .chan_num                     = 13,
+            .chan_freq                    = 2472,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[13] =
+        {
+            .chan_num                     = 14,
+            .chan_freq                    = 2484,
             .passive_scan_or_radar_detect = true,
         },
 };
@@ -275,7 +317,7 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg =
                         .chan_width = 20,
                         .chan_num   = 14,
                     },
-                .txpwrlimit_entry = {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}},
+                .txpwrlimit_entry = {{0, 8}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}},
             },
 };
 

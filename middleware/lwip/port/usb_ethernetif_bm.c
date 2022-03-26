@@ -27,7 +27,6 @@
 #include "usb_host_cdc_rndis.h"
 #include "usb_host_cdc.h"
 
-#include "fsl_debug_console.h"
 #include "board.h"
 
 #include "usb_ethernetif.h"

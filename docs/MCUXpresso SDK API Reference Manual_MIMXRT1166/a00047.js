@@ -1,6 +1,6 @@
 var a00047 =
 [
-    [ "serial_nor_config_option_t", "a00047.html#a00665", [
+    [ "serial_nor_config_option_t", "a00047.html#a00666", [
       [ "max_freq", "a00047.html#ab4a57d8d940d2087b5b08f65a975ccc9", null ],
       [ "misc_mode", "a00047.html#ab593fc2c81c4662c4ec2cff4a275f5fc", null ],
       [ "quad_mode_setting", "a00047.html#a7977532540c18274ae2a57e5e26db431", null ],

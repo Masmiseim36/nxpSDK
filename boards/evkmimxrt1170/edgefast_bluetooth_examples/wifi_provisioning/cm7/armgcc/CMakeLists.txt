@@ -32,7 +32,6 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../config_files/FreeRTOSConfig.h"
@@ -289,7 +288,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../config_files
     ${ProjDirPath}/../..
-    ${ProjDirPath}/../../../../../../middleware/wifi/wifi_bt_firmware
     ${ProjDirPath}/../../aws_iot_wifi_acs_porting_layer
     ${ProjDirPath}/../../aws_iot_bt_acs_porting_layer
     ${ProjDirPath}/../../aws_iot_bt_acs_porting_layer/ble
@@ -361,7 +359,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../../components/internal_flash
     ${ProjDirPath}/../../../../../../middleware/wireless
@@ -472,9 +470,13 @@ include(middleware_freertos-aws_iot_libraries_3rdparty_jsmn_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_vendor_nxp_pkcs11_MIMXRT1176_cm7)
 
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_ble_mt_MIMXRT1176_cm7)
+
 include(middleware_freertos-aws_iot_demos_wifi_provisioning_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_ble_hal_MIMXRT1176_cm7)
+
+include(middleware_freertos-aws_iot_demos_unused_internal_mt_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_tinycbor_MIMXRT1176_cm7)
 

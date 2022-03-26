@@ -1,6 +1,6 @@
 var a00079 =
 [
-    [ "sd_card_t", "a00079.html#a00635", [
+    [ "sd_card_t", "a00079.html#a00636", [
       [ "host", "a00079.html#ae1d68ff4edbc243d840cae5614d31a68", null ],
       [ "usrParam", "a00079.html#ab4566720b02d4de772cd3cbcb54eaafb", null ],
       [ "isHostReady", "a00079.html#a966fb2f61556afb59ab11f5f634e0578", null ],

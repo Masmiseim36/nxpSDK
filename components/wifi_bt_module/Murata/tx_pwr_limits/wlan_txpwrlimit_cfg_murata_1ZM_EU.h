@@ -23,7 +23,6 @@
  *  express and approved by NXP in writing.
  *
  */
-
 static wlan_chanlist_t chanlist_2g_cfg = {
     .num_chans = 13,
     .chan_info[0] =
@@ -259,7 +258,7 @@ static wlan_chanlist_t chanlist_5g_cfg = {
 #ifndef CONFIG_11AC
 static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
     .subband   = (wifi_SubBand_t)0x00,
-    .num_chans = 14,
+    .num_chans = 13,
     .txpwrlimit_config[0] =
         {
             .num_mod_grps = 10,
@@ -291,7 +290,8 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                     .chan_width = 20,
                     .chan_num   = 3,
                 },
-            .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+            .txpwrlimit_entry =
+                {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
         },
     .txpwrlimit_config[3] =
         {
@@ -302,7 +302,8 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                     .chan_width = 20,
                     .chan_num   = 4,
                 },
-            .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+            .txpwrlimit_entry =
+                {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
         },
     .txpwrlimit_config[4] =
         {
@@ -313,7 +314,8 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                     .chan_width = 20,
                     .chan_num   = 5,
                 },
-            .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+            .txpwrlimit_entry =
+                {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
         },
     .txpwrlimit_config[5] =
         {
@@ -324,7 +326,8 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                     .chan_width = 20,
                     .chan_num   = 6,
                 },
-            .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+            .txpwrlimit_entry =
+                {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
         },
     .txpwrlimit_config[6] =
         {
@@ -335,7 +338,8 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                     .chan_width = 20,
                     .chan_num   = 7,
                 },
-            .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+            .txpwrlimit_entry =
+                {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
         },
     .txpwrlimit_config[7] =
         {
@@ -346,7 +350,8 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                     .chan_width = 20,
                     .chan_num   = 8,
                 },
-            .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+            .txpwrlimit_entry =
+                {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
         },
     .txpwrlimit_config[8] =
         {
@@ -357,7 +362,8 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                     .chan_width = 20,
                     .chan_num   = 9,
                 },
-            .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+            .txpwrlimit_entry =
+                {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
         },
     .txpwrlimit_config[9] =
         {
@@ -368,7 +374,8 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                     .chan_width = 20,
                     .chan_num   = 10,
                 },
-            .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+            .txpwrlimit_entry =
+                {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
         },
     .txpwrlimit_config[10] =
         {
@@ -379,7 +386,8 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                     .chan_width = 20,
                     .chan_num   = 11,
                 },
-            .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+            .txpwrlimit_entry =
+                {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
         },
     .txpwrlimit_config[11] =
         {
@@ -403,453 +411,314 @@ static wifi_txpwrlimit_t tx_pwrlimit_2g_cfg = {
                 },
             .txpwrlimit_entry = {{0, 14}, {1, 14}, {2, 14}, {3, 14}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
         },
-    .txpwrlimit_config[13] =
-        {
-            .num_mod_grps = 10,
-            .chan_desc =
-                {
-                    .start_freq = 2414,
-                    .chan_width = 20,
-                    .chan_num   = 14,
-                },
-            .txpwrlimit_entry = {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}},
-        },
 };
 
 #ifdef CONFIG_5GHz_SUPPORT
-static wifi_txpwrlimit_t tx_pwrlimit_5g_cfg =
-    {
-        .subband   = (wifi_SubBand_t)0x00,
-        .num_chans = 39,
-        .txpwrlimit_config[0] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 36,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[1] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 40,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[2] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 44,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[3] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 48,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[4] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 52,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[5] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 56,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[6] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 60,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[7] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 64,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[8] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 100,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[9] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 104,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[10] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 108,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[11] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 112,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[12] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 116,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[13] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 120,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[14] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 124,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[15] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 128,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[16] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 132,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[17] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 136,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[18] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 140,
-                    },
-                .txpwrlimit_entry = {{1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
-            },
-        .txpwrlimit_config[19] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 144,
-                    },
-                .txpwrlimit_entry = {{1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}},
-            },
-        .txpwrlimit_config[20] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 149,
-                    },
-                .txpwrlimit_entry = {{1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
-            },
-        .txpwrlimit_config[21] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 153,
-                    },
-                .txpwrlimit_entry = {{1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
-            },
-        .txpwrlimit_config[22] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 157,
-                    },
-                .txpwrlimit_entry = {{1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
-            },
-        .txpwrlimit_config[23] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 161,
-                    },
-                .txpwrlimit_entry = {{1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
-            },
-        .txpwrlimit_config[24] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 165,
-                    },
-                .txpwrlimit_entry = {{1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
-            },
-        .txpwrlimit_config[25] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 183,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[26] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 184,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[27] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 185,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[28] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 187,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[29] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 188,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[30] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 189,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[31] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 192,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[32] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 196,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[33] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 7,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[34] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 8,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[35] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 11,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[36] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 12,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[37] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 16,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
-        .txpwrlimit_config[38] =
-            {
-                .num_mod_grps = 9,
-                .chan_desc =
-                    {
-                        .start_freq = 5000,
-                        .chan_width = 20,
-                        .chan_num   = 34,
-                    },
-                .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
-            },
+static wifi_txpwrlimit_t
+    tx_pwrlimit_5g_cfg =
+        {
+            .subband   = (wifi_SubBand_t)0x00,
+            .num_chans = 25,
+            .txpwrlimit_config[0] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 36,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[1] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 40,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[2] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 44,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[3] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 48,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[4] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 52,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[5] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 56,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[6] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 60,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[7] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 64,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[8] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 100,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[9] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 104,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[10] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 108,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[11] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 112,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[12] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 116,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[13] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 120,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[14] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 124,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[15] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 128,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[16] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 132,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[17] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 136,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 14}, {8, 14}, {9, 14}},
+                },
+            .txpwrlimit_config[18] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 140,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 15}, {2, 15}, {3, 15}, {4, 14}, {5, 14}, {6, 14}, {7, 0}, {8, 0}, {9, 0}},
+                },
+            .txpwrlimit_config[19] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 144,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}},
+                },
+            .txpwrlimit_config[20] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 149,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
+                },
+            .txpwrlimit_config[21] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 153,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
+                },
+            .txpwrlimit_config[22] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 157,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
+                },
+            .txpwrlimit_config[23] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 161,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
+                },
+            .txpwrlimit_config[24] =
+                {
+                    .num_mod_grps = 9,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num   = 165,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0}, {1, 7}, {2, 7}, {3, 7}, {4, 7}, {5, 7}, {6, 7}, {7, 7}, {8, 7}, {9, 7}},
+                },
 };
 #endif
 #else
@@ -857,7 +726,7 @@ static wifi_txpwrlimit_t
     tx_pwrlimit_2g_cfg =
         {
             .subband   = (wifi_SubBand_t)0x00,
-            .num_chans = 14,
+            .num_chans = 13,
             .txpwrlimit_config[0] =
                 {
                     .num_mod_grps = 12,
@@ -877,7 +746,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[1] =
@@ -899,7 +768,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[2] =
@@ -921,7 +790,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[3] =
@@ -943,7 +812,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[4] =
@@ -965,7 +834,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[5] =
@@ -987,7 +856,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[6] =
@@ -1009,7 +878,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[7] =
@@ -1031,7 +900,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[8] =
@@ -1053,7 +922,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[9] =
@@ -1075,7 +944,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[10] =
@@ -1097,7 +966,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[11] =
@@ -1119,7 +988,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
             .txpwrlimit_config[12] =
@@ -1141,29 +1010,7 @@ static wifi_txpwrlimit_t
                                          {7, 0},
                                          {8, 0},
                                          {9, 0},
-                                         {10, 0},
-                                         {11, 0}},
-                },
-            .txpwrlimit_config[13] =
-                {
-                    .num_mod_grps = 12,
-                    .chan_desc =
-                        {
-                            .start_freq = 2414,
-                            .chan_width = 20,
-                            .chan_num   = 14,
-                        },
-                    .txpwrlimit_entry = {{0, 0},
-                                         {1, 0},
-                                         {2, 0},
-                                         {3, 0},
-                                         {4, 0},
-                                         {5, 0},
-                                         {6, 0},
-                                         {7, 0},
-                                         {8, 0},
-                                         {9, 0},
-                                         {10, 0},
+                                         {10, 14},
                                          {11, 0}},
                 },
 };
@@ -1173,7 +1020,7 @@ static wifi_txpwrlimit_t
     tx_pwrlimit_5g_cfg =
         {
             .subband   = (wifi_SubBand_t)0x00,
-            .num_chans = 39,
+            .num_chans = 24,
             .txpwrlimit_config[0] =
                 {
                     .num_mod_grps = 16,
@@ -1621,10 +1468,10 @@ static wifi_txpwrlimit_t
                          {9, 14},
                          {10, 14},
                          {11, 13},
-                         {12, 14},
-                         {13, 13},
-                         {14, 13},
-                         {15, 13}},
+                         {12, 0},
+                         {13, 0},
+                         {14, 0},
+                         {15, 0}},
                 },
             .txpwrlimit_config[17] =
                 {
@@ -1648,10 +1495,10 @@ static wifi_txpwrlimit_t
                          {9, 14},
                          {10, 14},
                          {11, 13},
-                         {12, 14},
-                         {13, 13},
-                         {14, 13},
-                         {15, 13}},
+                         {12, 0},
+                         {13, 0},
+                         {14, 0},
+                         {15, 0}},
                 },
             .txpwrlimit_config[18] =
                 {
@@ -1670,43 +1517,17 @@ static wifi_txpwrlimit_t
                          {4, 14},
                          {5, 14},
                          {6, 14},
-                         {7, 14},
-                         {8, 14},
-                         {9, 14},
+                         {7, 0},
+                         {8, 0},
+                         {9, 0},
                          {10, 14},
-                         {11, 13},
-                         {12, 14},
-                         {13, 13},
-                         {14, 13},
-                         {15, 13}},
+                         {11, 0},
+                         {12, 0},
+                         {13, 0},
+                         {14, 0},
+                         {15, 0}},
                 },
             .txpwrlimit_config[19] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 144,
-                        },
-                    .txpwrlimit_entry = {{0, 0},
-                                         {1, 0},
-                                         {2, 0},
-                                         {3, 0},
-                                         {4, 0},
-                                         {5, 0},
-                                         {6, 0},
-                                         {7, 0},
-                                         {8, 0},
-                                         {9, 0},
-                                         {10, 0},
-                                         {11, 0},
-                                         {12, 0},
-                                         {13, 0},
-                                         {14, 0},
-                                         {15, 0}},
-                },
-            .txpwrlimit_config[20] =
                 {
                     .num_mod_grps = 16,
                     .chan_desc =
@@ -1732,7 +1553,7 @@ static wifi_txpwrlimit_t
                                          {14, 7},
                                          {15, 7}},
                 },
-            .txpwrlimit_config[21] =
+            .txpwrlimit_config[20] =
                 {
                     .num_mod_grps = 16,
                     .chan_desc =
@@ -1758,7 +1579,7 @@ static wifi_txpwrlimit_t
                                          {14, 7},
                                          {15, 7}},
                 },
-            .txpwrlimit_config[22] =
+            .txpwrlimit_config[21] =
                 {
                     .num_mod_grps = 16,
                     .chan_desc =
@@ -1784,7 +1605,7 @@ static wifi_txpwrlimit_t
                                          {14, 7},
                                          {15, 7}},
                 },
-            .txpwrlimit_config[23] =
+            .txpwrlimit_config[22] =
                 {
                     .num_mod_grps = 16,
                     .chan_desc =
@@ -1810,7 +1631,7 @@ static wifi_txpwrlimit_t
                                          {14, 7},
                                          {15, 7}},
                 },
-            .txpwrlimit_config[24] =
+            .txpwrlimit_config[23] =
                 {
                     .num_mod_grps = 16,
                     .chan_desc =
@@ -1831,388 +1652,10 @@ static wifi_txpwrlimit_t
                                          {9, 7},
                                          {10, 7},
                                          {11, 7},
-                                         {12, 7},
-                                         {13, 7},
-                                         {14, 7},
-                                         {15, 7}},
-                },
-            .txpwrlimit_config[25] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 183,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[26] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 184,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[27] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 185,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[28] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 187,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[29] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 188,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[30] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 189,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[31] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 192,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[32] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 196,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[33] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 7,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[34] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 8,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[35] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 11,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[36] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 12,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[37] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 16,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
-                },
-            .txpwrlimit_config[38] =
-                {
-                    .num_mod_grps = 16,
-                    .chan_desc =
-                        {
-                            .start_freq = 5000,
-                            .chan_width = 20,
-                            .chan_num   = 34,
-                        },
-                    .txpwrlimit_entry =
-                        {{0, 0},
-                         {1, 17},
-                         {2, 16},
-                         {3, 14},
-                         {4, 17},
-                         {5, 16},
-                         {6, 14},
-                         {7, 17},
-                         {8, 16},
-                         {9, 14},
-                         {10, 15},
-                         {11, 14},
-                         {12, 15},
-                         {13, 15},
-                         {14, 14},
-                         {15, 13}},
+                                         {12, 0},
+                                         {13, 0},
+                                         {14, 0},
+                                         {15, 0}},
                 },
 };
 #endif /* CONFIG_5GHz_SUPPORT */

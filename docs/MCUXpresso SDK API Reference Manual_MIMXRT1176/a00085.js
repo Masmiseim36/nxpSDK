@@ -1,6 +1,6 @@
 var a00085 =
 [
-    [ "serial_port_swo_config_t", "a00085.html#a00673", [
+    [ "serial_port_swo_config_t", "a00085.html#a00674", [
       [ "clockRate", "a00085.html#a515e2f5ca8778fd65e10a0ac7f77d309", null ],
       [ "baudRate", "a00085.html#af06ab1ceb2156bba95ee5b125ef77e40", null ],
       [ "port", "a00085.html#aeab85500212c4b7945515d3acdf24aee", null ],

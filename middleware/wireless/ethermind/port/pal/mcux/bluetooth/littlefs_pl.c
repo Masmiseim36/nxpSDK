@@ -1,6 +1,6 @@
 
 /*
- * Copyright 2021 NXP
+ * Copyright 2021 - 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -47,36 +47,36 @@
 
 #if (!(defined(__CC_ARM) || defined(__UVISION_VERSION)))
 /*
- * Name: LITTLEFS_STORAGE_START_ADDRESS
- * Description: LITTLEFS_STORAGE_START_ADDRESS from linker command file is used by this code
+ * Name: EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS
+ * Description: EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS from linker command file is used by this code
  *              as Raw Sector Start Address.
  */
-extern uint32_t LITTLEFS_STORAGE_START_ADDRESS[];
+extern uint32_t EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS[];
 
 /*
- * Name: LITTLEFS_STORAGE_SECTOR_SIZE
+ * Name: EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE
  * Description: external symbol from linker command file, it represents the size
  *              of a FLASH sector
  */
-extern uint32_t LITTLEFS_STORAGE_SECTOR_SIZE[];
+extern uint32_t EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE[];
 
 /*
- * Name:  LITTLEFS_STORAGE_MAX_SECTORS
+ * Name:  EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS
  * Description: external symbol from linker command file, it represents the sectors
  *              count used by the ENVM storage system; it has to be a multiple of 2
  */
-extern uint32_t LITTLEFS_STORAGE_MAX_SECTORS[];
+extern uint32_t EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS[];
 #else
 
-extern uint32_t Image$$LittleFS_region$$ZI$$Base[];
-extern uint32_t Image$$LittleFS_region$$ZI$$Limit[];
-extern uint32_t Image$$LittleFS_region$$Length;
+extern uint32_t Image$$EDGEFAST_BT_LittleFS_region$$ZI$$Base[];
+extern uint32_t Image$$EDGEFAST_BT_LittleFS_region$$ZI$$Limit[];
+extern uint32_t Image$$EDGEFAST_BT_LittleFS_region$$Length;
 
-#define LITTLEFS_STORAGE_START_ADDRESS (Image$$LittleFS_region$$ZI$$Base)
-#define LITTLEFS_STORAGE_END_ADDRESS (Image$$LittleFS_region$$ZI$$Limit)
-#define NVM_LENGTH ((uint32_t)((uint8_t*)LITTLEFS_STORAGE_END_ADDRESS)-(uint32_t)((uint8_t*)LITTLEFS_STORAGE_START_ADDRESS))
-#define LITTLEFS_STORAGE_SECTOR_SIZE FSL_FEATURE_FLASH_PAGE_SIZE_BYTES
-#define LITTLEFS_STORAGE_MAX_SECTORS (NVM_LENGTH/LITTLEFS_STORAGE_SECTOR_SIZE)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS (Image$$EDGEFAST_BT_LittleFS_region$$ZI$$Base)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS (Image$$EDGEFAST_BT_LittleFS_region$$ZI$$Limit)
+#define NVM_LENGTH ((uint32_t)((uint8_t*)EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS)-(uint32_t)((uint8_t*)EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS))
+#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE FSL_FEATURE_FLASH_PAGE_SIZE_BYTES
+#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS (NVM_LENGTH/EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
 #endif /* __CC_ARM */
 
 static int lfs_mflash_read(const struct lfs_config *lfsc, lfs_block_t block, lfs_off_t off, void *buffer, lfs_size_t size);
@@ -109,7 +109,7 @@ static int lfs_mflash_read(const struct lfs_config *lfsc, lfs_block_t block, lfs
 
     assert(lfsc);
 
-    flash_addr = ((uint32_t)LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size + off;
+    flash_addr = ((uint32_t)EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size + off;
 
     (void)OSA_MutexLock((osa_mutex_handle_t)s_flashOpsLock, osaWaitForever_c);
     if (HAL_FlashRead(flash_addr, size, buffer) != kStatus_HAL_Flash_Success)
@@ -133,7 +133,7 @@ static int lfs_mflash_prog(
 
     assert(lfsc);
 
-    flash_addr = ((uint32_t)LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size + off;
+    flash_addr = ((uint32_t)EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size + off;
 
     (void)OSA_MutexLock((osa_mutex_handle_t)s_flashOpsLock, osaWaitForever_c);
     for (uint32_t page_ofs = 0; page_ofs < size; page_ofs += LITTLEFS_PROG_SIZE)
@@ -172,7 +172,7 @@ static int lfs_mflash_erase(const struct lfs_config *lfsc, lfs_block_t block)
 
     assert(lfsc);
 
-    flash_addr = ((uint32_t)LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size;
+    flash_addr = ((uint32_t)EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size;
 
     (void)OSA_MutexLock((osa_mutex_handle_t)s_flashOpsLock, osaWaitForever_c);
     for (uint32_t sector_ofs = 0; sector_ofs < lfsc->block_size; sector_ofs += LITTLEFS_BLOCK_SIZE)
@@ -215,7 +215,7 @@ lfs_t * lfs_pl_init(void)
 
     if (0 == initialized)
     {
-        LittleFS_config.block_count = (uint32_t)LITTLEFS_STORAGE_MAX_SECTORS;
+        LittleFS_config.block_count = (uint32_t)EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS;
 #ifdef LITTLEFS_PL_DEBUG
         CoreDebug->DEMCR |= (1 << CoreDebug_DEMCR_TRCENA_Pos);
 #endif /* LITTLEFS_PL_DEBUG */

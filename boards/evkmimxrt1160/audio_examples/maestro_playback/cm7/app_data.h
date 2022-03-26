@@ -11,7 +11,11 @@
 #include <stdint.h>
 #include <streamer_element_properties.h>
 
+#ifdef CPU_LPC55S69JBD100_cm33_core0
+#define EAP_MAX_PRESET 6
+#else
 #define EAP_MAX_PRESET 10
+#endif
 
 typedef struct _app_data
 {

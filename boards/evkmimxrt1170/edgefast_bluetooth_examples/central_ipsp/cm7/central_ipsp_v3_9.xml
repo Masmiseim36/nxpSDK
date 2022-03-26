@@ -117,7 +117,6 @@
           <value>CONFIG_BT_GATT_CLIENT=1</value>
           <value>CONFIG_BT_CENTRAL=1</value>
           <value>CONFIG_BT_L2CAP_DYNAMIC_CHANNEL=1</value>
-          <value>CFG_BLE</value>
           <value>NVM_NO_COMPONNET=1</value>
           <value>HAL_UART_DMA_ENABLE=1</value>
           <value>HAL_AUDIO_DMA_INIT_ENABLE=0</value>
@@ -197,7 +196,6 @@
     </debug_configurations>
     <include_paths>
       <include_path path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ipsp/cm7" project_relative_path="source" type="c_include"/>
-      <include_path path="middleware/wifi/wifi_bt_firmware" project_relative_path="wifi/wifi_bt_firmware" type="c_include"/>
       <include_path path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ipsp/cm7" project_relative_path="board" type="c_include"/>
       <include_path path="middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs" project_relative_path="bt_ble/port/pal/mcux/edgefast_support/configs" type="c_include"/>
       <include_path path="middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs" project_relative_path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ipsp/cm7" type="c_include"/>
@@ -282,9 +280,6 @@
     </source>
     <source path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ipsp/cm7" project_relative_path="source" type="c_preinclude">
       <files mask="app_config.h"/>
-    </source>
-    <source path="middleware/wifi/wifi_bt_firmware" project_relative_path="wifi/wifi_bt_firmware" type="c_include">
-      <files mask="sduartIW416_wlan_bt.h"/>
     </source>
     <source path="boards/evkmimxrt1170/edgefast_bluetooth_examples/central_ipsp/cm7" project_relative_path="board" type="src">
       <files mask="sdmmc_config.c"/>
@@ -730,53 +725,53 @@
     <source path="middleware/edgefast_bluetooth/include/bluetooth/services" project_relative_path="edgefast/bluetooth/include/bluetooth/services" type="c_include">
       <files mask="ipsp.h"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
-      <files mask="libethermind_ble_core.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
+      <files mask="libethermind_bt_core.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
-      <files mask="libethermind_ble_gatt.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
+      <files mask="libethermind_bt_gatt.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
-      <files mask="libethermind_ble_protocol.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
+      <files mask="libethermind_bt_protocol.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
-      <files mask="libethermind_ble_util.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
+      <files mask="libethermind_bt_util.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
-      <files mask="libethermind_ble_core.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
+      <files mask="libethermind_bt_core.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
-      <files mask="libethermind_ble_gatt.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
+      <files mask="libethermind_bt_gatt.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
-      <files mask="libethermind_ble_protocol.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
+      <files mask="libethermind_bt_protocol.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
-      <files mask="libethermind_ble_util.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
+      <files mask="libethermind_bt_util.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
-      <files mask="libethermind_ble_core.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
+      <files mask="libethermind_bt_core.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
-      <files mask="libethermind_ble_gatt.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
+      <files mask="libethermind_bt_gatt.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
-      <files mask="libethermind_ble_protocol.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
+      <files mask="libethermind_bt_protocol.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
-      <files mask="libethermind_ble_util.a"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
+      <files mask="libethermind_bt_util.a"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
-      <files mask="libethermind_ble_core.lib"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
+      <files mask="libethermind_bt_core.lib"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
-      <files mask="libethermind_ble_gatt.lib"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
+      <files mask="libethermind_bt_gatt.lib"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
-      <files mask="libethermind_ble_protocol.lib"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
+      <files mask="libethermind_bt_protocol.lib"/>
     </source>
-    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm7f/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
-      <files mask="libethermind_ble_util.lib"/>
+    <source path="middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm7f/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
+      <files mask="libethermind_bt_util.lib"/>
     </source>
     <source path="middleware/edgefast_bluetooth/output/templates/config" project_relative_path="edgefast/bluetooth/edgefast_bluetooth/output/templates/config" type="c_include" exclude="true">
       <files mask="edgefast_bluetooth_config.h" hidden="true"/>

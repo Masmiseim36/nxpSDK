@@ -205,8 +205,8 @@ httpsrv_tls_sock_t httpsrv_tls_socket(httpsrv_tls_ctx_t ctx, int sock)
             ret = mbedtls_ssl_handshake(tls_sock);
             if (ret < 0)
             {
-            #if 0  
-                PRINTF(" failed\r\n  ! mbedtls_ssl_handshake error %d\r\n\n", ret);
+            #if 0
+                LWIP_PLATFORM_DIAG((" failed\r\n  ! mbedtls_ssl_handshake error %d", ret));
             #endif
                 httpsrv_tls_shutdown(tls_sock);
                 tls_sock=0;

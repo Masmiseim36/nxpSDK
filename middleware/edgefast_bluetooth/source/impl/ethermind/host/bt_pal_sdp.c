@@ -199,7 +199,7 @@ static uint8_t tg_cover_art_additional_protocol_desc_list[] =
 
 extern const uint8_t uuid_indices_arr[];
 extern SDP_RECORD dbase[DB_MAX_RECORDS];
-extern struct attr attr_arr[];
+extern struct SDP_ATTR attr_arr[];
 int bt_sdp_register_service(struct bt_sdp_record *service)
 {
 	uint32_t record_handle = 0xFFFFFFFFu;

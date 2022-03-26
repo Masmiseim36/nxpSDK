@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', MFLASH_FILE_BASEADDR=14221312, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, CRYPTO_USE_DRIVER_CAAM, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../..;../config_files;..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/flash/mflash/mimxrt1170;../../../../../../components/flash/mflash;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/freertos/demos/include;../../../../../../rtos/freertos/demos/dev_mode_key_provisioning/include;../../../../../../rtos/freertos/libraries/ota_for_aws/source/include;../../../../../../rtos/freertos/libraries/ota_for_aws/source/portable/os;../../../../../../rtos/freertos/vendors/nxp/ota;../../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include;../../../../../../rtos/freertos/libraries/logging/include;../../../../../../rtos/freertos/libraries/coreMQTT/source/include;../../../../../../rtos/freertos/libraries/coreMQTT/source/interface;../../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config;../../../../../../rtos/freertos/libraries/3rdparty/pkcs11;../../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform;../../../../../../rtos/freertos/libraries/abstractions/platform/include/platform;../../../../../../rtos/freertos/libraries/abstractions/platform/include/types;../../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include;../../../../../../rtos/freertos/libraries/abstractions/platform/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types;../../../../../../rtos/freertos/demos/network_manager;../../../../../../rtos/freertos/libraries/coreJSON/source/include;../../../../../../rtos/freertos/libraries/3rdparty/tinycbor/src;../../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include;../../../../../../rtos/freertos/libraries/abstractions/mqtt_agent/include;../../../../../../rtos/freertos/libraries/coreMQTT-Agent/source/include;../../../../../../rtos/freertos/demos/common/pkcs11_helpers;../../../../../../rtos/freertos/demos/common/mqtt_subscription_manager;../../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include;../../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils;../../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include;../../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include</IncludePath>
+              <IncludePath>../config_files;../../../..;..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/flash/mflash/mimxrt1170;../../../../../../components/flash/mflash;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/freertos/demos/include;../../../../../../rtos/freertos/demos/dev_mode_key_provisioning/include;../../../../../../rtos/freertos/libraries/ota_for_aws/source/include;../../../../../../rtos/freertos/libraries/ota_for_aws/source/portable/os;../../../../../../rtos/freertos/vendors/nxp/ota;../../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include;../../../../../../rtos/freertos/libraries/logging/include;../../../../../../rtos/freertos/libraries/coreMQTT/source/include;../../../../../../rtos/freertos/libraries/coreMQTT/source/interface;../../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config;../../../../../../rtos/freertos/libraries/3rdparty/pkcs11;../../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform;../../../../../../rtos/freertos/libraries/abstractions/platform/include/platform;../../../../../../rtos/freertos/libraries/abstractions/platform/include/types;../../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include;../../../../../../rtos/freertos/libraries/abstractions/platform/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types;../../../../../../rtos/freertos/demos/network_manager;../../../../../../rtos/freertos/libraries/coreJSON/source/include;../../../../../../rtos/freertos/libraries/3rdparty/tinycbor/src;../../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include;../../../../../../rtos/freertos/libraries/abstractions/mqtt_agent/include;../../../../../../rtos/freertos/libraries/coreMQTT-Agent/source/include;../../../../../../rtos/freertos/demos/common/pkcs11_helpers;../../../../../../rtos/freertos/demos/common/mqtt_subscription_manager;../../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include;../../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils;../../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include;../../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +352,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../../../..;../config_files</IncludePath>
+              <IncludePath>../config_files;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -376,38 +376,13 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>main_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwipopts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwipopts.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_app_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcuboot_app_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_app_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcuboot_app_support.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>config_files</GroupName>
           <Files>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/FreeRTOSConfig.h</FilePath>
+            </File>
             <File>
               <FileName>aws_demo_config.h</FileName>
               <FileType>5</FileType>
@@ -432,11 +407,6 @@
               <FileName>core_pkcs11_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/core_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/FreeRTOSConfig.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOSIPConfig.h</FileName>
@@ -467,6 +437,36 @@
               <FileName>aws_iot_network_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/aws_iot_network_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>main_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcuboot_app_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcuboot_app_support.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4858,7 +4858,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, LWIP_ENET_FLEXIBLE_CONFIGURATION, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, MBEDTLS_CONFIG_FILE='\"aws_mbedtls_config.h\"', MFLASH_FILE_BASEADDR=14221312, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, CRYPTO_USE_DRIVER_CAAM, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../..;../config_files;..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/flash/mflash/mimxrt1170;../../../../../../components/flash/mflash;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/freertos/demos/include;../../../../../../rtos/freertos/demos/dev_mode_key_provisioning/include;../../../../../../rtos/freertos/libraries/ota_for_aws/source/include;../../../../../../rtos/freertos/libraries/ota_for_aws/source/portable/os;../../../../../../rtos/freertos/vendors/nxp/ota;../../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include;../../../../../../rtos/freertos/libraries/logging/include;../../../../../../rtos/freertos/libraries/coreMQTT/source/include;../../../../../../rtos/freertos/libraries/coreMQTT/source/interface;../../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config;../../../../../../rtos/freertos/libraries/3rdparty/pkcs11;../../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform;../../../../../../rtos/freertos/libraries/abstractions/platform/include/platform;../../../../../../rtos/freertos/libraries/abstractions/platform/include/types;../../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include;../../../../../../rtos/freertos/libraries/abstractions/platform/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types;../../../../../../rtos/freertos/demos/network_manager;../../../../../../rtos/freertos/libraries/coreJSON/source/include;../../../../../../rtos/freertos/libraries/3rdparty/tinycbor/src;../../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include;../../../../../../rtos/freertos/libraries/abstractions/mqtt_agent/include;../../../../../../rtos/freertos/libraries/coreMQTT-Agent/source/include;../../../../../../rtos/freertos/demos/common/pkcs11_helpers;../../../../../../rtos/freertos/demos/common/mqtt_subscription_manager;../../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include;../../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils;../../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include;../../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include</IncludePath>
+              <IncludePath>../config_files;../../../..;..;../../../../../../components/phy/mdio/enet;../../../../../../components/phy/device/phyksz8081;../../../../../../components/phy/device/phyrtl8211f;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/flash/mflash/mimxrt1170;../../../../../../components/flash/mflash;../../../../../../middleware/mbedtls/include;../../../../../../middleware/mbedtls/library;../../../../../../middleware/mbedtls/port/ksdk;../../../../../../middleware/lwip/port;../../../../../../middleware/lwip/src;../../../../../../middleware/lwip/src/include;../../../../../../components/phy;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/freertos/demos/include;../../../../../../rtos/freertos/demos/dev_mode_key_provisioning/include;../../../../../../rtos/freertos/libraries/ota_for_aws/source/include;../../../../../../rtos/freertos/libraries/ota_for_aws/source/portable/os;../../../../../../rtos/freertos/vendors/nxp/ota;../../../../../../rtos/freertos/libraries/abstractions/transport/secure_sockets;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../rtos/freertos/libraries/abstractions/secure_sockets/include;../../../../../../rtos/freertos/libraries/logging/include;../../../../../../rtos/freertos/libraries/coreMQTT/source/include;../../../../../../rtos/freertos/libraries/coreMQTT/source/interface;../../../../../../rtos/freertos/libraries/3rdparty/mbedtls_config;../../../../../../rtos/freertos/libraries/3rdparty/pkcs11;../../../../../../rtos/freertos/libraries/abstractions/pkcs11/corePKCS11/source/include;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include/platform;../../../../../../rtos/freertos/libraries/abstractions/platform/include/platform;../../../../../../rtos/freertos/libraries/abstractions/platform/include/types;../../../../../../rtos/freertos/libraries/abstractions/platform/freertos/include;../../../../../../rtos/freertos/libraries/abstractions/platform/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/private;../../../../../../rtos/freertos/libraries/c_sdk/standard/common/include/types;../../../../../../rtos/freertos/demos/network_manager;../../../../../../rtos/freertos/libraries/coreJSON/source/include;../../../../../../rtos/freertos/libraries/3rdparty/tinycbor/src;../../../../../../rtos/freertos/libraries/abstractions/backoff_algorithm/source/include;../../../../../../rtos/freertos/libraries/abstractions/mqtt_agent/include;../../../../../../rtos/freertos/libraries/coreMQTT-Agent/source/include;../../../../../../rtos/freertos/demos/common/pkcs11_helpers;../../../../../../rtos/freertos/demos/common/mqtt_subscription_manager;../../../../../../rtos/freertos/libraries/freertos_plus/standard/tls/include;../../../../../../rtos/freertos/libraries/3rdparty/mbedtls_utils;../../../../../../rtos/freertos/libraries/freertos_plus/standard/crypto/include;../../../../../../rtos/freertos/libraries/freertos_plus/standard/utils/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4876,7 +4876,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../../../..;../config_files</IncludePath>
+              <IncludePath>../config_files;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -4900,38 +4900,13 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>main_enet.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main_enet.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwipopts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwipopts.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_app_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcuboot_app_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_app_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcuboot_app_support.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>config_files</GroupName>
           <Files>
+            <File>
+              <FileName>FreeRTOSConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/FreeRTOSConfig.h</FilePath>
+            </File>
             <File>
               <FileName>aws_demo_config.h</FileName>
               <FileType>5</FileType>
@@ -4956,11 +4931,6 @@
               <FileName>core_pkcs11_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/core_pkcs11_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>FreeRTOSConfig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/FreeRTOSConfig.h</FilePath>
             </File>
             <File>
               <FileName>FreeRTOSIPConfig.h</FileName>
@@ -4991,6 +4961,36 @@
               <FileName>aws_iot_network_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/aws_iot_network_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>aws_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>main_enet.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main_enet.c</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcuboot_app_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcuboot_app_support.h</FilePath>
             </File>
           </Files>
         </Group>

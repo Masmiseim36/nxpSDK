@@ -1,6 +1,6 @@
 var a00095 =
 [
-    [ "tmpsns_config_t", "a00095.html#a00695", [
+    [ "tmpsns_config_t", "a00095.html#a00696", [
       [ "measureMode", "a00095.html#ad171d2aae12e8878a49fd7cc2f53ef99", null ],
       [ "frequency", "a00095.html#ab34271c040c63ca30757af0c880664a5", null ],
       [ "highAlarmTemp", "a00095.html#aa1a6a5c4f3f97e50b1d0e8259971373e", null ],

@@ -6,10 +6,10 @@ asscess policy using RDC and RDC_SEMA42
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
+- IAR embedded Workbench  9.20.2
+- Keil MDK  5.36
 - MCUXpresso  11.5.0
-- GCC ARM Embedded  10.2.1
+- GCC ARM Embedded  10.3.1
 
 Hardware requirements
 =====================

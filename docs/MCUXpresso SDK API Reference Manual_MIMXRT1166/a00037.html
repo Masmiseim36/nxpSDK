@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.11.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -120,8 +120,8 @@ Typical use case</h1>
 <h2><a class="anchor" id="FlexIO_I2SCaseInterrupt"></a>
 FlexIO I2S send/receive using an interrupt method</h2>
 <div class="fragment"><div class="line">sai_handle_t g_saiTxHandle;</div>
-<div class="line"><a class="code" href="a00077.html#a00627">sai_config_t</a> user_config;</div>
-<div class="line"><a class="code" href="a00077.html#a00634">sai_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00077.html#a00628">sai_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00077.html#a00635">sai_transfer_t</a> sendXfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> rxFinished;</div>
 <div class="line"><span class="keyword">const</span> uint8_t sendData[] = [......];</div>
@@ -168,8 +168,8 @@ FLEXIO_I2S send/receive using a DMA method</h2>
 <div class="fragment"><div class="line">sai_handle_t g_saiHandle;</div>
 <div class="line">dma_handle_t g_saiTxDmaHandle;</div>
 <div class="line">dma_handle_t g_saiRxDmaHandle;</div>
-<div class="line"><a class="code" href="a00077.html#a00627">sai_config_t</a> user_config;</div>
-<div class="line"><a class="code" href="a00077.html#a00634">sai_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00077.html#a00628">sai_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00077.html#a00635">sai_transfer_t</a> sendXfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
 <div class="line">uint8_t sendData[] = ...;</div>
 <div class="line"></div>

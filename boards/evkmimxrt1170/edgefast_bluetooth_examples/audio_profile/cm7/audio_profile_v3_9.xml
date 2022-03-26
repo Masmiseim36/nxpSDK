@@ -259,13 +259,6 @@
       <include_path path="boards/evkmimxrt1170/edgefast_bluetooth_examples/audio_profile/cm7/config_files" project_relative_path="source" type="c_include"/>
       <include_path path="boards/evkmimxrt1170" project_relative_path="freertos/config_files" type="c_include"/>
       <include_path path="boards/evkmimxrt1170/edgefast_bluetooth_examples/audio_profile/cm7/config_files" project_relative_path="freertos/config_files" type="c_include"/>
-      <include_path path="middleware/wifi/incl/wifidriver" project_relative_path="wifi/incl/wifidriver" type="c_include"/>
-      <include_path path="middleware/wifi/wifidriver/incl" project_relative_path="wifi/wifidriver/incl" type="c_include"/>
-      <include_path path="middleware/wifi/wifidriver" project_relative_path="wifi/wifidriver" type="c_include"/>
-      <include_path path="middleware/wifi/incl/wlcmgr" project_relative_path="wifi/incl/wlcmgr" type="c_include"/>
-      <include_path path="middleware/wifi/incl/port/os" project_relative_path="wifi/incl/port/os" type="c_include"/>
-      <include_path path="middleware/wifi/incl" project_relative_path="wifi/incl" type="c_include"/>
-      <include_path path="middleware/wifi/wifi_bt_firmware" project_relative_path="wifi/wifi_bt_firmware" type="c_include"/>
       <include_path path="middleware/edgefast_bluetooth/source/impl/ethermind/controller" project_relative_path="edgefast/bluetooth/controller" type="c_include"/>
       <include_path path="middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs" project_relative_path="edgefast/bluetooth/controller/configs" type="c_include"/>
       <include_path path="middleware/edgefast_bluetooth/source/impl/ethermind/platform" project_relative_path="bt_ble/port/pal/mcux/edgefast_support" type="c_include"/>
@@ -532,95 +525,6 @@
     </source>
     <source path="boards/evkmimxrt1170/edgefast_bluetooth_examples/audio_profile/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
-    </source>
-    <source path="middleware/wifi/wifidriver" project_relative_path="wifi/wifidriver" type="src">
-      <files mask="mlan_sdio.c"/>
-      <files mask="mlan_11ac.c"/>
-      <files mask="mlan_11d.c"/>
-      <files mask="mlan_11h.c"/>
-      <files mask="mlan_11n.c"/>
-      <files mask="mlan_11n_aggr.c"/>
-      <files mask="mlan_11n_rxreorder.c"/>
-      <files mask="mlan_cfp.c"/>
-      <files mask="mlan_cmdevt.c"/>
-      <files mask="mlan_glue.c"/>
-      <files mask="mlan_init.c"/>
-      <files mask="mlan_join.c"/>
-      <files mask="mlan_misc.c"/>
-      <files mask="mlan_scan.c"/>
-      <files mask="mlan_shim.c"/>
-      <files mask="mlan_sta_cmd.c"/>
-      <files mask="mlan_sta_cmdresp.c"/>
-      <files mask="mlan_sta_event.c"/>
-      <files mask="mlan_sta_ioctl.c"/>
-      <files mask="mlan_sta_rx.c"/>
-      <files mask="mlan_txrx.c"/>
-      <files mask="mlan_uap_cmdevent.c"/>
-      <files mask="mlan_uap_ioctl.c"/>
-      <files mask="mlan_wmm.c"/>
-      <files mask="wifi.c"/>
-      <files mask="wifi_pwrmgr.c"/>
-      <files mask="wifi-debug.c"/>
-      <files mask="wifi-mem.c"/>
-      <files mask="wifi-sdio.c"/>
-      <files mask="wifi-uap.c"/>
-    </source>
-    <source path="middleware/wifi/wifidriver/incl" project_relative_path="wifi/wifidriver/incl" type="c_include">
-      <files mask="mlan.h"/>
-      <files mask="mlan_11ac.h"/>
-      <files mask="mlan_11h.h"/>
-      <files mask="mlan_11n.h"/>
-      <files mask="mlan_11n_aggr.h"/>
-      <files mask="mlan_11n_rxreorder.h"/>
-      <files mask="mlan_api.h"/>
-      <files mask="mlan_decl.h"/>
-      <files mask="mlan_fw.h"/>
-      <files mask="mlan_ieee.h"/>
-      <files mask="mlan_init.h"/>
-      <files mask="mlan_ioctl.h"/>
-      <files mask="mlan_join.h"/>
-      <files mask="mlan_main.h"/>
-      <files mask="mlan_meas.h"/>
-      <files mask="mlan_remap_mem_operations.h"/>
-      <files mask="mlan_sdio.h"/>
-      <files mask="mlan_uap.h"/>
-      <files mask="mlan_util.h"/>
-      <files mask="mlan_wmm.h"/>
-    </source>
-    <source path="middleware/wifi/port/os" project_relative_path="wifi/port/os" type="src">
-      <files mask="os.c"/>
-    </source>
-    <source path="middleware/wifi/incl/wifidriver" project_relative_path="wifi/incl/wifidriver" type="c_include">
-      <files mask="wifi.h"/>
-      <files mask="wifi_events.h"/>
-      <files mask="wifi-decl.h"/>
-      <files mask="mlan_sdio_api.h"/>
-    </source>
-    <source path="middleware/wifi/wifidriver" project_relative_path="wifi/wifidriver" type="c_include">
-      <files mask="wifi_common.h"/>
-      <files mask="wifi-debug.h"/>
-      <files mask="wifi-internal.h"/>
-      <files mask="wifi-sdio.h"/>
-    </source>
-    <source path="middleware/wifi/incl/wlcmgr" project_relative_path="wifi/incl/wlcmgr" type="c_include">
-      <files mask="wlan.h"/>
-      <files mask="wlan_11d.h"/>
-    </source>
-    <source path="middleware/wifi/incl/port/os" project_relative_path="wifi/incl/port/os" type="c_include">
-      <files mask="wm_os.h"/>
-    </source>
-    <source path="middleware/wifi/incl" project_relative_path="wifi/incl" type="c_include">
-      <files mask="wm_utils.h"/>
-      <files mask="wmerrno.h"/>
-      <files mask="wmlog.h"/>
-      <files mask="wmtypes.h"/>
-    </source>
-    <source path="middleware/wifi/wifi_bt_firmware" project_relative_path="wifi/wifi_bt_firmware" type="c_include">
-      <files mask="sd8801_wlan.h"/>
-      <files mask="sduartIW416_wlan_bt.h"/>
-    </source>
-    <source path="middleware/wifi/wifi_bt_firmware" project_relative_path="wifi/wifi_bt_firmware" type="doc">
-      <files mask="version.txt" hidden="true"/>
     </source>
     <source path="middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs" project_relative_path="edgefast/bluetooth/controller/configs" type="c_include">
       <files mask="lwipopts.h"/>

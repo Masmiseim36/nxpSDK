@@ -12,9 +12,9 @@ The recommend file is: https://github.com/cisco/openh264/blob/v2.1.1/res/test_ci
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.20.2
+- Keil MDK  5.36
+- GCC ARM Embedded  10.3.1
 - MCUXpresso  11.5.0
 
 Hardware requirements

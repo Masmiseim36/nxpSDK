@@ -1,6 +1,6 @@
 var a00064 =
 [
-    [ "sd_detect_card_t", "a00064.html#a00638", [
+    [ "sd_detect_card_t", "a00064.html#a00639", [
       [ "type", "a00064.html#a407caf12daf19c4ad7c378de436aaf92", null ],
       [ "cdDebounce_ms", "a00064.html#a4cf91350ecba1eba362c9ff79aed1162", null ],
       [ "callback", "a00064.html#a254899be35cd4545c302e157c0694338", null ],
@@ -8,11 +8,11 @@ var a00064 =
       [ "dat3PullFunc", "a00064.html#a99f673a560a2fe3637791ee6d3112ca4", null ],
       [ "userData", "a00064.html#a3496699d8427e00d35f299b744116f1a", null ]
     ] ],
-    [ "sd_io_voltage_t", "a00064.html#a00639", [
+    [ "sd_io_voltage_t", "a00064.html#a00640", [
       [ "type", "a00064.html#a27719c1458a616e66b95cf54a2aae255", null ],
       [ "func", "a00064.html#ab09b78ff1a49712b217a673465bc4f7e", null ]
     ] ],
-    [ "sd_usr_param_t", "a00064.html#a00642", [
+    [ "sd_usr_param_t", "a00064.html#a00643", [
       [ "pwr", "a00064.html#a13677f2e457d7662cae5189e522afad4", null ],
       [ "powerOnDelayMS", "a00064.html#a5b61e3c3ba57640675d63537158e5ce9", null ],
       [ "powerOffDelayMS", "a00064.html#addeb65553e3ec0c05e4293989ddca64f", null ],
@@ -22,11 +22,11 @@ var a00064 =
       [ "maxFreq", "a00064.html#a3b4374f8d530427b875a21cca755f8f3", null ],
       [ "capability", "a00064.html#a2de9b9b442f59c752f024ddb166701a8", null ]
     ] ],
-    [ "sdio_card_int_t", "a00064.html#a00643", [
+    [ "sdio_card_int_t", "a00064.html#a00644", [
       [ "userData", "a00064.html#a12f82505cb7f8ebd5c8a3be3adf7b660", null ],
       [ "cardInterrupt", "a00064.html#a7a47d8d99800747948cbe104bf81c072", null ]
     ] ],
-    [ "sdio_usr_param_t", "a00064.html#a00647", [
+    [ "sdio_usr_param_t", "a00064.html#a00648", [
       [ "pwr", "a00064.html#a807cc66ae8fac2047cd6cec5da43b075", null ],
       [ "powerOnDelayMS", "a00064.html#ae86cee0e6aa50a081f6465314e59db98", null ],
       [ "powerOffDelayMS", "a00064.html#a3c709deee8bb034ef7bfe7e5d5ce8bce", null ],
@@ -37,7 +37,7 @@ var a00064 =
       [ "maxFreq", "a00064.html#a87d887ac7b9ffe7af47d11c90fa52a13", null ],
       [ "capability", "a00064.html#ad6f86f6022ab5a6d82b4819821337aff", null ]
     ] ],
-    [ "sdio_fbr_t", "a00064.html#a00645", [
+    [ "sdio_fbr_t", "a00064.html#a00646", [
       [ "flags", "a00064.html#a3b6a21ff896bc0d1b8fa9b2ee4b98af9", null ],
       [ "ioStdFunctionCode", "a00064.html#aad92659603b6fff79649e4f8bd430a33", null ],
       [ "ioExtFunctionCode", "a00064.html#a1a1ac9ed4acd9e93465e17008ccb9e34", null ],
@@ -45,14 +45,14 @@ var a00064 =
       [ "ioPointerToCSA", "a00064.html#af2e70d436a73f9583fdf9c13c45ef6dc", null ],
       [ "ioBlockSize", "a00064.html#a92f0eeb2c63bda679683f0c8766fe454", null ]
     ] ],
-    [ "sdio_common_cis_t", "a00064.html#a00644", [
+    [ "sdio_common_cis_t", "a00064.html#a00645", [
       [ "mID", "a00064.html#ab500adf8d4ac19538ca6b8e9c77e03fe", null ],
       [ "mInfo", "a00064.html#a9c588f57c704ee84ba0cb5fb39546770", null ],
       [ "funcID", "a00064.html#a6ce96b1790cde9f02c09c09ce7fd084b", null ],
       [ "fn0MaxBlkSize", "a00064.html#a175e7a72520b9c4bab6413a0a4341259", null ],
       [ "maxTransSpeed", "a00064.html#a086313cec08ed58f9ab1a076757c8a54", null ]
     ] ],
-    [ "sdio_func_cis_t", "a00064.html#a00646", [
+    [ "sdio_func_cis_t", "a00064.html#a00647", [
       [ "funcID", "a00064.html#aa9f200d44527b21a23ab212f558b6487", null ],
       [ "funcInfo", "a00064.html#a72519ca781b81019f9b559434ae66b5f", null ],
       [ "ioVersion", "a00064.html#a533b71d7aaa969fbb951c4685436e342", null ],
@@ -75,7 +75,7 @@ var a00064 =
       [ "ioLowCurrentAvgCurrent", "a00064.html#a01d031aa41e0197ca55cd5873f64cc30", null ],
       [ "ioLowCurrentMaxCurrent", "a00064.html#a79bd479585831f8cbf942026b21d86b3", null ]
     ] ],
-    [ "sd_status_t", "a00064.html#a00641", [
+    [ "sd_status_t", "a00064.html#a00642", [
       [ "busWidth", "a00064.html#ab2a00bdb653acfddb97b8312c917b6e2", null ],
       [ "secureMode", "a00064.html#af63961d10a6213b128ae1226e4d9308e", null ],
       [ "cardType", "a00064.html#a2914b160f1efee04604ec227de3420d7", null ],
@@ -89,7 +89,7 @@ var a00064 =
       [ "uhsSpeedGrade", "a00064.html#a6cc825664732275578762e431ab7d90e", null ],
       [ "uhsAuSize", "a00064.html#a2c4de6b50d23ee9b48d9d150fcc16fcd", null ]
     ] ],
-    [ "sd_cid_t", "a00064.html#a00636", [
+    [ "sd_cid_t", "a00064.html#a00637", [
       [ "manufacturerID", "a00064.html#a6af4d5980499767cc63ee6995dc0b88e", null ],
       [ "applicationID", "a00064.html#a18358f467b8c778a8e7e0ee9df73ef6c", null ],
       [ "productName", "a00064.html#ae0712cb065e8078d43b3d6f1195abb64", null ],
@@ -97,7 +97,7 @@ var a00064 =
       [ "productSerialNumber", "a00064.html#a6427dc2217e2a8f92321e5b208c388c5", null ],
       [ "manufacturerData", "a00064.html#a086949cd74908854e1002e03f22db375", null ]
     ] ],
-    [ "sd_csd_t", "a00064.html#a00637", [
+    [ "sd_csd_t", "a00064.html#a00638", [
       [ "csdStructure", "a00064.html#afeedf78b5444467cc5583792d261f026", null ],
       [ "dataReadAccessTime1", "a00064.html#a536694cb543f0d54d54247a8a6565e8e", null ],
       [ "dataReadAccessTime2", "a00064.html#a53d4828dfbe9273f681afee8fa1c02fa", null ],
@@ -117,7 +117,7 @@ var a00064 =
       [ "writeBlockLength", "a00064.html#ae497e639f3ec2ce7e838c3c0497738af", null ],
       [ "fileFormat", "a00064.html#a7b5d22e124c59929a41dc397ea961849", null ]
     ] ],
-    [ "sd_scr_t", "a00064.html#a00640", [
+    [ "sd_scr_t", "a00064.html#a00641", [
       [ "scrStructure", "a00064.html#adfaf2aa23edd0ebd26e87387c5288583", null ],
       [ "sdSpecification", "a00064.html#a836c9b35b28e16292282079e6be9b622", null ],
       [ "flags", "a00064.html#a30495958e99a1eb05c1bca0043cbaae3", null ],

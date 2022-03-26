@@ -63,11 +63,6 @@
 #define SDMMCHOST_OPERATION_VOLTAGE_1V8
 #define SD_TIMING_MAX kSD_TimingDDR50Mode
 #define WIFI_BT_USE_USD_INTERFACE
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_CA.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_EU.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_JP.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_US.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_WW.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1XK_CA.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1XK_EU.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1XK_JP.h" */
@@ -82,11 +77,6 @@
 #define SDMMCHOST_OPERATION_VOLTAGE_1V8
 #define SD_TIMING_MAX kSD_TimingDDR50Mode
 #define WIFI_BT_USE_M2_INTERFACE
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_CA.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_EU.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_JP.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_US.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1XK_WW.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1XK_CA.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1XK_EU.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1XK_JP.h" */
@@ -101,11 +91,6 @@
 #define SDMMCHOST_OPERATION_VOLTAGE_1V8
 #define SD_TIMING_MAX kSD_TimingDDR50Mode
 #define WIFI_BT_USE_USD_INTERFACE
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_CA.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_EU.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_JP.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_US.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_WW.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1ZM_CA.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1ZM_EU.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1ZM_JP.h" */
@@ -120,11 +105,6 @@
 #define SDMMCHOST_OPERATION_VOLTAGE_1V8
 #define SD_TIMING_MAX kSD_TimingDDR50Mode
 #define WIFI_BT_USE_M2_INTERFACE
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_CA.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_EU.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_JP.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_US.h" */
-/* #define WIFI_BT_TX_PWR_LIMITS "wlan_enhanced_tests_murata_1ZM_WW.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1ZM_CA.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1ZM_EU.h" */
 /* #define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_murata_1ZM_JP.h" */

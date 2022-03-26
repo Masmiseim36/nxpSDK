@@ -1,13 +1,13 @@
 var a00072 =
 [
-    [ "pwm_signal_param_t", "a00072.html#a00615", [
+    [ "pwm_signal_param_t", "a00072.html#a00616", [
       [ "pwmChannel", "a00072.html#afe284fd225ea192d3456b41dd2703365", null ],
       [ "dutyCyclePercent", "a00072.html#acf5a17cbd7dafb2cca8afee404f12b17", null ],
       [ "level", "a00072.html#a1cc3927fcf1fd1adaeac49139919ed4f", null ],
       [ "deadtimeValue", "a00072.html#aad95dc08519edfd81485bad0640512f2", null ],
       [ "faultState", "a00072.html#ad4d7b748ab3d9f789983a299d799ef50", null ]
     ] ],
-    [ "pwm_config_t", "a00072.html#a00611", [
+    [ "pwm_config_t", "a00072.html#a00612", [
       [ "enableDebugMode", "a00072.html#a6269c0b9d8089986d5ca6be2d59e0728", null ],
       [ "enableWait", "a00072.html#a8606dc1ca1a8645f9f45b7ed55694ed6", null ],
       [ "initializationControl", "a00072.html#a063619b08565ed073b4aa22065b6514b", null ],
@@ -19,18 +19,18 @@ var a00072 =
       [ "reloadFrequency", "a00072.html#a576607f47ae97b0c3eb47f9cfbab66d7", null ],
       [ "forceTrigger", "a00072.html#a878aeddf9a10f2cb7ae5917cfe2c9c84", null ]
     ] ],
-    [ "pwm_fault_input_filter_param_t", "a00072.html#a00612", [
+    [ "pwm_fault_input_filter_param_t", "a00072.html#a00613", [
       [ "faultFilterCount", "a00072.html#a8dd64dbdb5cfddbc73aa831f6523cd06", null ],
       [ "faultFilterPeriod", "a00072.html#a121148e856d8304cad33418c14cbcb49", null ],
       [ "faultGlitchStretch", "a00072.html#adc4619cc4945da5964d4a90e7a6943ff", null ]
     ] ],
-    [ "pwm_fault_param_t", "a00072.html#a00613", [
+    [ "pwm_fault_param_t", "a00072.html#a00614", [
       [ "faultClearingMode", "a00072.html#abd6959c9123d004bd98d1f000404eb7e", null ],
       [ "faultLevel", "a00072.html#a623c03ffe07a6bb87f5f678cf965fc61", null ],
       [ "enableCombinationalPath", "a00072.html#aadb707d1b75ac87f0cf1fab143a8b51d", null ],
       [ "recoverMode", "a00072.html#ac771868777f59c5876e89d69c7a6552f", null ]
     ] ],
-    [ "pwm_input_capture_param_t", "a00072.html#a00614", [
+    [ "pwm_input_capture_param_t", "a00072.html#a00615", [
       [ "captureInputSel", "a00072.html#a010807beeb7b92f66bae9eb2c0107a70", null ],
       [ "edgeCompareValue", "a00072.html#ab7f5713d68bcce0b9e12db75630dc73c", null ],
       [ "edge0", "a00072.html#aa4255f37fdebd83a57003336d1118a2f", null ],

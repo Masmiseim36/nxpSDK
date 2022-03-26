@@ -156,13 +156,13 @@ status_t STREAMER_speaker_Create(streamer_handle_t *handle)
 
     streamer_set_property(handle->streamer, prop, true);
 
-    prop.prop = PROP_AUDIOSRC_SET_CHUNK_SIZE;
-    prop.val  = AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME / (2 * 2);
+    prop.prop = PROP_AUDIOSRC_SET_NUM_CHANNELS;
+    prop.val  = 2;
 
     streamer_set_property(handle->streamer, prop, true);
 
-    prop.prop = PROP_AUDIOSRC_SET_NUM_CHANNELS;
-    prop.val  = 2;
+    prop.prop = PROP_AUDIOSRC_SET_FRAME_MS;
+    prop.val  = 1;
 
     streamer_set_property(handle->streamer, prop, true);
 

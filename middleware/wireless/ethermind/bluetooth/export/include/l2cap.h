@@ -496,11 +496,15 @@ typedef struct
     /** Callback function for l2ca_data_read (CID, Buffer, Length) */
     API_RESULT (* l2ca_data_read_cb)(UINT16 lcid, UCHAR *data, UINT16 datalen);
 
+#ifdef L2CAP_CHANNEL_DATAWRITE_CALLBACK
+    /** Callback function for l2ca_data_write (CID, Buffer, Length) */
+    API_RESULT(*l2ca_data_write_cb)(UINT16 lcid, UCHAR *data, UINT16 datalen);
+#endif /* L2CAP_CHANNEL_DATAWRITE_CALLBACK */
+
     /** Callback for l2ca_qos_violation_ind (Device Queue Handle) */
     API_RESULT (* l2ca_qos_violation_ind_cb)(DEVICE_HANDLE * handle);
 
-/** #ifdef BT_ENH_L2CAP */
-#ifdef L2CAP_TX_QUEUE_FLOW_ON_CALLBACK
+#ifdef BT_ENH_L2CAP
     /** Callback for l2ca_tx_flow_ind (CID, Flow On/Off) */
     API_RESULT (* l2ca_tx_flow_ind_cb)(UINT16 lcid, UCHAR flow_ctrl);
 

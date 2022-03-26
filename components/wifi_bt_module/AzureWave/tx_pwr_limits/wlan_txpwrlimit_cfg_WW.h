@@ -30,7 +30,7 @@
 #include <wifi.h>
 
 static wlan_chanlist_t chanlist_2g_cfg = {
-    .num_chans = 7,
+    .num_chans = 14,
     .chan_info[0] =
         {
             .chan_num                     = 1,
@@ -69,15 +69,57 @@ static wlan_chanlist_t chanlist_2g_cfg = {
         },
     .chan_info[6] =
         {
+            .chan_num                     = 7,
+            .chan_freq                    = 2442,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[7] =
+        {
+            .chan_num                     = 8,
+            .chan_freq                    = 2447,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[8] =
+        {
+            .chan_num                     = 9,
+            .chan_freq                    = 2452,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[9] =
+        {
+            .chan_num                     = 10,
+            .chan_freq                    = 2457,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[10] =
+        {
+            .chan_num                     = 11,
+            .chan_freq                    = 2462,
+            .passive_scan_or_radar_detect = false,
+        },
+    .chan_info[11] =
+        {
             .chan_num                     = 12,
             .chan_freq                    = 2467,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[12] =
+        {
+            .chan_num                     = 13,
+            .chan_freq                    = 2472,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[13] =
+        {
+            .chan_num                     = 14,
+            .chan_freq                    = 2484,
             .passive_scan_or_radar_detect = true,
         },
 };
 
 #ifdef CONFIG_5GHz_SUPPORT
 static wlan_chanlist_t chanlist_5g_cfg = {
-    .num_chans = 8,
+    .num_chans = 25,
     .chan_info[0] =
         {
             .chan_num                     = 36,
@@ -116,14 +158,116 @@ static wlan_chanlist_t chanlist_5g_cfg = {
         },
     .chan_info[6] =
         {
-            .chan_num                     = 100,
-            .chan_freq                    = 5500,
+            .chan_num                     = 60,
+            .chan_freq                    = 5300,
             .passive_scan_or_radar_detect = true,
         },
     .chan_info[7] =
         {
+            .chan_num                     = 64,
+            .chan_freq                    = 5320,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[8] =
+        {
+            .chan_num                     = 100,
+            .chan_freq                    = 5500,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[9] =
+        {
+            .chan_num                     = 104,
+            .chan_freq                    = 5520,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[10] =
+        {
+            .chan_num                     = 108,
+            .chan_freq                    = 5540,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[11] =
+        {
+            .chan_num                     = 112,
+            .chan_freq                    = 5560,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[12] =
+        {
+            .chan_num                     = 116,
+            .chan_freq                    = 5580,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[13] =
+        {
+            .chan_num                     = 120,
+            .chan_freq                    = 5600,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[14] =
+        {
+            .chan_num                     = 124,
+            .chan_freq                    = 5620,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[15] =
+        {
+            .chan_num                     = 128,
+            .chan_freq                    = 5640,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[16] =
+        {
+            .chan_num                     = 132,
+            .chan_freq                    = 5660,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[17] =
+        {
+            .chan_num                     = 136,
+            .chan_freq                    = 5680,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[18] =
+        {
+            .chan_num                     = 140,
+            .chan_freq                    = 5700,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[19] =
+        {
             .chan_num                     = 144,
             .chan_freq                    = 5720,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[20] =
+        {
+            .chan_num                     = 149,
+            .chan_freq                    = 5745,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[21] =
+        {
+            .chan_num                     = 153,
+            .chan_freq                    = 5765,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[22] =
+        {
+            .chan_num                     = 157,
+            .chan_freq                    = 5785,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[23] =
+        {
+            .chan_num                     = 161,
+            .chan_freq                    = 5805,
+            .passive_scan_or_radar_detect = true,
+        },
+    .chan_info[24] =
+        {
+            .chan_num                     = 165,
+            .chan_freq                    = 5825,
             .passive_scan_or_radar_detect = true,
         },
 };

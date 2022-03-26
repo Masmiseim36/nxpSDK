@@ -28,16 +28,17 @@ var a00067 =
       [ "noiseFilterAdjustment", "a00067.html#aa9df6cdbf47ef4eaf06f29bff548a8bd", null ],
       [ "noiseGain", "a00067.html#ade6a68f4d654916e434895fea2479757", null ]
     ] ],
-    [ "pdm_hwvad_zero_cross_detector_t", "a00067.html#a00592", [
+    [ "pdm_hwvad_zero_cross_detector_t", "a00067.html#a00593", [
       [ "enableAutoThreshold", "a00067.html#a85356b87a791c5cf53a4193869d3fd3e", null ],
       [ "zcdAnd", "a00067.html#a3c5f375530d6bf5ee157480f709f46c7", null ],
       [ "threshold", "a00067.html#a4e2528d882836eea6a8387efd9cacf19", null ],
       [ "adjustmentThreshold", "a00067.html#add34bccb6c0392bdea758735e72b1ec8", null ]
     ] ],
-    [ "pdm_transfer_t", "a00067.html#a00593", [
+    [ "pdm_transfer_t", "a00067.html#a00594", [
       [ "data", "a00067.html#a4ba616d801fccc52f3d73364746f677b", null ],
       [ "dataSize", "a00067.html#a8af478d5a7369fc2c00715231fe34467", null ]
     ] ],
+    [ "pdm_hwvad_notification_t", "a00067.html#a00592", null ],
     [ "pdm_handle_t", "a00067.html#a00401", [
       [ "state", "a00067.html#ab2b16dd293c06768cbca8eea7a37a514", null ],
       [ "callback", "a00067.html#a9930728ef1b19dc11541c140bace0cc3", null ],
@@ -53,14 +54,17 @@ var a00067 =
     ] ],
     [ "FSL_PDM_DRIVER_VERSION", "a00067.html#ga3cb4702a9e581e2633e1c1bb3c63801f", null ],
     [ "PDM_XFER_QUEUE_SIZE", "a00067.html#ga04b7c7654ce66f908e162bac8c78ffb1", null ],
-    [ "pdm_transfer_callback_t", "a00067.html#gaf29cd20432f325217c7c12e59638416c", [
+    [ "pdm_transfer_callback_t", "a00067.html#gaf29cd20432f325217c7c12e59638416c", null ],
+    [ "pdm_hwvad_callback_t", "a00067.html#gadd2a341c59f5f8c4c619b62c4ebc4dcd", [
       [ "kStatus_PDM_Busy", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17a7fd57efdf5fd862d82ad3ddc4061995b", null ],
       [ "kStatus_PDM_CLK_LOW", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17ad8106fba77ad8b2ae3d1bf8ad844c28a", null ],
       [ "kStatus_PDM_FIFO_ERROR", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17ac8731f691ed5f103dc9dbed6a9d16e34", null ],
       [ "kStatus_PDM_QueueFull", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17a852dac50df76ac041f7957defb71e418", null ],
       [ "kStatus_PDM_Idle", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17ad838969e71909e93ae67e4442bd708d4", null ],
       [ "kStatus_PDM_Output_ERROR", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17af84c6de81d1988497b194e68879ee6e7", null ],
-      [ "kStatus_PDM_ChannelConfig_Failed", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17adbbcb06d87bf89f8261aeac797bd00a7", null ]
+      [ "kStatus_PDM_ChannelConfig_Failed", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17adbbcb06d87bf89f8261aeac797bd00a7", null ],
+      [ "kStatus_PDM_HWVAD_VoiceDetected", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17acecab396522a28825b2659f409cf88e9", null ],
+      [ "kStatus_PDM_HWVAD_Error", "a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17a8c976cbaec7a3ae9270e4bc4f6cba2fc", null ]
     ] ],
     [ "_pdm_interrupt_enable", "a00067.html#ga96a0bbb4423bd38dbbd5e0a84a1ca74e", [
       [ "kPDM_ErrorInterruptEnable", "a00067.html#gga96a0bbb4423bd38dbbd5e0a84a1ca74ea82f28d19050e81b6d92fa779d2de3bfa", null ],
@@ -233,6 +237,7 @@ var a00067 =
     [ "PDM_SetHwvadInternalFilterStatus", "a00067.html#gae03514f220df836a75b84980d817919f", null ],
     [ "PDM_SetHwvadInEnvelopeBasedMode", "a00067.html#gaf8577c2175f951d1a167bbf72285824a", null ],
     [ "PDM_SetHwvadInEnergyBasedMode", "a00067.html#gaa8cc50024bfa7741936df081c6952227", null ],
+    [ "PDM_EnableHwvadInterruptCallback", "a00067.html#ga31859f85d59073a5a0cb55c13b3d5e37", null ],
     [ "PDM_TransferCreateHandle", "a00067.html#ga592db7e89ce085fab3ad50a95d9e203a", null ],
     [ "PDM_TransferSetChannelConfig", "a00067.html#gaad4d95fc6dabf22e7bb5f6011cfd8f6f", null ],
     [ "PDM_TransferReceiveNonBlocking", "a00067.html#ga619b2cd8f98911c261d034965195d2d9", null ],

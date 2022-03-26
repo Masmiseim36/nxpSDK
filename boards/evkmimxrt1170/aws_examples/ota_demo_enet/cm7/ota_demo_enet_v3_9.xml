@@ -159,13 +159,13 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
-      <include_path path="boards/evkmimxrt1170" project_relative_path="config_files" type="c_include"/>
       <include_path path="boards/evkmimxrt1170/aws_examples/ota_demo_enet/cm7/config_files" project_relative_path="config_files" type="c_include"/>
+      <include_path path="boards/evkmimxrt1170" project_relative_path="config_files" type="c_include"/>
       <include_path path="boards/evkmimxrt1170/aws_examples/ota_demo_enet/cm7" project_relative_path="board" type="c_include"/>
       <include_path path="boards/evkmimxrt1170/aws_examples/ota_demo_enet/cm7" project_relative_path="." type="c_include"/>
       <include_path path="boards/evkmimxrt1170/aws_examples/ota_demo_enet/cm7" project_relative_path="source" type="c_include"/>
-      <include_path path="boards/evkmimxrt1170" project_relative_path="config_files" type="asm_include"/>
       <include_path path="boards/evkmimxrt1170/aws_examples/ota_demo_enet/cm7/config_files" project_relative_path="config_files" type="asm_include"/>
+      <include_path path="boards/evkmimxrt1170" project_relative_path="config_files" type="asm_include"/>
     </include_paths>
     <source path="boards/evkmimxrt1170/aws_examples/ota_demo_enet/cm7/iar" project_relative_path="./" type="workspace" toolchain="iar">
       <files mask="ota_demo_enet.ewd"/>
@@ -189,6 +189,9 @@
       <files mask="build_flexspi_nor_debug.sh"/>
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
+    </source>
+    <source path="boards/evkmimxrt1170/aws_examples/ota_demo_enet/cm7/config_files" project_relative_path="config_files" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
     </source>
     <source path="boards/evkmimxrt1170/aws_examples/ota_demo_enet/cm7/linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
       <files mask="bss.ldt"/>
@@ -216,7 +219,6 @@
       <files mask="core_http_config.h"/>
       <files mask="core_mqtt_config.h"/>
       <files mask="core_pkcs11_config.h"/>
-      <files mask="FreeRTOSConfig.h"/>
       <files mask="FreeRTOSIPConfig.h"/>
       <files mask="iot_config.h"/>
       <files mask="iot_secure_sockets_config.h"/>

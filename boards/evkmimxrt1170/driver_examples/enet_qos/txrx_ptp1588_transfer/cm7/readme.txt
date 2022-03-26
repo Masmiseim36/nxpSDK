@@ -14,9 +14,9 @@ The time stamp of the received timestamp will be print when the PTP message fram
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.20.2
+- Keil MDK  5.36
+- GCC ARM Embedded  10.3.1
 - MCUXpresso  11.5.0
 
 Hardware requirements

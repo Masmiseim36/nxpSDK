@@ -78,6 +78,18 @@ int OggOPUSInit (int *memory[], int *pCallbackFn[], int *pUserData);
 int OggOPUSDecode(int *memory[],int *sampleProudced,int *bufOut);
 
 /////////////////////////////////////////////////////////////////////////////////
+//! \brief Decoder reset function to cleanup the decoder structures and free memory.
+//!
+//! \fntype Function
+//!
+//! \param[in] *memory              This is pointer to the decoder memory.
+//!
+//! \retval kCodecSuccess    if codec destroys successfully.
+//! \retval kCodecInitError     if codec fails to cleanup.
+/////////////////////////////////////////////////////////////////////////////////
+int OggOPUSReset(int *pMemory[]);
+
+/////////////////////////////////////////////////////////////////////////////////
 //! \brief Decoder seek function to seek at specific offset.
 //!
 //! \fntype Function

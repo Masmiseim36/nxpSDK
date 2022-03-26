@@ -4745,6 +4745,8 @@ var searchData=
   ['kstatus_5fpdm_5fchannelconfig_5ffailed',['kStatus_PDM_ChannelConfig_Failed',['../a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17adbbcb06d87bf89f8261aeac797bd00a7',1,'fsl_pdm.h']]],
   ['kstatus_5fpdm_5fclk_5flow',['kStatus_PDM_CLK_LOW',['../a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17ad8106fba77ad8b2ae3d1bf8ad844c28a',1,'fsl_pdm.h']]],
   ['kstatus_5fpdm_5ffifo_5ferror',['kStatus_PDM_FIFO_ERROR',['../a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17ac8731f691ed5f103dc9dbed6a9d16e34',1,'fsl_pdm.h']]],
+  ['kstatus_5fpdm_5fhwvad_5ferror',['kStatus_PDM_HWVAD_Error',['../a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17a8c976cbaec7a3ae9270e4bc4f6cba2fc',1,'fsl_pdm.h']]],
+  ['kstatus_5fpdm_5fhwvad_5fvoicedetected',['kStatus_PDM_HWVAD_VoiceDetected',['../a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17acecab396522a28825b2659f409cf88e9',1,'fsl_pdm.h']]],
   ['kstatus_5fpdm_5fidle',['kStatus_PDM_Idle',['../a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17ad838969e71909e93ae67e4442bd708d4',1,'fsl_pdm.h']]],
   ['kstatus_5fpdm_5foutput_5ferror',['kStatus_PDM_Output_ERROR',['../a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17af84c6de81d1988497b194e68879ee6e7',1,'fsl_pdm.h']]],
   ['kstatus_5fpdm_5fqueuefull',['kStatus_PDM_QueueFull',['../a00067.html#gga9a3be2d66956bd67c0b66c32d8b30f17a852dac50df76ac041f7957defb71e418',1,'fsl_pdm.h']]],

@@ -98,9 +98,6 @@ void streamer_pcm_init(void)
     /* SAI init */
     SAI_Init(DEMO_SAI);
 
-    pcmHandle.isFirstRx = 1;
-    pcmHandle.isFirstTx = 1;
-
     EnableIRQ(DEMO_SAI_RX_IRQ);
     EnableIRQ(DEMO_SAI_TX_IRQ);
 }
@@ -143,42 +140,36 @@ void streamer_pcm_rx_close(pcm_rtos_t *pcm)
 
 int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 {
-    pcm->saiTx.dataSize = size;
-    pcm->saiTx.data     = data;
-
     /* Ensure write size is a multiple of 32, otherwise EDMA will assert
      * failure.  Round down for the last chunk of a file/stream. */
-    if (size % 32)
+    pcm->saiTx.dataSize = size - (size % 32);
+    pcm->saiTx.data     = data;
+
+    DCACHE_CleanByRange((uint32_t)pcm->saiTx.data, pcm->saiTx.dataSize);
+
+    if (pcm->isFirstTx)
     {
-        pcm->saiTx.dataSize = size - (size % 32);
+        pcm->isFirstTx = 0;
+    }
+    else
+    {
+        /* Wait for the previous transfer to finish */
+        if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
+            return -1;
     }
 
-    /* Start transfer */
-    DCACHE_CleanByRange((uint32_t)pcm->saiTx.data, pcm->saiTx.dataSize);
-    if (SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx) == kStatus_SAI_QueueFull)
-    {
-        /* Wait for transfer to finish */
-        if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
-        {
-            return -1;
-        }
-        SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx);
-    }
+    /* Start the consecutive transfer */
+    SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx);
 
     return 0;
 }
 
-int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint32_t size)
+int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 {
-    pcm->saiRx.dataSize = size;
-    pcm->saiRx.data     = data;
-
     /* Ensure write size is a multiple of 32, otherwise EDMA will assert
      * failure.  Round down for the last chunk of a file/stream. */
-    if (size % 32)
-    {
-        pcm->saiRx.dataSize = size - (size % 32);
-    }
+    pcm->saiRx.dataSize = size - (size % 32);
+    pcm->saiRx.data     = data;
 
     /* Start the first transfer */
     if (pcm->isFirstRx)
@@ -187,18 +178,16 @@ int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint
         pcm->isFirstRx = 0;
     }
 
-    /* Wait for transfer to finish */
+    /* Wait for the previous transfer to finish */
     if (xSemaphoreTake(pcm->semaphoreRX, portMAX_DELAY) != pdTRUE)
-    {
         return -1;
-    }
 
     DCACHE_InvalidateByRange((uint32_t)pcm->saiRx.data, pcm->saiRx.dataSize);
 
-    pcm->saiRx.data = next_buffer;
     /* Start the consecutive transfer */
     SAI_TransferReceiveEDMA(DEMO_SAI, &pcm->saiRxHandle, &pcm->saiRx);
 
+    /* Enable SAI Tx due to clock availability for the codec (see board schematic). */
     if (pcm->dummy_tx_enable)
         SAI_TxEnable(DEMO_SAI, true);
 
@@ -271,6 +260,8 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     sai_transceiver_t saiConfig, saiConfig2;
     uint32_t masterClockHz = 0U;
 
+    pcm->isFirstRx       = transfer ? pcm->isFirstRx : 1U;
+    pcm->isFirstTx       = transfer ? 1U : pcm->isFirstTx;
     pcm->sample_rate     = sample_rate;
     pcm->bit_width       = bit_width;
     pcm->num_channels    = num_channels;
@@ -289,17 +280,27 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     /* I2S transfer mode configurations */
     if (transfer)
     {
-        SAI_GetClassicI2SConfig(&saiConfig, _pcm_map_word_width(bit_width), format.stereo, 1U << DEMO_SAI_CHANNEL);
-        /* If there wasn't first RX transfer, we need to set SAI mode to Async */
-        if (pcm->isFirstRx)
+        if (pcm->num_channels > 2)
         {
-            saiConfig.syncMode = kSAI_ModeAsync;
+            SAI_GetTDMConfig(&saiConfig, kSAI_FrameSyncLenOneBitClk, kSAI_WordWidth32bits, DEMO_CHANNEL_NUM,
+                             kSAI_Channel0Mask);
+            saiConfig.frameSync.frameSyncEarly = true;
         }
         else
-        /* Otherwise we need to sync the SAI for the loopback */
         {
-            saiConfig.syncMode = kSAI_ModeSync;
+            SAI_GetClassicI2SConfig(&saiConfig, _pcm_map_word_width(bit_width), format.stereo, 1U << DEMO_SAI_CHANNEL);
+            /* If there wasn't first RX transfer, we need to set SAI mode to Async */
+            if (pcm->isFirstRx)
+            {
+                saiConfig.syncMode = kSAI_ModeAsync;
+            }
+            else
+            /* Otherwise we need to sync the SAI for the loopback */
+            {
+                saiConfig.syncMode = kSAI_ModeSync;
+            }
         }
+
         saiConfig.masterSlave = kSAI_Master;
 
         SAI_TransferTxSetConfigEDMA(DEMO_SAI, &pcmHandle.saiTxHandle, &saiConfig);
@@ -311,12 +312,20 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     }
     else
     {
-        /* I2S receive mode configurations */
-        SAI_GetClassicI2SConfig(&saiConfig, _pcm_map_word_width(bit_width), format.stereo, 1U << DEMO_SAI_CHANNEL);
+        if (pcm->num_channels > 2)
+        {
+            SAI_GetTDMConfig(&saiConfig, kSAI_FrameSyncLenOneBitClk, kSAI_WordWidth32bits, DEMO_CHANNEL_NUM,
+                             kSAI_Channel0Mask);
+            saiConfig.frameSync.frameSyncEarly = true;
+        }
+        else
+        {
+            SAI_GetClassicI2SConfig(&saiConfig, _pcm_map_word_width(bit_width), format.stereo, 1U << DEMO_SAI_CHANNEL);
+            saiConfig.syncMode    = kSAI_ModeAsync;
+            saiConfig.masterSlave = kSAI_Master;
+        }
         if (dummy_tx)
             SAI_GetClassicI2SConfig(&saiConfig2, _pcm_map_word_width(bit_width), format.stereo, 1U << DEMO_SAI_CHANNEL);
-        saiConfig.syncMode    = kSAI_ModeAsync;
-        saiConfig.masterSlave = kSAI_Master;
 
         SAI_TransferRxSetConfigEDMA(DEMO_SAI, &pcmHandle.saiRxHandle, &saiConfig);
         /* set bit clock divider */
@@ -339,11 +348,11 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
         SAI_RxEnableInterrupts(DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
     }
 
-    CODEC_SetMute(&codecHandle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, true);
+    streamer_pcm_set_volume(pcm, 0);
 
     CODEC_SetFormat(&codecHandle, masterClockHz, format.sampleRate_Hz, format.bitWidth);
 
-    CODEC_SetMute(&codecHandle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, false);
+    streamer_pcm_set_volume(pcm, DEMO_VOLUME);
 
     return 0;
 }
@@ -357,13 +366,22 @@ void streamer_pcm_getparams(pcm_rtos_t *pcm, uint32_t *sample_rate, uint32_t *bi
 
 int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute)
 {
-    CODEC_SetMute(&codecHandle, kCODEC_PlayChannelHeadphoneRight | kCODEC_PlayChannelHeadphoneLeft, mute);
+    CODEC_SetMute(&codecHandle, DEMO_CODEC_CHANNEL, mute);
 
     return 0;
 }
 
 int streamer_pcm_set_volume(pcm_rtos_t *pcm, int volume)
 {
+    int channel;
+
+    channel = (pcm->num_channels == 1) ? kCODEC_PlayChannelHeadphoneLeft : DEMO_CODEC_CHANNEL;
+
+    if (volume <= 0)
+        CODEC_SetMute(&codecHandle, channel, true);
+    else
+        CODEC_SetVolume(&codecHandle, channel, volume > CODEC_VOLUME_MAX_VALUE ? CODEC_VOLUME_MAX_VALUE : volume);
+
     return 0;
 }
 

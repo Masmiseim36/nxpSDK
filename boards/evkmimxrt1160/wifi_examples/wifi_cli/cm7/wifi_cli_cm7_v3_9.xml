@@ -167,6 +167,19 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
+    <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7/armgcc/linker" project_relative_path="evkmimxrt1160/wifi_examples/common/linker" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.ld"/>
+    </source>
+    <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7/iar/linker" project_relative_path="evkmimxrt1160/wifi_examples/common/linker" type="linker" toolchain="iar">
+      <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.icf"/>
+    </source>
+    <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7/mdk/linker" project_relative_path="evkmimxrt1160/wifi_examples/common/linker" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7/linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
+      <files mask="data.ldt"/>
+      <files mask="main_text.ldt"/>
+    </source>
     <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7" project_relative_path="source" type="c_preinclude">
       <files mask="app_config.h"/>
     </source>
@@ -186,6 +199,7 @@
       <files mask="lwipopts.h"/>
       <files mask="lwippools.h"/>
       <files mask="FreeRTOSConfig.h"/>
+      <files mask="wifi_config.h"/>
     </source>
     <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7" project_relative_path="board" type="src">
       <files mask="sdmmc_config.c"/>
@@ -201,20 +215,8 @@
       <files mask="clock_config.h"/>
       <files mask="dcd.h"/>
     </source>
-    <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7" project_relative_path="source" type="c_include">
-      <files mask="wifi_config.h"/>
-    </source>
     <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
-    </source>
-    <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7/iar" project_relative_path="MIMXRT1166/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.icf"/>
-    </source>
-    <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7/mdk" project_relative_path="MIMXRT1166/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.scf"/>
-    </source>
-    <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7/armgcc" project_relative_path="MIMXRT1166/gcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1166xxxxx_cm7_flexspi_nor.ld"/>
     </source>
     <source path="boards/evkmimxrt1160/wifi_examples/wifi_cli/cm7/iar" project_relative_path="evkmimxrt1160" type="other" toolchain="iar">
       <files mask="evkmimxrt1160_connect_cm7.mac"/>

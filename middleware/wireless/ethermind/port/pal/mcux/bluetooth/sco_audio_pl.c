@@ -147,8 +147,14 @@ API_RESULT sco_audio_stop_pl (void)
    /* Send VSC 0x73 command to enable WBS for second next call */
     if (0U != WBS_mode)
     {
-        printf(" sco_audio_stop_pl: Sending Vendor command 0073 now\n");
+        printf(" sco_audio_stop_pl: Sending Vendor command 0073 with WBS enabled\n");
         UCHAR new4[1U] = {0x01U};
+        (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x0073U, new4, sizeof(new4));
+    }
+    else
+    {
+        printf(" sco_audio_stop_pl: Sending Vendor command 0073 with WBS disabled\n");
+        UCHAR new4[1U] = {0x00U};
         (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x0073U, new4, sizeof(new4));
     }
 
@@ -192,9 +198,15 @@ void sco_audio_set_wideband_pl (UCHAR enable)
 
     if (0U != enable)
     {
-        printf(" Sending Vendor command 0073 now\n");
+        printf(" Sending Vendor command 0073 with WBS enabled\n");
         UCHAR new4[1U] = {0x01U};
         (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x0073U, new4, sizeof(new4));
+    }
+    else
+    {
+           printf(" Sending Vendor command 0073 with WBS disabled\n");
+           UCHAR new4[1U] = {0x00U};
+           (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x0073U, new4, sizeof(new4));
     }
     (BT_IGNORE_RETURN_VALUE) BT_hci_vendor_specific_command(0x0028U, config, sizeof(config));
 }

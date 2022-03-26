@@ -66,6 +66,8 @@ typedef struct {
 #define PROP_AUDIOSRC_SET_CONTINUOUS_READ           0x205
 #define PROP_AUDIOSRC_SET_DUMMY_TX_ENABLE           0x206
 #define PROP_AUDIOSRC_SET_NUM_CHANNELS              0x207
+#define PROP_AUDIOSRC_SET_BITS_PER_SAMPLE           0x208
+#define PROP_AUDIOSRC_SET_FRAME_MS                  0x209
 
 /* MEMORY SOURCE */
 #define PROP_MEMSRC_MASK                            0x300

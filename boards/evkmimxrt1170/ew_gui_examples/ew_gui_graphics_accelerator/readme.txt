@@ -25,9 +25,9 @@ In order create your own GUI application powered by the latest version of
 Embedded Wizard that is suitable for the i.MX RT1170 Evaluation Kit, please
 visit https://doc.embedded-wizard.de/getting-started-mimxrt1170-evk
 
-For this example a simulation of the user interface is also available. 
-It can be used under following link 
-http://www.embedded-wizard.de/NXP-SDK-Examples/IMXRT1170-EVK/PulseOximeter/Simulation/ 
+For this example a simulation of the user interface is also available.
+It can be used under following link
+http://www.embedded-wizard.de/NXP-SDK-Examples/IMXRT1170-EVK/PulseOximeter/Simulation/
 with any web browser. The simulation uses the JS/WebGL Embedded Wizard Platform Package.
 For further information about Embedded Wizard, please visit our web site at
 https://www.embedded-wizard.de/platforms/nxp/imx-rt1170
@@ -35,19 +35,19 @@ https://www.embedded-wizard.de/platforms/nxp/imx-rt1170
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.20.2
+- GCC ARM Embedded  10.3.1
 
 Hardware requirements
 =====================
 - Mini/micro USB cable
 - MIMXRT1170-EVK board
 - Personal Computer
-- RK043FN02H-CT LCD board
+- RK055MHD091 panel or RK055AHD091 panel or RK055IQH091 panel
 
 Board settings
 ==============
-No special settings are required.
+1. Connect the LCD panel to J48.
 
 Prepare the Demo
 ================
@@ -58,8 +58,9 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Download the program to the target board.
-4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+3.  Build the project, the project uses RK055MHD091 by default, to use other panels, change #define DEMO_PANEL DEMO_PANEL_RK055MHD091 to #define DEMO_PANEL DEMO_PANEL_RK055IQH091 or #define DEMO_PANEL DEMO_PANEL_RK055AHD091 in display_support.h.
+4.  Download the program to the target board.
+5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
 Running the demo
 ================

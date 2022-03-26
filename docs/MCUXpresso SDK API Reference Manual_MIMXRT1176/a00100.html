@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.11.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -113,15 +113,15 @@ $(document).ready(function(){initNavTree('a00100.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00716"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#a00716">xecc_config_t</a></td></tr>
-<tr class="memdesc:a00716"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC user configuration.  <a href="a00100.html#a00716">More...</a><br/></td></tr>
-<tr class="separator:a00716"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00718"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#a00718">xecc_single_error_info_t</a></td></tr>
-<tr class="memdesc:a00718"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC single error information, including single error address, ECC code, error data, error bit position and error bit field.  <a href="a00100.html#a00718">More...</a><br/></td></tr>
-<tr class="separator:a00718"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00717"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#a00717">xecc_multi_error_info_t</a></td></tr>
-<tr class="memdesc:a00717"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC multiple error information, including multiple error address, ECC code, error data and error bit field.  <a href="a00100.html#a00717">More...</a><br/></td></tr>
+<tr class="memitem:a00717"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#a00717">xecc_config_t</a></td></tr>
+<tr class="memdesc:a00717"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC user configuration.  <a href="a00100.html#a00717">More...</a><br/></td></tr>
 <tr class="separator:a00717"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00719"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#a00719">xecc_single_error_info_t</a></td></tr>
+<tr class="memdesc:a00719"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC single error information, including single error address, ECC code, error data, error bit position and error bit field.  <a href="a00100.html#a00719">More...</a><br/></td></tr>
+<tr class="separator:a00719"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00718"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#a00718">xecc_multi_error_info_t</a></td></tr>
+<tr class="memdesc:a00718"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC multiple error information, including multiple error address, ECC code, error data and error bit field.  <a href="a00100.html#a00718">More...</a><br/></td></tr>
+<tr class="separator:a00718"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -164,13 +164,13 @@ Driver version</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga97311aae29bfc510fbb42c624df1031c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#ga97311aae29bfc510fbb42c624df1031c">XECC_Init</a> (XECC_Type *base, const <a class="el" href="a00100.html#a00716">xecc_config_t</a> *config)</td></tr>
+<tr class="memitem:ga97311aae29bfc510fbb42c624df1031c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#ga97311aae29bfc510fbb42c624df1031c">XECC_Init</a> (XECC_Type *base, const <a class="el" href="a00100.html#a00717">xecc_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga97311aae29bfc510fbb42c624df1031c"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC module initialization function.  <a href="#ga97311aae29bfc510fbb42c624df1031c">More...</a><br/></td></tr>
 <tr class="separator:ga97311aae29bfc510fbb42c624df1031c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga242c4cc1dcde4ba11079b7d035d043b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#ga242c4cc1dcde4ba11079b7d035d043b4">XECC_Deinit</a> (XECC_Type *base)</td></tr>
 <tr class="memdesc:ga242c4cc1dcde4ba11079b7d035d043b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the XECC.  <a href="#ga242c4cc1dcde4ba11079b7d035d043b4">More...</a><br/></td></tr>
 <tr class="separator:ga242c4cc1dcde4ba11079b7d035d043b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacb10ed003d22ffce8a40a2b162fd8892"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#gacb10ed003d22ffce8a40a2b162fd8892">XECC_GetDefaultConfig</a> (<a class="el" href="a00100.html#a00716">xecc_config_t</a> *config)</td></tr>
+<tr class="memitem:gacb10ed003d22ffce8a40a2b162fd8892"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#gacb10ed003d22ffce8a40a2b162fd8892">XECC_GetDefaultConfig</a> (<a class="el" href="a00100.html#a00717">xecc_config_t</a> *config)</td></tr>
 <tr class="memdesc:gacb10ed003d22ffce8a40a2b162fd8892"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the XECC configuration structure to default values.  <a href="#gacb10ed003d22ffce8a40a2b162fd8892">More...</a><br/></td></tr>
 <tr class="separator:gacb10ed003d22ffce8a40a2b162fd8892"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -212,15 +212,15 @@ functional</h2></td></tr>
 <tr class="memitem:gaaca758e6d607ea7d598a46e74c429710"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#gaaca758e6d607ea7d598a46e74c429710">XECC_ErrorInjection</a> (XECC_Type *base, uint32_t errordata, uint8_t erroreccdata)</td></tr>
 <tr class="memdesc:gaaca758e6d607ea7d598a46e74c429710"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC module error injection.  <a href="#gaaca758e6d607ea7d598a46e74c429710">More...</a><br/></td></tr>
 <tr class="separator:gaaca758e6d607ea7d598a46e74c429710"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga37e71e730b2513d22704ed9bca718a36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#ga37e71e730b2513d22704ed9bca718a36">XECC_GetSingleErrorInfo</a> (XECC_Type *base, <a class="el" href="a00100.html#a00718">xecc_single_error_info_t</a> *info)</td></tr>
+<tr class="memitem:ga37e71e730b2513d22704ed9bca718a36"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#ga37e71e730b2513d22704ed9bca718a36">XECC_GetSingleErrorInfo</a> (XECC_Type *base, <a class="el" href="a00100.html#a00719">xecc_single_error_info_t</a> *info)</td></tr>
 <tr class="memdesc:ga37e71e730b2513d22704ed9bca718a36"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC module get single error information.  <a href="#ga37e71e730b2513d22704ed9bca718a36">More...</a><br/></td></tr>
 <tr class="separator:ga37e71e730b2513d22704ed9bca718a36"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33588746ea450cf41f40ba94a0e6990a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#ga33588746ea450cf41f40ba94a0e6990a">XECC_GetMultiErrorInfo</a> (XECC_Type *base, <a class="el" href="a00100.html#a00717">xecc_multi_error_info_t</a> *info)</td></tr>
+<tr class="memitem:ga33588746ea450cf41f40ba94a0e6990a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00100.html#ga33588746ea450cf41f40ba94a0e6990a">XECC_GetMultiErrorInfo</a> (XECC_Type *base, <a class="el" href="a00100.html#a00718">xecc_multi_error_info_t</a> *info)</td></tr>
 <tr class="memdesc:ga33588746ea450cf41f40ba94a0e6990a"><td class="mdescLeft">&#160;</td><td class="mdescRight">XECC module get multiple error information.  <a href="#ga33588746ea450cf41f40ba94a0e6990a">More...</a><br/></td></tr>
 <tr class="separator:ga33588746ea450cf41f40ba94a0e6990a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00716" id="a00716"></a>
+<a name="a00717" id="a00717"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -417,7 +417,7 @@ functional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00718" id="a00718"></a>
+<a name="a00719" id="a00719"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -452,7 +452,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a name="a00717" id="a00717"></a>
+<a name="a00718" id="a00718"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -583,7 +583,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00100.html#a00716">xecc_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00100.html#a00717">xecc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -632,7 +632,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void XECC_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00100.html#a00716">xecc_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00100.html#a00717">xecc_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1065,7 +1065,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00100.html#a00718">xecc_single_error_info_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00100.html#a00719">xecc_single_error_info_t</a> *&#160;</td>
           <td class="paramname"><em>info</em>&#160;</td>
         </tr>
         <tr>
@@ -1098,7 +1098,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00100.html#a00717">xecc_multi_error_info_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00100.html#a00718">xecc_multi_error_info_t</a> *&#160;</td>
           <td class="paramname"><em>info</em>&#160;</td>
         </tr>
         <tr>

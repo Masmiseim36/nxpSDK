@@ -91,7 +91,7 @@ int BOARD_CODEC_Init(void)
     CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Initial volume kept low for hearing safety. */
-    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 50);
+    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, DEMO_VOLUME);
 
     return 0;
 }

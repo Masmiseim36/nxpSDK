@@ -27,9 +27,9 @@ M7 core application depends on the M4 core, So user could build the M4 core appl
 Toolchain supported
 ===================
 - MCUXpresso  11.5.0
-- GCC ARM Embedded  10.2.1
-- Keil MDK  5.34
-- IAR embedded Workbench  9.10.2
+- GCC ARM Embedded  10.3.1
+- Keil MDK  5.36
+- IAR embedded Workbench  9.20.2
 
 Hardware requirements
 =====================

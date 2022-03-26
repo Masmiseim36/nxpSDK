@@ -254,9 +254,6 @@
     <source path="boards/evkmimxrt1170/aws_examples/remote_control_wifi_nxp/cm7" project_relative_path="source" type="c_preinclude">
       <files mask="app_config.h"/>
     </source>
-    <source path="boards/evkmimxrt1170/aws_examples/remote_control_wifi_nxp/cm7" project_relative_path="source" type="c_include">
-      <files mask="wifi_config.h"/>
-    </source>
     <source path="boards/evkmimxrt1170/aws_examples/remote_control_wifi_nxp/cm7" project_relative_path="board" type="src">
       <files mask="sdmmc_config.c"/>
       <files mask="wifi_bt_config.c"/>
@@ -380,6 +377,9 @@
     </source>
     <source path="boards/evkmimxrt1170/aws_examples/remote_control_android" project_relative_path="source" type="script">
       <files mask="gradlew.bat" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1170/aws_examples/remote_control_wifi_nxp/cm7" project_relative_path="source" type="c_include">
+      <files mask="wifi_config.h"/>
     </source>
     <source path="boards/evkmimxrt1170/aws_examples/remote_control_wifi_nxp/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

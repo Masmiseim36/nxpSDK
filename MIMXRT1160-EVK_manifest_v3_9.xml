@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1160-EVK" name="MIMXRT1160-EVK" brief="This is SDK version 2.11.0 manifest file. It describes the content of the MIMXRT1160-EVK and additional settings for tools that support SDK version 2.11.0" format_version="3.9" api_version="2.0.0" configuration="454160d65c16b969622645dc2ea33ecb" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.9.xsd">
-  <!--Timestamp (UTC): 2022-01-15 13:55:39.904857-->
-  <!--This manifest is generated based on sdk repo commit: 8b51d89d559eab0d6f538a2026d1d5438333b315-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1160-EVK" name="MIMXRT1160-EVK" brief="This is SDK version 2.11.1 manifest file. It describes the content of the MIMXRT1160-EVK and additional settings for tools that support SDK version 2.11.1" format_version="3.9" api_version="2.0.0" configuration="caf3ef99c69788df11188d2448ada7d2" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.9.xsd">
+  <!--Timestamp (UTC): 2022-03-24 13:13:21.683532-->
+  <!--This manifest is generated based on sdk repo commit: ffad758dc1bcbaea4db7161533a769680421b275-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso2110" name="MCUXpresso2110" version="2.11.0" revision="541 2022-01-14"/>
+  <ksdk id="MCUXpresso2111" name="MCUXpresso2111" version="2.11.1" revision="563 2022-03-24"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -39,9 +39,9 @@
     </toolchainSetting>
   </toolchainSettings>
   <toolchains>
-    <toolchain id="armgcc" name="GCC_ARM_Embedded" version="10.2.1" full_name="GCC ARM Embedded" compiler="compiler_gcc" type="armgcc" vendor="GCC ARM Embedded" vendor_url="http://launchpad.net/gcc-arm-embedded"/>
-    <toolchain id="mdk" name="Keil_MDK" version="5.34" full_name="Keil MDK" compiler="compiler_armclang" type="mdk" vendor="ARM" vendor_url="http://www.arm.com"/>
-    <toolchain id="iar" name="IAR_Embedded_Workbench_for_ARM" version="9.10.2" full_name="IAR Embedded Workbench for ARM" compiler="compiler_iar" type="iar" vendor="IAR Systems" vendor_url="http://www.iar.com"/>
+    <toolchain id="armgcc" name="GCC_ARM_Embedded" version="10.3.1" full_name="GCC ARM Embedded" compiler="compiler_gcc" type="armgcc" vendor="GCC ARM Embedded" vendor_url="http://launchpad.net/gcc-arm-embedded"/>
+    <toolchain id="mdk" name="Keil_MDK" version="5.36" full_name="Keil MDK" compiler="compiler_armclang" type="mdk" vendor="ARM" vendor_url="http://www.arm.com"/>
+    <toolchain id="iar" name="IAR_Embedded_Workbench_for_ARM" version="9.20.2" full_name="IAR Embedded Workbench for ARM" compiler="compiler_iar" type="iar" vendor="IAR Systems" vendor_url="http://www.iar.com"/>
     <toolchain id="mcuxpresso" name="MCUXpresso_IDE" version="11.5.0" full_name="MCUXpresso IDE" compiler="compiler_gcc" type="mcuxpresso" vendor="NXP Semiconductors" vendor_url="http://www.nxp.com">
       <debug>
         <debug_configuration id="com.crt.advproject.config.exe.release" name="Release Configuration" probe="LinkServer">
@@ -862,6 +862,11 @@ ${load}</script>
             <files mask="lwip_iperf_bm_cm4_v3_9.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1160_lwip_ipv4_ipv6_echo_freertos_cm4" name="lwip_ipv4_ipv6_echo_freertos_cm4" brief="The lwip_ipv4_ipv6_echo demo application demonstrates a TCP or UDP echo demo on the lwIP TCP/IP stack with FreeRTOS. The demo uses the TCP or UDP protocol over both IPv4 and IPv6 and acts as an echo server. The application sends back the received TCP or UDP packets from the PC, which can be used to test whether a TCP or UDP is available." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_ipv4_ipv6_echo/freertos/cm4">
+          <external path="boards/evkmimxrt1160/lwip_examples/lwip_ipv4_ipv6_echo/freertos/cm4" type="xml">
+            <files mask="lwip_ipv4_ipv6_echo_freertos_cm4_v3_9.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1160_lwip_mqtt_freertos_cm4" name="lwip_mqtt_freertos_cm4" brief="The lwip_mqtt demo application demonstrates MQTT client connecting to MQTT broker via unsecured socket. The application obtains IP and DNS addresses from DHCP and resolves broker's hostname if needed. Then it connects to the broker and subscribes to the &quot;lwip_topic/#&quot; and &quot;lwip_other/#&quot; topics. Further it publishes five messages to the &quot;lwip_topic/100&quot; which are also received back as the board is subscribed to the &quot;lwip_topic/#&quot;. Meanwhile it continues to receive messages published to the subscribed topics from other clients." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_mqtt/freertos/cm4">
           <external path="boards/evkmimxrt1160/lwip_examples/lwip_mqtt/freertos/cm4" type="xml">
             <files mask="lwip_mqtt_freertos_cm4_v3_9.xml"/>
@@ -875,26 +880,6 @@ ${load}</script>
         <example id="evkmimxrt1160_lwip_ping_freertos_cm4" name="lwip_ping_freertos_cm4" brief="The lwip_ping demo application demonstrates a Ping Demo on the lwIP TCP/IP stack which using the ICMP protocol. Theapplication periodically sends the ICMP echo request to a PC and processes the PC reply. Type the &quot;ping $board_address&quot;in the PC command window to send an ICMP echo request to the board. The lwIP stack sends the ICMP echo reply back to thePC." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_ping/freertos/cm4">
           <external path="boards/evkmimxrt1160/lwip_examples/lwip_ping/freertos/cm4" type="xml">
             <files mask="lwip_ping_freertos_cm4_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_lwip_tcpecho_bm_cm4" name="lwip_tcpecho_bm_cm4" brief="The lwip_tcpecho demo application demonstrates a TCP echo demo on the lwIP TCP/IP stack with bare metal KSDK orFreeRTOS. The demo uses the TCP protocol and acts as an echo server. The application sends back the received TCPpackets from the PC, which can be used to test whether a TCP connection is available." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_tcpecho/bm/cm4">
-          <external path="boards/evkmimxrt1160/lwip_examples/lwip_tcpecho/bm/cm4" type="xml">
-            <files mask="lwip_tcpecho_bm_cm4_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_lwip_tcpecho_freertos_cm4" name="lwip_tcpecho_freertos_cm4" brief="The lwip_tcpecho demo application demonstrates a TCP echo demo on the lwIP TCP/IP stack with bare metal KSDK orFreeRTOS. The demo uses the TCP protocol and acts as an echo server. The application sends back the received TCPpackets from the PC, which can be used to test whether a TCP connection is available." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_tcpecho/freertos/cm4">
-          <external path="boards/evkmimxrt1160/lwip_examples/lwip_tcpecho/freertos/cm4" type="xml">
-            <files mask="lwip_tcpecho_freertos_cm4_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_lwip_udpecho_bm_cm4" name="lwip_udpecho_bm_cm4" brief="The lwip_udpecho demo application demonstrates a UDP echo demo on the lwIP TCP/IP stack with bare metal KSDK orFreeRTOS, which uses the UDP protocol and acts as an echo server. The application sends back the received UDP packetsfrom the PC, which can be used to test whether a UDP connection is available." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_udpecho/bm/cm4">
-          <external path="boards/evkmimxrt1160/lwip_examples/lwip_udpecho/bm/cm4" type="xml">
-            <files mask="lwip_udpecho_bm_cm4_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_lwip_udpecho_freertos_cm4" name="lwip_udpecho_freertos_cm4" brief="The lwip_udpecho demo application demonstrates a UDP echo demo on the lwIP TCP/IP stack with bare metal KSDK orFreeRTOS, which uses the UDP protocol and acts as an echo server. The application sends back the received UDP packetsfrom the PC, which can be used to test whether a UDP connection is available." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_udpecho/freertos/cm4">
-          <external path="boards/evkmimxrt1160/lwip_examples/lwip_udpecho/freertos/cm4" type="xml">
-            <files mask="lwip_udpecho_freertos_cm4_v3_9.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1160_mbedtls_benchmark_cm4" name="mbedtls_benchmark_cm4" brief="The mbdedTLS Benchmark demo application performs cryptographic algorithm benchmarking and prints results to the terminal." toolchain="armgcc iar mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="mbedtls_examples" path="boards/evkmimxrt1160/mbedtls_examples/mbedtls_benchmark/cm4">
@@ -2557,6 +2542,11 @@ ${load}</script>
             <files mask="lwip_iperf_bm_cm7_v3_9.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1160_lwip_ipv4_ipv6_echo_freertos_cm7" name="lwip_ipv4_ipv6_echo_freertos_cm7" brief="The lwip_ipv4_ipv6_echo demo application demonstrates a TCP or UDP echo demo on the lwIP TCP/IP stack with FreeRTOS. The demo uses the TCP or UDP protocol over both IPv4 and IPv6 and acts as an echo server. The application sends back the received TCP or UDP packets from the PC, which can be used to test whether a TCP or UDP is available." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_ipv4_ipv6_echo/freertos/cm7">
+          <external path="boards/evkmimxrt1160/lwip_examples/lwip_ipv4_ipv6_echo/freertos/cm7" type="xml">
+            <files mask="lwip_ipv4_ipv6_echo_freertos_cm7_v3_9.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1160_lwip_mqtt_freertos_cm7" name="lwip_mqtt_freertos_cm7" brief="The lwip_mqtt demo application demonstrates MQTT client connecting to MQTT broker via unsecured socket. The application obtains IP and DNS addresses from DHCP and resolves broker's hostname if needed. Then it connects to the broker and subscribes to the &quot;lwip_topic/#&quot; and &quot;lwip_other/#&quot; topics. Further it publishes five messages to the &quot;lwip_topic/100&quot; which are also received back as the board is subscribed to the &quot;lwip_topic/#&quot;. Meanwhile it continues to receive messages published to the subscribed topics from other clients." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_mqtt/freertos/cm7">
           <external path="boards/evkmimxrt1160/lwip_examples/lwip_mqtt/freertos/cm7" type="xml">
             <files mask="lwip_mqtt_freertos_cm7_v3_9.xml"/>
@@ -2570,26 +2560,6 @@ ${load}</script>
         <example id="evkmimxrt1160_lwip_ping_freertos_cm7" name="lwip_ping_freertos_cm7" brief="The lwip_ping demo application demonstrates a Ping Demo on the lwIP TCP/IP stack which using the ICMP protocol. Theapplication periodically sends the ICMP echo request to a PC and processes the PC reply. Type the &quot;ping $board_address&quot;in the PC command window to send an ICMP echo request to the board. The lwIP stack sends the ICMP echo reply back to thePC." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_ping/freertos/cm7">
           <external path="boards/evkmimxrt1160/lwip_examples/lwip_ping/freertos/cm7" type="xml">
             <files mask="lwip_ping_freertos_cm7_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_lwip_tcpecho_bm_cm7" name="lwip_tcpecho_bm_cm7" brief="The lwip_tcpecho demo application demonstrates a TCP echo demo on the lwIP TCP/IP stack with bare metal KSDK orFreeRTOS. The demo uses the TCP protocol and acts as an echo server. The application sends back the received TCPpackets from the PC, which can be used to test whether a TCP connection is available." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_tcpecho/bm/cm7">
-          <external path="boards/evkmimxrt1160/lwip_examples/lwip_tcpecho/bm/cm7" type="xml">
-            <files mask="lwip_tcpecho_bm_cm7_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_lwip_tcpecho_freertos_cm7" name="lwip_tcpecho_freertos_cm7" brief="The lwip_tcpecho demo application demonstrates a TCP echo demo on the lwIP TCP/IP stack with bare metal KSDK orFreeRTOS. The demo uses the TCP protocol and acts as an echo server. The application sends back the received TCPpackets from the PC, which can be used to test whether a TCP connection is available." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_tcpecho/freertos/cm7">
-          <external path="boards/evkmimxrt1160/lwip_examples/lwip_tcpecho/freertos/cm7" type="xml">
-            <files mask="lwip_tcpecho_freertos_cm7_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_lwip_udpecho_bm_cm7" name="lwip_udpecho_bm_cm7" brief="The lwip_udpecho demo application demonstrates a UDP echo demo on the lwIP TCP/IP stack with bare metal KSDK orFreeRTOS, which uses the UDP protocol and acts as an echo server. The application sends back the received UDP packetsfrom the PC, which can be used to test whether a UDP connection is available." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_udpecho/bm/cm7">
-          <external path="boards/evkmimxrt1160/lwip_examples/lwip_udpecho/bm/cm7" type="xml">
-            <files mask="lwip_udpecho_bm_cm7_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_lwip_udpecho_freertos_cm7" name="lwip_udpecho_freertos_cm7" brief="The lwip_udpecho demo application demonstrates a UDP echo demo on the lwIP TCP/IP stack with bare metal KSDK orFreeRTOS, which uses the UDP protocol and acts as an echo server. The application sends back the received UDP packetsfrom the PC, which can be used to test whether a UDP connection is available." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="lwip_examples" path="boards/evkmimxrt1160/lwip_examples/lwip_udpecho/freertos/cm7">
-          <external path="boards/evkmimxrt1160/lwip_examples/lwip_udpecho/freertos/cm7" type="xml">
-            <files mask="lwip_udpecho_freertos_cm7_v3_9.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1160_maestro_playback" name="maestro_playback" brief="Audio maestro framework demo example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="audio_examples" path="boards/evkmimxrt1160/audio_examples/maestro_playback/cm7">
@@ -3107,9 +3077,9 @@ ${load}</script>
             <files mask="wifi_cli_cm7_v3_9.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1160_wifi_iperf_cm7" name="wifi_iperf_cm7" brief="wifi_iperf" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1160/wifi_examples/wifi_iperf/cm7">
-          <external path="boards/evkmimxrt1160/wifi_examples/wifi_iperf/cm7" type="xml">
-            <files mask="wifi_iperf_cm7_v3_9.xml"/>
+        <example id="evkmimxrt1160_wifi_ipv4_ipv6_echo_cm7" name="wifi_ipv4_ipv6_echo_cm7" brief="The wifi_ipv4_ipv6_echo demo application demonstrates a TCP or UDP echo demo on the lwIP TCP/IP stack with FreeRTOS. The demo uses the TCP or UDP protocol over both IPv4 and IPv6 and acts as an echo server. The application sends back the received TCP or UDP packets from the PC, which can be used to test whether a TCP or UDP is available." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1160/wifi_examples/wifi_ipv4_ipv6_echo/cm7">
+          <external path="boards/evkmimxrt1160/wifi_examples/wifi_ipv4_ipv6_echo/cm7" type="xml">
+            <files mask="wifi_ipv4_ipv6_echo_cm7_v3_9.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1160_wifi_setup_cm7" name="wifi_setup_cm7" brief="wifi_setup" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1160/wifi_examples/wifi_setup/cm7">
@@ -3147,56 +3117,6 @@ ${load}</script>
         <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
           <drivers>
             <driver id_refs="BOARD_FLASH_evkmimxrt1160">
-              <driverBinary path="devices/MIMXRT1166/mcuxpresso" type="binary">
-                <files mask="MIMXRT1160_SFDP_QSPI.cfx"/>
-              </driverBinary>
-            </driver>
-          </drivers>
-        </debug_configuration>
-      </debug_configurations>
-    </board>
-    <board id="evkmimxrt1160_agm01" name="MIMXRT1160-EVK-AGM01" href="https://www.nxp.com/pip/FRDM-STBC-AGM01" version="1.0.0" package="MIMXRT1166DVM6A" type="kit">
-      <description>i.MX RT1160 Evaluation Kit with 9-Axis sensor shield board FRDM-STBC-AGM01 having FXAS21002C Gyroscope &amp; FXOS8700CQ E-compass sensors</description>
-      <image path="boards/evkmimxrt1160_agm01" type="image">
-        <files mask="evkmimxrt1160_agm01.png"/>
-      </image>
-      <memory>
-        <memoryBlock id="BOARD_FLASH_evkmimxrt1160_agm01" name="BOARD_FLASH" addr="30000000" size="04000000" type="ExtFlash" access="RO"/>
-        <memoryBlock id="BOARD_SDRAM_evkmimxrt1160_agm01" name="BOARD_SDRAM" addr="80000000" size="03000000" type="RAM" access="RW"/>
-        <memoryBlock id="NCACHE_REGION_evkmimxrt1160_agm01" name="NCACHE_REGION" addr="83000000" size="01000000" type="RAM" access="RW"/>
-      </memory>
-      <total_memory flash_size_kb="65536" ram_size_kb="32768"/>
-      <examples>
-        <example id="evkmimxrt1160_agm01_fxas21002_fifo" name="fxas21002_fifo" brief="The FXAS21002 FIFO example application demonstrates the use of the FXAS21002 sensor in Buffered (FIFO) Mode.The example demonstrates configuration of all registers reguired to put the sensor in FIFO Mode and read out samples.The sensor reads samples and are buffered upto the configured Water Mark Level and then a Flag is set.The application consistently checks the Flag and when set, reads out all(count=Water Mark Level) samples." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="issdk/sensors" path="boards/evkmimxrt1160_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo/cm7">
-          <external path="boards/evkmimxrt1160_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo/cm7" type="xml">
-            <files mask="fxas21002_fifo_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_agm01_fxas21002_poll" name="fxas21002_poll" brief="The FXAS21002 Poll example application demonstrates the use of the FXAS21002 sensor in the Poll (Non-Buffered) Mode. The example demonstrates configuration of all registers reguired to put the sensor into Poll Mode and read out a sample." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="issdk/sensors" path="boards/evkmimxrt1160_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll/cm7">
-          <external path="boards/evkmimxrt1160_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll/cm7" type="xml">
-            <files mask="fxas21002_poll_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_agm01_fxos8700_fifo" name="fxos8700_fifo" brief="The FXAS8700 FIFO example application demonstrates the use of the FXAS8700 sensor in Buffered (FIFO) Mode.The example demonstrates configuration of all registers reguired to put the sensor in FIFO Mode and read out samples.The sensor reads samples and are buffered upto the configured Water Mark Level and then a Flag is set.The application consistently checks the Flag and when set, reads out all(count=Water Mark Level) samples." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="issdk/sensors" path="boards/evkmimxrt1160_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/cm7">
-          <external path="boards/evkmimxrt1160_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo/cm7" type="xml">
-            <files mask="fxos8700_fifo_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_agm01_fxos8700_poll" name="fxos8700_poll" brief="The FXOS8700 Poll example application demonstrates the use of the FXOS8700 sensor in the Poll (Non-Buffered) Mode. The example demonstrates configuration of all registers reguired to put the sensor into Poll Mode and read out a sample." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="issdk/sensors" path="boards/evkmimxrt1160_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll/cm7">
-          <external path="boards/evkmimxrt1160_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll/cm7" type="xml">
-            <files mask="fxos8700_poll_v3_9.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1160_agm01_tensorflow_lite_micro_adt_cm7" name="tensorflow_lite_micro_adt_cm7" brief="Anomaly detection example for TensorFlow Lite Micro" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="eiq_examples" path="boards/evkmimxrt1160_agm01/eiq_examples/tensorflow_lite_micro_adt">
-          <external path="boards/evkmimxrt1160_agm01/eiq_examples/tensorflow_lite_micro_adt" type="xml">
-            <files mask="tensorflow_lite_micro_adt_cm7_v3_9.xml"/>
-          </external>
-        </example>
-      </examples>
-      <debug_configurations>
-        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-          <drivers>
-            <driver id_refs="BOARD_FLASH_evkmimxrt1160_agm01">
               <driverBinary path="devices/MIMXRT1166/mcuxpresso" type="binary">
                 <files mask="MIMXRT1160_SFDP_QSPI.cfx"/>
               </driverBinary>
@@ -30256,7 +30176,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.pdm.MIMXRT1166" name="pdm" brief="PDM Driver" version="2.6.0" full_name="PDM Driver" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="driver" package_base_path="devices/MIMXRT1166/drivers" project_base_path="drivers">
+    <component id="platform.drivers.pdm.MIMXRT1166" name="pdm" brief="PDM Driver" version="2.7.0" full_name="PDM Driver" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" user_visible="true" type="driver" package_base_path="devices/MIMXRT1166/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT1166"/>
       </dependencies>
@@ -31383,7 +31303,6 @@ ${load}</script>
         <files mask="middleware_edgefast_wifi_nxp_MIMXRT1166_cm7.cmake" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.eiq.audio.MIMXRT1166" name="eiq_audio" brief="eIQ audio stream from microphone to speaker abstraction" version="1.0.0" full_name="eIQ audio stream" devices="MIMXRT1166xxxxx" user_visible="false" type="middleware" package_base_path="middleware/eiq/common/audio" project_base_path="source/audio"/>
     <component id="middleware.eiq.gui.printf.MIMXRT1166" name="eiq_GuiPrintf" brief="Video capture and display abstract layer" version="1.0.0" full_name="eiq_GuiPrintf" devices="MIMXRT1166xxxxx" user_visible="false" type="middleware" package_base_path="middleware/eiq" project_base_path="source">
       <dependencies>
         <component_dependency value="middleware.eiq.worker.MIMXRT1166"/>
@@ -31413,6 +31332,7 @@ ${load}</script>
       <source relative_path="./" type="doc">
         <files mask="AUTHORS"/>
         <files mask="LICENSE"/>
+        <files mask="NOTICE"/>
         <files mask="ChangeLogKSDK.txt"/>
         <files mask="readme.txt"/>
       </source>
@@ -31706,6 +31626,70 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.examples.microspeech.MIMXRT1166" name="TensorFlow Lite Micro word detection" brief="TensorFlow Lite Micro word detection library" version="2.6.0" full_name="TensorFlow Lite Micro word detection library" devices="MIMXRT1166xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="middleware/eiq/tensorflow-lite" project_base_path="eiq/tensorflow-lite">
+      <dependencies>
+        <component_dependency value="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1166"/>
+      </dependencies>
+      <source relative_path="tensorflow/lite/micro/examples/micro_speech" type="src">
+        <files mask="audio_provider.cpp"/>
+        <files mask="command_responder.cpp"/>
+        <files mask="feature_provider.cpp"/>
+        <files mask="recognize_commands.cpp"/>
+      </source>
+      <source relative_path="tensorflow/lite/micro/examples/micro_speech" type="c_include">
+        <files mask="audio_provider.h"/>
+        <files mask="command_responder.h"/>
+        <files mask="feature_provider.h"/>
+        <files mask="recognize_commands.h"/>
+      </source>
+      <source relative_path="tensorflow/lite/micro/examples/micro_speech/micro_features" type="src">
+        <files mask="micro_features_generator.cpp"/>
+        <files mask="micro_model_settings.cpp"/>
+      </source>
+      <source relative_path="tensorflow/lite/micro/examples/micro_speech/micro_features" type="c_include">
+        <files mask="micro_features_generator.h"/>
+        <files mask="micro_model_settings.h"/>
+        <files mask="model.h"/>
+      </source>
+      <source relative_path="tensorflow/lite/experimental/microfrontend/lib" type="src">
+        <files mask="filterbank.c"/>
+        <files mask="filterbank_util.c"/>
+        <files mask="frontend.c"/>
+        <files mask="frontend_util.c"/>
+        <files mask="log_lut.c"/>
+        <files mask="log_scale.c"/>
+        <files mask="log_scale_util.c"/>
+        <files mask="noise_reduction.c"/>
+        <files mask="noise_reduction_util.c"/>
+        <files mask="pcan_gain_control.c"/>
+        <files mask="pcan_gain_control_util.c"/>
+        <files mask="window.c"/>
+        <files mask="window_util.c"/>
+        <files mask="fft.cpp"/>
+        <files mask="fft_util.cpp"/>
+      </source>
+      <source relative_path="tensorflow/lite/experimental/microfrontend/lib" type="c_include">
+        <files mask="bits.h"/>
+        <files mask="fft.h"/>
+        <files mask="fft_util.h"/>
+        <files mask="filterbank.h"/>
+        <files mask="filterbank_util.h"/>
+        <files mask="frontend.h"/>
+        <files mask="frontend_util.h"/>
+        <files mask="log_lut.h"/>
+        <files mask="log_scale.h"/>
+        <files mask="log_scale_util.h"/>
+        <files mask="noise_reduction.h"/>
+        <files mask="noise_reduction_util.h"/>
+        <files mask="pcan_gain_control.h"/>
+        <files mask="pcan_gain_control_util.h"/>
+        <files mask="window.h"/>
+        <files mask="window_util.h"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="middleware.eiq.tensorflow_lite_micro.reference.MIMXRT1166" name="TensorFlow Lite Micro with reference kernels" brief="TensorFlow Lite Micro library with reference kernel implementations" version="2.6.0" full_name="TensorFlow Lite Micro library with reference kernel implementations" devices="MIMXRT1166xxxxx" category="Machine Learning/eIQ" user_visible="true" type="middleware" package_base_path="middleware/eiq/tensorflow-lite" project_base_path="eiq/tensorflow-lite">
       <dependencies>
         <component_dependency value="middleware.eiq.tensorflow_lite_micro.MIMXRT1166"/>
@@ -31975,6 +31959,38 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="tensorflow-lite/third_party/gemmlowp" project_relative_path="third_party/gemmlowp" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.eiq.tensorflow_lite_micro.third_party.kissfft.MIMXRT1166" name="Kiss FFT" brief="A mixed-radix Fast Fourier Transform library" version="1.3.0" full_name="Kiss FFT library" devices="MIMXRT1166xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="middleware/eiq/tensorflow-lite/third_party/kissfft" project_base_path="eiq/tensorflow-lite/third_party/kissfft">
+      <source relative_path="./" type="src">
+        <files mask="kiss_fft.c"/>
+      </source>
+      <source relative_path="./" type="c_include">
+        <files mask="_kiss_fft_guts.h"/>
+        <files mask="kiss_fft.h"/>
+      </source>
+      <source relative_path="./" type="other">
+        <files mask="kissfft.hh"/>
+      </source>
+      <source relative_path="tools" type="src">
+        <files mask="kfc.c"/>
+        <files mask="kiss_fastfir.c"/>
+        <files mask="kiss_fftnd.c"/>
+        <files mask="kiss_fftndr.c"/>
+        <files mask="kiss_fftr.c"/>
+      </source>
+      <source relative_path="tools" type="c_include">
+        <files mask="kfc.h"/>
+        <files mask="kiss_fftnd.h"/>
+        <files mask="kiss_fftndr.h"/>
+        <files mask="kiss_fftr.h"/>
+      </source>
+      <source relative_path="./" type="doc">
+        <files mask="COPYING"/>
+        <files mask="README"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.eiq.tensorflow_lite_micro.third_party.ruy.MIMXRT1166" name="Ruy" brief="Ruy library" version="1.0.0" full_name="Ruy library" devices="MIMXRT1166xxxxx" category="Machine Learning/eIQ" user_visible="false" type="middleware" package_base_path="middleware/eiq" project_base_path="eiq/tensorflow-lite">
@@ -36021,6 +36037,7 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="libraries/coreHTTP/source/include" type="c_include"/>
+        <include_path relative_path="libraries/coreHTTP/source/interface" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.freertos-aws_iot.libraries.corehttp.test.MIMXRT1166" name="AWS IoT coreHTTP test" brief="AWS IoT coreHTTP test" version="202107.00.0" revision="1" full_name="AWS IoT coreHTTP test" devices="MIMXRT1166xxxxx" category="AWS IoT/AWS common libraries" user_visible="true" type="middleware" package_base_path="rtos/freertos" project_base_path="freertos">
@@ -41935,12 +41952,6 @@ ${load}</script>
       <source relative_path="contrib/apps/tcpecho_raw" type="c_include">
         <files mask="tcpecho_raw.h"/>
       </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1166xxxxx">
-        <files mask="middleware_lwip_contrib_tcpecho_raw_MIMXRT1166_cm4.cmake" hidden="true"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1166xxxxx">
-        <files mask="middleware_lwip_contrib_tcpecho_raw_MIMXRT1166_cm7.cmake" hidden="true"/>
-      </source>
       <include_paths>
         <include_path relative_path="contrib/apps/tcpecho_raw" type="c_include"/>
       </include_paths>
@@ -41955,12 +41966,6 @@ ${load}</script>
       <source relative_path="contrib/apps/udpecho" type="src">
         <files mask="udpecho.c"/>
       </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1166xxxxx">
-        <files mask="middleware_lwip_contrib_udpecho_MIMXRT1166_cm4.cmake" hidden="true"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1166xxxxx">
-        <files mask="middleware_lwip_contrib_udpecho_MIMXRT1166_cm7.cmake" hidden="true"/>
-      </source>
       <include_paths>
         <include_path relative_path="contrib/apps/udpecho" type="c_include"/>
       </include_paths>
@@ -41974,12 +41979,6 @@ ${load}</script>
       </source>
       <source relative_path="contrib/apps/udpecho_raw" type="c_include">
         <files mask="udpecho_raw.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm4_MIMXRT1166xxxxx">
-        <files mask="middleware_lwip_contrib_udpecho_raw_MIMXRT1166_cm4.cmake" hidden="true"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1166xxxxx">
-        <files mask="middleware_lwip_contrib_udpecho_raw_MIMXRT1166_cm7.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="contrib/apps/udpecho_raw" type="c_include"/>
@@ -42736,6 +42735,15 @@ ${load}</script>
       </source>
       <source toolchain="iar" relative_path="libs/cm7f/iar/release" type="lib" device_cores="cm7_MIMXRT1166xxxxx">
         <files mask="libwav.a"/>
+      </source>
+      <source exclude="true" relative_path="mcu-audio/ogg" type="other">
+        <files mask="COPYING" hidden="true"/>
+      </source>
+      <source exclude="true" relative_path="mcu-audio/opus" type="other">
+        <files mask="COPYING" hidden="true"/>
+      </source>
+      <source exclude="true" relative_path="mcu-audio/opusfile" type="other">
+        <files mask="COPYING" hidden="true"/>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1166xxxxx">
         <files mask="middleware_maestro_framework_MIMXRT1166_cm7.cmake" hidden="true"/>
@@ -49135,7 +49143,7 @@ ${load}</script>
         <include_path relative_path="CortexM7/Lib/Inc" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.wifi.MIMXRT1166" name="wifi_nxp" brief="NXP Wi-Fi functionality enables customers to quickly develop applications of interest to add connectivity to different sensors and appliances" version="1.3.37" full_name="NXP Wi-Fi" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+    <component id="middleware.wifi.MIMXRT1166" name="wifi_nxp" brief="NXP Wi-Fi functionality enables customers to quickly develop applications of interest to add connectivity to different sensors and appliances" version="1.3.37" full_name="NXP Wi-Fi" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi_nxp" project_base_path="wifi">
       <dependencies>
         <all>
           <component_dependency value="middleware.freertos-kernel.MIMXRT1166"/>
@@ -49181,7 +49189,7 @@ ${load}</script>
         <include_path relative_path="port/lwip" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.wifi.cli.MIMXRT1166" name="wifi_nxp_cli" brief="Middlware Wi-Fi CLI" version="1.3.37" full_name="NXP Wi-Fi CLI" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+    <component id="middleware.wifi.cli.MIMXRT1166" name="wifi_nxp_cli" brief="Middlware Wi-Fi CLI" version="1.3.37" full_name="NXP Wi-Fi CLI" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi_nxp" project_base_path="wifi">
       <dependencies>
         <all>
           <component_dependency value="middleware.wifi.MIMXRT1166"/>
@@ -49227,7 +49235,7 @@ ${load}</script>
         <include_path relative_path="incl/wlcmgr" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.wifi.fwdnld.MIMXRT1166" name="nxp_wireless_fwdnld" brief="NXP WLAN f/w dnld driver" version="1.0.0" full_name="NXP WLAN f/w dnld driver" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+    <component id="middleware.wifi.fwdnld.MIMXRT1166" name="nxp_wireless_fwdnld" brief="NXP WLAN f/w dnld driver" version="1.0.0" full_name="NXP WLAN f/w dnld driver" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi_nxp" project_base_path="wifi">
       <dependencies>
         <all>
           <component_dependency value="middleware.freertos-kernel.MIMXRT1166"/>
@@ -49257,9 +49265,12 @@ ${load}</script>
         <files mask="mlan_ieee.h"/>
         <files mask="mlan_init.h"/>
         <files mask="mlan_join.h"/>
+        <files mask="mlan_main_defs.h"/>
         <files mask="mlan_main.h"/>
         <files mask="mlan_meas.h"/>
         <files mask="mlan_remap_mem_operations.h"/>
+        <files mask="type_decls.h"/>
+        <files mask="mlan_sdio_defs.h"/>
         <files mask="mlan_sdio.h"/>
         <files mask="mlan_uap.h"/>
         <files mask="mlan_util.h"/>
@@ -49317,7 +49328,7 @@ ${load}</script>
         <include_path relative_path="wifidriver/incl" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.wifi.template.MIMXRT1166" name="Wi-Fi configuration template" brief="Template configuration file to be edited by user." version="1.0.0" full_name="Wi-Fi configuration template" devices="MIMXRT1166xxxxx" category="Wireless/NXP Wi-Fi" user_visible="false" type="project_template" package_base_path="middleware/wifi/template" project_base_path="wifi/template">
+    <component id="middleware.wifi.template.MIMXRT1166" name="Wi-Fi configuration template" brief="Template configuration file to be edited by user." version="1.0.0" full_name="Wi-Fi configuration template" devices="MIMXRT1166xxxxx" category="Wireless/NXP Wi-Fi" user_visible="false" type="project_template" package_base_path="components/wifi_bt_module/template" project_base_path="wifi/template">
       <defines>
         <define name="LWIP_DNS" value="1"/>
         <define name="LWIP_NETIF_HOSTNAME" value="1"/>
@@ -49342,12 +49353,12 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.wifi.unused.MIMXRT1166" name="wifi_nxp_unused" brief="Middlware Wi-Fi unused" version="1.3.37" full_name="NXP Wi-Fi unused" devices="MIMXRT1166xxxxx" category="Wireless/NXP Wi-Fi" user_visible="false" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+    <component id="middleware.wifi.unused.MIMXRT1166" name="wifi_nxp_unused" brief="Middlware Wi-Fi unused" version="1.3.37" full_name="NXP Wi-Fi unused" devices="MIMXRT1166xxxxx" category="Wireless/NXP Wi-Fi" user_visible="false" type="middleware" package_base_path="middleware/wifi_nxp" project_base_path="wifi">
       <source relative_path="wifi_bt_firmware" type="doc">
         <files mask="version.txt"/>
       </source>
     </component>
-    <component id="middleware.wifi.wifidriver.MIMXRT1166" name="nxp_wifi_driver" brief="NXP Wi-Fi driver" version="1.3.37" full_name="NXP Wi-Fi driver" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+    <component id="middleware.wifi.wifidriver.MIMXRT1166" name="nxp_wifi_driver" brief="NXP Wi-Fi driver" version="1.3.37" full_name="NXP Wi-Fi driver" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi_nxp" project_base_path="wifi">
       <dependencies>
         <all>
           <component_dependency value="middleware.freertos-kernel.MIMXRT1166"/>
@@ -49550,49 +49561,6 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="project_template.evkmimxrt1160_agm01.MIMXRT1166" name="evkmimxrt1160_agm01" brief="Board_project_template evkmimxrt1160_agm01" version="1.0.0" full_name="Board_project_template evkmimxrt1160_agm01" devices="MIMXRT1166xxxxx" device_cores="cm4_MIMXRT1166xxxxx cm7_MIMXRT1166xxxxx" slave_roles="M4SLAVE M7SLAVE" category="Board Support/SDK Project Template" user_visible="true" type="project_template" package_base_path="boards" project_base_path="./">
-      <dependencies>
-        <all>
-          <component_dependency value="platform.devices.MIMXRT1166_startup.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.lpuart.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.clock.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.common.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.iomuxc.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.igpio.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.xip_device.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.xip_board.evkmimxrt1160.MIMXRT1166"/>
-          <component_dependency value="utility.debug_console.MIMXRT1166"/>
-          <component_dependency value="component.lpuart_adapter.MIMXRT1166"/>
-          <component_dependency value="component.serial_manager_uart.MIMXRT1166"/>
-          <component_dependency value="component.serial_manager.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.pmu_1.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.dcdc_soc.MIMXRT1166"/>
-          <component_dependency value="platform.drivers.gpc_3.MIMXRT1166"/>
-        </all>
-      </dependencies>
-      <source relative_path="evkmimxrt1160/project_template" project_relative_path="evkmimxrt1160" type="c_include">
-        <files mask="dcd.h"/>
-      </source>
-      <source relative_path="evkmimxrt1160/project_template" project_relative_path="evkmimxrt1160" type="src">
-        <files mask="dcd.c"/>
-      </source>
-      <source relative_path="evkmimxrt1160_agm01/project_template" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="pin_mux.c"/>
-        <files mask="peripherals.c"/>
-      </source>
-      <source relative_path="evkmimxrt1160_agm01/project_template" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="peripherals.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="evkmimxrt1160/project_template" project_relative_path="evkmimxrt1160" type="c_include"/>
-        <include_path relative_path="evkmimxrt1160_agm01/project_template" type="c_include"/>
       </include_paths>
     </component>
     <component id="docs.AzureRTOS.MIMXRT1166" name="Azure RTOS documentation" brief="Azure RTOS documentation" version="1.0.0" full_name="Azure RTOS documentation" devices="MIMXRT1166xxxxx" user_visible="true" type="documentation" package_base_path="docs/AzureRTOS" project_base_path="AzureRTOS">
@@ -57958,39 +57926,6 @@ ${load}</script>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
         <include_path relative_path="drivers/host" project_relative_path="./" type="c_include"/>
       </include_paths>
-    </component>
-    <component id="middleware.issdk.drivers.systick_utils.evkmimxrt1160.MIMXRT1166" name="systick_utils" brief="ISSDK Utils" version="1.7.0" full_name="Middleware issdk drivers systick_utils evkmimxrt1160" devices="MIMXRT1166xxxxx" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="utilities">
-      <source relative_path="drivers/systick" project_relative_path="./" type="src">
-        <files mask="systick_utils.c"/>
-      </source>
-      <source relative_path="drivers/systick" project_relative_path="./" type="c_include">
-        <files mask="systick_utils.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm7_MIMXRT1166xxxxx">
-        <files mask="middleware_issdk_drivers_systick_utils_evkmimxrt1160_MIMXRT1166_cm7.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="drivers/systick" project_relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.issdk.sensor.boardkit.evkmimxrt1160.MIMXRT1166" name="issdk_boardkit_evkmimxrt1160" brief="ISSDK Board-Kit files for RT1160 kit" version="1.7.0" full_name="Middleware issdk sensor boardkit evkmimxrt1160" devices="MIMXRT1166xxxxx" user_visible="false" type="other" package_base_path="middleware/issdk" project_base_path="issdk_boardkit">
-      <source relative_path="boardkit/evk-mimxrt1160" project_relative_path="./" type="c_include">
-        <files mask="RTE_Device.h"/>
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="evkmimxrt1160.h"/>
-        <files mask="pin_mux.h"/>
-      </source>
-      <source relative_path="boardkit/evk-mimxrt1160" project_relative_path="./" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="evkmimxrt1160.c"/>
-        <files mask="pin_mux.c"/>
-      </source>
-      <source relative_path="boardkit/evk-mimxrt1160/frdm-stbc-agm01" project_relative_path="./" type="c_include">
-        <files mask="frdm_stbc_agm01_shield.h"/>
-        <files mask="issdk_hal.h"/>
-      </source>
     </component>
     <!--<component id="middleware.openvg.allfiles.MIMXRT1166" name="openvg.allfiles" brief="OpenVG all files" version="1.0.0" full_name="Middleware openvg all files" devices="MIMXRT1166xxxxx" category="openvg/OpenVG" user_visible="false" type="container" package_base_path="middleware/openvg" project_base_path="openvg">
   <source relative_path="inc/VG" type="c_include">

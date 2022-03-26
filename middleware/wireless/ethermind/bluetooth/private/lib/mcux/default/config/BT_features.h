@@ -2220,6 +2220,16 @@
  *  Dependency: None
  */
 /* #define L2CAP_TX_COMPLETE_CALLBACK */
+
+/*
+ *  L2CAP_CHANNEL_DATAWRITE_CALLBACK
+ *
+ *  This flag enables L2CAP transmission complete callback
+ *  on every channel.
+ *
+ *  Dependency: None
+ */
+/* #define L2CAP_CHANNEL_DATAWRITE_CALLBACK */
 #endif /* BR_EDR_L2CAP */
 
 /*
@@ -2492,6 +2502,18 @@
  */
 #define SDP_SERVER_ACCESS_RFCOMM_CH
 
+/*
+ * SDP_DYNAMIC_DB
+ *
+ * This flag enables APIs to support dynamic creation of the SDP database.
+ * The static database shall not be included in the build with this flag
+ * defined.
+ *
+ * Dependency: SDP_SERVER must be defined.
+ *
+ * Default: Disable
+ */
+/* #define SDP_DYNAMIC_DB */
 #endif /* SDP_SERVER */
 #endif /* SDP */
 

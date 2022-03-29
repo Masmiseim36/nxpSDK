@@ -7,9 +7,9 @@ The example itself does not perform any data decryption operation over QSPI. It 
 Toolchain supported
 ===================
 - MCUXpresso  11.5.0
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.20.2
+- Keil MDK  5.36
+- GCC ARM Embedded  10.3.1
 
 Hardware requirements
 =====================

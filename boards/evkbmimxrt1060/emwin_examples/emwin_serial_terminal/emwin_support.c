@@ -10,11 +10,17 @@
 #include "emwin_support.h"
 #include "GUIDRV_Lin.h"
 
+#include "board.h"
 #include "fsl_debug_console.h"
+#include "fsl_video_common.h"
 #include "fsl_elcdif.h"
 #include "fsl_lpi2c.h"
+#include "fsl_gpio.h"
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#include "fsl_gt911.h"
+#else
 #include "fsl_ft5406_rt.h"
-
+#endif
 /*
 **      Define everything necessary for different color depths
 */
@@ -65,6 +71,11 @@ uint32_t s_vram_buffer[VRAM_SIZE * GUI_BUFFERS];
 #define VRAM_ADDR       ((uint32_t)s_vram_buffer)
 
 static volatile int32_t s_LCDpendingBuffer = -1;
+
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+static void BOARD_PullTouchResetPin(bool pullUp);
+static void BOARD_ConfigTouchIntPin(gt911_int_pin_mode_t mode);
+#endif
 
 /*******************************************************************************
  * Implementation of PortAPI for emWin LCD driver
@@ -135,7 +146,57 @@ void APP_ELCDIF_Init(void)
  ******************************************************************************/
 
 /* Touch driver handle. */
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+static gt911_handle_t s_touchHandle;
+static const gt911_config_t s_touchConfig = {
+    .I2C_SendFunc     = BOARD_Touch_I2C_Send,
+    .I2C_ReceiveFunc  = BOARD_Touch_I2C_Receive,
+    .pullResetPinFunc = BOARD_PullTouchResetPin,
+    .intPinFunc       = BOARD_ConfigTouchIntPin,
+    .timeDelayMsFunc  = VIDEO_DelayMs,
+    .touchPointNum    = 1,
+    .i2cAddrMode      = kGT911_I2cAddrMode0,
+    .intTrigMode      = kGT911_IntRisingEdge,
+};
+
+#else
 static ft5406_rt_handle_t touchHandle;
+#endif
+
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+static void BOARD_PullTouchResetPin(bool pullUp)
+{
+    if (pullUp)
+    {
+        GPIO_PinWrite(BOARD_TOUCH_RST_GPIO, BOARD_TOUCH_RST_PIN, 1);
+    }
+    else
+    {
+        GPIO_PinWrite(BOARD_TOUCH_RST_GPIO, BOARD_TOUCH_RST_PIN, 0);
+    }
+}
+
+static void BOARD_ConfigTouchIntPin(gt911_int_pin_mode_t mode)
+{
+    if (mode == kGT911_IntPinInput)
+    {
+        BOARD_TOUCH_INT_GPIO->GDIR &= ~(1UL << BOARD_TOUCH_INT_PIN);
+    }
+    else
+    {
+        if (mode == kGT911_IntPinPullDown)
+        {
+            GPIO_PinWrite(BOARD_TOUCH_INT_GPIO, BOARD_TOUCH_INT_PIN, 0);
+        }
+        else
+        {
+            GPIO_PinWrite(BOARD_TOUCH_INT_GPIO, BOARD_TOUCH_INT_PIN, 1);
+        }
+
+        BOARD_TOUCH_INT_GPIO->GDIR |= (1UL << BOARD_TOUCH_INT_PIN);
+    }
+}
+#endif
 
 static void BOARD_Touch_Init(void)
 {
@@ -159,7 +220,11 @@ static void BOARD_Touch_Init(void)
     LPI2C_MasterInit(BOARD_TOUCH_I2C, &masterConfig, BOARD_TOUCH_I2C_CLOCK_FREQ);
 
     /* Initialize the touch handle. */
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+    GT911_Init(&s_touchHandle, &s_touchConfig);
+#else
     FT5406_RT_Init(&touchHandle, BOARD_TOUCH_I2C);
+#endif
 }
 
 void BOARD_Touch_Deinit(void)
@@ -169,11 +234,28 @@ void BOARD_Touch_Deinit(void)
 
 int BOARD_Touch_Poll(void)
 {
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN02H)
     touch_event_t touch_event;
+#endif
     int touch_x;
     int touch_y;
     GUI_PID_STATE pid_state;
 
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+    status_t st = GT911_GetSingleTouch(&s_touchHandle, &touch_x, &touch_y);
+    if ((st == kStatus_Success) || (st == kStatus_TOUCHPANEL_NotTouched))
+    {
+        pid_state.x       = touch_x;
+        pid_state.y       = touch_y;
+        pid_state.Pressed = (st == kStatus_Success);
+        GUI_TOUCH_StoreStateEx(&pid_state);
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+#else
     if (kStatus_Success != FT5406_RT_GetSingleTouch(&touchHandle, &touch_event, &touch_x, &touch_y))
     {
         return 0;
@@ -188,6 +270,7 @@ int BOARD_Touch_Poll(void)
         return 1;
     }
     return 0;
+#endif
 }
 
 /*******************************************************************************

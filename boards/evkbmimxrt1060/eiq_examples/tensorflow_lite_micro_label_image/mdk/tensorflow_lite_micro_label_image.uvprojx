@@ -502,9 +502,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/examples/common/model/output_postproc.cpp</FilePath>
             </File>
             <File>
-              <FileName>model_mobilenet_ops_micro.cpp</FileName>
+              <FileName>model_all_ops_micro.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/examples/label_image/model_mobilenet_ops_micro.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/examples/model_all_ops_micro.cpp</FilePath>
             </File>
             <File>
               <FileName>model.cpp</FileName>
@@ -915,6 +915,11 @@
               <FileName>LICENSE</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/LICENSE</FilePath>
+            </File>
+            <File>
+              <FileName>NOTICE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/NOTICE</FilePath>
             </File>
             <File>
               <FileName>ChangeLogKSDK.txt</FileName>
@@ -3579,9 +3584,9 @@
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/examples/common/model/output_postproc.cpp</FilePath>
             </File>
             <File>
-              <FileName>model_mobilenet_ops_micro.cpp</FileName>
+              <FileName>model_all_ops_micro.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/eiq/tensorflow-lite/examples/label_image/model_mobilenet_ops_micro.cpp</FilePath>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/examples/model_all_ops_micro.cpp</FilePath>
             </File>
             <File>
               <FileName>model.cpp</FileName>
@@ -3992,6 +3997,11 @@
               <FileName>LICENSE</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/tensorflow-lite/LICENSE</FilePath>
+            </File>
+            <File>
+              <FileName>NOTICE</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/tensorflow-lite/NOTICE</FilePath>
             </File>
             <File>
               <FileName>ChangeLogKSDK.txt</FileName>

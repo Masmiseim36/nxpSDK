@@ -230,7 +230,7 @@ status_t STREAMER_PCM_Create(char *filename, int volume)
     streamer_set_property(streamer, prop, true);
 
     prop.prop = PROP_FILESRC_SET_SAMPLE_RATE;
-    prop.val  = 96000;
+    prop.val  = DEMO_SAMPLE_RATE;
 
     streamer_set_property(streamer, prop, true);
 
@@ -240,12 +240,12 @@ status_t STREAMER_PCM_Create(char *filename, int volume)
     streamer_set_property(streamer, prop, true);
 
     prop.prop = PROP_FILESRC_SET_BIT_WIDTH;
-    prop.val  = 32;
+    prop.val  = DEMO_BIT_WIDTH;
 
     streamer_set_property(streamer, prop, true);
 
     prop.prop = PROP_FILESRC_SET_CHUNK_SIZE;
-    prop.val  = get_app_data()->num_channels * 1024;
+    prop.val  = get_app_data()->num_channels * DEMO_BYTE_WIDTH * DEMO_SAMPLE_RATE / 100;
 
     streamer_set_property(streamer, prop, true);
 

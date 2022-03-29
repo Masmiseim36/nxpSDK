@@ -322,8 +322,8 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../config_files</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../components/phy/mdio/enet</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
@@ -641,8 +641,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../config_files</state>
+          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1355,8 +1355,8 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../config_files</state>
+          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../components/phy/mdio/enet</state>
           <state>$PROJ_DIR$/../../../../../components/phy/device/phyksz8081</state>
@@ -1674,8 +1674,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../config_files</state>
+          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2068,25 +2068,10 @@
     </settings>
   </configuration>
   <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../config_files/aws_mbedtls_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../main_enet.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../lwipopts.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../mcuboot_app_support.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../mcuboot_app_support.h</name>
-    </file>
-  </group>
-  <group>
     <name>config_files</name>
+    <file>
+      <name>$PROJ_DIR$/../config_files/FreeRTOSConfig.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../config_files/aws_demo_config.h</name>
     </file>
@@ -2101,9 +2086,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../config_files/core_pkcs11_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../config_files/FreeRTOSConfig.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../config_files/FreeRTOSIPConfig.h</name>
@@ -2122,6 +2104,24 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../config_files/aws_iot_network_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../config_files/aws_mbedtls_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../main_enet.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../lwipopts.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcuboot_app_support.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcuboot_app_support.h</name>
     </file>
   </group>
   <group>

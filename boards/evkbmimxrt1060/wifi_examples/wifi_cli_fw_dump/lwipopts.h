@@ -335,6 +335,8 @@
 #define LWIP_DHCP_AUTOIP_COOP_TRIES 5
 #endif
 
+#define LWIP_NETIF_EXT_STATUS_CALLBACK 1
+
 #define LWIP_DNS_SECURE 0
 
 /*

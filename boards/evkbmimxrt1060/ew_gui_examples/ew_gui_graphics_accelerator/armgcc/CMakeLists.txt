@@ -136,6 +136,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../components/ft5406_rt
+    ${ProjDirPath}/../../../../../components/gt911
+    ${ProjDirPath}/../../../../../components/video
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../middleware/EmbeddedWizard
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
@@ -159,6 +161,10 @@ include(driver_pxp_MIMXRT1062)
 include(driver_lpi2c_MIMXRT1062)
 
 include(driver_ft5406_rt_MIMXRT1062)
+
+include(driver_gt911_MIMXRT1062)
+
+include(driver_video-common_MIMXRT1062)
 
 include(utility_debug_console_lite_MIMXRT1062)
 

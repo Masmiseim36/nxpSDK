@@ -68,8 +68,8 @@ cs42448_config_t cs42448Config = {
     .reset        = BORAD_CodecReset,
     .master       = false,
     .i2cConfig    = {.codecI2CInstance = DEMO_CS42448_I2C_INSTANCE, .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ},
-    .format       = {.mclk_HZ = 16384000U, .sampleRate = 16000U, .bitWidth = 16U},
-    .bus          = kCS42448_BusI2S,
+    .format       = {.mclk_HZ = 16384000U, .sampleRate = 16000U, .bitWidth = 24U},
+    .bus          = kCS42448_BusTDM,
     .slaveAddress = CS42448_I2C_ADDR,
 };
 
@@ -112,7 +112,7 @@ int BOARD_CODEC_Init(void)
     CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Initial volume kept low for hearing safety. */
-    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 80);
+    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, DEMO_VOLUME);
 
     return 0;
 }

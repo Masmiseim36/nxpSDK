@@ -5,9 +5,9 @@ In this example, the RAW8 data is convert to RGB565 data, then shown in the pane
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.20.2
+- Keil MDK  5.36
+- GCC ARM Embedded  10.3.1
 - MCUXpresso  11.5.0
 
 Hardware requirements
@@ -15,12 +15,13 @@ Hardware requirements
 - Mini/micro USB cable
 - MIMXRT1060-EVKB board
 - Personal Computer
-- RK043FN02H-CT LCD board
+- RK043FN02H-CT or RK043FN66HS-CT6 LCD board
+  (RK043FN02H-CT and RK043FN66HS-CT6 are compatible)
 - MT9M114 module
 
 Board settings
 ==============
-1. Connect the RK043FN02H-CT board.
+1. Connect the RK043FN02H-CT or RK043FN66HS-CT6 to board.
 2. Connect the MT9M114 camera module.
 
 Prepare the Demo

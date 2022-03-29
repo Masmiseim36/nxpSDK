@@ -386,8 +386,8 @@
 /**
  * LWIP_DHCP==1: Enable DHCP module.
  */
-#define LWIP_DHCP                  1
-#define LWIP_NETIF_STATUS_CALLBACK 1
+#define LWIP_DHCP                      1
+#define LWIP_NETIF_EXT_STATUS_CALLBACK 1
 
 /**
  * DNS related options, revisit later to fine tune.

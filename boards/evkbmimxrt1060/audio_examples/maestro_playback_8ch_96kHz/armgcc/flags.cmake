@@ -70,8 +70,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCODEC_CS42448_ENABLE \
     -DSDK_OS_FREE_RTOS \
     -DMCUXPRESSO_SDK \
+    -O1 \
     -g \
-    -O0 \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \

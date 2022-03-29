@@ -226,7 +226,6 @@
     </debug_configurations>
     <include_paths>
       <include_path path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning" project_relative_path="source" type="c_include"/>
-      <include_path path="middleware/wifi/wifi_bt_firmware" project_relative_path="wifi/wifi_bt_firmware" type="c_include"/>
       <include_path path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning" project_relative_path="board" type="c_include"/>
       <include_path path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning/config_files" project_relative_path="freertos/config_files" type="c_include"/>
       <include_path path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning/config_files" project_relative_path="source" type="c_include"/>
@@ -303,9 +302,6 @@
     </source>
     <source path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning" project_relative_path="source" type="c_preinclude">
       <files mask="app_config.h"/>
-    </source>
-    <source path="middleware/wifi/wifi_bt_firmware" project_relative_path="wifi/wifi_bt_firmware" type="c_include">
-      <files mask="sduartIW416_wlan_bt.h"/>
     </source>
     <source path="boards/evkbmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning" project_relative_path="board" type="src">
       <files mask="sdmmc_config.c"/>

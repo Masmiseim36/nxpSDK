@@ -23,6 +23,11 @@
 #undef CONFIG_WMM
 #endif
 
+#define CONFIG_IPV6 1
+#ifdef CONFIG_IPV6
+#define CONFIG_MAX_IPV6_ADDRESSES 3
+#endif
+
 /* Logs */
 #define CONFIG_ENABLE_ERROR_LOGS   1
 #define CONFIG_ENABLE_WARNING_LOGS 1

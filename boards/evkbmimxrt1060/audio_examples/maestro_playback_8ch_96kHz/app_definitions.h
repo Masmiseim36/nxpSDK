@@ -34,6 +34,11 @@
 #define DEMO_TX_CHANNEL    (0U)
 #define DEMO_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
 
+#define DEMO_SAMPLE_RATE 96000
+#define DEMO_BIT_WIDTH   32
+#define DEMO_BYTE_WIDTH  4
+#define DEMO_CHANNEL_NUM 8
+
 #define DEMO_CS42448_I2C_INSTANCE      3
 #define DEMO_CODEC_POWER_GPIO          GPIO1
 #define DEMO_CODEC_POWER_GPIO_PIN      0

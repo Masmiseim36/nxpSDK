@@ -9,9 +9,9 @@ because these two targets spend different time to fill the frame buffer.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.20.2
+- Keil MDK  5.36
+- GCC ARM Embedded  10.3.1
 - MCUXpresso  11.5.0
 
 Hardware requirements
@@ -19,11 +19,12 @@ Hardware requirements
 - Micro USB cable
 - MIMXRT1060-EVKB board
 - Personal Computer
-- RK043FN02H-CT LCD board
+- RK043FN02H-CT or RK043FN66HS-CT6 LCD board
+  (RK043FN02H-CT and RK043FN66HS-CT6 are compatible)
 
 Board settings
 ==============
-1. Connect the RK043FN02H-CT board to J8.
+1. Connect the RK043FN02H-CT or RK043FN66HS-CT6 to board.
 
 Prepare the Demo
 ================

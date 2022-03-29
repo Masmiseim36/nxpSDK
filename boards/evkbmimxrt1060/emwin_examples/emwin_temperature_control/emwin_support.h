@@ -8,6 +8,13 @@
 #ifndef _EMWIN_SUPPORT_H_
 #define _EMWIN_SUPPORT_H_
 
+#define DEMO_PANEL_RK043FN02H  0 /* RK043FN02H-CT */
+#define DEMO_PANEL_RK043FN66HS 1 /* RK043FN66HS-CTG */
+
+#ifndef DEMO_PANEL
+#define DEMO_PANEL DEMO_PANEL_RK043FN66HS
+#endif
+
 /* Macros for the LCD controller. */
 #define APP_ELCDIF LCDIF
 
@@ -44,8 +51,6 @@
 
 #define LPI2C_MASTER_IRQ        LPI2C1_IRQn
 #define LPI2C_MASTER_IRQHandler LPI2C1_IRQHandler
-#define BOARD_TOUCH_INT_PORT    PORTA
-#define BOARD_TOUCH_INT_PIN     2
 
 #define BOARD_LCD_READABLE 1
 

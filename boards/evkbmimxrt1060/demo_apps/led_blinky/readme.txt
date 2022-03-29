@@ -7,9 +7,9 @@ The code of this demo has been prepared and updated for use with the MCUXpresso 
 
 Toolchain supported
 ===================
-- Keil MDK  5.34
-- IAR embedded Workbench  9.10.2
-- GCC ARM Embedded  10.2.1
+- Keil MDK  5.36
+- IAR embedded Workbench  9.20.2
+- GCC ARM Embedded  10.3.1
 - MCUXpresso  11.5.0
 
 Hardware requirements

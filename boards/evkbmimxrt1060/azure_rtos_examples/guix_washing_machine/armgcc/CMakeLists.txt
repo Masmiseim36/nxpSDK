@@ -45,6 +45,7 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../display_support.h"
 "${ProjDirPath}/../tx_user.h"
 "${ProjDirPath}/../gx_user.h"
 "${ProjDirPath}/../pin_mux.c"
@@ -77,6 +78,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/azure-rtos
     ${ProjDirPath}/../../../../../components/ft5406_rt
+    ${ProjDirPath}/../../../../../components/gt911
+    ${ProjDirPath}/../../../../../components/video/display/dc/elcdif
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
@@ -86,6 +89,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../components/video/display/dc
+    ${ProjDirPath}/../../../../../components/video
 )
 
 # include modules
@@ -93,9 +98,13 @@ include(middleware_azure_rtos_gx_MIMXRT1062)
 
 include(driver_ft5406_rt_MIMXRT1062)
 
-include(driver_elcdif_MIMXRT1062)
+include(driver_gt911_MIMXRT1062)
+
+include(driver_dc-fb-elcdif_MIMXRT1062)
 
 include(driver_lpi2c_MIMXRT1062)
+
+include(driver_pxp_MIMXRT1062)
 
 include(driver_clock_MIMXRT1062)
 
@@ -132,6 +141,12 @@ include(middleware_azure_rtos_tx_MIMXRT1062)
 include(middleware_azure_rtos_tx_template_MIMXRT1062)
 
 include(CMSIS_Include_core_cm_MIMXRT1062)
+
+include(driver_dc-fb-common_MIMXRT1062)
+
+include(driver_video-common_MIMXRT1062)
+
+include(driver_elcdif_MIMXRT1062)
 
 include(utilities_misc_utilities_MIMXRT1062)
 

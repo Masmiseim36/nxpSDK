@@ -863,7 +863,7 @@ int main(void)
         /* Poll touch controller for update */
         if (BOARD_Touch_Poll())
         {
-            GUI_Delay(5);
+            GUI_Delay(25);
         }
     }
 #else

@@ -13,8 +13,8 @@ Note:
 Toolchain supported
 ===================
 - MCUXpresso  11.5.0
-- IAR embedded Workbench  9.10.2
-- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.20.2
+- GCC ARM Embedded  10.3.1
 
 Hardware requirements
 =====================

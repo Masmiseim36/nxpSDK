@@ -169,6 +169,10 @@
     <source path="boards/evkbmimxrt1060/wifi_examples/wifi_setup/mdk/linker" project_relative_path="evkbmimxrt1060/wifi_examples/common/linker" type="linker" toolchain="mdk">
       <files mask="MIMXRT1062xxxxx_flexspi_nor.scf"/>
     </source>
+    <source path="boards/evkbmimxrt1060/wifi_examples/wifi_setup/linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
+      <files mask="data.ldt"/>
+      <files mask="main_text.ldt"/>
+    </source>
     <source path="boards/evkbmimxrt1060/wifi_examples/wifi_setup" project_relative_path="source" type="src">
       <files mask="wifi_setup.c"/>
     </source>

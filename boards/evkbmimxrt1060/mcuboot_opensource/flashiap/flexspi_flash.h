@@ -13,7 +13,8 @@
 
 #define CUSTOM_LUT_LENGTH 64
 
-#if defined(ISSI_AT25SFxxxA) || defined(ISSI_IS25LPxxxA) || defined(ISSI_IS25WPxxxA) || defined(WINBOND_W25QxxxJV)
+#if defined(ISSI_AT25SFxxxA) || defined(ISSI_IS25LPxxxA) || defined(ISSI_IS25WPxxxA) || defined(WINBOND_W25QxxxJV) || \
+    defined(Macronix_MX25U51245G)
 #define NOR_CMD_LUT_SEQ_IDX_READ_FAST_QUAD   0
 #define NOR_CMD_LUT_SEQ_IDX_WRITEENABLE      2
 #define NOR_CMD_LUT_SEQ_IDX_ERASESECTOR      3
@@ -68,6 +69,10 @@
 #define FLASH_CONFIG_SECTORSIZE 4u * 1024u
 
 #elif defined(Macronix_MX25UM51345G_2nd)
+#define FLASH_CONFIG_PAGESIZE   256
+#define FLASH_CONFIG_SECTORSIZE 4u * 1024u
+
+#elif defined(Macronix_MX25U51245G)
 #define FLASH_CONFIG_PAGESIZE   256
 #define FLASH_CONFIG_SECTORSIZE 4u * 1024u
 

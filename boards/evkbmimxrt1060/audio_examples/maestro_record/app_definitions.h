@@ -24,10 +24,8 @@
 #endif
 #define DEMO_SAI           SAI1
 #define DEMO_SAI_CHANNEL   (0)
-#define DEMO_SAI_BITWIDTH  (kSAI_WordWidth16bits)
 #define DEMO_SAI_IRQ       SAI1_IRQn
 #define SAI_UserIRQHandler SAI1_IRQHandler
-#define DEMO_CHANNEL_NUM   2
 
 /* IRQ */
 #define DEMO_SAI_TX_IRQ SAI1_IRQn
@@ -42,6 +40,10 @@
 #define DEMO_SAI_RX_SOURCE kDmaRequestMuxSai1Rx
 
 #if DEMO_CODEC_CS42448
+#define DEMO_SAI_BITWIDTH              (kSAI_WordWidth32bits)
+#define DEMO_VOLUME                    (100)
+#define DEMO_CHANNEL_NUM               8
+#define DEMO_CODEC_CHANNEL             0xFF
 #define DEMO_CS42448_I2C_INSTANCE      3
 #define DEMO_CODEC_POWER_GPIO          GPIO1
 #define DEMO_CODEC_POWER_GPIO_PIN      0
@@ -50,7 +52,11 @@
 #define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (47U)
 #define DEMO_SAI_MASTER_SLAVE          kSAI_Master
 #else
+#define DEMO_VOLUME                    (75)
 #define DEMO_WM8960_I2C_INSTANCE       1
+#define DEMO_CHANNEL_NUM               2
+#define DEMO_CODEC_CHANNEL             kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight
+#define DEMO_SAI_BITWIDTH              (kSAI_WordWidth16bits)
 #define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (63U)
 #define DEMO_SAI_MASTER_SLAVE          kSAI_Master
 #endif

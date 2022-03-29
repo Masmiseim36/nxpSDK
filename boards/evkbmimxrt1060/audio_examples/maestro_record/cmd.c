@@ -37,7 +37,9 @@
 /*${prototype:start}*/
 static shell_status_t shellEcho(shell_handle_t shellHandle, int32_t argc, char **argv);
 static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char **argv);
+#ifdef OPUS_ENCODE
 static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, char **argv);
+#endif
 /*${prototype:end}*/
 
 /*******************************************************************************
@@ -72,11 +74,13 @@ SHELL_COMMAND_DEFINE(record_mic,
                      shellRecMIC,
                      SHELL_IGNORE_PARAMETER_COUNT);
 
+#ifdef OPUS_ENCODE
 SHELL_COMMAND_DEFINE(opus_encode,
                      "\r\n\"opus_encode\": Initializes the streamer with the Opus memory-to-memory pipeline and\r\n"
                      "encodes a hardcoded buffer.\r\n",
                      shellOpusEncode,
                      0);
+#endif
 
 SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
 static shell_handle_t s_shellHandle;
@@ -186,6 +190,7 @@ error:
     return kStatus_SHELL_Success;
 }
 
+#ifdef OPUS_ENCODE
 static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
     void *inBuf                   = NULL;
@@ -260,6 +265,7 @@ error:
     osa_time_delay(100);
     return kStatus_SHELL_Success;
 }
+#endif
 
 void shellCmd(void)
 {
@@ -270,7 +276,9 @@ void shellCmd(void)
     /* Add new command to commands list */
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(version));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(record_mic));
+#ifdef OPUS_ENCODE
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(opus_encode));
+#endif
 
 #if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
     while (1)

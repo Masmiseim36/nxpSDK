@@ -31,6 +31,7 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../opusmem2mem_file.h"
 "${ProjDirPath}/../app_streamer.c"
 "${ProjDirPath}/../app_streamer.h"
 "${ProjDirPath}/../cmd.c"
@@ -41,7 +42,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../ffconf.h"
-"${ProjDirPath}/../opusmem2mem_file.h"
 "${ProjDirPath}/../streamer_pcm.c"
 "${ProjDirPath}/../streamer_pcm_app.h"
 "${ProjDirPath}/../startup_armgcc.c"

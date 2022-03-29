@@ -75,13 +75,12 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>PLATFORM_RT1060</value>
           <value>VIT_PROC</value>
-          <value>ALGORITHM_CS=1</value>
-          <value>ALGORITHM_XO=1</value>
           <value>CPU_MIMXRT1062DVL6A</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>OPUS_ENCODE</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
           <value>CODEC_WM8960_ENABLE</value>
@@ -89,8 +88,6 @@
           <value>SD_ENABLED</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>PRINTF_FLOAT_ENABLE=1</value>
-          <value>MP3_DECODER=1</value>
-          <value>OPUS_DECODER=1</value>
           <value>SAI_XFER_QUEUE_SIZE=3</value>
           <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
@@ -189,18 +186,18 @@
     <source path="boards/evkbmimxrt1060/audio_examples/maestro_record" project_relative_path="source" type="c_include" toolchain="mcuxpresso">
       <files mask="vit_proc.h"/>
     </source>
-    <source path="boards/evkbmimxrt1060/audio_examples/maestro_record" project_relative_path="source" type="src">
-      <files mask="app_streamer.c"/>
-      <files mask="cmd.c"/>
-      <files mask="main.c"/>
-    </source>
     <source path="boards/evkbmimxrt1060/audio_examples/maestro_record" project_relative_path="source" type="c_include">
+      <files mask="opusmem2mem_file.h"/>
       <files mask="app_streamer.h"/>
       <files mask="cmd.h"/>
       <files mask="main.h"/>
       <files mask="FreeRTOSConfig.h"/>
       <files mask="ffconf.h"/>
-      <files mask="opusmem2mem_file.h"/>
+    </source>
+    <source path="boards/evkbmimxrt1060/audio_examples/maestro_record" project_relative_path="source" type="src">
+      <files mask="app_streamer.c"/>
+      <files mask="cmd.c"/>
+      <files mask="main.c"/>
     </source>
     <source path="boards/evkbmimxrt1060/audio_examples/maestro_record" project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>

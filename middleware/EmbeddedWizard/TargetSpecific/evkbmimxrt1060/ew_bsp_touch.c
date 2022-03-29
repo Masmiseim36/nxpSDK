@@ -28,7 +28,11 @@
 *******************************************************************************/
 
 #include "fsl_lpi2c.h"
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#include "fsl_gt911.h"
+#else
 #include "fsl_ft5406_rt.h"
+#endif
 
 #include "ewconfig.h"
 #include "ewrte.h"
@@ -37,8 +41,15 @@
 
 #include "ew_bsp_clock.h"
 #include "ew_bsp_touch.h"
+#include "board.h"
+#include "fsl_video_common.h"
 
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#define NO_OF_FINGERS                   GT911_MAX_TOUCHES
+#else
 #define NO_OF_FINGERS                   FT5406_RT_MAX_TOUCHES
+#endif
+
 #define DELTA_TOUCH                     16
 #define DELTA_TIME                      500
 
@@ -57,7 +68,6 @@ typedef struct
   unsigned char TouchId;   /* constant touch ID provided by touch controller */
   unsigned char State;     /* current state within a touch cycle */
 } XTouchData;
-
 
 static int           TouchAreaWidth  = 0;
 static int           TouchAreaHeight = 0;
@@ -82,10 +92,77 @@ static XTouchData    TouchData[ NO_OF_FINGERS ];
 #define BOARD_TOUCH_I2C_CLOCK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 #define BOARD_TOUCH_I2C_BAUDRATE 100000U
 
-/* Touch driver handle. */
-static ft5406_rt_handle_t touchHandle;
-static touch_point_t      touchArray[ FT5406_RT_MAX_TOUCHES ];
+static void BOARD_PullTouchResetPin(bool pullUp);
+static void BOARD_ConfigTouchIntPin(gt911_int_pin_mode_t mode);
 
+/* Touch driver handle. */
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+static gt911_handle_t s_touchHandle;
+static const gt911_config_t s_touchConfig = {
+    .I2C_SendFunc     = BOARD_Touch_I2C_Send,
+    .I2C_ReceiveFunc  = BOARD_Touch_I2C_Receive,
+    .pullResetPinFunc = BOARD_PullTouchResetPin,
+    .intPinFunc       = BOARD_ConfigTouchIntPin,
+    .timeDelayMsFunc  = VIDEO_DelayMs,
+    .touchPointNum    = 1,
+    .i2cAddrMode      = kGT911_I2cAddrMode0,
+    .intTrigMode      = kGT911_IntRisingEdge,
+};
+
+#else
+static ft5406_rt_handle_t touchHandle;
+#endif
+static touch_point_t      touchArray[ NO_OF_FINGERS ];
+
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+/*******************************************************************************
+* FUNCTION:
+*   BOARD_PullTouchResetPin
+*
+* DESCRIPTION:
+*   Controls touch reset pin.
+*
+* ARGUMENTS:
+*   pullUp  - set state of reset pin.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+
+static void BOARD_PullTouchResetPin(bool pullUp)
+{
+    if (pullUp)
+    {
+        GPIO_PinWrite(BOARD_TOUCH_RST_GPIO, BOARD_TOUCH_RST_PIN, 1);
+    }
+    else
+    {
+        GPIO_PinWrite(BOARD_TOUCH_RST_GPIO, BOARD_TOUCH_RST_PIN, 0);
+    }
+}
+
+static void BOARD_ConfigTouchIntPin(gt911_int_pin_mode_t mode)
+{
+    if (mode == kGT911_IntPinInput)
+    {
+        BOARD_TOUCH_INT_GPIO->GDIR &= ~(1UL << BOARD_TOUCH_INT_PIN);
+    }
+    else
+    {
+        if (mode == kGT911_IntPinPullDown)
+        {
+            GPIO_PinWrite(BOARD_TOUCH_INT_GPIO, BOARD_TOUCH_INT_PIN, 0);
+        }
+        else
+        {
+            GPIO_PinWrite(BOARD_TOUCH_INT_GPIO, BOARD_TOUCH_INT_PIN, 1);
+        }
+
+        BOARD_TOUCH_INT_GPIO->GDIR |= (1UL << BOARD_TOUCH_INT_PIN);
+    }
+}
+#endif
 
 /*******************************************************************************
 * FUNCTION:
@@ -123,8 +200,12 @@ void EwBspTouchInit( int aWidth, int aHeight )
   /* Initialize the LPI2C master peripheral */
   LPI2C_MasterInit(BOARD_TOUCH_I2C, &masterConfig, BOARD_TOUCH_I2C_CLOCK_FREQ);
 
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+  GT911_Init(&s_touchHandle, &s_touchConfig);
+#else
   /* Initialize the touch handle. */
   FT5406_RT_Init(&touchHandle, BOARD_TOUCH_I2C);
+#endif
 
   TouchAreaWidth  = aWidth;
   TouchAreaHeight = aHeight;
@@ -175,7 +256,11 @@ void EwBspTouchDone( void )
 int EwBspTouchGetEvents( XTouchEvent** aTouchEvent )
 {
   status_t      status;
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+  uint8_t       touchCount;
+#else
   int           touchCount;
+#endif
   int           x, y;
   int           t;
   int           f;
@@ -187,14 +272,27 @@ int EwBspTouchGetEvents( XTouchEvent** aTouchEvent )
 
   /* access touch driver to receive current touch status and position */
   CPU_LOAD_SET_IDLE();
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+  touchCount = NO_OF_FINGERS;
+  status = GT911_GetMultiTouch(&s_touchHandle, &touchCount, touchArray);
+#else
   status = FT5406_RT_GetMultiTouch( &touchHandle, &touchCount, touchArray );
+#endif
   CPU_LOAD_SET_ACTIVE();
 
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+  if (!(( status == kStatus_Success ) || ( status == kStatus_TOUCHPANEL_NotTouched )))
+  {
+    EwPrint( "EwBspTouchGetEvents: error reading touch controller\n" );
+    return 0;
+  }
+#else
   if ( status != kStatus_Success )
   {
     EwPrint( "EwBspTouchGetEvents: error reading touch controller\n" );
     return 0;
   }
+#endif
 
   /* all fingers have the state unidentified */
   memset( identified, 0, sizeof( identified ));
@@ -205,7 +303,35 @@ int EwBspTouchGetEvents( XTouchEvent** aTouchEvent )
   /* iterate through all touch events from the hardware */
   for ( t = 0; t < touchCount; t++ )
   {
-    /* check for valid coordinates - coordinates provided swapped by FT5406 */
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+		/* check for valid coordinates - coordinates provided swapped by FT5406 */
+	    if (( touchArray[ t ].x > TouchAreaWidth ) || ( touchArray[ t ].y > TouchAreaHeight ))
+	      continue;
+
+	    /* apply screen rotation and swap coordinates provided by GT911 touch driver */
+	    #if ( EW_SURFACE_ROTATION == 90 )
+
+	      x = touchArray[ t ].y;
+	      y = TouchAreaWidth  - touchArray[ t ].x;
+
+	    #elif ( EW_SURFACE_ROTATION == 270 )
+
+	      x = TouchAreaHeight - touchArray[ t ].y;
+	      y = touchArray[ t ].x;
+
+	    #elif ( EW_SURFACE_ROTATION == 180 )
+
+	      x = TouchAreaWidth  - touchArray[ t ].x;
+	      y = TouchAreaHeight - touchArray[ t ].y;
+
+	    #else
+
+	      x = touchArray[ t ].x;
+	      y = touchArray[ t ].y;
+
+	    #endif
+#else
+	/* check for valid coordinates - coordinates provided swapped by FT5406 */
     if (( touchArray[ t ].TOUCH_Y > TouchAreaWidth ) || ( touchArray[ t ].TOUCH_X > TouchAreaHeight ))
       continue;
 
@@ -231,6 +357,7 @@ int EwBspTouchGetEvents( XTouchEvent** aTouchEvent )
       y = touchArray[ t ].TOUCH_X;
 
     #endif
+#endif
 
     /* Important note: The FT5406 driver does not provde down/up status information - the current
        phase within the touch cycle has to be determined by the software */
@@ -240,12 +367,19 @@ int EwBspTouchGetEvents( XTouchEvent** aTouchEvent )
       touch = &TouchData[ f ];
 
       /* check if the finger is already active */
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+      if (( touch->State != EW_BSP_TOUCH_IDLE ) && ( touch->TouchId == touchArray[ t ].touchID ))
+      {
+        finger = f;
+        break;
+      }
+#else
       if (( touch->State != EW_BSP_TOUCH_IDLE ) && ( touch->TouchId == touchArray[ t ].TOUCH_ID ))
       {
         finger = f;
         break;
       }
-
+#endif
       /* check if the finger was used within the recent time span and if the touch position is in the vicinity */
       if (( touch->State == EW_BSP_TOUCH_IDLE ) && ( ticks < touch->Ticks + DELTA_TIME )
         && ( x > touch->XPos - DELTA_TOUCH ) && ( x < touch->XPos + DELTA_TOUCH )
@@ -278,7 +412,11 @@ int EwBspTouchGetEvents( XTouchEvent** aTouchEvent )
       /* store current touch parameter */
       touch->XPos    = x;
       touch->YPos    = y;
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+      touch->TouchId = touchArray[ t ].touchID;
+#else
       touch->TouchId = touchArray[ t ].TOUCH_ID;
+#endif
       touch->Ticks   = ticks;
     }
   }

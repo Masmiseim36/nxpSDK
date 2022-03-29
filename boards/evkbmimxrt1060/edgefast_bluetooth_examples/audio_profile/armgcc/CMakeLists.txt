@@ -79,74 +79,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../bt_module_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_sdio.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_11ac.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_11ac.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_11d.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_11h.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_11h.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_11n.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_11n.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_11n_aggr.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_aggr.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_11n_rxreorder.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_11n_rxreorder.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_api.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_cfp.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_cmdevt.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_decl.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_fw.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_glue.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_ieee.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_init.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_init.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_ioctl.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_join.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_join.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_main.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_meas.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_misc.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_remap_mem_operations.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_scan.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_sdio.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_shim.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_sta_cmd.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_sta_cmdresp.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_sta_event.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_sta_ioctl.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_sta_rx.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_txrx.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_uap.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_uap_cmdevent.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_uap_ioctl.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_util.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/mlan_wmm.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl/mlan_wmm.h"
-"${ProjDirPath}/../../../../../middleware/wifi/port/os/os.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi.c"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wifidriver/wifi.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi_common.h"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wifidriver/wifi_events.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi_pwrmgr.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi-debug.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi-debug.h"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wifidriver/wifi-decl.h"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wifidriver/mlan_sdio_api.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi-internal.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi-mem.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi-sdio.c"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi-sdio.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifidriver/wifi-uap.c"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wlcmgr/wlan.h"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wlcmgr/wlan_11d.h"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/port/os/wm_os.h"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wm_utils.h"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wmerrno.h"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wmlog.h"
-"${ProjDirPath}/../../../../../middleware/wifi/incl/wmtypes.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware/sd8801_wlan.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/lwipopts.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/lwippools.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/wifi_config.h"
@@ -454,13 +386,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../../..
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/examples/audio_profile
     ${ProjDirPath}/../config_files
-    ${ProjDirPath}/../../../../../middleware/wifi/incl/wifidriver
-    ${ProjDirPath}/../../../../../middleware/wifi/wifidriver/incl
-    ${ProjDirPath}/../../../../../middleware/wifi/wifidriver
-    ${ProjDirPath}/../../../../../middleware/wifi/incl/wlcmgr
-    ${ProjDirPath}/../../../../../middleware/wifi/incl/port/os
-    ${ProjDirPath}/../../../../../middleware/wifi/incl
-    ${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind
@@ -538,7 +463,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../components/internal_flash
     ${ProjDirPath}/../../../../../middleware/wireless

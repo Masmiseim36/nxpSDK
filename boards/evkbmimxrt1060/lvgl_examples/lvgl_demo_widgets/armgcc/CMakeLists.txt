@@ -64,6 +64,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../components/ft5406_rt
+    ${ProjDirPath}/../../../../../components/gt911
+    ${ProjDirPath}/../../../../../components/video
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/lvgl
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
@@ -86,6 +88,10 @@ include(driver_ft5406_rt_MIMXRT1062)
 include(driver_pxp_MIMXRT1062)
 
 include(driver_cache_armv7_m7_MIMXRT1062)
+
+include(driver_gt911_MIMXRT1062)
+
+include(driver_video-common_MIMXRT1062)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1062)
 

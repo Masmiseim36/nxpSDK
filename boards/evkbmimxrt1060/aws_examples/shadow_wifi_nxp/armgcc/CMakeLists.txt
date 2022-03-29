@@ -87,7 +87,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/wifi_bt_module

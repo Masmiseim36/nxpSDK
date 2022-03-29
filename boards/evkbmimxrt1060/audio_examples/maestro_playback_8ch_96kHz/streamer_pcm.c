@@ -72,8 +72,6 @@ void streamer_pcm_init(void)
     /* SAI init */
     SAI_Init(DEMO_SAI);
 
-    pcmHandle.isFirstTx = 1;
-
     EnableIRQ(DEMO_SAI_TX_IRQ);
 }
 
@@ -109,32 +107,31 @@ void streamer_pcm_rx_close(pcm_rtos_t *pcm)
 
 int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 {
-    pcm->saiTx.dataSize = size;
+    /* Ensure write size is a multiple of 64, otherwise EDMA will assert
+     * failure.  Round down for the last chunk of a file/stream. */
+    pcm->saiTx.dataSize = size - (size % 64);
     pcm->saiTx.data     = data;
 
-    /* Ensure write size is a multiple of 32, otherwise EDMA will assert
-     * failure.  Round down for the last chunk of a file/stream. */
-    if (size % 64)
+    DCACHE_CleanByRange((uint32_t)pcm->saiTx.data, pcm->saiTx.dataSize);
+
+    if (pcm->isFirstTx)
     {
-        pcm->saiTx.dataSize = size - (size % 64);
+        pcm->isFirstTx = 0;
+    }
+    else
+    {
+        /* Wait for the previous transfer to finish */
+        if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
+            return -1;
     }
 
-    /* Start transfer */
-    DCACHE_CleanByRange((uint32_t)pcm->saiTx.data, pcm->saiTx.dataSize);
-    if (SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx) == kStatus_SAI_QueueFull)
-    {
-        /* Wait for transfer to finish */
-        if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
-        {
-            return -1;
-        }
-        SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx);
-    }
+    /* Start the consecutive transfer */
+    SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx);
 
     return 0;
 }
 
-int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint32_t size)
+int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 {
     return 0;
 }
@@ -208,6 +205,7 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     sai_transceiver_t saiConfig;
     uint32_t masterClockHz = 0U;
 
+    pcm->isFirstTx       = transfer ? 1U : pcm->isFirstTx;
     pcm->sample_rate     = sample_rate;
     pcm->bit_width       = bit_width;
     pcm->num_channels    = num_channels;
@@ -225,7 +223,8 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
 
     if (pcm->num_channels > 2)
     {
-        SAI_GetTDMConfig(&saiConfig, kSAI_FrameSyncLenOneBitClk, kSAI_WordWidth32bits, 8, kSAI_Channel0Mask);
+        SAI_GetTDMConfig(&saiConfig, kSAI_FrameSyncLenOneBitClk, kSAI_WordWidth32bits, DEMO_CHANNEL_NUM,
+                         kSAI_Channel0Mask);
         saiConfig.frameSync.frameSyncEarly = true;
     }
     else

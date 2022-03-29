@@ -35,13 +35,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
 "${ProjDirPath}/../config_files/core_http_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
 "${ProjDirPath}/../config_files/iot_config.h"
 "${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
@@ -66,8 +66,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../..
     ${ProjDirPath}/../config_files
+    ${ProjDirPath}/../../..
     ${ProjDirPath}/..
     ${ProjDirPath}/../../common
 )
@@ -88,7 +88,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/wifi_bt_module

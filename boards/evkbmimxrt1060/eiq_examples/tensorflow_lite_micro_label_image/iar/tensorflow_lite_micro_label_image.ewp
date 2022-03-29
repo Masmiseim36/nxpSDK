@@ -2073,7 +2073,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/examples/common/model/output_postproc.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/model_mobilenet_ops_micro.cpp</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/examples/model_all_ops_micro.cpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/examples/model.cpp</name>
@@ -2350,6 +2350,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/LICENSE</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/NOTICE</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/ChangeLogKSDK.txt</name>

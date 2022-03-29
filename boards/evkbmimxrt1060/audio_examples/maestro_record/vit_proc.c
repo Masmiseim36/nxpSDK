@@ -9,13 +9,36 @@
 #include <string.h>
 #include <math.h>
 
+#include "app_definitions.h"
 #include "fsl_debug_console.h"
 #include "osa_memory.h"
 
-#define NUMBER_OF_CHANNELS     _1CHAN
-#define MODEL_LOCATION         VIT_MODEL_IN_ROM
-#define VIT_OPERATING_MODE     VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+#include "vit_proc.h"
+#include "VIT_Model_en.h"
+#include "VIT_Model_cn.h"
+#include "VIT.h"
+#include "PL_platformTypes_CortexM7.h"
+
+#if (defined(DEMO_CODEC_CS42448) && (DEMO_CODEC_CS42448 > 0))
+#define NUMBER_OF_CHANNELS 2
+#define BYTE_DEPTH         4
+#else
+#define NUMBER_OF_CHANNELS 1
+#define BYTE_DEPTH         2
+#endif
+
+#define MODEL_LOCATION VIT_MODEL_IN_ROM
+#if (NUMBER_OF_CHANNELS == 1)
+#define VIT_OPERATING_MODE VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+#else
+#define VIT_OPERATING_MODE VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE | VIT_AFE_ENABLE
+#endif
+
+#if (NUMBER_OF_CHANNELS == 1)
 #define VIT_MIC1_MIC2_DISTANCE 0
+#else
+#define VIT_MIC1_MIC2_DISTANCE 65
+#endif
 #define VIT_MIC1_MIC3_DISTANCE 0
 
 #ifdef PLATFORM_RT1060
@@ -32,12 +55,6 @@
 
 #endif
 
-#include "vit_proc.h"
-#include "VIT_Model_en.h"
-#include "VIT_Model_cn.h"
-#include "VIT.h"
-#include "PL_platformTypes_CortexM7.h"
-
 #define MEMORY_ALIGNMENT 8 // in bytes
 
 static VIT_Handle_t VITHandle = PL_NULL;      // VIT handle pointer
@@ -48,6 +65,9 @@ static PL_BOOL InitPhase_Error        = PL_FALSE;
 static VIT_DataIn_st VIT_InputBuffers = {PL_NULL, PL_NULL,
                                          PL_NULL}; // Resetting Input Buffer addresses provided to VIT_process() API
 static PL_INT8 *pMemory[PL_NR_MEMORY_REGIONS];
+#if DEMO_CODEC_CS42448
+static PL_INT16 DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME * DEMO_CHANNEL_NUM];
+#endif
 
 VIT_ReturnStatus_en VIT_ModelInfo(void)
 {
@@ -257,11 +277,14 @@ int VIT_Execute(void *arg, void *inputBuffer, int size)
     VIT_VoiceCommand_st VoiceCommand;                               // Voice Command id
     VIT_DetectionStatus_en VIT_DetectionResults = VIT_NO_DETECTION; // VIT detection result
 
-    if (size != VIT_SAMPLES_PER_FRAME)
+    if (size != VIT_SAMPLES_PER_FRAME * NUMBER_OF_CHANNELS * BYTE_DEPTH)
     {
         PRINTF("Input buffer format issue\r\n");
         return VIT_INVALID_FRAME_SIZE;
     }
+#if DEMO_CODEC_CS42448
+    DeInterleave(inputBuffer, DeInterleavedBuffer, VIT_SAMPLES_PER_FRAME, DEMO_CHANNEL_NUM);
+#endif
     /*
      *   VIT Process
      */
@@ -276,12 +299,15 @@ int VIT_Execute(void *arg, void *inputBuffer, int size)
         VIT_InputBuffers.pBuffer_Chan2 = PL_NULL;
         VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
     }
-    else
+#if DEMO_CODEC_CS42448
+    if (VITInstParams.NumberOfChannel == _2CHAN)
     {
-        PRINTF("Input buffer format issue\r\n"); // could be implemented if needed, see VIT_ExApp.c
-        return VIT_INVALID_PARAMETER_OUTOFRANGE;
+        VIT_InputBuffers.pBuffer_Chan1 =
+            &DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME * 4]; // PCM buffer: 16-bit - 16kHz - mono
+        VIT_InputBuffers.pBuffer_Chan2 = &DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME * 5];
+        VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
     }
-
+#endif
     VIT_Status = VIT_Process(VITHandle,
                              &VIT_InputBuffers, // temporal audio input data
                              &VIT_DetectionResults);
@@ -348,6 +374,27 @@ int VIT_Deinit(void)
         }
     }
     return VIT_Status;
+}
+
+//  de-Interleave Multichannel signal
+//   example:  A1.B1.C1.A2.B2.C2.A3.B3.C3....An.Bn.Cn   (3 Channels case : A, B, C)
+//             will become
+//             A1.A2.A3....An.B1.B2.B3....Bn.C1.C2.C3....Cn
+
+// Simple helper function for de-interleaving Multichannel stream
+// The caller function shall ensure that all arguments are correct.
+// This function assumes the input data as 32 bit width and transforms it into 16 bit width
+void DeInterleave(const PL_INT16 *pDataInput, PL_INT16 *pDataOutput, PL_UINT16 FrameSize, PL_UINT16 ChannelNumber)
+{
+    for (PL_UINT16 ichan = 0; ichan < ChannelNumber; ichan++)
+    {
+        for (PL_UINT16 i = 0; i < FrameSize; i++)
+        {
+            /* Select the 16 MSB of the 32 input bits */
+            pDataOutput[i + (ichan * FrameSize)] = pDataInput[(i * 2 * ChannelNumber) + (ichan * 2) + 1];
+        }
+    }
+    return;
 }
 
 VIT_Initialize_T VIT_Initialize_func = VIT_Initialize;

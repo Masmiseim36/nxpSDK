@@ -32,7 +32,6 @@ include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
@@ -288,7 +287,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../config_files
-    ${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware
     ${ProjDirPath}/../aws_iot_wifi_acs_porting_layer
     ${ProjDirPath}/../aws_iot_bt_acs_porting_layer
     ${ProjDirPath}/../aws_iot_bt_acs_porting_layer/ble
@@ -359,7 +357,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../components/internal_flash
     ${ProjDirPath}/../../../../../middleware/wireless

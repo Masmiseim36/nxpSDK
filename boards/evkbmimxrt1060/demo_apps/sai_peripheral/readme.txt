@@ -7,10 +7,10 @@ The SAI Demo application demonstrates complicated digital audio playback and rec
 
 Toolchain supported
 ===================
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
+- Keil MDK  5.36
+- GCC ARM Embedded  10.3.1
 - MCUXpresso  11.5.0
-- IAR embedded Workbench  9.10.2
+- IAR embedded Workbench  9.20.2
 
 Hardware requirements
 =====================

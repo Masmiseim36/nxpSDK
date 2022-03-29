@@ -12,9 +12,9 @@ The recommend file is: https://github.com/cisco/openh264/blob/v2.1.1/res/test_ci
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.20.2
+- Keil MDK  5.36
+- GCC ARM Embedded  10.3.1
 - MCUXpresso  11.5.0
 
 Hardware requirements
@@ -24,12 +24,13 @@ Hardware requirements
 - JLink Plus
 - 5V power supply
 - Personal Computer
-- RK043FN02H-CT LCD board
+- RK043FN02H-CT or RK043FN66HS-CT6 LCD board
+  (RK043FN02H-CT and RK043FN66HS-CT6 are compatible)
 - SD card
 
 Board settings
 ==============
-1. Connect the RK043FN02H-CT board.
+1. Connect the RK043FN02H-CT or RK043FN66HS-CT6 to board.
 2. Prepare the H264 files and save in SD card.
 3. Make sure resistors R368/R347/R349/R365/R363 are removed.
 4. Insert the SDCARD into card slot.

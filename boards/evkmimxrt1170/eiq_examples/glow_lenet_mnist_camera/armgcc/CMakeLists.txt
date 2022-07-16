@@ -86,6 +86,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../components/video/display/rm68191
     ${ProjDirPath}/../../../../../components/video/display/rm68200
+    ${ProjDirPath}/../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../components/video/display
     ${ProjDirPath}/../../../../../components/video/camera/device
     ${ProjDirPath}/../../../../../components/video/camera
@@ -98,13 +99,14 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/video/display/dc
     ${ProjDirPath}/../../../../../components/video/display/dc/elcdif
     ${ProjDirPath}/../../../../../components/video/display/dc/lcdifv2
-    ${ProjDirPath}/../../../../../middleware/eiq
     ${ProjDirPath}/../../../../../CMSIS/DSP
+    ${ProjDirPath}/../../../../../middleware/eiq
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../xip
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../xmcd
 )
 
 # include modules
@@ -125,6 +127,8 @@ include(driver_mipi_dsi_split_MIMXRT1176_cm7)
 include(driver_display-rm68191_MIMXRT1176_cm7)
 
 include(driver_display-rm68200_MIMXRT1176_cm7)
+
+include(driver_display-hx8394_MIMXRT1176_cm7)
 
 include(driver_display-common_MIMXRT1176_cm7)
 
@@ -164,13 +168,13 @@ include(driver_soc_src_MIMXRT1176_cm7)
 
 include(driver_soc_mipi_csi2rx_MIMXRT1176_cm7)
 
+include(CMSIS_DSP_Source_MIMXRT1176_cm7)
+
 include(middleware_eiq_worker_MIMXRT1176_cm7)
 
 include(middleware_eiq_worker_video_MIMXRT1176_cm7)
 
 include(middleware_eiq_gui_printf_MIMXRT1176_cm7)
-
-include(CMSIS_DSP_Library_MIMXRT1176_cm7)
 
 include(middleware_eiq_glow_MIMXRT1176_cm7)
 
@@ -206,6 +210,8 @@ include(driver_memory_MIMXRT1176_cm7)
 
 include(driver_lcdifv2_MIMXRT1176_cm7)
 
+include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
+
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
 
@@ -216,14 +222,6 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

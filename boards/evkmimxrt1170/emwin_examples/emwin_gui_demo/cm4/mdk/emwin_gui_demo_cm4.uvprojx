@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/ft5406_rt;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/ft5406_rt;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../components/silicon_id;../../../../xmcd;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M4F.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0"</Misc>
+            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M4F.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=0"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -437,6 +437,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -609,11 +619,6 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -622,6 +627,11 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
             <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
@@ -957,6 +967,11 @@
               <FileName>GUIDRV_NoOpt_1_8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_NoOpt_1_8.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_Null.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_Null.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_S1D13748.h</FileName>
@@ -1542,6 +1557,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1926,9 +1956,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=0, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/ft5406_rt;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/ft5406_rt;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68191;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/gt911;../../../../../../components/video/display/dc/elcdif;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/video/display/hx8394;../../../../../../middleware/emwin/emWin_header;../../../../../../middleware/emwin/emWin_Config;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../components/silicon_id;../../../../xmcd;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1962,7 +1992,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M4F.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0"</Misc>
+            <Misc>../../../../../../middleware/emwin/emWin_library/Keil/emWin_M4F.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=0"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2031,6 +2061,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2203,11 +2243,6 @@
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/cm4/fsl_cache.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_anatop_ai.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.h</FilePath>
@@ -2216,6 +2251,11 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_anatop_ai.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_memory.h</FilePath>
             </File>
             <File>
               <FileName>fsl_soc_mipi_csi2rx.h</FileName>
@@ -2551,6 +2591,11 @@
               <FileName>GUIDRV_NoOpt_1_8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_NoOpt_1_8.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_Null.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/emwin/emWin_header/GUIDRV_Null.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_S1D13748.h</FileName>
@@ -3136,6 +3181,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>

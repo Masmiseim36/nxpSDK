@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,6 +17,8 @@
 #include "lwip/prot/dhcp.h"
 
 #include "network_cfg.h"
+
+#include "fsl_silicon_id.h"
 /*${header:end}*/
 
 /*******************************************************************************
@@ -58,13 +60,20 @@ int initNetwork(void)
 {
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
+        .phyHandle = &phyHandle,
+#ifdef configMAC_ADDR
         .macAddress = configMAC_ADDR,
+#endif
     };
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
 #ifdef IP_USE_DHCP
+#ifndef configMAC_ADDR
+    /* Set special address for each chip. */
+    (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
+
     IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
     IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
     IP4_ADDR(&netif_gw, 0, 0, 0, 0);

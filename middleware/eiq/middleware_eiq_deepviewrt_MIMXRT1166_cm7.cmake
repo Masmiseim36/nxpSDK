@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_eiq_deepviewrt component is included.")
 
 

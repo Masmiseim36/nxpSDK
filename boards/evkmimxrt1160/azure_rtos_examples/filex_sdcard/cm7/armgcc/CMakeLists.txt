@@ -72,6 +72,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
     ${ProjDirPath}/../../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
@@ -97,6 +98,8 @@ include(middleware_sdmmc_common_MIMXRT1166_cm7)
 include(middleware_sdmmc_host_usdhc_MIMXRT1166_cm7)
 
 include(middleware_sdmmc_host_usdhc_azurertos_MIMXRT1166_cm7)
+
+include(component_igpio_adapter_MIMXRT1166_cm7)
 
 include(component_lists_MIMXRT1166_cm7)
 

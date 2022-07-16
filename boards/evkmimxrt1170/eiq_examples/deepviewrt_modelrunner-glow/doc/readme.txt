@@ -86,7 +86,7 @@ Note: DeepView RT supports only a subset of operators available in
 
 6. Release notes
 ----------------
-The library is based on DeepView RT version 2.4.36.
+The library is based on DeepView RT version 2.4.44.
 
 7. ModelRunner for GLOW Example
 ----------------

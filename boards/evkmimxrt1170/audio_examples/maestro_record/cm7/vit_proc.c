@@ -11,16 +11,20 @@
 
 #include "app_definitions.h"
 #include "fsl_debug_console.h"
-#include "osa_memory.h"
+#include "fsl_os_abstraction.h"
 
 #include "vit_proc.h"
 #include "VIT_Model_en.h"
 #include "VIT_Model_cn.h"
 #include "VIT.h"
-#include "PL_platformTypes_CortexM7.h"
+
+#define VIT_CMD_TIME_SPAN 3.0
 
 #if (defined(DEMO_CODEC_CS42448) && (DEMO_CODEC_CS42448 > 0))
 #define NUMBER_OF_CHANNELS 2
+#define BYTE_DEPTH         4
+#elif (defined(PLATFORM_RT1170) || defined(PLATFORM_RT1160))
+#define NUMBER_OF_CHANNELS 1
 #define BYTE_DEPTH         4
 #else
 #define NUMBER_OF_CHANNELS 1
@@ -41,13 +45,19 @@
 #endif
 #define VIT_MIC1_MIC3_DISTANCE 0
 
-#ifdef PLATFORM_RT1060
+#if defined(PLATFORM_RT1040)
+#define DEVICE_ID VIT_IMXRT1040
+
+#elif defined(PLATFORM_RT1050)
+#define DEVICE_ID VIT_IMXRT1050
+
+#elif defined(PLATFORM_RT1060)
 #define DEVICE_ID VIT_IMXRT1060
 
-#elif defined PLATFORM_RT1160
+#elif defined(PLATFORM_RT1160)
 #define DEVICE_ID VIT_IMXRT1160
 
-#elif defined PLATFORM_RT1170
+#elif defined(PLATFORM_RT1170)
 #define DEVICE_ID VIT_IMXRT1170
 
 #else
@@ -65,7 +75,7 @@ static PL_BOOL InitPhase_Error        = PL_FALSE;
 static VIT_DataIn_st VIT_InputBuffers = {PL_NULL, PL_NULL,
                                          PL_NULL}; // Resetting Input Buffer addresses provided to VIT_process() API
 static PL_INT8 *pMemory[PL_NR_MEMORY_REGIONS];
-#if DEMO_CODEC_CS42448
+#if DEMO_CODEC_CS42448 || PLATFORM_RT1170 || PLATFORM_RT1160
 static PL_INT16 DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME * DEMO_CHANNEL_NUM];
 #endif
 
@@ -86,7 +96,8 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
     {
         PRINTF("  Language supported: %s \r\n", Model_Info.pLanguage);
     }
-    PRINTF("  Number of Commands supported: %d \r\n", Model_Info.NbOfVoiceCmds);
+    PRINTF("  Number of WakeWords supported : %d \r\n", Model_Info.NbOfWakeWords);
+    PRINTF("  Number of Commands supported : %d \r\n", Model_Info.NbOfVoiceCmds);
 
     if (!Model_Info.WW_VoiceCmds_Strings) // Check here if Model is containing WW and CMDs strings
     {
@@ -97,10 +108,15 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
         const char *ptr;
 
         PRINTF("  VIT_Model integrating WakeWord and Voice Commands strings: YES\r\n");
+        PRINTF("  WakeWords supported : \r\n");
         ptr = Model_Info.pWakeWord;
         if (ptr != PL_NULL)
         {
-            PRINTF("  WakeWord supported: %s \r\n", ptr);
+            for (PL_UINT16 i = 0; i < Model_Info.NbOfWakeWords; i++)
+            {
+                PRINTF("   '%s' \r\n", ptr);
+                ptr += strlen(ptr) + 1; // to consider NULL char
+            }
         }
         PRINTF("  Voice commands supported: \r\n");
         ptr = Model_Info.pVoiceCmds_List;
@@ -201,7 +217,7 @@ int VIT_Initialize(void *arg)
             // reserve memory space
             // NB: VITMemoryTable.Region[PL_MEMREGION_PERSISTENT_FAST_DATA] should be allocated
             //      in the fastest memory of the platform (when possible) - this is not the case in this example.
-            pMemory[i]                            = osa_malloc(VITMemoryTable.Region[i].Size + MEMORY_ALIGNMENT);
+            pMemory[i] = OSA_MemoryAllocate(VITMemoryTable.Region[i].Size + MEMORY_ALIGNMENT);
             VITMemoryTable.Region[i].pBaseAddress = (void *)pMemory[i];
         }
     }
@@ -236,6 +252,7 @@ int VIT_Initialize(void *arg)
     VITControlParams.OperatingMode      = VIT_OPERATING_MODE;
     VITControlParams.MIC1_MIC2_Distance = VIT_MIC1_MIC2_DISTANCE;
     VITControlParams.MIC1_MIC3_Distance = VIT_MIC1_MIC3_DISTANCE;
+    VITControlParams.Command_Time_Span  = VIT_CMD_TIME_SPAN;
 
     if (!InitPhase_Error)
     {
@@ -274,7 +291,9 @@ int VIT_Initialize(void *arg)
 int VIT_Execute(void *arg, void *inputBuffer, int size)
 {
     VIT_ReturnStatus_en VIT_Status;
-    VIT_VoiceCommand_st VoiceCommand;                               // Voice Command id
+    VIT_VoiceCommand_st VoiceCommand; // Voice Command info
+    VIT_WakeWord_st WakeWord;         // Wakeword info
+
     VIT_DetectionStatus_en VIT_DetectionResults = VIT_NO_DETECTION; // VIT detection result
 
     if (size != VIT_SAMPLES_PER_FRAME * NUMBER_OF_CHANNELS * BYTE_DEPTH)
@@ -282,7 +301,7 @@ int VIT_Execute(void *arg, void *inputBuffer, int size)
         PRINTF("Input buffer format issue\r\n");
         return VIT_INVALID_FRAME_SIZE;
     }
-#if DEMO_CODEC_CS42448
+#if DEMO_CODEC_CS42448 || PLATFORM_RT1170 || PLATFORM_RT1160
     DeInterleave(inputBuffer, DeInterleavedBuffer, VIT_SAMPLES_PER_FRAME, DEMO_CHANNEL_NUM);
 #endif
     /*
@@ -295,7 +314,11 @@ int VIT_Execute(void *arg, void *inputBuffer, int size)
     // example app.
     if (VITInstParams.NumberOfChannel == _1CHAN)
     {
+#if PLATFORM_RT1170 || PLATFORM_RT1160
+        VIT_InputBuffers.pBuffer_Chan1 = DeInterleavedBuffer;
+#else
         VIT_InputBuffers.pBuffer_Chan1 = (PL_INT16 *)inputBuffer; // PCM buffer: 16-bit - 16kHz - mono
+#endif
         VIT_InputBuffers.pBuffer_Chan2 = PL_NULL;
         VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
     }
@@ -320,7 +343,25 @@ int VIT_Execute(void *arg, void *inputBuffer, int size)
 
     if (VIT_DetectionResults == VIT_WW_DETECTED)
     {
-        PRINTF(" - WakeWord detected \r\n");
+        // Retrieve id of the WakeWord detected
+        // String of the Command can also be retrieved (when WW and CMDs strings are integrated in Model)
+        VIT_Status = VIT_GetWakeWordFound(VITHandle, &WakeWord);
+        if (VIT_Status != VIT_SUCCESS)
+        {
+            PRINTF("VIT_GetWakeWordFound error : %d\r\n", VIT_Status);
+            return VIT_Status; // will stop processing VIT and go directly to MEM free
+        }
+        else
+        {
+            PRINTF(" - WakeWord detected %d", WakeWord.WW_Id);
+
+            // Retrieve WakeWord Name : OPTIONAL
+            // Check first if WakeWord string is present
+            if (WakeWord.pWW_Name != PL_NULL)
+            {
+                PRINTF(" %s\r\n", WakeWord.pWW_Name);
+            }
+        }
     }
     else if (VIT_DetectionResults == VIT_VC_DETECTED)
     {
@@ -369,7 +410,7 @@ int VIT_Deinit(void)
     {
         if (VITMemoryTable.Region[i].Size != 0)
         {
-            osa_free((PL_INT8 *)pMemory[i]);
+            OSA_MemoryFree((PL_INT8 *)pMemory[i]);
             pMemory[i] = NULL;
         }
     }

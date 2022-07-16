@@ -14,9 +14,9 @@ the configuration structure's setting in application to fit the special requirem
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.20.2
-- Keil MDK  5.36
-- MCUXpresso  11.5.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- MCUXpresso  11.6.0
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements

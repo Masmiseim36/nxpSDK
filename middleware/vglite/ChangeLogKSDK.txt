@@ -2,7 +2,28 @@
 @page middleware_log Middleware Change Log
 
 @section vglite VGLite GPU Driver
-  The current version of the VGLite GPU Driver is 3.0.13_rev2.
+  The current version of the VGLite GPU Driver is 3.0.15_rev2.
+  - version 3.0.15_rev2
+    - Fixed:
+      - (IMX-2881) Fixed memory leaks in vector path stroking implementation
+      - (IMX-2863) Fixed stroked polygons rendering issue
+      - (IMX-2842) Fixed system hang when drawing circular arcs
+      - (MGG-897) Use OS heap instead of application heap for stroked vector polygons
+      - (MGG-897) Use OS heap instead of application heap for ciecular arc rendering
+    - Changed:
+      - (IMX-2863) Allow users to configure fill colour for stroked & filled vector paths
+  - version 3.0.15_rev1
+    - Fixed:
+      - (IMX-2844) Fixed missing path descriptor initialization in "vg_lite_init_arc_path"
+      - (IMX-2837) Fixed arc drawing direction
+      - (IMX-2811) Added VGPE flush after buffer clear
+    - Changed:
+      - (IMX-2835) Optimized storage of radial gradients params to allow memory saving
+    - Added:
+      - Added dithering support for RT11xx platforms
+      - Added color keying support for RT11xx platforms
+      - (IMX-2817) Added vector path stroking
+      - (IMX-2692) Added support for HW accelerated linear gradients on RT11xx platforms
   - version 3.0.13_rev2
     - Fixed:
       - (MGG-793) Fixed clipping issue when using the RT500 blit output quality workaround

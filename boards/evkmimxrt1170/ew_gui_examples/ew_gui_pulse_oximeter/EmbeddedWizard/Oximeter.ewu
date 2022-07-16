@@ -3013,7 +3013,7 @@ class DataStorage
     if ( pure NoOfData < Data.size )
       pure NoOfData = pure NoOfData + 1;
 
-    /* calculate the slope of the last data set as average of his neighbours */
+    /* calculate the slope of the last data set as average of their neighbours */
     var int32 prelast = last - 1;
     if ( prelast < 0 )
       prelast = NoOfData - 1;

@@ -19,9 +19,9 @@ struct nn_server {
     } timing;
     struct {
         int32_t num_outputs;
-        char* name[1024];
-        char* type[1024];
-        int64_t timing[1024];
+        char* name[512];
+        char* type[512];
+        int64_t timing[512];
         int32_t index[16];
         size_t bytes[16];
         char* data[16];
@@ -29,7 +29,21 @@ struct nn_server {
         int32_t outputs_size;
         int* shape_data[16];
         int32_t shape_size[16];
+        float scale[16];
+        int32_t zero_point[16];
     } output;
+    struct {
+        char* name[16];
+        size_t bytes[16];
+        char* data[16];
+        char data_type[16][20];
+        const int32_t* shape_data[16];
+        int32_t shape_size[16];
+        int32_t inputs_size;
+        float scale[16];
+        int32_t zero_point[16];
+        char* input_data[16];
+    } input;
     uint8_t* image_upload_data;
     char* model_upload;
     int inference_count;

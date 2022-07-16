@@ -38,6 +38,17 @@
 void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
+void USB0_IRQHandler(void);
+#endif
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+void USB1_IRQHandler(void);
+#endif
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
+void USB_OTG_IRQHandler(void);
+void USB_OTG1_IRQHandler(void);
+void USB_OTG2_IRQHandler(void);
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -139,6 +150,11 @@ void USB1_IRQHandler(void)
 }
 #endif
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
+void USB_OTG_IRQHandler(void)
+{
+    USB_DeviceEhciIsrFunction(s_audioMicrophone.deviceHandle);
+}
+
 void USB_OTG1_IRQHandler(void)
 {
     USB_DeviceEhciIsrFunction(s_audioMicrophone.deviceHandle);

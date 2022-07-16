@@ -37,7 +37,7 @@
 #define EDS_DCNT_IDLE_TIMEOUT   1 /* seconds */
 
 
-
+static QueueHandle_t idle_timeout_sync;
 static void idle_timeout(void *data, UINT16 datalen);
 
 /* Idle timer */
@@ -675,7 +675,10 @@ static void bt_ready(int err)
 		PRINTF("Bluetooth init failed (err %d)\n", err);
 		return;
 	}
-
+	if (IS_ENABLED(CONFIG_BT_SETTINGS)) 
+	{
+		settings_load();
+	}
 	PRINTF("Bluetooth initialized\n");
     
     bt_conn_cb_register(&conn_callbacks);
@@ -708,7 +711,7 @@ static void bt_ready(int err)
 	PRINTF("Configuration mode: waiting connections...\n");
 }
 
-static void idle_timeout(void *data, UINT16 datalen)
+static void idle_timeout_process(void *data, UINT16 datalen)
 {
 	if (eds_slots[eds_active_slot].type == EDS_TYPE_NONE) {
 		PRINTF("Switching to Beacon mode %u.\n", eds_active_slot);
@@ -716,9 +719,28 @@ static void idle_timeout(void *data, UINT16 datalen)
 	}
 }
 
+static void idle_timeout(void *data, UINT16 datalen)
+{
+    if (NULL != idle_timeout_sync)
+    {
+        /* it is not in isr context */
+        xSemaphoreGive(idle_timeout_sync);
+    }
+    else
+    {
+        idle_timeout_process(data, datalen);
+    }
+}
+
 void beacon_task(void *pvParameters)
 {
     int err;
+
+    idle_timeout_sync = xSemaphoreCreateCounting(0xFFu, 0u);
+    if (NULL == idle_timeout_sync)
+    {
+        PRINTF("faile to create idle_timeout_sync\n");
+    }
     /* Initialize the Bluetooth Subsystem */
     err = bt_enable(bt_ready);
     if (err)
@@ -727,9 +749,22 @@ void beacon_task(void *pvParameters)
         return;
     }
 
-    while(1)
+    if (NULL != idle_timeout_sync)
     {
-        vTaskDelay(1000);
+        while(1)
+        {
+            if (pdTRUE == xSemaphoreTake(idle_timeout_sync, portMAX_DELAY))
+            {
+                idle_timeout_process(NULL, 0);
+            }
+        }
+    }
+    else
+    {
+        while(1)
+        {
+            vTaskDelay(1000);
+        }
     }
 }
 

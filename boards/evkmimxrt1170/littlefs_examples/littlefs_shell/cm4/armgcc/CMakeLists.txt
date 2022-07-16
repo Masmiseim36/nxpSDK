@@ -63,6 +63,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
@@ -108,6 +109,8 @@ include(driver_igpio_MIMXRT1176_cm4)
 include(driver_pmu_1_MIMXRT1176_cm4)
 
 include(driver_dcdc_soc_MIMXRT1176_cm4)
+
+include(component_silicon_id_MIMXRT1176_cm4)
 
 include(driver_anatop_ai_MIMXRT1176_cm4)
 

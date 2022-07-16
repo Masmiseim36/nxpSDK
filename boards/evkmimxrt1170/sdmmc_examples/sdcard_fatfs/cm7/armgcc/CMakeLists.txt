@@ -54,6 +54,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../../components/uart
@@ -61,6 +62,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
@@ -80,6 +82,8 @@ include(middleware_sdmmc_host_usdhc_interrupt_MIMXRT1176_cm7)
 include(utility_debug_console_lite_MIMXRT1176_cm7)
 
 include(utility_assert_lite_MIMXRT1176_cm7)
+
+include(component_igpio_adapter_MIMXRT1176_cm7)
 
 include(middleware_fatfs_MIMXRT1176_cm7)
 
@@ -112,6 +116,8 @@ include(driver_pmu_1_MIMXRT1176_cm7)
 include(driver_dcdc_soc_MIMXRT1176_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1176_cm7)
+
+include(component_silicon_id_MIMXRT1176_cm7)
 
 include(driver_memory_MIMXRT1176_cm7)
 

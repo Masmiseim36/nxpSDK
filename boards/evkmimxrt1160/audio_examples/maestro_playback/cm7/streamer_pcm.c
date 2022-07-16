@@ -5,14 +5,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "osa_common.h"
-
 #include "board.h"
 #include "streamer_pcm_app.h"
 #include "fsl_codec_common.h"
 #include "fsl_wm8960.h"
 #include "app_definitions.h"
-#include "osa_memory.h"
 #include "fsl_cache.h"
 
 AT_NONCACHEABLE_SECTION_INIT(static pcm_rtos_t pcmHandle) = {0};
@@ -48,8 +45,8 @@ void SAI1_IRQHandler(void)
  */
 static void saiTxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
-    pcm_rtos_t *pcm = (pcm_rtos_t *)userData;
-    BaseType_t reschedule;
+    pcm_rtos_t *pcm       = (pcm_rtos_t *)userData;
+    BaseType_t reschedule = -1;
     xSemaphoreGiveFromISR(pcm->semaphoreTX, &reschedule);
     portYIELD_FROM_ISR(reschedule);
 }

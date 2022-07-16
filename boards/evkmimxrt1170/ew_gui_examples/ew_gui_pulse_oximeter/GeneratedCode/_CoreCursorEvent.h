@@ -57,7 +57,7 @@
 
 /* The class Core::CursorEvent provides a specialized event object able to deliver 
    touch screen pressure and release events. Each time the user clicks with the 
-   mouse cursor on the screen, hits it with a pen or touches it with his finger, 
+   mouse cursor on the screen, hits it with a pen or touches it with their finger, 
    a cursor event is prepared and dispatched to the view which is willing to handle 
    it. See the method DriveCursorHitting() of the class Core::Root.
    The event contains information about the position where the user has tapped (@HittingPos 

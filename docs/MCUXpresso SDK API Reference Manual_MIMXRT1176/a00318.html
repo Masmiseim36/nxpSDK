@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: NIC301 Driver</title>
+<title>MCUXpresso SDK API Reference Manual: PGMC Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,15 +99,19 @@ $(document).ready(function(){initNavTree('a00318.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">NIC301 Driver</div>  </div>
+<div class="title">PGMC Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>The MCUXpresso SDK provides APIs for MCUXpresso SDK devices' nic operation.</p>
-<p>The NIC301 driver supports:</p>
+<p>The MCUXpresso SDK provides APIs for MCUXpresso SDK devices' src operation.</p>
+<p>The Power Gating and Memory Controller(PGMC) block is a power management component that controls power gating of power domains and memory low power mode. There are four sub modules in the PGMC block, they are:</p>
 <ul>
-<li>Set IB configuration</li>
-<li>Get IB current configuration </li>
+<li>Basic Power Controller(BPC): To control power domains with simple isolation and power switch;</li>
+<li>CPU Power Controller(CPC): To control CPU platform with complex power domain and sequence requirement;</li>
+<li>PMIC Power Controller(PPC): To control PMIC standby mode outside of the chip;</li>
+<li>Memory Interface(MIF): Designed for dedicated technology of memory;</li>
 </ul>
+<p>For the BPC sub module, the APIs in "Basic Power Controller Related Interfaces" function group are provided. For the CPC sub module, the APIs in "CPU Power Controller Related Interfaces" function group are provided. For the PPC sub module, the APIs in "PMIC Power Related Interfaces" function group are provided. For the MIF sub module, the APIs in "MIF Module
+Related APIs" are provided. </p>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->

@@ -61,6 +61,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers
     ${ProjDirPath}/../../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../../middleware/fatfs
+    ${ProjDirPath}/../../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities
@@ -92,6 +93,8 @@ include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1166_cm7)
 include(middleware_fatfs_MIMXRT1166_cm7)
 
 include(middleware_fatfs_sd_MIMXRT1166_cm7)
+
+include(component_igpio_adapter_MIMXRT1166_cm7)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1166_cm7)
 
@@ -127,7 +130,7 @@ include(driver_igpio_MIMXRT1166_cm7)
 
 include(driver_xip_device_MIMXRT1166_cm7)
 
-include(driver_xip_board_MIMXRT1166_cm7)
+include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm7)
 
 include(middleware_usb_host_stack_MIMXRT1166_cm7)
 

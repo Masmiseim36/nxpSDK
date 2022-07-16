@@ -82,6 +82,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/video/camera/device/ov5640
     ${ProjDirPath}/../../../../../components/video/display/rm68191
     ${ProjDirPath}/../../../../../components/video/display/rm68200
+    ${ProjDirPath}/../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../components/video/camera
     ${ProjDirPath}/../../../../../components/video/camera/receiver/csi
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/drivers
@@ -100,6 +101,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../xmcd
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis
@@ -117,6 +119,8 @@ include(driver_camera-device-ov5640_MIMXRT1176_cm7)
 include(driver_display-rm68191_MIMXRT1176_cm7)
 
 include(driver_display-rm68200_MIMXRT1176_cm7)
+
+include(driver_display-hx8394_MIMXRT1176_cm7)
 
 include(driver_camera-common_MIMXRT1176_cm7)
 
@@ -189,6 +193,8 @@ include(driver_xip_device_MIMXRT1176_cm7)
 include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT1176_cm7)
+
+include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 

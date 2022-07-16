@@ -75,19 +75,25 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../middleware/maestro
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../middleware/EAP
+    ${ProjDirPath}/../../../../../../middleware/maestro/mcu-audio/opus
+    ${ProjDirPath}/../../../../../../middleware/maestro/mcu-audio/opusfile
+    ${ProjDirPath}/../../../../../../middleware/maestro/mcu-audio/ogg
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
+    ${ProjDirPath}/../../../../../../middleware/maestro/streamer
 )
 
 # include modules
@@ -125,6 +131,8 @@ include(driver_cache_armv7_m7_MIMXRT1166_cm7)
 
 include(driver_flexram_MIMXRT1166_cm7)
 
+include(component_igpio_adapter_MIMXRT1166_cm7)
+
 include(middleware_freertos-kernel_heap_4_MIMXRT1166_cm7)
 
 include(middleware_maestro_framework_MIMXRT1166_cm7)
@@ -138,6 +146,12 @@ include(middleware_fatfs_sd_MIMXRT1166_cm7)
 include(middleware_eap_MIMXRT1166_cm7)
 
 include(middleware_eap_arm_lib_MIMXRT1166_cm7)
+
+include(middleware_maestro_framework_opus_MIMXRT1166_cm7)
+
+include(middleware_maestro_framework_opusfile_MIMXRT1166_cm7)
+
+include(middleware_maestro_framework_ogg_MIMXRT1166_cm7)
 
 include(driver_clock_MIMXRT1166_cm7)
 
@@ -165,11 +179,13 @@ include(driver_igpio_MIMXRT1166_cm7)
 
 include(driver_xip_device_MIMXRT1166_cm7)
 
-include(driver_xip_board_MIMXRT1166_cm7)
+include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm7)
 
 include(driver_pmu_1_MIMXRT1166_cm7)
 
 include(driver_dcdc_soc_MIMXRT1166_cm7)
+
+include(component_silicon_id_MIMXRT1166_cm7)
 
 include(driver_anatop_ai_MIMXRT1166_cm7)
 
@@ -191,6 +207,8 @@ include(driver_soc_flexram_allocate_MIMXRT1166_cm7)
 
 include(middleware_maestro_framework_doc_MIMXRT1166_cm7)
 
+include(middleware_maestro_framework_streamer_MIMXRT1166_cm7)
+
 include(middleware_eap16_header_MIMXRT1166_cm7)
 
 include(utilities_misc_utilities_MIMXRT1166_cm7)
@@ -209,31 +227,7 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_streamer.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_cci.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_utils.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmp3.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libopus.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libogg.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libsrc48.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
@@ -245,31 +239,7 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_streamer.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_cci.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_utils.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmp3.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libopus.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libogg.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libsrc48.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)

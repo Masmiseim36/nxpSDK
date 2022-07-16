@@ -89,6 +89,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../xmcd
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis
@@ -119,7 +120,7 @@ include(utility_assert_lite_MIMXRT1176_cm7)
 
 include(middleware_eiq_worker_audio_MIMXRT1176_cm7)
 
-include(CMSIS_DSP_Library_MIMXRT1176_cm7)
+include(CMSIS_DSP_Source_MIMXRT1176_cm7)
 
 include(middleware_eiq_tensorflow_lite_micro_MIMXRT1176_cm7)
 
@@ -150,6 +151,8 @@ include(driver_xip_device_MIMXRT1176_cm7)
 include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(middleware_eiq_tensorflow_lite_micro_cmsis_nn_MIMXRT1176_cm7)
+
+include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
@@ -183,14 +186,6 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

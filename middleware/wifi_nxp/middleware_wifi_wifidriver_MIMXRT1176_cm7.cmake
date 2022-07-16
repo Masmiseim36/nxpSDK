@@ -1,8 +1,9 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_wifi_wifidriver component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_11ac.c
+    ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_11ax.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_11d.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_11h.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_11n.c
@@ -28,7 +29,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/mlan_wmm.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/wifi-debug.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/wifi-mem.c
-    ${CMAKE_CURRENT_LIST_DIR}/wifidriver/wifi-sdio.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/wifi-uap.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/wifi.c
     ${CMAKE_CURRENT_LIST_DIR}/wifidriver/wifi_pwrmgr.c
@@ -46,9 +46,23 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
+#OR Logic component
+if(CONFIG_USE_middleware_wifi_sdio_MIMXRT1176_cm7)
+     include(middleware_wifi_sdio_MIMXRT1176_cm7)
+endif()
+if(CONFIG_USE_middleware_wifi_fwdnld_MIMXRT1176_cm7)
+     include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
+endif()
+if(CONFIG_USE_middleware_wifi_imu_MIMXRT1176_cm7)
+     include(middleware_wifi_imu_MIMXRT1176_cm7)
+endif()
+if(NOT (CONFIG_USE_middleware_wifi_sdio_MIMXRT1176_cm7 OR CONFIG_USE_middleware_wifi_fwdnld_MIMXRT1176_cm7 OR CONFIG_USE_middleware_wifi_imu_MIMXRT1176_cm7))
+    message(WARNING "Since middleware_wifi_sdio_MIMXRT1176_cm7/middleware_wifi_fwdnld_MIMXRT1176_cm7/middleware_wifi_imu_MIMXRT1176_cm7 is not included at first or config in config.cmake file, use middleware_wifi_sdio_MIMXRT1176_cm7/middleware_wifi_fwdnld_MIMXRT1176_cm7 by default.")
+    include(middleware_wifi_sdio_MIMXRT1176_cm7)
+    include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
+endif()
+
 include(middleware_freertos-kernel_MIMXRT1176_cm7)
 
 include(utility_debug_console_MIMXRT1176_cm7)
-
-include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
 

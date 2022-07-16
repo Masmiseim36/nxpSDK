@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("driver_pdm_edma component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -11,7 +11,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(driver_pdm_MIMXRT1176_cm7)
-
 include(driver_edma_MIMXRT1176_cm7)
+
+include(driver_pdm_MIMXRT1176_cm7)
 

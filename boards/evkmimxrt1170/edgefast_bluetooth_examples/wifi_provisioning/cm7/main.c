@@ -68,6 +68,8 @@
 #include "usb_phy.h"
 #include "fsl_adapter_uart.h"
 #include "controller.h"
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+#endif /* CONFIG_BT_SMP */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -93,7 +95,9 @@ extern int RunDeviceShadowDemo(bool awsIotMqttMode,
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
 extern usb_host_handle g_HostHandle;
+#endif /* CONFIG_BT_SNOOP > 0 */
 
 
 /*******************************************************************************
@@ -197,6 +201,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 #else
 #endif
 
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
 void USB_HostClockInit(void)
 {
     uint32_t usbClockFreq;
@@ -247,6 +252,7 @@ void USB_OTG2_IRQHandler(void)
     USB_HostEhciIsrFunction(g_HostHandle);
     SDK_ISR_EXIT_BARRIER;
 }
+#endif /* CONFIG_BT_SNOOP > 0 */
 
 void print_string(const char *string)
 {
@@ -255,7 +261,9 @@ void print_string(const char *string)
 
 void main_task(void *pvParameters)
 {
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
     USB_HostMsdFatfsInit();
+#endif
     /* A simple example to demonstrate key and certificate provisioning in
      * microcontroller flash using PKCS#11 interface. This should be replaced
      * by production ready key provisioning mechanism. */
@@ -296,6 +304,9 @@ int main(void)
     EDMA_GetDefaultConfig(&config);
     EDMA_Init(dmaBases[0], &config);
 #endif
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+    CRYPTO_InitHardware();
+#endif /* CONFIG_BT_SMP */
     CRYPTO_InitHardware();
 
     if (xTaskCreate(main_task, "main_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)

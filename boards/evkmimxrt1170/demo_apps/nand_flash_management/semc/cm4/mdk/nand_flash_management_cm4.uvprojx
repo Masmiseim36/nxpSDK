@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, PRINTF_FLOAT_ENABLE=1, CACHE_MAINTAIN=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -892,6 +892,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1448,7 +1463,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, PRINTF_FLOAT_ENABLE=1, CACHE_MAINTAIN=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2010,6 +2025,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2562,7 +2592,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, PRINTF_FLOAT_ENABLE=1, CACHE_MAINTAIN=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3124,6 +3154,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -3676,7 +3721,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, PRINTF_FLOAT_ENABLE=1, CACHE_MAINTAIN=1, CPU_MIMXRT1176DVMAA_cm4, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>../..;..;../../../../../../../components/flash/nand/semc;../../../../../../../middleware/dhara/dhara;../../../../../../../middleware/dhara/ecc;../../../../../../../middleware/fatfs/source/fsl_nand_disk;../../../../../../../middleware/fatfs/source;../../../../../../../devices/MIMXRT1176/utilities;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../components/flash/nand;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4234,6 +4279,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>

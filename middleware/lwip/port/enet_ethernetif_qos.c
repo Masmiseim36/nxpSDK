@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -59,6 +59,10 @@
 
 #include "enet_ethernetif.h"
 #include "enet_ethernetif_priv.h"
+
+#ifdef FSL_ETH_ENABLE_CACHE_CONTROL
+#include "fsl_cache.h"
+#endif /* FSL_ETH_ENABLE_CACHE_CONTROL */
 
 #include "fsl_enet_qos.h"
 #include "fsl_phy.h"
@@ -113,6 +117,7 @@
 
 /* The number of ENET buffers needed to receive frame of maximum length. */
 #define MAX_BUFFERS_PER_FRAME \
+                              \
     ((ENET_QOS_FRAME_MAX_FRAMELEN / ENET_RXBUFF_SIZE) + ((ENET_QOS_FRAME_MAX_FRAMELEN % ENET_RXBUFF_SIZE == 0) ? 0 : 1))
 
 /* At least ENET_RXBD_NUM number of buffers is always held by ENET driver for RX.
@@ -231,17 +236,19 @@ err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, e
     switch (action)
     {
         case IGMP_ADD_MAC_FILTER:
-            /* Adds the ENET device to a multicast group. */
-            ENET_QOS_AddMulticastGroup(ethernetif->base, multicastMacAddr);
+            /* Adds the ENET device to a multicast group.*/
+            if (ethernetif_add_mmac_flt_needed(netif, multicastMacAddr))
+            {
+                ENET_QOS_AddMulticastGroup(ethernetif->base, multicastMacAddr);
+            }
             result = ERR_OK;
             break;
         case IGMP_DEL_MAC_FILTER:
-            /*
-             * Moves the ENET device from a multicast group.
-             * Since the ENET_LeaveMulticastGroup() could filter out also other
-             * group addresses having the same hash, the call is commented out.
-             */
-            /* ENET_QOS_LeaveMulticastGroup(ethernetif->base, multicastMacAddr); */
+            /* Moves the ENET device from a multicast group.*/
+            if (ethernetif_rm_mmac_flt_needed(netif, multicastMacAddr))
+            {
+                ENET_QOS_LeaveMulticastGroup(ethernetif->base, multicastMacAddr);
+            }
             result = ERR_OK;
             break;
         default:
@@ -270,17 +277,19 @@ err_t ethernetif_mld_mac_filter(struct netif *netif, const ip6_addr_t *group, en
     switch (action)
     {
         case NETIF_ADD_MAC_FILTER:
-            /* Adds the ENET device to a multicast group. */
-            ENET_QOS_AddMulticastGroup(ethernetif->base, multicastMacAddr);
+            /* Adds the ENET device to a multicast group.*/
+            if (ethernetif_add_mmac_flt_needed(netif, multicastMacAddr))
+            {
+                ENET_QOS_AddMulticastGroup(ethernetif->base, multicastMacAddr);
+            }
             result = ERR_OK;
             break;
         case NETIF_DEL_MAC_FILTER:
-            /*
-             * Moves the ENET device from a multicast group.
-             * Since the ENET_LeaveMulticastGroup() could filter out also other
-             * group addresses having the same hash, the call is commented out.
-             */
-            /* ENET_QOS_LeaveMulticastGroup(ethernetif->base, multicastMacAddr); */
+            /* Moves the ENET device from a multicast group.*/
+            if (ethernetif_rm_mmac_flt_needed(netif, multicastMacAddr))
+            {
+                ENET_QOS_LeaveMulticastGroup(ethernetif->base, multicastMacAddr);
+            }
             result = ERR_OK;
             break;
         default:
@@ -385,10 +394,14 @@ void ethernetif_enet_init(struct netif *netif,
         ethernetif_get_rx_desc(ethernetif, ENET_RXBD_NUM);         /* Aligned receive descriptor tail address. */
     buffCfg[0].rxBufferStartAddr  = ethernetif->rxBufferStartAddr; /* Start addresses of the rx buffers. */
     buffCfg[0].rxBuffSizeAlign    = sizeof(rx_buffer_t);           /* Aligned receive data buffer size. */
+#ifdef FSL_ETH_ENABLE_CACHE_CONTROL
     buffCfg[0].rxBuffNeedMaintain = true; /* Whether receive data buffer need cache maintain. */
+#else
+    buffCfg[0].rxBuffNeedMaintain = false; /* Whether receive data buffer need cache maintain. */
+#endif
 
     sysClock = ethernetifConfig->phyHandle->mdioHandle->resource.csrClock_Hz;
-    
+
     for (i = 0; i < ENET_RXBUFF_NUM; i++)
     {
         ethernetif->RxPbufs[i].p.custom_free_function = ethernetif_rx_release;
@@ -417,8 +430,8 @@ void ethernetif_enet_init(struct netif *netif,
     config.miiDuplex = (enet_qos_mii_duplex_t)duplex;
 
     config.specialControl = kENET_QOS_HashMulticastEnable | kENET_QOS_StoreAndForward;
-    config.rxBuffAlloc = ethernetif_rx_alloc;
-    config.rxBuffFree = ethernetif_rx_free;
+    config.rxBuffAlloc    = ethernetif_rx_alloc;
+    config.rxBuffFree     = ethernetif_rx_free;
 
 #if !NO_SYS
     ptpConfig.tsRollover = kENET_QOS_DigitalRollover;
@@ -505,7 +518,9 @@ static err_t ethernetif_send_frame(struct ethernetif *ethernetif, unsigned char 
 {
     status_t result;
 
+#ifdef FSL_ETH_ENABLE_CACHE_CONTROL
     DCACHE_CleanByRange((uint32_t)data, sizeof(tx_buffer_t));
+#endif
 
     do
     {
@@ -608,7 +623,7 @@ struct pbuf *ethernetif_linkinput(struct netif *netif)
     struct ethernetif *ethernetif = netif->state;
     enet_qos_buffer_struct_t buffers[MAX_BUFFERS_PER_FRAME];
     enet_qos_rx_frame_struct_t rxFrame = {.rxBuffArray = &buffers[0]};
-    struct pbuf *p                 = NULL;
+    struct pbuf *p                     = NULL;
     status_t status;
 
     status = ENET_QOS_GetRxFrame(ethernetif->base, &ethernetif->handle, &rxFrame, 0);

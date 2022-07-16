@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('a00359.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Smart Card EMVSIM Driver<div class="ingroups"><a class="el" href="a00088.html">Smart Card</a></div></div>  </div>
+<div class="title">Smart Card EMVSIM Driver<div class="ingroups"><a class="el" href="a00087.html">Smart Card</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -160,28 +160,28 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Smart card EMVSIM Driver</h2></td></tr>
-<tr class="memitem:gad69d847bed754e7ead81e9b2e9ad0bfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#gad69d847bed754e7ead81e9b2e9ad0bfb">SMARTCARD_EMVSIM_GetDefaultConfig</a> (<a class="el" href="a00088.html#a00677">smartcard_card_params_t</a> *cardParams)</td></tr>
+<tr class="memitem:gad69d847bed754e7ead81e9b2e9ad0bfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#gad69d847bed754e7ead81e9b2e9ad0bfb">SMARTCARD_EMVSIM_GetDefaultConfig</a> (<a class="el" href="a00087.html#a00671">smartcard_card_params_t</a> *cardParams)</td></tr>
 <tr class="memdesc:gad69d847bed754e7ead81e9b2e9ad0bfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the smartcard_card_params structure with default values according to the EMV 4.3 specification.  <a href="#gad69d847bed754e7ead81e9b2e9ad0bfb">More...</a><br/></td></tr>
 <tr class="separator:gad69d847bed754e7ead81e9b2e9ad0bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07ddc400aa5d62296a3e64d2b0ecbde7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#ga07ddc400aa5d62296a3e64d2b0ecbde7">SMARTCARD_EMVSIM_Init</a> (EMVSIM_Type *base, <a class="el" href="a00088.html#a00678">smartcard_context_t</a> *context, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:ga07ddc400aa5d62296a3e64d2b0ecbde7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#ga07ddc400aa5d62296a3e64d2b0ecbde7">SMARTCARD_EMVSIM_Init</a> (EMVSIM_Type *base, <a class="el" href="a00087.html#a00672">smartcard_context_t</a> *context, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:ga07ddc400aa5d62296a3e64d2b0ecbde7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an EMVSIM peripheral for the Smart card/ISO-7816 operation.  <a href="#ga07ddc400aa5d62296a3e64d2b0ecbde7">More...</a><br/></td></tr>
 <tr class="separator:ga07ddc400aa5d62296a3e64d2b0ecbde7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0417dcf491902a27c8146980bdc948d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#ga0417dcf491902a27c8146980bdc948d1">SMARTCARD_EMVSIM_Deinit</a> (EMVSIM_Type *base)</td></tr>
 <tr class="memdesc:ga0417dcf491902a27c8146980bdc948d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function disables the EMVSIM interrupts, disables the transmitter and receiver, flushes the FIFOs, and gates EMVSIM clock in SIM.  <a href="#ga0417dcf491902a27c8146980bdc948d1">More...</a><br/></td></tr>
 <tr class="separator:ga0417dcf491902a27c8146980bdc948d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6ab4e721e1f497736b7d1a8bf50befd6"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#ga6ab4e721e1f497736b7d1a8bf50befd6">SMARTCARD_EMVSIM_GetTransferRemainingBytes</a> (EMVSIM_Type *base, <a class="el" href="a00088.html#a00678">smartcard_context_t</a> *context)</td></tr>
+<tr class="memitem:ga6ab4e721e1f497736b7d1a8bf50befd6"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#ga6ab4e721e1f497736b7d1a8bf50befd6">SMARTCARD_EMVSIM_GetTransferRemainingBytes</a> (EMVSIM_Type *base, <a class="el" href="a00087.html#a00672">smartcard_context_t</a> *context)</td></tr>
 <tr class="memdesc:ga6ab4e721e1f497736b7d1a8bf50befd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the previous EMVSIM transfer has finished.  <a href="#ga6ab4e721e1f497736b7d1a8bf50befd6">More...</a><br/></td></tr>
 <tr class="separator:ga6ab4e721e1f497736b7d1a8bf50befd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb83e24714896d5ccf5acc0f8b7ad480"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#gadb83e24714896d5ccf5acc0f8b7ad480">SMARTCARD_EMVSIM_AbortTransfer</a> (EMVSIM_Type *base, <a class="el" href="a00088.html#a00678">smartcard_context_t</a> *context)</td></tr>
+<tr class="memitem:gadb83e24714896d5ccf5acc0f8b7ad480"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#gadb83e24714896d5ccf5acc0f8b7ad480">SMARTCARD_EMVSIM_AbortTransfer</a> (EMVSIM_Type *base, <a class="el" href="a00087.html#a00672">smartcard_context_t</a> *context)</td></tr>
 <tr class="memdesc:gadb83e24714896d5ccf5acc0f8b7ad480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Terminates an asynchronous EMVSIM transfer early.  <a href="#gadb83e24714896d5ccf5acc0f8b7ad480">More...</a><br/></td></tr>
 <tr class="separator:gadb83e24714896d5ccf5acc0f8b7ad480"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad16ebfe6c04c466a024bc832518bb089"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#gad16ebfe6c04c466a024bc832518bb089">SMARTCARD_EMVSIM_TransferNonBlocking</a> (EMVSIM_Type *base, <a class="el" href="a00088.html#a00678">smartcard_context_t</a> *context, <a class="el" href="a00088.html#a00681">smartcard_xfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gad16ebfe6c04c466a024bc832518bb089"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#gad16ebfe6c04c466a024bc832518bb089">SMARTCARD_EMVSIM_TransferNonBlocking</a> (EMVSIM_Type *base, <a class="el" href="a00087.html#a00672">smartcard_context_t</a> *context, <a class="el" href="a00087.html#a00675">smartcard_xfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gad16ebfe6c04c466a024bc832518bb089"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer data using interrupts.  <a href="#gad16ebfe6c04c466a024bc832518bb089">More...</a><br/></td></tr>
 <tr class="separator:gad16ebfe6c04c466a024bc832518bb089"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae6d4686bbd308d308ee183843cd0c9e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#gae6d4686bbd308d308ee183843cd0c9e7">SMARTCARD_EMVSIM_Control</a> (EMVSIM_Type *base, <a class="el" href="a00088.html#a00678">smartcard_context_t</a> *context, <a class="el" href="a00088.html#gac4b9128bb3719dfb0675abdb6e18daae">smartcard_control_t</a> control, uint32_t param)</td></tr>
+<tr class="memitem:gae6d4686bbd308d308ee183843cd0c9e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#gae6d4686bbd308d308ee183843cd0c9e7">SMARTCARD_EMVSIM_Control</a> (EMVSIM_Type *base, <a class="el" href="a00087.html#a00672">smartcard_context_t</a> *context, <a class="el" href="a00087.html#gac4b9128bb3719dfb0675abdb6e18daae">smartcard_control_t</a> control, uint32_t param)</td></tr>
 <tr class="memdesc:gae6d4686bbd308d308ee183843cd0c9e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controls the EMVSIM module per different user request.  <a href="#gae6d4686bbd308d308ee183843cd0c9e7">More...</a><br/></td></tr>
 <tr class="separator:gae6d4686bbd308d308ee183843cd0c9e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga117ab705974c45d57916edb09515c15c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#ga117ab705974c45d57916edb09515c15c">SMARTCARD_EMVSIM_IRQHandler</a> (EMVSIM_Type *base, <a class="el" href="a00088.html#a00678">smartcard_context_t</a> *context)</td></tr>
+<tr class="memitem:ga117ab705974c45d57916edb09515c15c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html#ga117ab705974c45d57916edb09515c15c">SMARTCARD_EMVSIM_IRQHandler</a> (EMVSIM_Type *base, <a class="el" href="a00087.html#a00672">smartcard_context_t</a> *context)</td></tr>
 <tr class="memdesc:ga117ab705974c45d57916edb09515c15c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handles EMVSIM module interrupts.  <a href="#ga117ab705974c45d57916edb09515c15c">More...</a><br/></td></tr>
 <tr class="separator:ga117ab705974c45d57916edb09515c15c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -260,7 +260,7 @@ Smart card EMVSIM Driver</h2></td></tr>
         <tr>
           <td class="memname">void SMARTCARD_EMVSIM_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00088.html#a00677">smartcard_card_params_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00087.html#a00671">smartcard_card_params_t</a> *&#160;</td>
           <td class="paramname"><em>cardParams</em></td><td>)</td>
           <td></td>
         </tr>
@@ -268,7 +268,7 @@ Smart card EMVSIM Driver</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">cardParams</td><td>The configuration structure of type <a class="el" href="a00088.html#a00679" title="Defines user specified configuration of Smart card interface. ">smartcard_interface_config_t</a>. Function fill in members: Fi = 372; Di = 1; currentD = 1; WI = 0x0A; GTN = 0x00; with default values. </td></tr>
+    <tr><td class="paramname">cardParams</td><td>The configuration structure of type <a class="el" href="a00087.html#a00673" title="Defines user specified configuration of Smart card interface. ">smartcard_interface_config_t</a>. Function fill in members: Fi = 372; Di = 1; currentD = 1; WI = 0x0A; GTN = 0x00; with default values. </td></tr>
   </table>
   </dd>
 </dl>
@@ -280,7 +280,7 @@ Smart card EMVSIM Driver</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_EMVSIM_Init </td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_EMVSIM_Init </td>
           <td>(</td>
           <td class="paramtype">EMVSIM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -288,7 +288,7 @@ Smart card EMVSIM Driver</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00088.html#a00678">smartcard_context_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00087.html#a00672">smartcard_context_t</a> *&#160;</td>
           <td class="paramname"><em>context</em>, </td>
         </tr>
         <tr>
@@ -352,7 +352,7 @@ Smart card EMVSIM Driver</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00088.html#a00678">smartcard_context_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00087.html#a00672">smartcard_context_t</a> *&#160;</td>
           <td class="paramname"><em>context</em>&#160;</td>
         </tr>
         <tr>
@@ -379,7 +379,7 @@ Smart card EMVSIM Driver</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_EMVSIM_AbortTransfer </td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_EMVSIM_AbortTransfer </td>
           <td>(</td>
           <td class="paramtype">EMVSIM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -387,7 +387,7 @@ Smart card EMVSIM Driver</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00088.html#a00678">smartcard_context_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00087.html#a00672">smartcard_context_t</a> *&#160;</td>
           <td class="paramname"><em>context</em>&#160;</td>
         </tr>
         <tr>
@@ -420,7 +420,7 @@ Smart card EMVSIM Driver</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_EMVSIM_TransferNonBlocking </td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_EMVSIM_TransferNonBlocking </td>
           <td>(</td>
           <td class="paramtype">EMVSIM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -428,13 +428,13 @@ Smart card EMVSIM Driver</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00088.html#a00678">smartcard_context_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00087.html#a00672">smartcard_context_t</a> *&#160;</td>
           <td class="paramname"><em>context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00088.html#a00681">smartcard_xfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00087.html#a00675">smartcard_xfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -462,7 +462,7 @@ Smart card EMVSIM Driver</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_EMVSIM_Control </td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SMARTCARD_EMVSIM_Control </td>
           <td>(</td>
           <td class="paramtype">EMVSIM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -470,13 +470,13 @@ Smart card EMVSIM Driver</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00088.html#a00678">smartcard_context_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00087.html#a00672">smartcard_context_t</a> *&#160;</td>
           <td class="paramname"><em>context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00088.html#gac4b9128bb3719dfb0675abdb6e18daae">smartcard_control_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00087.html#gac4b9128bb3719dfb0675abdb6e18daae">smartcard_control_t</a>&#160;</td>
           <td class="paramname"><em>control</em>, </td>
         </tr>
         <tr>
@@ -518,7 +518,7 @@ Smart card EMVSIM Driver</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00088.html#a00678">smartcard_context_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00087.html#a00672">smartcard_context_t</a> *&#160;</td>
           <td class="paramname"><em>context</em>&#160;</td>
         </tr>
         <tr>

@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("component_button component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -18,11 +18,14 @@ endif()
 if(CONFIG_USE_component_lpc_gpio_adapter_MIMXRT1176_cm7)
      include(component_lpc_gpio_adapter_MIMXRT1176_cm7)
 endif()
+if(CONFIG_USE_component_rt_gpio_adapter_MIMXRT1176_cm7)
+     include(component_rt_gpio_adapter_MIMXRT1176_cm7)
+endif()
 if(CONFIG_USE_component_igpio_adapter_MIMXRT1176_cm7)
      include(component_igpio_adapter_MIMXRT1176_cm7)
 endif()
-if(NOT (CONFIG_USE_component_gpio_adapter_MIMXRT1176_cm7 OR CONFIG_USE_component_lpc_gpio_adapter_MIMXRT1176_cm7 OR CONFIG_USE_component_igpio_adapter_MIMXRT1176_cm7))
-    message(WARNING "Since component_gpio_adapter_MIMXRT1176_cm7/component_lpc_gpio_adapter_MIMXRT1176_cm7/component_igpio_adapter_MIMXRT1176_cm7 is not included at first or config in config.cmake file, use component_gpio_adapter_MIMXRT1176_cm7 by default.")
+if(NOT (CONFIG_USE_component_gpio_adapter_MIMXRT1176_cm7 OR CONFIG_USE_component_lpc_gpio_adapter_MIMXRT1176_cm7 OR CONFIG_USE_component_rt_gpio_adapter_MIMXRT1176_cm7 OR CONFIG_USE_component_igpio_adapter_MIMXRT1176_cm7))
+    message(WARNING "Since component_gpio_adapter_MIMXRT1176_cm7/component_lpc_gpio_adapter_MIMXRT1176_cm7/component_rt_gpio_adapter_MIMXRT1176_cm7/component_igpio_adapter_MIMXRT1176_cm7 is not included at first or config in config.cmake file, use component_gpio_adapter_MIMXRT1176_cm7 by default.")
     include(component_gpio_adapter_MIMXRT1176_cm7)
 endif()
 

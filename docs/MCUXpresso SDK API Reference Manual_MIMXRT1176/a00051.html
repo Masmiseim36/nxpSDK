@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Iee</title>
+<title>MCUXpresso SDK API Reference Manual: KPP: KeyPad Port Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -100,447 +100,259 @@ $(document).ready(function(){initNavTree('a00051.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Iee</div>  </div>
+<div class="title">KPP: KeyPad Port Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
+<p>The MCUXpresso SDK provides a peripheral driver for the KeyPad Port block of MCUXpresso SDK devices.</p>
+<h1>KPP: KeyPad Port Driver</h1>
+<h2>KPP Initialization Operation</h2>
+<p>The KPP Initialize is to initialize for common configure: gate the KPP clock, configure columns, and rows features. The KPP Deinitialize is to ungate the clock.</p>
+<h2>KPP Basic Operation</h2>
+<p>The KPP provide the function to enable/disable interrupts. The KPP provide key press scanning function KPP_keyPressScanning. This API should be called by the Interrupt handler in application. KPP still provides functions to get and clear status flags.</p>
+<h1><a class="anchor" id="KPPTpyUC"></a>
+Typical use case</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00561"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00561">iee_config_t</a></td></tr>
-<tr class="memdesc:a00561"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEE configuration structure.  <a href="a00051.html#a00561">More...</a><br/></td></tr>
-<tr class="separator:a00561"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00556"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a00556">kpp_config_t</a></td></tr>
+<tr class="memdesc:a00556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP status.  <a href="a00051.html#a00556">More...</a><br/></td></tr>
+<tr class="separator:a00556"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga55a2b0860e831b846b006f7e680b41dc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga55a2b0860e831b846b006f7e680b41dc">iee_region_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga55a2b0860e831b846b006f7e680b41dcab80c1f6526ad541e2d2c1a8f06bce869">kIEE_Region0</a> = 0U, 
+<tr class="memitem:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">kpp_interrupt_enable_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00051.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2">kKPP_keyDepressInterrupt</a> = KPP_KPSR_KDIE_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga55a2b0860e831b846b006f7e680b41dca3da4079b83f4bb3b034c00ddf3ef8438">kIEE_Region1</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga55a2b0860e831b846b006f7e680b41dca755347f2ef5b68e2e11fff919dc15ee1">kIEE_Region2</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga55a2b0860e831b846b006f7e680b41dca93f9a216bb60bf54db8afdbb293522cd">kIEE_Region3</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga55a2b0860e831b846b006f7e680b41dcab31d2bde03f98d44157eb446b6bad5bc">kIEE_Region4</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga55a2b0860e831b846b006f7e680b41dca30e1af437b56e26b48127d5fc878de19">kIEE_Region5</a> = 5U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga55a2b0860e831b846b006f7e680b41dca163bba210fb527ac735c50072ec9f636">kIEE_Region6</a> = 6U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga55a2b0860e831b846b006f7e680b41dcac75ff4536da4dc6680ffeca29339254b">kIEE_Region7</a> = 7U
+&#160;&#160;<a class="el" href="a00051.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df">kKPP_keyReleaseInterrupt</a> = KPP_KPSR_KRIE_MASK
 <br/>
  }</td></tr>
-<tr class="memdesc:ga55a2b0860e831b846b006f7e680b41dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEE region.  <a href="a00051.html#ga55a2b0860e831b846b006f7e680b41dc">More...</a><br/></td></tr>
-<tr class="separator:ga55a2b0860e831b846b006f7e680b41dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa8140a551831c897aaf7a5281e94a09c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaa8140a551831c897aaf7a5281e94a09c">iee_aes_bypass_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#ggaa8140a551831c897aaf7a5281e94a09cae0d1b9f0a7b4edc9bcfdb541ce981396">kIEE_AesUseMdField</a> = 0U, 
+<tr class="memdesc:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of interrupts supported by the peripheral.  <a href="a00051.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">More...</a><br/></td></tr>
+<tr class="separator:ga405aea9bdb57ab7a5a7d0aecdc0edc72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c44e479c6d310cf4d9a701c09f73485"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga0c44e479c6d310cf4d9a701c09f73485">kpp_sync_operation_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00051.html#gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b">kKPP_ClearKeyDepressSyncChain</a> = KPP_KPSR_KDSC_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00051.html#ggaa8140a551831c897aaf7a5281e94a09caf971273623b2145aa83be8e28493a3fc">kIEE_AesBypass</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:gaa8140a551831c897aaf7a5281e94a09c"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEE AES enablement/bypass.  <a href="a00051.html#gaa8140a551831c897aaf7a5281e94a09c">More...</a><br/></td></tr>
-<tr class="separator:gaa8140a551831c897aaf7a5281e94a09c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7da20086019ff038ee7173f8821f9c59"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7da20086019ff038ee7173f8821f9c59">iee_aes_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga7da20086019ff038ee7173f8821f9c59acd7d9f9f729dd6bd0862603005df9bd3">kIEE_ModeNone</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga7da20086019ff038ee7173f8821f9c59a9439b059a09cd0abd7fe59d2d82da7b2">kIEE_ModeAesXTS</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga7da20086019ff038ee7173f8821f9c59a2eb27024863c59fea2af53fd37c29c05">kIEE_ModeAesCTRWAddress</a> = 2U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga7da20086019ff038ee7173f8821f9c59a9f314844d78e583a9268be5ab75470d2">kIEE_ModeAesCTRWOAddress</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga7da20086019ff038ee7173f8821f9c59aa3397a3b1572bd500bdbe6ddc5b671de">kIEE_ModeAesCTRkeystream</a> = 4U
+&#160;&#160;<a class="el" href="a00051.html#gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5">kKPP_SetKeyReleasesSyncChain</a> = KPP_KPSR_KRSS_MASK
 <br/>
  }</td></tr>
-<tr class="memdesc:ga7da20086019ff038ee7173f8821f9c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEE AES mode.  <a href="a00051.html#ga7da20086019ff038ee7173f8821f9c59">More...</a><br/></td></tr>
-<tr class="separator:ga7da20086019ff038ee7173f8821f9c59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga26706372629001af67a5f2ec0573a2ac"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga26706372629001af67a5f2ec0573a2ac">iee_aes_key_size_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga26706372629001af67a5f2ec0573a2acad4521fb3d6b1ac67feb4ae840273c10b">kIEE_AesCTR128XTS256</a> = 0U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga26706372629001af67a5f2ec0573a2aca8a317008cabda3fed00ec0484a1fe576">kIEE_AesCTR256XTS512</a> = 1U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga26706372629001af67a5f2ec0573a2ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEE AES key size.  <a href="a00051.html#ga26706372629001af67a5f2ec0573a2ac">More...</a><br/></td></tr>
-<tr class="separator:ga26706372629001af67a5f2ec0573a2ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2d206a59b14cb15341faef1d50e4f711"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga2d206a59b14cb15341faef1d50e4f711">iee_aes_key_num_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00051.html#gga2d206a59b14cb15341faef1d50e4f711a5e66522a28129c73bf61ae7ae98e7c0c">kIEE_AesKey1</a> = 1U, 
-<br/>
-&#160;&#160;<a class="el" href="a00051.html#gga2d206a59b14cb15341faef1d50e4f711ab2f317b5ef8fae3a5f626d75f5e6ca48">kIEE_AesKey2</a> = 2U
-<br/>
- }</td></tr>
-<tr class="memdesc:ga2d206a59b14cb15341faef1d50e4f711"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEE AES ke number.  <a href="a00051.html#ga2d206a59b14cb15341faef1d50e4f711">More...</a><br/></td></tr>
-<tr class="separator:ga2d206a59b14cb15341faef1d50e4f711"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga8a6f9218b0c1573f1553e4bc444ad271"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga8a6f9218b0c1573f1553e4bc444ad271">IEE_Init</a> (IEE_Type *base)</td></tr>
-<tr class="memdesc:ga8a6f9218b0c1573f1553e4bc444ad271"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets IEE module to factory default values.  <a href="#ga8a6f9218b0c1573f1553e4bc444ad271">More...</a><br/></td></tr>
-<tr class="separator:ga8a6f9218b0c1573f1553e4bc444ad271"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafcd7da36e820e5501659bf8ece665ae9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gafcd7da36e820e5501659bf8ece665ae9">IEE_GetDefaultConfig</a> (<a class="el" href="a00051.html#a00561">iee_config_t</a> *config)</td></tr>
-<tr class="memdesc:gafcd7da36e820e5501659bf8ece665ae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads default values to the IEE configuration structure.  <a href="#gafcd7da36e820e5501659bf8ece665ae9">More...</a><br/></td></tr>
-<tr class="separator:gafcd7da36e820e5501659bf8ece665ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga053537ed6702316207a96c286d540ceb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga053537ed6702316207a96c286d540ceb">IEE_SetRegionConfig</a> (IEE_Type *base, <a class="el" href="a00051.html#ga55a2b0860e831b846b006f7e680b41dc">iee_region_t</a> region, <a class="el" href="a00051.html#a00561">iee_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga053537ed6702316207a96c286d540ceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IEE module according to the configuration structure.  <a href="#ga053537ed6702316207a96c286d540ceb">More...</a><br/></td></tr>
-<tr class="separator:ga053537ed6702316207a96c286d540ceb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3548e651083d0b428ce402ca92158f4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga3548e651083d0b428ce402ca92158f4a">IEE_SetRegionKey</a> (IEE_Type *base, <a class="el" href="a00051.html#ga55a2b0860e831b846b006f7e680b41dc">iee_region_t</a> region, <a class="el" href="a00051.html#ga2d206a59b14cb15341faef1d50e4f711">iee_aes_key_num_t</a> keyNum, const uint8_t *key, size_t keySize)</td></tr>
-<tr class="memdesc:ga3548e651083d0b428ce402ca92158f4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the IEE module key.  <a href="#ga3548e651083d0b428ce402ca92158f4a">More...</a><br/></td></tr>
-<tr class="separator:ga3548e651083d0b428ce402ca92158f4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga864553ffc5feb8c1cece140c9855d8b0"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga864553ffc5feb8c1cece140c9855d8b0">IEE_GetOffset</a> (uint32_t addressIee, uint32_t addressMemory)</td></tr>
-<tr class="memdesc:ga864553ffc5feb8c1cece140c9855d8b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes IEE offset to be set for specifed memory location.  <a href="#ga864553ffc5feb8c1cece140c9855d8b0">More...</a><br/></td></tr>
-<tr class="separator:ga864553ffc5feb8c1cece140c9855d8b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga10093cf63c2c2503214f0f66cb85e1dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga10093cf63c2c2503214f0f66cb85e1dd">IEE_LockRegionConfig</a> (IEE_Type *base, <a class="el" href="a00051.html#ga55a2b0860e831b846b006f7e680b41dc">iee_region_t</a> region)</td></tr>
-<tr class="memdesc:ga10093cf63c2c2503214f0f66cb85e1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the IEE region configuration.  <a href="#ga10093cf63c2c2503214f0f66cb85e1dd">More...</a><br/></td></tr>
-<tr class="separator:ga10093cf63c2c2503214f0f66cb85e1dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga0c44e479c6d310cf4d9a701c09f73485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lists of KPP synchronize chain operation.  <a href="a00051.html#ga0c44e479c6d310cf4d9a701c09f73485">More...</a><br/></td></tr>
+<tr class="separator:ga0c44e479c6d310cf4d9a701c09f73485"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaa6ab6a409a4ff503d3b7e9a607dcab19"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaa6ab6a409a4ff503d3b7e9a607dcab19">FSL_IEE_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td></tr>
-<tr class="memdesc:gaa6ab6a409a4ff503d3b7e9a607dcab19"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEE driver version.  <a href="#gaa6ab6a409a4ff503d3b7e9a607dcab19">More...</a><br/></td></tr>
-<tr class="separator:gaa6ab6a409a4ff503d3b7e9a607dcab19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga35c20878a9d0b578ca2bbf50d98666a8">FSL_KPP_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td></tr>
+<tr class="memdesc:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP driver version 2.0.0.  <a href="#ga35c20878a9d0b578ca2bbf50d98666a8">More...</a><br/></td></tr>
+<tr class="separator:ga35c20878a9d0b578ca2bbf50d98666a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Initialization and De-initialization</h2></td></tr>
+<tr class="memitem:ga773203cef9b50a6c5864f78c05cb0c83"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga773203cef9b50a6c5864f78c05cb0c83">KPP_Init</a> (KPP_Type *base, <a class="el" href="a00051.html#a00556">kpp_config_t</a> *configure)</td></tr>
+<tr class="memdesc:ga773203cef9b50a6c5864f78c05cb0c83"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP initialize.  <a href="#ga773203cef9b50a6c5864f78c05cb0c83">More...</a><br/></td></tr>
+<tr class="separator:ga773203cef9b50a6c5864f78c05cb0c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga910f3aec15296a1d993f9b4963a152fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga910f3aec15296a1d993f9b4963a152fd">KPP_Deinit</a> (KPP_Type *base)</td></tr>
+<tr class="memdesc:ga910f3aec15296a1d993f9b4963a152fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the KPP module and gates the clock.  <a href="#ga910f3aec15296a1d993f9b4963a152fd">More...</a><br/></td></tr>
+<tr class="separator:ga910f3aec15296a1d993f9b4963a152fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+KPP Basic Operation</h2></td></tr>
+<tr class="memitem:ga4d8bc3929af0678c182047884c50f7db"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga4d8bc3929af0678c182047884c50f7db">KPP_EnableInterrupts</a> (KPP_Type *base, uint16_t mask)</td></tr>
+<tr class="memdesc:ga4d8bc3929af0678c182047884c50f7db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the interrupt.  <a href="#ga4d8bc3929af0678c182047884c50f7db">More...</a><br/></td></tr>
+<tr class="separator:ga4d8bc3929af0678c182047884c50f7db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa7de1f02a42c4176605cf7053f78baab"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gaa7de1f02a42c4176605cf7053f78baab">KPP_DisableInterrupts</a> (KPP_Type *base, uint16_t mask)</td></tr>
+<tr class="memdesc:gaa7de1f02a42c4176605cf7053f78baab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the interrupt.  <a href="#gaa7de1f02a42c4176605cf7053f78baab">More...</a><br/></td></tr>
+<tr class="separator:gaa7de1f02a42c4176605cf7053f78baab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e0b699fd3ac19ce1bbb95418871ab3e"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7e0b699fd3ac19ce1bbb95418871ab3e">KPP_GetStatusFlag</a> (KPP_Type *base)</td></tr>
+<tr class="memdesc:ga7e0b699fd3ac19ce1bbb95418871ab3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the KPP interrupt event status.  <a href="#ga7e0b699fd3ac19ce1bbb95418871ab3e">More...</a><br/></td></tr>
+<tr class="separator:ga7e0b699fd3ac19ce1bbb95418871ab3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5f48c3a6027700e16a3f9bf477fa7e6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#gad5f48c3a6027700e16a3f9bf477fa7e6">KPP_ClearStatusFlag</a> (KPP_Type *base, uint16_t mask)</td></tr>
+<tr class="memdesc:gad5f48c3a6027700e16a3f9bf477fa7e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears KPP status flag.  <a href="#gad5f48c3a6027700e16a3f9bf477fa7e6">More...</a><br/></td></tr>
+<tr class="separator:gad5f48c3a6027700e16a3f9bf477fa7e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7a240001a7a2b5fb84754a9a75afcb86"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga7a240001a7a2b5fb84754a9a75afcb86">KPP_SetSynchronizeChain</a> (KPP_Type *base, uint16_t mask)</td></tr>
+<tr class="memdesc:ga7a240001a7a2b5fb84754a9a75afcb86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set KPP synchronization chain.  <a href="#ga7a240001a7a2b5fb84754a9a75afcb86">More...</a><br/></td></tr>
+<tr class="separator:ga7a240001a7a2b5fb84754a9a75afcb86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ga636803e3b1c99ec6dc9756548d9ef7b9">KPP_keyPressScanning</a> (KPP_Type *base, uint8_t *data, uint32_t clockSrc_Hz)</td></tr>
+<tr class="memdesc:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keypad press scanning.  <a href="#ga636803e3b1c99ec6dc9756548d9ef7b9">More...</a><br/></td></tr>
+<tr class="separator:ga636803e3b1c99ec6dc9756548d9ef7b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00561" id="a00561"></a>
+<a name="a00556" id="a00556"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct iee_config_t</td>
+          <td class="memname">struct kpp_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:afa6b30f73ece910361ecdd2f8f4a9d41"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa6b30f73ece910361ecdd2f8f4a9d41"></a>
-<a class="el" href="a00051.html#gaa8140a551831c897aaf7a5281e94a09c">iee_aes_bypass_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#afa6b30f73ece910361ecdd2f8f4a9d41">bypass</a></td></tr>
-<tr class="memdesc:afa6b30f73ece910361ecdd2f8f4a9d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES encryption/decryption bypass. <br/></td></tr>
-<tr class="separator:afa6b30f73ece910361ecdd2f8f4a9d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64617d118a22579a8507b5ad3da3bf52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64617d118a22579a8507b5ad3da3bf52"></a>
-<a class="el" href="a00051.html#ga7da20086019ff038ee7173f8821f9c59">iee_aes_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a64617d118a22579a8507b5ad3da3bf52">mode</a></td></tr>
-<tr class="memdesc:a64617d118a22579a8507b5ad3da3bf52"><td class="mdescLeft">&#160;</td><td class="mdescRight">AES mode. <br/></td></tr>
-<tr class="separator:a64617d118a22579a8507b5ad3da3bf52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bba5dc718cf9954eaf192e2142df556"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bba5dc718cf9954eaf192e2142df556"></a>
-<a class="el" href="a00051.html#ga26706372629001af67a5f2ec0573a2ac">iee_aes_key_size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a6bba5dc718cf9954eaf192e2142df556">keySize</a></td></tr>
-<tr class="memdesc:a6bba5dc718cf9954eaf192e2142df556"><td class="mdescLeft">&#160;</td><td class="mdescRight">size of AES key <br/></td></tr>
-<tr class="separator:a6bba5dc718cf9954eaf192e2142df556"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae66f10521a115859814a118f9a45e8e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae66f10521a115859814a118f9a45e8e8"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#ae66f10521a115859814a118f9a45e8e8">pageOffset</a></td></tr>
-<tr class="memdesc:ae66f10521a115859814a118f9a45e8e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset to physical memory location from IEE start address. <br/></td></tr>
-<tr class="separator:ae66f10521a115859814a118f9a45e8e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affe1c0fe7c98a7bbd90e5da557a77029"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#affe1c0fe7c98a7bbd90e5da557a77029">activeRow</a></td></tr>
+<tr class="memdesc:affe1c0fe7c98a7bbd90e5da557a77029"><td class="mdescLeft">&#160;</td><td class="mdescRight">The row number: bit 7 ~ 0 represents the row 7 ~ 0.  <a href="#affe1c0fe7c98a7bbd90e5da557a77029">More...</a><br/></td></tr>
+<tr class="separator:affe1c0fe7c98a7bbd90e5da557a77029"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17262e678dbf479fc6fea48e685e94be"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a17262e678dbf479fc6fea48e685e94be">activeColumn</a></td></tr>
+<tr class="memdesc:a17262e678dbf479fc6fea48e685e94be"><td class="mdescLeft">&#160;</td><td class="mdescRight">The column number: bit 7 ~ 0 represents the column 7 ~ 0.  <a href="#a17262e678dbf479fc6fea48e685e94be">More...</a><br/></td></tr>
+<tr class="separator:a17262e678dbf479fc6fea48e685e94be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00051.html#a3f6f88fe9bcaf13690da0506e52f8bd9">interrupt</a></td></tr>
+<tr class="memdesc:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">KPP interrupt source.  <a href="#a3f6f88fe9bcaf13690da0506e52f8bd9">More...</a><br/></td></tr>
+<tr class="separator:a3f6f88fe9bcaf13690da0506e52f8bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="affe1c0fe7c98a7bbd90e5da557a77029"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t kpp_config_t::activeRow</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a17262e678dbf479fc6fea48e685e94be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t kpp_config_t::activeColumn</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a3f6f88fe9bcaf13690da0506e52f8bd9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t kpp_config_t::interrupt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A logical OR of "kpp_interrupt_enable_t". </p>
+
+</div>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gaa6ab6a409a4ff503d3b7e9a607dcab19"></a>
+<a class="anchor" id="ga35c20878a9d0b578ca2bbf50d98666a8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_IEE_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 1))</td>
+          <td class="memname">#define FSL_KPP_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Version 2.1.1.</p>
-<p>Current version: 2.1.1</p>
-<p>Change log:</p>
-<ul>
-<li>Version 2.0.0<ul>
-<li>Initial version</li>
-</ul>
-</li>
-<li>Version 2.1.0<ul>
-<li>Add region lock function <a class="el" href="a00051.html#ga10093cf63c2c2503214f0f66cb85e1dd" title="Lock the IEE region configuration. ">IEE_LockRegionConfig()</a> and driver clock control</li>
-</ul>
-</li>
-<li>Version 2.1.1<ul>
-<li>Fixed MISRA issues. </li>
-</ul>
-</li>
-</ul>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga55a2b0860e831b846b006f7e680b41dc"></a>
+<a class="anchor" id="ga405aea9bdb57ab7a5a7d0aecdc0edc72"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga55a2b0860e831b846b006f7e680b41dc">iee_region_t</a></td>
+          <td class="memname">enum <a class="el" href="a00051.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72">kpp_interrupt_enable_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This enumeration uses one-bot encoding to allow a logical OR of multiple members. Members usually map to interrupt enable bits in one or more peripheral registers. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga55a2b0860e831b846b006f7e680b41dcab80c1f6526ad541e2d2c1a8f06bce869"></a>kIEE_Region0</em>&nbsp;</td><td class="fielddoc">
-<p>IEE region 0. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2"></a>kKPP_keyDepressInterrupt</em>&nbsp;</td><td class="fielddoc">
+<p>Keypad depress interrupt source. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga55a2b0860e831b846b006f7e680b41dca3da4079b83f4bb3b034c00ddf3ef8438"></a>kIEE_Region1</em>&nbsp;</td><td class="fielddoc">
-<p>IEE region 1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga55a2b0860e831b846b006f7e680b41dca755347f2ef5b68e2e11fff919dc15ee1"></a>kIEE_Region2</em>&nbsp;</td><td class="fielddoc">
-<p>IEE region 2. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga55a2b0860e831b846b006f7e680b41dca93f9a216bb60bf54db8afdbb293522cd"></a>kIEE_Region3</em>&nbsp;</td><td class="fielddoc">
-<p>IEE region 3. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga55a2b0860e831b846b006f7e680b41dcab31d2bde03f98d44157eb446b6bad5bc"></a>kIEE_Region4</em>&nbsp;</td><td class="fielddoc">
-<p>IEE region 4. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga55a2b0860e831b846b006f7e680b41dca30e1af437b56e26b48127d5fc878de19"></a>kIEE_Region5</em>&nbsp;</td><td class="fielddoc">
-<p>IEE region 5. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga55a2b0860e831b846b006f7e680b41dca163bba210fb527ac735c50072ec9f636"></a>kIEE_Region6</em>&nbsp;</td><td class="fielddoc">
-<p>IEE region 6. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga55a2b0860e831b846b006f7e680b41dcac75ff4536da4dc6680ffeca29339254b"></a>kIEE_Region7</em>&nbsp;</td><td class="fielddoc">
-<p>IEE region 7. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df"></a>kKPP_keyReleaseInterrupt</em>&nbsp;</td><td class="fielddoc">
+<p>Keypad release interrupt source. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="gaa8140a551831c897aaf7a5281e94a09c"></a>
+<a class="anchor" id="ga0c44e479c6d310cf4d9a701c09f73485"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#gaa8140a551831c897aaf7a5281e94a09c">iee_aes_bypass_t</a></td>
+          <td class="memname">enum <a class="el" href="a00051.html#ga0c44e479c6d310cf4d9a701c09f73485">kpp_sync_operation_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa8140a551831c897aaf7a5281e94a09cae0d1b9f0a7b4edc9bcfdb541ce981396"></a>kIEE_AesUseMdField</em>&nbsp;</td><td class="fielddoc">
-<p>AES encryption/decryption enabled. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b"></a>kKPP_ClearKeyDepressSyncChain</em>&nbsp;</td><td class="fielddoc">
+<p>Keypad depress interrupt status. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa8140a551831c897aaf7a5281e94a09caf971273623b2145aa83be8e28493a3fc"></a>kIEE_AesBypass</em>&nbsp;</td><td class="fielddoc">
-<p>AES encryption/decryption bypass. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga7da20086019ff038ee7173f8821f9c59"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga7da20086019ff038ee7173f8821f9c59">iee_aes_mode_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga7da20086019ff038ee7173f8821f9c59acd7d9f9f729dd6bd0862603005df9bd3"></a>kIEE_ModeNone</em>&nbsp;</td><td class="fielddoc">
-<p>AES NONE mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7da20086019ff038ee7173f8821f9c59a9439b059a09cd0abd7fe59d2d82da7b2"></a>kIEE_ModeAesXTS</em>&nbsp;</td><td class="fielddoc">
-<p>AES XTS mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7da20086019ff038ee7173f8821f9c59a2eb27024863c59fea2af53fd37c29c05"></a>kIEE_ModeAesCTRWAddress</em>&nbsp;</td><td class="fielddoc">
-<p>CTR w address binding mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7da20086019ff038ee7173f8821f9c59a9f314844d78e583a9268be5ab75470d2"></a>kIEE_ModeAesCTRWOAddress</em>&nbsp;</td><td class="fielddoc">
-<p>AES CTR w/o address binding mode. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga7da20086019ff038ee7173f8821f9c59aa3397a3b1572bd500bdbe6ddc5b671de"></a>kIEE_ModeAesCTRkeystream</em>&nbsp;</td><td class="fielddoc">
-<p>AES CTR keystream only. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga26706372629001af67a5f2ec0573a2ac"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga26706372629001af67a5f2ec0573a2ac">iee_aes_key_size_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga26706372629001af67a5f2ec0573a2acad4521fb3d6b1ac67feb4ae840273c10b"></a>kIEE_AesCTR128XTS256</em>&nbsp;</td><td class="fielddoc">
-<p>AES 128 bits (CTR), 256 bits (XTS) </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga26706372629001af67a5f2ec0573a2aca8a317008cabda3fed00ec0484a1fe576"></a>kIEE_AesCTR256XTS512</em>&nbsp;</td><td class="fielddoc">
-<p>AES 256 bits (CTR), 512 bits (XTS) </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a class="anchor" id="ga2d206a59b14cb15341faef1d50e4f711"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="a00051.html#ga2d206a59b14cb15341faef1d50e4f711">iee_aes_key_num_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga2d206a59b14cb15341faef1d50e4f711a5e66522a28129c73bf61ae7ae98e7c0c"></a>kIEE_AesKey1</em>&nbsp;</td><td class="fielddoc">
-<p>AES Key 1. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga2d206a59b14cb15341faef1d50e4f711ab2f317b5ef8fae3a5f626d75f5e6ca48"></a>kIEE_AesKey2</em>&nbsp;</td><td class="fielddoc">
-<p>AES Key 2. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5"></a>kKPP_SetKeyReleasesSyncChain</em>&nbsp;</td><td class="fielddoc">
+<p>Keypad release interrupt status. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga8a6f9218b0c1573f1553e4bc444ad271"></a>
+<a class="anchor" id="ga773203cef9b50a6c5864f78c05cb0c83"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void IEE_Init </td>
+          <td class="memname">void KPP_Init </td>
           <td>(</td>
-          <td class="paramtype">IEE_Type *&#160;</td>
+          <td class="paramtype">KPP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00051.html#a00556">kpp_config_t</a> *&#160;</td>
+          <td class="paramname"><em>configure</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function ungates the KPP clock and initializes KPP. This function must be called before calling any other KPP driver functions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
+    <tr><td class="paramname">configure</td><td>The KPP configuration structure pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga910f3aec15296a1d993f9b4963a152fd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void KPP_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">KPP_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function performs hardware reset of IEE module. Attributes and keys of all regions are cleared.</p>
+<p>This function gates the KPP clock. As a result, the KPP module doesn't work after calling this function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>IEER peripheral address. </td></tr>
+    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gafcd7da36e820e5501659bf8ece665ae9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void IEE_GetDefaultConfig </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00051.html#a00561">iee_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Loads default values to the IEE region configuration structure. The default values are as follows. </p>
-<div class="fragment"><div class="line">*   config-&gt;bypass = <a class="code" href="a00051.html#ggaa8140a551831c897aaf7a5281e94a09cae0d1b9f0a7b4edc9bcfdb541ce981396">kIEE_AesUseMdField</a>;</div>
-<div class="line">*   config-&gt;mode = <a class="code" href="a00051.html#gga7da20086019ff038ee7173f8821f9c59acd7d9f9f729dd6bd0862603005df9bd3">kIEE_ModeNone</a>;</div>
-<div class="line">*   config-&gt;keySize = <a class="code" href="a00051.html#gga26706372629001af67a5f2ec0573a2acad4521fb3d6b1ac67feb4ae840273c10b">kIEE_AesCTR128XTS256</a>;</div>
-<div class="line">*   config-&gt;pageOffset = 0U;</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">config</td><td>Configuration for the selected IEE region. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga053537ed6702316207a96c286d540ceb"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void IEE_SetRegionConfig </td>
-          <td>(</td>
-          <td class="paramtype">IEE_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#ga55a2b0860e831b846b006f7e680b41dc">iee_region_t</a>&#160;</td>
-          <td class="paramname"><em>region</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#a00561">iee_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function configures IEE region according to configuration structure.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>IEE peripheral address. </td></tr>
-    <tr><td class="paramname">region</td><td>Selection of the IEE region to be configured. </td></tr>
-    <tr><td class="paramname">config</td><td>Configuration for the selected IEE region. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3548e651083d0b428ce402ca92158f4a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IEE_SetRegionKey </td>
-          <td>(</td>
-          <td class="paramtype">IEE_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#ga55a2b0860e831b846b006f7e680b41dc">iee_region_t</a>&#160;</td>
-          <td class="paramname"><em>region</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#ga2d206a59b14cb15341faef1d50e4f711">iee_aes_key_num_t</a>&#160;</td>
-          <td class="paramname"><em>keyNum</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>keySize</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function sets specified AES key for the given region.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>IEE peripheral address. </td></tr>
-    <tr><td class="paramname">region</td><td>Selection of the IEE region to be configured. </td></tr>
-    <tr><td class="paramname">keyNum</td><td>Selection of AES KEY1 or KEY2. </td></tr>
-    <tr><td class="paramname">key</td><td>AES key. </td></tr>
-    <tr><td class="paramname">keySize</td><td>Size of AES key. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga864553ffc5feb8c1cece140c9855d8b0"></a>
+<a class="anchor" id="ga4d8bc3929af0678c182047884c50f7db"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -548,16 +360,16 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t IEE_GetOffset </td>
+          <td class="memname">static void KPP_EnableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>addressIee</em>, </td>
+          <td class="paramtype">KPP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>addressMemory</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -571,32 +383,191 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This function calculates offset that must be set for IEE region to access physical memory location.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">addressIee</td><td>Address of IEE peripheral. </td></tr>
-    <tr><td class="paramname">addressMemory</td><td>Address of physical memory location. </td></tr>
+    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>KPP interrupts to enable. This is a logical OR of the enumeration :: kpp_interrupt_enable_t. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga10093cf63c2c2503214f0f66cb85e1dd"></a>
+<a class="anchor" id="gaa7de1f02a42c4176605cf7053f78baab"></a>
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void IEE_LockRegionConfig </td>
+          <td class="memname">static void KPP_DisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">IEE_Type *&#160;</td>
+          <td class="paramtype">KPP_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00051.html#ga55a2b0860e831b846b006f7e680b41dc">iee_region_t</a>&#160;</td>
-          <td class="paramname"><em>region</em>&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>KPP interrupts to disable. This is a logical OR of the enumeration :: kpp_interrupt_enable_t. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7e0b699fd3ac19ce1bbb95418871ab3e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint16_t KPP_GetStatusFlag </td>
+          <td>(</td>
+          <td class="paramtype">KPP_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The status of the KPP. Application can use the enum type in the "kpp_interrupt_enable_t" to get the right status of the related event. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad5f48c3a6027700e16a3f9bf477fa7e6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void KPP_ClearStatusFlag </td>
+          <td>(</td>
+          <td class="paramtype">KPP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>KPP mask to be cleared. This is a logical OR of the enumeration :: kpp_interrupt_enable_t. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7a240001a7a2b5fb84754a9a75afcb86"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void KPP_SetSynchronizeChain </td>
+          <td>(</td>
+          <td class="paramtype">KPP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>mask</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>KPP mask to be cleared. This is a logical OR of the enumeration :: kpp_sync_operation_t. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga636803e3b1c99ec6dc9756548d9ef7b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void KPP_keyPressScanning </td>
+          <td>(</td>
+          <td class="paramtype">KPP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>clockSrc_Hz</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -605,11 +576,12 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function locks IEE region registers for Key, Offset and Attribute. Only system reset can clear the Lock bit.</p>
+<p>This function will scanning all columns and rows. so all scanning data will be stored in the data pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>IEE peripheral address. </td></tr>
-    <tr><td class="paramname">region</td><td>Selection of the IEE region to be locked. </td></tr>
+    <tr><td class="paramname">base</td><td>KPP peripheral base address. </td></tr>
+    <tr><td class="paramname">data</td><td>KPP key press scanning data. The data buffer should be prepared with length at least equal to KPP_KEYPAD_COLUMNNUM_MAX * KPP_KEYPAD_ROWNUM_MAX. the data pointer is recommended to be a array like uint8_t data[KPP_KEYPAD_COLUMNNUM_MAX]. for example the data[2] = 4, that means in column 1 row 2 has a key press event. </td></tr>
+    <tr><td class="paramname">clockSrc_Hz</td><td>Source clock. </td></tr>
   </table>
   </dd>
 </dl>

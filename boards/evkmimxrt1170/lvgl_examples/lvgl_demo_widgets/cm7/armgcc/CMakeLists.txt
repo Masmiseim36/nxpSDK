@@ -35,15 +35,14 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../display_support.c"
 "${ProjDirPath}/../lvgl_demo_widgets.c"
 "${ProjDirPath}/../lv_conf.h"
-"${ProjDirPath}/../lv_demo_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/lv_demo_widgets.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/lv_demo_widgets.h"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/assets/img_clothes.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/assets/img_demo_widgets_avatar.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/assets/img_lvgl_logo.c"
-"${ProjDirPath}/../../../../../../middleware/lvgl/lv_examples/lv_demo.h"
+"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c"
+"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h"
+"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c"
+"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c"
+"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c"
+"${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/lv_demos.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -59,9 +58,9 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../..
-    ${ProjDirPath}/../../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets
-    ${ProjDirPath}/../../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/assets
-    ${ProjDirPath}/../../../../../../middleware/lvgl/lv_examples
+    ${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/widgets
+    ${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos/widgets/assets
+    ${ProjDirPath}/../../../../../../middleware/lvgl/lvgl/demos
     ${ProjDirPath}/../../..
 )
 
@@ -87,6 +86,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
+    ${ProjDirPath}/../../../../../../components/silicon_id
+    ${ProjDirPath}/../../../../xmcd
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/video/display/dc
 )
@@ -161,6 +162,10 @@ include(driver_pmu_1_MIMXRT1176_cm7)
 include(driver_dcdc_soc_MIMXRT1176_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1176_cm7)
+
+include(component_silicon_id_MIMXRT1176_cm7)
+
+include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 

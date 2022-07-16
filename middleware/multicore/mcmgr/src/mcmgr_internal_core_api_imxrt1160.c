@@ -152,6 +152,7 @@ mcmgr_status_t mcmgr_stop_core_internal(mcmgr_core_t coreNum)
     SRC->CTRL_M4CORE = 0x2U;
 
 #endif
+    s_mcmgrCoresContext[coreNum].state = kMCMGR_ResetCoreState;
     return kStatus_MCMGR_Success;
 }
 

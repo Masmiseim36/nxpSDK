@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CORE1_IMAGE_COPY_TO_RAM, CPU_MIMXRT1176DVMAA_cm7, __USE_SHMEM, MULTICORE_APP=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../erpc_common;../../../erpc_common/erpc_two_way_rpc/service;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/mcmgr/src;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>..;../../../erpc_common;../../../erpc_common/erpc_two_way_rpc/service;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/mcmgr/src;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1398,6 +1398,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -1439,6 +1454,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -1780,7 +1800,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CORE1_IMAGE_COPY_TO_RAM, CPU_MIMXRT1176DVMAA_cm7, __USE_SHMEM, MULTICORE_APP=1, SDK_OS_FREE_RTOS, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../erpc_common;../../../erpc_common/erpc_two_way_rpc/service;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/mcmgr/src;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>..;../../../erpc_common;../../../erpc_common/erpc_two_way_rpc/service;../..;../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt1170;../../../../../../middleware/multicore/rpmsg_lite/lib/include;../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/freertos;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../../middleware/multicore/mcmgr/src;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2844,6 +2864,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2885,6 +2920,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>

@@ -105,12 +105,12 @@ SECTIONS
     . = ALIGN(4);
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
-        */flexspi_nor_flash_ops.c.obj
+        */mflash_drv.c.obj
         */fsl_flexspi.c.obj
     ) .text)                 /* .text sections (code) */
     *(EXCLUDE_FILE(
         /* Exclude flash and frequently executed functions from XIP */
-        */flexspi_nor_flash_ops.c.obj
+        */mflash_drv.c.obj
         */fsl_flexspi.c.obj
     ) .text*)                /* .text* sections (code) */
     *(.rodata)               /* .rodata sections (constants, strings, etc.) */
@@ -217,7 +217,7 @@ SECTIONS
     __data_start__ = .;      /* create a global symbol at data start */
     *(m_usb_dma_init_data)
     /* Explicit placement of flash and frequently executed functions in RAM */
-    */flexspi_nor_flash_ops.c.obj(.text .text* .rodata .rodata*)
+    */mflash_drv.c.obj(.text .text* .rodata .rodata*)
     */fsl_flexspi.c.obj(.text .text* .rodata .rodata*)
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */

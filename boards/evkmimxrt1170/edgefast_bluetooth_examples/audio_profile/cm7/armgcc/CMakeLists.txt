@@ -79,6 +79,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../wifi_bt_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.c"
+"${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/lwipopts.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/lwippools.h"
 "${ProjDirPath}/../../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/wifi_config.h"
@@ -211,8 +213,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/ctn_pl.h"
 "${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/ftp_pl.c"
 "${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/ftp_pl.h"
-"${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.c"
-"${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.h"
 "${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart_internal.h"
 "${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/ht_read_task_pl.c"
 "${ProjDirPath}/../../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/map_pl.c"
@@ -456,21 +456,18 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../components/osa
     ${ProjDirPath}/../../../../../../middleware/fatfs
-    ${ProjDirPath}/../../../../../../middleware/wireless/framework
-    ${ProjDirPath}/../../../../../../components/mem_manager
-    ${ProjDirPath}/../../../../../../components/messaging
-    ${ProjDirPath}/../../../../../../components/rng
     ${ProjDirPath}/../../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../../components/flash/mflash/mimxrt1170
     ${ProjDirPath}/../../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../middleware/wifi_nxp
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
+    ${ProjDirPath}/../../../../../../components/gpio
+    ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../../components/internal_flash
-    ${ProjDirPath}/../../../../../../middleware/wireless
     ${ProjDirPath}/../../../../../../middleware/littlefs
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../../../middleware/maestro/streamer
     ${ProjDirPath}/../../../../../../components/log
 )
 
@@ -495,7 +492,7 @@ include(utility_debug_console_MIMXRT1176_cm7)
 
 include(driver_xip_device_MIMXRT1176_cm7)
 
-include(driver_xip_board_MIMXRT1176_cm7)
+include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_iomuxc_MIMXRT1176_cm7)
 
@@ -539,14 +536,6 @@ include(middleware_fatfs_MIMXRT1176_cm7)
 
 include(middleware_fatfs_usb_MIMXRT1176_cm7)
 
-include(middleware_wireless_framework_sec_lib_MIMXRT1176_cm7)
-
-include(component_mem_manager_MIMXRT1176_cm7)
-
-include(component_messaging_MIMXRT1176_cm7)
-
-include(component_software_rng_adapter_MIMXRT1176_cm7)
-
 include(component_mflash_file_MIMXRT1176_cm7)
 
 include(component_mflash_rt1170_MIMXRT1176_cm7)
@@ -559,11 +548,19 @@ include(middleware_mbedtls_port_ksdk_MIMXRT1176_cm7)
 
 include(middleware_mbedtls_rt2_MIMXRT1176_cm7)
 
+include(middleware_wifi_wifidriver_MIMXRT1176_cm7)
+
+include(middleware_freertos-kernel_MIMXRT1176_cm7)
+
+include(middleware_wifi_sdio_MIMXRT1176_cm7)
+
+include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
+
+include(component_igpio_adapter_MIMXRT1176_cm7)
+
 include(middleware_freertos-kernel_heap_4_MIMXRT1176_cm7)
 
 include(utility_shell_MIMXRT1176_cm7)
-
-include(middleware_freertos-kernel_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_vendor_nxp_wifi_MIMXRT1176_cm7)
 
@@ -619,10 +616,6 @@ include(component_flexspi_nor_flash_adapter_MIMXRT1176_cm7)
 
 include(component_flexspi_nor_flash_adapter_rt1060evk_MIMXRT1176_cm7)
 
-include(middleware_wireless_framework_function_lib_MIMXRT1176_cm7)
-
-include(middleware_wireless_framework_Common_MIMXRT1176_cm7)
-
 include(middleware_littlefs_MIMXRT1176_cm7)
 
 include(utilities_misc_utilities_MIMXRT1176_cm7)
@@ -645,6 +638,8 @@ include(driver_memory_MIMXRT1176_cm7)
 
 include(middleware_maestro_framework_doc_MIMXRT1176_cm7)
 
+include(middleware_maestro_framework_streamer_MIMXRT1176_cm7)
+
 include(middleware_usb_common_header_MIMXRT1176_cm7)
 
 include(middleware_usb_host_common_header_MIMXRT1176_cm7)
@@ -653,9 +648,7 @@ include(middleware_usb_host_msd_MIMXRT1176_cm7)
 
 include(driver_caam_MIMXRT1176_cm7)
 
-include(middleware_wifi_wifidriver_MIMXRT1176_cm7)
-
-include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
+include(middleware_wifi_sdio-2_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1176_cm7)
 
@@ -685,39 +678,11 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_streamer.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_cci.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_utils.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmp3.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libopus.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libogg.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libsrc48.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libwav.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/framework/SecLib/lib_crypto_m7.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
@@ -805,39 +770,11 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_streamer.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_cci.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmaestro_utils.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libmp3.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libopus.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libogg.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libsrc48.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/maestro/libs/cm7f/armgcc/release/libwav.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../middleware/wireless/framework/SecLib/lib_crypto_m7.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)

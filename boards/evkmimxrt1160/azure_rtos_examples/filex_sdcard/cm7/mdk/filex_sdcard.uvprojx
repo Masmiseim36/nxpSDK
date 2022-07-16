@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, FSL_RTOS_THREADX, SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SD_ENABLED, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -681,6 +681,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -896,12 +911,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1082,6 +1097,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -1463,7 +1483,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, FSL_RTOS_THREADX, SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SD_ENABLED, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1497,9 +1517,9 @@
             <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --legacyalign --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,3912</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -1810,6 +1830,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -2025,12 +2060,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2211,6 +2246,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -2592,7 +2632,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, FSL_RTOS_THREADX, SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SD_ENABLED, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2939,6 +2979,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -3154,12 +3209,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3340,6 +3395,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -3721,7 +3781,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1166DVM6A_cm7, FSL_RTOS_THREADX, SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE=0, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SD_ENABLED, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm7;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../components/gpio;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1166;../../../../xip;../../../../../../devices/MIMXRT1166/xip;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../rtos/azure-rtos/filex/common/inc;../../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3755,9 +3815,9 @@
             <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../../rtos/azure-rtos/binary/filex/cortex_m7/mdk/libfilex.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --legacyalign --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
-            <DisabledWarnings>6314</DisabledWarnings>
+            <DisabledWarnings>6314,3912</DisabledWarnings>
           </LDads>
         </TargetArmAds>
       </TargetOption>
@@ -4068,6 +4128,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>component/lists</GroupName>
           <Files>
             <File>
@@ -4283,12 +4358,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4469,6 +4544,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>

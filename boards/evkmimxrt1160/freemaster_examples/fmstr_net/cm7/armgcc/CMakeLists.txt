@@ -68,10 +68,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../components/phy
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
     ${ProjDirPath}/../../../../../../middleware/freemaster
+    ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
@@ -95,8 +95,6 @@ include(middleware_lwip_MIMXRT1166_cm7)
 include(driver_phy-common_MIMXRT1166_cm7)
 
 include(driver_enet_MIMXRT1166_cm7)
-
-include(utility_debug_console_MIMXRT1166_cm7)
 
 include(middleware_freertos-kernel_heap_3_MIMXRT1166_cm7)
 
@@ -149,6 +147,8 @@ include(driver_memory_MIMXRT1166_cm7)
 include(middleware_freertos-kernel_MIMXRT1166_cm7)
 
 include(middleware_freertos-kernel_extension_MIMXRT1166_cm7)
+
+include(utility_debug_console_MIMXRT1166_cm7)
 
 include(utilities_misc_utilities_MIMXRT1166_cm7)
 

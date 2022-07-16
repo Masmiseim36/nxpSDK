@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include;../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -442,6 +442,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -997,6 +1007,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -1336,9 +1351,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include;../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1372,7 +1387,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1446,6 +1461,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2001,6 +2026,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -2342,7 +2372,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include;../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2450,6 +2480,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3005,6 +3045,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -3346,7 +3391,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include;../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3454,6 +3499,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4009,6 +4064,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -4350,7 +4410,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include;../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4458,6 +4518,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5013,6 +5083,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -5352,9 +5427,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include;../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5388,7 +5463,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -5462,6 +5537,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6017,6 +6102,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -6358,7 +6448,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include;../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6466,6 +6556,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7021,6 +7121,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -7362,7 +7467,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../common/fmstr_example;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../CMSIS/Core/Include;../../../../xmcd</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7470,6 +7575,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8025,6 +8140,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>

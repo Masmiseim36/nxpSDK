@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_ETH_ENABLE_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -392,16 +392,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwip_mqtt_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id_otp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lwip_mqtt_id_otp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1624,6 +1614,11 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
             </File>
             <File>
+              <FileName>ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ecp.c</FilePath>
+            </File>
+            <File>
               <FileName>eui64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eui64.c</FilePath>
@@ -1647,11 +1642,6 @@
               <FileName>lcp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_ecp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
             </File>
             <File>
               <FileName>magic.c</FileName>
@@ -1831,41 +1821,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -1907,6 +1862,41 @@
               <FileName>system_MIMXRT1176_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm4.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2002,6 +1992,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2556,9 +2561,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_ETH_ENABLE_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2616,16 +2621,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwip_mqtt_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id_otp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lwip_mqtt_id_otp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3848,6 +3843,11 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
             </File>
             <File>
+              <FileName>ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ecp.c</FilePath>
+            </File>
+            <File>
               <FileName>eui64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eui64.c</FilePath>
@@ -3871,11 +3871,6 @@
               <FileName>lcp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_ecp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
             </File>
             <File>
               <FileName>magic.c</FileName>
@@ -4055,41 +4050,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -4131,6 +4091,41 @@
               <FileName>system_MIMXRT1176_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm4.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4226,6 +4221,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4780,9 +4790,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_ETH_ENABLE_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4840,16 +4850,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwip_mqtt_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id_otp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lwip_mqtt_id_otp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6072,6 +6072,11 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
             </File>
             <File>
+              <FileName>ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ecp.c</FilePath>
+            </File>
+            <File>
               <FileName>eui64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eui64.c</FilePath>
@@ -6095,11 +6100,6 @@
               <FileName>lcp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_ecp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
             </File>
             <File>
               <FileName>magic.c</FileName>
@@ -6279,41 +6279,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -6355,6 +6320,41 @@
               <FileName>system_MIMXRT1176_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm4.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6450,6 +6450,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7004,9 +7019,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_ETH_ENABLE_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7064,16 +7079,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwip_mqtt_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id_otp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lwip_mqtt_id_otp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8296,6 +8301,11 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
             </File>
             <File>
+              <FileName>ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ecp.c</FilePath>
+            </File>
+            <File>
               <FileName>eui64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eui64.c</FilePath>
@@ -8319,11 +8329,6 @@
               <FileName>lcp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_ecp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
             </File>
             <File>
               <FileName>magic.c</FileName>
@@ -8503,41 +8508,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -8579,6 +8549,41 @@
               <FileName>system_MIMXRT1176_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm4.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8674,6 +8679,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9228,9 +9248,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_ETH_ENABLE_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -9288,16 +9308,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwip_mqtt_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id_otp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lwip_mqtt_id_otp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10520,6 +10530,11 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
             </File>
             <File>
+              <FileName>ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ecp.c</FilePath>
+            </File>
+            <File>
               <FileName>eui64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eui64.c</FilePath>
@@ -10543,11 +10558,6 @@
               <FileName>lcp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_ecp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
             </File>
             <File>
               <FileName>magic.c</FileName>
@@ -10727,41 +10737,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -10803,6 +10778,41 @@
               <FileName>system_MIMXRT1176_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm4.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10898,6 +10908,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -11452,9 +11477,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_ETH_ENABLE_CACHE_CONTROL=1, USE_RTOS=1, PRINTF_ADVANCED_ENABLE=1, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
+              <IncludePath>..;../../../../../../../components/phy/mdio/enet_qos;../../../../../../../components/phy/device/phyrtl8211f;../../../../../../../middleware/lwip/src/include/lwip/apps;../../../../../../../middleware/lwip/port;../../../../../../../middleware/lwip/src;../../../../../../../middleware/lwip/src/include;../../../../../../../components/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../../components/silicon_id;../../../../../../../CMSIS/Core/Include;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -11512,16 +11537,6 @@
               <FileName>FreeRTOSConfig.h</FileName>
               <FileType>5</FileType>
               <FilePath>../FreeRTOSConfig.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwip_mqtt_id.h</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_mqtt_id_otp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../lwip_mqtt_id_otp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -12744,6 +12759,11 @@
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eap.c</FilePath>
             </File>
             <File>
+              <FileName>ecp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/ecp.c</FilePath>
+            </File>
+            <File>
               <FileName>eui64.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/eui64.c</FilePath>
@@ -12767,11 +12787,6 @@
               <FileName>lcp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwip_ecp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</FilePath>
             </File>
             <File>
               <FileName>magic.c</FileName>
@@ -12951,41 +12966,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -13027,6 +13007,41 @@
               <FileName>system_MIMXRT1176_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MIMXRT1176/system_MIMXRT1176_cm4.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MIMXRT1176/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -13122,6 +13137,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>

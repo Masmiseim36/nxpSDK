@@ -2,4 +2,5 @@
 set(CONFIG_USE_middleware_multicore_rpmsg_lite_freertos_MIMXRT1176_cm4 true)
 set(CONFIG_USE_component_serial_manager_uart_MIMXRT1176_cm4 true)
 set(CONFIG_USE_driver_lpuart_MIMXRT1176_cm4 true)
+set(CONFIG_USE_driver_common_MIMXRT1176_cm4 true)
 set(CONFIG_USE_middleware_freertos-kernel_MIMXRT1176_cm4 true)

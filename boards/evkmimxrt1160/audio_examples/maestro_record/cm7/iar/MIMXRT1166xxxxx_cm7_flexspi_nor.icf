@@ -7,7 +7,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMXRT1160RM, Rev 0, 03/2021
 **     Version:             rev. 0.1, 2020-12-29
-**     Build:               b210422
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -66,7 +66,7 @@ if (isdefinedsymbol(__stack_size__)) {
 if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = __heap_size__;
 } else {
-  define symbol __size_heap__          = 0x10000;
+  define symbol __size_heap__          = 0xF000;
 }
 
 define exported symbol __VECTOR_TABLE          = m_interrupts_start;
@@ -88,11 +88,12 @@ define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
 define block QACCESS_CODE  { section CodeQuickAccess };
+define block QACCESS_DATA  { section DataQuickAccess };
 
 define region core1_region = mem:[from core1_image_start to core1_image_end];
 define block CORE1_IMAGE_BLOCK          { section  __core1_image };
 
-initialize by copy { readwrite, section .textrw, section CodeQuickAccess };
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess, section DataQuickAccess };
 do not initialize  { section .noinit };
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
@@ -110,7 +111,8 @@ place in DATA2_region                       { readwrite object heap_4.o };
 place in DATA_region                        { block ZI };
 place in DATA_region                        { last block HEAP };
 place in NCACHE_region                      { block NCACHE_VAR };
+place in core1_region                       { block CORE1_IMAGE_BLOCK };
 place in CSTACK_region                      { block CSTACK };
 place in QACODE_region                      { section .textrw};
 place in QACODE_region                      { block QACCESS_CODE };
-place in core1_region                       { block CORE1_IMAGE_BLOCK };
+place in NCACHE_region                      { block QACCESS_DATA };

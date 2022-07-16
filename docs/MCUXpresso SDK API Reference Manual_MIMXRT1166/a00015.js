@@ -19,5 +19,5 @@ var a00015 =
     [ "CAAM_RNG_Deinit", "a00015.html#ga559516afd468f3d530bd329489a4edc3", null ],
     [ "CAAM_RNG_GenerateSecureKey", "a00015.html#ga1f116c5c74b3d79b0ba36374b4e707c1", null ],
     [ "CAAM_RNG_Reseed", "a00015.html#gae5050dac0e4d3b04a47235202d269015", null ],
-    [ "CAAM_RNG_GetRandomData", "a00015.html#ga5045a8f09386f5f2b7f809f30108e385", null ]
+    [ "CAAM_RNG_GetRandomData", "a00015.html#ga1896e9369bfdc948e3c17f22c17b6635", null ]
 ];

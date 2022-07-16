@@ -79,18 +79,20 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/flash/mflash/mimxrt1170
     ${ProjDirPath}/../../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../../middleware/lwip
+    ${ProjDirPath}/../../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
-    ${ProjDirPath}/../../../../../../middleware/wifi_nxp
-    ${ProjDirPath}/../../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../../components/gpio
+    ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
+    ${ProjDirPath}/../../../../../../components/wifi_bt_module
 )
 
 # include modules
@@ -108,23 +110,15 @@ include(middleware_mbedtls_port_ksdk_MIMXRT1176_cm7)
 
 include(middleware_mbedtls_rt2_MIMXRT1176_cm7)
 
-include(middleware_lwip_apps_httpssrv_MIMXRT1176_cm7)
-
-include(driver_clock_MIMXRT1176_cm7)
+include(middleware_wifi_wifidriver_MIMXRT1176_cm7)
 
 include(middleware_freertos-kernel_MIMXRT1176_cm7)
 
-include(middleware_freertos-kernel_heap_3_MIMXRT1176_cm7)
-
-include(middleware_lwip_MIMXRT1176_cm7)
-
 include(utility_debug_console_MIMXRT1176_cm7)
 
-include(middleware_wifi_MIMXRT1176_cm7)
+include(middleware_wifi_sdio_MIMXRT1176_cm7)
 
-include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1176_cm7)
-
-include(driver_usdhc_MIMXRT1176_cm7)
+include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
 
 include(middleware_sdmmc_sdio_MIMXRT1176_cm7)
 
@@ -133,6 +127,18 @@ include(middleware_sdmmc_common_MIMXRT1176_cm7)
 include(middleware_sdmmc_host_usdhc_MIMXRT1176_cm7)
 
 include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1176_cm7)
+
+include(component_igpio_adapter_MIMXRT1176_cm7)
+
+include(middleware_lwip_apps_httpssrv_MIMXRT1176_cm7)
+
+include(driver_clock_MIMXRT1176_cm7)
+
+include(middleware_freertos-kernel_heap_3_MIMXRT1176_cm7)
+
+include(middleware_lwip_MIMXRT1176_cm7)
+
+include(middleware_wifi_MIMXRT1176_cm7)
 
 include(driver_common_MIMXRT1176_cm7)
 
@@ -160,6 +166,8 @@ include(driver_pmu_1_MIMXRT1176_cm7)
 
 include(driver_dcdc_soc_MIMXRT1176_cm7)
 
+include(component_silicon_id_MIMXRT1176_cm7)
+
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
@@ -168,17 +176,19 @@ include(driver_caam_MIMXRT1176_cm7)
 
 include(driver_memory_MIMXRT1176_cm7)
 
-include(middleware_lwip_apps_httpsrv_MIMXRT1176_cm7)
-
 include(middleware_freertos-kernel_extension_MIMXRT1176_cm7)
 
-include(middleware_wifi_wifidriver_MIMXRT1176_cm7)
-
-include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
+include(middleware_wifi_sdio-2_MIMXRT1176_cm7)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1176_cm7)
 
 include(component_osa_free_rtos_MIMXRT1176_cm7)
+
+include(driver_usdhc_MIMXRT1176_cm7)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1176_cm7)
+
+include(middleware_lwip_apps_httpsrv_MIMXRT1176_cm7)
 
 include(utilities_misc_utilities_MIMXRT1176_cm7)
 

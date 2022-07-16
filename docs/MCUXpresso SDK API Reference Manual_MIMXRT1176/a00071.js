@@ -1,265 +1,276 @@
 var a00071 =
 [
-    [ "pmu_static_lpsr_ana_ldo_config_t", "a00071.html#a00608", [
-      [ "mode", "a00071.html#a19e82f342645c83aacaaad0f3877c27e", null ],
-      [ "enable2mALoad", "a00071.html#af494042d75f0dfbc8b51c0cd7618ffb9", null ],
-      [ "enable4mALoad", "a00071.html#a7926047ca9b3553f9d562cc640b4fa35", null ],
-      [ "enable20uALoad", "a00071.html#a8471619f0a2aca9fb98723d80e91650e", null ],
-      [ "enableStandbyMode", "a00071.html#ae03c4c0a9e7fea4515640a063a217bbe", null ]
+    [ "pwm_signal_param_t", "a00071.html#a00610", [
+      [ "pwmChannel", "a00071.html#afe284fd225ea192d3456b41dd2703365", null ],
+      [ "dutyCyclePercent", "a00071.html#acf5a17cbd7dafb2cca8afee404f12b17", null ],
+      [ "level", "a00071.html#a1cc3927fcf1fd1adaeac49139919ed4f", null ],
+      [ "deadtimeValue", "a00071.html#aad95dc08519edfd81485bad0640512f2", null ],
+      [ "faultState", "a00071.html#ad4d7b748ab3d9f789983a299d799ef50", null ]
     ] ],
-    [ "pmu_static_lpsr_dig_config_t", "a00071.html#a00609", [
-      [ "enableStableDetect", "a00071.html#a5959e8236f6a16bc50a26e33981b8ba6", null ],
-      [ "voltageStepTime", "a00071.html#a155fc75f7daea3955f23a7c74a7c5e47", null ],
-      [ "targetVoltage", "a00071.html#aebe748652164e98158f758a0dd7b526a", null ]
+    [ "pwm_config_t", "a00071.html#a00606", [
+      [ "enableDebugMode", "a00071.html#a6269c0b9d8089986d5ca6be2d59e0728", null ],
+      [ "enableWait", "a00071.html#a8606dc1ca1a8645f9f45b7ed55694ed6", null ],
+      [ "initializationControl", "a00071.html#a063619b08565ed073b4aa22065b6514b", null ],
+      [ "clockSource", "a00071.html#ae1129784787c30f1eafb856ef742316f", null ],
+      [ "prescale", "a00071.html#ae3583449715cded4b5d8f751243d1849", null ],
+      [ "pairOperation", "a00071.html#a7b35c872bee7e85d8aeda609b681a41f", null ],
+      [ "reloadLogic", "a00071.html#aa6c467701070fd42c3081e516a1a4faf", null ],
+      [ "reloadSelect", "a00071.html#adb40a7b5723fc3d4a0185275e8fda62b", null ],
+      [ "reloadFrequency", "a00071.html#a576607f47ae97b0c3eb47f9cfbab66d7", null ],
+      [ "forceTrigger", "a00071.html#a878aeddf9a10f2cb7ae5917cfe2c9c84", null ]
     ] ],
-    [ "pmu_snvs_dig_config_t", "a00071.html#a00606", [
-      [ "mode", "a00071.html#aec7c70e116b2d19aff82db755622ded7", null ],
-      [ "chargePumpCurrent", "a00071.html#a5a53c0ecdbfd93a0381cb7bde5a727bf", null ],
-      [ "dischargeResistorValue", "a00071.html#a77561e826b2361472fc17f5b6dd5f4b8", null ],
-      [ "trimValue", "a00071.html#af6a1b6104da33cf628141c77b90a5cd2", null ],
-      [ "enablePullDown", "a00071.html#a5ff70d40b8969ca5161d715bec8dc5e0", null ],
-      [ "enableLdoStable", "a00071.html#a6d074f8aba4bfcb9d362c86548f5f47e", null ]
+    [ "pwm_fault_input_filter_param_t", "a00071.html#a00607", [
+      [ "faultFilterCount", "a00071.html#a8dd64dbdb5cfddbc73aa831f6523cd06", null ],
+      [ "faultFilterPeriod", "a00071.html#a121148e856d8304cad33418c14cbcb49", null ],
+      [ "faultGlitchStretch", "a00071.html#adc4619cc4945da5964d4a90e7a6943ff", null ]
     ] ],
-    [ "pmu_static_bandgap_config_t", "a00071.html#a00607", [
-      [ "powerDownOption", "a00071.html#ae8348bb6e3993948796aa1564208deac", null ],
-      [ "enableLowPowerMode", "a00071.html#a7838757d27e540993b8ba100eb6f3ff6", null ],
-      [ "outputVoltage", "a00071.html#adb29383cd77094d2ec338beb09fb6ad2", null ],
-      [ "outputCurrent", "a00071.html#a70fe07dd7f9078db969b05afeae10082", null ]
+    [ "pwm_fault_param_t", "a00071.html#a00608", [
+      [ "faultClearingMode", "a00071.html#abd6959c9123d004bd98d1f000404eb7e", null ],
+      [ "faultLevel", "a00071.html#a623c03ffe07a6bb87f5f678cf965fc61", null ],
+      [ "enableCombinationalPath", "a00071.html#aadb707d1b75ac87f0cf1fab143a8b51d", null ],
+      [ "recoverMode", "a00071.html#ac771868777f59c5876e89d69c7a6552f", null ]
     ] ],
-    [ "pmu_well_bias_option_t", "a00071.html#a00611", [
-      [ "wellBiasData", "a00071.html#a93f9b29c0294a925aa4fafaa6130dcf3", null ],
-      [ "enablePWellOnly", "a00071.html#ae42efc9e1ea0d470d3f69a94c276dbd1", null ],
-      [ "reserved1", "a00071.html#a52c94b56a278cbf1ed7d2634a7de8264", null ],
-      [ "biasAreaSize", "a00071.html#a78fb89460ab1aa5a2d3aa25be9242843", null ],
-      [ "disableAdaptiveFreq", "a00071.html#ae3a85910ea4bc62f46b51d06c5062ee6", null ],
-      [ "wellBiasFreq", "a00071.html#abddd7abd2a5abab0596df262c019df3a", null ],
-      [ "clkSource", "a00071.html#a50ad44d6fecf5d714871957be697b32f", null ],
-      [ "freqReduction", "a00071.html#a7c86ebed16d265b6e6d2aea664301345", null ],
-      [ "enablePowerDownOption", "a00071.html#a444150e7a3e457f7d8c7a302c20b9697", null ],
-      [ "reserved2", "a00071.html#a61381ef26a799190928bd2cd7204bc74", null ],
-      [ "powerSource", "a00071.html#aa2e3b9be1e6da817d664f6c9b25082ee", null ],
-      [ "reserved3", "a00071.html#ae869a9064a8f0c69ab97857a9799e897", null ]
+    [ "pwm_input_capture_param_t", "a00071.html#a00609", [
+      [ "captureInputSel", "a00071.html#a010807beeb7b92f66bae9eb2c0107a70", null ],
+      [ "edgeCompareValue", "a00071.html#ab7f5713d68bcce0b9e12db75630dc73c", null ],
+      [ "edge0", "a00071.html#aa4255f37fdebd83a57003336d1118a2f", null ],
+      [ "edge1", "a00071.html#a2eb7622e237d0472a7cabc92a6327d90", null ],
+      [ "enableOneShotCapture", "a00071.html#a05d085bcc3aa391d8e2b2119d6f4f140", null ],
+      [ "fifoWatermark", "a00071.html#a3dd2b7c6d1b55c7d324d0e2a9f77b119", null ]
     ] ],
-    [ "pmu_well_bias_config_t", "a00071.html#a00610", [
-      [ "wellBiasOption", "a00071.html#a86d75b9a24f2346a4a268afc5e6e2688", null ],
-      [ "adjustment", "a00071.html#a67aea908e9baddd5f6862cc92a5765f6", null ]
+    [ "FSL_PWM_DRIVER_VERSION", "a00071.html#ga8bda5d1da1f6b7150e002c109a62d083", null ],
+    [ "PWM_SUBMODULE_SWCONTROL_WIDTH", "a00071.html#ga6e56de2326b1f4bf708bd7991010e63f", null ],
+    [ "pwm_submodule_t", "a00071.html#ga467e18574027c8e3bde8f61a3fe61010", [
+      [ "kPWM_Module_0", "a00071.html#gga467e18574027c8e3bde8f61a3fe61010add38c1b5a7f784f71f3cebf9a1bf3ff6", null ],
+      [ "kPWM_Module_1", "a00071.html#gga467e18574027c8e3bde8f61a3fe61010a47a6ce50cc1613c9988bf21d9bb44c4c", null ],
+      [ "kPWM_Module_2", "a00071.html#gga467e18574027c8e3bde8f61a3fe61010a0340ee44d37ea0644debbc392abe0218", null ],
+      [ "kPWM_Module_3", "a00071.html#gga467e18574027c8e3bde8f61a3fe61010a262d2987720c085ebda6b24b4e646ab9", null ]
     ] ],
-    [ "pmu_gpc_body_bias_config_t", "a00071.html#a00605", [
-      [ "PWELLRegulatorSize", "a00071.html#a2b1afa83f5a7a85d0baa29e17982f0b7", null ],
-      [ "NWELLRegulatorSize", "a00071.html#ae042091bf38cb93c515ee0887a057b76", null ],
-      [ "oscillatorSize", "a00071.html#a3ffa5a15c51a49a21f26b3b4cbed89a8", null ],
-      [ "regulatorStrength", "a00071.html#a01a5788e30480688ea8381de4fa19788", null ]
+    [ "pwm_channels_t", "a00071.html#ga595affbbaec64a811545de35ae1914ce", null ],
+    [ "pwm_value_register_t", "a00071.html#ga7772029819872f4f3ee61d3f715827d4", [
+      [ "kPWM_ValueRegister_0", "a00071.html#gga7772029819872f4f3ee61d3f715827d4a2629df804c88f83f3934ff2fbb68aacc", null ],
+      [ "kPWM_ValueRegister_1", "a00071.html#gga7772029819872f4f3ee61d3f715827d4a42790226368938e490216e5f2c63c2fd", null ],
+      [ "kPWM_ValueRegister_2", "a00071.html#gga7772029819872f4f3ee61d3f715827d4ae42d8eb24146ed351e0e42dc349885e2", null ],
+      [ "kPWM_ValueRegister_3", "a00071.html#gga7772029819872f4f3ee61d3f715827d4a7539de4e419733b706a122acfe8b1b8a", null ],
+      [ "kPWM_ValueRegister_4", "a00071.html#gga7772029819872f4f3ee61d3f715827d4a8bfe3c876423ba03198b0086bf95c9a3", null ],
+      [ "kPWM_ValueRegister_5", "a00071.html#gga7772029819872f4f3ee61d3f715827d4ae046f51b0c1edd5217aa3f4ed2cadfa0", null ]
     ] ],
-    [ "FSL_PMU_DRIVER_VERSION", "a00071.html#ga0dc3464cb828e0c8195cf6f4fd9fc9a8", null ],
-    [ "_pmu_setpoint_map", "a00071.html#ga3967d201db9617588b4e033d68a9ddd5", [
-      [ "kPMU_SetPoint0", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5ad2ae12b71f68165c86b142b347a9607e", null ],
-      [ "kPMU_SetPoint1", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5a2f8451a2d8e5c304cc887a095e3876b2", null ],
-      [ "kPMU_SetPoint2", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5ab67bd2f21aca79abcd1f11005e30536b", null ],
-      [ "kPMU_SetPoint3", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5a37407c02991cd4d58404faf3867c770b", null ],
-      [ "kPMU_SetPoint4", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5ac1f5a858bc462f4bb365e30b965f260f", null ],
-      [ "kPMU_SetPoint5", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5ac6a272dc8b1e5562f332eece1ae80415", null ],
-      [ "kPMU_SetPoint6", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5aa249aef1f120cfba0a4bbf4712ec8dff", null ],
-      [ "kPMU_SetPoint7", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5a7f2e760089cbbec20aca76a99f207a0f", null ],
-      [ "kPMU_SetPoint8", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5a369e918f35e45c2e02aa232bc9575766", null ],
-      [ "kPMU_SetPoint9", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5a968a7038a11d095666ac46f11f281968", null ],
-      [ "kPMU_SetPoint10", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5abeb561dd70b4931b22428fe67c433746", null ],
-      [ "kPMU_SetPoint11", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5aa663dddbb7df31e967004b3810d9c130", null ],
-      [ "kPMU_SetPoint12", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5a71617fe0d5916e486b223a477838ff23", null ],
-      [ "kPMU_SetPoint13", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5ae6a2e0b64d593f99af2585ff34224e8d", null ],
-      [ "kPMU_SetPoint14", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5a711b3c9c1db51d236c39651b4a87782f", null ],
-      [ "kPMU_SetPoint15", "a00071.html#gga3967d201db9617588b4e033d68a9ddd5a3fd0b42823c30bc6fd51af12e3c10e76", null ]
+    [ "_pwm_value_register_mask", "a00071.html#ga1ef571323a22659a47a056814c518928", [
+      [ "kPWM_ValueRegisterMask_0", "a00071.html#gga1ef571323a22659a47a056814c518928a69326d45df2c6ee651b821e0b6325855", null ],
+      [ "kPWM_ValueRegisterMask_1", "a00071.html#gga1ef571323a22659a47a056814c518928a16f9b677940307c9721e7322be3c60d6", null ],
+      [ "kPWM_ValueRegisterMask_2", "a00071.html#gga1ef571323a22659a47a056814c518928ad41f834769369cb8444d04b48ed06112", null ],
+      [ "kPWM_ValueRegisterMask_3", "a00071.html#gga1ef571323a22659a47a056814c518928a42baeac421f8acccb5dd97f62115f03e", null ],
+      [ "kPWM_ValueRegisterMask_4", "a00071.html#gga1ef571323a22659a47a056814c518928aa43d103a5a2fc1d7c175a5d2c0050cc8", null ],
+      [ "kPWM_ValueRegisterMask_5", "a00071.html#gga1ef571323a22659a47a056814c518928a87c70f83b1b4cedc4823944cd8344023", null ]
     ] ],
-    [ "pmu_ldo_name_t", "a00071.html#ga62e5bdc394b111c8c12c3b8e13c8b9d2", [
-      [ "kPMU_PllLdo", "a00071.html#gga62e5bdc394b111c8c12c3b8e13c8b9d2a6d47e631902d4c8539ff4bb1612b0700", null ],
-      [ "kPMU_LpsrAnaLdo", "a00071.html#gga62e5bdc394b111c8c12c3b8e13c8b9d2afcc84c3794326dfa89ab74c74b9be618", null ],
-      [ "kPMU_LpsrDigLdo", "a00071.html#gga62e5bdc394b111c8c12c3b8e13c8b9d2a7c7ae36e785ba073b8ce046b094ce1c0", null ],
-      [ "kPMU_SnvsDigLdo", "a00071.html#gga62e5bdc394b111c8c12c3b8e13c8b9d2a786b77ef59ac8b2dcea9b5e5062bf429", null ]
+    [ "pwm_clock_source_t", "a00071.html#ga54dcbb5e3e5c8ceebef5f46a9ec73a2f", [
+      [ "kPWM_BusClock", "a00071.html#gga54dcbb5e3e5c8ceebef5f46a9ec73a2faadd6fce563ffd4fcfa1b8fd32a6c8836", null ],
+      [ "kPWM_ExternalClock", "a00071.html#gga54dcbb5e3e5c8ceebef5f46a9ec73a2fa5491a1f9512916febc4d1e5a241f4aa1", null ],
+      [ "kPWM_Submodule0Clock", "a00071.html#gga54dcbb5e3e5c8ceebef5f46a9ec73a2facb3515bd116d5f3603ddedcfe12f0ec8", null ]
     ] ],
-    [ "pmu_body_bias_name_t", "a00071.html#ga02b51b9c56a85359b3fc1deb93fc98bb", [
-      [ "kPMU_RBB_SOC", "a00071.html#gga02b51b9c56a85359b3fc1deb93fc98bba962ddc782d4edc1158f43e63a6671de2", null ],
-      [ "kPMU_RBB_LPSR", "a00071.html#gga02b51b9c56a85359b3fc1deb93fc98bba52229fda3b450e198d9c270fdce98b6a", null ]
+    [ "pwm_clock_prescale_t", "a00071.html#ga1072624f12c3af3bba1591c9985961d0", [
+      [ "kPWM_Prescale_Divide_1", "a00071.html#gga1072624f12c3af3bba1591c9985961d0af9a5a8f75935115c248270592ebc1958", null ],
+      [ "kPWM_Prescale_Divide_2", "a00071.html#gga1072624f12c3af3bba1591c9985961d0a23a1e736f7176595b5c8f6928aae92af", null ],
+      [ "kPWM_Prescale_Divide_4", "a00071.html#gga1072624f12c3af3bba1591c9985961d0a22a28a9f43a62602bd76c6891def7df3", null ],
+      [ "kPWM_Prescale_Divide_8", "a00071.html#gga1072624f12c3af3bba1591c9985961d0a815f3c6fe8ebbf7cbc8321370b748c01", null ],
+      [ "kPWM_Prescale_Divide_16", "a00071.html#gga1072624f12c3af3bba1591c9985961d0ab480291453a4ed9f12bb649c3999cd7a", null ],
+      [ "kPWM_Prescale_Divide_32", "a00071.html#gga1072624f12c3af3bba1591c9985961d0a3609a2960ea5f6af9395bd712c835cd7", null ],
+      [ "kPWM_Prescale_Divide_64", "a00071.html#gga1072624f12c3af3bba1591c9985961d0a9329060508da1a966a938982f0437092", null ],
+      [ "kPWM_Prescale_Divide_128", "a00071.html#gga1072624f12c3af3bba1591c9985961d0a19e584bea4f6afaaf968fd6452763154", null ]
     ] ],
-    [ "pmu_control_mode_t", "a00071.html#ga1cf406bda502ebfe15b13f64e6424de8", [
-      [ "kPMU_StaticMode", "a00071.html#gga1cf406bda502ebfe15b13f64e6424de8adba499fea5219750d6447a87f4216043", null ],
-      [ "kPMU_GPCMode", "a00071.html#gga1cf406bda502ebfe15b13f64e6424de8ab8c886db257c21572c4fb705ca58e062", null ]
+    [ "pwm_force_output_trigger_t", "a00071.html#ga199c9464fb869977d72535e508628966", [
+      [ "kPWM_Force_Local", "a00071.html#gga199c9464fb869977d72535e508628966a9e11b14bc1860c492200b1370c672c6a", null ],
+      [ "kPWM_Force_Master", "a00071.html#gga199c9464fb869977d72535e508628966ac4b4c049b4469672fa062ca8e4afe5b6", null ],
+      [ "kPWM_Force_LocalReload", "a00071.html#gga199c9464fb869977d72535e508628966a9bb2f0d12171255d729380b2aacb92bb", null ],
+      [ "kPWM_Force_MasterReload", "a00071.html#gga199c9464fb869977d72535e508628966accf9880be990d673848acdcb9c6d58db", null ],
+      [ "kPWM_Force_LocalSync", "a00071.html#gga199c9464fb869977d72535e508628966ab4286c65207f98e1c2fe3c018a4a183e", null ],
+      [ "kPWM_Force_MasterSync", "a00071.html#gga199c9464fb869977d72535e508628966afea13339a2eeb6a11e8700cfd90dc8c3", null ],
+      [ "kPWM_Force_External", "a00071.html#gga199c9464fb869977d72535e508628966a764ad229154a4eaeee4ae8c407d060f2", null ],
+      [ "kPWM_Force_ExternalSync", "a00071.html#gga199c9464fb869977d72535e508628966a941c421adc51446d05dd65a257e081b9", null ]
     ] ],
-    [ "pmu_ldo_operate_mode_t", "a00071.html#ga4cabd91bd537d096382fd7953881c45c", [
-      [ "kPMU_LowPowerMode", "a00071.html#gga4cabd91bd537d096382fd7953881c45caa98362d60269bd57e36ba83dce6a766d", null ],
-      [ "kPMU_HighPowerMode", "a00071.html#gga4cabd91bd537d096382fd7953881c45cad8356f45326a1b00b9fbce66a4ef85d0", null ]
+    [ "pwm_init_source_t", "a00071.html#ga56a54ba9383680868db1e1292aceedd1", [
+      [ "kPWM_Initialize_LocalSync", "a00071.html#gga56a54ba9383680868db1e1292aceedd1abc2411b795be6f4f26efdc1d7abeadfa", null ],
+      [ "kPWM_Initialize_MasterReload", "a00071.html#gga56a54ba9383680868db1e1292aceedd1a46121e203b79d6f4bfa0e65f3151ea97", null ],
+      [ "kPWM_Initialize_MasterSync", "a00071.html#gga56a54ba9383680868db1e1292aceedd1a46d08f3cb3f213bfc543a5f31140dd89", null ],
+      [ "kPWM_Initialize_ExtSync", "a00071.html#gga56a54ba9383680868db1e1292aceedd1a81e313c61b9f2ca344156d26c46b88b1", null ]
     ] ],
-    [ "pmu_lpsr_ana_ldo_charge_pump_current_t", "a00071.html#gafd53442a462c3277a573bcdc7a1b0b51", [
-      [ "kPMU_LpsrAnaChargePump300nA", "a00071.html#ggafd53442a462c3277a573bcdc7a1b0b51ab20148bf72595c8577ac89575cc178f9", null ],
-      [ "kPMU_LpsrAnaChargePump400nA", "a00071.html#ggafd53442a462c3277a573bcdc7a1b0b51af596ef8a9648fb26780b1cafe3442c59", null ],
-      [ "kPMU_LpsrAnaChargePump500nA", "a00071.html#ggafd53442a462c3277a573bcdc7a1b0b51ad66c90b1780ab530cfd2f05f0dae5575", null ],
-      [ "kPMU_LpsrAnaChargePump600nA", "a00071.html#ggafd53442a462c3277a573bcdc7a1b0b51af58081fc0c2ec6eaf9448288e189645c", null ]
+    [ "pwm_load_frequency_t", "a00071.html#ga636ca143685fed2cb715c8e74b8e7d91", [
+      [ "kPWM_LoadEveryOportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a502575e9bd4268226093b0a60cb496f7", null ],
+      [ "kPWM_LoadEvery2Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91ae25e14c14030995b7bcafea1ce1cd0bb", null ],
+      [ "kPWM_LoadEvery3Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a8bef356364d1b93faecf843dd26071bb", null ],
+      [ "kPWM_LoadEvery4Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a994a426c30942ee491d83dcf14315f10", null ],
+      [ "kPWM_LoadEvery5Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a466a761a7e6855ac0f6ab43b4a5a4900", null ],
+      [ "kPWM_LoadEvery6Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91aa4b38e484380977443e365543194a83d", null ],
+      [ "kPWM_LoadEvery7Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a1eac6ad423d02507928c955a154c46e7", null ],
+      [ "kPWM_LoadEvery8Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a1ece67ccad5cbfe798eb8b2884d3d058", null ],
+      [ "kPWM_LoadEvery9Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a2afb25bbf82ea891d626ac5e7d5672a6", null ],
+      [ "kPWM_LoadEvery10Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a7a4c48816896b8ff0b2b574911329354", null ],
+      [ "kPWM_LoadEvery11Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a11bca58390b8d76d09df74743d40f90d", null ],
+      [ "kPWM_LoadEvery12Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a0ad8ab598380fb326ecaced36caae3b3", null ],
+      [ "kPWM_LoadEvery13Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91af01c1a29ee56d9971bf39066926c9b41", null ],
+      [ "kPWM_LoadEvery14Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a8d394dde4e8bee1e79602903744d1108", null ],
+      [ "kPWM_LoadEvery15Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91a9978f86435c6102452f6253d9b8e9f16", null ],
+      [ "kPWM_LoadEvery16Oportunity", "a00071.html#gga636ca143685fed2cb715c8e74b8e7d91ae5e40f251ac27cb47862be061094a04c", null ]
     ] ],
-    [ "pmu_lpsr_ana_ldo_output_range_t", "a00071.html#gaf1a7a0f5e2a23a02e92ce83de9c0540b", [
-      [ "kPMU_LpsrAnaLdoOutputFrom1P77To1P83", "a00071.html#ggaf1a7a0f5e2a23a02e92ce83de9c0540ba512aa2c7975d37b0608a4019949ccd35", null ],
-      [ "kPMU_LpsrAnaLdoOutputFrom1P72To1P77", "a00071.html#ggaf1a7a0f5e2a23a02e92ce83de9c0540baa6e40af57bb5d8c4bc5df3f48fbb4a0d", null ],
-      [ "kPMU_LpsrAnaLdoOutputFrom1P82To1P88", "a00071.html#ggaf1a7a0f5e2a23a02e92ce83de9c0540ba567593432a76a41c208b4cc5521b101f", null ]
+    [ "pwm_fault_input_t", "a00071.html#ga5b339bfb308c5c3b4a1f3170a8653926", [
+      [ "kPWM_Fault_0", "a00071.html#gga5b339bfb308c5c3b4a1f3170a8653926aa50cf34eeaa8076d5ea0df6a38e2aee3", null ],
+      [ "kPWM_Fault_1", "a00071.html#gga5b339bfb308c5c3b4a1f3170a8653926a3bd0bf391f22f4998a3086c6d711ec56", null ],
+      [ "kPWM_Fault_2", "a00071.html#gga5b339bfb308c5c3b4a1f3170a8653926a7a3b2460e58d5ba0256d80b3be07b5bb", null ],
+      [ "kPWM_Fault_3", "a00071.html#gga5b339bfb308c5c3b4a1f3170a8653926a4a75c3be4618667d27733b946d5a96c6", null ]
     ] ],
-    [ "pmu_lpsr_dig_voltage_step_time_t", "a00071.html#ga5717b7e7b56a14cb3ea26ea178d607c5", [
-      [ "kPMU_LpsrDigVoltageStepInc15us", "a00071.html#gga5717b7e7b56a14cb3ea26ea178d607c5a6677e2fc5dd9dc21663dd620c0f18a8f", null ],
-      [ "kPMU_LpsrDigVoltageStepInc25us", "a00071.html#gga5717b7e7b56a14cb3ea26ea178d607c5abb5c26688e2cc6f653115dc46a9167bb", null ],
-      [ "kPMU_LpsrDigVoltageStepInc50us", "a00071.html#gga5717b7e7b56a14cb3ea26ea178d607c5a32f1c9a6d1bd0a76a1b3ae8fb373e63a", null ],
-      [ "kPMU_LpsrDigVoltageStepInc100us", "a00071.html#gga5717b7e7b56a14cb3ea26ea178d607c5ab7af9d2e14e9c3b224d1cbdebe5d4342", null ]
+    [ "pwm_fault_disable_t", "a00071.html#ga7b8fa42a683b0c074f0ca0b7e3085d5c", [
+      [ "kPWM_FaultDisable_0", "a00071.html#gga7b8fa42a683b0c074f0ca0b7e3085d5ca9ae335b5e1a904709d60ced25524e908", null ],
+      [ "kPWM_FaultDisable_1", "a00071.html#gga7b8fa42a683b0c074f0ca0b7e3085d5caa65d2b110e545374d5afb5c5eb130b6b", null ],
+      [ "kPWM_FaultDisable_2", "a00071.html#gga7b8fa42a683b0c074f0ca0b7e3085d5ca36daf6bffafb09f096d749e82a522925", null ],
+      [ "kPWM_FaultDisable_3", "a00071.html#gga7b8fa42a683b0c074f0ca0b7e3085d5ca84c9c0fdc52cdc5d42fc2f9b7f57adc8", null ]
     ] ],
-    [ "pmu_lpsr_dig_target_output_voltage_t", "a00071.html#gaa299bb9f96e32600c5c16083e9217e94", [
-      [ "kPMU_LpsrDigTargetStableVoltage0P631V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94ad114eeb10a598defdf83a8cfb1919909", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P65V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a2136dfcc83aa8e19056a3c2e34e405d3", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P67V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a4574239584856e51b1e9482945e3947f", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P689V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a0a8eb876aea78c7c87b89a71bc6feff6", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P709V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a34b75a3648b63bc0e5d2a9116b92d287", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P728V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a77f63d334973327e65d9747b35b760a5", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P748V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a696180e04917b55e4fbd2136e761f7aa", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P767V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94aa45563d129a0e6c6fc5c226f66fb51b8", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P786V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94afc7cfddc91a471f821929b8a7d7e8d73", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P806V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a3ca6093774012054518abf3883132db4", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P825V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94ad92446346a4d975fa21724193f2e5bcd", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P845V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a22ed2dbf5ff1879effcec6adfdc1f66c", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P864V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a17f50025bacee44db3a2cd231d9fc3d0", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P883V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a4ea745c27541a7dfa540e15f895be14a", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P903V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a784d41a4305515c87a26641a9f3c7fe9", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P922V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a69ec8b951b626671e82dbe9c82b0fba5", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P942V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94aff482f61fe242f96e50424e549b066f4", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P961V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a4076af3674d5edb4a9ee5bd73d500346", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage0P981V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a4277fdc02b962a1a56cad5bcddbc477b", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P0V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a7a62014ed364b614b211f099e0569a6b", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P019V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a7856aeca0513f1a52abcd61fe371d0a8", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P039V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a4134e6b6ce0c7a5eda1b40af41884a73", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P058V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a162e5a23a1a6cda081b9cd1b49381f44", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P078V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94ade108eb3e7d3cbc320aa6acb19ca4623", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P097V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a22eb6ca8ad063ee4eb4626973dc9217b", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P117V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a5c284b0d3a1767c63a15efa94edf7b8d", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P136V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94aa907eb8fb7dedb75a580c6de7b09e5ab", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P155V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a01c97332679a7da128c0bee4e0dd4cc0", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P175V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94ae8b0531ef427c48c0601ce472b83318c", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P194V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94afd8fa5ab1caeb5a68663c0ae8fecb944", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P214V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a46380349ed123a0626830615ebc2494a", null ],
-      [ "kPMU_LpsrDigTargetStableVoltage1P233V", "a00071.html#ggaa299bb9f96e32600c5c16083e9217e94a9747c84f7cea6189dffa8257cb5987a8", null ]
+    [ "pwm_fault_channels_t", "a00071.html#gaa43032deb04cbea24f78ef9e85025c1b", null ],
+    [ "pwm_input_capture_edge_t", "a00071.html#gad5bbf1775f0f1d22d37523c5062f044b", [
+      [ "kPWM_Disable", "a00071.html#ggad5bbf1775f0f1d22d37523c5062f044ba3a9b563f19903f48e0dc698b1bd9e7cb", null ],
+      [ "kPWM_FallingEdge", "a00071.html#ggad5bbf1775f0f1d22d37523c5062f044ba789adc57426b9cab5e701edcfef6dd98", null ],
+      [ "kPWM_RisingEdge", "a00071.html#ggad5bbf1775f0f1d22d37523c5062f044ba3b3dfb3faa75faef27dca1156af8f930", null ],
+      [ "kPWM_RiseAndFallEdge", "a00071.html#ggad5bbf1775f0f1d22d37523c5062f044ba2287e78066381060836aa41f70f26395", null ]
     ] ],
-    [ "pmu_snvs_dig_charge_pump_current_t", "a00071.html#ga20cf7027b3327fce7a3ae90e14a14197", [
-      [ "kPMU_SnvsDigChargePump12P5nA", "a00071.html#gga20cf7027b3327fce7a3ae90e14a14197ac523b98eea509c3b0895b09b465c23ef", null ],
-      [ "kPMU_SnvsDigChargePump6P25nA", "a00071.html#gga20cf7027b3327fce7a3ae90e14a14197adf18a1fc6d8b71e871d408a7be62e332", null ],
-      [ "kPMU_SnvsDigChargePump18P75nA", "a00071.html#gga20cf7027b3327fce7a3ae90e14a14197aa7f9138b59a84fc74608ca84fd25ac01", null ]
+    [ "pwm_force_signal_t", "a00071.html#ga6429e832c8b26915f2448463ab396cd1", [
+      [ "kPWM_UsePwm", "a00071.html#gga6429e832c8b26915f2448463ab396cd1a166c8c92dffb307770373f011f58d8b6", null ],
+      [ "kPWM_InvertedPwm", "a00071.html#gga6429e832c8b26915f2448463ab396cd1a1c5e51e8f0bf695ca6d554719042f886", null ],
+      [ "kPWM_SoftwareControl", "a00071.html#gga6429e832c8b26915f2448463ab396cd1acf2037b15d767df630652ecdcc0b6b5a", null ],
+      [ "kPWM_UseExternal", "a00071.html#gga6429e832c8b26915f2448463ab396cd1aeaf780fe39f7852159d59b95361f5799", null ]
     ] ],
-    [ "pmu_snvs_dig_discharge_resistor_value_t", "a00071.html#ga21742aafafb8fa78e9127c8a9ba2f7f7", [
-      [ "kPMU_SnvsDigDischargeResistor15K", "a00071.html#gga21742aafafb8fa78e9127c8a9ba2f7f7a4ded66058db3116316eb5aa28ed56685", null ],
-      [ "kPMU_SnvsDigDischargeResistor30K", "a00071.html#gga21742aafafb8fa78e9127c8a9ba2f7f7af61d462722868e82fa204cd06fa31e55", null ],
-      [ "kPMU_SnvsDigDischargeResistor9K", "a00071.html#gga21742aafafb8fa78e9127c8a9ba2f7f7a71168a2eb0fe76daeb83637f8ed8b7c5", null ]
+    [ "pwm_chnl_pair_operation_t", "a00071.html#ga74af21116f00e824d05e776ddccb0802", [
+      [ "kPWM_Independent", "a00071.html#gga74af21116f00e824d05e776ddccb0802a4e4e74c3efd797dcc5bd430df090c548", null ],
+      [ "kPWM_ComplementaryPwmA", "a00071.html#gga74af21116f00e824d05e776ddccb0802a001cd311a33d4f1bf3bcfb0882ed30c2", null ],
+      [ "kPWM_ComplementaryPwmB", "a00071.html#gga74af21116f00e824d05e776ddccb0802a1c1204d77dfefb55460b359c9911d3df", null ]
     ] ],
-    [ "_pmu_static_bandgap_power_down_option", "a00071.html#gaaeddf485432a111c567f4674a44ac4c2", [
-      [ "kPMU_PowerDownBandgapFully", "a00071.html#ggaaeddf485432a111c567f4674a44ac4c2a7e2a729152f8166d917a531188d87c92", null ],
-      [ "kPMU_PowerDownVoltageReferenceOutputOnly", "a00071.html#ggaaeddf485432a111c567f4674a44ac4c2a7c5dfd30ba438ed41b4122a1af403df4", null ],
-      [ "kPMU_PowerDownBandgapVBGUPDetector", "a00071.html#ggaaeddf485432a111c567f4674a44ac4c2afba6969e0025df4a72952d0218c74684", null ]
+    [ "pwm_register_reload_t", "a00071.html#ga1376825a790fbe133bab869191bf5764", [
+      [ "kPWM_ReloadImmediate", "a00071.html#gga1376825a790fbe133bab869191bf5764a0302e609960d4cdd2d9017d76dabb12f", null ],
+      [ "kPWM_ReloadPwmHalfCycle", "a00071.html#gga1376825a790fbe133bab869191bf5764a1f4ca50703a5f530ca5436647bee5d84", null ],
+      [ "kPWM_ReloadPwmFullCycle", "a00071.html#gga1376825a790fbe133bab869191bf5764a143f812e649672592ac6f2966239a80f", null ],
+      [ "kPWM_ReloadPwmHalfAndFullCycle", "a00071.html#gga1376825a790fbe133bab869191bf5764a87c32f53e2c480284ebd863c866d76c0", null ]
     ] ],
-    [ "pmu_bandgap_output_VBG_voltage_value_t", "a00071.html#ga7d48569e695b18c5da93505a6cb645c4", [
-      [ "kPMU_BandgapOutputVBGVoltageNominal", "a00071.html#gga7d48569e695b18c5da93505a6cb645c4a7ae8a4a3ddfe9a4686d9690a87a86cfc", null ],
-      [ "kPMU_BandgapOutputVBGVoltagePlus10mV", "a00071.html#gga7d48569e695b18c5da93505a6cb645c4a1b8a5908d19f194f11f98d3266bff3cb", null ],
-      [ "kPMU_BandgapOutputVBGVoltagePlus20mV", "a00071.html#gga7d48569e695b18c5da93505a6cb645c4a896bcf46bbdaf7607eb1ca2708b32037", null ],
-      [ "kPMU_BandgapOutputVBGVoltagePlus30mV", "a00071.html#gga7d48569e695b18c5da93505a6cb645c4a005d7288cc2a12748f6caa6133746da3", null ],
-      [ "kPMU_BandgapOutputVBGVoltageMinus10mV", "a00071.html#gga7d48569e695b18c5da93505a6cb645c4a04a05fb8f21410c453fa151ebcc20b83", null ],
-      [ "kPMU_BandgapOutputVBGVoltageMinus20mV", "a00071.html#gga7d48569e695b18c5da93505a6cb645c4a6d800d681c922a4672a82ddc0984c5e3", null ],
-      [ "kPMU_BandgapOutputVBGVoltageMinus30mV", "a00071.html#gga7d48569e695b18c5da93505a6cb645c4a7464ed8a2654cb61e07cb52501368383", null ],
-      [ "kPMU_BandgapOutputVBGVoltageMinus40mV", "a00071.html#gga7d48569e695b18c5da93505a6cb645c4a14a042c855baacd41bde41785a96f3df", null ]
+    [ "pwm_fault_recovery_mode_t", "a00071.html#ga10bb013dcfa77ce708fe90ac290894e7", [
+      [ "kPWM_NoRecovery", "a00071.html#gga10bb013dcfa77ce708fe90ac290894e7ad683c9a0ca12b4932bb3e753a1b71c44", null ],
+      [ "kPWM_RecoverHalfCycle", "a00071.html#gga10bb013dcfa77ce708fe90ac290894e7a9438b2356162912bca02e9bc87a6218c", null ],
+      [ "kPWM_RecoverFullCycle", "a00071.html#gga10bb013dcfa77ce708fe90ac290894e7a79b1439966e60152ede2e96789640b8a", null ],
+      [ "kPWM_RecoverHalfAndFullCycle", "a00071.html#gga10bb013dcfa77ce708fe90ac290894e7a0759098353e5f56bb2aff98f46b57c7e", null ]
     ] ],
-    [ "pmu_bandgap_output_current_value_t", "a00071.html#ga19de4c5ff8822259f16283ca085c46b9", [
-      [ "kPMU_OutputCurrent11P5uA", "a00071.html#gga19de4c5ff8822259f16283ca085c46b9a408074778615f372cdf9731c9444795a", null ],
-      [ "kPMU_OutputCurrent11P8uA", "a00071.html#gga19de4c5ff8822259f16283ca085c46b9a9c9b1bfde177e0f9083c3b0453be715b", null ],
-      [ "kPMU_OutputCurrent12P1uA", "a00071.html#gga19de4c5ff8822259f16283ca085c46b9ac35a6f7661497b75837d5efef9ac339f", null ],
-      [ "kPMU_OutputCurrent12P4uA", "a00071.html#gga19de4c5ff8822259f16283ca085c46b9a8c12e0910d9eeca3495c4027755428f5", null ],
-      [ "kPMU_OutputCurrent12P7uA", "a00071.html#gga19de4c5ff8822259f16283ca085c46b9a005246d981092b9ffa80e779e0688cc9", null ],
-      [ "kPMU_OutputCurrent13P0uA", "a00071.html#gga19de4c5ff8822259f16283ca085c46b9a370f4be12312222ba663cd0c01bc23df", null ],
-      [ "kPMU_OutputCurrent13P3uA", "a00071.html#gga19de4c5ff8822259f16283ca085c46b9a09da1b841d49d4b42ca41aeeb15936ad", null ]
+    [ "pwm_interrupt_enable_t", "a00071.html#ga4f56d1f07b6947af55eccc5375ed520d", [
+      [ "kPWM_CompareVal0InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520daafc673bd39a17c660c2b7ab0f8e3dc82", null ],
+      [ "kPWM_CompareVal1InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520da2e38a714989c515bce7cf90f8526fe69", null ],
+      [ "kPWM_CompareVal2InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520daf595e6cd0654614be3b013a40071e43b", null ],
+      [ "kPWM_CompareVal3InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520da11b2ef7316b810c58d6da5374c15249c", null ],
+      [ "kPWM_CompareVal4InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520da69a6bfc5caa28f56280900793223843b", null ],
+      [ "kPWM_CompareVal5InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520daa162e16f672b526d73a20c7bd9d596b8", null ],
+      [ "kPWM_CaptureX0InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520dab7fd23d9cbe1485ddfea034329bf21a4", null ],
+      [ "kPWM_CaptureX1InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520da75e7a7c02cac25144674919fae5c988b", null ],
+      [ "kPWM_CaptureB0InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520da60950ae650bdac58cc9d7525ee0d26f0", null ],
+      [ "kPWM_CaptureB1InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520dabeb97760b062764028ce3548bf4bd4f0", null ],
+      [ "kPWM_CaptureA0InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520da265b164e3f9f77535218f57a4be1b53d", null ],
+      [ "kPWM_CaptureA1InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520daea67600460b65ab0fdcc702cfe8dce41", null ],
+      [ "kPWM_ReloadInterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520dacea7ba0ccfc25c688ccfbae5e9082949", null ],
+      [ "kPWM_ReloadErrorInterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520da5c181e7dfc61241177e0a2e761c12bc6", null ],
+      [ "kPWM_Fault0InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520dad02badace3737fa894aa30c3d4cb78a2", null ],
+      [ "kPWM_Fault1InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520dae7860301d0be780fd19d84009205ee6d", null ],
+      [ "kPWM_Fault2InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520daf84aa7e6052c1761a770927a22fa4061", null ],
+      [ "kPWM_Fault3InterruptEnable", "a00071.html#gga4f56d1f07b6947af55eccc5375ed520da5da7daaf3baaf533de940613f720ef45", null ]
     ] ],
-    [ "pmu_well_bias_power_source_t", "a00071.html#ga8a30d3378e811d216d31e5f481f68100", [
-      [ "kPMU_WellBiasPowerFromLpsrDigLdo", "a00071.html#gga8a30d3378e811d216d31e5f481f68100a7030bcb42454bd156964c4ffa9fa939a", null ],
-      [ "kPMU_WellBiasPowerFromDCDC", "a00071.html#gga8a30d3378e811d216d31e5f481f68100a3a5417e384d941238d6284c907c0a424", null ]
+    [ "pwm_status_flags_t", "a00071.html#gabc3ee1e46578039b2dbe795d60a69b2f", [
+      [ "kPWM_CompareVal0Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa4085859503a306f4838b8708270aebd3", null ],
+      [ "kPWM_CompareVal1Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa76c8be56ca875e509cf7249e16051221", null ],
+      [ "kPWM_CompareVal2Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fabda314afa7b77b8fb1280ab8ad8c92e4", null ],
+      [ "kPWM_CompareVal3Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa9eb2effb85360b09a5823aa8821a1d85", null ],
+      [ "kPWM_CompareVal4Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa5574e42fdfbb30c9a22e0da0c703a351", null ],
+      [ "kPWM_CompareVal5Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa6c732459b6d238d783c9049d11d7541c", null ],
+      [ "kPWM_CaptureX0Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2faf0334248cfeec0e102b747c6112ddc52", null ],
+      [ "kPWM_CaptureX1Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fac40ed759adecc7104fe66d77e226f5bd", null ],
+      [ "kPWM_CaptureB0Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa01e003611b957a607bc6f00df965af92", null ],
+      [ "kPWM_CaptureB1Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa8883f6fb88a1eafe3696a4e5287155cd", null ],
+      [ "kPWM_CaptureA0Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa8777414835e99f9d0f9376dbfe981a16", null ],
+      [ "kPWM_CaptureA1Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fab80c16b4b478e220ccda0b6427fbbb1a", null ],
+      [ "kPWM_ReloadFlag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa335926bdcc79dfa6e3df0127d2d426c2", null ],
+      [ "kPWM_ReloadErrorFlag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fa675549b86323ccf753f9189942f1d208", null ],
+      [ "kPWM_RegUpdatedFlag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fab03a24483985e2a865ae61402a80a08e", null ],
+      [ "kPWM_Fault0Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2faa475a054c52a6f6d405221835bcec032", null ],
+      [ "kPWM_Fault1Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2faf2ac36eb7c23cd116999efb473ba5120", null ],
+      [ "kPWM_Fault2Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2faa4040bb373c31ab8f79a2960bc0a04fc", null ],
+      [ "kPWM_Fault3Flag", "a00071.html#ggabc3ee1e46578039b2dbe795d60a69b2fadaca248c0c3948533401a8dad2c1f6d2", null ]
     ] ],
-    [ "pmu_bias_area_size_t", "a00071.html#ga5333ba2e94113d6c7ada3d546e62d819", [
-      [ "kPMU_180uA_6mm2At125C", "a00071.html#gga5333ba2e94113d6c7ada3d546e62d819afa87d979c1673e35c58bf64b70389c1c", null ],
-      [ "kPMU_150uA_5mm2At125C", "a00071.html#gga5333ba2e94113d6c7ada3d546e62d819a5939f82a3393ccf89790fbbe3131ec84", null ],
-      [ "kPMU_120uA_4mm2At125C", "a00071.html#gga5333ba2e94113d6c7ada3d546e62d819a6dfbb6b8d97c6e152f8090b21e7ae2b9", null ],
-      [ "kPMU_90uA_3mm2At125C", "a00071.html#gga5333ba2e94113d6c7ada3d546e62d819aba0af4509b97e57a69ca260b554a798d", null ],
-      [ "kPMU_60uA_2mm2At125C", "a00071.html#gga5333ba2e94113d6c7ada3d546e62d819aa13f6f679e3c3f21d58f4bbc03494a90", null ],
-      [ "kPMU_45uA_1P5mm2At125C", "a00071.html#gga5333ba2e94113d6c7ada3d546e62d819af7dede2e5f6c5e10227cb4e0cb31d3f0", null ],
-      [ "kPMU_30uA_1mm2At125C", "a00071.html#gga5333ba2e94113d6c7ada3d546e62d819a9d03e31a8135d466670929e49db0c2c5", null ],
-      [ "kPMU_15uA_0P5mm2At125C", "a00071.html#gga5333ba2e94113d6c7ada3d546e62d819a4d690a022722092c2887d8ab7245918f", null ]
+    [ "pwm_dma_enable_t", "a00071.html#ga01e708fa3b2c8846dd304f356629098d", [
+      [ "kPWM_CaptureX0DMAEnable", "a00071.html#gga01e708fa3b2c8846dd304f356629098da7e642c13a0b6db82aa3d7d5645f0b6ae", null ],
+      [ "kPWM_CaptureX1DMAEnable", "a00071.html#gga01e708fa3b2c8846dd304f356629098da5dfeb4fe686f9ee45bf8122f7f2b737e", null ],
+      [ "kPWM_CaptureB0DMAEnable", "a00071.html#gga01e708fa3b2c8846dd304f356629098da438b71dd5e4667303f4c728ec4397fb4", null ],
+      [ "kPWM_CaptureB1DMAEnable", "a00071.html#gga01e708fa3b2c8846dd304f356629098dabc1de00390af58663d14b4a4c0613bd4", null ],
+      [ "kPWM_CaptureA0DMAEnable", "a00071.html#gga01e708fa3b2c8846dd304f356629098dabe6e1b5d10408541556f1cdc5f5f8e32", null ],
+      [ "kPWM_CaptureA1DMAEnable", "a00071.html#gga01e708fa3b2c8846dd304f356629098da4c8d87cc83b851250029545de8f6138e", null ]
     ] ],
-    [ "pmu_well_bias_typical_freq_t", "a00071.html#gac35a088cbc832acda28f72f1a02e5fb6", [
-      [ "kPMU_OscFreqDiv128", "a00071.html#ggac35a088cbc832acda28f72f1a02e5fb6aa481f784839850cd3e96d211d1187bc9", null ],
-      [ "kPMU_OscFreqDiv64", "a00071.html#ggac35a088cbc832acda28f72f1a02e5fb6a43172501da0aef0c600031e6ad3d49f6", null ],
-      [ "kPMU_OscFreqDiv32", "a00071.html#ggac35a088cbc832acda28f72f1a02e5fb6a900a52260444f3fe3858bbb7a17cc7fb", null ],
-      [ "kPMU_OscFreqDiv16", "a00071.html#ggac35a088cbc832acda28f72f1a02e5fb6a2fb9b3a945d6d57c82a7b1b721dbca84", null ],
-      [ "kPMU_OscFreqDiv8", "a00071.html#ggac35a088cbc832acda28f72f1a02e5fb6abef0c9e14ad1d8ad7e6b794c39f35f50", null ],
-      [ "kPMU_OscFreqDiv2", "a00071.html#ggac35a088cbc832acda28f72f1a02e5fb6a17d3cbe81dd73c3ed2a46adde3b96271", null ],
-      [ "kPMU_OscFreq", "a00071.html#ggac35a088cbc832acda28f72f1a02e5fb6ad3090b93ee109967228bc3df656d5a18", null ]
+    [ "pwm_dma_source_select_t", "a00071.html#ga067a23696636cfa17157ddae5a8c4db9", [
+      [ "kPWM_DMARequestDisable", "a00071.html#gga067a23696636cfa17157ddae5a8c4db9a37f70ddc17861bd440eadad75053e13b", null ],
+      [ "kPWM_DMAWatermarksEnable", "a00071.html#gga067a23696636cfa17157ddae5a8c4db9aa846cccab4b46052e26fc655dd5d2d1c", null ],
+      [ "kPWM_DMALocalSync", "a00071.html#gga067a23696636cfa17157ddae5a8c4db9a00a0a894a36b9d5e8b1c59618b1641d4", null ],
+      [ "kPWM_DMALocalReload", "a00071.html#gga067a23696636cfa17157ddae5a8c4db9add80df2e06dc89139243b44baf79b8d5", null ]
     ] ],
-    [ "pmu_adaptive_clock_source_t", "a00071.html#gae947cdd8eba9339bec4d3b056ea1bfa1", [
-      [ "kPMU_AdaptiveClkSourceOscClk", "a00071.html#ggae947cdd8eba9339bec4d3b056ea1bfa1ae1b52476fc0e6fb502d9f392b4a150c6", null ],
-      [ "kPMU_AdaptiveClkSourceChargePumpClk", "a00071.html#ggae947cdd8eba9339bec4d3b056ea1bfa1a52017e2dabaa455f780c591b98a61833", null ]
+    [ "pwm_watermark_control_t", "a00071.html#gabc1ca39fc99b15b0466b7c8c8a7f7c0d", [
+      [ "kPWM_FIFOWatermarksOR", "a00071.html#ggabc1ca39fc99b15b0466b7c8c8a7f7c0dab5fd05c006eba66611efc1a02211aad1", null ],
+      [ "kPWM_FIFOWatermarksAND", "a00071.html#ggabc1ca39fc99b15b0466b7c8c8a7f7c0daef42642a5864353de97246bdcac3193d", null ]
     ] ],
-    [ "pmu_freq_reduction_t", "a00071.html#ga3f2cd5f7106cf3e779a436b0e2a01df5", [
-      [ "kPMU_FreqReductionNone", "a00071.html#gga3f2cd5f7106cf3e779a436b0e2a01df5a9ef6ade3f86838ad06465f45382d40d5", null ],
-      [ "kPMU_FreqReduction30PCT", "a00071.html#gga3f2cd5f7106cf3e779a436b0e2a01df5af20f5857165f89e41b4d3b314293cec5", null ],
-      [ "kPMU_FreqReduction40PCT", "a00071.html#gga3f2cd5f7106cf3e779a436b0e2a01df5a80e10150d95d5106319d8d16585d419a", null ],
-      [ "kPMU_FreqReduction50PCT", "a00071.html#gga3f2cd5f7106cf3e779a436b0e2a01df5a0a9330d1796c11f34e00c88dedf97ca8", null ]
+    [ "pwm_mode_t", "a00071.html#ga562b5946a0edd6f5eebb63db7d154d56", [
+      [ "kPWM_SignedCenterAligned", "a00071.html#gga562b5946a0edd6f5eebb63db7d154d56a62a713094bb4c628d40e801e07acab0a", null ],
+      [ "kPWM_CenterAligned", "a00071.html#gga562b5946a0edd6f5eebb63db7d154d56a74be077739ace445b92fbfb515a228ab", null ],
+      [ "kPWM_SignedEdgeAligned", "a00071.html#gga562b5946a0edd6f5eebb63db7d154d56a1ce6a8e531f0d012f2904435772adb59", null ],
+      [ "kPWM_EdgeAligned", "a00071.html#gga562b5946a0edd6f5eebb63db7d154d56a9e529b50dfb0c394a287c6f9e0ccf03a", null ]
     ] ],
-    [ "pmu_well_bias_1P8_adjustment_t", "a00071.html#ga1d20d7bba544e8db2725c89bb9544447", [
-      [ "kPMU_Cref0fFCspl0fFDeltaC0fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a2055bcf353b5c646f8106618db58db62", null ],
-      [ "kPMU_Cref0fFCspl30fFDeltaCN30fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a0cc4cb722720f34f219c7e61d645df7d", null ],
-      [ "kPMU_Cref0fFCspl43fFDeltaCN43fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a5d27d4b68d882bccb373b44ab0dddc23", null ],
-      [ "kPMU_Cref0fFCspl62fFDeltaCN62fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447ad1af0925007db8dc2cca6210d6a09771", null ],
-      [ "kPMU_Cref0fFCspl105fFDeltaCN105fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a4c22a724cb0f27954ae41e1ba8c92dd5", null ],
-      [ "kPMU_Cref30fFCspl0fFDeltaC30fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a14d874b69eefef432ecba6e8d9c2a54d", null ],
-      [ "kPMU_Cref30fFCspl43fFDeltaCN12fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447af36cd04bf45af3364be6a65f5ad4a8b9", null ],
-      [ "kPMU_Cref30fFCspl105fFDeltaCN75fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447acac5ab89488f9d00ee17cd08a91150d1", null ],
-      [ "kPMU_Cref43fFCspl0fFDeltaC43fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a90b309946f5b04e06ec683598c0ea656", null ],
-      [ "kPMU_Cref43fFCspl30fFDeltaC13fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a68335c505ae61df0a4b0109aca3f0a35", null ],
-      [ "kPMU_Cref43fFCspl62fFDeltaCN19fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447aa412e73ce4574659ce65f9ec3964cfae", null ],
-      [ "kPMU_Cref62fFCspl0fFDeltaC62fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a002bd37caccb2fb9ca1af2f8034db59e", null ],
-      [ "kPMU_Cref62fFCspl43fFDeltaC19fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a6332512227c5ff06a622d72c4b4f9fc3", null ],
-      [ "kPMU_Cref105fFCspl0fFDeltaC105fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447a8fabd19f21445f7f8892192541152375", null ],
-      [ "kPMU_Cref105fFCspl30fFDeltaC75fF", "a00071.html#gga1d20d7bba544e8db2725c89bb9544447ac64c8a3f52121806aeaca7c3172179bd", null ]
+    [ "pwm_level_select_t", "a00071.html#gaad9ca9d9d013e066ba14b2f93d512a4f", [
+      [ "kPWM_HighTrue", "a00071.html#ggaad9ca9d9d013e066ba14b2f93d512a4fa23232af7d53d18d6ae51cdef22bf89bd", null ],
+      [ "kPWM_LowTrue", "a00071.html#ggaad9ca9d9d013e066ba14b2f93d512a4fa7db3fb960191fb50008d3c8e17c640eb", null ]
     ] ],
-    [ "PMU_SetPllLdoControlMode", "a00071.html#ga2609471bb58f985a4073e0ca11b87cc2", null ],
-    [ "PMU_SwitchPllLdoToGPCMode", "a00071.html#ga88cdc51796f256c3b551a10e12866adb", null ],
-    [ "PMU_StaticEnablePllLdo", "a00071.html#gaba67fb3264c0b65ef46b6551b94dfe75", null ],
-    [ "PMU_StaticDisablePllLdo", "a00071.html#ga1f1d9d1e0aa7974915e1874dae7516f9", null ],
-    [ "PMU_SetLpsrAnaLdoControlMode", "a00071.html#ga48a0ccdbe4321743453001e74bf4e038", null ],
-    [ "PMU_StaticEnableLpsrAnaLdoBypassMode", "a00071.html#gac73b62d6d1d4ba636a96c8c047607426", null ],
-    [ "PMU_StaticCheckLpsrAnaLdoBypassMode", "a00071.html#ga48e9db2de6596c2b526a575011d916f7", null ],
-    [ "PMU_StaticGetLpsrAnaLdoDefaultConfig", "a00071.html#ga15cdfdeb738747dd4096bdd41e9e1358", null ],
-    [ "PMU_StaticLpsrAnaLdoInit", "a00071.html#ga98eba239552aff1eb0d68dbe3f75bd99", null ],
-    [ "PMU_StaticLpsrAnaLdoDeinit", "a00071.html#ga7ac8f130124a2b46581671a33f7ad030", null ],
-    [ "PMU_SetLpsrDigLdoControlMode", "a00071.html#gaf75a34bbcb87d7b0a8408aeed2500c5c", null ],
-    [ "PMU_StaticEnableLpsrDigLdoBypassMode", "a00071.html#ga393578d731949b6c87157b0f781ff326", null ],
-    [ "PMU_StaticCheckLpsrDigLdoBypassMode", "a00071.html#gaef39bbc8441e43b47f729d7b83e79c44", null ],
-    [ "PMU_StaticGetLpsrDigLdoDefaultConfig", "a00071.html#gacfc9f9bb90904bd39279126d3dfc8b6c", null ],
-    [ "PMU_StaticLpsrDigLdoInit", "a00071.html#ga36fbc269afb28e6d37d074b6911c510c", null ],
-    [ "PMU_StaticLpsrDigLdoDeinit", "a00071.html#ga5cff5f5a3b431cf4c108228941456798", null ],
-    [ "PMU_GPCSetLpsrDigLdoTargetVoltage", "a00071.html#ga8a0edc7a2fe29b813f768a71de64771d", null ],
-    [ "PMU_GetSnvsDigLdoDefaultConfig", "a00071.html#gaca0726570f76c60a8d57b1ebabdcce3c", null ],
-    [ "PMU_SnvsDigLdoInit", "a00071.html#gae882dc5e6c272a277a1ca126d64bbf5f", null ],
-    [ "PMU_SnvsDigLdoDeinit", "a00071.html#gabf1f9b7c8909aea02c4d92343e550d8e", null ],
-    [ "PMU_GPCEnableLdo", "a00071.html#ga80047fe37b9a9bff8545b8792e0114a8", null ],
-    [ "PMU_GPCSetLdoOperateMode", "a00071.html#gaa4d13262694ebf59122c98130102b8a4", null ],
-    [ "PMU_GPCEnableLdoTrackingMode", "a00071.html#ga326765d2d16eafd3c6ae959c97bfe97c", null ],
-    [ "PMU_GPCEnableLdoBypassMode", "a00071.html#gaf70d72ecba17506068d545b416d89c59", null ],
-    [ "PMU_GPCEnableLdoStandbyMode", "a00071.html#ga35b6945d7a7a390c23b5511aac2fc7a7", null ],
-    [ "PMU_SetBandgapControlMode", "a00071.html#gab656626ed3a793e4ada5fe580e47abf9", null ],
-    [ "PMU_SwitchBandgapToGPCMode", "a00071.html#ga609f77af306827927420c6489d0d1ede", null ],
-    [ "PMU_DisableBandgapSelfBiasAfterPowerUp", "a00071.html#gaf1b6f38bf670f2411c924060952b9908", null ],
-    [ "PMU_EnableBandgapSelfBiasBeforePowerDown", "a00071.html#ga1b03a94ecdbc26af86d4bed83d582725", null ],
-    [ "PMU_StaticBandgapInit", "a00071.html#ga3515b4a446813ca1873b172b991a396f", null ],
-    [ "PMU_GPCEnableBandgap", "a00071.html#gab661595307a539ab8e0d94516813103f", null ],
-    [ "PMU_GPCEnableBandgapStandbyMode", "a00071.html#ga7dda6a2ccfb4eb1cbd209b35f0536bdc", null ],
-    [ "PMU_WellBiasInit", "a00071.html#ga43c304a8397f8d453ad4bbad249b99cc", null ],
-    [ "PMU_GetWellBiasDefaultConfig", "a00071.html#ga175256a4ef45922b485ec7c7dfad8ebe", null ],
-    [ "PMU_SetBodyBiasControlMode", "a00071.html#ga4479a76b73837e1abc19be9d6e8e5e5c", null ],
-    [ "PMU_EnableBodyBias", "a00071.html#ga83fe1e76658afd915bb7912d7af9a4c3", null ],
-    [ "PMU_GPCEnableBodyBias", "a00071.html#ga8e8a32af4b4eeeb4cba4f43d1db94565", null ],
-    [ "PMU_GPCEnableBodyBiasStandbyMode", "a00071.html#ga5871ef1effcf4f7b165634d72707737b", null ],
-    [ "PMU_GPCGetBodyBiasDefaultConfig", "a00071.html#gab7823f681d28a20b94ba04c163ea6a77", null ],
-    [ "PMU_GPCSetBodyBiasConfig", "a00071.html#gaddc225df763182191f3772bf40959eb1", null ]
+    [ "pwm_fault_state_t", "a00071.html#ga7e6b82219a37861c036edc7ba4aacb11", [
+      [ "kPWM_PwmFaultState0", "a00071.html#gga7e6b82219a37861c036edc7ba4aacb11a13d81f0365c7f9c3dccfcfa61f822e24", null ],
+      [ "kPWM_PwmFaultState1", "a00071.html#gga7e6b82219a37861c036edc7ba4aacb11a783796fbb2d556e74749fa4126616d9e", null ],
+      [ "kPWM_PwmFaultState2", "a00071.html#gga7e6b82219a37861c036edc7ba4aacb11a4b55a75f393e3066e5f48b994c504112", null ],
+      [ "kPWM_PwmFaultState3", "a00071.html#gga7e6b82219a37861c036edc7ba4aacb11a2398fa058bbde6c2fe97dca183c8f77f", null ]
+    ] ],
+    [ "pwm_reload_source_select_t", "a00071.html#ga07f269543e848d4e520300d938a60ec5", [
+      [ "kPWM_LocalReload", "a00071.html#gga07f269543e848d4e520300d938a60ec5aed91b2aede324d8f2242e5d1baf795d4", null ],
+      [ "kPWM_MasterReload", "a00071.html#gga07f269543e848d4e520300d938a60ec5a5570b1618c1b54d235fb14df8e2de4d5", null ]
+    ] ],
+    [ "pwm_fault_clear_t", "a00071.html#gaa2b5b38c3958201ca8b446091f0fe71d", [
+      [ "kPWM_Automatic", "a00071.html#ggaa2b5b38c3958201ca8b446091f0fe71dabf68c2da0cf3a166bfbcb3936261e61d", null ],
+      [ "kPWM_ManualNormal", "a00071.html#ggaa2b5b38c3958201ca8b446091f0fe71da9afba77080d761b13b132caf69d7b55a", null ],
+      [ "kPWM_ManualSafety", "a00071.html#ggaa2b5b38c3958201ca8b446091f0fe71da2ab19200e6e01024b4ea5afb1c00091f", null ]
+    ] ],
+    [ "pwm_module_control_t", "a00071.html#ga19711b05aa2441dd54d8e5213362b864", [
+      [ "kPWM_Control_Module_0", "a00071.html#gga19711b05aa2441dd54d8e5213362b864a1f44c9b0cfe295515db31f8e9d7b166e", null ],
+      [ "kPWM_Control_Module_1", "a00071.html#gga19711b05aa2441dd54d8e5213362b864adfcd5cb91128996487412233496d9d67", null ],
+      [ "kPWM_Control_Module_2", "a00071.html#gga19711b05aa2441dd54d8e5213362b864adae0a8676b2afcba6a12b17ea2f68ba6", null ],
+      [ "kPWM_Control_Module_3", "a00071.html#gga19711b05aa2441dd54d8e5213362b864afb56a21760a3e3b74d4721c0c1028ae2", null ]
+    ] ],
+    [ "PWM_Init", "a00071.html#gab4d245c939c7cc9106065020244d84e2", null ],
+    [ "PWM_Deinit", "a00071.html#ga23a26fead175fa19dfe4617dde090bb5", null ],
+    [ "PWM_GetDefaultConfig", "a00071.html#gaead09677ab28bfd57dce26c6c161b18d", null ],
+    [ "PWM_SetupPwm", "a00071.html#ga50ecefa180c7ab83cb25c8ed58505b43", null ],
+    [ "PWM_UpdatePwmDutycycle", "a00071.html#ga8324acc824d28acc111006c67746d6ae", null ],
+    [ "PWM_UpdatePwmDutycycleHighAccuracy", "a00071.html#ga46eebd874652ec8e9c9b128bbd6057df", null ],
+    [ "PWM_SetupInputCapture", "a00071.html#ga714adfb30a4bac917530e4f7ac9f8497", null ],
+    [ "PWM_SetupFaultInputFilter", "a00071.html#gac252a848de7f669f38c1c169af2750bd", null ],
+    [ "PWM_SetupFaults", "a00071.html#ga6dba321676f0d87b3bd294afd859fd6c", null ],
+    [ "PWM_FaultDefaultConfig", "a00071.html#ga83e933e310dea3c09772ce2bd880ec25", null ],
+    [ "PWM_SetupForceSignal", "a00071.html#gab149e523b4f42b2ef8380bcffb0ae899", null ],
+    [ "PWM_EnableInterrupts", "a00071.html#ga16b4ff14585b9b4898c2b0e296f45779", null ],
+    [ "PWM_DisableInterrupts", "a00071.html#gae4766d9e26c674a3ed9634b11888ce2c", null ],
+    [ "PWM_GetEnabledInterrupts", "a00071.html#ga448340a1df47236ffbf02c1da40d942a", null ],
+    [ "PWM_DMAFIFOWatermarkControl", "a00071.html#ga6333f9b93bd418d3cb4ad63fe95ec603", null ],
+    [ "PWM_DMACaptureSourceSelect", "a00071.html#gab01601e4ee370143095a156a0f059f48", null ],
+    [ "PWM_EnableDMACapture", "a00071.html#gac66323b0c9bae228d3d427adf14bb919", null ],
+    [ "PWM_EnableDMAWrite", "a00071.html#gaa1538892bd38b81af7d972553686f38d", null ],
+    [ "PWM_GetStatusFlags", "a00071.html#ga827ba4608c9021cb29b981c716dfe83f", null ],
+    [ "PWM_ClearStatusFlags", "a00071.html#ga66f5e7f2d2f671b35031e17f17ae5b0d", null ],
+    [ "PWM_StartTimer", "a00071.html#ga7da5f4910ad7945fee50bd642f871fcc", null ],
+    [ "PWM_StopTimer", "a00071.html#ga542db369e1459b8b7847d005937a5be9", null ],
+    [ "PWM_OutputTriggerEnable", "a00071.html#ga40256df62c18de1ab8fef8609d6b4060", null ],
+    [ "PWM_ActivateOutputTrigger", "a00071.html#ga88cdc0804a1619da24c387a38d3f6741", null ],
+    [ "PWM_DeactivateOutputTrigger", "a00071.html#gaf64233d8510927731ae458d31fa5512e", null ],
+    [ "PWM_SetupSwCtrlOut", "a00071.html#ga8236aa4d0e9beba91cdaabdadc841b32", null ],
+    [ "PWM_SetPwmLdok", "a00071.html#ga7ff017951793deb3e01659ab0f440133", null ],
+    [ "PWM_SetPwmFaultState", "a00071.html#gaf7a606468a735625a9f7f1409b1686ab", null ],
+    [ "PWM_SetupFaultDisableMap", "a00071.html#ga5c4a97812d828bc76cd1873abf1710f7", null ]
 ];

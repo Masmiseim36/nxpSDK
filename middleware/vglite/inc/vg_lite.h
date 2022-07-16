@@ -357,7 +357,9 @@ extern "C" {
         gcFEATURE_BIT_VG_RGBA2_FORMAT,
         gcFEATURE_BIT_VG_QUALITY_8X,
         gcFEATURE_BIT_VG_RADIAL_GRADIENT,
-
+        gcFEATURE_BIT_VG_LINEAR_GRADIENT_EXT,
+        gcFEATURE_BIT_VG_COLOR_KEY,
+        gcFEATURE_BIT_VG_DITHER,
         /* Insert features above this comment only. */
         gcFEATURE_COUNT         /* Not a feature. */
     }
@@ -386,7 +388,153 @@ extern "C" {
       VG_LITE_RADIAL_GRADIENT_SPREAD_REFLECT,
     } vg_lite_radial_gradient_spreadmode_t;
 
+    /* draw path type. */
+    typedef enum vg_lite_draw_path_type{
+      VG_LITE_DRAW_FILL_PATH = 0, /*! draw fill path. */ 
+      VG_LITE_DRAW_STROKE_PATH,   /*! draw stroke path. */
+      VG_LITE_DRAW_FILL_STROKE_PATH, /*! draw both fill and stroke path. */
+    } vg_lite_draw_path_type_t;
+
+    /* End cap style. */
+    typedef enum vg_lite_cap_style
+    {
+        VG_LITE_CAP_BUTT,  /*! The Butt end cap style terminates each segment with a line perpendicular to the tangent at each endpoint. */
+        VG_LITE_CAP_ROUND, /*! The Round end cap style appends a semicircle with a diameter equal to the line width centered around each endpoint. */
+        VG_LITE_CAP_SQUARE /*! The Square end cap style appends a rectangle with two sides of length equal to the line width
+                               perpendicular to the tangent, and two sides of length equal to half the line width parallel
+                               to the tangent, at each endpoint. */
+    }
+    vg_lite_cap_style_t;
+
+    /* Line join styles. */
+    typedef enum vg_lite_join_style
+    {
+        VG_LITE_JOIN_MITER,/*! The Miter join style appends a trapezoid with one vertex at the intersection point of the two original
+                           lines, two adjacent vertices at the outer endpoints of the two “fattened” lines and a fourth vertex at
+                           the extrapolated intersection point of the outer perimeters of the two “fattened” lines. */
+        VG_LITE_JOIN_ROUND,/*! The Round join style appends a wedge-shaped portion of a circle,centered at the intersection point
+                           of the two original lines, having a radius equal to half the line width. */
+        VG_LITE_JOIN_BEVEL /*! The Bevel join style appends a triangle with two vertices at the outer endpoints of the two "fattened"
+                           lines and a third vertex at the intersection point of the two original lines. */
+    }
+    vg_lite_join_style_t;
+
 /* Structures *******************************************************************************************************************/
+
+    typedef struct vg_lite_path_point *        vg_lite_path_point_ptr;
+    typedef struct vg_lite_path_point
+    {
+        /* X coordinate. */
+        vg_lite_float_t                      x;
+
+        /* Y coordinate. */
+        vg_lite_float_t                      y;
+
+        /* Flatten flag for flattened path. */
+        uint8_t                              flatten_flag;
+
+        /* Curve type for stroke path. */
+        uint8_t                              curve_type;
+
+        /* X tangent. */
+        vg_lite_float_t                      tangentX;
+
+        /* Y tangent. */
+        vg_lite_float_t                      tangentY;
+
+        /* Length of the line. */
+        vg_lite_float_t                      length;
+
+        /* Pointer to next point node. */
+        vg_lite_path_point_ptr               next;
+
+        /* Pointer to previous point node. */
+        vg_lite_path_point_ptr               prev;
+
+#define centerX                 tangentX
+#define centerY                 tangentY
+
+    }vg_lite_path_point_t;
+
+    typedef struct vg_lite_sub_path *    vg_lite_sub_path_ptr;
+    typedef struct vg_lite_sub_path
+    {
+        /* Pointer to next sub path. */
+        vg_lite_sub_path_ptr             next;
+
+        /* Number of points. */
+        uint32_t                         point_count;
+
+        /* Point list. */
+        vg_lite_path_point_ptr           point_list;
+
+        /* Last point. */
+        vg_lite_path_point_ptr           last_point;
+
+        /* Whether is path is closed. */
+        uint8_t                          closed;
+
+        /* Sub path length. */
+        vg_lite_float_t                  length;
+    }
+    vg_lite_sub_path_t;
+
+    typedef struct vg_lite_stroke_conversion
+    {
+        /* Stroke parameters */
+        vg_lite_cap_style_t                stroke_cap_style;
+        vg_lite_join_style_t               stroke_join_style;
+        vg_lite_float_t                    stroke_line_width;
+        vg_lite_float_t                    stroke_miter_limit;
+        vg_lite_float_t *                  stroke_dash_pattern;
+        uint32_t                           stroke_dash_pattern_count;
+        vg_lite_float_t                    stroke_dash_phase;
+        vg_lite_float_t                    stroke_dash_initial_length;
+        uint32_t                           stroke_dash_initial_index;
+
+        vg_lite_float_t                    half_line_width;
+
+        /* Total length of stroke dash patterns. */
+        vg_lite_float_t                    stroke_dash_pattern_length;
+
+        /* For fast checking. */
+        vg_lite_float_t                    stroke_miter_limit_square;
+
+        /* Temp storage of stroke subPath. */
+        vg_lite_path_point_ptr             path_point_list;
+        vg_lite_path_point_ptr             path_last_point;
+        uint32_t                           point_count;
+        vg_lite_path_point_ptr             left_stroke_point;
+        vg_lite_path_point_ptr             last_right_stroke_point;
+        vg_lite_path_point_ptr             stroke_point_list;
+        vg_lite_path_point_ptr             stroke_last_point;
+        uint32_t                           stroke_point_count;
+
+        /* Sub path list. */
+        vg_lite_sub_path_ptr               stroke_sub_path_list;
+
+        /* Last sub path. */
+        vg_lite_sub_path_ptr               last_stroke_sub_path;
+
+        /* Swing area handling. */
+        uint8_t                            swing_need_to_handle;
+        uint32_t                           swing_handling;
+        uint8_t                            swing_counter_clockwise;
+        vg_lite_float_t                    swing_stroke_deltax;
+        vg_lite_float_t                    swing_stroke_deltay;
+        vg_lite_path_point_ptr             swing_start_point;
+        vg_lite_path_point_ptr             swing_start_stroke_point;
+        vg_lite_float_t                    swing_accu_length;
+        vg_lite_float_t                    swing_center_length;
+        uint32_t                           swing_count;
+
+        vg_lite_float_t                    stroke_path_length;
+        uint32_t                           stroke_path_size;
+        /* The stroke line is fat line. */
+        uint8_t                            is_fat;
+        uint8_t                            closed;
+    }
+    vg_lite_stroke_conversion_t;
 
     /* A 2D Point definition. */
     typedef struct vg_lite_point {
@@ -465,6 +613,11 @@ extern "C" {
         void *path;                         /*! Pointer to the physical description of the path. */
         int8_t path_changed;               /* Indicate whether path data is synced with command buffer (uploaded) or not. */
         int8_t pdata_internal;             /*! Indicate whether path data memory is allocated by driver. */
+        vg_lite_stroke_conversion_t stroke_conversion; /*! Refer to the definition by <code>vg_lite_stroke_conversion_t</code>.*/
+        vg_lite_draw_path_type_t path_type;            /*! Refer to the definition by <code>vg_lite_draw_path_type_t</code>. */
+        void *stroke_path_data;            /*! Pointer to the physical description of the stroke path. */
+        int32_t stroke_path_size;          /*! Number of bytes in the stroke path data. */
+        vg_lite_color_t stroke_color;      /*! The stroke path fill color.Refer to the definition by <code>vg_lite_color_t</code>.*/
     } vg_lite_path_t;
 
     /*!
@@ -558,6 +711,7 @@ extern "C" {
         vg_lite_matrix_t matrix;            /*! The matrix to transform the gradient. */
         vg_lite_buffer_t image;             /*! The image for rendering as gradient pattern. */
         vg_lite_radial_gradient_parameter_t radialGradient;      /* include center point,focal point and radius.*/
+        vg_lite_radial_gradient_spreadmode_t SpreadMode;    /* The tiling mode that applied to the pixels out of the image after transformed. */
 
         uint32_t vgColorRampLength;         /* Color ramp parameters for gradient paints provided to the driver. */
         vg_lite_color_ramp_t vgColorRamp[MAX_COLOR_RAMP_STOPS]; 
@@ -566,8 +720,82 @@ extern "C" {
         vg_lite_color_ramp_t intColorRamp[MAX_COLOR_RAMP_STOPS + 2];
 
         uint8_t colorRampPremultiplied;     /* if this value is set to 1,the color value of vgColorRamp will multiply by alpha value of vgColorRamp.*/
-        vg_lite_radial_gradient_spreadmode_t SpreadMode;    /* The tiling mode that applied to the pixels out of the image after transformed. */
     } vg_lite_radial_gradient_t;
+
+    /*!
+     @abstract linear gradient parameter definition.
+
+     @discussion
+     The line connecting point (X0,Y0) to point (X1,Y1) is the radial direction of the linear gradient.
+     This radial direction line called line0,the line perpendicular to line0 and passing through the point (X0,Y0)
+     called line1,the line perpendicular to line0 and passing through the point (X1,Y1) called line2,the linear gradient
+     starts form line1 and end to line2.
+     */
+    typedef struct vg_lite_linear_gradient_parameter
+    {
+        vg_lite_float_t X0;
+        vg_lite_float_t Y0;
+        vg_lite_float_t X1;
+        vg_lite_float_t Y1;
+    }
+    vg_lite_linear_gradient_parameter_t;
+
+    /*!
+     @abstract linear gradient definition.
+
+     @discussion
+     linear gradient is applied to filling a path.vg_lite_linear_gradient_ext and vg_lite_linear_gradient for hardware and software implementation
+     of linear gradient respectively.
+     */
+    typedef struct vg_lite_linear_gradient_ext {
+        uint32_t count;                     /*! Count of colors, up to 256. */
+        vg_lite_matrix_t matrix;            /*! The matrix to transform the gradient. */
+        vg_lite_buffer_t image;             /*! The image for rendering as gradient pattern. */
+        vg_lite_linear_gradient_parameter_t linear_gradient;      /* Refer to the definition by <code>vg_lite_linear_gradient_parameter_t</code>.*/
+
+        uint32_t vg_color_ramp_length;         /* Color ramp parameters for gradient paints provided to the driver. */
+        vg_lite_color_ramp_t vg_color_ramp[MAX_COLOR_RAMP_STOPS];
+
+        uint32_t int_color_ramp_length;        /* Converted internal color ramp. */
+        vg_lite_color_ramp_t int_color_ramp[MAX_COLOR_RAMP_STOPS + 2];
+
+        uint8_t color_ramp_premultiplied;     /* if this value is set to 1,the color value of vgColorRamp will multiply by alpha value of vgColorRamp.*/
+        vg_lite_radial_gradient_spreadmode_t spread_mode;    /* Use tge same spread mode enumeration type as radial gradient. */
+    } vg_lite_linear_gradient_ext_t;
+
+    /*!
+     @abstract color key definition.
+
+     @discussion
+     The colorkey have two sections,each section contain R,G,B chanels.Debited as hign_rgb and low_rgb respectively.
+     Can be used for blit operation or draw_pattern operation.when enable is ture,the alpha value is used to replace
+     the alpha channel of destination pixel when its RGB channels in range [low_rgb,hign_rgb].After use color key this
+     frame,and if the color key is not need in the next frame,disable the color key before next frame.
+     */
+    typedef struct vg_lite_color_key
+    {
+        uint8_t enable;        /* when enable is ture,this color key is effective. */
+        uint8_t low_r;         /* The R chanel of low_rgb. */
+        uint8_t low_g;         /* The G chanel of low_rgb. */
+        uint8_t low_b;         /* The B chanel of low_rgb. */
+        uint8_t alpha;         /* The alpha channel to replace destination pixel alpha channel.*/
+        uint8_t hign_r;        /* The R chanel of hign_rgb. */
+        uint8_t hign_g;        /* The G chanel of hign_rgb. */
+        uint8_t hign_b;        /* The B chanel of hign_rgb. */
+    } vg_lite_color_key_t;
+
+    /*!
+     @abstract colorkey definition.
+
+     @discussion
+     There are 4 groups of color key states.
+     rgb_hi_0, rgb_lo_0, alpha_0, enable_0;
+     rgb_hi_1, rgb_lo_1, alpha_1, enable_1;
+     rgb_hi_2, rgb_lo_2, alpha_2, enable_2;
+     rgb_hi_3, rgb_lo_3, alpha_3, enable_3;
+     Priority order:color_key_0 > color_key_1 > color_key_2 > color_key_3.
+    */
+    typedef vg_lite_color_key_t vg_lite_color_key4_t[4];
 
 /* API Function prototypes *****************************************************************************************************/
 
@@ -863,6 +1091,98 @@ extern "C" {
                                  vg_lite_color_t   color);
 
     /*!
+     @abstract Set stroke path's attributes.
+
+     @discussion
+     This function use the input parameters to set stroke attributes.
+
+     @param path
+     Pointer to a <code>vg_lite_path_t</code> structure that describes the path.
+
+     @param stroke_cap_style
+     The end cap style defined by <code>vg_lite_cap_style_t</code>.
+
+     @param stroke_join_style
+     The line join style defined by <code>vg_lite_join_style_t</code>.
+
+     @param stroke_line_width
+     The line width of stroke path.A line width less than or equal to 0 prevents stroking from taking place.
+
+     @param stroke_miter_limit
+     When stroking using the Miter join style, the miter length (i.e., the length between the
+     intersection points of the inner and outer perimeters of the two “fattened” lines) is compared
+     to the product of the user-set miter limit and the line width. If the miter length exceeds this
+     product, the Miter join is not drawn and a Bevel join is substituted.Miter limit values less
+     than 1 are silently clamped to 1.
+
+     @param stroke_dash_pattern
+     The dash pattern consists of a sequence of lengths of alternating "on" and "off" dash
+     segments. The first value of the dash array defines the length, in user coordinates, of the
+     first "on" dash segment. The second value defines the length of the following "off"
+     segment. Each subsequent pair of values defines one "on" and one "off" segment.If the dash
+     pattern has an odd number of elements, the final element is ignored. 
+
+     @param stroke_dash_pattern_count
+     The count of dash on/off segments.
+
+     @param stroke_dash_phase
+     The dash phase defines the starting point in the dash pattern that is associated with the
+     start of the first segment of the path. For example, if the dash pattern is [10 20 30 40]
+     and the dash phase is 35, the path will be stroked with an "on" segment of length 25
+     (skipping the first "on" segment of length 10, the following "off" segment of length 20,
+     and the first 5 units of the next "on" segment), followed by an "off" segment of length
+     40. The pattern will then repeat from the beginning, with an “on” segment of length 10,
+     an "off" segment of length 20, an "on" segment of length 30.
+
+     @param stroke_color
+     The color fill in stroke path.
+
+     @result
+     Returns the status as defined by <code>vg_lite_error_t</code>.
+     */
+    vg_lite_error_t vg_lite_set_stroke(vg_lite_path_t *path,
+                                       vg_lite_cap_style_t stroke_cap_style,
+                                       vg_lite_join_style_t stroke_join_style,
+                                       vg_lite_float_t stroke_line_width,
+                                       vg_lite_float_t stroke_miter_limit,
+                                       vg_lite_float_t *stroke_dash_pattern,
+                                       uint32_t stroke_dash_pattern_count,
+                                       vg_lite_float_t stroke_dash_phase,
+                                       vg_lite_color_t stroke_color);
+    /*!
+     @abstract Update stroke path.
+
+     @discussion
+     This function use the given path and stroke attributes given by function vg_lite_set_stroke 
+     to update stroke path's parameters and generate stroke path data.
+
+     @param path
+     Pointer to a <code>vg_lite_path_t</code> structure that describes the path.
+
+     @result
+     Returns the status as defined by <code>vg_lite_error_t</code>.
+     */
+    vg_lite_error_t vg_lite_update_stroke(vg_lite_path_t *path);
+
+    /*!
+     @abstract Set path type.
+
+     @discussion
+     This function set the path type.It can be VG_LITE_DRAW_FILL_PATH ,VG_LITE_DRAW_STROKE_PATH or
+     VG_LITE_DRAW_FILL_PATH | VG_LITE_DRAW_STROKE_PATH.
+
+     @param path
+     Pointer to a <code>vg_lite_path_t</code> structure that describes the path.
+
+     @param path_type
+     Pointer to a <code>vg_lite_draw_path_type_t</code> structure that describes the path.
+
+     @result
+     Returns the status as defined by <code>vg_lite_error_t</code>.
+     */
+    vg_lite_error_t vg_lite_set_draw_path_type(vg_lite_path_t * path,vg_lite_draw_path_type_t path_type);
+
+    /*!
      @abstract Get the value of register from register's address.
 
      @discussion
@@ -1054,7 +1374,7 @@ extern "C" {
      The count of the opcodes.
 
      */
-    void vg_lite_path_append(vg_lite_path_t *path,
+    vg_lite_error_t vg_lite_path_append(vg_lite_path_t *path,
                              uint8_t        *cmd,
                              void           *data,
                              uint32_t        seg_count);
@@ -1235,6 +1555,61 @@ extern "C" {
                                      uint8_t colorRampPremultiplied);
 
     /*!
+     @abstract Set the linear gradient members.
+
+     @discussion
+     This API sets the values for the members of the linear gradient definition.
+
+     @param grad
+     This is the vg_lite_linear_gradient_ext_t object to be set.
+
+     @param count
+     This is the count of the colors in grad.
+     The maxmum color stop count is defined by MAX_COLOR_RAMP_STOPS, which is currently 256.
+
+     @param vg_color_ramp
+     This is the stop for the linear gradient.The number of parameters is 5,and give the offset and
+     color of the stop.Each stop is defined by a floating-point offset value and four floating-point values
+     containing the sRGBA color and alpha value associated with each stop, in the form of a non-premultiplied
+     (R, G, B, alpha) quad.And the range of all parameters in it is [0,1].
+
+     @param linear_gradient
+     Refer to the definition by <code>vg_lite_linear_gradient_parameter_t</code>.
+
+     @param spread_mode
+     The tiling mode that applied to the pixels out of the paint after transformed.Use tge same spread mode enumeration type as radial gradient.
+
+     @param color_ramp_premultiplied
+     The parameter controls whether color and alpha values are interpolated in premultiplied or non-premultiplied
+     form.
+
+     @result
+     Error code. VG_LITE_INVALID_ARGUMENTS to indicate the parameters are wrong.
+     */
+    vg_lite_error_t vg_lite_set_linear_grad(vg_lite_linear_gradient_ext_t *grad,
+                                            uint32_t count,
+                                            vg_lite_color_ramp_t *vg_color_ramp,
+                                            vg_lite_linear_gradient_parameter_t linear_gradient,
+                                            vg_lite_radial_gradient_spreadmode_t spread_mode,
+                                            uint8_t color_ramp_premultiplied);
+
+    /*!
+     @abstract Update or generate the corresponding image object to render with.
+
+     @discussion
+     The vg_lite_linear_gradient_ext_t object has an image buffer which is used to render
+     the linear gradient paint. The image buffer will be create/updated by the corresponding
+     grad parameters.
+
+     @param grad
+     This is the vg_lite_linear_gradient_ext_t object to be updated from.
+
+     @result
+     Returns the status as defined by <code>vg_lite_error_t</code>.
+     */
+    vg_lite_error_t vg_lite_update_linear_grad(vg_lite_linear_gradient_ext_t *grad);
+
+    /*!
      @abstract Update or generate the corresponding image object to render with.
 
      @discussion
@@ -1295,6 +1670,20 @@ extern "C" {
     vg_lite_error_t vg_lite_clear_rad_grad(vg_lite_radial_gradient_t *grad);
 
     /*!
+     @abstract Clear the linear gradient object.
+
+     @discussion
+     This will reset the grad members and free the image buffer's memory.
+
+     @param grad
+     This is the vg_lite_linear_gradient_ext_t object to be cleared.
+
+     @result
+     Returns the status as defined by <code>vg_lite_error_t</code>.
+     */
+    vg_lite_error_t vg_lite_clear_linear_grad(vg_lite_linear_gradient_ext_t *grad);
+
+    /*!
      @abstract Get the pointer to the grad object's matrix.
 
      @discussion
@@ -1308,6 +1697,21 @@ extern "C" {
      The pointer to the matrix.
      */
     vg_lite_matrix_t * vg_lite_get_grad_matrix(vg_lite_linear_gradient_t *grad);
+
+    /*!
+     @abstract Get the pointer to the grad object's matrix.
+
+     @discussion
+     This function get the pointer to the gradient object's matrix. Thus the app
+     can manipulate the matrix to render the gradient path correctly.
+
+     @param grad
+     This is the vg_lite_linear_gradient_ext_t object where to get the matrix.
+
+     @result
+     The pointer to the matrix.
+     */
+     vg_lite_matrix_t * vg_lite_get_linear_grad_matrix(vg_lite_linear_gradient_ext_t *grad);
 
     /*!
      @abstract Get the pointer to the grad object's matrix.
@@ -1363,6 +1767,49 @@ extern "C" {
                                           vg_lite_matrix_t *matrix,
                                           vg_lite_linear_gradient_t *grad,
                                           vg_lite_blend_t blend);
+
+    /*!
+     @abstract Fill a path with a linear gradient.
+
+     @discussion
+     The specified path will be transformed by the given matrix and filled by the tranformed linear gradient.
+
+     @param path
+     Pointer to a <code>vg_lite_path_t</code> structure that describes the path to draw.
+
+     @param fill_rule
+     Specified fill rule for the path.
+
+     @param path_matrix
+     Pointer to a 3x3 matrix that defines the transformation matrix of the path. If <code>matrix</code> is <code>NULL</code>, an
+     identity matrix is assumed which is usually a bad idea since the path can be anything.
+
+     @param grad
+     This is the vg_lite_linear_gradient_ext_t object to be set.
+
+     @param paint_color
+     Specifies the paint color vg_lite_color_t RGBA value to applied by VG_LITE_RADIAL_GRADIENT_SPREAD_FILL,which set by fuction
+     vg_lite_set_linear_grad. When pixels are out of the image after transformed,this paint_color is applied to them,See enum
+     vg_lite_radial_gradient_spreadmode_t.
+
+     @param blend
+     The blending mode to be applied to each drawn pixel. If no blending is required, set this value to
+     <code>VG_LITE_BLEND_NONE</code> (0).
+
+     @param filter
+     Specified the filter mode vg_lite_filter_t enum value to be applied to each drawn pixel.
+
+     @result
+     Returns the status as defined by <code>vg_lite_error_t</code>.
+     */
+    vg_lite_error_t vg_lite_draw_linear_gradient(vg_lite_buffer_t * target,
+                                     vg_lite_path_t * path,
+                                     vg_lite_fill_t fill_rule,
+                                     vg_lite_matrix_t * path_matrix,
+                                     vg_lite_linear_gradient_ext_t *grad,
+                                     vg_lite_color_t paint_color,
+                                     vg_lite_blend_t blend,
+                                     vg_lite_filter_t filter);
 
     /*!
      @abstract Fill a path with a radial gradient.
@@ -1543,6 +1990,30 @@ extern "C" {
       @result
       Returns the status as defined by <code>vg_lite_error_t</code>.*/
     vg_lite_error_t vg_lite_disable_premultiply(void);
+
+    /*!
+     @abstract This api use to control dither function switch.Dither is turned off by default.
+
+     @param enable
+     0 means turn off the dither function. 1 means turn on the dither function.
+
+     @result
+     Returns the status as defined by <code>vg_lite_error_t</code>.
+     */
+    vg_lite_error_t vg_lite_set_dither(int enable);
+
+    /*!
+      @abstract use to set the colorkey.
+
+      @param colorkey
+      Defined by <code>vg_lite_color_key4_t</code>.
+
+      @result
+      Returns the status as defined by <code>vg_lite_error_t</code>.
+      Possible return value in this function:
+          VG_LITE_SUCCESS,the result correctly
+          VG_LITE_NOT_SUPPORT, if not support colorkey.*/
+    vg_lite_error_t vg_lite_set_color_key(vg_lite_color_key4_t colorkey);
 
 #endif /* VGLITE_VERSION_2_0 */
 

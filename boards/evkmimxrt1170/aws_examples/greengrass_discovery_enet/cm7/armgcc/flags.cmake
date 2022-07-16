@@ -3,19 +3,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -23,17 +14,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -47,6 +30,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DMFLASH_FILE_BASEADDR=14221312 \
     -DSDK_OS_FREE_RTOS \
@@ -83,6 +67,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DMFLASH_FILE_BASEADDR=14221312 \
     -DSDK_OS_FREE_RTOS \

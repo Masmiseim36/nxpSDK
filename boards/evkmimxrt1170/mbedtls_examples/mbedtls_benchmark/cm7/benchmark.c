@@ -43,6 +43,12 @@
 #include "board.h"
 #if defined(MBEDTLS_NXP_SSSAPI)
 #include "sssapi_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_CSS_API)
+#include "platform_hw_ip.h"
+#include "css_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_CSS_PKC_API)
+#include "platform_hw_ip.h"
+#include "css_pkc_mbedtls.h"
 #else
 #include "ksdk_mbedtls.h"
 #endif
@@ -207,7 +213,7 @@ int main(void)
  *      awk '{print length+2}' | sort -rn | head -n1
  *
  * This computes the maximum length of a title +2 (because we appends "/s").
- * (If the value is too small, the only consequence is poor alignement.) */
+ * (If the value is too small, the only consequence is poor alignment.) */
 #define TITLE_SPACE 16
 
 #define MEMORY_MEASURE_INIT                                             \

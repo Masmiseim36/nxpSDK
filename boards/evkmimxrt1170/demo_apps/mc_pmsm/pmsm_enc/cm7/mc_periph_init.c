@@ -20,7 +20,7 @@
 
 /* Motor 1 */
 /* Structure for current and voltage measurement */
-mcdrv_adc_t g_sM1AdcSensor;
+mcdrv_adcetc_t g_sM1AdcSensor;
 
 /* Structure for 3-phase PWM MC driver */
 mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
@@ -71,7 +71,7 @@ void MCDRV_Init_M1(void)
     M1_MCDRV_QD_PERIPH_INIT();
 
     /* Comparator CMP */
-    //M1_MCDRV_CMP_INIT();
+    M1_MCDRV_CMP_INIT();
 }
 
 /*!
@@ -84,13 +84,13 @@ void MCDRV_Init_M1(void)
 void InitClock(void)
 {
     uint32_t ui32CyclesNumber = 0U;
-    
+
     /* Calculate clock dependant variables for PMSM control algorithm */
     g_sClockSetup.ui32FastPeripheralClock = CLOCK_GetRootClockFreq(kCLOCK_Root_Bus);
     g_sClockSetup.ui32CpuFrequency = CLOCK_GetRootClockFreq(kCLOCK_Root_M7);
-      
+
     /* Parameters for motor M1 */
-    g_sClockSetup.ui16M1PwmFreq   = M1_PWM_FREQ; /* 10 kHz */
+    g_sClockSetup.ui16M1PwmFreq   = M1_PWM_FREQ; /* 16 kHz */
     g_sClockSetup.ui16M1PwmModulo = (g_sClockSetup.ui32FastPeripheralClock) / g_sClockSetup.ui16M1PwmFreq;
     ui32CyclesNumber = ((M1_PWM_DEADTIME * (g_sClockSetup.ui32FastPeripheralClock / 1000000U)) / 1000U);
     g_sClockSetup.ui16M1PwmDeadTime   = ui32CyclesNumber;
@@ -107,88 +107,117 @@ void InitClock(void)
  */
 void InitADC(void)
 {
-  
+
     lpadc_config_t lpadcConfig;
     lpadc_conv_command_config_t lpadcCommandConfig;
     lpadc_conv_trigger_config_t lpadcTriggerConfig;
 
     /* Initialize the ADC module. */
     LPADC_GetDefaultConfig(&lpadcConfig);
-    
+
     lpadcConfig.enableAnalogPreliminary = true;
     lpadcConfig.referenceVoltageSource = kLPADC_ReferenceVoltageAlt2;
     lpadcConfig.powerLevelMode = kLPADC_PowerLevelAlt4;
     lpadcConfig.powerUpDelay = 0U;
-    
+
     LPADC_Init(LPADC1, &lpadcConfig);
     LPADC_Init(LPADC2, &lpadcConfig);
-           
-    // M1_U_DCB - GPIO_AD_11 - ADC1 CH2-B
-    // M1_I_A - GPIO_AD_10 - ADC1 CH2-A
-    // M1_I_B - GPIO_AD_12 - ADC1 CH3-A; ADC2 CH3-A
-    // M1_I_C - GPIO_AD_13 - ADC1 CH3-B; ADC2 CH3-B
-    
+
+    /* Phase current measurement */
+    /* Sector 1,6 - measured currents Ib & Ic */
+    /* ADC1, channel Ib = M1_ADC1_PH_B (ADC_ETC trigger 0, chain 0) */
+    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaB = M1_ADC1_PH_B_CHNL;
+    g_sM1AdcSensor.sCurrSec16.ui16ChanSidePhaB = M1_ADC1_PH_B_SIDE;
+    /* ADC2, channel Ic = M1_ADC2_PH_C (ADC_ETC trigger 4, chain 0) */
+    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaC = M1_ADC2_PH_C_CHNL;
+    g_sM1AdcSensor.sCurrSec16.ui16ChanSidePhaC = M1_ADC2_PH_C_SIDE;
+
+    /* Sector 2,3 - measured currents Ia & Ic*/
+    /* ADC1, channel Ia = M1_ADC1_PH_A (ADC_ETC trigger 0, chain 0) */
+    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA = M1_ADC1_PH_A_CHNL;
+    g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaA = M1_ADC1_PH_A_SIDE;
+    /* ADC2, channel Ic = M1_ADC2_PH_C (ADC_ETC trigger 4, chain 0) */
+    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC = M1_ADC2_PH_C_CHNL;
+    g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaC = M1_ADC2_PH_C_SIDE;
+
+    /* Sector 4,5 - measured currents Ia & Ib */
+    /* ADC1, channel Ia = M1_ADC1_PH_A (ADC_ETC trigger 0, chain 0) */
+    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaA = M1_ADC1_PH_A_CHNL;
+    g_sM1AdcSensor.sCurrSec45.ui16ChanSidePhaA = M1_ADC1_PH_A_SIDE;
+    /* ADC2, channel Ib = M1_ADC2_PH_B (ADC_ETC trigger 4, chain 0) */
+    g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaB = M1_ADC2_PH_B_CHNL;
+    g_sM1AdcSensor.sCurrSec45.ui16ChanSidePhaB = M1_ADC2_PH_B_SIDE;
+
+    /* UDCbus channel measurement */
+    /* ADC1, channel Udcb = M1_ADC1_UDCB (ADC_ETC trigger 0, chain 1) */
+    g_sM1AdcSensor.ui16ChanNumVDcb  = M1_ADC1_UDCB_CHNL;
+    g_sM1AdcSensor.ui16ChanSideVDcb  = M1_ADC1_UDCB_SIDE;
+    /* ADC2, channel AUX (ADC_ETC trigger 4, chain 1) */
+    g_sM1AdcSensor.ui16ChanNumAux = 7U;
+    g_sM1AdcSensor.ui16ChanSideAux = kLPADC_SampleChannelSingleEndSideB;
+
+    //Default channel assigment for Sector 2
+
     /**************************************/
     /*             ADC1                   */
     /**************************************/
-    
+
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = 2U;
+    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA;
     lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
     lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = kLPADC_SampleChannelSingleEndSideA;  
-    LPADC_SetConvCommandConfig(LPADC1, 1U, &lpadcCommandConfig); // CMDL[number]   
+    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaA;
+    LPADC_SetConvCommandConfig(LPADC1, 1U, &lpadcCommandConfig); // CMDL[number]
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
     lpadcTriggerConfig.targetCommandId = 1U; //CMDL
     lpadcTriggerConfig.enableHardwareTrigger = true;
     LPADC_SetConvTriggerConfig(LPADC1, 0U, &lpadcTriggerConfig); // trigger from TCTRL[number]
-    
-    // M1_U_DCB - GPIO_AD_11 - ADC1 CH2-B
+
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = 2U;
+    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.ui16ChanNumVDcb;
     lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
     lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = kLPADC_SampleChannelSingleEndSideB;  
+    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.ui16ChanSideVDcb;
     LPADC_SetConvCommandConfig(LPADC1, 2U, &lpadcCommandConfig); // CMDL[number]
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
     lpadcTriggerConfig.targetCommandId = 2U; //CMDL
     lpadcTriggerConfig.enableHardwareTrigger = true;
     LPADC_SetConvTriggerConfig(LPADC1, 1U, &lpadcTriggerConfig); // trigger from TCTRL[number]
-    
+
     /**************************************/
     /*             ADC2                   */
     /**************************************/
-    
+
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = 3U;
+    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC;
     lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
     lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = kLPADC_SampleChannelSingleEndSideA;  
-    LPADC_SetConvCommandConfig(LPADC2, 1U, &lpadcCommandConfig); // CMDL[number]   
+    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.sCurrSec23.ui16ChanSidePhaC;
+    LPADC_SetConvCommandConfig(LPADC2, 1U, &lpadcCommandConfig); // CMDL[number]
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
     lpadcTriggerConfig.targetCommandId = 1U; //CMDL
     lpadcTriggerConfig.enableHardwareTrigger = true;
     LPADC_SetConvTriggerConfig(LPADC2, 0U, &lpadcTriggerConfig); // trigger from TCTRL[number]
-    
+
     /* Set conversion CMD configuration. */
     LPADC_GetDefaultConvCommandConfig(&lpadcCommandConfig);
-    lpadcCommandConfig.channelNumber = 1U;
+    lpadcCommandConfig.channelNumber = g_sM1AdcSensor.ui16ChanNumAux;
     lpadcCommandConfig.sampleTimeMode = kLPADC_SampleTimeADCK3;
     lpadcCommandConfig.sampleScaleMode = kLPADC_SamplePartScale;
-    lpadcCommandConfig.sampleChannelMode = kLPADC_SampleChannelSingleEndSideB;  
+    lpadcCommandConfig.sampleChannelMode = g_sM1AdcSensor.ui16ChanSideAux;
     LPADC_SetConvCommandConfig(LPADC2, 2U, &lpadcCommandConfig); // CMDL[number]
     /* Set trigger configuration. */
     LPADC_GetDefaultConvTriggerConfig(&lpadcTriggerConfig);
     lpadcTriggerConfig.targetCommandId = 2U; //CMDL
     lpadcTriggerConfig.enableHardwareTrigger = true;
     LPADC_SetConvTriggerConfig(LPADC2, 1U, &lpadcTriggerConfig); // trigger from TCTRL[number]
-  
+
 }
 
 /*!
@@ -235,6 +264,7 @@ void InitTMR1(void)
     /* Enable & setup interrupt from TMR1 */
     EnableIRQ(TMR1_IRQn);
     NVIC_SetPriority(TMR1_IRQn, 3U);
+
 }
 
 /*!
@@ -347,9 +377,9 @@ void M1_InitPWM(void)
     /* Initialize MC driver */
     g_sM1Pwm3ph.pui32PwmBaseAddress = (PWM_Type *)PWMBase;
 
-    g_sM1Pwm3ph.ui16PhASubNum = M1_PWM_PAIR_PHA; /* PWMA phase A sub-module number */
-    g_sM1Pwm3ph.ui16PhBSubNum = M1_PWM_PAIR_PHB; /* PWMA phase B sub-module number */
-    g_sM1Pwm3ph.ui16PhCSubNum = M1_PWM_PAIR_PHC; /* PWMA phase C sub-module number */
+    g_sM1Pwm3ph.ui16PhASubNum = 0U; /* PWMA phase A sub-module number */
+    g_sM1Pwm3ph.ui16PhBSubNum = 1U; /* PWMA phase B sub-module number */
+    g_sM1Pwm3ph.ui16PhCSubNum = 2U; /* PWMA phase C sub-module number */
 
     g_sM1Pwm3ph.ui16FaultFixNum = M1_FAULT_NUM; /* PWMA fixed-value over-current fault number */
     g_sM1Pwm3ph.ui16FaultAdjNum = M1_FAULT_NUM; /* PWMA adjustable over-current fault number */
@@ -366,11 +396,11 @@ void M1_InitPWM(void)
 void InitXBARA(void)
 {
     /* Enable clock to XBAR. */
-    CLOCK_EnableClock(kCLOCK_Xbar1); 
+    CLOCK_EnableClock(kCLOCK_Xbar1);
 
     /* Configure the XBARA signal connections. (set for sync mode in ADC_ETC) */
     XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputFlexpwm1Pwm0OutTrig0, kXBARA1_OutputAdcEtc0Coco0);
-	
+
 }
 
 /*!
@@ -383,7 +413,6 @@ void InitXBARA(void)
  */
 void InitADC_ETC(void)
 {
-  
     adc_etc_config_t adcEtcConfig;
     adc_etc_trigger_config_t adcEtcTriggerConfig;
     adc_etc_trigger_chain_config_t adcEtcTriggerChainConfig;
@@ -404,20 +433,20 @@ void InitADC_ETC(void)
 
     /* Set the external XBAR trigger0 chain configuration. */
     adcEtcTriggerChainConfig.enableB2BMode       = true;
-    
+
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 0U; /* Select ADC_HC0 register to trigger. */
     adcEtcTriggerChainConfig.ADCChannelSelect = 0U; /* ADC_HC0 will be triggered to sample Corresponding channel. */
     adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done0InterruptEnable; /* Enable the Done0 interrupt. */
     adcEtcTriggerChainConfig.enableIrq = false; /* Enable the IRQ. */
     ADC_ETC_SetTriggerChainConfig(ADC_ETC, 0U, 0U, &adcEtcTriggerChainConfig); /* Configure the trigger0 chain0. */
-          
+
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 1U; /* Select ADC_HC1 register to trigger. */
     adcEtcTriggerChainConfig.ADCChannelSelect = 0U; /* ADC_HC1 will be triggered to sample Corresponding channel. */
     adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done0InterruptEnable; /* Enable the Done1 interrupt. */
     adcEtcTriggerChainConfig.enableIrq = false; /* Enable the IRQ. */
     ADC_ETC_SetTriggerChainConfig(ADC_ETC, 0U, 1U, &adcEtcTriggerChainConfig); /* Configure the trigger0 group chain 1. */
 
-     
+
     /* Set the external XBAR trigger4 configuration. */
     adcEtcTriggerConfig.enableSyncMode      = false;
     adcEtcTriggerConfig.enableSWTriggerMode = false;
@@ -426,23 +455,23 @@ void InitADC_ETC(void)
     adcEtcTriggerConfig.sampleIntervalDelay = 0U;
     adcEtcTriggerConfig.initialDelay        = 0U;
     ADC_ETC_SetTriggerConfig(ADC_ETC, 4U, &adcEtcTriggerConfig);
-    
+
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 0U; /* Select ADC_HC0 register to trigger. */
     adcEtcTriggerChainConfig.ADCChannelSelect = 0U; /* ADC_HC0 will be triggered to sample Corresponding channel. */
     adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done0InterruptEnable; /* Enable the Done0 interrupt. */
     adcEtcTriggerChainConfig.enableIrq = false; /* Enable the IRQ. */
     ADC_ETC_SetTriggerChainConfig(ADC_ETC, 4U, 0U, &adcEtcTriggerChainConfig); /* Configure the trigger4 chain0. */
-    
+
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 1U; /* Select ADC_HC1 register to trigger. */
     adcEtcTriggerChainConfig.ADCChannelSelect = 0U; /* ADC_HC1 will be triggered to sample Corresponding channel. */
     adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_Done0InterruptEnable; /* Enable the Done1 interrupt. */
     adcEtcTriggerChainConfig.enableIrq = true; /* Enable the IRQ. */
     ADC_ETC_SetTriggerChainConfig(ADC_ETC, 4U, 1U, &adcEtcTriggerChainConfig); /* Configure the trigger4 group chain 1. */
-    
+
     /* Enable the NVIC. */
     EnableIRQ(ADC_ETC_IRQ0_IRQn);
     NVIC_SetPriority(ADC_ETC_IRQ0_IRQn, 0U);
-  
+
 }
 
 /*!
@@ -459,12 +488,6 @@ void M1_InitQD(void)
     /* Enable clock to ENC modules */
     CLOCK_EnableClock(kCLOCK_Enc1);
 
-    /* Initialization modulo counter to encoder number of pulses * 4 - 1 */
-    ENC1->LMOD = (M1_POSPE_ENC_PULSES * 4U) - 1U;
-
-    /* Enable modulo counting and revolution counter increment on roll-over */
-    ENC1->CTRL2 = (ENC_CTRL2_MOD_MASK | ENC_CTRL2_REVMOD_MASK);
-
     /* Pass initialization data into encoder driver structure */
     /* encoder position and speed measurement */
     g_sM1Enc.pui32QdBase   = (ENC_Type *)ENC1;
@@ -475,8 +498,14 @@ void M1_InitQD(void)
     g_sM1Enc.ui16Pp        = M1_MOTOR_PP;
     g_sM1Enc.bDirection    = M1_POSPE_ENC_DIRECTION;
     g_sM1Enc.fltSpdEncMin  = M1_POSPE_ENC_N_MIN;
+    g_sM1Enc.ui16PulseNumber = M1_POSPE_ENC_PULSES;
     MCDRV_QdEncSetDirection(&g_sM1Enc);
-    
+
+    /* Initialization modulo counter*/
+    MCDRV_QdEncSetPulses(&g_sM1Enc);
+
+    /* Enable modulo counting and revolution counter increment on roll-over */
+    ENC1->CTRL2 = (ENC_CTRL2_MOD_MASK | ENC_CTRL2_REVMOD_MASK);
 }
 
 /*!
@@ -494,46 +523,32 @@ void InitCMP(void)
     acmp_channel_config_t channelConfigStruct;
     acmp_dac_config_t dacConfigStruct;
     acmp_discrete_mode_config_t acmpDiscreteconfig;
-  
-  /* Configure ACMP. */
-    /*
-     * acmpConfigStruct.enableHighSpeed = false;
-     * acmpConfigStruct.enableInvertOutput = false;
-     * acmpConfigStruct.useUnfilteredOutput = false;
-     * acmpConfigStruct.enablePinOut = false;
-     * acmpConfigStruct.offsetMode = kACMP_OffsetLevel0;
-     * acmpConfigStruct.hysteresisMode = kACMP_HysteresisLevel0;
-     */
+
+    /* Configure ACMP. */
     ACMP_GetDefaultConfig(&acmpConfigStruct);
-    //acmpConfigStruct.enableInvertOutput = true;
+    acmpConfigStruct.enableInvertOutput = false;
     acmpConfigStruct.enableHighSpeed = true;
-    
+
     ACMP_Init(CMP3, &acmpConfigStruct);
 
     /* Configure negative inputs are coming from 3v domain. */
     ACMP_GetDefaultDiscreteModeConfig(&acmpDiscreteconfig);
-    //acmpDiscreteconfig.enableNegativeChannelDiscreteMode = true;
     acmpDiscreteconfig.enablePositiveChannelDiscreteMode = true;
-    //acmpDiscreteconfig.enableResistorDivider = true;
+    acmpDiscreteconfig.enableResistorDivider = true;
+
     ACMP_SetDiscreteModeConfig(CMP3, &acmpDiscreteconfig);
 
     /* Configure channel. Select the positive port input from DAC and negative port input from minus mux input. */
-    channelConfigStruct.plusMuxInput  = 3U;
+    channelConfigStruct.plusMuxInput  = 3U; // GPIO_AD_30
     channelConfigStruct.minusMuxInput = 7U;
     ACMP_SetChannelConfig(CMP3, &channelConfigStruct);
 
     /* Configure DAC. */
     dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin2; // 3V PAD
-    dacConfigStruct.DACValue = 230U; // range is 0-255U
-    
-#if defined(FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT) && (FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT == 1U)
-    dacConfigStruct.enableOutput = true;
-#endif /* FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT */
-#if defined(FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT) && (FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT == 1U)
+    dacConfigStruct.DACValue = 166U; // range is 0-255U
     dacConfigStruct.workMode = kACMP_DACWorkHighSpeedMode;
-#endif /* FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT */
-    
+
     ACMP_SetDACConfig(CMP3, &dacConfigStruct);
     ACMP_Enable(CMP3, true);
-      
+
 }

@@ -83,6 +83,17 @@ void USB_DeviceTaskFn(void *deviceHandle);
 usb_status_t USB_DeviceAudioCallback(class_handle_t handle, uint32_t event, void *param);
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
 
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
+void USB0_IRQHandler(void);
+#endif
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+void USB1_IRQHandler(void);
+#endif
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
+void USB_OTG_IRQHandler(void);
+void USB_OTG1_IRQHandler(void);
+void USB_OTG2_IRQHandler(void);
+#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -191,6 +202,10 @@ void USB1_IRQHandler(void)
 }
 #endif
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
+void USB_OTG_IRQHandler(void)
+{
+    USB_DeviceEhciIsrFunction(g_UsbDeviceAudioSpeaker.deviceHandle);
+}
 void USB_OTG1_IRQHandler(void)
 {
     USB_DeviceEhciIsrFunction(g_UsbDeviceAudioSpeaker.deviceHandle);

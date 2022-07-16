@@ -73,6 +73,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../../middleware/fatfs
+    ${ProjDirPath}/../../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
@@ -103,6 +104,8 @@ include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1176_cm7)
 include(middleware_fatfs_MIMXRT1176_cm7)
 
 include(middleware_fatfs_sd_MIMXRT1176_cm7)
+
+include(component_igpio_adapter_MIMXRT1176_cm7)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1176_cm7)
 

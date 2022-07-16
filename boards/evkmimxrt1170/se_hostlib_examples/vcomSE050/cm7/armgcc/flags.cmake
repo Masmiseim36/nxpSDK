@@ -3,19 +3,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -23,17 +14,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -48,6 +31,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DUSB_ISR_REDIRECT \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DMBEDTLS \
@@ -90,6 +74,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DUSB_ISR_REDIRECT \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DUSB_DEVICE_CONFIG_CDC_ACM=1 \
     -DMBEDTLS \

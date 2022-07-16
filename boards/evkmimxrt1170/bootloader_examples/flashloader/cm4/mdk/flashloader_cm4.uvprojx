@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm4, CPU_IS_ARM_CORTEX_M4=1, BL_TARGET_RAM, MIMXRT1176, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1052;../../../../../../middleware/mcu-boot/src/bm_usb;../../../../../../middleware/mcu-boot/src/autobaud;../../../../../../middleware/mcu-boot/src/bootloader;../../../../../../middleware/mcu-boot/src/crc;../../../../../../middleware/mcu-boot/src/include;../../../../../../middleware/mcu-boot/src/memory;../../../../../../middleware/mcu-boot/src/memory/src;../../../../../../middleware/mcu-boot/src/startup;../../../../../../middleware/mcu-boot/src/packet;../../../../../../middleware/mcu-boot/src/property;../../../../../../middleware/mcu-boot/src/sbloader;../../../../../../middleware/mcu-boot/src/utilities;../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src;../../../../../../middleware/mcu-boot/src;../../../../../../middleware/mcu-boot/src/authentication;../../../../../../middleware/mcu-boot/src/security/keyblob;../../../../../../middleware/mcu-boot/src/drivers;../../../../../../middleware/mcu-boot/src/drivers/flexspi_nor;../../../../../../middleware/mcu-boot/src/drivers/flexspi;../../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom;../../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc;../../../../../../platform/drivers/puf;../../../../../../middleware/mcu-boot/src/drivers/semc;../../../../../../middleware/mcu-boot/src/drivers/nand_ecc;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/mcu-boot/src/drivers/semc_nand;../../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../../middleware/mcu-boot/src/drivers/flexspi_nand;../../../../../../middleware/mcu-boot/src/drivers/ocotp;../../../../../../CMSIS/Core/Include;../../../../../../middleware/mcu-boot/src/drivers/usdhc;../../../../../../components/lists;../../../../../../middleware/usb/phy</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1052;../../../../../../middleware/mcu-boot/src/bm_usb;../../../../../../middleware/mcu-boot/src/autobaud;../../../../../../middleware/mcu-boot/src/bootloader;../../../../../../middleware/mcu-boot/src/crc;../../../../../../middleware/mcu-boot/src/include;../../../../../../middleware/mcu-boot/src/memory;../../../../../../middleware/mcu-boot/src/memory/src;../../../../../../middleware/mcu-boot/src/startup;../../../../../../middleware/mcu-boot/src/packet;../../../../../../middleware/mcu-boot/src/property;../../../../../../middleware/mcu-boot/src/sbloader;../../../../../../middleware/mcu-boot/src/utilities;../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src;../../../../../../middleware/mcu-boot/src;../../../../../../middleware/mcu-boot/src/authentication;../../../../../../middleware/mcu-boot/src/security/keyblob;../../../../../../middleware/mcu-boot/src/drivers;../../../../../../middleware/mcu-boot/src/drivers/flexspi_nor;../../../../../../middleware/mcu-boot/src/drivers/flexspi;../../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom;../../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc;../../../../../../middleware/mcu-boot/src/drivers/semc;../../../../../../middleware/mcu-boot/src/drivers/nand_ecc;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/mcu-boot/src/drivers/semc_nand;../../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../../middleware/mcu-boot/src/drivers/flexspi_nand;../../../../../../middleware/mcu-boot/src/drivers/ocotp;../../../../../../CMSIS/Core/Include;../../../../../../middleware/mcu-boot/src/drivers/usdhc;../../../../../../components/lists;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -462,6 +462,16 @@
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_puf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_puf.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_puf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_puf.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1082,21 +1092,6 @@
               <FileName>property_imx.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/mcu-boot/src/property/src/property_imx.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source/drivers/puf</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_puf.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../platform/drivers/puf/fsl_puf.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_puf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../platform/drivers/puf/fsl_puf.h</FilePath>
             </File>
           </Files>
         </Group>

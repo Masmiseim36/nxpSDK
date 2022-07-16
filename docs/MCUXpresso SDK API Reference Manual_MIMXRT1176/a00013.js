@@ -1,7 +1,7 @@
 var a00013 =
 [
-    [ "CAAM Blocking APIs", "a00322.html", "a00322" ],
-    [ "CAAM Non-blocking APIs", "a00326.html", "a00326" ],
+    [ "CAAM Blocking APIs", "a00321.html", "a00321" ],
+    [ "CAAM Non-blocking APIs", "a00325.html", "a00325" ],
     [ "caam_job_callback_t", "a00013.html#a00432", [
       [ "JobCompleted", "a00013.html#a51d80a64c0717c6e48006080394f4487", null ]
     ] ],

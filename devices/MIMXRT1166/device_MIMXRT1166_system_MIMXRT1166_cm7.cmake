@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("device_MIMXRT1166_system component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

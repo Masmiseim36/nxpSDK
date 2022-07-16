@@ -24,6 +24,7 @@
 #include "fsl_wm8960.h"
 #include "fsl_codec_adapter.h"
 #include "fsl_dmamux.h"
+#include "fsl_pdm.h"
 #include "app_definitions.h"
 /*******************************************************************************
  * Definitions
@@ -52,7 +53,7 @@ wm8960_config_t wm8960Config = {
     .bus              = kWM8960_BusI2S,
     .format           = {.mclk_HZ    = 24576000U,
                .sampleRate = kWM8960_AudioSampleRate16KHz,
-               .bitWidth   = kWM8960_AudioBitWidth16bit},
+               .bitWidth   = kWM8960_AudioBitWidth32bit},
     .master_slave     = false,
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
@@ -68,6 +69,7 @@ const clock_audio_pll_config_t audioPllConfig = {
     .numerator   = 77,  /* 30 bit numerator of fractional loop divider. */
     .denominator = 100, /* 30 bit denominator of fractional loop divider */
 };
+
 
 static app_handle_t app;
 /*******************************************************************************
@@ -102,6 +104,11 @@ static void APP_SDCARD_DetectCallBack(bool isInserted, void *userData)
 
     app->sdcardInserted = isInserted;
     xSemaphoreGiveFromISR(app->sdcardSem, NULL);
+}
+
+bool SDCARD_inserted(void)
+{
+    return (app.sdcardInserted);
 }
 
 void APP_SDCARD_Task(void *param)
@@ -183,15 +190,18 @@ int main(void)
     BOARD_ConfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    CLOCK_InitAudioPll(&audioPllConfig);
     BOARD_InitDebugConsole();
 
-    /*Clock setting for LPI2C*/
-    CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c5, 1);
+    CLOCK_InitAudioPll(&audioPllConfig);
 
-    /*Clock setting for SAI1*/
+    CLOCK_SetRootClockMux(kCLOCK_Root_Lpi2c5, 1);
+    /* audio pll  */
     CLOCK_SetRootClockMux(kCLOCK_Root_Sai1, 4);
     CLOCK_SetRootClockDiv(kCLOCK_Root_Sai1, 16);
+    /* 0SC400M */
+    /* 24.576m mic root clock */
+    CLOCK_SetRootClockMux(kCLOCK_Root_Mic, 6);
+    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 16);
 
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
@@ -208,6 +218,9 @@ int main(void)
     PRINTF("Maestro audio record demo start\r\n");
     PRINTF("*******************************\r\n");
     PRINTF("\r\n");
+
+    /* Initialize OSA*/
+    OSA_Init();
 
     ret = BOARD_CODEC_Init();
     if (ret)

@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -777,6 +777,36 @@
               <FileName>startup_MIMXRT1166_cm4.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/arm/startup_MIMXRT1166_cm4.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1163,7 +1193,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1610,6 +1640,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -1992,7 +2052,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2439,6 +2499,36 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -2821,7 +2911,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm4, LFS_NO_INTRINSICS=1, SDK_DEBUGCONSOLE_UART, MFLASH_FILE_BASEADDR=14221312, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1166/drivers/cm4;../../../../../../components/flash/mflash/mimxrt1160;../../../../../../components/flash/mflash;../../../../../../devices/MIMXRT1166/drivers;../../../../../../middleware/littlefs;../../../../../../devices/MIMXRT1166/utilities;../../../../../../devices/MIMXRT1166;../../../../../../devices/MIMXRT1166/utilities/str;../../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../xip;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3264,6 +3354,36 @@
               <FileName>startup_MIMXRT1166_cm4.S</FileName>
               <FileType>2</FileType>
               <FilePath>../../../../../../devices/MIMXRT1166/arm/startup_MIMXRT1166_cm4.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>xip</GroupName>
+          <Files>
+            <File>
+              <FileName>evkmimxrt1160_flexspi_nor_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>

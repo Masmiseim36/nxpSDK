@@ -72,7 +72,7 @@
  */
 #define CASCFG_USE_CCI                 1
 #define CASCFG_NUM_OF_PING_PONG_BUFFER 2
-#define CASCFG_ENABLE_WAV_CODEC        1
+/*#define CASCFG_ENABLE_WAV_CODEC        1*/
 #define CASCFG_ENABLE_MP3_CODEC        1
 /* CASCFG_ENABLE_WMA_CODEC is not set */
 /* CASCFG_ENABLE_AAC_CODEC is not set */

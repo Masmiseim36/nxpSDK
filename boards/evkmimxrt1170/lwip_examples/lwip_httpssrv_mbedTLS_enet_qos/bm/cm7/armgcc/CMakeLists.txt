@@ -65,14 +65,15 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../../components/phy
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
+    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../../components/uart
     ${ProjDirPath}/../../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../../components/lists
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../../xip
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers/cm7
+    ${ProjDirPath}/../../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
 )
 
@@ -99,13 +100,13 @@ include(driver_phy-common_MIMXRT1176_cm7)
 
 include(driver_enet_qos_MIMXRT1176_cm7)
 
-include(utility_debug_console_MIMXRT1176_cm7)
-
 include(driver_clock_MIMXRT1176_cm7)
 
 include(driver_common_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
+
+include(utility_debug_console_MIMXRT1176_cm7)
 
 include(component_lpuart_adapter_MIMXRT1176_cm7)
 
@@ -134,6 +135,8 @@ include(driver_pmu_1_MIMXRT1176_cm7)
 include(driver_dcdc_soc_MIMXRT1176_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1176_cm7)
+
+include(component_silicon_id_MIMXRT1176_cm7)
 
 include(driver_mdio-common_MIMXRT1176_cm7)
 

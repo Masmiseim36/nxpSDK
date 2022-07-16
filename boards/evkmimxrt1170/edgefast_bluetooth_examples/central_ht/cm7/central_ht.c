@@ -11,7 +11,6 @@
 #include <toolchain.h>
 #include <porting.h>
 #include <fsl_debug_console.h>
-#include <EmbeddedTypes.h>
 
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
@@ -32,6 +31,9 @@ static struct bt_conn *default_conn;
 static struct bt_uuid_16 uuid = BT_UUID_INIT_16(0);
 static struct bt_gatt_discover_params discover_params;
 static struct bt_gatt_subscribe_params subscribe_params;
+
+/* Bit shift definitions */
+#define BIT0              0x01U
 
 /*******************************************************************************
  * Code

@@ -365,7 +365,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>../../../../../devices/MIMXRT1166/arm/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x1000000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
@@ -852,6 +852,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -1224,7 +1229,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>../../../../../devices/MIMXRT1166/arm/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>../../../../../middleware/eiq/deepviewrt/lib/deepview-rt-mdk.lib --remove --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x1000000" --diag-warning=6242 --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
@@ -1711,6 +1716,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>

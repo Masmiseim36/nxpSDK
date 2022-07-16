@@ -54,15 +54,16 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../components/osa
     ${ProjDirPath}/../../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../../middleware
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
+    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../../components/uart
     ${ProjDirPath}/../../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../../components/lists
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../../xip
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers/cm7
+    ${ProjDirPath}/../../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
 )
 
@@ -85,8 +86,6 @@ include(middleware_usb_host_cdc_rndis_MIMXRT1176_cm7)
 
 include(driver_clock_MIMXRT1176_cm7)
 
-include(utility_debug_console_MIMXRT1176_cm7)
-
 include(middleware_lwip_contrib_ping_MIMXRT1176_cm7)
 
 include(middleware_baremetal_MIMXRT1176_cm7)
@@ -94,6 +93,8 @@ include(middleware_baremetal_MIMXRT1176_cm7)
 include(driver_common_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
+
+include(utility_debug_console_MIMXRT1176_cm7)
 
 include(component_lpuart_adapter_MIMXRT1176_cm7)
 
@@ -122,6 +123,8 @@ include(driver_pmu_1_MIMXRT1176_cm7)
 include(driver_dcdc_soc_MIMXRT1176_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1176_cm7)
+
+include(component_silicon_id_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 

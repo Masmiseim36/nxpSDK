@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_multicore_rpmsg_lite_imxrt1160_bm component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

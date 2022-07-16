@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['tamper_5factive_5frx_5fconfig_5ft',['tamper_active_rx_config_t',['../a00090.html#a00687',1,'']]],
-  ['tamper_5factive_5ftx_5fconfig_5ft',['tamper_active_tx_config_t',['../a00090.html#a00688',1,'']]],
-  ['tmpsns_5fconfig_5ft',['tmpsns_config_t',['../a00095.html#a00689',1,'']]]
+  ['tmpsns_5fconfig_5ft',['tmpsns_config_t',['../a00094.html#a00681',1,'']]]
 ];

@@ -181,6 +181,15 @@ SECTIONS
     . = ALIGN(4);
   } > m_text
 
+  ._bt_conn_cb :
+  {
+    . = ALIGN(4);
+    _bt_conn_cb_list_start = .;
+    KEEP(*(SORT(._bt_conn_cb.static.*)))
+    _bt_conn_cb_list_end = .;
+    . = ALIGN(4);
+  } > m_text
+
   ._bt_gatt_service_static :
   {
     . = ALIGN(4);

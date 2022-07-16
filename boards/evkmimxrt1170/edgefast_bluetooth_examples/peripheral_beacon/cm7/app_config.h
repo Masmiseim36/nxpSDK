@@ -58,6 +58,10 @@
 #define EDDYSTONE   0
 
 #define CONFIG_BT_PERIPHERAL 1
+#if (defined EDDYSTONE) && (EDDYSTONE)
+#define CONFIG_BT_SETTINGS              1
+#define CONFIG_BT_KEYS_OVERWRITE_OLDEST 1
+#endif
 #if defined(IBEACON_APP) && (IBEACON_APP == 1)
 #define CONFIG_BT_DEVICE_NAME "ibeacon"
 #elif defined(EDDYSTONE) && (EDDYSTONE == 1)

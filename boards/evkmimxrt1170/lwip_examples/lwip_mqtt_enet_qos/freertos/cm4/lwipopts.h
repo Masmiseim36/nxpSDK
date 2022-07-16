@@ -340,6 +340,13 @@ u32_t lwip_rand(void);
 #define LWIP_RAND() lwip_rand()
 #endif
 
+/**
+ * LWIP_NETIF_EXT_STATUS_CALLBACK==1: Support an extended callback function
+ * for several netif related event that supports multiple subscribers.
+ * @see netif_ext_status_callback
+ */
+#define LWIP_NETIF_EXT_STATUS_CALLBACK 1
+
 #endif /* __LWIPOPTS_H__ */
 
 /*****END OF FILE****/

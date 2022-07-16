@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, SD_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, SD_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/gpio;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -781,6 +781,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -1017,6 +1032,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -1373,7 +1393,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, SD_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/gpio;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1820,6 +1840,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -2056,6 +2091,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -2412,7 +2452,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, SD_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/gpio;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2859,6 +2899,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -3095,6 +3150,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -3449,9 +3509,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, SD_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, SD_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/gpio;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3898,6 +3958,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -4134,6 +4209,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -4490,7 +4570,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, SD_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/gpio;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4937,6 +5017,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -5173,6 +5268,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -5529,7 +5629,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_BM, SD_ENABLED, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>..;../../../../..;../../../../../../../middleware/usb/device;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../../components/gpio;../../../../../../../devices/MIMXRT1176;../../../../../../../components/uart;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5976,6 +6076,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -6212,6 +6327,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>

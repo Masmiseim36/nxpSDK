@@ -1,0 +1,63 @@
+Overview
+========
+
+This basic example shows how to use the library to create two simple pipelines:
+- camera preview
+- image view
+
+
+Pipelines Description
+=====================
+
+The pipelines created by the application are:
+1- Camera preview
++-------------+      +-------------+      +-------------+
+|             |      |             |      |             |
+|    camera   | -->  |  2D convert | -->  |    Display  |
+|             |      |             |      |             |
++-------------+      +-------------+      +-------------+
+
+Camera element is configured to output YUV444 images at 1280x720 resolution
+Display element is configured to receive RGB565 images at 720x1280 resolution
+2D convert is configured to perform:
+  - color space conversion from YUV444 to RGB565
+  - 90 degres rotation from 1280x720 to 720x1280
+
+
+2- Image preview
++-------------+      +-------------+      +-------------+
+|             |      |             |      |             |
+|    static   | -->  |  2D convert | -->  |    Display  |
+|    image    |      |             |      |             |
++-------------+      +-------------+      +-------------+
+
+Static image element is configured to output a YUV444 image at 168x208 resolution
+Display element is configured to receive RGB565 images at 720x1280 resolution
+2D convert is configured to perform:
+  - color space conversion from YUV444 to RGB565
+  - scaling from 168x208 to 720x1280
+
+
+Running the demo
+================
+
+The same application supports both pipelines. The camera preview pipeline is the default one.
+In order to build the image preview pipeline instead, please set up the following variable at the
+beginning of the camera_view.c file:
+
+#define SOURCE_STATIC_IMAGE 1
+
+
+Important notes
+===============
+
+The library uses TensorFlow Lite as a machine learning framework by default.
+TensorFLow Lite Micro library is built as part of the MPP library and has some dependencies
+on the operations that must be built to support a TensorFlow Lite model.
+This dependency must be resolved by the definition of a function called:
+
+tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReporter)
+
+The example uses a dummy TFLite operations resolver. So, it must not be used as a base for
+ML use cases.
+

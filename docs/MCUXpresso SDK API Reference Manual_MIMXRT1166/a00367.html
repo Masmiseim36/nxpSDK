@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -146,10 +146,10 @@ Functions</h2></td></tr>
 <tr class="memitem:gac278adaf161565d918abd41f4f4bf103"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#gac278adaf161565d918abd41f4f4bf103">IEE_APC_GlobalDisable</a> (IEE_APC_Type *base)</td></tr>
 <tr class="memdesc:gac278adaf161565d918abd41f4f4bf103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the APC IEE Region setting.  <a href="#gac278adaf161565d918abd41f4f4bf103">More...</a><br/></td></tr>
 <tr class="separator:gac278adaf161565d918abd41f4f4bf103"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga96a4a09160e96548e72d96b27e42a405"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga96a4a09160e96548e72d96b27e42a405">IEE_APC_SetRegionConfig</a> (IEE_APC_Type *base, <a class="el" href="a00367.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a> region, uint32_t startAddr, uint32_t endAddr)</td></tr>
+<tr class="memitem:ga96a4a09160e96548e72d96b27e42a405"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga96a4a09160e96548e72d96b27e42a405">IEE_APC_SetRegionConfig</a> (IEE_APC_Type *base, <a class="el" href="a00367.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a> region, uint32_t startAddr, uint32_t endAddr)</td></tr>
 <tr class="memdesc:ga96a4a09160e96548e72d96b27e42a405"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the APC IEE Memory Region Descriptors.  <a href="#ga96a4a09160e96548e72d96b27e42a405">More...</a><br/></td></tr>
 <tr class="separator:ga96a4a09160e96548e72d96b27e42a405"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8b9b0c0e6ab19657b266bc2b311d175a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga8b9b0c0e6ab19657b266bc2b311d175a">IEE_APC_LockRegionConfig</a> (IEE_APC_Type *base, <a class="el" href="a00367.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a> region, <a class="el" href="a00367.html#ga6c8858dea20b71c984ac122c640742c5">iee_apc_domain_t</a> domain)</td></tr>
+<tr class="memitem:ga8b9b0c0e6ab19657b266bc2b311d175a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga8b9b0c0e6ab19657b266bc2b311d175a">IEE_APC_LockRegionConfig</a> (IEE_APC_Type *base, <a class="el" href="a00367.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a> region, <a class="el" href="a00367.html#ga6c8858dea20b71c984ac122c640742c5">iee_apc_domain_t</a> domain)</td></tr>
 <tr class="memdesc:ga8b9b0c0e6ab19657b266bc2b311d175a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock the LPSR GPR and APC IEE configuration.  <a href="#ga8b9b0c0e6ab19657b266bc2b311d175a">More...</a><br/></td></tr>
 <tr class="separator:ga8b9b0c0e6ab19657b266bc2b311d175a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8f2a69526f52c82f2e02889accb64e74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga8f2a69526f52c82f2e02889accb64e74">IEE_APC_RegionEnable</a> (IEE_APC_Type *base, <a class="el" href="a00367.html#ga43c589f51df60eee06163aec88f77bf6">iee_apc_region_t</a> region)</td></tr>
@@ -158,7 +158,7 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga8f8e0efca6b2b04874ff994be95ccb36"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga8f8e0efca6b2b04874ff994be95ccb36">FSL_IEE_APC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
+<tr class="memitem:ga8f8e0efca6b2b04874ff994be95ccb36"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00367.html#ga8f8e0efca6b2b04874ff994be95ccb36">FSL_IEE_APC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td></tr>
 <tr class="memdesc:ga8f8e0efca6b2b04874ff994be95ccb36"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEE_APC driver version.  <a href="#ga8f8e0efca6b2b04874ff994be95ccb36">More...</a><br/></td></tr>
 <tr class="separator:ga8f8e0efca6b2b04874ff994be95ccb36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -168,7 +168,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_IEE_APC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td>
+          <td class="memname">#define FSL_IEE_APC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 1))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -299,7 +299,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IEE_APC_SetRegionConfig </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IEE_APC_SetRegionConfig </td>
           <td>(</td>
           <td class="paramtype">IEE_APC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -347,7 +347,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IEE_APC_LockRegionConfig </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> IEE_APC_LockRegionConfig </td>
           <td>(</td>
           <td class="paramtype">IEE_APC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

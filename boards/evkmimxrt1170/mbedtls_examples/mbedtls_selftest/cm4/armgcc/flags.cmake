@@ -3,38 +3,20 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m4 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv4-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG " \
     ${CMAKE_ASM_FLAGS_SDRAM_DEBUG} \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m4 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv4-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
@@ -42,17 +24,9 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
     -D__STARTUP_CLEAR_BSS \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m4 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv4-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE " \
     ${CMAKE_ASM_FLAGS_SDRAM_RELEASE} \
@@ -60,36 +34,19 @@ SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m4 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv4-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG} \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m4 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv4-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -97,17 +54,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m4 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv4-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
@@ -115,6 +64,7 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DCPU_MIMXRT1176DVMAA_cm4 \
     -DFREESCALE_KSDK_BM \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -mcpu=cortex-m4 \
@@ -141,6 +91,7 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -DCPU_MIMXRT1176DVMAA_cm4 \
     -DFREESCALE_KSDK_BM \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -mcpu=cortex-m4 \
@@ -165,6 +116,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DCPU_MIMXRT1176DVMAA_cm4 \
     -DFREESCALE_KSDK_BM \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -Os \
@@ -193,6 +145,7 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -DCPU_MIMXRT1176DVMAA_cm4 \
     -DFREESCALE_KSDK_BM \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -Os \
@@ -221,6 +174,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCPU_MIMXRT1176DVMAA_cm4 \
     -DFREESCALE_KSDK_BM \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -g \
@@ -250,6 +204,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCPU_MIMXRT1176DVMAA_cm4 \
     -DFREESCALE_KSDK_BM \
     -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -Os \

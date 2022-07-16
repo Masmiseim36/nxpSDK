@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, GX_INCLUDE_USER_DEFINE_FILE, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1176DVMAA_cm7, GUIX_PXP_ENABLE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, GX_INCLUDE_USER_DEFINE_FILE, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/azure-rtos/guix/common/inc;../../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/gt911;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../rtos/azure-rtos/guix/common/inc;../../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/gt911;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../xmcd;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../rtos/azure-rtos/binary/guix/cortex_m7/mdk/libguix.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../../rtos/azure-rtos/binary/guix/cortex_m7/mdk/libguix.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -437,6 +437,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -872,6 +882,16 @@
               <FileName>fsl_soc_src.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_pxp.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1327,6 +1347,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -1666,9 +1691,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, GX_INCLUDE_USER_DEFINE_FILE, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=0, XIP_BOOT_HEADER_XMCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1176DVMAA_cm7, GUIX_PXP_ENABLE, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, GX_INCLUDE_USER_DEFINE_FILE, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../rtos/azure-rtos/guix/common/inc;../../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/gt911;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
+              <IncludePath>..;../../../../../../rtos/azure-rtos/guix/common/inc;../../../../../../rtos/azure-rtos/guix/ports/cortex_m7/ac6/inc;../../../../../../components/video;../../../../../../components/video/display;../../../../../../components/video/display/rm68200;../../../../../../components/video/display/hx8394;../../../../../../components/video/display/rm68191;../../../../../../devices/MIMXRT1176/drivers;../../../../../../components/video/display/mipi_dsi_cmd;../../../../../../components/video/display/dc/lcdifv2;../../../../../../components/video/display/dc/elcdif;../../../../../../components/gt911;../../../../../../components/lists;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/MIMXRT1176;../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../xip;../../../../../../devices/MIMXRT1176/xip;../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../xmcd;../../../../../../CMSIS/Core/Include;../../../../../../components/video/display/dc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1702,7 +1727,7 @@
             <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../rtos/azure-rtos/binary/guix/cortex_m7/mdk/libguix.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../../rtos/azure-rtos/binary/guix/cortex_m7/mdk/libguix.lib ../../../../../../rtos/azure-rtos/binary/threadx/cortex_m7/mdk/libthreadx.lib --remove --entry=Reset_Handler --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-DXIP_BOOT_HEADER_DCD_ENABLE=0" --predefine="-DXIP_BOOT_HEADER_XMCD_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1771,6 +1796,16 @@
               <FileName>dcd.h</FileName>
               <FileType>5</FileType>
               <FilePath>../dcd.h</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../xmcd/xmcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>xmcd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../xmcd/xmcd.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2206,6 +2241,16 @@
               <FileName>fsl_soc_src.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_soc_src.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1176/drivers/fsl_pxp.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2661,6 +2706,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>

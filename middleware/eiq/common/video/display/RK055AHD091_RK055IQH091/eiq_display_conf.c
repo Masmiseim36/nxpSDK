@@ -9,8 +9,13 @@
 #include "fsl_gpio.h"
 #include "board.h"
 #include "fsl_mipi_dsi.h"
+#if (DEMO_PANEL == DEMO_PANEL_RK055AHD091)
 #include "fsl_rm68200.h"
+#elif (DEMO_PANEL == DEMO_PANEL_RK055IQH091)
 #include "fsl_rm68191.h"
+#elif (DEMO_PANEL == DEMO_PANEL_RK055MHD091)
+#include "fsl_hx8394.h"
+#endif
 #include "pin_mux.h"
 #include "fsl_debug_console.h"
 #include "fsl_soc_src.h"
@@ -21,8 +26,6 @@
 #include "fsl_dc_fb_elcdif.h"
 #endif
 
-#include <stdio.h>
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -32,6 +35,7 @@
  */
 
 #if (DEMO_PANEL == DEMO_PANEL_RK055AHD091)
+
 #define DEMO_HSW 8
 #define DEMO_HFP 32
 #define DEMO_HBP 32
@@ -39,11 +43,20 @@
 #define DEMO_VFP 16
 #define DEMO_VBP 14
 
-#elif (DEMO_PANEL_RK055IQH091 == DEMO_PANEL)
+#elif (DEMO_PANEL == DEMO_PANEL_RK055IQH091)
 
 #define DEMO_HSW 2
 #define DEMO_HFP 32
 #define DEMO_HBP 30
+#define DEMO_VSW 2
+#define DEMO_VFP 16
+#define DEMO_VBP 14
+
+#elif (DEMO_PANEL == DEMO_PANEL_RK055MHD091)
+
+#define DEMO_HSW 6
+#define DEMO_HFP 12
+#define DEMO_HBP 24
 #define DEMO_VSW 2
 #define DEMO_VFP 16
 #define DEMO_VBP 14
@@ -163,6 +176,24 @@ static display_handle_t rm68200Handle = {
     .ops      = &rm68200_ops,
 };
 
+#elif (DEMO_PANEL == DEMO_PANEL_RK055MHD091)
+
+static mipi_dsi_device_t dsiDevice = {
+    .virtualChannel = 0,
+    .xferFunc       = BOARD_DSI_Transfer,
+};
+
+static const hx8394_resource_t hx8394Resource = {
+    .dsiDevice    = &dsiDevice,
+    .pullResetPin = BOARD_PullPanelResetPin,
+    .pullPowerPin = BOARD_PullPanelPowerPin,
+};
+
+static display_handle_t hx8394Handle = {
+    .resource = &hx8394Resource,
+    .ops      = &hx8394_ops,
+};
+
 #else
 
 static mipi_dsi_device_t dsiDevice = {
@@ -236,6 +267,7 @@ const dc_fb_t g_dc = {
     .prvData = &s_dcFbElcdifHandle,
     .config  = &s_dcFbElcdifConfig,
 };
+
 #endif
 
 /*******************************************************************************
@@ -282,7 +314,7 @@ static void BOARD_InitLcdifClock(void)
     const clock_root_config_t lcdifClockConfig = {
         .clockOff = false,
         .mux      = 4, /*!< PLL_528. */
-#if (DEMO_PANEL == DEMO_PANEL_RK055AHD091)
+#if ((DEMO_PANEL == DEMO_PANEL_RK055AHD091) || (DEMO_PANEL_RK055MHD091 == DEMO_PANEL))
         .div = 9,
 #else
         .div = 15,
@@ -368,6 +400,10 @@ static status_t BOARD_InitLcdPanel(void)
 
 #if (DEMO_PANEL == DEMO_PANEL_RK055AHD091)
     status = RM68200_Init(&rm68200Handle, &displayConfig);
+
+#elif (DEMO_PANEL_RK055MHD091 == DEMO_PANEL)
+
+    status = HX8394_Init(&hx8394Handle, &displayConfig);
 
 #else
 
@@ -540,7 +576,7 @@ status_t BOARD_PrepareDisplayController(void)
 
     if (status != kStatus_Success)
     {
-        printf("Error: Invalid display clock source.\r\n");
+        PRINTF("Error: Invalid display clock source.\r\n");
         return status;
     }
 
@@ -565,7 +601,7 @@ status_t BOARD_PrepareDisplayController(void)
 }
 
 /*!
- * @brief Resets display controler.
+ * @brief Resets display controller.
  */
 void BOARD_ResetDisplayMix(void)
 {

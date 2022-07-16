@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: GPIO: General-Purpose Input/Output Driver</title>
+<title>MCUXpresso SDK API Reference Manual: GPT: General Purpose Timer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -102,273 +102,583 @@ $(document).ready(function(){initNavTree('a00049.html','');});
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">GPIO: General-Purpose Input/Output Driver</div>  </div>
+<div class="title">GPT: General Purpose Timer</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The MCUXpresso SDK provides a peripheral driver for the General-Purpose Input/Output (GPIO) module of MCUXpresso SDK devices.</p>
-<h1><a class="anchor" id="GPIOTpyUC"></a>
+<p>The MCUXpresso SDK provides a driver for the General Purpose Timer (GPT) of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="GPTFunc"></a>
+Function groups</h1>
+<p>The gpt driver supports the generation of PWM signals, input capture, and setting up the timer match conditions.</p>
+<h2><a class="anchor" id="GPTInit"></a>
+Initialization and deinitialization</h2>
+<p>The function <a class="el" href="a00049.html#ga6aeb20e99444bdaf31dd9c39c108e79f" title="Initialize GPT to reset state and initialize running mode. ">GPT_Init()</a> initializes the gpt with specified configurations. The function <a class="el" href="a00049.html#ga0f60fd16354f3fcf7bd02f1ccbee80e4" title="Fills in the GPT configuration structure with default settings. ">GPT_GetDefaultConfig()</a> gets the default configurations. The initialization function configures the restart/free-run mode and input selection when running.</p>
+<p>The function <a class="el" href="a00049.html#ga90be090ee63035f2a2b014adcfd8c60b" title="Disables the module and gates the GPT clock. ">GPT_Deinit()</a> stops the timer and turns off the module clock.</p>
+<h1><a class="anchor" id="GptCase"></a>
 Typical use case</h1>
-<h2><a class="anchor" id="GPIOInOps"></a>
-Input Operation</h2>
-<p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/gpio </p>
+<h2><a class="anchor" id="GPTInterruptExample"></a>
+GPT interrupt example</h2>
+<p>Set up a channel to trigger a periodic interrupt after every 1 second. Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/gpt </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00559"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a00559">gpio_pin_config_t</a></td></tr>
-<tr class="memdesc:a00559"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Init structure definition.  <a href="a00049.html#a00559">More...</a><br/></td></tr>
-<tr class="separator:a00559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00554"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a00554">gpt_config_t</a></td></tr>
+<tr class="memdesc:a00554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure to configure the running mode.  <a href="a00049.html#a00554">More...</a><br/></td></tr>
+<tr class="separator:a00554"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:gada41ca0a2ce239fe125ee96833e715c0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00049.html#ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4">kGPIO_DigitalInput</a> = 0U, 
+<tr class="memitem:gad0ed5e094d0bec112a065a0c6b057e56"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00049.html#ggad0ed5e094d0bec112a065a0c6b057e56a398f5e7765f47a492d625a7cb26bf499">kGPT_ClockSource_Off</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00049.html#ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9">kGPIO_DigitalOutput</a> = 1U
+&#160;&#160;<a class="el" href="a00049.html#ggad0ed5e094d0bec112a065a0c6b057e56a728cff5c785288f3884d4c2cbdf0b466">kGPT_ClockSource_Periph</a> = 1U, 
 <br/>
- }</td></tr>
-<tr class="memdesc:gada41ca0a2ce239fe125ee96833e715c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO direction definition.  <a href="a00049.html#gada41ca0a2ce239fe125ee96833e715c0">More...</a><br/></td></tr>
-<tr class="separator:gada41ca0a2ce239fe125ee96833e715c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1b9ad57f43a7be04e31c2e43e92aca39"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00049.html#gga1b9ad57f43a7be04e31c2e43e92aca39a69d618dcf6fc01e5c8315ef1dd4aa66d">kGPIO_NoIntmode</a> = 0U, 
+&#160;&#160;<a class="el" href="a00049.html#ggad0ed5e094d0bec112a065a0c6b057e56a1a2644f7461698f6515c3da0a7c1cbab">kGPT_ClockSource_HighFreq</a> = 2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00049.html#gga1b9ad57f43a7be04e31c2e43e92aca39af6c9ba431378e6290d7033b643e554da">kGPIO_IntLowLevel</a> = 1U, 
+&#160;&#160;<a class="el" href="a00049.html#ggad0ed5e094d0bec112a065a0c6b057e56ab76385e941d5ce14116ac5a55aaf5815">kGPT_ClockSource_Ext</a> = 3U, 
 <br/>
-&#160;&#160;<a class="el" href="a00049.html#gga1b9ad57f43a7be04e31c2e43e92aca39aa445f82a63c5aa94a1e53cdcf52b71d3">kGPIO_IntHighLevel</a> = 2U, 
+&#160;&#160;<a class="el" href="a00049.html#ggad0ed5e094d0bec112a065a0c6b057e56acb33521779fb2addb21bb22f850c837d">kGPT_ClockSource_LowFreq</a> = 4U, 
 <br/>
-&#160;&#160;<a class="el" href="a00049.html#gga1b9ad57f43a7be04e31c2e43e92aca39ab874f7d31c4bf2f964bf52466d5c40f4">kGPIO_IntRisingEdge</a> = 3U, 
-<br/>
-&#160;&#160;<a class="el" href="a00049.html#gga1b9ad57f43a7be04e31c2e43e92aca39a369cc36a7fda0eb55c4f509070c2d887">kGPIO_IntFallingEdge</a> = 4U, 
-<br/>
-&#160;&#160;<a class="el" href="a00049.html#gga1b9ad57f43a7be04e31c2e43e92aca39ac1d74f985cbebbe8441f6053b8074a50">kGPIO_IntRisingOrFallingEdge</a> = 5U
+&#160;&#160;<a class="el" href="a00049.html#ggad0ed5e094d0bec112a065a0c6b057e56a9df479d2e5f5d539b053425ab986ad20">kGPT_ClockSource_Osc</a> = 5U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga1b9ad57f43a7be04e31c2e43e92aca39"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO interrupt mode definition.  <a href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">More...</a><br/></td></tr>
-<tr class="separator:ga1b9ad57f43a7be04e31c2e43e92aca39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:gad0ed5e094d0bec112a065a0c6b057e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of clock sources.  <a href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">More...</a><br/></td></tr>
+<tr class="separator:gad0ed5e094d0bec112a065a0c6b057e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad36eff6489251bee506c6806c64a86d0"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00049.html#ggad36eff6489251bee506c6806c64a86d0a083b8ef10ac54db99013fdadaf40ea12">kGPT_InputCapture_Channel1</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#ggad36eff6489251bee506c6806c64a86d0a8ef1e1b7eee2eefaef9d4f9776bafe4a">kGPT_InputCapture_Channel2</a> = 1U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gad36eff6489251bee506c6806c64a86d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of input capture channel number.  <a href="a00049.html#gad36eff6489251bee506c6806c64a86d0">More...</a><br/></td></tr>
+<tr class="separator:gad36eff6489251bee506c6806c64a86d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22997c2d644f6249b9c704afc230eedf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00049.html#gga22997c2d644f6249b9c704afc230eedfaf7ecc55be6dd63a6be40d96dc9f8d24e">kGPT_InputOperation_Disabled</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga22997c2d644f6249b9c704afc230eedfa17ede75d0bb581f4fed42f678e1b81d1">kGPT_InputOperation_RiseEdge</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga22997c2d644f6249b9c704afc230eedfaa0dcd1649563ba92f8f1e8230284edfa">kGPT_InputOperation_FallEdge</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga22997c2d644f6249b9c704afc230eedfa5ad14d26a16fa7d607a446440c88b735">kGPT_InputOperation_BothEdge</a> = 3U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga22997c2d644f6249b9c704afc230eedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of input capture operation mode.  <a href="a00049.html#ga22997c2d644f6249b9c704afc230eedf">More...</a><br/></td></tr>
+<tr class="separator:ga22997c2d644f6249b9c704afc230eedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae6c9b96e71d6a276ce8437708acddfda"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00049.html#ggae6c9b96e71d6a276ce8437708acddfdaa68b52504e269393df3fc389c9b78c2d8">kGPT_OutputCompare_Channel1</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#ggae6c9b96e71d6a276ce8437708acddfdaa1be13c4fe09bed476ee7656b59f25d37">kGPT_OutputCompare_Channel2</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#ggae6c9b96e71d6a276ce8437708acddfdaa55da6b048e4471add16448bd43a6829c">kGPT_OutputCompare_Channel3</a> = 2U
+<br/>
+ }</td></tr>
+<tr class="memdesc:gae6c9b96e71d6a276ce8437708acddfda"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of output compare channel number.  <a href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">More...</a><br/></td></tr>
+<tr class="separator:gae6c9b96e71d6a276ce8437708acddfda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54e26b65b23236492c81c572ba36ab20"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00049.html#gga54e26b65b23236492c81c572ba36ab20adedc5e02092eeab85600f919bf2dec82">kGPT_OutputOperation_Disconnected</a> = 0U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga54e26b65b23236492c81c572ba36ab20acd8732f3636757f56665c6549a27c887">kGPT_OutputOperation_Toggle</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga54e26b65b23236492c81c572ba36ab20ab74f183a3e8eb815a40a39eb033dc532">kGPT_OutputOperation_Clear</a> = 2U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga54e26b65b23236492c81c572ba36ab20aae9329b2a4b5ea63e66ca10239efe669">kGPT_OutputOperation_Set</a> = 3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga54e26b65b23236492c81c572ba36ab20a5bd080fd627f26d074da1b3dab7535f2">kGPT_OutputOperation_Activelow</a> = 4U
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga54e26b65b23236492c81c572ba36ab20"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of output compare operation mode.  <a href="a00049.html#ga54e26b65b23236492c81c572ba36ab20">More...</a><br/></td></tr>
+<tr class="separator:ga54e26b65b23236492c81c572ba36ab20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac1d66bcf23acefc1a50049c7e24d77bb"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gac1d66bcf23acefc1a50049c7e24d77bb">gpt_interrupt_enable_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00049.html#ggac1d66bcf23acefc1a50049c7e24d77bba61170acbca36f4757633d1d12d3246ba">kGPT_OutputCompare1InterruptEnable</a> = GPT_IR_OF1IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#ggac1d66bcf23acefc1a50049c7e24d77bba4ebb7fc65d182cd6643fe237d60d91ed">kGPT_OutputCompare2InterruptEnable</a> = GPT_IR_OF2IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#ggac1d66bcf23acefc1a50049c7e24d77bba5141f4b482113c7763819b89c4abcc09">kGPT_OutputCompare3InterruptEnable</a> = GPT_IR_OF3IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#ggac1d66bcf23acefc1a50049c7e24d77bba21a3c64b4edc196b24be9e12c061fe88">kGPT_InputCapture1InterruptEnable</a> = GPT_IR_IF1IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#ggac1d66bcf23acefc1a50049c7e24d77bbaf6dc605de633b7e545065bc952409562">kGPT_InputCapture2InterruptEnable</a> = GPT_IR_IF2IE_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#ggac1d66bcf23acefc1a50049c7e24d77bba2bbf44ee3464387de1fd11a2c28a5132">kGPT_RollOverFlagInterruptEnable</a> = GPT_IR_ROVIE_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:gac1d66bcf23acefc1a50049c7e24d77bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of GPT interrupts.  <a href="a00049.html#gac1d66bcf23acefc1a50049c7e24d77bb">More...</a><br/></td></tr>
+<tr class="separator:gac1d66bcf23acefc1a50049c7e24d77bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21ce3ba40810ea60cf4b59a488e73cc5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00049.html#gga21ce3ba40810ea60cf4b59a488e73cc5a241fcd87ab22fa9a7212739a39134dfe">kGPT_OutputCompare1Flag</a> = GPT_SR_OF1_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga21ce3ba40810ea60cf4b59a488e73cc5a75f50bb95d6a232c6bbb0b6c52db60e5">kGPT_OutputCompare2Flag</a> = GPT_SR_OF2_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga21ce3ba40810ea60cf4b59a488e73cc5abfc4b1e05ade49b83461447d4b4464b1">kGPT_OutputCompare3Flag</a> = GPT_SR_OF3_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga21ce3ba40810ea60cf4b59a488e73cc5af8d82fdf4783ec7125f8f4cdedaed062">kGPT_InputCapture1Flag</a> = GPT_SR_IF1_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga21ce3ba40810ea60cf4b59a488e73cc5a64ff7cb952a6cd9c1d85d3dcffc1a50b">kGPT_InputCapture2Flag</a> = GPT_SR_IF2_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00049.html#gga21ce3ba40810ea60cf4b59a488e73cc5ae238e6b78d934129211d8e7aafef59a1">kGPT_RollOverFlag</a> = GPT_SR_ROV_MASK
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga21ce3ba40810ea60cf4b59a488e73cc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status flag.  <a href="a00049.html#ga21ce3ba40810ea60cf4b59a488e73cc5">More...</a><br/></td></tr>
+<tr class="separator:ga21ce3ba40810ea60cf4b59a488e73cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga5aa5229cbd041b11bcf8417ba12896b2">FSL_GPIO_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td></tr>
-<tr class="memdesc:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO driver version.  <a href="#ga5aa5229cbd041b11bcf8417ba12896b2">More...</a><br/></td></tr>
-<tr class="separator:ga5aa5229cbd041b11bcf8417ba12896b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga94106f68143140f2cf4292f02cf4ea21"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga94106f68143140f2cf4292f02cf4ea21"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_GPT_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+<tr class="separator:ga94106f68143140f2cf4292f02cf4ea21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-GPIO Initialization and Configuration functions</h2></td></tr>
-<tr class="memitem:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga8d3aa26ad7e88ef1427e51242a70c259">GPIO_PinInit</a> (GPIO_Type *base, uint32_t pin, const <a class="el" href="a00049.html#a00559">gpio_pin_config_t</a> *Config)</td></tr>
-<tr class="memdesc:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the GPIO peripheral according to the specified parameters in the initConfig.  <a href="#ga8d3aa26ad7e88ef1427e51242a70c259">More...</a><br/></td></tr>
-<tr class="separator:ga8d3aa26ad7e88ef1427e51242a70c259"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga6aeb20e99444bdaf31dd9c39c108e79f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga6aeb20e99444bdaf31dd9c39c108e79f">GPT_Init</a> (GPT_Type *base, const <a class="el" href="a00049.html#a00554">gpt_config_t</a> *initConfig)</td></tr>
+<tr class="memdesc:ga6aeb20e99444bdaf31dd9c39c108e79f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize GPT to reset state and initialize running mode.  <a href="#ga6aeb20e99444bdaf31dd9c39c108e79f">More...</a><br/></td></tr>
+<tr class="separator:ga6aeb20e99444bdaf31dd9c39c108e79f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga90be090ee63035f2a2b014adcfd8c60b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga90be090ee63035f2a2b014adcfd8c60b">GPT_Deinit</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga90be090ee63035f2a2b014adcfd8c60b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the module and gates the GPT clock.  <a href="#ga90be090ee63035f2a2b014adcfd8c60b">More...</a><br/></td></tr>
+<tr class="separator:ga90be090ee63035f2a2b014adcfd8c60b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0f60fd16354f3fcf7bd02f1ccbee80e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga0f60fd16354f3fcf7bd02f1ccbee80e4">GPT_GetDefaultConfig</a> (<a class="el" href="a00049.html#a00554">gpt_config_t</a> *config)</td></tr>
+<tr class="memdesc:ga0f60fd16354f3fcf7bd02f1ccbee80e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the GPT configuration structure with default settings.  <a href="#ga0f60fd16354f3fcf7bd02f1ccbee80e4">More...</a><br/></td></tr>
+<tr class="separator:ga0f60fd16354f3fcf7bd02f1ccbee80e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-GPIO Reads and Write Functions</h2></td></tr>
-<tr class="memitem:ga41c1b70e3ee7825359e0891812c88e85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga41c1b70e3ee7825359e0891812c88e85">GPIO_PinWrite</a> (GPIO_Type *base, uint32_t pin, uint8_t output)</td></tr>
-<tr class="memdesc:ga41c1b70e3ee7825359e0891812c88e85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the individual GPIO pin to logic 1 or 0.  <a href="#ga41c1b70e3ee7825359e0891812c88e85">More...</a><br/></td></tr>
-<tr class="separator:ga41c1b70e3ee7825359e0891812c88e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5677a2c3b14f5e9f034edbbd5b429c1d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga5677a2c3b14f5e9f034edbbd5b429c1d">GPIO_WritePinOutput</a> (GPIO_Type *base, uint32_t pin, uint8_t output)</td></tr>
-<tr class="memdesc:ga5677a2c3b14f5e9f034edbbd5b429c1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the individual GPIO pin to logic 1 or 0.  <a href="#ga5677a2c3b14f5e9f034edbbd5b429c1d">More...</a><br/></td></tr>
-<tr class="separator:ga5677a2c3b14f5e9f034edbbd5b429c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2de9f41517bfde0920a5dea5db6e56d6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga2de9f41517bfde0920a5dea5db6e56d6">GPIO_PortSet</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga2de9f41517bfde0920a5dea5db6e56d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the multiple GPIO pins to the logic 1.  <a href="#ga2de9f41517bfde0920a5dea5db6e56d6">More...</a><br/></td></tr>
-<tr class="separator:ga2de9f41517bfde0920a5dea5db6e56d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2f8a8be69355039abd8b1ddf2a236f4c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga2f8a8be69355039abd8b1ddf2a236f4c">GPIO_SetPinsOutput</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga2f8a8be69355039abd8b1ddf2a236f4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the multiple GPIO pins to the logic 1.  <a href="#ga2f8a8be69355039abd8b1ddf2a236f4c">More...</a><br/></td></tr>
-<tr class="separator:ga2f8a8be69355039abd8b1ddf2a236f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaff8a89d83ce5fdaea9db88317eece33c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaff8a89d83ce5fdaea9db88317eece33c">GPIO_PortClear</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaff8a89d83ce5fdaea9db88317eece33c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the multiple GPIO pins to the logic 0.  <a href="#gaff8a89d83ce5fdaea9db88317eece33c">More...</a><br/></td></tr>
-<tr class="separator:gaff8a89d83ce5fdaea9db88317eece33c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3ac4a7dccb5285b2926f152c3ff12af9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga3ac4a7dccb5285b2926f152c3ff12af9">GPIO_ClearPinsOutput</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga3ac4a7dccb5285b2926f152c3ff12af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the output level of the multiple GPIO pins to the logic 0.  <a href="#ga3ac4a7dccb5285b2926f152c3ff12af9">More...</a><br/></td></tr>
-<tr class="separator:ga3ac4a7dccb5285b2926f152c3ff12af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedff8c598cb084323f2aa6c324c2c0cb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaedff8c598cb084323f2aa6c324c2c0cb">GPIO_PortToggle</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaedff8c598cb084323f2aa6c324c2c0cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the current output logic of the multiple GPIO pins.  <a href="#gaedff8c598cb084323f2aa6c324c2c0cb">More...</a><br/></td></tr>
-<tr class="separator:gaedff8c598cb084323f2aa6c324c2c0cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac999c0dd229595fe2b651e796da560be"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gac999c0dd229595fe2b651e796da560be">GPIO_PinRead</a> (GPIO_Type *base, uint32_t pin)</td></tr>
-<tr class="memdesc:gac999c0dd229595fe2b651e796da560be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current input value of the GPIO port.  <a href="#gac999c0dd229595fe2b651e796da560be">More...</a><br/></td></tr>
-<tr class="separator:gac999c0dd229595fe2b651e796da560be"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf8d77b6a1daf18087dbc6c0814b2ed97"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaf8d77b6a1daf18087dbc6c0814b2ed97">GPIO_ReadPinInput</a> (GPIO_Type *base, uint32_t pin)</td></tr>
-<tr class="memdesc:gaf8d77b6a1daf18087dbc6c0814b2ed97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current input value of the GPIO port.  <a href="#gaf8d77b6a1daf18087dbc6c0814b2ed97">More...</a><br/></td></tr>
-<tr class="separator:gaf8d77b6a1daf18087dbc6c0814b2ed97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Software Reset</h2></td></tr>
+<tr class="memitem:ga9cbb3514413d2eb8783bbce110451d60"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga9cbb3514413d2eb8783bbce110451d60">GPT_SoftwareReset</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga9cbb3514413d2eb8783bbce110451d60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Software reset of GPT module.  <a href="#ga9cbb3514413d2eb8783bbce110451d60">More...</a><br/></td></tr>
+<tr class="separator:ga9cbb3514413d2eb8783bbce110451d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-GPIO Reads Pad Status Functions</h2></td></tr>
-<tr class="memitem:ga1841e0c18fa0792e1fa1b5f812dcdbfa"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga1841e0c18fa0792e1fa1b5f812dcdbfa">GPIO_PinReadPadStatus</a> (GPIO_Type *base, uint32_t pin)</td></tr>
-<tr class="memdesc:ga1841e0c18fa0792e1fa1b5f812dcdbfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current GPIO pin pad status.  <a href="#ga1841e0c18fa0792e1fa1b5f812dcdbfa">More...</a><br/></td></tr>
-<tr class="separator:ga1841e0c18fa0792e1fa1b5f812dcdbfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga064aa69c0dbb70a4a7344124df9943b1"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga064aa69c0dbb70a4a7344124df9943b1">GPIO_ReadPadStatus</a> (GPIO_Type *base, uint32_t pin)</td></tr>
-<tr class="memdesc:ga064aa69c0dbb70a4a7344124df9943b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current GPIO pin pad status.  <a href="#ga064aa69c0dbb70a4a7344124df9943b1">More...</a><br/></td></tr>
-<tr class="separator:ga064aa69c0dbb70a4a7344124df9943b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Clock source and frequency control</h2></td></tr>
+<tr class="memitem:ga0328dbdc7fe6c17155f776f27692e3c1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga0328dbdc7fe6c17155f776f27692e3c1">GPT_SetClockSource</a> (GPT_Type *base, <a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> gptClkSource)</td></tr>
+<tr class="memdesc:ga0328dbdc7fe6c17155f776f27692e3c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set clock source of GPT.  <a href="#ga0328dbdc7fe6c17155f776f27692e3c1">More...</a><br/></td></tr>
+<tr class="separator:ga0328dbdc7fe6c17155f776f27692e3c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2ef3c43a4ea5e27291686fcf52a01c53"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga2ef3c43a4ea5e27291686fcf52a01c53">GPT_GetClockSource</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga2ef3c43a4ea5e27291686fcf52a01c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get clock source of GPT.  <a href="#ga2ef3c43a4ea5e27291686fcf52a01c53">More...</a><br/></td></tr>
+<tr class="separator:ga2ef3c43a4ea5e27291686fcf52a01c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga941a31e66563ec733dc4c69ab430af3f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga941a31e66563ec733dc4c69ab430af3f">GPT_SetClockDivider</a> (GPT_Type *base, uint32_t divider)</td></tr>
+<tr class="memdesc:ga941a31e66563ec733dc4c69ab430af3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pre scaler of GPT.  <a href="#ga941a31e66563ec733dc4c69ab430af3f">More...</a><br/></td></tr>
+<tr class="separator:ga941a31e66563ec733dc4c69ab430af3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9e4fc77424a6dccfb8a80f33145aa85f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga9e4fc77424a6dccfb8a80f33145aa85f">GPT_GetClockDivider</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga9e4fc77424a6dccfb8a80f33145aa85f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get clock divider in GPT module.  <a href="#ga9e4fc77424a6dccfb8a80f33145aa85f">More...</a><br/></td></tr>
+<tr class="separator:ga9e4fc77424a6dccfb8a80f33145aa85f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga81c59ed87813049b1b1931547c229688"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga81c59ed87813049b1b1931547c229688">GPT_SetOscClockDivider</a> (GPT_Type *base, uint32_t divider)</td></tr>
+<tr class="memdesc:ga81c59ed87813049b1b1931547c229688"><td class="mdescLeft">&#160;</td><td class="mdescRight">OSC 24M pre-scaler before selected by clock source.  <a href="#ga81c59ed87813049b1b1931547c229688">More...</a><br/></td></tr>
+<tr class="separator:ga81c59ed87813049b1b1931547c229688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7f55308a463986caceb5dc78f97f72ea"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga7f55308a463986caceb5dc78f97f72ea">GPT_GetOscClockDivider</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga7f55308a463986caceb5dc78f97f72ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get OSC 24M clock divider in GPT module.  <a href="#ga7f55308a463986caceb5dc78f97f72ea">More...</a><br/></td></tr>
+<tr class="separator:ga7f55308a463986caceb5dc78f97f72ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Interrupts and flags management functions</h2></td></tr>
-<tr class="memitem:gac704735fb3cf3a56676f2fb90e67b10f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gac704735fb3cf3a56676f2fb90e67b10f">GPIO_PinSetInterruptConfig</a> (GPIO_Type *base, uint32_t pin, <a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> pinInterruptMode)</td></tr>
-<tr class="memdesc:gac704735fb3cf3a56676f2fb90e67b10f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current pin interrupt mode.  <a href="#gac704735fb3cf3a56676f2fb90e67b10f">More...</a><br/></td></tr>
-<tr class="separator:gac704735fb3cf3a56676f2fb90e67b10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga364fe6d19b98557e44282f95ccc5e63d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga364fe6d19b98557e44282f95ccc5e63d">GPIO_SetPinInterruptConfig</a> (GPIO_Type *base, uint32_t pin, <a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> pinInterruptMode)</td></tr>
-<tr class="memdesc:ga364fe6d19b98557e44282f95ccc5e63d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the current pin interrupt mode.  <a href="#ga364fe6d19b98557e44282f95ccc5e63d">More...</a><br/></td></tr>
-<tr class="separator:ga364fe6d19b98557e44282f95ccc5e63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2a62aa9cd2aeacf2a81dc4d644f9b0b1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga2a62aa9cd2aeacf2a81dc4d644f9b0b1">GPIO_PortEnableInterrupts</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga2a62aa9cd2aeacf2a81dc4d644f9b0b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the specific pin interrupt.  <a href="#ga2a62aa9cd2aeacf2a81dc4d644f9b0b1">More...</a><br/></td></tr>
-<tr class="separator:ga2a62aa9cd2aeacf2a81dc4d644f9b0b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7c45f4ed2a5ec769e0e4cd2e32f62ad5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga7c45f4ed2a5ec769e0e4cd2e32f62ad5">GPIO_EnableInterrupts</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga7c45f4ed2a5ec769e0e4cd2e32f62ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the specific pin interrupt.  <a href="#ga7c45f4ed2a5ec769e0e4cd2e32f62ad5">More...</a><br/></td></tr>
-<tr class="separator:ga7c45f4ed2a5ec769e0e4cd2e32f62ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf9613d5714d047051b09f86592d9cdc4"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaf9613d5714d047051b09f86592d9cdc4">GPIO_PortDisableInterrupts</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaf9613d5714d047051b09f86592d9cdc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the specific pin interrupt.  <a href="#gaf9613d5714d047051b09f86592d9cdc4">More...</a><br/></td></tr>
-<tr class="separator:gaf9613d5714d047051b09f86592d9cdc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa1deaff6764df2649453fa5502ee0fcc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaa1deaff6764df2649453fa5502ee0fcc">GPIO_DisableInterrupts</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gaa1deaff6764df2649453fa5502ee0fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the specific pin interrupt.  <a href="#gaa1deaff6764df2649453fa5502ee0fcc">More...</a><br/></td></tr>
-<tr class="separator:gaa1deaff6764df2649453fa5502ee0fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee4bc796792470cf80e8f0aa6d8c0d32"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaee4bc796792470cf80e8f0aa6d8c0d32">GPIO_PortGetInterruptFlags</a> (GPIO_Type *base)</td></tr>
-<tr class="memdesc:gaee4bc796792470cf80e8f0aa6d8c0d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads individual pin interrupt status.  <a href="#gaee4bc796792470cf80e8f0aa6d8c0d32">More...</a><br/></td></tr>
-<tr class="separator:gaee4bc796792470cf80e8f0aa6d8c0d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6efe712710a08ee6e9f89a47a507339f"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga6efe712710a08ee6e9f89a47a507339f">GPIO_GetPinsInterruptFlags</a> (GPIO_Type *base)</td></tr>
-<tr class="memdesc:ga6efe712710a08ee6e9f89a47a507339f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads individual pin interrupt status.  <a href="#ga6efe712710a08ee6e9f89a47a507339f">More...</a><br/></td></tr>
-<tr class="separator:ga6efe712710a08ee6e9f89a47a507339f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc9cd5e2b520359406cf4b45c5761011"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gabc9cd5e2b520359406cf4b45c5761011">GPIO_PortClearInterruptFlags</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:gabc9cd5e2b520359406cf4b45c5761011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears pin interrupt flag.  <a href="#gabc9cd5e2b520359406cf4b45c5761011">More...</a><br/></td></tr>
-<tr class="separator:gabc9cd5e2b520359406cf4b45c5761011"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b1ad50f4212dfb839fd059503f03bed"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga0b1ad50f4212dfb839fd059503f03bed">GPIO_ClearPinsInterruptFlags</a> (GPIO_Type *base, uint32_t mask)</td></tr>
-<tr class="memdesc:ga0b1ad50f4212dfb839fd059503f03bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears pin interrupt flag.  <a href="#ga0b1ad50f4212dfb839fd059503f03bed">More...</a><br/></td></tr>
-<tr class="separator:ga0b1ad50f4212dfb839fd059503f03bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Timer Start and Stop</h2></td></tr>
+<tr class="memitem:gafd643e0c52bdf9cb0ea78819cd5d1ca9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gafd643e0c52bdf9cb0ea78819cd5d1ca9">GPT_StartTimer</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:gafd643e0c52bdf9cb0ea78819cd5d1ca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start GPT timer.  <a href="#gafd643e0c52bdf9cb0ea78819cd5d1ca9">More...</a><br/></td></tr>
+<tr class="separator:gafd643e0c52bdf9cb0ea78819cd5d1ca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7d3298caf68180acb777d0bed3585a95"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga7d3298caf68180acb777d0bed3585a95">GPT_StopTimer</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga7d3298caf68180acb777d0bed3585a95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop GPT timer.  <a href="#ga7d3298caf68180acb777d0bed3585a95">More...</a><br/></td></tr>
+<tr class="separator:ga7d3298caf68180acb777d0bed3585a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Read the timer period</h2></td></tr>
+<tr class="memitem:ga27f113c6b601234c6493e04ff7699f84"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga27f113c6b601234c6493e04ff7699f84">GPT_GetCurrentTimerCount</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga27f113c6b601234c6493e04ff7699f84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current GPT counting value.  <a href="#ga27f113c6b601234c6493e04ff7699f84">More...</a><br/></td></tr>
+<tr class="separator:ga27f113c6b601234c6493e04ff7699f84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+GPT Input/Output Signal Control</h2></td></tr>
+<tr class="memitem:gaa0d5805eba17bbc982af80077e780bb0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaa0d5805eba17bbc982af80077e780bb0">GPT_SetInputOperationMode</a> (GPT_Type *base, <a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> channel, <a class="el" href="a00049.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> mode)</td></tr>
+<tr class="memdesc:gaa0d5805eba17bbc982af80077e780bb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GPT operation mode of input capture channel.  <a href="#gaa0d5805eba17bbc982af80077e780bb0">More...</a><br/></td></tr>
+<tr class="separator:gaa0d5805eba17bbc982af80077e780bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga075a62145685b5e150392b5bf0162af7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00049.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga075a62145685b5e150392b5bf0162af7">GPT_GetInputOperationMode</a> (GPT_Type *base, <a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> channel)</td></tr>
+<tr class="memdesc:ga075a62145685b5e150392b5bf0162af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT operation mode of input capture channel.  <a href="#ga075a62145685b5e150392b5bf0162af7">More...</a><br/></td></tr>
+<tr class="separator:ga075a62145685b5e150392b5bf0162af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga613c750bc61498e596cc34bf3d7c8705"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga613c750bc61498e596cc34bf3d7c8705">GPT_GetInputCaptureValue</a> (GPT_Type *base, <a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> channel)</td></tr>
+<tr class="memdesc:ga613c750bc61498e596cc34bf3d7c8705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT input capture value of certain channel.  <a href="#ga613c750bc61498e596cc34bf3d7c8705">More...</a><br/></td></tr>
+<tr class="separator:ga613c750bc61498e596cc34bf3d7c8705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b4b3962e3f263e53d83ccabf2f3b489"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga2b4b3962e3f263e53d83ccabf2f3b489">GPT_SetOutputOperationMode</a> (GPT_Type *base, <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel, <a class="el" href="a00049.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> mode)</td></tr>
+<tr class="memdesc:ga2b4b3962e3f263e53d83ccabf2f3b489"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GPT operation mode of output compare channel.  <a href="#ga2b4b3962e3f263e53d83ccabf2f3b489">More...</a><br/></td></tr>
+<tr class="separator:ga2b4b3962e3f263e53d83ccabf2f3b489"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4ed0958938a4a9c3c58050e26511026"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00049.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaa4ed0958938a4a9c3c58050e26511026">GPT_GetOutputOperationMode</a> (GPT_Type *base, <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel)</td></tr>
+<tr class="memdesc:gaa4ed0958938a4a9c3c58050e26511026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT operation mode of output compare channel.  <a href="#gaa4ed0958938a4a9c3c58050e26511026">More...</a><br/></td></tr>
+<tr class="separator:gaa4ed0958938a4a9c3c58050e26511026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab4482de4377738cf0ee065f6ad7d3547"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gab4482de4377738cf0ee065f6ad7d3547">GPT_SetOutputCompareValue</a> (GPT_Type *base, <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel, uint32_t value)</td></tr>
+<tr class="memdesc:gab4482de4377738cf0ee065f6ad7d3547"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set GPT output compare value of output compare channel.  <a href="#gab4482de4377738cf0ee065f6ad7d3547">More...</a><br/></td></tr>
+<tr class="separator:gab4482de4377738cf0ee065f6ad7d3547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf152c66a815fd38352742ed4ba01d507"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaf152c66a815fd38352742ed4ba01d507">GPT_GetOutputCompareValue</a> (GPT_Type *base, <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel)</td></tr>
+<tr class="memdesc:gaf152c66a815fd38352742ed4ba01d507"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT output compare value of output compare channel.  <a href="#gaf152c66a815fd38352742ed4ba01d507">More...</a><br/></td></tr>
+<tr class="separator:gaf152c66a815fd38352742ed4ba01d507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82938d7d324ba16a8462f1b68284b6ba"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga82938d7d324ba16a8462f1b68284b6ba">GPT_ForceOutput</a> (GPT_Type *base, <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> channel)</td></tr>
+<tr class="memdesc:ga82938d7d324ba16a8462f1b68284b6ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force GPT output action on output compare channel, ignoring comparator.  <a href="#ga82938d7d324ba16a8462f1b68284b6ba">More...</a><br/></td></tr>
+<tr class="separator:ga82938d7d324ba16a8462f1b68284b6ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+GPT Interrupt and Status Interface</h2></td></tr>
+<tr class="memitem:gaf441b1f196d31f08319db26487bbe496"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaf441b1f196d31f08319db26487bbe496">GPT_EnableInterrupts</a> (GPT_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaf441b1f196d31f08319db26487bbe496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the selected GPT interrupts.  <a href="#gaf441b1f196d31f08319db26487bbe496">More...</a><br/></td></tr>
+<tr class="separator:gaf441b1f196d31f08319db26487bbe496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4fd7eccba69c67e4facf6e9a5e9c62e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gaa4fd7eccba69c67e4facf6e9a5e9c62e">GPT_DisableInterrupts</a> (GPT_Type *base, uint32_t mask)</td></tr>
+<tr class="memdesc:gaa4fd7eccba69c67e4facf6e9a5e9c62e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the selected GPT interrupts.  <a href="#gaa4fd7eccba69c67e4facf6e9a5e9c62e">More...</a><br/></td></tr>
+<tr class="separator:gaa4fd7eccba69c67e4facf6e9a5e9c62e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga471739441f35a3f65707e40e8d5f0649"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga471739441f35a3f65707e40e8d5f0649">GPT_GetEnabledInterrupts</a> (GPT_Type *base)</td></tr>
+<tr class="memdesc:ga471739441f35a3f65707e40e8d5f0649"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enabled GPT interrupts.  <a href="#ga471739441f35a3f65707e40e8d5f0649">More...</a><br/></td></tr>
+<tr class="separator:ga471739441f35a3f65707e40e8d5f0649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+Status Interface</h2></td></tr>
+<tr class="memitem:ga9e19600458e9121125a370720b4f6f6d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#ga9e19600458e9121125a370720b4f6f6d">GPT_GetStatusFlags</a> (GPT_Type *base, <a class="el" href="a00049.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> flags)</td></tr>
+<tr class="memdesc:ga9e19600458e9121125a370720b4f6f6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get GPT status flags.  <a href="#ga9e19600458e9121125a370720b4f6f6d">More...</a><br/></td></tr>
+<tr class="separator:ga9e19600458e9121125a370720b4f6f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0cdd59a23d43441a5a160bf01351754"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#gad0cdd59a23d43441a5a160bf01351754">GPT_ClearStatusFlags</a> (GPT_Type *base, <a class="el" href="a00049.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> flags)</td></tr>
+<tr class="memdesc:gad0cdd59a23d43441a5a160bf01351754"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the GPT status flags.  <a href="#gad0cdd59a23d43441a5a160bf01351754">More...</a><br/></td></tr>
+<tr class="separator:gad0cdd59a23d43441a5a160bf01351754"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00559" id="a00559"></a>
+<a name="a00554" id="a00554"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct gpio_pin_config_t</td>
+          <td class="memname">struct gpt_config_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a5eae83ead0519707b896cfa9082c4e82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00049.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a5eae83ead0519707b896cfa9082c4e82">direction</a></td></tr>
-<tr class="memdesc:a5eae83ead0519707b896cfa9082c4e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the pin direction.  <a href="#a5eae83ead0519707b896cfa9082c4e82">More...</a><br/></td></tr>
-<tr class="separator:a5eae83ead0519707b896cfa9082c4e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d37ffd9a2943f10a91095759bd52da5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d37ffd9a2943f10a91095759bd52da5"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a9d37ffd9a2943f10a91095759bd52da5">outputLogic</a></td></tr>
-<tr class="memdesc:a9d37ffd9a2943f10a91095759bd52da5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a default output logic, which has no use in input. <br/></td></tr>
-<tr class="separator:a9d37ffd9a2943f10a91095759bd52da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2aaf4ec1e85d3fcea653b422c673441e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a2aaf4ec1e85d3fcea653b422c673441e">interruptMode</a></td></tr>
-<tr class="memdesc:a2aaf4ec1e85d3fcea653b422c673441e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the pin interrupt mode, a value of <a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>.  <a href="#a2aaf4ec1e85d3fcea653b422c673441e">More...</a><br/></td></tr>
-<tr class="separator:a2aaf4ec1e85d3fcea653b422c673441e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25f268bc5fecec8069a572c4c3b58fc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a25f268bc5fecec8069a572c4c3b58fc7">clockSource</a></td></tr>
+<tr class="memdesc:a25f268bc5fecec8069a572c4c3b58fc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">clock source for GPT module.  <a href="#a25f268bc5fecec8069a572c4c3b58fc7">More...</a><br/></td></tr>
+<tr class="separator:a25f268bc5fecec8069a572c4c3b58fc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2407ae05cf065f7670679b3e1c2c2b50"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a2407ae05cf065f7670679b3e1c2c2b50">divider</a></td></tr>
+<tr class="memdesc:a2407ae05cf065f7670679b3e1c2c2b50"><td class="mdescLeft">&#160;</td><td class="mdescRight">clock divider (prescaler+1) from clock source to counter.  <a href="#a2407ae05cf065f7670679b3e1c2c2b50">More...</a><br/></td></tr>
+<tr class="separator:a2407ae05cf065f7670679b3e1c2c2b50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae502b9cc970005480f6ff1658972d53"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#aae502b9cc970005480f6ff1658972d53">enableFreeRun</a></td></tr>
+<tr class="memdesc:aae502b9cc970005480f6ff1658972d53"><td class="mdescLeft">&#160;</td><td class="mdescRight">true: FreeRun mode, false: Restart mode.  <a href="#aae502b9cc970005480f6ff1658972d53">More...</a><br/></td></tr>
+<tr class="separator:aae502b9cc970005480f6ff1658972d53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ddfd1bd9f2f22b721a2bff60673fac5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a4ddfd1bd9f2f22b721a2bff60673fac5">enableRunInWait</a></td></tr>
+<tr class="memdesc:a4ddfd1bd9f2f22b721a2bff60673fac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPT enabled in wait mode.  <a href="#a4ddfd1bd9f2f22b721a2bff60673fac5">More...</a><br/></td></tr>
+<tr class="separator:a4ddfd1bd9f2f22b721a2bff60673fac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10b8bb88a27214987d3e877a6c0371db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a10b8bb88a27214987d3e877a6c0371db">enableRunInStop</a></td></tr>
+<tr class="memdesc:a10b8bb88a27214987d3e877a6c0371db"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPT enabled in stop mode.  <a href="#a10b8bb88a27214987d3e877a6c0371db">More...</a><br/></td></tr>
+<tr class="separator:a10b8bb88a27214987d3e877a6c0371db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cfe8142bf85397f51921301055b1bb8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a0cfe8142bf85397f51921301055b1bb8">enableRunInDoze</a></td></tr>
+<tr class="memdesc:a0cfe8142bf85397f51921301055b1bb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPT enabled in doze mode.  <a href="#a0cfe8142bf85397f51921301055b1bb8">More...</a><br/></td></tr>
+<tr class="separator:a0cfe8142bf85397f51921301055b1bb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c3a30242ed5d7d2675be2d300eed4d1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a5c3a30242ed5d7d2675be2d300eed4d1">enableRunInDbg</a></td></tr>
+<tr class="memdesc:a5c3a30242ed5d7d2675be2d300eed4d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPT enabled in debug mode.  <a href="#a5c3a30242ed5d7d2675be2d300eed4d1">More...</a><br/></td></tr>
+<tr class="separator:a5c3a30242ed5d7d2675be2d300eed4d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c9bf1a239e33da721076aabd0c2b079"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00049.html#a0c9bf1a239e33da721076aabd0c2b079">enableMode</a></td></tr>
+<tr class="memdesc:a0c9bf1a239e33da721076aabd0c2b079"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment"> true:  counter reset to 0 when enabled;
+</pre><p> false: counter retain its value when enabled.  <a href="#a0c9bf1a239e33da721076aabd0c2b079">More...</a><br/></td></tr>
+<tr class="separator:a0c9bf1a239e33da721076aabd0c2b079"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a5eae83ead0519707b896cfa9082c4e82"></a>
+<a class="anchor" id="a25f268bc5fecec8069a572c4c3b58fc7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00049.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a> gpio_pin_config_t::direction</td>
+          <td class="memname"><a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> gpt_config_t::clockSource</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="a2aaf4ec1e85d3fcea653b422c673441e"></a>
+<a class="anchor" id="a2407ae05cf065f7670679b3e1c2c2b50"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> gpio_pin_config_t::interruptMode</td>
+          <td class="memname">uint32_t gpt_config_t::divider</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-
-</div>
-</div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga5aa5229cbd041b11bcf8417ba12896b2"></a>
+<a class="anchor" id="aae502b9cc970005480f6ff1658972d53"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_GPIO_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 5))</td>
+          <td class="memname">bool gpt_config_t::enableFreeRun</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4ddfd1bd9f2f22b721a2bff60673fac5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool gpt_config_t::enableRunInWait</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a10b8bb88a27214987d3e877a6c0371db"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool gpt_config_t::enableRunInStop</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0cfe8142bf85397f51921301055b1bb8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool gpt_config_t::enableRunInDoze</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5c3a30242ed5d7d2675be2d300eed4d1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool gpt_config_t::enableRunInDbg</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a0c9bf1a239e33da721076aabd0c2b079"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool gpt_config_t::enableMode</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gada41ca0a2ce239fe125ee96833e715c0"></a>
+<a class="anchor" id="gad0ed5e094d0bec112a065a0c6b057e56"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00049.html#gada41ca0a2ce239fe125ee96833e715c0">gpio_pin_direction_t</a></td>
+          <td class="memname">enum <a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>Actual number of clock sources is SoC dependent </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4"></a>kGPIO_DigitalInput</em>&nbsp;</td><td class="fielddoc">
-<p>Set current pin as digital input. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56a398f5e7765f47a492d625a7cb26bf499"></a>kGPT_ClockSource_Off</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source Off. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9"></a>kGPIO_DigitalOutput</em>&nbsp;</td><td class="fielddoc">
-<p>Set current pin as digital output. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56a728cff5c785288f3884d4c2cbdf0b466"></a>kGPT_ClockSource_Periph</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from Peripheral Clock. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56a1a2644f7461698f6515c3da0a7c1cbab"></a>kGPT_ClockSource_HighFreq</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from High Frequency Reference Clock. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56ab76385e941d5ce14116ac5a55aaf5815"></a>kGPT_ClockSource_Ext</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from external pin. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56acb33521779fb2addb21bb22f850c837d"></a>kGPT_ClockSource_LowFreq</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from Low Frequency Reference Clock. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad0ed5e094d0bec112a065a0c6b057e56a9df479d2e5f5d539b053425ab986ad20"></a>kGPT_ClockSource_Osc</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Clock Source from Crystal oscillator. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<a class="anchor" id="ga1b9ad57f43a7be04e31c2e43e92aca39"></a>
+<a class="anchor" id="gad36eff6489251bee506c6806c64a86d0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a></td>
+          <td class="memname">enum <a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39a69d618dcf6fc01e5c8315ef1dd4aa66d"></a>kGPIO_NoIntmode</em>&nbsp;</td><td class="fielddoc">
-<p>Set current pin general IO functionality. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggad36eff6489251bee506c6806c64a86d0a083b8ef10ac54db99013fdadaf40ea12"></a>kGPT_InputCapture_Channel1</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Input Capture Channel1. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39af6c9ba431378e6290d7033b643e554da"></a>kGPIO_IntLowLevel</em>&nbsp;</td><td class="fielddoc">
-<p>Set current pin interrupt is low-level sensitive. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="ggad36eff6489251bee506c6806c64a86d0a8ef1e1b7eee2eefaef9d4f9776bafe4a"></a>kGPT_InputCapture_Channel2</em>&nbsp;</td><td class="fielddoc">
+<p>GPT Input Capture Channel2. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39aa445f82a63c5aa94a1e53cdcf52b71d3"></a>kGPIO_IntHighLevel</em>&nbsp;</td><td class="fielddoc">
-<p>Set current pin interrupt is high-level sensitive. </p>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga22997c2d644f6249b9c704afc230eedf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00049.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga22997c2d644f6249b9c704afc230eedfaf7ecc55be6dd63a6be40d96dc9f8d24e"></a>kGPT_InputOperation_Disabled</em>&nbsp;</td><td class="fielddoc">
+<p>Don't capture. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39ab874f7d31c4bf2f964bf52466d5c40f4"></a>kGPIO_IntRisingEdge</em>&nbsp;</td><td class="fielddoc">
-<p>Set current pin interrupt is rising-edge sensitive. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22997c2d644f6249b9c704afc230eedfa17ede75d0bb581f4fed42f678e1b81d1"></a>kGPT_InputOperation_RiseEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Capture on rising edge of input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39a369cc36a7fda0eb55c4f509070c2d887"></a>kGPIO_IntFallingEdge</em>&nbsp;</td><td class="fielddoc">
-<p>Set current pin interrupt is falling-edge sensitive. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22997c2d644f6249b9c704afc230eedfaa0dcd1649563ba92f8f1e8230284edfa"></a>kGPT_InputOperation_FallEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Capture on falling edge of input pin. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga1b9ad57f43a7be04e31c2e43e92aca39ac1d74f985cbebbe8441f6053b8074a50"></a>kGPIO_IntRisingOrFallingEdge</em>&nbsp;</td><td class="fielddoc">
-<p>Enable the edge select bit to override the ICR register's configuration. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga22997c2d644f6249b9c704afc230eedfa5ad14d26a16fa7d607a446440c88b735"></a>kGPT_InputOperation_BothEdge</em>&nbsp;</td><td class="fielddoc">
+<p>Capture on both edges of input pin. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gae6c9b96e71d6a276ce8437708acddfda"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggae6c9b96e71d6a276ce8437708acddfdaa68b52504e269393df3fc389c9b78c2d8"></a>kGPT_OutputCompare_Channel1</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel1. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae6c9b96e71d6a276ce8437708acddfdaa1be13c4fe09bed476ee7656b59f25d37"></a>kGPT_OutputCompare_Channel2</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae6c9b96e71d6a276ce8437708acddfdaa55da6b048e4471add16448bd43a6829c"></a>kGPT_OutputCompare_Channel3</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel3. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga54e26b65b23236492c81c572ba36ab20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00049.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20adedc5e02092eeab85600f919bf2dec82"></a>kGPT_OutputOperation_Disconnected</em>&nbsp;</td><td class="fielddoc">
+<p>Don't change output pin. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20acd8732f3636757f56665c6549a27c887"></a>kGPT_OutputOperation_Toggle</em>&nbsp;</td><td class="fielddoc">
+<p>Toggle output pin. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20ab74f183a3e8eb815a40a39eb033dc532"></a>kGPT_OutputOperation_Clear</em>&nbsp;</td><td class="fielddoc">
+<p>Set output pin low. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20aae9329b2a4b5ea63e66ca10239efe669"></a>kGPT_OutputOperation_Set</em>&nbsp;</td><td class="fielddoc">
+<p>Set output pin high. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga54e26b65b23236492c81c572ba36ab20a5bd080fd627f26d074da1b3dab7535f2"></a>kGPT_OutputOperation_Activelow</em>&nbsp;</td><td class="fielddoc">
+<p>Generate a active low pulse on output pin. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="gac1d66bcf23acefc1a50049c7e24d77bb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00049.html#gac1d66bcf23acefc1a50049c7e24d77bb">gpt_interrupt_enable_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba61170acbca36f4757633d1d12d3246ba"></a>kGPT_OutputCompare1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba4ebb7fc65d182cd6643fe237d60d91ed"></a>kGPT_OutputCompare2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel2 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba5141f4b482113c7763819b89c4abcc09"></a>kGPT_OutputCompare3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Output Compare Channel3 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba21a3c64b4edc196b24be9e12c061fe88"></a>kGPT_InputCapture1InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Input Capture Channel1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bbaf6dc605de633b7e545065bc952409562"></a>kGPT_InputCapture2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Input Capture Channel1 interrupt enable. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggac1d66bcf23acefc1a50049c7e24d77bba2bbf44ee3464387de1fd11a2c28a5132"></a>kGPT_RollOverFlagInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Counter rolled over interrupt enable. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a class="anchor" id="ga21ce3ba40810ea60cf4b59a488e73cc5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00049.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5a241fcd87ab22fa9a7212739a39134dfe"></a>kGPT_OutputCompare1Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Output compare channel 1 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5a75f50bb95d6a232c6bbb0b6c52db60e5"></a>kGPT_OutputCompare2Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Output compare channel 2 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5abfc4b1e05ade49b83461447d4b4464b1"></a>kGPT_OutputCompare3Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Output compare channel 3 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5af8d82fdf4783ec7125f8f4cdedaed062"></a>kGPT_InputCapture1Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Input Capture channel 1 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5a64ff7cb952a6cd9c1d85d3dcffc1a50b"></a>kGPT_InputCapture2Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Input Capture channel 2 event. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga21ce3ba40810ea60cf4b59a488e73cc5ae238e6b78d934129211d8e7aafef59a1"></a>kGPT_RollOverFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Counter reaches maximum value and rolled over to 0 event. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga8d3aa26ad7e88ef1427e51242a70c259"></a>
+<a class="anchor" id="ga6aeb20e99444bdaf31dd9c39c108e79f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GPIO_PinInit </td>
+          <td class="memname">void GPT_Init </td>
           <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>pin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00049.html#a00559">gpio_pin_config_t</a> *&#160;</td>
-          <td class="paramname"><em>Config</em>&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00049.html#a00554">gpt_config_t</a> *&#160;</td>
+          <td class="paramname"><em>initConfig</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -379,142 +689,69 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">pin</td><td>Specifies the pin number </td></tr>
-    <tr><td class="paramname">Config</td><td>pointer to a <a class="el" href="a00049.html#a00559">gpio_pin_config_t</a> structure that contains the configuration information. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">initConfig</td><td>GPT mode setting configuration. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga41c1b70e3ee7825359e0891812c88e85"></a>
+<a class="anchor" id="ga90be090ee63035f2a2b014adcfd8c60b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GPIO_PinWrite </td>
+          <td class="memname">void GPT_Deinit </td>
           <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>pin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>output</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">pin</td><td>GPIO port pin number. </td></tr>
-    <tr><td class="paramname">output</td><td>GPIOpin output logic level.<ul>
-<li>0: corresponding pin output low-logic level.</li>
-<li>1: corresponding pin output high-logic level. </li>
-</ul>
-</td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga5677a2c3b14f5e9f034edbbd5b429c1d"></a>
+<a class="anchor" id="ga0f60fd16354f3fcf7bd02f1ccbee80e4"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void GPIO_WritePinOutput </td>
+          <td class="memname">void GPT_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="a00049.html#a00554">gpt_config_t</a> *&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>pin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>output</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00374.html#_deprecated000007">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00049.html#ga41c1b70e3ee7825359e0891812c88e85">GPIO_PinWrite</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2de9f41517bfde0920a5dea5db6e56d6"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPIO_PortSet </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
+<p>The default values are: </p>
+<div class="fragment"><div class="line">*    config-&gt;clockSource = <a class="code" href="a00049.html#ggad0ed5e094d0bec112a065a0c6b057e56a728cff5c785288f3884d4c2cbdf0b466">kGPT_ClockSource_Periph</a>;</div>
+<div class="line">*    config-&gt;divider = 1U;</div>
+<div class="line">*    config-&gt;enableRunInStop = <span class="keyword">true</span>;</div>
+<div class="line">*    config-&gt;enableRunInWait = <span class="keyword">true</span>;</div>
+<div class="line">*    config-&gt;enableRunInDoze = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;enableRunInDbg = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;enableFreeRun = <span class="keyword">false</span>;</div>
+<div class="line">*    config-&gt;enableMode  = <span class="keyword">true</span>;</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO peripheral base pointer (GPIO1, GPIO2, GPIO3, and so on.) </td></tr>
-    <tr><td class="paramname">mask</td><td>GPIO pin number macro </td></tr>
+    <tr><td class="paramname">config</td><td>Pointer to the user configuration structure. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2f8a8be69355039abd8b1ddf2a236f4c"></a>
+<a class="anchor" id="ga9cbb3514413d2eb8783bbce110451d60"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -522,564 +759,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void GPIO_SetPinsOutput </td>
+          <td class="memname">static void GPT_SoftwareReset </td>
           <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00374.html#_deprecated000008">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00049.html#ga2de9f41517bfde0920a5dea5db6e56d6">GPIO_PortSet</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaff8a89d83ce5fdaea9db88317eece33c"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPIO_PortClear </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO peripheral base pointer (GPIO1, GPIO2, GPIO3, and so on.) </td></tr>
-    <tr><td class="paramname">mask</td><td>GPIO pin number macro </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga3ac4a7dccb5285b2926f152c3ff12af9"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPIO_ClearPinsOutput </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00374.html#_deprecated000009">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00049.html#gaff8a89d83ce5fdaea9db88317eece33c">GPIO_PortClear</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaedff8c598cb084323f2aa6c324c2c0cb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPIO_PortToggle </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO peripheral base pointer (GPIO1, GPIO2, GPIO3, and so on.) </td></tr>
-    <tr><td class="paramname">mask</td><td>GPIO pin number macro </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gac999c0dd229595fe2b651e796da560be"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t GPIO_PinRead </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>pin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">pin</td><td>GPIO port pin number. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">GPIO</td><td>port input value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf8d77b6a1daf18087dbc6c0814b2ed97"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t GPIO_ReadPinInput </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>pin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00374.html#_deprecated000010">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00049.html#gac999c0dd229595fe2b651e796da560be">GPIO_PinRead</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga1841e0c18fa0792e1fa1b5f812dcdbfa"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint8_t GPIO_PinReadPadStatus </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>pin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">pin</td><td>GPIO port pin number. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">GPIO</td><td>pin pad status value. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga064aa69c0dbb70a4a7344124df9943b1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint8_t GPIO_ReadPadStatus </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>pin</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00374.html#_deprecated000011">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00049.html#ga1841e0c18fa0792e1fa1b5f812dcdbfa">GPIO_PinReadPadStatus</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gac704735fb3cf3a56676f2fb90e67b10f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void GPIO_PinSetInterruptConfig </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>pin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>&#160;</td>
-          <td class="paramname"><em>pinInterruptMode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">pin</td><td>GPIO port pin number. </td></tr>
-    <tr><td class="paramname">pinInterruptMode</td><td>pointer to a <a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a> structure that contains the interrupt mode information. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga364fe6d19b98557e44282f95ccc5e63d"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPIO_SetPinInterruptConfig </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>pin</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#ga1b9ad57f43a7be04e31c2e43e92aca39">gpio_interrupt_mode_t</a>&#160;</td>
-          <td class="paramname"><em>pinInterruptMode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00374.html#_deprecated000012">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00049.html#gac704735fb3cf3a56676f2fb90e67b10f">GPIO_PinSetInterruptConfig</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga2a62aa9cd2aeacf2a81dc4d644f9b0b1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPIO_PortEnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7c45f4ed2a5ec769e0e4cd2e32f62ad5"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPIO_EnableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaf9613d5714d047051b09f86592d9cdc4"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPIO_PortDisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaa1deaff6764df2649453fa5502ee0fcc"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GPIO_DisableInterrupts </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>mask</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00374.html#_deprecated000013">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00049.html#gaf9613d5714d047051b09f86592d9cdc4">GPIO_PortDisableInterrupts</a>. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaee4bc796792470cf80e8f0aa6d8c0d32"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static uint32_t GPIO_PortGetInterruptFlags </td>
-          <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1092,20 +774,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">current</td><td>pin interrupt status flag. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga6efe712710a08ee6e9f89a47a507339f"></a>
+<a class="anchor" id="ga0328dbdc7fe6c17155f776f27692e3c1"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1113,9 +789,50 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t GPIO_GetPinsInterruptFlags </td>
+          <td class="memname">static void GPT_SetClockSource </td>
           <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a>&#160;</td>
+          <td class="paramname"><em>gptClkSource</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">gptClkSource</td><td>Clock source (see <a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2ef3c43a4ea5e27291686fcf52a01c53"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> GPT_GetClockSource </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1128,20 +845,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">current</td><td>pin interrupt status flag. </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>clock source (see <a class="el" href="a00049.html#gad0ed5e094d0bec112a065a0c6b057e56">gpt_clock_source_t</a> typedef enumeration). </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="gabc9cd5e2b520359406cf4b45c5761011"></a>
+<a class="anchor" id="ga941a31e66563ec733dc4c69ab430af3f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1149,9 +861,597 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void GPIO_PortClearInterruptFlags </td>
+          <td class="memname">static void GPT_SetClockDivider </td>
           <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>divider</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">divider</td><td>Divider of GPT (1-4096). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9e4fc77424a6dccfb8a80f33145aa85f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetClockDivider </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>clock divider in GPT module (1-4096). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga81c59ed87813049b1b1931547c229688"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_SetOscClockDivider </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>divider</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">divider</td><td>OSC Divider(1-16). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7f55308a463986caceb5dc78f97f72ea"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetOscClockDivider </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>OSC clock divider in GPT module (1-16). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gafd643e0c52bdf9cb0ea78819cd5d1ca9"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_StartTimer </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga7d3298caf68180acb777d0bed3585a95"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_StopTimer </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga27f113c6b601234c6493e04ff7699f84"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetCurrentTimerCount </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Current GPT counter value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa0d5805eba17bbc982af80077e780bb0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_SetInputOperationMode </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT capture channel (see <a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> typedef enumeration). </td></tr>
+    <tr><td class="paramname">mode</td><td>GPT input capture operation mode (see <a class="el" href="a00049.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga075a62145685b5e150392b5bf0162af7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00049.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> GPT_GetInputOperationMode </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT capture channel (see <a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT input capture operation mode (see <a class="el" href="a00049.html#ga22997c2d644f6249b9c704afc230eedf">gpt_input_operation_mode_t</a> typedef enumeration). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga613c750bc61498e596cc34bf3d7c8705"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetInputCaptureValue </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT capture channel (see <a class="el" href="a00049.html#gad36eff6489251bee506c6806c64a86d0">gpt_input_capture_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT input capture value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga2b4b3962e3f263e53d83ccabf2f3b489"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_SetOutputOperationMode </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a>&#160;</td>
+          <td class="paramname"><em>mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+    <tr><td class="paramname">mode</td><td>GPT output operation mode (see <a class="el" href="a00049.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa4ed0958938a4a9c3c58050e26511026"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="a00049.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> GPT_GetOutputOperationMode </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT output operation mode (see <a class="el" href="a00049.html#ga54e26b65b23236492c81c572ba36ab20">gpt_output_operation_mode_t</a> typedef enumeration). </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gab4482de4377738cf0ee065f6ad7d3547"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_SetOutputCompareValue </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+    <tr><td class="paramname">value</td><td>GPT output compare value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf152c66a815fd38352742ed4ba01d507"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetOutputCompareValue </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT output compare value. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga82938d7d324ba16a8462f1b68284b6ba"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_ForceOutput </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">channel</td><td>GPT output compare channel (see <a class="el" href="a00049.html#gae6c9b96e71d6a276ce8437708acddfda">gpt_output_compare_channel_t</a> typedef enumeration). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf441b1f196d31f08319db26487bbe496"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_EnableInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1172,18 +1472,17 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Status flags are cleared by writing a 1 to the corresponding bit position.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. This is a logical OR of members of the enumeration <a class="el" href="a00049.html#gac1d66bcf23acefc1a50049c7e24d77bb" title="List of GPT interrupts. ">gpt_interrupt_enable_t</a> </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga0b1ad50f4212dfb839fd059503f03bed"></a>
+<a class="anchor" id="gaa4fd7eccba69c67e4facf6e9a5e9c62e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1191,9 +1490,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void GPIO_ClearPinsInterruptFlags </td>
+          <td class="memname">static void GPT_DisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">GPIO_Type *&#160;</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1214,11 +1513,124 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Status flags are cleared by writing a 1 to the corresponding bit position.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>GPIO base pointer. </td></tr>
-    <tr><td class="paramname">mask</td><td>GPIO pin number macro. </td></tr>
+    <tr><td class="paramname">base</td><td>GPT peripheral base address </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to disable. This is a logical OR of members of the enumeration <a class="el" href="a00049.html#gac1d66bcf23acefc1a50049c7e24d77bb" title="List of GPT interrupts. ">gpt_interrupt_enable_t</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga471739441f35a3f65707e40e8d5f0649"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetEnabledInterrupts </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The enabled interrupts. This is the logical OR of members of the enumeration <a class="el" href="a00049.html#gac1d66bcf23acefc1a50049c7e24d77bb" title="List of GPT interrupts. ">gpt_interrupt_enable_t</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9e19600458e9121125a370720b4f6f6d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t GPT_GetStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a>&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">flags</td><td>GPT status flag mask (see <a class="el" href="a00049.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> for bit definition). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>GPT status, each bit represents one status flag. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gad0cdd59a23d43441a5a160bf01351754"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GPT_ClearStatusFlags </td>
+          <td>(</td>
+          <td class="paramtype">GPT_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00049.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a>&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>GPT peripheral base address. </td></tr>
+    <tr><td class="paramname">flags</td><td>GPT status flag mask (see <a class="el" href="a00049.html#ga21ce3ba40810ea60cf4b59a488e73cc5">gpt_status_flag_t</a> for bit definition). </td></tr>
   </table>
   </dd>
 </dl>

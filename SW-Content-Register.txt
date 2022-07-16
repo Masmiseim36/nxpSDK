@@ -511,7 +511,7 @@ cmsis_drivers              Name: SDK CMSIS Peripheral Drivers
                            Origin: NXP (Apache License 2.0)                  
 
 MCMGR                      Name: MCMGR                                       
-                           Version: 4.1.1                                    
+                           Version: 4.1.2                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: COPYING-BSD-3                       
                            Format: source code                               
@@ -530,7 +530,7 @@ multicore                  Name: Multicore SDK
                            Origin: NXP (BSD-3-Clause)                        
 
 rpmsg_lite                 Name: RPMsg-Lite                                  
-                           Version: 3.2.0                                    
+                           Version: 4.0.0                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: COPYING-BSD-3                       
                            Format: source code                               
@@ -723,7 +723,7 @@ libjpeg                    Name: LIBJPEG
                            Origin: IJG (IJG) - http://www.ijg.org            
 
 vglite                     Name: vglite                                      
-                           Version: 3.0.13_rev2                              
+                           Version: 3.0.15_rev2                              
                            Outgoing License: MIT                             
                            License File: middleware/vglite/LICENSE.txt       
                            Format: source code                               
@@ -1303,6 +1303,17 @@ wolfssl                    Name: WolfSSL
                            Location: middleware/wolfssl                      
                            Origin: WolfSSL                                   
                            Url: https://github.com/wolfSSL/wolfssl           
+
+mpp                        Name: Multimedia Processing Pipelines (MPP)       
+                           Version: 0.9.0                                    
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           v35 May 2022 - Additional distribution license    
+                           granted - License in Section 2.3 applies          
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: source code, header files                 
+                           Description: Library to build vision pipelines    
+                           Location: middleware/eiq/mpp                      
+                           Origin: NXP                                       
 
 dsp_audio_framework        Name: dsp_audio_framework                         
                            Version: 2.6p2                                    

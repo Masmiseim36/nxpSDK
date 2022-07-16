@@ -8,13 +8,6 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
@@ -26,13 +19,6 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
@@ -42,6 +28,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DFSL_RTOS_FREE_RTOS \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DSDK_OS_FREE_RTOS \
     -DFSL_RTOS_BM \
     -DSDK_DEBUGCONSOLE_UART \
     -DPRINTF_FLOAT_ENABLE=1 \
@@ -56,13 +43,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DSDK_DEBUGCONSOLE=1 \
     -DSKIP_SYSCLK_INIT \
     -DUSE_RTOS=1 \
-    -DSDK_OS_FREE_RTOS \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DCMSIS_NN \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DTF_LITE_STATIC_MEMORY \
     -DMCUXPRESSO_SDK \
-    -O3 \
+    -O1 \
     -Wno-strict-aliasing \
     -fno-strict-aliasing \
     -Wno-unused-function \
@@ -86,6 +72,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DFSL_RTOS_FREE_RTOS \
     -DFSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
+    -DSDK_OS_FREE_RTOS \
     -DFSL_RTOS_BM \
     -DSDK_DEBUGCONSOLE_UART \
     -DPRINTF_FLOAT_ENABLE=1 \
@@ -100,13 +87,12 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DSDK_DEBUGCONSOLE=1 \
     -DSKIP_SYSCLK_INIT \
     -DUSE_RTOS=1 \
-    -DSDK_OS_FREE_RTOS \
     -DLWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1 \
     -DCMSIS_NN \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DTF_LITE_STATIC_MEMORY \
     -DMCUXPRESSO_SDK \
-    -O3 \
+    -O1 \
     -Wno-strict-aliasing \
     -fno-strict-aliasing \
     -Wno-unused-function \
@@ -133,7 +119,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DTF_LITE_STATIC_MEMORY \
     -DMCUXPRESSO_SDK \
-    -O3 \
+    -O2 \
     -fno-rtti \
     -fno-exceptions \
     -Wno-sign-compare \
@@ -160,7 +146,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DTF_LITE_STATIC_MEMORY \
     -DMCUXPRESSO_SDK \
-    -O3 \
+    -O2 \
     -fno-rtti \
     -fno-exceptions \
     -Wno-sign-compare \

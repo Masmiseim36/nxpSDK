@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: SD Card Driver</title>
+<title>MCUXpresso SDK API Reference Manual: SDIO Card Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -101,293 +101,309 @@ $(document).ready(function(){initNavTree('a00079.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">SD Card Driver<div class="ingroups"><a class="el" href="a00359.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
+<div class="title">SDIO Card Driver<div class="ingroups"><a class="el" href="a00359.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The SDCARD driver provide card initialization/read/write/erase interface.</p>
-<h1><a class="anchor" id="SDCardOperation"></a>
-SD CARD Operation</h1>
+<p>The SDIO card driver provide card initialization/IO direct and extend command interface.</p>
+<h1><a class="anchor" id="SDIOCardOperation"></a>
+SDIO CARD Operation</h1>
 <h2>error log support</h2>
-<p>Lots of error log has been added to sd relate functions, if error occurs during initial/read/write, please enable the error log print functionality with <code>#define</code> SDMMC_ENABLE_LOG_PRINT 1 And rerun the project then user can check what kind of error happened.</p>
-<h2>User configurable</h2>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>_sd_card</div>
-<div class="line">{</div>
-<div class="line">    <a class="code" href="a00082.html#a00651">sdmmchost_t</a> *host; </div>
-<div class="line">    <a class="code" href="a00064.html#a00643">sd_usr_param_t</a> usrParam; </div>
-<div class="line">    <span class="keywordtype">bool</span> isHostReady;        </div>
-<div class="line">    <span class="keywordtype">bool</span> noInteralAlign;      </div>
-<div class="line">    uint32_t busClock_Hz;     </div>
-<div class="line">    uint32_t relativeAddress; </div>
-<div class="line">    uint32_t version;         </div>
-<div class="line">    uint32_t flags;           </div>
-<div class="line">    uint8_t internalBuffer[<a class="code" href="a00064.html#ga4dd122ccc71f9eef692acf27d5f851c3">FSL_SDMMC_CARD_INTERNAL_BUFFER_SIZE</a>]; </div>
-<div class="line">    uint32_t ocr;                                                </div>
-<div class="line">    <a class="code" href="a00064.html#a00637">sd_cid_t</a> cid;                                                </div>
-<div class="line">    <a class="code" href="a00064.html#a00638">sd_csd_t</a> csd;                                                </div>
-<div class="line">    <a class="code" href="a00064.html#a00641">sd_scr_t</a> scr;                                                </div>
-<div class="line">    <a class="code" href="a00064.html#a00642">sd_status_t</a> stat;                                            </div>
-<div class="line">    uint32_t blockCount;                                         </div>
-<div class="line">    uint32_t blockSize;                                          </div>
-<div class="line">    <a class="code" href="a00064.html#ga508c3d50863e57dce5fa1b7758972e1b">sd_timing_mode_t</a> currentTiming;                              </div>
-<div class="line">    <a class="code" href="a00064.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a> driverStrength;                         </div>
-<div class="line">    <a class="code" href="a00064.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a> maxCurrent;                                 </div>
-<div class="line">    <a class="code" href="a00064.html#ga27fd895fac89bbc0288543ca0b1e371c">sdmmc_operation_voltage_t</a> operationVoltage;                  </div>
-<div class="line">    <a class="code" href="a00081.html#a00650">sdmmc_osa_mutex_t</a> lock;                                      </div>
-<div class="line">} <a class="code" href="a00079.html#a00636">sd_card_t</a>;</div>
-</div><!-- fragment --><p>Part of The variables above is user configurable,</p>
-<ol type="1">
-<li><p class="startli">host</p>
-<p class="startli">Application need to provide host controller base address and the host's source clock frequency, etc. For example: </p>
-<div class="fragment"><div class="line"><span class="comment">/* allocate dma descriptor buffer for host controller */</span></div>
-<div class="line">s_host.dmaDesBuffer                                      = s_sdmmcHostDmaBuffer;</div>
-<div class="line">s_host.dmaDesBufferWordsNum                              = xxx;</div>
-<div class="line"><span class="comment">/*  */</span></div>
-<div class="line">((<a class="code" href="a00079.html#a00636">sd_card_t</a> *)card)-&gt;host                                = &amp;s_host;</div>
-<div class="line">((<a class="code" href="a00079.html#a00636">sd_card_t</a> *)card)-&gt;host-&gt;hostController.base           = BOARD_SDMMC_SD_HOST_BASEADDR;</div>
-<div class="line">((<a class="code" href="a00079.html#a00636">sd_card_t</a> *)card)-&gt;host-&gt;hostController.sourceClock_Hz = BOARD_USDHC1ClockConfiguration();</div>
-<div class="line"></div>
-<div class="line"><span class="comment">/* allocate resource for sdmmc osa layer */</span></div>
-<div class="line">((<a class="code" href="a00079.html#a00636">sd_card_t</a> *)card)-&gt;host-&gt;hostEvent     = &amp;s_event;</div>
-</div><!-- fragment --></li>
-<li>sdcard_usr_param_t usrParam</li>
-</ol>
-<div class="fragment"><div class="line"><span class="comment">/* board layer configuration register */</span></div>
-<div class="line">((<a class="code" href="a00079.html#a00636">sd_card_t</a> *)card)-&gt;usrParam.cd         = &amp;s_cd;</div>
-<div class="line">((<a class="code" href="a00079.html#a00636">sd_card_t</a> *)card)-&gt;usrParam.pwr        = BOARD_SDCardPowerControl;</div>
-<div class="line">((<a class="code" href="a00079.html#a00636">sd_card_t</a> *)card)-&gt;usrParam.ioStrength = BOARD_SD_Pin_Config;</div>
-<div class="line">((<a class="code" href="a00079.html#a00636">sd_card_t</a> *)card)-&gt;usrParam.ioVoltage  = &amp;s_ioVoltage;</div>
-<div class="line">((<a class="code" href="a00079.html#a00636">sd_card_t</a> *)card)-&gt;usrParam.maxFreq    = BOARD_SDMMC_SD_HOST_SUPPORT_SDR104_FREQ;</div>
-<div class="line"></div>
-<div class="line">a. cd-which allow application define the card insert/<span class="keyword">remove</span> callback <span class="keyword">function</span>, redefine the card detect timeout ms and also allow application determine how to detect card.</div>
-<div class="line">b. pwr-which allow application redefine the card power on/off <span class="keyword">function</span>.</div>
-<div class="line">c. ioStrength-which is used to <span class="keywordflow">switch</span> the signal pin configurations include driver strength/speed mode dynamiclly <span class="keywordflow">for</span> different timing(SDR/HS timing) mode, reference the <span class="keyword">function</span> defined sdmmc_config.c</div>
-<div class="line">d. ioVoltage-which allow application <span class="keyword">register</span> io voltage <span class="keywordflow">switch</span> <span class="keyword">function</span> instead of <span class="keyword">using</span> the <span class="keyword">function</span> host driver provided <span class="keywordflow">for</span> SDR/HS200/HS400 timing.</div>
-<div class="line">e. maxFreq-which allow application set the maximum bus clock that the board support.</div>
-</div><!-- fragment --><ol type="1">
-<li><p class="startli">bool noInteralAlign</p>
-<p class="startli">Sdmmc include an address align internal buffer(to use host controller internal DMA), to improve read/write performance while application cannot make sure the data address used to read/write is align, set it to true will achieve a better performance.</p>
-</li>
-<li><p class="startli">sd_timing_mode_t currentTiming</p>
-<p class="startli">It is used to indicate the currentTiming the card is working on, however sdmmc also support preset timing mode, then sdmmc will try to switch to this timing first, if failed, a valid timing will switch to automatically. Generally, user may not set this variable if you don't know what kind of timing the card support, sdmmc will switch to the highest timing which the card support.</p>
-</li>
-<li><p class="startli">sd_driver_strength_t driverStrength</p>
-<p class="startli">Choose a valid card driver strength if application required and call SD_SetDriverStrength in application.</p>
-</li>
-<li><p class="startli">sd_max_current_t maxCurrent</p>
-<p class="startli">Choose a valid card current if application required and call SD_SetMaxCurrent in application.</p>
-</li>
-</ol>
+<p>Not supported yet. </p>
+<h2>User configuable</h2>
+<h2>Board dependency</h2>
 <h2>Mutual exclusive access support for RTOS</h2>
-<p>SDCARD driver has added mutual exclusive access support for init/deinit/write/read/erase function. Please note that the card init function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
-<div class="fragment"><div class="line"><a class="code" href="a00079.html#ga50dee2b5bc071a01480b0ab3671c8524">SD_Deinit</a>(card);<span class="comment">/* This function will destroy the created mutex */</span></div>
-<div class="line"><a class="code" href="a00079.html#ga281fb14816d236446ee2d047be0c7155">SD_Init</a>(card);</div>
-</div><!-- fragment --><h2>Typical use case</h2>
+<p>SDIO driver has added mutual exclusive access support for init/deinit/write/read/erase function. Please note that the card init function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
+<div class="fragment"><div class="line"><a class="code" href="a00079.html#ga3b7ba8e7b9bfafde767535a7089da44d">SDIO_Deinit</a>(card);<span class="comment">/* This function will destroy the created mutex */</span></div>
+<div class="line"><a class="code" href="a00079.html#ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d">SDIO_Init</a>(card);</div>
+</div><!-- fragment --> <h2>Typical use case</h2>
 <p>Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/sdmmc_examples/ </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00636"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a00636">sd_card_t</a></td></tr>
-<tr class="memdesc:a00636"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD card state.  <a href="a00079.html#a00636">More...</a><br/></td></tr>
-<tr class="separator:a00636"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00403"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a00403">sdio_card_t</a></td></tr>
+<tr class="memdesc:a00403"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDIO card state.  <a href="a00079.html#a00403">More...</a><br/></td></tr>
+<tr class="separator:a00403"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga6fa18202479ec86d33169ee28513ae94"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga6fa18202479ec86d33169ee28513ae94">FSL_SD_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 4U, 0U)) /*2.4.0*/</td></tr>
-<tr class="memdesc:ga6fa18202479ec86d33169ee28513ae94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#ga6fa18202479ec86d33169ee28513ae94">More...</a><br/></td></tr>
-<tr class="separator:ga6fa18202479ec86d33169ee28513ae94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1e1aa37ee346a5118f31e7899e921d1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gab1e1aa37ee346a5118f31e7899e921d1">FSL_SDIO_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 4U, 0U)) /*2.4.0*/</td></tr>
+<tr class="memdesc:gab1e1aa37ee346a5118f31e7899e921d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Middleware version.  <a href="#gab1e1aa37ee346a5118f31e7899e921d1">More...</a><br/></td></tr>
+<tr class="separator:gab1e1aa37ee346a5118f31e7899e921d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga433c62975c819240b160a627eaa25092"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga433c62975c819240b160a627eaa25092"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga433c62975c819240b160a627eaa25092">FSL_SDIO_MAX_IO_NUMS</a>&#160;&#160;&#160;(7U)</td></tr>
+<tr class="memdesc:ga433c62975c819240b160a627eaa25092"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio device support maximum IO number <br/></td></tr>
+<tr class="separator:ga433c62975c819240b160a627eaa25092"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga24b4be566dc13edf4efc5915fb431288"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga24b4be566dc13edf4efc5915fb431288"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga24b4be566dc13edf4efc5915fb431288">sdio_io_irq_handler_t</a> )(sdio_card_t *card, uint32_t func)</td></tr>
+<tr class="memdesc:ga24b4be566dc13edf4efc5915fb431288"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio io handler <br/></td></tr>
+<tr class="separator:ga24b4be566dc13edf4efc5915fb431288"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga0724528cce39d640312f4a7ad1a893f7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00079.html#gga0724528cce39d640312f4a7ad1a893f7a9fdf7d592b595f8dffd0519979222bc8">kSD_SupportHighCapacityFlag</a> = (1U &lt;&lt; 1U), 
+<tr class="memitem:ga9dfb4270982e609bc964f5547b0a040a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga9dfb4270982e609bc964f5547b0a040a">sdio_io_direction_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00079.html#gga9dfb4270982e609bc964f5547b0a040aa7c72ffd0968a86552164ec85a5c3fd36">kSDIO_IORead</a> = 0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00079.html#gga0724528cce39d640312f4a7ad1a893f7a163a232e42705c297ad363283349cc40">kSD_Support4BitWidthFlag</a> = (1U &lt;&lt; 2U), 
-<br/>
-&#160;&#160;<a class="el" href="a00079.html#gga0724528cce39d640312f4a7ad1a893f7ad76278db320cf350e0a21fa35cef47db">kSD_SupportSdhcFlag</a> = (1U &lt;&lt; 3U), 
-<br/>
-&#160;&#160;<a class="el" href="a00079.html#gga0724528cce39d640312f4a7ad1a893f7a38bc49f3235ef3245779efcbd0f616ca">kSD_SupportSdxcFlag</a> = (1U &lt;&lt; 4U), 
-<br/>
-&#160;&#160;<a class="el" href="a00079.html#gga0724528cce39d640312f4a7ad1a893f7a9ea1d2e9f73d26c15593a98481eb8132">kSD_SupportVoltage180v</a> = (1U &lt;&lt; 5U), 
-<br/>
-&#160;&#160;<a class="el" href="a00079.html#gga0724528cce39d640312f4a7ad1a893f7a1d6f3540c4292326a017d8b629021d09">kSD_SupportSetBlockCountCmd</a> = (1U &lt;&lt; 6U), 
-<br/>
-&#160;&#160;<a class="el" href="a00079.html#gga0724528cce39d640312f4a7ad1a893f7a76d5891295fcaef57bb726e2fde42671">kSD_SupportSpeedClassControlCmd</a> = (1U &lt;&lt; 7U)
+&#160;&#160;<a class="el" href="a00079.html#gga9dfb4270982e609bc964f5547b0a040aae1bcefbd4840a8519fe085167531a356">kSDIO_IOWrite</a> = 1U
 <br/>
  }</td></tr>
-<tr class="memdesc:ga0724528cce39d640312f4a7ad1a893f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD card flags.  <a href="a00079.html#ga0724528cce39d640312f4a7ad1a893f7">More...</a><br/></td></tr>
-<tr class="separator:ga0724528cce39d640312f4a7ad1a893f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga9dfb4270982e609bc964f5547b0a040a"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio io read/write direction  <a href="a00079.html#ga9dfb4270982e609bc964f5547b0a040a">More...</a><br/></td></tr>
+<tr class="separator:ga9dfb4270982e609bc964f5547b0a040a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-SDCARD Function</h2></td></tr>
-<tr class="memitem:ga281fb14816d236446ee2d047be0c7155"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga281fb14816d236446ee2d047be0c7155">SD_Init</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga281fb14816d236446ee2d047be0c7155"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the card on a specific host controller.  <a href="#ga281fb14816d236446ee2d047be0c7155">More...</a><br/></td></tr>
-<tr class="separator:ga281fb14816d236446ee2d047be0c7155"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50dee2b5bc071a01480b0ab3671c8524"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga50dee2b5bc071a01480b0ab3671c8524">SD_Deinit</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga50dee2b5bc071a01480b0ab3671c8524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card.  <a href="#ga50dee2b5bc071a01480b0ab3671c8524">More...</a><br/></td></tr>
-<tr class="separator:ga50dee2b5bc071a01480b0ab3671c8524"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22154dd3ecedaaf63ed951fb248b0265"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga22154dd3ecedaaf63ed951fb248b0265">SD_CardInit</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga22154dd3ecedaaf63ed951fb248b0265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the card.  <a href="#ga22154dd3ecedaaf63ed951fb248b0265">More...</a><br/></td></tr>
-<tr class="separator:ga22154dd3ecedaaf63ed951fb248b0265"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2683393842666aa39ec74898a7ad6e8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga2683393842666aa39ec74898a7ad6e8a">SD_CardDeinit</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga2683393842666aa39ec74898a7ad6e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card.  <a href="#ga2683393842666aa39ec74898a7ad6e8a">More...</a><br/></td></tr>
-<tr class="separator:ga2683393842666aa39ec74898a7ad6e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga47f15fb31bcb60a2eeb474081cde54e4">SD_HostInit</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize the host.  <a href="#ga47f15fb31bcb60a2eeb474081cde54e4">More...</a><br/></td></tr>
-<tr class="separator:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac44a13a36870f276b1f323a5b519bb9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gac44a13a36870f276b1f323a5b519bb9f">SD_HostDeinit</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:gac44a13a36870f276b1f323a5b519bb9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the host.  <a href="#gac44a13a36870f276b1f323a5b519bb9f">More...</a><br/></td></tr>
-<tr class="separator:gac44a13a36870f276b1f323a5b519bb9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75785c0a29f560b0bfd14b572106bda0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga75785c0a29f560b0bfd14b572106bda0">SD_HostDoReset</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga75785c0a29f560b0bfd14b572106bda0"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the host.  <a href="#ga75785c0a29f560b0bfd14b572106bda0">More...</a><br/></td></tr>
-<tr class="separator:ga75785c0a29f560b0bfd14b572106bda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga5e8b2d7768c7d916a1953583035fdbb3">SD_SetCardPower</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card, bool enable)</td></tr>
-<tr class="memdesc:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">set card power.  <a href="#ga5e8b2d7768c7d916a1953583035fdbb3">More...</a><br/></td></tr>
-<tr class="separator:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga38c82aa0e0daaec4c6be8ba3acd56da2">SD_PollingCardInsert</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card, uint32_t status)</td></tr>
-<tr class="memdesc:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">sd wait card detect function.  <a href="#ga38c82aa0e0daaec4c6be8ba3acd56da2">More...</a><br/></td></tr>
-<tr class="separator:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga6de9f134ae84e25053647e2c0ba8ef27">SD_IsCardPresent</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="mdescLeft">&#160;</td><td class="mdescRight">sd card present check function.  <a href="#ga6de9f134ae84e25053647e2c0ba8ef27">More...</a><br/></td></tr>
-<tr class="separator:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gad9b5c3ecc8acf18ee06ffd4154eb0352">SD_CheckReadOnly</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the card is write-protected.  <a href="#gad9b5c3ecc8acf18ee06ffd4154eb0352">More...</a><br/></td></tr>
-<tr class="separator:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab8b91d51f045d43e32770599a9406e3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gab8b91d51f045d43e32770599a9406e3b">SD_SelectCard</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card, bool isSelected)</td></tr>
-<tr class="memdesc:gab8b91d51f045d43e32770599a9406e3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send SELECT_CARD command to set the card to be transfer state or not.  <a href="#gab8b91d51f045d43e32770599a9406e3b">More...</a><br/></td></tr>
-<tr class="separator:gab8b91d51f045d43e32770599a9406e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf3537757745005c2b103be314ddfaa7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gaf3537757745005c2b103be314ddfaa7b">SD_ReadStatus</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card)</td></tr>
-<tr class="memdesc:gaf3537757745005c2b103be314ddfaa7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send ACMD13 to get the card current status.  <a href="#gaf3537757745005c2b103be314ddfaa7b">More...</a><br/></td></tr>
-<tr class="separator:gaf3537757745005c2b103be314ddfaa7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d134e8244b6641352d1a374d0e8b848"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga1d134e8244b6641352d1a374d0e8b848">SD_ReadBlocks</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card, uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
-<tr class="memdesc:ga1d134e8244b6641352d1a374d0e8b848"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads blocks from the specific card.  <a href="#ga1d134e8244b6641352d1a374d0e8b848">More...</a><br/></td></tr>
-<tr class="separator:ga1d134e8244b6641352d1a374d0e8b848"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga9ab9d1eb512dec6e15beb2cee4e9691e">SD_WriteBlocks</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card, const uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
-<tr class="memdesc:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes blocks of data to the specific card.  <a href="#ga9ab9d1eb512dec6e15beb2cee4e9691e">More...</a><br/></td></tr>
-<tr class="separator:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04e7b25d9776e92ddfcf72063af02418"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga04e7b25d9776e92ddfcf72063af02418">SD_EraseBlocks</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card, uint32_t startBlock, uint32_t blockCount)</td></tr>
-<tr class="memdesc:ga04e7b25d9776e92ddfcf72063af02418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases blocks of the specific card.  <a href="#ga04e7b25d9776e92ddfcf72063af02418">More...</a><br/></td></tr>
-<tr class="separator:ga04e7b25d9776e92ddfcf72063af02418"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga07178b3047e22e71bd7a3bd60322e7b6">SD_SetDriverStrength</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card, <a class="el" href="a00064.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a> driverStrength)</td></tr>
-<tr class="memdesc:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">select card driver strength select card driver strength  <a href="#ga07178b3047e22e71bd7a3bd60322e7b6">More...</a><br/></td></tr>
-<tr class="separator:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a3a34d76af9ee378086a4dcc1259936"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga6a3a34d76af9ee378086a4dcc1259936">SD_SetMaxCurrent</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card, <a class="el" href="a00064.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a> maxCurrent)</td></tr>
-<tr class="memdesc:ga6a3a34d76af9ee378086a4dcc1259936"><td class="mdescLeft">&#160;</td><td class="mdescRight">select max current select max operation current  <a href="#ga6a3a34d76af9ee378086a4dcc1259936">More...</a><br/></td></tr>
-<tr class="separator:ga6a3a34d76af9ee378086a4dcc1259936"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33babf402c15dae5d2712793230158a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga33babf402c15dae5d2712793230158a9">SD_PollingCardStatusBusy</a> (<a class="el" href="a00079.html#a00636">sd_card_t</a> *card, uint32_t timeoutMs)</td></tr>
-<tr class="memdesc:ga33babf402c15dae5d2712793230158a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polling card idle status.  <a href="#ga33babf402c15dae5d2712793230158a9">More...</a><br/></td></tr>
-<tr class="separator:ga33babf402c15dae5d2712793230158a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Initialization and deinitialization</h2></td></tr>
+<tr class="memitem:ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d">SDIO_Init</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDIO card init function.  <a href="#ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d">More...</a><br/></td></tr>
+<tr class="separator:ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3b7ba8e7b9bfafde767535a7089da44d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga3b7ba8e7b9bfafde767535a7089da44d">SDIO_Deinit</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:ga3b7ba8e7b9bfafde767535a7089da44d"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDIO card deinit, include card and host deinit.  <a href="#ga3b7ba8e7b9bfafde767535a7089da44d">More...</a><br/></td></tr>
+<tr class="separator:ga3b7ba8e7b9bfafde767535a7089da44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee0b26685255c5a69ded10b2371008c0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gaee0b26685255c5a69ded10b2371008c0">SDIO_CardInit</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:gaee0b26685255c5a69ded10b2371008c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the card.  <a href="#gaee0b26685255c5a69ded10b2371008c0">More...</a><br/></td></tr>
+<tr class="separator:gaee0b26685255c5a69ded10b2371008c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13f67b379d7429002674ccf7d730465e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga13f67b379d7429002674ccf7d730465e">SDIO_CardDeinit</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:ga13f67b379d7429002674ccf7d730465e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card.  <a href="#ga13f67b379d7429002674ccf7d730465e">More...</a><br/></td></tr>
+<tr class="separator:ga13f67b379d7429002674ccf7d730465e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab812996961a7bf10ba20fe15ad6b058e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gab812996961a7bf10ba20fe15ad6b058e">SDIO_HostInit</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:gab812996961a7bf10ba20fe15ad6b058e"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize the host.  <a href="#gab812996961a7bf10ba20fe15ad6b058e">More...</a><br/></td></tr>
+<tr class="separator:gab812996961a7bf10ba20fe15ad6b058e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga189f1410a950b2f5f1ee703239cebed3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga189f1410a950b2f5f1ee703239cebed3">SDIO_HostDeinit</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:ga189f1410a950b2f5f1ee703239cebed3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the host.  <a href="#ga189f1410a950b2f5f1ee703239cebed3">More...</a><br/></td></tr>
+<tr class="separator:ga189f1410a950b2f5f1ee703239cebed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac505825daac65f982b589ef10e8f64e0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gac505825daac65f982b589ef10e8f64e0">SDIO_HostDoReset</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:gac505825daac65f982b589ef10e8f64e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the host.  <a href="#gac505825daac65f982b589ef10e8f64e0">More...</a><br/></td></tr>
+<tr class="separator:gac505825daac65f982b589ef10e8f64e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b2c66357f64588e8ab6ba45fc1bb29b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga7b2c66357f64588e8ab6ba45fc1bb29b">SDIO_SetCardPower</a> (sdio_card_t *card, bool enable)</td></tr>
+<tr class="memdesc:ga7b2c66357f64588e8ab6ba45fc1bb29b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set card power.  <a href="#ga7b2c66357f64588e8ab6ba45fc1bb29b">More...</a><br/></td></tr>
+<tr class="separator:ga7b2c66357f64588e8ab6ba45fc1bb29b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8cb6ac091eeba10ef001d7ec50ef9adf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga8cb6ac091eeba10ef001d7ec50ef9adf">SDIO_CardInActive</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:ga8cb6ac091eeba10ef001d7ec50ef9adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">set SDIO card to inactive state  <a href="#ga8cb6ac091eeba10ef001d7ec50ef9adf">More...</a><br/></td></tr>
+<tr class="separator:ga8cb6ac091eeba10ef001d7ec50ef9adf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafca21fb443a7642ab6b99d4477fd41b0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gafca21fb443a7642ab6b99d4477fd41b0">SDIO_GetCardCapability</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func)</td></tr>
+<tr class="memdesc:gafca21fb443a7642ab6b99d4477fd41b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">get SDIO card capability  <a href="#gafca21fb443a7642ab6b99d4477fd41b0">More...</a><br/></td></tr>
+<tr class="separator:gafca21fb443a7642ab6b99d4477fd41b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga86024856b5fdb11ca5eb076c4d4ad370"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga86024856b5fdb11ca5eb076c4d4ad370">SDIO_SetBlockSize</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t blockSize)</td></tr>
+<tr class="memdesc:ga86024856b5fdb11ca5eb076c4d4ad370"><td class="mdescLeft">&#160;</td><td class="mdescRight">set SDIO card block size  <a href="#ga86024856b5fdb11ca5eb076c4d4ad370">More...</a><br/></td></tr>
+<tr class="separator:ga86024856b5fdb11ca5eb076c4d4ad370"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47ee885791070dc880f4b5e6027844f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga47ee885791070dc880f4b5e6027844f9">SDIO_CardReset</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:ga47ee885791070dc880f4b5e6027844f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">set SDIO card reset  <a href="#ga47ee885791070dc880f4b5e6027844f9">More...</a><br/></td></tr>
+<tr class="separator:ga47ee885791070dc880f4b5e6027844f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5e6c4d0098f11caa7fc84236fba1bc5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gac5e6c4d0098f11caa7fc84236fba1bc5">SDIO_SetDataBusWidth</a> (sdio_card_t *card, <a class="el" href="a00063.html#ga0aaaac7d76fefa8e084c2ecf6880da95">sdio_bus_width_t</a> busWidth)</td></tr>
+<tr class="memdesc:gac5e6c4d0098f11caa7fc84236fba1bc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">set SDIO card data bus width  <a href="#gac5e6c4d0098f11caa7fc84236fba1bc5">More...</a><br/></td></tr>
+<tr class="separator:gac5e6c4d0098f11caa7fc84236fba1bc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga78df99aeaeb2c0a9208cba6f243022a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga78df99aeaeb2c0a9208cba6f243022a3">SDIO_SwitchToHighSpeed</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:ga78df99aeaeb2c0a9208cba6f243022a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">switch the card to high speed  <a href="#ga78df99aeaeb2c0a9208cba6f243022a3">More...</a><br/></td></tr>
+<tr class="separator:ga78df99aeaeb2c0a9208cba6f243022a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf75b7891af56a6d6368e75f2e92b6223"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gaf75b7891af56a6d6368e75f2e92b6223">SDIO_ReadCIS</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, const uint32_t *tupleList, uint32_t tupleNum)</td></tr>
+<tr class="memdesc:gaf75b7891af56a6d6368e75f2e92b6223"><td class="mdescLeft">&#160;</td><td class="mdescRight">read SDIO card CIS for each function  <a href="#gaf75b7891af56a6d6368e75f2e92b6223">More...</a><br/></td></tr>
+<tr class="separator:gaf75b7891af56a6d6368e75f2e92b6223"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a02395a67e477b281e13c2b43b35857"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga1a02395a67e477b281e13c2b43b35857">SDIO_PollingCardInsert</a> (sdio_card_t *card, uint32_t status)</td></tr>
+<tr class="memdesc:ga1a02395a67e477b281e13c2b43b35857"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio wait card detect function.  <a href="#ga1a02395a67e477b281e13c2b43b35857">More...</a><br/></td></tr>
+<tr class="separator:ga1a02395a67e477b281e13c2b43b35857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad02df0717fc54a10a2bb170cb5ab92b9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gad02df0717fc54a10a2bb170cb5ab92b9">SDIO_IsCardPresent</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:gad02df0717fc54a10a2bb170cb5ab92b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio card present check function.  <a href="#gad02df0717fc54a10a2bb170cb5ab92b9">More...</a><br/></td></tr>
+<tr class="separator:gad02df0717fc54a10a2bb170cb5ab92b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+IO operations</h2></td></tr>
+<tr class="memitem:ga4cd4d79ffce74b8374b486e3f389a560"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga4cd4d79ffce74b8374b486e3f389a560">SDIO_IO_Write_Direct</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t *data, bool raw)</td></tr>
+<tr class="memdesc:ga4cd4d79ffce74b8374b486e3f389a560"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO direct write transfer function.  <a href="#ga4cd4d79ffce74b8374b486e3f389a560">More...</a><br/></td></tr>
+<tr class="separator:ga4cd4d79ffce74b8374b486e3f389a560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacbe48b74676d809d9bcf948c89915c79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gacbe48b74676d809d9bcf948c89915c79">SDIO_IO_Read_Direct</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t *data)</td></tr>
+<tr class="memdesc:gacbe48b74676d809d9bcf948c89915c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO direct read transfer function.  <a href="#gacbe48b74676d809d9bcf948c89915c79">More...</a><br/></td></tr>
+<tr class="separator:gacbe48b74676d809d9bcf948c89915c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga22478b5061fd90f914acc45574fdc7ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga22478b5061fd90f914acc45574fdc7ad">SDIO_IO_RW_Direct</a> (sdio_card_t *card, <a class="el" href="a00079.html#ga9dfb4270982e609bc964f5547b0a040a">sdio_io_direction_t</a> direction, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t dataIn, uint8_t *dataOut)</td></tr>
+<tr class="memdesc:ga22478b5061fd90f914acc45574fdc7ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO direct read/write transfer function.  <a href="#ga22478b5061fd90f914acc45574fdc7ad">More...</a><br/></td></tr>
+<tr class="separator:ga22478b5061fd90f914acc45574fdc7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga419cc9819458bd605262ba149fa607dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga419cc9819458bd605262ba149fa607dc">SDIO_IO_Write_Extended</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t *buffer, uint32_t count, uint32_t flags)</td></tr>
+<tr class="memdesc:ga419cc9819458bd605262ba149fa607dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO extended write transfer function.  <a href="#ga419cc9819458bd605262ba149fa607dc">More...</a><br/></td></tr>
+<tr class="separator:ga419cc9819458bd605262ba149fa607dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga663f22e0a9f35b5b6f6c8cfe062b9a19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga663f22e0a9f35b5b6f6c8cfe062b9a19">SDIO_IO_Read_Extended</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, uint32_t regAddr, uint8_t *buffer, uint32_t count, uint32_t flags)</td></tr>
+<tr class="memdesc:ga663f22e0a9f35b5b6f6c8cfe062b9a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">IO extended read transfer function.  <a href="#ga663f22e0a9f35b5b6f6c8cfe062b9a19">More...</a><br/></td></tr>
+<tr class="separator:ga663f22e0a9f35b5b6f6c8cfe062b9a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d90b3f3516e04d1d89f73c3b939eadb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga1d90b3f3516e04d1d89f73c3b939eadb">SDIO_EnableIOInterrupt</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, bool enable)</td></tr>
+<tr class="memdesc:ga1d90b3f3516e04d1d89f73c3b939eadb"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable IO interrupt  <a href="#ga1d90b3f3516e04d1d89f73c3b939eadb">More...</a><br/></td></tr>
+<tr class="separator:ga1d90b3f3516e04d1d89f73c3b939eadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85f16ed455700421111456391a889d1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga85f16ed455700421111456391a889d1f">SDIO_EnableIO</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, bool enable)</td></tr>
+<tr class="memdesc:ga85f16ed455700421111456391a889d1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable IO and wait IO ready  <a href="#ga85f16ed455700421111456391a889d1f">More...</a><br/></td></tr>
+<tr class="separator:ga85f16ed455700421111456391a889d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga499c1fe5773784b7ba199c076d365476"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga499c1fe5773784b7ba199c076d365476">SDIO_SelectIO</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func)</td></tr>
+<tr class="memdesc:ga499c1fe5773784b7ba199c076d365476"><td class="mdescLeft">&#160;</td><td class="mdescRight">select IO  <a href="#ga499c1fe5773784b7ba199c076d365476">More...</a><br/></td></tr>
+<tr class="separator:ga499c1fe5773784b7ba199c076d365476"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacd873183a1d4972c52e8e110af3503ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gacd873183a1d4972c52e8e110af3503ef">SDIO_AbortIO</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func)</td></tr>
+<tr class="memdesc:gacd873183a1d4972c52e8e110af3503ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort IO transfer.  <a href="#gacd873183a1d4972c52e8e110af3503ef">More...</a><br/></td></tr>
+<tr class="separator:gacd873183a1d4972c52e8e110af3503ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1d7eb887cb13f6a837bb7b7ff42fdddc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga1d7eb887cb13f6a837bb7b7ff42fdddc">SDIO_SetDriverStrength</a> (sdio_card_t *card, <a class="el" href="a00063.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a> driverStrength)</td></tr>
+<tr class="memdesc:ga1d7eb887cb13f6a837bb7b7ff42fdddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set driver strength.  <a href="#ga1d7eb887cb13f6a837bb7b7ff42fdddc">More...</a><br/></td></tr>
+<tr class="separator:ga1d7eb887cb13f6a837bb7b7ff42fdddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf30a83e0424613e2c44c4a61b2ffae32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gaf30a83e0424613e2c44c4a61b2ffae32">SDIO_EnableAsyncInterrupt</a> (sdio_card_t *card, bool enable)</td></tr>
+<tr class="memdesc:gaf30a83e0424613e2c44c4a61b2ffae32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable Async interrupt.  <a href="#gaf30a83e0424613e2c44c4a61b2ffae32">More...</a><br/></td></tr>
+<tr class="separator:gaf30a83e0424613e2c44c4a61b2ffae32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4e69a2c71e3fefb8e77f53dd43843ee1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga4e69a2c71e3fefb8e77f53dd43843ee1">SDIO_GetPendingInterrupt</a> (sdio_card_t *card, uint8_t *pendingInt)</td></tr>
+<tr class="memdesc:ga4e69a2c71e3fefb8e77f53dd43843ee1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get pending interrupt.  <a href="#ga4e69a2c71e3fefb8e77f53dd43843ee1">More...</a><br/></td></tr>
+<tr class="separator:ga4e69a2c71e3fefb8e77f53dd43843ee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5c0e3742026865e079ff4d15903b7b55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ga5c0e3742026865e079ff4d15903b7b55">SDIO_IO_Transfer</a> (sdio_card_t *card, <a class="el" href="a00063.html#ga77154625e2d23b77a5242e28de41d250">sdio_command_t</a> cmd, uint32_t argument, uint32_t blockSize, uint8_t *txData, uint8_t *rxData, uint16_t dataSize, uint32_t *response)</td></tr>
+<tr class="memdesc:ga5c0e3742026865e079ff4d15903b7b55"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio card io transfer function.  <a href="#ga5c0e3742026865e079ff4d15903b7b55">More...</a><br/></td></tr>
+<tr class="separator:ga5c0e3742026865e079ff4d15903b7b55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4c9b0351ead20e77eb148bc4cee7d42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gac4c9b0351ead20e77eb148bc4cee7d42">SDIO_SetIOIRQHandler</a> (sdio_card_t *card, <a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a> func, <a class="el" href="a00079.html#ga24b4be566dc13edf4efc5915fb431288">sdio_io_irq_handler_t</a> handler)</td></tr>
+<tr class="memdesc:gac4c9b0351ead20e77eb148bc4cee7d42"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio set io IRQ handler.  <a href="#gac4c9b0351ead20e77eb148bc4cee7d42">More...</a><br/></td></tr>
+<tr class="separator:gac4c9b0351ead20e77eb148bc4cee7d42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad0749d472baa307fc39a74d493b3b49e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#gad0749d472baa307fc39a74d493b3b49e">SDIO_HandlePendingIOInterrupt</a> (sdio_card_t *card)</td></tr>
+<tr class="memdesc:gad0749d472baa307fc39a74d493b3b49e"><td class="mdescLeft">&#160;</td><td class="mdescRight">sdio card io pending interrupt handle function.  <a href="#gad0749d472baa307fc39a74d493b3b49e">More...</a><br/></td></tr>
+<tr class="separator:gad0749d472baa307fc39a74d493b3b49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00636" id="a00636"></a>
+<a name="a00403" id="a00403"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct sd_card_t</td>
+          <td class="memname">struct _sdio_card</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="textblock"><p>Define the card structure including the necessary fields to identify and describe the card. </p>
+<div class="textblock"><p>sdio card descriptor</p>
+<p>Define the card structure including the necessary fields to identify and describe the card. </p>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:ae1d68ff4edbc243d840cae5614d31a68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1d68ff4edbc243d840cae5614d31a68"></a>
-<a class="el" href="a00082.html#a00651">sdmmchost_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ae1d68ff4edbc243d840cae5614d31a68">host</a></td></tr>
-<tr class="memdesc:ae1d68ff4edbc243d840cae5614d31a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host configuration. <br/></td></tr>
-<tr class="separator:ae1d68ff4edbc243d840cae5614d31a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4566720b02d4de772cd3cbcb54eaafb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4566720b02d4de772cd3cbcb54eaafb"></a>
-<a class="el" href="a00064.html#a00643">sd_usr_param_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ab4566720b02d4de772cd3cbcb54eaafb">usrParam</a></td></tr>
-<tr class="memdesc:ab4566720b02d4de772cd3cbcb54eaafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">user parameter <br/></td></tr>
-<tr class="separator:ab4566720b02d4de772cd3cbcb54eaafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a966fb2f61556afb59ab11f5f634e0578"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a966fb2f61556afb59ab11f5f634e0578"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a966fb2f61556afb59ab11f5f634e0578">isHostReady</a></td></tr>
-<tr class="memdesc:a966fb2f61556afb59ab11f5f634e0578"><td class="mdescLeft">&#160;</td><td class="mdescRight">use this flag to indicate if need host re-init or not <br/></td></tr>
-<tr class="separator:a966fb2f61556afb59ab11f5f634e0578"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a089143022f4fcf62251935db4ee7e996"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a089143022f4fcf62251935db4ee7e996"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a089143022f4fcf62251935db4ee7e996">noInteralAlign</a></td></tr>
-<tr class="memdesc:a089143022f4fcf62251935db4ee7e996"><td class="mdescLeft">&#160;</td><td class="mdescRight">used to enable/disable the functionality of the exchange buffer <br/></td></tr>
-<tr class="separator:a089143022f4fcf62251935db4ee7e996"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ae02a01ec2961f9a2374f40d9818c61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9ae02a01ec2961f9a2374f40d9818c61"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a9ae02a01ec2961f9a2374f40d9818c61">busClock_Hz</a></td></tr>
-<tr class="memdesc:a9ae02a01ec2961f9a2374f40d9818c61"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD bus clock frequency united in Hz. <br/></td></tr>
-<tr class="separator:a9ae02a01ec2961f9a2374f40d9818c61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa63229571c2375d7bac861ccf49fc38c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa63229571c2375d7bac861ccf49fc38c"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aa63229571c2375d7bac861ccf49fc38c">relativeAddress</a></td></tr>
-<tr class="memdesc:aa63229571c2375d7bac861ccf49fc38c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relative address of the card. <br/></td></tr>
-<tr class="separator:aa63229571c2375d7bac861ccf49fc38c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23b8ed9688825316750d697b524c7d18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23b8ed9688825316750d697b524c7d18"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a23b8ed9688825316750d697b524c7d18">version</a></td></tr>
-<tr class="memdesc:a23b8ed9688825316750d697b524c7d18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card version. <br/></td></tr>
-<tr class="separator:a23b8ed9688825316750d697b524c7d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2979044e1c678c4d1f4b55915ea11f9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2979044e1c678c4d1f4b55915ea11f9b"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a2979044e1c678c4d1f4b55915ea11f9b">flags</a></td></tr>
-<tr class="memdesc:a2979044e1c678c4d1f4b55915ea11f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags in _sd_card_flag. <br/></td></tr>
-<tr class="separator:a2979044e1c678c4d1f4b55915ea11f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32f0cae971b2a8785e4efe92877f723f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32f0cae971b2a8785e4efe92877f723f"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a32f0cae971b2a8785e4efe92877f723f">internalBuffer</a> [<a class="el" href="a00064.html#ga4dd122ccc71f9eef692acf27d5f851c3">FSL_SDMMC_CARD_INTERNAL_BUFFER_SIZE</a>]</td></tr>
-<tr class="memdesc:a32f0cae971b2a8785e4efe92877f723f"><td class="mdescLeft">&#160;</td><td class="mdescRight">internal buffer <br/></td></tr>
-<tr class="separator:a32f0cae971b2a8785e4efe92877f723f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dfdb06355545a94755d7b7b8b8bb708"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4dfdb06355545a94755d7b7b8b8bb708"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a4dfdb06355545a94755d7b7b8b8bb708">ocr</a></td></tr>
-<tr class="memdesc:a4dfdb06355545a94755d7b7b8b8bb708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw OCR content. <br/></td></tr>
-<tr class="separator:a4dfdb06355545a94755d7b7b8b8bb708"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0efb67f15239d1406b0b0f8b91345669"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0efb67f15239d1406b0b0f8b91345669"></a>
-<a class="el" href="a00064.html#a00637">sd_cid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a0efb67f15239d1406b0b0f8b91345669">cid</a></td></tr>
-<tr class="memdesc:a0efb67f15239d1406b0b0f8b91345669"><td class="mdescLeft">&#160;</td><td class="mdescRight">CID. <br/></td></tr>
-<tr class="separator:a0efb67f15239d1406b0b0f8b91345669"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1958a5fde8f395573ccdff37a26aa455"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1958a5fde8f395573ccdff37a26aa455"></a>
-<a class="el" href="a00064.html#a00638">sd_csd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a1958a5fde8f395573ccdff37a26aa455">csd</a></td></tr>
-<tr class="memdesc:a1958a5fde8f395573ccdff37a26aa455"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSD. <br/></td></tr>
-<tr class="separator:a1958a5fde8f395573ccdff37a26aa455"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae47527a4d44dfb1754d97149e71d7744"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae47527a4d44dfb1754d97149e71d7744"></a>
-<a class="el" href="a00064.html#a00641">sd_scr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ae47527a4d44dfb1754d97149e71d7744">scr</a></td></tr>
-<tr class="memdesc:ae47527a4d44dfb1754d97149e71d7744"><td class="mdescLeft">&#160;</td><td class="mdescRight">SCR. <br/></td></tr>
-<tr class="separator:ae47527a4d44dfb1754d97149e71d7744"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9b7cf861f3224f3a8f14d9b7c52ca1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9b7cf861f3224f3a8f14d9b7c52ca1b"></a>
-<a class="el" href="a00064.html#a00642">sd_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ac9b7cf861f3224f3a8f14d9b7c52ca1b">stat</a></td></tr>
-<tr class="memdesc:ac9b7cf861f3224f3a8f14d9b7c52ca1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">sd 512 bit status <br/></td></tr>
-<tr class="separator:ac9b7cf861f3224f3a8f14d9b7c52ca1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee36dc7f6472b4efb5c8c00fcaeb8a55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee36dc7f6472b4efb5c8c00fcaeb8a55"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aee36dc7f6472b4efb5c8c00fcaeb8a55">blockCount</a></td></tr>
-<tr class="memdesc:aee36dc7f6472b4efb5c8c00fcaeb8a55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card total block number. <br/></td></tr>
-<tr class="separator:aee36dc7f6472b4efb5c8c00fcaeb8a55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11f6303b3585dda87da4b8a26763c752"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11f6303b3585dda87da4b8a26763c752"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a11f6303b3585dda87da4b8a26763c752">blockSize</a></td></tr>
-<tr class="memdesc:a11f6303b3585dda87da4b8a26763c752"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card block size. <br/></td></tr>
-<tr class="separator:a11f6303b3585dda87da4b8a26763c752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78e38be0fbd415b66ef4ba9e5b0f8930"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78e38be0fbd415b66ef4ba9e5b0f8930"></a>
-<a class="el" href="a00064.html#ga508c3d50863e57dce5fa1b7758972e1b">sd_timing_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a78e38be0fbd415b66ef4ba9e5b0f8930">currentTiming</a></td></tr>
-<tr class="memdesc:a78e38be0fbd415b66ef4ba9e5b0f8930"><td class="mdescLeft">&#160;</td><td class="mdescRight">current timing mode <br/></td></tr>
-<tr class="separator:a78e38be0fbd415b66ef4ba9e5b0f8930"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf5c5e39b67ad3bb8318c3b3036e8752"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acf5c5e39b67ad3bb8318c3b3036e8752"></a>
-<a class="el" href="a00064.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#acf5c5e39b67ad3bb8318c3b3036e8752">driverStrength</a></td></tr>
-<tr class="memdesc:acf5c5e39b67ad3bb8318c3b3036e8752"><td class="mdescLeft">&#160;</td><td class="mdescRight">driver strength <br/></td></tr>
-<tr class="separator:acf5c5e39b67ad3bb8318c3b3036e8752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1071e94c4d0fce611c54e347a97b5b93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1071e94c4d0fce611c54e347a97b5b93"></a>
-<a class="el" href="a00064.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a1071e94c4d0fce611c54e347a97b5b93">maxCurrent</a></td></tr>
-<tr class="memdesc:a1071e94c4d0fce611c54e347a97b5b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">card current limit <br/></td></tr>
-<tr class="separator:a1071e94c4d0fce611c54e347a97b5b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef60a9196a9789f243660bb76f3a0ef2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aef60a9196a9789f243660bb76f3a0ef2"></a>
-<a class="el" href="a00064.html#ga27fd895fac89bbc0288543ca0b1e371c">sdmmc_operation_voltage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aef60a9196a9789f243660bb76f3a0ef2">operationVoltage</a></td></tr>
-<tr class="memdesc:aef60a9196a9789f243660bb76f3a0ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">card operation voltage <br/></td></tr>
-<tr class="separator:aef60a9196a9789f243660bb76f3a0ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a617e4f6ef3604042d7ae2851bd1ae50c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a617e4f6ef3604042d7ae2851bd1ae50c"></a>
-<a class="el" href="a00081.html#a00650">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a617e4f6ef3604042d7ae2851bd1ae50c">lock</a></td></tr>
-<tr class="memdesc:a617e4f6ef3604042d7ae2851bd1ae50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">card access lock <br/></td></tr>
-<tr class="separator:a617e4f6ef3604042d7ae2851bd1ae50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff91723723609dbd00d027e7e6cee4e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff91723723609dbd00d027e7e6cee4e8"></a>
+<a class="el" href="a00081.html#a00645">sdmmchost_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aff91723723609dbd00d027e7e6cee4e8">host</a></td></tr>
+<tr class="memdesc:aff91723723609dbd00d027e7e6cee4e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host information. <br/></td></tr>
+<tr class="separator:aff91723723609dbd00d027e7e6cee4e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85fb84502cfbe41a1264c1dfbe4ae37f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85fb84502cfbe41a1264c1dfbe4ae37f"></a>
+<a class="el" href="a00063.html#a00642">sdio_usr_param_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a85fb84502cfbe41a1264c1dfbe4ae37f">usrParam</a></td></tr>
+<tr class="memdesc:a85fb84502cfbe41a1264c1dfbe4ae37f"><td class="mdescLeft">&#160;</td><td class="mdescRight">user parameter <br/></td></tr>
+<tr class="separator:a85fb84502cfbe41a1264c1dfbe4ae37f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3a92263c58ded5911a0c0bce688352f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aa3a92263c58ded5911a0c0bce688352f">noInternalAlign</a></td></tr>
+<tr class="memdesc:aa3a92263c58ded5911a0c0bce688352f"><td class="mdescLeft">&#160;</td><td class="mdescRight">use this flag to disable sdmmc align.  <a href="#aa3a92263c58ded5911a0c0bce688352f">More...</a><br/></td></tr>
+<tr class="separator:aa3a92263c58ded5911a0c0bce688352f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af117938433e273d737ddcbb023ca2d79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af117938433e273d737ddcbb023ca2d79"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#af117938433e273d737ddcbb023ca2d79">internalBuffer</a> [<a class="el" href="a00063.html#ga4dd122ccc71f9eef692acf27d5f851c3">FSL_SDMMC_CARD_INTERNAL_BUFFER_SIZE</a>]</td></tr>
+<tr class="memdesc:af117938433e273d737ddcbb023ca2d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">internal buffer <br/></td></tr>
+<tr class="separator:af117938433e273d737ddcbb023ca2d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fed1ffae7a9b0c2874c8c34ab41e4ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fed1ffae7a9b0c2874c8c34ab41e4ce"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a4fed1ffae7a9b0c2874c8c34ab41e4ce">isHostReady</a></td></tr>
+<tr class="memdesc:a4fed1ffae7a9b0c2874c8c34ab41e4ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">use this flag to indicate if need host re-init or not <br/></td></tr>
+<tr class="separator:a4fed1ffae7a9b0c2874c8c34ab41e4ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab41bb166ddf4ee9ddf6c1ef03296a877"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab41bb166ddf4ee9ddf6c1ef03296a877"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ab41bb166ddf4ee9ddf6c1ef03296a877">memPresentFlag</a></td></tr>
+<tr class="memdesc:ab41bb166ddf4ee9ddf6c1ef03296a877"><td class="mdescLeft">&#160;</td><td class="mdescRight">indicate if memory present <br/></td></tr>
+<tr class="separator:ab41bb166ddf4ee9ddf6c1ef03296a877"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4efa0a0f8086a31d1cd6d7337ed5ea24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4efa0a0f8086a31d1cd6d7337ed5ea24"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a4efa0a0f8086a31d1cd6d7337ed5ea24">busClock_Hz</a></td></tr>
+<tr class="memdesc:a4efa0a0f8086a31d1cd6d7337ed5ea24"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD bus clock frequency united in Hz. <br/></td></tr>
+<tr class="separator:a4efa0a0f8086a31d1cd6d7337ed5ea24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8120eb0af2d45fb67f968af63fa99505"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8120eb0af2d45fb67f968af63fa99505"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a8120eb0af2d45fb67f968af63fa99505">relativeAddress</a></td></tr>
+<tr class="memdesc:a8120eb0af2d45fb67f968af63fa99505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relative address of the card. <br/></td></tr>
+<tr class="separator:a8120eb0af2d45fb67f968af63fa99505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac23564e5abb6823da4d5d42e7d22e5df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac23564e5abb6823da4d5d42e7d22e5df"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ac23564e5abb6823da4d5d42e7d22e5df">sdVersion</a></td></tr>
+<tr class="memdesc:ac23564e5abb6823da4d5d42e7d22e5df"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD version. <br/></td></tr>
+<tr class="separator:ac23564e5abb6823da4d5d42e7d22e5df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a839c4f9ded7733adde635b9f31a4ef50"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a839c4f9ded7733adde635b9f31a4ef50"></a>
+<a class="el" href="a00063.html#ga508c3d50863e57dce5fa1b7758972e1b">sd_timing_mode_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a839c4f9ded7733adde635b9f31a4ef50">currentTiming</a></td></tr>
+<tr class="memdesc:a839c4f9ded7733adde635b9f31a4ef50"><td class="mdescLeft">&#160;</td><td class="mdescRight">current timing mode <br/></td></tr>
+<tr class="separator:a839c4f9ded7733adde635b9f31a4ef50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a877165b60f8f29595fcbc973cfb3bbbe"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a877165b60f8f29595fcbc973cfb3bbbe"></a>
+<a class="el" href="a00063.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a877165b60f8f29595fcbc973cfb3bbbe">driverStrength</a></td></tr>
+<tr class="memdesc:a877165b60f8f29595fcbc973cfb3bbbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">driver strength <br/></td></tr>
+<tr class="separator:a877165b60f8f29595fcbc973cfb3bbbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b59e4128776be4cbe36ff579230611d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b59e4128776be4cbe36ff579230611d"></a>
+<a class="el" href="a00063.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a1b59e4128776be4cbe36ff579230611d">maxCurrent</a></td></tr>
+<tr class="memdesc:a1b59e4128776be4cbe36ff579230611d"><td class="mdescLeft">&#160;</td><td class="mdescRight">card current limit <br/></td></tr>
+<tr class="separator:a1b59e4128776be4cbe36ff579230611d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aecd4677ec222958c8daad36033933d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7aecd4677ec222958c8daad36033933d"></a>
+<a class="el" href="a00063.html#ga27fd895fac89bbc0288543ca0b1e371c">sdmmc_operation_voltage_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a7aecd4677ec222958c8daad36033933d">operationVoltage</a></td></tr>
+<tr class="memdesc:a7aecd4677ec222958c8daad36033933d"><td class="mdescLeft">&#160;</td><td class="mdescRight">card operation voltage <br/></td></tr>
+<tr class="separator:a7aecd4677ec222958c8daad36033933d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac882417e33e2c8995e718f7f076cd570"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac882417e33e2c8995e718f7f076cd570"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ac882417e33e2c8995e718f7f076cd570">sdioVersion</a></td></tr>
+<tr class="memdesc:ac882417e33e2c8995e718f7f076cd570"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDIO version. <br/></td></tr>
+<tr class="separator:ac882417e33e2c8995e718f7f076cd570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5f4f00e76462d549a30bad447fa22e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5f4f00e76462d549a30bad447fa22e1"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ae5f4f00e76462d549a30bad447fa22e1">cccrVersioin</a></td></tr>
+<tr class="memdesc:ae5f4f00e76462d549a30bad447fa22e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">CCCR version. <br/></td></tr>
+<tr class="separator:ae5f4f00e76462d549a30bad447fa22e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28d663dc9d286efea1ea40f27963ddab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28d663dc9d286efea1ea40f27963ddab"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a28d663dc9d286efea1ea40f27963ddab">ioTotalNumber</a></td></tr>
+<tr class="memdesc:a28d663dc9d286efea1ea40f27963ddab"><td class="mdescLeft">&#160;</td><td class="mdescRight">total number of IO function <br/></td></tr>
+<tr class="separator:a28d663dc9d286efea1ea40f27963ddab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a014bf722d879d642eadbaf98a3f79ce4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a014bf722d879d642eadbaf98a3f79ce4"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a014bf722d879d642eadbaf98a3f79ce4">cccrflags</a></td></tr>
+<tr class="memdesc:a014bf722d879d642eadbaf98a3f79ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags in _sd_card_flag. <br/></td></tr>
+<tr class="separator:a014bf722d879d642eadbaf98a3f79ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b92c90fc8d938d03859842c084a13fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b92c90fc8d938d03859842c084a13fc"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a4b92c90fc8d938d03859842c084a13fc">io0blockSize</a></td></tr>
+<tr class="memdesc:a4b92c90fc8d938d03859842c084a13fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">record the io0 block size <br/></td></tr>
+<tr class="separator:a4b92c90fc8d938d03859842c084a13fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a493c409455409991a2af4ae08e31b386"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a493c409455409991a2af4ae08e31b386"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a493c409455409991a2af4ae08e31b386">ocr</a></td></tr>
+<tr class="memdesc:a493c409455409991a2af4ae08e31b386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw OCR content, only 24bit avalible for SDIO card. <br/></td></tr>
+<tr class="separator:a493c409455409991a2af4ae08e31b386"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a024ce205b03a42375447c1ff8b420fcc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a024ce205b03a42375447c1ff8b420fcc"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a024ce205b03a42375447c1ff8b420fcc">commonCISPointer</a></td></tr>
+<tr class="memdesc:a024ce205b03a42375447c1ff8b420fcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">point to common CIS <br/></td></tr>
+<tr class="separator:a024ce205b03a42375447c1ff8b420fcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8212a1cbbc785d1524e50eff84619275"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8212a1cbbc785d1524e50eff84619275"></a>
+<a class="el" href="a00063.html#a00639">sdio_common_cis_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a8212a1cbbc785d1524e50eff84619275">commonCIS</a></td></tr>
+<tr class="memdesc:a8212a1cbbc785d1524e50eff84619275"><td class="mdescLeft">&#160;</td><td class="mdescRight">CIS table. <br/></td></tr>
+<tr class="separator:a8212a1cbbc785d1524e50eff84619275"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace621e0a3fe5c94aeacd6e3aa0447523"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ace621e0a3fe5c94aeacd6e3aa0447523"></a>
+<a class="el" href="a00063.html#a00640">sdio_fbr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ace621e0a3fe5c94aeacd6e3aa0447523">ioFBR</a> [<a class="el" href="a00079.html#ga433c62975c819240b160a627eaa25092">FSL_SDIO_MAX_IO_NUMS</a>]</td></tr>
+<tr class="memdesc:ace621e0a3fe5c94aeacd6e3aa0447523"><td class="mdescLeft">&#160;</td><td class="mdescRight">FBR table. <br/></td></tr>
+<tr class="separator:ace621e0a3fe5c94aeacd6e3aa0447523"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae80511f00c2dcd48052cbb24a1244c9a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae80511f00c2dcd48052cbb24a1244c9a"></a>
+<a class="el" href="a00063.html#a00641">sdio_func_cis_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ae80511f00c2dcd48052cbb24a1244c9a">funcCIS</a> [<a class="el" href="a00079.html#ga433c62975c819240b160a627eaa25092">FSL_SDIO_MAX_IO_NUMS</a>]</td></tr>
+<tr class="memdesc:ae80511f00c2dcd48052cbb24a1244c9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">function CIS table <br/></td></tr>
+<tr class="separator:ae80511f00c2dcd48052cbb24a1244c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8a72b23fec3ec0d480f2ebe4558cd5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8a72b23fec3ec0d480f2ebe4558cd5d"></a>
+<a class="el" href="a00079.html#ga24b4be566dc13edf4efc5915fb431288">sdio_io_irq_handler_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#aa8a72b23fec3ec0d480f2ebe4558cd5d">ioIRQHandler</a> [<a class="el" href="a00079.html#ga433c62975c819240b160a627eaa25092">FSL_SDIO_MAX_IO_NUMS</a>]</td></tr>
+<tr class="memdesc:aa8a72b23fec3ec0d480f2ebe4558cd5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">io IRQ handler <br/></td></tr>
+<tr class="separator:aa8a72b23fec3ec0d480f2ebe4558cd5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19acaf5999a53978041fbedcc2d974ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19acaf5999a53978041fbedcc2d974ba"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a19acaf5999a53978041fbedcc2d974ba">ioIntIndex</a></td></tr>
+<tr class="memdesc:a19acaf5999a53978041fbedcc2d974ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">used to record current enabled io interrupt index <br/></td></tr>
+<tr class="separator:a19acaf5999a53978041fbedcc2d974ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3b2c92cf994137596ef25e273281e43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3b2c92cf994137596ef25e273281e43"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#ac3b2c92cf994137596ef25e273281e43">ioIntNums</a></td></tr>
+<tr class="memdesc:ac3b2c92cf994137596ef25e273281e43"><td class="mdescLeft">&#160;</td><td class="mdescRight">used to record total enabled io interrupt numbers <br/></td></tr>
+<tr class="separator:ac3b2c92cf994137596ef25e273281e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70e254e10b9328a91b6c41e8648de05b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70e254e10b9328a91b6c41e8648de05b"></a>
+<a class="el" href="a00080.html#a00644">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00079.html#a70e254e10b9328a91b6c41e8648de05b">lock</a></td></tr>
+<tr class="memdesc:a70e254e10b9328a91b6c41e8648de05b"><td class="mdescLeft">&#160;</td><td class="mdescRight">card access lock <br/></td></tr>
+<tr class="separator:a70e254e10b9328a91b6c41e8648de05b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="aa3a92263c58ded5911a0c0bce688352f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool sdio_card_t::noInternalAlign</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>If disable, sdmmc will not make sure the data buffer address is word align, otherwise all the transfer are align to low level driver </p>
+
+</div>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga6fa18202479ec86d33169ee28513ae94"></a>
+<a class="anchor" id="gab1e1aa37ee346a5118f31e7899e921d1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SD_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 4U, 0U)) /*2.4.0*/</td>
+          <td class="memname">#define FSL_SDIO_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2U, 4U, 0U)) /*2.4.0*/</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -395,60 +411,43 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga0724528cce39d640312f4a7ad1a893f7"></a>
+<a class="anchor" id="ga9dfb4270982e609bc964f5547b0a040a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname">enum <a class="el" href="a00079.html#ga9dfb4270982e609bc964f5547b0a040a">sdio_io_direction_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="anchor" id="_sd_card_flag"></a></p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga0724528cce39d640312f4a7ad1a893f7a9fdf7d592b595f8dffd0519979222bc8"></a>kSD_SupportHighCapacityFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Support high capacity. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9dfb4270982e609bc964f5547b0a040aa7c72ffd0968a86552164ec85a5c3fd36"></a>kSDIO_IORead</em>&nbsp;</td><td class="fielddoc">
+<p>io read </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0724528cce39d640312f4a7ad1a893f7a163a232e42705c297ad363283349cc40"></a>kSD_Support4BitWidthFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Support 4-bit data width. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0724528cce39d640312f4a7ad1a893f7ad76278db320cf350e0a21fa35cef47db"></a>kSD_SupportSdhcFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Card is SDHC. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0724528cce39d640312f4a7ad1a893f7a38bc49f3235ef3245779efcbd0f616ca"></a>kSD_SupportSdxcFlag</em>&nbsp;</td><td class="fielddoc">
-<p>Card is SDXC. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0724528cce39d640312f4a7ad1a893f7a9ea1d2e9f73d26c15593a98481eb8132"></a>kSD_SupportVoltage180v</em>&nbsp;</td><td class="fielddoc">
-<p>card support 1.8v voltage </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0724528cce39d640312f4a7ad1a893f7a1d6f3540c4292326a017d8b629021d09"></a>kSD_SupportSetBlockCountCmd</em>&nbsp;</td><td class="fielddoc">
-<p>card support cmd23 flag </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga0724528cce39d640312f4a7ad1a893f7a76d5891295fcaef57bb726e2fde42671"></a>kSD_SupportSpeedClassControlCmd</em>&nbsp;</td><td class="fielddoc">
-<p>card support speed class control flag </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9dfb4270982e609bc964f5547b0a040aae1bcefbd4840a8519fe085167531a356"></a>kSDIO_IOWrite</em>&nbsp;</td><td class="fielddoc">
+<p>io write </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga281fb14816d236446ee2d047be0c7155"></a>
+<a class="anchor" id="ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_Init </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function initializes the card on a specific host controller, it is consist of host init, card detect, card init function, however user can ignore this high level function, instead of use the low level function, such as SD_CardInit, SD_HostInit, SD_CardDetect.</p>
 <p>Thread safe function, please note that the function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00079.html#ga50dee2b5bc071a01480b0ab3671c8524">SD_Deinit</a>(card);</div>
-<div class="line">* <a class="code" href="a00079.html#ga281fb14816d236446ee2d047be0c7155">SD_Init</a>(card);</div>
+<div class="fragment"><div class="line">* <a class="code" href="a00079.html#ga3b7ba8e7b9bfafde767535a7089da44d">SDIO_Deinit</a>(card);</div>
+<div class="line">* <a class="code" href="a00079.html#ga18c7e68c7f4f5377fc5f0a4ccd8b8a9d">SDIO_Init</a>(card);</div>
 <div class="line">* </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -458,39 +457,36 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da36304fa7f64a74351464b5f16a0765c7" title="host controller not ready ">kStatus_SDMMC_HostNotReady</a></td><td>host is not ready. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5daee037801937ac6781197e7cb2713bab3" title="Go idle failed. ">kStatus_SDMMC_GoIdleFailed</a></td><td>Go idle failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5dac05b576643f7597d46f0a9b8a77c04ab" title="Send Operation Condition failed. ">kStatus_SDMMC_HandShakeOperationConditionFailed</a></td><td>Send operation condition failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da33ce287b896a9b498be7909cf2f7b38e" title="Send CID failed. ">kStatus_SDMMC_AllSendCidFailed</a></td><td>Send CID failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da96b5e73d4dd9eb02bc9bfb6362664136" title="Send relative address failed. ">kStatus_SDMMC_SendRelativeAddressFailed</a></td><td>Send relative address failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da73cec1c7d4346ca37ab6b0818f3a5041" title="Send CSD failed. ">kStatus_SDMMC_SendCsdFailed</a></td><td>Send CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da99077f9e3bb94b11b0169cf07a34e025" title="Select card failed. ">kStatus_SDMMC_SelectCardFailed</a></td><td>Send SELECT_CARD command failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da36de73a8df86d5a70b5f2b5c1b3b4598" title="Send SCR failed. ">kStatus_SDMMC_SendScrFailed</a></td><td>Send SCR failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5daeb87568ca0030117ce1bdca2d3fe36df" title="Set bus width failed. ">kStatus_SDMMC_SetDataBusWidthFailed</a></td><td>Set bus width failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5dace05b1fe2c1b30113d51bee8f7cb910c" title="Switch high speed failed. ">kStatus_SDMMC_SwitchBusTimingFailed</a></td><td>Switch high speed failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da7ce8c51a45aad4f51f2dcbddcb7dc233" title="Set block size failed. ">kStatus_SDMMC_SetCardBlockSizeFailed</a></td><td>Set card block size failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_GoIdleFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_HandShakeOperationConditionFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidCard</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidVoltage</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SendRelativeAddressFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SelectCardFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SDIO_SwitchHighSpeedFail</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SDIO_ReadCISFail</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga50dee2b5bc071a01480b0ab3671c8524"></a>
+<a class="anchor" id="ga3b7ba8e7b9bfafde767535a7089da44d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SD_Deinit </td>
+          <td class="memname">void SDIO_Deinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function deinitializes the specific card and host. Please note it is a thread safe function.</p>
+<p>Please note it is a thread safe function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
@@ -500,14 +496,14 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="ga22154dd3ecedaaf63ed951fb248b0265"></a>
+<a class="anchor" id="gaee0b26685255c5a69ded10b2371008c0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_CardInit </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_CardInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -515,8 +511,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><div class="memdoc">
 <p>This function initializes the card only, make sure the host is ready when call this function, otherwise it will return kStatus_SDMMC_HostNotReady.</p>
 <p>Thread safe function, please note that the function will create the mutex lock dynamically by default, so to avoid the mutex create redundantly, application must follow bellow sequence for card re-initialization </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00079.html#ga2683393842666aa39ec74898a7ad6e8a">SD_CardDeinit</a>(card);</div>
-<div class="line">* <a class="code" href="a00079.html#ga22154dd3ecedaaf63ed951fb248b0265">SD_CardInit</a>(card);</div>
+<div class="fragment"><div class="line">* <a class="code" href="a00079.html#ga13f67b379d7429002674ccf7d730465e">SDIO_CardDeinit</a>(card);</div>
+<div class="line">* <a class="code" href="a00079.html#gaee0b26685255c5a69ded10b2371008c0">SDIO_CardInit</a>(card);</div>
 <div class="line">* </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -526,39 +522,40 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da36304fa7f64a74351464b5f16a0765c7" title="host controller not ready ">kStatus_SDMMC_HostNotReady</a></td><td>host is not ready. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5daee037801937ac6781197e7cb2713bab3" title="Go idle failed. ">kStatus_SDMMC_GoIdleFailed</a></td><td>Go idle failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5dac05b576643f7597d46f0a9b8a77c04ab" title="Send Operation Condition failed. ">kStatus_SDMMC_HandShakeOperationConditionFailed</a></td><td>Send operation condition failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da33ce287b896a9b498be7909cf2f7b38e" title="Send CID failed. ">kStatus_SDMMC_AllSendCidFailed</a></td><td>Send CID failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da96b5e73d4dd9eb02bc9bfb6362664136" title="Send relative address failed. ">kStatus_SDMMC_SendRelativeAddressFailed</a></td><td>Send relative address failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da73cec1c7d4346ca37ab6b0818f3a5041" title="Send CSD failed. ">kStatus_SDMMC_SendCsdFailed</a></td><td>Send CSD failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da99077f9e3bb94b11b0169cf07a34e025" title="Select card failed. ">kStatus_SDMMC_SelectCardFailed</a></td><td>Send SELECT_CARD command failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da36de73a8df86d5a70b5f2b5c1b3b4598" title="Send SCR failed. ">kStatus_SDMMC_SendScrFailed</a></td><td>Send SCR failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5daeb87568ca0030117ce1bdca2d3fe36df" title="Set bus width failed. ">kStatus_SDMMC_SetDataBusWidthFailed</a></td><td>Set bus width failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5dace05b1fe2c1b30113d51bee8f7cb910c" title="Switch high speed failed. ">kStatus_SDMMC_SwitchBusTimingFailed</a></td><td>Switch high speed failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da7ce8c51a45aad4f51f2dcbddcb7dc233" title="Set block size failed. ">kStatus_SDMMC_SetCardBlockSizeFailed</a></td><td>Set card block size failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_HostNotReady</td><td>host is not ready. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_GoIdleFailed</td><td>Go idle failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_NotSupportYet</td><td>Card not support. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SendOperationConditionFailed</td><td>Send operation condition failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_AllSendCidFailed</td><td>Send CID failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SendRelativeAddressFailed</td><td>Send relative address failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SendCsdFailed</td><td>Send CSD failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SelectCardFailed</td><td>Send SELECT_CARD command failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SendScrFailed</td><td>Send SCR failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SetBusWidthFailed</td><td>Set bus width failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SwitchHighSpeedFailed</td><td>Switch high speed failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SetCardBlockSizeFailed</td><td>Set card block size failed. </td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td>Operate successfully. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga2683393842666aa39ec74898a7ad6e8a"></a>
+<a class="anchor" id="ga13f67b379d7429002674ccf7d730465e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SD_CardDeinit </td>
+          <td class="memname">void SDIO_CardDeinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function deinitializes the specific card. Please note it is a thread safe function.</p>
+<p>This function deinitializes the specific card.</p>
+<p>Please note it is a thread safe function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
@@ -568,14 +565,14 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="ga47f15fb31bcb60a2eeb474081cde54e4"></a>
+<a class="anchor" id="gab812996961a7bf10ba20fe15ad6b058e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_HostInit </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_HostInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -591,14 +588,14 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="gac44a13a36870f276b1f323a5b519bb9f"></a>
+<a class="anchor" id="ga189f1410a950b2f5f1ee703239cebed3"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SD_HostDeinit </td>
+          <td class="memname">void SDIO_HostDeinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -614,14 +611,14 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="ga75785c0a29f560b0bfd14b572106bda0"></a>
+<a class="anchor" id="gac505825daac65f982b589ef10e8f64e0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SD_HostDoReset </td>
+          <td class="memname">void SDIO_HostDoReset </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -637,14 +634,14 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="ga5e8b2d7768c7d916a1953583035fdbb3"></a>
+<a class="anchor" id="ga7b2c66357f64588e8ab6ba45fc1bb29b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SD_SetCardPower </td>
+          <td class="memname">void SDIO_SetCardPower </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -671,14 +668,285 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="ga38c82aa0e0daaec4c6be8ba3acd56da2"></a>
+<a class="anchor" id="ga8cb6ac091eeba10ef001d7ec50ef9adf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_PollingCardInsert </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_CardInActive </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gafca21fb443a7642ab6b99d4477fd41b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_GetCardCapability </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">func</td><td>IO number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga86024856b5fdb11ca5eb076c4d4ad370"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SetBlockSize </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">func</td><td>io number </td></tr>
+    <tr><td class="paramname">blockSize</td><td>block size </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_SetCardBlockSizeFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidArgument</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga47ee885791070dc880f4b5e6027844f9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_CardReset </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac5e6c4d0098f11caa7fc84236fba1bc5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SetDataBusWidth </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga0aaaac7d76fefa8e084c2ecf6880da95">sdio_bus_width_t</a>&#160;</td>
+          <td class="paramname"><em>busWidth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">busWidth</td><td>bus width </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga78df99aeaeb2c0a9208cba6f243022a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SwitchToHighSpeed </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SDIO_SwitchHighSpeedFail</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf75b7891af56a6d6368e75f2e92b6223"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_ReadCIS </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const uint32_t *&#160;</td>
+          <td class="paramname"><em>tupleList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>tupleNum</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">func</td><td>io number </td></tr>
+    <tr><td class="paramname">tupleList</td><td>code list </td></tr>
+    <tr><td class="paramname">tupleNum</td><td>code number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_SDIO_ReadCISFail</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1a02395a67e477b281e13c2b43b35857"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_PollingCardInsert </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -705,14 +973,14 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="ga6de9f134ae84e25053647e2c0ba8ef27"></a>
+<a class="anchor" id="gad02df0717fc54a10a2bb170cb5ab92b9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool SD_IsCardPresent </td>
+          <td class="memname">bool SDIO_IsCardPresent </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -727,51 +995,39 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="gad9b5c3ecc8acf18ee06ffd4154eb0352"></a>
+<a class="anchor" id="ga4cd4d79ffce74b8374b486e3f389a560"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool SD_CheckReadOnly </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Write_Direct </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function checks if the card is write-protected via the CSD register.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>The specific card. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">true</td><td>Card is read only. </td></tr>
-    <tr><td class="paramname">false</td><td>Card isn't read only. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gab8b91d51f045d43e32770599a9406e3b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_SelectCard </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>isSelected</em>&#160;</td>
+          <td class="paramname"><em>raw</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -780,62 +1036,172 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Please note it is a thread safe function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">isSelected</td><td>True to set the card into transfer state, false to disselect. </td></tr>
+    <tr><td class="paramname">func</td><td>IO numner </td></tr>
+    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
+    <tr><td class="paramname">data</td><td>the data pinter to write </td></tr>
+    <tr><td class="paramname">raw</td><td>flag, indicate read after write or write only </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaf3537757745005c2b103be314ddfaa7b"></a>
+<a class="anchor" id="gacbe48b74676d809d9bcf948c89915c79"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_ReadStatus </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Read_Direct </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em></td><td>)</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Please note it is a thread safe function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">func</td><td>IO number </td></tr>
+    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
+    <tr><td class="paramname">data</td><td>pointer to read </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da7f58bb3e7cb4ef2ea7ae0eedba07470d" title="Send application command failed. ">kStatus_SDMMC_SendApplicationCommandFailed</a></td><td>send application command failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga1d134e8244b6641352d1a374d0e8b848"></a>
+<a class="anchor" id="ga22478b5061fd90f914acc45574fdc7ad"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_ReadBlocks </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_RW_Direct </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00079.html#ga9dfb4270982e609bc964f5547b0a040a">sdio_io_direction_t</a>&#160;</td>
+          <td class="paramname"><em>direction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>dataIn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>dataOut</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Please note it is a thread safe function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">direction</td><td>io access direction, please reference sdio_io_direction_t. </td></tr>
+    <tr><td class="paramname">func</td><td>IO number </td></tr>
+    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
+    <tr><td class="paramname">dataIn</td><td>data to write </td></tr>
+    <tr><td class="paramname">dataOut</td><td>data pointer for readback data, support both for read and write, when application want readback the data after write command, dataOut should not be NULL. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga419cc9819458bd605262ba149fa607dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Write_Extended </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -847,13 +1213,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>startBlock</em>, </td>
+          <td class="paramname"><em>count</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockCount</em>&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -862,59 +1228,68 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function reads blocks from the specific card with default block size defined by the SDHC_CARD_DEFAULT_BLOCK_SIZE.</p>
 <p>Please note it is a thread safe function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">buffer</td><td>The buffer to save the data read from card. </td></tr>
-    <tr><td class="paramname">startBlock</td><td>The start block index. </td></tr>
-    <tr><td class="paramname">blockCount</td><td>The number of blocks to read. </td></tr>
+    <tr><td class="paramname">func</td><td>IO number </td></tr>
+    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
+    <tr><td class="paramname">buffer</td><td>data buffer to write </td></tr>
+    <tr><td class="paramname">count</td><td>data count </td></tr>
+    <tr><td class="paramname">flags</td><td>write flags </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a9743ab3bec5065667c0b12510317e76c" title="Generic status for invalid argument check. ">kStatus_InvalidArgument</a></td><td>Invalid argument. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da1fd62104d25e38e44cf0f02299397aee" title="Card doesn&#39;t support. ">kStatus_SDMMC_CardNotSupport</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Not support now. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Send status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da4bea51bb845aec7597b4eda78449457a" title="Stop transmission failed. ">kStatus_SDMMC_StopTransmissionFailed</a></td><td>Stop transmission failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidArgument</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga9ab9d1eb512dec6e15beb2cee4e9691e"></a>
+<a class="anchor" id="ga663f22e0a9f35b5b6f6c8cfe062b9a19"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_WriteBlocks </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Read_Extended </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const uint8_t *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>regAddr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>buffer</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>startBlock</em>, </td>
+          <td class="paramname"><em>count</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockCount</em>&#160;</td>
+          <td class="paramname"><em>flags</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -923,57 +1298,50 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function writes blocks to the specific card with default block size 512 bytes.</p>
-<p>Please note,</p>
-<ol type="1">
-<li>It is a thread safe function.</li>
-<li>It is a async write function which means that the card status may still busy after the function return. Application can call function SD_PollingCardStatusBusy to wait card status idle after the write operation.</li>
-</ol>
+<p>Please note it is a thread safe function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">buffer</td><td>The buffer holding the data to be written to the card. </td></tr>
-    <tr><td class="paramname">startBlock</td><td>The start block index. </td></tr>
-    <tr><td class="paramname">blockCount</td><td>The number of blocks to write. </td></tr>
+    <tr><td class="paramname">func</td><td>IO number </td></tr>
+    <tr><td class="paramname">regAddr</td><td>register address </td></tr>
+    <tr><td class="paramname">buffer</td><td>data buffer to read </td></tr>
+    <tr><td class="paramname">count</td><td>data count </td></tr>
+    <tr><td class="paramname">flags</td><td>write flags </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a9743ab3bec5065667c0b12510317e76c" title="Generic status for invalid argument check. ">kStatus_InvalidArgument</a></td><td>Invalid argument. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da4bd8f4c0ddc86120d94a75e4e5b4c3e1" title="Haven&#39;t supported. ">kStatus_SDMMC_NotSupportYet</a></td><td>Not support now. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da1fd62104d25e38e44cf0f02299397aee" title="Card doesn&#39;t support. ">kStatus_SDMMC_CardNotSupport</a></td><td>Card not support. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Send status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da4bea51bb845aec7597b4eda78449457a" title="Stop transmission failed. ">kStatus_SDMMC_StopTransmissionFailed</a></td><td>Stop transmission failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_SDIO_InvalidArgument</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga04e7b25d9776e92ddfcf72063af02418"></a>
+<a class="anchor" id="ga1d90b3f3516e04d1d89f73c3b939eadb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_EraseBlocks </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_EnableIOInterrupt </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>startBlock</em>, </td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>blockCount</em>&#160;</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -982,47 +1350,165 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function erases blocks of the specific card with default block size 512 bytes.</p>
-<p>Please note,</p>
-<ol type="1">
-<li>It is a thread safe function.</li>
-<li>It is a async erase function which means that the card status may still busy after the function return. Application can call function SD_PollingCardStatusBusy to wait card status idle after the erase operation.</li>
-</ol>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">startBlock</td><td>The start block index. </td></tr>
-    <tr><td class="paramname">blockCount</td><td>The number of blocks to erase. </td></tr>
+    <tr><td class="paramname">func</td><td>IO number </td></tr>
+    <tr><td class="paramname">enable</td><td>enable/disable flag </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a9743ab3bec5065667c0b12510317e76c" title="Generic status for invalid argument check. ">kStatus_InvalidArgument</a></td><td>Invalid argument. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Send status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da969247847528f8a186376988d0fb448c" title="Send command failed. ">kStatus_SDMMC_TransferFailed</a></td><td>Transfer failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00064.html#gga81929fb3d21206b62f55bcb744f71d5da8431f0a58374484158210c4858117168" title="Wait write complete failed. ">kStatus_SDMMC_WaitWriteCompleteFailed</a></td><td>Send status failed. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881" title="Generic status for Success. ">kStatus_Success</a></td><td>Operate successfully. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga07178b3047e22e71bd7a3bd60322e7b6"></a>
+<a class="anchor" id="ga85f16ed455700421111456391a889d1f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_SetDriverStrength </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_EnableIO </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">func</td><td>IO number </td></tr>
+    <tr><td class="paramname">enable</td><td>enable/disable flag </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga499c1fe5773784b7ba199c076d365476"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SelectIO </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">func</td><td>IO number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gacd873183a1d4972c52e8e110af3503ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_AbortIO </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">func</td><td>IO number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1d7eb887cb13f6a837bb7b7ff42fdddc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_SetDriverStrength </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a>&#160;</td>
           <td class="paramname"><em>driverStrength</em>&#160;</td>
         </tr>
         <tr>
@@ -1035,82 +1521,251 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">driverStrength</td><td>Driver strength </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6a3a34d76af9ee378086a4dcc1259936"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_SetMaxCurrent </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00064.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a>&#160;</td>
-          <td class="paramname"><em>maxCurrent</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">maxCurrent</td><td>Max current </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga33babf402c15dae5d2712793230158a9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_PollingCardStatusBusy </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00079.html#a00636">sd_card_t</a> *&#160;</td>
-          <td class="paramname"><em>card</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>timeoutMs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function can be used to polling the status from busy to Idle, the function will return if the card status idle or timeout.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
-    <tr><td class="paramname">timeoutMs</td><td>polling card status timeout value. </td></tr>
+    <tr><td class="paramname">driverStrength</td><td>target driver strength. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Operate successfully. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_WaitWriteCompleteFailed</td><td>CMD13 transfer failed. </td></tr>
-    <tr><td class="paramname">kStatus_SDMMC_PollingCardIdleFailed,polling</td><td>card DAT0 idle failed. </td></tr>
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gaf30a83e0424613e2c44c4a61b2ffae32"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_EnableAsyncInterrupt </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">enable</td><td>true is enable, false is disable. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4e69a2c71e3fefb8e77f53dd43843ee1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_GetPendingInterrupt </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>pendingInt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>Card descriptor. </td></tr>
+    <tr><td class="paramname">pendingInt</td><td>pointer store pending interrupt </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga5c0e3742026865e079ff4d15903b7b55"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_IO_Transfer </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#ga77154625e2d23b77a5242e28de41d250">sdio_command_t</a>&#160;</td>
+          <td class="paramname"><em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>argument</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>txData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>rxData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>dataSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t *&#160;</td>
+          <td class="paramname"><em>response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function can be used for trnansfer direct/extend command. Please pay attention to the non-align data buffer address transfer, if data buffer address can not meet host controller internal DMA requirement, sdio driver will try to use internal align buffer if data size is not bigger than internal buffer size, Align address transfer always can get a better performance, so if application want sdio driver make sure buffer address align,</p>
+<p>Please note it is a thread safe function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
+    <tr><td class="paramname">cmd</td><td>command to transfer </td></tr>
+    <tr><td class="paramname">argument</td><td>argument to transfer </td></tr>
+    <tr><td class="paramname">blockSize</td><td>used for block mode. </td></tr>
+    <tr><td class="paramname">txData</td><td>tx buffer pointer or NULL </td></tr>
+    <tr><td class="paramname">rxData</td><td>rx buffer pointer or NULL </td></tr>
+    <tr><td class="paramname">dataSize</td><td>transfer data size </td></tr>
+    <tr><td class="paramname">response</td><td>reponse pointer, if application want read response back, please set it to a NON-NULL pointer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gac4c9b0351ead20e77eb148bc4cee7d42"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SDIO_SetIOIRQHandler </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00063.html#gafc907cf430ace449a3c95a85d2a11251">sdio_func_num_t</a>&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00079.html#ga24b4be566dc13edf4efc5915fb431288">sdio_io_irq_handler_t</a>&#160;</td>
+          <td class="paramname"><em>handler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>card descriptor. </td></tr>
+    <tr><td class="paramname">func</td><td>function io number. </td></tr>
+    <tr><td class="paramname">handler</td><td>io IRQ handler. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gad0749d472baa307fc39a74d493b3b49e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SDIO_HandlePendingIOInterrupt </td>
+          <td>(</td>
+          <td class="paramtype">sdio_card_t *&#160;</td>
+          <td class="paramname"><em>card</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function is used to handle the pending io interrupt. To reigster a IO IRQ handler, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00079.html#ga1d90b3f3516e04d1d89f73c3b939eadb">SDIO_EnableIOInterrupt</a>(card, 0, <span class="keyword">true</span>);</div>
+<div class="line">* <a class="code" href="a00079.html#gac4c9b0351ead20e77eb148bc4cee7d42">SDIO_SetIOIRQHandler</a>(card, 0, func0_handler);</div>
+<div class="line">* </div>
+</div><!-- fragment --><p> call it in interrupt callback </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00079.html#gad0749d472baa307fc39a74d493b3b49e">SDIO_HandlePendingIOInterrupt</a>(card);</div>
+<div class="line">* </div>
+</div><!-- fragment --><p> To releae a IO IRQ handler, </p>
+<div class="fragment"><div class="line">* <a class="code" href="a00079.html#ga1d90b3f3516e04d1d89f73c3b939eadb">SDIO_EnableIOInterrupt</a>(card, 0, <span class="keyword">false</span>);</div>
+<div class="line">* <a class="code" href="a00079.html#gac4c9b0351ead20e77eb148bc4cee7d42">SDIO_SetIOIRQHandler</a>(card, 0, NULL);</div>
+<div class="line">* </div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">card</td><td>card descriptor.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">kStatus_SDMMC_TransferFailed</td><td></td></tr>
+    <tr><td class="paramname">kStatus_Success</td><td></td></tr>
   </table>
   </dd>
 </dl>

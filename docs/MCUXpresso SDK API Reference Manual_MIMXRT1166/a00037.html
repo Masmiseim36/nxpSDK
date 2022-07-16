@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('a00037.html','');});
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">FlexIO I2S Driver<div class="ingroups"><a class="el" href="a00331.html">FlexIO: FlexIO Driver</a></div></div>  </div>
+<div class="title">FlexIO I2S Driver<div class="ingroups"><a class="el" href="a00330.html">FlexIO: FlexIO Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -120,13 +120,13 @@ Typical use case</h1>
 <h2><a class="anchor" id="FlexIO_I2SCaseInterrupt"></a>
 FlexIO I2S send/receive using an interrupt method</h2>
 <div class="fragment"><div class="line">sai_handle_t g_saiTxHandle;</div>
-<div class="line"><a class="code" href="a00077.html#a00628">sai_config_t</a> user_config;</div>
-<div class="line"><a class="code" href="a00077.html#a00635">sai_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00076.html#a00622">sai_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00076.html#a00629">sai_transfer_t</a> sendXfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> rxFinished;</div>
 <div class="line"><span class="keyword">const</span> uint8_t sendData[] = [......];</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> FLEXIO_I2S_UserCallback(sai_handle_t *handle, <a class="code" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keywordtype">void</span> FLEXIO_I2S_UserCallback(sai_handle_t *handle, <a class="code" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    userData = userData;</div>
 <div class="line"></div>
@@ -149,8 +149,8 @@ FlexIO I2S send/receive using an interrupt method</h2>
 <div class="line">    FLEXIO_I2S_TransferTxSetTransferFormat(FLEXIO I2S0, &amp;g_saiHandle, mclkSource, mclk);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Prepares to send.</span></div>
-<div class="line">    sendXfer.<a class="code" href="a00077.html#a5a8e66b73932caa8eaf99df59127e389">data</a> = sendData</div>
-<div class="line">    sendXfer.<a class="code" href="a00077.html#a9518c75eb06dadc3b73f44ee49f4e0ff">dataSize</a> = <span class="keyword">sizeof</span>(sendData)/<span class="keyword">sizeof</span>(sendData[0]);</div>
+<div class="line">    sendXfer.<a class="code" href="a00076.html#a5a8e66b73932caa8eaf99df59127e389">data</a> = sendData</div>
+<div class="line">    sendXfer.<a class="code" href="a00076.html#a9518c75eb06dadc3b73f44ee49f4e0ff">dataSize</a> = <span class="keyword">sizeof</span>(sendData)/<span class="keyword">sizeof</span>(sendData[0]);</div>
 <div class="line">    txFinished = <span class="keyword">false</span>;</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Sends out.</span></div>
@@ -168,12 +168,12 @@ FLEXIO_I2S send/receive using a DMA method</h2>
 <div class="fragment"><div class="line">sai_handle_t g_saiHandle;</div>
 <div class="line">dma_handle_t g_saiTxDmaHandle;</div>
 <div class="line">dma_handle_t g_saiRxDmaHandle;</div>
-<div class="line"><a class="code" href="a00077.html#a00628">sai_config_t</a> user_config;</div>
-<div class="line"><a class="code" href="a00077.html#a00635">sai_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00076.html#a00622">sai_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00076.html#a00629">sai_transfer_t</a> sendXfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
 <div class="line">uint8_t sendData[] = ...;</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> FLEXIO_I2S_UserCallback(sai_handle_t *handle, <a class="code" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keywordtype">void</span> FLEXIO_I2S_UserCallback(sai_handle_t *handle, <a class="code" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    userData = userData;</div>
 <div class="line"></div>
@@ -191,9 +191,9 @@ FLEXIO_I2S send/receive using a DMA method</h2>
 <div class="line">    FLEXIO_I2S_TxInit(FLEXIO I2S0, &amp;user_config);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Sets up the DMA.</span></div>
-<div class="line">    <a class="code" href="a00327.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(DMAMUX0);</div>
-<div class="line">    <a class="code" href="a00327.html#ga97083a74f4af599de628cdd8864d6676">DMAMUX_SetSource</a>(DMAMUX0, FLEXIO_I2S_TX_DMA_CHANNEL, FLEXIO_I2S_TX_DMA_REQUEST);</div>
-<div class="line">    <a class="code" href="a00327.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a>(DMAMUX0, FLEXIO_I2S_TX_DMA_CHANNEL);</div>
+<div class="line">    <a class="code" href="a00326.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(DMAMUX0);</div>
+<div class="line">    <a class="code" href="a00326.html#ga97083a74f4af599de628cdd8864d6676">DMAMUX_SetSource</a>(DMAMUX0, FLEXIO_I2S_TX_DMA_CHANNEL, FLEXIO_I2S_TX_DMA_REQUEST);</div>
+<div class="line">    <a class="code" href="a00326.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a>(DMAMUX0, FLEXIO_I2S_TX_DMA_CHANNEL);</div>
 <div class="line"></div>
 <div class="line">    DMA_Init(DMA0);</div>
 <div class="line"></div>
@@ -203,8 +203,8 @@ FLEXIO_I2S send/receive using a DMA method</h2>
 <div class="line">    FLEXIO_I2S_TransferTxCreateHandleDMA(FLEXIO I2S0, &amp;g_saiTxDmaHandle, FLEXIO_I2S_UserCallback, NULL);</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Prepares to send.</span></div>
-<div class="line">    sendXfer.<a class="code" href="a00077.html#a5a8e66b73932caa8eaf99df59127e389">data</a> = sendData</div>
-<div class="line">    sendXfer.<a class="code" href="a00077.html#a9518c75eb06dadc3b73f44ee49f4e0ff">dataSize</a> = <span class="keyword">sizeof</span>(sendData)/<span class="keyword">sizeof</span>(sendData[0]);</div>
+<div class="line">    sendXfer.<a class="code" href="a00076.html#a5a8e66b73932caa8eaf99df59127e389">data</a> = sendData</div>
+<div class="line">    sendXfer.<a class="code" href="a00076.html#a9518c75eb06dadc3b73f44ee49f4e0ff">dataSize</a> = <span class="keyword">sizeof</span>(sendData)/<span class="keyword">sizeof</span>(sendData[0]);</div>
 <div class="line">    txFinished = <span class="keyword">false</span>;</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// Sends out.</span></div>
@@ -253,7 +253,7 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga5ab500341d34539faaea54f985950046"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5ab500341d34539faaea54f985950046"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga5ab500341d34539faaea54f985950046">flexio_i2s_callback_t</a> )(<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, <a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga5ab500341d34539faaea54f985950046">flexio_i2s_callback_t</a> )(<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga5ab500341d34539faaea54f985950046"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO I2S xfer callback prototype. <br/></td></tr>
 <tr class="separator:ga5ab500341d34539faaea54f985950046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -338,7 +338,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga8ac64ab2c050d6a3b5e6dcc784bde2dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga8ac64ab2c050d6a3b5e6dcc784bde2dd">FSL_FLEXIO_I2S_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td></tr>
+<tr class="memitem:ga8ac64ab2c050d6a3b5e6dcc784bde2dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga8ac64ab2c050d6a3b5e6dcc784bde2dd">FSL_FLEXIO_I2S_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td></tr>
 <tr class="memdesc:ga8ac64ab2c050d6a3b5e6dcc784bde2dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO I2S driver version 2.2.0.  <a href="#ga8ac64ab2c050d6a3b5e6dcc784bde2dd">More...</a><br/></td></tr>
 <tr class="separator:ga8ac64ab2c050d6a3b5e6dcc784bde2dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -395,13 +395,13 @@ Bus Operations</h2></td></tr>
 <tr class="memitem:ga31e254b013b68f5c84a45794ee67e9b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga31e254b013b68f5c84a45794ee67e9b6">FLEXIO_I2S_SlaveSetFormat</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, <a class="el" href="a00037.html#a00523">flexio_i2s_format_t</a> *format)</td></tr>
 <tr class="memdesc:ga31e254b013b68f5c84a45794ee67e9b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the FlexIO I2S audio format in slave mode.  <a href="#ga31e254b013b68f5c84a45794ee67e9b6">More...</a><br/></td></tr>
 <tr class="separator:ga31e254b013b68f5c84a45794ee67e9b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadf86d43e7db486d68ddf3c41d12ef37c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gadf86d43e7db486d68ddf3c41d12ef37c">FLEXIO_I2S_WriteBlocking</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, uint8_t bitWidth, uint8_t *txData, size_t size)</td></tr>
+<tr class="memitem:gadf86d43e7db486d68ddf3c41d12ef37c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gadf86d43e7db486d68ddf3c41d12ef37c">FLEXIO_I2S_WriteBlocking</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, uint8_t bitWidth, uint8_t *txData, size_t size)</td></tr>
 <tr class="memdesc:gadf86d43e7db486d68ddf3c41d12ef37c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using a blocking method.  <a href="#gadf86d43e7db486d68ddf3c41d12ef37c">More...</a><br/></td></tr>
 <tr class="separator:gadf86d43e7db486d68ddf3c41d12ef37c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga19b30ed9f8b1fc37675bc92cac35b871"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga19b30ed9f8b1fc37675bc92cac35b871">FLEXIO_I2S_WriteData</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, uint8_t bitWidth, uint32_t data)</td></tr>
 <tr class="memdesc:ga19b30ed9f8b1fc37675bc92cac35b871"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes data into a data register.  <a href="#ga19b30ed9f8b1fc37675bc92cac35b871">More...</a><br/></td></tr>
 <tr class="separator:ga19b30ed9f8b1fc37675bc92cac35b871"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac03239be31a9c4768e2d409de9e455f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gac03239be31a9c4768e2d409de9e455f9">FLEXIO_I2S_ReadBlocking</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, uint8_t bitWidth, uint8_t *rxData, size_t size)</td></tr>
+<tr class="memitem:gac03239be31a9c4768e2d409de9e455f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gac03239be31a9c4768e2d409de9e455f9">FLEXIO_I2S_ReadBlocking</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, uint8_t bitWidth, uint8_t *rxData, size_t size)</td></tr>
 <tr class="memdesc:gac03239be31a9c4768e2d409de9e455f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a piece of data using a blocking method.  <a href="#gac03239be31a9c4768e2d409de9e455f9">More...</a><br/></td></tr>
 <tr class="separator:gac03239be31a9c4768e2d409de9e455f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga87630cef372b980eb1c39cb339c432d0"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga87630cef372b980eb1c39cb339c432d0">FLEXIO_I2S_ReadData</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base)</td></tr>
@@ -419,10 +419,10 @@ Transactional</h2></td></tr>
 <tr class="memitem:ga38f2a431871f5dfd9d07905b0f5ed81a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga38f2a431871f5dfd9d07905b0f5ed81a">FLEXIO_I2S_TransferRxCreateHandle</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, <a class="el" href="a00037.html#ga5ab500341d34539faaea54f985950046">flexio_i2s_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga38f2a431871f5dfd9d07905b0f5ed81a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the FlexIO I2S receive handle.  <a href="#ga38f2a431871f5dfd9d07905b0f5ed81a">More...</a><br/></td></tr>
 <tr class="separator:ga38f2a431871f5dfd9d07905b0f5ed81a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga225948d3be017124dc7db4518e6a41d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga225948d3be017124dc7db4518e6a41d4">FLEXIO_I2S_TransferSendNonBlocking</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, <a class="el" href="a00037.html#a00524">flexio_i2s_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga225948d3be017124dc7db4518e6a41d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga225948d3be017124dc7db4518e6a41d4">FLEXIO_I2S_TransferSendNonBlocking</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, <a class="el" href="a00037.html#a00524">flexio_i2s_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga225948d3be017124dc7db4518e6a41d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an interrupt non-blocking send transfer on FlexIO I2S.  <a href="#ga225948d3be017124dc7db4518e6a41d4">More...</a><br/></td></tr>
 <tr class="separator:ga225948d3be017124dc7db4518e6a41d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga474f218ab7765525d1fd30ed10c04437"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga474f218ab7765525d1fd30ed10c04437">FLEXIO_I2S_TransferReceiveNonBlocking</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, <a class="el" href="a00037.html#a00524">flexio_i2s_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga474f218ab7765525d1fd30ed10c04437"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga474f218ab7765525d1fd30ed10c04437">FLEXIO_I2S_TransferReceiveNonBlocking</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, <a class="el" href="a00037.html#a00524">flexio_i2s_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga474f218ab7765525d1fd30ed10c04437"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs an interrupt non-blocking receive transfer on FlexIO I2S.  <a href="#ga474f218ab7765525d1fd30ed10c04437">More...</a><br/></td></tr>
 <tr class="separator:ga474f218ab7765525d1fd30ed10c04437"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3fb83f37b693d00a84f9b3108690cdff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga3fb83f37b693d00a84f9b3108690cdff">FLEXIO_I2S_TransferAbortSend</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle)</td></tr>
@@ -431,10 +431,10 @@ Transactional</h2></td></tr>
 <tr class="memitem:ga95208c72642fe24909c7708c1efbd9a4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga95208c72642fe24909c7708c1efbd9a4">FLEXIO_I2S_TransferAbortReceive</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle)</td></tr>
 <tr class="memdesc:ga95208c72642fe24909c7708c1efbd9a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the current receive.  <a href="#ga95208c72642fe24909c7708c1efbd9a4">More...</a><br/></td></tr>
 <tr class="separator:ga95208c72642fe24909c7708c1efbd9a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga590a1845d2f37e2d8ca67d95a85b842a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga590a1845d2f37e2d8ca67d95a85b842a">FLEXIO_I2S_TransferGetSendCount</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga590a1845d2f37e2d8ca67d95a85b842a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#ga590a1845d2f37e2d8ca67d95a85b842a">FLEXIO_I2S_TransferGetSendCount</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga590a1845d2f37e2d8ca67d95a85b842a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the remaining bytes to be sent.  <a href="#ga590a1845d2f37e2d8ca67d95a85b842a">More...</a><br/></td></tr>
 <tr class="separator:ga590a1845d2f37e2d8ca67d95a85b842a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab1c4b7d6e2c63bdbd33a86ad4acf8c25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gab1c4b7d6e2c63bdbd33a86ad4acf8c25">FLEXIO_I2S_TransferGetReceiveCount</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gab1c4b7d6e2c63bdbd33a86ad4acf8c25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gab1c4b7d6e2c63bdbd33a86ad4acf8c25">FLEXIO_I2S_TransferGetReceiveCount</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:gab1c4b7d6e2c63bdbd33a86ad4acf8c25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the remaining bytes to be received.  <a href="#gab1c4b7d6e2c63bdbd33a86ad4acf8c25">More...</a><br/></td></tr>
 <tr class="separator:gab1c4b7d6e2c63bdbd33a86ad4acf8c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab7706d68288d8c1fa2ad05d43ed459fe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00037.html#gab7706d68288d8c1fa2ad05d43ed459fe">FLEXIO_I2S_TransferTxHandleIRQ</a> (void *i2sBase, void *i2sHandle)</td></tr>
@@ -654,7 +654,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXIO_I2S_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td>
+          <td class="memname">#define FSL_FLEXIO_I2S_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1288,7 +1288,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_WriteBlocking </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_WriteBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1391,7 +1391,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_ReadBlocking </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_ReadBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1621,7 +1621,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferSendNonBlocking </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferSendNonBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1670,7 +1670,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferReceiveNonBlocking </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferReceiveNonBlocking </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1787,7 +1787,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferGetSendCount </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferGetSendCount </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1834,7 +1834,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferGetReceiveCount </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferGetReceiveCount </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

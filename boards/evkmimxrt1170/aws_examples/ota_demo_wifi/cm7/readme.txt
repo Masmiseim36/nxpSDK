@@ -12,10 +12,10 @@ For more information about Wi-Fi module connection see:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.20.2
-- Keil MDK  5.36
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.5.0
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================
@@ -29,7 +29,7 @@ Board settings
 
 Prepare the Demo
 ================
-The demo requires MCUBoot booloader to be present in the FLASH memory to function properly.
+The demo requires MCUBoot bootloader to be present in the FLASH memory to function properly.
 It is recommended to build and program the bootloader first, then go on with the application.
 Please refer to respective readme of the mcuboot_opensource example and follow the steps there before you continue.
 
@@ -87,28 +87,7 @@ Before running the demo it is mecessary to configure AWS IoT Console and update 
 
 Running the demo
 ================
-To get the application properly executed by the bootloader, it is necessary to put signed application image to the primary application partition.
-There are multiple options how to achieve that, however in principle the are two main methods (both presuming the bootlaoder is already in place):
-
-a) programing signed application image to the primary application partition using an external tool (direct method)
-b) jump-starting the application by debugger, performing OTA update with the signed image, resetting the board and letting the bootloader to perform update (indirect method)
-
-The latter method is described step by step below:
-
-1.  Load the demo project and build it.
-    Known issue: MDK linker issues warning about unused boot_hdr sections. This does not affect the functionality of the example.
-    
-2.  Prepare signed image of the application from raw binary as described in the mcuboot_opensource readme.
-     - In case of MCUXpress raw binary may not be generated automatically. Use binary tools after right clicking Binaries/.axf file in the project tree to generate it manually.
-    
-3.  Launch the debugger in your IDE to jump-start the application.
-     - In case of MCUXpresso IDE the execution stalls in an endless loop in the bootloader. Pause the debugging and use debugger console and issue command 'jump ResetISR'.
-
-4.  The OTA demo connects to the cloud service and expects an update package to be deployed.
-    Plese refer to https://docs.aws.amazon.com/freertos/latest/userguide/ota-manager.html on how to create an update job with the signed image.
-    Note: the image signed for MCUBoot (using imgtool) needs to be further signed for AWS OTA job. These are distinct signatures that are being checked at different stages of the OTA/boot process.
-    
-5.  After the OTA agent (that is part the the demo) gets notification about the update it starts downloading the image and storing it into secondary application partition.
-
-6.  Once the image is downloaded, bootloader is notified about it and reboot in test-mode takes place.
-    If the updated firmware is able to run without issues the update is made permanent automatically.
+Platform specific behavior:
+When an application programmatically performs software-induced reset while in a debugging session, the execution stalls in the ROM code. This is a feature.
+Your attention is needed at that moment: please perform reset manually by pressing the on-board hw reset button once you spot "SystemReset" message in the serial console.
+Manual reset is not needed while MCU is running freely without a debugger.

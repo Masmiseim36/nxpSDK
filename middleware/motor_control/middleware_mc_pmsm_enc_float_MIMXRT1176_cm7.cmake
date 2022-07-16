@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_mc_pmsm_enc_float component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

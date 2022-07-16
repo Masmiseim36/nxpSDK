@@ -1,5 +1,6 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v8.0
+product: Pins v11.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 9.0.1
+processor_version: 11.0.1
 pin_labels:
 - {pin_num: T17, pin_signal: GPIO_AD_07, label: TP, identifier: TP}
 - {pin_num: R15, pin_signal: GPIO_AD_08, label: TP, identifier: TP}
@@ -42,6 +43,7 @@ void BOARD_InitBootPins(void) {
     BOARD_InitPWM();
     BOARD_InitADC();
     BOARD_InitENC();
+    BOARD_InitCMP();
 }
 
 /*
@@ -157,12 +159,12 @@ void BOARD_InitPWM(void) {
 BOARD_InitADC:
 - options: {callFromInitBoot: 'true', coreID: cm7, enableClock: 'true'}
 - pin_list:
-  - {pin_num: R17, peripheral: LPADC1, signal: 'A, 1_2', pin_signal: GPIO_AD_10}
-  - {pin_num: P16, peripheral: LPADC1, signal: 'B, 1_2', pin_signal: GPIO_AD_11}
-  - {pin_num: P17, peripheral: LPADC1, signal: 'A, 1_3', pin_signal: GPIO_AD_12}
-  - {pin_num: L12, peripheral: LPADC1, signal: 'B, 1_3', pin_signal: GPIO_AD_13}
-  - {pin_num: P17, peripheral: LPADC2, signal: 'A, 2_3', pin_signal: GPIO_AD_12}
-  - {pin_num: L12, peripheral: LPADC2, signal: 'B, 2_3', pin_signal: GPIO_AD_13}
+  - {pin_num: R17, peripheral: LPADC1, signal: 'A, 1_2', pin_signal: GPIO_AD_10, pull_keeper_select: Keeper}
+  - {pin_num: P16, peripheral: LPADC1, signal: 'B, 1_2', pin_signal: GPIO_AD_11, pull_keeper_select: Keeper}
+  - {pin_num: P17, peripheral: LPADC1, signal: 'A, 1_3', pin_signal: GPIO_AD_12, pull_keeper_select: Keeper}
+  - {pin_num: L12, peripheral: LPADC1, signal: 'B, 1_3', pin_signal: GPIO_AD_13, pull_keeper_select: Keeper}
+  - {pin_num: P17, peripheral: LPADC2, signal: 'A, 2_3', pin_signal: GPIO_AD_12, pull_keeper_select: Keeper}
+  - {pin_num: L12, peripheral: LPADC2, signal: 'B, 2_3', pin_signal: GPIO_AD_13, pull_keeper_select: Keeper}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -187,6 +189,42 @@ void BOARD_InitADC(void) {
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_13_GPIO_MUX3_IO12,       /* GPIO_AD_13 is configured as GPIO_MUX3_IO12 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinConfig(
+      IOMUXC_GPIO_AD_10_GPIO_MUX3_IO09,       /* GPIO_AD_10 PAD functional properties : */
+      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+                                                 Drive Strength Field: high drive strength
+                                                 Pull / Keep Select Field: Pull Disable, Highz
+                                                 Pull Up / Down Config. Field: Weak pull down
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
+  IOMUXC_SetPinConfig(
+      IOMUXC_GPIO_AD_11_GPIO_MUX3_IO10,       /* GPIO_AD_11 PAD functional properties : */
+      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+                                                 Drive Strength Field: high drive strength
+                                                 Pull / Keep Select Field: Pull Disable, Highz
+                                                 Pull Up / Down Config. Field: Weak pull down
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
+  IOMUXC_SetPinConfig(
+      IOMUXC_GPIO_AD_12_GPIO_MUX3_IO11,       /* GPIO_AD_12 PAD functional properties : */
+      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+                                                 Drive Strength Field: high drive strength
+                                                 Pull / Keep Select Field: Pull Disable, Highz
+                                                 Pull Up / Down Config. Field: Weak pull down
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
+  IOMUXC_SetPinConfig(
+      IOMUXC_GPIO_AD_13_GPIO_MUX3_IO12,       /* GPIO_AD_13 PAD functional properties : */
+      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+                                                 Drive Strength Field: high drive strength
+                                                 Pull / Keep Select Field: Pull Disable, Highz
+                                                 Pull Up / Down Config. Field: Weak pull down
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
 }
 
 
@@ -229,7 +267,7 @@ void BOARD_InitENC(void) {
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitCMP:
-- options: {callFromInitBoot: 'false', coreID: cm7, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: cm7, enableClock: 'true'}
 - pin_list:
   - {pin_num: K17, peripheral: CMP3, signal: 'IN, 3', pin_signal: GPIO_AD_30}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********

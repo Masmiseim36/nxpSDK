@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>2</fileVersion>
+  <fileVersion>3</fileVersion>
   <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
@@ -11,9 +11,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Debug\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/flexspi_nor_debug</state>
@@ -31,22 +35,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -59,12 +53,12 @@
         <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>RTDescription</name>
@@ -76,15 +70,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>7.80.4.12487</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
+          <state>9.30.1.48832</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -107,26 +93,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
         </option>
         <option>
@@ -143,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
         </option>
         <option>
@@ -166,8 +138,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Debug</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -175,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -185,16 +227,25 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>OPUS_ENCODE</state>
+          <state>STREAMER_ENABLE_ENCODER</state>
+          <state>STREAMER_ENABLE_CEI_OPUS</state>
+          <state>PLATFORM_RT1160</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
-          <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>SAI_XFER_QUEUE_SIZE=3</state>
+          <state>DISABLEFLOAT16</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>HAVE_CONFIG_H</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
+          <state>CASCFG_PLATFORM_FREERTOS</state>
+          <state>FSL_OS_SELECTED=SDK_OS_FREERTOS</state>
+          <state>FSL_OSA_TASK_ENABLE=1</state>
+          <state>STREAMER_ENABLE_FILESRC</state>
+          <state>STREAMER_ENABLE_FILE_SINK</state>
+          <state>STREAMER_ENABLE_MEM_SRC</state>
+          <state>STREAMER_ENABLE_MEM_SINK</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -235,7 +286,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa050,Pa082,Pe186,Pe815</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -272,11 +323,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--align_sp_on_irq  --macro_positions_in_diagnostics  --header_context  --no_unaligned_access</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -288,10 +339,6 @@
         </option>
         <option>
           <name>CCRequirePrototypes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCMultibyteSupport</name>
           <state>0</state>
         </option>
         <option>
@@ -319,10 +366,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
@@ -339,16 +382,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/inc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/osa/freertos</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/inc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
@@ -357,11 +403,20 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/decoders/cci_dec</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/devices</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/opus</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -370,10 +425,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -391,16 +442,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -424,19 +465,7 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -471,13 +500,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -607,10 +668,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -637,6 +694,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -677,12 +738,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -696,16 +753,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -746,7 +799,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
-          <state>__heap_size__=0x10000</state>
+          <state>__heap_size__=0xF000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -825,14 +878,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Lib/IAR/iar_cortexM7lf_math.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_cci.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_streamer.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_utils.a</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmp3.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libogg.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libopus.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libsrc48.a</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libwav.a</state>
         </option>
         <option>
@@ -996,6 +1042,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1019,11 +1145,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>flexspi_nor_release</name>
@@ -1035,9 +1156,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Release\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/flexspi_nor_release</state>
@@ -1055,22 +1180,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1083,12 +1198,12 @@
         <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>RTDescription</name>
@@ -1101,14 +1216,6 @@
         <option>
           <name>OGLastSavedByProductVersion</name>
           <state>7.60.1.11206</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -1131,26 +1238,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
         </option>
         <option>
@@ -1167,7 +1260,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
         </option>
         <option>
@@ -1190,8 +1283,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Release</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1199,7 +1362,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1209,16 +1372,25 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1166DVM6A_cm7</state>
           <state>OPUS_ENCODE</state>
+          <state>STREAMER_ENABLE_ENCODER</state>
+          <state>STREAMER_ENABLE_CEI_OPUS</state>
+          <state>PLATFORM_RT1160</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
-          <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>SAI_XFER_QUEUE_SIZE=3</state>
+          <state>DISABLEFLOAT16</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
+          <state>HAVE_CONFIG_H</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
+          <state>CASCFG_PLATFORM_FREERTOS</state>
+          <state>FSL_OS_SELECTED=SDK_OS_FREERTOS</state>
+          <state>FSL_OSA_TASK_ENABLE=1</state>
+          <state>STREAMER_ENABLE_FILESRC</state>
+          <state>STREAMER_ENABLE_FILE_SINK</state>
+          <state>STREAMER_ENABLE_MEM_SRC</state>
+          <state>STREAMER_ENABLE_MEM_SINK</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1259,7 +1431,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa050,Pa082,Pe186,Pe815</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1296,11 +1468,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--align_sp_on_irq  --macro_positions_in_diagnostics  --header_context  --no_unaligned_access</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1312,10 +1484,6 @@
         </option>
         <option>
           <name>CCRequirePrototypes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCMultibyteSupport</name>
           <state>0</state>
         </option>
         <option>
@@ -1343,10 +1511,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
@@ -1363,16 +1527,19 @@
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/host/usdhc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/cm7</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions</state>
+          <state>$PROJ_DIR$/../../../../../../components/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/config</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/inc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/osa/freertos</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-libs/common</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/inc</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../../middleware/fatfs/source/fsl_sd_disk</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
@@ -1381,11 +1548,20 @@
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/decoders/cci_dec</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/devices</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/opus</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1394,10 +1570,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -1415,16 +1587,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1448,19 +1610,7 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -1495,13 +1645,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1631,10 +1813,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -1661,6 +1839,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -1701,12 +1883,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -1720,16 +1898,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -1770,7 +1944,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
-          <state>__heap_size__=0x10000</state>
+          <state>__heap_size__=0xF000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1849,14 +2023,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/DSP/Lib/IAR/iar_cortexM7lf_math.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_cci.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_streamer.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_utils.a</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libmp3.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libogg.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libopus.a</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libsrc48.a</state>
           <state>$PROJ_DIR$/../../../../../../middleware/maestro/libs/cm7f/iar/release/libwav.a</state>
         </option>
         <option>
@@ -2020,6 +2187,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2042,11 +2289,6 @@
           <state/>
         </option>
       </data>
-    </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
   </configuration>
   <group>
@@ -2190,6 +2432,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_flexram.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_pdm_edma.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_pdm_edma.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</name>
     </file>
     <file>
@@ -2243,6 +2491,12 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_flexram_allocate.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_pdm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1166/drivers/fsl_pdm.c</name>
+    </file>
   </group>
   <group>
     <name>codec</name>
@@ -2292,6 +2546,15 @@
       </file>
     </group>
     <group>
+      <name>gpio</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_gpio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/gpio/fsl_adapter_igpio.c</name>
+      </file>
+    </group>
+    <group>
       <name>uart</name>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
@@ -2325,6 +2588,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/silicon_id/fsl_silicon_id.h</name>
       </file>
     </group>
     <group>
@@ -2415,6 +2687,279 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_helium_utils.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math_f16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math_memory.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math_types.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_math_types_f16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_mve_tables.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_mve_tables_f16.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_vec_math.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/arm_vec_math_f16.h</name>
+        </file>
+        <group>
+          <name>dsp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/bayes_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/bayes_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/controller_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/distance_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/filtering_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/filtering_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/matrix_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/none.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/quaternion_math_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/statistics_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/statistics_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/support_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/support_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/svm_defines.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/svm_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/svm_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/transform_functions.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/transform_functions_f16.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Include/dsp/utils.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>PrivateInclude</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude/arm_sorting.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_fft.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_filtering.h</name>
+        </file>
+      </group>
+      <group>
+        <name>Source</name>
+        <group>
+          <name>BasicMathFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>BayesFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/BayesFunctions/BayesFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/BayesFunctions/BayesFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>CommonTables</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/CommonTables/CommonTables.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/CommonTables/CommonTablesF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>ComplexMathFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>ControllerFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/ControllerFunctions/ControllerFunctions.c</name>
+          </file>
+        </group>
+        <group>
+          <name>DistanceFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions/DistanceFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions/arm_boolean_distance_template.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/DistanceFunctions/DistanceFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>FastMathFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/FastMathFunctions/FastMathFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/FastMathFunctions/FastMathFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>FilteringFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/FilteringFunctions/FilteringFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/FilteringFunctions/FilteringFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>InterpolationFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>MatrixFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/MatrixFunctions/MatrixFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/MatrixFunctions/MatrixFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>QuaternionMathFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/QuaternionMathFunctions/QuaternionMathFunctions.c</name>
+          </file>
+        </group>
+        <group>
+          <name>SVMFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/SVMFunctions/SVMFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/SVMFunctions/SVMFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>StatisticsFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>SupportFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/SupportFunctions/SupportFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/SupportFunctions/SupportFunctionsF16.c</name>
+          </file>
+        </group>
+        <group>
+          <name>TransformFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/TransformFunctions/TransformFunctions.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c</name>
+          </file>
+        </group>
       </group>
     </group>
     <file>
@@ -2440,6 +2985,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Core/Include/mpu_armv7.h</name>
@@ -2570,9 +3118,6 @@
     <group>
       <name>inc</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/container.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/error.h</name>
       </file>
       <file>
@@ -2582,55 +3127,7 @@
         <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/general_utils.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/lib_common.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/logging.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_cond.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_dir.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_event.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_freertos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_init.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_isr.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_memory.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_message.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_misc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_mutex.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_sem.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_thread.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_time.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/osa_types.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/ringbuffer.h</name>
@@ -2642,69 +3139,858 @@
         <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/streamer_element_properties.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/streamer_error.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/streamer_message.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/streamer_pcm.h</name>
       </file>
+    </group>
+    <group>
+      <name>config</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/maestro/inc/vector.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/maestro/config/audio_cfg.h</name>
       </file>
     </group>
     <group>
-      <name>mcu-audio</name>
+      <name>opus</name>
       <group>
-        <name>opus</name>
+        <name>celt</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/bands.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/celt.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/celt_decoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/celt_encoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/celt_lpc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/cwrs.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/entcode.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/entdec.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/entenc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/kiss_fft.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/laplace.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/mathops.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/mdct.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/modes.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/pitch.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/quant_bands.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/rate.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/vq.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/_kiss_fft_guts.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/arch.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/bands.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/celt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/celt_lpc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/cpu_support.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/cwrs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/ecintrin.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/entcode.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/entdec.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/entenc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/fixed_c5x.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/fixed_c6x.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/fixed_debug.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/fixed_generic.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/float_cast.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/kiss_fft.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/laplace.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/mathops.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/mdct.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/mfrngcod.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/modes.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/os_support.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/pitch.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/quant_bands.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/rate.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/stack_alloc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/static_modes_fixed.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/static_modes_float.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/celt/vq.h</name>
+        </file>
+      </group>
+      <group>
+        <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_cci.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_cci_raw.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_custom.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_defines.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_multistream.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_projection.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_types.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/test_opus_common.h</name>
+        </file>
+      </group>
+      <group>
+        <name>silk</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/A2NLSF.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/CNG.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/HP_variable_cutoff.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/LPC_analysis_filter.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/LPC_fit.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/LPC_inv_pred_gain.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/LP_variable_cutoff.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NLSF2A.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NLSF_VQ.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NLSF_VQ_weights_laroia.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NLSF_decode.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NLSF_del_dec_quant.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NLSF_encode.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NLSF_stabilize.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NLSF_unpack.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NSQ.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NSQ_del_dec.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/PLC.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/VAD.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/VQ_WMat_EC.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/ana_filt_bank_1.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/biquad_alt.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/bwexpander.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/bwexpander_32.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/check_control_input.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/code_signs.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/control_SNR.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/control_audio_bandwidth.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/control_codec.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/debug.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/dec_API.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/decode_core.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/decode_frame.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/decode_indices.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/decode_parameters.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/decode_pitch.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/decode_pulses.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/decoder_set_fs.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/enc_API.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/encode_indices.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/encode_pulses.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/gain_quant.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/init_decoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/init_encoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/inner_prod_aligned.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/interpolate.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/lin2log.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/log2lin.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/pitch_est_tables.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/process_NLSFs.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/quant_LTP_gains.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_down2.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_down2_3.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_private_AR2.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_private_IIR_FIR.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_private_down_FIR.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_private_up2_HQ.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_rom.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/shell_coder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/sigm_Q15.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/sort.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/stereo_LR_to_MS.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/stereo_MS_to_LR.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/stereo_decode_pred.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/stereo_encode_pred.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/stereo_find_predictor.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/stereo_quant_pred.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/sum_sqr_shift.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/table_LSF_cos.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/tables_LTP.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/tables_NLSF_CB_NB_MB.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/tables_NLSF_CB_WB.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/tables_gain.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/tables_other.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/tables_pitch_lag.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/tables_pulses_per_block.c</name>
+        </file>
         <group>
-          <name>include</name>
+          <name>fixed</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/config.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/LTP_analysis_filter_FIX.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/LTP_scale_ctrl_FIX.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_cci.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/apply_sine_window_FIX.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_cci_raw.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/autocorr_FIX.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_custom.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/burg_modified_FIX.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_defines.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/corrMatrix_FIX.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_multistream.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/encode_frame_FIX.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_projection.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/find_LPC_FIX.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/opus_types.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/find_LTP_FIX.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/include/test_opus_common.h</name>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/find_pitch_lags_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/find_pred_coefs_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/k2a_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/k2a_Q16_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/noise_shape_analysis_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/pitch_analysis_core_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/process_gains_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/regularize_correlations_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/residual_energy16_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/residual_energy_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/schur64_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/schur_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/vector_ops_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/warped_autocorrelation_FIX.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/main_FIX.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/fixed/structs_FIX.h</name>
           </file>
         </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/API.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/Inlines.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/MacroCount.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/MacroDebug.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/NSQ.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/PLC.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/SigProc_FIX.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/control.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/debug.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/define.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/errors.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/macros.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/main.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/pitch_est_defines.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_private.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_rom.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/resampler_structs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/structs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/tables.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/tuning_parameters.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/silk/typedef.h</name>
+        </file>
+      </group>
+      <group>
+        <name>src</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/opus.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/opus_cci.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/opus_cci_raw.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/opus_decoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/opus_encoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/opus_multistream.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/opus_multistream_decoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/opus_multistream_encoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/repacketizer.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/analysis.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/mlp.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/mcu-audio/opus/src/opus_private.h</name>
+        </file>
       </group>
     </group>
     <group>
       <name>streamer</name>
       <group>
-        <name>inc</name>
+        <name>cci</name>
+        <group>
+          <name>include</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include/cci_metadata.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include/codec_interface.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include/codec_interface_public_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/include/errordefs.h</name>
+          </file>
+        </group>
+        <group>
+          <name>metadata</name>
+          <group>
+            <name>src</name>
+            <group>
+              <name>mp3</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_extractmetadata.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_id3v2.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_vbr.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_id3v2.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_id3v2_internal.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_metadata.h</name>
+              </file>
+            </group>
+            <group>
+              <name>adpcm</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/metadata/src/adpcm/adpcm_extractmetadata.c</name>
+              </file>
+            </group>
+            <group>
+              <name>opus</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/cci/metadata/src/opus/opus_extractmetadata.c</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+      <group>
+        <name>core</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/inc/af_error.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core/pad.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/inc/memtypes.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core/pipeline.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/inc/metadata_error.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core/streamer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core/streamer_element.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core/pad.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core/pipeline.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core/streamer.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core/streamer_element.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/core/streamer_msg.c</name>
+        </file>
+      </group>
+      <group>
+        <name>decoders</name>
+        <group>
+          <name>cci_dec</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/decoders/cci_dec/ccidec.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/decoders/cci_dec/ccidec.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/decoders/cci_dec/codec_interface.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/decoders/cci_dec/codecextractmetadata.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>devices</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/devices/audio_sink_pcmrtos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/devices/audio_src_pcmrtos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/devices/freertos_pcm.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/devices/audio_sink_pcmrtos.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/devices/audio_src_pcmrtos.c</name>
+        </file>
+      </group>
+      <group>
+        <name>elements</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/audio_sink.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/audio_src.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/decoder.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/decoder_pads.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/eap.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/encoder.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/file_sink.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/file_src_freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/mem_sink.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/mem_src.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/netbuf_src.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/vit_sink.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/audio_sink.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/audio_src.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/decoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/decoder_pads.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/eap.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/file_sink.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/file_src_freertos.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/mem_sink.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/vit_sink.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/mem_src.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/netbuf_src.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/elements/encoder.c</name>
+        </file>
+      </group>
+      <group>
+        <name>pipelines</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_audiosrc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_fs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_mic2file.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_opusmem2mem.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_eap_speaker.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_audiosrc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_fs.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_mic2file.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_opusmem2mem.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_eap_speaker.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/pipelines/streamer_vit.c</name>
         </file>
       </group>
       <group>
@@ -2721,6 +4007,39 @@
             <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/cei/cei_table.h</name>
           </file>
         </group>
+        <group>
+          <name>opus</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/opus/opusenc_cei.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/encoders/opus/opusenc_cei.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>parsers</name>
+        <group>
+          <name>cci</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/parsers/cci/cci_codec_type_conversion.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>utils</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/utils/file_utils.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/utils/general_utils.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/utils/logging.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/maestro/streamer/utils/ringbuffer.c</name>
+        </file>
       </group>
     </group>
   </group>

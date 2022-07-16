@@ -68,6 +68,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../../middleware
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../../../components/uart
@@ -98,6 +99,8 @@ include(middleware_sdmmc_host_usdhc_interrupt_MIMXRT1176_cm7)
 include(utility_debug_console_lite_MIMXRT1176_cm7)
 
 include(utility_assert_lite_MIMXRT1176_cm7)
+
+include(component_igpio_adapter_MIMXRT1176_cm7)
 
 include(middleware_baremetal_MIMXRT1176_cm7)
 

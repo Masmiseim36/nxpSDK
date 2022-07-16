@@ -1,5 +1,5 @@
 /*
-* Copyright 2020-2021 NXP
+* Copyright 2020-2022 NXP
 *
 * NXP Confidential. This software is owned or controlled by NXP and may only
 * be used strictly in accordance with the applicable license terms found in
@@ -15,19 +15,20 @@
 
 // Select core targeted
 //#define PLATFORM_RT600
-#define PLATFORM_RT500
+//#define PLATFORM_RT500
+//#define PLATFORM_RT1040
 //#define PLATFORM_RT1060
 //#define PLATFORM_RT1170
 //#define PLATFORM_WINDOWS
 
 
 // Way to reserve memory, if defined then Malloc() allocation else pre-reserved buffer (static allocation) 
-//#define MEMORY_MALLOC
+#define MEMORY_MALLOC
 
 
 // PCM input file
 // The data format should be aligned with VIT interface (16kHz, 16-bit, number of channel) 
-#define INPUT_FILE                   "../../../_INPUT/HEYNXP_WW_CMD.pcm"
+#define INPUT_FILE                   "../../../../_INPUT/HEYNXP_WW_CMD.pcm"
 
 #ifndef MEMORY_MALLOC
 // STATIC ALLOCATION 
@@ -49,8 +50,17 @@
 // If AFE is enable  : only 2 or 3 channels input is supported
 // If AFE is disable : only 1 channel input is supported
 // see VIT.h for further information on VIT configurations : section "Valid VIT Configurations"
-#ifdef PLATFORM_RT1060
-    #include "PL_platformTypes_CortexM7.h"
+#ifdef PLATFORM_RT1040
+    #include "PL_platformTypes_CortexM.h"
+    #define MODEL_LOCATION              VIT_MODEL_IN_ROM
+    #define DEVICE_ID                   VIT_IMXRT1040
+    // Configuration : VIT lib not integrating AFE - only 1Mic supported
+    #define VIT_OPERATING_MODE          VIT_LPVAD_ENABLE | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+    #define NUMBER_OF_CHANNELS          _1CHAN
+    #define VIT_MIC1_MIC2_DISTANCE      0 
+    #define VIT_MIC1_MIC3_DISTANCE      0
+#elif PLATFORM_RT1060
+    #include "PL_platformTypes_CortexM.h"
     #define MODEL_LOCATION              VIT_MODEL_IN_ROM
     #define DEVICE_ID                   VIT_IMXRT1060
     // Configuration : VIT lib integrating AFE - AFE selected - 2 Mics enabled
@@ -59,7 +69,7 @@
     #define VIT_MIC1_MIC2_DISTANCE      63                       // Distance between MIC2 and the reference MIC in mm
     #define VIT_MIC1_MIC3_DISTANCE      0                        // Distance between MIC3 and the reference MIC in mm
 #elif defined PLATFORM_RT1170
-    #include "PL_platformTypes_CortexM7.h"
+    #include "PL_platformTypes_CortexM.h"
     #define MODEL_LOCATION              VIT_MODEL_IN_ROM
     #define DEVICE_ID                   VIT_IMXRT1170
     // Configuration : VIT lib integrating AFE - AFE selected  - 3Mics enabled
@@ -88,7 +98,8 @@
 #elif defined  PLATFORM_WINDOWS
 #include "PL_platformTypes_windows.h"
     #define MODEL_LOCATION              VIT_MODEL_IN_ROM
-    #define VIT_OPERATING_MODE          VIT_LPVAD_ENABLE | VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+    #define DEVICE_ID                   VIT_IMXRT500   //Dummy
+    #define VIT_OPERATING_MODE          VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
     #define NUMBER_OF_CHANNELS          _1CHAN
     #define VIT_MIC1_MIC2_DISTANCE      0
     #define VIT_MIC1_MIC3_DISTANCE      0
@@ -97,6 +108,9 @@
     #error "No platform selected"
 #endif
 
+// Configure the detection period in second for each command
+// VIT will return UNKNOWN if no command is recognized during this time span.
+#define VIT_COMMAND_TIME_SPAN 3.0 // in second
 
 /****************************************************************************************/
 /*                                                                                      */
@@ -169,7 +183,8 @@ PL_INT32 main(void)
     VIT_ControlParams_st      VITControlParams;                         // VIT control parameters structure
     PL_MemoryTable_st         VITMemoryTable;                           // VIT memory table descriptor
     VIT_ReturnStatus_en       Status;                                   // Status of the function
-    VIT_VoiceCommand_st        VoiceCommand;                             // Voice Command id
+    VIT_VoiceCommand_st       VoiceCommand;                             // Voice Command info
+    VIT_WakeWord_st           WakeWord;                                 // Wakeword info
     VIT_DetectionStatus_en    VIT_DetectionResults = VIT_NO_DETECTION;  // VIT detection result
     VIT_DataIn_st             VIT_InputBuffers     = { PL_NULL, PL_NULL, PL_NULL };  // Resetting Input Buffer addresses provided to VIT_process() API
     PL_INT16                  *VIT_InputData;    
@@ -224,7 +239,7 @@ PL_INT32 main(void)
     *   VIT Get Model Info (OPTIONAL)
     *       To retrieve information on the VIT_Model registered in VIT:
     *               - Model Release Number, number of commands supported
-    *               - WakeWord supported (when info is present)
+    *               - WakeWords supported (when info is present)
     *               - list of commands (when info is present) 
     *
     */
@@ -244,7 +259,8 @@ PL_INT32 main(void)
         printf("  Language supported : %s \n", Model_Info.pLanguage);
     }
 
-    printf("  Number of Commands supported : %d \n", Model_Info.NbOfVoiceCmds);
+    printf("  Number of WakeWords supported : %d \n", Model_Info.NbOfWakeWords);
+    printf("  Number of Commands supported : %d \n",  Model_Info.NbOfVoiceCmds);
 
     if (!Model_Info.WW_VoiceCmds_Strings)               // Check here if Model is containing WW and CMDs strings
     {
@@ -255,10 +271,15 @@ PL_INT32 main(void)
         const char* ptr;
 
         printf("  VIT_Model integrating WakeWord and Voice Commands strings : YES\n");
+        printf("  WakeWords supported : \n");
         ptr = Model_Info.pWakeWord;
         if (ptr != PL_NULL)
         {
-            printf("  WakeWord supported : %s \n", ptr);
+            for (PL_UINT16 i = 0; i < Model_Info.NbOfWakeWords; i++)
+            {
+                printf("   '%s' \n", ptr);
+                ptr += strlen(ptr) + 1;                 // to consider NULL char
+            }
         }
         printf("  Voice commands supported : \n");
         ptr = Model_Info.pVoiceCmds_List;
@@ -433,6 +454,8 @@ PL_INT32 main(void)
     VITControlParams.OperatingMode      = VIT_OPERATING_MODE;
     VITControlParams.MIC1_MIC2_Distance = VIT_MIC1_MIC2_DISTANCE;
     VITControlParams.MIC1_MIC3_Distance = VIT_MIC1_MIC3_DISTANCE;
+    VITControlParams.Command_Time_Span  = VIT_COMMAND_TIME_SPAN;
+
 
     if (!InitPhase_Error)
     {
@@ -554,7 +577,27 @@ PL_INT32 main(void)
 
         if (VIT_DetectionResults == VIT_WW_DETECTED)
         {
-            printf(" - WakeWord detected \n");
+            // Retrieve id of the WakeWord detected
+            // String of the Command can also be retrieved (when WW and CMDs strings are integrated in Model)
+            Status = VIT_GetWakeWordFound( VITHandle,
+                                           &WakeWord
+                                         );
+            if (Status != VIT_SUCCESS)
+            {
+                printf("VIT_GetWakeWordFound error : %d\n", Status);
+                MainLoop_Flag = 0;                                              // will stop processing VIT and go directly to MEM free
+            }
+            else
+            {
+                printf(" - WakeWord detected %d", WakeWord.WW_Id);
+
+                // Retrieve WakeWord Name : OPTIONAL
+                // Check first if WakeWord string is present
+                if (WakeWord.pWW_Name != PL_NULL)
+                {
+                    printf(" %s\n", WakeWord.pWW_Name);
+                }
+            }
         }
         else if (VIT_DetectionResults == VIT_VC_DETECTED)
         {

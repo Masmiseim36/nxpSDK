@@ -339,7 +339,6 @@
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/drivers/flexspi</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../../platform/drivers/puf</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/drivers/semc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/drivers/nand_ecc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
@@ -1052,6 +1051,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_puf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_puf.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1176/drivers/fsl_common.h</name>
     </file>
     <file>
@@ -1367,16 +1372,34 @@
       </group>
     </group>
     <group>
-      <name>drivers</name>
+      <name>security</name>
       <group>
-        <name>puf</name>
+        <name>keyblob</name>
+        <group>
+          <name>src</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/security/keyblob/src/keyblob_caam.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/security/keyblob/src/keyblob.c</name>
+          </file>
+        </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../platform/drivers/puf/fsl_puf.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../platform/drivers/puf/fsl_puf.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/security/keyblob/keyblob.h</name>
         </file>
       </group>
+    </group>
+    <group>
+      <name>authentication</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/authentication/key_store_puf.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/authentication/key_store_puf.h</name>
+      </file>
+    </group>
+    <group>
+      <name>drivers</name>
       <group>
         <name>nand_ecc</name>
         <file>
@@ -1515,33 +1538,6 @@
           <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.h</name>
         </file>
       </group>
-    </group>
-    <group>
-      <name>security</name>
-      <group>
-        <name>keyblob</name>
-        <group>
-          <name>src</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/security/keyblob/src/keyblob_caam.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/security/keyblob/src/keyblob.c</name>
-          </file>
-        </group>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/security/keyblob/keyblob.h</name>
-        </file>
-      </group>
-    </group>
-    <group>
-      <name>authentication</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/authentication/key_store_puf.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/authentication/key_store_puf.h</name>
-      </file>
     </group>
   </group>
   <group>

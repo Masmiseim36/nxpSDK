@@ -5,17 +5,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
@@ -23,19 +15,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
@@ -61,7 +44,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DMCUXPRESSO_SDK \
-    -O3 \
+    -O2 \
     -fno-strict-aliasing \
     -Wno-unused-function \
     -mcpu=cortex-m7 \
@@ -133,7 +116,7 @@ SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
-    -O3 \
+    -O2 \
     -mcpu=cortex-m7 \
     -Wall \
     -mfloat-abi=hard \
@@ -213,7 +196,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     --defsym=__stack_size__=0x10000 \
     -Xlinker \
     -print-memory-usage \
-    -T${ProjDirPath}/../../../../../devices/MIMXRT1166/gcc/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld -static \
+    -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
@@ -250,5 +233,5 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     --defsym=__stack_size__=0x10000 \
     -Xlinker \
     -print-memory-usage \
-    -T${ProjDirPath}/../../../../../devices/MIMXRT1166/gcc/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld -static \
+    -T${ProjDirPath}/MIMXRT1166xxxxx_cm7_flexspi_nor_sdram.ld -static \
 ")

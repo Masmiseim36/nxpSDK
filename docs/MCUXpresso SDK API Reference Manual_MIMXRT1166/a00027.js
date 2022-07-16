@@ -16,7 +16,9 @@ var a00027 =
       [ "revolutionCountCondition", "a00027.html#a5c6214d0358540fb9ca7bd31d3961fc4", null ],
       [ "enableModuloCountMode", "a00027.html#ab41faf266e79e9fbdfbca2c4a568f286", null ],
       [ "positionModulusValue", "a00027.html#a9c4ca08aaa0a4680a62fae18c1f907a7", null ],
-      [ "positionInitialValue", "a00027.html#a42ff0a11bf950e3383e2c86df34c1380", null ]
+      [ "positionInitialValue", "a00027.html#a42ff0a11bf950e3383e2c86df34c1380", null ],
+      [ "enablePeriodMeasurementFunction", "a00027.html#a13c0b0863c60ceaf0e762aeb89564717", null ],
+      [ "prescalerValue", "a00027.html#a4c7f89f0145120ed902353d2011aed51", null ]
     ] ],
     [ "enc_self_test_config_t", "a00027.html#a00470", [
       [ "signalDirection", "a00027.html#a43c1f46f38185c53d70945706d0f7379", null ],
@@ -78,6 +80,7 @@ var a00027 =
       [ "kENC_SelfTestDirectionPositive", "a00027.html#gga0771658dcc0d7fb694a3f6c3df1f7815a15fa41a761cf10c06dc032ad51b9d72c", null ],
       [ "kENC_SelfTestDirectionNegative", "a00027.html#gga0771658dcc0d7fb694a3f6c3df1f7815a1536128883baf0c538ecf287c5b65a4a", null ]
     ] ],
+    [ "enc_prescaler_t", "a00027.html#ga5711c6f6deee4de358050e1645967700", null ],
     [ "ENC_Init", "a00027.html#ga3137a28cb8af9082c19244923faa6c7a", null ],
     [ "ENC_Deinit", "a00027.html#gae5541a81fcbffecd6184d3c88eb7ae4b", null ],
     [ "ENC_GetDefaultConfig", "a00027.html#ga812eaa30d800dd8901fada028ef14562", null ],
@@ -96,5 +99,10 @@ var a00027 =
     [ "ENC_GetPositionDifferenceValue", "a00027.html#gac6174b059531f941c244f4ba4bb0334f", null ],
     [ "ENC_GetHoldPositionDifferenceValue", "a00027.html#ga0c1d85fb1ae43b29b5956c94ed73364f", null ],
     [ "ENC_GetRevolutionValue", "a00027.html#ga61378ace000c47c8020aa956fe153f16", null ],
-    [ "ENC_GetHoldRevolutionValue", "a00027.html#gad7c69f91e436ff10454c22fb7ae5b7e4", null ]
+    [ "ENC_GetHoldRevolutionValue", "a00027.html#gad7c69f91e436ff10454c22fb7ae5b7e4", null ],
+    [ "ENC_GetLastEdgeTimeValue", "a00027.html#ga5b24f380eb62929adb7823b1b52fe390", null ],
+    [ "ENC_GetHoldLastEdgeTimeValue", "a00027.html#ga813621a8b88243c69eff8788e7d78a1c", null ],
+    [ "ENC_GetPositionDifferencePeriodValue", "a00027.html#ga6882da538aa2ec25d13748a8ef28d2e2", null ],
+    [ "ENC_GetPositionDifferencePeriodBufferValue", "a00027.html#ga8c061763322132ddc9721ebf73895a65", null ],
+    [ "ENC_GetHoldPositionDifferencePeriodValue", "a00027.html#ga4ca4a1557b39fbb99f1f78d12842faaf", null ]
 ];

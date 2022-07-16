@@ -7,7 +7,6 @@
 
 #include <toolchain.h>
 #include <porting.h>
-#include "EmbeddedTypes.h"
 #include "fsl_debug_console.h"
 
 #include <bluetooth/services/pxr.h>
@@ -69,7 +68,7 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
         default_conn = NULL;
     }
 
-    if(reason == 0x08) /* Connection timeout */
+    if ((reason == 0x08) || (reason == 0x22))  /* Connection timeout */
     {
         PRINTF("Link Loss Alert Triggered...\r\n");
         alert_ui(pxr_lls_get_alert_level());

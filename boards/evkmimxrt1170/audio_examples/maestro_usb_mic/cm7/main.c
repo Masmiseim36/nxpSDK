@@ -168,6 +168,9 @@ int main(void)
     PRINTF("*************************************************\r\n");
     PRINTF("\r\n");
 
+    /* Initialize OSA*/
+    OSA_Init();
+
     ret = BOARD_CODEC_Init();
     if (ret)
     {

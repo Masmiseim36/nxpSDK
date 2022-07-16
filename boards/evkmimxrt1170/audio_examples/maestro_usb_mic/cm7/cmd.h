@@ -5,6 +5,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#ifndef _CMD_H_
+#define _CMD_H_
+
 /*${header:start}*/
 #include "main.h"
 /*${header:end}*/
@@ -30,3 +33,5 @@ typedef void handleShellMessageCallback_t(void *arg);
  */
 void shellCmd(handleShellMessageCallback_t *handleShellMessageCallback, void *arg);
 /*${prototype:end}*/
+
+#endif

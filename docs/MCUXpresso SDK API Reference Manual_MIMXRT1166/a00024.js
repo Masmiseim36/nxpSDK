@@ -1,6 +1,6 @@
 var a00024 =
 [
-    [ "MIPI_DSI_Type", "a00024.html#a00576", [
+    [ "MIPI_DSI_Type", "a00024.html#a00570", [
       [ "host", "a00024.html#a6012274780345325eef46fa2ab1a305d", null ],
       [ "apb", "a00024.html#a9f9e9ba7c608984e1b0717f1ad52f4b6", null ],
       [ "dpi", "a00024.html#a2df581c4f66b6192eb26bf7d356eeba2", null ],

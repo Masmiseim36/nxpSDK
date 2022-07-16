@@ -16,8 +16,6 @@
  *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *
- *  This file is part of mbed TLS (https://tls.mbed.org)
  */
 
 /*******************************************************************************
@@ -76,6 +74,12 @@
 #include "fsl_debug_console.h"
 #if defined(MBEDTLS_NXP_SSSAPI)
 #include "sssapi_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_CSS_API)
+#include "platform_hw_ip.h"
+#include "css_mbedtls.h"
+#elif defined(MBEDTLS_MCUX_CSS_PKC_API)
+#include "platform_hw_ip.h"
+#include "css_pkc_mbedtls.h"
 #else
 #include "ksdk_mbedtls.h"
 #endif
@@ -122,8 +126,9 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
 #if RUN_TEST_SNPRINTF
-static int test_snprintf( size_t n, const char ref_buf[10], int ref_ret )
+static int test_snprintf( size_t n, const char *ref_buf, int ref_ret )
 {
     int ret;
     char buf[10] = "xxxxxxxxx";
@@ -152,7 +157,7 @@ static int run_test_snprintf( void )
             test_snprintf( 4, "123",         3 ) != 0 ||
             test_snprintf( 5, "123",         3 ) != 0 );
 }
-#endif
+#endif /* RUN_TEST_SNPRINTF */
 
 /*
  * Check if a seed file is present, and if not create one for the entropy
@@ -291,8 +296,8 @@ const selftest_t selftests[] =
 #endif
 #if defined(MBEDTLS_ARIA_C)
     {"aria", mbedtls_aria_self_test},
-#endif
-#if defined(MBEDTLS_CTR_DRBG_C)
+#endif /* NXP remove CTR_DRBG setftest for CSS PKC since there is different implementation */
+#if defined(MBEDTLS_CTR_DRBG_C) && !defined(MBEDTLS_MCUX_CSS_PKC_API) && !defined(MBEDTLS_MCUX_CSS_API)
     {"ctr_drbg", mbedtls_ctr_drbg_self_test},
 #endif
 #if defined(MBEDTLS_HMAC_DRBG_C)
@@ -352,6 +357,8 @@ static int bench_print_features(void)
     text = "S200 HW accelerated";
 #elif defined(MBEDTLS_NXP_SENTINEL300)
     text = "S300 HW accelerated";
+#elif defined(MBEDTLS_MCUX_CSS_PKC_API)
+    text = "CSS PKC HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -374,6 +381,8 @@ static int bench_print_features(void)
     text = "SW AES, S200 HW accelerated CCM and CMAC";
 #elif defined(MBEDTLS_NXP_SENTINEL300)
     text = "SW AES, S300 HW accelerated CCM and CMAC";
+#elif defined(MBEDTLS_MCUX_CSS_PKC_API)
+    text = "CSS PKC HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -388,6 +397,8 @@ static int bench_print_features(void)
     text = "CAU3 HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_CAAM_AES_GCM)
     text = "CAAM HW accelerated";
+#elif defined(MBEDTLS_MCUX_CSS_PKC_API)
+    text = "CSS PKC HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -416,6 +427,8 @@ static int bench_print_features(void)
     text = "S200 HW accelerated ECDSA and ECDH";
 #elif defined(MBEDTLS_NXP_SENTINEL300)
     text = "S300 HW accelerated ECDSA and ECDH";
+#elif defined(MBEDTLS_MCUX_CSS_PKC_API)
+    text = "CSS PKC HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -446,11 +459,13 @@ int main(int argc, char *argv[])
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+
     if( CRYPTO_InitHardware() != kStatus_Success )
     {
         mbedtls_printf( "Initialization of crypto HW failed\n" );
         mbedtls_exit( MBEDTLS_EXIT_FAILURE );
     }
+
 #endif
     bench_print_features();
 

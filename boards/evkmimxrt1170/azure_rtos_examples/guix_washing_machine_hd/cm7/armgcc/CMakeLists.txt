@@ -96,6 +96,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
+    ${ProjDirPath}/../../../../xmcd
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/video/display/dc
 )
@@ -130,6 +131,8 @@ include(driver_lpi2c_MIMXRT1176_cm7)
 include(driver_gt911_MIMXRT1176_cm7)
 
 include(driver_soc_src_MIMXRT1176_cm7)
+
+include(driver_pxp_MIMXRT1176_cm7)
 
 include(component_lists_MIMXRT1176_cm7)
 
@@ -168,6 +171,8 @@ include(utility_debug_console_MIMXRT1176_cm7)
 include(middleware_azure_rtos_tx_MIMXRT1176_cm7)
 
 include(middleware_azure_rtos_tx_template_MIMXRT1176_cm7)
+
+include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 

@@ -3,13 +3,19 @@ Overview
 The lwip_httpscli_ota demo application demonstrates an HTTPS OTA client using FreeRTOS + LWIP + MbedTLS + CoreHTTP.
 The client connects to a HTTPS server and requests an OTA binary for download and subsequent installation by MCUBoot.
 
+Before building the example application select Wi-Fi module macro in the app_config.h. (see #define WIFI_<SoC Name>BOARD<Module Name>).
+For more information about Wi-Fi module connection see:
+    readme_modules.txt
+    Getting started guide on supported modules configuration:
+    https://www.nxp.com/document/guide/getting-started-with-nxp-wi-fi-modules-using-i-mx-rt-platform:GS-WIFI-MODULES-IMXRT-PLATFORM
+
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.20.2
-- Keil MDK  5.36
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.5.0
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================
@@ -30,7 +36,7 @@ Manual reset is not needed while MCU is running freely without a debugger.
 
 Prepare the Demo
 ================
-1. The demo requires MCUBoot booloader to be present in the FLASH memory to function properly.
+1. The demo requires MCUBoot bootloader to be present in the FLASH memory to function properly.
    It is recommended to build and program the bootloader first, then go on with the application.
    Please refer to respective readme of the mcuboot_opensource example and follow the steps there before you continue.
 2. Go through setup files in the demo source tree source/config/ota_config.h and source/config/network_cfg.h to check:

@@ -4,10 +4,12 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "osa_common.h"
 #include "board.h"
 #include "app_music_control.h"
 #include "streamer_pcm.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
 
 #define STREAMER_BUFFER_COUNT (6)
 
@@ -18,6 +20,7 @@ volatile uint32_t s_StreamerBufferPosArray[STREAMER_BUFFER_COUNT];
 volatile uint8_t s_StreamerBufferWriteIndex = 0;
 volatile uint8_t s_StreamerBufferReadIndex = 0;
 volatile uint8_t s_StreamerBufferCount = 0;
+static SemaphoreHandle_t stream_write_wait;
 
 #if (defined(STREAMER_CODEC_EANBLE) && (STREAMER_CODEC_EANBLE))
 extern codec_handle_t codecHandle;
@@ -31,7 +34,7 @@ void streamer_pcm_init(void)
 pcm_rtos_t *streamer_pcm_open(uint32_t num_buffers)
 {
     s_StreamerBufferCount = num_buffers;
-    for (uint32_t index = 0U; index < num_buffers; ++index)
+    for (uint32_t index = 0U; index < s_StreamerBufferCount; ++index)
     {
         s_StreamerBufferDataLengthArray[index] = 0U;
         s_StreamerBufferPosArray[index] = 0U;
@@ -40,6 +43,11 @@ pcm_rtos_t *streamer_pcm_open(uint32_t num_buffers)
     s_StreamerBufferReadIndex = 0U;
     pcmHandle.streamerStop = 0U;
     pcmHandle.streamerGettingData = 0U;
+    if (NULL != stream_write_wait)
+    {
+        vSemaphoreDelete(stream_write_wait);
+    }
+    stream_write_wait = xSemaphoreCreateCounting(0xFFu, s_StreamerBufferCount);
     return &pcmHandle;
 }
 
@@ -62,16 +70,6 @@ void streamer_pcm_rx_close(pcm_rtos_t *pcm)
 
 int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 {
-    while (s_StreamerBufferDataLengthArray[s_StreamerBufferWriteIndex] > 0)
-    {
-        if (pcmHandle.streamerStop)
-        {
-            /* discard data, let the task run. */
-            return 0;
-        }
-        osa_time_delay(1);
-    }
-
     s_StreamerBufferArray[s_StreamerBufferWriteIndex] = data;
     s_StreamerBufferDataLengthArray[s_StreamerBufferWriteIndex] = size;
     s_StreamerBufferPosArray[s_StreamerBufferWriteIndex] = 0U;
@@ -81,16 +79,32 @@ int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
         s_StreamerBufferWriteIndex = 0U;
     }
 
+    while (s_StreamerBufferDataLengthArray[s_StreamerBufferWriteIndex] > 0)
+    {
+        /* 1ms */
+        xSemaphoreTake(stream_write_wait, ((1)*configTICK_RATE_HZ + 999U) / 1000U);
+        if (pcmHandle.streamerStop)
+        {
+            /* discard data, let the task run. */
+            return 0;
+        }
+    }
+
     return 0;
 }
 
-int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint32_t size)
+int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 {
     return 0;
 }
 
-int streamer_pcm_setparams(
-    pcm_rtos_t *pcm, uint32_t sample_rate, uint32_t bit_width, uint8_t num_channels, bool transfer)
+int streamer_pcm_setparams(pcm_rtos_t *pcm,
+                           uint32_t sample_rate,
+                           uint32_t bit_width,
+                           uint8_t num_channels,
+                           bool transfer,
+                           bool dummy_tx,
+                           int volume)
 {
     pcm->sample_rate  = sample_rate;
     pcm->bit_width    = bit_width;
@@ -111,7 +125,7 @@ int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute)
     return 0;
 }
 
-int streamer_pcm_set_volume(uint32_t volume)
+int streamer_pcm_set_volume(pcm_rtos_t *pcm, int volume)
 {
     return 0;
 }
@@ -168,6 +182,12 @@ int streamer_pcm_get_data(uint8_t *dest, uint32_t length)
             if (s_StreamerBufferReadIndex >= s_StreamerBufferCount)
             {
                 s_StreamerBufferReadIndex = 0U;
+            }
+
+            if (NULL != stream_write_wait)
+            {
+                /* it is not in isr context */
+                xSemaphoreGive(stream_write_wait);
             }
         }
     }

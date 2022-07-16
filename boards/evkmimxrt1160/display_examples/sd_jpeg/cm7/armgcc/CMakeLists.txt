@@ -63,6 +63,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../../components/video/display/hx8394
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../middleware/libjpeg
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../components/video
@@ -73,6 +74,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm7
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/video/display
     ${ProjDirPath}/../../../../../../components/osa
@@ -112,6 +114,8 @@ include(utility_assert_lite_MIMXRT1166_cm7)
 
 include(driver_display-hx8394_MIMXRT1166_cm7)
 
+include(component_igpio_adapter_MIMXRT1166_cm7)
+
 include(driver_igpio_MIMXRT1166_cm7)
 
 include(driver_clock_MIMXRT1166_cm7)
@@ -142,13 +146,15 @@ include(driver_iomuxc_MIMXRT1166_cm7)
 
 include(driver_xip_device_MIMXRT1166_cm7)
 
-include(driver_xip_board_MIMXRT1166_cm7)
+include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm7)
 
 include(driver_pmu_1_MIMXRT1166_cm7)
 
 include(driver_dcdc_soc_MIMXRT1166_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1166_cm7)
+
+include(component_silicon_id_MIMXRT1166_cm7)
 
 include(driver_anatop_ai_MIMXRT1166_cm7)
 

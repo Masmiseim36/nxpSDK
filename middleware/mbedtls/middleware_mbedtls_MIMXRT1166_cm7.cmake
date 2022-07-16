@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_mbedtls component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -14,11 +14,12 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/library/camellia.c
     ${CMAKE_CURRENT_LIST_DIR}/library/ccm.c
     ${CMAKE_CURRENT_LIST_DIR}/library/certs.c
-    ${CMAKE_CURRENT_LIST_DIR}/library/cipher.c
-    ${CMAKE_CURRENT_LIST_DIR}/library/cipher_wrap.c
     ${CMAKE_CURRENT_LIST_DIR}/library/chacha20.c
     ${CMAKE_CURRENT_LIST_DIR}/library/chachapoly.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/cipher.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/cipher_wrap.c
     ${CMAKE_CURRENT_LIST_DIR}/library/cmac.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/constant_time.c
     ${CMAKE_CURRENT_LIST_DIR}/library/ctr_drbg.c
     ${CMAKE_CURRENT_LIST_DIR}/library/debug.c
     ${CMAKE_CURRENT_LIST_DIR}/library/des.c
@@ -39,9 +40,9 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/library/md2.c
     ${CMAKE_CURRENT_LIST_DIR}/library/md4.c
     ${CMAKE_CURRENT_LIST_DIR}/library/md5.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/memory_buffer_alloc.c
     ${CMAKE_CURRENT_LIST_DIR}/library/mps_reader.c
     ${CMAKE_CURRENT_LIST_DIR}/library/mps_trace.c
-    ${CMAKE_CURRENT_LIST_DIR}/library/memory_buffer_alloc.c
     ${CMAKE_CURRENT_LIST_DIR}/library/net_sockets.c
     ${CMAKE_CURRENT_LIST_DIR}/library/nist_kw.c
     ${CMAKE_CURRENT_LIST_DIR}/library/oid.c

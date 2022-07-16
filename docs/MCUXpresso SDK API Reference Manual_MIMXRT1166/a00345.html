@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -133,7 +133,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga1a2c1f1889cdd9c2d4410a9fffe226d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#ga1a2c1f1889cdd9c2d4410a9fffe226d9">RDC_SEMA42_Deinit</a> (RDC_SEMAPHORE_Type *base)</td></tr>
 <tr class="memdesc:ga1a2c1f1889cdd9c2d4410a9fffe226d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-initializes the RDC_SEMA42 module.  <a href="#ga1a2c1f1889cdd9c2d4410a9fffe226d9">More...</a><br/></td></tr>
 <tr class="separator:ga1a2c1f1889cdd9c2d4410a9fffe226d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85fb981fbe35995485b419091c06583c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#ga85fb981fbe35995485b419091c06583c">RDC_SEMA42_TryLock</a> (RDC_SEMAPHORE_Type *base, uint8_t gateNum, uint8_t masterIndex, uint8_t domainId)</td></tr>
+<tr class="memitem:ga85fb981fbe35995485b419091c06583c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#ga85fb981fbe35995485b419091c06583c">RDC_SEMA42_TryLock</a> (RDC_SEMAPHORE_Type *base, uint8_t gateNum, uint8_t masterIndex, uint8_t domainId)</td></tr>
 <tr class="memdesc:ga85fb981fbe35995485b419091c06583c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to lock the RDC_SEMA42 gate.  <a href="#ga85fb981fbe35995485b419091c06583c">More...</a><br/></td></tr>
 <tr class="separator:ga85fb981fbe35995485b419091c06583c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga55f710fde1530472af83d2192a1003d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#ga55f710fde1530472af83d2192a1003d6">RDC_SEMA42_Lock</a> (RDC_SEMAPHORE_Type *base, uint8_t gateNum, uint8_t masterIndex, uint8_t domainId)</td></tr>
@@ -148,17 +148,17 @@ Functions</h2></td></tr>
 <tr class="memitem:gac2bc50ca8bb908c88f0eedba0bc2f3f2"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#gac2bc50ca8bb908c88f0eedba0bc2f3f2">RDC_SEMA42_GetLockDomainID</a> (RDC_SEMAPHORE_Type *base, uint8_t gateNum)</td></tr>
 <tr class="memdesc:gac2bc50ca8bb908c88f0eedba0bc2f3f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets which domain has currently locked the gate.  <a href="#gac2bc50ca8bb908c88f0eedba0bc2f3f2">More...</a><br/></td></tr>
 <tr class="separator:gac2bc50ca8bb908c88f0eedba0bc2f3f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga756f7f9c12750a30c2ab26271371108d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#ga756f7f9c12750a30c2ab26271371108d">RDC_SEMA42_ResetGate</a> (RDC_SEMAPHORE_Type *base, uint8_t gateNum)</td></tr>
+<tr class="memitem:ga756f7f9c12750a30c2ab26271371108d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#ga756f7f9c12750a30c2ab26271371108d">RDC_SEMA42_ResetGate</a> (RDC_SEMAPHORE_Type *base, uint8_t gateNum)</td></tr>
 <tr class="memdesc:ga756f7f9c12750a30c2ab26271371108d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the RDC_SEMA42 gate to an unlocked status.  <a href="#ga756f7f9c12750a30c2ab26271371108d">More...</a><br/></td></tr>
 <tr class="separator:ga756f7f9c12750a30c2ab26271371108d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae72a0e282cf4c612ff7f2e55954cd2fd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#gae72a0e282cf4c612ff7f2e55954cd2fd">RDC_SEMA42_ResetAllGates</a> (RDC_SEMAPHORE_Type *base)</td></tr>
+<tr class="memitem:gae72a0e282cf4c612ff7f2e55954cd2fd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#gae72a0e282cf4c612ff7f2e55954cd2fd">RDC_SEMA42_ResetAllGates</a> (RDC_SEMAPHORE_Type *base)</td></tr>
 <tr class="memdesc:gae72a0e282cf4c612ff7f2e55954cd2fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets all RDC_SEMA42 gates to an unlocked status.  <a href="#gae72a0e282cf4c612ff7f2e55954cd2fd">More...</a><br/></td></tr>
 <tr class="separator:gae72a0e282cf4c612ff7f2e55954cd2fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gaa6cac37b3ebec11ac45076d374d6a93e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa6cac37b3ebec11ac45076d374d6a93e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#gaa6cac37b3ebec11ac45076d374d6a93e">FSL_RDC_SEMA42_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 3))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00345.html#gaa6cac37b3ebec11ac45076d374d6a93e">FSL_RDC_SEMA42_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
 <tr class="memdesc:gaa6cac37b3ebec11ac45076d374d6a93e"><td class="mdescLeft">&#160;</td><td class="mdescRight">RDC_SEMA42 driver version. <br/></td></tr>
 <tr class="separator:gaa6cac37b3ebec11ac45076d374d6a93e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -265,7 +265,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> RDC_SEMA42_TryLock </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> RDC_SEMA42_TryLock </td>
           <td>(</td>
           <td class="paramtype">RDC_SEMAPHORE_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -486,7 +486,7 @@ Driver version</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> RDC_SEMA42_ResetGate </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> RDC_SEMA42_ResetGate </td>
           <td>(</td>
           <td class="paramtype">RDC_SEMAPHORE_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -530,7 +530,7 @@ Driver version</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> RDC_SEMA42_ResetAllGates </td>
+          <td class="memname">static <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> RDC_SEMA42_ResetAllGates </td>
           <td>(</td>
           <td class="paramtype">RDC_SEMAPHORE_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>

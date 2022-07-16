@@ -5,7 +5,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "usb_host_msd.h"
@@ -1211,3 +1211,4 @@ int USB_HostMsdFatfsInit(void)
 
     return 0;
 }
+#endif

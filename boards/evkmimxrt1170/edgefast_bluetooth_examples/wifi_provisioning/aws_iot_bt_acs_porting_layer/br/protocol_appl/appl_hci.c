@@ -636,11 +636,13 @@ API_RESULT appl_hci_event_indication_callback
 
         #ifndef HCI_NO_ESCO_AUTO_ACCEPT
             if (0 == appl_hci_sync_conn_accept_auto_rsp)
-            {
+            { 
+ #ifdef BR_EDR_HCI
                 if (BT_TRUE == appl_hci_set_esco_connect_param)
                 {
                     BT_hci_set_esco_channel_parameters (&appl_esco_params);
                 }
+#endif
             }
             else if (1 == appl_hci_sync_conn_accept_auto_rsp)
             {
@@ -2045,8 +2047,10 @@ void main_hci_operations ( void )
             IotLogDebug("Read Local supported and Extended features...\n");
 
             BT_hci_read_local_supported_features();
+#if 0
             BT_hci_read_local_extended_features(0);
             BT_hci_read_local_extended_features(1);
+#endif
             break;
 
         case 27:

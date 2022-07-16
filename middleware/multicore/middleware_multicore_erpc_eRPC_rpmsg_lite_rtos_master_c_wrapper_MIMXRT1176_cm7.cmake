@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_multicore_erpc_eRPC_rpmsg_lite_rtos_master_c_wrapper component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

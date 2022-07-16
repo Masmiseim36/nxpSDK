@@ -56,6 +56,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
 )
@@ -96,6 +97,8 @@ include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm4)
 include(driver_pmu_1_MIMXRT1176_cm4)
 
 include(driver_dcdc_soc_MIMXRT1176_cm4)
+
+include(component_silicon_id_MIMXRT1176_cm4)
 
 include(driver_memory_MIMXRT1176_cm4)
 

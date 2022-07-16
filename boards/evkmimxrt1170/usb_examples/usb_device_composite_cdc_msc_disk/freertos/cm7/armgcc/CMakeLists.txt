@@ -73,6 +73,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
+    ${ProjDirPath}/../../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
@@ -93,6 +94,8 @@ include(middleware_usb_device_ehci_MIMXRT1176_cm7)
 include(middleware_usb_phy_MIMXRT1176_cm7)
 
 include(driver_usdhc_MIMXRT1176_cm7)
+
+include(component_igpio_adapter_MIMXRT1176_cm7)
 
 include(middleware_sdmmc_sd_MIMXRT1176_cm7)
 

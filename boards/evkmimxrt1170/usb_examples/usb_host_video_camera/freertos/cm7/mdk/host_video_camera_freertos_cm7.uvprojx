@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_FREERTOS, configAPPLICATION_ALLOCATED_HEAP=1, SD_ENABLED, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, USB_STACK_FREERTOS_HEAP_SIZE=98304</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_FREERTOS, configAPPLICATION_ALLOCATED_HEAP=1, SD_ENABLED, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, USB_STACK_FREERTOS_HEAP_SIZE=98304</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../components/gpio;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -802,6 +802,21 @@
               <FileName>fsl_sd_disk.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1292,6 +1307,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -1648,7 +1668,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_FREERTOS, configAPPLICATION_ALLOCATED_HEAP=1, SD_ENABLED, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, USB_STACK_FREERTOS_HEAP_SIZE=98304</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../components/gpio;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2120,6 +2140,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -2608,6 +2643,11 @@
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
@@ -2962,7 +3002,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, DEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_FREERTOS, configAPPLICATION_ALLOCATED_HEAP=1, SD_ENABLED, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, USB_STACK_FREERTOS_HEAP_SIZE=98304</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../components/gpio;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3434,6 +3474,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -3922,6 +3977,11 @@
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
@@ -4274,9 +4334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_FREERTOS, configAPPLICATION_ALLOCATED_HEAP=1, SD_ENABLED, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, USB_STACK_FREERTOS_HEAP_SIZE=98304</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=0, _DEBUG=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_FREERTOS, configAPPLICATION_ALLOCATED_HEAP=1, SD_ENABLED, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, USB_STACK_FREERTOS_HEAP_SIZE=98304</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../components/gpio;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4748,6 +4808,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -5236,6 +5311,11 @@
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
@@ -5590,7 +5670,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_FREERTOS, configAPPLICATION_ALLOCATED_HEAP=1, SD_ENABLED, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, USB_STACK_FREERTOS_HEAP_SIZE=98304</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../components/gpio;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6062,6 +6142,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -6550,6 +6645,11 @@
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
@@ -6904,7 +7004,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, USB_STACK_FREERTOS, configAPPLICATION_ALLOCATED_HEAP=1, SD_ENABLED, SDK_OS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1, MCUXPRESSO_SDK, USB_STACK_FREERTOS_HEAP_SIZE=98304</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
+              <IncludePath>../../../../..;..;../..;../../../../../../../middleware/usb/host;../../../../../../../middleware/usb/include;../../../../../../../middleware/usb/phy;../../../../../../../devices/MIMXRT1176/drivers;../../../../../../../middleware/sdmmc/sd;../../../../../../../middleware/sdmmc/common;../../../../../../../middleware/sdmmc/host/usdhc;../../../../../../../middleware/fatfs/source;../../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../../components/gpio;../../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../../middleware/usb/host/class;../../../../../../../devices/MIMXRT1176;../../../../../../../devices/MIMXRT1176/utilities/str;../../../../../../../devices/MIMXRT1176/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MIMXRT1176/xip;../../../../../xip;../../../../../../../components/osa;../../../../../../../devices/MIMXRT1176/drivers/cm7;../../../../../../../CMSIS/Core/Include;../../../../../../../middleware/sdmmc/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -7376,6 +7476,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
@@ -7862,6 +7977,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>

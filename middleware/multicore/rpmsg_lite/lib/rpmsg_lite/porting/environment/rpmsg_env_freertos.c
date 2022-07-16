@@ -2,7 +2,7 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * Copyright 2021 ACRIOS Systems s.r.o.
  * All rights reserved.
  *
@@ -44,21 +44,25 @@
  *
  **************************************************************************/
 
+#include "rpmsg_compiler.h"
 #include "rpmsg_env.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "semphr.h"
 #include "rpmsg_platform.h"
 #include "virtqueue.h"
-#include "rpmsg_compiler.h"
+#include "event_groups.h"
+#include "rpmsg_lite.h"
 
 #include <stdlib.h>
 #include <string.h>
 
-static int32_t env_init_counter   = 0;
-static SemaphoreHandle_t env_sema = ((void *)0);
+static int32_t env_init_counter       = 0;
+static SemaphoreHandle_t env_sema     = ((void *)0);
+static EventGroupHandle_t event_group = ((void *)0);
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)
 LOCK_STATIC_CONTEXT env_sem_static_context;
+StaticEventGroup_t event_group_static_context;
 #endif
 
 /* RL_ENV_MAX_MUTEX_COUNT is an arbitrary count greater than 'count'
@@ -96,6 +100,42 @@ static int32_t env_in_isr(void)
 }
 
 /*!
+ * env_wait_for_link_up
+ *
+ * Wait until the link_state parameter of the rpmsg_lite_instance is set.
+ * Utilize events to avoid busy loop implementation.
+ *
+ */
+void env_wait_for_link_up(volatile uint32_t *link_state, uint32_t link_id)
+{
+    (void)xEventGroupClearBits(event_group, (EventBits_t)(1UL << link_id));
+    if (*link_state != 1U)
+    {
+        (void)xEventGroupWaitBits(event_group, (EventBits_t)(1UL << link_id), pdFALSE, pdTRUE, portMAX_DELAY);
+    }
+}
+
+/*!
+ * env_tx_callback
+ *
+ * Set event to notify task waiting in env_wait_for_link_up().
+ *
+ */
+void env_tx_callback(uint32_t link_id)
+{
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    if (env_in_isr() != 0)
+    {
+        (void)xEventGroupSetBitsFromISR(event_group, (EventBits_t)(1UL << link_id), &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+    }
+    else
+    {
+        (void)xEventGroupSetBits(event_group, (EventBits_t)(1UL << link_id));
+    }
+}
+
+/*!
  * env_init
  *
  * Initializes OS/BM environment.
@@ -105,7 +145,7 @@ int32_t env_init(void)
 {
     int32_t retval;
     vTaskSuspendAll(); /* stop scheduler */
-    // verify 'env_init_counter'
+    /* verify 'env_init_counter' */
     RL_ASSERT(env_init_counter >= 0);
     if (env_init_counter < 0)
     {
@@ -113,14 +153,21 @@ int32_t env_init(void)
         return -1;
     }
     env_init_counter++;
-    // multiple call of 'env_init' - return ok
+    /* multiple call of 'env_init' - return ok */
     if (env_init_counter == 1)
     {
-        // first call
+        /* first call */
 #if defined(RL_USE_STATIC_API) && (RL_USE_STATIC_API == 1)
-        env_sema = xSemaphoreCreateBinaryStatic(&env_sem_static_context);
+        env_sema    = xSemaphoreCreateBinaryStatic(&env_sem_static_context);
+        event_group = xEventGroupCreateStatic(&event_group_static_context);
 #else
-        env_sema = xSemaphoreCreateBinary();
+        env_sema    = xSemaphoreCreateBinary();
+        event_group = xEventGroupCreate();
+#endif
+#if (configUSE_16_BIT_TICKS == 1)
+        (void)xEventGroupClearBits(event_group, 0xFFu);
+#else
+        (void)xEventGroupClearBits(event_group, 0xFFFFFFu);
 #endif
         (void)memset(isr_table, 0, sizeof(isr_table));
         (void)xTaskResumeAll();
@@ -157,7 +204,7 @@ int32_t env_deinit(void)
     int32_t retval;
 
     vTaskSuspendAll(); /* stop scheduler */
-    // verify 'env_init_counter'
+    /* verify 'env_init_counter' */
     RL_ASSERT(env_init_counter > 0);
     if (env_init_counter <= 0)
     {
@@ -165,14 +212,16 @@ int32_t env_deinit(void)
         return -1;
     }
 
-    // counter on zero - call platform deinit
+    /* counter on zero - call platform deinit */
     env_init_counter--;
-    // multiple call of 'env_deinit' - return ok
+    /* multiple call of 'env_deinit' - return ok */
     if (env_init_counter <= 0)
     {
-        // last call
+        /* last call */
         (void)memset(isr_table, 0, sizeof(isr_table));
         retval = platform_deinit();
+        vEventGroupDelete(event_group);
+        event_group = ((void *)0);
         vSemaphoreDelete(env_sema);
         env_sema = ((void *)0);
         (void)xTaskResumeAll();

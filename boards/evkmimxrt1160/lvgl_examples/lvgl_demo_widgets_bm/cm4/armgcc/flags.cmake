@@ -4,19 +4,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m4 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv4-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
@@ -25,17 +16,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m4 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv4-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
@@ -47,7 +30,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -DDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
-    -DLV_DEMO_CONF_INCLUDE_SIMPLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMCUXPRESSO_SDK \
@@ -79,7 +61,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DNDEBUG \
     -DCPU_MIMXRT1166DVM6A_cm4 \
     -DLV_CONF_INCLUDE_SIMPLE=1 \
-    -DLV_DEMO_CONF_INCLUDE_SIMPLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMCUXPRESSO_SDK \

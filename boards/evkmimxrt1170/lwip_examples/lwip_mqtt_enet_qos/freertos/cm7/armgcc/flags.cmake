@@ -4,19 +4,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     -D__STARTUP_INITIALIZE_RAMFUNCTION \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
@@ -25,36 +16,19 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_SDRAM_DEBUG " \
     ${CMAKE_ASM_FLAGS_SDRAM_DEBUG} \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE " \
     ${CMAKE_ASM_FLAGS_SDRAM_RELEASE} \
@@ -62,29 +36,23 @@ SET(CMAKE_ASM_FLAGS_SDRAM_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
-    -DXIP_BOOT_HEADER_DCD_ENABLE=1 \
+    -DXIP_BOOT_HEADER_DCD_ENABLE=0 \
+    -DXIP_BOOT_HEADER_XMCD_ENABLE=1 \
     -DUSE_SDRAM \
     -DDATA_SECTION_IS_CACHEABLE=1 \
     -DDEBUG \
     -D_POSIX_SOURCE \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
@@ -113,13 +81,15 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} \
     -DXIP_EXTERNAL_FLASH=1 \
     -DXIP_BOOT_HEADER_ENABLE=1 \
-    -DXIP_BOOT_HEADER_DCD_ENABLE=1 \
+    -DXIP_BOOT_HEADER_DCD_ENABLE=0 \
+    -DXIP_BOOT_HEADER_XMCD_ENABLE=1 \
     -DUSE_SDRAM \
     -DDATA_SECTION_IS_CACHEABLE=1 \
     -DNDEBUG \
     -D_POSIX_SOURCE \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
@@ -151,6 +121,7 @@ SET(CMAKE_C_FLAGS_SDRAM_DEBUG " \
     -D_POSIX_SOURCE \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \
@@ -183,6 +154,7 @@ SET(CMAKE_C_FLAGS_SDRAM_RELEASE " \
     -D_POSIX_SOURCE \
     -DLWIP_TIMEVAL_PRIVATE=0 \
     -DCPU_MIMXRT1176DVMAA_cm7 \
+    -DFSL_ETH_ENABLE_CACHE_CONTROL=1 \
     -DUSE_RTOS=1 \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1 \

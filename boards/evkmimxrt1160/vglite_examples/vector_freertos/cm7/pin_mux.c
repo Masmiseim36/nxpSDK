@@ -70,7 +70,7 @@ BOARD_InitMipiPanelPins:
 - pin_list:
   - {pin_num: K17, peripheral: GPIO9, signal: 'gpio_io, 29', pin_signal: GPIO_AD_30}
   - {pin_num: R13, peripheral: GPIO9, signal: 'gpio_io, 01', pin_signal: GPIO_AD_02}
-  - {pin_num: C9, peripheral: GPIO11, signal: 'gpio_io, 06', pin_signal: GPIO_DISP_B2_05}
+  - {pin_num: A4, peripheral: GPIO11, signal: 'gpio_io, 16', pin_signal: GPIO_DISP_B2_15}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -90,7 +90,7 @@ void BOARD_InitMipiPanelPins(void) {
       IOMUXC_GPIO_AD_30_GPIO9_IO29,           /* GPIO_AD_30 is configured as GPIO9_IO29 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_DISP_B2_05_GPIO11_IO06,     /* GPIO_DISP_B2_05 is configured as GPIO11_IO06 */
+      IOMUXC_GPIO_DISP_B2_15_GPIO11_IO16,     /* GPIO_DISP_B2_15 is configured as GPIO11_IO16 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
 }
 

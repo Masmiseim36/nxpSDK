@@ -107,7 +107,7 @@ define region core1_region = mem:[from core1_image_start to core1_image_end];
 define block CORE1_IMAGE_BLOCK          { section  __core1_image };
 
 initialize by copy {
-  object flexspi_nor_flash_ops.o,
+  object mflash_drv.o,
   object fsl_flexspi.o,
 };
 

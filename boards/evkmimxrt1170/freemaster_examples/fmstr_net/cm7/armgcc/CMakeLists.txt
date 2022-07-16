@@ -68,10 +68,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../components/phy
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
     ${ProjDirPath}/../../../../../../middleware/freemaster
+    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
@@ -79,6 +79,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../xmcd
 )
 
 # include modules
@@ -95,8 +96,6 @@ include(middleware_lwip_MIMXRT1176_cm7)
 include(driver_phy-common_MIMXRT1176_cm7)
 
 include(driver_enet_MIMXRT1176_cm7)
-
-include(utility_debug_console_MIMXRT1176_cm7)
 
 include(middleware_freertos-kernel_heap_3_MIMXRT1176_cm7)
 
@@ -150,9 +149,13 @@ include(middleware_freertos-kernel_MIMXRT1176_cm7)
 
 include(middleware_freertos-kernel_extension_MIMXRT1176_cm7)
 
+include(utility_debug_console_MIMXRT1176_cm7)
+
 include(utilities_misc_utilities_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
+
+include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

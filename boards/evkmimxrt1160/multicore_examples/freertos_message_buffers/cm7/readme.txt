@@ -25,9 +25,9 @@ at a fixed location that is then known for both cores.
 Toolchain supported
 ===================
 - GCC ARM Embedded  10.3.1
-- Keil MDK  5.36
-- IAR embedded Workbench  9.20.2
-- MCUXpresso  11.5.0
+- Keil MDK  5.37
+- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================

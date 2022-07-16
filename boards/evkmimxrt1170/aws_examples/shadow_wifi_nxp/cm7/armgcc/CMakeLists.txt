@@ -88,12 +88,13 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/flash/mflash/mimxrt1170
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/drivers/cm7
     ${ProjDirPath}/../../../../../../middleware/mbedtls
+    ${ProjDirPath}/../../../../../../middleware/wifi_nxp
+    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
+    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
+    ${ProjDirPath}/../../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
-    ${ProjDirPath}/../../../../../../middleware/wifi_nxp
-    ${ProjDirPath}/../../../../../../middleware/sdmmc
-    ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../../components/uart
@@ -101,6 +102,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
 )
@@ -124,21 +126,15 @@ include(middleware_mbedtls_port_ksdk_MIMXRT1176_cm7)
 
 include(middleware_mbedtls_rt2_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_vendor_nxp_wifi_MIMXRT1176_cm7)
+include(middleware_wifi_wifidriver_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_vendor_nxp_secure_sockets_lwip_MIMXRT1176_cm7)
-
-include(middleware_freertos-aws_iot_demos_MIMXRT1176_cm7)
-
-include(middleware_lwip_MIMXRT1176_cm7)
+include(middleware_freertos-kernel_MIMXRT1176_cm7)
 
 include(utility_debug_console_MIMXRT1176_cm7)
 
-include(middleware_wifi_MIMXRT1176_cm7)
+include(middleware_wifi_sdio_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_demos_shadow_MIMXRT1176_cm7)
-
-include(middleware_freertos-aws_iot_demos_dev_mode_key_provisioning_MIMXRT1176_cm7)
+include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
 
 include(middleware_sdmmc_sdio_MIMXRT1176_cm7)
 
@@ -148,9 +144,23 @@ include(middleware_sdmmc_host_usdhc_MIMXRT1176_cm7)
 
 include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1176_cm7)
+include(component_igpio_adapter_MIMXRT1176_cm7)
 
-include(middleware_freertos-kernel_MIMXRT1176_cm7)
+include(middleware_freertos-aws_iot_vendor_nxp_wifi_MIMXRT1176_cm7)
+
+include(middleware_freertos-aws_iot_vendor_nxp_secure_sockets_lwip_MIMXRT1176_cm7)
+
+include(middleware_freertos-aws_iot_demos_MIMXRT1176_cm7)
+
+include(middleware_lwip_MIMXRT1176_cm7)
+
+include(middleware_wifi_MIMXRT1176_cm7)
+
+include(middleware_freertos-aws_iot_demos_shadow_MIMXRT1176_cm7)
+
+include(middleware_freertos-aws_iot_demos_dev_mode_key_provisioning_MIMXRT1176_cm7)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1176_cm7)
 
@@ -204,25 +214,25 @@ include(driver_pmu_1_MIMXRT1176_cm7)
 
 include(driver_dcdc_soc_MIMXRT1176_cm7)
 
+include(component_silicon_id_MIMXRT1176_cm7)
+
 include(driver_memory_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT1176_cm7)
-
 include(middleware_freertos-kernel_extension_MIMXRT1176_cm7)
 
-include(middleware_wifi_wifidriver_MIMXRT1176_cm7)
-
-include(middleware_wifi_fwdnld_MIMXRT1176_cm7)
+include(middleware_wifi_sdio-2_MIMXRT1176_cm7)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1176_cm7)
 
 include(component_osa_free_rtos_MIMXRT1176_cm7)
 
 include(driver_usdhc_MIMXRT1176_cm7)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT1176_cm7)
 
 include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1176_cm7)
 

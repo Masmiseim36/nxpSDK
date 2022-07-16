@@ -101,7 +101,7 @@ include(driver_igpio_MIMXRT1166_cm4)
 
 include(driver_xip_device_MIMXRT1166_cm4)
 
-include(driver_xip_board_MIMXRT1166_cm4)
+include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm4)
 
 include(middleware_usb_host_stack_MIMXRT1166_cm4)
 

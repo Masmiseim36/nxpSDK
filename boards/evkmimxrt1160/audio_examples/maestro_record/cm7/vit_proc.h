@@ -8,7 +8,7 @@
 #ifndef _VIT_PROC_H_
 #define _VIT_PROC_H_
 
-#include "PL_platformTypes_CortexM7.h"
+#include "PL_platformTypes_CortexM.h"
 #include "VIT.h"
 
 typedef int (*VIT_Initialize_T)(void *arg);

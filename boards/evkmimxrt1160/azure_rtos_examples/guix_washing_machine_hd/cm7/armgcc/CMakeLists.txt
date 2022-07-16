@@ -131,6 +131,8 @@ include(driver_gt911_MIMXRT1166_cm7)
 
 include(driver_soc_src_MIMXRT1166_cm7)
 
+include(driver_pxp_MIMXRT1166_cm7)
+
 include(component_lists_MIMXRT1166_cm7)
 
 include(component_lpuart_adapter_MIMXRT1166_cm7)

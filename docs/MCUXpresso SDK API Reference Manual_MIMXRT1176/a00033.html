@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -104,7 +104,7 @@ $(document).ready(function(){initNavTree('a00033.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">FlexIO Camera Driver<div class="ingroups"><a class="el" href="a00338.html">FlexIO: FlexIO Driver</a></div></div>  </div>
+<div class="title">FlexIO Camera Driver<div class="ingroups"><a class="el" href="a00337.html">FlexIO: FlexIO Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -130,13 +130,13 @@ FlexIO Camera Receive using eDMA method</h2>
 <div class="line"><a class="code" href="a00033.html#a00521">flexio_camera_config_t</a> cameraConfig;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* Configure DMAMUX */</span></div>
-<div class="line"><a class="code" href="a00334.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(DMAMUX0);</div>
+<div class="line"><a class="code" href="a00333.html#ga850545ac61a004df8ca312db2ca9db73">DMAMUX_Init</a>(DMAMUX0);</div>
 <div class="line"><span class="comment">/* Configure DMA */</span></div>
 <div class="line"><a class="code" href="a00025.html#ga9851dc5addd6a1fc557bfdb625aa5c19">EDMA_GetDefaultConfig</a>(&amp;edmaConfig);</div>
 <div class="line"><a class="code" href="a00025.html#gaf7588eb4b54499f0f55c698bd98bc1bb">EDMA_Init</a>(DMA0, &amp;edmaConfig);</div>
 <div class="line"></div>
-<div class="line"><a class="code" href="a00334.html#ga97083a74f4af599de628cdd8864d6676">DMAMUX_SetSource</a>(DMAMUX0, DMA_CHN_FLEXIO_TO_FRAMEBUFF, (g_FlexioCameraDevice.<a class="code" href="a00033.html#af554771d59526dae198dbccced67dd3d">shifterStartIdx</a> + 1U));</div>
-<div class="line"><a class="code" href="a00334.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a>(DMAMUX0, DMA_CHN_FLEXIO_TO_FRAMEBUFF);</div>
+<div class="line"><a class="code" href="a00333.html#ga97083a74f4af599de628cdd8864d6676">DMAMUX_SetSource</a>(DMAMUX0, DMA_CHN_FLEXIO_TO_FRAMEBUFF, (g_FlexioCameraDevice.<a class="code" href="a00033.html#af554771d59526dae198dbccced67dd3d">shifterStartIdx</a> + 1U));</div>
+<div class="line"><a class="code" href="a00333.html#gaecac68802d961c31a06389caa97387f5">DMAMUX_EnableChannel</a>(DMAMUX0, DMA_CHN_FLEXIO_TO_FRAMEBUFF);</div>
 <div class="line"><a class="code" href="a00025.html#gae71842684e693908395784e8b7f7ef55">EDMA_CreateHandle</a>(&amp;g_edmaHandle, DMA0, DMA_CHN_FLEXIO_TO_FRAMEBUFF);</div>
 <div class="line"></div>
 <div class="line"><a class="code" href="a00033.html#ga802016ccb9ed8299101f66455b85d7db">FLEXIO_CAMERA_GetDefaultConfig</a>(&amp;cameraConfig);</div>
@@ -158,7 +158,7 @@ FlexIO Camera Receive using eDMA method</h2>
 <div class="line"><span class="comment">/* A callback function is also needed */</span></div>
 <div class="line"><span class="keywordtype">void</span> FLEXIO_CAMERA_UserCallback(<a class="code" href="a00033.html#a00523">FLEXIO_CAMERA_Type</a> *base,</div>
 <div class="line">                            flexio_camera_edma_handle_t *handle,</div>
-<div class="line">                            <a class="code" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status,</div>
+<div class="line">                            <a class="code" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status,</div>
 <div class="line">                            <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    userData = userData;</div>
@@ -213,7 +213,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaf67f7409d83d5806e8dee459e28ea116"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#gaf67f7409d83d5806e8dee459e28ea116">FSL_FLEXIO_CAMERA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
+<tr class="memitem:gaf67f7409d83d5806e8dee459e28ea116"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00033.html#gaf67f7409d83d5806e8dee459e28ea116">FSL_FLEXIO_CAMERA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td></tr>
 <tr class="memdesc:gaf67f7409d83d5806e8dee459e28ea116"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO Camera driver version 2.1.3.  <a href="#gaf67f7409d83d5806e8dee459e28ea116">More...</a><br/></td></tr>
 <tr class="separator:gaf67f7409d83d5806e8dee459e28ea116"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -466,7 +466,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXIO_CAMERA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
+          <td class="memname">#define FSL_FLEXIO_CAMERA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">

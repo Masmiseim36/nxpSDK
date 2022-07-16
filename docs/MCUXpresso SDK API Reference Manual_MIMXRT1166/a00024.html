@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -161,9 +161,9 @@ Command mode data transfer</h1>
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00576"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a></td></tr>
-<tr class="memdesc:a00576"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI DSI structure definition.  <a href="a00024.html#a00576">More...</a><br/></td></tr>
-<tr class="separator:a00576"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00570"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a></td></tr>
+<tr class="memdesc:a00570"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI DSI structure definition.  <a href="a00024.html#a00570">More...</a><br/></td></tr>
+<tr class="separator:a00570"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00455"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a00455">dsi_config_t</a></td></tr>
 <tr class="memdesc:a00455"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI DSI controller configuration.  <a href="a00024.html#a00455">More...</a><br/></td></tr>
 <tr class="separator:a00455"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,7 +182,7 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gae04b53640614864862c37996d8ccb4eb"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gae04b53640614864862c37996d8ccb4eb">dsi_callback_t</a> )(const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, dsi_handle_t *handle, <a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+<tr class="memitem:gae04b53640614864862c37996d8ccb4eb"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gae04b53640614864862c37996d8ccb4eb">dsi_callback_t</a> )(const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, dsi_handle_t *handle, <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gae04b53640614864862c37996d8ccb4eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">MIPI DSI callback for finished transfer.  <a href="#gae04b53640614864862c37996d8ccb4eb">More...</a><br/></td></tr>
 <tr class="separator:gae04b53640614864862c37996d8ccb4eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -510,15 +510,15 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gadff12c22c272d75eb22abfd2b7b09146"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gadff12c22c272d75eb22abfd2b7b09146"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_MIPI_DSI_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_MIPI_DSI_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td></tr>
 <tr class="separator:gadff12c22c272d75eb22abfd2b7b09146"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 MIPI_DSI host initialization.</h2></td></tr>
-<tr class="memitem:ga3718863609718b6b22a643b483bf67d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga3718863609718b6b22a643b483bf67d1">DSI_Init</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, const <a class="el" href="a00024.html#a00455">dsi_config_t</a> *config)</td></tr>
+<tr class="memitem:ga3718863609718b6b22a643b483bf67d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga3718863609718b6b22a643b483bf67d1">DSI_Init</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, const <a class="el" href="a00024.html#a00455">dsi_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga3718863609718b6b22a643b483bf67d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an MIPI DSI host with the user configuration.  <a href="#ga3718863609718b6b22a643b483bf67d1">More...</a><br/></td></tr>
 <tr class="separator:ga3718863609718b6b22a643b483bf67d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga876d5de3c6a3f30ed3dcb99100420a7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga876d5de3c6a3f30ed3dcb99100420a7a">DSI_Deinit</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base)</td></tr>
+<tr class="memitem:ga876d5de3c6a3f30ed3dcb99100420a7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga876d5de3c6a3f30ed3dcb99100420a7a">DSI_Deinit</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base)</td></tr>
 <tr class="memdesc:ga876d5de3c6a3f30ed3dcb99100420a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes an MIPI DSI host.  <a href="#ga876d5de3c6a3f30ed3dcb99100420a7a">More...</a><br/></td></tr>
 <tr class="separator:ga876d5de3c6a3f30ed3dcb99100420a7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1f1b94589f9988c1e678307f177e34cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga1f1b94589f9988c1e678307f177e34cf">DSI_GetDefaultConfig</a> (<a class="el" href="a00024.html#a00455">dsi_config_t</a> *config)</td></tr>
@@ -527,16 +527,16 @@ MIPI_DSI host initialization.</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 DPI interface</h2></td></tr>
-<tr class="memitem:ga34dfc19faef8807a1c3c25719f2c8e3b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga34dfc19faef8807a1c3c25719f2c8e3b">DSI_SetDpiConfig</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, const <a class="el" href="a00024.html#a00457">dsi_dpi_config_t</a> *config, uint8_t numLanes, uint32_t dpiPixelClkFreq_Hz, uint32_t dsiHsBitClkFreq_Hz)</td></tr>
+<tr class="memitem:ga34dfc19faef8807a1c3c25719f2c8e3b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga34dfc19faef8807a1c3c25719f2c8e3b">DSI_SetDpiConfig</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, const <a class="el" href="a00024.html#a00457">dsi_dpi_config_t</a> *config, uint8_t numLanes, uint32_t dpiPixelClkFreq_Hz, uint32_t dsiHsBitClkFreq_Hz)</td></tr>
 <tr class="memdesc:ga34dfc19faef8807a1c3c25719f2c8e3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the DPI interface core.  <a href="#ga34dfc19faef8807a1c3c25719f2c8e3b">More...</a><br/></td></tr>
 <tr class="separator:ga34dfc19faef8807a1c3c25719f2c8e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 D-PHY configuration.</h2></td></tr>
-<tr class="memitem:ga20340a84602c5c560ab5ac809a8981eb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga20340a84602c5c560ab5ac809a8981eb">DSI_InitDphy</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, const <a class="el" href="a00024.html#a00456">dsi_dphy_config_t</a> *config, uint32_t refClkFreq_Hz)</td></tr>
+<tr class="memitem:ga20340a84602c5c560ab5ac809a8981eb"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga20340a84602c5c560ab5ac809a8981eb">DSI_InitDphy</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, const <a class="el" href="a00024.html#a00456">dsi_dphy_config_t</a> *config, uint32_t refClkFreq_Hz)</td></tr>
 <tr class="memdesc:ga20340a84602c5c560ab5ac809a8981eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the D-PHY.  <a href="#ga20340a84602c5c560ab5ac809a8981eb">More...</a><br/></td></tr>
 <tr class="separator:ga20340a84602c5c560ab5ac809a8981eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae0b5ef49a9a7b1937d9512945a63b482"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gae0b5ef49a9a7b1937d9512945a63b482">DSI_DeinitDphy</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base)</td></tr>
+<tr class="memitem:gae0b5ef49a9a7b1937d9512945a63b482"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gae0b5ef49a9a7b1937d9512945a63b482">DSI_DeinitDphy</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base)</td></tr>
 <tr class="memdesc:gae0b5ef49a9a7b1937d9512945a63b482"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the D-PHY.  <a href="#gae0b5ef49a9a7b1937d9512945a63b482">More...</a><br/></td></tr>
 <tr class="separator:gae0b5ef49a9a7b1937d9512945a63b482"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga10b7d3702936b8ba7831d6cfb8bda75a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga10b7d3702936b8ba7831d6cfb8bda75a">DSI_GetDphyDefaultConfig</a> (<a class="el" href="a00024.html#a00456">dsi_dphy_config_t</a> *config, uint32_t txHsBitClk_Hz, uint32_t txEscClk_Hz)</td></tr>
@@ -545,46 +545,46 @@ D-PHY configuration.</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Interrupts</h2></td></tr>
-<tr class="memitem:gaca7d1be1f80b6a6a71ce72bc010ccc9f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaca7d1be1f80b6a6a71ce72bc010ccc9f">DSI_EnableInterrupts</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, uint32_t intGroup1, uint32_t intGroup2)</td></tr>
+<tr class="memitem:gaca7d1be1f80b6a6a71ce72bc010ccc9f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaca7d1be1f80b6a6a71ce72bc010ccc9f">DSI_EnableInterrupts</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, uint32_t intGroup1, uint32_t intGroup2)</td></tr>
 <tr class="memdesc:gaca7d1be1f80b6a6a71ce72bc010ccc9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the interrupts.  <a href="#gaca7d1be1f80b6a6a71ce72bc010ccc9f">More...</a><br/></td></tr>
 <tr class="separator:gaca7d1be1f80b6a6a71ce72bc010ccc9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf5ec8a0fb3d645cc43c52d1abdf111b9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaf5ec8a0fb3d645cc43c52d1abdf111b9">DSI_DisableInterrupts</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, uint32_t intGroup1, uint32_t intGroup2)</td></tr>
+<tr class="memitem:gaf5ec8a0fb3d645cc43c52d1abdf111b9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaf5ec8a0fb3d645cc43c52d1abdf111b9">DSI_DisableInterrupts</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, uint32_t intGroup1, uint32_t intGroup2)</td></tr>
 <tr class="memdesc:gaf5ec8a0fb3d645cc43c52d1abdf111b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the interrupts.  <a href="#gaf5ec8a0fb3d645cc43c52d1abdf111b9">More...</a><br/></td></tr>
 <tr class="separator:gaf5ec8a0fb3d645cc43c52d1abdf111b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76e98b4cb7a664c37d1588a786bb4776"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga76e98b4cb7a664c37d1588a786bb4776">DSI_GetAndClearInterruptStatus</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, uint32_t *intGroup1, uint32_t *intGroup2)</td></tr>
+<tr class="memitem:ga76e98b4cb7a664c37d1588a786bb4776"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga76e98b4cb7a664c37d1588a786bb4776">DSI_GetAndClearInterruptStatus</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, uint32_t *intGroup1, uint32_t *intGroup2)</td></tr>
 <tr class="memdesc:ga76e98b4cb7a664c37d1588a786bb4776"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get and clear the interrupt status.  <a href="#ga76e98b4cb7a664c37d1588a786bb4776">More...</a><br/></td></tr>
 <tr class="separator:ga76e98b4cb7a664c37d1588a786bb4776"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 MIPI DSI APB</h2></td></tr>
-<tr class="memitem:ga49a371f6902522e09ac66f251c07c37b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga49a371f6902522e09ac66f251c07c37b">DSI_SetApbPacketControl</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, uint16_t wordCount, uint8_t virtualChannel, <a class="el" href="a00024.html#gac1ac47350bb91427a05f33ef6b8064f1">dsi_tx_data_type_t</a> dataType, uint8_t flags)</td></tr>
+<tr class="memitem:ga49a371f6902522e09ac66f251c07c37b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga49a371f6902522e09ac66f251c07c37b">DSI_SetApbPacketControl</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, uint16_t wordCount, uint8_t virtualChannel, <a class="el" href="a00024.html#gac1ac47350bb91427a05f33ef6b8064f1">dsi_tx_data_type_t</a> dataType, uint8_t flags)</td></tr>
 <tr class="memdesc:ga49a371f6902522e09ac66f251c07c37b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure the APB packet to send.  <a href="#ga49a371f6902522e09ac66f251c07c37b">More...</a><br/></td></tr>
 <tr class="separator:ga49a371f6902522e09ac66f251c07c37b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaffaccfa05573478e96c1dbb8790b07c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaffaccfa05573478e96c1dbb8790b07c0">DSI_WriteApbTxPayload</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, const uint8_t *payload, uint16_t payloadSize)</td></tr>
+<tr class="memitem:gaffaccfa05573478e96c1dbb8790b07c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaffaccfa05573478e96c1dbb8790b07c0">DSI_WriteApbTxPayload</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, const uint8_t *payload, uint16_t payloadSize)</td></tr>
 <tr class="memdesc:gaffaccfa05573478e96c1dbb8790b07c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill the long APB packet payload.  <a href="#gaffaccfa05573478e96c1dbb8790b07c0">More...</a><br/></td></tr>
 <tr class="separator:gaffaccfa05573478e96c1dbb8790b07c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga83c2aefed9bcc91cdf530ec676d89386"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga83c2aefed9bcc91cdf530ec676d89386">DSI_WriteApbTxPayloadExt</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, const uint8_t *payload, uint16_t payloadSize, bool sendDscCmd, uint8_t dscCmd)</td></tr>
+<tr class="memitem:ga83c2aefed9bcc91cdf530ec676d89386"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga83c2aefed9bcc91cdf530ec676d89386">DSI_WriteApbTxPayloadExt</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, const uint8_t *payload, uint16_t payloadSize, bool sendDscCmd, uint8_t dscCmd)</td></tr>
 <tr class="memdesc:ga83c2aefed9bcc91cdf530ec676d89386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extended function to fill the payload to TX FIFO.  <a href="#ga83c2aefed9bcc91cdf530ec676d89386">More...</a><br/></td></tr>
 <tr class="separator:ga83c2aefed9bcc91cdf530ec676d89386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2f3d3f44ede73b95a4cb3a115a2de2f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga2f3d3f44ede73b95a4cb3a115a2de2f6">DSI_ReadApbRxPayload</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, uint8_t *payload, uint16_t payloadSize)</td></tr>
+<tr class="memitem:ga2f3d3f44ede73b95a4cb3a115a2de2f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga2f3d3f44ede73b95a4cb3a115a2de2f6">DSI_ReadApbRxPayload</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, uint8_t *payload, uint16_t payloadSize)</td></tr>
 <tr class="memdesc:ga2f3d3f44ede73b95a4cb3a115a2de2f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the long APB packet payload.  <a href="#ga2f3d3f44ede73b95a4cb3a115a2de2f6">More...</a><br/></td></tr>
 <tr class="separator:ga2f3d3f44ede73b95a4cb3a115a2de2f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab0f1795f1c73bf6ba45cf87b5441d349"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gab0f1795f1c73bf6ba45cf87b5441d349">DSI_SendApbPacket</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base)</td></tr>
+<tr class="memitem:gab0f1795f1c73bf6ba45cf87b5441d349"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gab0f1795f1c73bf6ba45cf87b5441d349">DSI_SendApbPacket</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base)</td></tr>
 <tr class="memdesc:gab0f1795f1c73bf6ba45cf87b5441d349"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trigger the controller to send out APB packet.  <a href="#gab0f1795f1c73bf6ba45cf87b5441d349">More...</a><br/></td></tr>
 <tr class="separator:gab0f1795f1c73bf6ba45cf87b5441d349"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07645eb303c76ebbb5ca30867945611d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga07645eb303c76ebbb5ca30867945611d">DSI_GetApbStatus</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base)</td></tr>
+<tr class="memitem:ga07645eb303c76ebbb5ca30867945611d"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga07645eb303c76ebbb5ca30867945611d">DSI_GetApbStatus</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base)</td></tr>
 <tr class="memdesc:ga07645eb303c76ebbb5ca30867945611d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the APB status.  <a href="#ga07645eb303c76ebbb5ca30867945611d">More...</a><br/></td></tr>
 <tr class="separator:ga07645eb303c76ebbb5ca30867945611d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58b50c19c6704d0e42cedc5a84484ecc"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga58b50c19c6704d0e42cedc5a84484ecc">DSI_GetRxErrorStatus</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base)</td></tr>
+<tr class="memitem:ga58b50c19c6704d0e42cedc5a84484ecc"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga58b50c19c6704d0e42cedc5a84484ecc">DSI_GetRxErrorStatus</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base)</td></tr>
 <tr class="memdesc:ga58b50c19c6704d0e42cedc5a84484ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the error status during data transfer.  <a href="#ga58b50c19c6704d0e42cedc5a84484ecc">More...</a><br/></td></tr>
 <tr class="separator:ga58b50c19c6704d0e42cedc5a84484ecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga91f6cb2db5958f5fc808106f666f5b57"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga91f6cb2db5958f5fc808106f666f5b57">DSI_GetEccRxErrorPosition</a> (uint32_t rxErrorStatus)</td></tr>
 <tr class="memdesc:ga91f6cb2db5958f5fc808106f666f5b57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the one-bit RX ECC error position.  <a href="#ga91f6cb2db5958f5fc808106f666f5b57">More...</a><br/></td></tr>
 <tr class="separator:ga91f6cb2db5958f5fc808106f666f5b57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4f75cf8fab05489c7e09a1356824821c"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga4f75cf8fab05489c7e09a1356824821c">DSI_GetAndClearHostStatus</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base)</td></tr>
+<tr class="memitem:ga4f75cf8fab05489c7e09a1356824821c"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga4f75cf8fab05489c7e09a1356824821c">DSI_GetAndClearHostStatus</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base)</td></tr>
 <tr class="memdesc:ga4f75cf8fab05489c7e09a1356824821c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get and clear the DSI host status.  <a href="#ga4f75cf8fab05489c7e09a1356824821c">More...</a><br/></td></tr>
 <tr class="separator:ga4f75cf8fab05489c7e09a1356824821c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga580b8ca5075199d4861d8ab8c1ebe72b"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga580b8ca5075199d4861d8ab8c1ebe72b">DSI_GetRxPacketHeader</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base)</td></tr>
+<tr class="memitem:ga580b8ca5075199d4861d8ab8c1ebe72b"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga580b8ca5075199d4861d8ab8c1ebe72b">DSI_GetRxPacketHeader</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base)</td></tr>
 <tr class="memdesc:ga580b8ca5075199d4861d8ab8c1ebe72b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the RX packet header.  <a href="#ga580b8ca5075199d4861d8ab8c1ebe72b">More...</a><br/></td></tr>
 <tr class="separator:ga580b8ca5075199d4861d8ab8c1ebe72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8f4c0424beb21e00e531c74b114f6fd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00024.html#ga11ecb99946cfa8154b9ca3f8e0a59dc9">dsi_rx_data_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaa8f4c0424beb21e00e531c74b114f6fd">DSI_GetRxPacketType</a> (uint32_t rxPktHeader)</td></tr>
@@ -596,27 +596,27 @@ MIPI DSI APB</h2></td></tr>
 <tr class="memitem:ga0974af0093c2cff509789fc92d55d6b4"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga0974af0093c2cff509789fc92d55d6b4">DSI_GetRxPacketVirtualChannel</a> (uint32_t rxPktHeader)</td></tr>
 <tr class="memdesc:ga0974af0093c2cff509789fc92d55d6b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the RX packet virtual channel from the packet header.  <a href="#ga0974af0093c2cff509789fc92d55d6b4">More...</a><br/></td></tr>
 <tr class="separator:ga0974af0093c2cff509789fc92d55d6b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaad439cc9843129910be5555fc18639c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaad439cc9843129910be5555fc18639c3">DSI_TransferBlocking</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, <a class="el" href="a00024.html#a00458">dsi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gaad439cc9843129910be5555fc18639c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gaad439cc9843129910be5555fc18639c3">DSI_TransferBlocking</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, <a class="el" href="a00024.html#a00458">dsi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gaad439cc9843129910be5555fc18639c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">APB data transfer using blocking method.  <a href="#gaad439cc9843129910be5555fc18639c3">More...</a><br/></td></tr>
 <tr class="separator:gaad439cc9843129910be5555fc18639c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Transactional</h2></td></tr>
-<tr class="memitem:ga35e9ca5b02cb28a50bf396a684d7ff30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga35e9ca5b02cb28a50bf396a684d7ff30">DSI_TransferCreateHandle</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, dsi_handle_t *handle, <a class="el" href="a00024.html#gae04b53640614864862c37996d8ccb4eb">dsi_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:ga35e9ca5b02cb28a50bf396a684d7ff30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga35e9ca5b02cb28a50bf396a684d7ff30">DSI_TransferCreateHandle</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, dsi_handle_t *handle, <a class="el" href="a00024.html#gae04b53640614864862c37996d8ccb4eb">dsi_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga35e9ca5b02cb28a50bf396a684d7ff30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the MIPI DSI handle.  <a href="#ga35e9ca5b02cb28a50bf396a684d7ff30">More...</a><br/></td></tr>
 <tr class="separator:ga35e9ca5b02cb28a50bf396a684d7ff30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab9082d2089d31e03847cfdaddfc7c781"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gab9082d2089d31e03847cfdaddfc7c781">DSI_TransferNonBlocking</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, dsi_handle_t *handle, <a class="el" href="a00024.html#a00458">dsi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gab9082d2089d31e03847cfdaddfc7c781"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#gab9082d2089d31e03847cfdaddfc7c781">DSI_TransferNonBlocking</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, dsi_handle_t *handle, <a class="el" href="a00024.html#a00458">dsi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gab9082d2089d31e03847cfdaddfc7c781"><td class="mdescLeft">&#160;</td><td class="mdescRight">APB data transfer using interrupt method.  <a href="#gab9082d2089d31e03847cfdaddfc7c781">More...</a><br/></td></tr>
 <tr class="separator:gab9082d2089d31e03847cfdaddfc7c781"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga58d4de8a8964b355fdb97d553c5a0e05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga58d4de8a8964b355fdb97d553c5a0e05">DSI_TransferAbort</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, dsi_handle_t *handle)</td></tr>
+<tr class="memitem:ga58d4de8a8964b355fdb97d553c5a0e05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga58d4de8a8964b355fdb97d553c5a0e05">DSI_TransferAbort</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, dsi_handle_t *handle)</td></tr>
 <tr class="memdesc:ga58d4de8a8964b355fdb97d553c5a0e05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort current APB data transfer.  <a href="#ga58d4de8a8964b355fdb97d553c5a0e05">More...</a><br/></td></tr>
 <tr class="separator:ga58d4de8a8964b355fdb97d553c5a0e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga02d176f8574da8d6776586d1d7b53353"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga02d176f8574da8d6776586d1d7b53353">DSI_TransferHandleIRQ</a> (const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, dsi_handle_t *handle)</td></tr>
+<tr class="memitem:ga02d176f8574da8d6776586d1d7b53353"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#ga02d176f8574da8d6776586d1d7b53353">DSI_TransferHandleIRQ</a> (const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, dsi_handle_t *handle)</td></tr>
 <tr class="memdesc:ga02d176f8574da8d6776586d1d7b53353"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interrupt handler for the DSI.  <a href="#ga02d176f8574da8d6776586d1d7b53353">More...</a><br/></td></tr>
 <tr class="separator:ga02d176f8574da8d6776586d1d7b53353"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00576" id="a00576"></a>
+<a name="a00570" id="a00570"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1407,7 +1407,7 @@ Transactional</h2></td></tr>
 void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#adb45cc4aae30fb2fcfb81316a1c06fd0">userData</a></td></tr>
 <tr class="memdesc:adb45cc4aae30fb2fcfb81316a1c06fd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback parameter. <br/></td></tr>
 <tr class="separator:adb45cc4aae30fb2fcfb81316a1c06fd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7518a6cac5f26367fb5e0d8cdedb99fc"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a7518a6cac5f26367fb5e0d8cdedb99fc">dsi</a></td></tr>
+<tr class="memitem:a7518a6cac5f26367fb5e0d8cdedb99fc"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00024.html#a7518a6cac5f26367fb5e0d8cdedb99fc">dsi</a></td></tr>
 <tr class="memdesc:a7518a6cac5f26367fb5e0d8cdedb99fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to MIPI DSI peripheral.  <a href="#a7518a6cac5f26367fb5e0d8cdedb99fc">More...</a><br/></td></tr>
 <tr class="separator:a7518a6cac5f26367fb5e0d8cdedb99fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -1441,7 +1441,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a>* dsi_handle_t::dsi</td>
+          <td class="memname">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a>* dsi_handle_t::dsi</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1457,17 +1457,17 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* dsi_callback_t)(const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *base, dsi_handle_t *handle, <a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
+          <td class="memname">typedef void(* dsi_callback_t)(const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *base, dsi_handle_t *handle, <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>When transfer finished, one of these status values will be passed to the user:</p>
 <ul>
-<li><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> Data transfer finished with no error.</li>
-<li><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9adf7f172a5d4f1a44d5cb8a1121dcafcb">kStatus_Timeout</a> Transfer failed because of timeout.</li>
+<li><a class="el" href="a00325.html#ggaae05225933a42f81e7c4a9fb286596f9a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a> Data transfer finished with no error.</li>
+<li><a class="el" href="a00325.html#ggaae05225933a42f81e7c4a9fb286596f9adf7f172a5d4f1a44d5cb8a1121dcafcb">kStatus_Timeout</a> Transfer failed because of timeout.</li>
 <li><a class="el" href="a00024.html#ggae33c78feb670de33d2abf21ec0624531acd8b3eeb40ff906e95c567b9826de7e6">kStatus_DSI_RxDataError</a> RX data error, user could use <a class="el" href="a00024.html#ga58b50c19c6704d0e42cedc5a84484ecc">DSI_GetRxErrorStatus</a> to check the error details.</li>
 <li><a class="el" href="a00024.html#ggae33c78feb670de33d2abf21ec0624531abdf7231314f285596b023c7f5a9fa676">kStatus_DSI_ErrorReportReceived</a> Error Report packet received, user could use <a class="el" href="a00024.html#ga4f75cf8fab05489c7e09a1356824821c">DSI_GetAndClearHostStatus</a> to check the error report status.</li>
-<li><a class="el" href="a00326.html#ggaae05225933a42f81e7c4a9fb286596f9a8692e71089c7e81bd5f4503ff55035db">kStatus_Fail</a> Transfer failed for other reasons. </li>
+<li><a class="el" href="a00325.html#ggaae05225933a42f81e7c4a9fb286596f9a8692e71089c7e81bd5f4503ff55035db">kStatus_Fail</a> Transfer failed for other reasons. </li>
 </ul>
 
 </div>
@@ -2067,7 +2067,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_Init </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2101,7 +2101,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_Deinit </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2155,7 +2155,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_SetDpiConfig </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2210,7 +2210,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">uint32_t DSI_InitDphy </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2253,7 +2253,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_DeinitDphy </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2320,7 +2320,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void DSI_EnableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2369,7 +2369,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void DSI_DisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2418,7 +2418,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void DSI_GetAndClearInterruptStatus </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2463,7 +2463,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_SetApbPacketControl </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2518,7 +2518,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_WriteApbTxPayload </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2559,7 +2559,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_WriteApbTxPayloadExt </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2618,7 +2618,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_ReadApbRxPayload </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2662,7 +2662,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static void DSI_SendApbPacket </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2693,7 +2693,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static uint32_t DSI_GetApbStatus </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2725,7 +2725,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static uint32_t DSI_GetRxErrorStatus </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2795,7 +2795,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static uint32_t DSI_GetAndClearHostStatus </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2827,7 +2827,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">static uint32_t DSI_GetRxPacketHeader </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2949,9 +2949,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferBlocking </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferBlocking </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2968,6 +2968,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
       </table>
 </div><div class="memdoc">
 <p>Perform APB data transfer using blocking method. This function waits until all data send or received, or timeout happens.</p>
+<p>When using this API to read data, the actually read data count could be got from xfer-&gt;rxDataSize.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>MIPI DSI host peripheral base address. </td></tr>
@@ -2994,9 +2995,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferCreateHandle </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferCreateHandle </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -3042,9 +3043,9 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferNonBlocking </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> DSI_TransferNonBlocking </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -3067,6 +3068,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
       </table>
 </div><div class="memdoc">
 <p>Perform APB data transfer using interrupt method, when transfer finished, upper layer could be informed through callback function.</p>
+<p>When using this API to read data, the actually read data count could be got from handle-&gt;xfer-&gt;rxDataSize after read finished.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>MIPI DSI host peripheral base address. </td></tr>
@@ -3093,7 +3095,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_TransferAbort </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -3126,7 +3128,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void DSI_TransferHandleIRQ </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00024.html#a00576">MIPI_DSI_Type</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00024.html#a00570">MIPI_DSI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>

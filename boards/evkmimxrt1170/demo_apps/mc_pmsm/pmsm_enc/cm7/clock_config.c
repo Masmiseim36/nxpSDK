@@ -1,5 +1,6 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,11 +19,11 @@
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v7.0
+product: Clocks v9.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 9.0.1
+processor_version: 11.0.1
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 #include "clock_config.h"
@@ -111,7 +112,6 @@ outputs:
 - {id: ENET_TIMER1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: ENET_TIMER2_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: ENET_TIMER3_CLK_ROOT.outFreq, value: 24 MHz}
-- {id: ENET_TX_CLK.outFreq, value: 24 MHz}
 - {id: FLEXIO1_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: FLEXIO2_CLK_ROOT.outFreq, value: 24 MHz}
 - {id: FLEXSPI1_CLK_ROOT.outFreq, value: 24 MHz}
@@ -282,8 +282,19 @@ void BOARD_BootClockRUN(void)
 {
     clock_root_config_t rootCfg = {0};
 
+    /* Set DCDC to DCM mode to improve the efficiency for light loading in run mode and transient performance with a big loading step. */
+    DCDC_BootIntoDCM(DCDC);
+
 #if !defined(SKIP_DCDC_ADJUSTMENT) || (!SKIP_DCDC_ADJUSTMENT)
-    DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_1P0BuckTarget1P15V);
+    if((OCOTP->FUSEN[16].FUSE == 0x57AC5969U) && ((OCOTP->FUSEN[17].FUSE & 0xFFU) == 0x0BU))
+    {
+        DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_1P0BuckTarget1P15V);
+    }
+    else
+    {
+        /* Set 1.125V for production samples to align with data sheet requirement */
+        DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC, kDCDC_1P0BuckTarget1P125V);
+    }
 #endif
 
 #if !defined(SKIP_FBB_ENABLE) || (!SKIP_FBB_ENABLE)
@@ -344,14 +355,22 @@ void BOARD_BootClockRUN(void)
     }
 
     /* Swicth both core, M7 Systick and Bus_Lpsr to OscRC48MDiv2 first */
+#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
-#if __CORTEX_M == 7
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
+
+    rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
 #endif
 #if __CORTEX_M == 4
+    rootCfg.mux = kCLOCK_M4_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4, &rootCfg);
+
+    rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Bus_Lpsr, &rootCfg);
 #endif
 
@@ -528,7 +547,7 @@ void BOARD_BootClockRUN(void)
     CLOCK_SetRootClock(kCLOCK_Root_Gpt6, &rootCfg);
 
     /* Configure FLEXSPI1 using OSC_RC_48M_DIV2 */
-#if !(defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1))
+#if !(defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1) || defined(FLEXSPI_IN_USE))
     rootCfg.mux = kCLOCK_FLEXSPI1_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Flexspi1, &rootCfg);
@@ -837,10 +856,16 @@ void BOARD_BootClockRUN(void)
 
     /* Set MQS configuration. */
     IOMUXC_MQSConfig(IOMUXC_GPR,kIOMUXC_MqsPwmOverSampleRate32, 0);
-    /* Set ENET Tx clock source. */
-    IOMUXC_GPR->GPR4 &= ~IOMUXC_GPR_GPR4_ENET_TX_CLK_SEL_MASK;
+    /* Set ENET Ref clock source. */
+    IOMUXC_GPR->GPR4 &= ~IOMUXC_GPR_GPR4_ENET_REF_CLK_DIR_MASK;
     /* Set ENET_1G Tx clock source. */
-    IOMUXC_GPR->GPR5 &= ~IOMUXC_GPR_GPR5_ENET1G_TX_CLK_SEL_MASK;
+    IOMUXC_GPR->GPR5 = ((IOMUXC_GPR->GPR5 & ~IOMUXC_GPR_GPR5_ENET1G_TX_CLK_SEL_MASK) | IOMUXC_GPR_GPR5_ENET1G_RGMII_EN_MASK);
+    /* Set ENET_1G Ref clock source. */
+    IOMUXC_GPR->GPR5 &= ~IOMUXC_GPR_GPR5_ENET1G_REF_CLK_DIR_MASK;
+    /* Set ENET_QOS Tx clock source. */
+    IOMUXC_GPR->GPR6 &= ~IOMUXC_GPR_GPR6_ENET_QOS_RGMII_EN_MASK;
+    /* Set ENET_QOS Ref clock source. */
+    IOMUXC_GPR->GPR6 &= ~IOMUXC_GPR_GPR6_ENET_QOS_REF_CLK_DIR_MASK;
     /* Set GPT1 High frequency reference clock source. */
     IOMUXC_GPR->GPR22 &= ~IOMUXC_GPR_GPR22_REF_1M_CLK_GPT1_MASK;
     /* Set GPT2 High frequency reference clock source. */

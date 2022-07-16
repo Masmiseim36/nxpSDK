@@ -3,19 +3,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -23,17 +14,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -68,6 +51,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCONFIG_BT_CENTRAL=1 \
     -DCONFIG_BT_SMP=1 \
     -DCONFIG_BT_DEVICE_NAME='\"a2dp sink\"' \
+    -DLPUART_RING_BUFFER_SIZE=1024U \
     -DNVM_NO_COMPONNET=1 \
     -DHAL_UART_DMA_ENABLE=1 \
     -DHAL_AUDIO_DMA_INIT_ENABLE=0 \
@@ -82,6 +66,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DLOG_ENABLE_OVERWRITE=0 \
     -DCONFIG_ARM=1 \
     -DMCUXPRESSO_SDK \
+    -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -g \
     -O0 \
     -mcpu=cortex-m7 \
@@ -91,6 +77,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mthumb \
     -MMD \
     -MP \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -132,6 +120,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCONFIG_BT_CENTRAL=1 \
     -DCONFIG_BT_SMP=1 \
     -DCONFIG_BT_DEVICE_NAME='\"a2dp sink\"' \
+    -DLPUART_RING_BUFFER_SIZE=1024U \
     -DNVM_NO_COMPONNET=1 \
     -DHAL_UART_DMA_ENABLE=1 \
     -DHAL_AUDIO_DMA_INIT_ENABLE=0 \
@@ -146,6 +135,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DLOG_ENABLE_OVERWRITE=0 \
     -DCONFIG_ARM=1 \
     -DMCUXPRESSO_SDK \
+    -DCRYPTO_USE_DRIVER_CAAM \
+    -DCACHE_MODE_WRITE_THROUGH=1 \
     -Os \
     -mcpu=cortex-m7 \
     -Wall \
@@ -154,6 +145,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mthumb \
     -MMD \
     -MP \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \

@@ -5,12 +5,12 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "osa_common.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 
 #include "app_streamer.h"
 #include "streamer_pcm_app.h"
+#include "logging.h"
 #ifdef VIT_PROC
 #include "vit_proc.h"
 #endif
@@ -21,15 +21,23 @@
 #define STREAMER_MESSAGE_TASK_NAME "StreamerMessage"
 
 #ifdef OPUS_ENCODE
-#define STREAMER_OPUS_TASK_STACK_SIZE 60 * 1024
+/* The STREAMER_OPUS_TASK_STACK_SIZE value is different for the IAR because the IAR allocates memory for VLA (variable
+ * length array - used in the opus encoder) in the application heap and the opus task stack would be largely unused.
+ */
+#if defined(__ICCARM__)
+#define STREAMER_OPUS_TASK_STACK_SIZE 5 * 1024
+#else
+#define STREAMER_OPUS_TASK_STACK_SIZE 30 * 1024
 #endif
-#define STREAMER_TASK_STACK_SIZE         4 * 1024
-#define STREAMER_MESSAGE_TASK_STACK_SIZE 512
+#endif
+
+#define STREAMER_TASK_STACK_SIZE         16 * 1024
+#define STREAMER_MESSAGE_TASK_STACK_SIZE 1024
 #define MAX_FILE_NAME_LENGTH             100
 
 ringbuf_t *audioBuffer;
-OsaMutex audioMutex;
-OsaThread msg_thread;
+OSA_MUTEX_HANDLE_DEFINE(audioMutex);
+OSA_TASK_HANDLE_DEFINE(msg_thread);
 
 /*!
  * @brief Streamer task for communicating messages
@@ -43,29 +51,31 @@ OsaThread msg_thread;
  */
 static void STREAMER_MessageTask(void *arg)
 {
-    OsaMq mq;
     STREAMER_MSG_T msg;
     streamer_handle_t *handle;
     bool exit_thread = false;
-    int ret;
+    osa_status_t ret;
 
     handle = (streamer_handle_t *)arg;
 
-    PRINTF("[STREAMER] Message Task started\r\n");
-
-    ret = osa_mq_open(&mq, APP_STREAMER_MSG_QUEUE, STREAMER_MSG_SIZE, true);
-    if (ERRCODE_NO_ERROR != ret)
+    while (!handle->streamer->mq_out)
     {
-        PRINTF("osa_mq_open failed: %d\r\n", ret);
+        OSA_TimeDelay(1);
+    }
+    if (handle->streamer->mq_out == NULL)
+    {
+        PRINTF("[STREAMER] osa_mq_open failed: %d\r\n");
         return;
     }
 
+    PRINTF("[STREAMER] Message Task started\r\n");
+
     do
     {
-        ret = osa_mq_receive(&mq, (void *)&msg, STREAMER_MSG_SIZE, 0, NULL);
-        if (ret != ERRCODE_NO_ERROR)
+        ret = OSA_MsgQGet(&handle->streamer->mq_out, (void *)&msg, osaWaitForever_c);
+        if (ret != KOSA_StatusSuccess)
         {
-            PRINTF("osa_mq_receiver error: %d\r\n", ret);
+            PRINTF("OSA_MsgQGet error: %d\r\n", ret);
             continue;
         }
 
@@ -96,19 +106,19 @@ static void STREAMER_MessageTask(void *arg)
 
     } while (!exit_thread);
 
-    osa_mq_close(&mq);
-    osa_mq_destroy(APP_STREAMER_MSG_QUEUE);
+    OSA_MsgQDestroy(&handle->streamer->mq_out);
+    handle->streamer->mq_out = NULL;
 
-    osa_thread_destroy(msg_thread);
+    OSA_TaskDestroy(msg_thread);
 }
 
 int STREAMER_Read(uint8_t *data, uint32_t size)
 {
     uint32_t bytes_read;
 
-    osa_mutex_lock(&audioMutex);
+    OSA_MutexLock(&audioMutex, osaWaitForever_c);
     bytes_read = ringbuf_read(audioBuffer, data, size);
-    osa_mutex_unlock(&audioMutex);
+    OSA_MutexUnlock(&audioMutex);
 
     if (bytes_read != size)
     {
@@ -122,9 +132,9 @@ int STREAMER_Write(uint8_t *data, uint32_t size)
 {
     uint32_t written;
 
-    osa_mutex_lock(&audioMutex);
+    OSA_MutexLock(&audioMutex, osaWaitForever_c);
     written = ringbuf_write(audioBuffer, data, size);
-    osa_mutex_unlock(&audioMutex);
+    OSA_MutexUnlock(&audioMutex);
 
     if (written != size)
     {
@@ -165,10 +175,10 @@ status_t STREAMER_Create(streamer_handle_t *handle)
 {
     STREAMER_CREATE_PARAM params;
     ELEMENT_PROPERTY_T prop;
-    OsaThreadAttr thread_attr;
+    osa_task_def_t thread_attr;
     int ret;
 
-    osa_mutex_create(&audioMutex, false);
+    OSA_MutexCreate(&audioMutex);
     audioBuffer = ringbuf_create(AUDIO_BUFFER_SIZE);
     if (!audioBuffer)
     {
@@ -176,12 +186,12 @@ status_t STREAMER_Create(streamer_handle_t *handle)
     }
 
     /* Create message process thread */
-    osa_thread_attr_init(&thread_attr);
-    osa_thread_attr_set_name(&thread_attr, STREAMER_MESSAGE_TASK_NAME);
-    osa_thread_attr_set_stack_size(&thread_attr, STREAMER_MESSAGE_TASK_STACK_SIZE);
-    ret = osa_thread_create(&msg_thread, &thread_attr, STREAMER_MessageTask, (void *)handle);
-    osa_thread_attr_destroy(&thread_attr);
-    if (ERRCODE_NO_ERROR != ret)
+    thread_attr.tpriority = OSA_PRIORITY_NORMAL;
+    thread_attr.tname     = (uint8_t *)STREAMER_MESSAGE_TASK_NAME;
+    thread_attr.pthread   = &STREAMER_MessageTask;
+    thread_attr.stacksize = STREAMER_MESSAGE_TASK_STACK_SIZE;
+    ret                   = OSA_TaskCreate(&msg_thread, &thread_attr, (void *)handle);
+    if (KOSA_StatusSuccess != ret)
     {
         return kStatus_Fail;
     }
@@ -218,20 +228,9 @@ status_t STREAMER_Create(streamer_handle_t *handle)
 status_t STREAMER_mic_Create(streamer_handle_t *handle, out_sink_t out_sink, char *file_name)
 {
     STREAMER_CREATE_PARAM params;
-    OsaThreadAttr thread_attr;
+    osa_task_def_t thread_attr;
     ELEMENT_PROPERTY_T prop;
     int ret;
-
-    /* Create message process thread */
-    osa_thread_attr_init(&thread_attr);
-    osa_thread_attr_set_name(&thread_attr, STREAMER_MESSAGE_TASK_NAME);
-    osa_thread_attr_set_stack_size(&thread_attr, STREAMER_MESSAGE_TASK_STACK_SIZE);
-    ret = osa_thread_create(&msg_thread, &thread_attr, STREAMER_MessageTask, (void *)handle);
-    osa_thread_attr_destroy(&thread_attr);
-    if (ERRCODE_NO_ERROR != ret)
-    {
-        return kStatus_Fail;
-    }
 
     /* Create streamer */
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
@@ -268,10 +267,21 @@ status_t STREAMER_mic_Create(streamer_handle_t *handle, out_sink_t out_sink, cha
         return kStatus_Fail;
     }
 
+    /* Create message process thread */
+    thread_attr.tpriority = OSA_PRIORITY_HIGH;
+    thread_attr.tname     = (uint8_t *)STREAMER_MESSAGE_TASK_NAME;
+    thread_attr.pthread   = &STREAMER_MessageTask;
+    thread_attr.stacksize = STREAMER_MESSAGE_TASK_STACK_SIZE;
+    ret                   = OSA_TaskCreate(&msg_thread, &thread_attr, (void *)handle);
+    if (KOSA_StatusSuccess != ret)
+    {
+        return kStatus_Fail;
+    }
+
 #ifdef VIT_PROC
     if (params.pipeline_type == STREAM_PIPELINE_VIT)
     {
-        EXT_PROCESS_DESC_T vit_proc = {VIT_Initialize_func, VIT_Execute_func, VIT_Deinit_func, &Vit_Language, 0};
+        EXT_PROCESS_DESC_T vit_proc = {VIT_Initialize_func, VIT_Execute_func, VIT_Deinit_func, &Vit_Language};
 
         prop.prop = PROP_VITSINK_FPOINT;
         prop.val  = (uintptr_t)&vit_proc;
@@ -290,6 +300,13 @@ status_t STREAMER_mic_Create(streamer_handle_t *handle, out_sink_t out_sink, cha
     prop.val  = 16000;
 
     streamer_set_property(handle->streamer, prop, true);
+
+#if (defined(PLATFORM_RT1170) || defined(PLATFORM_RT1160))
+    prop.prop = PROP_AUDIOSRC_SET_BITS_PER_SAMPLE;
+    prop.val  = 32;
+
+    streamer_set_property(handle->streamer, prop, true);
+#endif
 
 #if DEMO_CODEC_CS42448
     prop.prop = PROP_AUDIOSRC_SET_NUM_CHANNELS;
@@ -325,29 +342,31 @@ status_t STREAMER_opusmem2mem_Create(streamer_handle_t *handle,
                                      SET_BUFFER_DESC_T *outBuf)
 {
     STREAMER_CREATE_PARAM params;
-    OsaThreadAttr thread_attr;
+    osa_task_def_t thread_attr;
     ELEMENT_PROPERTY_T prop;
     int ret;
-
-    /* Create message process thread */
-    osa_thread_attr_init(&thread_attr);
-    osa_thread_attr_set_name(&thread_attr, STREAMER_MESSAGE_TASK_NAME);
-    osa_thread_attr_set_stack_size(&thread_attr, STREAMER_MESSAGE_TASK_STACK_SIZE);
-    ret = osa_thread_create(&msg_thread, &thread_attr, STREAMER_MessageTask, (void *)handle);
-    osa_thread_attr_destroy(&thread_attr);
-    if (ERRCODE_NO_ERROR != ret)
-    {
-        return kStatus_Fail;
-    }
 
     /* Create streamer */
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
     params.stack_size    = STREAMER_OPUS_TASK_STACK_SIZE;
     params.pipeline_type = STREAM_PIPELINE_OPUS_MEM2MEM;
     params.task_name     = STREAMER_TASK_NAME;
+    params.in_dev_name   = "";
+    params.out_dev_name  = "";
 
     handle->streamer = streamer_create(&params);
     if (!handle->streamer)
+    {
+        return kStatus_Fail;
+    }
+
+    /* Create message process thread */
+    thread_attr.tpriority = OSA_PRIORITY_HIGH;
+    thread_attr.tname     = (uint8_t *)STREAMER_MESSAGE_TASK_NAME;
+    thread_attr.pthread   = &STREAMER_MessageTask;
+    thread_attr.stacksize = STREAMER_MESSAGE_TASK_STACK_SIZE;
+    ret                   = OSA_TaskCreate(&msg_thread, &thread_attr, (void *)handle);
+    if (KOSA_StatusSuccess != ret)
     {
         return kStatus_Fail;
     }
@@ -405,29 +424,18 @@ void STREAMER_Destroy(streamer_handle_t *handle)
     streamer_destroy(handle->streamer);
     handle->streamer = NULL;
 
-    if (audioMutex != NULL)
-    {
-        osa_mutex_destroy(&audioMutex);
-        audioMutex = NULL;
-    }
     if (audioBuffer != NULL)
     {
         ringbuf_destroy(audioBuffer);
         audioBuffer = NULL;
     }
     deinit_logging();
-    osa_deinit();
 }
 
 void STREAMER_Init(void)
 {
-    /* Initialize OSA*/
-    osa_init();
-
     /* Initialize logging */
     init_logging();
-
-    add_module_name(LOGMDL_STREAMER, "STREAMER");
 
     /* Uncomment below to turn on full debug logging for the streamer. */
     // set_debug_module(0xffffffff);

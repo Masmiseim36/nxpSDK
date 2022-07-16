@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -116,13 +116,13 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:gac8ad14418234f5c3f326cad96b2c72d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac8ad14418234f5c3f326cad96b2c72d2"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gac8ad14418234f5c3f326cad96b2c72d2">flexio_i2s_edma_callback_t</a> )(<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, <a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gac8ad14418234f5c3f326cad96b2c72d2">flexio_i2s_edma_callback_t</a> )(<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gac8ad14418234f5c3f326cad96b2c72d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO I2S eDMA transfer callback function for finish and error. <br/></td></tr>
 <tr class="separator:gac8ad14418234f5c3f326cad96b2c72d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gaa43bc2ccc6c5bfc9c6a10fa1dc814dc5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gaa43bc2ccc6c5bfc9c6a10fa1dc814dc5">FSL_FLEXIO_I2S_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 7))</td></tr>
+<tr class="memitem:gaa43bc2ccc6c5bfc9c6a10fa1dc814dc5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gaa43bc2ccc6c5bfc9c6a10fa1dc814dc5">FSL_FLEXIO_I2S_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 7))</td></tr>
 <tr class="memdesc:gaa43bc2ccc6c5bfc9c6a10fa1dc814dc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO I2S EDMA driver version 2.1.7.  <a href="#gaa43bc2ccc6c5bfc9c6a10fa1dc814dc5">More...</a><br/></td></tr>
 <tr class="separator:gaa43bc2ccc6c5bfc9c6a10fa1dc814dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -137,10 +137,10 @@ eDMA Transactional</h2></td></tr>
 <tr class="memitem:gaea6d35cc631a51dbadca239bb0c59478"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gaea6d35cc631a51dbadca239bb0c59478">FLEXIO_I2S_TransferSetFormatEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, <a class="el" href="a00037.html#a00523">flexio_i2s_format_t</a> *format, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:gaea6d35cc631a51dbadca239bb0c59478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the FlexIO I2S Tx audio format.  <a href="#gaea6d35cc631a51dbadca239bb0c59478">More...</a><br/></td></tr>
 <tr class="separator:gaea6d35cc631a51dbadca239bb0c59478"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab9611613f8b7e9b2d4da51d709db661e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gab9611613f8b7e9b2d4da51d709db661e">FLEXIO_I2S_TransferSendEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, <a class="el" href="a00037.html#a00524">flexio_i2s_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gab9611613f8b7e9b2d4da51d709db661e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gab9611613f8b7e9b2d4da51d709db661e">FLEXIO_I2S_TransferSendEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, <a class="el" href="a00037.html#a00524">flexio_i2s_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gab9611613f8b7e9b2d4da51d709db661e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking FlexIO I2S transfer using DMA.  <a href="#gab9611613f8b7e9b2d4da51d709db661e">More...</a><br/></td></tr>
 <tr class="separator:gab9611613f8b7e9b2d4da51d709db661e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga440a4f8f9a6d859f2c8078d5209e74ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga440a4f8f9a6d859f2c8078d5209e74ad">FLEXIO_I2S_TransferReceiveEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, <a class="el" href="a00037.html#a00524">flexio_i2s_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga440a4f8f9a6d859f2c8078d5209e74ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga440a4f8f9a6d859f2c8078d5209e74ad">FLEXIO_I2S_TransferReceiveEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, <a class="el" href="a00037.html#a00524">flexio_i2s_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga440a4f8f9a6d859f2c8078d5209e74ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking FlexIO I2S receive using eDMA.  <a href="#ga440a4f8f9a6d859f2c8078d5209e74ad">More...</a><br/></td></tr>
 <tr class="separator:ga440a4f8f9a6d859f2c8078d5209e74ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga965a1f1fb9a4bea6808afb4d060121d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga965a1f1fb9a4bea6808afb4d060121d2">FLEXIO_I2S_TransferAbortSendEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle)</td></tr>
@@ -149,10 +149,10 @@ eDMA Transactional</h2></td></tr>
 <tr class="memitem:ga8dfa5e3058760202f87d2ff01fca285a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga8dfa5e3058760202f87d2ff01fca285a">FLEXIO_I2S_TransferAbortReceiveEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle)</td></tr>
 <tr class="memdesc:ga8dfa5e3058760202f87d2ff01fca285a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts a FlexIO I2S receive using eDMA.  <a href="#ga8dfa5e3058760202f87d2ff01fca285a">More...</a><br/></td></tr>
 <tr class="separator:ga8dfa5e3058760202f87d2ff01fca285a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga866f520fa4d5b421700563ddbe28b375"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga866f520fa4d5b421700563ddbe28b375">FLEXIO_I2S_TransferGetSendCountEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga866f520fa4d5b421700563ddbe28b375"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#ga866f520fa4d5b421700563ddbe28b375">FLEXIO_I2S_TransferGetSendCountEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga866f520fa4d5b421700563ddbe28b375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the remaining bytes to be sent.  <a href="#ga866f520fa4d5b421700563ddbe28b375">More...</a><br/></td></tr>
 <tr class="separator:ga866f520fa4d5b421700563ddbe28b375"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabbeb9ad1ffd98e0a371cfa14d513d8d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gabbeb9ad1ffd98e0a371cfa14d513d8d1">FLEXIO_I2S_TransferGetReceiveCountEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:gabbeb9ad1ffd98e0a371cfa14d513d8d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00038.html#gabbeb9ad1ffd98e0a371cfa14d513d8d1">FLEXIO_I2S_TransferGetReceiveCountEDMA</a> (<a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *base, flexio_i2s_edma_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:gabbeb9ad1ffd98e0a371cfa14d513d8d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the remaining bytes to be received.  <a href="#gabbeb9ad1ffd98e0a371cfa14d513d8d1">More...</a><br/></td></tr>
 <tr class="separator:gabbeb9ad1ffd98e0a371cfa14d513d8d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -267,7 +267,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXIO_I2S_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 7))</td>
+          <td class="memname">#define FSL_FLEXIO_I2S_EDMA_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 7))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -438,7 +438,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferSendEDMA </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferSendEDMA </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -487,7 +487,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferReceiveEDMA </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferReceiveEDMA </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -602,7 +602,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferGetSendCountEDMA </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferGetSendCountEDMA </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -649,7 +649,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferGetReceiveCountEDMA </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_I2S_TransferGetReceiveCountEDMA </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="a00037.html#a00525">FLEXIO_I2S_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

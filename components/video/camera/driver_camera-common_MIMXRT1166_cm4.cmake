@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("driver_camera-common component is included.")
 
 

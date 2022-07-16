@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -127,7 +127,7 @@ Comments about API usage in interrupt handler</h1>
 <p>All APIs can be used from interrupt handler although execution time should be considered (interrupt latency of equal and lower priority interrupts increases).</p>
 <h1><a class="anchor" id="CAAMdcache"></a>
 Comments about DCACHE</h1>
-<p>Usually the output data are not cached, because CAAM driver cleans them before scheduling job and invalidate after that, but in some cases the computing can take longer time and data could be written to memory by CAAM after invalidate happen, so it's recommended to invalidate CAAM output data again, right before their usage.</p>
+<p>CAAM driver requires any cached memory to be used with CAAM module to be set in write-trough mode, so any data in CACHE are up to date with ones in memory. This guarantee that CAAM can fetch descriptor, execute desired operation and when computation is done, it is safe to perform invalidate even over unaligned data, since all data in physical memory are up to date with ones in CACHE (so no memory corruption occurs) and finally, CPU can retrieve correct output.</p>
 <h1><a class="anchor" id="CAAMEx"></a>
 CAAM Driver Examples</h1>
 <h2><a class="anchor" id="CAAMSimpleEx"></a>
@@ -136,9 +136,9 @@ Simple examples</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
-<tr class="memitem:a00322"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00322.html">CAAM Blocking APIs</a></td></tr>
+<tr class="memitem:a00321"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00321.html">CAAM Blocking APIs</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00326"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00326.html">CAAM Non-blocking APIs</a></td></tr>
+<tr class="memitem:a00325"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00325.html">CAAM Non-blocking APIs</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -273,25 +273,25 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga66ab61bd1853470636a41dd518e3e6d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga66ab61bd1853470636a41dd518e3e6d7">CAAM_Init</a> (CAAM_Type *base, const <a class="el" href="a00013.html#a00430">caam_config_t</a> *config)</td></tr>
+<tr class="memitem:ga66ab61bd1853470636a41dd518e3e6d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga66ab61bd1853470636a41dd518e3e6d7">CAAM_Init</a> (CAAM_Type *base, const <a class="el" href="a00013.html#a00430">caam_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga66ab61bd1853470636a41dd518e3e6d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the CAAM driver.  <a href="#ga66ab61bd1853470636a41dd518e3e6d7">More...</a><br/></td></tr>
 <tr class="separator:ga66ab61bd1853470636a41dd518e3e6d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa354edfad49c88a86091a29c7f49edf2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gaa354edfad49c88a86091a29c7f49edf2">CAAM_Deinit</a> (CAAM_Type *base)</td></tr>
+<tr class="memitem:gaa354edfad49c88a86091a29c7f49edf2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#gaa354edfad49c88a86091a29c7f49edf2">CAAM_Deinit</a> (CAAM_Type *base)</td></tr>
 <tr class="memdesc:gaa354edfad49c88a86091a29c7f49edf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the CAAM driver.  <a href="#gaa354edfad49c88a86091a29c7f49edf2">More...</a><br/></td></tr>
 <tr class="separator:gaa354edfad49c88a86091a29c7f49edf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2186183039e37704f5de91185beeeca9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga2186183039e37704f5de91185beeeca9">CAAM_GetDefaultConfig</a> (<a class="el" href="a00013.html#a00430">caam_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga2186183039e37704f5de91185beeeca9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration structure.  <a href="#ga2186183039e37704f5de91185beeeca9">More...</a><br/></td></tr>
 <tr class="separator:ga2186183039e37704f5de91185beeeca9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga845e852bf5d63cc7720369b248d14c63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga845e852bf5d63cc7720369b248d14c63">CAAM_Wait</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, uint32_t *descriptor, <a class="el" href="a00013.html#ga8206f157a241853fea5c077eaf03062e">caam_wait_mode_t</a> mode)</td></tr>
+<tr class="memitem:ga845e852bf5d63cc7720369b248d14c63"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga845e852bf5d63cc7720369b248d14c63">CAAM_Wait</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, uint32_t *descriptor, <a class="el" href="a00013.html#ga8206f157a241853fea5c077eaf03062e">caam_wait_mode_t</a> mode)</td></tr>
 <tr class="memdesc:ga845e852bf5d63cc7720369b248d14c63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wait for a CAAM job to complete.  <a href="#ga845e852bf5d63cc7720369b248d14c63">More...</a><br/></td></tr>
 <tr class="separator:ga845e852bf5d63cc7720369b248d14c63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga14881a9666cd889b959a40a2f1069225"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga14881a9666cd889b959a40a2f1069225">CAAM_ExternalKeyTransfer</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga14b2b35c9ea5a7b845a80ea702809b87">caam_ext_key_xfr_source_t</a> keySource, size_t keySize)</td></tr>
+<tr class="memitem:ga14881a9666cd889b959a40a2f1069225"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga14881a9666cd889b959a40a2f1069225">CAAM_ExternalKeyTransfer</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, <a class="el" href="a00013.html#ga14b2b35c9ea5a7b845a80ea702809b87">caam_ext_key_xfr_source_t</a> keySource, size_t keySize)</td></tr>
 <tr class="memdesc:ga14881a9666cd889b959a40a2f1069225"><td class="mdescLeft">&#160;</td><td class="mdescRight">External Key Transfer.  <a href="#ga14881a9666cd889b959a40a2f1069225">More...</a><br/></td></tr>
 <tr class="separator:ga14881a9666cd889b959a40a2f1069225"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga1d75e0f32e94cd5ba180e7cdf0465d6b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga1d75e0f32e94cd5ba180e7cdf0465d6b">FSL_CAAM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 5))</td></tr>
+<tr class="memitem:ga1d75e0f32e94cd5ba180e7cdf0465d6b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00013.html#ga1d75e0f32e94cd5ba180e7cdf0465d6b">FSL_CAAM_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 6))</td></tr>
 <tr class="memdesc:ga1d75e0f32e94cd5ba180e7cdf0465d6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CAAM driver version.  <a href="#ga1d75e0f32e94cd5ba180e7cdf0465d6b">More...</a><br/></td></tr>
 <tr class="separator:ga1d75e0f32e94cd5ba180e7cdf0465d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -466,12 +466,12 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_CAAM_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00333.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 5))</td>
+          <td class="memname">#define FSL_CAAM_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 6))</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Version 2.1.5.</p>
-<p>Current version: 2.1.4</p>
+<p>Version 2.1.6.</p>
+<p>Current version: 2.1.6</p>
 <p>Change log:</p>
 <ul>
 <li>Version 2.0.0<ul>
@@ -513,7 +513,11 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </li>
 <li>Version 2.1.5<ul>
 <li>Support EXTENDED data size for all AES, HASH and RNG operations.</li>
-<li>Support multiple De-Initialization/Initialization of CAAM driver within one POR event. </li>
+<li>Support multiple De-Initialization/Initialization of CAAM driver within one POR event.</li>
+</ul>
+</li>
+<li>Version 2.1.6<ul>
+<li>Improve DCACHE handling. Requires CAAM used and cached memory set in write-trough mode. </li>
 </ul>
 </li>
 </ul>
@@ -695,7 +699,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_Init </td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_Init </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -732,7 +736,7 @@ kStatus_Fail the CAAM Init has completed with non-zero termination status word <
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_Deinit </td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_Deinit </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
@@ -781,7 +785,7 @@ kStatus_Fail the CAAM Deinit has completed with non-zero termination status word
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_Wait </td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_Wait </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -837,7 +841,7 @@ kStatus_Again In non-blocking mode, the job is not ready in the CAAM Output Ring
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00333.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_ExternalKeyTransfer </td>
+          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_ExternalKeyTransfer </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

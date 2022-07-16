@@ -5,9 +5,9 @@ Application demonstrating the shell mode of the simplified Adapter APIs.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.5.0
-- IAR embedded Workbench  9.20.2
-- Keil MDK  5.36
+- MCUXpresso  11.6.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements
@@ -120,10 +120,10 @@ Copyright  2020  NXP
 @bt>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The shell command list could be get by enter "help" in serial terminal.
-The demo can be configed to a "central" or "peripheral" by shell commands.
+The shell command list could be gotten by entering "help" in serial terminal.
+The demo can be configed as a "central" or "peripheral" by shell commands.
 
-Here is a example of scan devices (the BLE host must initialized before):
+Here is an example of central, scan devices (the BLE host must initialized before):
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 @bt> bt.init
 @bt> Bluetooth initialized
@@ -589,14 +589,39 @@ GATT central role side,
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Here is a example of phy 1M/2M udpate.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here is an example of filter accept list.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+GATT peripheral role side,
+1. Initialize the Host, press "bt.init",
+2. Adding device to white list, press "bt.fal-add <address: XX:XX:XX:XX:XX:XX> <type: (public|random)>",such as "bt.fal-add 11:22:33:44:55:66 public".
+3. Advertising, press "bt.advertise on fal-conn",
+4. Only the device in filter accept list can connect to current device. or else no log will be print.
+
+Note: if device address is added after command bt.advertise on, then filter accept list will take effect after re-star advertise.
+the bt.advertise off and bt.advertise on can be used to re-start the advertise. 
+
+GATT central role side,
+1. Initialize the Host, press "bt.init",
+2. Adding device to filter accept list, press "bt.fal-add <address: XX:XX:XX:XX:XX:XX> <type: (public|random)>",such as "bt.fal-add 80:D2:1D:E8:2B:7E public".
+3. press "bt.fal-connect on".
+@bt> Connected: 80:D2:1D:E8:2B:7E (public)
+4. press "bt.disconnect". device will be disconnect.
+@bt> Disconnected: 80:D2:1D:E8:2B:7E (public) (reason 0x16)
+4. bt.fal-rem 80:D2:1D:E8:2B:7E public
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here is an example of 1M/2M/Coded PHY update.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 GATT peripheral role side,
 1. Initialize the Host, press "bt.init",
 2. Advertising, press "bt.advertise on",
 3. After the connection is established.
-4. Send phy update command, press "bt.phy-update <tx_phy> [rx_phy] [s2] [s8]", tx_phy/rx_phy could be 1(1M) or 2(2M). 
-   such as "bt.phy-update 2 2". Note, the "s2" and "s8" are unsupported.
+4. Send phy update command, press "bt.phy-update <tx_phy> [rx_phy] [s2] [s8]", tx_phy/rx_phy could be 1(1M) or 2(2M) or 4(Coded). 
+   such as "bt.phy-update 2 2".
 5. The message "LE PHY updated: TX PHY LE 2M, RX PHY LE 2M" would be printed if the phy is updated. note, if peer don't support phy update, then this message will not be printed.
 
 GATT central role side,
@@ -607,32 +632,63 @@ GATT central role side,
 [DEVICE]: 66:8F:26:27:1F:52 (random), AD evt type 0, RSSI -82  C:1 S:1 D:0 SR:0 E:0 Prim: LE 1M, Secn: No packets, Interval: 0x0000 (0 ms), SID: 0xff
 3. stop scan, press "bt.scan off",
 4. connect target device, press "bt.connect <address: XX:XX:XX:XX:XX:XX> <type: (public|random)>", such as bt.connect 72:78:C1:B5:0F:DA random
-
-5. Send phy update command, press "bt.phy-update <tx_phy> [rx_phy] [s2] [s8]", tx_phy/rx_phy could be 1(1M) or 2(2M). 
-   such as "bt.phy-update 2 2/bt.phy-update 1 2". Note, the "s2" and "s8" are unsupported.
+5. Send phy update command, press "bt.phy-update <tx_phy> [rx_phy] [s2] [s8]", tx_phy/rx_phy could be 1(1M) or 2(2M) or 4(Coded). 
+   such as "bt.phy-update 2 2".
 6. The message "LE PHY updated: TX PHY LE 2M, RX PHY LE 2M" would be printed if the phy is updated. note, if peer don't support phy update, then this message will not be printed.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Here is a example of white list.
+Here is an example of LE Data Packet Length Extension update.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 GATT peripheral role side,
-1. Initialize the Host, press "bt.init",
-2. Adding device to white list, press "bt.wl-add <address: XX:XX:XX:XX:XX:XX> <type: (public|random)>",such as "bt.wl-add 11:22:33:44:55:66 public".
-3. Advertising, press "bt.advertise on wl-conn",
-4. Only the device in white list can connect to current device. or else no log will be print.
-
-Note: if device address is added after command bt.advertise on, then white list will take effect after re-star advertise.
-the bt.advertise off and bt.advertise on can be used to re-start the advertise. 
+1. Initialize the Host, press "bt.init".
+2. Advertising, press "bt.advertise on".
+3. After the connection is established.
+4. Check current LE RX/TX maximum data length and time, press "bt.info", as blow, default RX/TX maximum data length is 27 and default RX/TX maxumum time is 328.
+Type: LE, Role: slave, Id: 0
+59:8F:3C:20:93:86 (random)
+Remote address: 59:8F:3C:20:93:86 (random) (resolvable)
+Local address: 80:D2:1D:E8:30:EC (public) (identity)
+Remote on-air address: 59:8F:3C:20:93:86 (random) (resolvable)
+Local on-air address: 7C:59:48:2E:A4:51 (random) (resolvable)
+Interval: 0x0024 (45 ms)
+Latency: 0x0000 (0 ms)
+Supervision timeout: 0x0190 (4000 ms)
+LE PHY: TX PHY LE 1M, RX PHY LE 1M
+LE data len: TX (len: 27 time: 328) RX (len: 27 time: 328)
+5. When LE data len is updated by the peer device, below information will be printed.
+LE data len updated: TX (len: 27 time: 328) RX (len: 50 time: 512)
+6. Update maximum tx data length, press "bt.data-len-update <tx_max_len> [tx_max_time]", such as bt.data-len-update 65, below information will be printed.
+Calculated tx time: 632
+59:8F:3C:20:93:86 (random)
+data len update initiated.
+LE data len updated: TX (len: 65 time: 632) RX (len: 50 time: 512)
 
 GATT central role side,
-1. Initialize the Host, press "bt.init",
-2. Adding device to white list, press "bt.wl-add <address: XX:XX:XX:XX:XX:XX> <type: (public|random)>",such as "bt.wl-add 80:D2:1D:E8:2B:7E public".
-3. press "bt.wl-connect on".
-@bt> Connected: 80:D2:1D:E8:2B:7E (public)
-4. press "bt.disconnect". device will be disconnect.
-@bt> Disconnected: 80:D2:1D:E8:2B:7E (public) (reason 0x16)
-4. bt.wl-rem 80:D2:1D:E8:2B:7E public
+1. Initialize the Host, press "bt.init".
+2. Start scan, press "bt.scan on", Bluetooth device around your current bluetooth will be list, for example, 
+[DEVICE]: 7C:59:48:2E:A4:51 (random), AD evt type 4, RSSI -44 BLE Peripheral C:0 S:1 D:0 SR:1 E:0 Prim: LE 1M, Secn: No packets, Interval: 0x0000 (0 ms), SID: 0xff
+3. Stop scan, press "bt.scan off",
+4. Connect target device, press "bt.connect <address: XX:XX:XX:XX:XX:XX> <type: (public|random)>", such as bt.connect 7C:59:48:2E:A4:51 random
+5. Check current LE RX/TX maximum data length and time, press "bt.info", as blow, default RX/TX maximum data length is 27 and default RX/TX maxumum time is 328.
+Type: LE, Role: master, Id: 0
+7C:59:48:2E:A4:51 (random)
+Remote address: 7C:59:48:2E:A4:51 (random) (resolvable)
+Local address: C0:95:DA:00:BC:82 (public) (identity)
+Remote on-air address: 7C:59:48:2E:A4:51 (random) (resolvable)
+Local on-air address: 59:8F:3C:20:93:86 (random) (resolvable)
+Interval: 0x0024 (45 ms)
+Latency: 0x0000 (0 ms)
+Supervision timeout: 0x0190 (4000 ms)
+LE PHY: TX PHY LE 1M, RX PHY LE 1M
+LE data len: TX (len: 27 time: 328) RX (len: 27 time: 328)
+6. Update maximum tx data length, press "bt.data-len-update <tx_max_len> [tx_max_time]", such as bt.data-len-update 50, below information will be printed.
+Calculated tx time: 512
+7C:59:48:2E:A4:51 (random)
+data len update initiated.
+LE data len updated: TX (len: 50 time: 512) RX (len: 27 time: 328)
+7. When LE data len is updated by the peer device, below information will be printed.
+LE data len updated: TX (len: 50 time: 512) RX (len: 65 time: 632)
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

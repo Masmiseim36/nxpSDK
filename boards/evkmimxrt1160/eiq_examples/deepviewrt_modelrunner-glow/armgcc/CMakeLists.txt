@@ -74,15 +74,16 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/phy
     ${ProjDirPath}/../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1166/drivers/cm7
     ${ProjDirPath}/../../../../../components/phy/device/phyksz8081
     ${ProjDirPath}/../../../../../components/phy/device/phyrtl8211f
     ${ProjDirPath}/../../../../../components/phy/mdio/enet
     ${ProjDirPath}/../../../../../middleware/eiq
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
+    ${ProjDirPath}/../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../xip
@@ -103,8 +104,6 @@ include(middleware_lwip_enet_ethernetif_MIMXRT1166_cm7)
 include(driver_phy-common_MIMXRT1166_cm7)
 
 include(driver_enet_MIMXRT1166_cm7)
-
-include(utility_debug_console_MIMXRT1166_cm7)
 
 include(middleware_lwip_empty_ethernetif_MIMXRT1166_cm7)
 
@@ -130,6 +129,10 @@ include(middleware_eiq_deepviewrt_deps_stb_MIMXRT1166_cm7)
 
 include(middleware_eiq_deepviewrt_deps_flatcc_MIMXRT1166_cm7)
 
+include(component_silicon_id_MIMXRT1166_cm7)
+
+include(driver_common_MIMXRT1166_cm7)
+
 include(middleware_eiq_deepviewrt_MIMXRT1166_cm7)
 
 include(component_lists_MIMXRT1166_cm7)
@@ -138,11 +141,11 @@ include(component_lpuart_adapter_MIMXRT1166_cm7)
 
 include(component_serial_manager_MIMXRT1166_cm7)
 
-include(driver_common_MIMXRT1166_cm7)
-
 include(component_serial_manager_uart_MIMXRT1166_cm7)
 
 include(driver_lpuart_MIMXRT1166_cm7)
+
+include(utility_debug_console_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm7)
 

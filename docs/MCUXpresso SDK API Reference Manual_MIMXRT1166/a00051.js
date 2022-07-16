@@ -1,45 +1,25 @@
 var a00051 =
 [
-    [ "iee_config_t", "a00051.html#a00554", [
-      [ "bypass", "a00051.html#afa6b30f73ece910361ecdd2f8f4a9d41", null ],
-      [ "mode", "a00051.html#a64617d118a22579a8507b5ad3da3bf52", null ],
-      [ "keySize", "a00051.html#a6bba5dc718cf9954eaf192e2142df556", null ],
-      [ "pageOffset", "a00051.html#ae66f10521a115859814a118f9a45e8e8", null ]
+    [ "kpp_config_t", "a00051.html#a00549", [
+      [ "activeRow", "a00051.html#affe1c0fe7c98a7bbd90e5da557a77029", null ],
+      [ "activeColumn", "a00051.html#a17262e678dbf479fc6fea48e685e94be", null ],
+      [ "interrupt", "a00051.html#a3f6f88fe9bcaf13690da0506e52f8bd9", null ]
     ] ],
-    [ "FSL_IEE_DRIVER_VERSION", "a00051.html#gaa6ab6a409a4ff503d3b7e9a607dcab19", null ],
-    [ "iee_region_t", "a00051.html#ga55a2b0860e831b846b006f7e680b41dc", [
-      [ "kIEE_Region0", "a00051.html#gga55a2b0860e831b846b006f7e680b41dcab80c1f6526ad541e2d2c1a8f06bce869", null ],
-      [ "kIEE_Region1", "a00051.html#gga55a2b0860e831b846b006f7e680b41dca3da4079b83f4bb3b034c00ddf3ef8438", null ],
-      [ "kIEE_Region2", "a00051.html#gga55a2b0860e831b846b006f7e680b41dca755347f2ef5b68e2e11fff919dc15ee1", null ],
-      [ "kIEE_Region3", "a00051.html#gga55a2b0860e831b846b006f7e680b41dca93f9a216bb60bf54db8afdbb293522cd", null ],
-      [ "kIEE_Region4", "a00051.html#gga55a2b0860e831b846b006f7e680b41dcab31d2bde03f98d44157eb446b6bad5bc", null ],
-      [ "kIEE_Region5", "a00051.html#gga55a2b0860e831b846b006f7e680b41dca30e1af437b56e26b48127d5fc878de19", null ],
-      [ "kIEE_Region6", "a00051.html#gga55a2b0860e831b846b006f7e680b41dca163bba210fb527ac735c50072ec9f636", null ],
-      [ "kIEE_Region7", "a00051.html#gga55a2b0860e831b846b006f7e680b41dcac75ff4536da4dc6680ffeca29339254b", null ]
+    [ "FSL_KPP_DRIVER_VERSION", "a00051.html#ga35c20878a9d0b578ca2bbf50d98666a8", null ],
+    [ "kpp_interrupt_enable_t", "a00051.html#ga405aea9bdb57ab7a5a7d0aecdc0edc72", [
+      [ "kKPP_keyDepressInterrupt", "a00051.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72ab4f673ab2f4dfc055981eed98465d8b2", null ],
+      [ "kKPP_keyReleaseInterrupt", "a00051.html#gga405aea9bdb57ab7a5a7d0aecdc0edc72a760b827e5a10ba43afac4c5a5f4449df", null ]
     ] ],
-    [ "iee_aes_bypass_t", "a00051.html#gaa8140a551831c897aaf7a5281e94a09c", [
-      [ "kIEE_AesUseMdField", "a00051.html#ggaa8140a551831c897aaf7a5281e94a09cae0d1b9f0a7b4edc9bcfdb541ce981396", null ],
-      [ "kIEE_AesBypass", "a00051.html#ggaa8140a551831c897aaf7a5281e94a09caf971273623b2145aa83be8e28493a3fc", null ]
+    [ "kpp_sync_operation_t", "a00051.html#ga0c44e479c6d310cf4d9a701c09f73485", [
+      [ "kKPP_ClearKeyDepressSyncChain", "a00051.html#gga0c44e479c6d310cf4d9a701c09f73485a362de7775b6d24295feddbb8cc93550b", null ],
+      [ "kKPP_SetKeyReleasesSyncChain", "a00051.html#gga0c44e479c6d310cf4d9a701c09f73485a2938765c6adf7fcf5128895478876aa5", null ]
     ] ],
-    [ "iee_aes_mode_t", "a00051.html#ga7da20086019ff038ee7173f8821f9c59", [
-      [ "kIEE_ModeNone", "a00051.html#gga7da20086019ff038ee7173f8821f9c59acd7d9f9f729dd6bd0862603005df9bd3", null ],
-      [ "kIEE_ModeAesXTS", "a00051.html#gga7da20086019ff038ee7173f8821f9c59a9439b059a09cd0abd7fe59d2d82da7b2", null ],
-      [ "kIEE_ModeAesCTRWAddress", "a00051.html#gga7da20086019ff038ee7173f8821f9c59a2eb27024863c59fea2af53fd37c29c05", null ],
-      [ "kIEE_ModeAesCTRWOAddress", "a00051.html#gga7da20086019ff038ee7173f8821f9c59a9f314844d78e583a9268be5ab75470d2", null ],
-      [ "kIEE_ModeAesCTRkeystream", "a00051.html#gga7da20086019ff038ee7173f8821f9c59aa3397a3b1572bd500bdbe6ddc5b671de", null ]
-    ] ],
-    [ "iee_aes_key_size_t", "a00051.html#ga26706372629001af67a5f2ec0573a2ac", [
-      [ "kIEE_AesCTR128XTS256", "a00051.html#gga26706372629001af67a5f2ec0573a2acad4521fb3d6b1ac67feb4ae840273c10b", null ],
-      [ "kIEE_AesCTR256XTS512", "a00051.html#gga26706372629001af67a5f2ec0573a2aca8a317008cabda3fed00ec0484a1fe576", null ]
-    ] ],
-    [ "iee_aes_key_num_t", "a00051.html#ga2d206a59b14cb15341faef1d50e4f711", [
-      [ "kIEE_AesKey1", "a00051.html#gga2d206a59b14cb15341faef1d50e4f711a5e66522a28129c73bf61ae7ae98e7c0c", null ],
-      [ "kIEE_AesKey2", "a00051.html#gga2d206a59b14cb15341faef1d50e4f711ab2f317b5ef8fae3a5f626d75f5e6ca48", null ]
-    ] ],
-    [ "IEE_Init", "a00051.html#ga8a6f9218b0c1573f1553e4bc444ad271", null ],
-    [ "IEE_GetDefaultConfig", "a00051.html#gafcd7da36e820e5501659bf8ece665ae9", null ],
-    [ "IEE_SetRegionConfig", "a00051.html#ga053537ed6702316207a96c286d540ceb", null ],
-    [ "IEE_SetRegionKey", "a00051.html#ga3548e651083d0b428ce402ca92158f4a", null ],
-    [ "IEE_GetOffset", "a00051.html#ga864553ffc5feb8c1cece140c9855d8b0", null ],
-    [ "IEE_LockRegionConfig", "a00051.html#ga10093cf63c2c2503214f0f66cb85e1dd", null ]
+    [ "KPP_Init", "a00051.html#ga773203cef9b50a6c5864f78c05cb0c83", null ],
+    [ "KPP_Deinit", "a00051.html#ga910f3aec15296a1d993f9b4963a152fd", null ],
+    [ "KPP_EnableInterrupts", "a00051.html#ga4d8bc3929af0678c182047884c50f7db", null ],
+    [ "KPP_DisableInterrupts", "a00051.html#gaa7de1f02a42c4176605cf7053f78baab", null ],
+    [ "KPP_GetStatusFlag", "a00051.html#ga7e0b699fd3ac19ce1bbb95418871ab3e", null ],
+    [ "KPP_ClearStatusFlag", "a00051.html#gad5f48c3a6027700e16a3f9bf477fa7e6", null ],
+    [ "KPP_SetSynchronizeChain", "a00051.html#ga7a240001a7a2b5fb84754a9a75afcb86", null ],
+    [ "KPP_keyPressScanning", "a00051.html#ga636803e3b1c99ec6dc9756548d9ef7b9", null ]
 ];

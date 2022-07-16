@@ -21,6 +21,9 @@
 #include "fsl_lpuart_edma.h"
 #include "fsl_dmamux.h"
 #include "usb_phy.h"
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+#include "ksdk_mbedtls.h"
+#endif /* CONFIG_BT_SMP */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -228,6 +231,9 @@ int main(void)
     EDMA_GetDefaultConfig(&config);
     EDMA_Init(dmaBases[0], &config);
 #endif
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+    CRYPTO_InitHardware();
+#endif /* CONFIG_BT_SMP */
 
     if (xTaskCreate(spp_task, "spp_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
@@ -239,4 +245,17 @@ int main(void)
     vTaskStartScheduler();
     for (;;)
         ;
+}
+
+void *pvPortCalloc(size_t xNum, size_t xSize)
+{
+    void *pvReturn;
+
+    pvReturn = pvPortMalloc(xNum * xSize);
+    if (pvReturn != NULL)
+    {
+        memset(pvReturn, 0x00, xNum * xSize);
+    }
+
+    return pvReturn;
 }

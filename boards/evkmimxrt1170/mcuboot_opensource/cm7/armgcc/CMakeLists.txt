@@ -31,8 +31,6 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../flexspi_flash_config.h"
-"${ProjDirPath}/../flexspi_nor_flash_ops.c"
 "${ProjDirPath}/../boot.c"
 "${ProjDirPath}/../boot.h"
 "${ProjDirPath}/../keys.c"
@@ -49,8 +47,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../include/sysflash/sysflash.h"
 "${ProjDirPath}/../flashiap/flash_api.c"
 "${ProjDirPath}/../flashiap/flash_info.h"
-"${ProjDirPath}/../flashiap/flexspi_flash.c"
-"${ProjDirPath}/../flashiap/flexspi_flash.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../sblconfig.h"
 "${ProjDirPath}/../pin_mux.c"
@@ -85,6 +81,8 @@ endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/drivers/cm7
     ${ProjDirPath}/../../../../../middleware/mbedtls
+    ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1170
+    ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../middleware/mcuboot_opensource/boot/bootutil
     ${ProjDirPath}/../../../../../devices/MIMXRT1176
@@ -94,6 +92,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -105,6 +104,10 @@ include(middleware_mbedtls_port_ksdk_MIMXRT1176_cm7)
 include(middleware_mbedtls_MIMXRT1176_cm7)
 
 include(middleware_mbedtls_rt2_MIMXRT1176_cm7)
+
+include(component_mflash_rt1170_MIMXRT1176_cm7)
+
+include(component_mflash_common_MIMXRT1176_cm7)
 
 include(driver_flexspi_MIMXRT1176_cm7)
 
@@ -143,6 +146,8 @@ include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 include(driver_pmu_1_MIMXRT1176_cm7)
 
 include(driver_dcdc_soc_MIMXRT1176_cm7)
+
+include(component_silicon_id_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 

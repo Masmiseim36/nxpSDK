@@ -66,6 +66,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers
     ${ProjDirPath}/../../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../../middleware
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../../components/uart
@@ -97,6 +98,8 @@ include(utility_debug_console_lite_MIMXRT1166_cm7)
 
 include(utility_assert_lite_MIMXRT1166_cm7)
 
+include(component_igpio_adapter_MIMXRT1166_cm7)
+
 include(middleware_baremetal_MIMXRT1166_cm7)
 
 include(driver_clock_MIMXRT1166_cm7)
@@ -119,7 +122,7 @@ include(driver_igpio_MIMXRT1166_cm7)
 
 include(driver_xip_device_MIMXRT1166_cm7)
 
-include(driver_xip_board_MIMXRT1166_cm7)
+include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm7)
 
 include(middleware_usb_device_controller_driver_MIMXRT1166_cm7)
 

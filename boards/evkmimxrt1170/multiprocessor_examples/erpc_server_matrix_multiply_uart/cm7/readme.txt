@@ -22,7 +22,7 @@ usage: run_uart.py [-h] [-c] [-s] [-p PORT] [-b BD]
 eRPC Matrix Multiply example
 
 optional arguments:
-  -h, --help            show this help message an
+  -h, --help            show this help message and exit
   -c, --client          Run client
   -s, --server          Run server
   -p PORT, --port PORT  Serial port
@@ -36,9 +36,9 @@ To run PC side as a client with a board connected as a server to COM3 execute:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.20.2
-- MCUXpresso  11.5.0
-- Keil MDK  5.36
+- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.6.0
+- Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements

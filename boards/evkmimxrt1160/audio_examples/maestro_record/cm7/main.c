@@ -24,6 +24,7 @@
 #include "fsl_wm8960.h"
 #include "fsl_codec_adapter.h"
 #include "fsl_dmamux.h"
+#include "fsl_pdm.h"
 #include "fsl_flexram.h"
 #include "fsl_flexram_allocate.h"
 #include "app_definitions.h"
@@ -54,7 +55,7 @@ wm8960_config_t wm8960Config = {
     .bus              = kWM8960_BusI2S,
     .format           = {.mclk_HZ    = 24576000U,
                .sampleRate = kWM8960_AudioSampleRate16KHz,
-               .bitWidth   = kWM8960_AudioBitWidth16bit},
+               .bitWidth   = kWM8960_AudioBitWidth32bit},
     .master_slave     = false,
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8960, .codecDevConfig = &wm8960Config};
@@ -71,8 +72,6 @@ const clock_audio_pll_config_t audioPllConfig = {
     .denominator = 100, /* 30 bit denominator of fractional loop divider */
 };
 
-extern uint32_t __bss_ocram_start__;
-extern uint32_t __bss_ocram_end__;
 
 static app_handle_t app;
 /*******************************************************************************
@@ -134,6 +133,9 @@ void SystemInitHook(void)
     IOMUXC_GPR->GPR16 |= IOMUXC_GPR_GPR16_FLEXRAM_BANK_CFG_SEL_MASK;
 
 #if (defined __GNUC__ && !defined __MCUXPRESSO)
+    extern uint32_t __bss_ocram_start__;
+    extern uint32_t __bss_ocram_end__;
+
     /* Initialization of OCRAM BSS section. */
     uint32_t startAddr; /* Address of the source memory. */
     uint32_t endAddr;   /* End of copied memory. */
@@ -186,6 +188,11 @@ static void APP_SDCARD_DetectCallBack(bool isInserted, void *userData)
 
     app->sdcardInserted = isInserted;
     xSemaphoreGiveFromISR(app->sdcardSem, NULL);
+}
+
+bool SDCARD_inserted(void)
+{
+    return (app.sdcardInserted);
 }
 
 void APP_SDCARD_Task(void *param)
@@ -268,8 +275,10 @@ int main(void)
     update_MPU_config();
     BOARD_InitPins();
     BOARD_BootClockRUN();
-    CLOCK_InitAudioPll(&audioPllConfig);
     BOARD_InitDebugConsole();
+    EnableIRQ(GPIO13_Combined_0_31_IRQn);
+
+    CLOCK_InitAudioPll(&audioPllConfig);
 
     FLEXRAM_Init(FLEXRAM);
 
@@ -283,6 +292,11 @@ int main(void)
     CLOCK_SetRootClockMux(kCLOCK_Root_Sai1, 4);
     CLOCK_SetRootClockDiv(kCLOCK_Root_Sai1, 16);
 
+    /* 0SC400M */
+    /* 24.576m mic root clock */
+    CLOCK_SetRootClockMux(kCLOCK_Root_Mic, 6);
+    CLOCK_SetRootClockDiv(kCLOCK_Root_Mic, 16);
+
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
 
@@ -290,7 +304,7 @@ int main(void)
     DMAMUX_Init(DEMO_DMAMUX);
     DMAMUX_SetSource(DEMO_DMAMUX, DEMO_TX_CHANNEL, (uint8_t)DEMO_SAI_TX_SOURCE);
     DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_TX_CHANNEL);
-    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_RX_CHANNEL, (uint8_t)DEMO_SAI_RX_SOURCE);
+    DMAMUX_SetSource(DEMO_DMAMUX, DEMO_RX_CHANNEL, (uint8_t)DEMO_PDM_RX_SOURCE);
     DMAMUX_EnableChannel(DEMO_DMAMUX, DEMO_RX_CHANNEL);
 
     PRINTF("\r\n");
@@ -298,6 +312,9 @@ int main(void)
     PRINTF("Maestro audio record demo start\r\n");
     PRINTF("*******************************\r\n");
     PRINTF("\r\n");
+
+    /* Initialize OSA*/
+    OSA_Init();
 
     ret = BOARD_CODEC_Init();
     if (ret)

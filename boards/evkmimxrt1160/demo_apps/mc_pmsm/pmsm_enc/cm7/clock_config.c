@@ -1,4 +1,12 @@
 /*
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2022 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+/*
  * How to setup clock using clock driver functions:
  *
  * 1. Call CLOCK_InitXXXPLL() to configure corresponding PLL clock.
@@ -11,11 +19,11 @@
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v7.0
+product: Clocks v9.0
 processor: MIMXRT1166xxxxx
 package_id: MIMXRT1166DVM6A
 mcu_data: ksdk2_0
-processor_version: 0.10.9
+processor_version: 0.11.7
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
 #include "clock_config.h"
@@ -271,6 +279,9 @@ void BOARD_BootClockRUN(void)
 {
     clock_root_config_t rootCfg = {0};
 
+    /* Set DCDC to DCM mode to improve the efficiency for light loading in run mode and transient performance with a big loading step. */
+    DCDC_BootIntoDCM(DCDC);
+
 #if defined(BYPASS_LDO_LPSR) && BYPASS_LDO_LPSR
     PMU_StaticEnableLpsrAnaLdoBypassMode(ANADIG_LDO_SNVS, true);
     PMU_StaticEnableLpsrDigLdoBypassMode(ANADIG_LDO_SNVS, true);
@@ -299,14 +310,22 @@ void BOARD_BootClockRUN(void)
     }
 
     /* Swicth both core, M7 Systick and Bus_Lpsr to OscRC48MDiv2 first */
+#if __CORTEX_M == 7
     rootCfg.mux = kCLOCK_M7_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
-#if __CORTEX_M == 7
     CLOCK_SetRootClock(kCLOCK_Root_M7, &rootCfg);
+
+    rootCfg.mux = kCLOCK_M7_SYSTICK_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M7_Systick, &rootCfg);
 #endif
 #if __CORTEX_M == 4
+    rootCfg.mux = kCLOCK_M4_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_M4, &rootCfg);
+
+    rootCfg.mux = kCLOCK_BUS_LPSR_ClockRoot_MuxOscRc48MDiv2;
+    rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Bus_Lpsr, &rootCfg);
 #endif
 
@@ -483,7 +502,7 @@ void BOARD_BootClockRUN(void)
     CLOCK_SetRootClock(kCLOCK_Root_Gpt6, &rootCfg);
 
     /* Configure FLEXSPI1 using OSC_RC_48M_DIV2 */
-#if !(defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1))
+#if !(defined(XIP_EXTERNAL_FLASH) && (XIP_EXTERNAL_FLASH == 1) || defined(FLEXSPI_IN_USE))
     rootCfg.mux = kCLOCK_FLEXSPI1_ClockRoot_MuxOscRc48MDiv2;
     rootCfg.div = 1;
     CLOCK_SetRootClock(kCLOCK_Root_Flexspi1, &rootCfg);

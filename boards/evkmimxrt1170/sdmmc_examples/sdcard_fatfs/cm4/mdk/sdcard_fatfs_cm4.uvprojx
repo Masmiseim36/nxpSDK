@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SD_ENABLED, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -681,6 +681,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -822,6 +837,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1248,7 +1278,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SD_ENABLED, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1595,6 +1625,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -1736,6 +1781,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2162,7 +2222,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, DEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SD_ENABLED, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2509,6 +2569,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -2650,6 +2725,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3076,7 +3166,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SD_ENABLED, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3423,6 +3513,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -3564,6 +3669,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3990,7 +4110,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SD_ENABLED, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4337,6 +4457,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -4478,6 +4613,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4904,7 +5054,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=0, NDEBUG, CPU_MIMXRT1176DVMAA_cm4, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SD_ENABLED, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1176/drivers;../../../../../../middleware/sdmmc/sd;../../../../../../middleware/sdmmc/common;../../../../../../middleware/sdmmc/host/usdhc;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../components/gpio;../../../../../../middleware/fatfs/source;../../../../../../middleware/fatfs/source/fsl_sd_disk;../../../../../../devices/MIMXRT1176;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../devices/MIMXRT1176/drivers/cm4;../../../../../../components/silicon_id;../../../../../../CMSIS/Core/Include;../../../../../../middleware/sdmmc/osa;../../../../../../components/osa</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -5251,6 +5401,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/gpio</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_igpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_igpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>fatfs/source</GroupName>
           <Files>
             <File>
@@ -5392,6 +5557,21 @@
               <FileName>evkmimxrt1170_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../xip/evkmimxrt1170_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
             </File>
           </Files>
         </Group>

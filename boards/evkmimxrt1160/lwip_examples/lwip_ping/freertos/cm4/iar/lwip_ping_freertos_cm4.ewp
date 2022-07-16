@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>2</fileVersion>
+  <fileVersion>3</fileVersion>
   <configuration>
     <name>debug</name>
     <toolchain>
@@ -11,9 +11,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Debug\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/debug</state>
@@ -31,22 +35,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -76,15 +70,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>7.80.4.12487</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
+          <state>9.30.1.48832</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -107,26 +93,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -143,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -166,8 +138,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Debug</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -175,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -286,10 +328,6 @@
           <state>0</state>
         </option>
         <option>
-          <name>CCMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCDiagWarnAreErr</name>
           <state>0</state>
         </option>
@@ -314,10 +352,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
@@ -329,15 +363,16 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
@@ -349,10 +384,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -370,16 +401,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>0</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -403,18 +424,6 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
           <state>0</state>
         </option>
         <option>
@@ -450,13 +459,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -586,10 +627,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -617,6 +654,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -657,12 +698,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -676,16 +713,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -967,6 +1000,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -990,11 +1103,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>flexspi_nor_debug</name>
@@ -1006,9 +1114,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Debug\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/flexspi_nor_debug</state>
@@ -1026,22 +1138,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1071,15 +1173,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>7.80.4.12487</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
+          <state>9.30.1.48832</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -1102,26 +1196,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -1138,7 +1218,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -1161,8 +1241,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Debug</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1170,7 +1320,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1283,10 +1433,6 @@
           <state>0</state>
         </option>
         <option>
-          <name>CCMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCDiagWarnAreErr</name>
           <state>0</state>
         </option>
@@ -1311,10 +1457,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
@@ -1326,15 +1468,16 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
@@ -1346,10 +1489,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -1367,16 +1506,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1400,18 +1529,6 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
           <state>0</state>
         </option>
         <option>
@@ -1447,13 +1564,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1583,10 +1732,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -1614,6 +1759,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -1654,12 +1803,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -1673,16 +1818,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -1964,6 +2105,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1987,11 +2208,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>sdram_debug</name>
@@ -2003,9 +2219,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Debug\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/sdram_debug</state>
@@ -2023,22 +2243,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -2068,15 +2278,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>7.80.4.12487</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
+          <state>9.30.1.48832</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -2099,26 +2301,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -2135,7 +2323,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -2158,8 +2346,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Debug</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -2167,7 +2425,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2280,10 +2538,6 @@
           <state>0</state>
         </option>
         <option>
-          <name>CCMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCDiagWarnAreErr</name>
           <state>0</state>
         </option>
@@ -2308,10 +2562,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
@@ -2323,15 +2573,16 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
@@ -2343,10 +2594,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -2364,16 +2611,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -2397,18 +2634,6 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
           <state>0</state>
         </option>
         <option>
@@ -2444,13 +2669,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -2580,10 +2837,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -2611,6 +2864,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -2651,12 +2908,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -2670,16 +2923,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -2961,6 +3210,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2984,11 +3313,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>release</name>
@@ -3000,9 +3324,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Release\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/release</state>
@@ -3020,22 +3348,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -3068,14 +3386,6 @@
           <state>7.60.1.11206</state>
         </option>
         <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>OGChipSelectEditMenu</name>
           <state>MIMXRT1166xxx6_M4	NXP MIMXRT1166xxx6_M4</state>
         </option>
@@ -3096,26 +3406,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -3132,7 +3428,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -3155,8 +3451,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Release</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -3164,7 +3530,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3275,10 +3641,6 @@
           <state>0</state>
         </option>
         <option>
-          <name>CCMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCDiagWarnAreErr</name>
           <state>0</state>
         </option>
@@ -3303,10 +3665,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
@@ -3318,15 +3676,16 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
@@ -3338,10 +3697,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -3359,16 +3714,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -3392,18 +3737,6 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
           <state>0</state>
         </option>
         <option>
@@ -3439,13 +3772,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3575,10 +3940,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -3606,6 +3967,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -3646,12 +4011,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -3665,16 +4026,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -3956,6 +4313,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -3979,11 +4416,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>flexspi_nor_release</name>
@@ -3995,9 +4427,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Release\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/flexspi_nor_release</state>
@@ -4015,22 +4451,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -4063,14 +4489,6 @@
           <state>7.60.1.11206</state>
         </option>
         <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>OGChipSelectEditMenu</name>
           <state>MIMXRT1166xxx6_M4	NXP MIMXRT1166xxx6_M4</state>
         </option>
@@ -4091,26 +4509,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -4127,7 +4531,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -4150,8 +4554,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Release</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -4159,7 +4633,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4272,10 +4746,6 @@
           <state>0</state>
         </option>
         <option>
-          <name>CCMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCDiagWarnAreErr</name>
           <state>0</state>
         </option>
@@ -4300,10 +4770,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
@@ -4315,15 +4781,16 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
@@ -4335,10 +4802,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -4356,16 +4819,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -4389,18 +4842,6 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
           <state>0</state>
         </option>
         <option>
@@ -4436,13 +4877,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -4572,10 +5045,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -4603,6 +5072,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -4643,12 +5116,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -4662,16 +5131,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -4953,6 +5418,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -4976,11 +5521,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>sdram_release</name>
@@ -4992,9 +5532,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Release\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/sdram_release</state>
@@ -5012,22 +5556,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -5060,14 +5594,6 @@
           <state>7.60.1.11206</state>
         </option>
         <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>OGChipSelectEditMenu</name>
           <state>MIMXRT1166xxx6_M4	NXP MIMXRT1166xxx6_M4</state>
         </option>
@@ -5088,26 +5614,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -5124,7 +5636,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
         </option>
         <option>
@@ -5147,8 +5659,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>39</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Release</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -5156,7 +5738,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5269,10 +5851,6 @@
           <state>0</state>
         </option>
         <option>
-          <name>CCMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCDiagWarnAreErr</name>
           <state>0</state>
         </option>
@@ -5297,10 +5875,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy/mdio/enet</state>
@@ -5312,15 +5886,16 @@
           <state>$PROJ_DIR$/../../../../../../../middleware/lwip/src/include</state>
           <state>$PROJ_DIR$/../../../../../../../components/phy</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../../../xip</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/cm4</state>
+          <state>$PROJ_DIR$/../../../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
@@ -5332,10 +5907,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -5353,16 +5924,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -5386,18 +5947,6 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
           <state>0</state>
         </option>
         <option>
@@ -5433,13 +5982,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -5569,10 +6150,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -5600,6 +6177,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -5640,12 +6221,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -5659,16 +6236,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -5950,6 +6523,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -5972,11 +6625,6 @@
           <state/>
         </option>
       </data>
-    </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
   </configuration>
   <group>
@@ -6735,6 +7383,9 @@
             <name>$PROJ_DIR$/../../../../../../../middleware/lwip/src/netif/ppp/eap.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../../../middleware/lwip/src/netif/ppp/ecp.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../../../middleware/lwip/src/netif/ppp/eui64.c</name>
           </file>
           <file>
@@ -6748,9 +7399,6 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../../middleware/lwip/src/netif/ppp/lcp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../../middleware/lwip/src/netif/ppp/lwip_ecp.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../../middleware/lwip/src/netif/ppp/magic.c</name>
@@ -6859,27 +7507,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/drivers/fsl_memory.h</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</name>
     </file>
   </group>
   <group>
@@ -7021,6 +7648,27 @@
     </file>
   </group>
   <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
     <name>component</name>
     <group>
       <name>uart</name>
@@ -7056,6 +7704,15 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/silicon_id/fsl_silicon_id.h</name>
       </file>
     </group>
   </group>

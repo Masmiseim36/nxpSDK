@@ -70,6 +70,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../../middleware/fatfs
+    ${ProjDirPath}/../../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../../middleware
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
@@ -100,6 +101,8 @@ include(middleware_sdmmc_host_usdhc_interrupt_MIMXRT1176_cm7)
 include(middleware_fatfs_MIMXRT1176_cm7)
 
 include(middleware_fatfs_sd_MIMXRT1176_cm7)
+
+include(component_igpio_adapter_MIMXRT1176_cm7)
 
 include(middleware_baremetal_MIMXRT1176_cm7)
 

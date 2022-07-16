@@ -16,7 +16,6 @@ The partitioning is defined by definitions in flash_partitioning.h header file.
 The MCUBoot partition starts at the very beginning of the FLASH memory and spans up to BOOT_FLASH_ACT_APP.
 The primary partition occupies range starting from BOOT_FLASH_ACT_APP up to BOOT_FLASH_CAND_APP.
 The secondary partition starts at BOOT_FLASH_CAND_APP and it is automatically assigned the same size as the primary one.
-The scratch area is 512 KB in size by default.
 The rest of the memory may be used by the application for arbitrary purposes.
 
 Important notice: should you need to change the partitioning please make sure to update also the header file used by the OTA application!
@@ -58,10 +57,10 @@ https://docs.mcuboot.com/imgtool.html
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.20.2
-- Keil MDK  5.36
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
-- MCUXpresso  11.5.0
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================

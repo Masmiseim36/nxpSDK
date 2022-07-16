@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: ENET CMSIS Driver</title>
+<title>MCUXpresso SDK API Reference Manual: EQOS-TSN: Ethernet QoS with TSN Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,103 +99,32 @@ $(document).ready(function(){initNavTree('a00328.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">ENET CMSIS Driver<div class="ingroups"><a class="el" href="a00028.html">ENET: Ethernet MAC Driver</a></div></div>  </div>
+<div class="title">EQOS-TSN: Ethernet QoS with TSN Driver</div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>This section describes the programming interface of the ENET Cortex Microcontroller Software Interface Standard (CMSIS) driver. This driver defines generic peripheral driver interfaces for middleware making it reusable across a wide range of supported microcontroller devices. The API connects microcontroller peripherals with middleware that implements for example communication stacks, file systems, or graphic user interfaces. More information and usage methord see <a href="http://www.keil.com/pack/doc/cmsis/Driver/html/index.html">http://www.keil.com/pack/doc/cmsis/Driver/html/index.html</a>.</p>
-<p>The ENET CMSIS driver includes transactional APIs.</p>
-<p>Transactional APIs are transaction target high-level APIs. The transactional APIs can be used to enable the peripheral quickly and also in the application if the code size and performance of transactional APIs satisfy the requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code accessing the hardware registers.</p>
-<h1><a class="anchor" id="ENETTpyUC"></a>
-Typical use case</h1>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> ENET_SignalEvent_t(uint32_t event)</div>
-<div class="line">{</div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_ETH_MAC_EVENT_RX_FRAME)</div>
-<div class="line">    {</div>
-<div class="line">        uint32_t size;</div>
-<div class="line">        uint32_t len;</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">/* Get the Frame size */</span></div>
-<div class="line">        size =  EXAMPLE_ENET.GetRxFrameSize();</div>
-<div class="line">        <span class="comment">/* Call ENET_ReadFrame when there is a received frame. */</span></div>
-<div class="line">        <span class="keywordflow">if</span> (size != 0)</div>
-<div class="line">        {</div>
-<div class="line">            <span class="comment">/* Received valid frame. Deliver the rx buffer with the size equal to length. */</span></div>
-<div class="line">            uint8_t *data = (uint8_t *)malloc(size);</div>
-<div class="line">            <span class="keywordflow">if</span> (data)</div>
-<div class="line">            {</div>
-<div class="line">                len = EXAMPLE_ENET.ReadFrame(data, size);</div>
-<div class="line">                <span class="keywordflow">if</span> (size == len)</div>
-<div class="line">                {</div>
-<div class="line">                    <span class="comment">/* Increase the received frame numbers. */</span></div>
-<div class="line">                    <span class="keywordflow">if</span> (g_rxIndex &lt; ENET_EXAMPLE_LOOP_COUNT)</div>
-<div class="line">                    {</div>
-<div class="line">                        g_rxIndex++;</div>
-<div class="line">                    }                        </div>
-<div class="line">                }</div>
-<div class="line">                free(data);                             </div>
-<div class="line">            }</div>
-<div class="line">         }</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (event == ARM_ETH_MAC_EVENT_TX_FRAME)</div>
-<div class="line">    {</div>
-<div class="line">        g_testTxNum ++;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">/* Initialize the ENET module. */</span></div>
-<div class="line">    EXAMPLE_ENET.Initialize(ENET_SignalEvent_t);</div>
-<div class="line">    EXAMPLE_ENET.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">    EXAMPLE_ENET.SetMacAddress((ARM_ETH_MAC_ADDR *)g_macAddr); </div>
-<div class="line">    EXAMPLE_ENET.Control(ARM_ETH_MAC_CONFIGURE, linkInfo.speed &lt;&lt; ARM_ETH_MAC_SPEED_Pos  |</div>
-<div class="line">                 linkInfo.duplex &lt;&lt; ARM_ETH_MAC_DUPLEX_Pos | ARM_ETH_MAC_ADDRESS_BROADCAST);  </div>
-<div class="line">    EXAMPLE_ENET_PHY.PowerControl(ARM_POWER_FULL);</div>
-<div class="line">    EXAMPLE_ENET_PHY.SetMode(ARM_ETH_PHY_AUTO_NEGOTIATE);</div>
-<div class="line">      EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_RX, 1);</div>
-<div class="line">    EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_TX, 1);</div>
-<div class="line">    <span class="keywordflow">if</span> (EXAMPLE_ENET_PHY.GetLinkState() == ARM_ETH_LINK_UP)</div>
-<div class="line">    {</div>
-<div class="line">        linkInfo = EXAMPLE_ENET_PHY.GetLinkInfo();</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">    {</div>
-<div class="line">        <a class="code" href="a00356.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;\r\nPHY Link down, please check the cable connection and link partner setting.\r\n&quot;</span>);</div>
-<div class="line">    }</div>
-<div class="line"></div>
-<div class="line">    <span class="comment">/* Build broadcast for sending. */</span></div>
-<div class="line">    ENET_BuildBroadCastFrame();</div>
-<div class="line"></div>
-<div class="line">    <span class="keywordflow">while</span> (1)</div>
-<div class="line">    {</div>
-<div class="line">        <span class="comment">/* Check the total number of received number. */</span></div>
-<div class="line">        <span class="keywordflow">if</span> (g_rxCheckIdx != g_rxIndex)</div>
-<div class="line">        {</div>
-<div class="line">            <a class="code" href="a00356.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;The %d frame has been successfuly received!\r\n&quot;</span>, g_rxIndex);</div>
-<div class="line">            g_rxCheckIdx = g_rxIndex;</div>
-<div class="line">        }          </div>
-<div class="line">        <span class="keywordflow">if</span> ( g_testTxNum &amp;&amp; (g_txCheckIdx != g_testTxNum))</div>
-<div class="line">        {</div>
-<div class="line">            g_txCheckIdx = g_testTxNum;</div>
-<div class="line">            <a class="code" href="a00356.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;The %d frame transmitted success!\r\n&quot;</span>, g_txCheckIdx);</div>
-<div class="line">        }</div>
-<div class="line">        <span class="comment">/* Get the Frame size */</span></div>
-<div class="line">        <span class="keywordflow">if</span> (txnumber &lt; ENET_EXAMPLE_LOOP_COUNT)</div>
-<div class="line">        {</div>
-<div class="line">            txnumber ++;</div>
-<div class="line">            <span class="comment">/* Send a multicast frame when the PHY is link up. */</span></div>
-<div class="line">            <span class="keywordflow">if</span> (EXAMPLE_ENET.SendFrame(&amp;g_frame[0], ENET_DATA_LENGTH, ARM_ETH_MAC_TX_FRAME_EVENT) == ARM_DRIVER_OK)</div>
-<div class="line">            {</div>
-<div class="line">                <span class="keywordflow">for</span> (uint32_t count = 0; count &lt; 0x3FF; count++)</div>
-<div class="line">                {</div>
-<div class="line">                    __ASM(<span class="stringliteral">&quot;nop&quot;</span>);</div>
-<div class="line">                }</div>
-<div class="line">            }</div>
-<div class="line">            <span class="keywordflow">else</span></div>
-<div class="line">            {</div>
-<div class="line">                <a class="code" href="a00356.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot; \r\nTransmit frame failed!\r\n&quot;</span>);</div>
-<div class="line">            }</div>
-<div class="line">         }</div>
-<div class="line">    }</div>
-</div><!-- fragment --> </div><!-- contents -->
+<p>The MCUXpresso SDK provides a peripheral driver for the 10/100/1000 Mbps Ethernet QoS with TSN module of MCUXpresso SDK devices.</p>
+<h1><a class="anchor" id="EthernetQosDriver"></a>
+EQOS-TSN: Ethernet QoS with TSN Driver</h1>
+<h1>Operations of Ethernet QoS with TSN Driver {EthernetQosDriverOps}</h1>
+<h2><a class="anchor" id="ENETQosInitDeinitInterOps"></a>
+Initialize and De-initialize interface Operation</h2>
+<p>Use the <a class="el" href="a00029.html#ga6ea9055b33a4be6261321dd7f5d7569d" title="Gets the ENET default configuration structure. ">ENET_QOS_GetDefaultConfig()</a> to get the default basic configuration, Use the default configuration unchanged or changed as the input to the <a class="el" href="a00029.html#ga52c0e0010a95ae9829c3577f09045c37" title="Initializes the ENET module. ">ENET_QOS_Init()</a> to do basic configuration for EQOS module. Call <a class="el" href="a00029.html#gad77a47ac26f190cdc3f60c42033def66" title="Initialize for all ENET descriptors. ">ENET_QOS_DescriptorInit()</a> to initialization the descriptors and Call <a class="el" href="a00029.html#ga4b9ca12ac1da8a22e4c38780dca36783" title="Starts the ENET rx/tx. ">ENET_QOS_StartRxTx()</a> to start the EQOS engine after all initialization. <a class="el" href="a00029.html#ga46ca98c608a9370de15f5617fbc4709c" title="Deinitializes the ENET module. ">ENET_QOS_Deinit()</a> is used to to EQOS De-initialization.</p>
+<h2><a class="anchor" id="ENETQosOthBasicOps"></a>
+Other basic operation</h2>
+<p>This group provides the EQOS mac address set/get operation with <a class="el" href="a00029.html#gad8b191e841d3156a403de2e0f0f16a0f" title="Sets the ENET module Mac address. ">ENET_QOS_SetMacAddr()</a> and <a class="el" href="a00029.html#gad2b22a143bcebe34386c2dc1ec4c9f69" title="Gets the ENET module Mac address. ">ENET_QOS_GetMacAddr()</a>. The <a class="el" href="a00029.html#gaa4b09bff201b897d61e4b398d97f5c75" title="Set the MAC to enter into power down mode. ">ENET_QOS_EnterPowerDown()</a> and <a class="el" href="a00029.html#gab334639e52d3ea5d0c9e689d420b2aff" title="Set the MAC to exit power down mode. ">ENET_QOS_ExitPowerDown()</a> can be used to do power management.</p>
+<h2><a class="anchor" id="ENETQosIntOps"></a>
+Interrupt operation</h2>
+<p>This group provide the DMA interrupt get and clear APIs. This can be used by application to create new IRQ handler.</p>
+<h2><a class="anchor" id="ENETQosFuncOps"></a>
+Functional Operation</h2>
+<p>This group functions are low level TX/RX descriptor operations. It is convenient to use these TX/RX APIs to do application specific RX/TX. For TX: Use <a class="el" href="a00029.html#gac8ec621a37feefa4472738b84b36e501" title="Get the tx descriptor DMA Own flag. ">ENET_QOS_IsTxDescriptorDmaOwn()</a>, <a class="el" href="a00029.html#ga19c8bd01196f30f847943bc3db75bd84" title="Setup a given tx descriptor. ">ENET_QOS_SetupTxDescriptor()</a> to build your packet for transfer and ENET_QOS_UpdateTxDescriptorTail to update the TX tail pointer. For RX: Use <a class="el" href="a00029.html#gac81527ecb6bc5c1c9ceea49fec09bac6" title="Gets the context in the ENET rx descriptor. ">ENET_QOS_GetRxDescriptor()</a> to get the received data/length and use the <a class="el" href="a00029.html#gac25fbd0c003edd2e9b970de390c68107" title="Updates the buffers and the own status for a given rx descriptor. ">ENET_QOS_UpdateRxDescriptor()</a> to update the buffers/status.</p>
+<h2><a class="anchor" id="ENETQosTransOps"></a>
+Transactional Operation</h2>
+<p>When use the Transactional APIs, please make sure to call the ENET_QOS_CreateHandler to create the handler which are used to maintain all data related to TX/RX process.</p>
+<p>For EQOS receive, the <a class="el" href="a00029.html#gaa58e73492953ac3bb2bbf95db9c80ad7" title="Gets the size of the read frame. ">ENET_QOS_GetRxFrameSize()</a> function must be called to get the received data size. Then, call the <a class="el" href="a00029.html#gac64b2ddaf2fa723ee509903aa83e90a2" title="Reads a frame from the ENET device. ">ENET_QOS_ReadFrame()</a> function to get the received data.</p>
+<p>For EQOS transmit, call the <a class="el" href="a00029.html#gab60a3473b01c1a47af926a8de0a07ef8" title="Transmits an ENET frame. ">ENET_QOS_SendFrame()</a> function to send the data out. To save memory and avoid the memory copy in the TX process. The <a class="el" href="a00029.html#gab60a3473b01c1a47af926a8de0a07ef8" title="Transmits an ENET frame. ">ENET_QOS_SendFrame()</a> here is a zero-copy API, so make sure the input data buffers are not re-queued or freed before the data are really sent out. To make sure the data buffers reclaim is rightly done. the transmit interrupt must be used. so For transactional APIs here we enabled the tx interrupt in <a class="el" href="a00029.html#gaf3984bbc863c4116b3fe81ae53cd993f" title="Create ENET Handler. ">ENET_QOS_CreateHandler()</a>. That means the tx interrupt is automatically enabled in transactional APIs. is recommended to be called on the transmit interrupt handler.ENET_QOS_ReclaimTxDescriptor() is a transactional API to get the information from the finished transmit data buffers and reclaim the tx index. it is called by the transmit interrupt IRQ handler.</p>
+<p>For use the transactional APIs, receive polling Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/enet_qos For the functional API, rx polling Refer to the driver examples codes located at &lt;SDK_ROOT&gt;/boards/&lt;BOARD&gt;/driver_examples/enet_qos </p>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.5-->
 <!-- start footer part -->

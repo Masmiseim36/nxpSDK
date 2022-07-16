@@ -65,12 +65,14 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/drivers/cm4
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
     ${ProjDirPath}/../../../../../../devices/MIMXRT1166/utilities
@@ -81,7 +83,7 @@ include(driver_lpi2c_MIMXRT1166_cm4)
 
 include(driver_wm8960_MIMXRT1166_cm4)
 
-include(CMSIS_DSP_Library_MIMXRT1166_cm4)
+include(CMSIS_DSP_Source_MIMXRT1166_cm4)
 
 include(driver_usdhc_MIMXRT1166_cm4)
 
@@ -111,6 +113,8 @@ include(utility_debug_console_lite_MIMXRT1166_cm4)
 
 include(utility_assert_lite_MIMXRT1166_cm4)
 
+include(component_igpio_adapter_MIMXRT1166_cm4)
+
 include(driver_clock_MIMXRT1166_cm4)
 
 include(driver_sai_MIMXRT1166_cm4)
@@ -137,13 +141,15 @@ include(driver_igpio_MIMXRT1166_cm4)
 
 include(driver_xip_device_MIMXRT1166_cm4)
 
-include(driver_xip_board_MIMXRT1166_cm4)
+include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm4)
 
 include(driver_pmu_1_MIMXRT1166_cm4)
 
 include(driver_dcdc_soc_MIMXRT1166_cm4)
 
 include(driver_cache_lmem_MIMXRT1166_cm4)
+
+include(component_silicon_id_MIMXRT1166_cm4)
 
 include(driver_anatop_ai_MIMXRT1166_cm4)
 
@@ -169,30 +175,6 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
-if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM4lf_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM4lf_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL release)
-
-if(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM4lf_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM4lf_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL sdram_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM4lf_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM4lf_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

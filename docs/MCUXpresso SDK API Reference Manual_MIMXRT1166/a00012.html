@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -132,7 +132,7 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga7ba61e89780b499873e8308cebb821d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7ba61e89780b499873e8308cebb821d0"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#ga7ba61e89780b499873e8308cebb821d0">asrc_edma_callback_t</a> )(ASRC_Type *base, asrc_edma_handle_t *handle, <a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#ga7ba61e89780b499873e8308cebb821d0">asrc_edma_callback_t</a> )(ASRC_Type *base, asrc_edma_handle_t *handle, <a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga7ba61e89780b499873e8308cebb821d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">ASRC eDMA transfer callback function for finish and error. <br/></td></tr>
 <tr class="separator:ga7ba61e89780b499873e8308cebb821d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5e3ce96be0e30a557f8d7b117060c55c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5e3ce96be0e30a557f8d7b117060c55c"></a>
@@ -143,7 +143,7 @@ typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gada8908a527652ebcf1a40b869952b971"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gada8908a527652ebcf1a40b869952b971"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#gada8908a527652ebcf1a40b869952b971">FSL_ASRC_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00326.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#gada8908a527652ebcf1a40b869952b971">FSL_ASRC_EDMA_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00325.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
 <tr class="memdesc:gada8908a527652ebcf1a40b869952b971"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.1.0. <br/></td></tr>
 <tr class="separator:gada8908a527652ebcf1a40b869952b971"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -155,13 +155,13 @@ eDMA Transactional</h2></td></tr>
 <tr class="memitem:ga106f0082ac62e5a214a8673403d62d90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#ga106f0082ac62e5a214a8673403d62d90">ASRC_TransferOutCreateHandleEDMA</a> (ASRC_Type *base, asrc_edma_handle_t *handle, <a class="el" href="a00011.html#ga4d609b2d88cb02f3ca8953287ef59565">asrc_channel_pair_t</a> channelPair, <a class="el" href="a00012.html#ga7ba61e89780b499873e8308cebb821d0">asrc_edma_callback_t</a> callback, <a class="el" href="a00025.html#a00461">edma_handle_t</a> *outDmaHandle, const <a class="el" href="a00012.html#a00422">asrc_p2p_edma_config_t</a> *periphConfig, void *userData)</td></tr>
 <tr class="memdesc:ga106f0082ac62e5a214a8673403d62d90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the ASRC OUT eDMA handle.  <a href="#ga106f0082ac62e5a214a8673403d62d90">More...</a><br/></td></tr>
 <tr class="separator:ga106f0082ac62e5a214a8673403d62d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8a7127fcabfe07461ba13b9bc067ccf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#ga8a7127fcabfe07461ba13b9bc067ccf0">ASRC_TransferSetChannelPairConfigEDMA</a> (ASRC_Type *base, asrc_edma_handle_t *handle, <a class="el" href="a00011.html#a00417">asrc_channel_pair_config_t</a> *asrcConfig, uint32_t inSampleRate, uint32_t outSampleRate)</td></tr>
+<tr class="memitem:ga8a7127fcabfe07461ba13b9bc067ccf0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#ga8a7127fcabfe07461ba13b9bc067ccf0">ASRC_TransferSetChannelPairConfigEDMA</a> (ASRC_Type *base, asrc_edma_handle_t *handle, <a class="el" href="a00011.html#a00417">asrc_channel_pair_config_t</a> *asrcConfig, uint32_t inSampleRate, uint32_t outSampleRate)</td></tr>
 <tr class="memdesc:ga8a7127fcabfe07461ba13b9bc067ccf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the ASRC P2P channel pair.  <a href="#ga8a7127fcabfe07461ba13b9bc067ccf0">More...</a><br/></td></tr>
 <tr class="separator:ga8a7127fcabfe07461ba13b9bc067ccf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae159599d8f8f6b84cb5b36fd6e6de80c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#gae159599d8f8f6b84cb5b36fd6e6de80c">ASRC_GetOutSamplesSizeEDMA</a> (ASRC_Type *base, asrc_edma_handle_t *handle, uint32_t inSampleRate, uint32_t outSampleRate, uint32_t inSamplesize)</td></tr>
 <tr class="memdesc:gae159599d8f8f6b84cb5b36fd6e6de80c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get output sample buffer size can be transferred by edma.  <a href="#gae159599d8f8f6b84cb5b36fd6e6de80c">More...</a><br/></td></tr>
 <tr class="separator:gae159599d8f8f6b84cb5b36fd6e6de80c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaccc8ff7c84adde4460e95d49b2ee106d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#gaccc8ff7c84adde4460e95d49b2ee106d">ASRC_TransferEDMA</a> (ASRC_Type *base, asrc_edma_handle_t *handle, <a class="el" href="a00011.html#a00423">asrc_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gaccc8ff7c84adde4460e95d49b2ee106d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#gaccc8ff7c84adde4460e95d49b2ee106d">ASRC_TransferEDMA</a> (ASRC_Type *base, asrc_edma_handle_t *handle, <a class="el" href="a00011.html#a00423">asrc_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gaccc8ff7c84adde4460e95d49b2ee106d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking ASRC m2m convert using EDMA.  <a href="#gaccc8ff7c84adde4460e95d49b2ee106d">More...</a><br/></td></tr>
 <tr class="separator:gaccc8ff7c84adde4460e95d49b2ee106d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7e8cc93823f859cea5cc186fb3845ec5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00012.html#ga7e8cc93823f859cea5cc186fb3845ec5">ASRC_TransferInAbortEDMA</a> (ASRC_Type *base, asrc_edma_handle_t *handle)</td></tr>
@@ -576,7 +576,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ASRC_TransferSetChannelPairConfigEDMA </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ASRC_TransferSetChannelPairConfigEDMA </td>
           <td>(</td>
           <td class="paramtype">ASRC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -691,7 +691,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00326.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ASRC_TransferEDMA </td>
+          <td class="memname"><a class="el" href="a00325.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> ASRC_TransferEDMA </td>
           <td>(</td>
           <td class="paramtype">ASRC_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

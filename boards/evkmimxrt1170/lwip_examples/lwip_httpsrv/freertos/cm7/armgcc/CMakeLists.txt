@@ -56,17 +56,19 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../components/phy/device/phyksz8081
     ${ProjDirPath}/../../../../../../../components/phy/device/phyrtl8211f
     ${ProjDirPath}/../../../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../../components/phy
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers
     ${ProjDirPath}/../../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176
+    ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../../../components/uart
     ${ProjDirPath}/../../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../../components/lists
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../../../xip
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1176/drivers/cm7
+    ${ProjDirPath}/../../../../../../../components/silicon_id
+    ${ProjDirPath}/../../../../../xmcd
     ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
 )
 
@@ -83,8 +85,6 @@ include(middleware_lwip_apps_mdns_MIMXRT1176_cm7)
 
 include(middleware_lwip_MIMXRT1176_cm7)
 
-include(utility_debug_console_MIMXRT1176_cm7)
-
 include(middleware_lwip_enet_ethernetif_MIMXRT1176_cm7)
 
 include(driver_phy-common_MIMXRT1176_cm7)
@@ -98,6 +98,8 @@ include(middleware_freertos-kernel_heap_3_MIMXRT1176_cm7)
 include(driver_common_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
+
+include(utility_debug_console_MIMXRT1176_cm7)
 
 include(component_lpuart_adapter_MIMXRT1176_cm7)
 
@@ -127,11 +129,15 @@ include(driver_dcdc_soc_MIMXRT1176_cm7)
 
 include(driver_cache_armv7_m7_MIMXRT1176_cm7)
 
-include(driver_mdio-common_MIMXRT1176_cm7)
+include(component_silicon_id_MIMXRT1176_cm7)
+
+include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(driver_anatop_ai_MIMXRT1176_cm7)
 
 include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
+
+include(driver_mdio-common_MIMXRT1176_cm7)
 
 include(driver_memory_MIMXRT1176_cm7)
 

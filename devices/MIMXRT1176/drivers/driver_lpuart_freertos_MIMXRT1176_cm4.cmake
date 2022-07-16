@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("driver_lpuart_freertos component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

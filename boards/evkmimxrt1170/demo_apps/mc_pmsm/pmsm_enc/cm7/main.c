@@ -10,12 +10,12 @@
 #include "mc_periph_init.h"
 #include "freemaster.h"
 #include "pin_mux.h"
+#include "peripherals.h"
 #include "fsl_gpio.h"
 #include "fsl_lpuart.h"
 #include "m1_sm_snsless_enc.h"
 #include "fsl_adc_etc.h"
 
-#include "freemaster_serial_lpuart.h"
 #include "board.h"
 #include "mid_sm_states.h"
 
@@ -24,6 +24,8 @@
  ******************************************************************************/
 /* Version info */
 #define MCRSP_VER "2.0.0" /* motor control package version */
+
+#define DAPENG_TEST /* Dapeng test */
 
 /* Example's feature set in form of bits inside ui16featureSet.
    This feature set is expected to be growing over time.
@@ -36,10 +38,6 @@
 #define FEATURE_SET (FEATURE_ENC << (0) | \
                      FEATURE_FIELD_WEAKENING << (1) | \
                      FEATURE_S_RAMP << (2))
-
-/*! @brief The UART to use for FreeMASTER communication */
-#define BOARD_FMSTR_UART_PORT LPUART1
-#define BOARD_FMSTR_UART_BAUDRATE 19200U
 
 #define BOARD_USER_BUTTON_PRIORITY 4
 
@@ -60,17 +58,21 @@
 /* Init SDK HW */
 static void BOARD_Init(void);
 /* ADC COCO interrupt */
+RAM_FUNC_LIB 
 void ADC_ETC_IRQ0_IRQHandler(void);
 /* TMR1 reload ISR called with 1ms period */
+RAM_FUNC_LIB 
 void TMR1_IRQHandler(void);
 /* SW8 Button interrupt handler */
+RAM_FUNC_LIB 
 void GPIO13_Combined_0_31_IRQHandler(void);
 /* Demo Speed Stimulator */
+RAM_FUNC_LIB 
 static void DemoSpeedStimulator(void);
 /* Demo Position Stimulator */
+RAM_FUNC_LIB
 static void DemoPositionStimulator(void);
 
-static void BOARD_InitUART(uint32_t u32BaudRate);
 static void BOARD_InitSysTick(void);
 static void BOARD_InitGPIO(void);
 static void Application_Control_BL(void);
@@ -82,6 +84,12 @@ static void Application_Control_BL(void);
 /* CPU load measurement using Systick */
 uint32_t g_ui32NumberOfCycles    = 0U;
 uint32_t g_ui32MaxNumberOfCycles = 0U;
+
+#ifdef DAPENG_TEST
+/* ISR counters */
+uint32_t ui32FastIsrCount = 0U;
+uint32_t ui32SlowIsrCount = 0U;
+#endif
 
 /* Demo mode enabled/disabled */
 bool_t bDemoModeSpeed    = FALSE;
@@ -103,7 +111,7 @@ app_ver_t g_sAppIdFM = {
 };
 
 mid_app_cmd_t g_eMidCmd;                  /* Start/Stop MID command */
-ctrl_m1_mid_t g_sSpinMidSwitch;           /* Control Spin/MID switching */ 
+ctrl_m1_mid_t g_sSpinMidSwitch;           /* Control Spin/MID switching */
 
 /*******************************************************************************
  * Prototypes
@@ -133,17 +141,11 @@ int main(void)
     /* Init board hardware. */
     BOARD_Init();
 
-    /* Init UART for FreeMaster communication */
-    BOARD_InitUART(BOARD_FMSTR_UART_BAUDRATE);
-
     /* SysTick initialization for CPU load measurement */
     BOARD_InitSysTick();
 
     /* Init peripheral motor control driver for motor M1 */
     MCDRV_Init_M1();
-
-    /* FreeMaster init */
-    FMSTR_Init();
 
     /* Turn off application */
     M1_SetAppSwitch(FALSE);
@@ -165,8 +167,8 @@ int main(void)
     /* Infinite loop */
     while (1)
     {
-	Application_Control_BL();
-
+        Application_Control_BL();
+        
         /* FreeMASTER Polling function */
         FMSTR_Poll();
     }
@@ -180,6 +182,7 @@ int main(void)
  *
  * @return  none
  */
+RAM_FUNC_LIB
 void ADC_ETC_IRQ0_IRQHandler(void)
 {
     /* Start CPU tick number couting */
@@ -205,6 +208,11 @@ void ADC_ETC_IRQ0_IRQHandler(void)
     /* Call FreeMASTER recorder */
     FMSTR_Recorder(0);
     
+#ifdef DAPENG_TEST
+    /* Increment ISR counter */
+    ui32FastIsrCount++;
+#endif
+        
     ADC_ETC_ClearInterruptStatusFlags(ADC_ETC, kADC_ETC_Trg0TriggerSource, kADC_ETC_Done0StatusFlagMask);
     ADC_ETC_ClearInterruptStatusFlags(ADC_ETC, kADC_ETC_Trg4TriggerSource, kADC_ETC_Done0StatusFlagMask);
 
@@ -220,6 +228,7 @@ void ADC_ETC_IRQ0_IRQHandler(void)
  *
  * @return  none
  */
+RAM_FUNC_LIB
 void TMR1_IRQHandler(void)
 {    
     /* M1 Slow StateMachine call */
@@ -239,6 +248,11 @@ void TMR1_IRQHandler(void)
     /* Demo position stimulator */
     DemoPositionStimulator();
 
+#ifdef DAPENG_TEST    
+    /* Increment ISR counter */
+    ui32SlowIsrCount++;
+#endif
+    
     /* Clear the CSCTRL0[TCF1] flag */
     TMR1->CHANNEL[0].CSCTRL |= TMR_CSCTRL_TCF1(0x00);
     TMR1->CHANNEL[0].CSCTRL &= ~(TMR_CSCTRL_TCF1_MASK);
@@ -257,6 +271,7 @@ void TMR1_IRQHandler(void)
  *
  * @return  none
  */
+RAM_FUNC_LIB
 void GPIO13_Combined_0_31_IRQHandler(void)
 {
     if (GPIO13->ISR & GPIO_ICR1_ICR0_MASK)
@@ -300,6 +315,7 @@ void GPIO13_Combined_0_31_IRQHandler(void)
  *
  * @return  none
  */
+RAM_FUNC_LIB
 static void DemoSpeedStimulator(void)
 {
     /* Increase push button pressing counter  */
@@ -356,6 +372,7 @@ static void DemoSpeedStimulator(void)
  *
  * @return  none
  */
+RAM_FUNC_LIB
 static void DemoPositionStimulator(void)
 {
     if (bDemoModePosition)
@@ -471,6 +488,8 @@ static void BOARD_Init(void)
     BOARD_InitBootPins();
     /* Initialize clock configuration */
     BOARD_InitBootClocks();
+    /* Init peripherals set in peripherals file */
+    BOARD_InitBootPeripherals();
     /* Init GPIO pins */
     BOARD_InitGPIO();
 }
@@ -507,34 +526,6 @@ static void BOARD_InitGPIO(void)
     GPIO_PinInit(BOARD_USER_BUTTON_GPIO, BOARD_USER_BUTTON_GPIO_PIN, &user_button_config);
     GPIO_PortEnableInterrupts(BOARD_USER_BUTTON_GPIO, 1U << BOARD_USER_BUTTON_GPIO_PIN);
     NVIC_SetPriority(BOARD_USER_BUTTON_IRQ, BOARD_USER_BUTTON_PRIORITY);
-}
-
-/*!
- *@brief      Initialization of the UART module
- *
- *@param      u32BaudRate         Baud rate
- *
- *@return     none
- */
-static void BOARD_InitUART(uint32_t u32BaudRate)
-{
-    lpuart_config_t config;
-
-    LPUART_GetDefaultConfig(&config);
-    config.baudRate_Bps = BOARD_FMSTR_UART_BAUDRATE;
-    config.enableTx     = true;
-    config.enableRx     = true;
-
-    LPUART_Init(BOARD_FMSTR_UART_PORT, &config, BOARD_DebugConsoleSrcFreq());
-
-    /* Register communication module used by FreeMASTER driver. */
-    FMSTR_SerialSetBaseAddress(BOARD_FMSTR_UART_PORT);
-
-#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
-    /* Enable UART interrupts. */
-    EnableIRQ(BOARD_UART_IRQ);
-    EnableGlobalIRQ(0);
-#endif
 }
 
 /*!

@@ -1,6 +1,6 @@
 
 ----------------------------------------------------------------------
-REL 5.04.00 - LA_OPT_NXP_Software_License
+REL 5.06.00 - LA_OPT_NXP_Software_License
 ----------------------------------------------------------------------
 VIT integrating LP_VAD, 2/3 MICs AFE, WakeWordEngine Text2Model and Voice Commands Text2Model features.
 Core supported : Cortex-M7
@@ -8,11 +8,19 @@ Library validated on IMXRT1170 platform
 
 Languages supported : English - Mandarin
 
-English WakeWord supported : "HEY NXP"
-Mandarin  WakeWord supported : " 你好 恩 智 浦 "
-See VIT_Model.h for the list of commands supported by the VIT lib.
+English WakeWord supported : "HEY NXP", "HEY TV"
+Mandarin  WakeWord supported : " 你好 恩 智 浦 ", "你好 电视"
+See VIT_Model.h for the list of commands supported.
 
 Dependency : CMSIS_DSP lib
 
+New features :
+    - Multi WakeWord support (up to 3) - see VIT.h for description and VIT_ExApp.c for usage
+    - Multi Turn Voice Commands : see VIT Integration Guide for description and usage
+    - New VIT Control parameter "Command_Time_Span" : see VIT.h for description and VIT_ExApp.c for usage
+    
+
 Notes : VIT lib is supporting up to 3 MICs on RT1170
         AFE is not enabled in RT1170 MCU SDK example since RT1170 EVK does not have proper multi MIC placement
+
+

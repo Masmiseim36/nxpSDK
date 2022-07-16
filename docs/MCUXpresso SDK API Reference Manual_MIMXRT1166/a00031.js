@@ -320,7 +320,7 @@ var a00031 =
     [ "FLEXCAN_EnableMbInterrupts", "a00031.html#ga3c1b52fa316941bd352f7f13e92852a7", null ],
     [ "FLEXCAN_DisableMbInterrupts", "a00031.html#gac340f1eabdcbbb6c7234d4bb7994b125", null ],
     [ "FLEXCAN_EnableRxFifoDMA", "a00031.html#gab3bf9b8856103be2045e5d5050b236d6", null ],
-    [ "FLEXCAN_GetRxFifoHeadAddr", "a00031.html#ga5391b69b149d1e640e52807eb96a08ef", null ],
+    [ "FLEXCAN_GetRxFifoHeadAddr", "a00031.html#ga1ac0f28c60c800b9ba4fa2d71320e2f8", null ],
     [ "FLEXCAN_Enable", "a00031.html#ga20f79302d5fad90306a26b667f58fe4d", null ],
     [ "FLEXCAN_WriteTxMb", "a00031.html#ga9aa3cbde78272a0983317d6c79740a3d", null ],
     [ "FLEXCAN_ReadRxMb", "a00031.html#gad41dd26b58b8e36a1bf79425b46a275c", null ],

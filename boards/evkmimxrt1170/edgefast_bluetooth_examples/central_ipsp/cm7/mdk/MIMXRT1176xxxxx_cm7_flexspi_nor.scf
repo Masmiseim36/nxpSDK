@@ -153,6 +153,10 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
     .ANY (+RO)
   }
 
+  ER_bt_conn_cb +0 { ;
+    * (._bt_conn_cb*)
+  }
+
   ER_bt_gatt_service_static +0 { ;
     * (._bt_gatt_service_static*)
   }

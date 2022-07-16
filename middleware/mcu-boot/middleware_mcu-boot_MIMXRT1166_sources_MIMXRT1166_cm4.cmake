@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_mcu-boot_MIMXRT1166_sources component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -19,7 +19,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/bootloader/src/lpuart_peripheral_interface.c
     ${CMAKE_CURRENT_LIST_DIR}/src/bootloader/src/usb_hid_msc_peripheral_interface.c
     ${CMAKE_CURRENT_LIST_DIR}/src/property/src/property_imx.c
-    ${CMAKE_CURRENT_LIST_DIR}/../../platform/drivers/puf/fsl_puf.c
     ${CMAKE_CURRENT_LIST_DIR}/src/security/keyblob/src/keyblob_caam.c
     ${CMAKE_CURRENT_LIST_DIR}/src/security/keyblob/src/keyblob.c
     ${CMAKE_CURRENT_LIST_DIR}/src/authentication/key_store_puf.c
@@ -45,7 +44,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/flexspi
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/serial_nor_eeprom
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/sdmmc/inc
-    ${CMAKE_CURRENT_LIST_DIR}/../../platform/drivers/puf
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/semc
     ${CMAKE_CURRENT_LIST_DIR}/src/drivers/nand_ecc
 )

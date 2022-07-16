@@ -67,6 +67,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../xip
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176/utilities
+    ${ProjDirPath}/../../../../xmcd
 )
 
 # include modules
@@ -111,6 +112,8 @@ include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
 include(utilities_misc_utilities_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_system_MIMXRT1176_cm7)
+
+include(driver_xmcd_evkmimxrt1170_MIMXRT1176_cm7)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

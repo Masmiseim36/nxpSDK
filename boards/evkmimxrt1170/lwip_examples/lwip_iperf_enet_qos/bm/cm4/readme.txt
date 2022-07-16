@@ -30,9 +30,9 @@ For RTOS applications, DEFAULT_THREAD_PRIO and TCPIP_THREAD_PRIO values can have
 Toolchain supported
 ===================
 - GCC ARM Embedded  10.3.1
-- IAR embedded Workbench  9.20.2
-- Keil MDK  5.36
-- MCUXpresso  11.5.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================

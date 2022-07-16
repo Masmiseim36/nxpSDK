@@ -69,6 +69,8 @@ include(driver_lpuart_MIMXRT1176_cm4)
 
 include(driver_iomuxc_MIMXRT1176_cm4)
 
+include(driver_puf_MIMXRT1176_cm4)
+
 include(middleware_mcu-boot_MIMXRT1176_startup_MIMXRT1176_cm4)
 
 include(middleware_mcu-boot_src_bm_usb_hid_MIMXRT1176_cm4)

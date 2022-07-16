@@ -2,9 +2,9 @@ var a00332 =
 [
     [ "LPI2C CMSIS Driver", "a00334.html", null ],
     [ "LPI2C FreeRTOS Driver", "a00333.html", "a00333" ],
-    [ "LPI2C Master DMA Driver", "a00056.html", "a00056" ],
-    [ "LPI2C Master Driver", "a00055.html", "a00055" ],
-    [ "LPI2C Slave Driver", "a00057.html", "a00057" ],
+    [ "LPI2C Master DMA Driver", "a00055.html", "a00055" ],
+    [ "LPI2C Master Driver", "a00054.html", "a00054" ],
+    [ "LPI2C Slave Driver", "a00056.html", "a00056" ],
     [ "FSL_LPI2C_DRIVER_VERSION", "a00332.html#gad5469acd31ed336234c60b02cf7c424a", null ],
     [ "I2C_RETRY_TIMES", "a00332.html#gaac288786aaa7d0cb947c91591baf42d7", [
       [ "kStatus_LPI2C_Busy", "a00332.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aaf52a270e301641b8855edf3fcc843814", null ],

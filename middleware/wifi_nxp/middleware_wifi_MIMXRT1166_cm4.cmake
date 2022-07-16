@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_wifi component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -14,6 +14,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/dhcpd
+    ${CMAKE_CURRENT_LIST_DIR}/incl
     ${CMAKE_CURRENT_LIST_DIR}/incl/port/lwip
     ${CMAKE_CURRENT_LIST_DIR}/port/lwip
 )

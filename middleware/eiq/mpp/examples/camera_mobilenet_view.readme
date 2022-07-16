@@ -1,0 +1,100 @@
+Overview
+========
+
+This example shows how to use the library to create two image classification use-cases:
+- image classification using camera as source
+- image classification using a file as source
+
+The machine learning framework used is TensorFlow Lite Micro
+The image classification model used is quantized Mobilenet
+convolutional neural network model [1] that classifies the input image into
+one of 1000 output classes.
+
+[1] https://www.tensorflow.org/lite/models
+
+
+Use-cases Description
+=====================
+
+
+1- Image classification using camera as source
+   --------------------------------------------
+
+1-a) High-level description
+     ----------------------
+
+                                                                   +------------------------------------------+
+                                                                   |                                          |
+                                                                   |                                          |
+                                                                  \ /                                         |
+                  +-------------+      +-------------+      +-------------+      +-------------+              |
+                  |             |      |             |      |             |      |             |              |
+Pipeline 0        |    camera   | -->  |  2D convert | -->  |   labeled   | -->  |    Display  |              |
+                  |             |  |   |             |      |  rectangle  |      |             |              |
+                  +-------------+  |   +-------------+      +-------------+      +-------------+              |
+                                   |                                                                          |
+                                   |     +-------------+      +--------------+      +-------------+           |
+                                   |     |             |      |              |      |             |           |
+Pipeline 1                         +---> |  2D convert | -->  | ML Inference | -->  |  NULL sink  |           |
+                                         |             |      |              |      |             |           |
+                                         +-------------+      +--------------+      +-------------+           |
+                                                                       |                                      |
+                                                                       |                                      |
+	+-----------------+                                            |                                      |
+	|  Main app:      |                                            |                                      |
+	| ML output       |   <----- ML Inference output callback -----+                                      |
+	| post processing |                                                                                   |
+	|                 |   ------ labeled rectangle update ------------------------------------------------+
+	+-----------------+
+
+
+1-b) Detailed description
+     --------------------
+
+Application creates two pipelines:
+
+- One pipeline that runs the camera preview.
+- Another pipeline that runs the ML inference on the image coming from the camera.
+- Pipeline 1 is split from pipeline 0
+- Pipeline 0 executes the processing of each element sequentially and CANNOT be preempted by another pipeline.
+- Pipeline 1 executes the processing of each element sequentially but CAN be preempted.
+
+1-c) Pipelines elements description
+     ------------------------------
+
+* Camera element is configured to output YUV444 images at 1280x720 resolution
+* Display element is configured to receive RGB565 images at 720x1280 resolution
+* 2D convert element on pipeline 0 is configured to perform:
+  - color space conversion from YUV444 to RGB565
+  - 90 degres rotation from 1280x720 to 720x1280
+
+* 2D convert element on pipeline 1 is configured to perform:
+  - color space conversion from YUV444 to RGB888
+  - cropping to 720x720 to maintain image aspect ratio
+  - scaling from 720x720 to 128x128 as mandated by the image classification model
+
+* The labeled rectangle element draws a crop window from which the camera image is sent to
+  the ML inference element. The labeled rectangle element also displays the label of the object detected.
+* The ML inference element runs an inference on the image pre-processed by the 2D convert element.
+* The NULL sink element closes pipeline 1 (in MPP concept, only sink elements can close a pipeline).
+
+* At every inference, the ML inference element invokes a callback containing the inference outputs.
+These outputs are post-processed by the callback client component (in this case, the main task of the application)
+
+2- Image classification with static image as source
+   ------------------------------------------------
+
+In this use-case, same pipelines are created as for use-case described in section 1).
+The only difference is a static image element that replaces the camera element.
+Image outputs same image format as camera source, but with a different resolution
+(168x208 instead of 1280x720).
+
+
+Running the demo
+================
+
+The same application supports both pipelines. The camera preview pipeline is the default one.
+In order to build the image preview pipeline instead, please set up the following variable at the
+beginning of the camera_mobilenet_view.c file:
+
+#define SOURCE_STATIC_IMAGE 1

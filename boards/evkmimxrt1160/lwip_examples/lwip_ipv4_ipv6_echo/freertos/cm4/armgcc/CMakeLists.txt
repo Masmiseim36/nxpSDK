@@ -63,8 +63,8 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../../components/phy
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers
-    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../../rtos/freertos/freertos_kernel
+    ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../../../components/uart
     ${ProjDirPath}/../../../../../../../components/serial_manager
@@ -72,6 +72,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../../../xip
     ${ProjDirPath}/../../../../../../../devices/MIMXRT1166/drivers/cm4
+    ${ProjDirPath}/../../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../../CMSIS/Core/Include
 )
 
@@ -92,8 +93,6 @@ include(driver_phy-common_MIMXRT1166_cm4)
 
 include(driver_enet_MIMXRT1166_cm4)
 
-include(utility_debug_console_MIMXRT1166_cm4)
-
 include(driver_clock_MIMXRT1166_cm4)
 
 include(middleware_freertos-kernel_heap_3_MIMXRT1166_cm4)
@@ -103,6 +102,8 @@ include(utility_shell_MIMXRT1166_cm4)
 include(driver_common_MIMXRT1166_cm4)
 
 include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm4)
+
+include(utility_debug_console_MIMXRT1166_cm4)
 
 include(component_lpuart_adapter_MIMXRT1166_cm4)
 
@@ -124,13 +125,15 @@ include(driver_igpio_MIMXRT1166_cm4)
 
 include(driver_xip_device_MIMXRT1166_cm4)
 
-include(driver_xip_board_MIMXRT1166_cm4)
+include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm4)
 
 include(driver_pmu_1_MIMXRT1166_cm4)
 
 include(driver_dcdc_soc_MIMXRT1166_cm4)
 
 include(driver_cache_lmem_MIMXRT1166_cm4)
+
+include(component_silicon_id_MIMXRT1166_cm4)
 
 include(driver_mdio-common_MIMXRT1166_cm4)
 

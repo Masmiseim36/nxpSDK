@@ -82,6 +82,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/video/camera/device/ov5640
     ${ProjDirPath}/../../../../../components/video/display/rm68191
     ${ProjDirPath}/../../../../../components/video/display/rm68200
+    ${ProjDirPath}/../../../../../components/video/display/hx8394
     ${ProjDirPath}/../../../../../components/video/camera
     ${ProjDirPath}/../../../../../components/video/camera/receiver/csi
     ${ProjDirPath}/../../../../../devices/MIMXRT1166/drivers
@@ -117,6 +118,8 @@ include(driver_camera-device-ov5640_MIMXRT1166_cm7)
 include(driver_display-rm68191_MIMXRT1166_cm7)
 
 include(driver_display-rm68200_MIMXRT1166_cm7)
+
+include(driver_display-hx8394_MIMXRT1166_cm7)
 
 include(driver_camera-common_MIMXRT1166_cm7)
 

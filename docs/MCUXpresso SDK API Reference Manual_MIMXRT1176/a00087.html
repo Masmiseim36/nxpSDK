@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: Shell</title>
+<title>MCUXpresso SDK API Reference Manual: Smart Card</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -99,229 +99,263 @@ $(document).ready(function(){initNavTree('a00087.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#groups">Modules</a> &#124;
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">Shell</div>  </div>
+<div class="title">Smart Card</div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>This section describes the programming interface of the Shell middleware.</p>
-<p>Shell controls MCUs by commands via the specified communication peripheral based on the debug console driver.</p>
-<h1><a class="anchor" id="ShellFunGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="ShellInit"></a>
-Initialization</h2>
-<p>To initialize the Shell middleware, call the <span style="color:red"><a class="el" href="a00087.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a></span> function with these parameters. This function automatically enables the middleware.</p>
-<div class="fragment"><div class="line"><a class="code" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> <a class="code" href="a00087.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(<a class="code" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="code" href="a00084.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, <span class="keywordtype">char</span> *prompt);</div>
-</div><!-- fragment --><p>Then, after the initialization was successful, call a command to control MCUs.</p>
-<p>This example shows how to call the <a class="el" href="a00087.html#ga7961e946400cd244c315cfbbd36ae5d1" title="Initializes the shell module. ">SHELL_Init()</a> given the user configuration structure.</p>
-<div class="fragment"><div class="line"><a class="code" href="a00087.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
-</div><!-- fragment --><h2><a class="anchor" id="ShellAdvFeature"></a>
-Advanced Feature</h2>
+<p>The MCUXpresso SDK provides a peripheral drivers for the UART-ISO7816 and EMVSIM modules of MCUXpresso SDK devices.<br/>
+ <br/>
+Smart Card driver provides the necessary functions to access and control integrated circuit cards. The driver controls communication modules (UART/EMVSIM) and handles special ICC sequences, such as the activation/deactivation (using EMVSIM IP or external interface chip). The Smart Card driver consists of two IPs (SmartCard_Uart and SmartCard_EmvSim drivers) and three PHY drivers (smartcard_phy_emvsim, smartcard_phy_tda8035, and smartcard_phy_gpio drivers). These drivers can be combined, which means that the Smart Card driver wraps one IP (transmission) and one PHY (interface) driver.</p>
+<p>The driver provides asynchronous functions to communicate with the Integrated Circuit Card (ICC). The driver contains RTOS adaptation layers which use semaphores as synchronization objects of synchronous transfers. The RTOS driver support also provides protection for multithreading.</p>
+<h1><a class="anchor" id="SmartCardInit"></a>
+SmartCard Driver Initialization</h1>
+<p>The Smart Card Driver is initialized by calling the SMARTCARD_Init() and <a class="el" href="a00360.html#gad7d80be0c1867711f3673dede0d574e6" title="Initializes a Smart card interface instance. ">SMARTCARD_PHY_Init()</a> functions. The Smart Card Driver initialization configuration structure requires these settings: </p>
 <ul>
-<li>Support to get a character from standard input devices. <div class="fragment"><div class="line"><span class="keyword">static</span> <a class="code" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_GetChar(shell_context_handle_t *shellContextHandle, uint8_t *ch);</div>
-</div><!-- fragment --></li>
+<li>
+Smart Card voltage class </li>
+<li>
+Smart Card Interface options such as the RST, IRQ, CLK pins, and so on. </li>
 </ul>
-<div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>Commands  </th><th>Description  </th></tr>
-<tr>
-<td>help  </td><td>List all the registered commands.   </td></tr>
-<tr>
-<td>exit  </td><td>Exit program.   </td></tr>
-</table>
-</div><h2><a class="anchor" id="SHELLOper"></a>
-Shell Operation</h2>
-<div class="fragment"><div class="line"><a class="code" href="a00087.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>(s_shellHandle, s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
-<div class="line"><a class="code" href="a00087.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a>((s_shellHandle);</div>
-</div><!-- fragment --> <table class="memberdecls">
+<p>The driver also supports user callbacks for assertion/de-assertion Smart Card events and transfer finish event. This feature is useful to detect the card presence or for handling transfer events, for example, in RTOS. The user should initialize the Smart Card driver, which consist of IP and PHY drivers.</p>
+<h1><a class="anchor" id="SmarCardCallDiagram"></a>
+SmartCard Call diagram</h1>
+<p>Because the call diagram is complex, the detailed use of the Smart Card driver is not described in this section. For details about using the Smart Card driver, see the Smart Card driver example which describes a simple use case.</p>
+<h1>PHY driver</h1>
+<p>The Smart Card interface driver is initialized by calling the function <a class="el" href="a00360.html#gad7d80be0c1867711f3673dede0d574e6" title="Initializes a Smart card interface instance. ">SMARTCARD_PHY_Init()</a>. During the initialization phase, Smart Card clock is configured and all hardware pins for IC handling are configured. </p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
+Modules</h2></td></tr>
+<tr class="memitem:a00359"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00359.html">Smart Card EMVSIM Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00360"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00360.html">Smart Card PHY Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00356"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00356.html">Smart Card PHY EMVSIM Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00357"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00357.html">Smart Card PHY GPIO Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00355"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00355.html">Smart Card PHY TDA8035 Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00358"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00358.html">Smart Card UART Driver</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00676"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00676">shell_command_t</a></td></tr>
-<tr class="memdesc:a00676"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command data configuration structure.  <a href="a00087.html#a00676">More...</a><br/></td></tr>
-<tr class="separator:a00676"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00671"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00671">smartcard_card_params_t</a></td></tr>
+<tr class="memdesc:a00671"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines card-specific parameters for Smart card driver.  <a href="a00087.html#a00671">More...</a><br/></td></tr>
+<tr class="separator:a00671"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00674"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00674">smartcard_timers_state_t</a></td></tr>
+<tr class="memdesc:a00674"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card defines the state of the EMV timers in the Smart card driver.  <a href="a00087.html#a00674">More...</a><br/></td></tr>
+<tr class="separator:a00674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00673"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00673">smartcard_interface_config_t</a></td></tr>
+<tr class="memdesc:a00673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines user specified configuration of Smart card interface.  <a href="a00087.html#a00673">More...</a><br/></td></tr>
+<tr class="separator:a00673"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00675"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00675">smartcard_xfer_t</a></td></tr>
+<tr class="memdesc:a00675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines user transfer structure used to initialize transfer.  <a href="a00087.html#a00675">More...</a><br/></td></tr>
+<tr class="separator:a00675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00672"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a00672">smartcard_context_t</a></td></tr>
+<tr class="memdesc:a00672"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runtime state of the Smart card driver.  <a href="a00087.html#a00672">More...</a><br/></td></tr>
+<tr class="separator:a00672"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">SHELL_NON_BLOCKING_MODE</a>&#160;&#160;&#160;<a class="el" href="a00084.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td></tr>
-<tr class="memdesc:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether use non-blocking mode.  <a href="#ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab">More...</a><br/></td></tr>
-<tr class="separator:ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga30882f4b5fc99cbc21459cc960ef9ffe">SHELL_AUTO_COMPLETE</a>&#160;&#160;&#160;(1U)</td></tr>
-<tr class="memdesc:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set on/off auto-complete feature.  <a href="#ga30882f4b5fc99cbc21459cc960ef9ffe">More...</a><br/></td></tr>
-<tr class="separator:ga30882f4b5fc99cbc21459cc960ef9ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf98219b0fb886040896b83966903a135"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a>&#160;&#160;&#160;(64U)</td></tr>
-<tr class="memdesc:gaf98219b0fb886040896b83966903a135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set console buffer size.  <a href="#gaf98219b0fb886040896b83966903a135">More...</a><br/></td></tr>
-<tr class="separator:gaf98219b0fb886040896b83966903a135"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga0800d9fb741c785d0601f0c3d7125f40">SHELL_MAX_ARGS</a>&#160;&#160;&#160;(8U)</td></tr>
-<tr class="memdesc:ga0800d9fb741c785d0601f0c3d7125f40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum arguments in command.  <a href="#ga0800d9fb741c785d0601f0c3d7125f40">More...</a><br/></td></tr>
-<tr class="separator:ga0800d9fb741c785d0601f0c3d7125f40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4362aa35752c9abf77387a237faaaea5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a>&#160;&#160;&#160;(3U)</td></tr>
-<tr class="memdesc:ga4362aa35752c9abf77387a237faaaea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set maximum count of history commands.  <a href="#ga4362aa35752c9abf77387a237faaaea5">More...</a><br/></td></tr>
-<tr class="separator:ga4362aa35752c9abf77387a237faaaea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8c32b818330b7a6b62a5b819703e5e8f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga8c32b818330b7a6b62a5b819703e5e8f">SHELL_IGNORE_PARAMETER_COUNT</a>&#160;&#160;&#160;(0xFF)</td></tr>
-<tr class="memdesc:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to bypass arguments check. <br/></td></tr>
-<tr class="separator:ga8c32b818330b7a6b62a5b819703e5e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a></td></tr>
-<tr class="memdesc:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle size of the shell module.  <a href="#gaa4c15d7595f7cf7ee5f837a02cbdf574">More...</a><br/></td></tr>
-<tr class="separator:gaa4c15d7595f7cf7ee5f837a02cbdf574"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga100ef8e4a639c03682d84fb981ba235b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga100ef8e4a639c03682d84fb981ba235b">SHELL_USE_COMMON_TASK</a>&#160;&#160;&#160;(0U)</td></tr>
-<tr class="memdesc:ga100ef8e4a639c03682d84fb981ba235b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to determine whether use common task.  <a href="#ga100ef8e4a639c03682d84fb981ba235b">More...</a><br/></td></tr>
-<tr class="separator:ga100ef8e4a639c03682d84fb981ba235b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga5b98f71ea7bd89ef344cac14aa79a1e3">SHELL_TASK_PRIORITY</a>&#160;&#160;&#160;(2U)</td></tr>
-<tr class="memdesc:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task priority.  <a href="#ga5b98f71ea7bd89ef344cac14aa79a1e3">More...</a><br/></td></tr>
-<tr class="separator:ga5b98f71ea7bd89ef344cac14aa79a1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga416667c8e6b960d2c1ec518b41a06d62">SHELL_TASK_STACK_SIZE</a>&#160;&#160;&#160;(1000U)</td></tr>
-<tr class="memdesc:ga416667c8e6b960d2c1ec518b41a06d62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to set shell task stack size.  <a href="#ga416667c8e6b960d2c1ec518b41a06d62">More...</a><br/></td></tr>
-<tr class="separator:ga416667c8e6b960d2c1ec518b41a06d62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(name)&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00087.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td></tr>
-<tr class="memdesc:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell handle.  <a href="#gafdb2c68b2d83d459fc196ab0f58d7ab3">More...</a><br/></td></tr>
-<tr class="separator:gafdb2c68b2d83d459fc196ab0f58d7ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(command, descriptor, callback, paramCount)</td></tr>
-<tr class="memdesc:gacd1f7ee25cd791efee6a45e753ec9824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the shell command structure.  <a href="#gacd1f7ee25cd791efee6a45e753ec9824">More...</a><br/></td></tr>
-<tr class="separator:gacd1f7ee25cd791efee6a45e753ec9824"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(command)&#160;&#160;&#160;&amp;g_shellCommand##command</td></tr>
-<tr class="memdesc:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the shell command pointer.  <a href="#ga16dd6cfbd9db7dafdaa802eda58564b5">More...</a><br/></td></tr>
-<tr class="separator:ga16dd6cfbd9db7dafdaa802eda58564b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0c7cc29f5aad96cbd0ced4c679f1de3e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0c7cc29f5aad96cbd0ced4c679f1de3e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga0c7cc29f5aad96cbd0ced4c679f1de3e">SMARTCARD_INIT_DELAY_CLOCK_CYCLES</a>&#160;&#160;&#160;(42000u)</td></tr>
+<tr class="memdesc:ga0c7cc29f5aad96cbd0ced4c679f1de3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card global define which specify number of clock cycles until initial 'TS' character has to be received. <br/></td></tr>
+<tr class="separator:ga0c7cc29f5aad96cbd0ced4c679f1de3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf6d2732d28a270ff02adb607b53a8471"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf6d2732d28a270ff02adb607b53a8471"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaf6d2732d28a270ff02adb607b53a8471">SMARTCARD_EMV_ATR_DURATION_ETU</a>&#160;&#160;&#160;(20150u)</td></tr>
+<tr class="memdesc:gaf6d2732d28a270ff02adb607b53a8471"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card global define which specify number of clock cycles during which ATR string has to be received. <br/></td></tr>
+<tr class="separator:gaf6d2732d28a270ff02adb607b53a8471"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga712bc1afedcb0bc88dbe8850754b7793"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga712bc1afedcb0bc88dbe8850754b7793"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga712bc1afedcb0bc88dbe8850754b7793">SMARTCARD_TS_DIRECT_CONVENTION</a>&#160;&#160;&#160;(0x3Bu)</td></tr>
+<tr class="memdesc:ga712bc1afedcb0bc88dbe8850754b7793"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card specification initial TS character definition of direct convention. <br/></td></tr>
+<tr class="separator:ga712bc1afedcb0bc88dbe8850754b7793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc43ce3e95980291116fa2dd191b5797"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gafc43ce3e95980291116fa2dd191b5797"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gafc43ce3e95980291116fa2dd191b5797">SMARTCARD_TS_INVERSE_CONVENTION</a>&#160;&#160;&#160;(0x3Fu)</td></tr>
+<tr class="memdesc:gafc43ce3e95980291116fa2dd191b5797"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card specification initial TS character definition of inverse convention. <br/></td></tr>
+<tr class="separator:gafc43ce3e95980291116fa2dd191b5797"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga818c3ca274bd83d1dc870a5618eb21f2"></a>
-typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a></td></tr>
-<tr class="memdesc:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The handle of the shell module. <br/></td></tr>
-<tr class="separator:ga818c3ca274bd83d1dc870a5618eb21f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> )(<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td></tr>
-<tr class="memdesc:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="mdescLeft">&#160;</td><td class="mdescRight">User command function prototype.  <a href="#ga7ace1ddfb1e83ac1516ac44be90cf822">More...</a><br/></td></tr>
-<tr class="separator:ga7ace1ddfb1e83ac1516ac44be90cf822"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee0e1f95525a9305d25c21a7a6b0c6ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaee0e1f95525a9305d25c21a7a6b0c6ea"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaee0e1f95525a9305d25c21a7a6b0c6ea">smartcard_interface_callback_t</a> )(void *smartcardContext, void *param)</td></tr>
+<tr class="memdesc:gaee0e1f95525a9305d25c21a7a6b0c6ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card interface interrupt callback function type. <br/></td></tr>
+<tr class="separator:gaee0e1f95525a9305d25c21a7a6b0c6ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaedb10efbba55294f2568ca37c0a6772"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaedb10efbba55294f2568ca37c0a6772"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaaedb10efbba55294f2568ca37c0a6772">smartcard_transfer_callback_t</a> )(void *smartcardContext, void *param)</td></tr>
+<tr class="memdesc:gaaedb10efbba55294f2568ca37c0a6772"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card transfer interrupt callback function type. <br/></td></tr>
+<tr class="separator:gaaedb10efbba55294f2568ca37c0a6772"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga008f3ec99d03724068bd4dc923df13bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga008f3ec99d03724068bd4dc923df13bc"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga008f3ec99d03724068bd4dc923df13bc">smartcard_time_delay_t</a> )(uint32_t us)</td></tr>
+<tr class="memdesc:ga008f3ec99d03724068bd4dc923df13bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time Delay function used to passive waiting using RTOS [us]. <br/></td></tr>
+<tr class="separator:ga008f3ec99d03724068bd4dc923df13bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga16424f17c6492c580e65adf9a4e1ac61"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> { <br/>
-&#160;&#160;<a class="el" href="a00087.html#gga16424f17c6492c580e65adf9a4e1ac61aeb6cf57843c8b47b87ae07417d53df3e">kStatus_SHELL_Success</a> = kStatus_Success, 
+<tr class="memitem:ga1f3b6c692395e5007ff47ce5d9304c1c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1caf4a7d15729a632fcff216f4203e45894">kStatus_SMARTCARD_Success</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 0), 
 <br/>
-&#160;&#160;<a class="el" href="a00087.html#gga16424f17c6492c580e65adf9a4e1ac61ae1a9ae61e350888892f4cde21f8dd7f9">kStatus_SHELL_Error</a> = MAKE_STATUS(kStatusGroup_SHELL, 1), 
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1ca1ceaaad06999f92ec00c6d7aa54fff25">kStatus_SMARTCARD_TxBusy</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 1), 
 <br/>
-&#160;&#160;<a class="el" href="a00087.html#gga16424f17c6492c580e65adf9a4e1ac61a25ff80ec847b1028041ae913beec2b5b">kStatus_SHELL_OpenWriteHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 2), 
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1ca6d86716992e29764cd1baadc6de8154d">kStatus_SMARTCARD_RxBusy</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 2), 
 <br/>
-&#160;&#160;<a class="el" href="a00087.html#gga16424f17c6492c580e65adf9a4e1ac61a14f89a732b5c11a35e8c9b91d4e22ad8">kStatus_SHELL_OpenReadHandleFailed</a> = MAKE_STATUS(kStatusGroup_SHELL, 3)
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1ca7a428aea3974d37bf0cc4474b57ec76e">kStatus_SMARTCARD_NoTransferInProgress</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 3), 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1cabc65f3fca631698cf065e4732fb5b49d">kStatus_SMARTCARD_Timeout</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 4), 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1ca6e5f1a14530fa1865da32bd536ed50b3">kStatus_SMARTCARD_Initialized</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1caef93b179c5e7db3b41575fa88fa06c30">kStatus_SMARTCARD_PhyInitialized</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1ca911faf13c8d3a2dbe97f178c9c0ddb90">kStatus_SMARTCARD_CardNotActivated</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 7), 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1ca42f5e0e08e5edd588dafcdb166bb91a2">kStatus_SMARTCARD_InvalidInput</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00087.html#gga1f3b6c692395e5007ff47ce5d9304c1ca8d72e9988338127cc3affdc7bcbbef12">kStatus_SMARTCARD_OtherError</a> = MAKE_STATUS(kStatusGroup_SMARTCARD, 9)
 <br/>
  }</td></tr>
-<tr class="memdesc:ga16424f17c6492c580e65adf9a4e1ac61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shell status.  <a href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">More...</a><br/></td></tr>
-<tr class="separator:ga16424f17c6492c580e65adf9a4e1ac61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:ga1f3b6c692395e5007ff47ce5d9304c1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card Error codes.  <a href="a00087.html#ga1f3b6c692395e5007ff47ce5d9304c1c">More...</a><br/></td></tr>
+<tr class="separator:ga1f3b6c692395e5007ff47ce5d9304c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4b9128bb3719dfb0675abdb6e18daae"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gac4b9128bb3719dfb0675abdb6e18daae">smartcard_control_t</a> </td></tr>
+<tr class="memdesc:gac4b9128bb3719dfb0675abdb6e18daae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Control codes for the Smart card protocol timers and misc.  <a href="a00087.html#gac4b9128bb3719dfb0675abdb6e18daae">More...</a><br/></td></tr>
+<tr class="separator:gac4b9128bb3719dfb0675abdb6e18daae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga91c6b69e1e7b265fccf7b58d53b3fa22"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga91c6b69e1e7b265fccf7b58d53b3fa22">smartcard_card_voltage_class_t</a> </td></tr>
+<tr class="memdesc:ga91c6b69e1e7b265fccf7b58d53b3fa22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card interface voltage class values. <br/></td></tr>
+<tr class="separator:ga91c6b69e1e7b265fccf7b58d53b3fa22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0c157da43418589404685a7664fcdea"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gac0c157da43418589404685a7664fcdea">smartcard_transfer_state_t</a> </td></tr>
+<tr class="memdesc:gac0c157da43418589404685a7664fcdea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card I/O transfer states. <br/></td></tr>
+<tr class="separator:gac0c157da43418589404685a7664fcdea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa4b57fc884f0466d060b71d9787b0901"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaa4b57fc884f0466d060b71d9787b0901">smartcard_reset_type_t</a> </td></tr>
+<tr class="memdesc:gaa4b57fc884f0466d060b71d9787b0901"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card reset types. <br/></td></tr>
+<tr class="separator:gaa4b57fc884f0466d060b71d9787b0901"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa324ae7a3331449e7e59a7b289223444"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaa324ae7a3331449e7e59a7b289223444">smartcard_transport_type_t</a> </td></tr>
+<tr class="memdesc:gaa324ae7a3331449e7e59a7b289223444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card transport protocol types. <br/></td></tr>
+<tr class="separator:gaa324ae7a3331449e7e59a7b289223444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga40707a836342ca254297e2e03027f665"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga40707a836342ca254297e2e03027f665">smartcard_parity_type_t</a> </td></tr>
+<tr class="memdesc:ga40707a836342ca254297e2e03027f665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card data parity types. <br/></td></tr>
+<tr class="separator:ga40707a836342ca254297e2e03027f665"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4177d5746ae509a539af2c1d87a5ef5d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga4177d5746ae509a539af2c1d87a5ef5d">smartcard_card_convention_t</a> </td></tr>
+<tr class="memdesc:ga4177d5746ae509a539af2c1d87a5ef5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines data Convention format. <br/></td></tr>
+<tr class="separator:ga4177d5746ae509a539af2c1d87a5ef5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3620f4dad4aca31c4e2b5eb5d6114147"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga3620f4dad4aca31c4e2b5eb5d6114147">smartcard_interface_control_t</a> </td></tr>
+<tr class="memdesc:ga3620f4dad4aca31c4e2b5eb5d6114147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines Smart card interface IC control types. <br/></td></tr>
+<tr class="separator:ga3620f4dad4aca31c4e2b5eb5d6114147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb9206a264b33729d7e6755db58f4ce8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gabb9206a264b33729d7e6755db58f4ce8">smartcard_direction_t</a> </td></tr>
+<tr class="memdesc:gabb9206a264b33729d7e6755db58f4ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines transfer direction.  <a href="a00087.html#gabb9206a264b33729d7e6755db58f4ce8">More...</a><br/></td></tr>
+<tr class="separator:gabb9206a264b33729d7e6755db58f4ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Shell functional operation</h2></td></tr>
-<tr class="memitem:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a> (<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00084.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle, char *prompt)</td></tr>
-<tr class="memdesc:ga7961e946400cd244c315cfbbd36ae5d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the shell module.  <a href="#ga7961e946400cd244c315cfbbd36ae5d1">More...</a><br/></td></tr>
-<tr class="separator:ga7961e946400cd244c315cfbbd36ae5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a> (<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, <a class="el" href="a00087.html#a00676">shell_command_t</a> *shellCommand)</td></tr>
-<tr class="memdesc:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the shell command.  <a href="#gab5f85f3ba2cc7dd58bc85076c19c5177">More...</a><br/></td></tr>
-<tr class="separator:gab5f85f3ba2cc7dd58bc85076c19c5177"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53355638d856258b0bcb76e308803dab"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga53355638d856258b0bcb76e308803dab">SHELL_UnregisterCommand</a> (<a class="el" href="a00087.html#a00676">shell_command_t</a> *shellCommand)</td></tr>
-<tr class="memdesc:ga53355638d856258b0bcb76e308803dab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unregisters the shell command.  <a href="#ga53355638d856258b0bcb76e308803dab">More...</a><br/></td></tr>
-<tr class="separator:ga53355638d856258b0bcb76e308803dab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga9f182608b5a6107757be5bb8a90ad74c">SHELL_Write</a> (<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
-<tr class="memdesc:ga9f182608b5a6107757be5bb8a90ad74c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream.  <a href="#ga9f182608b5a6107757be5bb8a90ad74c">More...</a><br/></td></tr>
-<tr class="separator:ga9f182608b5a6107757be5bb8a90ad74c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaade5449d8cbfc3cd026667b40c35d29f">SHELL_Printf</a> (<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
-<tr class="memdesc:gaade5449d8cbfc3cd026667b40c35d29f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream.  <a href="#gaade5449d8cbfc3cd026667b40c35d29f">More...</a><br/></td></tr>
-<tr class="separator:gaade5449d8cbfc3cd026667b40c35d29f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6466b141fd4f94e78636e4a15c302dda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga6466b141fd4f94e78636e4a15c302dda">SHELL_WriteSynchronization</a> (<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *buffer, uint32_t length)</td></tr>
-<tr class="memdesc:ga6466b141fd4f94e78636e4a15c302dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data to the shell output stream with OS synchronization.  <a href="#ga6466b141fd4f94e78636e4a15c302dda">More...</a><br/></td></tr>
-<tr class="separator:ga6466b141fd4f94e78636e4a15c302dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56c78f6217a822015a9369bf3e52e92a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga56c78f6217a822015a9369bf3e52e92a">SHELL_PrintfSynchronization</a> (<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, const char *formatString,...)</td></tr>
-<tr class="memdesc:ga56c78f6217a822015a9369bf3e52e92a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes formatted output to the shell output stream with OS synchronization.  <a href="#ga56c78f6217a822015a9369bf3e52e92a">More...</a><br/></td></tr>
-<tr class="separator:ga56c78f6217a822015a9369bf3e52e92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca4540dc42f8892cb276691644a247e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gaca4540dc42f8892cb276691644a247e2">SHELL_ChangePrompt</a> (<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, char *prompt)</td></tr>
-<tr class="memdesc:gaca4540dc42f8892cb276691644a247e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change shell prompt.  <a href="#gaca4540dc42f8892cb276691644a247e2">More...</a><br/></td></tr>
-<tr class="separator:gaca4540dc42f8892cb276691644a247e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad2a840776dee8490d482a0692fbf2d7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#gad2a840776dee8490d482a0692fbf2d7e">SHELL_PrintPrompt</a> (<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
-<tr class="memdesc:gad2a840776dee8490d482a0692fbf2d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print shell prompt.  <a href="#gad2a840776dee8490d482a0692fbf2d7e">More...</a><br/></td></tr>
-<tr class="separator:gad2a840776dee8490d482a0692fbf2d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga44e3087a3cdea9b62f159e2585dfcd8d">SHELL_Task</a> (<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle)</td></tr>
-<tr class="memdesc:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task function for Shell.  <a href="#ga44e3087a3cdea9b62f159e2585dfcd8d">More...</a><br/></td></tr>
-<tr class="separator:ga44e3087a3cdea9b62f159e2585dfcd8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4eeb17b16773359c132f1d40478938ec"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga4eeb17b16773359c132f1d40478938ec">SHELL_checkRunningInIsr</a> (void)</td></tr>
-<tr class="memdesc:ga4eeb17b16773359c132f1d40478938ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if code is running in ISR.  <a href="#ga4eeb17b16773359c132f1d40478938ec">More...</a><br/></td></tr>
-<tr class="separator:ga4eeb17b16773359c132f1d40478938ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+Driver version</h2></td></tr>
+<tr class="memitem:ga7bf31c8c6501017503f021feee4d3bed"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7bf31c8c6501017503f021feee4d3bed"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ga7bf31c8c6501017503f021feee4d3bed">FSL_SMARTCARD_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td></tr>
+<tr class="memdesc:ga7bf31c8c6501017503f021feee4d3bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card driver version 2.2.2. <br/></td></tr>
+<tr class="separator:ga7bf31c8c6501017503f021feee4d3bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00676" id="a00676"></a>
+<a name="a00671" id="a00671"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct shell_command_t</td>
+          <td class="memname">struct smartcard_card_params_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a9bcf2ff85f63adcaa4c03f4ef85e8df9"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a9bcf2ff85f63adcaa4c03f4ef85e8df9">pcCommand</a></td></tr>
-<tr class="memdesc:a9bcf2ff85f63adcaa4c03f4ef85e8df9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The command that is executed.  <a href="#a9bcf2ff85f63adcaa4c03f4ef85e8df9">More...</a><br/></td></tr>
-<tr class="separator:a9bcf2ff85f63adcaa4c03f4ef85e8df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af6bfe76160c7aeeb3c32cc2fe117541b"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#af6bfe76160c7aeeb3c32cc2fe117541b">pcHelpString</a></td></tr>
-<tr class="memdesc:af6bfe76160c7aeeb3c32cc2fe117541b"><td class="mdescLeft">&#160;</td><td class="mdescRight">String that describes how to use the command.  <a href="#af6bfe76160c7aeeb3c32cc2fe117541b">More...</a><br/></td></tr>
-<tr class="separator:af6bfe76160c7aeeb3c32cc2fe117541b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5d55bf1f33b397949eb926c9ee48e6d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a00087.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aa5d55bf1f33b397949eb926c9ee48e6d">pFuncCallBack</a></td></tr>
-<tr class="memdesc:aa5d55bf1f33b397949eb926c9ee48e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to the callback function that returns the output generated by the command.  <a href="#aa5d55bf1f33b397949eb926c9ee48e6d">More...</a><br/></td></tr>
-<tr class="separator:aa5d55bf1f33b397949eb926c9ee48e6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a72da17de3b4a0af7b4072d726449c6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a4a72da17de3b4a0af7b4072d726449c6">cExpectedNumberOfParameters</a></td></tr>
-<tr class="memdesc:a4a72da17de3b4a0af7b4072d726449c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Commands expect a fixed number of parameters, which may be zero.  <a href="#a4a72da17de3b4a0af7b4072d726449c6">More...</a><br/></td></tr>
-<tr class="separator:a4a72da17de3b4a0af7b4072d726449c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8178558fd61934e49498c79f2e47792e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8178558fd61934e49498c79f2e47792e"></a>
-list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a8178558fd61934e49498c79f2e47792e">link</a></td></tr>
-<tr class="memdesc:a8178558fd61934e49498c79f2e47792e"><td class="mdescLeft">&#160;</td><td class="mdescRight">link of the element <br/></td></tr>
-<tr class="separator:a8178558fd61934e49498c79f2e47792e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30310c0980e26d6980e014e096b33940"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a30310c0980e26d6980e014e096b33940"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a30310c0980e26d6980e014e096b33940">Fi</a></td></tr>
+<tr class="memdesc:a30310c0980e26d6980e014e096b33940"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits Fi - clock rate conversion integer <br/></td></tr>
+<tr class="separator:a30310c0980e26d6980e014e096b33940"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa450d45c6d04135f5460289bd7394b08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa450d45c6d04135f5460289bd7394b08"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aa450d45c6d04135f5460289bd7394b08">fMax</a></td></tr>
+<tr class="memdesc:aa450d45c6d04135f5460289bd7394b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum Smart card frequency in MHz. <br/></td></tr>
+<tr class="separator:aa450d45c6d04135f5460289bd7394b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ca9c07718cbcb7f90b981edd10a8040"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ca9c07718cbcb7f90b981edd10a8040"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a3ca9c07718cbcb7f90b981edd10a8040">WI</a></td></tr>
+<tr class="memdesc:a3ca9c07718cbcb7f90b981edd10a8040"><td class="mdescLeft">&#160;</td><td class="mdescRight">8 bits WI - work wait time integer <br/></td></tr>
+<tr class="separator:a3ca9c07718cbcb7f90b981edd10a8040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae028abbdda125060df7d0dfcd095f159"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae028abbdda125060df7d0dfcd095f159"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ae028abbdda125060df7d0dfcd095f159">Di</a></td></tr>
+<tr class="memdesc:ae028abbdda125060df7d0dfcd095f159"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits DI - baud rate divisor <br/></td></tr>
+<tr class="separator:ae028abbdda125060df7d0dfcd095f159"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac636ca1c64904a9ac72e06af64bc8b5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac636ca1c64904a9ac72e06af64bc8b5f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ac636ca1c64904a9ac72e06af64bc8b5f">BWI</a></td></tr>
+<tr class="memdesc:ac636ca1c64904a9ac72e06af64bc8b5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits BWI - block wait time integer <br/></td></tr>
+<tr class="separator:ac636ca1c64904a9ac72e06af64bc8b5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31579e27044929d0c3ab686e9ec51878"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a31579e27044929d0c3ab686e9ec51878"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a31579e27044929d0c3ab686e9ec51878">CWI</a></td></tr>
+<tr class="memdesc:a31579e27044929d0c3ab686e9ec51878"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits CWI - character wait time integer <br/></td></tr>
+<tr class="separator:a31579e27044929d0c3ab686e9ec51878"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a153bdad9489ec1c267193828c66c4bcb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a153bdad9489ec1c267193828c66c4bcb"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a153bdad9489ec1c267193828c66c4bcb">BGI</a></td></tr>
+<tr class="memdesc:a153bdad9489ec1c267193828c66c4bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits BGI - block guard time integer <br/></td></tr>
+<tr class="separator:a153bdad9489ec1c267193828c66c4bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96d29e2cf9c3765046366e1319fe0f2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a96d29e2cf9c3765046366e1319fe0f2d"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a96d29e2cf9c3765046366e1319fe0f2d">GTN</a></td></tr>
+<tr class="memdesc:a96d29e2cf9c3765046366e1319fe0f2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">8 bits GTN - extended guard time integer <br/></td></tr>
+<tr class="separator:a96d29e2cf9c3765046366e1319fe0f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a541a29ce8dadd7c7351d55ed4baaad17"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a541a29ce8dadd7c7351d55ed4baaad17"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a541a29ce8dadd7c7351d55ed4baaad17">IFSC</a></td></tr>
+<tr class="memdesc:a541a29ce8dadd7c7351d55ed4baaad17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates IFSC value of the card. <br/></td></tr>
+<tr class="separator:a541a29ce8dadd7c7351d55ed4baaad17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab12186825c77e913869be42ad819562a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab12186825c77e913869be42ad819562a">modeNegotiable</a></td></tr>
+<tr class="memdesc:ab12186825c77e913869be42ad819562a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the card acts in negotiable or a specific mode.  <a href="#ab12186825c77e913869be42ad819562a">More...</a><br/></td></tr>
+<tr class="separator:ab12186825c77e913869be42ad819562a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1d6feb64c7242603b70aac38d240969"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1d6feb64c7242603b70aac38d240969"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab1d6feb64c7242603b70aac38d240969">currentD</a></td></tr>
+<tr class="memdesc:ab1d6feb64c7242603b70aac38d240969"><td class="mdescLeft">&#160;</td><td class="mdescRight">4 bits DI - current baud rate divisor <br/></td></tr>
+<tr class="separator:ab1d6feb64c7242603b70aac38d240969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0ca14d8661b22001f4b8d93d13ab10d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0ca14d8661b22001f4b8d93d13ab10d"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aa0ca14d8661b22001f4b8d93d13ab10d">status</a></td></tr>
+<tr class="memdesc:aa0ca14d8661b22001f4b8d93d13ab10d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates smart card status. <br/></td></tr>
+<tr class="separator:aa0ca14d8661b22001f4b8d93d13ab10d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a608e76ceeef8b18c7e8bc7eb08094854"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a608e76ceeef8b18c7e8bc7eb08094854"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a608e76ceeef8b18c7e8bc7eb08094854">t0Indicated</a></td></tr>
+<tr class="memdesc:a608e76ceeef8b18c7e8bc7eb08094854"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates ff T=0 indicated in TD1 byte. <br/></td></tr>
+<tr class="separator:a608e76ceeef8b18c7e8bc7eb08094854"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2c1fad2d4116dc33a45f238bc52e8d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af2c1fad2d4116dc33a45f238bc52e8d2"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#af2c1fad2d4116dc33a45f238bc52e8d2">t1Indicated</a></td></tr>
+<tr class="memdesc:af2c1fad2d4116dc33a45f238bc52e8d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if T=1 indicated in TD2 byte. <br/></td></tr>
+<tr class="separator:af2c1fad2d4116dc33a45f238bc52e8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab028135e2731ab54c5987e8979737119"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab028135e2731ab54c5987e8979737119"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab028135e2731ab54c5987e8979737119">atrComplete</a></td></tr>
+<tr class="memdesc:ab028135e2731ab54c5987e8979737119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the ATR received from the card was complete or not. <br/></td></tr>
+<tr class="separator:ab028135e2731ab54c5987e8979737119"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a460492492c9287027ee08761cc778b09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a460492492c9287027ee08761cc778b09"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a460492492c9287027ee08761cc778b09">atrValid</a></td></tr>
+<tr class="memdesc:a460492492c9287027ee08761cc778b09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether the ATR received from the card was valid or not. <br/></td></tr>
+<tr class="separator:a460492492c9287027ee08761cc778b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad81f68d5bb02ed7a91307dcf6e8ade5d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad81f68d5bb02ed7a91307dcf6e8ade5d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ad81f68d5bb02ed7a91307dcf6e8ade5d">present</a></td></tr>
+<tr class="memdesc:ad81f68d5bb02ed7a91307dcf6e8ade5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if a smart card is present. <br/></td></tr>
+<tr class="separator:ad81f68d5bb02ed7a91307dcf6e8ade5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82a695a3393bb1fba78c7c4504d44f3a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a82a695a3393bb1fba78c7c4504d44f3a"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a82a695a3393bb1fba78c7c4504d44f3a">active</a></td></tr>
+<tr class="memdesc:a82a695a3393bb1fba78c7c4504d44f3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates if the smart card is activated. <br/></td></tr>
+<tr class="separator:a82a695a3393bb1fba78c7c4504d44f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a989340f1d18a2e4507335d305d3111a0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a989340f1d18a2e4507335d305d3111a0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a989340f1d18a2e4507335d305d3111a0">faulty</a></td></tr>
+<tr class="memdesc:a989340f1d18a2e4507335d305d3111a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether smart card/interface is faulty. <br/></td></tr>
+<tr class="separator:a989340f1d18a2e4507335d305d3111a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c4f8664bdf0e0ba361acab3eb028ca8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c4f8664bdf0e0ba361acab3eb028ca8"></a>
+<a class="el" href="a00087.html#ga4177d5746ae509a539af2c1d87a5ef5d">smartcard_card_convention_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a6c4f8664bdf0e0ba361acab3eb028ca8">convention</a></td></tr>
+<tr class="memdesc:a6c4f8664bdf0e0ba361acab3eb028ca8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Card convention, kSMARTCARD_DirectConvention for direct convention, kSMARTCARD_InverseConvention for inverse convention. <br/></td></tr>
+<tr class="separator:a6c4f8664bdf0e0ba361acab3eb028ca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
-<a class="anchor" id="a9bcf2ff85f63adcaa4c03f4ef85e8df9"></a>
+<a class="anchor" id="ab12186825c77e913869be42ad819562a"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* shell_command_t::pcCommand</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>For example "help". It must be all lower case. </p>
-
-</div>
-</div>
-<a class="anchor" id="af6bfe76160c7aeeb3c32cc2fe117541b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char* shell_command_t::pcHelpString</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>It should start with the command itself, and end with "\r\n". For example "help: Returns a list of all the commands\r\n". </p>
-
-</div>
-</div>
-<a class="anchor" id="aa5d55bf1f33b397949eb926c9ee48e6d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="a00087.html#ga7ace1ddfb1e83ac1516ac44be90cf822">cmd_function_t</a> shell_command_t::pFuncCallBack</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a class="anchor" id="a4a72da17de3b4a0af7b4072d726449c6"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t shell_command_t::cExpectedNumberOfParameters</td>
+          <td class="memname">uint8_t smartcard_card_params_t::modeNegotiable</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -331,682 +365,529 @@ list_element_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 
 </div>
 </div>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="ga30f0f53e0fd0ab3f7f4696f8f8e3e8ab"></a>
+<a name="a00674" id="a00674"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_NON_BLOCKING_MODE&#160;&#160;&#160;<a class="el" href="a00084.html#gabf238ccb327fd5316f765109d1235ae3">SERIAL_MANAGER_NON_BLOCKING_MODE</a></td>
+          <td class="memname">struct smartcard_timers_state_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a78e3d1c7de639c8a1030ab8b4624b1bb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78e3d1c7de639c8a1030ab8b4624b1bb"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a78e3d1c7de639c8a1030ab8b4624b1bb">adtExpired</a></td></tr>
+<tr class="memdesc:a78e3d1c7de639c8a1030ab8b4624b1bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether ADT timer expired. <br/></td></tr>
+<tr class="separator:a78e3d1c7de639c8a1030ab8b4624b1bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a449213036ea0934f3f7c4289054563f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a449213036ea0934f3f7c4289054563f6"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a449213036ea0934f3f7c4289054563f6">wwtExpired</a></td></tr>
+<tr class="memdesc:a449213036ea0934f3f7c4289054563f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether WWT timer expired. <br/></td></tr>
+<tr class="separator:a449213036ea0934f3f7c4289054563f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbd232c8c41da9d8443637c8ce753364"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbd232c8c41da9d8443637c8ce753364"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#adbd232c8c41da9d8443637c8ce753364">cwtExpired</a></td></tr>
+<tr class="memdesc:adbd232c8c41da9d8443637c8ce753364"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether CWT timer expired. <br/></td></tr>
+<tr class="separator:adbd232c8c41da9d8443637c8ce753364"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a847fd54ca26052f91c0e1f4051f77b1e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a847fd54ca26052f91c0e1f4051f77b1e"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a847fd54ca26052f91c0e1f4051f77b1e">bwtExpired</a></td></tr>
+<tr class="memdesc:a847fd54ca26052f91c0e1f4051f77b1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether BWT timer expired. <br/></td></tr>
+<tr class="separator:a847fd54ca26052f91c0e1f4051f77b1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a38cb0f038a3bcfb5d6b5839084d1db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a38cb0f038a3bcfb5d6b5839084d1db"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a8a38cb0f038a3bcfb5d6b5839084d1db">initCharTimerExpired</a></td></tr>
+<tr class="memdesc:a8a38cb0f038a3bcfb5d6b5839084d1db"><td class="mdescLeft">&#160;</td><td class="mdescRight"><pre class="fragment">                         Indicates whether reception timer
+</pre><p> for initialization character (TS) after the RST has expired <br/></td></tr>
+<tr class="separator:a8a38cb0f038a3bcfb5d6b5839084d1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="a00673" id="a00673"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct smartcard_interface_config_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:adc30dba2f979029f1942780fe4fb4ed9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc30dba2f979029f1942780fe4fb4ed9"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#adc30dba2f979029f1942780fe4fb4ed9">smartCardClock</a></td></tr>
+<tr class="memdesc:adc30dba2f979029f1942780fe4fb4ed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card interface clock [Hz]. <br/></td></tr>
+<tr class="separator:adc30dba2f979029f1942780fe4fb4ed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ade5d2d20a79754f2451a58f34540df"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ade5d2d20a79754f2451a58f34540df"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a2ade5d2d20a79754f2451a58f34540df">clockToResetDelay</a></td></tr>
+<tr class="memdesc:a2ade5d2d20a79754f2451a58f34540df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates clock to RST apply delay [smart card clock cycles]. <br/></td></tr>
+<tr class="separator:a2ade5d2d20a79754f2451a58f34540df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2088af66478915d7ff86c6ccfcc5fdd6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2088af66478915d7ff86c6ccfcc5fdd6"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a2088af66478915d7ff86c6ccfcc5fdd6">clockModule</a></td></tr>
+<tr class="memdesc:a2088af66478915d7ff86c6ccfcc5fdd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card clock module number. <br/></td></tr>
+<tr class="separator:a2088af66478915d7ff86c6ccfcc5fdd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f438812c1a9c2711a68d2ae77814fe9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f438812c1a9c2711a68d2ae77814fe9"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a2f438812c1a9c2711a68d2ae77814fe9">clockModuleChannel</a></td></tr>
+<tr class="memdesc:a2f438812c1a9c2711a68d2ae77814fe9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card clock module channel number. <br/></td></tr>
+<tr class="separator:a2f438812c1a9c2711a68d2ae77814fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d1729d7b31cc0ce03662c8f10469ae8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d1729d7b31cc0ce03662c8f10469ae8"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a8d1729d7b31cc0ce03662c8f10469ae8">clockModuleSourceClock</a></td></tr>
+<tr class="memdesc:a8d1729d7b31cc0ce03662c8f10469ae8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card clock module source clock [e.g., BusClk]. <br/></td></tr>
+<tr class="separator:a8d1729d7b31cc0ce03662c8f10469ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cac169f286acf5c11230c97854fab4e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cac169f286acf5c11230c97854fab4e"></a>
+<a class="el" href="a00087.html#ga91c6b69e1e7b265fccf7b58d53b3fa22">smartcard_card_voltage_class_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a1cac169f286acf5c11230c97854fab4e">vcc</a></td></tr>
+<tr class="memdesc:a1cac169f286acf5c11230c97854fab4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card voltage class. <br/></td></tr>
+<tr class="separator:a1cac169f286acf5c11230c97854fab4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5f453b1f9f5d42d19293862d4e7cd18"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af5f453b1f9f5d42d19293862d4e7cd18"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#af5f453b1f9f5d42d19293862d4e7cd18">controlPort</a></td></tr>
+<tr class="memdesc:af5f453b1f9f5d42d19293862d4e7cd18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY control port instance. <br/></td></tr>
+<tr class="separator:af5f453b1f9f5d42d19293862d4e7cd18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48a0d85417bf92ec57aed499f5a5e1e3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48a0d85417bf92ec57aed499f5a5e1e3"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a48a0d85417bf92ec57aed499f5a5e1e3">controlPin</a></td></tr>
+<tr class="memdesc:a48a0d85417bf92ec57aed499f5a5e1e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY control pin instance. <br/></td></tr>
+<tr class="separator:a48a0d85417bf92ec57aed499f5a5e1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b0c544e82c33ad0fb03b9e8815656a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b0c544e82c33ad0fb03b9e8815656a5"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a9b0c544e82c33ad0fb03b9e8815656a5">irqPort</a></td></tr>
+<tr class="memdesc:a9b0c544e82c33ad0fb03b9e8815656a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Interrupt port instance. <br/></td></tr>
+<tr class="separator:a9b0c544e82c33ad0fb03b9e8815656a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22890b38399988e6381272befbf9c270"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22890b38399988e6381272befbf9c270"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a22890b38399988e6381272befbf9c270">irqPin</a></td></tr>
+<tr class="memdesc:a22890b38399988e6381272befbf9c270"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Interrupt pin instance. <br/></td></tr>
+<tr class="separator:a22890b38399988e6381272befbf9c270"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85ddfeff3b27f548153e16c4d6e4f9aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85ddfeff3b27f548153e16c4d6e4f9aa"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a85ddfeff3b27f548153e16c4d6e4f9aa">resetPort</a></td></tr>
+<tr class="memdesc:a85ddfeff3b27f548153e16c4d6e4f9aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card reset port instance. <br/></td></tr>
+<tr class="separator:a85ddfeff3b27f548153e16c4d6e4f9aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a120ca0cbcf3030d47fc2e621bbb135"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a120ca0cbcf3030d47fc2e621bbb135"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a8a120ca0cbcf3030d47fc2e621bbb135">resetPin</a></td></tr>
+<tr class="memdesc:a8a120ca0cbcf3030d47fc2e621bbb135"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card reset pin instance. <br/></td></tr>
+<tr class="separator:a8a120ca0cbcf3030d47fc2e621bbb135"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a578366a06d6229bc1b8d4e9ae904532c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a578366a06d6229bc1b8d4e9ae904532c"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a578366a06d6229bc1b8d4e9ae904532c">vsel0Port</a></td></tr>
+<tr class="memdesc:a578366a06d6229bc1b8d4e9ae904532c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Vsel0 control port instance. <br/></td></tr>
+<tr class="separator:a578366a06d6229bc1b8d4e9ae904532c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46717701f7542f479d82929d401714da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a46717701f7542f479d82929d401714da"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a46717701f7542f479d82929d401714da">vsel0Pin</a></td></tr>
+<tr class="memdesc:a46717701f7542f479d82929d401714da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Vsel0 control pin instance. <br/></td></tr>
+<tr class="separator:a46717701f7542f479d82929d401714da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a074048f689285fe2ba82d3ecdb9f1eba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a074048f689285fe2ba82d3ecdb9f1eba"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a074048f689285fe2ba82d3ecdb9f1eba">vsel1Port</a></td></tr>
+<tr class="memdesc:a074048f689285fe2ba82d3ecdb9f1eba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Vsel1 control port instance. <br/></td></tr>
+<tr class="separator:a074048f689285fe2ba82d3ecdb9f1eba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e8dd30d2f0e89c46a4d0c6aeebe7720"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e8dd30d2f0e89c46a4d0c6aeebe7720"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a8e8dd30d2f0e89c46a4d0c6aeebe7720">vsel1Pin</a></td></tr>
+<tr class="memdesc:a8e8dd30d2f0e89c46a4d0c6aeebe7720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY Vsel1 control pin instance. <br/></td></tr>
+<tr class="separator:a8e8dd30d2f0e89c46a4d0c6aeebe7720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac32d96f23f1d48e8208dfdd999f17f9f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac32d96f23f1d48e8208dfdd999f17f9f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ac32d96f23f1d48e8208dfdd999f17f9f">dataPort</a></td></tr>
+<tr class="memdesc:ac32d96f23f1d48e8208dfdd999f17f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY data port instance. <br/></td></tr>
+<tr class="separator:ac32d96f23f1d48e8208dfdd999f17f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6aa18905513b4ab98239696d037cf409"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6aa18905513b4ab98239696d037cf409"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a6aa18905513b4ab98239696d037cf409">dataPin</a></td></tr>
+<tr class="memdesc:a6aa18905513b4ab98239696d037cf409"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY data pin instance. <br/></td></tr>
+<tr class="separator:a6aa18905513b4ab98239696d037cf409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a182b27845f39b982ca74188d530bd9f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a182b27845f39b982ca74188d530bd9f2"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a182b27845f39b982ca74188d530bd9f2">dataPinMux</a></td></tr>
+<tr class="memdesc:a182b27845f39b982ca74188d530bd9f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card PHY data pin mux option. <br/></td></tr>
+<tr class="separator:a182b27845f39b982ca74188d530bd9f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c102f662c6a6f75192d57589e1a8885"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c102f662c6a6f75192d57589e1a8885"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a8c102f662c6a6f75192d57589e1a8885">tsTimerId</a></td></tr>
+<tr class="memdesc:a8c102f662c6a6f75192d57589e1a8885"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numerical identifier of the External HW timer for Initial character detection. <br/></td></tr>
+<tr class="separator:a8c102f662c6a6f75192d57589e1a8885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+
+</div>
+</div>
+<a name="a00675" id="a00675"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct smartcard_xfer_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a517f3c6204f3b2be918c93f954fa63d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#gabb9206a264b33729d7e6755db58f4ce8">smartcard_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a517f3c6204f3b2be918c93f954fa63d2">direction</a></td></tr>
+<tr class="memdesc:a517f3c6204f3b2be918c93f954fa63d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction of communication.  <a href="#a517f3c6204f3b2be918c93f954fa63d2">More...</a><br/></td></tr>
+<tr class="separator:a517f3c6204f3b2be918c93f954fa63d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5247d9a46e7caade1b3c7d1b1495be58"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a5247d9a46e7caade1b3c7d1b1495be58">buff</a></td></tr>
+<tr class="memdesc:a5247d9a46e7caade1b3c7d1b1495be58"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of data.  <a href="#a5247d9a46e7caade1b3c7d1b1495be58">More...</a><br/></td></tr>
+<tr class="separator:a5247d9a46e7caade1b3c7d1b1495be58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a588a37c446a56270578b148458c965f0"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a588a37c446a56270578b148458c965f0">size</a></td></tr>
+<tr class="memdesc:a588a37c446a56270578b148458c965f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of transferred units.  <a href="#a588a37c446a56270578b148458c965f0">More...</a><br/></td></tr>
+<tr class="separator:a588a37c446a56270578b148458c965f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a517f3c6204f3b2be918c93f954fa63d2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00087.html#gabb9206a264b33729d7e6755db58f4ce8">smartcard_direction_t</a> smartcard_xfer_t::direction</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>(RX/TX) </p>
+
+</div>
+</div>
+<a class="anchor" id="a5247d9a46e7caade1b3c7d1b1495be58"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* smartcard_xfer_t::buff</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga30882f4b5fc99cbc21459cc960ef9ffe"></a>
+<a class="anchor" id="a588a37c446a56270578b148458c965f0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_AUTO_COMPLETE&#160;&#160;&#160;(1U)</td>
+          <td class="memname">size_t smartcard_xfer_t::size</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gaf98219b0fb886040896b83966903a135"></a>
+
+</div>
+</div>
+<a name="a00672" id="a00672"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_BUFFER_SIZE&#160;&#160;&#160;(64U)</td>
+          <td class="memname">struct smartcard_context_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"></div><table class="memberdecls">
+<tr><td colspan="2"><h3>Data Fields</h3></td></tr>
+<tr class="memitem:a02bf88378f7d493a3fdda186438f4f9b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a02bf88378f7d493a3fdda186438f4f9b"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a02bf88378f7d493a3fdda186438f4f9b">base</a></td></tr>
+<tr class="memdesc:a02bf88378f7d493a3fdda186438f4f9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card module base address. <br/></td></tr>
+<tr class="separator:a02bf88378f7d493a3fdda186438f4f9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a942c03c7f239e362a3b9d199ed7004eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#gabb9206a264b33729d7e6755db58f4ce8">smartcard_direction_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a942c03c7f239e362a3b9d199ed7004eb">direction</a></td></tr>
+<tr class="memdesc:a942c03c7f239e362a3b9d199ed7004eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction of communication.  <a href="#a942c03c7f239e362a3b9d199ed7004eb">More...</a><br/></td></tr>
+<tr class="separator:a942c03c7f239e362a3b9d199ed7004eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65eb6eb4b19e8ed945a98ff104b17ee9"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a65eb6eb4b19e8ed945a98ff104b17ee9">xBuff</a></td></tr>
+<tr class="memdesc:a65eb6eb4b19e8ed945a98ff104b17ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The buffer of data being transferred.  <a href="#a65eb6eb4b19e8ed945a98ff104b17ee9">More...</a><br/></td></tr>
+<tr class="separator:a65eb6eb4b19e8ed945a98ff104b17ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4d7fc5bcf6b9b4c985a58b61606340d"><td class="memItemLeft" align="right" valign="top">volatile size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab4d7fc5bcf6b9b4c985a58b61606340d">xSize</a></td></tr>
+<tr class="memdesc:ab4d7fc5bcf6b9b4c985a58b61606340d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of bytes to be transferred.  <a href="#ab4d7fc5bcf6b9b4c985a58b61606340d">More...</a><br/></td></tr>
+<tr class="separator:ab4d7fc5bcf6b9b4c985a58b61606340d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0ce05c8505925bb0349c4740abbf214"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ac0ce05c8505925bb0349c4740abbf214">xIsBusy</a></td></tr>
+<tr class="memdesc:ac0ce05c8505925bb0349c4740abbf214"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if there is an active transfer.  <a href="#ac0ce05c8505925bb0349c4740abbf214">More...</a><br/></td></tr>
+<tr class="separator:ac0ce05c8505925bb0349c4740abbf214"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3984d1f18d0edbd3a99a87845c4dc55d"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a3984d1f18d0edbd3a99a87845c4dc55d">txFifoEntryCount</a></td></tr>
+<tr class="memdesc:a3984d1f18d0edbd3a99a87845c4dc55d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of data word entries in transmit FIFO.  <a href="#a3984d1f18d0edbd3a99a87845c4dc55d">More...</a><br/></td></tr>
+<tr class="separator:a3984d1f18d0edbd3a99a87845c4dc55d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab76f8a83d2fcf98f0ee59cb3cf99a521"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab76f8a83d2fcf98f0ee59cb3cf99a521">rxFifoThreshold</a></td></tr>
+<tr class="memdesc:ab76f8a83d2fcf98f0ee59cb3cf99a521"><td class="mdescLeft">&#160;</td><td class="mdescRight">The max value of the receiver FIFO threshold.  <a href="#ab76f8a83d2fcf98f0ee59cb3cf99a521">More...</a><br/></td></tr>
+<tr class="separator:ab76f8a83d2fcf98f0ee59cb3cf99a521"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab305980bd3aedd14e3b7e36480f868a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#gaee0e1f95525a9305d25c21a7a6b0c6ea">smartcard_interface_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ab305980bd3aedd14e3b7e36480f868a5">interfaceCallback</a></td></tr>
+<tr class="memdesc:ab305980bd3aedd14e3b7e36480f868a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback to invoke after interface IC raised interrupt.  <a href="#ab305980bd3aedd14e3b7e36480f868a5">More...</a><br/></td></tr>
+<tr class="separator:ab305980bd3aedd14e3b7e36480f868a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b80e2ed7f7ba8afd7c96a43a71c6a19"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#gaaedb10efbba55294f2568ca37c0a6772">smartcard_transfer_callback_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a5b80e2ed7f7ba8afd7c96a43a71c6a19">transferCallback</a></td></tr>
+<tr class="memdesc:a5b80e2ed7f7ba8afd7c96a43a71c6a19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback to invoke after transfer event occur.  <a href="#a5b80e2ed7f7ba8afd7c96a43a71c6a19">More...</a><br/></td></tr>
+<tr class="separator:a5b80e2ed7f7ba8afd7c96a43a71c6a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad91072ab0516b7a8a9d90145d309a0bd"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ad91072ab0516b7a8a9d90145d309a0bd">interfaceCallbackParam</a></td></tr>
+<tr class="memdesc:ad91072ab0516b7a8a9d90145d309a0bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface callback parameter pointer.  <a href="#ad91072ab0516b7a8a9d90145d309a0bd">More...</a><br/></td></tr>
+<tr class="separator:ad91072ab0516b7a8a9d90145d309a0bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0df21a577b0343b37a2c73e61f89e14"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aa0df21a577b0343b37a2c73e61f89e14">transferCallbackParam</a></td></tr>
+<tr class="memdesc:aa0df21a577b0343b37a2c73e61f89e14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer callback parameter pointer.  <a href="#aa0df21a577b0343b37a2c73e61f89e14">More...</a><br/></td></tr>
+<tr class="separator:aa0df21a577b0343b37a2c73e61f89e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a808aee40758a9d347616521d609b9bf1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#ga008f3ec99d03724068bd4dc923df13bc">smartcard_time_delay_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a808aee40758a9d347616521d609b9bf1">timeDelay</a></td></tr>
+<tr class="memdesc:a808aee40758a9d347616521d609b9bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function which handles time delay defined by user or RTOS.  <a href="#a808aee40758a9d347616521d609b9bf1">More...</a><br/></td></tr>
+<tr class="separator:a808aee40758a9d347616521d609b9bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a540d2dd502a55958ba741bf60dc2c0e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00087.html#gaa4b57fc884f0466d060b71d9787b0901">smartcard_reset_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a540d2dd502a55958ba741bf60dc2c0e4">resetType</a></td></tr>
+<tr class="memdesc:a540d2dd502a55958ba741bf60dc2c0e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether a Cold reset or Warm reset was requested.  <a href="#a540d2dd502a55958ba741bf60dc2c0e4">More...</a><br/></td></tr>
+<tr class="separator:a540d2dd502a55958ba741bf60dc2c0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af67df5b68fadc8a35554a5ce788fab08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af67df5b68fadc8a35554a5ce788fab08"></a>
+<a class="el" href="a00087.html#gaa324ae7a3331449e7e59a7b289223444">smartcard_transport_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#af67df5b68fadc8a35554a5ce788fab08">tType</a></td></tr>
+<tr class="memdesc:af67df5b68fadc8a35554a5ce788fab08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates current transfer protocol (T0 or T1) <br/></td></tr>
+<tr class="separator:af67df5b68fadc8a35554a5ce788fab08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0676393a8d397bf73ae4ed7d565479f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa0676393a8d397bf73ae4ed7d565479f"></a>
+volatile <a class="el" href="a00087.html#gac0c157da43418589404685a7664fcdea">smartcard_transfer_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aa0676393a8d397bf73ae4ed7d565479f">transferState</a></td></tr>
+<tr class="memdesc:aa0676393a8d397bf73ae4ed7d565479f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the current transfer state. <br/></td></tr>
+<tr class="separator:aa0676393a8d397bf73ae4ed7d565479f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c3a9f68b8386a2c9fa3e55a51d3f9d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c3a9f68b8386a2c9fa3e55a51d3f9d6"></a>
+<a class="el" href="a00087.html#a00674">smartcard_timers_state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a2c3a9f68b8386a2c9fa3e55a51d3f9d6">timersState</a></td></tr>
+<tr class="memdesc:a2c3a9f68b8386a2c9fa3e55a51d3f9d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the state of different protocol timers used in driver. <br/></td></tr>
+<tr class="separator:a2c3a9f68b8386a2c9fa3e55a51d3f9d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4509b44f2e6fd36458f14233fdcf2b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae4509b44f2e6fd36458f14233fdcf2b2"></a>
+<a class="el" href="a00087.html#a00671">smartcard_card_params_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ae4509b44f2e6fd36458f14233fdcf2b2">cardParams</a></td></tr>
+<tr class="memdesc:ae4509b44f2e6fd36458f14233fdcf2b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card parameters(ATR and current) and interface slots states(ATR and current) <br/></td></tr>
+<tr class="separator:ae4509b44f2e6fd36458f14233fdcf2b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7b9dd55a5ab1fe7ce0544d3cc620db0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7b9dd55a5ab1fe7ce0544d3cc620db0"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#aa7b9dd55a5ab1fe7ce0544d3cc620db0">IFSD</a></td></tr>
+<tr class="memdesc:aa7b9dd55a5ab1fe7ce0544d3cc620db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates the terminal IFSD. <br/></td></tr>
+<tr class="separator:aa7b9dd55a5ab1fe7ce0544d3cc620db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18b6f43d1abd93fa321737d057da9125"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18b6f43d1abd93fa321737d057da9125"></a>
+<a class="el" href="a00087.html#ga40707a836342ca254297e2e03027f665">smartcard_parity_type_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a18b6f43d1abd93fa321737d057da9125">parity</a></td></tr>
+<tr class="memdesc:a18b6f43d1abd93fa321737d057da9125"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates current parity even/odd. <br/></td></tr>
+<tr class="separator:a18b6f43d1abd93fa321737d057da9125"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada63329264ee47980774fe0c73a406ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada63329264ee47980774fe0c73a406ba"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ada63329264ee47980774fe0c73a406ba">rxtCrossed</a></td></tr>
+<tr class="memdesc:ada63329264ee47980774fe0c73a406ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether RXT thresholds has been crossed. <br/></td></tr>
+<tr class="separator:ada63329264ee47980774fe0c73a406ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89876a139b740b4e42804f8b22a2ab7b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89876a139b740b4e42804f8b22a2ab7b"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a89876a139b740b4e42804f8b22a2ab7b">txtCrossed</a></td></tr>
+<tr class="memdesc:a89876a139b740b4e42804f8b22a2ab7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether TXT thresholds has been crossed. <br/></td></tr>
+<tr class="separator:a89876a139b740b4e42804f8b22a2ab7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49e092493f9f0cf5c493f71559d1c370"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49e092493f9f0cf5c493f71559d1c370"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a49e092493f9f0cf5c493f71559d1c370">wtxRequested</a></td></tr>
+<tr class="memdesc:a49e092493f9f0cf5c493f71559d1c370"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether WTX has been requested or not. <br/></td></tr>
+<tr class="separator:a49e092493f9f0cf5c493f71559d1c370"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8782d7be126ee9db59e55b7b2dc143ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8782d7be126ee9db59e55b7b2dc143ac"></a>
+volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a8782d7be126ee9db59e55b7b2dc143ac">parityError</a></td></tr>
+<tr class="memdesc:a8782d7be126ee9db59e55b7b2dc143ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indicates whether a parity error has been detected. <br/></td></tr>
+<tr class="separator:a8782d7be126ee9db59e55b7b2dc143ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcbaef11dd2a30f080f46d930d943ed4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcbaef11dd2a30f080f46d930d943ed4"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#abcbaef11dd2a30f080f46d930d943ed4">statusBytes</a> [2]</td></tr>
+<tr class="memdesc:abcbaef11dd2a30f080f46d930d943ed4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to store Status bytes SW1, SW2 of the last executed card command response. <br/></td></tr>
+<tr class="separator:abcbaef11dd2a30f080f46d930d943ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac569ed73a7546a74f362fcddfbf75bdf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac569ed73a7546a74f362fcddfbf75bdf"></a>
+<a class="el" href="a00087.html#a00673">smartcard_interface_config_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#ac569ed73a7546a74f362fcddfbf75bdf">interfaceConfig</a></td></tr>
+<tr class="memdesc:ac569ed73a7546a74f362fcddfbf75bdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smart card interface configuration structure. <br/></td></tr>
+<tr class="separator:ac569ed73a7546a74f362fcddfbf75bdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dd19f8c5846f92620f9d11735c43412"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00087.html#a4dd19f8c5846f92620f9d11735c43412">abortTransfer</a></td></tr>
+<tr class="memdesc:a4dd19f8c5846f92620f9d11735c43412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to abort transfer.  <a href="#a4dd19f8c5846f92620f9d11735c43412">More...</a><br/></td></tr>
+<tr class="separator:a4dd19f8c5846f92620f9d11735c43412"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a942c03c7f239e362a3b9d199ed7004eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00087.html#gabb9206a264b33729d7e6755db58f4ce8">smartcard_direction_t</a> smartcard_context_t::direction</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>(RX/TX) </p>
+
+</div>
+</div>
+<a class="anchor" id="a65eb6eb4b19e8ed945a98ff104b17ee9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* smartcard_context_t::xBuff</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga0800d9fb741c785d0601f0c3d7125f40"></a>
+<a class="anchor" id="ab4d7fc5bcf6b9b4c985a58b61606340d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_MAX_ARGS&#160;&#160;&#160;(8U)</td>
+          <td class="memname">volatile size_t smartcard_context_t::xSize</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga4362aa35752c9abf77387a237faaaea5"></a>
+<a class="anchor" id="ac0ce05c8505925bb0349c4740abbf214"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_HISTORY_COUNT&#160;&#160;&#160;(3U)</td>
+          <td class="memname">volatile bool smartcard_context_t::xIsBusy</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gaa4c15d7595f7cf7ee5f837a02cbdf574"></a>
+<a class="anchor" id="a3984d1f18d0edbd3a99a87845c4dc55d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_HANDLE_SIZE</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(160U + <a class="code" href="a00087.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a> * <a class="code" href="a00087.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + <a class="code" href="a00087.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a> + SERIAL_MANAGER_READ_HANDLE_SIZE + <a class="code" href="a00084.html#gac278be51c3508495c1be1a4cff566f3f">\</a></div>
-<div class="line"><a class="code" href="a00084.html#gac278be51c3508495c1be1a4cff566f3f">     SERIAL_MANAGER_WRITE_HANDLE_SIZE</a>)</div>
-<div class="ttc" id="a00087_html_ga4362aa35752c9abf77387a237faaaea5"><div class="ttname"><a href="a00087.html#ga4362aa35752c9abf77387a237faaaea5">SHELL_HISTORY_COUNT</a></div><div class="ttdeci">#define SHELL_HISTORY_COUNT</div><div class="ttdoc">Macro to set maximum count of history commands. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:43</div></div>
-<div class="ttc" id="a00087_html_gaf98219b0fb886040896b83966903a135"><div class="ttname"><a href="a00087.html#gaf98219b0fb886040896b83966903a135">SHELL_BUFFER_SIZE</a></div><div class="ttdeci">#define SHELL_BUFFER_SIZE</div><div class="ttdoc">Macro to set console buffer size. </div><div class="ttdef"><b>Definition:</b> fsl_shell.h:35</div></div>
-<div class="ttc" id="a00084_html_gac278be51c3508495c1be1a4cff566f3f"><div class="ttname"><a href="a00084.html#gac278be51c3508495c1be1a4cff566f3f">SERIAL_MANAGER_WRITE_HANDLE_SIZE</a></div><div class="ttdeci">#define SERIAL_MANAGER_WRITE_HANDLE_SIZE</div><div class="ttdoc">Set serial manager write handle size. </div><div class="ttdef"><b>Definition:</b> fsl_component_serial_manager.h:123</div></div>
-</div><!-- fragment --><p>It is the sum of the SHELL_HISTORY_COUNT * SHELL_BUFFER_SIZE + SHELL_BUFFER_SIZE + SERIAL_MANAGER_READ_HANDLE_SIZE + SERIAL_MANAGER_WRITE_HANDLE_SIZE </p>
-
-</div>
-</div>
-<a class="anchor" id="ga100ef8e4a639c03682d84fb981ba235b"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SHELL_USE_COMMON_TASK&#160;&#160;&#160;(0U)</td>
+          <td class="memname">uint8_t smartcard_context_t::txFifoEntryCount</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga5b98f71ea7bd89ef344cac14aa79a1e3"></a>
+<a class="anchor" id="ab76f8a83d2fcf98f0ee59cb3cf99a521"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_TASK_PRIORITY&#160;&#160;&#160;(2U)</td>
+          <td class="memname">uint8_t smartcard_context_t::rxFifoThreshold</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="ga416667c8e6b960d2c1ec518b41a06d62"></a>
+<a class="anchor" id="ab305980bd3aedd14e3b7e36480f868a5"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_TASK_STACK_SIZE&#160;&#160;&#160;(1000U)</td>
+          <td class="memname"><a class="el" href="a00087.html#gaee0e1f95525a9305d25c21a7a6b0c6ea">smartcard_interface_callback_t</a> smartcard_context_t::interfaceCallback</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gafdb2c68b2d83d459fc196ab0f58d7ab3"></a>
+<a class="anchor" id="a5b80e2ed7f7ba8afd7c96a43a71c6a19"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_HANDLE_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">name</td><td>)</td>
-          <td>&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00087.html#gaa4c15d7595f7cf7ee5f837a02cbdf574">SHELL_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td>
+          <td class="memname"><a class="el" href="a00087.html#gaaedb10efbba55294f2568ca37c0a6772">smartcard_transfer_callback_t</a> smartcard_context_t::transferCallback</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This macro is used to define a 4 byte aligned shell handle. Then use "(shell_handle_t)name" to get the shell handle.</p>
-<p>The macro should be global and could be optional. You could also define shell handle by yourself.</p>
-<p>This is an example, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00087.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(shellHandle);</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>The name string of the shell handle. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
-<a class="anchor" id="gacd1f7ee25cd791efee6a45e753ec9824"></a>
+<a class="anchor" id="ad91072ab0516b7a8a9d90145d309a0bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_COMMAND_DEFINE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">command, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">descriptor, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">callback, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">paramCount&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">void* smartcard_context_t::interfaceCallbackParam</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">\</div>
-<div class="line">    shell_command_t g_shellCommand##command = {                         \</div>
-<div class="line">        (#command), (descriptor), (callback), (paramCount), {0},        \</div>
-<div class="line">    }</div>
-</div><!-- fragment --><p>This macro is used to define the shell command structure <a class="el" href="a00087.html#a00676" title="User command data configuration structure. ">shell_command_t</a>. And then uses the macro SHELL_COMMAND to get the command structure pointer. The macro should not be used in any function.</p>
-<p>This is a example, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00087.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
-<div class="line">* <a class="code" href="a00087.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00087.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
-<div class="line">* </div>
-</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
-    <tr><td class="paramname">descriptor</td><td>The description of the command is used for showing the command usage when "help" is typing. </td></tr>
-    <tr><td class="paramname">callback</td><td>The callback of the command is used to handle the command line when the input command is matched. </td></tr>
-    <tr><td class="paramname">paramCount</td><td>The max parameter count of the current command. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
-<a class="anchor" id="ga16dd6cfbd9db7dafdaa802eda58564b5"></a>
+<a class="anchor" id="aa0df21a577b0343b37a2c73e61f89e14"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SHELL_COMMAND</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">command</td><td>)</td>
-          <td>&#160;&#160;&#160;&amp;g_shellCommand##command</td>
+          <td class="memname">void* smartcard_context_t::transferCallbackParam</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This macro is used to get the shell command pointer. The macro should not be used before the macro SHELL_COMMAND_DEFINE is used.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">command</td><td>The command string of the command. The double quotes do not need. Such as exit for "exit", help for "Help", read for "read". </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a class="anchor" id="ga7ace1ddfb1e83ac1516ac44be90cf822"></a>
+<a class="anchor" id="a808aee40758a9d347616521d609b9bf1"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a>(* cmd_function_t)(<a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a> shellHandle, int32_t argc, char **argv)</td>
+          <td class="memname"><a class="el" href="a00087.html#ga008f3ec99d03724068bd4dc923df13bc">smartcard_time_delay_t</a> smartcard_context_t::timeDelay</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a540d2dd502a55958ba741bf60dc2c0e4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00087.html#gaa4b57fc884f0466d060b71d9787b0901">smartcard_reset_type_t</a> smartcard_context_t::resetType</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4dd19f8c5846f92620f9d11735c43412"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool smartcard_context_t::abortTransfer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="ga16424f17c6492c580e65adf9a4e1ac61"></a>
+<a class="anchor" id="ga1f3b6c692395e5007ff47ce5d9304c1c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a></td>
+          <td class="memname">anonymous enum</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61aeb6cf57843c8b47b87ae07417d53df3e"></a>kStatus_SHELL_Success</em>&nbsp;</td><td class="fielddoc">
-<p>Success. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1caf4a7d15729a632fcff216f4203e45894"></a>kStatus_SMARTCARD_Success</em>&nbsp;</td><td class="fielddoc">
+<p>Transfer ends successfully. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61ae1a9ae61e350888892f4cde21f8dd7f9"></a>kStatus_SHELL_Error</em>&nbsp;</td><td class="fielddoc">
-<p>Failed. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1ca1ceaaad06999f92ec00c6d7aa54fff25"></a>kStatus_SMARTCARD_TxBusy</em>&nbsp;</td><td class="fielddoc">
+<p>Transmit in progress. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61a25ff80ec847b1028041ae913beec2b5b"></a>kStatus_SHELL_OpenWriteHandleFailed</em>&nbsp;</td><td class="fielddoc">
-<p>Open write handle failed. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1ca6d86716992e29764cd1baadc6de8154d"></a>kStatus_SMARTCARD_RxBusy</em>&nbsp;</td><td class="fielddoc">
+<p>Receiving in progress. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga16424f17c6492c580e65adf9a4e1ac61a14f89a732b5c11a35e8c9b91d4e22ad8"></a>kStatus_SHELL_OpenReadHandleFailed</em>&nbsp;</td><td class="fielddoc">
-<p>Open read handle failed. </p>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1ca7a428aea3974d37bf0cc4474b57ec76e"></a>kStatus_SMARTCARD_NoTransferInProgress</em>&nbsp;</td><td class="fielddoc">
+<p>No transfer in progress. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1cabc65f3fca631698cf065e4732fb5b49d"></a>kStatus_SMARTCARD_Timeout</em>&nbsp;</td><td class="fielddoc">
+<p>Transfer ends with time-out. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1ca6e5f1a14530fa1865da32bd536ed50b3"></a>kStatus_SMARTCARD_Initialized</em>&nbsp;</td><td class="fielddoc">
+<p>Smart card driver is already initialized. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1caef93b179c5e7db3b41575fa88fa06c30"></a>kStatus_SMARTCARD_PhyInitialized</em>&nbsp;</td><td class="fielddoc">
+<p>Smart card PHY drive is already initialized. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1ca911faf13c8d3a2dbe97f178c9c0ddb90"></a>kStatus_SMARTCARD_CardNotActivated</em>&nbsp;</td><td class="fielddoc">
+<p>Smart card is not activated. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1ca42f5e0e08e5edd588dafcdb166bb91a2"></a>kStatus_SMARTCARD_InvalidInput</em>&nbsp;</td><td class="fielddoc">
+<p>Function called with invalid input arguments. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga1f3b6c692395e5007ff47ce5d9304c1ca8d72e9988338127cc3affdc7bcbbef12"></a>kStatus_SMARTCARD_OtherError</em>&nbsp;</td><td class="fielddoc">
+<p>Some other error occur. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga7961e946400cd244c315cfbbd36ae5d1"></a>
+<a class="anchor" id="gac4b9128bb3719dfb0675abdb6e18daae"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_Init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00084.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>&#160;</td>
-          <td class="paramname"><em>serialHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>prompt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">enum <a class="el" href="a00087.html#gac4b9128bb3719dfb0675abdb6e18daae">smartcard_control_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function must be called before calling all other Shell functions. Call operation the Shell commands with user-defined settings. The example below shows how to set up the Shell and how to call the SHELL_Init function by passing in these parameters. This is an example. </p>
-<div class="fragment"><div class="line">*   <span class="keyword">static</span> <a class="code" href="a00087.html#gafdb2c68b2d83d459fc196ab0f58d7ab3">SHELL_HANDLE_DEFINE</a>(s_shellHandle);</div>
-<div class="line">*   <a class="code" href="a00087.html#ga7961e946400cd244c315cfbbd36ae5d1">SHELL_Init</a>((<a class="code" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>)s_shellHandle, (<a class="code" href="a00084.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a>)s_serialHandle, <span class="stringliteral">&quot;Test@SHELL&gt;&quot;</span>);</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>Pointer to point to a memory space of size <a class="el" href="a00087.html#gaa4c15d7595f7cf7ee5f837a02cbdf574" title="The handle size of the shell module. ">SHELL_HANDLE_SIZE</a> allocated by the caller. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00087.html#gafdb2c68b2d83d459fc196ab0f58d7ab3" title="Defines the shell handle. ">SHELL_HANDLE_DEFINE(shellHandle)</a>; or uint32_t shellHandle[((SHELL_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
-    <tr><td class="paramname">serialHandle</td><td>The serial manager module handle pointer. </td></tr>
-    <tr><td class="paramname">prompt</td><td>The string prompt pointer of Shell. Only the global variable can be passed. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>The shell initialization succeed. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred when the shell is initialized. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_OpenWriteHandleFailed</td><td>Open the write handle failed. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_OpenReadHandleFailed</td><td>Open the read handle failed. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
-<a class="anchor" id="gab5f85f3ba2cc7dd58bc85076c19c5177"></a>
+<a class="anchor" id="gabb9206a264b33729d7e6755db58f4ce8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_RegisterCommand </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00087.html#a00676">shell_command_t</a> *&#160;</td>
-          <td class="paramname"><em>shellCommand</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">enum <a class="el" href="a00087.html#gabb9206a264b33729d7e6755db58f4ce8">smartcard_direction_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function is used to register the shell command by using the command configuration shell_command_config_t. This is a example, </p>
-<div class="fragment"><div class="line">* <a class="code" href="a00087.html#gacd1f7ee25cd791efee6a45e753ec9824">SHELL_COMMAND_DEFINE</a>(exit, <span class="stringliteral">&quot;\r\n\&quot;exit\&quot;: Exit program\r\n&quot;</span>, SHELL_ExitCommand, 0);</div>
-<div class="line">* <a class="code" href="a00087.html#gab5f85f3ba2cc7dd58bc85076c19c5177">SHELL_RegisterCommand</a>(s_shellHandle, <a class="code" href="a00087.html#ga16dd6cfbd9db7dafdaa802eda58564b5">SHELL_COMMAND</a>(exit));</div>
-<div class="line">* </div>
-</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
-    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully register the command. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga53355638d856258b0bcb76e308803dab"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_UnregisterCommand </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#a00676">shell_command_t</a> *&#160;</td>
-          <td class="paramname"><em>shellCommand</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to unregister the shell command.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellCommand</td><td>The command element. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully unregister the command. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9f182608b5a6107757be5bb8a90ad74c"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_Write </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to send data to the shell output stream.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
-    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="gaade5449d8cbfc3cd026667b40c35d29f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int SHELL_Printf </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>formatString</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call this function to write a formatted output to the shell output stream.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
-    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga6466b141fd4f94e78636e4a15c302dda"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00087.html#ga16424f17c6492c580e65adf9a4e1ac61">shell_status_t</a> SHELL_WriteSynchronization </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>buffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>length</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function is used to send data to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
-    <tr><td class="paramname">buffer</td><td>Start address of the data to write. </td></tr>
-    <tr><td class="paramname">length</td><td>Length of the data to write. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_SHELL_Success</td><td>Successfully send data. </td></tr>
-    <tr><td class="paramname">kStatus_SHELL_Error</td><td>An error occurred. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga56c78f6217a822015a9369bf3e52e92a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int SHELL_PrintfSynchronization </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>formatString</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>...</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call this function to write a formatted output to the shell output stream with OS synchronization, note the function could not be called in ISR.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
-    <tr><td class="paramname">formatString</td><td>Format string. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns the number of characters printed or a negative value if an error occurs. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gaca4540dc42f8892cb276691644a247e2"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SHELL_ChangePrompt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>prompt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call this function to change shell prompt.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
-    <tr><td class="paramname">prompt</td><td>The string which will be used for command prompt </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="gad2a840776dee8490d482a0692fbf2d7e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SHELL_PrintPrompt </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call this function to print shell prompt.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>NULL. </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga44e3087a3cdea9b62f159e2585dfcd8d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SHELL_Task </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00087.html#ga818c3ca274bd83d1dc870a5618eb21f2">shell_handle_t</a>&#160;</td>
-          <td class="paramname"><em>shellHandle</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>The task function for Shell; The function should be polled by upper layer. This function does not return until Shell command exit was called.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shellHandle</td><td>The shell module handle pointer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga4eeb17b16773359c132f1d40478938ec"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static bool SHELL_checkRunningInIsr </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>This function is used to check if code running in ISR.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">TRUE</td><td>if code runing in ISR. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

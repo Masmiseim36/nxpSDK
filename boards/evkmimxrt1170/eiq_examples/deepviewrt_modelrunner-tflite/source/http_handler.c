@@ -93,7 +93,7 @@ parse_out_data(char* src, char* dest, char* line_end, size_t dest_sz)
     } else {
         do {
             end++;
-        } while ((*end != ' ' || *end != ';' || *end != '\'') &&
+        } while ((*end != ' ' && *end != ';' && *end != '\'') &&
                  end < line_end);
     }
 
@@ -267,10 +267,119 @@ model_handler(SOCKET             sock,
         server->json_size   = 4096;
     }
 
+    for (size_t i = 0; i < n_headers; ++i) {
+        struct phr_header* hdr = &headers[i];
+        if (strncasecmp("Accept", hdr->name, hdr->name_len) == 0 &&
+            strncasecmp("application/vnd.deepview.rtm",
+                        hdr->value,
+                        hdr->value_len) == 0) {
+            return http_response(sock,
+                                 200,
+                                 "application/vnd.deepview.rtm",
+                                 server->model_size,
+                                 server->model_upload,
+                                 0,
+                                 NULL);
+        }
+    }
+
     json = server->json_buffer;
     json =
         json_objOpen_flex(&server->json_buffer, &server->json_size, json, NULL);
     if (!json) { goto json_oom; }
+
+    json = json_arrOpen_flex(&server->json_buffer,
+                             &server->json_size,
+                             json,
+                             "inputs");
+    for (int i=0; i < server->input.inputs_size; i++){
+        json = json_objOpen_flex(&server->json_buffer,
+                                 &server->json_size,
+                                 json,
+                                 NULL);
+        json = json_str_flex(&server->json_buffer,
+                             &server->json_size,
+                             json,
+                             "name",
+                             server->input.name[i]);
+        json = json_double_flex(&server->json_buffer,
+                                &server->json_size,
+                                json,
+                                "scale",
+                                server->input.scale[i]);
+        json = json_int_flex(&server->json_buffer,
+                              &server->json_size,
+                              json,
+                              "zero_point",
+                              server->input.zero_point[i]);
+        json = json_str_flex(&server->json_buffer,
+                             &server->json_size,
+                             json,
+                             "datatype",
+                             server->input.data_type[i]);
+        json = json_arrOpen_flex(&server->json_buffer,
+                                 &server->json_size,
+                                 json,
+                                 "shape");
+        for (int dim = 0; dim < server->input.shape_size [i]; ++dim) {
+            json = json_int_flex(&server->json_buffer,
+                                 &server->json_size,
+                                 json,
+                                 NULL,
+                                 (int)server->input.shape_data[i] [dim]);
+        }
+        json =
+            json_arrClose_flex(&server->json_buffer, &server->json_size, json);
+        json = json_objClose_flex(&server->json_buffer, &server->json_size, json);
+    }
+    json = json_arrClose_flex(&server->json_buffer, &server->json_size, json);
+
+    json = json_arrOpen_flex(&server->json_buffer,
+                             &server->json_size,
+                             json,
+                             "outputs");
+    for (int i=0; i < server->output.outputs_size; i++){
+        json = json_objOpen_flex(&server->json_buffer,
+                                 &server->json_size,
+                                 json,
+                                 NULL);
+        json = json_str_flex(&server->json_buffer,
+                             &server->json_size,
+                             json,
+                             "name",
+                             server->output.name[server->output.index [i]]);
+        json = json_double_flex(&server->json_buffer,
+                                &server->json_size,
+                                json,
+                                "scale",
+                                server->output.scale[i]);
+        json = json_int_flex(&server->json_buffer,
+                              &server->json_size,
+                              json,
+                              "zero_point",
+                              server->output.zero_point[i]);
+        json = json_str_flex(&server->json_buffer,
+                             &server->json_size,
+                             json,
+                             "datatype",
+                             server->output.data_type[i]);
+        json = json_arrOpen_flex(&server->json_buffer,
+                                 &server->json_size,
+                                 json,
+                                 "shape");
+        for (int dim = 0; dim < server->output.shape_size [i]; ++dim) {
+            json = json_int_flex(&server->json_buffer,
+                                 &server->json_size,
+                                 json,
+                                 NULL,
+                                 (int)server->output.shape_data[i] [dim]);
+        }
+        json =
+            json_arrClose_flex(&server->json_buffer, &server->json_size, json);
+        json = json_objClose_flex(&server->json_buffer, &server->json_size, json);
+
+    }
+    json = json_arrClose_flex(&server->json_buffer, &server->json_size, json);
 
     json = json_int_flex(&server->json_buffer,
                          &server->json_size,
@@ -281,7 +390,7 @@ model_handler(SOCKET             sock,
                             &server->json_size,
                             json,
                             "timing",
-                            server->run_ns);
+                            server->run_ns*1e3);
     json = json_arrOpen_flex(&server->json_buffer,
                              &server->json_size,
                              json,
@@ -312,13 +421,13 @@ model_handler(SOCKET             sock,
                                 &server->json_size,
                                 json,
                                 "timing",
-                                (int64_t)(server->output.timing[i]/server->inference_count*1e6));
+                                (int64_t)(server->output.timing[i]/server->inference_count*1e3));
         json = json_objClose_flex(&server->json_buffer, &server->json_size, json);
         json = json_uint64_flex(&server->json_buffer,
                                 &server->json_size,
                                 json,
                                 "avg_timing",
-                                (int64_t)(server->output.timing[i]/server->inference_count*1e6));
+                                (int64_t)(server->output.timing[i]/server->inference_count*1e3));
         json = json_objClose_flex(&server->json_buffer, &server->json_size, json);
     }
 
@@ -363,7 +472,7 @@ v1_handler_put(SOCKET             sock,
 {
     NNServer*   server = (NNServer *)user_data;
     const char* errmsg = "";
-    int         errlen = (int) strlen(errmsg);
+    int         errlen;
 
     size_t      data_len, n1 = 0, n2 = 0;
     const char* data;
@@ -404,6 +513,7 @@ v1_handler_put(SOCKET             sock,
         }
         if (data_t_count == data_t_max){
             server->model_upload = (char*)blob;
+            server->model_size = block_size * data_t_count + data_len;
             Model_Setup(server);
             goto json_success;
         }
@@ -486,7 +596,7 @@ v1_handler(SOCKET             sock,
 {
     NNServer*   server = (NNServer *)user_data;
     const char* errmsg = "error";
-    int         errlen = (int) strlen(errmsg);
+    int         errlen;
 
     if (server->json_size < 4096) {
         void* ptr = realloc(server->json_buffer, 4096);
@@ -583,7 +693,7 @@ v1_handler_post(SOCKET             sock,
 {
     NNServer*   server = (NNServer *)user_data;
     const char* errmsg = "no model uploaded";
-    int         errlen = (int) strlen(errmsg);
+    int         errlen;
     int n_outputs = 0;
     int outputs_idx[16];
     char*       json;
@@ -636,6 +746,35 @@ v1_handler_post(SOCKET             sock,
         }
     }
 
+    char mime [50];
+    char name [30];
+    char filename [30];
+    size_t      data_len_, n1 = 0, n2 = 0;
+    const char* data             = NULL;
+
+    while ((n2 = parse_multipart_mime(content + n1,
+                                      content_length - n1,
+                                      name,
+                                      sizeof(name),
+                                      filename,
+                                      sizeof(filename),
+                                      mime,
+                                      sizeof(mime),
+                                      &data,
+                                      &data_len_))) {
+        if (strcmp("application/vnd.deepview.tensor.float32", mime) == 0) {
+            for (int i=0; i<server->input.inputs_size; i++){
+                if (strcmp (name, server->input.name [i] ) == 0){
+                    server->input.input_data [i] = (char*) malloc(data_len_);
+                    memcpy(server->input.input_data [i], data, data_len_);
+                    break;
+                }
+            }
+        }
+        n1 += n2;
+    }
+
+
     for (size_t i = 1; i < n_headers; ++i) {
         const struct phr_header* hdr = &headers[i];
         if (strncmp("Content-Type", hdr->name, hdr->name_len) == 0 &&
@@ -664,8 +803,11 @@ v1_handler_post(SOCKET             sock,
             int height = server->input_dims_data[1];
             int width = server->input_dims_data[2];
             int channels = server->input_dims_data[3];
+			if (server->image_upload_data){
+                free(server->image_upload_data);
+			}
+            server->image_upload_data = (uint8_t*) malloc(height * width * channels);
             if (h != height || w != width) {
-                server->image_upload_data = (uint8_t*) malloc(height * width * channels);
                 stbir_resize_uint8(source,
                                    w,
                                    h,
@@ -675,10 +817,10 @@ v1_handler_post(SOCKET             sock,
                                    height,
                                    0,
                                    channels);
-                stbi_image_free(source);
             } else {
-                server->image_upload_data = source;
+				memcpy((void*) server->image_upload_data, (const void*) source, height * width * channels);
             }
+            stbi_image_free(source);
 
         }
     }
@@ -705,7 +847,6 @@ v1_handler_post(SOCKET             sock,
     }
 
     Model_RunInference(server);
-    printf("run ms: %f\r\n", (float)(server->run_ns/1e6));
 
     if (strcmp(accepts, "application/vnd.deepview.tensor") == 0) {
         snprintf(runtime, sizeof(runtime), "%lld", server->run_ns);
@@ -763,7 +904,7 @@ v1_handler_post(SOCKET             sock,
                          &server->json_size,
                          json,
                          "timing",
-                         (float)(server->run_ns/1e6));
+                         (float)(server->run_ns/1e3));
     if (!json) { goto json_oom; }
 
     json = json_int_flex(&server->json_buffer,
@@ -793,6 +934,11 @@ v1_handler_post(SOCKET             sock,
                                      json,
                                      "type",
                                      server->output.type[server->output.index[outputs_idx[i]]]);
+                json = json_str_flex(&server->json_buffer,
+                                     &server->json_size,
+                                     json,
+                                     "datatype",
+                                     server->output.data_type [i]);
                 json = json_arrOpen_flex(&server->json_buffer,
                                          &server->json_size,
                                          json,

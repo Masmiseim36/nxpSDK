@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_wifi_cli component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -24,5 +24,9 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 include(middleware_wifi_MIMXRT1166_cm7)
 
+include(middleware_wifi_wifidriver_MIMXRT1166_cm7)
+
 include(middleware_lwip_apps_lwiperf_MIMXRT1166_cm7)
+
+include(utility_debug_console_MIMXRT1166_cm7)
 

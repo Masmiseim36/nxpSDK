@@ -161,7 +161,7 @@ static bool is_flexspi_clock_enabled(uint32_t instance);
  * Variables
  ******************************************************************************/
 // Secondary option of the DQS pin for Primary FLEXSPI1 Pin group
-const flexspi_pad_attribute_t k_flexspi1_A_DQS3 = { kIOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_B1_18, 6,
+const flexspi_pad_attribute_t k_flexspi1_A_DQS3 = { kIOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_B2_18, 6,
                                                     kIOMUXC_FLEXSPI1_I_DQS_FA_SELECT_INPUT, 0 };
 // Reset Pin Definitions
 const gpio_pad_data_t k_resetPins[2] = {
@@ -1060,8 +1060,8 @@ bool is_flexspi_clock_enabled(uint32_t instance)
 
 void flexspi_update_padsetting(flexspi_mem_config_t *config, uint32_t driveStrength)
 {
-#define IOMUXC_PAD_SETTING_DSE_SHIFT (3)
-#define IOMUXC_PAD_SETTING_DSE_MASK (0x07 << IOMUXC_PAD_SETTING_DSE_SHIFT)
+#define IOMUXC_PAD_SETTING_DSE_SHIFT (1)
+#define IOMUXC_PAD_SETTING_DSE_MASK (0x01 << IOMUXC_PAD_SETTING_DSE_SHIFT)
 #define IOMUXC_PAD_SETTING_DSE(x) (((x) << IOMUXC_PAD_SETTING_DSE_SHIFT) & IOMUXC_PAD_SETTING_DSE_MASK)
     if (driveStrength)
     {

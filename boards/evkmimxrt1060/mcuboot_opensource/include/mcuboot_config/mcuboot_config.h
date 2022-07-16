@@ -60,6 +60,7 @@
 #ifdef CONFIG_BOOT_HW_KEY
 #define MCUBOOT_HW_KEY
 #endif
+
 /*
  * Upgrade mode
  *
@@ -71,10 +72,19 @@
 /* Uncomment to enable the overwrite-only code path. */
 /* #define MCUBOOT_OVERWRITE_ONLY */
 
+#ifndef MCUBOOT_OVERWRITE_ONLY
+
+#define CONFIG_BOOT_SWAP_USING_MOVE
+#define MCUBOOT_SWAP_USING_MOVE 1
+
+#endif
+
 #ifdef MCUBOOT_OVERWRITE_ONLY
 /* Uncomment to only erase and overwrite those primary slot sectors needed
  * to install the new image, rather than the entire image slot. */
-#define MCUBOOT_OVERWRITE_ONLY_FAST
+
+/* #define MCUBOOT_OVERWRITE_ONLY_FAST */
+
 #endif
 
 /*
@@ -102,10 +112,6 @@
 #define MCUBOOT_VALIDATE_PRIMARY_SLOT
 #endif
 #endif
-
-#define CONFIG_BOOT_SWAP_USING_MOVE
-
-#define MCUBOOT_SWAP_USING_MOVE 1
 
 #ifdef CONFIG_UPDATEABLE_IMAGE_NUMBER
 #define MCUBOOT_IMAGE_NUMBER CONFIG_UPDATEABLE_IMAGE_NUMBER

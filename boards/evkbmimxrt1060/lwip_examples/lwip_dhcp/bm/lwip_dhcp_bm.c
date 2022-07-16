@@ -26,6 +26,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "fsl_silicon_id.h"
 #include "fsl_phy.h"
 
 #include "fsl_phyksz8081.h"
@@ -35,29 +36,50 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 /* IP address configuration. */
+#ifndef configIP_ADDR0
 #define configIP_ADDR0 192
+#endif
+#ifndef configIP_ADDR1
 #define configIP_ADDR1 168
+#endif
+#ifndef configIP_ADDR2
 #define configIP_ADDR2 0
+#endif
+#ifndef configIP_ADDR3
 #define configIP_ADDR3 102
+#endif
 
 /* Netmask configuration. */
+#ifndef configNET_MASK0
 #define configNET_MASK0 255
+#endif
+#ifndef configNET_MASK1
 #define configNET_MASK1 255
+#endif
+#ifndef configNET_MASK2
 #define configNET_MASK2 255
+#endif
+#ifndef configNET_MASK3
 #define configNET_MASK3 0
+#endif
 
 /* Gateway address configuration. */
+#ifndef configGW_ADDR0
 #define configGW_ADDR0 192
+#endif
+#ifndef configGW_ADDR1
 #define configGW_ADDR1 168
+#endif
+#ifndef configGW_ADDR2
 #define configGW_ADDR2 0
+#endif
+#ifndef configGW_ADDR3
 #define configGW_ADDR3 100
-
-/* MAC address configuration. */
-#define configMAC_ADDR                     \
-    {                                      \
-        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
-    }
+#endif
 
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
@@ -193,8 +215,10 @@ int main(void)
     struct netif netif;
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
+        .phyHandle = &phyHandle,
+#ifdef configMAC_ADDR
         .macAddress = configMAC_ADDR,
+#endif
     };
 
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
@@ -218,6 +242,11 @@ int main(void)
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     time_init();
+
+#ifndef configMAC_ADDR
+    /* Set special address for each chip. */
+    (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
 
     IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
     IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);

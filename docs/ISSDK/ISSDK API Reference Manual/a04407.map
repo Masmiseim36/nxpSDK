@@ -1,3 +1,4 @@
-<map id="boardkit/frdm&#45;kl25z/RTE_Device.h" name="boardkit/frdm&#45;kl25z/RTE_Device.h">
-<area shape="rect" id="node2" href="$a00584.html" title="The frdm_kl25z.h file defines GPIO pin mappings for FRDM&#45;KL25Z board. " alt="" coords="5,95,137,136"/>
+<map id="boardkit/lpcxpresso55s69/frdm&#45;stbc&#45;agm01/issdk_hal.h" name="boardkit/lpcxpresso55s69/frdm&#45;stbc&#45;agm01/issdk_hal.h">
+<area shape="rect" id="node5" href="$a00653.html" title="The lpc55s69.h file defines GPIO pin mappings for LPCXpresso55S69 board. " alt="" coords="427,95,512,121"/>
+<area shape="rect" id="node6" href="$a04481.html" title="frdm_stbc_agm01_shield.h" alt="" coords="537,95,714,121"/>
 </map>

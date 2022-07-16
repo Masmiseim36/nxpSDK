@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: Apache-2.0
 #
 # Nix environment for imgtool
 #
@@ -19,7 +20,7 @@ let
       python37.pkgs.cryptography
       python37.pkgs.intelhex
       python37.pkgs.setuptools
-      python37.pkgs.cbor
+      python37.pkgs.cbor2
     ]
   );
 in

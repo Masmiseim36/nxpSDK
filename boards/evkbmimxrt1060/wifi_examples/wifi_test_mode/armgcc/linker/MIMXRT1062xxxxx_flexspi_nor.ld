@@ -83,12 +83,13 @@ SECTIONS
   .text :
   {
     . = ALIGN(4);
-    *(.text)                 /* .text sections (code) */
+    *(EXCLUDE_FILE(
+        *fsl_memcpy.S.obj
+    ) .text)                 /* .text sections (code) */
     *(EXCLUDE_FILE(
         *queue.c.obj
         *tcp_out.c.obj
         *mlan_11n_rxreorder.c.obj
-        *lib_a-memcpy-stub.o
         *tcp_in.c.obj
         *inet_chksum.c.obj
         *timers.c.obj
@@ -101,6 +102,7 @@ SECTIONS
         *lib_a-memset.o
         *fsl_cache.c.obj
         *wifi.c.obj
+        *fsl_memcpy.S.obj
       ) .text*)              /* .text* sections (code) */
     *(.rodata)               /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)              /* .rodata* sections (constants, strings, etc.) */
@@ -224,7 +226,6 @@ SECTIONS
     *queue.c.obj(.text*)
     *tcp_out.c.obj(.text*)
     *mlan_11n_rxreorder.c.obj(.text*)
-    *lib_a-memcpy-stub.o(.text*)
     *tcp_in.c.obj(.text*)
     *inet_chksum.c.obj(.text*)
     *timers.c.obj(.text*)
@@ -237,6 +238,7 @@ SECTIONS
     *lib_a-memset.o(.text*)
     *fsl_cache.c.obj(.text*)
     *wifi.c.obj(.text*)
+    *fsl_memcpy.S.obj(.text)
     . = ALIGN(128);
     __ram_function_end__ = .;
   } > m_qacode

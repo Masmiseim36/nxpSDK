@@ -27,7 +27,7 @@
 #if FMSTR_USE_TSA > 0 && FMSTR_DISABLE == 0
 
 /* global variables */
-FMSTR_TSA_CDECL char FMSTR_TSA_POINTER[] = {
+const char FMSTR_TSA_POINTER[] = {
     (char)(0xe0 |
            (sizeof(void *) == 2 ?
                 0x01 :
@@ -40,7 +40,6 @@ FMSTR_TSA_CDECL char FMSTR_TSA_POINTER[] = {
 static FMSTR_SIZE fmstr_tsaBuffSize; /* Dynamic TSA buffer size */
 static FMSTR_ADDR fmstr_tsaBuffAddr; /* Dynamic TSA buffer address */
 static FMSTR_SIZE fmstr_tsaTableIndex;
-
 #endif
 
 /******************************************************************************
@@ -74,7 +73,7 @@ FMSTR_BOOL FMSTR_SetUpTsaBuff(FMSTR_ADDR buffAddr, FMSTR_SIZE buffSize)
     if (FMSTR_ADDR_VALID(buffAddr) == FMSTR_FALSE || FMSTR_ADDR_VALID(fmstr_tsaBuffAddr) == FMSTR_FALSE)
     {
         /* TSA table must be aligned on pointer size */
-        FMSTR_SIZE alignment = FMSTR_GetAlignmentCorrection(buffAddr, sizeof(void *));
+        FMSTR_SIZE alignment = FMSTR_GetAlignmentCorrection(buffAddr, sizeof(FMSTR_ADDR));
         fmstr_tsaBuffAddr    = buffAddr + alignment;
         fmstr_tsaBuffSize    = buffSize - alignment;
         return FMSTR_TRUE;
@@ -101,7 +100,7 @@ FMSTR_TSA_FUNC_PROTO(dynamic_tsa)
     {
         *tableSize = (FMSTR_SIZE)(fmstr_tsaTableIndex * sizeof(FMSTR_TSA_ENTRY));
     }
-    return (const FMSTR_TSA_ENTRY *)FMSTR_CAST_ADDR_TO_PTR(fmstr_tsaBuffAddr);
+    return fmstr_tsaBuffAddr;
 }
 #endif
 
@@ -122,38 +121,43 @@ FMSTR_BOOL FMSTR_TsaAddVar(FMSTR_TSATBL_STRPTR tsaName,
     if (((fmstr_tsaTableIndex + 1U) * sizeof(FMSTR_TSA_ENTRY)) <= fmstr_tsaBuffSize)
     {
         FMSTR_TSATBL_VOIDPTR info = FMSTR_TSA_INFO2(varSize, flags);
-        FMSTR_TSA_ENTRY *pItem;
+        FMSTR_LP_TSA_ENTRY pItem  = (FMSTR_LP_TSA_ENTRY)FMSTR_CAST_ADDR_TO_PTR(fmstr_tsaBuffAddr);
+        FMSTR_BOOL found;
         FMSTR_SIZE i;
 
         /* Check if this record is already in table */
         for (i = 0; i < fmstr_tsaTableIndex; i++)
         {
-            pItem = &((FMSTR_TSA_ENTRY *)FMSTR_CAST_ADDR_TO_PTR(fmstr_tsaBuffAddr))[i];
+            found = FMSTR_TRUE;
 
             if (FMSTR_StrCmp(pItem->name.p, tsaName) != 0)
             {
-                continue; /* name is different */
+                found = FMSTR_FALSE; /* name is different */
             }
-            if (pItem->type.p != tsaType)
+            else if (pItem->type.p != tsaType)
             {
-                continue; /* type is different */
+                found = FMSTR_FALSE; /* type is different */
             }
-            if (pItem->addr.p != varAddr)
+            else if (pItem->addr.p != varAddr)
             {
-                continue; /* address is different */
+                found = FMSTR_FALSE; /* address is different */
             }
-            if (pItem->info.p != info)
+            else if (pItem->info.p != info)
             {
-                continue; /* size or attributes are different */
+                found = FMSTR_FALSE; /* size or attributes are different */
             }
 
-            /* the same entry already exists, consider it added okay */
-            return FMSTR_TRUE;
+            if (found != FMSTR_FALSE)
+            {
+                /* the same entry already exists, consider it added okay */
+                return FMSTR_TRUE;
+            }
+
+            /* MISRA does not allow multiple increments in for(), let's do it here */
+            pItem++;
         }
 
         /* add the entry to the last-used position */
-        pItem = &((FMSTR_TSA_ENTRY *)FMSTR_CAST_ADDR_TO_PTR(fmstr_tsaBuffAddr))[i];
-
         pItem->name.p = FMSTR_TSATBL_STRPTR_CAST(tsaName);
         pItem->type.p = FMSTR_TSATBL_STRPTR_CAST(tsaType);
         pItem->addr.p = FMSTR_TSATBL_VOIDPTR_CAST(varAddr);
@@ -185,7 +189,7 @@ FMSTR_BOOL FMSTR_TsaAddVar(FMSTR_TSATBL_STRPTR tsaName,
 FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
     volatile FMSTR_BPTR response = msgBuffIO;
-    const FMSTR_TSA_ENTRY *tsaTbl;
+    FMSTR_ADDR tsaTbl;
     FMSTR_SIZE tblIndex;
     FMSTR_SIZE tblSize = 0U;
     FMSTR_U8 tblFlags;
@@ -202,13 +206,13 @@ FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 
     /* sizeof TSA table entry items */
     /*lint -e{506,774} constant value boolean */
-    if ((sizeof(void *)) == 2U)
+    if ((sizeof(FMSTR_ADDR)) == 2U)
     {
         tblFlags |= FMSTR_TSA_INFO_ADRSIZE_16;
     }
     else
     {
-        if ((sizeof(void *)) <= 4U)
+        if ((sizeof(FMSTR_ADDR)) <= 4U)
         {
             tblFlags |= FMSTR_TSA_INFO_ADRSIZE_32;
         }
@@ -229,7 +233,7 @@ FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     response = FMSTR_SizeToBuffer(response, tblSize);
 
     /* table address */
-    response = FMSTR_AddressToBuffer(response, FMSTR_CAST_PTR_TO_ADDR(tsaTbl));
+    response = FMSTR_AddressToBuffer(response, tsaTbl);
 
     /* success  */
     *retStatus = FMSTR_STS_OK | FMSTR_STSF_VARLEN;
@@ -325,7 +329,8 @@ static FMSTR_BOOL FMSTR_CheckMemSpace(FMSTR_ADDR addrUser,
 
 FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOOL writeAccess)
 {
-    const FMSTR_TSA_ENTRY *pte;
+    FMSTR_LP_TSA_ENTRY pte;
+    FMSTR_ADDR pteAddr;
     FMSTR_SIZE tableIndex;
     FMSTR_SIZE i, cnt;
     unsigned long info;
@@ -339,8 +344,10 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
     /* to be as fast as possible during normal operation,
        check variable entries in all tables first */
     tableIndex = 0U;
-    while ((pte = FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL)
+    while ((pteAddr = FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL)
     {
+        pte = (FMSTR_LP_TSA_ENTRY)FMSTR_CAST_ADDR_TO_PTR(pteAddr);
+
         /* number of items in a table */
         cnt /= (FMSTR_SIZE)sizeof(FMSTR_TSA_ENTRY);
 
@@ -402,10 +409,12 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
 
     /* allow reading of any C-constant string referenced in TSA tables */
     tableIndex = 0U;
-    while ((pte = FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL)
+    while ((pteAddr = FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL)
     {
+        pte = (FMSTR_LP_TSA_ENTRY)FMSTR_CAST_ADDR_TO_PTR(pteAddr);
+
         /* allow reading of the TSA table itself */
-        if (FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)(FMSTR_TSA_ENTRY *)pte, cnt) != FMSTR_FALSE)
+        if (FMSTR_CheckMemSpace(varAddr, varSize, pteAddr, cnt) != FMSTR_FALSE)
         {
             return FMSTR_TRUE;
         }
@@ -460,15 +469,18 @@ static FMSTR_BOOL _FMSTR_IsMemoryMapped(const char *type, unsigned long info)
 }
 
 /* Find TSA table row with user resource by resource ID */
-const FMSTR_TSA_ENTRY *FMSTR_FindUresInTsa(FMSTR_ADDR resourceId)
+FMSTR_ADDR FMSTR_FindUresInTsa(FMSTR_ADDR resourceId)
 {
-    const FMSTR_TSA_ENTRY *pte;
+    FMSTR_LP_TSA_ENTRY pte;
+    FMSTR_ADDR pteAddr;
     FMSTR_SIZE tableIndex;
     FMSTR_SIZE i, cnt;
 
     tableIndex = 0U;
-    while ((pte = FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL)
+    while ((pteAddr = FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL)
     {
+        pte = (FMSTR_LP_TSA_ENTRY)FMSTR_CAST_ADDR_TO_PTR(pteAddr);
+
         /* number of items in a table */
         cnt /= (FMSTR_SIZE)sizeof(FMSTR_TSA_ENTRY);
 
@@ -477,7 +489,7 @@ const FMSTR_TSA_ENTRY *FMSTR_FindUresInTsa(FMSTR_ADDR resourceId)
         {
             if (pte->addr.n == resourceId)
             {
-                return pte;
+                return FMSTR_CAST_PTR_TO_ADDR(pte);
             }
         }
 

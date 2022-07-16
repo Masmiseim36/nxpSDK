@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MIMXRT1052xxxxB" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_10 http://mcuxpresso.nxp.com/XSD/mex_configuration_10.xsd" uuid="bb0f0103-ec1f-43a7-b49f-f5ed3002a5d4" version="10" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MIMXRT1052xxxxB" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_11 http://mcuxpresso.nxp.com/XSD/mex_configuration_11.xsd" uuid="294ca24c-0f7a-437f-aa0c-05b46cd048f7" version="11" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_11" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1052xxxxB</processor>
       <package>MIMXRT1052DVL6B</package>
@@ -14,20 +14,17 @@
       <validate_boot_init_only>true</validate_boot_init_only>
       <generate_extended_information>false</generate_extended_information>
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
-      <custom_copyright>
-         <text></text>
-         <enabled>false</enabled>
-      </custom_copyright>
       <update_include_paths>true</update_include_paths>
+      <generate_registers_defines>false</generate_registers_defines>
    </preferences>
    <tools>
-      <pins name="Pins" version="9.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="12.0" enabled="true" update_project_code="true">
          <generated_project_files>
             <file path="board/pin_mux.c" update_enabled="true"/>
             <file path="board/pin_mux.h" update_enabled="true"/>
          </generated_project_files>
          <pins_profile>
-            <processor_version>0.10.4</processor_version>
+            <processor_version>0.12.4</processor_version>
             <power_domains/>
          </pins_profile>
          <functions_list>
@@ -247,16 +244,16 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="8.0" enabled="true" update_project_code="true">
+      <clocks name="Clocks" version="10.0" enabled="true" update_project_code="true">
          <generated_project_files>
             <file path="board/clock_config.c" update_enabled="true"/>
             <file path="board/clock_config.h" update_enabled="true"/>
          </generated_project_files>
          <clocks_profile>
-            <processor_version>0.10.4</processor_version>
+            <processor_version>0.12.4</processor_version>
          </clocks_profile>
          <clock_configurations>
-            <clock_configuration name="BOARD_BootClockRUN">
+            <clock_configuration name="BOARD_BootClockRUN" id_prefix="" prefix_user_defined="false">
                <description></description>
                <options/>
                <dependencies>
@@ -300,6 +297,11 @@
                         <data>OUTPUT</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_refclk" description="&apos;ENET_REF_CLK&apos; (Pins tool id: ENET.enet_refclk, Clocks tool id: IOMUXC_GPR.ENET_REF_CLK_EXT_PIN) needs to be routed" problem_level="1" source="Clocks:BOARD_BootClockRUN">
+                     <feature name="routed" evaluation="">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
                   <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Clocks initialization requires the COMMON Driver in the project." problem_level="2" source="Clocks:BOARD_BootClockRUN">
                      <feature name="enabled" evaluation="equal" configuration="core0">
                         <data>true</data>
@@ -312,6 +314,7 @@
                   </dependency>
                </dependencies>
                <clock_sources>
+                  <clock_source id="IOMUXC_GPR.ENET_REF_CLK_EXT.outFreq" value="50 MHz" locked="false" enabled="true"/>
                   <clock_source id="XTALOSC24M.RTC_OSC.outFreq" value="32.768 kHz" locked="false" enabled="true"/>
                </clock_sources>
                <clock_outputs>
@@ -323,10 +326,10 @@
                   <clock_output id="CSI_CLK_ROOT.outFreq" value="12 MHz" locked="false" accuracy=""/>
                   <clock_output id="ENET_125M_CLK.outFreq" value="2.4 MHz" locked="false" accuracy=""/>
                   <clock_output id="ENET_25M_REF_CLK.outFreq" value="1.2 MHz" locked="false" accuracy=""/>
-                  <clock_output id="ENET_REF_CLK.outFreq" value="2.4 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ENET_REF_CLK.outFreq" value="50 MHz" locked="false" accuracy=""/>
                   <clock_output id="FLEXIO1_CLK_ROOT.outFreq" value="30 MHz" locked="false" accuracy=""/>
                   <clock_output id="FLEXIO2_CLK_ROOT.outFreq" value="30 MHz" locked="false" accuracy=""/>
-                  <clock_output id="FLEXSPI_CLK_ROOT.outFreq" value="960/11 MHz" locked="false" accuracy=""/>
+                  <clock_output id="FLEXSPI_CLK_ROOT.outFreq" value="160 MHz" locked="false" accuracy=""/>
                   <clock_output id="GPT1_ipg_clk_highfreq.outFreq" value="75 MHz" locked="false" accuracy=""/>
                   <clock_output id="GPT2_ipg_clk_highfreq.outFreq" value="75 MHz" locked="false" accuracy=""/>
                   <clock_output id="IPG_CLK_ROOT.outFreq" value="150 MHz" locked="false" accuracy=""/>
@@ -358,12 +361,11 @@
                   <setting id="CCM.AHB_PODF.scale" value="1" locked="true"/>
                   <setting id="CCM.ARM_PODF.scale" value="2" locked="true"/>
                   <setting id="CCM.FLEXSPI_PODF.scale" value="3" locked="true"/>
-                  <setting id="CCM.FLEXSPI_SEL.sel" value="CCM_ANALOG.PLL3_PFD0_CLK" locked="false"/>
+                  <setting id="CCM.FLEXSPI_SEL.sel" value="CCM.PLL3_SW_CLK_SEL" locked="false"/>
                   <setting id="CCM.LPSPI_PODF.scale" value="5" locked="true"/>
                   <setting id="CCM.PERCLK_PODF.scale" value="2" locked="true"/>
                   <setting id="CCM.SEMC_PODF.scale" value="8" locked="false"/>
                   <setting id="CCM.TRACE_CLK_SEL.sel" value="CCM_ANALOG.PLL2_MAIN_CLK" locked="false"/>
-                  <setting id="CCM.TRACE_PODF.scale" value="4" locked="true"/>
                   <setting id="CCM_ANALOG.PLL1_BYPASS.sel" value="CCM_ANALOG.PLL1" locked="false"/>
                   <setting id="CCM_ANALOG.PLL1_PREDIV.scale" value="1" locked="true"/>
                   <setting id="CCM_ANALOG.PLL1_VDIV.scale" value="50" locked="true"/>
@@ -384,7 +386,7 @@
                   <setting id="CCM_ANALOG.PLL4.denom" value="50" locked="false"/>
                   <setting id="CCM_ANALOG.PLL4.div" value="47" locked="false"/>
                   <setting id="CCM_ANALOG.PLL5.denom" value="1" locked="false"/>
-                  <setting id="CCM_ANALOG.PLL5.div" value="31" locked="true"/>
+                  <setting id="CCM_ANALOG.PLL5.div" value="40" locked="false"/>
                   <setting id="CCM_ANALOG.PLL5.num" value="0" locked="false"/>
                   <setting id="CCM_ANALOG.PLL5_BYPASS.sel" value="CCM_ANALOG.PLL5_POST_DIV" locked="false"/>
                   <setting id="CCM_ANALOG.PLL5_POST_DIV.scale" value="2" locked="false"/>
@@ -392,7 +394,6 @@
                   <setting id="CCM_ANALOG_PLL_ENET_POWERDOWN_CFG" value="Yes" locked="false"/>
                   <setting id="CCM_ANALOG_PLL_USB1_POWER_CFG" value="Yes" locked="false"/>
                   <setting id="CCM_ANALOG_PLL_VIDEO_POWERDOWN_CFG" value="No" locked="false"/>
-                  <setting id="IOMUXC_GPR.ENET_REF_CLK_SEL.sel" value="CCM_ANALOG.ENET_125M_CLK" locked="false"/>
                </clock_settings>
                <called_from_default_init>true</called_from_default_init>
             </clock_configuration>
@@ -404,7 +405,7 @@
             <file path="board/dcd.h" update_enabled="true"/>
          </generated_project_files>
          <dcdx_profile>
-            <processor_version>0.10.4</processor_version>
+            <processor_version>0.12.4</processor_version>
             <output_format>c_array</output_format>
          </dcdx_profile>
          <dcdx_configurations>
@@ -422,88 +423,88 @@
                         <command type="write_value" address="CCM_CCGR5" value="0xFFFFFFFF" value_width="4"/>
                         <command type="write_value" address="CCM_CCGR6" value="0xFFFFFFFF" value_width="4"/>
                         <command type="write_value" address="CCM_ANALOG_PLL_SYS" value="0x2001" value_width="4"/>
-                        <command type="write_value" address="CCM_ANALOG_PFD_528" value="0x1D0000" value_width="4"/>
+                        <command type="write_value" address="CCM_ANALOG_PFD_528" value="0x101D101B" value_width="4"/>
                         <command type="write_value" address="CCM_CBCDR" value="0x10D40" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x00" value_width="4"/>
-                        <command type="write_value" value="0x10" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
-                        <command type="write_value" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_00" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_01" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_02" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_03" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_04" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_05" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_06" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_07" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_08" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_09" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_10" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_11" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_12" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_13" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_14" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_15" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_16" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_17" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_18" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_19" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_20" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_21" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_22" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_23" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_24" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_25" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_26" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_27" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_28" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_29" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_30" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_31" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_32" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_33" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_34" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_35" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_36" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_37" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_38" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_39" value="0x10" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_00" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_01" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_02" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_03" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_04" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_05" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_06" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_07" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_08" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_09" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_10" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_11" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_12" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_13" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_14" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_15" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_16" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_17" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_18" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_19" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_20" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_21" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_22" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_23" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_24" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_25" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_26" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_27" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_28" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_29" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_30" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_31" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_32" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_33" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_34" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_35" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_36" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_37" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_38" value="0x110F9" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_39" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="SEMC_MCR" value="0x10000004" value_width="4"/>
                         <command type="write_value" address="SEMC_BMCR0" value="0x81" value_width="4"/>
                         <command type="write_value" address="SEMC_BMCR1" value="0x81" value_width="4"/>
@@ -545,8 +546,18 @@
             </dcdx_configuration>
          </dcdx_configurations>
       </dcdx>
-      <periphs name="Peripherals" version="10.0" enabled="true" update_project_code="true">
+      <periphs name="Peripherals" version="11.0" enabled="true" update_project_code="true">
          <dependencies>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.lpuart" description="LPUART Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.drivers.lpuart" description="Unsupported version of the LPUART Driver in the toolchain/IDE project. Required: ${required_value}, actual: ${actual_value}. Project might not compile correctly." problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">2.5.1</data>
+               </feature>
+            </dependency>
             <dependency resourceType="SWComponent" resourceId="middleware.lwip" description="lwIP not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data type="Boolean">true</data>
@@ -564,120 +575,175 @@
             <file path="source/lwipopts.h" update_enabled="true"/>
          </generated_project_files>
          <peripherals_profile>
-            <processor_version>0.10.4</processor_version>
+            <processor_version>0.12.4</processor_version>
          </peripherals_profile>
          <functional_groups>
             <functional_group name="BOARD_InitPeripherals" uuid="37390496-d439-42d0-8a5a-5744d0849f92" called_from_default_init="true" id_prefix="" core="core0">
                <description></description>
                <options/>
-               <dependencies/>
-               <instances/>
+               <dependencies>
+                  <dependency resourceType="ClockOutput" resourceId="UART_CLK_ROOT" description="UART_CLK_ROOT is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="frequency" evaluation="greaterThan">
+                        <data type="Frequency" unit="Hz">0</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPUART1.uart_tx" description="Signal TX is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPUART1.uart_rx" description="Signal RX is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+               </dependencies>
+               <instances>
+                  <instance name="LPUART1" uuid="aed5049b-ef92-4b0e-a5ec-6e382b8e3812" type="lpuart" type_id="lpuart_bf01db7d964092f3cf860852cba17f7e" mode="polling" peripheral="LPUART1" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="lpuartConfig_t" quick_selection="QuickSelection1">
+                        <struct name="lpuartConfig">
+                           <setting name="clockSource" value="LpuartClock"/>
+                           <setting name="lpuartSrcClkFreq" value="BOARD_BootClockRUN"/>
+                           <setting name="baudRate_Bps" value="115200"/>
+                           <setting name="parityMode" value="kLPUART_ParityDisabled"/>
+                           <setting name="dataBitsCount" value="kLPUART_EightDataBits"/>
+                           <setting name="isMsb" value="false"/>
+                           <setting name="stopBitCount" value="kLPUART_OneStopBit"/>
+                           <setting name="enableMatchAddress1" value="false"/>
+                           <setting name="matchAddress1" value="0"/>
+                           <setting name="enableMatchAddress2" value="false"/>
+                           <setting name="matchAddress2" value="0"/>
+                           <setting name="txFifoWatermark" value="0"/>
+                           <setting name="rxFifoWatermark" value="1"/>
+                           <setting name="enableRxRTS" value="false"/>
+                           <setting name="enableTxCTS" value="false"/>
+                           <setting name="txCtsSource" value="kLPUART_CtsSourcePin"/>
+                           <setting name="txCtsConfig" value="kLPUART_CtsSampleAtStart"/>
+                           <setting name="rxIdleType" value="kLPUART_IdleTypeStartBit"/>
+                           <setting name="rxIdleConfig" value="kLPUART_IdleCharacter1"/>
+                           <setting name="enableTx" value="true"/>
+                           <setting name="enableRx" value="true"/>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="NVIC" uuid="6c5b616f-e461-4676-8896-7e014495eaa0" type="nvic" type_id="nvic_57b5eef3774cc60acaede6f5b8bddc67" mode="general" peripheral="NVIC" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="nvic">
+                        <array name="interrupt_table"/>
+                        <array name="interrupts"/>
+                     </config_set>
+                  </instance>
+               </instances>
             </functional_group>
             <functional_group name="BOARD_InitLwip" uuid="d13c8045-82b3-4342-a3e8-c68bbe97a01d" called_from_default_init="false" id_prefix="" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="SWComponent" resourceId="middleware.freertos-kernel" description="The freertos-kernel driver is missing in the project (required for LWIP FreeRTOS mode)." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="SWComponent" resourceId="middleware.freertos-kernel" description="The freertos-kernel driver is missing in the project  (required for LWIP FreeRTOS mode)." problem_level="2" source="Peripherals:BOARD_InitLwip">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="middleware.lwip.enet_ethernetif" description="The enet ethernetif driver is missing in the project (required for lwIP)." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="SWComponent" resourceId="middleware.lwip.enet_ethernetif" description="The enet ethernetif driver is missing in the project  (required for lwIP)." problem_level="2" source="Peripherals:BOARD_InitLwip">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="driver.phy-common" description="The fsl_phy.h driver is missing in the project (required for lwIP)." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="SWComponent" resourceId="components.silicon_id" description="The fsl_silicon_id.h driver is missing in the project  (required for lwIP)." problem_level="2" source="Peripherals:BOARD_InitLwip">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="driver.phy-device-ksz8081" description="The fsl_phyksz8081.h driver is missing in the project (required for lwIP)." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="SWComponent" resourceId="driver.phy-common" description="The fsl_phy.h driver is missing in the project  (required for lwIP)." problem_level="2" source="Peripherals:BOARD_InitLwip">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.enet" description="The fsl_enet.h driver is missing in the project (required for lwIP)." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="SWComponent" resourceId="driver.phy-device-ksz8081" description="The fsl_phyksz8081.h driver is missing in the project  (required for lwIP)." problem_level="2" source="Peripherals:BOARD_InitLwip">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="driver.mdio-common" description="The fsl_mdio.h driver is missing in the project (required for lwIP)." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.enet" description="The fsl_enet.h driver is missing in the project  (required for lwIP)." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="driver.mdio-enet" description="The fsl_enet_mdio.h driver is missing in the project (required for lwIP)." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="SWComponent" resourceId="driver.mdio-common" description="The fsl_mdio.h driver is missing in the project  (required for lwIP)." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_mdc" description="Signal MDC of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="SWComponent" resourceId="driver.mdio-enet" description="The fsl_enet_mdio.h driver is missing in the project  (required for lwIP)." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                     <feature name="enabled" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_mdc" description="Signal MDC is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_mdio" description="Signal MDIO of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_mdio" description="Signal MDIO is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_refclk" description="Signal REF_CLK of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_refclk" description="Signal REF_CLK is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxdv" description="Signal CSR_DV of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxdv" description="Signal CSR_DV is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxer" description="Signal RX_ER of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxer" description="Signal RX_ER is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxd0" description="Signal RXD 0 of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxd0" description="Signal RXD 0 is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxd.0" description="Signal RXD 0 of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxd.0" description="Signal RXD 0 is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxd1" description="Signal RXD 1 of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxd1" description="Signal RXD 1 is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxd.1" description="Signal RXD 1 of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_rxd.1" description="Signal RXD 1 is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txen" description="Signal TX_EN of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txen" description="Signal TX_EN is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txd0" description="Signal TXD 0 of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txd0" description="Signal TXD 0 is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txd.0" description="Signal TXD 0 of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txd.0" description="Signal TXD 0 is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txd1" description="Signal TXD 1 of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txd1" description="Signal TXD 1 is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txd.1" description="Signal TXD 1 of the peripheral ENET is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="ENET.enet_txd.1" description="Signal TXD 1 is not routed." problem_level="1" source="Peripherals:BOARD_InitLwip">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
@@ -687,14 +753,19 @@
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="ClockOutput" resourceId="ENET_REF_CLK" description="ENET_REF_CLK - BOARD_BootClockRUN: 2.4 MHz is inactive." problem_level="2" source="Peripherals:BOARD_InitLwip">
+                  <dependency resourceType="ClockOutput" resourceId="ENET_REF_CLK" description="ENET_REF_CLK - BOARD_BootClockRUN: 50 MHz is inactive." problem_level="2" source="Peripherals:BOARD_InitLwip">
                      <feature name="frequency" evaluation="greaterThan">
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
                </dependencies>
                <instances>
-                  <instance name="lwIP" uuid="60e30764-cac8-4921-9d9d-52b90774a696" type="lwip" type_id="lwip_6392ecbde07cacbf3d4363fea53cea19" mode="general" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                  <instance name="MPU" uuid="022e1c0e-69fe-476c-b51f-da3ce29e2492" type="mpu_utility" type_id="mpu_utility_bc3ea1f6add76edb6050f698d423d163" mode="MPU" peripheral="MPU" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="mpu_init">
+                        <setting name="mpuInit" value="custom_init"/>
+                     </config_set>
+                  </instance>
+                  <instance name="lwIP" uuid="a9ddd0f1-b548-411a-b481-3c755b9744c7" type="lwip" type_id="lwip_e916e23135ce42147b8e9c16b7728f8a" mode="general" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
                      <config_set name="lwip_config">
                         <setting name="mode" value="freertos"/>
                         <setting name="LWIP_NETIF_API" value="true"/>
@@ -724,6 +795,10 @@
                         <setting name="LWIP_IGMP" value="false"/>
                         <setting name="LWIP_DHCP" value="true"/>
                         <setting name="LWIP_DHCP_DOES_ACD_CHECK" value="true"/>
+                        <setting name="LWIP_IPV6" value="false"/>
+                        <setting name="LWIP_IPV6_NUM_ADDRESSES" value="3"/>
+                        <setting name="LWIP_IPV6_AUTOCONFIG" value="true"/>
+                        <setting name="LWIP_IPV6_DHCP6" value="false"/>
                         <setting name="LWIP_RAW" value="false"/>
                         <setting name="RAW_TTL" value="IP_DEFAULT_TTL"/>
                         <setting name="LWIP_TCP" value="true"/>
@@ -749,16 +824,19 @@
                         <setting name="DEFAULT_UDP_RECVMBOX_SIZE" value="12"/>
                         <setting name="DEFAULT_TCP_RECVMBOX_SIZE" value="12"/>
                         <setting name="DEFAULT_ACCEPTMBOX_SIZE" value="12"/>
-                        <setting name="custom_opts" value="#define LWIP_DNS 1"/>
+                        <setting name="custom_opts" value="#define LWIP_DNS                       1\n#define LWIP_NETIF_EXT_STATUS_CALLBACK 1"/>
                         <setting name="modules_include" value="#include &quot;board.h&quot;"/>
+                        <struct name="mpu_init">
+                           <setting name="mpu_init_component" value="MPU"/>
+                        </struct>
                         <setting name="user_preinit" value="false"/>
                         <struct name="user_init">
                            <setting name="initFunctionID" value="lwIP_interface_init"/>
                         </struct>
                         <setting name="lwip_init" value="true"/>
-                        <setting name="enableCallback" value="false"/>
+                        <setting name="enableCallback" value="true"/>
                         <struct name="initFnCallback">
-                           <setting name="callbackFunction" value="InitFn"/>
+                           <setting name="callbackFunction" value="tcpip_init_callback"/>
                            <setting name="arg_ptr" value=""/>
                         </struct>
                         <array name="ifConfig">
@@ -785,6 +863,7 @@
                               <setting name="netif_function_name" value="defaultFn"/>
                               <setting name="netif_input_function_name" value="defaultInputFn"/>
                               <struct name="mac_address">
+                                 <setting name="useSiliconId" value="true"/>
                                  <setting name="addr" value="02-12-13-10-15-25"/>
                               </struct>
                               <struct name="phyConfig">
@@ -815,31 +894,43 @@
                         <struct name="lwip_codegenerator"/>
                      </config_set>
                   </instance>
+                  <instance name="NVIC_2" uuid="a9699b91-a74a-4490-ba0c-5d4797d32732" type="nvic" type_id="nvic_57b5eef3774cc60acaede6f5b8bddc67" mode="general" peripheral="NVIC" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="nvic">
+                        <array name="interrupt_table"/>
+                        <array name="interrupts"/>
+                     </config_set>
+                  </instance>
                </instances>
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" uuid="5419ee94-4ba5-4d70-8e70-9672d7f3111f" type_id="system_54b53072540eeeb8f8e9343e71f28176">
+            <component name="system" uuid="06e86992-051b-4a0b-9e9c-49a3b172e4ca" type_id="system_54b53072540eeeb8f8e9343e71f28176">
                <config_set_global name="global_system_definitions">
                   <setting name="user_definitions" value=""/>
                   <setting name="user_includes" value=""/>
                </config_set_global>
             </component>
-            <component name="msg" uuid="f883b775-ae39-4268-8803-eaa73a5151d2" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+            <component name="uart_cmsis_common" uuid="79ec22fd-6866-4d43-8c05-4265ea8e1347" type_id="uart_cmsis_common_9cb8e302497aa696fdbb5a4fd622c2a8">
+               <config_set_global name="global_USART_CMSIS_common" quick_selection="default"/>
+            </component>
+            <component name="gpio_adapter_common" uuid="30279e8e-6434-4db6-8aa8-45cfd1f25a0d" type_id="gpio_adapter_common_57579b9ac814fe26bf95df0a384c36b6">
+               <config_set_global name="global_gpio_adapter_common" quick_selection="default"/>
+            </component>
+            <component name="msg" uuid="1098ab3e-fc04-4169-abeb-a2da9ffd3f6f" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
             </component>
-            <component name="generic_uart" uuid="29ca1345-0e25-4fac-ac4d-15f563630bfb" type_id="generic_uart_8cae00565451cf2346eb1b8c624e73a6">
+            <component name="generic_uart" uuid="75d6c5ab-d9c9-42c6-8d8c-c9a5a65117b8" type_id="generic_uart_8cae00565451cf2346eb1b8c624e73a6">
                <config_set_global name="global_uart"/>
             </component>
-            <component name="generic_enet" uuid="00864d28-b4a8-4fe7-b888-e98555368444" type_id="generic_enet">
+            <component name="generic_enet" uuid="10da5da3-486d-4d52-bfdb-f82f24dfa564" type_id="generic_enet_74db5c914f0ddbe47d86af40cb77a619">
                <config_set_global name="global_enet"/>
             </component>
-            <component name="generic_can" uuid="098c3635-ce74-4e2d-9295-fd673886e9cf" type_id="generic_can_1bfdd78b1af214566c1f23cf6a582d80">
+            <component name="generic_can" uuid="a0722f0e-c36c-4c61-ad26-19ab779f327d" type_id="generic_can_1bfdd78b1af214566c1f23cf6a582d80">
                <config_set_global name="global_can"/>
             </component>
          </components>
       </periphs>
-      <tee name="TEE" version="3.0" enabled="false" update_project_code="true">
+      <tee name="TEE" version="4.0" enabled="false" update_project_code="true">
          <generated_project_files/>
          <tee_profile>
             <processor_version>N/A</processor_version>

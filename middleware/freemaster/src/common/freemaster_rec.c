@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -89,8 +89,11 @@ typedef volatile union
 
 } FMSTR_REC_FLAGS;
 
+/* pointer to FMSTR_REC_VAR_DATA (potentially far on some platforms) */
+FMSTR_TYPEDEF_LPTR(struct FMSTR_REC_VAR_DATA_S, FMSTR_LP_REC_VAR_DATA);
+
 /* compare functions prototype */
-typedef FMSTR_BOOL (*FMSTR_PCOMPAREFUNC)(struct FMSTR_REC_VAR_DATA_S *varData);
+typedef FMSTR_BOOL (*FMSTR_PCOMPAREFUNC)(FMSTR_LP_REC_VAR_DATA varData);
 
 /* Recorder internal description of one variable */
 typedef struct FMSTR_REC_VAR_DATA_S
@@ -104,7 +107,7 @@ typedef struct FMSTR_REC_VAR_DATA_S
 /* runtime variables  */
 typedef struct
 {
-    FMSTR_REC_VAR_DATA *varDescr; /* table with recorder variables description. */
+	FMSTR_LP_REC_VAR_DATA varDescr; /* table with recorder variables description. */
     FMSTR_ADDR buffAddr;          /* Address of buffer for recorded variables. */
     FMSTR_SIZE buffSize;          /* Size of buffer for recorded variables. */
     FMSTR_SIZE totalSmplsCnt;     /* recorder total samples count */
@@ -118,6 +121,9 @@ typedef struct
     FMSTR_REC_FLAGS flags;        /* recorder flags */
     FMSTR_REC_CFG config;         /* original recorder configuration */
 } FMSTR_REC;
+
+/* pointer to FMSTR_REC (potentially far on some platforms) */
+FMSTR_TYPEDEF_LPTR(FMSTR_REC, FMSTR_LP_REC);
 
 /* Map of FreeMASTER recorder instance in memory */
 /*********************************************/
@@ -148,40 +154,44 @@ typedef struct
  ********************************************************/
 
 static FMSTR_REC_BUFF *_FMSTR_GetRecorderBufferByRecIx(FMSTR_INDEX recIndex);
-static FMSTR_REC *_FMSTR_GetRecorderByRecIx(FMSTR_INDEX recIndex);
+static FMSTR_LP_REC _FMSTR_GetRecorderByRecIx(FMSTR_INDEX recIndex);
 
-static FMSTR_U8 _FMSTR_CheckConfiguration(FMSTR_REC *recorder);
-static FMSTR_U8 _FMSTR_RecMemCfg(FMSTR_REC *recorder, FMSTR_INDEX recIndex, FMSTR_REC_CFG *recCfg);
-static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_REC *recorder, FMSTR_INDEX recVarIx, FMSTR_REC_VAR *recVarCfg);
+static FMSTR_U8 _FMSTR_CheckConfiguration(FMSTR_LP_REC recorder);
+static FMSTR_U8 _FMSTR_RecMemCfg(FMSTR_LP_REC recorder, FMSTR_INDEX recIndex, FMSTR_REC_CFG *recCfg);
+static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_LP_REC recorder, FMSTR_INDEX recVarIx, FMSTR_REC_VAR *recVarCfg);
 
-static FMSTR_U8 _FMSTR_StartRec(FMSTR_REC *recorder);
-static FMSTR_U8 _FMSTR_TriggerRec(FMSTR_REC *recorder);
-static FMSTR_U8 _FMSTR_AbortRec(FMSTR_REC *recorder);
+static FMSTR_U8 _FMSTR_StartRec(FMSTR_LP_REC recorder);
+static FMSTR_U8 _FMSTR_TriggerRec(FMSTR_LP_REC recorder);
+static FMSTR_U8 _FMSTR_AbortRec(FMSTR_LP_REC recorder);
 
-static FMSTR_BPTR _FMSTR_SetRecCmd_CFGMEM(
-    FMSTR_BPTR msgBuffIO, FMSTR_SIZE opLen, FMSTR_REC *recorder, FMSTR_INDEX recIndex, FMSTR_U8 *retStatus);
+static FMSTR_BPTR _FMSTR_SetRecCmd_CFGMEM(FMSTR_BPTR msgBuffIO,
+		                                  FMSTR_SIZE opLen,
+		                                  FMSTR_LP_REC recorder,
+		                                  FMSTR_INDEX recIndex,
+		                                  FMSTR_U8 *retStatus);
+
 static FMSTR_BPTR _FMSTR_SetRecCmd_CFGVAR(FMSTR_BPTR msgBuffIO,
                                           FMSTR_SIZE opLen,
-                                          FMSTR_REC *recorder,
+                                          FMSTR_LP_REC recorder,
                                           FMSTR_U8 *retStatus);
 
 static FMSTR_BOOL _FMSTR_RecIsValidVarSize(FMSTR_SIZE size);
 static FMSTR_U8 _FMSTR_CalcRecStatus(FMSTR_REC_FLAGS recFlags);
 
-static FMSTR_BOOL _FMSTR_Compare8S(FMSTR_REC_VAR_DATA *varData);
-static FMSTR_BOOL _FMSTR_Compare8U(FMSTR_REC_VAR_DATA *varData);
-static FMSTR_BOOL _FMSTR_Compare16S(FMSTR_REC_VAR_DATA *varData);
-static FMSTR_BOOL _FMSTR_Compare16U(FMSTR_REC_VAR_DATA *varData);
-static FMSTR_BOOL _FMSTR_Compare32S(FMSTR_REC_VAR_DATA *varData);
-static FMSTR_BOOL _FMSTR_Compare32U(FMSTR_REC_VAR_DATA *varData);
-static FMSTR_BOOL _FMSTR_Compare64S(FMSTR_REC_VAR_DATA *varData);
-static FMSTR_BOOL _FMSTR_Compare64U(FMSTR_REC_VAR_DATA *varData);
+static FMSTR_BOOL _FMSTR_Compare8S(FMSTR_LP_REC_VAR_DATA varData);
+static FMSTR_BOOL _FMSTR_Compare8U(FMSTR_LP_REC_VAR_DATA varData);
+static FMSTR_BOOL _FMSTR_Compare16S(FMSTR_LP_REC_VAR_DATA varData);
+static FMSTR_BOOL _FMSTR_Compare16U(FMSTR_LP_REC_VAR_DATA varData);
+static FMSTR_BOOL _FMSTR_Compare32S(FMSTR_LP_REC_VAR_DATA varData);
+static FMSTR_BOOL _FMSTR_Compare32U(FMSTR_LP_REC_VAR_DATA varData);
+static FMSTR_BOOL _FMSTR_Compare64S(FMSTR_LP_REC_VAR_DATA varData);
+static FMSTR_BOOL _FMSTR_Compare64U(FMSTR_LP_REC_VAR_DATA varData);
 #if FMSTR_REC_FLOAT_TRIG > 0
-static FMSTR_BOOL _FMSTR_CompareFloat(FMSTR_REC_VAR_DATA *varData);
-static FMSTR_BOOL _FMSTR_CompareDouble(FMSTR_REC_VAR_DATA *varData);
+static FMSTR_BOOL _FMSTR_CompareFloat(FMSTR_LP_REC_VAR_DATA varData);
+static FMSTR_BOOL _FMSTR_CompareDouble(FMSTR_LP_REC_VAR_DATA varData);
 #endif
 
-static void _FMSTR_Recorder2(FMSTR_REC *recorder);
+static void _FMSTR_Recorder2(FMSTR_LP_REC recorder);
 
 /********************************************************
  *  static variables
@@ -214,7 +224,7 @@ FMSTR_BOOL FMSTR_InitRec(void)
 
 #if FMSTR_REC_BUFF_SIZE > 0
     /* When FMSTR_REC_BUFF_SIZE is defined, create the default buffer */
-    recBuffCfg.addr          = (FMSTR_ADDR)fmstr_pOwnRecBuffer;
+    recBuffCfg.addr          = FMSTR_CAST_PTR_TO_ADDR(fmstr_pOwnRecBuffer);
     recBuffCfg.size          = FMSTR_REC_BUFF_SIZE;
     recBuffCfg.name          = "Default Recorder";
     recBuffCfg.basePeriod_ns = FMSTR_REC_TIMEBASE;
@@ -325,7 +335,7 @@ FMSTR_BOOL FMSTR_RecorderSetTimeBase(FMSTR_INDEX recIndex, FMSTR_U32 timeBase_ns
 
 FMSTR_BOOL FMSTR_RecorderConfigure(FMSTR_INDEX recIndex, FMSTR_REC_CFG *recCfg)
 {
-    FMSTR_REC *recorder;
+    FMSTR_LP_REC recorder;
 
     FMSTR_ASSERT_RETURN(recIndex < (FMSTR_INDEX)FMSTR_USE_RECORDER, FMSTR_FALSE);
     FMSTR_ASSERT_RETURN(recCfg != NULL, FMSTR_FALSE);
@@ -349,7 +359,7 @@ FMSTR_BOOL FMSTR_RecorderConfigure(FMSTR_INDEX recIndex, FMSTR_REC_CFG *recCfg)
  *
  ******************************************************************************/
 
-static FMSTR_U8 _FMSTR_RecMemCfg(FMSTR_REC *recorder, FMSTR_INDEX recIndex, FMSTR_REC_CFG *recCfg)
+static FMSTR_U8 _FMSTR_RecMemCfg(FMSTR_LP_REC recorder, FMSTR_INDEX recIndex, FMSTR_REC_CFG *recCfg)
 {
     FMSTR_REC_BUFF *recBuff = _FMSTR_GetRecorderBufferByRecIx(recIndex);
     FMSTR_ADDR dynAddr;
@@ -372,13 +382,13 @@ static FMSTR_U8 _FMSTR_RecMemCfg(FMSTR_REC *recorder, FMSTR_INDEX recIndex, FMST
     recorder->config = *recCfg;
 
     /* Initialize the variable configuration array (the array follows the recorder structure) */
-    dynAddr = (FMSTR_ADDR)(recorder + 1);
+    dynAddr = FMSTR_CAST_PTR_TO_ADDR(recorder + 1);
     dynAddr += FMSTR_GetAlignmentCorrection(dynAddr, FMSTR_REC_STRUCT_ALIGN);
-    recorder->varDescr = (FMSTR_REC_VAR_DATA *)dynAddr;
+    recorder->varDescr = (FMSTR_LP_REC_VAR_DATA)FMSTR_CAST_ADDR_TO_PTR(dynAddr);
     FMSTR_MemSet(recorder->varDescr, 0, sizeof(FMSTR_REC_VAR_DATA) * (FMSTR_SIZE)recCfg->varCount);
 
     /* Data sampling area follows the variable array */
-    dynAddr = (FMSTR_ADDR)(recorder->varDescr + recCfg->varCount);
+    dynAddr = FMSTR_CAST_PTR_TO_ADDR(recorder->varDescr + recCfg->varCount);
     dynAddr += FMSTR_GetAlignmentCorrection(dynAddr, FMSTR_REC_STRUCT_ALIGN);
     recorder->buffAddr = dynAddr;
 
@@ -404,7 +414,7 @@ static FMSTR_U8 _FMSTR_RecMemCfg(FMSTR_REC *recorder, FMSTR_INDEX recIndex, FMST
  ******************************************************************************/
 
 static FMSTR_BPTR _FMSTR_SetRecCmd_CFGMEM(
-    FMSTR_BPTR msgBuffIO, FMSTR_SIZE opLen, FMSTR_REC *recorder, FMSTR_INDEX recIndex, FMSTR_U8 *retStatus)
+    FMSTR_BPTR msgBuffIO, FMSTR_SIZE opLen, FMSTR_LP_REC recorder, FMSTR_INDEX recIndex, FMSTR_U8 *retStatus)
 {
     FMSTR_REC_CFG recCfg;
     FMSTR_BPTR tmpMsgBuffIO = msgBuffIO;
@@ -442,7 +452,7 @@ static FMSTR_BPTR _FMSTR_SetRecCmd_CFGMEM(
 
 FMSTR_BOOL FMSTR_RecorderAddVariable(FMSTR_INDEX recIndex, FMSTR_INDEX recVarIx, FMSTR_REC_VAR *recVarCfg)
 {
-    FMSTR_REC *recorder;
+    FMSTR_LP_REC recorder;
 
     if ((recorder = _FMSTR_GetRecorderByRecIx(recIndex)) == NULL)
     {
@@ -464,9 +474,9 @@ FMSTR_BOOL FMSTR_RecorderAddVariable(FMSTR_INDEX recIndex, FMSTR_INDEX recVarIx,
  *
  ******************************************************************************/
 
-static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_REC *recorder, FMSTR_INDEX recVarIx, FMSTR_REC_VAR *recVarCfg)
+static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_LP_REC recorder, FMSTR_INDEX recVarIx, FMSTR_REC_VAR *recVarCfg)
 {
-    FMSTR_REC_VAR_DATA *varDescr;
+    FMSTR_LP_REC_VAR_DATA varDescr;
     FMSTR_PCOMPAREFUNC compareFunc = NULL;
 
     FMSTR_ASSERT_RETURN(((FMSTR_SIZE)recVarIx) < recorder->config.varCount, FMSTR_STC_INSTERR);
@@ -574,7 +584,7 @@ static FMSTR_U8 _FMSTR_RecVarCfg(FMSTR_REC *recorder, FMSTR_INDEX recVarIx, FMST
 
 static FMSTR_BPTR _FMSTR_SetRecCmd_CFGVAR(FMSTR_BPTR msgBuffIO,
                                           FMSTR_SIZE opLen,
-                                          FMSTR_REC *recorder,
+                                          FMSTR_LP_REC recorder,
                                           FMSTR_U8 *retStatus)
 {
     FMSTR_REC_VAR recVarCfg;
@@ -612,7 +622,7 @@ static FMSTR_BPTR _FMSTR_SetRecCmd_CFGVAR(FMSTR_BPTR msgBuffIO,
     else
     {
         /* Constant threshold. Get its address. */
-        FMSTR_U8 *constThresholdPtr = recorder->varDescr[recVarIx].thresholdVal.raw;
+        FMSTR_LP_U8 constThresholdPtr = (FMSTR_LP_U8)recorder->varDescr[recVarIx].thresholdVal.raw;
 
         switch (recVarCfg.triggerMode & FMSTR_REC_TRG_TYPE_MASK)
         {
@@ -637,7 +647,7 @@ static FMSTR_BPTR _FMSTR_SetRecCmd_CFGVAR(FMSTR_BPTR msgBuffIO,
         }
 
         /* Pointer to constant threshold value */
-        recVarCfg.trgAddr = (FMSTR_ADDR)constThresholdPtr;
+        recVarCfg.trgAddr = FMSTR_CAST_PTR_TO_ADDR(constThresholdPtr);
     }
 
     /* Secoded ULEBs should match the expected op_data length */
@@ -680,7 +690,7 @@ static FMSTR_BOOL _FMSTR_RecIsValidVarSize(FMSTR_SIZE size)
 
 FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus)
 {
-    FMSTR_REC *recorder   = NULL;
+    FMSTR_LP_REC recorder   = NULL;
     FMSTR_BPTR response   = msgBuffIO;
     FMSTR_U8 responseCode = FMSTR_STS_OK;
     FMSTR_U8 recIndex     = 0;
@@ -811,7 +821,7 @@ FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_
 {
     FMSTR_U8 responseCode = (FMSTR_STS_OK | FMSTR_STSF_VARLEN);
     FMSTR_BPTR response   = msgBuffIO;
-    FMSTR_REC *recorder;
+    FMSTR_LP_REC recorder;
     FMSTR_U8 recIndex;
     FMSTR_U8 cfgCode;
 
@@ -844,7 +854,7 @@ FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_
                 else
                 {
                     strLen   = FMSTR_StrLen(recorderBuff->name);
-                    response = FMSTR_CopyToBuffer(response, (FMSTR_ADDR)recorderBuff->name, strLen);
+                    response = FMSTR_CopyToBuffer(response, FMSTR_CAST_PTR_TO_ADDR(recorderBuff->name), strLen);
                 }
             }
             break;
@@ -905,11 +915,10 @@ FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_
                     }
                     else
                     {
-                        FMSTR_S32 byteIx       = recorder->writePtr - recorder->buffAddr;
+                        FMSTR_S32 byteIx       = (FMSTR_S32)(recorder->writePtr - recorder->buffAddr);
                         FMSTR_SIZE currIx      = (FMSTR_SIZE)(((FMSTR_U32)byteIx) / recorder->pointSize);
                         FMSTR_SIZE recFirstPnt = recorder->flags.flg.isVirginCycle != 0U ? 0U : currIx;
-                        FMSTR_SIZE recPntCnt =
-                            recorder->flags.flg.isVirginCycle != 0U ? currIx : recorder->totalSmplsCnt;
+                        FMSTR_SIZE recPntCnt   = recorder->flags.flg.isVirginCycle != 0U ? currIx : recorder->totalSmplsCnt;
 
                         /* count of recorded variables */
                         response = FMSTR_ValueToBuffer8(response, recorder->pointVarCount);
@@ -949,7 +958,7 @@ FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_
 
 FMSTR_BOOL FMSTR_RecorderStart(FMSTR_INDEX recIndex)
 {
-    FMSTR_REC *recorder;
+    FMSTR_LP_REC recorder;
 
     /* Get the recorder */
     if ((recorder = _FMSTR_GetRecorderByRecIx(recIndex)) == NULL)
@@ -970,7 +979,7 @@ FMSTR_BOOL FMSTR_RecorderStart(FMSTR_INDEX recIndex)
 
 FMSTR_BOOL FMSTR_RecorderTrigger(FMSTR_INDEX recIndex)
 {
-    FMSTR_REC *recorder;
+    FMSTR_LP_REC recorder;
 
     /* Get the recorder */
     if ((recorder = _FMSTR_GetRecorderByRecIx(recIndex)) == NULL)
@@ -991,7 +1000,7 @@ FMSTR_BOOL FMSTR_RecorderTrigger(FMSTR_INDEX recIndex)
 
 FMSTR_BOOL FMSTR_RecorderAbort(FMSTR_INDEX recIndex)
 {
-    FMSTR_REC *recorder;
+    FMSTR_LP_REC recorder;
 
     /* Get the recorder */
     if ((recorder = _FMSTR_GetRecorderByRecIx(recIndex)) == NULL)
@@ -1014,7 +1023,7 @@ FMSTR_BOOL FMSTR_RecorderAbort(FMSTR_INDEX recIndex)
  *
  ******************************************************************************/
 
-static FMSTR_U8 _FMSTR_StartRec(FMSTR_REC *recorder)
+static FMSTR_U8 _FMSTR_StartRec(FMSTR_LP_REC recorder)
 {
     /* must be configured */
     if (recorder->flags.flg.isConfigured == 0U)
@@ -1060,7 +1069,7 @@ static FMSTR_U8 _FMSTR_StartRec(FMSTR_REC *recorder)
  *
  ******************************************************************************/
 
-static FMSTR_U8 _FMSTR_TriggerRec(FMSTR_REC *recorder)
+static FMSTR_U8 _FMSTR_TriggerRec(FMSTR_LP_REC recorder)
 {
     /* must be configured */
     if (recorder->flags.flg.isConfigured == 0U)
@@ -1087,7 +1096,7 @@ static FMSTR_U8 _FMSTR_TriggerRec(FMSTR_REC *recorder)
  *
  ******************************************************************************/
 
-static FMSTR_U8 _FMSTR_AbortRec(FMSTR_REC *recorder)
+static FMSTR_U8 _FMSTR_AbortRec(FMSTR_LP_REC recorder)
 {
     /* must be configured */
     if (recorder->flags.flg.isConfigured == 0U)
@@ -1120,7 +1129,7 @@ static FMSTR_U8 _FMSTR_AbortRec(FMSTR_REC *recorder)
 
 FMSTR_BOOL FMSTR_IsInRecBuffer(FMSTR_ADDR addr, FMSTR_SIZE size)
 {
-    FMSTR_REC *recorder;
+    FMSTR_LP_REC recorder;
     FMSTR_INDEX i;
 
     for (i = 0; i < (FMSTR_INDEX)FMSTR_USE_RECORDER; i++)
@@ -1150,7 +1159,7 @@ FMSTR_BOOL FMSTR_IsInRecBuffer(FMSTR_ADDR addr, FMSTR_SIZE size)
  *
  ******************************************************************************/
 
-static FMSTR_U8 _FMSTR_CheckConfiguration(FMSTR_REC *recorder)
+static FMSTR_U8 _FMSTR_CheckConfiguration(FMSTR_LP_REC recorder)
 {
     FMSTR_SIZE pointSize     = 0U;
     FMSTR_SIZE pointVarCount = 0U;
@@ -1228,7 +1237,7 @@ static FMSTR_U8 _FMSTR_CheckConfiguration(FMSTR_REC *recorder)
         recorder->totalSmplsCnt = totalSmpls;
 
         /* remember the effective end of circular buffer */
-        recorder->endBuffPtr = (FMSTR_ADDR)(recorder->buffAddr + (blen / FMSTR_CFG_BUS_WIDTH));
+        recorder->endBuffPtr = FMSTR_CAST_PTR_TO_ADDR(recorder->buffAddr + (blen / FMSTR_CFG_BUS_WIDTH));
 
         /* Store variable set size */
         recorder->pointSize     = pointSize;
@@ -1256,53 +1265,53 @@ static FMSTR_U8 _FMSTR_CheckConfiguration(FMSTR_REC *recorder)
 
 #define CMP(v, t) ((FMSTR_BOOL)(((v) < (t)) ? 0 : 1))
 
-static FMSTR_BOOL _FMSTR_Compare8S(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_Compare8S(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetS8(varData->cfg.addr), FMSTR_GetS8(varData->cfg.trgAddr));
 }
 
-static FMSTR_BOOL _FMSTR_Compare8U(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_Compare8U(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetU8(varData->cfg.addr), FMSTR_GetU8(varData->cfg.trgAddr));
 }
 
-static FMSTR_BOOL _FMSTR_Compare16S(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_Compare16S(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetS16(varData->cfg.addr), FMSTR_GetS16(varData->cfg.trgAddr));
 }
 
-static FMSTR_BOOL _FMSTR_Compare16U(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_Compare16U(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetU16(varData->cfg.addr), FMSTR_GetU16(varData->cfg.trgAddr));
 }
 
-static FMSTR_BOOL _FMSTR_Compare32S(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_Compare32S(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetS32(varData->cfg.addr), FMSTR_GetS32(varData->cfg.trgAddr));
 }
 
-static FMSTR_BOOL _FMSTR_Compare32U(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_Compare32U(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetU32(varData->cfg.addr), FMSTR_GetU32(varData->cfg.trgAddr));
 }
 
-static FMSTR_BOOL _FMSTR_Compare64S(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_Compare64S(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetS64(varData->cfg.addr), FMSTR_GetS64(varData->cfg.trgAddr));
 }
 
-static FMSTR_BOOL _FMSTR_Compare64U(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_Compare64U(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetU64(varData->cfg.addr), FMSTR_GetU64(varData->cfg.trgAddr));
 }
 
 #if FMSTR_REC_FLOAT_TRIG > 0
-static FMSTR_BOOL _FMSTR_CompareFloat(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_CompareFloat(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetFloat(varData->cfg.addr), FMSTR_GetFloat(varData->cfg.trgAddr));
 }
 
-static FMSTR_BOOL _FMSTR_CompareDouble(FMSTR_REC_VAR_DATA *varData)
+static FMSTR_BOOL _FMSTR_CompareDouble(FMSTR_LP_REC_VAR_DATA varData)
 {
     return CMP(FMSTR_GetDouble(varData->cfg.addr), FMSTR_GetDouble(varData->cfg.trgAddr));
 }
@@ -1338,14 +1347,14 @@ static FMSTR_REC_BUFF *_FMSTR_GetRecorderBufferByRecIx(FMSTR_INDEX recIndex)
  *
  ******************************************************************************/
 
-static FMSTR_REC *_FMSTR_GetRecorderByRecIx(FMSTR_INDEX recIndex)
+static FMSTR_LP_REC _FMSTR_GetRecorderByRecIx(FMSTR_INDEX recIndex)
 {
     if (recIndex < 0 || recIndex >= (FMSTR_INDEX)FMSTR_USE_RECORDER)
     {
         return NULL;
     }
 
-    return (FMSTR_REC *)fmstr_recBuffs[recIndex].addr;
+    return (FMSTR_LP_REC)FMSTR_CAST_ADDR_TO_PTR(fmstr_recBuffs[recIndex].addr);
 }
 
 /******************************************************************************
@@ -1364,7 +1373,7 @@ static FMSTR_REC *_FMSTR_GetRecorderByRecIx(FMSTR_INDEX recIndex)
 
 void FMSTR_Recorder(FMSTR_INDEX recIndex)
 {
-    FMSTR_REC *recorder = _FMSTR_GetRecorderByRecIx(recIndex);
+    FMSTR_LP_REC recorder = _FMSTR_GetRecorderByRecIx(recIndex);
 
     /* recorder not active */
     if (recorder == NULL || recorder->flags.flg.isRunning == 0U)
@@ -1386,11 +1395,11 @@ void FMSTR_Recorder(FMSTR_INDEX recIndex)
 #pragma interrupt called
 #endif
 
-static void _FMSTR_Recorder2(FMSTR_REC *recorder)
+static void _FMSTR_Recorder2(FMSTR_LP_REC recorder)
 {
-    FMSTR_REC_VAR_DATA *recVarData;
+    FMSTR_LP_REC_VAR_DATA recVarData;
     FMSTR_PCOMPAREFUNC compareFunc;
-    FMSTR_U8 triggerMode;
+    FMSTR_SIZE8 triggerMode;
     FMSTR_SIZE8 sz;
     FMSTR_SIZE i;
     FMSTR_BOOL cmp;
@@ -1407,10 +1416,12 @@ static void _FMSTR_Recorder2(FMSTR_REC *recorder)
     /* re-initialize divider */
     recorder->timeDivCtr = recorder->config.timeDiv;
 
-    /* take snapshot of variable values */
+    /* variable info data for the next loop processing */
+    recVarData  = recorder->varDescr;
+
+    /* take snapshot of variable values (do not use 'continue' here!) */
     for (i = 0U; i < recorder->config.varCount; i++)
     {
-        recVarData  = &recorder->varDescr[i];
         triggerMode = recVarData->cfg.triggerMode;
 
         /* test trigger condition if still running */
@@ -1444,7 +1455,7 @@ static void _FMSTR_Recorder2(FMSTR_REC *recorder)
                 }
             }
 
-            /* Store the last comparision */
+            /* Store the last comparison */
             recVarData->trgLastState = cmp;
         }
 
@@ -1456,6 +1467,9 @@ static void _FMSTR_Recorder2(FMSTR_REC *recorder)
             sz /= FMSTR_CFG_BUS_WIDTH;
             recorder->writePtr += sz;
         }
+
+        /* advance to next variable (MISRA does not let to do it in the for() statement */
+        recVarData++;
     }
 
     /* We now have at least some data*/

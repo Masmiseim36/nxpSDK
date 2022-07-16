@@ -92,6 +92,8 @@ var searchData=
   ['runbit5limit',['runBit5Limit',['../a00078.html#a64f977e88bb179f321bf325b016b6df7',1,'trng_config_t']]],
   ['runbit6pluslimit',['runBit6PlusLimit',['../a00078.html#a1ef1a1672daaeb22f465f1400ac4e33a',1,'trng_config_t']]],
   ['rx',['rx',['../a00045.html#ac5e069483ad1c1563924f9721fc37d2c',1,'_lpi2c_master_edma_handle']]],
+  ['rx_5ftimeout_5fconstant_5fms',['rx_timeout_constant_ms',['../a00051.html#aa8dc452650aae3faefd0f92cffe2b6ab',1,'lpuart_rtos_config_t']]],
+  ['rx_5ftimeout_5fmultiplier_5fms',['rx_timeout_multiplier_ms',['../a00051.html#a7deed5c320a55485e10ccf7fb6f39d3b',1,'lpuart_rtos_config_t']]],
   ['rxaccelerconfig',['rxAccelerConfig',['../a00024.html#a7458a889dfeb4ccd0b62767486e61bbb',1,'enet_config_t']]],
   ['rxbdbase',['rxBdBase',['../a00024.html#a9b645c4be993309d06f1ffed6c951c45',1,'enet_rx_bd_ring_t']]],
   ['rxbdnumber',['rxBdNumber',['../a00024.html#a65e1faa923f03d01a64c133a3830bc7f',1,'enet_buffer_config_t']]],

@@ -178,6 +178,7 @@
 #define NN_VERSION_2_4_28 NN_VERSION_ENCODE(2, 4, 28)
 #define NN_VERSION_2_4_30 NN_VERSION_ENCODE(2, 4, 30)
 #define NN_VERSION_2_4_32 NN_VERSION_ENCODE(2, 4, 32)
+#define NN_VERSION_2_4_42 NN_VERSION_ENCODE(2, 4, 42)
 
 /**
  * This macro defines the target version when compiling against deepview_rt.h
@@ -188,7 +189,7 @@
  * provided deepview_rt.h file.
  */
 #ifndef NN_TARGET_VERSION
-#define NN_TARGET_VERSION NN_VERSION_2_4_30
+#define NN_TARGET_VERSION NN_VERSION_2_4_42
 #endif
 
 #if NN_TARGET_VERSION < NN_VERSION_ENCODE(2, 0, 0)
@@ -271,6 +272,14 @@
 #define NN_DEPRECATED_SINCE_2_4_32 NN_DEPRECATED(2.4.32)
 #endif
 
+#if NN_TARGET_VERSION < NN_VERSION_ENCODE(2, 4, 42)
+#define NN_AVAILABLE_SINCE_2_4_42 NN_UNAVAILABLE(2.4.42)
+#define NN_DEPRECATED_SINCE_2_4_42
+#else
+#define NN_AVAILABLE_SINCE_2_4_42
+#define NN_DEPRECATED_SINCE_2_4_42 NN_DEPRECATED(2.4.42)
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -278,6 +287,7 @@ extern "C" {
 #define NN_IMAGE_PROC_UNSIGNED_NORM 0x0001
 #define NN_IMAGE_PROC_WHITENING 0x0002
 #define NN_IMAGE_PROC_SIGNED_NORM 0x0004
+#define NN_IMAGE_PROC_IMAGENET 0x0008
 #define NN_IMAGE_PROC_MIRROR 0x1000
 #define NN_IMAGE_PROC_FLIP 0x2000
 
@@ -1757,7 +1767,8 @@ nn_tensor_concat(NNTensor* output,
                  int32_t   axis);
 
 /**
- * nn_tensor_slice copies a slice of the tensor into output.
+ * nn_tensor_slice copies a slice of the tensor into output. For a version which
+ * supports strides see @ref nn_tensor_strided_slice.
  *
  * The axes, head, and tail must be of length n_axes or NULL.  Calling slice
  * with axes==NULL will ignore head/tail and is effectively @ref nn_tensor_copy.
@@ -1778,6 +1789,18 @@ nn_tensor_slice(NNTensor*     output,
                 const int32_t axes[NN_ARRAY_PARAM(n_axes)],
                 const int32_t head[NN_ARRAY_PARAM(n_axes)],
                 const int32_t tail[NN_ARRAY_PARAM(n_axes)]);
+
+NN_AVAILABLE_SINCE_2_4_42
+NN_WARN_UNUSED_RESULT
+NN_API
+NNError
+nn_tensor_strided_slice(NNTensor*     output,
+                        NNTensor*     input,
+                        int32_t       n_axes,
+                        const int32_t axes[NN_ARRAY_PARAM(n_axes)],
+                        const int32_t head_[NN_ARRAY_PARAM(n_axes)],
+                        const int32_t tail_[NN_ARRAY_PARAM(n_axes)],
+                        const int32_t strides_[NN_ARRAY_PARAM(n_axes)]);
 
 /**
  * nn_tensor_padding calculates the paddings for the given tensor, padtype,
@@ -1911,60 +1934,6 @@ nn_tensor_load_image_ex(NNTensor*   tensor,
                         size_t      image_size,
                         uint32_t    proc);
 
-/**
- * Loads a video frame from virtual or physical memory into the tensor, handling
- * any required conversions (such as casting to floating point, if required).
- * The frame must have a stride calculated from with and a known fourcc code,
- * for example YUYV would need stride to be width*2 whereas NV12 would required
- * stride to be width. For planar formats each plane must be packed
- * sequentially, so for NV12 the UV planes must follow immediately after the Y
- * plane.
- *
- * @public @memberof NNTensor
- * @since 2.0
- * @deprecated 2.3
- */
-NN_AVAILABLE_SINCE_2_0
-NN_DEPRECATED_SINCE_2_3
-NN_WARN_UNUSED_RESULT
-NN_API
-NNError
-nn_tensor_load_frame(NNTensor*     tensor,
-                     void*         memory,
-                     void*         physical,
-                     uint32_t      fourcc,
-                     int32_t       width,
-                     int32_t       height,
-                     const int32_t roi[4]);
-
-/**
- * Loads a video frame from virtual or physical memory into the tensor, handling
- * any required conversions (such as casting to floating point, if required).
- * The frame must have a stride calculated from with and a known fourcc code,
- * for example YUYV would need stride to be width*2 whereas NV12 would required
- * stride to be width. For planar formats each plane must be packed
- * sequentially, so for NV12 the UV planes must follow immediately after the Y
- * plane.
- *
- * When called with proc==0 it is the same as nn_tensor_load_frame().
- *
- * @public @memberof NNTensor
- * @since 2.1
- * @deprecated 2.3
- */
-NN_AVAILABLE_SINCE_2_1
-NN_DEPRECATED_SINCE_2_3
-NN_WARN_UNUSED_RESULT
-NN_API
-NNError
-nn_tensor_load_frame_ex(NNTensor*     tensor,
-                        void*         memory,
-                        void*         physical,
-                        uint32_t      fourcc,
-                        int32_t       width,
-                        int32_t       height,
-                        const int32_t roi[4],
-                        uint32_t      proc);
 
 /**
  * Attempts to validate model, this is automatically called by nn_model_load and
@@ -2848,8 +2817,27 @@ NN_API
 NNError
 nn_context_step(NNContext* context, size_t index);
 
+/**
+ * Exposes the free() function
+ *
+ */
+NN_API
+void
+nn_free(void *ptr);
+
+/**
+ * Exposes the malloc() function
+ *
+ */
+NN_API
+void *
+nn_malloc(size_t size);
+
 #ifdef __cplusplus
 }
 #endif
 
+
+
 #endif /* DEEPVIEW_RT_H */
+

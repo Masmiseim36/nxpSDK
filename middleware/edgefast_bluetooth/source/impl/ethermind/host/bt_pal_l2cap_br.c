@@ -100,7 +100,7 @@ struct bt_l2cap_br {
 
 static struct bt_l2cap_br bt_l2cap_br_pool[CONFIG_BT_MAX_CONN];
 
-Z_STRUCT_SECTION_DEFINE(bt_l2cap_br_fixed_chan);
+STRUCT_SECTION_DEFINE(bt_l2cap_br_fixed_chan);
 
 struct bt_l2cap_chan *bt_l2cap_br_lookup_rx_cid(struct bt_conn *conn,
 						uint16_t cid)
@@ -189,8 +189,8 @@ static void l2cap_br_rtx_timeout(struct k_work *work)
 	}
 
 	BT_DBG("chan %p %s scid 0x%04x", chan,
-		   bt_l2cap_chan_state_str(chan->chan.state),
-		   chan->rx.cid);
+	       bt_l2cap_chan_state_str(chan->chan.state),
+	       chan->rx.cid);
 
 	switch (chan->chan.state) {
 	case BT_L2CAP_CONFIG:
@@ -217,6 +217,12 @@ static bool l2cap_br_chan_add(struct bt_conn *conn, struct bt_l2cap_chan *chan,
 		return false;
 	}
 #if 0
+	/* All dynamic channels have the destroy handler which makes sure that
+	 * the RTX work structure is properly released with a cancel sync.
+	 * The fixed signal channel is only removed when disconnected and the
+	 * disconnected handler is always called from the workqueue itself so
+	 * canceling from there should always succeed.
+	 */
 	k_work_init_delayable(&chan->rtx_work, l2cap_br_rtx_timeout);
 #endif
 	bt_l2cap_chan_add(conn, chan, destroy);
@@ -237,9 +243,27 @@ static uint8_t l2cap_br_get_ident(void)
 	return ident;
 }
 
+/* Send the buffer and release it in case of failure.
+ * Any other cleanup in failure to send should be handled by the disconnected
+ * handler.
+ */
+static inline void l2cap_send(struct bt_conn *conn, uint16_t cid,
+			      struct net_buf *buf)
+{
+	if (bt_l2cap_send(conn, cid, buf)) {
+		net_buf_unref(buf);
+	}
+}
+
 static void l2cap_br_chan_send_req(struct bt_l2cap_br_chan *chan,
 				   struct net_buf *buf, size_t timeout)
 {
+
+	if (bt_l2cap_send(chan->chan.conn, BT_L2CAP_CID_BR_SIG, buf)) {
+		net_buf_unref(buf);
+		return;
+	}
+
 	/* BLUETOOTH SPECIFICATION Version 4.2 [Vol 3, Part A] page 126:
 	 *
 	 * The value of this timer is implementation-dependent but the minimum
@@ -250,9 +274,8 @@ static void l2cap_br_chan_send_req(struct bt_l2cap_br_chan *chan,
 	 * link is lost.
 	 */
 #if 0
-	k_work_schedule(&chan->chan.rtx_work, timeout);
+	k_work_reschedule(&chan->chan.rtx_work, timeout);
 #endif
-	bt_l2cap_send(chan->chan.conn, BT_L2CAP_CID_BR_SIG, buf);
 }
 #if 0
 static void l2cap_br_get_info(struct bt_l2cap_br *l2cap, uint16_t info_type)
@@ -397,7 +420,7 @@ static uint8_t get_fixed_channels_mask(void)
 	uint8_t mask = 0U;
 
 	/* this needs to be enhanced if AMP Test Manager support is added */
-	Z_STRUCT_SECTION_FOREACH(bt_l2cap_br_fixed_chan, fchan) {
+	STRUCT_SECTION_FOREACH(bt_l2cap_br_fixed_chan, fchan) {
 		mask |= BIT(fchan->cid);
 	}
 
@@ -453,7 +476,7 @@ static int l2cap_br_info_req(struct bt_l2cap_br *l2cap, uint8_t ident,
 		break;
 	}
 
-	bt_l2cap_send(conn, BT_L2CAP_CID_BR_SIG, rsp_buf);
+	l2cap_send(conn, BT_L2CAP_CID_BR_SIG, rsp_buf);
 
 	return 0;
 }
@@ -462,7 +485,7 @@ void bt_l2cap_br_connected(struct bt_conn *conn)
 {
 	struct bt_l2cap_chan *chan;
 
-	Z_STRUCT_SECTION_FOREACH(bt_l2cap_br_fixed_chan, fchan) {
+	STRUCT_SECTION_FOREACH(bt_l2cap_br_fixed_chan, fchan) {
 		struct bt_l2cap_br_chan *ch;
 
 		if (!fchan->accept) {
@@ -802,7 +825,7 @@ static void l2cap_br_send_conn_rsp(struct bt_l2cap_chan *chan, uint16_t scid,
 		rsp->status = sys_cpu_to_le16(BT_L2CAP_CS_NO_INFO);
 	}
 
-	bt_l2cap_send(conn, BT_L2CAP_CID_BR_SIG, buf);
+	l2cap_send(conn, BT_L2CAP_CID_BR_SIG, buf);
 #endif
 	uint16_t resp_type;
 	API_RESULT ret;
@@ -937,8 +960,7 @@ static void l2cap_br_conn_req(struct bt_conn *conn,
 	atomic_set_bit(BR_CHAN(chan)->flags, L2CAP_FLAG_CONN_ACCEPTOR);
 
 	/* Disable fragmentation of l2cap rx pdu */
-	BR_CHAN(chan)->rx.mtu = MIN(BR_CHAN(chan)->rx.mtu,
-					CONFIG_BT_BUF_ACL_RX_SIZE);
+	BR_CHAN(chan)->rx.mtu = MIN(BR_CHAN(chan)->rx.mtu, BT_L2CAP_RX_MTU);
 
 	switch (l2cap_br_conn_security(chan, psm)) {
 	case L2CAP_CONN_SECURITY_PENDING:
@@ -1325,7 +1347,7 @@ static void l2cap_br_send_reject(struct bt_conn *conn, uint8_t ident,
 		net_buf_add_mem(buf, data, data_len);
 	}
 
-	bt_l2cap_send(conn, BT_L2CAP_CID_BR_SIG, buf);
+	l2cap_send(conn, BT_L2CAP_CID_BR_SIG, buf);
 }
 
 static uint16_t l2cap_br_conf_opt_mtu(struct bt_l2cap_chan *chan,
@@ -1500,7 +1522,7 @@ static void l2cap_br_disconn_req(struct bt_conn *conn, uint16_t dcid, uint16_t s
 #endif
 	bt_l2cap_chan_del(&chan->chan);
 #if 0
-	bt_l2cap_send(conn, BT_L2CAP_CID_BR_SIG, buf);
+	l2cap_send(conn, BT_L2CAP_CID_BR_SIG, buf);
 #endif
 }
 
@@ -1929,7 +1951,7 @@ void bt_l2cap_br_recv(struct bt_conn *conn, struct net_buf *buf)
 
 	chan = bt_l2cap_br_lookup_rx_cid(conn, cid);
 	if (!chan) {
-		BT_WARN("Ignoring data for unknown CID 0x%04x", cid);
+		BT_WARN("Ignoring data for unknown channel ID 0x%04x", cid);
 		net_buf_unref(buf);
 		return;
 	}

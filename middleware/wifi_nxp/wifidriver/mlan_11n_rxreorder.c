@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -179,6 +163,8 @@ static mlan_status wlan_11n_dispatch_pkt_until_start_win(t_void *priv, RxReorder
     }
 
     rx_reor_tbl_ptr->start_win = start_win;
+    /* clear the bits of reorder bitmap that has been dispatched */
+    rx_reor_tbl_ptr->bitmap = rx_reor_tbl_ptr->bitmap >> no_pkt_to_send;
     (void)pmpriv->adapter->callbacks.moal_spin_unlock(pmpriv->adapter->pmoal_handle, pmpriv->rx_pkt_lock);
 
     LEAVE();
@@ -249,6 +235,8 @@ static mlan_status wlan_11n_scan_and_dispatch(t_void *priv, RxReorderTbl *rx_reo
             rx_reor_tbl_ptr->rx_reorder_ptr[i + j] = MNULL;
         }
     }
+    /* clear the bits of reorder bitmap that has been dispatched */
+    rx_reor_tbl_ptr->bitmap = rx_reor_tbl_ptr->bitmap >> i;
 
     rx_reor_tbl_ptr->start_win = (rx_reor_tbl_ptr->start_win + i) & (MAX_TID_VALUE - 1);
 
@@ -332,12 +320,12 @@ static int wlan_11n_find_last_seqnum(RxReorderTbl *rx_reorder_tbl_ptr)
  *
  *  @return 	   	    N/A
  */
-static t_void wlan_flush_data(t_void *tmr_handle)
+static t_void wlan_flush_data(os_timer_arg_t tmr_handle)
 {
     /* Note: Giving tmr_handle as a parameter in callback is a feature
        of FreeRTOS. Hence, we have to change the default mlan code here
        to get the actual context expected by it */
-    reorder_tmr_cnxt_t *reorder_cnxt = (reorder_tmr_cnxt_t *)os_timer_get_context((os_timer_t *)&tmr_handle);
+    reorder_tmr_cnxt_t *reorder_cnxt = (reorder_tmr_cnxt_t *)os_timer_get_context(&tmr_handle);
     int startWin;
 
     ENTER();
@@ -418,6 +406,7 @@ static t_void wlan_11n_create_rxreorder_tbl(mlan_private *priv, t_u8 *ta, int ti
         new_node->win_size        = win_size;
         new_node->force_no_drop   = MFALSE;
         new_node->check_start_win = MTRUE;
+        new_node->bitmap = 0;
 
         if ((pmadapter->callbacks.moal_malloc(pmadapter->pmoal_handle, sizeof(t_void *) * win_size, MLAN_MEM_DEF,
                                               (t_u8 **)&new_node->rx_reorder_ptr)) != MLAN_STATUS_SUCCESS)
@@ -672,7 +661,7 @@ mlan_status wlan_cmd_11n_delba(mlan_private *priv, HostCmd_DS_COMMAND *cmd, void
 mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *ta, t_u8 pkt_type, void *payload)
 {
     RxReorderTbl *rx_reor_tbl_ptr;
-    int prev_start_win, start_win, end_win, win_size;
+    int start_win, end_win, win_size;
     mlan_status ret         = MLAN_STATUS_SUCCESS;
     pmlan_adapter pmadapter = ((mlan_private *)priv)->adapter;
 
@@ -762,7 +751,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
             }
         }
 
-        prev_start_win = start_win = rx_reor_tbl_ptr->start_win;
+        start_win = rx_reor_tbl_ptr->start_win;
         win_size                   = rx_reor_tbl_ptr->win_size;
         end_win                    = ((start_win + win_size) - 1) & (MAX_TID_VALUE - 1);
 
@@ -842,6 +831,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
                     goto done;
                 }
                 rx_reor_tbl_ptr->rx_reorder_ptr[seq_num - start_win] = payload;
+                MLAN_SET_BIT(rx_reor_tbl_ptr->bitmap, seq_num - start_win);
             }
             else
             { /* Wrap condition */
@@ -852,6 +842,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
                     goto done;
                 }
                 rx_reor_tbl_ptr->rx_reorder_ptr[(seq_num + (MAX_TID_VALUE)) - start_win] = payload;
+                MLAN_SET_BIT(rx_reor_tbl_ptr->bitmap, (seq_num + (MAX_TID_VALUE)) - start_win);
             }
         }
 
@@ -867,7 +858,13 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
     }
 
 done:
-    if (!rx_reor_tbl_ptr->timer_context.timer_is_set || (prev_start_win != rx_reor_tbl_ptr->start_win))
+    if (rx_reor_tbl_ptr->timer_context.timer_is_set && rx_reor_tbl_ptr->bitmap == 0)
+    {
+        pmadapter->callbacks.moal_stop_timer(pmadapter->pmoal_handle, rx_reor_tbl_ptr->timer_context.timer);
+        rx_reor_tbl_ptr->timer_context.timer_is_set = MFALSE;
+    }
+
+    if (!rx_reor_tbl_ptr->timer_context.timer_is_set && rx_reor_tbl_ptr->bitmap != 0)
     {
         mlan_11n_rxreorder_timer_restart(pmadapter, rx_reor_tbl_ptr);
     }

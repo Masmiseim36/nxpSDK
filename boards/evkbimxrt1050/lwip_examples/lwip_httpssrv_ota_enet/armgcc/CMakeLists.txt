@@ -71,12 +71,13 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../components/phy
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
+    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/flash/mflash
 )
@@ -108,8 +109,6 @@ include(driver_phy-common_MIMXRT1052)
 
 include(driver_enet_MIMXRT1052)
 
-include(utility_debug_console_MIMXRT1052)
-
 include(driver_clock_MIMXRT1052)
 
 include(middleware_freertos-kernel_heap_3_MIMXRT1052)
@@ -117,6 +116,8 @@ include(middleware_freertos-kernel_heap_3_MIMXRT1052)
 include(driver_common_MIMXRT1052)
 
 include(device_MIMXRT1052_CMSIS_MIMXRT1052)
+
+include(utility_debug_console_MIMXRT1052)
 
 include(component_lpuart_adapter_MIMXRT1052)
 
@@ -135,6 +136,8 @@ include(driver_iomuxc_MIMXRT1052)
 include(utility_assert_MIMXRT1052)
 
 include(driver_igpio_MIMXRT1052)
+
+include(component_silicon_id_MIMXRT1052)
 
 include(driver_mdio-common_MIMXRT1052)
 

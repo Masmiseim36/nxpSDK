@@ -342,7 +342,7 @@ typedef struct
 /** Attestation data */
 typedef struct
 {
-#if !SSS_HAVE_SE05X_VER_GTE_06_16
+#if !SSS_HAVE_SE05X_VER_GTE_07_02
     /** Random used during attestation */
     uint8_t outrandom[16];
     /** length of outrandom */
@@ -360,7 +360,7 @@ typedef struct
     uint8_t attribute[MAX_POLICY_BUFFER_SIZE + 15];
     /** Length of Attribute */
     size_t attributeLen;
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
     /** capdu for attestation */
     uint8_t cmd[100];
     /** capdu Length of attestation */

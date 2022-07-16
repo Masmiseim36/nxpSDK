@@ -6,8 +6,6 @@
  */
 #ifdef EAP32_PROC
 
-#include "osa_types.h"
-#include "osa_memory.h"
 #include "fsl_debug_console.h"
 
 #include "streamer_api.h"
@@ -229,7 +227,7 @@ int EAP_Init(void *arg)
         /* Log the memory size */
         if (EAP_MemTab.Region[i].Size != 0)
         {
-            temp32 = (LVM_INT32)osa_malloc(EAP_MemTab.Region[i].Size + (LVM_UINT32)MallocAlign);
+            temp32 = (LVM_INT32)OSA_MemoryAllocate(EAP_MemTab.Region[i].Size + (LVM_UINT32)MallocAlign);
             if (!temp32)
             {
                 return LVM_NULLADDRESS;
@@ -313,7 +311,7 @@ int EAP_Execute(void *arg, void *inputBuffer, int size)
 
             for (int i = 0; i < 2; i++)
             {
-                eap_xo_out_buffer[i] = osa_malloc(size * num_channel);
+                eap_xo_out_buffer[i] = OSA_MemoryAllocate(size * num_channel);
                 if (eap_xo_out_buffer[i] != NULL)
                 {
                     outBuffer[i] = eap_xo_out_buffer[i];
@@ -459,7 +457,7 @@ int EAP_Deinit(void)
         if (EAP_MemTab.Region[i].Size != 0)
         {
             temp32 = (LVM_INT32)EAP_MemTab.Region[i].pBaseAddress - MallocAlign;
-            osa_free((LVM_INT8 *)temp32);
+            OSA_MemoryFree((LVM_INT8 *)temp32);
         }
     }
 #if (ALGORITHM_XO == 1)
@@ -467,7 +465,7 @@ int EAP_Deinit(void)
     {
         for (int i = 0; i < 2; i++)
         {
-            osa_free(eap_xo_out_buffer[i]);
+            OSA_MemoryFree(eap_xo_out_buffer[i]);
         }
     }
 #endif
@@ -483,7 +481,7 @@ eap_att_code_t register_post_process(void *streamer)
 
     PRINTF("[EAP_STREAMER] registering post process EAP\r\n");
 
-    EXT_PROCESS_DESC_T eap_proc = {EAP_Init, EAP_Execute, EAP_Deinit, &get_app_data()->eap_args, 0};
+    EXT_PROCESS_DESC_T eap_proc = {EAP_Init, EAP_Execute, EAP_Deinit, &get_app_data()->eap_args};
 
     prop.prop = PROP_EAP_FPOINT;
     prop.val  = (uintptr_t)&eap_proc;

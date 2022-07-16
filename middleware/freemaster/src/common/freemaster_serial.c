@@ -129,9 +129,6 @@ const FMSTR_TRANSPORT_INTF FMSTR_SERIAL = {
     FMSTR_C99_INIT(SendResponse) _FMSTR_SerialSendResponse,
 };
 
-/*lint -esym(752,_FMSTR_RxQueue) this may be unreferenced in some cases */
-/*lint -esym(752,_FMSTR_RxDequeue) this may be unreferenced in some cases */
-
 /*******************************************************************************
  *
  * @brief    Routine to quick-receive a character (put to a queue only)
@@ -227,10 +224,13 @@ void FMSTR_ProcessSerial(void)
 
         /* when SCI TX buffering is enabled, we must first wait until all
             characters are physically transmitted (before disabling transmitter) */
-        if (_fmstr_wFlags.flg.bTxWaitTC != 0U && FMSTR_SERIAL_DRV.IsTransmitterActive() == FMSTR_FALSE)
+        if (_fmstr_wFlags.flg.bTxWaitTC != 0U)
         {
-            /* after TC, we can switch to listen mode safely */
-            _FMSTR_Listen();
+            if(FMSTR_SERIAL_DRV.IsTransmitterActive() == FMSTR_FALSE)
+            {
+                /* after TC, we can switch to listen mode safely */
+                _FMSTR_Listen();
+            }
         }
     }
     /* transmitter not active, able to receive */

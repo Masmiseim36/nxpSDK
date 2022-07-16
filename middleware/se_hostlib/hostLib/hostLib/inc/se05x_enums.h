@@ -234,7 +234,7 @@ typedef enum
     kSE05x_P2_DH_REVERSE = 0x59,
     kSE05x_P2_READ_STATE = 0x5B,
 #endif
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
     kSE05x_P2_ECPM = 0x62
 #endif
 } SE05x_P2_t;
@@ -288,7 +288,7 @@ typedef enum
     kSE05x_TAG_9 = 0x49,
     kSE05x_TAG_10 = 0x4A,
     kSE05x_TAG_11 = 0x4B,
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
     kSE05x_TAG_TIMESTAMP = 0x4F,
     kSE05x_TAG_SIGNATURE = 0x52,
 #endif
@@ -741,14 +741,14 @@ typedef enum
     /** Performs tests on the active shield protection of the
      * hardware. When the test fails, the chip triggers the attack
      * counter and the chip will reset. */
-    kSE05x_HealthCheckMode_SHIELDING = 0xFB04,
+    kSE05x_HealthCheckMode_SHIELDING = 0xFC03,
     /** Performs self-tests on hardware sensors and reports the
      * status. */
-    kSE05x_HealthCheckMode_SENSOR = 0xFA05,
+    kSE05x_HealthCheckMode_SENSOR = 0xFB04,
     /** Performs self-tests on the hardware registers. When the test
      * fails, the chip triggers the attack counter and the chip will
      * reset. */
-    kSE05x_HealthCheckMode_SFR_CHECK = 0xFC03,
+    kSE05x_HealthCheckMode_SFR_CHECK = 0xFA05,
 } SE05x_HealthCheckMode_t;
 #endif
 
@@ -856,7 +856,7 @@ typedef enum
     kSE05x_SecObjTyp_CURVE = 0x10,
     /**  */
     kSE05x_SecObjTyp_HMAC_KEY = 0x11,
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
     kSE05x_SecObjTyp_EC_KEY_PAIR_NIST_P192 = 0x21,
     kSE05x_SecObjTyp_EC_PRIV_KEY_NIST_P192 = 0x22,
     kSE05x_SecObjTyp_EC_PUB_KEY_NIST_P192 = 0x23,

@@ -88,7 +88,7 @@ struct bt_hfp_hf_cb {
 	 *  If this callback is provided it will be called whenever the
 	 *  connection completes.
 	 *
-	 * @param conn Connection object.
+	 *  @param conn Connection object.
 	 */
 	void (*connected)(struct bt_conn *conn);
 	/** HF disconnected callback to application
@@ -97,63 +97,63 @@ struct bt_hfp_hf_cb {
 	 *  connection gets disconnected, including when a connection gets
 	 *  rejected or cancelled or any error in SLC establisment.
 	 *
-	 * @param conn Connection object.
+	 *  @param conn Connection object.
 	 */
 	void (*disconnected)(struct bt_conn *conn);
 	/** HF indicator Callback
 	 *
 	 *  This callback provides service indicator value to the application
 	 *
-	 * @param conn Connection object.
-	 * @param value service indicator value received from the AG.
+	 *  @param conn Connection object.
+	 *  @param value service indicator value received from the AG.
 	 */
 	void (*service)(struct bt_conn *conn, uint32_t value);
 	/** HF indicator Callback
 	 *
 	 *  This callback provides call indicator value to the application
 	 *
-	 * @param conn Connection object.
-	 * @param value call indicator value received from the AG.
+	 *  @param conn Connection object.
+	 *  @param value call indicator value received from the AG.
 	 */
 	void (*call)(struct bt_conn *conn, uint32_t value);
 	/** HF indicator Callback
 	 *
 	 *  This callback provides call setup indicator value to the application
 	 *
-	 * @param conn Connection object.
-	 * @param value call setup indicator value received from the AG.
+	 *  @param conn Connection object.
+	 *  @param value call setup indicator value received from the AG.
 	 */
 	void (*call_setup)(struct bt_conn *conn, uint32_t value);
 	/** HF indicator Callback
 	 *
 	 *  This callback provides call held indicator value to the application
 	 *
-	 * @param conn Connection object.
-	 * @param value call held indicator value received from the AG.
+	 *  @param conn Connection object.
+	 *  @param value call held indicator value received from the AG.
 	 */
 	void (*call_held)(struct bt_conn *conn, uint32_t value);
 	/** HF indicator Callback
 	 *
 	 *  This callback provides signal indicator value to the application
 	 *
-	 * @param conn Connection object.
-	 * @param value signal indicator value received from the AG.
+	 *  @param conn Connection object.
+	 *  @param value signal indicator value received from the AG.
 	 */
 	void (*signal)(struct bt_conn *conn, uint32_t value);
 	/** HF indicator Callback
 	 *
 	 *  This callback provides roaming indicator value to the application
 	 *
-	 * @param conn Connection object.
-	 * @param value roaming indicator value received from the AG.
+	 *  @param conn Connection object.
+	 *  @param value roaming indicator value received from the AG.
 	 */
 	void (*roam)(struct bt_conn *conn, uint32_t value);
 	/** HF indicator Callback
 	 *
 	 *  This callback battery service indicator value to the application
 	 *
-	 * @param conn Connection object.
-	 * @param value battery indicator value received from the AG.
+	 *  @param conn Connection object.
+	 *  @param value battery indicator value received from the AG.
 	 */
 	void (*battery)(struct bt_conn *conn, uint32_t value);
 
@@ -211,7 +211,7 @@ struct bt_hfp_hf_cb {
  *  Register Handsfree profile callbacks to monitor the state and get the
  *  required HFP details to display.
  *
- * @param cb callback structure.
+ *  @param cb callback structure.
  *
  *  @return 0 in case of success or negative value in case of error.
  */
@@ -221,7 +221,8 @@ int bt_hfp_hf_register(struct bt_hfp_hf_cb *cb);
  *
  *  Send specific AT commands to handsfree client profile.
  *
- * @param conn Connection object.
+ *  @param conn Connection object.
+ *  @param cmd AT command to be sent.
  *
  *  @return 0 in case of success or negative value in case of error.
  */
@@ -374,7 +375,6 @@ int bt_hfp_hf_get_last_voice_tag_number(struct bt_conn *conn);
 #ifdef __cplusplus
 }
 #endif
-
 
 /**
  * @}

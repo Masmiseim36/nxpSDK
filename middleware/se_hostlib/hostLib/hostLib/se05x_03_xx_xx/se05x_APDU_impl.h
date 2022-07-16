@@ -807,8 +807,7 @@ cleanup:
     return retStatus;
 }
 
-
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 smStatus_t Se05x_API_ReadObject_W_Attst_V2(pSe05xSession_t session_ctx,
     uint32_t objectID,
     uint16_t offset,
@@ -876,14 +875,17 @@ smStatus_t Se05x_API_ReadObject_W_Attst_V2(pSe05xSession_t session_ctx,
     //As length is extended
     pCmdapdu[4] = 0x00;
     pCmdapdu[5] = 0x00;
+    if (cmdbufLen == 0) {
+        goto cleanup;
+    }
     pCmdapdu[6] = (uint8_t)cmdbufLen;
     memcpy(pCmdapdu + 7, cmdbuf, cmdbufLen);
     retStatus = DoAPDUTxRx_s_Case4_ext(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
     if (retStatus == SM_OK) {
-        *pCmdapduLen = cmdbufLen + 7;
+        *pCmdapduLen    = cmdbufLen + 7;
         retStatus       = SM_NOT_OK;
         size_t rspIndex = 0;
-        tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, data, pdataLen); /*  */
+        tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, data, pdataLen); /*  */
         if (0 != tlvRet) {
             /* Keys with no read policy will not return TAG1 */
             //goto cleanup;
@@ -941,11 +943,11 @@ smStatus_t Se05x_API_ReadObject_W_Attst(pSe05xSession_t session_ctx,
     size_t *psignatureLen)
 {
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr = { { kSE05x_CLA, kSE05x_INS_READ_With_Attestation, kSE05x_P1_DEFAULT, kSE05x_P2_DEFAULT } };
+    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_READ_With_Attestation, kSE05x_P1_DEFAULT, kSE05x_P2_DEFAULT}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
-    int tlvRet = 0;
+    int tlvRet       = 0;
     uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
@@ -979,9 +981,9 @@ smStatus_t Se05x_API_ReadObject_W_Attst(pSe05xSession_t session_ctx,
     }
     retStatus = DoAPDUTxRx_s_Case4_ext(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
     if (retStatus == SM_OK) {
-        retStatus = SM_NOT_OK;
+        retStatus       = SM_NOT_OK;
         size_t rspIndex = 0;
-        tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, data, pdataLen); /*  */
+        tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, data, pdataLen); /*  */
         if (0 != tlvRet) {
             /* Keys with no read policy will not return TAG1 */
             //goto cleanup;
@@ -1014,8 +1016,7 @@ smStatus_t Se05x_API_ReadObject_W_Attst(pSe05xSession_t session_ctx,
 cleanup:
     return retStatus;
 }
-#endif //#if SSS_HAVE_SE05X_VER_GTE_06_16
-
+#endif //#if SSS_HAVE_SE05X_VER_GTE_07_02
 
 smStatus_t Se05x_API_ReadRSA(pSe05xSession_t session_ctx,
     uint32_t objectID,
@@ -1071,8 +1072,7 @@ cleanup:
     return retStatus;
 }
 
-
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 smStatus_t Se05x_API_ReadRSA_W_Attst_V2(pSe05xSession_t session_ctx,
     uint32_t objectID,
     uint16_t offset,
@@ -1097,11 +1097,11 @@ smStatus_t Se05x_API_ReadRSA_W_Attst_V2(pSe05xSession_t session_ctx,
     size_t *psignatureLen)
 {
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr = { { kSE05x_CLA, kSE05x_INS_READ_With_Attestation, kSE05x_P1_DEFAULT, kSE05x_P2_DEFAULT } };
+    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_READ_With_Attestation, kSE05x_P1_DEFAULT, kSE05x_P2_DEFAULT}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
-    int tlvRet = 0;
+    int tlvRet       = 0;
     uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
@@ -1142,14 +1142,17 @@ smStatus_t Se05x_API_ReadRSA_W_Attst_V2(pSe05xSession_t session_ctx,
     //As length is extended
     pCmdapdu[4] = 0x00;
     pCmdapdu[5] = 0x00;
+    if (cmdbufLen == 0) {
+        goto cleanup;
+    }
     pCmdapdu[6] = (uint8_t)cmdbufLen;
     memcpy(pCmdapdu + 7, cmdbuf, cmdbufLen);
     retStatus = DoAPDUTxRx_s_Case4_ext(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
     if (retStatus == SM_OK) {
-        *pCmdapduLen = cmdbufLen + 7;
-        retStatus = SM_NOT_OK;
+        *pCmdapduLen    = cmdbufLen + 7;
+        retStatus       = SM_NOT_OK;
         size_t rspIndex = 0;
-        tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, data, pdataLen); /*  */
+        tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, data, pdataLen); /*  */
         if (0 != tlvRet) {
             goto cleanup;
         }
@@ -1213,7 +1216,7 @@ smStatus_t Se05x_API_ReadRSA_W_Attst(pSe05xSession_t session_ctx,
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -1284,7 +1287,7 @@ smStatus_t Se05x_API_ReadRSA_W_Attst(pSe05xSession_t session_ctx,
 cleanup:
     return retStatus;
 }
-#endif // if SSS_HAVE_SE05X_VER_GTE_06_16
+#endif // if SSS_HAVE_SE05X_VER_GTE_07_02
 
 smStatus_t Se05x_API_ExportObject(
     pSe05xSession_t session_ctx, uint32_t objectID, SE05x_RSAKeyComponent_t rsaKeyComp, uint8_t *data, size_t *pdataLen)
@@ -1858,7 +1861,7 @@ cleanup:
     return retStatus;
 }
 
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 smStatus_t Se05x_API_ECDAASign(pSe05xSession_t session_ctx,
     uint32_t objectID,
     SE05x_ECDAASignatureAlgo_t ecdaaSignAlgo,
@@ -2528,7 +2531,11 @@ smStatus_t Se05x_API_CipherOneShot(pSe05xSession_t session_ctx,
     if (0 != tlvRet) {
         goto cleanup;
     }
-    tlvRet = TLVSET_CipherMode("cipherMode", &pCmdbuf, &cmdbufLen, kSE05x_TAG_2, (cipherMode==kSE05x_CipherMode_AES_CTR_INT_IV)?kSE05x_CipherMode_AES_CTR:cipherMode);
+    tlvRet = TLVSET_CipherMode("cipherMode",
+        &pCmdbuf,
+        &cmdbufLen,
+        kSE05x_TAG_2,
+        (cipherMode == kSE05x_CipherMode_AES_CTR_INT_IV) ? kSE05x_CipherMode_AES_CTR : cipherMode);
     if (0 != tlvRet) {
         goto cleanup;
     }
@@ -3473,7 +3480,7 @@ cleanup:
 }
 
 // LCOV_EXCL_START
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 
 smStatus_t Se05x_API_I2CM_ExecuteCommandSet(pSe05xSession_t session_ctx,
     const uint8_t *inputData,
@@ -3527,11 +3534,14 @@ smStatus_t Se05x_API_I2CM_ExecuteCommandSet(pSe05xSession_t session_ctx,
     memcpy(pCmd, &hdr, 4);
     pCmd[4] = 0; // Extended Length
     pCmd[5] = 0; // Extended Length
+    if (cmdbufLen == 0) {
+        goto cleanup;
+    }
     pCmd[6] = (uint8_t)cmdbufLen;
     memcpy(pCmd + 7, cmdbuf, cmdbufLen);
     retStatus = DoAPDUTxRx_s_Case4_ext(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
     if (retStatus == SM_OK) {
-        *pCmdLen = cmdbufLen + 7;
+        *pCmdLen        = cmdbufLen + 7;
         retStatus       = SM_NOT_OK;
         size_t rspIndex = 0;
         tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, response, presponseLen); /*  */

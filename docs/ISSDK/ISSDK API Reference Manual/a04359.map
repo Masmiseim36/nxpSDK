@@ -1,4 +1,4 @@
-<map id="boardkit/frdm&#45;ke15z/pin_mux.h" name="boardkit/frdm&#45;ke15z/pin_mux.h">
-<area shape="rect" id="node2" href="$a00638.html" title="The frdm_ke15z.h file defines GPIO pin mappings for FRDM&#45;KE15Z board. " alt="" coords="5,95,141,136"/>
-<area shape="rect" id="node3" href="$a04294.html" title="boardkit/frdm&#45;ke15z\l/pin_mux.c" alt="" coords="165,95,301,136"/>
+<map id="boardkit/frdm&#45;k22f/frdm&#45;stbi&#45;a8974/issdk_hal.h" name="boardkit/frdm&#45;k22f/frdm&#45;stbi&#45;a8974/issdk_hal.h">
+<area shape="rect" id="node5" href="$a00605.html" title="The frdm_k22f.h file defines GPIO pins for FRDM&#45;K22F board. " alt="" coords="427,95,517,121"/>
+<area shape="rect" id="node6" href="$a00599.html" title="frdm_stbi_a8974_shield.h" alt="" coords="541,95,710,121"/>
 </map>

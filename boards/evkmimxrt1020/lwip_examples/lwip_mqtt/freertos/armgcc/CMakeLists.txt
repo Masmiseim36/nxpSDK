@@ -36,8 +36,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../lwip_mqtt_id.h"
-"${ProjDirPath}/../lwip_mqtt_id_otp.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -57,14 +55,15 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1021/drivers
     ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../components/phy
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1021
+    ${ProjDirPath}/../../../../../../devices/MIMXRT1021/utilities
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1021/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
@@ -85,8 +84,6 @@ include(driver_phy-common_MIMXRT1021)
 
 include(driver_enet_MIMXRT1021)
 
-include(utility_debug_console_MIMXRT1021)
-
 include(driver_clock_MIMXRT1021)
 
 include(middleware_freertos-kernel_heap_3_MIMXRT1021)
@@ -94,6 +91,8 @@ include(middleware_freertos-kernel_heap_3_MIMXRT1021)
 include(driver_common_MIMXRT1021)
 
 include(device_MIMXRT1021_CMSIS_MIMXRT1021)
+
+include(utility_debug_console_MIMXRT1021)
 
 include(component_lpuart_adapter_MIMXRT1021)
 
@@ -116,6 +115,8 @@ include(driver_igpio_MIMXRT1021)
 include(driver_xip_device_MIMXRT1021)
 
 include(driver_xip_board_evkmimxrt1020_MIMXRT1021)
+
+include(component_silicon_id_MIMXRT1021)
 
 include(driver_mdio-common_MIMXRT1021)
 

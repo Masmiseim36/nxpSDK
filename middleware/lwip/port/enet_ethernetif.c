@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2020,2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -61,6 +61,40 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+#if LWIP_IPV6 && LWIP_IPV6_MLD
+#define _NUM_MLD6_GROUP MEMP_NUM_MLD6_GROUP
+#else
+#define _NUM_MLD6_GROUP 0
+#endif
+
+#if LWIP_IGMP
+#define _NUM_IGMP_GROUP MEMP_NUM_IGMP_GROUP
+#else
+#define _NUM_IGMP_GROUP 0
+#endif
+
+/**
+ * Maximal possible count of IPv4 and IPv6 multicast MAC addresses
+ * on all netifs.
+ */
+#if (defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0))
+#define MMAC_CNT 0 /* LPC does not supports MAC filters. It can only allow or disable all multicast packets */
+#else
+#define MMAC_CNT ((_NUM_MLD6_GROUP) + (_NUM_IGMP_GROUP))
+#endif
+
+#if MMAC_CNT > 0
+struct mmac_ref_item
+{
+    uint8_t netif_num;
+    uint64_t mmac;
+    int ref_cnt;
+};
+
+static struct mmac_ref_item mmac_ref_list[MMAC_CNT];
+static int mmac_ref_list_is_initialized = 0;
+#endif
 
 /*******************************************************************************
  * Code
@@ -107,7 +141,8 @@ void ethernetif_phy_init(struct ethernetif *ethernetif,
         } while (--autoWaitCount);
         if (!autonego)
         {
-            LWIP_PLATFORM_DIAG(("PHY Auto-negotiation failed. Please check the cable connection and link partner setting."));
+            LWIP_PLATFORM_DIAG(
+                ("PHY Auto-negotiation failed. Please check the cable connection and link partner setting."));
         }
 
         initWaitCount++;
@@ -118,7 +153,7 @@ void ethernetif_phy_init(struct ethernetif *ethernetif,
         /* Get the actual PHY link speed. */
         PHY_GetLinkSpeedDuplex(ethernetifConfig->phyHandle, speed, duplex);
     }
-#if 0 /* Disable assert. If initial auto-negation is timeout, \ \
+#if 0 /* Disable assert. If initial auto-negation is timeout, \ \ \ \ \
          the ENET is set to default (100Mbs and full-duplex). */
     else
     {
@@ -134,19 +169,19 @@ void ethernetif_phy_init(struct ethernetif *ethernetif,
  * interface. Then the type of the received packet is determined and
  * the appropriate input function is called.
  *
- * @param netif the lwip network interface structure for this ethernetif
+ * @param netif_ the lwip network interface structure for this ethernetif
  */
-void ethernetif_input(struct netif *netif)
+void ethernetif_input(struct netif *netif_)
 {
     struct pbuf *p;
 
-    LWIP_ASSERT("netif != NULL", (netif != NULL));
+    LWIP_ASSERT("netif_ != NULL", (netif_ != NULL));
 
     /* move received packet into a new pbuf */
-    while ((p = ethernetif_linkinput(netif)) != NULL)
+    while ((p = ethernetif_linkinput(netif_)) != NULL)
     {
         /* pass all packets to ethernet_input, which decides what packets it supports */
-        if (netif->input(p, netif) != ERR_OK)
+        if (netif_->input(p, netif_) != (err_t)ERR_OK)
         {
             LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
             pbuf_free(p);
@@ -199,17 +234,17 @@ void *ethernetif_get_enet_qos_base(const uint8_t enetIdx)
 }
 #endif
 
-err_t ethernetif_init(struct netif *netif,
+err_t ethernetif_init(struct netif *netif_,
                       struct ethernetif *ethernetif,
                       void *enetBase,
                       const ethernetif_config_t *ethernetifConfig)
 {
-    LWIP_ASSERT("netif != NULL", (netif != NULL));
+    LWIP_ASSERT("netif_ != NULL", (netif_ != NULL));
     LWIP_ASSERT("ethernetifConfig != NULL", (ethernetifConfig != NULL));
 
 #if LWIP_NETIF_HOSTNAME
     /* Initialize interface hostname */
-    netif->hostname = "lwip";
+    netif_->hostname = "lwip";
 #endif /* LWIP_NETIF_HOSTNAME */
 
     /*
@@ -217,30 +252,30 @@ err_t ethernetif_init(struct netif *netif,
      * The last argument should be replaced with your link speed, in units
      * of bits per second.
      */
-    MIB2_INIT_NETIF(netif, snmp_ifType_ethernet_csmacd, LINK_SPEED_OF_YOUR_NETIF_IN_BPS);
+    MIB2_INIT_NETIF(netif_, snmp_ifType_ethernet_csmacd, LINK_SPEED_OF_YOUR_NETIF_IN_BPS);
 
-    netif->state   = ethernetif;
-    netif->name[0] = IFNAME0;
-    netif->name[1] = IFNAME1;
+    netif_->state   = ethernetif;
+    netif_->name[0] = IFNAME0;
+    netif_->name[1] = IFNAME1;
 /* We directly use etharp_output() here to save a function call.
  * You can instead declare your own function an call etharp_output()
  * from it if you have to do some checks before sending (e.g. if link
  * is available...) */
 #if LWIP_IPV4
-    netif->output = etharp_output;
+    netif_->output = etharp_output;
 #endif
 #if LWIP_IPV6
-    netif->output_ip6 = ethip6_output;
+    netif_->output_ip6 = ethip6_output;
 #endif /* LWIP_IPV6 */
-    netif->linkoutput = ethernetif_linkoutput;
+    netif_->linkoutput = ethernetif_linkoutput;
 
 #if LWIP_IPV4 && LWIP_IGMP
-    netif_set_igmp_mac_filter(netif, ethernetif_igmp_mac_filter);
-    netif->flags |= NETIF_FLAG_IGMP;
+    netif_set_igmp_mac_filter(netif_, ethernetif_igmp_mac_filter);
+    netif_->flags |= NETIF_FLAG_IGMP;
 #endif
 #if LWIP_IPV6 && LWIP_IPV6_MLD
-    netif_set_mld_mac_filter(netif, ethernetif_mld_mac_filter);
-    netif->flags |= NETIF_FLAG_MLD6;
+    netif_set_mld_mac_filter(netif_, ethernetif_mld_mac_filter);
+    netif_->flags |= NETIF_FLAG_MLD6;
 #endif
 
     /* Init ethernetif parameters.*/
@@ -248,20 +283,20 @@ err_t ethernetif_init(struct netif *netif,
     LWIP_ASSERT("*ethernetif_enet_ptr(ethernetif) != NULL", (*ethernetif_enet_ptr(ethernetif) != NULL));
 
     /* set MAC hardware address length */
-    netif->hwaddr_len = ETH_HWADDR_LEN;
+    netif_->hwaddr_len = ETH_HWADDR_LEN;
 
     /* set MAC hardware address */
-    memcpy(netif->hwaddr, ethernetifConfig->macAddress, NETIF_MAX_HWADDR_LEN);
+    memcpy(netif_->hwaddr, ethernetifConfig->macAddress, NETIF_MAX_HWADDR_LEN);
 
     /* maximum transfer unit */
-    netif->mtu = 1500; /* TODO: define a config */
+    netif_->mtu = 1500; /* TODO: define a config */
 
     /* device capabilities */
     /* don't set NETIF_FLAG_ETHARP if this device is not an ethernet one */
-    netif->flags |= NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_LINK_UP;
+    netif_->flags |= NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_LINK_UP;
 
     /* ENET driver initialization.*/
-    ethernetif_enet_init(netif, ethernetif, ethernetifConfig);
+    ethernetif_enet_init(netif_, ethernetif, ethernetifConfig);
 
 #if LWIP_IPV6 && LWIP_IPV6_MLD
     /*
@@ -269,13 +304,141 @@ err_t ethernetif_init(struct netif *netif,
      * All-nodes link-local is handled by default, so we must let the hardware know
      * to allow multicast packets in.
      * Should set mld_mac_filter previously. */
-    if (netif->mld_mac_filter != NULL)
+    if (netif_->mld_mac_filter != NULL)
     {
         ip6_addr_t ip6_allnodes_ll;
         ip6_addr_set_allnodes_linklocal(&ip6_allnodes_ll);
-        netif->mld_mac_filter(netif, &ip6_allnodes_ll, NETIF_ADD_MAC_FILTER);
+        netif_->mld_mac_filter(netif_, &ip6_allnodes_ll, NETIF_ADD_MAC_FILTER);
     }
 #endif /* LWIP_IPV6 && LWIP_IPV6_MLD */
 
     return ERR_OK;
+}
+
+#if MMAC_CNT > 0
+static uint64_t mac_array_to_uint64(const uint8_t *mmac_arr)
+{
+    int i;
+    uint64_t mmac = 0;
+
+    for (i = 0; i < 6; i++)
+    {
+        mmac <<= 8;
+        mmac |= ((uint64_t)mmac_arr[i] & 0xffU);
+    }
+
+    return mmac;
+}
+
+static void mmac_ref_list_ensure_inited(void)
+{
+    if (!mmac_ref_list_is_initialized)
+    {
+        memset(mmac_ref_list, 0, sizeof(mmac_ref_list));
+        mmac_ref_list_is_initialized = 1;
+    }
+}
+
+static int mmac_ref_list_find_mmac_idx(uint8_t netif_num, const uint64_t mmac)
+{
+    int i;
+    int idx_found_on = -1;
+
+    mmac_ref_list_ensure_inited();
+
+    for (i = 0; i < MMAC_CNT; i++)
+    {
+        if (mmac_ref_list[i].netif_num == netif_num && mmac_ref_list[i].mmac == mmac)
+        {
+            idx_found_on = i;
+            break;
+        }
+    }
+
+    return idx_found_on;
+}
+
+static int mmac_ref_list_find_free_idx(void)
+{
+    int i;
+    int idx_free = -1;
+
+    mmac_ref_list_ensure_inited();
+
+    for (i = 0; i < MMAC_CNT; i++)
+    {
+        if (mmac_ref_list[i].ref_cnt <= 0)
+        {
+            idx_free = i;
+            break;
+        }
+    }
+
+    LWIP_ASSERT("Multicast MAC list out of space", idx_free >= 0);
+    return idx_free;
+}
+
+#endif /* #if MMAC_CNT > 0 */
+
+bool ethernetif_add_mmac_flt_needed(const struct netif *netif_, const uint8_t *mmac_arr)
+{
+#if MMAC_CNT <= 0
+    (void)netif_;
+    (void)mmac_arr;
+    return false;
+#else
+
+    bool needed             = false;
+    const uint8_t netif_num = netif_->num;
+    const uint64_t mmac     = mac_array_to_uint64(mmac_arr);
+
+    int idx = mmac_ref_list_find_mmac_idx(netif_num, mmac);
+
+    if (idx < 0)
+    {
+        idx                          = mmac_ref_list_find_free_idx();
+        if (idx < 0) /* This should not happen. */
+            return true;
+        mmac_ref_list[idx].mmac      = mmac;
+        mmac_ref_list[idx].netif_num = netif_num;
+        needed                       = true;
+    }
+    mmac_ref_list[idx].ref_cnt++;
+
+    return needed;
+
+#endif /* #if MMAC_CNT <= 0 */
+}
+
+bool ethernetif_rm_mmac_flt_needed(const struct netif *netif_, const uint8_t *mmac_arr)
+{
+#if MMAC_CNT <= 0
+    (void)netif_;
+    (void)mmac_arr;
+    return false;
+#else
+
+    bool needed             = false;
+    const uint8_t netif_num = netif_->num;
+    const uint64_t mmac     = mac_array_to_uint64(mmac_arr);
+
+    int idx = mmac_ref_list_find_mmac_idx(netif_num, mmac);
+
+    if (idx >= 0)
+    {
+        mmac_ref_list[idx].ref_cnt--;
+        if (mmac_ref_list[idx].ref_cnt <= 0)
+        {
+            memset(&mmac_ref_list[idx], 0, sizeof(struct mmac_ref_item));
+            needed = true;
+        }
+    }
+    else
+    {
+        LWIP_ASSERT("Deletion of MAC which is not present in Multicast MAC list.", false);
+    }
+
+    return needed;
+
+#endif /* #if MMAC_CNT <= 0 */
 }

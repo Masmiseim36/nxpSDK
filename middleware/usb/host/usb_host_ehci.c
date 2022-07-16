@@ -16,7 +16,9 @@
 #endif
 #include "fsl_device_registers.h"
 #include "usb_host_ehci.h"
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT))
 #include "usb_phy.h"
+#endif
 #if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
 #include "usb_host.h"
 #endif
@@ -3563,7 +3565,9 @@ static usb_status_t USB_HostEhciControlBus(usb_host_ehci_instance_t *ehciInstanc
                 ehciInstance->ehciIpBase->PORTSC1 &= ~USBHS_PORTSC1_WKCN_MASK;
                 ehciInstance->ehciIpBase->PORTSC1 |= USBHS_PORTSC1_WKDS_MASK;
                 ehciInstance->ehciIpBase->PORTSC1 |= (USBHS_PORTSC1_SUSP_MASK); /* Suspend the device */
-
+#if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
+                PMU->WAKEUP_PM2_MASK1 |= PMU_WAKEUP_PM2_MASK1_USB(1);
+#endif
                 ehciInstance->matchTick = 0U;
                 ehciInstance->ehciIpBase->USBINTR |= (USBHS_USBINTR_TIE1_MASK);
                 ehciInstance->busSuspendStatus = kBus_EhciStartSuspend;
@@ -3582,7 +3586,10 @@ static usb_status_t USB_HostEhciControlBus(usb_host_ehci_instance_t *ehciInstanc
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
                 ehciInstance->registerNcBase->USB_OTGn_CTRL &= ~USBNC_USB_OTGn_CTRL_WIE_MASK;
 #else
+#if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
+#else
                 ehciInstance->ehciIpBase->USBGENCTRL &= ~USBHS_USBGENCTRL_WU_IE_MASK;
+#endif
 #endif
                 ehciInstance->ehciIpBase->USBCMD |= (USBHS_USBCMD_RS_MASK);
                 ehciInstance->ehciIpBase->PORTSC1 |= (USBHS_PORTSC1_FPR_MASK); /* Resume the device */
@@ -3940,10 +3947,12 @@ static void USB_HostEhciPortChange(usb_host_ehci_instance_t *ehciInstance)
         ehciInstance->firstDeviceSpeed =
             (uint8_t)((ehciInstance->ehciIpBase->PORTSC1 & USBHS_PORTSC1_PSPD_MASK) >> USBHS_PORTSC1_PSPD_SHIFT);
         /* enable ehci phy disconnection */
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
         if (ehciInstance->firstDeviceSpeed == USB_SPEED_HIGH)
         {
             USB_EhcihostPhyDisconnectDetectCmd(ehciInstance->controllerId, 1);
         }
+#endif
 
         /* wait for reset */
         USB_HostEhciDelay(ehciInstance->ehciIpBase, USB_HOST_EHCI_PORT_RESET_DELAY);
@@ -3964,7 +3973,9 @@ static void USB_HostEhciPortChange(usb_host_ehci_instance_t *ehciInstance)
             ehciInstance->ehciIpBase->USBINTR &= ~(USBHS_USBINTR_TIE1_MASK);
 #endif
             /* disable ehci phy disconnection */
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
             USB_EhcihostPhyDisconnectDetectCmd(ehciInstance->controllerId, 0);
+#endif
             /* disable async and periodic */
             USB_HostEhciStopAsync(ehciInstance);
             USB_HostEhciStopPeriodic(ehciInstance);
@@ -4125,23 +4136,28 @@ static void USB_HostEhciTimer1(usb_host_ehci_instance_t *ehciInstance)
                         USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
 #endif
                     ehciInstance->ehciIpBase->PORTSC1 |= USBHS_PORTSC1_PHCD_MASK;
-
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
                     ehciInstance->registerPhyBase->PWD = 0xFFFFFFFFU;
 
                     while (0U != (ehciInstance->registerPhyBase->CTRL & (USBPHY_CTRL_UTMI_SUSPENDM_MASK)))
                     {
                         __NOP();
                     }
-
+#endif
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
                     ehciInstance->registerNcBase->USB_OTGn_CTRL |= USBNC_USB_OTGn_CTRL_WKUP_ID_EN_MASK |
                                                                    USBNC_USB_OTGn_CTRL_WKUP_VBUS_EN_MASK |
                                                                    USBNC_USB_OTGn_CTRL_WKUP_DPDM_EN_MASK;
                     ehciInstance->registerNcBase->USB_OTGn_CTRL |= USBNC_USB_OTGn_CTRL_WIE_MASK;
 #else
+#if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
+#else
                     ehciInstance->ehciIpBase->USBGENCTRL = USBHS_USBGENCTRL_WU_IE_MASK;
 #endif
+#endif
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
                     ehciInstance->registerPhyBase->CTRL |= USBPHY_CTRL_CLKGATE_MASK;
+#endif
                     (void)hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
                                                       kUSB_HostEventSuspended); /* call host callback function */
                     ehciInstance->busSuspendStatus = kBus_EhciSuspended;
@@ -4212,8 +4228,9 @@ usb_status_t USB_HostEhciCreate(uint8_t controllerId,
     ehciInstance->busSuspendStatus = kBus_EhciIdle;
 
 #if (defined(USB_HOST_CONFIG_LOW_POWER_MODE) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
     ehciInstance->registerPhyBase = (USBPHY_Type *)USB_EhciPhyGetBase(controllerId);
-
+#endif
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
     ehciInstance->registerNcBase = (USBNC_Type *)USB_EhciNCGetBase(controllerId);
 #endif
@@ -4869,6 +4886,8 @@ void USB_HostEhciIsrFunction(void *hostHandle)
         /*no action*/
     }
 #else
+#if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
+#else
     if (0U != (ehciInstance->ehciIpBase->USBGENCTRL & USBHS_USBGENCTRL_WU_IE_MASK))
     {
         usb_host_instance_t *hostPointer = (usb_host_instance_t *)ehciInstance->hostHandle;
@@ -4901,8 +4920,8 @@ void USB_HostEhciIsrFunction(void *hostHandle)
     {
         /*no action*/
     }
+#endif /* FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT */
 #endif /* FSL_FEATURE_SOC_USBNC_COUNT */
-
 #endif /* USB_HOST_CONFIG_LOW_POWER_MODE */
 
     interruptStatus = ehciInstance->ehciIpBase->USBSTS;
@@ -4949,6 +4968,27 @@ void USB_HostEhciIsrFunction(void *hostHandle)
                     /*no action */
                 }
             }
+#if (defined(FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT) && (FSL_FEATURE_USB_ATLANTIC_EHCI_SUPPORT > 0U))
+            if ((kBus_EhciSuspended == ehciInstance->busSuspendStatus))
+            {
+                usb_host_instance_t *hostPointer = (usb_host_instance_t *)ehciInstance->hostHandle;
+
+                (void)hostPointer->deviceCallback(hostPointer->suspendedDevice, NULL,
+                                                  kUSB_HostEventDetectResume); /* call host callback function */
+
+                uint32_t delay = 100000;
+                while (delay-- && !(USBOTG->PLL_CONTROL_0 & USBC_PLL_CONTROL_0_PLL_READY_MASK))
+                {
+                }
+                if (0U != (ehciInstance->ehciIpBase->PORTSC1 & USBHS_PORTSC1_CCS_MASK))
+                {
+                    USB_HostEhciStartAsync(ehciInstance);
+                    USB_HostEhciStartPeriodic(ehciInstance);
+                }
+                ehciInstance->ehciIpBase->USBCMD |= (USBHS_USBCMD_RS_MASK);
+                ehciInstance->busSuspendStatus = kBus_EhciStartResume;
+            }
+#endif
 #endif
             (void)OSA_EventSet(ehciInstance->taskEventHandle, EHCI_TASK_EVENT_PORT_CHANGE);
         }

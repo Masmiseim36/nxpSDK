@@ -53,7 +53,7 @@ static FMSTR_U32 fmstr_eonceBaseAddr = (FMSTR_U32)FMSTR_SERIAL_BASE;
 static FMSTR_U32 fmstr_eonceBaseAddr = 0;
 #endif
 
-struct
+static struct
 {
     FMSTR_U32 txData;   /* Cached 4 bytes of transmit data */
     FMSTR_U32 rxData;   /* Cached 4 bytes of receive data */
@@ -566,7 +566,7 @@ static void _FMSTR_56F800E_EOnCE_Flush(void)
         if (fmstr_eonceCtx.txSize < 4U)
         {
             FMSTR_SIZE8 shift     = 8U * (4U - fmstr_eonceCtx.txSize);
-            fmstr_eonceCtx.txData = (fmstr_eonceCtx.txData << shift) | ((1 << shift) - 1);
+            fmstr_eonceCtx.txData = (fmstr_eonceCtx.txData << shift) | (FMSTR_U32)((1UL << shift) - 1UL);
             fmstr_eonceCtx.txSize = 4U;
         }
 

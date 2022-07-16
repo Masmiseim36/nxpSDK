@@ -83,12 +83,13 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1064
     ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../components/fxos8700cq
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
+    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
+    ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
+    ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
-    ${ProjDirPath}/../../../../../middleware/wifi
-    ${ProjDirPath}/../../../../../middleware/sdmmc
-    ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../../components/uart
@@ -96,6 +97,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/osa
 )
@@ -123,6 +125,26 @@ include(driver_lpi2c_MIMXRT1064)
 
 include(driver_fxos8700cq_MIMXRT1064)
 
+include(middleware_wifi_wifidriver_MIMXRT1064)
+
+include(middleware_freertos-kernel_MIMXRT1064)
+
+include(utility_debug_console_MIMXRT1064)
+
+include(middleware_wifi_sdio_MIMXRT1064)
+
+include(middleware_wifi_fwdnld_MIMXRT1064)
+
+include(middleware_sdmmc_sdio_MIMXRT1064)
+
+include(middleware_sdmmc_common_MIMXRT1064)
+
+include(middleware_sdmmc_host_usdhc_MIMXRT1064)
+
+include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1064)
+
+include(component_igpio_adapter_MIMXRT1064)
+
 include(middleware_freertos-aws_iot_vendor_nxp_wifi_MIMXRT1064)
 
 include(middleware_freertos-aws_iot_vendor_nxp_secure_sockets_lwip_MIMXRT1064)
@@ -133,17 +155,7 @@ include(middleware_freertos-aws_iot_demos_dev_mode_key_provisioning_MIMXRT1064)
 
 include(middleware_lwip_MIMXRT1064)
 
-include(utility_debug_console_MIMXRT1064)
-
 include(middleware_wifi_MIMXRT1064)
-
-include(middleware_sdmmc_sdio_MIMXRT1064)
-
-include(middleware_sdmmc_common_MIMXRT1064)
-
-include(middleware_sdmmc_host_usdhc_MIMXRT1064)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1064)
 
 include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT1064)
 
@@ -152,8 +164,6 @@ include(middleware_freertos-aws_iot_libraries_corejason_MIMXRT1064)
 include(middleware_freertos-aws_iot_mqtt_demo_helpers_MIMXRT1064)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1064)
-
-include(middleware_freertos-kernel_MIMXRT1064)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1064)
 
@@ -203,23 +213,23 @@ include(driver_xip_device_MIMXRT1064)
 
 include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
+include(component_silicon_id_MIMXRT1064)
+
 include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(component_mflash_common_MIMXRT1064)
 
-include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT1064)
-
 include(middleware_freertos-kernel_extension_MIMXRT1064)
 
-include(middleware_wifi_wifidriver_MIMXRT1064)
-
-include(middleware_wifi_fwdnld_MIMXRT1064)
+include(middleware_wifi_sdio-2_MIMXRT1064)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1064)
 
 include(component_osa_free_rtos_MIMXRT1064)
 
 include(driver_usdhc_MIMXRT1064)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT1064)
 
 include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT1064)
 

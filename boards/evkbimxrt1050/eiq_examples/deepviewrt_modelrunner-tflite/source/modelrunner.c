@@ -35,8 +35,9 @@ size_t __aeabi_read_tp(void)
 extern u32_t sys_now(void);
 int64_t os_clock_now()
 {
-    int64_t ns_time = (int64_t)(sys_now()*1e6);
-    return ns_time;
+    int64_t us = ((SystemCoreClock / 1000) - SysTick->VAL) / (SystemCoreClock / 1000000);
+    us += (int64_t)(sys_now()*1e3);
+    return us;
 }
 
 #if defined(CPU_MIMXRT1176DVMAA_cm7)

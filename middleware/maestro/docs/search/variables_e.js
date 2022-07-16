@@ -1,5 +1,30 @@
 var searchData=
 [
-  ['ret_0',['ret',['../structSTREAMER__MSG__T.html#af0fb1798d930c51469722e212de8644c',1,'STREAMER_MSG_T']]],
-  ['rr_5finterval_1',['rr_interval',['../structOsaThreadAttr.html#a7f7d51bc325bf77d85f707e53589b160',1,'OsaThreadAttr']]]
+  ['packed_5fbuffer_0',['packed_buffer',['../structCCIDecInfo.html#aba8cd1c59d70863c9a01f6919542d172',1,'CCIDecInfo']]],
+  ['packetlossperc_1',['packetLossPerc',['../structCeiOpusConfig.html#a056ee5f56e0a0dca8959418ccd893d97',1,'CeiOpusConfig']]],
+  ['padding_2',['padding',['../structAudioPacketHeader.html#a2b26f6a7fd5a4301c0df84d070bdcf68',1,'AudioPacketHeader']]],
+  ['parent_3',['parent',['../struct__StreamElement.html#a1167ebdf634f3dee80085b2fc47bc9bf',1,'_StreamElement::parent()'],['../struct__ElementAudioSink.html#afa0ed6a94c46332dde2ee3b37fa3c6c6',1,'_ElementAudioSink::parent()'],['../struct__ElementAudioSrc.html#a60ba4d6cdc8a1b0d51bd6de6af051d07',1,'_ElementAudioSrc::parent()'],['../struct__ElementDecoder.html#a01556cecc92382bc922828c342bfc41a',1,'_ElementDecoder::parent()'],['../struct__ElementEap.html#ab5e5e0b9471c7497c07c96182e4087c2',1,'_ElementEap::parent()'],['../structElementEncoder.html#a12f33dc8878804ef3d14bab6820dcf70',1,'ElementEncoder::parent()'],['../struct__ElementFileSink.html#aa7d63df26229c3f3cc8fde1a96a527de',1,'_ElementFileSink::parent()'],['../struct__ElementFileSrc.html#a7a8b34f27f34bb9eefa39cb873c49afb',1,'_ElementFileSrc::parent()'],['../struct__ElementMemSink.html#a13ed9f7b9bd2adb14d0606255d9840c5',1,'_ElementMemSink::parent()'],['../struct__ElementMemSrc.html#a1fb5c640783ef893edfc8a2525aafcee',1,'_ElementMemSrc::parent()'],['../structElementNetbufSrc.html#aa63ff783248227bbcd2cdcf6a6b4bced',1,'ElementNetbufSrc::parent()'],['../struct__ElementVitSink.html#ac186a3a939e39fb3ae5153a7aaaf7226',1,'_ElementVitSink::parent()']]],
+  ['parse_5ftag_4',['parse_tag',['../struct__ElementDecoder.html#a87a46a87ed55af044f4647b391e32b47',1,'_ElementDecoder']]],
+  ['parser_5ftype_5',['parser_type',['../structStreamerFileSrcConfig.html#ac5770e7c1705c5d66e94f282089354ed',1,'StreamerFileSrcConfig']]],
+  ['path_6',['path',['../structTrackInfo.html#a7ec9acd8c0c1920a0a6de72d8db46a71',1,'TrackInfo']]],
+  ['pause_5fdevice_5ffunc_7',['pause_device_func',['../structAudioSinkPadDeviceIOFuncType.html#a25eae34ea6972b82708b93502505d239',1,'AudioSinkPadDeviceIOFuncType']]],
+  ['pcm_5fhandle_8',['pcm_handle',['../structPCMSinkDeviceInfo.html#a0ba02cc0ba42be349dc752f0f7561314',1,'PCMSinkDeviceInfo::pcm_handle()'],['../structPCMRtosDeviceInfo.html#ae71184ea832f978de8accc3bf6c53066',1,'PCMRtosDeviceInfo::pcm_handle()']]],
+  ['pfnftell_9',['pfnFtell',['../structdecoder__callback__FunctionTable__t.html#a7a55c7d58889bc2346c6f33279680706',1,'decoder_callback_FunctionTable_t']]],
+  ['pfnread_10',['pfnRead',['../structdecoder__callback__FunctionTable__t.html#af66852ef9ec215b359060b9cb9aefc08',1,'decoder_callback_FunctionTable_t']]],
+  ['pfnseek_11',['pfnSeek',['../structdecoder__callback__FunctionTable__t.html#a8182c9b707223ff29296f3ebd2cc9bd9',1,'decoder_callback_FunctionTable_t']]],
+  ['pipeline_5findex_12',['pipeline_index',['../structSTREAMER__MSG__T.html#a35d353959a209f3c7f318a9814462f58',1,'STREAMER_MSG_T']]],
+  ['pipeline_5ftype_13',['pipeline_type',['../structSTREAMER__MSG__T.html#a794f2d427114dd2a9d6eeca5ab39958a',1,'STREAMER_MSG_T::pipeline_type()'],['../structSTREAMER__CREATE__PARAM.html#a8c58fc73dce1a154af96614ad0da243c',1,'STREAMER_CREATE_PARAM::pipeline_type()'],['../structSTREAMER__T.html#abd6a73a80a9eacde4d04576d3880a2d3',1,'STREAMER_T::pipeline_type()']]],
+  ['pipes_14',['pipes',['../structSTREAMER__T.html#afec62c3d653dae165434b72e6835154b',1,'STREAMER_T']]],
+  ['pkt_5fhdr_15',['pkt_hdr',['../struct__ElementAudioSrc.html#ad5b7f95e7cb6f91fcd1f10cb5fe2ef28',1,'_ElementAudioSrc']]],
+  ['play_5fdevice_5ffunc_16',['play_device_func',['../structAudioSinkPadDeviceIOFuncType.html#ac80a925474ac1bd1445facebd38990c3',1,'AudioSinkPadDeviceIOFuncType']]],
+  ['predictiondisabled_17',['predictionDisabled',['../structCeiOpusConfig.html#aba6bd290de48acc981b84238afeaaa9b',1,'CeiOpusConfig']]],
+  ['preset_5fnum_18',['preset_num',['../structext__proc__args.html#a60e9f796c42c7a88ee9db90686182ce8',1,'ext_proc_args']]],
+  ['proc_5ffunc_19',['proc_func',['../structEXT__PROCESS__DESC__T.html#abddfd0c2bd5179214330c79732c9d165',1,'EXT_PROCESS_DESC_T::proc_func()'],['../structAudioSinkPadDeviceIOFuncType.html#a04a24828c2c2c74098c6552b21a2f4ee',1,'AudioSinkPadDeviceIOFuncType::proc_func()'],['../struct__ElementEap.html#a6128aef1f47a5000a1fff71815e7dfdd',1,'_ElementEap::proc_func()'],['../struct__ElementVitSink.html#ae874c4e74e51d31a69ed306613180d70',1,'_ElementVitSink::proc_func()']]],
+  ['processed_20',['processed',['../structSTREAMER__MSG__T.html#a4c86041095d43112c527b23cbd839c3a',1,'STREAMER_MSG_T']]],
+  ['prop_21',['prop',['../structELEMENT__PROPERTY__T.html#a40dc39f13a8d25b45d19d63498082e10',1,'ELEMENT_PROPERTY_T']]],
+  ['property_22',['property',['../structElementPropertyLookup.html#afad74371ace0d3e90779e491bfbe021f',1,'ElementPropertyLookup']]],
+  ['property_5flookup_5ftable_23',['property_lookup_table',['../streamer__msg_8c.html#a6a6fa8aa9a1a7a0c1419dd160bfe7b10',1,'streamer_msg.c']]],
+  ['ptr_24',['ptr',['../structSET__BUFFER__DESC__T.html#a7f2e71fd104a040038a8a118cde41c30',1,'SET_BUFFER_DESC_T::ptr()'],['../structBufferInfo.html#ad43df7a66fbbd79a1accab6d61c3c456',1,'BufferInfo::ptr()']]],
+  ['pull_5fhandler_25',['pull_handler',['../struct__PadSrc.html#a048700003b65fe03e6ffd5ae88b6799f',1,'_PadSrc']]],
+  ['pullbuf_26',['pullbuf',['../struct__ElementFileSink.html#a9705306ed59b5522645785a111ef5de9',1,'_ElementFileSink']]]
 ];

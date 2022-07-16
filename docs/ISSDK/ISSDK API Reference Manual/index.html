@@ -44,8 +44,8 @@ $(function() {
 <div class="title">Introduction </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>ISSDK 1.8 is designed as a middleware component inside the MCUXpresso SDK 2.11.0 Rel 15 ecosystem. This means that ISSDK 1.8 takes advantage of the deployment infrastructure, device specific drivers, and project creation tools to supply customers with a consistent “out-of-box” experience. In addition to the base enablement, the ISSDK is augmented with demo sensor and algorithm example projects for supported board-kits, and API documentation to help users quickly leverage the support of the ISSDK 1.8.</p>
-<p>ISSDK 1.8 is fully integrated into the MCUXpresso Web &amp; SDK Builder (Previously known as Kinetis Expert (KEx)) delivery system. MCUXpresso Web &amp; SDK Builder is a cloud-based system used to build MCUXpresso SDK 2.11.0 packages. MCUXpresso Web &amp; SDK Builder includes both cloud and locally based tools to collect and build projects from the MCUXpresso SDK repositories. MCUXpresso SDK 2.11.0 is built using a hierarchy of deployed Git repositories. Specific project codebases are built through the online tool. A given codebase is specified by its target (i.e., the device, board, or kit desired), the version of MCUXpresso SDK 2.x, the supported IDEs (i.e., MCUXpresso IDE, IAR, Keil MDK, ARM GCC) and the target Host OS(i.e., Windows, Mac, or Linux).</p>
+<div class="textblock"><p>ISSDK 1.8 is designed as a middleware component inside the MCUXpresso SDK 2.12.0 ecosystem. This means that ISSDK 1.8 takes advantage of the deployment infrastructure, device specific drivers, and project creation tools to supply customers with a consistent “out-of-box” experience. In addition to the base enablement, the ISSDK is augmented with demo sensor and algorithm example projects for supported board-kits, and API documentation to help users quickly leverage the support of the ISSDK 1.8.</p>
+<p>ISSDK 1.8 is fully integrated into the MCUXpresso Web &amp; SDK Builder (Previously known as Kinetis Expert (KEx)) delivery system. MCUXpresso Web &amp; SDK Builder is a cloud-based system used to build MCUXpresso SDK 2.11.0 packages. MCUXpresso Web &amp; SDK Builder includes both cloud and locally based tools to collect and build projects from the MCUXpresso SDK repositories. MCUXpresso SDK 2.12.0 is built using a hierarchy of deployed Git repositories. Specific project codebases are built through the online tool. A given codebase is specified by its target (i.e., the device, board, or kit desired), the version of MCUXpresso SDK 2.x, the supported IDEs (i.e., MCUXpresso IDE, IAR, Keil MDK, ARM GCC) and the target Host OS(i.e., Windows, Mac, or Linux).</p>
 <p>For each Sensor Driver and communications channel there is a set of Driver Examples which demonstrate the usage of the Sensor Driver over a variety of conditions that make sense for the sensor. List of supported Sensors:</p>
 <a class="anchor" id="multi_row"></a>
 <table class="doxtable">
@@ -54,6 +54,10 @@ $(function() {
 <th>Sensor</th><th>Sensor Type</th><th>Interface </th></tr>
 <tr>
 <td>FXLS8964AF</td><td>3-Axis Digital Accelerometer</td><td>I2C and SPI </td></tr>
+<tr>
+<td>FXLS8967AF</td><td>3-Axis Digital Accelerometer</td><td>I2C and SPI </td></tr>
+<tr>
+<td>FXLS8974CF</td><td>3-Axis Digital Accelerometer</td><td>I2C and SPI </td></tr>
 <tr>
 <td>FXAS21002C</td><td>3-Axis Digital Gyroscope</td><td>I2C and SPI </td></tr>
 <tr>
@@ -95,7 +99,7 @@ $(function() {
 <tr>
 <th>Sensor Kit</th><th>MCU Board</th><th>Sensor Shield Board </th></tr>
 <tr>
-<td>FRDM-K22F-A8964</td><td>FRDM-K22F</td><td>FRDM-STBA-A8964 </td></tr>
+<td>FRDM-K22F-A8974</td><td>FRDM-K22F</td><td>FRDM-STBI-A8974 </td></tr>
 <tr>
 <td>FRDM-K22F-AGM01</td><td>FRDM-K22F</td><td>FRDM-STBC-AGM01 </td></tr>
 <tr>
@@ -128,6 +132,10 @@ $(function() {
 <caption>Custom Sensor Kits</caption>
 <tr>
 <th>Sensor Kit</th><th>MCU Board</th><th>Sensor Shield Board </th></tr>
+<tr>
+<td>FRDM-K22F with A8964</td><td>FRDM-K22F</td><td>FRDM-STBA-A8964 </td></tr>
+<tr>
+<td>FRDM-K22F with A8967</td><td>FRDM-K22F</td><td>FRDM-STBA-A8967 </td></tr>
 <tr>
 <td>FRDM-K64F with MULT2B</td><td>FRDM-K64F</td><td>FRDM-FXS-MULT2-B </td></tr>
 <tr>

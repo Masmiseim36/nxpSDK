@@ -62,6 +62,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1021/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
@@ -101,6 +102,8 @@ include(utility_assert_MIMXRT1021)
 include(driver_xip_device_MIMXRT1021)
 
 include(driver_xip_board_evkmimxrt1020_MIMXRT1021)
+
+include(component_silicon_id_MIMXRT1021)
 
 include(CMSIS_Include_core_cm_MIMXRT1021)
 

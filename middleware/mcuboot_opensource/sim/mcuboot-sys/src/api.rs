@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2019 Linaro LTD
+// Copyright (c) 2017-2021 Linaro LTD
 // Copyright (c) 2018-2019 JUUL Labs
 //
 // SPDX-License-Identifier: Apache-2.0
@@ -6,7 +6,6 @@
 //! HAL api for MyNewt applications
 
 use crate::area::CAreaDesc;
-use libc;
 use log::{Level, log_enabled, warn};
 use simflash::{Result, Flash, FlashPtr};
 use std::{
@@ -21,11 +20,43 @@ use std::{
 pub type FlashMap = HashMap<u8, FlashPtr>;
 
 pub struct FlashParamsStruct {
-    align: u16,
+    align: u32,
     erased_val: u8,
 }
 
 pub type FlashParams = HashMap<u8, FlashParamsStruct>;
+
+/// The `boot_rsp` structure used by boot_go.
+#[repr(C)]
+#[derive(Debug)]
+pub struct BootRsp {
+    pub br_hdr: *const ImageHeader,
+    pub flash_dev_id: u8,
+    pub image_off: u32,
+}
+
+// TODO: Don't duplicate this image header declaration.
+#[repr(C)]
+#[derive(Debug)]
+pub struct ImageHeader {
+    magic: u32,
+    load_addr: u32,
+    hdr_size: u16,
+    protect_tlv_size: u16,
+    img_size: u32,
+    flags: u32,
+    ver: ImageVersion,
+    _pad2: u32,
+}
+
+#[repr(C)]
+#[derive(Debug)]
+pub struct ImageVersion {
+    pub major: u8,
+    pub minor: u8,
+    pub revision: u16,
+    pub build_num: u32,
+}
 
 pub struct CAreaDescPtr {
    pub ptr: *const CAreaDesc,
@@ -39,6 +70,16 @@ pub struct FlashContext {
 
 impl FlashContext {
     pub fn new() -> FlashContext {
+        FlashContext {
+            flash_map: HashMap::new(),
+            flash_params: HashMap::new(),
+            flash_areas: CAreaDescPtr{ptr: ptr::null()},
+        }
+    }
+}
+
+impl Default for FlashContext {
+    fn default() -> FlashContext {
         FlashContext {
             flash_map: HashMap::new(),
             flash_params: HashMap::new(),
@@ -72,25 +113,51 @@ impl CSimContextPtr {
     }
 }
 
+impl Default for CSimContextPtr {
+    fn default() -> CSimContextPtr {
+        CSimContextPtr {
+            ptr: ptr::null(),
+        }
+    }
+}
+
+/// This struct describes the RAM layout of the current device.  It will be stashed, per test
+/// thread, and queried by the C code.
+#[repr(C)]
+#[derive(Debug, Default)]
+pub struct BootsimRamInfo {
+    pub start: u32,
+    pub size: u32,
+    pub base: usize,
+}
+
 thread_local! {
     pub static THREAD_CTX: RefCell<FlashContext> = RefCell::new(FlashContext::new());
     pub static SIM_CTX: RefCell<CSimContextPtr> = RefCell::new(CSimContextPtr::new());
+    pub static RAM_CTX: RefCell<BootsimRamInfo> = RefCell::new(BootsimRamInfo::default());
 }
 
-// Set the flash device to be used by the simulation.  The pointer is unsafely stashed away.
-pub unsafe fn set_flash(dev_id: u8, dev: &mut dyn Flash) {
+/// Set the flash device to be used by the simulation.  The pointer is unsafely stashed away.
+///
+/// # Safety
+///
+/// This uses mem::transmute to stash a Rust pointer into a C value to
+/// retrieve later.  It should be safe to use this.
+pub fn set_flash(dev_id: u8, dev: &mut dyn Flash) {
     THREAD_CTX.with(|ctx| {
         ctx.borrow_mut().flash_params.insert(dev_id, FlashParamsStruct {
-            align: dev.align() as u16,
+            align: dev.align() as u32,
             erased_val: dev.erased_val(),
         });
-        let dev: &'static mut dyn Flash = mem::transmute(dev);
-        ctx.borrow_mut().flash_map.insert(
-            dev_id, FlashPtr{ptr: dev as *mut dyn Flash});
+        unsafe {
+            let dev: &'static mut dyn Flash = mem::transmute(dev);
+            ctx.borrow_mut().flash_map.insert(
+                dev_id, FlashPtr{ptr: dev as *mut dyn Flash});
+        }
     });
 }
 
-pub unsafe fn clear_flash(dev_id: u8) {
+pub fn clear_flash(dev_id: u8) {
     THREAD_CTX.with(|ctx| {
         ctx.borrow_mut().flash_map.remove(&dev_id);
     });
@@ -141,6 +208,32 @@ pub extern fn sim_reset_context() {
 }
 
 #[no_mangle]
+pub extern "C" fn bootsim_get_ram_info() -> *const BootsimRamInfo {
+    RAM_CTX.with(|ctx| {
+        if ctx.borrow().base == 0 {
+            // Option is messier to get a pointer out of, so just check if the base has been set to
+            // anything.
+            panic!("ram info not set, but being used");
+        }
+        ctx.as_ptr()
+    })
+}
+
+/// Store a copy of this RAM info.
+pub fn set_ram_info(info: BootsimRamInfo) {
+    RAM_CTX.with(|ctx| {
+        ctx.replace(info);
+    });
+}
+
+/// Clear out the ram info.
+pub fn clear_ram_info() {
+    RAM_CTX.with(|ctx| {
+        ctx.borrow_mut().base = 0;
+    });
+}
+
+#[no_mangle]
 pub extern fn sim_flash_erase(dev_id: u8, offset: u32, size: u32) -> libc::c_int {
     let mut rc: libc::c_int = -19;
     THREAD_CTX.with(|ctx| {
@@ -179,7 +272,7 @@ pub extern fn sim_flash_write(dev_id: u8, offset: u32, src: *const u8, size: u32
 }
 
 #[no_mangle]
-pub extern fn sim_flash_align(id: u8) -> u16 {
+pub extern fn sim_flash_align(id: u8) -> u32 {
     THREAD_CTX.with(|ctx| {
         ctx.borrow().flash_params.get(&id).unwrap().align
     })

@@ -7,10 +7,10 @@ board running a HFP AG application. And the HF example support accept/reject/End
 
 Toolchain supported
 ===================
-- MCUXpresso  11.5.0
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.6.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- GCC ARM Embedded  10.3.1
 
 Hardware requirements
 =====================
@@ -118,6 +118,7 @@ PCM_SYNC |  J11(pin 3)  |   J21(pin 9)   |    SAI2_RX_SYNC    | GPIO_AD_B0_07
 PCM_CLK  |  J11(pin 4)  |   J21(pin 7)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
 GND      |  J11(pin 6)  |   J21(pin 20)  |    GND             | GND
 ------------------------------------------------------------------------------------
+Note: AzureWave AW-AM510-USD Module without fireware runing will plug the RT jlink pin, fail to download image, need disconnect J9(pin 2)/TP11 pin.
 
 Jumper settings for AzureWave AW-CM358-uSD Module:
   - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)

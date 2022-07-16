@@ -217,6 +217,7 @@ var searchData=
   ['pxp_5fas_5fbuffer_5fconfig_5ft',['pxp_as_buffer_config_t',['../a00058.html#a00460',1,'']]],
   ['pxp_5fas_5fpixel_5fformat_5ft',['pxp_as_pixel_format_t',['../a00058.html#ga5415ad6494be336b345385bc66e5374a',1,'fsl_pxp.h']]],
   ['pxp_5fblock_5fsize_5ft',['pxp_block_size_t',['../a00058.html#gaf83cdca4f0cb8ac8d005ed4ea9f152ae',1,'fsl_pxp.h']]],
+  ['pxp_5fbuildrect',['PXP_BuildRect',['../a00058.html#gaf75a0bda73f3b24179509cf9e1eff23d',1,'fsl_pxp.h']]],
   ['pxp_5fcancelnextcommand',['PXP_CancelNextCommand',['../a00058.html#ga8261582d4b35311cd03231e4d27b8a19',1,'fsl_pxp.h']]],
   ['pxp_5fclearstatusflags',['PXP_ClearStatusFlags',['../a00058.html#ga03abdf1ea37da9eb1d87d279068250aa',1,'fsl_pxp.h']]],
   ['pxp_5fclocks',['PXP_CLOCKS',['../a00011.html#gad88afb286e1fafa3be698c550d31adb6',1,'fsl_clock.h']]],
@@ -271,7 +272,5 @@ var searchData=
   ['pxp_5fsetprocesssurfacescaler',['PXP_SetProcessSurfaceScaler',['../a00058.html#ga0bb8c79014141a66b47b6d13889b6982',1,'fsl_pxp.h']]],
   ['pxp_5fsetprocesssurfaceyuvformat',['PXP_SetProcessSurfaceYUVFormat',['../a00058.html#ga1da6bab10d611e5c00a005d6c33c17e8',1,'fsl_pxp.h']]],
   ['pxp_5fsetrotateconfig',['PXP_SetRotateConfig',['../a00058.html#ga0ae3e7e2b902aed4ad4a1e3de73e3345',1,'fsl_pxp.h']]],
-  ['pxp_5fstart',['PXP_Start',['../a00058.html#ga403087332729f6b471321da69c4e5613',1,'fsl_pxp.h']]],
-  ['pxp_5fstartmemcopy',['PXP_StartMemCopy',['../a00058.html#ga9a0982380fc4bdfd546bfe6e1f83b0c4',1,'fsl_pxp.h']]],
-  ['pxp_5fstartpicturecopy',['PXP_StartPictureCopy',['../a00058.html#ga5b151a90a397af37d8844a4a4d716042',1,'fsl_pxp.h']]]
+  ['pxp_5fstart',['PXP_Start',['../a00058.html#ga403087332729f6b471321da69c4e5613',1,'fsl_pxp.h']]]
 ];

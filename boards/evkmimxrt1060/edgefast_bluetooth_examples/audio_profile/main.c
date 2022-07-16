@@ -40,6 +40,8 @@
 #include "usb_phy.h"
 #include "fsl_adapter_uart.h"
 #include "controller.h"
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+#endif /* CONFIG_BT_SMP */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -238,6 +240,9 @@ void main(void)
     /* Turn on Bluetooth module */
     GPIO_PinWrite(MURATA_WIFI_RESET_GPIO, MURATA_WIFI_RESET_GPIO_PIN, 1U);
 #endif
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+    CRYPTO_InitHardware();
+#endif /* CONFIG_BT_SMP */
     CRYPTO_InitHardware();
     USB_HostApplicationInit();
 

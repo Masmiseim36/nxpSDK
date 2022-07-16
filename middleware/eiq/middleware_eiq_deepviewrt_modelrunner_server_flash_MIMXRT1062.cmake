@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_eiq_deepviewrt_modelrunner_server_flash component is included.")
 
 

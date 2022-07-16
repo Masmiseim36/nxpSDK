@@ -28,6 +28,7 @@ static bool_t s_statusPass;
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
 {
     frac16_t f16DutyCycle, f16DutyCycleTemp, f16ModuloTemp;
@@ -69,6 +70,7 @@ void MCDRV_eFlexPwm3PhSet(mcdrv_pwm3ph_pwma_t *this)
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this)
 {
 
@@ -94,6 +96,7 @@ void MCDRV_eFlexPwm3PhOutEn(mcdrv_pwm3ph_pwma_t *this)
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this)
 {
 
@@ -126,6 +129,7 @@ void MCDRV_eFlexPwm3PhOutDis(mcdrv_pwm3ph_pwma_t *this)
  *
  * @return boot_t true on success
  */
+RAM_FUNC_LIB
 bool_t MCDRV_eFlexPwm3PhFltGet(mcdrv_pwm3ph_pwma_t *this)
 {
     /* read over-current flags */

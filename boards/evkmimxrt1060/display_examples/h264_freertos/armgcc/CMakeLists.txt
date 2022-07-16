@@ -93,6 +93,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/video/display/dc/elcdif
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../components/video/display/fbdev
@@ -104,6 +105,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../components/video/display/dc
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/osa
@@ -124,6 +126,8 @@ include(utility_debug_console_lite_MIMXRT1062)
 include(utility_assert_lite_MIMXRT1062)
 
 include(driver_usdhc_MIMXRT1062)
+
+include(component_igpio_adapter_MIMXRT1062)
 
 include(middleware_sdmmc_sd_MIMXRT1062)
 
@@ -166,6 +170,8 @@ include(driver_igpio_MIMXRT1062)
 include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
+
+include(component_silicon_id_MIMXRT1062)
 
 include(driver_dc-fb-common_MIMXRT1062)
 

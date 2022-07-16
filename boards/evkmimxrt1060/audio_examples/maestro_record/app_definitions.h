@@ -24,6 +24,7 @@
 #define DEMO_SAI_IRQ       SAI1_IRQn
 #define SAI_UserIRQHandler SAI1_IRQHandler
 #define DEMO_CHANNEL_NUM   2
+#define DEMO_CODEC_CHANNEL kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight
 
 /* IRQ */
 #define DEMO_SAI_TX_IRQ SAI1_IRQn
@@ -58,6 +59,7 @@
 /* Get frequency of lpi2c clock */
 #define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
+#define DEMO_VOLUME (75)
 /*${macro:end}*/
 
 #endif /* _APP_DEFINITIONS_H_ */

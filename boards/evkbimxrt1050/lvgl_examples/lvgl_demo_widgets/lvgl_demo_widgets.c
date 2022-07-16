@@ -13,7 +13,7 @@
 #include "pin_mux.h"
 #include "board.h"
 #include "lvgl.h"
-#include "lv_examples/src/lv_demo_widgets/lv_demo_widgets.h"
+#include "demos/lv_demos.h"
 
 /*******************************************************************************
  * Definitions
@@ -24,23 +24,9 @@ static volatile bool s_lvgl_initialized = false;
  * Prototypes
  ******************************************************************************/
 #if LV_USE_LOG
-static void print_cb(lv_log_level_t level, const char *file, uint32_t line, const char *func, const char *buf)
+static void print_cb(const char *buf)
 {
-    /*Use only the file name not the path*/
-    size_t p;
-
-    for (p = strlen(file); p > 0; p--)
-    {
-        if (file[p] == '/' || file[p] == '\\')
-        {
-            p++; /*Skip the slash*/
-            break;
-        }
-    }
-
-    static const char *lvl_prefix[] = {"Trace", "Info", "Warn", "Error", "User"};
-
-    PRINTF("\r%s: %s \t(%s #%d %s())\n", lvl_prefix[level], buf, &file[p], line, func);
+    PRINTF("\r%s\n", buf);
 }
 #endif
 
@@ -119,7 +105,7 @@ void BOARD_ReconfigFlexSpiRxBuffer(void)
     FLEXSPI->AHBRXBUFCR0[3] =
         FLEXSPI_AHBRXBUFCR0_PREFETCHEN_MASK | FLEXSPI_AHBRXBUFCR0_MSTRID(3) | FLEXSPI_AHBRXBUFCR0_BUFSZ(0x40);
 
-   FLEXSPI->AHBCR = ahbcr; /* Set AHBCR back to the original value */
+    FLEXSPI->AHBCR = ahbcr; /* Set AHBCR back to the original value */
 
     /* Enable I cache and D cache */
     SCB_EnableDCache();

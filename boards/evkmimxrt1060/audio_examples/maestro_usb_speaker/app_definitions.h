@@ -27,15 +27,12 @@
 
 /* IRQ */
 #define DEMO_SAI_TX_IRQ SAI1_IRQn
-#define DEMO_SAI_RX_IRQ SAI1_IRQn
 
 /* DMA */
 #define DEMO_DMA           DMA0
 #define DEMO_DMAMUX        DMAMUX
 #define DEMO_TX_CHANNEL    (0U)
-#define DEMO_RX_CHANNEL    (1U)
 #define DEMO_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
-#define DEMO_SAI_RX_SOURCE kDmaRequestMuxSai1Rx
 
 /* Select Audio/Video PLL (786.48 MHz) as sai1 clock source */
 #define DEMO_SAI1_CLOCK_SOURCE_SELECT (2U)

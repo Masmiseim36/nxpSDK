@@ -15,14 +15,22 @@
  * Prototypes
  ******************************************************************************/
 
+RAM_FUNC_LIB
 static void SM_StateFaultFast(sm_app_ctrl_t *psAppCtrl);
+RAM_FUNC_LIB
 static void SM_StateInitFast(sm_app_ctrl_t *psAppCtrl);
+RAM_FUNC_LIB
 static void SM_StateStopFast(sm_app_ctrl_t *psAppCtrl);
+RAM_FUNC_LIB
 static void SM_StateRunFast(sm_app_ctrl_t *psAppCtrl);
 
+RAM_FUNC_LIB
 static void SM_StateFaultSlow(sm_app_ctrl_t *psAppCtrl);
+RAM_FUNC_LIB
 static void SM_StateInitSlow(sm_app_ctrl_t *psAppCtrl);
+RAM_FUNC_LIB
 static void SM_StateStopSlow(sm_app_ctrl_t *psAppCtrl);
+RAM_FUNC_LIB
 static void SM_StateRunSlow(sm_app_ctrl_t *psAppCtrl);
 
 /*******************************************************************************
@@ -46,6 +54,7 @@ const pfcn_void_psm g_SM_STATE_TABLE_SLOW[4] = {SM_StateFaultSlow, SM_StateInitS
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void SM_StateFaultFast(sm_app_ctrl_t *psAppCtrl)
 {
     /* User Fault function */
@@ -72,6 +81,7 @@ static void SM_StateFaultFast(sm_app_ctrl_t *psAppCtrl)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void SM_StateInitFast(sm_app_ctrl_t *psAppCtrl)
 {
     /* User Init function */
@@ -112,6 +122,7 @@ static void SM_StateInitFast(sm_app_ctrl_t *psAppCtrl)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void SM_StateStopFast(sm_app_ctrl_t *psAppCtrl)
 {
     /* User Stop function */
@@ -155,6 +166,7 @@ static void SM_StateStopFast(sm_app_ctrl_t *psAppCtrl)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void SM_StateRunFast(sm_app_ctrl_t *psAppCtrl)
 {
     /* User Run function */
@@ -196,6 +208,7 @@ static void SM_StateRunFast(sm_app_ctrl_t *psAppCtrl)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void SM_StateFaultSlow(sm_app_ctrl_t *psAppCtrl)
 {
     psAppCtrl->psStateSlow->Fault();
@@ -208,6 +221,7 @@ static void SM_StateFaultSlow(sm_app_ctrl_t *psAppCtrl)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void SM_StateInitSlow(sm_app_ctrl_t *psAppCtrl)
 {
     psAppCtrl->psStateSlow->Init();
@@ -220,6 +234,7 @@ static void SM_StateInitSlow(sm_app_ctrl_t *psAppCtrl)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void SM_StateStopSlow(sm_app_ctrl_t *psAppCtrl)
 {
     psAppCtrl->psStateSlow->Stop();
@@ -232,6 +247,7 @@ static void SM_StateStopSlow(sm_app_ctrl_t *psAppCtrl)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void SM_StateRunSlow(sm_app_ctrl_t *psAppCtrl)
 {
     psAppCtrl->psStateSlow->Run();

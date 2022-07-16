@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP.
+ * Copyright 2018-2022 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -20,188 +20,97 @@
  * CONSTANTS, DEFINES AND MACROS
  */
 
-/* BLD_MESSAGE:
- * @msg: Message id
- * @type: message type
+/**
+ * @brief Build a message
  *
- *   Msg Id                 Message type
- *  ---------------------------------------------------------
- *  |           |                                           |
- *  ---------------------------------------------------------
- *    31-24                    23-0
  *
- * Max ids of message is 8. Each Id can have 24 types.
+ * @param msg: Message id
+ * @param type: message type
+ *
+ * @details
+ * Max ID of message is 8. Each ID can have 24 types.
+ * Bits 31-24: Message ID
+ * Bits 23-0:  Message type
+ *
+ *
  */
-#define BLD_MESSAGE(msg, type)   \
-        ((uint32_t)(((uint32_t)(msg)<<24)|((uint32_t)(type))))
+#define BLD_MESSAGE(msg, type) ((uint32_t)(((uint32_t)(msg) << 24) | ((uint32_t)(type))))
 
-#define MESSAGE_ID(msg)          (uint32_t)((msg) >> 24)
-#define MESSAGE_TYPE(msg)        (uint32_t)((msg) & 0xFFF)
+/**
+ * @brief Get message ID
+ *
+ */
+#define MESSAGE_ID(msg) (uint32_t)((msg) >> 24)
+
+/**
+ * @brief Get message type
+ *
+ */
+#define MESSAGE_TYPE(msg) (uint32_t)((msg)&0xFFF)
 
 /*-------------------------------- Messages ---------------------------------*/
-#define MSG_NULL    (uint32_t)0
 
-/*!
- * MSG_EOS
- * End of stream message from the pipeline.
- */
-#define MSG_EOS                  BLD_MESSAGE(MESSAGE_EOS, 0)
+/** @brief Null message */
+#define MSG_NULL (uint32_t)0
 
-/*!
- * MSG_ERROR_AUDIO
- * Actual error type will be decoder dependent passed on in message data field.
- */
-#define MSG_ERROR_AUDIO          BLD_MESSAGE(MESSAGE_ERROR, ERROR_VIDEO_FATAL)
+/** @brief End of stream message from the pipeline. */
+#define MSG_EOS BLD_MESSAGE(MESSAGE_EOS, 0)
 
-/*!
- * MSG_ERROR_VIDEO
- * Actual error type will be decoder dependent passed on in message data field.
- */
-#define MSG_ERROR_VIDEO          BLD_MESSAGE(MESSAGE_ERROR, ERROR_AUDIO_FATAL)
+/** @brief Actual error type will be decoder dependent passed on in message data field. */
+#define MSG_ERROR_AUDIO BLD_MESSAGE(MESSAGE_ERROR, ERROR_AUDIO_FATAL)
 
-/*!
- * MSG_WARNING_AUDIO
- * Actual warning type will be decoder dependent passed on in message data field
- */
-#define MSG_WARNING_AUDIO        BLD_MESSAGE(MESSAGE_ERROR, WARNING_AUDIO)
+/** @brief Actual warning type will be decoder dependent passed on in message data field */
+#define MSG_WARNING_AUDIO BLD_MESSAGE(MESSAGE_ERROR, WARNING_AUDIO)
 
-/*!
- * MSG_WARNING_VIDEO
- * Actual warning type will be decoder dependent passed on in message data field
- */
-#define MSG_WARNING_VIDEO        BLD_MESSAGE(MESSAGE_ERROR, WARNING_VIDEO)
+/** @brief Message data will contain the bitrate in bits per second. */
+#define MSG_INFO_AUDIO_BITRATE BLD_MESSAGE(MESSAGE_INFO, INFO_AUDIO_BITRATE)
 
-/*!
- * MSG_INFO_VIDEO_BITRATE
- * Message data will contain the bitrate in bits per second.
- */
-#define MSG_INFO_VIDEO_BITRATE   BLD_MESSAGE(MESSAGE_INFO, INFO_VIDEO_BITRATE)
+/** @brief Message data will contain the number of channels supported. */
+#define MSG_INFO_AUDIO_CHANNELS BLD_MESSAGE(MESSAGE_INFO, INFO_AUDIO_CHANNELS)
 
-/*!
- * MSG_INFO_VIDEO_FRAMERATE
- * Message data will contain the bitrate in frames per second.
- */
-#define MSG_INFO_VIDEO_FRAMERATE BLD_MESSAGE(MESSAGE_INFO, INFO_VIDEO_FRAMERATE)
+/** @brief Message data will contain the audio sampling rate in Hz. */
+#define MSG_INFO_AUDIO_SAMPLERATE BLD_MESSAGE(MESSAGE_INFO, INFO_AUDIO_SAMPLERATE)
 
-/*!
- * MSG_INFO_VIDEO_TYPE
- * Message data will contain the type of video. Video type depends on the
- * decoders supported.
- */
-#define MSG_INFO_VIDEO_TYPE      BLD_MESSAGE(MESSAGE_INFO, INFO_VIDEO_TYPE)
+/** @brief Message data will contain the type of audio. Audio type depends on the decoders supported. */
+#define MSG_INFO_AUDIO_TYPE BLD_MESSAGE(MESSAGE_INFO, INFO_AUDIO_TYPE)
 
-/*!
- * MSG_INFO_AUDIO_BITRATE
- * Message data will contain the bitrate in bits per second.
- */
-#define MSG_INFO_AUDIO_BITRATE   BLD_MESSAGE(MESSAGE_INFO, INFO_AUDIO_BITRATE)
+/** @brief Message data will contain the pointer to a string of codec info */
+#define MSG_INFO_CODEC_INFO BLD_MESSAGE(MESSAGE_INFO, INFO_CODEC_INFO)
 
-/*!
- * MSG_INFO_AUDIO_CHANNELS
- * Message data will contain the number of channels supported.
- */
-#define MSG_INFO_AUDIO_CHANNELS  BLD_MESSAGE(MESSAGE_INFO, INFO_AUDIO_CHANNELS)
+/** @brief Message data will contain the total duration of playback in milliseconds. */
+#define MSG_INFO_DURATION BLD_MESSAGE(MESSAGE_INFO, INFO_DURATION)
 
-/*!
- * MSG_INFO_AUDIO_SAMPLERATE
- * Message data will contain the audio sampling rate in Hz.
- */
-#define MSG_INFO_AUDIO_SAMPLERATE    \
-        BLD_MESSAGE(MESSAGE_INFO, INFO_AUDIO_SAMPLERATE)
+/** @brief Nothing in message data.  get tag function should be called to get the required tag. */
+#define MSG_INFO_ALBUM BLD_MESSAGE(MESSAGE_INFO, INFO_ALBUM)
 
-/*!
- * MSG_INFO_AUDIO_TYPE
- * Message data will contain the type of audio. Audio type depends on the
- * decoders supported.
- */
-#define MSG_INFO_AUDIO_TYPE      BLD_MESSAGE(MESSAGE_INFO, INFO_AUDIO_TYPE)
+/** @brief Nothing in message data.  get tag function should be called to get the required tag. */
+#define MSG_INFO_ARTIST BLD_MESSAGE(MESSAGE_INFO, INFO_ARTIST)
 
-/*!
- * MSG_INFO_CODEC_INFO
- * Message data will contain the pointer to a string of codec info
- */
-#define MSG_INFO_CODEC_INFO      BLD_MESSAGE(MESSAGE_INFO, INFO_CODEC_INFO)
+/** @brief Nothing in message data.  get tag function should be called to get the required tag. */
+#define MSG_INFO_TITLE BLD_MESSAGE(MESSAGE_INFO, INFO_TITLE)
 
-/*!
- * MSG_INFO_DURATION
- * Message data will contain the total duration of playback in milliseconds.
- */
-#define MSG_INFO_DURATION        BLD_MESSAGE(MESSAGE_INFO, INFO_DURATION)
+/** @brief Nothing in message data.  get tag function should be called to get the required tag. */
+#define MSG_INFO_GENRE BLD_MESSAGE(MESSAGE_INFO, INFO_GENRE)
 
-/*!
- * MSG_INFO_ALBUM
- * Nothing in message data.  get tag function should be called to get the
- * required tag.
- */
-#define MSG_INFO_ALBUM            BLD_MESSAGE(MESSAGE_INFO, INFO_ALBUM)
+/** @brief Nothing in message data.  get tag function should be called to get the required tag. */
+#define MSG_INFO_YEAR BLD_MESSAGE(MESSAGE_INFO, INFO_YEAR)
 
-/*!
- * MSG_INFO_ARTIST
- * Nothing in message data.  get tag function should be called to get the
- * required tag.
- */
-#define MSG_INFO_ARTIST           BLD_MESSAGE(MESSAGE_INFO, INFO_ARTIST)
+/** @brief Nothing in message data.  get tag function should be called to get the required tag. */
+#define MSG_INFO_TRACK BLD_MESSAGE(MESSAGE_INFO, INFO_TRACK)
 
-/*!
- * MSG_INFO_TITLE
- * Nothing in message data.  get tag function should be called to get the
- * required tag.
- */
-#define MSG_INFO_TITLE            BLD_MESSAGE(MESSAGE_INFO, INFO_TITLE)
+/** @brief Message data will contain the total duration of playback in milliseconds. */
+#define MSG_INFO_ALBUMART BLD_MESSAGE(MESSAGE_INFO, INFO_ALBUMART_IMAGE)
 
-/*!
- * MSG_INFO_GENRE
- * Nothing in message data.  get tag function should be called to get the
- * required tag.
- */
-#define MSG_INFO_GENRE            BLD_MESSAGE(MESSAGE_INFO, INFO_GENRE)
+/** @brief Message data will contain the current time of playback in milliseconds. */
+#define MSG_INFO_POSITION BLD_MESSAGE(MESSAGE_INFO, INFO_POSITION)
 
-/*!
- * MSG_INFO_YEAR
- * Nothing in message data.  get tag function should be called to get the
- * required tag.
- */
-#define MSG_INFO_YEAR             BLD_MESSAGE(MESSAGE_INFO, INFO_YEAR)
+/** @brief Nothing in message data. indicate that all stream information is updated */
+#define MSG_STREAM_INFO_UPDATED BLD_MESSAGE(MESSAGE_INFO, INFO_STREAM_INFO_UPDATE)
 
-/*!
- * MSG_INFO_TRACK
- * Nothing in message data.  get tag function should be called to get the
- * required tag.
- */
+/** @brief Nothing in message data. indicate that all metadata information is updated */
+#define MSG_META_INFO_UPDATED BLD_MESSAGE(MESSAGE_INFO, INFO_META_INFO_UPDATE)
 
-#define MSG_INFO_TRACK             BLD_MESSAGE(MESSAGE_INFO, INFO_TRACK)
-
-/*!
- * MSG_INFO_ALBUMART
- * Message data will contain the total duration of playback in milliseconds.
- */
-#define MSG_INFO_ALBUMART         BLD_MESSAGE(MESSAGE_INFO, INFO_ALBUMART_IMAGE)
-
-/*!
- * MSG_INFO_POSITION
- * Message data will contain the current time of playback in milliseconds.
- */
-#define MSG_INFO_POSITION         BLD_MESSAGE(MESSAGE_INFO, INFO_POSITION)
-
-/*!
- * MSG_STREAM_INFO_UPDATED
- * Nothing in message data. indicate that all stream information is updated
- */
-#define MSG_STREAM_INFO_UPDATED   \
-                            BLD_MESSAGE(MESSAGE_INFO, INFO_STREAM_INFO_UPDATE)
-
-/*!
- * MSG_META_INFO_UPDATED
- * Nothing in message data. indicate that all metadata information is updated
- */
-#define MSG_META_INFO_UPDATED   \
-                            BLD_MESSAGE(MESSAGE_INFO, INFO_META_INFO_UPDATE)
-
-/*!
- * MSG_STREAM_ERROR
- * Message data will contain the error type.
- */
-#define MSG_STREAM_ERROR   \
-                            BLD_MESSAGE(MESSAGE_INFO, INFO_ERROR)
+/** @brief Message data will contain the error type. */
+#define MSG_STREAM_ERROR BLD_MESSAGE(MESSAGE_INFO, INFO_ERROR)
 
 #endif /* STREAMER_MESSAGE_H */

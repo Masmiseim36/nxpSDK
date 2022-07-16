@@ -49,49 +49,30 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6.h"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_address_set.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_address_get.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_create.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_destroy.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_flush.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_reset.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_stall.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_stall_clear.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_endpoint_status.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_frame_number_get.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_function.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_initialize.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_initialize_complete.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_interrupt_handler.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_interrupt_thread.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_qtd_get.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_register_clear.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_register_read.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_register_set.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_register_write.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_state_change.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_status_phase_hook.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_transfer_abort.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_transfer_callback.c"
-"${ProjDirPath}/../usbx_device_controllers/ux_dcd_mcimx6_transfer_request.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci.h"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_callback.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_control_callback.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_create.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_destroy.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_reset.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_stall.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_endpoint_status.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_frame_number_get.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_function.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_initialize.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_initialize_complete.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_transfer_callback.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_transfer_request.c"
+"${ProjDirPath}/../usbx_device_controllers/ux_dcd_nxp_dci_uninitialize.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board_setup.c"
 "${ProjDirPath}/../board_setup.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.c"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_config.h"
+"${ProjDirPath}/../usb_device_config.h"
 "${ProjDirPath}/../usbx_device_mass_storage.c"
 "${ProjDirPath}/../tx_user.h"
 "${ProjDirPath}/../fx_user.h"
 "${ProjDirPath}/../nx_user.h"
-"${ProjDirPath}/../ux_dcd_interrupt_handler.c"
 "${ProjDirPath}/../ux_user.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
@@ -103,14 +84,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/../usbx_device_controllers
-    ${ProjDirPath}/../../../../../middleware/usb/include
-    ${ProjDirPath}/../../../../../middleware/usb/phy
-    ${ProjDirPath}/../../../../../components/osa
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/azure-rtos
+    ${ProjDirPath}/../../../../../components/osa
+    ${ProjDirPath}/../../../../../middleware/usb
     ${ProjDirPath}/../../../../../devices/MIMXRT1021/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1021
     ${ProjDirPath}/../../../../../devices/MIMXRT1021/utilities
@@ -124,6 +104,16 @@ set(CMAKE_MODULE_PATH
 
 # include modules
 include(middleware_azure_rtos_ux_MIMXRT1021)
+
+include(component_osa_thread_MIMXRT1021)
+
+include(middleware_usb_device_controller_driver_MIMXRT1021)
+
+include(component_osa_MIMXRT1021)
+
+include(middleware_usb_device_ehci_MIMXRT1021)
+
+include(middleware_usb_phy_MIMXRT1021)
 
 include(driver_clock_MIMXRT1021)
 
@@ -169,9 +159,13 @@ include(middleware_azure_rtos_tx_MIMXRT1021)
 
 include(middleware_azure_rtos_tx_template_MIMXRT1021)
 
-include(utilities_misc_utilities_MIMXRT1021)
-
 include(CMSIS_Include_core_cm_MIMXRT1021)
+
+include(middleware_usb_common_header_MIMXRT1021)
+
+include(middleware_usb_device_common_header_MIMXRT1021)
+
+include(utilities_misc_utilities_MIMXRT1021)
 
 include(device_MIMXRT1021_system_MIMXRT1021)
 

@@ -227,7 +227,7 @@ int mbedtls_ecdh_compute_shared(mbedtls_ecp_group *grp,
     int keyBitLen            = 0;
     sss_status_t status;
     sss_object_t otherPartyKeyObject = {0};
-    sss_object_t derivedKeyObject = {0};
+    sss_object_t derivedKeyObject    = {0};
     sss_derive_key_t context;
     uint8_t SharedSecret[128];
     uint16_t SharedSecretlen = sizeof(SharedSecret);
@@ -407,8 +407,10 @@ int mbedtls_ecdh_compute_shared(mbedtls_ecp_group *grp,
                 }
                 ret = mbedtls_mpi_read_binary(z, buf, bufByteLen);
             } while (0);
+            
             sss_key_object_free(&otherPartyKeyObject);
-            sss_key_object_free(&derivedKeyObject);
+            sss_key_object_free(&derivedKeyObject);  
+ 
         }
     }
     else {

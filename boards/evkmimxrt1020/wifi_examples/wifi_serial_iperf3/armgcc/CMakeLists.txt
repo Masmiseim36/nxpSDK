@@ -51,6 +51,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/serial_mwm
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1021/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1021
@@ -60,6 +61,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1021/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -67,6 +69,8 @@ set(CMAKE_MODULE_PATH
 include(component_serial_mwm_MIMXRT1021)
 
 include(component_serial_mwm_lpuart_MIMXRT1021)
+
+include(component_igpio_adapter_MIMXRT1021)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1021)
 
@@ -101,6 +105,8 @@ include(driver_igpio_MIMXRT1021)
 include(driver_xip_device_MIMXRT1021)
 
 include(driver_xip_board_evkmimxrt1020_MIMXRT1021)
+
+include(component_silicon_id_MIMXRT1021)
 
 include(driver_lpuart_freertos_MIMXRT1021)
 

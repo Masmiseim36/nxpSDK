@@ -1,5 +1,5 @@
 /*
- * Copyright 2018,2020 NXP
+ * Copyright 2018,2020,2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -105,7 +105,7 @@ void USB_HostCdcRndisDataInCallback(void *param, uint8_t *data, uint32_t dataLen
             pbuf= pbuf_alloc(PBUF_RAW, temp->dataLength, PBUF_POOL);
             if (pbuf)
             {
-                
+
                 temp->dataBuffer[temp->dataLength] = 0;
                 pbuf->tot_len = temp->dataLength;
                 pbuf->len = temp->dataLength;
@@ -115,7 +115,7 @@ void USB_HostCdcRndisDataInCallback(void *param, uint8_t *data, uint32_t dataLen
                 /*in special case, when polling out packet, in packet maybe finihsed, the in packet will be not be handled*/
                 if (!rndisInstance->pollingInSending)
                 {
-                    netif->input(pbuf, netif);   
+                    netif->input(pbuf, netif);
                 }
             }
 
@@ -181,8 +181,8 @@ err_t USB_EthernetIfOutPut(struct netif *netif, struct pbuf *p)
                 rndisInstance->dataSend = 1;
                 if(total <= RNDIS_FRAME_MAX_FRAMELEN)
                 {
-                       
-                      USB_HostRndisSendDataMsg(rndisInstance->classHandle, rndisInstance->outPutBuffer, RNDIS_FRAME_MAX_FRAMELEN, 0, 0, 0, 0, 0, ((uint8_t*)p->payload + transferDone),total, 
+
+                      USB_HostRndisSendDataMsg(rndisInstance->classHandle, rndisInstance->outPutBuffer, RNDIS_FRAME_MAX_FRAMELEN, 0, 0, 0, 0, 0, ((uint8_t*)p->payload + transferDone),total,
                                                   USB_HostCdcRndisDataOutCallback, rndisInstance);
                       transferDone += total;
                       total = 0U;
@@ -190,10 +190,10 @@ err_t USB_EthernetIfOutPut(struct netif *netif, struct pbuf *p)
                 }
                 else
                 {
-                      USB_HostRndisSendDataMsg(rndisInstance->classHandle, rndisInstance->outPutBuffer, RNDIS_FRAME_MAX_FRAMELEN, 0, 0, 0, 0, 0, ((uint8_t*)p->payload + transferDone),RNDIS_FRAME_MAX_FRAMELEN, 
+                      USB_HostRndisSendDataMsg(rndisInstance->classHandle, rndisInstance->outPutBuffer, RNDIS_FRAME_MAX_FRAMELEN, 0, 0, 0, 0, 0, ((uint8_t*)p->payload + transferDone),RNDIS_FRAME_MAX_FRAMELEN,
                                                   USB_HostCdcRndisDataOutCallback, rndisInstance);
                       transferDone += RNDIS_FRAME_MAX_FRAMELEN;
-                      total -=  RNDIS_FRAME_MAX_FRAMELEN;     
+                      total -=  RNDIS_FRAME_MAX_FRAMELEN;
                 }
              }
         }
@@ -212,13 +212,13 @@ err_t USB_EthernetIfOutPut(struct netif *netif, struct pbuf *p)
                  rndisInstance->pollingInSending = 1;
                  while(rndisInstance->dataSend)
                  {
-                      
+
                      USB_HostTaskFn(g_HostHandle);
                  }
                  rndisInstance->pollingInSending = 0;
-                  USB_HostRndisSendDataMsg(rndisInstance->classHandle, rndisInstance->outPutBuffer, RNDIS_FRAME_MAX_FRAMELEN, 0, 0, 0, 0, 0, ((uint8_t*)&g_OutPutBuffer[0]),p->tot_len, 
+                  USB_HostRndisSendDataMsg(rndisInstance->classHandle, rndisInstance->outPutBuffer, RNDIS_FRAME_MAX_FRAMELEN, 0, 0, 0, 0, 0, ((uint8_t*)&g_OutPutBuffer[0]),p->tot_len,
                               USB_HostCdcRndisDataOutCallback, rndisInstance);
-             
+
             }
             else
             {
@@ -286,9 +286,9 @@ static void USB_HostApplicationInit(uint8_t controllerId, struct netif *netif)
 {
 
     usb_status_t status = kStatus_USB_Success;
-    
+
     USB_HostClockInit();
- 
+
 
     status = USB_HostInit(controllerId, &g_HostHandle, USB_HostEvent);
     if (status != kStatus_USB_Success)
@@ -334,7 +334,7 @@ err_t USB_EthernetIfInIt(struct netif *netif)
         netif->flags = NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_LINK_UP;
         status = ERR_OK;
     }
-    
+
     return status;
 }
 
@@ -354,7 +354,7 @@ void USB_HostCdcRndisInterruptCallback(void *param, uint8_t *data, uint32_t data
 {
     /*usb_host_cdc_acm_state_struct_t *state = (usb_host_cdc_acm_state_struct_t *)data;*/
     usb_host_rndis_instance_struct_t *rndisInstance = (usb_host_rndis_instance_struct_t *)param;
-    
+
     if (status != kStatus_USB_Success)
     {
         if (status == kStatus_USB_TransferCancel)
@@ -394,7 +394,7 @@ void USB_HostCdcRndisControlCallback(void *param, uint8_t *data, uint32_t dataLe
         usb_echo("data transfer error = %d\r\n",status);
         return;
     }
-    
+
     if (rndisInstance->runWaitState == kUSB_HostCdcRndisRunWaitSetControlInterface)
     {
         rndisInstance->runState = kUSB_HostCdcRndisRunSetControlInterfaceDone;
@@ -425,7 +425,7 @@ void USB_HostCdcRndisControlCallback(void *param, uint8_t *data, uint32_t dataLe
         if (rndisInstance->previousRunState == kUSB_HostCdcRndisRunWaitInitMsgDone)
         {
            rndisInstance->runState = kUSB_HostCdcRndisRunWaitMaxmumFrame;
-                  
+
         }
         else if (rndisInstance->previousRunState == kUSB_HostCdcRndisRunWaitMaxmumFrameDone)
         {
@@ -551,14 +551,14 @@ void USB_HosCdcRndisTask(void *param)
                 }
             }
             else if (rndisInstance->interruptRunState == kUSB_HostCdcRndisRunInterruptRecvDone)
-            {     
+            {
                 rndisInstance->interruptRunState = kUSB_HostCdcRndisRunIdle;
                 /*remember the previous set encapsulated command*/
                 rndisInstance->previousRunState = kUSB_HostCdcRndisRunWaitInitMsgDone;
                 rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitGetEncapsulatedCommand;
                 rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
 
-                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage, 
+                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage,
                                                                                 RNDIS_CONTROL_MESSAGE, USB_HostCdcRndisControlCallback, rndisInstance))
                 {
                    usb_echo("Error in Init message\r\n");
@@ -570,13 +570,13 @@ void USB_HosCdcRndisTask(void *param)
             rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitMaxmumFrame;
             rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
 
-            if(USB_HostRndisQueryMsg(rndisInstance->classHandle, OID_GEN_MAXIMUM_FRAME_SIZE, rndisInstance->sendMessage, 
+            if(USB_HostRndisQueryMsg(rndisInstance->classHandle, OID_GEN_MAXIMUM_FRAME_SIZE, rndisInstance->sendMessage,
                                                                                       RNDIS_CONTROL_MESSAGE, 0, 0, NULL, USB_HostCdcRndisControlCallback, rndisInstance))
             {
                 usb_echo("Error in Init message\r\n");
             }
             break;
-      
+
         case kUSB_HostCdcRndisRunWaitMaxmumFrameDone:
 
             if (rndisInstance->interruptRunState == kUSB_HostCdcRndisRunIdle)
@@ -596,7 +596,7 @@ void USB_HosCdcRndisTask(void *param)
                 rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitGetEncapsulatedCommand;
                 rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
 
-                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage, 
+                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage,
                                                                                           RNDIS_CONTROL_MESSAGE, USB_HostCdcRndisControlCallback, rndisInstance))
                 {
                     usb_echo("Error in Init message\r\n");
@@ -608,13 +608,13 @@ void USB_HosCdcRndisTask(void *param)
             rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitGetMACAddress;
             rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
 
-            if(USB_HostRndisQueryMsg(rndisInstance->classHandle, OID_802_3_CURRENT_ADDRESS,rndisInstance->sendMessage, 
+            if(USB_HostRndisQueryMsg(rndisInstance->classHandle, OID_802_3_CURRENT_ADDRESS,rndisInstance->sendMessage,
                                                                                       RNDIS_CONTROL_MESSAGE, 0, 0, NULL, USB_HostCdcRndisControlCallback, rndisInstance))
             {
                 usb_echo("Error in Init message\r\n");
             }
             break;
-      
+
         case kUSB_HostCdcRndisRunWaitGetMACAddressDone:
             if (rndisInstance->interruptRunState  == kUSB_HostCdcRndisRunIdle)
             {
@@ -636,7 +636,7 @@ void USB_HosCdcRndisTask(void *param)
                 rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitGetEncapsulatedCommand;
                 rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
 
-                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage, 
+                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage,
                                                                                           RNDIS_CONTROL_MESSAGE, USB_HostCdcRndisControlCallback, rndisInstance))
                 {
                     usb_echo("Error in Init message\r\n");
@@ -673,7 +673,7 @@ void USB_HosCdcRndisTask(void *param)
                 rndisInstance->runWaitState = kUSB_HostCdcRndisRunWaitGetEncapsulatedCommand;
                 rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
 
-                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage, 
+                if(USB_HostCdcGetEncapsulatedResponse(rndisInstance->classHandle, rndisInstance->getMessage,
                                                                   RNDIS_CONTROL_MESSAGE, USB_HostCdcRndisControlCallback, rndisInstance))
                 {
                     usb_echo("Error in Init message\r\n");
@@ -687,7 +687,7 @@ void USB_HosCdcRndisTask(void *param)
             netif_set_link_up(netif);
         case kUSB_HostCdcRndisRunDataReceive:
             rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
-            USB_HostRndisRecvDataMsg(rndisInstance->classHandle, rndisInstance->inPutBuffer, RNDIS_DATA_MESSAGE, 
+            USB_HostRndisRecvDataMsg(rndisInstance->classHandle, rndisInstance->inPutBuffer, RNDIS_DATA_MESSAGE,
                                                             USB_HostCdcRndisDataInCallback, rndisInstance);
             break;
         default:
@@ -785,7 +785,7 @@ usb_status_t USB_HostCdcRndisEvent(usb_device_handle deviceHandle,
                 if ((g_RndisInstance.deviceHandle != NULL) && (g_RndisInstance.dataInterfaceHandle != NULL) && (g_RndisInstance.controlInterfaceHandle != NULL))
                 {
                     g_RndisInstance.deviceState = kStatus_DEV_Attached;
-  
+
                     USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDevicePID, &info_value);
                     usb_echo("device cdc attached:\r\npid=0x%x", info_value);
                     USB_HostHelperGetPeripheralInformation(deviceHandle, kUSB_HostGetDeviceVID, &info_value);

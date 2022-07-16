@@ -9,10 +9,10 @@ through internal loopback interconnect and print out the Message payload to term
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  10.2.1
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- MCUXpresso  11.5.0
+- GCC ARM Embedded  10.3.1
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================

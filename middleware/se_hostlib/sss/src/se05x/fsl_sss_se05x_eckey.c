@@ -473,6 +473,7 @@ sss_status_t nxECKey_Calculate_Shared_secret(
 cleanup:
     sss_host_derive_key_context_free(&dervCtx);
     sss_host_key_object_free(&shsSecret);
+    
     return status;
 }
 

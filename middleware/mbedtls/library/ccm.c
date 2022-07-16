@@ -34,6 +34,13 @@
 #include "mbedtls/platform_util.h"
 #include "mbedtls/error.h"
 
+/* NXP added */
+#if defined(MBEDTLS_CCM_USE_AES_CBC_MAC)
+#include "mbedtls/cipher_internal.h"
+#include "mbedtls/aes.h"
+#include "cbc_mac_alt.h"
+#endif /* MBEDTLS_CCM_USE_AES_CBC_MAC */
+
 #include <string.h>
 
 #if defined(MBEDTLS_SELF_TEST) && defined(MBEDTLS_AES_C)
@@ -147,10 +154,6 @@ void mbedtls_ccm_free( mbedtls_ccm_context *ctx )
  */
 /* NXP added for HW accelerators support */ 
 #if !defined(MBEDTLS_CCM_CRYPT_ALT)
-/* CCM selftest fails on ARM Cortex M with IAR 8.11 with common subexpression elimination optimalization enabled */
-#if defined(__ICCARM__)
-#pragma optimize=no_cse
-#endif
 static int ccm_auth_crypt( mbedtls_ccm_context *ctx, int mode, size_t length,
                            const unsigned char *iv, size_t iv_len,
                            const unsigned char *add, size_t add_len,
@@ -206,7 +209,7 @@ static int ccm_auth_crypt( mbedtls_ccm_context *ctx, int mode, size_t length,
     memcpy( b + 1, iv, iv_len );
 
     for( i = 0, len_left = length; i < q; i++, len_left >>= 8 )
-        b[15-i] = (unsigned char)( len_left & 0xFF );
+        b[15-i] = MBEDTLS_BYTE_0( len_left );
 
     if( len_left > 0 )
         return( MBEDTLS_ERR_CCM_BAD_INPUT );
@@ -227,8 +230,7 @@ static int ccm_auth_crypt( mbedtls_ccm_context *ctx, int mode, size_t length,
         src = add;
 
         memset( b, 0, 16 );
-        b[0] = (unsigned char)( ( add_len >> 8 ) & 0xFF );
-        b[1] = (unsigned char)( ( add_len      ) & 0xFF );
+        MBEDTLS_PUT_UINT16_BE( add_len, b, 0 );
 
         use_len = len_left < 16 - 2 ? len_left : 16 - 2;
         memcpy( b + 2, src, use_len );
@@ -236,6 +238,18 @@ static int ccm_auth_crypt( mbedtls_ccm_context *ctx, int mode, size_t length,
         src += use_len;
 
         UPDATE_CBC_MAC;
+
+/* NXP added */
+#if defined(MBEDTLS_CCM_USE_AES_CBC_MAC)
+        if( MBEDTLS_CIPHER_ID_AES == ctx->cipher_ctx.cipher_info->base->cipher )
+        {
+            if( ( ret = mbedtls_aes_cbc_mac((mbedtls_aes_context*) ctx->cipher_ctx.cipher_ctx, len_left, y, src) ) != 0 )
+            {
+                return( ret );
+            }
+        }
+        else
+#endif /* MBEDTLS_CCM_USE_AES_CBC_MAC */
 
         while( len_left > 0 )
         {
@@ -274,6 +288,36 @@ static int ccm_auth_crypt( mbedtls_ccm_context *ctx, int mode, size_t length,
     len_left = length;
     src = input;
     dst = output;
+
+/* NXP added */
+#if defined(MBEDTLS_CCM_USE_AES_CBC_MAC)
+    if( MBEDTLS_CIPHER_ID_AES == ctx->cipher_ctx.cipher_info->base->cipher )
+    {
+        if( mode == CCM_ENCRYPT )
+        {
+            if( ( ret = mbedtls_aes_cbc_mac((mbedtls_aes_context*) ctx->cipher_ctx.cipher_ctx, len_left, y, src) ) != 0 )
+            {
+                return( ret );
+            }
+        }
+
+        size_t offset = 0;
+        if( ( ret = mbedtls_aes_crypt_ctr((mbedtls_aes_context*) ctx->cipher_ctx.cipher_ctx, len_left,
+                                          &offset, ctr, b, src, dst) ) != 0 )
+        {
+            return( ret );
+        }
+
+        if( mode == CCM_DECRYPT )
+        {
+            if( ( ret = mbedtls_aes_cbc_mac((mbedtls_aes_context*) ctx->cipher_ctx.cipher_ctx, len_left, y, dst) ) != 0 )
+            {
+                return( ret );
+            }
+        }
+    }
+    else
+#endif /* MBEDTLS_CCM_USE_AES_CBC_MAC */
 
     while( len_left > 0 )
     {
@@ -427,7 +471,9 @@ int mbedtls_ccm_auth_decrypt( mbedtls_ccm_context *ctx, size_t length,
  */
 
 #define NB_TESTS 3
-#define CCM_SELFTEST_PT_MAX_LEN 24
+
+/* NXP increased CCM_SELFTEST_PT_MAX_LEN from 24 to 32 for HW accelerators support */ 
+#define CCM_SELFTEST_PT_MAX_LEN 32
 #define CCM_SELFTEST_CT_MAX_LEN 32
 
 #ifndef AT_NONCACHEABLE_SECTION_INIT

@@ -13,13 +13,6 @@
 extern "C" {
 #endif
 
-// The Glow bundle when using the Softmax layer has the "expf" function (symbol)
-// unresolved. Since not all the toolchains provide an implementation we define
-// the function here and use the standard "exp" implementation.
-float expf(float f) {
-  return exp(f);
-}
-
 // Dynamic memory allocation of aligned memory.
 void* alignedAlloc(align_t alignment, size_t size) {
   size_t alloc_size;

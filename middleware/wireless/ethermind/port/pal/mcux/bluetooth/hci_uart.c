@@ -425,7 +425,6 @@ void hci_uart_bt_init(void)
     config.instance     = getConfig.instance;
     config.enableRxRTS  = getConfig.enableRxRTS;
     config.enableTxCTS  = getConfig.enableTxCTS;
-    config.mode         = kHAL_UartNonBlockMode;
 #if (defined(HAL_UART_ADAPTER_FIFO) && (HAL_UART_ADAPTER_FIFO > 0u))
     config.txFifoWatermark = 0U;
     config.rxFifoWatermark = 0U;

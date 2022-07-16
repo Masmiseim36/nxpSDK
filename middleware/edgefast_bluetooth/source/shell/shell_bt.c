@@ -14,9 +14,11 @@
 
 #include <errno/errno.h>
 #include <zephyr/types.h>
+#include <ctype.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+//#include <strings.h>
 #include <sys/printk.h>
 #include <sys/byteorder.h>
 #include <sys/util.h>
@@ -33,9 +35,6 @@
 
 #include "shell_bt.h"
 #include "shell_hci.h"
-
-#define DEVICE_NAME		CONFIG_BT_DEVICE_NAME
-#define DEVICE_NAME_LEN		(sizeof(DEVICE_NAME) - 1)
 
 static bool no_settings_load;
 
@@ -87,6 +86,49 @@ static const char *phy2str(uint8_t phy)
 #endif
 
 #if (defined(CONFIG_BT_OBSERVER) && (CONFIG_BT_OBSERVER > 0))
+static struct bt_scan_filter {
+	char name[NAME_LEN];
+	bool name_set;
+	char addr[18]; /* fits xx:xx:xx:xx:xx:xx\0 */
+	bool addr_set;
+} scan_filter;
+
+
+/**
+ * @brief Compares two strings without case sensitivy
+ *
+ * @param substr The substring
+ * @param str The string to find the substring in
+ *
+ * @return true if @substr is a substring of @p, else false
+ */
+static bool is_substring(const char *substr, const char *str)
+{
+	const size_t str_len = strlen(str);
+	const size_t sub_str_len = strlen(substr);
+
+	if (sub_str_len > str_len) {
+		return false;
+	}
+
+	for (size_t pos = 0; pos < str_len; pos++) {
+		unsigned char a = substr[0];
+		unsigned char b = str[pos];
+		if (tolower(a) == tolower(b)) {
+			if (pos + sub_str_len > str_len) {
+				shell_print(ctx_shell, "length fail");
+				return false;
+			}
+
+			if (strncasecmp(substr, &str[pos], sub_str_len) == 0) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 static bool data_cb(struct bt_data *data, void *user_data)
 {
 	char *name = (char *)user_data;
@@ -113,6 +155,15 @@ static void scan_recv(const struct bt_le_scan_recv_info *info,
 	bt_data_parse(buf, data_cb, name);
 
 	bt_addr_le_to_str(info->addr, le_addr, sizeof(le_addr));
+
+	if (scan_filter.name_set && !is_substring(scan_filter.name, name)) {
+		return;
+	}
+
+	if (scan_filter.addr_set && !is_substring(scan_filter.addr, le_addr)) {
+		return;
+	}
+
 	shell_print(ctx_shell, "[DEVICE]: %s, AD evt type %u, RSSI %i %s "
 		    "C:%u S:%u D:%d SR:%u E:%u Prim: %s, Secn: %s, "
 		    "Interval: 0x%04x (%u ms), SID: 0x%x",
@@ -367,7 +418,7 @@ static const char *ver_str(uint8_t ver)
 {
 	const char * const str[] = {
 		"1.0b", "1.1", "1.2", "2.0", "2.1", "3.0", "4.0", "4.1", "4.2",
-		"5.0", "5.1",
+		"5.0", "5.1", "5.2", "5.3"
 	};
 
 	if (ver < ARRAY_SIZE(str)) {
@@ -894,8 +945,8 @@ static shell_status_t cmd_scan(shell_handle_t shell, int32_t argc, char *argv[])
 			options |= BT_LE_SCAN_OPT_FILTER_DUPLICATE;
 		} else if (!strcmp(arg, "nodups")) {
 			options &= ~BT_LE_SCAN_OPT_FILTER_DUPLICATE;
-		} else if (!strcmp(arg, "wl")) {
-			options |= BT_LE_SCAN_OPT_FILTER_WHITELIST;
+		} else if (!strcmp(arg, "fal")) {
+			options |= BT_LE_SCAN_OPT_FILTER_ACCEPT_LIST;
 		} else if (!strcmp(arg, "coded")) {
 			options |= BT_LE_SCAN_OPT_CODED;
 		} else if (!strcmp(arg, "no-1m")) {
@@ -924,6 +975,80 @@ static shell_status_t cmd_scan(shell_handle_t shell, int32_t argc, char *argv[])
 		shell_help(shell);
 		return kStatus_SHELL_PrintCmdHelp;
 	}
+}
+
+static shell_status_t cmd_scan_filter_set_name(shell_handle_t shell, int32_t argc,
+				    char *argv[])
+{
+	const char *name_arg = argv[1];
+
+	if (strlen(name_arg) >= sizeof(scan_filter.name)) {
+		shell_error(ctx_shell, "Name is too long (max %zu): %s\n",
+			    sizeof(scan_filter.name), name_arg);
+		return kStatus_SHELL_Error;
+	}
+
+	strcpy(scan_filter.name, name_arg);
+	scan_filter.name_set = true;
+
+	return kStatus_SHELL_Success;
+}
+
+static shell_status_t cmd_scan_filter_set_addr(shell_handle_t shell, int32_t argc,
+				    char *argv[])
+{
+	const char *addr_arg = argv[1];
+
+	/* Validate length */
+	if (strlen(addr_arg) > sizeof(scan_filter.addr)) {
+		shell_error(ctx_shell, "Invalid address string: %s\n",
+			    addr_arg);
+		return kStatus_SHELL_Error;
+	}
+
+	/* Validate input to check if valid (subset of) BT address */
+	for (size_t i = 0; i < strlen(addr_arg); i++) {
+		const char c = addr_arg[i];
+		uint8_t tmp;
+
+		if (c != ':' && char2hex(c, &tmp) < 0) {
+			shell_error(ctx_shell,
+					"Invalid address string: %s\n",
+					addr_arg);
+			return kStatus_SHELL_Error;
+		}
+	}
+
+	strcpy(scan_filter.addr, addr_arg);
+	scan_filter.addr_set = true;
+
+	return kStatus_SHELL_Success;
+}
+
+static shell_status_t cmd_scan_filter_clear_all(shell_handle_t shell, int32_t argc,
+				     char *argv[])
+{
+	(void)memset(&scan_filter, 0, sizeof(scan_filter));
+
+	return kStatus_SHELL_Success;
+}
+
+static shell_status_t cmd_scan_filter_clear_name(shell_handle_t shell, int32_t argc,
+				      char *argv[])
+{
+	(void)memset(scan_filter.name, 0, sizeof(scan_filter.name));
+	scan_filter.name_set = false;
+
+	return kStatus_SHELL_Success;
+}
+
+static shell_status_t cmd_scan_filter_clear_addr(shell_handle_t shell, int32_t argc,
+				      char *argv[])
+{
+	(void)memset(scan_filter.addr, 0, sizeof(scan_filter.addr));
+	scan_filter.addr_set = false;
+
+	return kStatus_SHELL_Success;
 }
 #endif /* CONFIG_BT_OBSERVER */
 
@@ -976,17 +1101,20 @@ static shell_status_t cmd_advertise(shell_handle_t shell, int32_t argc, char *ar
 		} else if (!strcmp(arg, "non_discov")) {
 			ad = NULL;
 			ad_len = 0;
-		} else if (!strcmp(arg, "wl")) {
+		} else if (!strcmp(arg, "fal")) {
 			param.options |= BT_LE_ADV_OPT_FILTER_SCAN_REQ;
 			param.options |= BT_LE_ADV_OPT_FILTER_CONN;
-		} else if (!strcmp(arg, "wl-scan")) {
+		} else if (!strcmp(arg, "fal-scan")) {
 			param.options |= BT_LE_ADV_OPT_FILTER_SCAN_REQ;
-		} else if (!strcmp(arg, "wl-conn")) {
+		} else if (!strcmp(arg, "fal-conn")) {
 			param.options |= BT_LE_ADV_OPT_FILTER_CONN;
 		} else if (!strcmp(arg, "identity")) {
 			param.options |= BT_LE_ADV_OPT_USE_IDENTITY;
 		} else if (!strcmp(arg, "no-name")) {
 			param.options &= ~BT_LE_ADV_OPT_USE_NAME;
+		} else if (!strcmp(arg, "name-ad")) {
+			param.options |= BT_LE_ADV_OPT_USE_NAME;
+			param.options |= BT_LE_ADV_OPT_FORCE_NAME_IN_AD;
 		} else if (!strcmp(arg, "one-time")) {
 			param.options |= BT_LE_ADV_OPT_ONE_TIME;
 		} else if (!strcmp(arg, "disable-37")) {
@@ -1107,17 +1235,20 @@ static bool adv_param_parse(int32_t argc, char *argv[],
 			param->options |= BT_LE_ADV_OPT_USE_TX_POWER;
 		} else if (!strcmp(arg, "scan-reports")) {
 			param->options |= BT_LE_ADV_OPT_NOTIFY_SCAN_REQ;
-		} else if (!strcmp(arg, "wl")) {
+		} else if (!strcmp(arg, "fal")) {
 			param->options |= BT_LE_ADV_OPT_FILTER_SCAN_REQ;
 			param->options |= BT_LE_ADV_OPT_FILTER_CONN;
-		} else if (!strcmp(arg, "wl-scan")) {
+		} else if (!strcmp(arg, "fal-scan")) {
 			param->options |= BT_LE_ADV_OPT_FILTER_SCAN_REQ;
-		} else if (!strcmp(arg, "wl-conn")) {
+		} else if (!strcmp(arg, "fal-conn")) {
 			param->options |= BT_LE_ADV_OPT_FILTER_CONN;
 		} else if (!strcmp(arg, "identity")) {
 			param->options |= BT_LE_ADV_OPT_USE_IDENTITY;
 		} else if (!strcmp(arg, "name")) {
 			param->options |= BT_LE_ADV_OPT_USE_NAME;
+		} else if (!strcmp(arg, "name-ad")) {
+			param->options |= BT_LE_ADV_OPT_USE_NAME;
+			param->options |= BT_LE_ADV_OPT_FORCE_NAME_IN_AD;
 		} else if (!strcmp(arg, "low")) {
 			param->options |= BT_LE_ADV_OPT_DIR_MODE_LOW_DUTY;
 		} else if (!strcmp(arg, "disable-37")) {
@@ -1233,6 +1364,9 @@ static shell_status_t cmd_adv_data(shell_handle_t shell, int32_t argc, char *arg
 		if (strcmp(arg, "scan-response") &&
 		    *data_len == ARRAY_SIZE(ad)) {
 			/* Maximum entries limit reached. */
+			shell_print(shell, "Failed to set advertising data: "
+					   "Maximum entries limit reached");
+
 			return kStatus_SHELL_Error;
 		}
 
@@ -1250,6 +1384,8 @@ static shell_status_t cmd_adv_data(shell_handle_t shell, int32_t argc, char *arg
 			(*data_len)++;
 		} else if (!strcmp(arg, "scan-response")) {
 			if (data == sd) {
+				shell_print(shell, "Failed to set advertising data: "
+						   "duplicate scan-response option");
 				return kStatus_SHELL_Error;
 			}
 
@@ -1262,11 +1398,13 @@ static shell_status_t cmd_adv_data(shell_handle_t shell, int32_t argc, char *arg
 				      sizeof(hex_data) - hex_data_len);
 
 			if (!len || (len - 1) != (hex_data[hex_data_len])) {
+				shell_print(shell, "Failed to set advertising data: "
+						   "malformed hex data");
 				return kStatus_SHELL_Error;
 			}
 
 			data[*data_len].type = hex_data[hex_data_len + 1];
-			data[*data_len].data_len = hex_data[hex_data_len];
+			data[*data_len].data_len = len - 2;
 			data[*data_len].data = &hex_data[hex_data_len + 2];
 			(*data_len)++;
 			hex_data_len += len;
@@ -1820,7 +1958,7 @@ static shell_status_t cmd_connect_le(shell_handle_t shell, int32_t argc, char *a
 	return kStatus_SHELL_Success;
 }
 
-#if !(defined(CONFIG_BT_WHITELIST) && (CONFIG_BT_WHITELIST > 0))
+#if !(defined(CONFIG_BT_FILTER_ACCEPT_LIST) && (CONFIG_BT_FILTER_ACCEPT_LIST > 0))
 static shell_status_t cmd_auto_conn(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	bt_addr_le_t addr;
@@ -1843,7 +1981,7 @@ static shell_status_t cmd_auto_conn(shell_handle_t shell, int32_t argc, char *ar
 		return kStatus_SHELL_PrintCmdHelp;
 	}
 }
-#endif /* !defined(CONFIG_BT_WHITELIST) */
+#endif /* !defined(CONFIG_BT_FILTER_ACCEPT_LIST) */
 #endif /* CONFIG_BT_CENTRAL */
 
 static shell_status_t cmd_disconnect(shell_handle_t shell, int32_t argc, char *argv[])
@@ -1930,8 +2068,8 @@ static const char *get_conn_type_str(uint8_t type)
 static const char *get_conn_role_str(uint8_t role)
 {
 	switch (role) {
-	case BT_CONN_ROLE_MASTER: return "master";
-	case BT_CONN_ROLE_SLAVE: return "slave";
+	case BT_CONN_ROLE_CENTRAL: return "central";
+	case BT_CONN_ROLE_PERIPHERAL: return "peripheral";
 	default: return "Invalid";
 	}
 }
@@ -2727,6 +2865,10 @@ static shell_status_t cmd_auth(shell_handle_t shell, int32_t argc, char *argv[])
 		return kStatus_SHELL_PrintCmdHelp;
 	}
 
+	if (err) {
+		shell_error(shell, "Failed to set auth handlers (%d)", err);
+	}
+
 	return (shell_status_t)err;
 }
 
@@ -2777,8 +2919,8 @@ static shell_status_t cmd_auth_pairing_confirm(shell_handle_t shell,
 	return kStatus_SHELL_Success;
 }
 
-#if (defined(CONFIG_BT_WHITELIST) && (CONFIG_BT_WHITELIST > 0))
-static shell_status_t cmd_wl_add(shell_handle_t shell, int32_t argc, char *argv[])
+#if (defined(CONFIG_BT_FILTER_ACCEPT_LIST) && (CONFIG_BT_FILTER_ACCEPT_LIST > 0))
+static shell_status_t cmd_fal_add(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	bt_addr_le_t addr;
 	int err;
@@ -2789,16 +2931,16 @@ static shell_status_t cmd_wl_add(shell_handle_t shell, int32_t argc, char *argv[
 		return (shell_status_t)err;
 	}
 
-	err = bt_le_whitelist_add(&addr);
+	err = bt_le_filter_accept_list_add(&addr);
 	if (err) {
-		shell_error(shell, "Add to whitelist failed (err %d)", err);
+		shell_error(shell, "Add to fa list failed (err %d)", err);
 		return (shell_status_t)err;
 	}
 
 	return kStatus_SHELL_Success;
 }
 
-static shell_status_t cmd_wl_rem(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_fal_rem(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	bt_addr_le_t addr;
 	int err;
@@ -2809,22 +2951,22 @@ static shell_status_t cmd_wl_rem(shell_handle_t shell, int32_t argc, char *argv[
 		return (shell_status_t)err;
 	}
 
-	err = bt_le_whitelist_rem(&addr);
+	err = bt_le_filter_accept_list_remove(&addr);
 	if (err) {
-		shell_error(shell, "Remove from whitelist failed (err %d)",
+		shell_error(shell, "Remove from fa list failed (err %d)",
 			    err);
 		return (shell_status_t)err;
 	}
 	return kStatus_SHELL_Success;
 }
 
-static shell_status_t cmd_wl_clear(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_fal_clear(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	int err;
 
-	err = bt_le_whitelist_clear();
+	err = bt_le_filter_accept_list_clear();
 	if (err) {
-		shell_error(shell, "Clearing whitelist failed (err %d)", err);
+		shell_error(shell, "Clearing fa list failed (err %d)", err);
 		return (shell_status_t)err;
 	}
 
@@ -2832,7 +2974,7 @@ static shell_status_t cmd_wl_clear(shell_handle_t shell, int32_t argc, char *arg
 }
 
 #if (defined(CONFIG_BT_CENTRAL) && (CONFIG_BT_CENTRAL > 0))
-static shell_status_t cmd_wl_connect(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_fal_connect(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	int err;
 	const char *action = argv[1];
@@ -2876,7 +3018,7 @@ static shell_status_t cmd_wl_connect(shell_handle_t shell, int32_t argc, char *a
 	return kStatus_SHELL_Success;
 }
 #endif /* CONFIG_BT_CENTRAL */
-#endif /* defined(CONFIG_BT_WHITELIST) */
+#endif /* defined(CONFIG_BT_FILTER_ACCEPT_LIST) */
 
 #if (defined(CONFIG_BT_FIXED_PASSKEY) && (CONFIG_BT_FIXED_PASSKEY > 0))
 static shell_status_t cmd_fixed_passkey(shell_handle_t shell,
@@ -2965,12 +3107,27 @@ static shell_status_t cmd_auth_oob_tk(shell_handle_t shell, int32_t argc, char *
 #define EXT_ADV_SCAN_OPT " [coded] [no-1m]"
 #define EXT_ADV_PARAM "<type: conn-scan conn-nscan, nconn-scan nconn-nscan> " \
 		      "[ext-adv] [no-2m] [coded] "                            \
-		      "[whitelist: wl, wl-scan, wl-conn] [identity] [name] "  \
-		      "[directed "HELP_ADDR_LE"] [mode: low]"                 \
+		      "[filter-accept-list: fal, fal-scan, fal-conn] [identity] [name] "  \
+		      "[name-ad] [directed "HELP_ADDR_LE"] [mode: low]"       \
 		      "[disable-37] [disable-38] [disable-39]"
 #else
 #define EXT_ADV_SCAN_OPT ""
 #endif /* defined(CONFIG_BT_EXT_ADV) */
+
+#if (defined(CONFIG_BT_OBSERVER) && (CONFIG_BT_OBSERVER > 0))
+SHELL_STATIC_SUBCMD_SET_CREATE(bt_scan_filter_set_cmds,
+	SHELL_CMD_ARG(name, NULL, "<name>", cmd_scan_filter_set_name, 2, 0),
+	SHELL_CMD_ARG(addr, NULL, "<addr>", cmd_scan_filter_set_addr, 2, 0),
+	SHELL_SUBCMD_SET_END
+);
+
+SHELL_STATIC_SUBCMD_SET_CREATE(bt_scan_filter_clear_cmds,
+	SHELL_CMD_ARG(all, NULL, "", cmd_scan_filter_clear_all, 1, 0),
+	SHELL_CMD_ARG(name, NULL, "", cmd_scan_filter_clear_name, 1, 0),
+	SHELL_CMD_ARG(addr, NULL, "", cmd_scan_filter_clear_addr, 1, 0),
+	SHELL_SUBCMD_SET_END
+);
+#endif /* CONFIG_BT_OBSERVER */
 
 SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 	SHELL_CMD_ARG(init, NULL, "[no-settings-load], [sync]",
@@ -2989,15 +3146,22 @@ SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 	SHELL_CMD_ARG(name, NULL, "[name]", cmd_name, 1, 1),
 #if (defined(CONFIG_BT_OBSERVER) && (CONFIG_BT_OBSERVER > 0))
 	SHELL_CMD_ARG(scan, NULL,
-		      "<value: on, passive, off> [filter: dups, nodups] [wl]"
+		      "<value: on, passive, off> [filter: dups, nodups] [fal]"
 		      EXT_ADV_SCAN_OPT,
 		      cmd_scan, 2, 4),
+	SHELL_CMD_ARG(scan-filter-set, bt_scan_filter_set_cmds,
+		      "Scan filter set commands",
+		      NULL, 1, 0),
+	SHELL_CMD_ARG(scan-filter-clear, bt_scan_filter_clear_cmds,
+		      "Scan filter clear commands",
+		      NULL, 1, 0),
 #endif /* CONFIG_BT_OBSERVER */
 #if (defined(CONFIG_BT_BROADCASTER) && (CONFIG_BT_BROADCASTER > 0))
 	SHELL_CMD_ARG(advertise, NULL,
 		      "<type: off, on, scan, nconn> [mode: discov, non_discov] "
-		      "[whitelist: wl, wl-scan, wl-conn] [identity] [no-name] "
-		      "[one-time] [disable-37] [disable-38] [disable-39]",
+		      "[filter-accept-list: fal, fal-scan, fal-conn] [identity] [no-name] "
+		      "[one-time] [name-ad]"
+		      "[disable-37] [disable-38] [disable-39]",
 		      cmd_advertise, 2, 8),
 #if (defined(CONFIG_BT_PERIPHERAL) && (CONFIG_BT_PERIPHERAL > 0))
 	SHELL_CMD_ARG(directed-adv, NULL, HELP_ADDR_LE " [mode: low] "
@@ -3048,9 +3212,9 @@ SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 #if (defined(CONFIG_BT_CENTRAL) && (CONFIG_BT_CENTRAL > 0))
 	SHELL_CMD_ARG(connect, NULL, HELP_ADDR_LE EXT_ADV_SCAN_OPT,
 		      cmd_connect_le, 3, 3),
-#if !(defined(CONFIG_BT_WHITELIST) && (CONFIG_BT_WHITELIST > 0))
+#if !(defined(CONFIG_BT_FILTER_ACCEPT_LIST) && (CONFIG_BT_FILTER_ACCEPT_LIST > 0))
 	SHELL_CMD_ARG(auto-conn, NULL, HELP_ADDR_LE, cmd_auto_conn, 3, 0),
-#endif /* !defined(CONFIG_BT_WHITELIST) */
+#endif /* !defined(CONFIG_BT_FILTER_ACCEPT_LIST) */
 #endif /* CONFIG_BT_CENTRAL */
 	SHELL_CMD_ARG(disconnect, NULL, HELP_NONE, cmd_disconnect, 1, 2),
 	SHELL_CMD_ARG(select, NULL, HELP_ADDR_LE, cmd_select, 3, 0),
@@ -3096,16 +3260,16 @@ SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
 		      HELP_ADDR_LE" <oob rand> <oob confirm>",
 		      cmd_oob_remote, 3, 2),
 	SHELL_CMD_ARG(oob-clear, NULL, HELP_NONE, cmd_oob_clear, 1, 0),
-#if (defined(CONFIG_BT_WHITELIST) && (CONFIG_BT_WHITELIST > 0))
-	SHELL_CMD_ARG(wl-add, NULL, HELP_ADDR_LE, cmd_wl_add, 3, 0),
-	SHELL_CMD_ARG(wl-rem, NULL, HELP_ADDR_LE, cmd_wl_rem, 3, 0),
-	SHELL_CMD_ARG(wl-clear, NULL, HELP_NONE, cmd_wl_clear, 1, 0),
+#if (defined(CONFIG_BT_FILTER_ACCEPT_LIST) && (CONFIG_BT_FILTER_ACCEPT_LIST > 0))
+	SHELL_CMD_ARG(fal-add, NULL, HELP_ADDR_LE, cmd_fal_add, 3, 0),
+	SHELL_CMD_ARG(fal-rem, NULL, HELP_ADDR_LE, cmd_fal_rem, 3, 0),
+	SHELL_CMD_ARG(fal-clear, NULL, HELP_NONE, cmd_fal_clear, 1, 0),
 
 #if (defined(CONFIG_BT_CENTRAL) && (CONFIG_BT_CENTRAL > 0))
-	SHELL_CMD_ARG(wl-connect, NULL, "<on, off>" EXT_ADV_SCAN_OPT,
-		      cmd_wl_connect, 2, 3),
+	SHELL_CMD_ARG(fal-connect, NULL, "<on, off>" EXT_ADV_SCAN_OPT,
+		      cmd_fal_connect, 2, 3),
 #endif /* CONFIG_BT_CENTRAL */
-#endif /* defined(CONFIG_BT_WHITELIST) */
+#endif /* defined(CONFIG_BT_FILTER_ACCEPT_LIST) */
 #if (defined(CONFIG_BT_FIXED_PASSKEY) && (CONFIG_BT_FIXED_PASSKEY > 0))
 	SHELL_CMD_ARG(fixed-passkey, NULL, "[passkey]", cmd_fixed_passkey,
 		      1, 1),

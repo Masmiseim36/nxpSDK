@@ -1,4 +1,4 @@
-<map id="algorithms/pedometer/examples/pedometer_stepcount_mma8652.c" name="algorithms/pedometer/examples/pedometer_stepcount_mma8652.c">
-<area shape="rect" id="node8" href="$a00917.html" title="The pedometer.h file contains the interface and structure definitions for pedometer application..." alt="" coords="723,109,818,136"/>
-<area shape="rect" id="node9" href="$a00137.html" title="The mma865x_drv.h file describes the MMA865x driver interface and structures. " alt="" coords="842,109,955,136"/>
+<map id="algorithms/sensorfusion/sources/precisionAccelerometer.c" name="algorithms/sensorfusion/sources/precisionAccelerometer.c">
+<area shape="rect" id="node3" href="$a00914.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="104,169,217,196"/>
+<area shape="rect" id="node4" href="$a00848.html" title="Lower level sensor fusion interface. " alt="" coords="154,95,221,121"/>
 </map>

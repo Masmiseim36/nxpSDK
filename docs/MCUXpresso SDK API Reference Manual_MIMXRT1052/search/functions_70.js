@@ -70,6 +70,7 @@ var searchData=
   ['pwm_5fstoptimer',['PWM_StopTimer',['../a00056.html#ga542db369e1459b8b7847d005937a5be9',1,'fsl_pwm.h']]],
   ['pwm_5fupdatepwmdutycycle',['PWM_UpdatePwmDutycycle',['../a00056.html#ga8324acc824d28acc111006c67746d6ae',1,'fsl_pwm.h']]],
   ['pwm_5fupdatepwmdutycyclehighaccuracy',['PWM_UpdatePwmDutycycleHighAccuracy',['../a00056.html#ga46eebd874652ec8e9c9b128bbd6057df',1,'fsl_pwm.h']]],
+  ['pxp_5fbuildrect',['PXP_BuildRect',['../a00057.html#gaf75a0bda73f3b24179509cf9e1eff23d',1,'fsl_pxp.h']]],
   ['pxp_5fcancelnextcommand',['PXP_CancelNextCommand',['../a00057.html#ga8261582d4b35311cd03231e4d27b8a19',1,'fsl_pxp.h']]],
   ['pxp_5fclearstatusflags',['PXP_ClearStatusFlags',['../a00057.html#ga03abdf1ea37da9eb1d87d279068250aa',1,'fsl_pxp.h']]],
   ['pxp_5fdeinit',['PXP_Deinit',['../a00057.html#gae5619626b61b61e4a4e18c352f5c7a3b',1,'fsl_pxp.h']]],
@@ -103,7 +104,5 @@ var searchData=
   ['pxp_5fsetprocesssurfacescaler',['PXP_SetProcessSurfaceScaler',['../a00057.html#ga0bb8c79014141a66b47b6d13889b6982',1,'fsl_pxp.h']]],
   ['pxp_5fsetprocesssurfaceyuvformat',['PXP_SetProcessSurfaceYUVFormat',['../a00057.html#ga1da6bab10d611e5c00a005d6c33c17e8',1,'fsl_pxp.h']]],
   ['pxp_5fsetrotateconfig',['PXP_SetRotateConfig',['../a00057.html#ga0ae3e7e2b902aed4ad4a1e3de73e3345',1,'fsl_pxp.h']]],
-  ['pxp_5fstart',['PXP_Start',['../a00057.html#ga403087332729f6b471321da69c4e5613',1,'fsl_pxp.h']]],
-  ['pxp_5fstartmemcopy',['PXP_StartMemCopy',['../a00057.html#ga9a0982380fc4bdfd546bfe6e1f83b0c4',1,'fsl_pxp.h']]],
-  ['pxp_5fstartpicturecopy',['PXP_StartPictureCopy',['../a00057.html#ga5b151a90a397af37d8844a4a4d716042',1,'fsl_pxp.h']]]
+  ['pxp_5fstart',['PXP_Start',['../a00057.html#ga403087332729f6b471321da69c4e5613',1,'fsl_pxp.h']]]
 ];

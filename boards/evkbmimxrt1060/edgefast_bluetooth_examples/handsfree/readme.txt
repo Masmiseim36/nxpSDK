@@ -7,9 +7,9 @@ board running a HFP AG application. And the HF example support accept/reject/End
 
 Toolchain supported
 ===================
-- MCUXpresso  11.5.0
-- IAR embedded Workbench  9.20.2
-- Keil MDK  5.36
+- MCUXpresso  11.6.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
 - GCC ARM Embedded  10.3.1
 
 Hardware requirements
@@ -71,15 +71,15 @@ AzureWave Solution Board settings
 For AzureWave WIFI_IW416_BOARD_AW_AM510MA-M.2, the hardware should be reworked according to the Hardware Rework Guide for MIMXRT1060-EVKB and AW-AM510MA in document Hardware Rework Guide for EdgeFast BT PAL.
 
 For AzureWave WIFI_88W8987_BOARD_AW_CM358MA-M.2, the hardware should be reworked according to the Hardware Rework Guide for MIMXRT1060-EVKB and AW-CM358MA in document Hardware Rework Guide for EdgeFast BT PAL.
-Jumper settings for AzureWave AW-AM457-uSD Module:
+Jumper settings for AzureWave AW-AM510-uSD Module:
   - J11 2-3: VIO_SD 3.3V (Voltage level of SDIO pins is 3.3V)
   - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
   - J4  2-3: 3.3V VIO
 
-The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-AM457-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
+The hardware should be reworked according to the hardware rework guide for evkmimxrt1060 and AW-AM510-uSD in document Hardware Rework Guide for EdgeFast BT PAL.
 The pin connect for UART HCI as the following table,
 ------------------------------------------------------------------------------------
-PIN NAME | AW-AM457-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+PIN NAME | AW-AM510-uSD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
 ------------------------------------------------------------------------------------
 UART_TXD |  J10(pin 4)  |   J16(pin 1)   |    LPUART3_RXD     | GPIO_AD_B1_07
 UART_RXD |  J10(pin 2)  |   J16(pin 2)   |    LPUART3_TXD     | GPIO_AD_B1_06
@@ -90,7 +90,7 @@ GND      |  J6(pin 7)   |   J32(pin 7)   |    GND             | GND
 
 The pin connect for PCM interface as the following table,
 ------------------------------------------------------------------------------------
-PIN NAME | AW-AM457-USD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
+PIN NAME | AW-AM510-uSD |   I.MXRT1060   | PIN NAME OF RT1060 | GPIO NAME OF RT1060
 ------------------------------------------------------------------------------------
 PCM_IN   |  J9(pin 1)   |   J16(pin 5)   |    SAI2_TXD        | GPIO_AD_B0_09
 PCM_OUT  |  J9(pin 2)   |   TP11         |    SAI2_RXD        | GPIO_AD_B0_08   
@@ -98,6 +98,7 @@ PCM_SYNC |  J9(pin 3)   |   J2(pin 9)    |    SAI2_RX_SYNC    | GPIO_AD_B0_07
 PCM_CLK  |  J9(pin 4)   |   J10(pin 2)   |    SAI2_RX_BCLK    | GPIO_AD_B0_06
 GND      |  J9(pin 6)   |   J2(pin 20)   |    GND             | GND
 ------------------------------------------------------------------------------------
+Note: AzureWave AW-AM510-uSD Module without fireware runing will plug the RT jlink pin, fail to download image, need disconnect J9(pin 2)/TP11 pin.
 
 Jumper settings for AzureWave AW-CM358-uSD Module:
   - J2 1-2: 3.3V VIO_uSD (Power Supply from uSD connector)

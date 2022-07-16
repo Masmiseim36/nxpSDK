@@ -1,5 +1,5 @@
 /* 
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,11 +12,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v10.0
+product: Peripherals v11.0
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 0.10.4
+processor_version: 0.12.4
 board: IMXRT1050-EVKB
 functionalGroups:
 - name: BOARD_InitPeripherals
@@ -36,6 +36,22 @@ component:
   - user_definitions: ''
   - user_includes: ''
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+component:
+- type: 'uart_cmsis_common'
+- type_id: 'uart_cmsis_common_9cb8e302497aa696fdbb5a4fd622c2a8'
+- global_USART_CMSIS_common:
+  - quick_selection: 'default'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+component:
+- type: 'gpio_adapter_common'
+- type_id: 'gpio_adapter_common_57579b9ac814fe26bf95df0a384c36b6'
+- global_gpio_adapter_common:
+  - quick_selection: 'default'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
 /***********************************************************************************************************************
@@ -44,8 +60,144 @@ component:
 #include "peripherals.h"
 
 /***********************************************************************************************************************
+ * BOARD_InitPeripherals functional group
+ **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * LPUART1 initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'LPUART1'
+- type: 'lpuart'
+- mode: 'polling'
+- custom_name_enabled: 'false'
+- type_id: 'lpuart_bf01db7d964092f3cf860852cba17f7e'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'LPUART1'
+- config_sets:
+  - lpuartConfig_t:
+    - lpuartConfig:
+      - clockSource: 'LpuartClock'
+      - lpuartSrcClkFreq: 'BOARD_BootClockRUN'
+      - baudRate_Bps: '115200'
+      - parityMode: 'kLPUART_ParityDisabled'
+      - dataBitsCount: 'kLPUART_EightDataBits'
+      - isMsb: 'false'
+      - stopBitCount: 'kLPUART_OneStopBit'
+      - enableMatchAddress1: 'false'
+      - matchAddress1: '0'
+      - enableMatchAddress2: 'false'
+      - matchAddress2: '0'
+      - txFifoWatermark: '0'
+      - rxFifoWatermark: '1'
+      - enableRxRTS: 'false'
+      - enableTxCTS: 'false'
+      - txCtsSource: 'kLPUART_CtsSourcePin'
+      - txCtsConfig: 'kLPUART_CtsSampleAtStart'
+      - rxIdleType: 'kLPUART_IdleTypeStartBit'
+      - rxIdleConfig: 'kLPUART_IdleCharacter1'
+      - enableTx: 'true'
+      - enableRx: 'true'
+    - quick_selection: 'QuickSelection1'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+const lpuart_config_t LPUART1_config = {
+  .baudRate_Bps = 115200UL,
+  .parityMode = kLPUART_ParityDisabled,
+  .dataBitsCount = kLPUART_EightDataBits,
+  .isMsb = false,
+  .stopBitCount = kLPUART_OneStopBit,
+  .txFifoWatermark = 0U,
+  .rxFifoWatermark = 1U,
+  .enableRxRTS = false,
+  .enableTxCTS = false,
+  .txCtsSource = kLPUART_CtsSourcePin,
+  .txCtsConfig = kLPUART_CtsSampleAtStart,
+  .rxIdleType = kLPUART_IdleTypeStartBit,
+  .rxIdleConfig = kLPUART_IdleCharacter1,
+  .enableTx = true,
+  .enableRx = true
+};
+
+static void LPUART1_init(void) {
+  LPUART_Init(LPUART1_PERIPHERAL, &LPUART1_config, LPUART1_CLOCK_SOURCE);
+}
+
+/***********************************************************************************************************************
+ * NVIC initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'NVIC'
+- type: 'nvic'
+- mode: 'general'
+- custom_name_enabled: 'false'
+- type_id: 'nvic_57b5eef3774cc60acaede6f5b8bddc67'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'NVIC'
+- config_sets:
+  - nvic:
+    - interrupt_table: []
+    - interrupts: []
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+
+/* Empty initialization function (commented out)
+static void NVIC_init(void) {
+} */
+
+/***********************************************************************************************************************
  * BOARD_InitLwip functional group
  **********************************************************************************************************************/
+/***********************************************************************************************************************
+ * MPU initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'MPU'
+- type: 'mpu_utility'
+- mode: 'MPU'
+- custom_name_enabled: 'false'
+- type_id: 'mpu_utility_bc3ea1f6add76edb6050f698d423d163'
+- functional_group: 'BOARD_InitLwip'
+- peripheral: 'MPU'
+- config_sets:
+  - mpu_init:
+    - mpuInit: 'custom_init'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+
+/* Empty initialization function (commented out)
+static void MPU_init(void) {
+} */
+
+/***********************************************************************************************************************
+ * NVIC_2 initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'NVIC_2'
+- type: 'nvic'
+- mode: 'general'
+- custom_name_enabled: 'false'
+- type_id: 'nvic_57b5eef3774cc60acaede6f5b8bddc67'
+- functional_group: 'BOARD_InitLwip'
+- peripheral: 'NVIC'
+- config_sets:
+  - nvic:
+    - interrupt_table: []
+    - interrupts: []
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+
+/* Empty initialization function (commented out)
+static void NVIC_2_init(void) {
+} */
+
 /***********************************************************************************************************************
  * lwIP initialization code
  **********************************************************************************************************************/
@@ -56,7 +208,7 @@ instance:
 - type: 'lwip'
 - mode: 'general'
 - custom_name_enabled: 'false'
-- type_id: 'lwip_6392ecbde07cacbf3d4363fea53cea19'
+- type_id: 'lwip_e916e23135ce42147b8e9c16b7728f8a'
 - functional_group: 'BOARD_InitLwip'
 - config_sets:
   - lwip_config:
@@ -88,6 +240,10 @@ instance:
     - LWIP_IGMP: 'false'
     - LWIP_DHCP: 'true'
     - LWIP_DHCP_DOES_ACD_CHECK: 'true'
+    - LWIP_IPV6: 'false'
+    - LWIP_IPV6_NUM_ADDRESSES: '3'
+    - LWIP_IPV6_AUTOCONFIG: 'true'
+    - LWIP_IPV6_DHCP6: 'false'
     - LWIP_RAW: 'false'
     - RAW_TTL: 'IP_DEFAULT_TTL'
     - LWIP_TCP: 'true'
@@ -113,15 +269,17 @@ instance:
     - DEFAULT_UDP_RECVMBOX_SIZE: '12'
     - DEFAULT_TCP_RECVMBOX_SIZE: '12'
     - DEFAULT_ACCEPTMBOX_SIZE: '12'
-    - custom_opts: '#define LWIP_DNS 1'
+    - custom_opts: '#define LWIP_DNS                       1\n#define LWIP_NETIF_EXT_STATUS_CALLBACK 1'
     - modules_include: '#include "board.h"'
+    - mpu_init:
+      - mpu_init_component: 'MPU'
     - user_preinit: 'false'
     - user_init:
       - initFunctionID: 'lwIP_interface_init'
     - lwip_init: 'true'
-    - enableCallback: 'false'
+    - enableCallback: 'true'
     - initFnCallback:
-      - callbackFunction: 'InitFn'
+      - callbackFunction: 'tcpip_init_callback'
       - arg_ptr: ''
     - ifConfig:
       - 0:
@@ -143,6 +301,7 @@ instance:
         - netif_function_name: 'defaultFn'
         - netif_input_function_name: 'defaultInputFn'
         - mac_address:
+          - useSiliconId: 'true'
           - addr: '02-12-13-10-15-25'
         - phyConfig:
           - phy_driver: 'phyksz8081'
@@ -163,15 +322,11 @@ instance:
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 /* IPv4 adress, netmask and gateway handle */
-ip4_addr_t lwIP_netif0_ipaddr, lwIP_netif0_netmask, lwIP_netif0_netif_gw;
+ip4_addr_t lwIP_netif0_ipaddr, lwIP_netif0_netmask, lwIP_netif0_gw;
 /* Network interface structure */
 struct netif lwIP_netif0;
-static mdio_resource_t lwIP_netif0_mdio_resource = {
-  .base = ENET,
-  .csrClock_Hz = 150000000U
-};
 static mdio_handle_t lwIP_netif0_mdio_handle = {
-  .resource = {&lwIP_netif0_mdio_resource},
+  .resource = LWIP_NETIF0_MDIO_RESOURCE,
   .ops = &LWIP_NETIF0_MDIO_OPS
 };
 static phy_handle_t lwIP_netif0_phy_handle = {
@@ -181,20 +336,26 @@ static phy_handle_t lwIP_netif0_phy_handle = {
 };
 ethernetif_config_t lwIP_netif0_enet_config = {
   .phyHandle = &lwIP_netif0_phy_handle,
-  .macAddress = LWIP_NETIF0_MAC_ADDRESS
+#ifdef LWIP_NETIF0_MAC_ADDRESS
+  .macAddress = LWIP_NETIF0_MAC_ADDRESS,
+#endif
 };
 
 static void lwIP_init(void) {
   /* lwIP IP address initialization */
-  IP4_ADDR(&lwIP_netif0_ipaddr, 0U, 0U, 0U, 0U);
+  IP4_ADDR(&lwIP_netif0_ipaddr, LWIP_NETIF0_IPADDR0, LWIP_NETIF0_IPADDR1, LWIP_NETIF0_IPADDR2, LWIP_NETIF0_IPADDR3);
   /* lwIP netmask initialization */
-  IP4_ADDR(&lwIP_netif0_netmask, 0U, 0U, 0U, 0U);
+  IP4_ADDR(&lwIP_netif0_netmask, LWIP_NETIF0_NETMASK0, LWIP_NETIF0_NETMASK1, LWIP_NETIF0_NETMASK2, LWIP_NETIF0_NETMASK3);
   /* lwIP gateway initialization */
-  IP4_ADDR(&lwIP_netif0_netif_gw, 0U, 0U, 0U, 0U);
+  IP4_ADDR(&lwIP_netif0_gw, LWIP_NETIF0_GW0, LWIP_NETIF0_GW1, LWIP_NETIF0_GW2, LWIP_NETIF0_GW3);
   /* lwIP module initialization */
-  tcpip_init(NULL, NULL);
+  tcpip_init(tcpip_init_callback, NULL);
+#ifndef LWIP_NETIF0_MAC_ADDRESS
+  /* Set special address for each chip. */
+  (void)SILICONID_ConvertToMacAddr(&lwIP_netif0_enet_config.macAddress);
+#endif
   /* lwIP network interface initialization */
-  netifapi_netif_add(&lwIP_netif0, &lwIP_netif0_ipaddr, &lwIP_netif0_netmask, &lwIP_netif0_netif_gw, &lwIP_netif0_enet_config, ethernetif0_init, tcpip_input);
+  netifapi_netif_add(&lwIP_netif0, &lwIP_netif0_ipaddr, &lwIP_netif0_netmask, &lwIP_netif0_gw, &lwIP_netif0_enet_config, ethernetif0_init, tcpip_input);
   netifapi_netif_set_default(&lwIP_netif0);
   netifapi_netif_set_up(&lwIP_netif0);
   /* lwIP DHCP initialization */
@@ -206,6 +367,8 @@ static void lwIP_init(void) {
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
 {
+  /* Initialize components */
+  LPUART1_init();
 }
 
 void BOARD_InitLwip(void)

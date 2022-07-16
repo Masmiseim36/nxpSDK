@@ -52,6 +52,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/lists
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
 )
@@ -80,6 +81,8 @@ include(device_MIMXRT1064_startup_MIMXRT1064)
 include(driver_iomuxc_MIMXRT1064)
 
 include(driver_igpio_MIMXRT1064)
+
+include(component_silicon_id_MIMXRT1064)
 
 include(CMSIS_Include_core_cm_MIMXRT1064)
 

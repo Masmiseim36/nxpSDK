@@ -31,7 +31,7 @@
 /* Defines                                                                    */
 /* ************************************************************************** */
 
-#define SSS_SUBSYSTEM_TYPE_IS_HOST(subsystem) (subsystem == kType_SSS_mbedTLS)
+#define SSS_SUBSYSTEM_TYPE_IS_HOST(subsystem) (subsystem == kType_SSS_Software)
 
 #define SSS_SESSION_TYPE_IS_HOST(session) (session && SSS_SUBSYSTEM_TYPE_IS_HOST(session->subsystem))
 

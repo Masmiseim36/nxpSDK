@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 #include "fsl_common.h"
 
 #include "lfs.h"
@@ -14,7 +15,7 @@
 
 #define SETTINGS_NAME_SEPARATOR '/'
 
-Z_STRUCT_SECTION_DEFINE(settings_handler_static);
+STRUCT_SECTION_DEFINE(settings_handler_static);
 
 static lfs_t * lfs;
 
@@ -175,7 +176,7 @@ static int settings_load_subtree_scan(struct settings_handler_static *set, const
 int settings_load_subtree(const char *subtree)
 {
     /* h_set callback */
-    Z_STRUCT_SECTION_FOREACH(settings_handler_static, set)
+    STRUCT_SECTION_FOREACH(settings_handler_static, set)
     {
         if (NULL == set->h_set)
         {
@@ -367,7 +368,7 @@ int settings_commit_subtree(const char *subtree)
 {
     int err;
     /* h_commit callback */
-    Z_STRUCT_SECTION_FOREACH(settings_handler_static, set)
+    STRUCT_SECTION_FOREACH(settings_handler_static, set)
     {
         if ((NULL != subtree) && (!settings_name_steq(set->name, subtree, NULL)))
         {
@@ -384,3 +385,4 @@ int settings_commit_subtree(const char *subtree)
     (void)err;
     return 0;
 }
+#endif /* CONFIG_BT_SETTINGS */

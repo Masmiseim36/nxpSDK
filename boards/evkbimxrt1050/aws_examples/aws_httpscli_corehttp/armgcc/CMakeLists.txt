@@ -81,13 +81,14 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../components/phy
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
+    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -126,8 +127,6 @@ include(driver_phy-common_MIMXRT1052)
 
 include(driver_enet_MIMXRT1052)
 
-include(utility_debug_console_MIMXRT1052)
-
 include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT1052)
 
 include(middleware_freertos-kernel_MIMXRT1052)
@@ -158,6 +157,8 @@ include(driver_common_MIMXRT1052)
 
 include(device_MIMXRT1052_CMSIS_MIMXRT1052)
 
+include(utility_debug_console_MIMXRT1052)
+
 include(component_lpuart_adapter_MIMXRT1052)
 
 include(component_serial_manager_MIMXRT1052)
@@ -179,6 +180,8 @@ include(driver_igpio_MIMXRT1052)
 include(driver_xip_device_MIMXRT1052)
 
 include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
+
+include(component_silicon_id_MIMXRT1052)
 
 include(driver_mdio-common_MIMXRT1052)
 

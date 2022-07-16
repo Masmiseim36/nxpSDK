@@ -1,4 +1,3 @@
-<map id="drivers/ads/kinetis/auto_detection_service.h" name="drivers/ads/kinetis/auto_detection_service.h">
-<area shape="rect" id="node2" href="$a04546.html" title="drivers/ads/kinetis\l/auto_detection_service.c" alt="" coords="5,102,175,143"/>
-<area shape="rect" id="node3" href="$a00509.html" title="The auto detection service file implements auto detection sequence for discovery of FRDM&#45;KL25Z Board ..." alt="" coords="199,95,357,151"/>
+<map id="boardkit/evk&#45;mimxrt1015/pin_mux.c" name="boardkit/evk&#45;mimxrt1015/pin_mux.c">
+<area shape="rect" id="node4" href="$a04619.html" title="pin_mux.h" alt="" coords="251,95,334,121"/>
 </map>

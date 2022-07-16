@@ -31,13 +31,13 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
 "${ProjDirPath}/../config_files/core_http_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
 "${ProjDirPath}/../config_files/iot_config.h"
 "${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
@@ -60,8 +60,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../..
     ${ProjDirPath}/../config_files
+    ${ProjDirPath}/../../..
     ${ProjDirPath}/..
 )
 
@@ -79,16 +79,17 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../components/phy
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1062
     ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
+    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -108,8 +109,6 @@ include(middleware_lwip_MIMXRT1062)
 include(driver_phy-common_MIMXRT1062)
 
 include(driver_enet_MIMXRT1062)
-
-include(utility_debug_console_MIMXRT1062)
 
 include(component_mflash_file_MIMXRT1062)
 
@@ -161,6 +160,8 @@ include(driver_common_MIMXRT1062)
 
 include(device_MIMXRT1062_CMSIS_MIMXRT1062)
 
+include(utility_debug_console_MIMXRT1062)
+
 include(component_lpuart_adapter_MIMXRT1062)
 
 include(component_serial_manager_MIMXRT1062)
@@ -178,6 +179,8 @@ include(driver_iomuxc_MIMXRT1062)
 include(utility_assert_MIMXRT1062)
 
 include(driver_igpio_MIMXRT1062)
+
+include(component_silicon_id_MIMXRT1062)
 
 include(driver_mdio-common_MIMXRT1062)
 

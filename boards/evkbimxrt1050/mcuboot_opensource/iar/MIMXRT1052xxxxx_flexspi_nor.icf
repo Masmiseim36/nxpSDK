@@ -88,7 +88,7 @@ define block QACCESS_CODE  { section CodeQuickAccess };
 define block QACCESS_DATA  { section DataQuickAccess };
 
 initialize by copy {
-  object flexspi_nor_flash_ops.o,
+  object mflash_drv.o,
   object fsl_flexspi.o,
 };
 

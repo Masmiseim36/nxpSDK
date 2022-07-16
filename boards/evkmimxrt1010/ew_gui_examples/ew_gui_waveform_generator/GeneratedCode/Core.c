@@ -343,7 +343,7 @@ XObject CoreView__HandleEvent( void* _this, CoreEvent aEvent )
    procedure for the next behind view until a willing view has been found or all 
    views are evaluated.
    In the implementation of the method the view can evaluate the passed aArea parameter. 
-   It determines the place where the user has tapped the view with his fingertip 
+   It determines the place where the user has tapped the view with their fingertip 
    expressed in the coordinates of the views @Owner. The method can test e.g. whether 
    the tapped area does intersect any touchable areas within the view, etc. The 
    affected finger is identified in the parameter aFinger. The first finger (or 
@@ -2071,7 +2071,7 @@ void CoreGroup_Draw( CoreGroup _this, GraphicsCanvas aCanvas, XRect aClip, XPoin
    procedure for the next behind view until a willing view has been found or all 
    views are evaluated.
    In the implementation of the method the view can evaluate the passed aArea parameter. 
-   It determines the place where the user has tapped the view with his fingertip 
+   It determines the place where the user has tapped the view with their fingertip 
    expressed in the coordinates of the views @Owner. The method can test e.g. whether 
    the tapped area does intersect any touchable areas within the view, etc. The 
    affected finger is identified in the parameter aFinger. The first finger (or 
@@ -4292,7 +4292,7 @@ XBool CoreRoot__DriveMultiTouchMovement( void* _this, XInt32 aFinger, XPoint aPo
    target system. Usually the method will be invoked in response to to touch events 
    received in the main() message loop from the target specific touch screen driver.
    The parameters passed to the method determine the event. aDown determines whether 
-   the user has pressed (== 'true') or released (== 'false') his finger at the position 
+   the user has pressed (== 'true') or released (== 'false') their finger at the position 
    aPos relative to the top-left origin of the GUI application area. The parameter 
    aFinger specifies the finger (or mouse button) the user pressed for this operation. 
    The first finger (mouse button) has the number 0, the second 1, and so far.
@@ -4317,7 +4317,7 @@ XBool CoreRoot__DriveCursorHitting( void* _this, XBool aDown, XInt32 aFinger, XP
    events received in the main() message loop from the target specific touch screen 
    driver.
    The parameters passed to the method determine the event. aDown determines whether 
-   the user has pressed (== 'true') or released (== 'false') his finger at the position 
+   the user has pressed (== 'true') or released (== 'false') their finger at the position 
    aPos relative to the top-left origin of the GUI application area. The parameter 
    aFinger identifies the associated finger. The first finger has the number 0, 
    the second 1 and so far till 9. 
@@ -5895,7 +5895,7 @@ XObject CoreSimpleTouchHandler_HandleEvent( CoreSimpleTouchHandler _this, CoreEv
    procedure for the next behind view until a willing view has been found or all 
    views are evaluated.
    In the implementation of the method the view can evaluate the passed aArea parameter. 
-   It determines the place where the user has tapped the view with his fingertip 
+   It determines the place where the user has tapped the view with their fingertip 
    expressed in the coordinates of the views @Owner. The method can test e.g. whether 
    the tapped area does intersect any touchable areas within the view, etc. The 
    affected finger is identified in the parameter aFinger. The first finger (or 
@@ -6801,7 +6801,7 @@ XObject CoreSlideTouchHandler_HandleEvent( CoreSlideTouchHandler _this, CoreEven
    procedure for the next behind view until a willing view has been found or all 
    views are evaluated.
    In the implementation of the method the view can evaluate the passed aArea parameter. 
-   It determines the place where the user has tapped the view with his fingertip 
+   It determines the place where the user has tapped the view with their fingertip 
    expressed in the coordinates of the views @Owner. The method can test e.g. whether 
    the tapped area does intersect any touchable areas within the view, etc. The 
    affected finger is identified in the parameter aFinger. The first finger (or 

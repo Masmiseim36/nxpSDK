@@ -7,7 +7,7 @@ Depending on target platform there are different features of the demo enabled.
 
     - loopback from microphone to speaker
     - recording microphone to a file
-    - wake word + voice recognition
+    - wake words + voice commands recognition
 
 The application is controlled by commands from a shell interface using serial console.
 
@@ -32,12 +32,14 @@ Type "help" to see the command list. Similar description will be displayed on se
      Please note that this VIT demo is near-field and uses 1 on-board microphone.
      NOTE: this command returns to shell after record finished.
 
+For custom VIT model generation (defining own wake words and voice commands) please use https://vit.nxp.com/
+
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- GCC ARM Embedded  10.2.1
-- MCUXpresso  11.5.0
+- IAR embedded Workbench  9.30.1
+- GCC ARM Embedded  10.3.1
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================

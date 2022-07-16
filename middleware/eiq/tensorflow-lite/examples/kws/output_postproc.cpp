@@ -33,7 +33,7 @@ status_t MODEL_ProcessOutput(const uint8_t* data, const tensor_dims_t* dims,
     }
 
     int time = TIMER_GetTimeInUS();
-    if ((counter <= 2 || (time - lastPrintTime) >= kUsInSecond) && inferenceTime > 0)
+    if ((counter <= 2 || (time - lastPrintTime) >= kUsInSecond))
     {
         int index = lastTopResult.index;
         const char* label = index >= 0 ? labels[index] : "No word detected";
@@ -47,11 +47,6 @@ status_t MODEL_ProcessOutput(const uint8_t* data, const tensor_dims_t* dims,
         lastPrintTime = time;
         lastTopResult = {.score = 0.0, .index = -1};
         counter++;
-    }
-    /* Handle timer overflow */
-    if (time < lastPrintTime)
-    {
-        lastPrintTime = time;
     }
 
     return kStatus_Success;

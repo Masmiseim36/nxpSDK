@@ -20,6 +20,7 @@ limitations under the License.
 #include "tensorflow/lite/kernels/kernel_util.h"
 #include "tensorflow/lite/kernels/op_macros.h"
 #include "tensorflow/lite/micro/kernels/softmax.h"
+#include "tensorflow/lite/micro/micro_context.h"
 
 namespace tflite {
 
@@ -90,12 +91,14 @@ void* SoftmaxInit(TfLiteContext* context, const char* buffer, size_t length) {
 }
 
 TfLiteStatus SoftmaxPrepare(TfLiteContext* context, TfLiteNode* node) {
+  MicroContext* micro_context = GetMicroContext(context);
+
   TF_LITE_ENSURE_EQ(context, NumInputs(node), 1);
   TF_LITE_ENSURE_EQ(context, NumOutputs(node), 1);
-  const TfLiteTensor* input = GetInput(context, node, 0);
+  TfLiteTensor* input = micro_context->AllocateTempInputTensor(node, 0);
   TF_LITE_ENSURE(context, input != nullptr);
   TF_LITE_ENSURE(context, NumDimensions(input) >= 1);
-  TfLiteTensor* output = GetOutput(context, node, 0);
+  TfLiteTensor* output = micro_context->AllocateTempOutputTensor(node, 0);
   TF_LITE_ENSURE(context, output != nullptr);
 
   TF_LITE_ENSURE(context, node->user_data != nullptr);
@@ -125,16 +128,23 @@ TfLiteStatus SoftmaxPrepare(TfLiteContext* context, TfLiteNode* node) {
     TF_LITE_ENSURE_EQ(context, output->params.zero_point, 0);
     // exp LUT only used on negative values
     // we consider exp(-10.0) is insignificant to accumulation
-    gen_lut([](float value) { return std::exp(value); }, -10.0f, 0.0f,
-            op_data->exp_lut, kInt16LUTArraySize);
-    gen_lut([](float value) { return 1.0f / (1.0f + value); }, 0.0f, 1.0f,
-            op_data->one_over_one_plus_x_lut, kInt16LUTArraySize);
+    gen_lut<float, int16_t, int16_t>(
+        [](float value) { return std::exp(value); }, -10.0f, 0.0f, -1.0f, 1.0f,
+        op_data->exp_lut);
+    gen_lut<float, int16_t, int16_t>(
+        [](float value) { return 1.0f / (1.0f + value); }, 0.0f, 1.0f, -1.0f,
+        1.0f, op_data->one_over_one_plus_x_lut);
     op_data->zero_point = output->params.zero_point;
     op_data->scale = output->params.scale;
   }
 
   auto* params = static_cast<TfLiteSoftmaxParams*>(node->builtin_data);
-  return CalculateSoftmaxParams(context, input, output, params, op_data);
+  auto ret_val =
+      CalculateSoftmaxParams(context, input, output, params, op_data);
+
+  micro_context->DeallocateTempTfLiteTensor(input);
+  micro_context->DeallocateTempTfLiteTensor(output);
+  return ret_val;
 }
 
 }  // namespace tflite

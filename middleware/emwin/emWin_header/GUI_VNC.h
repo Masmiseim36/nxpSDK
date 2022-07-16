@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_VNC.h
@@ -68,6 +68,10 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 
 #define GUI_DES_ENCRYPT 0
 #define GUI_DES_DECRYPT 1
+
+#ifndef   GUI_VNC_BUFFER_SIZE
+  #define GUI_VNC_BUFFER_SIZE        1000
+#endif
 
 //
 // File transfer
@@ -152,6 +156,10 @@ typedef struct GUI_VNC_CONTEXT {
   int (* pfStoreData)(struct GUI_VNC_CONTEXT * pContext, BUFFER_CB * pBCB, const U8 * pData, int NumBytes);
   int (* pfFlush)    (struct GUI_VNC_CONTEXT * pContext, BUFFER_CB * pBCB);
   int (* pfRead)     (struct GUI_VNC_CONTEXT * pContext, U8 *, int Len);
+  //
+  // Color format
+  //
+  LCD_PIXELINDEX (* pfColor2Index)(LCD_COLOR Color);
 } GUI_VNC_CONTEXT;
 
 typedef struct {
@@ -197,9 +205,9 @@ void GUI_VNC__SetRFBExtensionHandler(int (* pFunc)(U32, GUI_VNC_CONTEXT *, BUFFE
 //
 // External routine to link the server to the system ... USER defined !
 //
-int  GUI_VNC_X_StartServer  (int LayerIndex, int ServerIndex);
-int  GUI_VNC_X_StartServerFT(int LayerIndex, int ServerIndex);
-void GUI_VNC_X_getpeername  (U32 * Addr);
+int  GUI_VNC_X_StartServer  (int LayerIndex,  int ServerIndex);
+int  GUI_VNC_X_StartServerFT(int LayerIndex,  int ServerIndex);
+void GUI_VNC_X_getpeername  (int ServerIndex, U32 * Addr);
 
 #if defined(__cplusplus)
   }

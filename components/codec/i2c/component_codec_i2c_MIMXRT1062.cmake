@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("component_codec_i2c component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

@@ -772,6 +772,7 @@ static status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd
     content.data    = &data;
 
     (void)USDHC_Reset(host->hostController.base, kUSDHC_ResetTuning, 100U);
+    USDHC_ForceClockOn(host->hostController.base, true);
     /* disable standard tuning */
     USDHC_EnableStandardTuning(host->hostController.base, SDMMCHOST_STANDARD_TUNING_START, SDMMCHOST_TUINIG_STEP,
                                false);
@@ -819,7 +820,7 @@ static status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd
     {
         return kStatus_SDMMC_TuningFail;
     }
-
+    USDHC_ForceClockOn(host->hostController.base, false);
     USDHC_EnableAutoTuning(host->hostController.base, true);
 
     return kStatus_Success;

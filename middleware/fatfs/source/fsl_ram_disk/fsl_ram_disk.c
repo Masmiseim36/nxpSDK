@@ -8,6 +8,7 @@
  */
 
 #include "ffconf.h"
+
 /* This fatfs subcomponent is disabled by default
  * To enable it, define following macro in ffconf.h */
 #ifdef RAM_DISK_ENABLE
@@ -16,17 +17,9 @@
 #include "fsl_ram_disk.h"
 
 /*******************************************************************************
- * Definitions
- ******************************************************************************/
-/* clang-format off */
-#define SECTOR_SIZE FF_MIN_SS /* usualy 512 B */
-#define DISK_SIZE 65536     /* minmal disk size calculated as 128 * FF_MIN_SS (ff.c ln 4112) , 128*512=65536 */
-/* clang-format on */
-
-/*******************************************************************************
  * Globals
  ******************************************************************************/
-static uint8_t disk_space[DISK_SIZE];
+static uint8_t disk_space[FSL_FF_RAMDISK_DISK_SIZE];
 
 /*******************************************************************************
  * Code
@@ -64,7 +57,7 @@ DRESULT ram_disk_read(BYTE pdrv, BYTE* buff, LBA_t sector, UINT count)
     {
         return RES_PARERR;
     }
-    memcpy(buff, disk_space + sector * SECTOR_SIZE, SECTOR_SIZE * count);
+    memcpy(buff, disk_space + sector * FSL_FF_RAMDISK_SECTOR_SIZE, FSL_FF_RAMDISK_SECTOR_SIZE * count);
     return RES_OK;
 }
 
@@ -77,7 +70,7 @@ DRESULT ram_disk_write(BYTE pdrv, const BYTE* buff, LBA_t sector, UINT count)
     {
         return RES_PARERR;
     }
-    memcpy(disk_space + sector * SECTOR_SIZE, buff, SECTOR_SIZE * count);
+    memcpy(disk_space + sector * FSL_FF_RAMDISK_SECTOR_SIZE, buff, FSL_FF_RAMDISK_SECTOR_SIZE * count);
     return RES_OK;
 }
 
@@ -93,11 +86,11 @@ DRESULT ram_disk_ioctl(BYTE pdrv, BYTE cmd, void* buff)
     switch (cmd)
     {
         case GET_SECTOR_COUNT:
-            *(uint32_t *)buff = DISK_SIZE / SECTOR_SIZE;
+            *(uint32_t *)buff = FSL_FF_RAMDISK_DISK_SIZE / FSL_FF_RAMDISK_SECTOR_SIZE;
             return RES_OK;
             break;
         case GET_SECTOR_SIZE:
-            *(uint32_t *)buff = SECTOR_SIZE;
+            *(uint32_t *)buff = FSL_FF_RAMDISK_SECTOR_SIZE;
             return RES_OK;
             break;
         case CTRL_SYNC:

@@ -8,6 +8,10 @@ var a00045 =
       [ "stopbits", "a00045.html#a347be0a813260f445e7829308a58f479", null ],
       [ "buffer", "a00045.html#a355e354365fe669ddf27d8eb538c83e9", null ],
       [ "buffer_size", "a00045.html#ad8ba8f4845a222fef29714542876ae55", null ],
+      [ "rx_timeout_constant_ms", "a00045.html#aa8dc452650aae3faefd0f92cffe2b6ab", null ],
+      [ "rx_timeout_multiplier_ms", "a00045.html#a7deed5c320a55485e10ccf7fb6f39d3b", null ],
+      [ "tx_timeout_constant_ms", "a00045.html#a42dc67e6be0ad089f67a8d404aee72d4", null ],
+      [ "tx_timeout_multiplier_ms", "a00045.html#a8fa692dea066c6e1393912ae32a5fc3a", null ],
       [ "enableRxRTS", "a00045.html#a6bf2ba5df12af74dd4049e4377caa213", null ],
       [ "enableTxCTS", "a00045.html#adc3d995c9c3c887bb00f2252882c9526", null ],
       [ "txCtsSource", "a00045.html#a39ef6b032392c800cb96fbf3db2470f9", null ],
@@ -17,5 +21,7 @@ var a00045 =
     [ "LPUART_RTOS_Init", "a00045.html#ga5be9370b1fa0187c194475769e7138fc", null ],
     [ "LPUART_RTOS_Deinit", "a00045.html#ga057e59dcc578ef4b303850bcd90ca50e", null ],
     [ "LPUART_RTOS_Send", "a00045.html#ga275e067e13ecc77dde83d2d7938c038e", null ],
-    [ "LPUART_RTOS_Receive", "a00045.html#ga0561f87122863c6e9b20f8991a73a0fb", null ]
+    [ "LPUART_RTOS_Receive", "a00045.html#ga0561f87122863c6e9b20f8991a73a0fb", null ],
+    [ "LPUART_RTOS_SetRxTimeout", "a00045.html#ga3e211e0c1a2c93d9bdd73d6ca4639a10", null ],
+    [ "LPUART_RTOS_SetTxTimeout", "a00045.html#gad2317ff04710f0f4a2dc7d219f850c85", null ]
 ];

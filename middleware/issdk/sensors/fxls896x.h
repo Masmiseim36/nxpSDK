@@ -83,9 +83,10 @@ enum
 
 #define FXLS896x_DEVICE_ADDRESS_SA0_0 (0x18) /*!< Device Address Value. */
 #define FXLS896x_DEVICE_ADDRESS_SA0_1 (0x19) /*!< Device Address Value. */
-#define FXLS896x_WHOAMI_VALUE (0x62)         /*!< Who AM I Value. */
+#define FXLS8962_WHOAMI_VALUE (0x62)         /*!< Who AM I Value. */
 #define FXLS8964_WHOAMI_VALUE (0x84)         /*!< Who AM I Value.of FXLS8964AF */
 #define FXLS8967_WHOAMI_VALUE (0x87)         /*!< Who AM I Value.of FXLS8967AF */
+#define FXLS8968_WHOAMI_VALUE (0x88)         /*!< Who AM I Value.of FXLS8968CF */
 #define FXLS8974_WHOAMI_VALUE (0x86)         /*!< Who AM I Value.of FXLS8974CF */
 #define FXLS896x_TBOOT_MAX 20                /*!< Maximum safe value for TBOOT1/2 in ms (1ms, 17.7ms)=~20ms. */
 

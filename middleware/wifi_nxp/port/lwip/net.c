@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -82,6 +66,7 @@ typedef struct interface interface_t;
 static interface_t g_mlan;
 static interface_t g_uap;
 
+static int net_wlan_init_done;
 static os_timer_t dhcp_timer;
 
 static void dhcp_timer_cb(os_timer_arg_t arg);
@@ -199,7 +184,6 @@ static void wm_netif_ipv6_status_callback(struct netif *n)
 
 int net_wlan_init(void)
 {
-    static int net_wlan_init_done;
     int ret;
     if (!net_wlan_init_done)
     {
@@ -213,7 +197,7 @@ int net_wlan_init(void)
         ip_2_ip4(&g_mlan.ipaddr)->addr = INADDR_ANY;
         ret = netifapi_netif_add(&g_mlan.netif, ip_2_ip4(&g_mlan.ipaddr), ip_2_ip4(&g_mlan.ipaddr),
                                  ip_2_ip4(&g_mlan.ipaddr), NULL, lwip_netif_init, tcpip_input);
-        if (ret != 0)
+        if (ret != WM_SUCCESS)
         {
             net_e("MLAN interface add failed");
             return -WM_FAIL;
@@ -224,7 +208,7 @@ int net_wlan_init(void)
 
         ret = netifapi_netif_add(&g_uap.netif, ip_2_ip4(&g_uap.ipaddr), ip_2_ip4(&g_uap.ipaddr),
                                  ip_2_ip4(&g_uap.ipaddr), NULL, lwip_netif_uap_init, tcpip_input);
-        if (ret != 0)
+        if (ret != WM_SUCCESS)
         {
             net_e("UAP interface add failed");
             return -WM_FAIL;
@@ -250,6 +234,73 @@ int net_wlan_init(void)
     }
 
     (void)wlan_wlcmgr_send_msg(WIFI_EVENT_NET_INTERFACE_CONFIG, WIFI_EVENT_REASON_SUCCESS, NULL);
+    return WM_SUCCESS;
+}
+
+static int net_netif_deinit(struct netif *netif)
+{
+    int ret;
+#ifdef CONFIG_IPV6
+    if (netif->mld_mac_filter != NULL)
+    {
+        ip6_addr_t ip6_allnodes_ll;
+        ip6_addr_set_allnodes_linklocal(&ip6_allnodes_ll);
+        netif->mld_mac_filter(netif, &ip6_allnodes_ll, NETIF_DEL_MAC_FILTER);
+    }
+#endif
+    ret = netifapi_netif_remove(netif);
+
+    if (ret != WM_SUCCESS)
+    {
+        net_e("Interface remove failed");
+        return -WM_FAIL;
+    }
+
+    if (netif->state != NULL)
+    {
+        mem_free(netif->state);
+        netif->state = NULL;
+    }
+
+    return WM_SUCCESS;
+}
+
+int net_wlan_deinit(void)
+{
+    int ret;
+
+    if (net_wlan_init_done != 1)
+    {
+        return -WM_FAIL;
+    }
+
+    ret = net_netif_deinit(&g_mlan.netif);
+    if (ret != WM_SUCCESS)
+    {
+        net_e("MLAN interface deinit failed");
+        return -WM_FAIL;
+    }
+
+    ret = net_netif_deinit(&g_uap.netif);
+    if (ret != WM_SUCCESS)
+    {
+        net_e("UAP interface deinit failed");
+        return -WM_FAIL;
+    }
+
+    ret = os_timer_delete(&dhcp_timer);
+    if (ret != WM_SUCCESS)
+    {
+        net_e("DHCP timer deletion failed");
+        return -WM_FAIL;
+    }
+
+    netif_remove_ext_callback(&netif_ext_callback);
+    wm_netif_status_callback_ptr = NULL;
+    net_wlan_init_done           = 0;
+
+    net_d("DeInitialized TCP/IP networking stack");
+
     return WM_SUCCESS;
 }
 
@@ -395,6 +446,7 @@ void *net_sock_to_interface(int sock)
     void *req_iface   = NULL;
     int ret;
 
+    (void)memset(&peer, 0, sizeof(struct sockaddr_in));
     ret = getpeername(sock, (struct sockaddr *)(void *)&peer, &peerlen);
     if (ret < 0)
     {
@@ -581,6 +633,18 @@ int net_get_if_ipv6_pref_addr(struct wlan_ip_config *addr, void *intrfc_handle)
     return ret;
 }
 #endif /* CONFIG_IPV6 */
+
+int net_get_if_name(char *pif_name, void *intrfc_handle)
+{
+    interface_t *if_handle = (interface_t *)intrfc_handle;
+    char if_name[NETIF_NAMESIZE];
+    char *ptr_if_name = NULL;
+
+    ptr_if_name = netif_index_to_name(if_handle->netif.num + 1, if_name);
+
+    strncpy(pif_name, ptr_if_name, NETIF_NAMESIZE);
+    return WM_SUCCESS;
+}
 
 int net_get_if_ip_addr(uint32_t *ip, void *intrfc_handle)
 {

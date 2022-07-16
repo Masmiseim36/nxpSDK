@@ -1485,7 +1485,7 @@ smStatus_t Se05x_API_ReadObject(
  * @return     The sm status.
  */
 
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 smStatus_t Se05x_API_ReadObject_W_Attst_V2(pSe05xSession_t session_ctx,
     uint32_t objectID,
     uint16_t offset,
@@ -1575,7 +1575,7 @@ smStatus_t Se05x_API_ReadRSA(pSe05xSession_t session_ctx,
  *
  * @return     The sm status.
  */
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 smStatus_t Se05x_API_ReadRSA_W_Attst_V2(pSe05xSession_t session_ctx,
     uint32_t objectID,
     uint16_t offset,
@@ -1793,7 +1793,7 @@ smStatus_t Se05x_API_ReadRSA_W_Attst(pSe05xSession_t session_ctx,
  *
  * @return     The sm status.
  */
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 smStatus_t Se05x_API_ReadObjectAttributes_W_Attst_V2(pSe05xSession_t session_ctx,
     uint32_t objectID,
     uint32_t attestID,
@@ -2954,7 +2954,7 @@ smStatus_t Se05x_API_EdDSASign(pSe05xSession_t session_ctx,
  * @param[out] signature  [0:kSE05x_TAG_1]
  * @param[in,out] psignatureLen Length for signature
  */
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 smStatus_t Se05x_API_ECDAASign(pSe05xSession_t session_ctx,
     uint32_t objectID,
     SE05x_ECDAASignatureAlgo_t ecdaaSignAlgo,
@@ -3626,7 +3626,6 @@ smStatus_t Se05x_API_CipherInit(pSe05xSession_t session_ctx,
     size_t IVLen,
     const SE05x_Cipher_Oper_t operation);
 
-
 /** Se05x_API_CipherUpdate
  *
  * Update a cipher context.
@@ -3839,7 +3838,6 @@ smStatus_t Se05x_API_CipherOneShot(pSe05xSession_t session_ctx,
     uint8_t *outputData,
     size_t *poutputDataLen,
     const SE05x_Cipher_Oper_OneShot_t operation);
-
 
 /** Se05x_API_MACInit
  *
@@ -5231,7 +5229,7 @@ smStatus_t Se05x_API_TLSPerformPRF(pSe05xSession_t session_ctx,
     size_t *poutputDataLen,
     const SE05x_TLSPerformPRFType_t tlsprf);
 
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 
 /** Se05x_API_I2CM_ExecuteCommandSet
  *

@@ -3,7 +3,7 @@
  *
  * Copyright (c) 2017-2020 Linaro LTD
  * Copyright (c) 2017-2019 JUUL Labs
- * Copyright (c) 2019-2020 Arm Limited
+ * Copyright (c) 2019-2021 Arm Limited
  *
  * Original license:
  *
@@ -47,23 +47,7 @@
 extern "C" {
 #endif
 
-#ifdef MCUBOOT_HAVE_ASSERT_H
-#include "mcuboot_config/mcuboot_assert.h"
-#else
-#include <assert.h>
-#define ASSERT assert
-#endif
-
 struct flash_area;
-
-#define BOOT_EFLASH      1
-#define BOOT_EFILE       2
-#define BOOT_EBADIMAGE   3
-#define BOOT_EBADVECT    4
-#define BOOT_EBADSTATUS  5
-#define BOOT_ENOMEM      6
-#define BOOT_EBADARGS    7
-#define BOOT_EBADVERSION 8
 
 #define BOOT_TMPBUF_SZ  256
 
@@ -98,27 +82,13 @@ struct boot_status {
     uint8_t swap_type;    /* The type of swap in effect */
     uint32_t swap_size;   /* Total size of swapped image */
 #ifdef MCUBOOT_ENC_IMAGES
-    uint8_t enckey[BOOT_NUM_SLOTS][BOOT_ENC_KEY_SIZE];
+    uint8_t enckey[BOOT_NUM_SLOTS][BOOT_ENC_KEY_ALIGN_SIZE];
 #if MCUBOOT_SWAP_SAVE_ENCTLV
     uint8_t enctlv[BOOT_NUM_SLOTS][BOOT_ENC_TLV_ALIGN_SIZE];
 #endif
 #endif
     int source;           /* Which slot contains swap status metadata */
 };
-
-#define BOOT_MAGIC_GOOD     1
-#define BOOT_MAGIC_BAD      2
-#define BOOT_MAGIC_UNSET    3
-#define BOOT_MAGIC_ANY      4  /* NOTE: control only, not dependent on sector */
-#define BOOT_MAGIC_NOTGOOD  5  /* NOTE: control only, not dependent on sector */
-
-/*
- * NOTE: leave BOOT_FLAG_SET equal to one, this is written to flash!
- */
-#define BOOT_FLAG_SET       1
-#define BOOT_FLAG_BAD       2
-#define BOOT_FLAG_UNSET     3
-#define BOOT_FLAG_ANY       4  /* NOTE: control only, not dependent on sector */
 
 #define BOOT_STATUS_IDX_0   1
 
@@ -139,16 +109,28 @@ struct boot_status {
  *  |                 Encryption key 0 (16 octets) [*]              |
  *  |                                                               |
  *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ *  |                    0xff padding as needed                     |
+ *  |  (BOOT_MAX_ALIGN minus 16 octets from Encryption key 0) [*]   |
+ *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  *  |                 Encryption key 1 (16 octets) [*]              |
  *  |                                                               |
  *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ *  |                    0xff padding as needed                     |
+ *  |  (BOOT_MAX_ALIGN minus 16 octets from Encryption key 1) [*]   |
+ *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  *  |                      Swap size (4 octets)                     |
  *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- *  |   Swap info   |           0xff padding (7 octets)             |
+ *  |                    0xff padding as needed                     |
+ *  |        (BOOT_MAX_ALIGN minus 4 octets from Swap size)         |
  *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- *  |   Copy done   |           0xff padding (7 octets)             |
+ *  |   Swap info   |  0xff padding (BOOT_MAX_ALIGN minus 1 octet)  |
  *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
- *  |   Image OK    |           0xff padding (7 octets)             |
+ *  |   Copy done   |  0xff padding (BOOT_MAX_ALIGN minus 1 octet)  |
+ *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ *  |   Image OK    |  0xff padding (BOOT_MAX_ALIGN minus 1 octet)  |
+ *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ *  |                    0xff padding as needed                     |
+ *  |         (BOOT_MAX_ALIGN minus 16 octets from MAGIC)           |
  *  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
  *  |                       MAGIC (16 octets)                       |
  *  |                                                               |
@@ -158,53 +140,38 @@ struct boot_status {
  *      (`MCUBOOT_ENC_IMAGES`).
  */
 
-extern const uint32_t boot_img_magic[4];
-
-struct boot_swap_state {
-    uint8_t magic;      /* One of the BOOT_MAGIC_[...] values. */
-    uint8_t swap_type;  /* One of the BOOT_SWAP_TYPE_[...] values. */
-    uint8_t copy_done;  /* One of the BOOT_FLAG_[...] values. */
-    uint8_t image_ok;   /* One of the BOOT_FLAG_[...] values. */
-    uint8_t image_num;  /* Boot status belongs to this image */
+union boot_img_magic_t
+{
+    struct {
+        uint16_t align;
+        uint8_t magic[14];
+    };
+    uint8_t val[16];
 };
 
-#ifdef MCUBOOT_IMAGE_NUMBER
-#define BOOT_IMAGE_NUMBER          MCUBOOT_IMAGE_NUMBER
+extern const union boot_img_magic_t boot_img_magic;
+
+#define BOOT_IMG_MAGIC  (boot_img_magic.val)
+
+#if BOOT_MAX_ALIGN == 8
+#define BOOT_IMG_ALIGN  (BOOT_MAX_ALIGN)
 #else
-#define BOOT_IMAGE_NUMBER          1
+#define BOOT_IMG_ALIGN  (boot_img_magic.align)
 #endif
 
-_Static_assert(BOOT_IMAGE_NUMBER > 0, "Invalid value for BOOT_IMAGE_NUMBER");
+_Static_assert(sizeof(boot_img_magic) == BOOT_MAGIC_SZ, "Invalid size for image magic");
 
 #if !defined(MCUBOOT_DIRECT_XIP) && !defined(MCUBOOT_RAM_LOAD)
 #define ARE_SLOTS_EQUIVALENT()    0
 #else
 #define ARE_SLOTS_EQUIVALENT()    1
 
-#if (BOOT_IMAGE_NUMBER != 1)
-#error "The MCUBOOT_DIRECT_XIP and MCUBOOT_RAM_LOAD mode only supports single-image boot (MCUBOOT_IMAGE_NUMBER=1)."
-#endif
-#ifdef MCUBOOT_ENC_IMAGES
-#error "Image encryption (MCUBOOT_ENC_IMAGES) is not supported when MCUBOOT_DIRECT_XIP or MCUBOOT_RAM_LOAD mode is selected."
-#endif
+#if defined(MCUBOOT_DIRECT_XIP) && defined(MCUBOOT_ENC_IMAGES)
+#error "Image encryption (MCUBOOT_ENC_IMAGES) is not supported when MCUBOOT_DIRECT_XIP is selected."
+#endif /* MCUBOOT_DIRECT_XIP && MCUBOOT_ENC_IMAGES */
 #endif /* MCUBOOT_DIRECT_XIP || MCUBOOT_RAM_LOAD */
 
 #define BOOT_MAX_IMG_SECTORS       MCUBOOT_MAX_IMG_SECTORS
-
-/*
- * Extract the swap type and image number from image trailers's swap_info
- * filed.
- */
-#define BOOT_GET_SWAP_TYPE(swap_info)    ((swap_info) & 0x0F)
-#define BOOT_GET_IMAGE_NUM(swap_info)    ((swap_info) >> 4)
-
-/* Construct the swap_info field from swap type and image number */
-#define BOOT_SET_SWAP_INFO(swap_info, image, type)  {                          \
-                                                    assert((image) < 0xF);     \
-                                                    assert((type)  < 0xF);     \
-                                                    (swap_info) = (image) << 4 \
-                                                                | (type);      \
-                                                    }
 
 #define BOOT_LOG_IMAGE_INFO(slot, hdr)                                    \
     BOOT_LOG_INF("%-9s slot: version=%u.%u.%u+%u",                        \
@@ -213,17 +180,6 @@ _Static_assert(BOOT_IMAGE_NUMBER > 0, "Invalid value for BOOT_IMAGE_NUMBER");
                  (hdr)->ih_ver.iv_minor,                                  \
                  (hdr)->ih_ver.iv_revision,                               \
                  (hdr)->ih_ver.iv_build_num)
-
-/*
- * The current flashmap API does not check the amount of space allocated when
- * loading sector data from the flash device, allowing for smaller counts here
- * would most surely incur in overruns.
- *
- * TODO: make flashmap API receive the current sector array size.
- */
-#if BOOT_MAX_IMG_SECTORS < 32
-#error "Too few sectors, please increase BOOT_MAX_IMG_SECTORS to at least 32"
-#endif
 
 #if MCUBOOT_SWAP_USING_MOVE
 #define BOOT_STATUS_MOVE_STATE_COUNT    1
@@ -243,8 +199,6 @@ _Static_assert(BOOT_IMAGE_NUMBER > 0, "Invalid value for BOOT_IMAGE_NUMBER");
 #define BOOT_STATUS_SOURCE_SCRATCH      1
 #define BOOT_STATUS_SOURCE_PRIMARY_SLOT 2
 
-#define BOOT_MAGIC_SZ (sizeof boot_img_magic)
-
 /**
  * Compatibility shim for flash sector type.
  *
@@ -262,14 +216,14 @@ struct boot_loader_state {
         struct image_header hdr;
         const struct flash_area *area;
         boot_sector_t *sectors;
-        size_t num_sectors;
+        uint32_t num_sectors;
     } imgs[BOOT_IMAGE_NUMBER][BOOT_NUM_SLOTS];
 
 #if MCUBOOT_SWAP_USING_SCRATCH
     struct {
         const struct flash_area *area;
         boot_sector_t *sectors;
-        size_t num_sectors;
+        uint32_t num_sectors;
     } scratch;
 #endif
 
@@ -282,7 +236,24 @@ struct boot_loader_state {
 
 #if (BOOT_IMAGE_NUMBER > 1)
     uint8_t curr_img_idx;
+    bool img_mask[BOOT_IMAGE_NUMBER];
 #endif
+
+#if defined(MCUBOOT_DIRECT_XIP) || defined(MCUBOOT_RAM_LOAD)
+    struct slot_usage_t {
+        /* Index of the slot chosen to be loaded */
+        uint32_t active_slot;
+        bool slot_available[BOOT_NUM_SLOTS];
+#if defined(MCUBOOT_RAM_LOAD)
+        /* Image destination and size for the active slot */
+        uint32_t img_dst;
+        uint32_t img_sz;
+#elif defined(MCUBOOT_DIRECT_XIP_REVERT)
+        /* Swap status for the active slot */
+        struct boot_swap_state swap_state;
+#endif
+    } slot_usage[BOOT_IMAGE_NUMBER];
+#endif /* MCUBOOT_DIRECT_XIP || MCUBOOT_RAM_LOAD */
 };
 
 fih_int bootutil_verify_sig(uint8_t *hash, uint32_t hlen, uint8_t *sig,
@@ -295,7 +266,6 @@ uint32_t boot_status_sz(uint32_t min_write_sz);
 uint32_t boot_trailer_sz(uint32_t min_write_sz);
 int boot_status_entries(int image_index, const struct flash_area *fap);
 uint32_t boot_status_off(const struct flash_area *fap);
-uint32_t boot_swap_info_off(const struct flash_area *fap);
 int boot_read_swap_state(const struct flash_area *fap,
                          struct boot_swap_state *state);
 int boot_read_swap_state_by_id(int flash_area_id,
@@ -307,6 +277,10 @@ int boot_write_image_ok(const struct flash_area *fap);
 int boot_write_swap_info(const struct flash_area *fap, uint8_t swap_type,
                          uint8_t image_num);
 int boot_write_swap_size(const struct flash_area *fap, uint32_t swap_size);
+int boot_write_trailer(const struct flash_area *fap, uint32_t off,
+                       const uint8_t *inbuf, uint8_t inlen);
+int boot_write_trailer_flag(const struct flash_area *fap, uint32_t off,
+                            uint8_t flag_val);
 int boot_read_swap_size(int image_index, uint32_t *swap_size);
 int boot_slots_compatible(struct boot_loader_state *state);
 uint32_t boot_status_internal_off(const struct boot_status *bs, int elem_sz);
@@ -414,7 +388,7 @@ boot_img_num_sectors(const struct boot_loader_state *state, size_t slot)
 static inline uint32_t
 boot_img_slot_off(struct boot_loader_state *state, size_t slot)
 {
-    return BOOT_IMG(state, slot).area->fa_off;
+    return flash_area_get_off(BOOT_IMG(state, slot).area);
 }
 
 #ifndef MCUBOOT_USE_FLASH_AREA_GET_SECTORS
@@ -423,7 +397,7 @@ static inline size_t
 boot_img_sector_size(const struct boot_loader_state *state,
                      size_t slot, size_t sector)
 {
-    return BOOT_IMG(state, slot).sectors[sector].fa_size;
+    return flash_area_get_size(&BOOT_IMG(state, slot).sectors[sector]);
 }
 
 /*
@@ -434,8 +408,8 @@ static inline uint32_t
 boot_img_sector_off(const struct boot_loader_state *state, size_t slot,
                     size_t sector)
 {
-    return BOOT_IMG(state, slot).sectors[sector].fa_off -
-           BOOT_IMG(state, slot).sectors[0].fa_off;
+    return flash_area_get_off(&BOOT_IMG(state, slot).sectors[sector]) -
+           flash_area_get_off(&BOOT_IMG(state, slot).sectors[0]);
 }
 
 #else  /* defined(MCUBOOT_USE_FLASH_AREA_GET_SECTORS) */
@@ -444,24 +418,47 @@ static inline size_t
 boot_img_sector_size(const struct boot_loader_state *state,
                      size_t slot, size_t sector)
 {
-    return BOOT_IMG(state, slot).sectors[sector].fs_size;
+    return flash_sector_get_size(&BOOT_IMG(state, slot).sectors[sector]);
 }
 
 static inline uint32_t
 boot_img_sector_off(const struct boot_loader_state *state, size_t slot,
                     size_t sector)
 {
-    return BOOT_IMG(state, slot).sectors[sector].fs_off -
-           BOOT_IMG(state, slot).sectors[0].fs_off;
+    return flash_sector_get_off(&BOOT_IMG(state, slot).sectors[sector]) -
+           flash_sector_get_off(&BOOT_IMG(state, slot).sectors[0]);
 }
 
 #endif  /* !defined(MCUBOOT_USE_FLASH_AREA_GET_SECTORS) */
 
 #ifdef MCUBOOT_RAM_LOAD
+#   ifdef __BOOTSIM__
+
+/* Query for the layout of a RAM buffer appropriate for holding the
+ * image.  This will be per-test-thread, and therefore must be queried
+ * through this call. */
+struct bootsim_ram_info {
+    uint32_t start;
+    uint32_t size;
+    uintptr_t base;
+};
+struct bootsim_ram_info *bootsim_get_ram_info(void);
+
+#define IMAGE_GET_FIELD(field) (bootsim_get_ram_info()->field)
+#define IMAGE_RAM_BASE IMAGE_GET_FIELD(base)
+#define IMAGE_EXECUTABLE_RAM_START IMAGE_GET_FIELD(start)
+#define IMAGE_EXECUTABLE_RAM_SIZE IMAGE_GET_FIELD(size)
+
+#   else
+#       define IMAGE_RAM_BASE ((uintptr_t)0)
+#   endif
+
 #define LOAD_IMAGE_DATA(hdr, fap, start, output, size)       \
-    (memcpy((output),(void*)((hdr)->ih_load_addr + (start)), \
+    (memcpy((output),(void*)(IMAGE_RAM_BASE + (hdr)->ih_load_addr + (start)), \
     (size)), 0)
 #else
+#define IMAGE_RAM_BASE ((uintptr_t)0)
+
 #define LOAD_IMAGE_DATA(hdr, fap, start, output, size)       \
     (flash_area_read((fap), (start), (output), (size)))
 #endif /* MCUBOOT_RAM_LOAD */

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -24,6 +24,10 @@
 
 #ifndef __FREEMASTER_H
 #error Please include the freemaster.h master header file before the freemaster_private.h
+#endif
+
+#ifndef __FREEMASTER_TSA_H
+#error Please include the freemaster_tsa.h header file before the freemaster_private.h
 #endif
 
 /******************************************************************************
@@ -90,18 +94,51 @@ FMSTR_INLINE void *FMSTR_CAST_ADDR_TO_PTR_Func(FMSTR_ADDR addr)
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
+
 /******************************************************************************
- * SHA calculation
+ * Long pointer type declarations. By default, all FMSTR_LP_xx types are just
+ * regular pointers, but platforms like 56F800E may require to use __far
+ * declaration. Note that LP pointers are only used to access user variables
+ * and Recorder memory. The rest of FreeMASTER driver uses conventional pointer
+ * types to internal data structures.
  ******************************************************************************/
 
+#ifndef FMSTR_TYPEDEF_LPTR
+#define FMSTR_TYPEDEF_LPTR(type, ptrtype) typedef type *ptrtype
+#endif
+
+#ifndef FMSTR_LP_U8
+FMSTR_TYPEDEF_LPTR(FMSTR_U8, _FMSTR_LP_U8);
+#define FMSTR_LP_U8 _FMSTR_LP_U8
+#endif
+
+#ifndef FMSTR_LP_U16
+FMSTR_TYPEDEF_LPTR(FMSTR_U16, _FMSTR_LP_U16);
+#define FMSTR_LP_U16 _FMSTR_LP_U16
+#endif
+
+#ifndef FMSTR_LP_U32
+FMSTR_TYPEDEF_LPTR(FMSTR_U32, _FMSTR_LP_U32);
+#define FMSTR_LP_U32 _FMSTR_LP_U32
+#endif
+
+#ifndef FMSTR_LP_U64
+FMSTR_TYPEDEF_LPTR(FMSTR_U64, _FMSTR_LP_U64);
+#define FMSTR_LP_U64 _FMSTR_LP_U64
+#endif
+
+/* pointer to FMSTR_TSA_ENTRY (also potentially far on some platforms) */
+#ifndef FMSTR_LP_TSA_ENTRY
+FMSTR_TYPEDEF_LPTR(FMSTR_TSA_ENTRY, _FMSTR_LP_TSA_ENTRY);
+#define FMSTR_LP_TSA_ENTRY _FMSTR_LP_TSA_ENTRY
+#endif
 
 /******************************************************************************
  * Internal data types used
  ******************************************************************************/
 
 #define SHA1_BLOCK_SIZE 20
-    
+
 typedef struct fmstr_sha1_ctx
 {
     FMSTR_U8 data[64];
@@ -116,13 +153,13 @@ typedef struct FMSTR_TRANSPORT_INTF_S
 {
     FMSTR_BOOL (*Init)(void);
     void (*Poll)(void);
-    void (*SendResponse)(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode, void * identification);
+    void (*SendResponse)(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode, void *identification);
 } FMSTR_TRANSPORT_INTF;
 
 typedef struct FMSTR_SESSION_S
 {
-    void * identification;      /* Identification for transport (address/socket/...) */
-    
+    void *identification; /* Identification for transport (address/socket/...) */
+
 #if FMSTR_CFG_F1_RESTRICTED_ACCESS != 0
     struct
     {
@@ -133,8 +170,8 @@ typedef struct FMSTR_SESSION_S
         FMSTR_U8 accessKey[SHA1_BLOCK_SIZE];
         FMSTR_U8 localKey[SHA1_BLOCK_SIZE];
     } restr; /* Restricted access */
-#endif/* FMSTR_CFG_F1_RESTRICTED_ACCESS */
-    
+#endif       /* FMSTR_CFG_F1_RESTRICTED_ACCESS */
+
 } FMSTR_SESSION;
 
 /* There are multiple global instances of different transports. User selects one in
@@ -147,37 +184,37 @@ extern const FMSTR_TRANSPORT_INTF FMSTR_TRANSPORT;
  * Feature locking API
  ******************************************************************************/
 
-#if FMSTR_SESSION_COUNT > 1 
-FMSTR_BOOL FMSTR_IsFeatureOwned(FMSTR_SESSION * session, FMSTR_U8 featureType, FMSTR_U8 instance);
+#if FMSTR_SESSION_COUNT > 1
+FMSTR_BOOL FMSTR_IsFeatureOwned(FMSTR_SESSION *session, FMSTR_U8 featureType, FMSTR_U8 instance);
 #endif
 
 /******************************************************************************
  * Global non-API functions (used internally in FreeMASTER driver)
  ******************************************************************************/
 
-void FMSTR_FreeSession(void * identification);
-     
-void FMSTR_SendResponse(FMSTR_BPTR response, FMSTR_SIZE length, FMSTR_U8 statusCode, FMSTR_SESSION * session);
-FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 cmdCode, void * identification);
-FMSTR_BOOL FMSTR_SendTestFrame(FMSTR_BPTR msgBuffIO, FMSTR_SESSION * session);
+void FMSTR_FreeSession(void *identification);
+
+void FMSTR_SendResponse(FMSTR_BPTR response, FMSTR_SIZE length, FMSTR_U8 statusCode, FMSTR_SESSION *session);
+FMSTR_BOOL FMSTR_ProtocolDecoder(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 cmdCode, void *identification);
+FMSTR_BOOL FMSTR_SendTestFrame(FMSTR_BPTR msgBuffIO, FMSTR_SESSION *session);
 
 #if FMSTR_USE_APPCMD > 0
 FMSTR_BOOL FMSTR_InitAppCmds(void);
-FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 #endif
 
 #if FMSTR_USE_SCOPE > 0
 FMSTR_BOOL FMSTR_InitScope(void);
-FMSTR_BPTR FMSTR_SetScope(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_ReadScope(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE maxOutSize);
+FMSTR_BPTR FMSTR_SetScope(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_ReadScope(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE maxOutSize);
 #endif
 
 #if FMSTR_USE_RECORDER > 0
 FMSTR_BOOL FMSTR_InitRec(void);
-FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_SetRecCmd(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_GetRecCmd(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus);
 FMSTR_BOOL FMSTR_IsInRecBuffer(FMSTR_ADDR addr, FMSTR_SIZE size);
 #endif
 
@@ -191,8 +228,8 @@ FMSTR_BPTR FMSTR_UresControl(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 
 
 #if FMSTR_USE_PIPES > 0
 FMSTR_BOOL FMSTR_InitPipes(void);
-FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
-FMSTR_BPTR FMSTR_GetPipe(FMSTR_SESSION * session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_PipeFrame(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
+FMSTR_BPTR FMSTR_GetPipe(FMSTR_SESSION *session, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus);
 FMSTR_INDEX FMSTR_FindPipeIndex(FMSTR_PIPE_PORT pipePort);
 #endif
 
@@ -221,7 +258,7 @@ void FMSTR_CopyFromBufferWithMask(FMSTR_ADDR destAddr, FMSTR_BPTR srcBuff, FMSTR
 #define FMSTR_SkipInBuffer(dest, size) ((FMSTR_BPTR)(((FMSTR_BPTR)(dest)) + (size)))
 
 FMSTR_BPTR FMSTR_ValueFromBuffer16BE(FMSTR_U16 *pnum, FMSTR_BPTR src);
-FMSTR_BPTR FMSTR_ValueToBuffer16BE(FMSTR_BPTR dest, FMSTR_U16 num);        
+FMSTR_BPTR FMSTR_ValueToBuffer16BE(FMSTR_BPTR dest, FMSTR_U16 num);
 FMSTR_BPTR FMSTR_AddressFromBuffer(FMSTR_ADDR *paddr, FMSTR_BPTR src);
 FMSTR_BPTR FMSTR_AddressToBuffer(FMSTR_BPTR dest, FMSTR_ADDR addr);
 FMSTR_BPTR FMSTR_SizeFromBuffer(FMSTR_SIZE *psize, FMSTR_BPTR src);

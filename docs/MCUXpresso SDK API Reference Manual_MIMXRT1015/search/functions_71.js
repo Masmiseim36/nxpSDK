@@ -11,6 +11,8 @@ var searchData=
   ['qtmr_5fgetenabledinterrupts',['QTMR_GetEnabledInterrupts',['../a00050.html#gafe580603d4441b8a2101ca86485c517c',1,'fsl_qtmr.h']]],
   ['qtmr_5fgetstatus',['QTMR_GetStatus',['../a00050.html#ga89d05673c74e2f8ccc6c5cbecdab962c',1,'fsl_qtmr.h']]],
   ['qtmr_5finit',['QTMR_Init',['../a00050.html#gab784ac72bb2bf452ffca29053b05fa7c',1,'fsl_qtmr.h']]],
+  ['qtmr_5fsetcomparevalue',['QTMR_SetCompareValue',['../a00050.html#ga9764da43797074b65a4689a6df999cba',1,'fsl_qtmr.h']]],
+  ['qtmr_5fsetloadvalue',['QTMR_SetLoadValue',['../a00050.html#ga3db9e42ab0f483438a720139353937f7',1,'fsl_qtmr.h']]],
   ['qtmr_5fsettimerperiod',['QTMR_SetTimerPeriod',['../a00050.html#ga1d1fe996963cd527aabb034888e994b4',1,'fsl_qtmr.h']]],
   ['qtmr_5fsetupinputcapture',['QTMR_SetupInputCapture',['../a00050.html#gaab1b216e8bae644b8027cf8eaa4e2964',1,'fsl_qtmr.h']]],
   ['qtmr_5fsetuppwm',['QTMR_SetupPwm',['../a00050.html#ga364220c9fcdf15f102e60c7c76041c06',1,'fsl_qtmr.h']]],

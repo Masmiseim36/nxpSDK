@@ -33,20 +33,19 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../lvgl_demo_benchmark_bm.c"
 "${ProjDirPath}/../lv_conf.h"
-"${ProjDirPath}/../lv_demo_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark/lv_demo_benchmark.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark/lv_demo_benchmark.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/lv_demo.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_alpha16.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_rgb.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_argb.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_indexed16.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_chroma_keyed.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets/lv_font_montserrat_28_compr_az.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets/lv_font_montserrat_16_compr_az.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets/lv_font_montserrat_12_compr_az.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/lv_demos.h"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -59,10 +58,10 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark
-    ${ProjDirPath}/../../../../../middleware/lvgl/lv_examples
+    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark
+    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos
     ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets
-    ${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets
+    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/stress/assets
     ${ProjDirPath}/../..
 )
 
@@ -78,6 +77,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
 )
@@ -124,6 +124,8 @@ include(driver_igpio_MIMXRT1062)
 include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkbmimxrt1060_MIMXRT1062)
+
+include(component_silicon_id_MIMXRT1062)
 
 include(CMSIS_Include_core_cm_MIMXRT1062)
 

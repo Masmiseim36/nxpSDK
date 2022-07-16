@@ -176,23 +176,23 @@ Select this for LE Peripheral role support.
 
 #if CONFIG_BT_HCI_HOST
 
-/*! @brief Enable whitelist support.
- * This option enables the whitelist API. This takes advantage of the
+/*! @brief Enable filter accept list support.
+ * This option enables the filter accept list API. This takes advantage of the
  * whitelisting feature of a BLE controller.
- * The whitelist is a global list and the same whitelist is used
- * by both scanner and advertiser. The whitelist cannot be modified while
+ * The filter accept list is a global list and the same filter accept list is used
+ * by both scanner and advertiser. The filter accept list cannot be modified while
  * it is in use.
- * An Advertiser can whitelist which peers can connect or request scan
+ * An Advertiser can filter accept list which peers can connect or request scan
  * response data.
- * A scanner can whitelist advertiser for which it will generate
+ * A scanner can filter accept list advertiser for which it will generate
  * advertising reports.
- * Connections can be established automatically for whitelisted peers.
+ * Connections can be established automatically for filter accepted peers.
  *
  * This options deprecates the bt_le_set_auto_conn API in favor of the
  * bt_conn_create_aute_le API.
  */
-#ifndef CONFIG_BT_WHITELIST
-    #define CONFIG_BT_WHITELIST 0
+#ifndef CONFIG_BT_FILTER_ACCEPT_LIST
+    #define CONFIG_BT_FILTER_ACCEPT_LIST 0
 #endif
 
 /*! @brief Bluetooth device name.
@@ -643,13 +643,13 @@ Select this for LE Peripheral role support.
 /*! @brief "Minimum encryption key size accepted in octets, rangeing from 7 to 16
  * This option sets the minimum encryption key size accepted during pairing.
  */
-#ifndef CONFIG_BT_SMP_MIN_ENC_KEY_SIZE
+#ifndef BT_SMP_MIN_ENC_KEY_SIZE
 #if (defined(CONFIG_BT_SMP_SC_ONLY) && (CONFIG_BT_SMP_SC_ONLY > 0))
-#define CONFIG_BT_SMP_MIN_ENC_KEY_SIZE 16
+#define BT_SMP_MIN_ENC_KEY_SIZE 16
 #else
-#define CONFIG_BT_SMP_MIN_ENC_KEY_SIZE 7
+#define BT_SMP_MIN_ENC_KEY_SIZE 7
 #endif /* CONFIG_BT_SMP_SC_ONLY */
-#endif /* CONFIG_BT_SMP_MIN_ENC_KEY_SIZE */
+#endif /* BT_SMP_MIN_ENC_KEY_SIZE */
 
 #endif /* CONFIG_BT_SMP */
 
@@ -698,6 +698,16 @@ Select this for LE Peripheral role support.
     #define CONFIG_BT_L2CAP_DYNAMIC_CHANNEL 0
 #endif
 #endif /* CONFIG_BT_SMP */
+
+#if ((defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL)) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
+/*! @brief L2CAP Enhanced Credit Based Flow Control support.
+ * This option enables support for LE Connection oriented Channels with
+ * Enhanced Credit Based Flow Control support on dynamic L2CAP Channels.
+ */
+#ifndef CONFIG_BT_L2CAP_ECRED
+    #define CONFIG_BT_L2CAP_ECRED 0
+#endif
+#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
 
 /*! @brief L2CAP RETRANSMISSION/FLOW CONTROL/STREAMING modes support.
  * This option enables support for RETRANSMISSION/FLOW CONTROL/STREAMING
@@ -881,8 +891,8 @@ Select this for LE Peripheral role support.
 /*! @brief Peripheral preferred slave latency in Connection Intervals, range 0 to 499 is valid.
  * Range 0 to 499 is valid.
  */
-#ifndef CONFIG_BT_PERIPHERAL_PREF_SLAVE_LATENCY
-    #define CONFIG_BT_PERIPHERAL_PREF_SLAVE_LATENCY 0
+#ifndef CONFIG_BT_PERIPHERAL_PREF_LATENCY
+    #define CONFIG_BT_PERIPHERAL_PREF_LATENCY 0
 #endif
 
 /*! @brief Peripheral preferred supervision timeout in 10ms units, range 10 to 65534 is valid.

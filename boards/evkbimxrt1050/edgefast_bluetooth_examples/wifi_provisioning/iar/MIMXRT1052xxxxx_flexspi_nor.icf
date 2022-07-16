@@ -1,0 +1,208 @@
+/*
+** ###################################################################
+**     Processors:          MIMXRT1052CVJ5B
+**                          MIMXRT1052CVL5B
+**                          MIMXRT1052DVJ6B
+**                          MIMXRT1052DVL6B
+**
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Reference manual:    IMXRT1050RM Rev.2.1, 12/2018 | IMXRT1050SRM Rev.2
+**     Version:             rev. 1.0, 2018-09-21
+**     Build:               b210709
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2021 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+/* NVM */
+/* By default, the NVM is not used. */
+if (!isdefinedsymbol(gUseNVMLink_d)) {
+    define symbol gUseNVMLink_d = 0;
+}
+
+if (!isdefinedsymbol(gEraseNVMLink_d)) {
+    define symbol gEraseNVMLink_d = 0;
+}
+
+if (!isdefinedsymbol(gNVMSectorCountLink_d)) {
+    define symbol gNVMSectorCountLink_d = 4;
+}
+/* NVM */
+/* flash layout */
+
+define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000400 : 0;
+define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x000003FF : 0;
+
+define symbol m_interrupts_start       = 0x60002000;
+define symbol m_interrupts_end         = 0x600023FF;
+
+define symbol m_text_start             = 0x60002400;
+define symbol _ROM_END_                = 0x63AFFFFF;   
+
+
+/* NOTE: Flash in range 0x63D8_0000 - 0x63FFFFFF is reserved for litteFS data */
+
+define symbol m_interrupts_ram_start   = 0x20000000;
+define symbol m_interrupts_ram_end     = 0x20000000 + __ram_vector_table_offset__;
+
+define symbol m_data_start             = m_interrupts_ram_start + __ram_vector_table_size__;
+define symbol m_data_end               = 0x2001FFFF;
+
+define symbol m_data2_start            = 0x20200000;
+define symbol m_data2_end              = 0x2023FFFF;
+
+define symbol m_qacode_start           = 0x00000000;
+define symbol m_qacode_end             = 0x0001FFFF;
+
+define exported symbol m_boot_hdr_conf_start = 0x60000000;
+define symbol m_boot_hdr_ivt_start           = 0x60001000;
+define symbol m_boot_hdr_boot_data_start     = 0x60001020;
+define symbol m_boot_hdr_dcd_data_start      = 0x60001030;
+
+define symbol STORAGE_AREA_LENGTH  = 0x100000;
+
+define symbol STORAGE_AREA_SIZE  = STORAGE_AREA_LENGTH;
+define symbol STORAGE_AREA_START = _ROM_END_ - STORAGE_AREA_SIZE + 1;
+define symbol m_text_end         = STORAGE_AREA_START -1;
+/*** NVM Configuration Start ***/
+if (isdefinedsymbol(gUseNVMLink_d))
+{
+  define exported symbol NVM_AREA_START = STORAGE_AREA_START;
+  
+  define exported symbol NV_STORAGE_SECTOR_SIZE = 0x40000;  /* 256k flash sector size */
+  define exported symbol NV_STORAGE_MAX_SECTORS = gNVMSectorCountLink_d;
+  define exported symbol NVM_AREA_SIZE = NV_STORAGE_SECTOR_SIZE * NV_STORAGE_MAX_SECTORS;
+  if (NVM_AREA_SIZE > STORAGE_AREA_SIZE)
+  {
+    error "Required NVM storage area is biger than STORAGE_AREA_SIZE";
+  }
+  define exported symbol NV_STORAGE_END_ADDRESS = NVM_AREA_START + NVM_AREA_SIZE - 1;
+  define exported symbol NV_STORAGE_START_ADDRESS = NVM_AREA_START;
+}
+/*** NVM Configuration End ***/
+
+/*** littleFS configuration Start ***/
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE = 0x40000;  /* 256k flash sector size */
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS = (0x63D80000 - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
+
+/*** littleFS configuration End ***/
+
+/* Sizes */
+if (isdefinedsymbol(__stack_size__)) {
+  define symbol __size_cstack__        = __stack_size__;
+} else {
+  define symbol __size_cstack__        = 0x0400;
+}
+
+if (isdefinedsymbol(__heap_size__)) {
+  define symbol __size_heap__          = __heap_size__;
+} else {
+  define symbol __size_heap__          = 0x1000;
+}
+
+define exported symbol __NCACHE_REGION_START   = m_data2_start;
+define exported symbol __NCACHE_REGION_SIZE    = 0x0;
+
+define exported symbol __VECTOR_TABLE          = m_interrupts_start;
+define exported symbol __VECTOR_RAM            = isdefinedsymbol(__ram_vector_table__) ? m_interrupts_ram_start : m_interrupts_start;
+define exported symbol __RAM_VECTOR_TABLE_SIZE = __ram_vector_table_size__;
+
+define memory mem with size = 4G;
+define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
+                          | mem:[from m_text_start to m_text_end];
+define region QACODE_region = mem:[from m_qacode_start to m_qacode_end];
+define region DATA_region = mem:[from m_data_start to m_data_end-__size_cstack__];
+/*define region CSTACK_region = mem:[from m_data_end-__size_cstack__+1 to m_data_end];*/
+define region DATA2_region = mem:[from m_data2_start to m_data2_end];
+define region CSTACK_region = mem:[from m_data_end-__size_cstack__+1 to m_data_end];
+
+define block CSTACK    with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
+define block RW        { readwrite };
+define block ZI        { zi };
+define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
+define block QACCESS_CODE  { section CodeQuickAccess };
+define block QACCESS_DATA  { section DataQuickAccess };
+
+initialize by copy { readwrite, section CodeQuickAccess, section DataQuickAccess,
+  /* Place in RAM flash and performance dependent functions */
+  object fsl_adapter_flexspi_hyper_nor_flash.o,
+  object NV_Flash.o,
+  object mflash_drv.o,
+  object fsl_flexspi.o,
+  object fsl_clock.o,
+  object fsl_adapter_flexspi_hyper_flash_config.o,
+  section .textrw
+};
+do not initialize  { section .noinit,  };
+
+place at address mem: m_interrupts_start    { readonly section .intvec };
+place at address mem: m_boot_hdr_conf_start { section .boot_hdr.conf };
+place at address mem: m_boot_hdr_ivt_start { section .boot_hdr.ivt };
+place at address mem: m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };  
+place at address mem: m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
+
+keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
+
+place in DATA_region { readwrite object write_task_pl.o,
+readwrite object aws_demo.o,
+readwrite object memp.o,
+readwrite object mem.o,
+readwrite object ht_read_task_pl.o,
+readwrite object write_task_pl.o,
+readwrite object sdio.o, 
+readwrite object wifi-mem.o,
+readwrite object wifi-sdio.o,
+readwrite object wifi-sdio.o,
+readwrite object mlan_init.o,
+readwrite object mlan_sdio.o,
+readwrite object l2cap_init.o,
+readwrite object BT_storage_pl.o,
+readwrite object fsl_debug_console.o,
+/*readwrite object gatt.o,*/ 
+readwrite object controller_wifi_nxp.o,
+readwrite object core_pkcs11_mbedtls.o,
+readwrite object aws_iot_demo_shadow.o,
+readwrite object iot_ble_hal_gatt_server.o,
+readwrite object wlan.o,
+readwrite object iot_wifi.o,
+readwrite object wlan_txpwrlimit_cfg.o,
+readwrite object ht_core.o,
+readwrite object l2cap_fixed_channel.o,
+readwrite object smp_init.o,
+readwrite object write_task.o,
+readwrite object mlan_cfp.o,
+readwrite object appl_gatt_server.o,
+readwrite object iot_ble_hal_common_gap.o,
+readwrite object iot_ble_hal_gap.o,
+readwrite object iot_ble_hal_gatt_server.o,
+readwrite object mlan_11d.o,
+readwrite object mlan_glue.o,
+readwrite object hci_init.o,
+readwrite object iot_ble_data_transfer.o,
+readwrite object iot_ble_wifi_provisioning.o,
+readwrite object mbedtls_error.o,
+readwrite object iot_ble_gap.o,
+};
+
+place in TEXT_region                        { readonly, readonly section ._bt*};
+place in DATA2_region                        { block RW ,section ._net_buf_pool, section ._k_mem_slab};  
+place in DATA2_region                        { block ZI };
+place in DATA_region                        { last block HEAP, section app_region };
+place in DATA_region                        { block NCACHE_VAR };
+place in CSTACK_region                      { block CSTACK };
+place in QACODE_region                      { block QACCESS_CODE };
+place in DATA_region                        { block QACCESS_DATA };
+keep { section .flash_area_list, section ._net_buf_pool, section ._k_mem_slab, section ._bt*, section ._settings*};

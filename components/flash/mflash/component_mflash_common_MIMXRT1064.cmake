@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("component_mflash_common component is included.")
 
 

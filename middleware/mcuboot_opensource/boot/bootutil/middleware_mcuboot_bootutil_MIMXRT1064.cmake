@@ -1,9 +1,10 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_mcuboot_bootutil component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/boot_record.c
     ${CMAKE_CURRENT_LIST_DIR}/src/bootutil_misc.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/bootutil_public.c
     ${CMAKE_CURRENT_LIST_DIR}/src/caps.c
     ${CMAKE_CURRENT_LIST_DIR}/src/encrypted.c
     ${CMAKE_CURRENT_LIST_DIR}/src/fault_injection_hardening.c

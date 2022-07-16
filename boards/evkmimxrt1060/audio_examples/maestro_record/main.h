@@ -32,4 +32,6 @@ typedef struct _app_handle
     FIL fileObject;
 } app_handle_t;
 
+bool SDCARD_inserted(void);
+
 #endif /* __MAIN_H__ */

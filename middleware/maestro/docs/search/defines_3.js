@@ -1,21 +1,7 @@
 var searchData=
 [
-  ['log_5fenter_0',['LOG_ENTER',['../logging_8h.html#a503e8966796bdec2d276a971a1fc76f4',1,'logging.h']]],
-  ['log_5fexit_1',['LOG_EXIT',['../logging_8h.html#af8abf4e7b6b559b09e6210715c3855ea',1,'logging.h']]],
-  ['log_5fname_5flength_2',['LOG_NAME_LENGTH',['../logging_8h.html#acc470f9b17fb012b2e4f35cf821e501b',1,'logging.h']]],
-  ['loglvl_5fall_3',['LOGLVL_ALL',['../logging_8h.html#a8f491d8065d3e3015a47660d63d9c82f',1,'logging.h']]],
-  ['loglvl_5fcatastrophic_4',['LOGLVL_CATASTROPHIC',['../logging_8h.html#a7e58fc6c0af6889ac1b108d263d71cce',1,'logging.h']]],
-  ['loglvl_5fdebug_5',['LOGLVL_DEBUG',['../logging_8h.html#a78a2b6393499a54d899091f93e43104e',1,'logging.h']]],
-  ['loglvl_5ferror_6',['LOGLVL_ERROR',['../logging_8h.html#a0bb5287396eca168cf489ffcf757c92a',1,'logging.h']]],
-  ['loglvl_5ffunction_5finfo_7',['LOGLVL_FUNCTION_INFO',['../logging_8h.html#a9bafcf9d98359b7b88dca674976744cd',1,'logging.h']]],
-  ['loglvl_5finfo_8',['LOGLVL_INFO',['../logging_8h.html#a31d2cdb5f68889c29aaa36b121e7b172',1,'logging.h']]],
-  ['loglvl_5fnone_9',['LOGLVL_NONE',['../logging_8h.html#a2cd5994e1b25bf546dc08d1275a960a6',1,'logging.h']]],
-  ['loglvl_5fwarning_10',['LOGLVL_WARNING',['../logging_8h.html#a2dbe014582398091abf6fe811f6d4ef0',1,'logging.h']]],
-  ['logmdl_5fgeneral_11',['LOGMDL_GENERAL',['../streamer__error_8h.html#ae4a382efe202d31c3f4ab8c300d2f709',1,'LOGMDL_GENERAL():&#160;streamer_error.h'],['../af__error_8h.html#ae4a382efe202d31c3f4ab8c300d2f709',1,'LOGMDL_GENERAL():&#160;af_error.h']]],
-  ['logmdl_5fmax_5fmodules_12',['LOGMDL_MAX_MODULES',['../logging_8h.html#ab77aaba719c8388e0ff48184f93b97f3',1,'logging.h']]],
-  ['logmdl_5fmetadata_13',['LOGMDL_METADATA',['../metadata__error_8h.html#a5b042cace26f1b8a9a6cca4a31d426fd',1,'metadata_error.h']]],
-  ['logput_5fall_14',['LOGPUT_ALL',['../logging_8h.html#a14f4970e32514b4654d68b58bc3c6f6a',1,'logging.h']]],
-  ['logput_5fconsole_15',['LOGPUT_CONSOLE',['../logging_8h.html#ae9a0d64d91211f3d8654480078b85190',1,'logging.h']]],
-  ['logput_5ffile_16',['LOGPUT_FILE',['../logging_8h.html#a4a994c638207059ec4045be713fe5c0c',1,'logging.h']]],
-  ['logput_5fnone_17',['LOGPUT_NONE',['../logging_8h.html#a94e30373b0b18cb39c065abc5bee5e76',1,'logging.h']]]
+  ['cei_5fencoder_5fencodeerr_0',['CEI_ENCODER_ENCODEERR',['../cei_8h.html#a299b79f7bfee7458e931c7daf5705b98',1,'cei.h']]],
+  ['chk_5fargs_1',['CHK_ARGS',['../streamer_8h.html#ae6212585133242727c5c11cc0186f956',1,'streamer.h']]],
+  ['clear_5fbit_2',['CLEAR_BIT',['../streamer__api_8h.html#a18b1f235d3f685354db260ffc9c8fb56',1,'streamer_api.h']]],
+  ['codec_5finfo_5flen_3',['CODEC_INFO_LEN',['../streamer__api_8h.html#a0183d6a1ea26a3de26c05a5322bee606',1,'streamer_api.h']]]
 ];

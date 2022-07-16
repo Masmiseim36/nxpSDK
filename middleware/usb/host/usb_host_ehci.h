@@ -309,7 +309,9 @@ typedef struct _usb_host_ehci_instance
     uint32_t taskEventHandleBuffer[(OSA_EVENT_HANDLE_SIZE + 3) / 4]; /*!< EHCI task event handle buffer*/
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
     uint64_t matchTick;
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
     USBPHY_Type *registerPhyBase; /*!< The base address of the PHY register */
+#endif
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
     USBNC_Type *registerNcBase; /*!< The base address of the USBNC register */
 #endif

@@ -4,22 +4,23 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "osa_common.h"
+
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 
 #include "app_streamer.h"
 #include "streamer_pcm_app.h"
+#include "logging.h"
 #include "audio_microphone.h"
 
 #define APP_STREAMER_MSG_QUEUE     "app_queue"
 #define STREAMER_TASK_NAME         "Streamer"
 #define STREAMER_MESSAGE_TASK_NAME "StreamerMessage"
 
-#define STREAMER_TASK_STACK_SIZE         4 * 1024
+#define STREAMER_TASK_STACK_SIZE         16 * 1024
 #define STREAMER_MESSAGE_TASK_STACK_SIZE 1024
 
-OsaThread msg_thread;
+OSA_TASK_HANDLE_DEFINE(msg_thread);
 extern usb_audio_microphone_struct_t s_audioMicrophone;
 
 /*!
@@ -34,29 +35,31 @@ extern usb_audio_microphone_struct_t s_audioMicrophone;
  */
 static void STREAMER_MessageTask(void *arg)
 {
-    OsaMq mq;
     STREAMER_MSG_T msg;
     streamer_handle_t *handle;
     bool exit_thread = false;
-    int ret;
+    osa_status_t ret;
 
     handle = (streamer_handle_t *)arg;
 
-    PRINTF("[STREAMER] Message Task started\r\n");
-
-    ret = osa_mq_open(&mq, APP_STREAMER_MSG_QUEUE, STREAMER_MSG_SIZE, true);
-    if (ERRCODE_NO_ERROR != ret)
+    while (!handle->streamer->mq_out)
     {
-        PRINTF("osa_mq_open failed: %d\r\n", ret);
+        OSA_TimeDelay(1);
+    }
+    if (handle->streamer->mq_out == NULL)
+    {
+        PRINTF("[STREAMER] osa_mq_open failed: %d\r\n");
         return;
     }
 
+    PRINTF("[STREAMER] Message Task started\r\n");
+
     do
     {
-        ret = osa_mq_receive(&mq, (void *)&msg, STREAMER_MSG_SIZE, 0, NULL);
-        if (ret != ERRCODE_NO_ERROR)
+        ret = OSA_MsgQGet(&handle->streamer->mq_out, (void *)&msg, osaWaitForever_c);
+        if (ret != KOSA_StatusSuccess)
         {
-            PRINTF("osa_mq_receiver error: %d\r\n", ret);
+            PRINTF("OSA_MsgQGet error: %d\r\n", ret);
             continue;
         }
 
@@ -69,7 +72,7 @@ static void STREAMER_MessageTask(void *arg)
                 break;
             case STREAM_MSG_EOS:
                 PRINTF("\nSTREAM_MSG_EOS\r\n");
-
+                exit_thread = true;
                 /* Indicate to other software layers that playing has ended. */
                 STREAMER_Stop(handle);
                 break;
@@ -87,10 +90,10 @@ static void STREAMER_MessageTask(void *arg)
 
     } while (!exit_thread);
 
-    osa_mq_close(&mq);
-    osa_mq_destroy(APP_STREAMER_MSG_QUEUE);
+    OSA_MsgQDestroy(&handle->streamer->mq_out);
+    handle->streamer->mq_out = NULL;
 
-    osa_thread_destroy(msg_thread);
+    OSA_TaskDestroy(msg_thread);
 }
 
 bool STREAMER_IsPlaying(streamer_handle_t *handle)
@@ -121,20 +124,9 @@ void STREAMER_Stop(streamer_handle_t *handle)
 status_t STREAMER_mic_Create(streamer_handle_t *handle)
 {
     STREAMER_CREATE_PARAM params;
-    OsaThreadAttr thread_attr;
+    osa_task_def_t thread_attr;
     ELEMENT_PROPERTY_T prop;
     int ret;
-
-    /* Create message process thread */
-    osa_thread_attr_init(&thread_attr);
-    osa_thread_attr_set_name(&thread_attr, STREAMER_MESSAGE_TASK_NAME);
-    osa_thread_attr_set_stack_size(&thread_attr, STREAMER_MESSAGE_TASK_STACK_SIZE);
-    ret = osa_thread_create(&msg_thread, &thread_attr, STREAMER_MessageTask, (void *)handle);
-    osa_thread_attr_destroy(&thread_attr);
-    if (ERRCODE_NO_ERROR != ret)
-    {
-        return kStatus_Fail;
-    }
 
     /* Create streamer */
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
@@ -146,6 +138,17 @@ status_t STREAMER_mic_Create(streamer_handle_t *handle)
 
     handle->streamer = streamer_create(&params);
     if (!handle->streamer)
+    {
+        return kStatus_Fail;
+    }
+
+    /* Create message process thread */
+    thread_attr.tpriority = OSA_PRIORITY_HIGH;
+    thread_attr.tname     = (uint8_t *)STREAMER_MESSAGE_TASK_NAME;
+    thread_attr.pthread   = &STREAMER_MessageTask;
+    thread_attr.stacksize = STREAMER_MESSAGE_TASK_STACK_SIZE;
+    ret                   = OSA_TaskCreate(&msg_thread, &thread_attr, (void *)handle);
+    if (KOSA_StatusSuccess != ret)
     {
         return kStatus_Fail;
     }
@@ -178,18 +181,12 @@ void STREAMER_Destroy(streamer_handle_t *handle)
 {
     streamer_destroy(handle->streamer);
     deinit_logging();
-    osa_deinit();
 }
 
 void STREAMER_Init(void)
 {
-    /* Initialize OSA*/
-    osa_init();
-
     /* Initialize logging */
     init_logging();
-
-    add_module_name(LOGMDL_STREAMER, "STREAMER");
 
     /* Uncomment below to turn on full debug logging for the streamer. */
     //    set_debug_module(0xffffffff);

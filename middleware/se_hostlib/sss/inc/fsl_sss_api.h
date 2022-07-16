@@ -1218,7 +1218,7 @@ sss_status_t sss_cipher_finish(
  * @param srcData Buffer containing the input data.
  * @param destData Buffer containing the output data.
  * @param size Size of source and destination data buffers in bytes.
- * @param[in,out] initialCounter Input counter (updates on return). When using internal IV algorithms (only encrypt)
+ * @param[in,out] initialCounter Input counter (Always 16 bytes) (updates on return). When using internal IV algorithms (only encrypt)
  * for SE051, initialCounter buffer will be filled with genereted Initial counter.
  * @param[out] lastEncryptedCounter Output cipher of last counter, for chained CTR calls. NULL can be passed if
  * chained calls are not used.

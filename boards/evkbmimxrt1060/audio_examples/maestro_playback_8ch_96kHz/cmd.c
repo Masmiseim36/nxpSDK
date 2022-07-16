@@ -81,7 +81,6 @@ SHELL_COMMAND_DEFINE(
 
 SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
 static shell_handle_t s_shellHandle;
-
 extern serial_handle_t g_serialHandle;
 extern app_handle_t app;
 streamer_handle_t streamerHandle;
@@ -97,9 +96,9 @@ streamer_handle_t streamerHandle;
 static uint32_t isFileOnSDcard(char *filename)
 {
     FRESULT error;
-    DIR directory;
-    FILINFO fileInformation;
-    uint32_t filePresent = false;
+    DIR directory           = {0};
+    FILINFO fileInformation = {0};
+    uint32_t filePresent    = false;
 
     if (!app.sdcardInserted)
     {

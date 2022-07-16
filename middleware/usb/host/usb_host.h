@@ -105,7 +105,7 @@ typedef struct _usb_host_process_descriptor_param
     uint8_t descriptorIndex;   /*!< The descriptor index is used to select a specific descriptor (only for configuration
                                   and string descriptors) when several descriptors of the same type are implemented in a
                                   device */
-    uint8_t languageId;        /*!< It specifies the language ID for string descriptors or is reset to zero for other
+    uint16_t languageId;        /*!< It specifies the language ID for string descriptors or is reset to zero for other
                                   descriptors */
     uint8_t *descriptorBuffer; /*!< Buffer pointer */
     uint16_t descriptorLength; /*!< Buffer data length */

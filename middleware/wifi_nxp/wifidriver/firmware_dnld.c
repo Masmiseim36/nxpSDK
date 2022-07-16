@@ -4,23 +4,7 @@
  *
  *  Copyright 2021-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -44,8 +28,8 @@ const uint8_t *wlanfw;
 /* remove this after mlan integration complete */
 enum
 {
-    FWDNLD_STATUS_FAILURE = 0xffffffff,
-    FWDNLD_STATUS_SUCCESS = 0,
+    FWDNLD_STATUS_FAILURE    = 0xffffffff,
+    FWDNLD_STATUS_SUCCESS    = 0,
     FWDNLD_CARD_NOT_DETECTED = 3,
     FWDNLD_STATUS_FW_DNLD_FAILED,
     FWDNLD_STATUS_FW_NOT_DETECTED = 5,
@@ -54,16 +38,14 @@ enum
     FWDNLD_CARD_CMD_TIMEOUT
 };
 
-static int wlan_card_fw_status(t_u16 *dat)
+static void wlan_card_fw_status(t_u16 *dat)
 {
     uint32_t resp = 0;
 
     (void)sdio_drv_creg_read(CARD_FW_STATUS0_REG, 1, &resp);
-    *dat = resp & 0xff;
+    *dat = (t_u16)(resp & 0xff);
     (void)sdio_drv_creg_read(CARD_FW_STATUS1_REG, 1, &resp);
-    *dat |= (resp & 0xff) << 8;
-
-    return true;
+    *dat |= (t_u16)((resp & 0xff) << 8);
 }
 
 static bool wlan_card_ready_wait(t_u32 poll)
@@ -177,7 +159,7 @@ static int32_t wlan_set_fw_dnld_size(void)
 {
     uint32_t resp;
 
-    int rv = sdio_drv_creg_write(FN1_BLOCK_SIZE_0, 0, 0, &resp);
+    bool rv = sdio_drv_creg_write(FN1_BLOCK_SIZE_0, 0, 0, &resp);
     if (rv == false)
     {
         return FWDNLD_STATUS_FAILURE;
@@ -188,6 +170,7 @@ static int32_t wlan_set_fw_dnld_size(void)
     {
         return FWDNLD_STATUS_FAILURE;
     }
+
     return FWDNLD_STATUS_SUCCESS;
 }
 
@@ -265,6 +248,7 @@ int32_t firmware_download(enum wlan_fw_storage_type st, const uint8_t *fw_ram_st
     {
         return ret;
     }
+
     if (wlan_card_ready_wait(1000) != true)
     {
         fwdnld_io_e("SDIO - FW Ready Registers not set");

@@ -13,10 +13,6 @@
       </member>
       <member>
         <project>mc_pmsm</project>
-        <configuration>sdram_debug</configuration>
-      </member>
-      <member>
-        <project>mc_pmsm</project>
         <configuration>sdram_release</configuration>
       </member>
       <member>
@@ -40,13 +36,6 @@
       <member>
         <project>mc_pmsm</project>
         <configuration>release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_debug</name>
-      <member>
-        <project>mc_pmsm</project>
-        <configuration>sdram_debug</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

@@ -27,6 +27,7 @@
 #include "sdio.h"
 #include "firmware_dnld.h"
 
+#include "fsl_adapter_uart.h"
 #include "fsl_os_abstraction.h"
 
 #include "controller.h"
@@ -107,7 +108,6 @@ static void controller_hci_uart_init(void)
     config.instance     = hciUartConfig.instance;
     config.enableRxRTS  = hciUartConfig.enableRxRTS;
     config.enableTxCTS  = hciUartConfig.enableTxCTS;
-    config.mode         = kHAL_UartNonBlockMode;
 #if (defined(HAL_UART_ADAPTER_FIFO) && (HAL_UART_ADAPTER_FIFO > 0u))
     config.txFifoWatermark = 0U;
     config.rxFifoWatermark = 0U;

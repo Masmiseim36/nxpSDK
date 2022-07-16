@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -34,13 +18,81 @@
 #include <wlan.h>
 #include <wifi_ping.h>
 
-int wlan_get_ipv4_addr(unsigned int *ipv4_addr);
+static struct netif *get_netif_up()
+{
+    struct netif *netif = netif_list;
+    for (; netif != NULL; netif = netif->next)
+    {
+        if (netif_is_up(netif))
+        {
+            return netif;
+        }
+    }
+    return NULL;
+}
+
+static int addr_af(const ip_addr_t *addr)
+{
+#ifdef CONFIG_IPV6
+    return (addr->type == IPADDR_TYPE_V4) ? AF_INET : AF_INET6;
+#else
+    return AF_INET;
+#endif
+}
+
+static const ip_addr_t *get_src_addr(const ip_addr_t *dst)
+{
+    static ip_addr_t ret;
+    const ip_addr_t *addr = NULL;
+    struct netif *netif   = get_netif_up();
+
+    if (netif == NULL)
+    {
+        return NULL;
+    }
+
+#ifdef CONFIG_IPV6
+    switch (dst->type)
+    {
+        case IPADDR_TYPE_V4:
+            addr = netif_ip_addr4(netif);
+            memcpy(&ret.u_addr.ip4, &addr->u_addr.ip4, sizeof(ret.u_addr.ip4));
+            break;
+        case IPADDR_TYPE_V6:
+            addr = ip6_select_source_address(netif, &addr->u_addr.ip6);
+            memcpy(&ret.u_addr.ip6, &addr->u_addr.ip6, sizeof(ret.u_addr.ip6));
+            break;
+        default:
+            return NULL;
+    }
+
+    ret.type = dst->type;
+#else
+    addr = netif_ip_addr4(netif);
+    memcpy(&ret, addr, sizeof(ip_addr_t));
+#endif
+    return &ret;
+}
+
+/* Converts IPv4 or IPv6 address into static buffer and returns its pointer */
+static const char *ip_to_str(const ip_addr_t *ipaddr)
+{
+    static char ip_str[50];
+
+    if (inet_ntop(addr_af(ipaddr), ipaddr, ip_str, sizeof(ip_str)) == NULL)
+    {
+        ip_str[0] = '?';
+        ip_str[1] = '\0';
+    }
+
+    return ip_str;
+}
 
 /* Display the final result of ping */
-static void display_ping_result(ip_addr_t *addr, int total, int recvd)
+static void display_ping_result(const ip_addr_t *addr, int total, int recvd)
 {
     int dropped = total - recvd;
-    (void)PRINTF("\r\n--- %s ping statistics ---\r\n", inet_ntoa(*addr));
+    (void)PRINTF("\r\n--- %s ping statistics ---\r\n", ip_to_str(addr));
     (void)PRINTF("%d packets transmitted, %d received,", total, recvd);
     if (dropped != 0)
     {
@@ -50,15 +102,17 @@ static void display_ping_result(ip_addr_t *addr, int total, int recvd)
 }
 
 /* Display the statistics of the current iteration of ping */
-static void display_ping_stats(int status, uint32_t size, ip_addr_t *ipaddr, u16_t seqno, int ttl, uint32_t time)
+static void display_ping_stats(int status, uint32_t size, const ip_addr_t *ipaddr, u16_t seqno, int ttl, uint32_t time)
 {
+    const char *ip_str = ip_to_str(ipaddr);
+
     if (status == WM_SUCCESS)
     {
-        (void)PRINTF("%u bytes from %s: icmp_req=%u ttl=%u time=%u ms\r\n", size, inet_ntoa(*ipaddr), seqno, ttl, time);
+        (void)PRINTF("%u bytes from %s: icmp_req=%u ttl=%u time=%u ms\r\n", size, ip_str, seqno, ttl, time);
     }
     else
     {
-        (void)PRINTF("From %s icmp_seq=%u Destination Host Unreachable\r\n", inet_ntoa(*ipaddr), seqno);
+        (void)PRINTF("From %s icmp_seq=%u Destination Host Unreachable\r\n", ip_str, seqno);
     }
 }
 
@@ -68,7 +122,11 @@ static void display_ping_usage(void)
     (void)PRINTF("Usage:\r\n");
     (void)PRINTF(
         "\tping [-s <packet_size>] [-c <packet_count>] "
-        "[-W <timeout in sec>] <ip_address>\r\n");
+#ifdef CONFIG_IPV6
+        "[-W <timeout in sec>] <ipv4/ipv6 address>\r\n");
+#else
+        "[-W <timeout in sec>] <ipv4 address>\r\n");
+#endif
     (void)PRINTF("Default values:\r\n");
     (void)PRINTF(
         "\tpacket_size: %u\r\n\tpacket_count: %u"
@@ -102,7 +160,7 @@ static int ping_recv(int s, uint16_t seq_no, int *ttl)
             {
                 /* Extract TTL and send back so that it can be
                  * displayed in ping statistics */
-                *ttl = iphdr->_ttl;
+                *ttl = (int)(iphdr->_ttl);
                 return WM_SUCCESS;
             }
         }
@@ -111,13 +169,57 @@ static int ping_recv(int s, uint16_t seq_no, int *ttl)
     return -WM_FAIL;
 }
 
+#ifdef CONFIG_IPV6
+/* Handle the ICMP6 echo response and extract required parameters */
+static int ping6_recv(int s, uint16_t seq_no, int *ttl)
+{
+    char buf[64];
+    int fromlen = 0, len;
+    struct sockaddr_in6 from;
+    struct ip6_hdr *iphdr;
+    struct icmp_echo_hdr *iecho;
+
+    while ((len = lwip_recvfrom(s, buf, sizeof(buf), 0, (struct sockaddr *)(void *)&from,
+                                (socklen_t *)(void *)&fromlen)) > 0)
+    {
+        /* Received length should be greater than size of IP header and
+         * size of ICMP header */
+        if (len >= (int)(sizeof(struct ip6_hdr) + sizeof(struct icmp_echo_hdr)))
+        {
+            iphdr = (struct ip6_hdr *)(void *)buf;
+            if (IP6H_NEXTH(iphdr) == IP6_NEXTH_ICMP6)
+            {
+                /* Calculate the offset of ICMP header */
+                iecho = (struct icmp_echo_hdr *)(void *)(buf + sizeof(struct ip6_hdr));
+
+                /* Verify that the echo response is for the echo request
+                 * we sent by checking PING_ID, sequence number and ICMP type*/
+                if ((iecho->id == PING_ID) && (iecho->seqno == htons(seq_no)) && (iecho->type == ICMP6_TYPE_EREP))
+                {
+                    /* Extract TTL and send back so that it can be
+                     * displayed in ping statistics */
+                    *ttl = IP6H_HOPLIM(iphdr);
+                    return WM_SUCCESS;
+                }
+            }
+        }
+    }
+    /* Either len < 0 or the echo response verification unsuccessful */
+    return -WM_FAIL;
+}
+#endif
+
 /* Prepare a ICMP echo request */
-static void ping_prepare_echo(struct icmp_echo_hdr *iecho, uint16_t len, uint16_t seq_no)
+static void ping_prepare_echo(struct icmp_echo_hdr *iecho, const ip_addr_t *dest, uint16_t len, uint16_t seq_no)
 {
     uint32_t i;
     uint32_t data_len = len - sizeof(struct icmp_echo_hdr);
 
+#ifdef CONFIG_IPV6
+    ICMPH_TYPE_SET(iecho, (dest->type == IPADDR_TYPE_V4) ? ICMP_ECHO : ICMP6_TYPE_EREQ);
+#else
     ICMPH_TYPE_SET(iecho, ICMP_ECHO);
+#endif
     ICMPH_CODE_SET(iecho, 0);
     iecho->chksum = 0;
     iecho->id     = PING_ID;
@@ -128,8 +230,6 @@ static void ping_prepare_echo(struct icmp_echo_hdr *iecho, uint16_t len, uint16_
     {
         ((char *)iecho)[sizeof(struct icmp_echo_hdr) + i] = (char)i;
     }
-
-    iecho->chksum = inet_chksum(iecho, len);
 }
 
 /* Send an ICMP echo request, receive its response and print its statistics and
@@ -139,16 +239,25 @@ static int ping(u16_t count, unsigned short size, unsigned int r_timeout, ip_add
     int ret = WM_SUCCESS, s, recvd = 0;
     u16_t i = 1;
     struct icmp_echo_hdr *iecho;
-    struct sockaddr_in to;
-    unsigned int src_ip, ping_time, ping_size;
-    ip_addr_t *ip_addr;
+    unsigned int ping_time, ping_size;
+    const ip_addr_t *ip_addr, *src_ip_addr;
     struct timeval timeout;
 
-    (void)PRINTF("PING %s (%s) %u(%u) bytes of data\r\n", inet_ntoa(*addr), inet_ntoa(*addr), size,
+#ifdef CONFIG_IPV6
+    struct netif *netif     = get_netif_up();
+    const unsigned scope_id = netif_get_index(netif);
+#endif
+    const char *ip_str = ip_to_str(addr);
+
+    (void)PRINTF("PING %s (%s) %u(%u) bytes of data\r\n", ip_str, ip_str, size,
                  size + sizeof(struct ip_hdr) + sizeof(struct icmp_echo_hdr));
 
     /* Create a raw socket */
-    s = socket(AF_INET, SOCK_RAW, 1);
+#ifdef CONFIG_IPV6
+    s = socket(addr_af(addr), SOCK_RAW, (addr->type == IPADDR_TYPE_V4) ? IPPROTO_ICMP : IPPROTO_ICMPV6);
+#else
+    s              = socket(addr_af(addr), SOCK_RAW, IPPROTO_ICMP);
+#endif
     if (s < 0)
     {
         ping_e("Failed to create raw socket for ping %d", s);
@@ -173,7 +282,7 @@ static int ping(u16_t count, unsigned short size, unsigned int r_timeout, ip_add
     }
 
     /* Get the source IP address */
-    (void)wlan_get_ipv4_addr(&src_ip);
+    src_ip_addr = get_src_addr(addr);
 
     /* Ping size is: size of ICMP header + size of payload */
     ping_size = sizeof(struct icmp_echo_hdr) + size;
@@ -186,20 +295,37 @@ static int ping(u16_t count, unsigned short size, unsigned int r_timeout, ip_add
         goto end;
     }
 
-    ping_prepare_echo(iecho, (uint16_t)ping_size, i);
-
     while (i <= count)
     {
-        iecho->seqno  = htons(i);
-        iecho->chksum = 0;
-        iecho->chksum = inet_chksum(iecho, (uint16_t)ping_size);
+        ping_prepare_echo(iecho, addr, (uint16_t)ping_size, i);
+#ifdef CONFIG_IPV6
+        if (addr->type == IPADDR_TYPE_V4)
+#endif
+        {
+            struct sockaddr_in to;
+            to.sin_len    = (u8_t)sizeof(to);
+            to.sin_family = AF_INET;
+            inet_addr_from_ip4addr(&to.sin_addr, ip_2_ip4(addr));
 
-        to.sin_len    = sizeof(to);
-        to.sin_family = AF_INET;
-        inet_addr_from_ip4addr(&to.sin_addr, ip_2_ip4(addr));
+            iecho->chksum = inet_chksum(iecho, ping_size);
 
-        /* Send the ICMP echo request */
-        ret = lwip_sendto(s, iecho, ping_size, 0, (struct sockaddr *)(void *)&to, sizeof(to));
+            /* Send the ICMP echo request */
+            ret = lwip_sendto(s, iecho, ping_size, 0, (struct sockaddr *)(void *)&to, sizeof(to));
+        }
+#ifdef CONFIG_IPV6
+        else
+        {
+            struct sockaddr_in6 to;
+            to.sin6_len      = sizeof(to);
+            to.sin6_family   = AF_INET6;
+            to.sin6_scope_id = scope_id;
+
+            inet6_addr_from_ip6addr(&to.sin6_addr, ip_2_ip6(addr));
+
+            /* Send the ICMP6 echo request */
+            ret = lwip_sendto(s, iecho, ping_size, 0, (struct sockaddr *)(void *)&to, sizeof(to));
+        }
+#endif
 
         /* Get the current ticks as the start time */
         ping_time = os_ticks_get();
@@ -208,7 +334,14 @@ static int ping(u16_t count, unsigned short size, unsigned int r_timeout, ip_add
         {
             int ttl = 0;
             /* Receive the ICMP echo response */
-            ret = ping_recv(s, i, &ttl);
+#ifdef CONFIG_IPV6
+            if (addr->type == IPADDR_TYPE_V4)
+#endif
+                ret = ping_recv(s, (uint16_t)i, &ttl);
+#ifdef CONFIG_IPV6
+            else
+                ret = ping6_recv(s, (uint16_t)i, &ttl);
+#endif
 
             /* Calculate the round trip time */
             ping_time = os_ticks_get() - ping_time;
@@ -225,7 +358,7 @@ static int ping(u16_t count, unsigned short size, unsigned int r_timeout, ip_add
             {
                 /* To display unsuccessful ping stats, source
                  * IP address is required */
-                ip_addr = (ip_addr_t *)(void *)&src_ip;
+                ip_addr = src_ip_addr;
             }
 
             display_ping_stats(ret, ping_size, ip_addr, i, ttl, ping_time);
@@ -241,7 +374,7 @@ static int ping(u16_t count, unsigned short size, unsigned int r_timeout, ip_add
         os_thread_sleep(os_msec_to_ticks(PING_INTERVAL));
     }
     os_mem_free(iecho);
-    display_ping_result((ip_addr_t *)(void *)&src_ip, count, recvd);
+    display_ping_result(src_ip_addr, (int)count, recvd);
 end:
     (void)close(s);
     return ret;
@@ -255,6 +388,8 @@ void cmd_ping(int argc, char **argv)
     uint16_t count = PING_DEFAULT_COUNT;
     uint32_t cnt, temp;
     uint32_t timeout = PING_DEFAULT_TIMEOUT_SEC;
+
+    memset(&addr, 0, sizeof(addr));
 
     /* If number of arguments is odd then print error */
     if ((argc & 0x01) != 0)
@@ -298,7 +433,7 @@ void cmd_ping(int argc, char **argv)
                         temp, PING_MAX_SIZE);
                     return;
                 }
-                size = temp;
+                size = (uint16_t)temp;
                 break;
             case 'W':
                 timeout = strtoul(cli_optarg, NULL, 10);
@@ -318,18 +453,34 @@ void cmd_ping(int argc, char **argv)
 
     /* Extract the destination IP address. This function returns non zero on
      * success, zero on failure */
-    if (inet_aton(argv[cli_optind], &addr) != 0)
+    if (inet_pton(AF_INET, argv[cli_optind], &addr))
     {
+#ifdef CONFIG_IPV6
+        addr.type = IPADDR_TYPE_V4;
+#endif
         (void)ping(count, size, timeout, &addr);
         return;
     }
+#ifdef CONFIG_IPV6
+    else if (inet_pton(AF_INET6, argv[cli_optind], &addr))
+    {
+        addr.type = IPADDR_TYPE_V6;
+        (void)ping(count, size, timeout, &addr);
+        return;
+    }
+#endif
+
 end:
     (void)PRINTF("Incorrect usage\r\n");
     display_ping_usage();
 }
 
 static struct cli_command ping_cli[] = {
-    {"ping", "[-s <packet_size>] [-c <packet_count>] [-W <timeout in sec>] <ip_address>", cmd_ping},
+#ifdef CONFIG_IPV6
+    {"ping", "[-s <packet_size>] [-c <packet_count>] [-W <timeout in sec>] <ipv4/ipv6 address>", cmd_ping},
+#else
+    {"ping", "[-s <packet_size>] [-c <packet_count>] [-W <timeout in sec>] <ipv4 address>", cmd_ping},
+#endif
 };
 
 int ping_cli_init(void)

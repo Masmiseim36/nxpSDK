@@ -10,13 +10,25 @@
 
 #include "mid_def.h"
 #include "mid_mc_api_connector.h"
-#include "pmsm_control.h"
-
-
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* RL Estim measurement parameters. */ 
+#if (M1_PWM_FREQ <= 10000U)
+  #define F_SAMPLING 		M1_PWM_FREQ             /* AP MID - Sampling frequency [Hz]. */
+#else
+  #define F_SAMPLING 		(M1_PWM_FREQ / 2U)      /* AP MID - Sampling frequency [Hz]. */
+  #define ESTIMRL_HALF_TS       (TRUE)                  /* Execute RL Estim every second ADC IQR */ 
+#endif
+
+#define NUM_MEAS 		20U                     /* AP MID - Number of measurement. */
+#define I_NOMINAL 		5.0F                    /* AP MID - Nominal current [A]. */
+#define I_POSMAX 		6.0F                    /* AP MID - Maximum positive current [A]. */
+#define I_NEGMAX 		-6.0F                   /* AP MID - Minimum positive current [A]. */
+#define I_LD			0.0F                    /* AP MID - Current to determine inductance in d-axis [A]. */
+#define I_LQ			I_NOMINAL               /* AP MID - Current to determine inductance in q-axis [A]. */
+
 /* The default measurement configuration used to initialize the
    sUserMIDMeasConfig variable. */
 #define MID_DEFAULT_MEAS_CONFIG {\
@@ -92,6 +104,7 @@ extern "C" {
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MID_Init_AR(void);
 
 /*!
@@ -101,6 +114,7 @@ void MID_Init_AR(void);
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MID_ProcessFast_FL(void);
 
 /*!
@@ -122,6 +136,7 @@ void MID_ProcessFast_FL(void);
  *           -b3 - Parameter Ke is missing when TRUE.
  *           -b4 - Parameter Pp is missing when TRUE.
  */
+RAM_FUNC_LIB
 uint32_t MID_Start_BL(mid_meas_type_t eMeasurementType);
 
 /*!
@@ -131,6 +146,7 @@ uint32_t MID_Start_BL(mid_meas_type_t eMeasurementType);
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MID_Stop_BL(void);
 
 /*!
@@ -142,6 +158,7 @@ void MID_Stop_BL(void);
  * @retval TRUE  - Measurement is ongoing.
  * @retval FALSE - MID is idle.
  */
+RAM_FUNC_LIB
 bool_t MID_GetStatus_BL(mid_status_t *psMIDStatus);
 
 /*!
@@ -152,6 +169,7 @@ bool_t MID_GetStatus_BL(mid_status_t *psMIDStatus);
  * @return MID configuration result. See the MID Configuration result defines
  *         for more details.
  */
+RAM_FUNC_LIB
 uint16_t MID_SetMeasConfig_BL(mid_config_t *psMeasConfig);
 
 /*!
@@ -170,6 +188,7 @@ uint16_t MID_SetMeasConfig_BL(mid_config_t *psMeasConfig);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_SetKnownMotorParams_BL(mid_motor_params_user_t *psMotorParams);
 
 /*!
@@ -179,6 +198,7 @@ void MID_SetKnownMotorParams_BL(mid_motor_params_user_t *psMotorParams);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_GetMotorParams_BL(mid_motor_params_user_t *psMotorParams);
 
 /*!
@@ -188,6 +208,7 @@ void MID_GetMotorParams_BL(mid_motor_params_user_t *psMotorParams);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_Process_BL(mid_app_cmd_t *pMidCmd);
 
 /*!
@@ -197,6 +218,7 @@ void MID_Process_BL(mid_app_cmd_t *pMidCmd);
  *
  * @return  Actual MID state
  */
+RAM_FUNC_LIB
 uint16_t MID_GetActualState(void);
 
 #ifdef __cplusplus

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -414,8 +414,8 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga90d7087431db03b22516e7a311aebeb1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga90d7087431db03b22516e7a311aebeb1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga90d7087431db03b22516e7a311aebeb1">FSL_SAI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00252.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 4))</td></tr>
-<tr class="memdesc:ga90d7087431db03b22516e7a311aebeb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.3.4. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga90d7087431db03b22516e7a311aebeb1">FSL_SAI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00252.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 6))</td></tr>
+<tr class="memdesc:ga90d7087431db03b22516e7a311aebeb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.3.6. <br/></td></tr>
 <tr class="separator:ga90d7087431db03b22516e7a311aebeb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -528,12 +528,12 @@ Status</h2></td></tr>
 <tr class="memitem:ga3329969cbf718114c37f10d88e527669"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga3329969cbf718114c37f10d88e527669">SAI_RxClearStatusFlags</a> (I2S_Type *base, uint32_t mask)</td></tr>
 <tr class="memdesc:ga3329969cbf718114c37f10d88e527669"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the SAI Rx status flag state.  <a href="#ga3329969cbf718114c37f10d88e527669">More...</a><br/></td></tr>
 <tr class="separator:ga3329969cbf718114c37f10d88e527669"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5130499a5c0da79e9ddfa9882c2f8328"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga5130499a5c0da79e9ddfa9882c2f8328">SAI_TxSoftwareReset</a> (I2S_Type *base, <a class="el" href="a00057.html#gae33638b9b4e26245e21faa2ed10bbf7f">sai_reset_type_t</a> type)</td></tr>
-<tr class="memdesc:ga5130499a5c0da79e9ddfa9882c2f8328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software reset or FIFO reset .  <a href="#ga5130499a5c0da79e9ddfa9882c2f8328">More...</a><br/></td></tr>
-<tr class="separator:ga5130499a5c0da79e9ddfa9882c2f8328"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3884861b9de4eb9dacd5f45d98a974d7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga3884861b9de4eb9dacd5f45d98a974d7">SAI_RxSoftwareReset</a> (I2S_Type *base, <a class="el" href="a00057.html#gae33638b9b4e26245e21faa2ed10bbf7f">sai_reset_type_t</a> type)</td></tr>
-<tr class="memdesc:ga3884861b9de4eb9dacd5f45d98a974d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software reset or FIFO reset .  <a href="#ga3884861b9de4eb9dacd5f45d98a974d7">More...</a><br/></td></tr>
-<tr class="separator:ga3884861b9de4eb9dacd5f45d98a974d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae9ff8664d0683df7a60078b1e41cce17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#gae9ff8664d0683df7a60078b1e41cce17">SAI_TxSoftwareReset</a> (I2S_Type *base, <a class="el" href="a00057.html#gae33638b9b4e26245e21faa2ed10bbf7f">sai_reset_type_t</a> resetType)</td></tr>
+<tr class="memdesc:gae9ff8664d0683df7a60078b1e41cce17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software reset or FIFO reset .  <a href="#gae9ff8664d0683df7a60078b1e41cce17">More...</a><br/></td></tr>
+<tr class="separator:gae9ff8664d0683df7a60078b1e41cce17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga503d652201ae85fd82dd20e908b6afea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga503d652201ae85fd82dd20e908b6afea">SAI_RxSoftwareReset</a> (I2S_Type *base, <a class="el" href="a00057.html#gae33638b9b4e26245e21faa2ed10bbf7f">sai_reset_type_t</a> resetType)</td></tr>
+<tr class="memdesc:ga503d652201ae85fd82dd20e908b6afea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software reset or FIFO reset .  <a href="#ga503d652201ae85fd82dd20e908b6afea">More...</a><br/></td></tr>
+<tr class="separator:ga503d652201ae85fd82dd20e908b6afea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga633f5af270fa98e7dad379a2c78b4d72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga633f5af270fa98e7dad379a2c78b4d72">SAI_TxSetChannelFIFOMask</a> (I2S_Type *base, uint8_t mask)</td></tr>
 <tr class="memdesc:ga633f5af270fa98e7dad379a2c78b4d72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Tx channel FIFO enable mask.  <a href="#ga633f5af270fa98e7dad379a2c78b4d72">More...</a><br/></td></tr>
 <tr class="separator:ga633f5af270fa98e7dad379a2c78b4d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -594,12 +594,12 @@ DMA Control</h2></td></tr>
 <tr class="memitem:ga8061229e53203dfca2ed45b2f7648ca5"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga8061229e53203dfca2ed45b2f7648ca5">SAI_RxEnableDMA</a> (I2S_Type *base, uint32_t mask, bool enable)</td></tr>
 <tr class="memdesc:ga8061229e53203dfca2ed45b2f7648ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the SAI Rx DMA requests.  <a href="#ga8061229e53203dfca2ed45b2f7648ca5">More...</a><br/></td></tr>
 <tr class="separator:ga8061229e53203dfca2ed45b2f7648ca5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac19d42fce7cc3f6ab68f279be959f3bb"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#gac19d42fce7cc3f6ab68f279be959f3bb">SAI_TxGetDataRegisterAddress</a> (I2S_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:gac19d42fce7cc3f6ab68f279be959f3bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SAI Tx data register address.  <a href="#gac19d42fce7cc3f6ab68f279be959f3bb">More...</a><br/></td></tr>
-<tr class="separator:gac19d42fce7cc3f6ab68f279be959f3bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2b90519b672bb8cb8b0aa6386f66c251"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga2b90519b672bb8cb8b0aa6386f66c251">SAI_RxGetDataRegisterAddress</a> (I2S_Type *base, uint32_t channel)</td></tr>
-<tr class="memdesc:ga2b90519b672bb8cb8b0aa6386f66c251"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SAI Rx data register address.  <a href="#ga2b90519b672bb8cb8b0aa6386f66c251">More...</a><br/></td></tr>
-<tr class="separator:ga2b90519b672bb8cb8b0aa6386f66c251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9eb7289d72ab3d607b85948bd8377dcc"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga9eb7289d72ab3d607b85948bd8377dcc">SAI_TxGetDataRegisterAddress</a> (I2S_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:ga9eb7289d72ab3d607b85948bd8377dcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SAI Tx data register address.  <a href="#ga9eb7289d72ab3d607b85948bd8377dcc">More...</a><br/></td></tr>
+<tr class="separator:ga9eb7289d72ab3d607b85948bd8377dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad41b09d7c4c5e3fbd6a6584ea1eb015"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#gaad41b09d7c4c5e3fbd6a6584ea1eb015">SAI_RxGetDataRegisterAddress</a> (I2S_Type *base, uint32_t channel)</td></tr>
+<tr class="memdesc:gaad41b09d7c4c5e3fbd6a6584ea1eb015"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SAI Rx data register address.  <a href="#gaad41b09d7c4c5e3fbd6a6584ea1eb015">More...</a><br/></td></tr>
+<tr class="separator:gaad41b09d7c4c5e3fbd6a6584ea1eb015"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Bus Operations</h2></td></tr>
@@ -871,6 +871,10 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#af23c63fada62140420230a61abe37d4e">frameSyncEarly</a></td></tr>
 <tr class="memdesc:af23c63fada62140420230a61abe37d4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TRUE is frame sync assert one bit before the first bit of frame FALSE is frame sync assert with the first bit of the frame. <br/></td></tr>
 <tr class="separator:af23c63fada62140420230a61abe37d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcc4ee55d055827215038e2cc4ea8b1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adcc4ee55d055827215038e2cc4ea8b1b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#adcc4ee55d055827215038e2cc4ea8b1b">frameSyncGenerateOnDemand</a></td></tr>
+<tr class="memdesc:adcc4ee55d055827215038e2cc4ea8b1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">internal frame sync is generated when FIFO waring flag is clear <br/></td></tr>
+<tr class="separator:adcc4ee55d055827215038e2cc4ea8b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6fbff9ec23d1ba0bb54ca7d91b7f40d9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6fbff9ec23d1ba0bb54ca7d91b7f40d9"></a>
 <a class="el" href="a00057.html#ga311302fe418002fddb7b0e553e73d22d">sai_clock_polarity_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#a6fbff9ec23d1ba0bb54ca7d91b7f40d9">frameSyncPolarity</a></td></tr>
 <tr class="memdesc:a6fbff9ec23d1ba0bb54ca7d91b7f40d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">frame sync polarity <br/></td></tr>
@@ -2979,7 +2983,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a class="anchor" id="ga5130499a5c0da79e9ddfa9882c2f8328"></a>
+<a class="anchor" id="gae9ff8664d0683df7a60078b1e41cce17"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -2993,7 +2997,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="a00057.html#gae33638b9b4e26245e21faa2ed10bbf7f">sai_reset_type_t</a>&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
+          <td class="paramname"><em>resetType</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3006,14 +3010,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
-    <tr><td class="paramname">type</td><td>Reset type, FIFO reset or software reset </td></tr>
+    <tr><td class="paramname">tresetType</td><td>Reset type, FIFO reset or software reset </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="ga3884861b9de4eb9dacd5f45d98a974d7"></a>
+<a class="anchor" id="ga503d652201ae85fd82dd20e908b6afea"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -3027,7 +3031,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="a00057.html#gae33638b9b4e26245e21faa2ed10bbf7f">sai_reset_type_t</a>&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
+          <td class="paramname"><em>resetType</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3040,7 +3044,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>SAI base pointer </td></tr>
-    <tr><td class="paramname">type</td><td>Reset type, FIFO reset or software reset </td></tr>
+    <tr><td class="paramname">resetType</td><td>Reset type, FIFO reset or software reset </td></tr>
   </table>
   </dd>
 </dl>
@@ -3757,7 +3761,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a class="anchor" id="gac19d42fce7cc3f6ab68f279be959f3bb"></a>
+<a class="anchor" id="ga9eb7289d72ab3d607b85948bd8377dcc"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -3765,7 +3769,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t SAI_TxGetDataRegisterAddress </td>
+          <td class="memname">static uintptr_t SAI_TxGetDataRegisterAddress </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -3800,7 +3804,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a class="anchor" id="ga2b90519b672bb8cb8b0aa6386f66c251"></a>
+<a class="anchor" id="gaad41b09d7c4c5e3fbd6a6584ea1eb015"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -3808,7 +3812,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t SAI_RxGetDataRegisterAddress </td>
+          <td class="memname">static uintptr_t SAI_RxGetDataRegisterAddress </td>
           <td>(</td>
           <td class="paramtype">I2S_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>

@@ -38,6 +38,7 @@ typedef struct _mcdrv_qd_enc_t
     int16_t i16PosMeGainSh;       /* encoder pulses to mechanical position scale shift */
     acc32_t a32PosMeReal;         /* real position (revolution counter + mechanical position) */
     uint32_t ui32RevCounter;      /* revolution counter measured by periphery */
+    uint16_t ui16PulseNumber;     /* quadrature pulses per one revolution */
 } mcdrv_qd_enc_t;
 
 /*******************************************************************************
@@ -55,6 +56,7 @@ extern "C" {
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_QdEncGet(mcdrv_qd_enc_t *this);
 
 /*!
@@ -64,6 +66,7 @@ void MCDRV_QdEncGet(mcdrv_qd_enc_t *this);
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_QdEncClear(mcdrv_qd_enc_t *this);
 
 /*!
@@ -74,6 +77,7 @@ void MCDRV_QdEncClear(mcdrv_qd_enc_t *this);
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe);
 
 /*!
@@ -84,7 +88,19 @@ void MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe);
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_QdEncSetDirection(mcdrv_qd_enc_t *this);
+
+/*!
+ * @brief Function set quadrature encoder pulses per one revolution
+ *
+ * @param this            Pointer to the current object
+ *        ui16PulseNumber Encoder pulses per revolution
+ *
+ * @return none
+ */
+RAM_FUNC_LIB
+void MCDRV_QdEncSetPulses(mcdrv_qd_enc_t *this);
 
 #ifdef __cplusplus
 }

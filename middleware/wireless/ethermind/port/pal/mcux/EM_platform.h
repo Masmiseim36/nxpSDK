@@ -63,10 +63,6 @@
 #define fclose(...)
 #define fseek(...)
 
-#if defined(__IAR_SYSTEMS_ICC__)
-#define stdin
-#endif /* defined(__IAR_SYSTEMS_ICC__) */
-
 /* --------------------------------------------- Structures/Data Types */
 
 /* --------------------------------------------- Macros */

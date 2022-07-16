@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -86,6 +86,9 @@ void BOARD_InitPWM(void);
 #define BOARD_MISC_UserLed_GPIO                                            GPIO1   /*!< GPIO peripheral base pointer */
 #define BOARD_MISC_UserLed_GPIO_PIN                                           9U   /*!< GPIO pin number */
 #define BOARD_MISC_UserLed_GPIO_PIN_MASK                              (1U << 9U)   /*!< GPIO pin mask */
+#define BOARD_MISC_UserLed_PORT                                            GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_MISC_UserLed_PIN                                                9U   /*!< PORT pin number */
+#define BOARD_MISC_UserLed_PIN_MASK                                   (1U << 9U)   /*!< PORT pin mask */
 
 /* WAKEUP (coord L6), SW8 */
 /* Routed pin properties */
@@ -97,6 +100,9 @@ void BOARD_InitPWM(void);
 #define BOARD_MISC_SW8_GPIO                                                GPIO5   /*!< GPIO peripheral base pointer */
 #define BOARD_MISC_SW8_GPIO_PIN                                               0U   /*!< GPIO pin number */
 #define BOARD_MISC_SW8_GPIO_PIN_MASK                                  (1U << 0U)   /*!< GPIO pin mask */
+#define BOARD_MISC_SW8_PORT                                                GPIO5   /*!< PORT peripheral base pointer */
+#define BOARD_MISC_SW8_PIN                                                    0U   /*!< PORT pin number */
+#define BOARD_MISC_SW8_PIN_MASK                                       (1U << 0U)   /*!< PORT pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

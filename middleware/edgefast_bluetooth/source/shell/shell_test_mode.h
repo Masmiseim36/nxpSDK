@@ -7,6 +7,30 @@
 #ifndef _SHELL_TEST_MODE_H__
 #define _SHELL_TEST_MODE_H__
 #include "BT_common.h"
+
+
+
+#define BT_OGF_TEST 0x06
+
+#define BT_HCI_OP_ENABLE_TEST_MODE BT_OP(BT_OGF_TEST,0x03)
+
+#define BT_HCI_OP_LE_SET_TX_POWER               BT_OP(BT_OGF_VS, 0x0087)
+STRUCT_PACKED_PRE
+struct bt_hci_le_config {
+	uint8_t  tx_power;
+} STRUCT_PACKED_POST;
+
+
+
+STRUCT_PACKED_PRE
+struct bt_hci_command {
+	uint8_t ogf;
+	uint8_t ocf;
+	uint16_t opcode;
+	uint8_t param_len;
+};
+
+
 /**
  *  \brief To start a test where the DUT generates test reference
  *         packets at a fixed interval.

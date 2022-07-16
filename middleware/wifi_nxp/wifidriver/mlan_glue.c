@@ -5,23 +5,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -150,7 +134,7 @@ static mlan_status wrapper_moal_recv_packet(IN t_void *pmoal_handle, IN pmlan_bu
 /** moal_init_timer*/
 static mlan_status wrapper_moal_init_timer(IN t_void *pmoal_handle,
                                            OUT t_void **pptimer,
-                                           IN t_void (*callback)(t_void *pcontext),
+                                           IN t_void (*callback)(os_timer_arg_t arg),
                                            IN t_void *pcontext)
 {
     w_tmr_d("Creating timer");
@@ -174,8 +158,8 @@ static mlan_status wrapper_moal_init_timer(IN t_void *pmoal_handle,
      */
 #define DUMMY_TIME_PARAM 10
 
-    int rv = os_timer_create((os_timer_t *)pptimer, NULL, DUMMY_TIME_PARAM, (TimerCallbackFunction_t)callback, pcontext,
-                             OS_TIMER_ONE_SHOT, OS_TIMER_NO_ACTIVATE);
+    int rv = os_timer_create((os_timer_t *)pptimer, NULL, DUMMY_TIME_PARAM, callback, pcontext, OS_TIMER_ONE_SHOT,
+                             OS_TIMER_NO_ACTIVATE);
     if (rv != WM_SUCCESS)
     {
         w_tmr_e("Unable to create timer");
@@ -333,6 +317,13 @@ int mlan_subsys_init(void)
 
     (void)mlan_init_fw(mlan_adap);
     /* wlan_init_adapter(mlan_adap); */
+
+    return WM_SUCCESS;
+}
+
+int mlan_subsys_deinit(void)
+{
+    (void)mlan_unregister(mlan_adap);
 
     return WM_SUCCESS;
 }
@@ -537,7 +528,7 @@ static mlan_status do_wlan_ret_11n_addba_req(mlan_private *priv, HostCmd_DS_COMM
 
     tid = (padd_ba_rsp->block_ack_param_set & BLOCKACKPARAM_TID_MASK) >> BLOCKACKPARAM_TID_POS;
 
-    int bss_type = HostCmd_GET_BSS_TYPE(resp->seq_num);
+    mlan_bss_type bss_type = (mlan_bss_type)HostCmd_GET_BSS_TYPE(resp->seq_num);
     if (padd_ba_rsp->status_code == BA_RESULT_SUCCESS)
     {
         if (bss_type == MLAN_BSS_TYPE_STA)
@@ -576,7 +567,7 @@ static mlan_status do_wlan_ret_11n_addba_req(mlan_private *priv, HostCmd_DS_COMM
 static mlan_status do_wlan_ret_11n_delba(mlan_private *priv, HostCmd_DS_COMMAND *resp)
 {
     HostCmd_DS_11N_DELBA *pdel_ba = (HostCmd_DS_11N_DELBA *)&resp->params.del_ba;
-    int bss_type                  = HostCmd_GET_BSS_TYPE(resp->seq_num);
+    mlan_bss_type bss_type        = (mlan_bss_type)HostCmd_GET_BSS_TYPE(resp->seq_num);
     if (pdel_ba->del_result == BA_RESULT_SUCCESS)
     {
         if (bss_type == MLAN_BSS_TYPE_STA)
@@ -889,7 +880,7 @@ int wrapper_wlan_handle_amsdu_rx_packet(const t_u8 *rcvdata, const t_u16 datalen
     /** Use count for this buffer */
     /* t_u32 use_count; */
 
-    if (rxpd->bss_type == MLAN_BSS_ROLE_STA)
+    if (rxpd->bss_type == (t_u8)MLAN_BSS_ROLE_STA)
     {
         (void)wlan_handle_rx_packet(mlan_adap, pmbuf);
     }
@@ -969,7 +960,7 @@ mlan_status wifi_prepare_and_send_cmd(IN mlan_private *pmpriv,
                                       IN t_u32 cmd_oid,
                                       IN t_void *pioctl_buf,
                                       IN t_void *pdata_buf,
-                                      int bss_type,
+                                      mlan_bss_type bss_type,
                                       void *priv)
 {
     pmlan_ioctl_req pioctl_req = (mlan_ioctl_req *)pioctl_buf;
@@ -980,13 +971,13 @@ mlan_status wifi_prepare_and_send_cmd(IN mlan_private *pmpriv,
 
     if (pioctl_req != NULL)
     {
-        if (pioctl_req->bss_index == 1)
+        if (pioctl_req->bss_index == 1U)
         {
             bss_type = MLAN_BSS_TYPE_UAP;
         }
     }
 
-    cmd->seq_num = HostCmd_SET_SEQ_NO_BSS_INFO(0U /* seq_num */, 0U /* bss_num */, bss_type);
+    cmd->seq_num = HostCmd_SET_SEQ_NO_BSS_INFO(0U /* seq_num */, 0U /* bss_num */, (t_u8)bss_type);
     cmd->result = 0x0;
 
     if (bss_type == MLAN_BSS_TYPE_UAP)
@@ -1249,7 +1240,7 @@ int wifi_set_txratecfg(wifi_ds_rate ds_rate)
     (void)memset(&ds_rate_cfg, 0x00, sizeof(mlan_ds_rate));
 
     ds_rate_cfg.sub_command = MLAN_OID_RATE_CFG;
-    if (ds_rate.param.rate_cfg.rate_format == 0xffU)
+    if (ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_AUTO)
     {
         ds_rate_cfg.param.rate_cfg.is_rate_auto = MTRUE;
     }
@@ -1578,7 +1569,7 @@ int wifi_process_cmd_response(HostCmd_DS_COMMAND *resp)
                 if (resp->result == HostCmd_RESULT_OK)
                 {
                     pmpriv->uap_bss_started = MFALSE;
-                    int bss_type            = HostCmd_GET_BSS_TYPE(resp->seq_num);
+                    mlan_bss_type bss_type  = (mlan_bss_type)HostCmd_GET_BSS_TYPE(resp->seq_num);
                     if ((bss_type == MLAN_BSS_TYPE_UAP)
                     )
                     {
@@ -1596,7 +1587,7 @@ int wifi_process_cmd_response(HostCmd_DS_COMMAND *resp)
             {
                 if (resp->result == HostCmd_RESULT_OK)
                 {
-                    int bss_type = HostCmd_GET_BSS_TYPE(resp->seq_num);
+                    mlan_bss_type bss_type = (mlan_bss_type)HostCmd_GET_BSS_TYPE(resp->seq_num);
                     if ((bss_type == MLAN_BSS_TYPE_UAP)
                     )
                     {
@@ -1798,6 +1789,24 @@ int wifi_process_cmd_response(HostCmd_DS_COMMAND *resp)
                 rv = wlan_ops_sta_process_cmdresp(pmpriv, command, resp, NULL);
             }
             break;
+#ifdef SD8801
+            case HostCmd_CMD_ROBUST_COEX:
+            {
+                const HostCmd_DS_ExtBLECoex_Config_t *coex = &resp->params.ext_ble_coex_cfg;
+                if (coex->action == HostCmd_ACT_GEN_GET)
+                {
+                    if (wm_wifi.cmd_resp_priv != NULL)
+                    {
+                        wifi_ext_coex_stats_t *stats = (wifi_ext_coex_stats_t *)wm_wifi.cmd_resp_priv;
+                        stats->ext_radio_req_count = coex->coex_cfg_data.EXT_RADIO_REQ_count;
+                        stats->ext_radio_pri_count = coex->coex_cfg_data.EXT_RADIO_PRI_count;
+                        stats->wlan_grant_count = coex->coex_cfg_data.WLAN_GRANT_count;
+                    }
+                }
+                wm_wifi.cmd_resp_status = WM_SUCCESS;
+            }
+            break;
+#endif
             case HostCmd_CMD_11N_CFG:
                 rv = wlan_ret_11n_cfg(pmpriv, resp, NULL);
                 break;
@@ -2609,7 +2618,7 @@ static void wrapper_wlan_check_sta_capability(pmlan_private priv, Event_Ext_t *p
                 break;
             }
         }
-        tlv_buf_left -= (sizeof(MrvlIEtypesHeader_t) + tlv_len);
+        tlv_buf_left -= (int)(sizeof(MrvlIEtypesHeader_t) + tlv_len);
         tlv = (MrvlIEtypesHeader_t *)(void *)((t_u8 *)tlv + tlv_len + sizeof(MrvlIEtypesHeader_t));
     }
     LEAVE();
@@ -2658,7 +2667,7 @@ static void wrapper_wlan_check_uap_capability(pmlan_private priv, Event_Ext_t *p
             PRINTM(MERROR, "wrong tlv: tlvLen=%d, tlvBufLeft=%d\n", tlv_len, tlv_buf_left);
             break;
         }
-        if (tlv_type == HT_CAPABILITY)
+        if (tlv_type == (t_u16)HT_CAPABILITY)
         {
             DBG_HEXDUMP(MCMD_D, "HT_CAP tlv", tlv, tlv_len + sizeof(MrvlIEtypesHeader_t));
             priv->is_11n_enabled = MTRUE;
@@ -2696,7 +2705,7 @@ static void wrapper_wlan_check_uap_capability(pmlan_private priv, Event_Ext_t *p
             }
             PRINTM(MCMND, "pkt_fwd DRV: 0x%x\n", priv->pkt_fwd);
         }
-        tlv_buf_left -= (sizeof(MrvlIEtypesHeader_t) + tlv_len);
+        tlv_buf_left -= (int)(sizeof(MrvlIEtypesHeader_t) + tlv_len);
         tlv = (MrvlIEtypesHeader_t *)(void *)((t_u8 *)tlv + tlv_len + sizeof(MrvlIEtypesHeader_t));
     }
     LEAVE();
@@ -2707,6 +2716,7 @@ static void wrapper_wlan_check_uap_capability(pmlan_private priv, Event_Ext_t *p
 #define IEEEtypes_REASON_PRIOR_AUTH_INVALID 2U
 #define IEEEtypes_REASON_DEAUTH_LEAVING     3
 #define AP_DEAUTH_REASON_MAC_ADDR_BLOCKED   6
+
 
 int wifi_handle_fw_event(struct bus_message *msg)
 {
@@ -3026,7 +3036,7 @@ static unsigned char process_rsn_ie(
             }
         }
     }
-    if (akmp_count == 2 && WPA_WPA2_WEP->wpa3_sae)
+    if (akmp_count == 2U && WPA_WPA2_WEP->wpa3_sae)
     {
         prsn_ie->len = 20;
         akmp_count   = 1;
@@ -3044,7 +3054,7 @@ static unsigned char process_rsn_ie(
             sizeof(uint16_t));
     }
 
-    if (akmp_count == 3 && WPA_WPA2_WEP->wpa3_sae)
+    if (akmp_count == 3U && WPA_WPA2_WEP->wpa3_sae)
     {
         prsn_ie->len = 20;
         akmp_count   = 1;
@@ -3616,7 +3626,11 @@ void _wifi_set_mac_addr(uint8_t *mac)
     (void)wlan_ops_sta_prepare_cmd((mlan_private *)mlan_adap->priv[0], HostCmd_CMD_802_11_MAC_ADDRESS,
                                    HostCmd_ACT_GEN_SET, 0, NULL, mac, cmd);
     (void)wifi_wait_for_cmdresp(NULL);
+    /* Also need to update priv->curr_addr, as rx reorder will check mac address using priv->curr_addr */
+    (void)memcpy(&mlan_adap->priv[0]->curr_addr[0], &mac[0], MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(&mlan_adap->priv[1]->curr_addr[0], &mac[0], MLAN_MAC_ADDR_LENGTH);
 }
+
 
 #ifdef WLAN_LOW_POWER_ENABLE
 void wifi_enable_low_pwr_mode()

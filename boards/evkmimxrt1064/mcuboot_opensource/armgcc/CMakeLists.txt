@@ -31,8 +31,6 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../flexspi_flash_config.h"
-"${ProjDirPath}/../flexspi_nor_flash_ops.c"
 "${ProjDirPath}/../boot.c"
 "${ProjDirPath}/../boot.h"
 "${ProjDirPath}/../keys.c"
@@ -49,8 +47,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../include/sysflash/sysflash.h"
 "${ProjDirPath}/../flashiap/flash_api.c"
 "${ProjDirPath}/../flashiap/flash_info.h"
-"${ProjDirPath}/../flashiap/flexspi_flash.c"
-"${ProjDirPath}/../flashiap/flexspi_flash.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../sblconfig.h"
 "${ProjDirPath}/../pin_mux.c"
@@ -84,6 +80,7 @@ endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../devices/MIMXRT1064/drivers
     ${ProjDirPath}/../../../../middleware/mbedtls
+    ${ProjDirPath}/../../../../components/flash/mflash/mimxrt1064
     ${ProjDirPath}/../../../../middleware/mcuboot_opensource/boot/bootutil
     ${ProjDirPath}/../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../devices/MIMXRT1064/utilities
@@ -92,7 +89,9 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../components/lists
     ${ProjDirPath}/../../../../devices/MIMXRT1064/xip
     ${ProjDirPath}/../../xip
+    ${ProjDirPath}/../../../../components/silicon_id
     ${ProjDirPath}/../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../components/flash/mflash
 )
 
 # include modules
@@ -103,6 +102,8 @@ include(middleware_mbedtls_port_ksdk_MIMXRT1064)
 include(middleware_mbedtls_MIMXRT1064)
 
 include(middleware_mbedtls_rt_MIMXRT1064)
+
+include(component_mflash_rt1064_MIMXRT1064)
 
 include(driver_flexspi_MIMXRT1064)
 
@@ -138,11 +139,15 @@ include(driver_xip_device_MIMXRT1064)
 
 include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
+include(component_silicon_id_MIMXRT1064)
+
 include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(driver_dcp_MIMXRT1064)
 
 include(driver_trng_MIMXRT1064)
+
+include(component_mflash_common_MIMXRT1064)
 
 include(utilities_misc_utilities_MIMXRT1064)
 

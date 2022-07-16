@@ -42,9 +42,9 @@
 //#include "aws_clientcredential.h"
 
 #if defined(LPC_WIFI)
-#include "iot_wifi.h"
-#include "wifi_config.h"
-#include "serial_mwm.h"
+#   include "iot_wifi.h"
+#   include "wifi_config.h"
+#   include "serial_mwm.h"
 
 #elif defined(LPC_ENET)
 #include "lwip/opt.h"
@@ -155,9 +155,7 @@ void BOARD_InitNetwork_MAC(const unsigned char buffer[18])
             vTaskDelay(pdMS_TO_TICKS(1));
         }
     }
-    memcpy(pxNetworkParams.xPassword.xWPA.cPassphrase,
-        clientcredentialWIFI_PASSWORD,
-        strlen(clientcredentialWIFI_PASSWORD));
+    memcpy(pxNetworkParams.xPassword.xWPA.cPassphrase, clientcredentialWIFI_PASSWORD, strlen(clientcredentialWIFI_PASSWORD));
     pxNetworkParams.xPassword.xWPA.ucLength = strlen(clientcredentialWIFI_PASSWORD);
 
     pxNetworkParams.xSecurity = clientcredentialWIFI_SECURITY;

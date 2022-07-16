@@ -51,11 +51,11 @@ extern "C" {
 #define A2DP_SBC_ALLOC_MTHD_SNR      BIT(1)
 #define A2DP_SBC_ALLOC_MTHD_LOUDNESS BIT(0)
 
-#define BT_A2DP_SBC_SAMP_FREQ(cap)    ((cap->config[0] >> 4) & 0x0f)
-#define BT_A2DP_SBC_CHAN_MODE(cap)    ((cap->config[0]) & 0x0f)
-#define BT_A2DP_SBC_BLK_LEN(cap)      ((cap->config[1] >> 4) & 0x0f)
-#define BT_A2DP_SBC_SUB_BAND(cap)     ((cap->config[1] >> 2) & 0x03)
-#define BT_A2DP_SBC_ALLOC_MTHD(cap)   ((cap->config[1]) & 0x03)
+#define BT_A2DP_SBC_SAMP_FREQ(preset)    ((preset->config[0] >> 4) & 0x0f)
+#define BT_A2DP_SBC_CHAN_MODE(preset)    ((preset->config[0]) & 0x0f)
+#define BT_A2DP_SBC_BLK_LEN(preset)      ((preset->config[1] >> 4) & 0x0f)
+#define BT_A2DP_SBC_SUB_BAND(preset)     ((preset->config[1] >> 2) & 0x03)
+#define BT_A2DP_SBC_ALLOC_MTHD(preset)   ((preset->config[1]) & 0x03)
 
 /** @brief SBC Codec */
 STRUCT_PACKED_PRE

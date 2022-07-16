@@ -1,6 +1,6 @@
-// Copyright (c) 2019 Linaro LTD
+// Copyright (c) 2019-2021 Linaro LTD
 // Copyright (c) 2019-2020 JUUL Labs
-// Copyright (c) 2019 Arm Limited
+// Copyright (c) 2019-2021 Arm Limited
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -19,22 +19,26 @@ use rand::{
     rngs::SmallRng,
 };
 use std::{
-    collections::HashSet,
+    collections::{BTreeMap, HashSet},
     io::{Cursor, Write},
     mem,
     slice,
 };
-use aes_ctr::{
+use aes::{
+    Aes128,
     Aes128Ctr,
-    stream_cipher::{
-        generic_array::GenericArray,
-        NewStreamCipher,
-        SyncStreamCipher,
-    },
+    Aes256,
+    Aes256Ctr,
+    NewBlockCipher,
 };
+use cipher::{
+    FromBlockCipher,
+    generic_array::GenericArray,
+    StreamCipher,
+    };
 
 use simflash::{Flash, SimFlash, SimMultiFlash};
-use mcuboot_sys::{c, AreaDesc, FlashId};
+use mcuboot_sys::{c, AreaDesc, FlashId, RamBlock};
 use crate::{
     ALL_DEVICES,
     DeviceName,
@@ -50,6 +54,12 @@ use crate::depends::{
     UpgradeInfo,
 };
 use crate::tlv::{ManifestGen, TlvGen, TlvFlags};
+use crate::utils::align_up;
+use typenum::{U32, U16};
+
+/// For testing, use a non-zero offset for the ram-load, to make sure the offset is getting used
+/// properly, but the value is not really that important.
+const RAM_LOAD_ADDR: u32 = 1024;
 
 /// A builder for Images.  This describes a single run of the simulator,
 /// capturing the configuration of a particular set of devices, including
@@ -59,6 +69,7 @@ pub struct ImagesBuilder {
     flash: SimMultiFlash,
     areadesc: AreaDesc,
     slots: Vec<[SlotInfo; 2]>,
+    ram: RamData,
 }
 
 /// Images represents the state of a simulation for a given set of images.
@@ -69,6 +80,7 @@ pub struct Images {
     areadesc: AreaDesc,
     images: Vec<OneImage>,
     total_count: Option<i32>,
+    ram: RamData,
 }
 
 /// When doing multi-image, there is an instance of this information for
@@ -83,8 +95,32 @@ struct OneImage {
 /// is just the unencrypted payload.  For encrypted images, we store both
 /// the encrypted and the plaintext.
 struct ImageData {
+    size: usize,
     plain: Vec<u8>,
     cipher: Option<Vec<u8>>,
+}
+
+/// For the RamLoad test cases, we need a contiguous area of RAM to load these images into.  For
+/// multi-image builds, these may not correspond with the offsets.  This has to be computed early,
+/// before images are built, because each image contains the offset where the image is to be loaded
+/// in the header, which is contained within the signature.
+#[derive(Clone, Debug)]
+struct RamData {
+    places: BTreeMap<SlotKey, SlotPlace>,
+    total: u32,
+}
+
+/// Every slot is indexed by this key.
+#[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
+struct SlotKey {
+    dev_id: u8,
+    base_off: usize,
+}
+
+#[derive(Clone, Debug)]
+struct SlotPlace {
+    offset: u32,
+    size: u32,
 }
 
 impl ImagesBuilder {
@@ -148,10 +184,13 @@ impl ImagesBuilder {
             slots.push([primary, secondary]);
         }
 
+        let ram = RamData::new(&slots);
+
         Ok(ImagesBuilder {
-            flash: flash,
-            areadesc: areadesc,
-            slots: slots,
+            flash,
+            areadesc,
+            slots,
+            ram,
         })
     }
 
@@ -174,28 +213,32 @@ impl ImagesBuilder {
     pub fn make_no_upgrade_image(self, deps: &DepTest) -> Images {
         let num_images = self.num_images();
         let mut flash = self.flash;
+        let ram = self.ram.clone();  // TODO: This is wasteful.
         let images = self.slots.into_iter().enumerate().map(|(image_num, slots)| {
             let dep: Box<dyn Depender> = if num_images > 1 {
                 Box::new(PairDep::new(num_images, image_num, deps))
             } else {
                 Box::new(BoringDep::new(image_num, deps))
             };
-            let primaries = install_image(&mut flash, &slots[0], 42784, &*dep, false);
+            let primaries = install_image(&mut flash, &slots[0],
+                maximal(42784), &ram, &*dep, false);
             let upgrades = match deps.depends[image_num] {
                 DepType::NoUpgrade => install_no_image(),
-                _ => install_image(&mut flash, &slots[1], 46928, &*dep, false)
+                _ => install_image(&mut flash, &slots[1],
+                    maximal(46928), &ram, &*dep, false)
             };
             OneImage {
-                slots: slots,
-                primaries: primaries,
-                upgrades: upgrades,
+                slots,
+                primaries,
+                upgrades,
             }}).collect();
         install_ptable(&mut flash, &self.areadesc);
         Images {
-            flash: flash,
+            flash,
             areadesc: self.areadesc,
-            images: images,
+            images,
             total_count: None,
+            ram: self.ram,
         }
     }
 
@@ -205,10 +248,15 @@ impl ImagesBuilder {
             mark_upgrade(&mut images.flash, &image.slots[1]);
         }
 
+        // The count is meaningless if no flash operations are performed.
+        if !Caps::modifies_flash() {
+            return images;
+        }
+
         // upgrades without fails, counts number of flash operations
         let total_count = match images.run_basic_upgrade(permanent) {
-            Ok(v)  => v,
-            Err(_) =>
+            Some(v)  => v,
+            None =>
                 if deps.upgrades.iter().any(|u| *u == UpgradeInfo::Held) {
                     0
                 } else {
@@ -222,58 +270,68 @@ impl ImagesBuilder {
 
     pub fn make_bad_secondary_slot_image(self) -> Images {
         let mut bad_flash = self.flash;
+        let ram = self.ram.clone(); // TODO: Avoid this clone.
         let images = self.slots.into_iter().enumerate().map(|(image_num, slots)| {
             let dep = BoringDep::new(image_num, &NO_DEPS);
-            let primaries = install_image(&mut bad_flash, &slots[0], 32784, &dep, false);
-            let upgrades = install_image(&mut bad_flash, &slots[1], 41928, &dep, true);
+            let primaries = install_image(&mut bad_flash, &slots[0],
+                maximal(32784), &ram, &dep, false);
+            let upgrades = install_image(&mut bad_flash, &slots[1],
+                maximal(41928), &ram, &dep, true);
             OneImage {
-                slots: slots,
-                primaries: primaries,
-                upgrades: upgrades,
+                slots,
+                primaries,
+                upgrades,
             }}).collect();
         Images {
             flash: bad_flash,
             areadesc: self.areadesc,
-            images: images,
+            images,
             total_count: None,
+            ram: self.ram,
         }
     }
 
     pub fn make_erased_secondary_image(self) -> Images {
         let mut flash = self.flash;
+        let ram = self.ram.clone(); // TODO: Avoid this clone.
         let images = self.slots.into_iter().enumerate().map(|(image_num, slots)| {
             let dep = BoringDep::new(image_num, &NO_DEPS);
-            let primaries = install_image(&mut flash, &slots[0], 32784, &dep, false);
+            let primaries = install_image(&mut flash, &slots[0],
+                maximal(32784), &ram, &dep, false);
             let upgrades = install_no_image();
             OneImage {
-                slots: slots,
-                primaries: primaries,
-                upgrades: upgrades,
+                slots,
+                primaries,
+                upgrades,
             }}).collect();
         Images {
-            flash: flash,
+            flash,
             areadesc: self.areadesc,
-            images: images,
+            images,
             total_count: None,
+            ram: self.ram,
         }
     }
 
     pub fn make_bootstrap_image(self) -> Images {
         let mut flash = self.flash;
+        let ram = self.ram.clone(); // TODO: Avoid this clone.
         let images = self.slots.into_iter().enumerate().map(|(image_num, slots)| {
             let dep = BoringDep::new(image_num, &NO_DEPS);
             let primaries = install_no_image();
-            let upgrades = install_image(&mut flash, &slots[1], 32784, &dep, false);
+            let upgrades = install_image(&mut flash, &slots[1],
+                maximal(32784), &ram, &dep, false);
             OneImage {
-                slots: slots,
-                primaries: primaries,
-                upgrades: upgrades,
+                slots,
+                primaries,
+                upgrades,
             }}).collect();
         Images {
-            flash: flash,
+            flash,
             areadesc: self.areadesc,
-            images: images,
+            images,
             total_count: None,
+            ram: self.ram,
         }
     }
 
@@ -282,9 +340,13 @@ impl ImagesBuilder {
         match device {
             DeviceName::Stm32f4 => {
                 // STM style flash.  Large sectors, with a large scratch area.
-                let dev = SimFlash::new(vec![16 * 1024, 16 * 1024, 16 * 1024, 16 * 1024,
-                                        64 * 1024,
-                                        128 * 1024, 128 * 1024, 128 * 1024],
+                // The flash layout as described is not present in any real STM32F4 device, but it
+                // serves to exercise support for sectors of varying sizes inside a single slot,
+                // as long as they are compatible in both slots and all fit in the scratch.
+                let dev = SimFlash::new(vec![16 * 1024, 16 * 1024, 16 * 1024, 16 * 1024, 64 * 1024,
+                                        32 * 1024, 32 * 1024, 64 * 1024,
+                                        32 * 1024, 32 * 1024, 64 * 1024,
+                                        128 * 1024],
                                         align as usize, erased_val);
                 let dev_id = 0;
                 let mut areadesc = AreaDesc::new();
@@ -405,16 +467,17 @@ impl Images {
     /// A simple upgrade without forced failures.
     ///
     /// Returns the number of flash operations which can later be used to
-    /// inject failures at chosen steps.
-    pub fn run_basic_upgrade(&self, permanent: bool) -> Result<i32, ()> {
+    /// inject failures at chosen steps.  Returns None if it was unable to
+    /// count the operations in a basic upgrade.
+    pub fn run_basic_upgrade(&self, permanent: bool) -> Option<i32> {
         let (flash, total_count) = self.try_upgrade(None, permanent);
         info!("Total flash operation count={}", total_count);
 
         if !self.verify_images(&flash, 0, 1) {
             warn!("Image mismatch after first boot");
-            Err(())
+            None
         } else {
-            Ok(total_count)
+            Some(total_count)
         }
     }
 
@@ -425,8 +488,7 @@ impl Images {
         if Caps::Bootstrap.present() {
             info!("Try bootstraping image in the primary");
 
-            let (result, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-            if result != 0 {
+            if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
                 warn!("Failed first boot");
                 fails += 1;
             }
@@ -454,6 +516,10 @@ impl Images {
     /// Test a simple upgrade, with dependencies given, and verify that the
     /// image does as is described in the test.
     pub fn run_check_deps(&self, deps: &DepTest) -> bool {
+        if !Caps::modifies_flash() {
+            return false;
+        }
+
         let (flash, _) = self.try_upgrade(None, true);
 
         self.verify_dep_images(&flash, deps)
@@ -464,7 +530,7 @@ impl Images {
     }
 
     pub fn run_basic_revert(&self) -> bool {
-        if Caps::OverwriteUpgrade.present() {
+        if Caps::OverwriteUpgrade.present() || !Caps::modifies_flash() {
             return false;
         }
 
@@ -486,6 +552,10 @@ impl Images {
     }
 
     pub fn run_perm_with_fails(&self) -> bool {
+        if !Caps::modifies_flash() {
+            return false;
+        }
+
         let mut fails = 0;
         let total_flash_ops = self.total_count.unwrap();
 
@@ -511,12 +581,10 @@ impl Images {
                 fails += 1;
             }
 
-            if self.is_swap_upgrade() {
-                if !self.verify_images(&flash, 1, 0) {
-                    warn!("Secondary slot FAIL at step {} of {}",
-                          i, total_flash_ops);
-                    fails += 1;
-                }
+            if self.is_swap_upgrade() && !self.verify_images(&flash, 1, 0) {
+                warn!("Secondary slot FAIL at step {} of {}",
+                    i, total_flash_ops);
+                fails += 1;
             }
         }
 
@@ -529,6 +597,10 @@ impl Images {
     }
 
     pub fn run_perm_with_random_fails(&self, total_fails: usize) -> bool {
+        if !Caps::modifies_flash() {
+            return false;
+        }
+
         let mut fails = 0;
         let total_flash_ops = self.total_count.unwrap();
         let (flash, total_counts) = self.try_random_fails(total_flash_ops, total_fails);
@@ -567,7 +639,7 @@ impl Images {
     }
 
     pub fn run_revert_with_fails(&self) -> bool {
-        if Caps::OverwriteUpgrade.present() {
+        if Caps::OverwriteUpgrade.present() || !Caps::modifies_flash() {
             return false;
         }
 
@@ -587,7 +659,7 @@ impl Images {
     }
 
     pub fn run_norevert(&self) -> bool {
-        if Caps::OverwriteUpgrade.present() {
+        if Caps::OverwriteUpgrade.present() || !Caps::modifies_flash() {
             return false;
         }
 
@@ -597,8 +669,7 @@ impl Images {
         info!("Try norevert");
 
         // First do a normal upgrade...
-        let (result, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if result != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Failed first boot");
             fails += 1;
         }
@@ -631,8 +702,7 @@ impl Images {
             fails += 1;
         }
 
-        let (result, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if result != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Failed second boot");
             fails += 1;
         }
@@ -667,8 +737,7 @@ impl Images {
         info!("Try no downgrade");
 
         // First, do a normal upgrade.
-        let (result, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if result != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Failed first boot");
             fails += 1;
         }
@@ -689,6 +758,11 @@ impl Images {
     // image_ok set while there is no image on the secondary slot, so no revert
     // should ever happen...
     pub fn run_norevert_newimage(&self) -> bool {
+        if !Caps::modifies_flash() {
+            info!("Skipping run_norevert_newimage, as configuration doesn't modify flash");
+            return false;
+        }
+
         let mut flash = self.flash.clone();
         let mut fails = 0;
 
@@ -705,8 +779,7 @@ impl Images {
         }
 
         // Run the bootloader...
-        let (result, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if result != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Failed first boot");
             fails += 1;
         }
@@ -743,6 +816,12 @@ impl Images {
 
         info!("Try upgrade image with bad signature");
 
+        // Only perform this test if an upgrade is expected to happen.
+        if !Caps::modifies_flash() {
+            info!("Skipping upgrade image with bad signature");
+            return false;
+        }
+
         self.mark_upgrades(&mut flash, 0);
         self.mark_permanent_upgrades(&mut flash, 0);
         self.mark_upgrades(&mut flash, 1);
@@ -754,8 +833,7 @@ impl Images {
         }
 
         // Run the bootloader...
-        let (result, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if result != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Failed first boot");
             fails += 1;
         }
@@ -781,6 +859,10 @@ impl Images {
     // Should detect there is a leftover trailer in an otherwise erased
     // secondary slot and erase its trailer.
     pub fn run_secondary_leftover_trailer(&self) -> bool {
+        if !Caps::modifies_flash() {
+            return false;
+        }
+
         let mut flash = self.flash.clone();
         let mut fails = 0;
 
@@ -791,8 +873,7 @@ impl Images {
         self.mark_upgrades(&mut flash, 1);
 
         // Run the bootloader...
-        let (result, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if result != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Failed first boot");
             fails += 1;
         }
@@ -827,7 +908,7 @@ impl Images {
     /// allowing for fails in the status area. This should run to the end
     /// and warn that write fails were detected...
     pub fn run_with_status_fails_complete(&self) -> bool {
-        if !Caps::ValidatePrimarySlot.present() {
+        if !Caps::ValidatePrimarySlot.present() || !Caps::modifies_flash() {
             return false;
         }
 
@@ -839,15 +920,15 @@ impl Images {
         self.mark_permanent_upgrades(&mut flash, 1);
         self.mark_bad_status_with_rate(&mut flash, 0, 1.0);
 
-        let (result, asserts) = c::boot_go(&mut flash, &self.areadesc, None, true);
-        if result != 0 {
+        let result = c::boot_go(&mut flash, &self.areadesc, None, None, true);
+        if !result.success() {
             warn!("Failed!");
             fails += 1;
         }
 
         // Failed writes to the marked "bad" region don't assert anymore.
         // Any detected assert() is happening in another part of the code.
-        if asserts != 0 {
+        if result.asserts() != 0 {
             warn!("At least one assert() was called");
             fails += 1;
         }
@@ -865,8 +946,7 @@ impl Images {
 
         info!("validate primary slot enabled; \
                re-run of boot_go should just work");
-        let (result, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if result != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Failed!");
             fails += 1;
         }
@@ -882,7 +962,7 @@ impl Images {
     /// allowing for fails in the status area. This should run to the end
     /// and warn that write fails were detected...
     pub fn run_with_status_fails_with_reset(&self) -> bool {
-        if Caps::OverwriteUpgrade.present() {
+        if Caps::OverwriteUpgrade.present() || !Caps::modifies_flash() {
             false
         } else if Caps::ValidatePrimarySlot.present() {
 
@@ -898,7 +978,8 @@ impl Images {
             self.mark_bad_status_with_rate(&mut flash, 0, 0.5);
 
             // Should not fail, writing to bad regions does not assert
-            let (_, asserts) = c::boot_go(&mut flash, &self.areadesc, Some(&mut count), true);
+            let asserts = c::boot_go(&mut flash, &self.areadesc,
+                                     Some(&mut count), None, true).asserts();
             if asserts != 0 {
                 warn!("At least one assert() was called");
                 fails += 1;
@@ -907,7 +988,8 @@ impl Images {
             self.reset_bad_status(&mut flash, 0);
 
             info!("Resuming an interrupted swap operation");
-            let (_, asserts) = c::boot_go(&mut flash, &self.areadesc, None, true);
+            let asserts = c::boot_go(&mut flash, &self.areadesc, None, None,
+                                     true).asserts();
 
             // This might throw no asserts, for large sector devices, where
             // a single failure writing is indistinguishable from no failure,
@@ -934,7 +1016,8 @@ impl Images {
             self.mark_bad_status_with_rate(&mut flash, 0, 1.0);
 
             // This is expected to fail while writing to bad regions...
-            let (_, asserts) = c::boot_go(&mut flash, &self.areadesc, None, true);
+            let asserts = c::boot_go(&mut flash, &self.areadesc, None, None,
+                                     true).asserts();
             if asserts == 0 {
                 warn!("No assert() detected");
                 fails += 1;
@@ -942,6 +1025,123 @@ impl Images {
 
             fails > 0
         }
+    }
+
+    /// Test the direct XIP configuration.  With this mode, flash images are never moved, and the
+    /// bootloader merely selects which partition is the proper one to boot.
+    pub fn run_direct_xip(&self) -> bool {
+        if !Caps::DirectXip.present() {
+            return false;
+        }
+
+        // Clone the flash so we can tell if unchanged.
+        let mut flash = self.flash.clone();
+
+        let result = c::boot_go(&mut flash, &self.areadesc, None, None, true);
+
+        // Ensure the boot was successful.
+        let resp = if let Some(resp) = result.resp() {
+            resp
+        } else {
+            panic!("Boot didn't return a valid result");
+        };
+
+        // This configuration should always try booting from the first upgrade slot.
+        if let Some((offset, _, dev_id)) = self.areadesc.find(FlashId::Image1) {
+            assert_eq!(offset, resp.image_off as usize);
+            assert_eq!(dev_id, resp.flash_dev_id);
+        } else {
+            panic!("Unable to find upgrade image");
+        }
+        false
+    }
+
+    /// Test the ram-loading.
+    pub fn run_ram_load(&self) -> bool {
+        if !Caps::RamLoad.present() {
+            return false;
+        }
+
+        // Clone the flash so we can tell if unchanged.
+        let mut flash = self.flash.clone();
+
+        // Setup ram based on the ram configuration we determined earlier for the images.
+        let ram = RamBlock::new(self.ram.total - RAM_LOAD_ADDR, RAM_LOAD_ADDR);
+
+        // println!("Ram: {:#?}", self.ram);
+
+        // Verify that the images area loaded into this.
+        let result = ram.invoke(|| c::boot_go(&mut flash, &self.areadesc, None,
+                                              None, true));
+        if !result.success() {
+            error!("Failed to execute ram-load");
+            return true;
+        }
+
+        // Verify each image.
+        for image in &self.images {
+            let place = self.ram.lookup(&image.slots[0]);
+            let ram_image = ram.borrow_part(place.offset as usize - RAM_LOAD_ADDR as usize,
+                place.size as usize);
+            let src_sz = image.upgrades.size();
+            if src_sz > ram_image.len() {
+                error!("Image ended up too large, nonsensical");
+                return true;
+            }
+            let src_image = &image.upgrades.plain[0..src_sz];
+            let ram_image = &ram_image[0..src_sz];
+            if ram_image != src_image {
+                error!("Image not loaded correctly");
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    /// Test the split ram-loading.
+    pub fn run_split_ram_load(&self) -> bool {
+        if !Caps::RamLoad.present() {
+            return false;
+        }
+
+        // Clone the flash so we can tell if unchanged.
+        let mut flash = self.flash.clone();
+
+        // Setup ram based on the ram configuration we determined earlier for the images.
+        let ram = RamBlock::new(self.ram.total - RAM_LOAD_ADDR, RAM_LOAD_ADDR);
+
+        for (idx, _image) in (&self.images).iter().enumerate() {
+            // Verify that the images area loaded into this.
+            let result = ram.invoke(|| c::boot_go(&mut flash, &self.areadesc,
+                                                  None, Some(idx as i32), true));
+            if !result.success() {
+                error!("Failed to execute ram-load");
+                return true;
+            }
+        }
+
+        // Verify each image.
+        for image in &self.images {
+            let place = self.ram.lookup(&image.slots[0]);
+            let ram_image = ram.borrow_part(place.offset as usize - RAM_LOAD_ADDR as usize,
+                place.size as usize);
+            let src_sz = image.upgrades.size();
+            if src_sz > ram_image.len() {
+                error!("Image ended up too large, nonsensical");
+                return true;
+            }
+            let src_image = &image.upgrades.plain[0..src_sz];
+            let ram_image = &ram_image[0..src_sz];
+            if ram_image != src_image {
+                error!("Image not loaded correctly");
+                return true;
+            }
+
+        }
+
+        return false;
     }
 
     /// Adds a new flash area that fails statistically
@@ -993,19 +1193,23 @@ impl Images {
 
         let mut counter = stop.unwrap_or(0);
 
-        let (first_interrupted, count) = match c::boot_go(&mut flash, &self.areadesc, Some(&mut counter), false) {
-            (-0x13579, _) => (true, stop.unwrap()),
-            (0, _) => (false, -counter),
-            (x, _) => panic!("Unknown return: {}", x),
+        let (first_interrupted, count) = match c::boot_go(&mut flash,
+                                                          &self.areadesc,
+                                                          Some(&mut counter),
+                                                          None, false) {
+            x if x.interrupted() => (true, stop.unwrap()),
+            x if x.success() => (false, -counter),
+            x => panic!("Unknown return: {:?}", x),
         };
 
         counter = 0;
         if first_interrupted {
             // fl.dump();
-            match c::boot_go(&mut flash, &self.areadesc, Some(&mut counter), false) {
-                (-0x13579, _) => panic!("Shouldn't stop again"),
-                (0, _) => (),
-                (x, _) => panic!("Unknown return: {}", x),
+            match c::boot_go(&mut flash, &self.areadesc, Some(&mut counter),
+                             None, false) {
+                x if x.interrupted() => panic!("Shouldn't stop again"),
+                x if x.success() => (),
+                x => panic!("Unknown return: {:?}", x),
             }
         }
 
@@ -1018,7 +1222,7 @@ impl Images {
         // fl.write_file("image0.bin").unwrap();
         for i in 0 .. count {
             info!("Running boot pass {}", i + 1);
-            assert_eq!(c::boot_go(&mut flash, &self.areadesc, None, false), (0, 0));
+            assert!(c::boot_go(&mut flash, &self.areadesc, None, None, false).success_no_asserts());
         }
         flash
     }
@@ -1028,8 +1232,8 @@ impl Images {
         let mut fails = 0;
 
         let mut counter = stop;
-        let (x, _) = c::boot_go(&mut flash, &self.areadesc, Some(&mut counter), false);
-        if x != -0x13579 {
+        if !c::boot_go(&mut flash, &self.areadesc, Some(&mut counter), None,
+                       false).interrupted() {
             warn!("Should have stopped test at interruption point");
             fails += 1;
         }
@@ -1041,8 +1245,7 @@ impl Images {
             fails += 1;
         }
 
-        let (x, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if x != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Should have finished test upgrade");
             fails += 1;
         }
@@ -1070,14 +1273,13 @@ impl Images {
 
         // Do Revert
         let mut counter = stop;
-        let (x, _) = c::boot_go(&mut flash, &self.areadesc, Some(&mut counter), false);
-        if x != -0x13579 {
+        if !c::boot_go(&mut flash, &self.areadesc, Some(&mut counter), None,
+                       false).interrupted() {
             warn!("Should have stopped revert at interruption point");
             fails += 1;
         }
 
-        let (x, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if x != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Should have finished revert upgrade");
             fails += 1;
         }
@@ -1104,8 +1306,7 @@ impl Images {
             fails += 1;
         }
 
-        let (x, _) = c::boot_go(&mut flash, &self.areadesc, None, false);
-        if x != 0 {
+        if !c::boot_go(&mut flash, &self.areadesc, None, None, false).success() {
             warn!("Should have finished 3rd boot");
             fails += 1;
         }
@@ -1131,21 +1332,22 @@ impl Images {
         let mut rng = rand::thread_rng();
         let mut resets = vec![0i32; count];
         let mut remaining_ops = total_ops;
-        for i in 0 .. count {
-            let reset_counter = rng.gen_range(1, remaining_ops / 2);
+        for reset in &mut resets {
+            let reset_counter = rng.gen_range(1 ..= remaining_ops / 2);
             let mut counter = reset_counter;
-            match c::boot_go(&mut flash, &self.areadesc, Some(&mut counter), false) {
-                (0, _) | (-0x13579, _) => (),
-                (x, _) => panic!("Unknown return: {}", x),
+            match c::boot_go(&mut flash, &self.areadesc, Some(&mut counter),
+                             None, false) {
+                x if x.interrupted() => (),
+                x => panic!("Unknown return: {:?}", x),
             }
             remaining_ops -= reset_counter;
-            resets[i] = reset_counter;
+            *reset = reset_counter;
         }
 
-        match c::boot_go(&mut flash, &self.areadesc, None, false) {
-            (-0x13579, _) => panic!("Should not be have been interrupted!"),
-            (0, _) => (),
-            (x, _) => panic!("Unknown return: {}", x),
+        match c::boot_go(&mut flash, &self.areadesc, None, None, false) {
+            x if x.interrupted() => panic!("Should not be have been interrupted!"),
+            x if x.success() => (),
+            x => panic!("Unknown return: {:?}", x),
         }
 
         (flash, resets)
@@ -1232,6 +1434,40 @@ impl Images {
     }
 }
 
+impl RamData {
+    // TODO: This is not correct. The second slot of each image should be at the same address as
+    // the primary.
+    fn new(slots: &[[SlotInfo; 2]]) -> RamData {
+        let mut addr = RAM_LOAD_ADDR;
+        let mut places = BTreeMap::new();
+        // println!("Setup:-------------");
+        for imgs in slots {
+            for si in imgs {
+                // println!("Setup: si: {:?}", si);
+                let offset = addr;
+                let size = si.len as u32;
+                places.insert(SlotKey {
+                    dev_id: si.dev_id,
+                    base_off: si.base_off,
+                }, SlotPlace { offset, size });
+                // println!("  load: offset: {}, size: {}", offset, size);
+            }
+            addr += imgs[0].len as u32;
+        }
+        RamData {
+            places,
+            total: addr,
+        }
+    }
+
+    /// Lookup the ram data associated with a given flash partition.  We just panic if not present,
+    /// because all slots used should be in the map.
+    fn lookup(&self, slot: &SlotInfo) -> &SlotPlace {
+        self.places.get(&SlotKey{dev_id: slot.dev_id, base_off: slot.base_off})
+            .expect("RamData should contain all slots")
+    }
+}
+
 /// Show the flash layout.
 #[allow(dead_code)]
 fn show_flash(flash: &dyn Flash) {
@@ -1240,16 +1476,26 @@ fn show_flash(flash: &dyn Flash) {
         println!("    {:3}: 0x{:08x}, 0x{:08x}",
                  sector.num, sector.base, sector.size);
     }
-    println!("");
+    println!();
+}
+
+#[derive(Debug)]
+enum ImageSize {
+    /// Make the image the specified given size.
+    Given(usize),
+    /// Make the image as large as it can be for the partition/device.
+    Largest,
 }
 
 /// Install a "program" into the given image.  This fakes the image header, or at least all of the
 /// fields used by the given code.  Returns a copy of the image that was written.
-fn install_image(flash: &mut SimMultiFlash, slot: &SlotInfo, len: usize,
+fn install_image(flash: &mut SimMultiFlash, slot: &SlotInfo, len: ImageSize,
+                 ram: &RamData,
                  deps: &dyn Depender, bad_sig: bool) -> ImageData {
     let offset = slot.base_off;
     let slot_len = slot.len;
     let dev_id = slot.dev_id;
+    let dev = flash.get_mut(&dev_id).unwrap();
 
     let mut tlv: Box<dyn ManifestGen> = Box::new(make_tlv());
 
@@ -1260,10 +1506,37 @@ fn install_image(flash: &mut SimMultiFlash, slot: &SlotInfo, len: usize,
 
     const HDR_SIZE: usize = 32;
 
+    let place = ram.lookup(&slot);
+    let load_addr = if Caps::RamLoad.present() {
+        place.offset
+    } else {
+        0
+    };
+
+    let len = match len {
+        ImageSize::Given(size) => size,
+        ImageSize::Largest => {
+            // Using the header size we know, the trailer size, and the slot size, we can compute
+            // the largest image possible.
+            let trailer = if Caps::OverwriteUpgrade.present() {
+                // This computation is incorrect, and we need to figure out the correct size.
+                // c::boot_status_sz(dev.align() as u32) as usize
+                16 + 4 * dev.align()
+            } else {
+                let sector_size = dev.sector_iter().next().unwrap().size as u32;
+                align_up(c::boot_trailer_sz(dev.align() as u32), sector_size) as usize
+            };
+            let tlv_len = tlv.estimate_size();
+            info!("slot: 0x{:x}, HDR: 0x{:x}, trailer: 0x{:x}",
+                slot_len, HDR_SIZE, trailer);
+            slot_len - HDR_SIZE - trailer - tlv_len
+        }
+    };
+
     // Generate a boot header.  Note that the size doesn't include the header.
     let header = ImageHeader {
         magic: tlv.get_magic(),
-        load_addr: 0,
+        load_addr,
         hdr_size: HDR_SIZE as u16,
         protect_tlv_size: tlv.protect_size(),
         img_size: len as u32,
@@ -1295,17 +1568,27 @@ fn install_image(flash: &mut SimMultiFlash, slot: &SlotInfo, len: usize,
     tlv.add_bytes(&b_img);
 
     // Generate encrypted images
-    let flag = TlvFlags::ENCRYPTED as u32;
-    let is_encrypted = (tlv.get_flags() & flag) == flag;
+    let flag = TlvFlags::ENCRYPTED_AES128 as u32 | TlvFlags::ENCRYPTED_AES256 as u32;
+    let is_encrypted = (tlv.get_flags() & flag) != 0;
     let mut b_encimg = vec![];
     if is_encrypted {
+        let flag = TlvFlags::ENCRYPTED_AES256 as u32;
+        let aes256 = (tlv.get_flags() & flag) == flag;
         tlv.generate_enc_key();
         let enc_key = tlv.get_enc_key();
-        let key = GenericArray::from_slice(enc_key.as_slice());
         let nonce = GenericArray::from_slice(&[0; 16]);
-        let mut cipher = Aes128Ctr::new(&key, &nonce);
         b_encimg = b_img.clone();
-        cipher.apply_keystream(&mut b_encimg);
+        if aes256 {
+            let key: &GenericArray<u8, U32> = GenericArray::from_slice(enc_key.as_slice());
+            let block = Aes256::new(&key);
+            let mut cipher = Aes256Ctr::from_block_cipher(block, &nonce);
+            cipher.apply_keystream(&mut b_encimg);
+        } else {
+            let key: &GenericArray<u8, U16> = GenericArray::from_slice(enc_key.as_slice());
+            let block = Aes128::new(&key);
+            let mut cipher = Aes128Ctr::from_block_cipher(block, &nonce);
+            cipher.apply_keystream(&mut b_encimg);
+        }
     }
 
     // Build the TLV itself.
@@ -1314,8 +1597,6 @@ fn install_image(flash: &mut SimMultiFlash, slot: &SlotInfo, len: usize,
     }
     let mut b_tlv = tlv.make_tlv();
 
-    let dev = flash.get_mut(&dev_id).unwrap();
-
     let mut buf = vec![];
     buf.append(&mut b_header.to_vec());
     buf.append(&mut b_img);
@@ -1323,6 +1604,7 @@ fn install_image(flash: &mut SimMultiFlash, slot: &SlotInfo, len: usize,
 
     // Pad the buffer to a multiple of the flash alignment.
     let align = dev.align();
+    let image_sz = buf.len();
     while buf.len() % align != 0 {
         buf.push(dev.erased_val());
     }
@@ -1365,6 +1647,7 @@ fn install_image(flash: &mut SimMultiFlash, slot: &SlotInfo, len: usize,
         dev.read(offset, &mut copy).unwrap();
 
         ImageData {
+            size: image_sz,
             plain: copy,
             cipher: enc_copy,
         }
@@ -1391,6 +1674,7 @@ fn install_image(flash: &mut SimMultiFlash, slot: &SlotInfo, len: usize,
         }
 
         ImageData {
+            size: image_sz,
             plain: copy,
             cipher: enc_copy,
         }
@@ -1400,41 +1684,45 @@ fn install_image(flash: &mut SimMultiFlash, slot: &SlotInfo, len: usize,
 /// Install no image.  This is used when no upgrade happens.
 fn install_no_image() -> ImageData {
     ImageData {
+        size: 0,
         plain: vec![],
         cipher: None,
     }
 }
 
+/// Construct a TLV generator based on how MCUboot is currently configured.  The returned
+/// ManifestGen will generate the appropriate entries based on this configuration.
 fn make_tlv() -> TlvGen {
     if Caps::EcdsaP224.present() {
         panic!("Ecdsa P224 not supported in Simulator");
     }
+    let aes_key_size = if Caps::Aes256.present() { 256 } else { 128 };
 
     if Caps::EncKw.present() {
         if Caps::RSA2048.present() {
-            TlvGen::new_rsa_kw()
+            TlvGen::new_rsa_kw(aes_key_size)
         } else if Caps::EcdsaP256.present() {
-            TlvGen::new_ecdsa_kw()
+            TlvGen::new_ecdsa_kw(aes_key_size)
         } else {
-            TlvGen::new_enc_kw()
+            TlvGen::new_enc_kw(aes_key_size)
         }
     } else if Caps::EncRsa.present() {
         if Caps::RSA2048.present() {
-            TlvGen::new_sig_enc_rsa()
+            TlvGen::new_sig_enc_rsa(aes_key_size)
         } else {
-            TlvGen::new_enc_rsa()
+            TlvGen::new_enc_rsa(aes_key_size)
         }
     } else if Caps::EncEc256.present() {
         if Caps::EcdsaP256.present() {
-            TlvGen::new_ecdsa_ecies_p256()
+            TlvGen::new_ecdsa_ecies_p256(aes_key_size)
         } else {
-            TlvGen::new_ecies_p256()
+            TlvGen::new_ecies_p256(aes_key_size)
         }
     } else if Caps::EncX25519.present() {
         if Caps::Ed25519.present() {
-            TlvGen::new_ed25519_ecies_x25519()
+            TlvGen::new_ed25519_ecies_x25519(aes_key_size)
         } else {
-            TlvGen::new_ecies_x25519()
+            TlvGen::new_ecies_x25519(aes_key_size)
         }
     } else {
         // The non-encrypted configuration.
@@ -1464,6 +1752,10 @@ impl ImageData {
             (true, 1) => self.cipher.as_ref().expect("Invalid image"),
             _ => panic!("Invalid slot requested"),
         }
+    }
+
+    fn size(&self) -> usize {
+        self.size
     }
 }
 
@@ -1510,12 +1802,13 @@ fn verify_trailer(flash: &SimMultiFlash, slot: &SlotInfo,
 
     failed |= match magic {
         Some(v) => {
-            if v == 1 && &copy[24..] != MAGIC {
+            let magic_off = (c::boot_max_align() * 3) + (c::boot_magic_sz() - MAGIC.len());
+            if v == 1 && &copy[magic_off..] != MAGIC {
                 warn!("\"magic\" mismatch at {:#x}", offset);
                 true
             } else if v == 3 {
                 let expected = [erased_val; 16];
-                if &copy[24..] != expected {
+                if copy[magic_off..] != expected {
                     warn!("\"magic\" mismatch at {:#x}", offset);
                     true
                 } else {
@@ -1530,8 +1823,9 @@ fn verify_trailer(flash: &SimMultiFlash, slot: &SlotInfo,
 
     failed |= match image_ok {
         Some(v) => {
-            if (v == 1 && copy[16] != v) || (v == 3 && copy[16] != erased_val) {
-                warn!("\"image_ok\" mismatch at {:#x} v={} val={:#x}", offset, v, copy[8]);
+            let image_ok_off = c::boot_max_align() * 2;
+            if (v == 1 && copy[image_ok_off] != v) || (v == 3 && copy[image_ok_off] != erased_val) {
+                warn!("\"image_ok\" mismatch at {:#x} v={} val={:#x}", offset, v, copy[image_ok_off]);
                 true
             } else {
                 false
@@ -1542,8 +1836,9 @@ fn verify_trailer(flash: &SimMultiFlash, slot: &SlotInfo,
 
     failed |= match copy_done {
         Some(v) => {
-            if (v == 1 && copy[8] != v) || (v == 3 && copy[8] != erased_val) {
-                warn!("\"copy_done\" mismatch at {:#x} v={} val={:#x}", offset, v, copy[0]);
+            let copy_done_off = c::boot_max_align();
+            if (v == 1 && copy[copy_done_off] != v) || (v == 3 && copy[copy_done_off] != erased_val) {
+                warn!("\"copy_done\" mismatch at {:#x} v={} val={:#x}", offset, v, copy[copy_done_off]);
                 true
             } else {
                 false
@@ -1565,11 +1860,14 @@ fn install_ptable(flash: &mut SimMultiFlash, areadesc: &AreaDesc) {
         // aren't marked as the BootLoader partition, avoid adding the
         // partition table.  This makes it harder to view the image, but
         // avoids messing up images already written.
-        if areadesc.iter_areas().any(|area| {
-            area.device_id == id &&
-                area.off == 0 &&
-                area.flash_id != FlashId::BootLoader
-        }) {
+        let skip_ptable = areadesc
+            .iter_areas()
+            .any(|area| {
+                area.device_id == id &&
+                    area.off == 0 &&
+                    area.flash_id != FlashId::BootLoader
+            });
+        if skip_ptable {
             if log_enabled!(Info) {
                 let special: Vec<FlashId> = areadesc.iter_areas()
                     .filter(|area| area.device_id == id && area.off == 0)
@@ -1641,10 +1939,17 @@ pub struct SlotInfo {
     pub dev_id: u8,
 }
 
+#[cfg(not(feature = "max-align-32"))]
 const MAGIC: &[u8] = &[0x77, 0xc2, 0x95, 0xf3,
                        0x60, 0xd2, 0xef, 0x7f,
                        0x35, 0x52, 0x50, 0x0f,
                        0x2c, 0xb6, 0x79, 0x80];
+
+#[cfg(feature = "max-align-32")]
+const MAGIC: &[u8] = &[0x20, 0x00, 0x2d, 0xe1,
+                       0x5d, 0x29, 0x41, 0x0b,
+                       0x8d, 0x77, 0x67, 0x9c,
+                       0x11, 0x0f, 0x1f, 0x8a];
 
 // Replicates defines found in bootutil.h
 const BOOT_MAGIC_GOOD: Option<u8> = Some(1);
@@ -1662,8 +1967,9 @@ pub fn mark_upgrade(flash: &mut SimMultiFlash, slot: &SlotInfo) {
         // The write size is larger than the magic value.  Fill a buffer
         // with the erased value, put the MAGIC in it, and write it in its
         // entirety.
-        let mut buf = vec![dev.erased_val(); align];
-        buf[(offset % align)..].copy_from_slice(MAGIC);
+        let mut buf = vec![dev.erased_val(); c::boot_max_align()];
+        let magic_off = (offset % align) + (c::boot_magic_sz() - MAGIC.len());
+        buf[magic_off..].copy_from_slice(MAGIC);
         dev.write(offset - (offset % align), &buf).unwrap();
     } else {
         dev.write(offset, MAGIC).unwrap();
@@ -1681,16 +1987,16 @@ fn mark_permanent_upgrade(flash: &mut SimMultiFlash, slot: &SlotInfo) {
     }
 
     let dev = flash.get_mut(&slot.dev_id).unwrap();
-    let mut ok = [dev.erased_val(); 8];
+    let align = dev.align();
+    let mut ok = vec![dev.erased_val(); align];
     ok[0] = 1u8;
     let off = slot.trailer_off + c::boot_max_align() * 3;
-    let align = dev.align();
-    dev.write(off, &ok[..align]).unwrap();
+    dev.write(off, &ok).unwrap();
 }
 
 // Drop some pseudo-random gibberish onto the data.
 fn splat(data: &mut [u8], seed: usize) {
-    let mut seed_block = [0u8; 16];
+    let mut seed_block = [0u8; 32];
     let mut buf = Cursor::new(&mut seed_block[..]);
     buf.write_u32::<LittleEndian>(0x135782ea).unwrap();
     buf.write_u32::<LittleEndian>(0x92184728).unwrap();
@@ -1702,9 +2008,21 @@ fn splat(data: &mut [u8], seed: usize) {
 
 /// Return a read-only view into the raw bytes of this object
 trait AsRaw : Sized {
-    fn as_raw<'a>(&'a self) -> &'a [u8] {
+    fn as_raw(&self) -> &[u8] {
         unsafe { slice::from_raw_parts(self as *const _ as *const u8,
                                        mem::size_of::<Self>()) }
+    }
+}
+
+/// Determine whether it makes sense to test this configuration with a maximally-sized image.
+/// Returns an ImageSize representing the best size to test, possibly just with the given size.
+fn maximal(size: usize) -> ImageSize {
+    if Caps::OverwriteUpgrade.present() ||
+        Caps::SwapUsingMove.present()
+    {
+        ImageSize::Given(size)
+    } else {
+        ImageSize::Largest
     }
 }
 
@@ -1716,12 +2034,12 @@ pub fn show_sizes() {
     }
 }
 
-#[cfg(not(feature = "large-write"))]
+#[cfg(not(feature = "max-align-32"))]
 fn test_alignments() -> &'static [usize] {
     &[1, 2, 4, 8]
 }
 
-#[cfg(feature = "large-write")]
+#[cfg(feature = "max-align-32")]
 fn test_alignments() -> &'static [usize] {
-    &[1, 2, 4, 8, 128, 512]
+    &[32]
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2020-2021 NXP
+ *  Copyright 2020-2022 NXP
  *  All rights reserved.
  *
  *  SPDX-License-Identifier: BSD-3-Clause
@@ -47,5 +47,11 @@
 #undef CONFIG_WIFI_TIMER_DEBUG
 #undef CONFIG_WIFI_SDIO_DEBUG
 #undef CONFIG_WIFI_FW_DEBUG
+
+/*
+ * Heap debug options
+ */
+#undef CONFIG_HEAP_DEBUG
+#undef CONFIG_HEAP_STAT
 
 #endif /* _WIFI_CONFIG_H_ */

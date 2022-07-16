@@ -698,13 +698,11 @@ usb_status_t USB_HostHelperParseAlternateSetting(usb_host_interface_handle inter
     }
 
     /* parse configuration descriptor */
-    temp = (void *)((usb_host_interface_t *)interfaceHandle)->interfaceDesc;
-    ;
+    temp = (void *)((usb_host_interface_t *)interfaceHandle)->interfaceExtension;
     unionDes = (usb_descriptor_union_t *)temp; /* interface extend descriptor start */
     endPosition =
         (uint32_t)unionDes +
         ((usb_host_interface_t *)interfaceHandle)->interfaceExtensionLength; /* interface extend descriptor end */
-    unionDes = (usb_descriptor_union_t *)((uint32_t)unionDes + unionDes->common.bLength);
 
     /* search for the alternate setting interface descriptor */
     while ((uint32_t)unionDes < endPosition)

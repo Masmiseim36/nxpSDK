@@ -11,7 +11,9 @@
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "usb_host_msd.h"
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT))
 #include "usb_phy.h"
+#endif
 #include "host_msd_fatfs.h"
 #include "ff.h"
 #include "diskio.h"
@@ -899,11 +901,19 @@ static void USB_HostApplicationTask(void *param)
 }
 
 #if (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U))
+#if (defined USBHS_IRQHandler)
+void USBHS_IRQHandler(void)
+{
+    USB_HostEhciIsrFunction(g_HostMsdFatfsHandle);
+    SDK_ISR_EXIT_BARRIER;
+}
+#else
 void USB_OTG1_IRQHandler(void)
 {
     USB_HostEhciIsrFunction(g_HostMsdFatfsHandle);
     SDK_ISR_EXIT_BARRIER;
 }
+#endif
 
 void USB_OTG2_IRQHandler(void)
 {

@@ -45,6 +45,9 @@
 #endif /* MBEDTLS_PLATFORM_C */
 #endif /* MBEDTLS_SELF_TEST */
 
+/* NXP added */
+#if !defined(MBEDTLS_CTR_DRBG_ALT)
+
 /*
  * CTR_DRBG context initialization
  */
@@ -152,11 +155,8 @@ static int block_cipher_df( unsigned char *output,
      *     (Total is padded to a multiple of 16-bytes with zeroes)
      */
     p = buf + MBEDTLS_CTR_DRBG_BLOCKSIZE;
-    *p++ = ( data_len >> 24 ) & 0xff;
-    *p++ = ( data_len >> 16 ) & 0xff;
-    *p++ = ( data_len >> 8  ) & 0xff;
-    *p++ = ( data_len       ) & 0xff;
-    p += 3;
+    MBEDTLS_PUT_UINT32_BE( data_len, p, 0);
+    p += 4 + 3;
     *p++ = MBEDTLS_CTR_DRBG_SEEDLEN;
     memcpy( p, data, data_len );
     p[data_len] = 0x80;
@@ -681,6 +681,9 @@ exit:
     return( mbedtls_ctr_drbg_write_seed_file( ctx, path ) );
 }
 #endif /* MBEDTLS_FS_IO */
+
+/* NXP added */
+#endif /* MBEDTLS_CTR_DRBG_ALT */
 
 #if defined(MBEDTLS_SELF_TEST)
 

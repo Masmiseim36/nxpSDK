@@ -100,6 +100,7 @@ extern const pfcn_void_psm g_SM_STATE_TABLE_SLOW[4];
  *
  * @return None
  */
+RAM_FUNC_LIB
 static inline void SM_StateMachineFast(sm_app_ctrl_t *sAppCtrl)
 {
     g_SM_STATE_TABLE_FAST[sAppCtrl->eState](sAppCtrl);
@@ -112,6 +113,7 @@ static inline void SM_StateMachineFast(sm_app_ctrl_t *sAppCtrl)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static inline void SM_StateMachineSlow(sm_app_ctrl_t *sAppCtrl)
 {
     g_SM_STATE_TABLE_SLOW[sAppCtrl->eState](sAppCtrl);

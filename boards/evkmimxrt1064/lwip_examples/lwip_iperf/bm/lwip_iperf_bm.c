@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2020,2022 NXP
  * All rights reserved.
  *
  *
@@ -24,6 +24,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "fsl_silicon_id.h"
 #include "fsl_phy.h"
 
 #include "fsl_phyksz8081.h"
@@ -78,13 +79,6 @@
 #define configGW_ADDR3 100
 #endif
 
-/* MAC address configuration. */
-#ifndef configMAC_ADDR
-#define configMAC_ADDR                     \
-    {                                      \
-        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
-    }
-#endif
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
@@ -299,22 +293,21 @@ static void *start_iperf(ip4_addr_t *remote_addr)
         }
         else
         {
-            iperf_session =
-                lwiperf_start_udp_server(netif_ip_addr4(netif_default), EXAMPLE_PORT, lwiperf_report, 0);
+            iperf_session = lwiperf_start_udp_server(netif_ip_addr4(netif_default), EXAMPLE_PORT, lwiperf_report, 0);
         }
     }
     else
     {
         if (tcp)
         {
-            iperf_session = lwiperf_start_tcp_client(remote_addr, EXAMPLE_PORT, client_type,
-                                                     IPERF_CLIENT_AMOUNT, lwiperf_report, 0);
+            iperf_session = lwiperf_start_tcp_client(remote_addr, EXAMPLE_PORT, client_type, IPERF_CLIENT_AMOUNT,
+                                                     lwiperf_report, 0);
         }
         else
         {
-            iperf_session = lwiperf_start_udp_client(
-                netif_ip_addr4(netif_default), EXAMPLE_PORT, remote_addr, EXAMPLE_PORT,
-                client_type, IPERF_CLIENT_AMOUNT, IPERF_UDP_CLIENT_RATE, 0, lwiperf_report, NULL);
+            iperf_session = lwiperf_start_udp_client(netif_ip_addr4(netif_default), EXAMPLE_PORT, remote_addr,
+                                                     EXAMPLE_PORT, client_type, IPERF_CLIENT_AMOUNT,
+                                                     IPERF_UDP_CLIENT_RATE, 0, lwiperf_report, NULL);
         }
     }
 
@@ -341,8 +334,10 @@ int main(void)
     struct netif netif;
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
+        .phyHandle = &phyHandle,
+#ifdef configMAC_ADDR
         .macAddress = configMAC_ADDR,
+#endif
     };
 
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
@@ -366,6 +361,11 @@ int main(void)
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     time_init();
+
+#ifndef configMAC_ADDR
+    /* Set special address for each chip. */
+    (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
 
     IP4_ADDR(&netif_ipaddr, configIP_ADDR0, configIP_ADDR1, configIP_ADDR2, configIP_ADDR3);
     IP4_ADDR(&netif_netmask, configNET_MASK0, configNET_MASK1, configNET_MASK2, configNET_MASK3);

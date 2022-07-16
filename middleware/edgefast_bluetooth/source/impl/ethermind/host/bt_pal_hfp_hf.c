@@ -1636,6 +1636,7 @@ static void bt_connected(struct bt_conn *conn, uint8_t err)
         BT_INFO("bt_connected\n");
 
         hfp_hf = hfp_hf_GetNoneActiveInstance();
+        (void)memset(&info, 0, sizeof(info));
         bt_conn_get_info(conn, &info);
         if (info.type == BT_CONN_TYPE_LE)
         {

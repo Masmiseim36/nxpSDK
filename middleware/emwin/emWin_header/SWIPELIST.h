@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : SWIPELIST.h
@@ -113,6 +113,7 @@ Purpose     : SWIPELIST include
 #define SWIPELIST_CI_BK_ITEM_UNSEL     0    // Background of an unselected item.
 #define SWIPELIST_CI_BK_ITEM_SEL       1    // Background of a selected item.
 #define SWIPELIST_CI_BK_SEP_ITEM       2    // Background of a separator item.
+#define SWIPELIST_CI_BK                3    // Background of unused area.
 
 /*********************************************************************
 *
@@ -130,6 +131,19 @@ Purpose     : SWIPELIST include
 #define SWIPELIST_BA_TOP	     (0 << 2)
 #define SWIPELIST_BA_BOTTOM	   (1 << 2)
 
+/*********************************************************************
+*
+*       SWIPELIST notification codes
+*
+*  Description
+*    Notifications sent by SWIPELIST widget to its parent widget through
+*    a WM_NOTIFY_PARENT message.
+*
+*    For notifications relating overlap, see SWIPELIST_SetOverlap().
+*/
+#define SWIPELIST_NOTIFICATION_OVERLAP_TOP_ENTERED       (WM_NOTIFICATION_WIDGET + 0)    // Sent when the overlap area was entered at the top of the SWIPELIST.
+#define SWIPELIST_NOTIFICATION_OVERLAP_BOTTOM_ENTERED    (WM_NOTIFICATION_WIDGET + 1)    // Sent when the overlap area was entered at the bottom of the SWIPELIST.
+#define SWIPELIST_NOTIFICATION_OVERLAP_RELEASED          (WM_NOTIFICATION_WIDGET + 2)    // Sent after a dragged overlap area has been released.
 
 /*********************************************************************
 *

@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -173,6 +157,7 @@ typedef enum _mlan_ioctl_req_id
     MLAN_IOCTL_11H_CFG = 0x00110000,
     MLAN_OID_11H_CHANNEL_CHECK,
     MLAN_OID_11H_LOCAL_POWER_CONSTRAINT,
+
 
     /* Miscellaneous Configuration Group */
     MLAN_IOCTL_MISC_CFG = 0x00200000,
@@ -938,7 +923,7 @@ typedef struct _mlan_ds_bss
         mlan_deauth_param deauth_param;
 #endif
         /** BSS role */
-        t_u8 bss_role;
+        mlan_bss_role bss_role;
     } param;
 } mlan_ds_bss, *pmlan_ds_bss;
 
@@ -1267,6 +1252,7 @@ typedef struct _mlan_ds_get_signal
     /** NF of data packet average */
     t_s16 data_nf_avg;
 } mlan_ds_get_signal, *pmlan_ds_get_signal;
+
 
 /** mlan_fw_info data structure for MLAN_OID_GET_FW_INFO */
 typedef struct _mlan_fw_info
@@ -1638,7 +1624,7 @@ typedef enum _mlan_psk_type
 /** key flag for mcast IGTK */
 #define KEY_FLAG_AES_MCAST_IGTK 0x00000010U
 /** key flag for remove key */
-#define KEY_FLAG_REMOVE_KEY 0x80000000
+#define KEY_FLAG_REMOVE_KEY 0x80000000U
 
 /** Type definition of mlan_ds_encrypt_key for MLAN_OID_SEC_CFG_ENCRYPT_KEY */
 typedef struct _mlan_ds_encrypt_key
@@ -1961,7 +1947,7 @@ typedef struct _mlan_ds_power_cfg
 /** Power Management Configuration Group */
 /*-----------------------------------------------------------------*/
 /** Host sleep config conditions : Cancel */
-#define HOST_SLEEP_CFG_CANCEL 0xffffffff
+#define HOST_SLEEP_CFG_CANCEL 0xffffffffU
 /** Host sleep config conditions : NULL (used for offload features) */
 #define HOST_SLEEP_NO_COND 0
 
@@ -2521,14 +2507,14 @@ typedef struct _mlan_ds_11ac_vht_cfg
 } mlan_ds_11ac_vht_cfg, *pmlan_ds_11ac_vht_cfg;
 
 #ifdef CONFIG_11AX
-typedef struct MLAN_PACK_START _mlan_11axcmdcfg_obss_pd_offset
+typedef MLAN_PACK_START struct _mlan_11axcmdcfg_obss_pd_offset
 {
     /** <NON_SRG_OffSET, SRG_OFFSET> */
     t_u8 offset[2];
 } MLAN_PACK_END mlan_11axcmdcfg_obss_pd_offset;
 
 /** Type definition of mlan_11axcmdcfg_sr_control for MLAN_OID_11AX_CMD_CFG */
-typedef struct MLAN_PACK_START _mlan_11axcmdcfg_sr_control
+typedef MLAN_PACK_START struct _mlan_11axcmdcfg_sr_control
 {
     /** 1 enable, 0 disable */
     t_u8 control;
@@ -2563,7 +2549,7 @@ typedef struct _mlan_ds_11ax_he_cfg
 } mlan_ds_11ax_he_cfg, *pmlan_ds_11ax_he_cfg;
 
 /** Type definition of mlan_ds_11ax_sr_cmd for MLAN_OID_11AX_CMD_CFG */
-typedef struct MLAN_PACK_START _mlan_ds_11ax_sr_cmd
+typedef MLAN_PACK_START struct _mlan_ds_11ax_sr_cmd
 {
     /** type*/
     t_u16 type;

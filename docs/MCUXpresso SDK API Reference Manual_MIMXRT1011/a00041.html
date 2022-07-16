@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -320,7 +320,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga0870fb824ece32739bd35f819f8c408e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga0870fb824ece32739bd35f819f8c408e">FSL_LPUART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00209.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 2))</td></tr>
+<tr class="memitem:ga0870fb824ece32739bd35f819f8c408e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga0870fb824ece32739bd35f819f8c408e">FSL_LPUART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00209.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 3))</td></tr>
 <tr class="memdesc:ga0870fb824ece32739bd35f819f8c408e"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART driver version.  <a href="#ga0870fb824ece32739bd35f819f8c408e">More...</a><br/></td></tr>
 <tr class="separator:ga0870fb824ece32739bd35f819f8c408e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -890,7 +890,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPUART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00209.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 2))</td>
+          <td class="memname">#define FSL_LPUART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00209.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1753,7 +1753,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function clears LPUART status flags with a provided mask. Automatically cleared flags can't be cleared by this function. Flags that can only cleared or set by hardware are: kLPUART_TxDataRegEmptyFlag, kLPUART_TransmissionCompleteFlag, kLPUART_RxDataRegFullFlag, kLPUART_RxActiveFlag, kLPUART_NoiseErrorInRxDataRegFlag, kLPUART_ParityErrorInRxDataRegFlag, kLPUART_TxFifoEmptyFlag,kLPUART_RxFifoEmptyFlag Note: This API should be called when the Tx/Rx is idle, otherwise it takes no effects.</p>
+<p>This function clears LPUART status flags with a provided mask. Automatically cleared flags can't be cleared by this function. Flags that can only cleared or set by hardware are: kLPUART_TxDataRegEmptyFlag, kLPUART_TransmissionCompleteFlag, kLPUART_RxDataRegFullFlag, kLPUART_RxActiveFlag, kLPUART_NoiseErrorFlag, kLPUART_ParityErrorFlag, kLPUART_TxFifoEmptyFlag,kLPUART_RxFifoEmptyFlag Note: This API should be called when the Tx/Rx is idle, otherwise it takes no effects.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
@@ -1801,7 +1801,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
-    <tr><td class="paramname">mask</td><td>The interrupts to enable. Logical OR of the enumeration _uart_interrupt_enable. </td></tr>
+    <tr><td class="paramname">mask</td><td>The interrupts to enable. Logical OR of <a class="el" href="a00041.html#ga199a157d391291a9d003bf23954f9603">_lpuart_interrupt_enable</a>. </td></tr>
   </table>
   </dd>
 </dl>

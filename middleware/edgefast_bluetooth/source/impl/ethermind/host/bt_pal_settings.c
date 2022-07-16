@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS > 0))
 #include <errno/errno.h>
 
 #include <porting.h>
@@ -128,7 +128,7 @@ static int set(const char *name, size_t len_rd, settings_read_cb read_cb,
 
 	len = settings_name_next(name, &next);
 
-	if (!strncmp(name, "id", sizeof("id"))) {
+	if (!strncmp(name, "id", len)) {
 		/* Any previously provided identities supersede flash */
 		if (atomic_test_bit(bt_dev.flags, BT_DEV_PRESET_ID)) {
 			BT_WARN("Ignoring identities stored in flash");
@@ -162,7 +162,7 @@ static int set(const char *name, size_t len_rd, settings_read_cb read_cb,
 	}
 
 #if (defined(CONFIG_BT_DEVICE_NAME_DYNAMIC) && (CONFIG_BT_DEVICE_NAME_DYNAMIC > 0))
-	if (!strncmp(name, "name", sizeof("name"))) {
+	if (!strncmp(name, "name", len)) {
 		len = read_cb(cb_arg, &bt_dev.name, sizeof(bt_dev.name) - 1);
 		if (len < 0) {
 			BT_ERR("Failed to read device name from storage"
@@ -177,7 +177,7 @@ static int set(const char *name, size_t len_rd, settings_read_cb read_cb,
 #endif
 
 #if (defined(CONFIG_BT_PRIVACY) && (CONFIG_BT_PRIVACY > 0))
-	if (!strncmp(name, "irk", sizeof("irk"))) {
+	if (!strncmp(name, "irk", len)) {
 		len = read_cb(cb_arg, bt_dev.irk, sizeof(bt_dev.irk));
 		if (len < sizeof(bt_dev.irk[0])) {
 			if (len < 0) {
@@ -255,10 +255,10 @@ void bt_settings_save_name(void)
 	k_work_submit(&save_name_work);
 }
 
-static int commit(void);
-
 static int commit(void)
 {
+	int err;
+
 	BT_DBG("");
 
 #if (defined(CONFIG_BT_DEVICE_NAME_DYNAMIC) && (CONFIG_BT_DEVICE_NAME_DYNAMIC > 0))
@@ -266,14 +266,15 @@ static int commit(void)
 		bt_set_name(CONFIG_BT_DEVICE_NAME);
 	}
 #endif
-
 	if (!bt_dev.id_count) {
-		bt_setup_public_id_addr();
+		err = bt_setup_public_id_addr();
+		if (err) {
+			BT_ERR("Unable to setup an identity address");
+			return err;
+		}
 	}
 
 	if (!bt_dev.id_count) {
-		int err;
-
 		err = bt_setup_random_id_addr();
 		if (err) {
 			BT_ERR("Unable to setup an identity address");
@@ -312,4 +313,4 @@ int bt_settings_init(void)
 
 	return 0;
 }
-
+#endif /* CONFIG_BT_SETTINGS */

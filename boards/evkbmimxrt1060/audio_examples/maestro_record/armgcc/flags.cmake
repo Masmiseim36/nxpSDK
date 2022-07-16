@@ -3,19 +3,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -23,17 +14,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -41,20 +24,30 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DDEBUG \
     -DCPU_MIMXRT1062DVL6A \
+    -DSTREAMER_ENABLE_EAP \
+    -DSTREAMER_ENABLE_VIT_SINK \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DOPUS_ENCODE \
+    -DSTREAMER_ENABLE_ENCODER \
+    -DSTREAMER_ENABLE_CEI_OPUS \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DBOARD_USE_CODEC=1 \
     -DCODEC_WM8960_ENABLE \
     -DCODEC_MULTI_ADAPTERS=1 \
     -DSD_ENABLED \
-    -DPRINTF_ADVANCED_ENABLE=1 \
-    -DPRINTF_FLOAT_ENABLE=1 \
-    -DSAI_XFER_QUEUE_SIZE=3 \
+    -DDISABLEFLOAT16 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
+    -DHAVE_CONFIG_H \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DCODEC_CS42448_ENABLE \
     -DSDK_OS_FREE_RTOS \
+    -DCASCFG_PLATFORM_FREERTOS \
+    -DFSL_OS_SELECTED=SDK_OS_FREERTOS \
+    -DFSL_OSA_TASK_ENABLE=1 \
+    -DSTREAMER_ENABLE_FILESRC \
+    -DSTREAMER_ENABLE_FILE_SINK \
+    -DSTREAMER_ENABLE_MEM_SRC \
+    -DSTREAMER_ENABLE_MEM_SINK \
     -DMCUXPRESSO_SDK \
     -g \
     -O0 \
@@ -79,20 +72,30 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DNDEBUG \
     -DCPU_MIMXRT1062DVL6A \
+    -DSTREAMER_ENABLE_EAP \
+    -DSTREAMER_ENABLE_VIT_SINK \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DOPUS_ENCODE \
+    -DSTREAMER_ENABLE_ENCODER \
+    -DSTREAMER_ENABLE_CEI_OPUS \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DBOARD_USE_CODEC=1 \
     -DCODEC_WM8960_ENABLE \
     -DCODEC_MULTI_ADAPTERS=1 \
     -DSD_ENABLED \
-    -DPRINTF_ADVANCED_ENABLE=1 \
-    -DPRINTF_FLOAT_ENABLE=1 \
-    -DSAI_XFER_QUEUE_SIZE=3 \
+    -DDISABLEFLOAT16 \
     -DDEBUG_CONSOLE_RX_ENABLE=0 \
+    -DHAVE_CONFIG_H \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DCODEC_CS42448_ENABLE \
     -DSDK_OS_FREE_RTOS \
+    -DCASCFG_PLATFORM_FREERTOS \
+    -DFSL_OS_SELECTED=SDK_OS_FREERTOS \
+    -DFSL_OSA_TASK_ENABLE=1 \
+    -DSTREAMER_ENABLE_FILESRC \
+    -DSTREAMER_ENABLE_FILE_SINK \
+    -DSTREAMER_ENABLE_MEM_SRC \
+    -DSTREAMER_ENABLE_MEM_SINK \
     -DMCUXPRESSO_SDK \
     -Os \
     -mcpu=cortex-m7 \
@@ -187,7 +190,7 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_DEBUG " \
     -Xlinker \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \
-    --defsym=__heap_size__=0x10000 \
+    --defsym=__heap_size__=0x1000 \
     -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld -static \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
@@ -219,6 +222,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_RELEASE " \
     -Xlinker \
     --defsym=__stack_size__=0x1000 \
     -Xlinker \
-    --defsym=__heap_size__=0x10000 \
+    --defsym=__heap_size__=0x1000 \
     -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor.ld -static \
 ")

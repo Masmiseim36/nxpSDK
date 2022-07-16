@@ -13,9 +13,6 @@
 #include "cmd.h"
 #include "app_streamer.h"
 
-#include "fsl_sd.h"
-#include "ff.h"
-#include "diskio.h"
 #include "fsl_sd_disk.h"
 #include "sdmmc_config.h"
 
@@ -158,10 +155,10 @@ app_data_t *get_app_data()
 status_t list_files(bool autoInput)
 {
     FRESULT error;
-    DIR directory;
-    FILINFO fileInformation;
-    char *dot;
-    uint32_t count = 0;
+    DIR directory           = {0};
+    FILINFO fileInformation = {0};
+    char *dot               = NULL;
+    uint32_t count          = 0;
 
     if (!app.sdcardInserted)
     {
@@ -351,6 +348,9 @@ int main(void)
     /* enable codec power */
     GPIO_PinWrite(DEMO_CODEC_POWER_GPIO, DEMO_CODEC_POWER_GPIO_PIN, 1U);
 #endif
+
+    /* Initialize OSA*/
+    OSA_Init();
 
     PRINTF("\r\n");
     PRINTF("*********************************\r\n");

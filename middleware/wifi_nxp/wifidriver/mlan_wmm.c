@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -71,7 +55,7 @@ Change log:
 #define IPTOS_OFFSET 5
 
 /** WMM information IE */
-static const t_u8 wmm_info_ie[] = {WMM_IE, 0x07, 0x00, 0x50, 0xf2, 0x02, 0x00, 0x01, 0x00};
+static const t_u8 wmm_info_ie[] = {(t_u8)WMM_IE, 0x07, 0x00, 0x50, 0xf2, 0x02, 0x00, 0x01, 0x00};
 
 
 /**
@@ -182,10 +166,10 @@ void wlan_wmm_default_queue_priorities(pmlan_private priv)
     ENTER();
 
     /* Default queue priorities: VO->VI->BE->BK */
-    priv->wmm.queue_priority[0] = WMM_AC_VO;
-    priv->wmm.queue_priority[1] = WMM_AC_VI;
-    priv->wmm.queue_priority[2] = WMM_AC_BE;
-    priv->wmm.queue_priority[3] = WMM_AC_BK;
+    priv->wmm.queue_priority[0] = (t_u8)WMM_AC_VO;
+    priv->wmm.queue_priority[1] = (t_u8)WMM_AC_VI;
+    priv->wmm.queue_priority[2] = (t_u8)WMM_AC_BE;
+    priv->wmm.queue_priority[3] = (t_u8)WMM_AC_BK;
 
     LEAVE();
 }

@@ -71,6 +71,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/azure-rtos
     ${ProjDirPath}/../../../../../devices/MIMXRT1021/drivers
     ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT1021
     ${ProjDirPath}/../../../../../devices/MIMXRT1021/utilities
     ${ProjDirPath}/../../../../../components/uart
@@ -96,6 +97,8 @@ include(middleware_sdmmc_common_MIMXRT1021)
 include(middleware_sdmmc_host_usdhc_MIMXRT1021)
 
 include(middleware_sdmmc_host_usdhc_azurertos_MIMXRT1021)
+
+include(component_igpio_adapter_MIMXRT1021)
 
 include(driver_clock_MIMXRT1021)
 

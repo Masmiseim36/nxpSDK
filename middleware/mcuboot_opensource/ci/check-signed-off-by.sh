@@ -32,14 +32,23 @@ for sha in $commits; do
   lines="$(git show -s --format=%B ${sha})"
 
   found_author=false
-  found_committer=false
+  # Don't enforce committer email on forks; this primarily avoids issues
+  # running workflows on the zephyr fork, because rebases done in the GH UX
+  # use the primary email of the committer, which might not match the one
+  # used in git CLI.
+  if [[ $GITHUB_REPOSITORY == mcu-tools/* ]]; then
+    found_committer=false
+  else
+    found_committer=true
+  fi
+
   IFS=$'\n'
   for line in ${lines}; do
     stripped=$(echo $line | sed -e 's/^\s*//' | sed -e 's/\s*$//')
-    if [[ ${stripped} == ${author} ]]; then
+    if [[ "${stripped}" == "${author}" ]]; then
       found_author=true
     fi
-    if [[ ${stripped} == ${committer} ]]; then
+    if [[ "${stripped}" == "${committer}" ]]; then
       found_committer=true
     fi
 

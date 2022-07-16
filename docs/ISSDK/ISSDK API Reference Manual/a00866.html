@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: algorithms/sensorfusion/sources/output_stream.c File Reference</title>
+<title>ISSDK: algorithms/sensorfusion/sources/main_agmp03_freertos_two_tasks.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -45,364 +45,235 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">output_stream.c File Reference</div>  </div>
+<div class="title">main_agmp03_freertos_two_tasks.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Implements streaming function for the status subsystem. See <a class="el" href="a00887.html" title="Application-specific status subsystem. ">status.h</a>.  
+<p>FreeRTOS (two task) implementation of sensor fusion.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00878_source.html">sensor_fusion.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00743_source.html">control.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00755_source.html">debug.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;FreeRTOS.h&quot;</code><br />
+<code>#include &quot;task.h&quot;</code><br />
+<code>#include &quot;queue.h&quot;</code><br />
+<code>#include &quot;timers.h&quot;</code><br />
+<code>#include &quot;event_groups.h&quot;</code><br />
+<code>#include &quot;fsl_debug_console.h&quot;</code><br />
+<code>#include &quot;pin_mux.h&quot;</code><br />
+<code>#include &quot;clock_config.h&quot;</code><br />
+<code>#include &quot;board.h&quot;</code><br />
+<code>#include &quot;fsl_port.h&quot;</code><br />
+<code>#include &quot;fsl_i2c.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00026_source.html">fxas21002.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00053_source.html">fxls8962.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00113_source.html">mag3110.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00170_source.html">register_io_i2c.h</a>&quot;</code><br />
+<code>#include &quot;fsl_i2c_cmsis.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00914_source.html">sensor_fusion.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00779_source.html">control.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00923_source.html">status.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00842_source.html">drivers.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for output_stream.c:</div>
+Include dependency graph for main_agmp03_freertos_two_tasks.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00867.png" border="0" usemap="#algorithms_2sensorfusion_2sources_2output__stream_8c" alt=""/></div>
-<map name="algorithms_2sensorfusion_2sources_2output__stream_8c" id="algorithms_2sensorfusion_2sources_2output__stream_8c">
-<area shape="rect" id="node2" href="a00878.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="5,95,119,121"/>
-<area shape="rect" id="node3" href="a00743.html" title="Defines control sub&#45;system. " alt="" coords="143,95,215,121"/>
-<area shape="rect" id="node4" href="a00755.html" title="ApplyPerturbation function used to analyze dynamic performance. " alt="" coords="240,95,308,121"/>
+<div class="center"><img src="a00867.png" border="0" usemap="#algorithms_2sensorfusion_2sources_2main__agmp03__freertos__two__tasks_8c" alt=""/></div>
+<map name="algorithms_2sensorfusion_2sources_2main__agmp03__freertos__two__tasks_8c" id="algorithms_2sensorfusion_2sources_2main__agmp03__freertos__two__tasks_8c">
+<area shape="rect" id="node13" href="a00026.html" title="The fxas21002.h contains the fxas21002 sensor register definitions and its bit mask. " alt="" coords="1213,109,1305,136"/>
+<area shape="rect" id="node14" href="a00053.html" title="This file contains the FXLS8962 Accelerometer register definitions, access macros, and device access functions. " alt="" coords="1329,109,1411,136"/>
+<area shape="rect" id="node15" href="a00113.html" title="mag3110.h" alt="" coords="1435,109,1521,136"/>
+<area shape="rect" id="node16" href="a00170.html" title="The register_io_i2c.h file declares low&#45;level interface functions for reading and writing sensor regi..." alt="" coords="1546,109,1663,136"/>
+<area shape="rect" id="node18" href="a00914.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="1824,109,1937,136"/>
+<area shape="rect" id="node19" href="a00779.html" title="Defines control sub&#45;system. " alt="" coords="1962,109,2034,136"/>
+<area shape="rect" id="node20" href="a00923.html" title="Application&#45;specific status subsystem. " alt="" coords="2058,109,2127,136"/>
+<area shape="rect" id="node21" href="a00842.html" title="Provides function prototypes for driver level interfaces. " alt="" coords="2152,109,2223,136"/>
 </map>
 </div>
 </div>
 <p><a href="a00866_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:abac6549a1587711841a3467018ee2582"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#abac6549a1587711841a3467018ee2582">MAXPACKETRATEHZ</a>&#160;&#160;&#160;40</td></tr>
-<tr class="separator:abac6549a1587711841a3467018ee2582"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9badfcf686c8cfb2afabc3c9e3ba11d3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a9badfcf686c8cfb2afabc3c9e3ba11d3">RATERESOLUTION</a>&#160;&#160;&#160;1000</td></tr>
-<tr class="separator:a9badfcf686c8cfb2afabc3c9e3ba11d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7ad6e53b35d6fc860a1299ceff40a299"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a7ad6e53b35d6fc860a1299ceff40a299">sBufAppendItem</a> (uint8_t *pDest, uint16_t *pIndex, uint8_t *pSource, uint16_t iBytesToCopy)</td></tr>
-<tr class="memdesc:a7ad6e53b35d6fc860a1299ceff40a299"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function used to place data in output buffer about to be transmitted via UART.  <a href="#a7ad6e53b35d6fc860a1299ceff40a299">More...</a><br /></td></tr>
-<tr class="separator:a7ad6e53b35d6fc860a1299ceff40a299"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93db92e775dee51c4dbf2dca2aed05b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a93db92e775dee51c4dbf2dca2aed05b3">sBufAppendZeros</a> (uint8_t *pDest, uint16_t *pIndex, uint16_t numZeros)</td></tr>
-<tr class="separator:a93db92e775dee51c4dbf2dca2aed05b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96da70ac128170ff0d03feffa05ef769"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a96da70ac128170ff0d03feffa05ef769">readCommon</a> (<a class="el" href="a00878.html#a3fe0b3e3d934e9d4af406ff60f451387">SV_ptr</a> <a class="el" href="a00395.html#a0155cf01983779a6f386fb8eac40d37c">data</a>, <a class="el" href="a03732.html">Quaternion</a> *fq, int16_t *iPhi, int16_t *iThe, int16_t *iRho, int16_t iOmega[], uint16_t *isystick)</td></tr>
-<tr class="separator:a96da70ac128170ff0d03feffa05ef769"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16d1508470294835d76682195104898e"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a16d1508470294835d76682195104898e">throttle</a> ()</td></tr>
-<tr class="memdesc:a16d1508470294835d76682195104898e"><td class="mdescLeft">&#160;</td><td class="mdescRight">(OVERSAMPLE_RATIO * MAXPACKETRATEHZ) / SENSORFS  <a href="#a16d1508470294835d76682195104898e">More...</a><br /></td></tr>
-<tr class="separator:a16d1508470294835d76682195104898e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbb4129e795ca534e4bb1649bb81b559"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#adbb4129e795ca534e4bb1649bb81b559">CreateAndSendPackets</a> (<a class="el" href="a03800.html">SensorFusionGlobals</a> *<a class="el" href="a00848.html#afa81c629d378fe700f351a1bce411ad5">sfg</a>, uint8_t *<a class="el" href="a00749.html#a3b6c71dda245dccb73352c7264176527">sUARTOutputBuffer</a>)</td></tr>
-<tr class="separator:adbb4129e795ca534e4bb1649bb81b559"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
+<tr class="memdesc:a840291bc02cba5474a4cb46a9b9566fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is a FreeRTOS (dual task) implementation of the NXP sensor fusion demo build.  <a href="#a840291bc02cba5474a4cb46a9b9566fe">More...</a><br /></td></tr>
+<tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:afa81c629d378fe700f351a1bce411ad5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04047.html">SensorFusionGlobals</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#afa81c629d378fe700f351a1bce411ad5">sfg</a></td></tr>
+<tr class="memdesc:afa81c629d378fe700f351a1bce411ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the primary sensor fusion data structure.  <a href="#afa81c629d378fe700f351a1bce411ad5">More...</a><br /></td></tr>
+<tr class="separator:afa81c629d378fe700f351a1bce411ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a641b380af068b4004bc5b9dff5e5a6db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03967.html">ControlSubsystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a641b380af068b4004bc5b9dff5e5a6db">controlSubsystem</a></td></tr>
+<tr class="memdesc:a641b380af068b4004bc5b9dff5e5a6db"><td class="mdescLeft">&#160;</td><td class="mdescRight">used for serial communications  <a href="#a641b380af068b4004bc5b9dff5e5a6db">More...</a><br /></td></tr>
+<tr class="separator:a641b380af068b4004bc5b9dff5e5a6db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a875f795e25aaef1b828061bbfae4764a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04051.html">StatusSubsystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a875f795e25aaef1b828061bbfae4764a">statusSubsystem</a></td></tr>
+<tr class="memdesc:a875f795e25aaef1b828061bbfae4764a"><td class="mdescLeft">&#160;</td><td class="mdescRight">provides visual (usually LED) status indicator  <a href="#a875f795e25aaef1b828061bbfae4764a">More...</a><br /></td></tr>
+<tr class="separator:a875f795e25aaef1b828061bbfae4764a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac77ede8cd8ed3202149e4e4e79862772"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a03991.html">PhysicalSensor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#ac77ede8cd8ed3202149e4e4e79862772">sensors</a> [4]</td></tr>
+<tr class="memdesc:ac77ede8cd8ed3202149e4e4e79862772"><td class="mdescLeft">&#160;</td><td class="mdescRight">This implementation uses four physical sensors.  <a href="#ac77ede8cd8ed3202149e4e4e79862772">More...</a><br /></td></tr>
+<tr class="separator:ac77ede8cd8ed3202149e4e4e79862772"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a729bc9c4006e68fecea92342c3c3700b"><td class="memItemLeft" align="right" valign="top">EventGroupHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a729bc9c4006e68fecea92342c3c3700b">event_group</a> = NULL</td></tr>
+<tr class="separator:a729bc9c4006e68fecea92342c3c3700b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75f40af5caf43ce58b7a18015c210e4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03819.html">registerDeviceInfo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00866.html#a75f40af5caf43ce58b7a18015c210e4a">i2cBusInfo</a></td></tr>
+<tr class="separator:a75f40af5caf43ce58b7a18015c210e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Implements streaming function for the status subsystem. See <a class="el" href="a00887.html" title="Application-specific status subsystem. ">status.h</a>. </p>
+<div class="textblock"><p>FreeRTOS (two task) implementation of sensor fusion. </p>
+<p>This file shows one recommended way to incorporate sensor fusion capabilities into a FreeRTOS project. </p>
 
-<p class="definition">Definition in file <a class="el" href="a00866_source.html">output_stream.c</a>.</p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="abac6549a1587711841a3467018ee2582"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abac6549a1587711841a3467018ee2582">&#9670;&nbsp;</a></span>MAXPACKETRATEHZ</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MAXPACKETRATEHZ&#160;&#160;&#160;40</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00016">16</a> of file <a class="el" href="a00866_source.html">output_stream.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00866_source.html#l00097">throttle()</a>.</p>
-
-</div>
-</div>
-<a id="a9badfcf686c8cfb2afabc3c9e3ba11d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9badfcf686c8cfb2afabc3c9e3ba11d3">&#9670;&nbsp;</a></span>RATERESOLUTION</h2>
+<p class="definition">Definition in file <a class="el" href="a00866_source.html">main_agmp03_freertos_two_tasks.c</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a840291bc02cba5474a4cb46a9b9566fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a840291bc02cba5474a4cb46a9b9566fe">&#9670;&nbsp;</a></span>main()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RATERESOLUTION&#160;&#160;&#160;1000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00017">17</a> of file <a class="el" href="a00866_source.html">output_stream.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00866_source.html#l00097">throttle()</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="adbb4129e795ca534e4bb1649bb81b559"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbb4129e795ca534e4bb1649bb81b559">&#9670;&nbsp;</a></span>CreateAndSendPackets()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void CreateAndSendPackets </td>
+          <td class="memname">int main </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a03800.html">SensorFusionGlobals</a> *&#160;</td>
-          <td class="paramname"><em>sfg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>sUARTOutputBuffer</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Called once per fusion cycle to stream information required by the NXP Sensor Fusion Toolbox. Packet protocols are defined in the NXP Sensor Fusion for Kinetis Product Development Kit User Guide. </p>
-
-<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00122">122</a> of file <a class="el" href="a00866_source.html">output_stream.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a00743_source.html#l00049">ControlSubsystem::AccelCalPacketOn</a>, <a class="el" href="a00743_source.html#l00048">ControlSubsystem::AltPacketOn</a>, <a class="el" href="a00743_source.html#l00045">ControlSubsystem::AngularVelocityPacketOn</a>, <a class="el" href="a00878_source.html#l00060">CHX</a>, <a class="el" href="a00878_source.html#l00061">CHY</a>, <a class="el" href="a00878_source.html#l00062">CHZ</a>, <a class="el" href="a00743_source.html#l00046">ControlSubsystem::DebugPacketOn</a>, <a class="el" href="a00881_source.html#l00050">F_1DOF_P_BASIC</a>, <a class="el" href="a00881_source.html#l00052">F_3DOF_B_BASIC</a>, <a class="el" href="a00881_source.html#l00051">F_3DOF_G_BASIC</a>, <a class="el" href="a00881_source.html#l00053">F_3DOF_Y_BASIC</a>, <a class="el" href="a00881_source.html#l00054">F_6DOF_GB_BASIC</a>, <a class="el" href="a00881_source.html#l00055">F_6DOF_GY_KALMAN</a>, <a class="el" href="a00881_source.html#l00056">F_9DOF_GBY_KALMAN</a>, <a class="el" href="a00881_source.html#l00038">F_USING_ACCEL</a>, <a class="el" href="a00881_source.html#l00040">F_USING_GYRO</a>, <a class="el" href="a00821_source.html#l00021">F_USING_MAG</a>, <a class="el" href="a00821_source.html#l00060">MagCalibration::fB</a>, <a class="el" href="a00821_source.html#l00062">MagCalibration::fFitErrorpc</a>, <a class="el" href="a00821_source.html#l00059">MagCalibration::finvW</a>, <a class="el" href="a00881_source.html#l00068">FUSION_HZ</a>, <a class="el" href="a00821_source.html#l00058">MagCalibration::fV</a>, <a class="el" href="a00878_source.html#l00227">MagSensor::iBc</a>, <a class="el" href="a00821_source.html#l00048">MagBuffer::iBs</a>, <a class="el" href="a00878_source.html#l00228">MagSensor::iCountsPeruT</a>, <a class="el" href="a00878_source.html#l00467">SensorFusionGlobals::iFlags</a>, <a class="el" href="a00821_source.html#l00051">MagBuffer::iMagBufferCount</a>, <a class="el" href="a00821_source.html#l00049">MagBuffer::index</a>, <a class="el" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f">int32_t()</a>, <a class="el" href="a00878_source.html#l00489">SensorFusionGlobals::Mag</a>, <a class="el" href="a00878_source.html#l00491">SensorFusionGlobals::MagBuffer</a>, <a class="el" href="a00821_source.html#l00027">MAGBUFFSIZEX</a>, <a class="el" href="a00821_source.html#l00028">MAGBUFFSIZEY</a>, <a class="el" href="a00878_source.html#l00490">SensorFusionGlobals::MagCal</a>, <a class="el" href="a00872_source.html#l00018">MAX_ACCEL_CAL_ORIENTATIONS</a>, <a class="el" href="a00878_source.html#l00462">SensorFusionGlobals::pControlSubsystem</a>, <a class="el" href="a00863_source.html#l00022">Quaternion::q0</a>, <a class="el" href="a00863_source.html#l00023">Quaternion::q1</a>, <a class="el" href="a00863_source.html#l00024">Quaternion::q2</a>, <a class="el" href="a00863_source.html#l00025">Quaternion::q3</a>, <a class="el" href="a00878_source.html#l00049">Q3</a>, <a class="el" href="a00878_source.html#l00051">Q3G</a>, <a class="el" href="a00878_source.html#l00050">Q3M</a>, <a class="el" href="a00878_source.html#l00053">Q6AG</a>, <a class="el" href="a00878_source.html#l00052">Q6MA</a>, <a class="el" href="a00878_source.html#l00054">Q9</a>, <a class="el" href="a00743_source.html#l00044">ControlSubsystem::QuaternionPacketType</a>, <a class="el" href="a00866_source.html#l00078">readCommon()</a>, <a class="el" href="a00743_source.html#l00047">ControlSubsystem::RPCPacketOn</a>, <a class="el" href="a00866_source.html#l00037">sBufAppendItem()</a>, <a class="el" href="a00866_source.html#l00070">sBufAppendZeros()</a>, <a class="el" href="a00545_source.html#l00145">THIS_BOARD</a>, <a class="el" href="a04078_source.html#l00087">THIS_SHIELD</a>, <a class="el" href="a00881_source.html#l00021">THISBUILD</a>, <a class="el" href="a00866_source.html#l00097">throttle()</a>, and <a class="el" href="a00743_source.html#l00050">ControlSubsystem::write</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00740_source.html#l00160">initializeControlPort()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a00866_adbb4129e795ca534e4bb1649bb81b559_cgraph.png" border="0" usemap="#a00866_adbb4129e795ca534e4bb1649bb81b559_cgraph" alt=""/></div>
-<map name="a00866_adbb4129e795ca534e4bb1649bb81b559_cgraph" id="a00866_adbb4129e795ca534e4bb1649bb81b559_cgraph">
-<area shape="rect" id="node2" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f" title="The interface function to append the data on the formated stream. " alt="" coords="246,5,307,32"/>
-<area shape="rect" id="node3" href="a00866.html#a96da70ac128170ff0d03feffa05ef769" title="readCommon" alt="" coords="227,56,326,83"/>
-<area shape="rect" id="node4" href="a00866.html#a7ad6e53b35d6fc860a1299ceff40a299" title="Utility function used to place data in output buffer about to be transmitted via UART. " alt="" coords="387,132,504,159"/>
-<area shape="rect" id="node5" href="a00866.html#a93db92e775dee51c4dbf2dca2aed05b3" title="sBufAppendZeros" alt="" coords="215,157,339,184"/>
-<area shape="rect" id="node6" href="a00866.html#a16d1508470294835d76682195104898e" title="(OVERSAMPLE_RATIO * MAXPACKETRATEHZ) / SENSORFS " alt="" coords="245,208,308,235"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a00866_adbb4129e795ca534e4bb1649bb81b559_icgraph.png" border="0" usemap="#a00866_adbb4129e795ca534e4bb1649bb81b559_icgraph" alt=""/></div>
-<map name="a00866_adbb4129e795ca534e4bb1649bb81b559_icgraph" id="a00866_adbb4129e795ca534e4bb1649bb81b559_icgraph">
-<area shape="rect" id="node2" href="a00743.html#a67029acf1be9712c5d30c625132ad958" title="Call this once to initialize structures, ports, etc. " alt="" coords="215,5,349,32"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a96da70ac128170ff0d03feffa05ef769"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96da70ac128170ff0d03feffa05ef769">&#9670;&nbsp;</a></span>readCommon()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void readCommon </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00878.html#a3fe0b3e3d934e9d4af406ff60f451387">SV_ptr</a>&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a03732.html">Quaternion</a> *&#160;</td>
-          <td class="paramname"><em>fq</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>iPhi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>iThe</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>iRho</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t&#160;</td>
-          <td class="paramname"><em>iOmega</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>isystick</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00078">78</a> of file <a class="el" href="a00866_source.html">output_stream.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a00878_source.html#l00060">CHX</a>, <a class="el" href="a00878_source.html#l00061">CHY</a>, <a class="el" href="a00878_source.html#l00062">CHZ</a>, <a class="el" href="a00878_source.html#l00444">SV_COMMON::fOmega</a>, <a class="el" href="a00878_source.html#l00436">SV_COMMON::fPhi</a>, <a class="el" href="a00878_source.html#l00442">SV_COMMON::fq</a>, <a class="el" href="a00878_source.html#l00439">SV_COMMON::fRho</a>, <a class="el" href="a00878_source.html#l00437">SV_COMMON::fThe</a>, and <a class="el" href="a00878_source.html#l00445">SV_COMMON::systick</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00866_source.html#l00122">CreateAndSendPackets()</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a00866_a96da70ac128170ff0d03feffa05ef769_icgraph.png" border="0" usemap="#a00866_a96da70ac128170ff0d03feffa05ef769_icgraph" alt=""/></div>
-<map name="a00866_a96da70ac128170ff0d03feffa05ef769_icgraph" id="a00866_a96da70ac128170ff0d03feffa05ef769_icgraph">
-<area shape="rect" id="node2" href="a00866.html#adbb4129e795ca534e4bb1649bb81b559" title="CreateAndSendPackets" alt="" coords="152,5,313,32"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a7ad6e53b35d6fc860a1299ceff40a299"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ad6e53b35d6fc860a1299ceff40a299">&#9670;&nbsp;</a></span>sBufAppendItem()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void sBufAppendItem </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pDest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>pIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pSource</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>iBytesToCopy</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Utility function used to place data in output buffer about to be transmitted via UART. </p>
-
-<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00037">37</a> of file <a class="el" href="a00866_source.html">output_stream.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00216">appendZerosOrientBuf()</a>, <a class="el" href="a00866_source.html#l00122">CreateAndSendPackets()</a>, and <a class="el" href="a00866_source.html#l00070">sBufAppendZeros()</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a00866_a7ad6e53b35d6fc860a1299ceff40a299_icgraph.png" border="0" usemap="#a00866_a7ad6e53b35d6fc860a1299ceff40a299_icgraph" alt=""/></div>
-<map name="a00866_a7ad6e53b35d6fc860a1299ceff40a299_icgraph" id="a00866_a7ad6e53b35d6fc860a1299ceff40a299_icgraph">
-<area shape="rect" id="node2" href="a00437.html#affc6785c2a861503e9d86d9ab0b09330" title="appendZerosOrientBuf utility function " alt="" coords="171,5,321,32"/>
-<area shape="rect" id="node3" href="a00866.html#adbb4129e795ca534e4bb1649bb81b559" title="CreateAndSendPackets" alt="" coords="369,81,531,108"/>
-<area shape="rect" id="node4" href="a00866.html#a93db92e775dee51c4dbf2dca2aed05b3" title="sBufAppendZeros" alt="" coords="184,107,308,133"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a93db92e775dee51c4dbf2dca2aed05b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93db92e775dee51c4dbf2dca2aed05b3">&#9670;&nbsp;</a></span>sBufAppendZeros()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void sBufAppendZeros </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pDest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>pIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>numZeros</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00070">70</a> of file <a class="el" href="a00866_source.html">output_stream.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a00866_source.html#l00037">sBufAppendItem()</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00866_source.html#l00122">CreateAndSendPackets()</a>.</p>
-<div class="dynheader">
-Here is the call graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a00866_a93db92e775dee51c4dbf2dca2aed05b3_cgraph.png" border="0" usemap="#a00866_a93db92e775dee51c4dbf2dca2aed05b3_cgraph" alt=""/></div>
-<map name="a00866_a93db92e775dee51c4dbf2dca2aed05b3_cgraph" id="a00866_a93db92e775dee51c4dbf2dca2aed05b3_cgraph">
-<area shape="rect" id="node2" href="a00866.html#a7ad6e53b35d6fc860a1299ceff40a299" title="Utility function used to place data in output buffer about to be transmitted via UART. " alt="" coords="177,5,295,32"/>
-</map>
-</div>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a00866_a93db92e775dee51c4dbf2dca2aed05b3_icgraph.png" border="0" usemap="#a00866_a93db92e775dee51c4dbf2dca2aed05b3_icgraph" alt=""/></div>
-<map name="a00866_a93db92e775dee51c4dbf2dca2aed05b3_icgraph" id="a00866_a93db92e775dee51c4dbf2dca2aed05b3_icgraph">
-<area shape="rect" id="node2" href="a00866.html#adbb4129e795ca534e4bb1649bb81b559" title="CreateAndSendPackets" alt="" coords="177,5,339,32"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a16d1508470294835d76682195104898e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16d1508470294835d76682195104898e">&#9670;&nbsp;</a></span>throttle()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint16_t throttle </td>
-          <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>(OVERSAMPLE_RATIO * MAXPACKETRATEHZ) / SENSORFS </p>
+<p>This is a FreeRTOS (dual task) implementation of the NXP sensor fusion demo build. </p>
 
-<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00097">97</a> of file <a class="el" href="a00866_source.html">output_stream.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00061">61</a> of file <a class="el" href="a00866_source.html">main_agmp03_freertos_two_tasks.c</a>.</p>
 
-<p class="reference">References <a class="el" href="a00881_source.html#l00068">FUSION_HZ</a>, <a class="el" href="a00866_source.html#l00016">MAXPACKETRATEHZ</a>, and <a class="el" href="a00866_source.html#l00017">RATERESOLUTION</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00866_source.html#l00122">CreateAndSendPackets()</a>.</p>
+<p class="reference">References <a class="el" href="a04280_source.html#l00019">BOARD_BootClockRUN</a>, <a class="el" href="a04097_source.html#l00015">BOARD_InitDebugConsole()</a>, <a class="el" href="a04523_source.html#l00047">BOARD_InitPins()</a>, <a class="el" href="a00866_source.html#l00049">event_group</a>, <a class="el" href="a00545_source.html#l00032">FXAS21002_I2C_ADDR</a>, <a class="el" href="a00842.html#a81c5b987e709b3991bc7c1bc1e659c1f">FXAS21002_Init()</a>, <a class="el" href="a00842.html#a1e2a1a192ed7f150fc24fc11df8d4c1e">FXAS21002_Read()</a>, <a class="el" href="a00545_source.html#l00066">FXLS8962_I2C_ADDR</a>, <a class="el" href="a00842.html#aaa91d9099dbad0946e4fd169cce17471">FXLS8962_Init()</a>, <a class="el" href="a00842.html#ad1f818d50cb7b4c05ac4b39a7c6064ee">FXLS8962_Read()</a>, <a class="el" href="a04331_source.html#l00033">I2C_S_DRIVER</a>, <a class="el" href="a04331_source.html#l00034">I2C_S_SIGNAL_EVENT</a>, <a class="el" href="a00368_source.html#l00083">I2Cdrv</a>, <a class="el" href="a00776_source.html#l00160">initializeControlPort()</a>, <a class="el" href="a00914_source.html#l00525">SensorFusionGlobals::initializeFusionEngine</a>, <a class="el" href="a00920_source.html#l00165">initializeStatusSubsystem()</a>, <a class="el" href="a00911_source.html#l00051">initSensorFusionGlobals()</a>, <a class="el" href="a00914_source.html#l00524">SensorFusionGlobals::installSensor</a>, <a class="el" href="a00545_source.html#l00039">MAG3110_I2C_ADDR</a>, <a class="el" href="a00821_source.html#l00082">MAG3110_Init()</a>, <a class="el" href="a00821_source.html#l00113">MAG3110_Read()</a>, <a class="el" href="a00545_source.html#l00046">MPL3115_I2C_ADDR</a>, <a class="el" href="a00842.html#af48197046b6d2f232932bf5ac61c4534">MPL3115_Init()</a>, <a class="el" href="a00842.html#a54f6d4249d7a6d3484b35f7c98970425">MPL3115_Read()</a>, and <a class="el" href="a00866_source.html#l00048">sensors</a>.</p>
 <div class="dynheader">
-Here is the caller graph for this function:</div>
+Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00866_a16d1508470294835d76682195104898e_icgraph.png" border="0" usemap="#a00866_a16d1508470294835d76682195104898e_icgraph" alt=""/></div>
-<map name="a00866_a16d1508470294835d76682195104898e_icgraph" id="a00866_a16d1508470294835d76682195104898e_icgraph">
-<area shape="rect" id="node2" href="a00866.html#adbb4129e795ca534e4bb1649bb81b559" title="CreateAndSendPackets" alt="" coords="116,5,277,32"/>
+<div class="center"><img src="a00866_a840291bc02cba5474a4cb46a9b9566fe_cgraph.png" border="0" usemap="#a00866_a840291bc02cba5474a4cb46a9b9566fe_cgraph" alt=""/></div>
+<map name="a00866_a840291bc02cba5474a4cb46a9b9566fe_cgraph" id="a00866_a840291bc02cba5474a4cb46a9b9566fe_cgraph">
+<area shape="rect" id="node2" href="a04097.html#a4c84ccb952cb083367d7040cf9de3db8" title="BOARD_InitDebugConsole" alt="" coords="104,5,280,32"/>
+<area shape="rect" id="node3" href="a00959.html#ga2c9fe54b6b84723fbaa590a6f4576966" title="Configures pin routing and optionally pin electrical features. " alt="" coords="133,56,251,83"/>
+<area shape="rect" id="node4" href="a00842.html#a81c5b987e709b3991bc7c1bc1e659c1f" title="FXAS21002_Init" alt="" coords="135,107,249,133"/>
+<area shape="rect" id="node5" href="a00842.html#a1e2a1a192ed7f150fc24fc11df8d4c1e" title="FXAS21002_Read" alt="" coords="129,157,255,184"/>
+<area shape="rect" id="node6" href="a00842.html#aaa91d9099dbad0946e4fd169cce17471" title="FXLS8962_Init" alt="" coords="139,208,245,235"/>
+<area shape="rect" id="node7" href="a00842.html#ad1f818d50cb7b4c05ac4b39a7c6064ee" title="FXLS8962_Read" alt="" coords="133,259,251,285"/>
+<area shape="rect" id="node8" href="a00776.html#a67029acf1be9712c5d30c625132ad958" title="Initialize the control subsystem and all related hardware. " alt="" coords="125,309,259,336"/>
+<area shape="rect" id="node9" href="a00920.html#a01619741119cf3432f8cfff23334c793" title="initializeStatusSubsystem" alt="" coords="105,360,279,387"/>
+<area shape="rect" id="node10" href="a00911.html#a43b44018042fabb5179c2e62277cc942" title="utility function to insert default values in the top level structure " alt="" coords="111,411,273,437"/>
+<area shape="rect" id="node11" href="a00821.html#a20b118514f14ce008825433f72527ecd" title="MAG3110_Init" alt="" coords="140,461,244,488"/>
+<area shape="rect" id="node12" href="a00821.html#a2592117f3e2fed5f61ff029cb18fa556" title="MAG3110_Read" alt="" coords="133,512,251,539"/>
+<area shape="rect" id="node13" href="a00842.html#af48197046b6d2f232932bf5ac61c4534" title="MPL3115_Init" alt="" coords="141,563,243,589"/>
+<area shape="rect" id="node14" href="a00842.html#a54f6d4249d7a6d3484b35f7c98970425" title="MPL3115_Read" alt="" coords="135,613,249,640"/>
 </map>
 </div>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a641b380af068b4004bc5b9dff5e5a6db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a641b380af068b4004bc5b9dff5e5a6db">&#9670;&nbsp;</a></span>controlSubsystem</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03967.html">ControlSubsystem</a> controlSubsystem</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>used for serial communications </p>
+
+<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00046">46</a> of file <a class="el" href="a00866_source.html">main_agmp03_freertos_two_tasks.c</a>.</p>
+
+</div>
+</div>
+<a id="a729bc9c4006e68fecea92342c3c3700b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a729bc9c4006e68fecea92342c3c3700b">&#9670;&nbsp;</a></span>event_group</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EventGroupHandle_t event_group = NULL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00049">49</a> of file <a class="el" href="a00866_source.html">main_agmp03_freertos_two_tasks.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00866_source.html#l00061">main()</a>.</p>
+
+</div>
+</div>
+<a id="a75f40af5caf43ce58b7a18015c210e4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75f40af5caf43ce58b7a18015c210e4a">&#9670;&nbsp;</a></span>i2cBusInfo</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a03819.html">registerDeviceInfo_t</a> i2cBusInfo</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .deviceInstance     = <a class="code" href="a04331.html#ab0c7969a7fffaabe78d43db2b12ad840">I2C_S_DEVICE_INDEX</a>,</div><div class="line">    .functionParam      = NULL,</div><div class="line">    .idleFunction       = NULL</div><div class="line">}</div><div class="ttc" id="a04331_html_ab0c7969a7fffaabe78d43db2b12ad840"><div class="ttname"><a href="a04331.html#ab0c7969a7fffaabe78d43db2b12ad840">I2C_S_DEVICE_INDEX</a></div><div class="ttdeci">#define I2C_S_DEVICE_INDEX</div><div class="ttdef"><b>Definition:</b> <a href="a04331_source.html#l00035">issdk_hal.h:35</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00051">51</a> of file <a class="el" href="a00866_source.html">main_agmp03_freertos_two_tasks.c</a>.</p>
+
+</div>
+</div>
+<a id="ac77ede8cd8ed3202149e4e4e79862772"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac77ede8cd8ed3202149e4e4e79862772">&#9670;&nbsp;</a></span>sensors</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="a03991.html">PhysicalSensor</a> sensors[4]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This implementation uses four physical sensors. </p>
+
+<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00048">48</a> of file <a class="el" href="a00866_source.html">main_agmp03_freertos_two_tasks.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00866_source.html#l00061">main()</a>.</p>
+
+</div>
+</div>
+<a id="afa81c629d378fe700f351a1bce411ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa81c629d378fe700f351a1bce411ad5">&#9670;&nbsp;</a></span>sfg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a04047.html">SensorFusionGlobals</a> sfg</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This is the primary sensor fusion data structure. </p>
+
+<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00045">45</a> of file <a class="el" href="a00866_source.html">main_agmp03_freertos_two_tasks.c</a>.</p>
+
+</div>
+</div>
+<a id="a875f795e25aaef1b828061bbfae4764a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a875f795e25aaef1b828061bbfae4764a">&#9670;&nbsp;</a></span>statusSubsystem</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a04051.html">StatusSubsystem</a> statusSubsystem</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>provides visual (usually LED) status indicator </p>
+
+<p class="definition">Definition at line <a class="el" href="a00866_source.html#l00047">47</a> of file <a class="el" href="a00866_source.html">main_agmp03_freertos_two_tasks.c</a>.</p>
 
 </div>
 </div>

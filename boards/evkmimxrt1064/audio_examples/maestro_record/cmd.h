@@ -5,9 +5,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#ifndef _CMD_H_
+#define _CMD_H_
+
 /*${header:start}*/
 #include "main.h"
+#ifdef OPUS_ENCODE
 #include "opusmem2mem_file.h"
+#endif
 /*${header:end}*/
 
 /*******************************************************************************
@@ -33,5 +38,9 @@ void shellCmd(void);
 /*${prototype:end}*/
 
 /** Constants **/
-#define OPUSMEM2MEM_INBUF_SIZE  96100
-#define OPUSMEM2MEM_OUTBUF_SIZE 96100
+#ifdef OPUS_ENCODE
+#define OPUSMEM2MEM_INBUF_SIZE  96000
+#define OPUSMEM2MEM_OUTBUF_SIZE 32960
+#endif
+
+#endif

@@ -28,6 +28,10 @@ typedef FIL* EM_fops_file_handle;
 /* Platform type for Object handle */
 typedef DIR EM_fops_object_handle;
 
+/* when EM_FOPS_FILE_SYNC_IN_IDLE is enable
+ * 1. when one file is written firstly, the file need be closed before reading it.
+ * 2.If there is file reading in other tasks that is executing in parallel with file sync idle task, FF_FS_REENTRANT need be enabled.
+ */
 #ifndef EM_FOPS_FILE_SYNC_IN_IDLE
 #define EM_FOPS_FILE_SYNC_IN_IDLE 1U
 #endif

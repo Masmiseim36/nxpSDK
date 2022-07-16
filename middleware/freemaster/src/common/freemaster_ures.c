@@ -33,6 +33,22 @@ static FMSTR_BPTR _FMSTR_UresControlWrite(
 static FMSTR_BPTR _FMSTR_UresControlIoctl(
     FMSTR_ADDR resourceId, FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_BPTR response, FMSTR_U8 *retStatus);
 
+static FMSTR_LP_TSA_ENTRY _FMSTR_FindUresInTsaInternal(FMSTR_ADDR resourceId);
+
+/******************************************************************************
+ *
+ * @brief    Get resource TSA entry - helper function
+ *
+ * @return   Address of the TSA entry typed to FMSTR_LP_TSA_ENTRY private type
+ *
+ ******************************************************************************/
+
+static FMSTR_LP_TSA_ENTRY _FMSTR_FindUresInTsaInternal(FMSTR_ADDR resourceId)
+{
+    FMSTR_ADDR pteAddr = FMSTR_FindUresInTsa(resourceId);
+    return (FMSTR_LP_TSA_ENTRY)FMSTR_CAST_ADDR_TO_PTR(pteAddr);
+}
+
 /******************************************************************************
  *
  * @brief    Handling User Resources
@@ -116,7 +132,7 @@ static FMSTR_BPTR _FMSTR_UresControlRead(
     FMSTR_BOOL ret;
     FMSTR_ADDR readOffset;
     FMSTR_SIZE readLen = 0;
-    const FMSTR_TSA_ENTRY *ures;
+    FMSTR_LP_TSA_ENTRY ures;
     FMSTR_URES_HANDLER_FUNC uresFunc;
     FMSTR_RWI_BUFF uresBuffRWI;
 
@@ -140,7 +156,7 @@ static FMSTR_BPTR _FMSTR_UresControlRead(
     msgBuffIO = FMSTR_SizeFromBuffer(&readLen, msgBuffIO);
 
     /* Find resource in TSA table */
-    ures = FMSTR_FindUresInTsa(resourceId);
+    ures = _FMSTR_FindUresInTsaInternal(resourceId);
     if (ures == NULL)
     {
         /* User resource not found in TSA table */
@@ -212,7 +228,7 @@ static FMSTR_BPTR _FMSTR_UresControlWrite(
     FMSTR_BOOL ret;
     FMSTR_ADDR writeOffset;
     FMSTR_SIZE writeLen = 0;
-    const FMSTR_TSA_ENTRY *ures;
+    FMSTR_LP_TSA_ENTRY ures;
     FMSTR_URES_HANDLER_FUNC uresFunc;
     FMSTR_RWI_BUFF uresBuffRWI;
 
@@ -236,7 +252,7 @@ static FMSTR_BPTR _FMSTR_UresControlWrite(
     msgBuffIO = FMSTR_SizeFromBuffer(&writeLen, msgBuffIO);
 
     /* Find resource in TSA table */
-    ures = FMSTR_FindUresInTsa(resourceId);
+    ures = _FMSTR_FindUresInTsaInternal(resourceId);
     if (ures == NULL)
     {
         /* User resource not found in TSA table */
@@ -286,7 +302,7 @@ static FMSTR_BPTR _FMSTR_UresControlIoctl(
 {
     FMSTR_BOOL ret;
     FMSTR_URES_IOCTL_CODE ioctlCode;
-    const FMSTR_TSA_ENTRY *ures;
+    FMSTR_LP_TSA_ENTRY ures;
     FMSTR_URES_HANDLER_FUNC uresFunc;
     FMSTR_RWI_BUFF uresBuffRWI;
     FMSTR_INDEX hdrSize;
@@ -313,7 +329,7 @@ static FMSTR_BPTR _FMSTR_UresControlIoctl(
     hdrSize = msgBuffIO - response;
 
     /* Find resource in TSA table */
-    ures = FMSTR_FindUresInTsa(resourceId);
+    ures = _FMSTR_FindUresInTsaInternal(resourceId);
     if (ures == NULL)
     {
         /* User resource not found in TSA table */

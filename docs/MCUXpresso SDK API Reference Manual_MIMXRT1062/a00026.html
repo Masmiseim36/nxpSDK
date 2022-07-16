@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -485,7 +485,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga77da4800ee90257a6be4be815bf067cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00026.html#ga77da4800ee90257a6be4be815bf067cb">FSL_FLEXCAN_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 8, 2))</td></tr>
+<tr class="memitem:ga77da4800ee90257a6be4be815bf067cb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00026.html#ga77da4800ee90257a6be4be815bf067cb">FSL_FLEXCAN_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 8, 6))</td></tr>
 <tr class="memdesc:ga77da4800ee90257a6be4be815bf067cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexCAN driver version.  <a href="#ga77da4800ee90257a6be4be815bf067cb">More...</a><br/></td></tr>
 <tr class="separator:ga77da4800ee90257a6be4be815bf067cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -590,9 +590,9 @@ DMA Control</h2></td></tr>
 <tr class="memitem:gab3bf9b8856103be2045e5d5050b236d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00026.html#gab3bf9b8856103be2045e5d5050b236d6">FLEXCAN_EnableRxFifoDMA</a> (CAN_Type *base, bool enable)</td></tr>
 <tr class="memdesc:gab3bf9b8856103be2045e5d5050b236d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables or disables the FlexCAN Rx FIFO DMA request.  <a href="#gab3bf9b8856103be2045e5d5050b236d6">More...</a><br/></td></tr>
 <tr class="separator:gab3bf9b8856103be2045e5d5050b236d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5391b69b149d1e640e52807eb96a08ef"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00026.html#ga5391b69b149d1e640e52807eb96a08ef">FLEXCAN_GetRxFifoHeadAddr</a> (CAN_Type *base)</td></tr>
-<tr class="memdesc:ga5391b69b149d1e640e52807eb96a08ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Rx FIFO Head address.  <a href="#ga5391b69b149d1e640e52807eb96a08ef">More...</a><br/></td></tr>
-<tr class="separator:ga5391b69b149d1e640e52807eb96a08ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ac0f28c60c800b9ba4fa2d71320e2f8"><td class="memItemLeft" align="right" valign="top">static uintptr_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00026.html#ga1ac0f28c60c800b9ba4fa2d71320e2f8">FLEXCAN_GetRxFifoHeadAddr</a> (CAN_Type *base)</td></tr>
+<tr class="memdesc:ga1ac0f28c60c800b9ba4fa2d71320e2f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Rx FIFO Head address.  <a href="#ga1ac0f28c60c800b9ba4fa2d71320e2f8">More...</a><br/></td></tr>
+<tr class="separator:ga1ac0f28c60c800b9ba4fa2d71320e2f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Bus Operations</h2></td></tr>
@@ -1901,7 +1901,7 @@ Transactional</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXCAN_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 8, 2))</td>
+          <td class="memname">#define FSL_FLEXCAN_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 8, 6))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -3077,7 +3077,7 @@ Transactional</h2></td></tr>
 <p>Rx Warning interrupt, use bit 10. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga339a68a513c218f67756e2a04985428eaab59629e2da9dc184add56eebe85bf5f"></a>kFLEXCAN_WakeUpInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Self Wake Up interrupt, use bit 22. </p>
+<p>Self Wake Up interrupt, use bit 26. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga339a68a513c218f67756e2a04985428ea339f2d4d5b6df94d826cf8cea45beba9"></a>kFLEXCAN_FDErrorInterruptEnable</em>&nbsp;</td><td class="fielddoc">
 <p>CAN FD Error interrupt, use bit 31. </p>
@@ -4392,7 +4392,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga5391b69b149d1e640e52807eb96a08ef"></a>
+<a class="anchor" id="ga1ac0f28c60c800b9ba4fa2d71320e2f8"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -4400,7 +4400,7 @@ Transactional</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t FLEXCAN_GetRxFifoHeadAddr </td>
+          <td class="memname">static uintptr_t FLEXCAN_GetRxFifoHeadAddr </td>
           <td>(</td>
           <td class="paramtype">CAN_Type *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>

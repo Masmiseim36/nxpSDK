@@ -65,7 +65,7 @@
    touch screen events associated with the beginning and the end of a cursor grab 
    cycle.
    Each time the user clicks with the mouse cursor on the screen, hits it with a 
-   pen or touches it with his finger, the Mosaic searches for the view, which is 
+   pen or touches it with their finger, the Mosaic searches for the view, which is 
    lying at the touched screen position and willing to handle the user interaction. 
    This found view will become the target for all subsequent cursor events related 
    to this interaction. This relation is called the 'grab cycle'.

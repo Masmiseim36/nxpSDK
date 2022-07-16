@@ -6,23 +6,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -541,6 +525,9 @@ extern t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond);
 /** TDLS indication in extended capa IE */
 #define HOTSPOT_ENABLE_TDLS_IND MBIT(1)
 
+#define MLAN_SET_BIT(x, val) ((x) |= (1U << (val)))
+#define MLAN_CLEAR_BIT(x, val) ((x) &= ~(1U << (val)))
+
 /** Info for debug purpose */
 typedef struct _wlan_dbg
 {
@@ -961,7 +948,7 @@ struct _mlan_private
     /** BSS index */
     t_u8 bss_index;
     /** BSS type */
-    t_u8 bss_type;
+    mlan_bss_type bss_type;
     /** BSS role */
     mlan_bss_role bss_role;
     /** BSS Priority */
@@ -1153,6 +1140,7 @@ struct _mlan_private
     /** function table */
     mlan_operations ops;
 
+
     /** Port Control mode */
     t_u8 port_ctrl_mode;
 
@@ -1241,6 +1229,8 @@ struct _RxReorderTbl
     t_u8 check_start_win;
     /** pkt receive after BA setup */
     t_u8 pkt_count;
+    /** BA window bitmap */
+    t_u64 bitmap;
 };
 
 /** BSS priority node */
@@ -1458,6 +1448,7 @@ typedef struct
     HostCmd_DS_MEASUREMENT_REPORT meas_rpt_returned;
 
 } wlan_meas_state_t;
+
 
 
 
@@ -1690,6 +1681,7 @@ struct _mlan_adapter
 
 mlan_status wlan_cmd_get_tsf(pmlan_private pmpriv, IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_action);
 
+
 mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter);
 
 /** Initialize firmware */
@@ -1733,8 +1725,11 @@ t_void wlan_free_mlan_buffer(mlan_adapter *pmadapter, pmlan_buffer pmbuf);
 
 
 /** handle command for enhanced power save mode */
-mlan_status wlan_cmd_enh_power_mode(
-    pmlan_private pmpriv, IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_action, IN t_u16 ps_bitmap, IN t_void *pdata_buf);
+mlan_status wlan_cmd_enh_power_mode(pmlan_private pmpriv,
+                                    IN HostCmd_DS_COMMAND *cmd,
+                                    IN ENH_PS_MODES cmd_action,
+                                    IN t_u16 ps_bitmap,
+                                    IN t_void *pdata_buf);
 
 
 mlan_status wlan_cmd_remain_on_channel(IN pmlan_private pmpriv,

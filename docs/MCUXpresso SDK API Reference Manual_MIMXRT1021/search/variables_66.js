@@ -30,6 +30,7 @@ var searchData=
   ['frame',['frame',['../a00024.html#af38b9852b65061e18ee7d6232a7ef3be',1,'flexcan_mb_transfer_t::frame()'],['../a00024.html#ad3420cfcbd536444d54b6a223b615d6f',1,'flexcan_fifo_transfer_t::frame()']]],
   ['framesync',['frameSync',['../a00057.html#a46ce7801a6ba02d5dd8f56e431d681f1',1,'sai_transceiver_t']]],
   ['framesyncearly',['frameSyncEarly',['../a00057.html#af23c63fada62140420230a61abe37d4e',1,'sai_frame_sync_t']]],
+  ['framesyncgenerateondemand',['frameSyncGenerateOnDemand',['../a00057.html#adcc4ee55d055827215038e2cc4ea8b1b',1,'sai_frame_sync_t']]],
   ['framesyncpolarity',['frameSyncPolarity',['../a00057.html#a6fbff9ec23d1ba0bb54ca7d91b7f40d9',1,'sai_frame_sync_t']]],
   ['framesyncwidth',['frameSyncWidth',['../a00057.html#a220329ad330217786663fee4457a7281',1,'sai_frame_sync_t']]],
   ['frequency',['frequency',['../a00073.html#a207108996ebfd8421548f96bd4d3afaf',1,'tempmon_config_t']]],

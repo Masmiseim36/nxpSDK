@@ -43,7 +43,7 @@ smStatus_t Se05x_API_AeadOneShot(pSe05xSession_t session_ctx,
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
     SE05x_Result_t result;
@@ -57,8 +57,12 @@ smStatus_t Se05x_API_AeadOneShot(pSe05xSession_t session_ctx,
     if (0 != tlvRet) {
         goto cleanup;
     }
-#if SSS_HAVE_SE05X_VER_GTE_06_16
-    tlvRet = TLVSET_CipherMode("cipherMode", &pCmdbuf, &cmdbufLen, kSE05x_TAG_2, ((cipherMode==kSE05x_CipherMode_AES_GCM_INT_IV)?kSE05x_CipherMode_AES_GCM:cipherMode));
+#if SSS_HAVE_SE05X_VER_GTE_07_02
+    tlvRet = TLVSET_CipherMode("cipherMode",
+        &pCmdbuf,
+        &cmdbufLen,
+        kSE05x_TAG_2,
+        ((cipherMode == kSE05x_CipherMode_AES_GCM_INT_IV) ? kSE05x_CipherMode_AES_GCM : cipherMode));
 #else
     tlvRet = TLVSET_CipherMode("cipherMode", &pCmdbuf, &cmdbufLen, kSE05x_TAG_2, cipherMode);
 #endif
@@ -146,7 +150,7 @@ smStatus_t Se05x_API_AeadInit(pSe05xSession_t session_ctx,
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
     uint16_t ivlen16 = (uint16_t)IVLen;
@@ -186,10 +190,10 @@ smStatus_t Se05x_API_AeadInit(pSe05xSession_t session_ctx,
         if (retStatus == SM_OK) {
             retStatus       = SM_NOT_OK;
             size_t rspIndex = 0;
-#if SSS_HAVE_SE05X_VER_GTE_06_16
-            tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_3, pIV, &ivlen32);
+#if SSS_HAVE_SE05X_VER_GTE_07_02
+            tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_3, pIV, &ivlen32);
 #else
-            tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, pIV, &ivlen32);
+            tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, pIV, &ivlen32);
 #endif
             if (0 != tlvRet) {
                 goto cleanup;
@@ -223,7 +227,7 @@ smStatus_t Se05x_API_AeadCCMInit(pSe05xSession_t session_ctx,
     uint16_t aadLen16     = (uint16_t)aadLen;
     uint16_t payloadLen16 = (uint16_t)payloadLen;
     uint16_t tagLen16     = (uint16_t)tagLen;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
     uint16_t ivlen16 = (uint16_t)IVLen;
@@ -329,7 +333,7 @@ smStatus_t Se05x_API_AeadUpdate(pSe05xSession_t session_ctx,
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 
@@ -402,7 +406,7 @@ smStatus_t Se05x_API_AeadCCMFinal(pSe05xSession_t session_ctx,
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
     size_t tagLen    = *pTagLen;
@@ -467,7 +471,7 @@ smStatus_t Se05x_API_AeadFinal(pSe05xSession_t session_ctx,
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
     size_t tagLen    = *pTagLen;
@@ -552,7 +556,7 @@ smStatus_t Se05x_API_TriggerSelfTest(
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -580,7 +584,7 @@ cleanup:
     return retStatus;
 }
 
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 
 smStatus_t Se05x_API_TriggerSelfTest_W_Attst(pSe05xSession_t session_ctx,
     SE05x_HealthCheckMode_t healthCheckMode,
@@ -605,7 +609,7 @@ smStatus_t Se05x_API_TriggerSelfTest_W_Attst(pSe05xSession_t session_ctx,
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -628,12 +632,15 @@ smStatus_t Se05x_API_TriggerSelfTest_W_Attst(pSe05xSession_t session_ctx,
     if (0 != tlvRet) {
         goto cleanup;
     }
+    memcpy(pCmd, hdr.hdr, sizeof(hdr.hdr));
+    *(pCmd + sizeof(hdr.hdr)) = (uint8_t)cmdbufLen;
+    if (cmdbufLen == 0) {
+        goto cleanup;
+    }
+    memcpy(pCmd + sizeof(hdr.hdr) + 1, cmdbuf, cmdbufLen);
     retStatus = DoAPDUTxRx_s_Case4(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
     if (retStatus == SM_OK) {
-        memcpy(pCmd, hdr.hdr, sizeof(hdr.hdr));
-        *(pCmd + sizeof(hdr.hdr)) = (uint8_t) cmdbufLen;
-        memcpy(pCmd + sizeof(hdr.hdr) + 1, cmdbuf, cmdbufLen);
-        *pCmdLen = sizeof(hdr.hdr) + 1 + cmdbufLen;
+        *pCmdLen        = sizeof(hdr.hdr) + 1 + cmdbufLen;
         retStatus       = SM_NOT_OK;
         size_t rspIndex = 0;
         tlvRet          = tlvGet_U8(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, result); /*  */
@@ -683,12 +690,12 @@ smStatus_t Se05x_API_TriggerSelfTest_W_Attst(pSe05xSession_t session_ctx,
     size_t *psignatureLen)
 {
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_MGMT | kSE05x_INS_ATTEST, kSE05x_P1_DEFAULT, kSE05x_P2_SANITY}};
+    tlvHeader_t hdr = {{kSE05x_CLA, kSE05x_INS_MGMT | kSE05x_INS_ATTEST, kSE05x_P1_DEFAULT, kSE05x_P2_SANITY}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
-    int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    int tlvRet = 0;
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -713,9 +720,9 @@ smStatus_t Se05x_API_TriggerSelfTest_W_Attst(pSe05xSession_t session_ctx,
     }
     retStatus = DoAPDUTxRx_s_Case4(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
     if (retStatus == SM_OK) {
-        retStatus       = SM_NOT_OK;
+        retStatus = SM_NOT_OK;
         size_t rspIndex = 0;
-        tlvRet          = tlvGet_U8(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, result); /*  */
+        tlvRet = tlvGet_U8(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, result); /*  */
         if (0 != tlvRet) {
             goto cleanup;
         }
@@ -744,7 +751,7 @@ cleanup:
     return retStatus;
 }
 
-#endif // SSS_HAVE_SE05X_VER_GTE_06_16
+#endif // SSS_HAVE_SE05X_VER_GTE_07_02
 
 smStatus_t Se05x_API_ReadObjectAttributes(
     pSe05xSession_t session_ctx, uint32_t objectID, uint8_t *data, size_t *pdataLen)
@@ -755,7 +762,7 @@ smStatus_t Se05x_API_ReadObjectAttributes(
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -770,7 +777,7 @@ smStatus_t Se05x_API_ReadObjectAttributes(
     if (retStatus == SM_OK) {
         retStatus       = SM_NOT_OK;
         size_t rspIndex = 0;
-#if !SSS_HAVE_SE05X_VER_GTE_06_16
+#if !SSS_HAVE_SE05X_VER_GTE_07_02
         //Backward compataibility
         tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_2, data, pdataLen); /*  */
 #else
@@ -788,7 +795,7 @@ cleanup:
     return retStatus;
 }
 
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 smStatus_t Se05x_API_ReadObjectAttributes_W_Attst_V2(pSe05xSession_t session_ctx,
     uint32_t objectID,
     uint32_t attestID,
@@ -808,12 +815,12 @@ smStatus_t Se05x_API_ReadObjectAttributes_W_Attst_V2(pSe05xSession_t session_ctx
     size_t *psignatureLen)
 {
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr = { { kSE05x_CLA, kSE05x_INS_READ_With_Attestation, kSE05x_P1_DEFAULT, kSE05x_P2_ATTRIBUTES } };
+    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_READ_With_Attestation, kSE05x_P1_DEFAULT, kSE05x_P2_ATTRIBUTES}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
-    int tlvRet = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    int tlvRet       = 0;
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -841,14 +848,18 @@ smStatus_t Se05x_API_ReadObjectAttributes_W_Attst_V2(pSe05xSession_t session_ctx
     //As length is extended
     pCmdapdu[4] = 0x00;
     pCmdapdu[5] = 0x00;
+    if(0 == cmdbufLen){
+        goto cleanup;
+    }
+
     pCmdapdu[6] = (uint8_t)cmdbufLen;
     memcpy(pCmdapdu + 7, cmdbuf, cmdbufLen);
     retStatus = DoAPDUTxRx_s_Case4_ext(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
     if (retStatus == SM_OK) {
-        *pCmdapduLen = cmdbufLen + 7;
-        retStatus = SM_NOT_OK;
+        *pCmdapduLen    = cmdbufLen + 7;
+        retStatus       = SM_NOT_OK;
         size_t rspIndex = 0;
-        tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_2, chipId, pchipIdLen); /*  */
+        tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_2, chipId, pchipIdLen); /*  */
         if (0 != tlvRet) {
             goto cleanup;
         }
@@ -872,8 +883,7 @@ smStatus_t Se05x_API_ReadObjectAttributes_W_Attst_V2(pSe05xSession_t session_ctx
             retStatus = (pRspbuf[rspIndex] << 8) | (pRspbuf[rspIndex + 1]);
         }
     }
-    else
-    {
+    else {
         *pCmdapduLen = 0;
     }
 
@@ -899,11 +909,11 @@ smStatus_t Se05x_API_ReadObjectAttributes_W_Attst(pSe05xSession_t session_ctx,
     size_t *psignatureLen)
 {
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_READ_With_Attestation, kSE05x_P1_DEFAULT, kSE05x_P2_ATTRIBUTES}};
+    tlvHeader_t hdr = {{kSE05x_CLA, kSE05x_INS_READ_With_Attestation, kSE05x_P1_DEFAULT, kSE05x_P2_ATTRIBUTES}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
-    int tlvRet       = 0;
+    int tlvRet = 0;
     uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
@@ -929,9 +939,9 @@ smStatus_t Se05x_API_ReadObjectAttributes_W_Attst(pSe05xSession_t session_ctx,
     }
     retStatus = DoAPDUTxRx_s_Case4_ext(session_ctx, &hdr, cmdbuf, cmdbufLen, rspbuf, &rspbufLen);
     if (retStatus == SM_OK) {
-        retStatus       = SM_NOT_OK;
+        retStatus = SM_NOT_OK;
         size_t rspIndex = 0;
-        tlvRet          = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_2, data, pdataLen); /*  */
+        tlvRet = tlvGet_u8buf(pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_2, data, pdataLen); /*  */
         if (0 != tlvRet) {
             goto cleanup;
         }
@@ -975,7 +985,7 @@ smStatus_t Se05x_API_ECDHGenerateSharedSecret_InObject(pSe05xSession_t session_c
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
     NEWLINE();
@@ -1254,9 +1264,10 @@ smStatus_t Se05x_API_WriteSymmKey_Ver(pSe05xSession_t session_ctx,
     if (0 != tlvRet) {
         goto cleanup;
     }
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
     if (type == kSE05x_SymmKeyType_HMAC) {
-        tlvRet = TLVSET_U16("Min output length", &pCmdbuf, &cmdbufLen, kSE05x_TAG_5, SE05X_MINIMUM_KEY_DERIVATION_OUTPUT_LEN);
+        tlvRet = TLVSET_U16(
+            "Min output length", &pCmdbuf, &cmdbufLen, kSE05x_TAG_5, SE05X_MINIMUM_KEY_DERIVATION_OUTPUT_LEN);
         if (0 != tlvRet) {
             goto cleanup;
         }
@@ -1333,7 +1344,7 @@ smStatus_t Se05x_API_ReadState(pSe05xSession_t session_ctx, uint8_t *pstateValue
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -1364,7 +1375,7 @@ smStatus_t Se05x_API_GetExtVersion(pSe05xSession_t session_ctx, uint8_t *papplet
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -1397,7 +1408,7 @@ smStatus_t Se05x_API_SendCardManagerCmd(
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -1781,8 +1792,79 @@ cleanup:
     return retStatus;
 }
 
+smStatus_t Se05x_API_WriteSymmKey_Ver_extended(pSe05xSession_t session_ctx,
+    pSe05xPolicy_t policy,
+    SE05x_MaxAttemps_t maxAttempt,
+    uint32_t objectID,
+    SE05x_KeyID_t kekID,
+    const uint8_t *keyValue,
+    size_t keyValueLen,
+    const SE05x_INS_t ins_type,
+    const SE05x_SymmKeyType_t type,
+    uint32_t version,
+    uint16_t min_aead_tag_len)
+{
+    smStatus_t retStatus = SM_NOT_OK;
+    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_WRITE | ins_type, type, kSE05x_P2_DEFAULT}};
+    uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
+    size_t cmdbufLen = 0;
+    uint8_t *pCmdbuf = &cmdbuf[0];
+    int tlvRet       = 0;
 
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+    if (Se05x_IsInValidRangeOfUID(objectID)) {
+        return SM_NOT_OK;
+    }
+
+#if VERBOSE_APDU_LOGS
+    NEWLINE();
+    nLog("APDU", NX_LEVEL_DEBUG, "Se05x_API_WriteSymmKey_Ver_extended []");
+#endif /* VERBOSE_APDU_LOGS */
+    tlvRet = TLVSET_Se05xPolicy("policy", &pCmdbuf, &cmdbufLen, kSE05x_TAG_POLICY, policy);
+    if (0 != tlvRet) {
+        goto cleanup;
+    }
+    tlvRet = TLVSET_MaxAttemps("maxAttempt", &pCmdbuf, &cmdbufLen, kSE05x_TAG_MAX_ATTEMPTS, maxAttempt);
+    if (0 != tlvRet) {
+        goto cleanup;
+    }
+    tlvRet = TLVSET_U32("object id", &pCmdbuf, &cmdbufLen, kSE05x_TAG_1, objectID);
+    if (0 != tlvRet) {
+        goto cleanup;
+    }
+    tlvRet = TLVSET_KeyID("KEK id", &pCmdbuf, &cmdbufLen, kSE05x_TAG_2, kekID);
+    if (0 != tlvRet) {
+        goto cleanup;
+    }
+    tlvRet = TLVSET_u8bufOptional("key value", &pCmdbuf, &cmdbufLen, kSE05x_TAG_3, keyValue, keyValueLen);
+    if (0 != tlvRet) {
+        goto cleanup;
+    }
+    if (type == kSE05x_SymmKeyType_AES) {
+        tlvRet = TLVSET_U16("Min tag length for AEAD", &pCmdbuf, &cmdbufLen, kSE05x_TAG_4, min_aead_tag_len);
+        if (0 != tlvRet) {
+            goto cleanup;
+        }
+    }
+#if SSS_HAVE_SE05X_VER_GTE_06_18
+    if (type == kSE05x_SymmKeyType_HMAC) {
+        tlvRet = TLVSET_U16(
+            "Min output length", &pCmdbuf, &cmdbufLen, kSE05x_TAG_5, SE05X_MINIMUM_KEY_DERIVATION_OUTPUT_LEN);
+        if (0 != tlvRet) {
+            goto cleanup;
+        }
+    }
+#endif
+    tlvRet = TLVSET_U32("version", &pCmdbuf, &cmdbufLen, kSE05x_TAG_11, version);
+    if (0 != tlvRet) {
+        goto cleanup;
+    }
+    retStatus = DoAPDUTx_s_Case3(session_ctx, &hdr, cmdbuf, cmdbufLen);
+
+cleanup:
+    return retStatus;
+}
+
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 smStatus_t Se05x_API_PBKDF2_extended(pSe05xSession_t session_ctx,
     uint32_t objectID,
     const uint8_t *salt,
@@ -1801,7 +1883,7 @@ smStatus_t Se05x_API_PBKDF2_extended(pSe05xSession_t session_ctx,
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
     uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
@@ -1852,7 +1934,7 @@ smStatus_t Se05x_API_PBKDF2_extended(pSe05xSession_t session_ctx,
                 retStatus = (rspbuf[0] << 8) | (rspbuf[1]);
             }
         }
-        else{
+        else {
             retStatus       = SM_NOT_OK;
             size_t rspIndex = 0;
             tlvRet =
@@ -1885,7 +1967,8 @@ smStatus_t Se05x_API_ECDHGenerateSharedSecret_InObject_extended(pSe05xSession_t 
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
+    uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
     NEWLINE();
@@ -1911,7 +1994,7 @@ smStatus_t Se05x_API_ECDHGenerateSharedSecret_InObject_extended(pSe05xSession_t 
     if (retStatus == SM_OK) {
         retStatus = SM_NOT_OK;
         if (2 == rspbufLen) {
-            retStatus = (rspbuf[0] << 8) | (rspbuf[1]);
+            retStatus = (pRspbuf[0] << 8) | (pRspbuf[1]);
         }
     }
 
@@ -1928,13 +2011,13 @@ smStatus_t Se05x_API_ECPointMultiply_InputObj(pSe05xSession_t session_ctx,
     SE05x_ECPMAlgo_t ECPMAlgo)
 {
     smStatus_t retStatus = SM_NOT_OK;
-    tlvHeader_t hdr      = {
-        {kSE05x_CLA, kSE05x_INS_CRYPTO, kSE05x_P1_EC, kSE05x_P2_ECPM}};
+    tlvHeader_t hdr      = {{kSE05x_CLA, kSE05x_INS_CRYPTO, kSE05x_P1_EC, kSE05x_P2_ECPM}};
     uint8_t cmdbuf[SE05X_MAX_BUF_SIZE_CMD];
     size_t cmdbufLen = 0;
     uint8_t *pCmdbuf = &cmdbuf[0];
     int tlvRet       = 0;
-    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP];
+    uint8_t rspbuf[SE05X_MAX_BUF_SIZE_RSP] = {0};
+    uint8_t *pRspbuf = &rspbuf[0];
     size_t rspbufLen = ARRAY_SIZE(rspbuf);
 #if VERBOSE_APDU_LOGS
     NEWLINE();
@@ -1969,12 +2052,13 @@ smStatus_t Se05x_API_ECPointMultiply_InputObj(pSe05xSession_t session_ctx,
         else {
             retStatus       = SM_NOT_OK;
             size_t rspIndex = 0;
-            tlvRet = tlvGet_u8buf(rspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, sharedSecretOuput, psharedSecretOuputLen); /*  */
+            tlvRet          = tlvGet_u8buf(
+                pRspbuf, &rspIndex, rspbufLen, kSE05x_TAG_1, sharedSecretOuput, psharedSecretOuputLen); /*  */
             if (0 != tlvRet) {
                 goto cleanup;
             }
             if ((rspIndex + 2) == rspbufLen) {
-                retStatus = (rspbuf[rspIndex] << 8) | (rspbuf[rspIndex + 1]);
+                retStatus = (pRspbuf[rspIndex] << 8) | (pRspbuf[rspIndex + 1]);
             }
         }
     }
@@ -1983,4 +2067,4 @@ cleanup:
     return retStatus;
 }
 
-#endif //#if SSS_HAVE_SE05X_VER_GTE_06_16
+#endif //#if SSS_HAVE_SE05X_VER_GTE_07_02

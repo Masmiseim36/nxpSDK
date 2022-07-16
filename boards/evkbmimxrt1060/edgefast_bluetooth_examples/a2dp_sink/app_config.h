@@ -50,7 +50,9 @@
 #error The Wi-Fi module is unsupported
 #endif
 
-#define CONFIG_BT_A2DP      1
-#define CONFIG_BT_A2DP_SINK 1
+#define CONFIG_BT_A2DP                  1
+#define CONFIG_BT_A2DP_SINK             1
+#define CONFIG_BT_SETTINGS              1
+#define CONFIG_BT_KEYS_OVERWRITE_OLDEST 1
 
 #include "edgefast_bluetooth_config.h"

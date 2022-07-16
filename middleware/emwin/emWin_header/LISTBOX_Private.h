@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : LISTBOX_Private.h
@@ -86,20 +86,21 @@ typedef struct {
 } LISTBOX_PROPS;
 
 typedef struct {
-  WIDGET Widget;
-  GUI_ARRAY ItemArray;
-  WIDGET_DRAW_ITEM_FUNC* pfDrawItem;
-  WM_SCROLL_STATE ScrollStateV;
-  WM_SCROLL_STATE ScrollStateH;
-  LISTBOX_PROPS Props;
-  WM_HWIN hOwner;
-  I16 Sel;                        /* current selection */
-  U8  Flags;
-  U8  ScrollbarWidth;
-  int MotionPosY;
-  U16 ItemSpacing;
-  U16 ContentSizeX;
-  U16 FixedScrollPos;
+  WIDGET                  Widget;
+  GUI_ARRAY               ItemArray;
+  WIDGET_DRAW_ITEM_FUNC * pfDrawItem;
+  WM_SCROLL_STATE         ScrollStateV;
+  WM_SCROLL_STATE         ScrollStateH;
+  LISTBOX_PROPS           Props;
+  WM_HWIN                 hOwner;
+  I16                     Sel;                        /* current selection */
+  U8                      Flags;
+  U8                      ScrollbarWidth;
+  int                     MotionPosY;
+  U16                     ItemSpacing;
+  U16                     ContentSizeX;
+  U16                     FixedScrollPos;
+  U8                      MotionStarted;             // Internal flag to check if motion swiping has been started
 } LISTBOX_Obj;
 
 /*********************************************************************
@@ -118,7 +119,7 @@ typedef struct {
   LISTBOX_Obj * LISTBOX_LockH(LISTBOX_Handle h);
   #define LISTBOX_LOCK_H(h)   LISTBOX_LockH(h)
 #else
-  #define LISTBOX_LOCK_H(h)   (LISTBOX_Obj *)GUI_LOCK_H(h)
+  #define LISTBOX_LOCK_H(h)   (LISTBOX_Obj *)WM_LOCK_H(h)
 #endif
 
 /*********************************************************************
@@ -136,6 +137,8 @@ extern LISTBOX_PROPS LISTBOX_DefaultProps;
 *
 **********************************************************************
 */
+int          LISTBOX__GetItemPosY           (LISTBOX_Handle hObj, unsigned Index);
+int          LISTBOX__GetItemSizeY          (LISTBOX_Handle hObj, unsigned Index);
 unsigned     LISTBOX__GetNumItems           (const LISTBOX_Obj * pObj);
 const char * LISTBOX__GetpStringLocked      (LISTBOX_Handle hObj, int Index, LISTBOX_ITEM ** ppItem);
 void         LISTBOX__InvalidateInsideArea  (LISTBOX_Handle hObj);

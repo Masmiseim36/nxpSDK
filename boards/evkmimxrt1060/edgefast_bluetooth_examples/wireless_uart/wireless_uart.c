@@ -130,7 +130,7 @@ static void connected(struct bt_conn *conn, uint8_t err)
         }
 
         switch (info.role) {
-        case BT_HCI_ROLE_SLAVE:
+        case BT_HCI_ROLE_PERIPHERAL:
             for (i = 0;i < CONFIG_BT_MAX_CONN;i++)
             {
                 if (conn == g_WirelessUartState.peerCentral[i].conn)
@@ -152,7 +152,7 @@ static void connected(struct bt_conn *conn, uint8_t err)
                 }
             }
             break;
-        case BT_HCI_ROLE_MASTER:
+        case BT_HCI_ROLE_CENTRAL:
             for (i = 0;i < CONFIG_BT_MAX_CONN;i++)
             {
                 if (conn == g_WirelessUartState.peerPeripheral[i].conn)
@@ -175,7 +175,7 @@ static void connected(struct bt_conn *conn, uint8_t err)
         bt_gatt_wu_connected(conn);
         PRINTF("Connected to %s\n", addr);
 #if CONFIG_BT_SMP
-        if(BT_HCI_ROLE_SLAVE == info.role)
+        if(BT_HCI_ROLE_PERIPHERAL == info.role)
         {
             if (bt_conn_set_security(conn, BT_SECURITY_L2))
             {

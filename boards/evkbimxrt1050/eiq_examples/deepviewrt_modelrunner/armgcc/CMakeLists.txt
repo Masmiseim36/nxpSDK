@@ -66,13 +66,14 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/phy
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../middleware/eiq
     ${ProjDirPath}/../../../../../components/phy/device/phyksz8081
     ${ProjDirPath}/../../../../../components/phy/mdio/enet
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
+    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
@@ -92,8 +93,6 @@ include(driver_phy-common_MIMXRT1052)
 
 include(driver_enet_MIMXRT1052)
 
-include(utility_debug_console_MIMXRT1052)
-
 include(middleware_lwip_empty_ethernetif_MIMXRT1052)
 
 include(middleware_eiq_deepviewrt_modelrunner_server_MIMXRT1052)
@@ -112,6 +111,10 @@ include(driver_mdio-enet_MIMXRT1052)
 
 include(driver_gpt_MIMXRT1052)
 
+include(component_silicon_id_MIMXRT1052)
+
+include(driver_common_MIMXRT1052)
+
 include(middleware_eiq_deepviewrt_MIMXRT1052)
 
 include(component_lists_MIMXRT1052)
@@ -120,11 +123,11 @@ include(component_lpuart_adapter_MIMXRT1052)
 
 include(component_serial_manager_MIMXRT1052)
 
-include(driver_common_MIMXRT1052)
-
 include(component_serial_manager_uart_MIMXRT1052)
 
 include(driver_lpuart_MIMXRT1052)
+
+include(utility_debug_console_MIMXRT1052)
 
 include(device_MIMXRT1052_CMSIS_MIMXRT1052)
 

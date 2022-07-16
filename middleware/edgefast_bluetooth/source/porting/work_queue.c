@@ -414,8 +414,29 @@ int bt_delayed_work_submit(struct bt_delayed_work *work, int32_t delay)
     return 0;
 }
 
+int bt_delayed_work_submit_anyways(struct bt_delayed_work *work, int32_t delay)
+{
+    if ((NULL != work->workQueue) && (&s_workQueueHead != work->workQueue))
+    {
+        return -1;
+    }
+
+    bt_delayed_work_queue_remove(&g_DelayedWorkQueueHead, work);
+
+    work->timeOut = (uint32_t)delay;
+    work->workQueue = &s_workQueueHead;
+    bt_delayed_work_queue_insert_sort(&g_DelayedWorkQueueHead, work);
+
+    return 0;
+}
+
 int bt_delayed_work_cancel(struct bt_delayed_work *work)
 {
     bt_delayed_work_queue_remove(&g_DelayedWorkQueueHead, work);
     return 0;
+}
+
+struct k_work_delayable * k_work_delayable_from_work(struct k_work *work)
+{
+	return CONTAINER_OF(work, struct k_work_delayable, work);
 }

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : ROTARY.h
@@ -80,6 +80,10 @@ typedef struct {
   WM_HMEM           hDrawObjMarker;    // Draw object for marker image
   WM_HMEM           hDrawObjMarkerHR;  // Draw object for marker image (HR)
   GUI_MEMDEV_Handle hMemMarker;        // Handle of marker device
+  //
+  // Pointer to rotation function
+  //
+  void (* pFunc)(GUI_MEMDEV_Handle hSrc, GUI_MEMDEV_Handle hDst, I32 dx, I32 dy, int a, int Mag);
 } ROTARY_OBJ;
 
 /*********************************************************************
@@ -98,7 +102,7 @@ typedef struct {
   ROTARY_OBJ * ROTARY_LockH(ROTARY_Handle h);
   #define ROTARY_LOCK_H(h)   ROTARY_LockH(h)
 #else
-  #define ROTARY_LOCK_H(h)   (ROTARY_OBJ *)GUI_LOCK_H(h)
+  #define ROTARY_LOCK_H(h)   (ROTARY_OBJ *)WM_LOCK_H(h)
 #endif
 
 /*********************************************************************

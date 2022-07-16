@@ -52,12 +52,15 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/drivers
     ${ProjDirPath}/../../../../../components/ft5406_rt
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../components/gt911
+    ${ProjDirPath}/../../../../../components/video
     ${ProjDirPath}/../../../../../middleware/emwin
     ${ProjDirPath}/../../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
 )
@@ -72,6 +75,10 @@ include(driver_lpi2c_MIMXRT1064)
 include(driver_ft5406_rt_MIMXRT1064)
 
 include(utility_debug_console_lite_MIMXRT1064)
+
+include(driver_gt911_MIMXRT1064)
+
+include(driver_video-common_MIMXRT1064)
 
 include(utility_assert_lite_MIMXRT1064)
 
@@ -100,6 +107,8 @@ include(driver_igpio_MIMXRT1064)
 include(driver_xip_device_MIMXRT1064)
 
 include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
+
+include(component_silicon_id_MIMXRT1064)
 
 include(CMSIS_Include_core_cm_MIMXRT1064)
 

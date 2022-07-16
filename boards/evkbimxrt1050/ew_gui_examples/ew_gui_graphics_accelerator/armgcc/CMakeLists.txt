@@ -136,6 +136,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../components/ft5406_rt
+    ${ProjDirPath}/../../../../../components/gt911
+    ${ProjDirPath}/../../../../../components/video
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../middleware/EmbeddedWizard
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
@@ -143,6 +145,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
 )
@@ -159,6 +162,10 @@ include(driver_pxp_MIMXRT1052)
 include(driver_lpi2c_MIMXRT1052)
 
 include(driver_ft5406_rt_MIMXRT1052)
+
+include(driver_gt911_MIMXRT1052)
+
+include(driver_video-common_MIMXRT1052)
 
 include(utility_debug_console_lite_MIMXRT1052)
 
@@ -189,6 +196,8 @@ include(driver_igpio_MIMXRT1052)
 include(driver_xip_device_MIMXRT1052)
 
 include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
+
+include(component_silicon_id_MIMXRT1052)
 
 include(CMSIS_Include_core_cm_MIMXRT1052)
 

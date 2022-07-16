@@ -22,9 +22,9 @@
 #    define APPLET_SE050_VER_MAJOR          (6u)
 #    define APPLET_SE050_VER_MINOR          (0u)
 #    define APPLET_SE050_VER_DEV            (0u)
-#elif SSS_HAVE_SE05X_VER_06_16 == 1
-#    define APPLET_SE050_VER_MAJOR          (6u)
-#    define APPLET_SE050_VER_MINOR          (16u)
+#elif SSS_HAVE_SE05X_VER_07_02 == 1
+#    define APPLET_SE050_VER_MAJOR          (7u)
+#    define APPLET_SE050_VER_MINOR          (2u)
 #    define APPLET_SE050_VER_DEV            (0u)
 #elif SSS_HAVE_FIPS
 #    define APPLET_SE050_VER_MAJOR          (3u)

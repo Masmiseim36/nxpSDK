@@ -17,7 +17,7 @@
 /* # CMake Features : Start */
 
 
-/** Applet : The Secure Element Applet
+/** PTMW_Applet : The Secure Element Applet
  * 
  * You can compile host library for different Applets listed below.
  * Please note, some of these Applets may be for NXP Internal use only.
@@ -69,7 +69,7 @@
     + SSS_HAVE_APPLET_AUTH           \
     + SSS_HAVE_APPLET_LOOPBACK       \
     ) > 1)
-#        error "Enable only one of 'Applet'"
+#        error "Enable only one of 'PTMW_Applet'"
 #endif
 
 
@@ -86,12 +86,12 @@
     + SSS_HAVE_APPLET_AUTH           \
     + SSS_HAVE_APPLET_LOOPBACK       \
     ) == 0)
-#        error "Enable at-least one of 'Applet'"
+#        error "Enable at-least one of 'PTMW_Applet'"
 #endif
 
 
 
-/** SE05X_Ver : SE05X Applet version.
+/** PTMW_SE05X_Ver : SE05X Applet version.
  * 
  * Selection of Applet version 03_XX enables SE050 features.
  * Selection of Applet version 06_00 enables SE051 features.
@@ -105,28 +105,28 @@
 #define SSS_HAVE_SE05X_VER_06_00 0
 
 /** SE051 */
-#define SSS_HAVE_SE05X_VER_06_16 0
+#define SSS_HAVE_SE05X_VER_07_02 0
 
 #if (( 0                             \
     + SSS_HAVE_SE05X_VER_03_XX       \
     + SSS_HAVE_SE05X_VER_06_00       \
-    + SSS_HAVE_SE05X_VER_06_16       \
+    + SSS_HAVE_SE05X_VER_07_02       \
     ) > 1)
-#        error "Enable only one of 'SE05X_Ver'"
+#        error "Enable only one of 'PTMW_SE05X_Ver'"
 #endif
 
 
 #if (( 0                             \
     + SSS_HAVE_SE05X_VER_03_XX       \
     + SSS_HAVE_SE05X_VER_06_00       \
-    + SSS_HAVE_SE05X_VER_06_16       \
+    + SSS_HAVE_SE05X_VER_07_02       \
     ) == 0)
-#        error "Enable at-least one of 'SE05X_Ver'"
+#        error "Enable at-least one of 'PTMW_SE05X_Ver'"
 #endif
 
 
 
-/** HostCrypto : Counterpart Crypto on Host
+/** PTMW_HostCrypto : Counterpart Crypto on Host
  * 
  * What is being used as a cryptographic library on the host.
  * As of now only OpenSSL / mbedTLS is supported
@@ -164,7 +164,7 @@
     + SSS_HAVE_HOSTCRYPTO_USER       \
     + SSS_HAVE_HOSTCRYPTO_NONE       \
     ) > 1)
-#        error "Enable only one of 'HostCrypto'"
+#        error "Enable only one of 'PTMW_HostCrypto'"
 #endif
 
 
@@ -175,12 +175,12 @@
     + SSS_HAVE_HOSTCRYPTO_USER       \
     + SSS_HAVE_HOSTCRYPTO_NONE       \
     ) == 0)
-#        error "Enable at-least one of 'HostCrypto'"
+#        error "Enable at-least one of 'PTMW_HostCrypto'"
 #endif
 
 
 
-/** mbedTLS_ALT : ALT Engine implementation for mbedTLS
+/** PTMW_mbedTLS_ALT : ALT Engine implementation for mbedTLS
  * 
  * When set to None, mbedTLS would not use ALT Implementation to connect to / use Secure Element.
  * This needs to be set to SSS for Cloud Demos over SSS APIs
@@ -202,7 +202,7 @@
     + SSS_HAVE_MBEDTLS_ALT_A71CH     \
     + SSS_HAVE_MBEDTLS_ALT_NONE      \
     ) > 1)
-#        error "Enable only one of 'mbedTLS_ALT'"
+#        error "Enable only one of 'PTMW_mbedTLS_ALT'"
 #endif
 
 
@@ -211,12 +211,12 @@
     + SSS_HAVE_MBEDTLS_ALT_A71CH     \
     + SSS_HAVE_MBEDTLS_ALT_NONE      \
     ) == 0)
-#        error "Enable at-least one of 'mbedTLS_ALT'"
+#        error "Enable at-least one of 'PTMW_mbedTLS_ALT'"
 #endif
 
 
 
-/** SCP : Secure Channel Protocol
+/** PTMW_SCP : Secure Channel Protocol
  * 
  * In case we enable secure channel to Secure Element, which interface to be used.
  */
@@ -235,7 +235,7 @@
     + SSS_HAVE_SCP_SCP03_SSS         \
     + SSS_HAVE_SCP_SCP03_HOSTCRYPTO  \
     ) > 1)
-#        error "Enable only one of 'SCP'"
+#        error "Enable only one of 'PTMW_SCP'"
 #endif
 
 
@@ -244,12 +244,12 @@
     + SSS_HAVE_SCP_SCP03_SSS         \
     + SSS_HAVE_SCP_SCP03_HOSTCRYPTO  \
     ) == 0)
-#        error "Enable at-least one of 'SCP'"
+#        error "Enable at-least one of 'PTMW_SCP'"
 #endif
 
 
 
-/** FIPS : Enable or disable FIPS 
+/** PTMW_FIPS : Enable or disable FIPS
  * 
  * This selection mostly impacts tests, and generally not the actual Middleware
  */
@@ -272,7 +272,7 @@
     + SSS_HAVE_FIPS_140_2            \
     + SSS_HAVE_FIPS_140_3            \
     ) > 1)
-#        error "Enable only one of 'FIPS'"
+#        error "Enable only one of 'PTMW_FIPS'"
 #endif
 
 
@@ -282,12 +282,12 @@
     + SSS_HAVE_FIPS_140_2            \
     + SSS_HAVE_FIPS_140_3            \
     ) == 0)
-#        error "Enable at-least one of 'FIPS'"
+#        error "Enable at-least one of 'PTMW_FIPS'"
 #endif
 
 
 
-/** SBL : Enable/Disable SBL Bootable support
+/** PTMW_SBL : Enable/Disable SBL Bootable support
  * 
  * This option is to enable/disable boot from SBL by switching linker address
  */
@@ -302,7 +302,7 @@
     + SSS_HAVE_SBL_NONE              \
     + SSS_HAVE_SBL_SBL_LPC55S        \
     ) > 1)
-#        error "Enable only one of 'SBL'"
+#        error "Enable only one of 'PTMW_SBL'"
 #endif
 
 
@@ -310,12 +310,12 @@
     + SSS_HAVE_SBL_NONE              \
     + SSS_HAVE_SBL_SBL_LPC55S        \
     ) == 0)
-#        error "Enable at-least one of 'SBL'"
+#        error "Enable at-least one of 'PTMW_SBL'"
 #endif
 
 
 
-/** SE05X_Auth : SE050 Authentication
+/** PTMW_SE05X_Auth : SE050 Authentication
  * 
  * This settings is used by examples to connect using various options
  * to authenticate with the Applet.
@@ -364,7 +364,7 @@
     + SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03 \
     + SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03 \
     ) > 1)
-#        error "Enable only one of 'SE05X_Auth'"
+#        error "Enable only one of 'PTMW_SE05X_Auth'"
 #endif
 
 
@@ -378,12 +378,12 @@
     + SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03 \
     + SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03 \
     ) == 0)
-#        error "Enable at-least one of 'SE05X_Auth'"
+#        error "Enable at-least one of 'PTMW_SE05X_Auth'"
 #endif
 
 
 
-/** A71CH_AUTH : A71CH Authentication
+/** PTMW_A71CH_AUTH : A71CH Authentication
  * 
  * This settings is used by SSS-API based examples to connect using either plain or authenticated to the A71CH.
  */
@@ -398,7 +398,7 @@
     + SSS_HAVE_A71CH_AUTH_NONE       \
     + SSS_HAVE_A71CH_AUTH_SCP03      \
     ) > 1)
-#        error "Enable only one of 'A71CH_AUTH'"
+#        error "Enable only one of 'PTMW_A71CH_AUTH'"
 #endif
 
 
@@ -406,7 +406,7 @@
     + SSS_HAVE_A71CH_AUTH_NONE       \
     + SSS_HAVE_A71CH_AUTH_SCP03      \
     ) == 0)
-#        error "Enable at-least one of 'A71CH_AUTH'"
+#        error "Enable at-least one of 'PTMW_A71CH_AUTH'"
 #endif
 
 
@@ -511,25 +511,25 @@
 
 /* Version checks GTE - Greater Than Or Equal To */
 #if SSS_HAVE_APPLET_SE05X_IOT
-#    if SSS_HAVE_SE05X_VER_06_16
-#        define SSS_HAVE_SE05X_VER_GTE_06_16 1
+#    if SSS_HAVE_SE05X_VER_07_02
+#        define SSS_HAVE_SE05X_VER_GTE_07_02 1
 #        define SSS_HAVE_SE05X_VER_GTE_06_00 1
 #        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
-#    endif /* SSS_HAVE_SE05X_VER_06_16 */
+#    endif /* SSS_HAVE_SE05X_VER_07_02 */
 #    if SSS_HAVE_SE05X_VER_06_00
-#        define SSS_HAVE_SE05X_VER_GTE_06_16 0
+#        define SSS_HAVE_SE05X_VER_GTE_07_02 0
 #        define SSS_HAVE_SE05X_VER_GTE_06_00 1
 #        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
 #    endif /* SSS_HAVE_SE05X_VER_06_00 */
 #    if SSS_HAVE_SE05X_VER_03_XX
-#        define SSS_HAVE_SE05X_VER_GTE_06_16 0
+#        define SSS_HAVE_SE05X_VER_GTE_07_02 0
 #        define SSS_HAVE_SE05X_VER_GTE_06_00 0
 #        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
 #    endif /* SSS_HAVE_SE05X_VER_03_XX */
 #else //SSS_HAVE_APPLET_SE05X_IOT
 #   define SSS_HAVE_SE05X_VER_GTE_03_XX 0
 #   define SSS_HAVE_SE05X_VER_GTE_06_00 0
-#   define SSS_HAVE_SE05X_VER_GTE_06_16 0
+#   define SSS_HAVE_SE05X_VER_GTE_07_02 0
 #endif // SSS_HAVE_APPLET_SE05X_IOT
 /** Deprecated items. Used here for backwards compatibility. */
 

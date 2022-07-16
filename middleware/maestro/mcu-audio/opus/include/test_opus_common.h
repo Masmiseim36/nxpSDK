@@ -25,6 +25,8 @@
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include "opus.h"
+
 static OPUS_INLINE void deb2_impl(unsigned char *_t,unsigned char **_p,int _k,int _x,int _y)
 {
   int i;
@@ -73,7 +75,7 @@ static OPUS_INLINE void _test_failed(const char *file, int line)
   printf(" ***         A fatal error was detected.         ***\n");
   printf(" ***************************************************\n");
   printf("Please report this failure and include\n");
-  printf("'make check SEED=%u fails %s at line %d for %s'\n",iseed,file,line,opus_get_version_string());
+  printf("'make check SEED=%lu fails %s at line %d for %s'\n",iseed,file,line,opus_get_version_string());
   printf("and any relevant details about your system.\n\n");
 #if defined(_MSC_VER)
    _set_abort_behavior( 0, _WRITE_ABORT_MSG);

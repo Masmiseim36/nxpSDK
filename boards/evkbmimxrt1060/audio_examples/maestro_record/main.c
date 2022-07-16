@@ -140,6 +140,11 @@ static void APP_SDCARD_DetectCallBack(bool isInserted, void *userData)
     xSemaphoreGiveFromISR(app->sdcardSem, NULL);
 }
 
+bool SDCARD_inserted(void)
+{
+    return (app.sdcardInserted);
+}
+
 void APP_SDCARD_Task(void *param)
 {
     const TCHAR driverNumberBuffer[3U] = {SDDISK + '0', ':', '/'};
@@ -254,6 +259,9 @@ int main(void)
     PRINTF("Maestro audio record demo start\r\n");
     PRINTF("*******************************\r\n");
     PRINTF("\r\n");
+
+    /* Initialize OSA*/
+    OSA_Init();
 
     ret = BOARD_CODEC_Init();
     if (ret)

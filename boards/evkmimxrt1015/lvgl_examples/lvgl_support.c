@@ -40,7 +40,7 @@ static ft6x06_handle_t touch_handle;
 static volatile uint32_t spi_event;
 static volatile bool spi_event_received;
 static ft6x06_handle_t touch_handle;
-SDK_ALIGN(static uint8_t s_frameBuffer[1][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_frameBuffer[1][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
 /*******************************************************************************
  * Code
  ******************************************************************************/

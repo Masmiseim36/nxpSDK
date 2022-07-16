@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : LCD.h
@@ -182,6 +182,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_556;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_655;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_666;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_666_9;
+extern const LCD_API_COLOR_CONV LCD_API_ColorConv_666_18;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_822216;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_84444;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_8666;
@@ -189,6 +190,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_8666_1;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_88666I;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_888;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_8888;
+extern const LCD_API_COLOR_CONV LCD_API_ColorConv_8888I;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M111;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M1555I;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M222;
@@ -205,6 +207,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M556;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M655;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M666;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M666_9;
+extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M666_18;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M8565;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M888;
 extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M8888;
@@ -240,6 +243,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M8888I;
 #define GUICC_655       &LCD_API_ColorConv_655
 #define GUICC_666       &LCD_API_ColorConv_666
 #define GUICC_666_9     &LCD_API_ColorConv_666_9
+#define GUICC_666_18    &LCD_API_ColorConv_666_18
 #define GUICC_822216    &LCD_API_ColorConv_822216
 #define GUICC_84444     &LCD_API_ColorConv_84444
 #define GUICC_8666      &LCD_API_ColorConv_8666
@@ -247,6 +251,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M8888I;
 #define GUICC_88666I    &LCD_API_ColorConv_88666I
 #define GUICC_888       &LCD_API_ColorConv_888
 #define GUICC_8888      &LCD_API_ColorConv_8888
+#define GUICC_8888I     &LCD_API_ColorConv_8888I
 #define GUICC_M111      &LCD_API_ColorConv_M111
 #define GUICC_M1555I    &LCD_API_ColorConv_M1555I
 #define GUICC_M222      &LCD_API_ColorConv_M222
@@ -262,6 +267,7 @@ extern const LCD_API_COLOR_CONV LCD_API_ColorConv_M8888I;
 #define GUICC_M655      &LCD_API_ColorConv_M655
 #define GUICC_M666      &LCD_API_ColorConv_M666
 #define GUICC_M666_9    &LCD_API_ColorConv_M666_9
+#define GUICC_M666_18   &LCD_API_ColorConv_M666_18
 #define GUICC_M8565     &LCD_API_ColorConv_M8565
 #define GUICC_M888      &LCD_API_ColorConv_M888
 #define GUICC_M8888     &LCD_API_ColorConv_M8888
@@ -776,6 +782,7 @@ unsigned char LCD_X_Read00(void);
 unsigned char LCD_X_Read01(void);
 void LCD_X_Write00 (unsigned char c);
 void LCD_X_Write01 (unsigned char c);
+void LCD_X_WriteM00(unsigned char * pData, int NumBytes);
 void LCD_X_WriteM01(unsigned char * pData, int NumBytes);
 
 #if defined(__cplusplus)

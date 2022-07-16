@@ -4,34 +4,18 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
+#include <string.h>
+#include <wm_os.h>
+#include <wm_net.h> /* for net_inet_aton */
 #include <wlan.h>
 #include <cli.h>
 #include <cli_utils.h>
-#include <string.h>
-#include <wm_net.h> /* for net_inet_aton */
 #include <wifi.h>
 #include <wlan_tests.h>
-
 /*
  * NXP Test Framework (MTF) functions
  */
@@ -185,19 +169,19 @@ static int get_address(char *arg, struct wlan_ip_config *ip)
     {
         return -1;
     }
-    *gwaddr++ = 0;
+    *gwaddr++ = (char)0;
 
     netmask = strstr(gwaddr, ",");
     if (netmask == NULL)
     {
         return -1;
     }
-    *netmask++ = 0;
+    *netmask++ = (char)0;
 
     dns1 = strstr(netmask, ",");
     if (dns1 != NULL)
     {
-        *dns1++ = 0;
+        *dns1++ = (char)0;
         dns2    = strstr(dns1, ",");
     }
     ip->ipv4.address = net_inet_aton(ipaddr);
@@ -233,7 +217,7 @@ int get_security(int argc, char **argv, enum wlan_security_type type, struct wla
                 return 1;
             }
             /* copy the PSK phrase */
-            sec->psk_len = strlen(argv[0]);
+            sec->psk_len = (char)strlen(argv[0]);
             if (sec->psk_len < WLAN_PSK_MIN_LENGTH)
             {
                 return 1;
@@ -318,8 +302,9 @@ static void dump_wlan_add_usage(void)
 void test_wlan_add(int argc, char **argv)
 {
     struct wlan_network network;
-    int ret = 0;
-    int arg = 1;
+    int ret    = 0;
+    int arg    = 1;
+    size_t len = 0U;
     struct
     {
         unsigned ssid : 1;
@@ -343,25 +328,27 @@ void test_wlan_add(int argc, char **argv)
         return;
     }
 
-    if (strlen(argv[arg]) >= WLAN_NETWORK_NAME_MAX_LENGTH)
+    len = strlen(argv[arg]);
+    if (len >= WLAN_NETWORK_NAME_MAX_LENGTH)
     {
         (void)PRINTF("Error: network name too long\r\n");
         return;
     }
 
-    (void)memcpy(network.name, argv[arg], strlen(argv[arg]));
+    (void)memcpy(network.name, argv[arg], len);
     arg++;
-    info.address = ADDR_TYPE_DHCP;
+    info.address = (u8_t)ADDR_TYPE_DHCP;
     do
     {
         if (!info.ssid && string_equal("ssid", argv[arg]))
         {
-            if (strlen(argv[arg + 1]) > IEEEtypes_SSID_SIZE)
+            len = strlen(argv[arg + 1]);
+            if (len > IEEEtypes_SSID_SIZE)
             {
                 (void)PRINTF("Error: SSID is too long\r\n");
                 return;
             }
-            (void)memcpy(network.ssid, argv[arg + 1], strlen(argv[arg + 1]));
+            (void)memcpy(network.ssid, argv[arg + 1], len);
             arg += 2;
             info.ssid = 1;
         }
@@ -401,7 +388,7 @@ void test_wlan_add(int argc, char **argv)
                 return;
             }
             arg++;
-            info.address = ADDR_TYPE_STATIC;
+            info.address = (u8_t)ADDR_TYPE_STATIC;
         }
         else if (!info.security && string_equal("wpa", argv[arg]))
         {
@@ -479,7 +466,7 @@ void test_wlan_add(int argc, char **argv)
         }
         else if (!info.mfpc && string_equal("mfpc", argv[arg]))
         {
-            network.security.mfpc = strtol(argv[arg + 1], NULL, 10);
+            network.security.mfpc = (bool)strtol(argv[arg + 1], NULL, 10);
             if (arg + 1 >= argc || (network.security.mfpc != false && network.security.mfpc != true))
             {
                 (void)PRINTF(
@@ -492,7 +479,7 @@ void test_wlan_add(int argc, char **argv)
         }
         else if (!info.mfpr && string_equal("mfpr", argv[arg]))
         {
-            network.security.mfpr = atoi(argv[arg + 1]);
+            network.security.mfpr = (bool)atoi(argv[arg + 1]);
             if (arg + 1 >= argc || (network.security.mfpr != false && network.security.mfpr != true))
             {
                 (void)PRINTF(
@@ -505,7 +492,7 @@ void test_wlan_add(int argc, char **argv)
         }
         else if (!strncmp(argv[arg], "autoip", 6))
         {
-            info.address = ADDR_TYPE_LLA;
+            info.address = (u8_t)ADDR_TYPE_LLA;
             arg++;
         }
         else
@@ -973,7 +960,7 @@ static void test_wlan_list(int argc, char **argv)
     }
 
     (void)PRINTF("%d network%s%s\r\n", count, count == 1U ? "" : "s", count > 0U ? ":" : "");
-    for (i = 0; i < count; i++)
+    for (i = 0; i < WLAN_MAX_KNOWN_NETWORKS; i++)
     {
         if (wlan_get_network(i, &network) == WM_SUCCESS)
         {
@@ -1054,7 +1041,7 @@ static void test_wlan_address(int argc, char **argv)
 static void test_wlan_get_uap_channel(int argc, char **argv)
 {
     int channel;
-    int rv = wifi_get_uap_channel(&channel);
+    int rv = wlan_get_uap_channel(&channel);
     if (rv != WM_SUCCESS)
     {
         (void)PRINTF("Unable to get channel: %d\r\n", rv);
@@ -1188,6 +1175,10 @@ static void test_wlan_deep_sleep_ps(int argc, char **argv)
 
 
 
+
+
+
+
 static void test_wlan_host_sleep(int argc, char **argv)
 {
     int choice = -1, wowlan = 0;
@@ -1281,28 +1272,50 @@ static void test_wlan_send_hostcmd(int argc, char **argv)
 }
 
 #ifdef SD8801
-u8_t ext_coex_8801_resp_buf[HOSTCMD_RESP_BUFF_SIZE] = {0};
-/* Command buffer to set External Coex Configuration parameters */
-u8_t ext_coex_8801_cmd_buf[] = {0xe0, 0,    0x1d, 0, 0x17, 0,    0,    0,    0x01, 0,    0,    0,    0x2f, 0x02, 0x0d,
-                                0x00, 0x01, 0,    0, 0x03, 0x01, 0x02, 0x01, 0x01, 0x00, 0x28, 0x00, 0x3c, 0x00};
-
 static void test_wlan_8801_enable_ext_coex(int argc, char **argv)
 {
-    int ret           = -WM_FAIL;
-    uint32_t reqd_len = 0;
+    int ret = -WM_FAIL;
+    wlan_ext_coex_config_t ext_coex_config;
 
-    ret = wlan_send_hostcmd(ext_coex_8801_cmd_buf, sizeof(ext_coex_8801_cmd_buf) / sizeof(u8_t), ext_coex_8801_resp_buf,
-                            HOSTCMD_RESP_BUFF_SIZE, &reqd_len);
+    ext_coex_config.Enabled                        = 1;
+    ext_coex_config.IgnorePriority                 = 0;
+    ext_coex_config.DefaultPriority                = 0;
+    ext_coex_config.EXT_RADIO_REQ_ip_gpio_num      = 3;
+    ext_coex_config.EXT_RADIO_REQ_ip_gpio_polarity = 1;
+    ext_coex_config.EXT_RADIO_PRI_ip_gpio_num      = 2;
+    ext_coex_config.EXT_RADIO_PRI_ip_gpio_polarity = 1;
+    ext_coex_config.WLAN_GRANT_op_gpio_num         = 1;
+    ext_coex_config.WLAN_GRANT_op_gpio_polarity    = 0;
+    ext_coex_config.reserved_1                     = 0x28;
+    ext_coex_config.reserved_2                     = 0x3c;
+
+    ret = wlan_set_ext_coex_config(ext_coex_config);
 
     if (ret == WM_SUCCESS)
     {
-        (void)PRINTF("8801 External Coex Config success, response is");
-        for (ret = 0; ret < reqd_len; ret++)
-            (void)PRINTF("%x\t", ext_coex_8801_resp_buf[ret]);
+        (void)PRINTF("8801 External Coex Config set successfully");
     }
     else
     {
         (void)PRINTF("8801 External Coex Config error: %d", ret);
+    }
+}
+
+static void test_wlan_8801_ext_coex_stats(int argc, char **argv)
+{
+    int ret = -WM_FAIL;
+    wlan_ext_coex_stats_t ext_coex_stats;
+
+    ret = wlan_get_ext_coex_stats(&ext_coex_stats);
+
+    if (ret != WM_SUCCESS)
+    {
+        (void)PRINTF("Unable to get external Coex statistics\r\n");
+    }
+    else
+    {
+        (void)PRINTF("BLE_EIP: %d, BLE_PRI: %d, WLAN_EIP: %d\r\n", ext_coex_stats.ext_radio_req_count,
+                     ext_coex_stats.ext_radio_pri_count, ext_coex_stats.wlan_grant_count);
     }
 }
 #endif
@@ -1320,7 +1333,7 @@ static void test_wlan_set_uap_bandwidth(int argc, char **argv)
         return;
     }
 
-    bandwidth = atoi(argv[1]);
+    bandwidth = (uint8_t)atoi(argv[1]);
     ret       = wlan_uap_set_bandwidth(bandwidth);
 
     if (ret != WM_SUCCESS)
@@ -1332,6 +1345,15 @@ static void test_wlan_set_uap_bandwidth(int argc, char **argv)
         (void)PRINTF("bandwidth set successfully\r\n");
 }
 #endif
+
+
+#ifdef CONFIG_HEAP_STAT
+static void test_heap_stat(int argc, char **argv)
+{
+    os_dump_mem_stats();
+}
+#endif
+
 
 static struct cli_command tests[] = {
     {"wlan-scan", NULL, test_wlan_scan},
@@ -1357,6 +1379,10 @@ static struct cli_command tests[] = {
 #endif
 #ifdef SD8801
     {"wlan-8801-enable-ext-coex", NULL, test_wlan_8801_enable_ext_coex},
+    {"wlan-8801-get-ext-coex-stats", NULL, test_wlan_8801_ext_coex_stats},
+#endif
+#ifdef CONFIG_HEAP_STAT
+    {"heap-stat", NULL, test_heap_stat},
 #endif
 };
 
@@ -1371,7 +1397,7 @@ int wlan_cli_init(void)
         return i;
     }
 
-    if (cli_register_commands(tests, sizeof(tests) / sizeof(struct cli_command)) != 0)
+    if (cli_register_commands(tests, (int)(sizeof(tests) / sizeof(struct cli_command))) != 0)
     {
         return -WM_FAIL;
     }

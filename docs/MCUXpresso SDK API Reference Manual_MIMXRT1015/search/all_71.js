@@ -24,6 +24,8 @@ var searchData=
   ['qtmr_5foutput_5fmode_5ft',['qtmr_output_mode_t',['../a00050.html#gaf79e17f54c3cf8ed96bb9e7845ca5bc3',1,'fsl_qtmr.h']]],
   ['qtmr_5fpreload_5fcontrol_5ft',['qtmr_preload_control_t',['../a00050.html#gae91f0c5f7a204dce2d5cc6b71d1c6885',1,'fsl_qtmr.h']]],
   ['qtmr_5fprimary_5fcount_5fsource_5ft',['qtmr_primary_count_source_t',['../a00050.html#gac6d08f267b908a7cde4881df86f22c78',1,'fsl_qtmr.h']]],
+  ['qtmr_5fsetcomparevalue',['QTMR_SetCompareValue',['../a00050.html#ga9764da43797074b65a4689a6df999cba',1,'fsl_qtmr.h']]],
+  ['qtmr_5fsetloadvalue',['QTMR_SetLoadValue',['../a00050.html#ga3db9e42ab0f483438a720139353937f7',1,'fsl_qtmr.h']]],
   ['qtmr_5fsettimerperiod',['QTMR_SetTimerPeriod',['../a00050.html#ga1d1fe996963cd527aabb034888e994b4',1,'fsl_qtmr.h']]],
   ['qtmr_5fsetupinputcapture',['QTMR_SetupInputCapture',['../a00050.html#gaab1b216e8bae644b8027cf8eaa4e2964',1,'fsl_qtmr.h']]],
   ['qtmr_5fsetuppwm',['QTMR_SetupPwm',['../a00050.html#ga364220c9fcdf15f102e60c7c76041c06',1,'fsl_qtmr.h']]],

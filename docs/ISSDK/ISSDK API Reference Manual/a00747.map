@@ -1,4 +1,4 @@
-<map id="algorithms/sensorfusion/sources/control_lpc.c" name="algorithms/sensorfusion/sources/control_lpc.c">
-<area shape="rect" id="node6" href="$a00878.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="473,95,587,121"/>
-<area shape="rect" id="node7" href="$a00743.html" title="Defines control sub&#45;system. " alt="" coords="611,95,683,121"/>
+<map id="boardkit/evk&#45;mimxrt1064/evkmimxrt1064.h" name="boardkit/evk&#45;mimxrt1064/evkmimxrt1064.h">
+<area shape="rect" id="node2" href="$a04637.html" title="pin_mux.h" alt="" coords="5,95,88,121"/>
+<area shape="rect" id="node3" href="$a04706.html" title="RTE_Device.h" alt="" coords="113,95,215,121"/>
 </map>

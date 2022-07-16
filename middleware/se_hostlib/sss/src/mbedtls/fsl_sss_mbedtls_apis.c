@@ -91,6 +91,7 @@ static sss_status_t sss_mbedtls_aead_ccm_update(sss_mbedtls_aead_t *context, con
 #error Need MBEDTLS_CTR_DRBG_C defined
 #endif
 
+// LCOV_EXCL_START
 sss_status_t sss_mbedtls_session_create(sss_mbedtls_session_t *session,
     sss_type_t subsystem,
     uint32_t application_id,
@@ -101,6 +102,7 @@ sss_status_t sss_mbedtls_session_create(sss_mbedtls_session_t *session,
     /* Nothing special to be handled */
     return retval;
 }
+// LCOV_EXCL_STOP
 
 sss_status_t sss_mbedtls_session_open(sss_mbedtls_session_t *session,
     sss_type_t subsystem,
@@ -326,6 +328,7 @@ exit:
     return retval;
 }
 
+// LCOV_EXCL_START
 sss_status_t sss_mbedtls_key_object_set_eccgfp_group(sss_mbedtls_object_t *keyObject, sss_eccgfp_group_t *group)
 {
     sss_status_t retval = kStatus_SSS_Success;
@@ -353,6 +356,7 @@ sss_status_t sss_mbedtls_key_object_get_access(sss_mbedtls_object_t *keyObject, 
     *access             = keyObject->accessRights;
     return retval;
 }
+// LCOV_EXCL_STOP
 
 void sss_mbedtls_key_object_free(sss_mbedtls_object_t *keyObject)
 {
@@ -3179,7 +3183,7 @@ static sss_status_t sss_mbedtls_generate_ecp_key(
         ret = mbedtls_ecp_gen_key(groupId, mbedtls_pk_ec(*pkey), mbedtls_ctr_drbg_random, pSession->ctr_drbg);
     }
     else {
-        LOG_E(" Don't have support keyBitLen", keyBitLen);
+        LOG_E(" Don't have support for this keyBitLen");
         ret = 1;
     }
 

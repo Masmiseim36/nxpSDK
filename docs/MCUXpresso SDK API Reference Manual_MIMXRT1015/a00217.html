@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -387,7 +387,17 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00217.html#gga7ff0b98bb1341c07acefb1473b6eda29a7712fcacc6d5e9698366daafc59ea644">kStatusGroup_QUEUEDSPI</a> = 158, 
 <br/>
-&#160;&#160;<a class="el" href="a00217.html#gga7ff0b98bb1341c07acefb1473b6eda29a6c52b0b8b2d2ca670a5f8eca66212f54">kStatusGroup_POWER_MANAGER</a> = 159
+&#160;&#160;<a class="el" href="a00217.html#gga7ff0b98bb1341c07acefb1473b6eda29a6c52b0b8b2d2ca670a5f8eca66212f54">kStatusGroup_POWER_MANAGER</a> = 159, 
+<br/>
+&#160;&#160;<a class="el" href="a00217.html#gga7ff0b98bb1341c07acefb1473b6eda29a79d16666510da650e32b1499cf102aa5">kStatusGroup_IPED</a> = 160, 
+<br/>
+&#160;&#160;<a class="el" href="a00217.html#gga7ff0b98bb1341c07acefb1473b6eda29a9ef29ac5ce94ff0617434c39574b4f91">kStatusGroup_CSS_PKC</a> = 161, 
+<br/>
+&#160;&#160;<a class="el" href="a00217.html#gga7ff0b98bb1341c07acefb1473b6eda29a51bf18cc27f6df31f1602db81a2f77f5">kStatusGroup_HOSTIF</a> = 162, 
+<br/>
+&#160;&#160;<a class="el" href="a00217.html#gga7ff0b98bb1341c07acefb1473b6eda29a50aada436b514e0056476e275e1fd203">kStatusGroup_CLIF</a> = 163, 
+<br/>
+&#160;&#160;<a class="el" href="a00217.html#gga7ff0b98bb1341c07acefb1473b6eda29af5e618b56733c41397941d8dec581030">kStatusGroup_BMA</a> = 164
 <br/>
  }</td></tr>
 <tr class="memdesc:ga7ff0b98bb1341c07acefb1473b6eda29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Status group numbers.  <a href="a00217.html#ga7ff0b98bb1341c07acefb1473b6eda29">More...</a><br/></td></tr>
@@ -429,7 +439,7 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gac6e3c4c6fa592fc0da7fab541e7019f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#gac6e3c4c6fa592fc0da7fab541e7019f7">FSL_COMMON_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
+<tr class="memitem:gac6e3c4c6fa592fc0da7fab541e7019f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00217.html#gac6e3c4c6fa592fc0da7fab541e7019f7">FSL_COMMON_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
 <tr class="memdesc:gac6e3c4c6fa592fc0da7fab541e7019f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">common driver version.  <a href="#gac6e3c4c6fa592fc0da7fab541e7019f7">More...</a><br/></td></tr>
 <tr class="separator:gac6e3c4c6fa592fc0da7fab541e7019f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -535,7 +545,7 @@ Suppress fallthrough warning macro</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_COMMON_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td>
+          <td class="memname">#define FSL_COMMON_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00217.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1046,6 +1056,21 @@ Suppress fallthrough warning macro</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29a6c52b0b8b2d2ca670a5f8eca66212f54"></a>kStatusGroup_POWER_MANAGER</em>&nbsp;</td><td class="fielddoc">
 <p>Group number for POWER_MANAGER status codes. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29a79d16666510da650e32b1499cf102aa5"></a>kStatusGroup_IPED</em>&nbsp;</td><td class="fielddoc">
+<p>Group number for IPED status codes. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29a9ef29ac5ce94ff0617434c39574b4f91"></a>kStatusGroup_CSS_PKC</em>&nbsp;</td><td class="fielddoc">
+<p>Group number for CSS PKC status codes. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29a51bf18cc27f6df31f1602db81a2f77f5"></a>kStatusGroup_HOSTIF</em>&nbsp;</td><td class="fielddoc">
+<p>Group number for HOSTIF status codes. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29a50aada436b514e0056476e275e1fd203"></a>kStatusGroup_CLIF</em>&nbsp;</td><td class="fielddoc">
+<p>Group number for CLIF status codes. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga7ff0b98bb1341c07acefb1473b6eda29af5e618b56733c41397941d8dec581030"></a>kStatusGroup_BMA</em>&nbsp;</td><td class="fielddoc">
+<p>Group number for BMA status codes. </p>
 </td></tr>
 </table>
 

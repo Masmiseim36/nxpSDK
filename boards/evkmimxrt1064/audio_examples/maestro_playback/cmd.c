@@ -49,7 +49,11 @@ SHELL_COMMAND_DEFINE(
     file,
     "\r\n\"file\": Perform audio file decode and playback\r\n"
     "\r\n"
-    "  USAGE: file [start|stop|pause|update|track|list|info]\r\n"
+    "  USAGE: file [start|stop|pause|"
+#ifdef EAP_PROC
+    "update|set|get"
+#endif
+    "track|list|info]\r\n"
     "    start             Play default (first found) or specified audio track file.\r\n"
     "    stop              Stops actual playback.\r\n"
     "    pause             Pause actual track or resume if already paused.\r\n"
@@ -87,9 +91,9 @@ streamer_handle_t streamerHandle;
 static uint32_t isFileOnSDcard(char *filename)
 {
     FRESULT error;
-    DIR directory;
-    FILINFO fileInformation;
-    uint32_t filePresent = false;
+    DIR directory           = {0};
+    FILINFO fileInformation = {0};
+    uint32_t filePresent    = false;
 
     if (!app.sdcardInserted)
     {

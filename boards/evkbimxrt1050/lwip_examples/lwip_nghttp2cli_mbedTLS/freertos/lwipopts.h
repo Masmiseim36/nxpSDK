@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,12 +12,16 @@
 /**
 ******************************************************************************
 * @file lwipopts.h
-* This file is based on \src\include\lwip\opt.h
+* This file is based on \\src\\include\\lwip\\opt.h
 ******************************************************************************
 */
 
 #ifndef __LWIPOPTS_H__
 #define __LWIPOPTS_H__
+
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
 
 /**
  * NO_SYS 0: Use RTOS; 1: Bare metal lwIP
@@ -108,15 +112,14 @@ timeouts. */
 #endif
 
 /* ---------- Pbuf options ---------- */
-/* PBUF_POOL_SIZE: the number of buffers in the pbuf pool. */
+/* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool.
+ * The default is designed to accommodate single full size TCP frame in one pbuf, including
+ * TCP_MSS, IP header, and link header. It is defined in lwip\\src\\include\\lwip\\opt.h as
+ * LWIP_MEM_ALIGN_SIZE(TCP_MSS+40+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)
+ */
 #ifndef PBUF_POOL_SIZE
 #define PBUF_POOL_SIZE 5
 #endif
-/* PBUF_POOL_BUFSIZE: the size of each pbuf in the pbuf pool.
- * The default is designed to accommodate single full size TCP frame in one pbuf, including
- * TCP_MSS, IP header, and link header. It is defined in lwip\src\include\lwip\opt.h as
- * LWIP_MEM_ALIGN_SIZE(TCP_MSS+40+PBUF_LINK_ENCAPSULATION_HLEN+PBUF_LINK_HLEN)
- */
 
 /* ---------- Network Interfaces options ---------- */
 /* LWIP_SINGLE_NETIF==1: use a single netif only. This is the common case for
@@ -190,13 +193,13 @@ order. Define to 0 if your device is low on memory. */
 #endif
 /* TCP sender buffer space (bytes). */
 #ifndef TCP_SND_BUF
-/* CONF: Configurable if LWIP_TCP. Int, validation conditions in middlewarelwipsrccoreinit.c */
+/* CONF: Configurable if LWIP_TCP. Int, validation conditions in middleware\lwip\src\core\init.c */
 #define TCP_SND_BUF (6 * TCP_MSS)
 #endif
 /* TCP sender buffer space (pbufs). This must be at least =
 2 *TCP_SND_BUF/TCP_MSS for things to work. */
 #ifndef TCP_SND_QUEUELEN
-/* CONF: Configurable if LWIP_TCP. Int, validation conditions in middlewarelwipsrccoreinit.c */
+/* CONF: Configurable if LWIP_TCP. Int, validation conditions in middleware\lwip\src\core\init.c */
 #define TCP_SND_QUEUELEN (3 * TCP_SND_BUF) / TCP_MSS
 #endif
 /* TCP receive window. */
@@ -275,8 +278,8 @@ turning this on does currently not work. */
 #define LWIP_STATS 0
 #endif
 /* ---------- ERRNO options ---------- */
-/** LWIP_PROVIDE_ERRNO==1: Let lwIP provide ERRNO values and the 'errno' variable.
- * If this is disabled, cc.h must either define 'errno', include <errno.h>,
+/** LWIP_PROVIDE_ERRNO==1: Let lwIP provide ERRNO values and the \'errno\' variable.
+ * If this is disabled, cc.h must either define \'errno\', include <errno.h>,
  * define LWIP_ERRNO_STDINCLUDE to get <errno.h> included or
  * define LWIP_ERRNO_INCLUDE to <errno.h> or equivalent.
  */
@@ -333,8 +336,39 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 #define DEFAULT_THREAD_PRIO 3
 #endif
 
-/* ---------- Debugging options ---------- */
+/* ---------- IPv6 options ---------- */
+/**
+ * LWIP_IPV6==1: Enable IPv6
+ */
+#ifndef LWIP_IPV6
+#define LWIP_IPV6 0
+#endif
+/**
+ * LWIP_IPV6_NUM_ADDRESSES: Number of IPv6 addresses per netif.
+ */
+#ifndef LWIP_IPV6_NUM_ADDRESSES
+#define LWIP_IPV6_NUM_ADDRESSES 3
+#endif
+/**
+ * LWIP_IPV6_AUTOCONFIG==1: Enable stateless address autoconfiguration as per RFC 4862.
+ */
+#ifndef LWIP_IPV6_AUTOCONFIG
+#define LWIP_IPV6_AUTOCONFIG 0
+#endif
+/**
+ * LWIP_IPV6_DHCP6==1: enable DHCPv6 stateful/stateless address autoconfiguration.
+ */
+#ifndef LWIP_IPV6_DHCP6
+#define LWIP_IPV6_DHCP6 0
+#endif
+/**
+ * LWIP_IPV6_DHCP6_STATELESS==1: enable DHCPv6 stateless address autoconfiguration.
+ */
+#ifndef LWIP_IPV6_DHCP6_STATELESS
+#define LWIP_IPV6_DHCP6_STATELESS LWIP_IPV6_DHCP6
+#endif
 
+/* ---------- Debugging options ---------- */
 #define LWIP_DEBUG
 
 #ifdef LWIP_DEBUG
@@ -378,7 +412,8 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
  */
 #define DEFAULT_ACCEPTMBOX_SIZE 12
 
-#define LWIP_DNS 1
+#define LWIP_DNS                       1
+#define LWIP_NETIF_EXT_STATUS_CALLBACK 1
 
 #if (LWIP_DNS || LWIP_IGMP || LWIP_IPV6) && !defined(LWIP_RAND)
 /* When using IGMP or IPv6, LWIP_RAND() needs to be defined to a random-function returning an u32_t random value*/
@@ -386,6 +421,11 @@ Some MCU allow computing and verifying the IP, UDP, TCP and ICMP checksums by ha
 u32_t lwip_rand(void);
 #define LWIP_RAND() lwip_rand()
 #endif
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
+
 #endif /* __LWIPOPTS_H__ */
 
 /*****END OF FILE****/

@@ -1,4 +1,4 @@
-eIQ inference with DeepView RT 2.4.20
+eIQ inference with DeepView RT 2.4.44
 
 Content
 -------
@@ -79,7 +79,7 @@ Note: DeepView RT supports only a subset of operators available in
 
 6. Release notes
 ----------------
-The library is based on DeepView RT version 2.4.20.
+The library is based on DeepView RT version 2.4.44.
 
 7. Limitations
 --------------

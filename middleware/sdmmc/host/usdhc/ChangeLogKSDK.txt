@@ -2,7 +2,11 @@
 @page middleware_log Middleware Change Log
 
 @section host_usdhc Host USDHC driver for MCUXpresso SDK
-The current driver version is 2.6.1.
+The current driver version is 2.6.2.
+
+  - 2.6.2
+    - Bug Fixes
+      - Added clock force on during standard tuning to fix the card access not stable after initialization.
 
   - 2.6.1
     - Improvements

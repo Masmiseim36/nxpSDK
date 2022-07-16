@@ -1,0 +1,1801 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=windows-1250">
+        <meta http-equiv="X-UA-Compatible" content="IE=10">
+    <title id='Description'></title>
+    <link rel="stylesheet" href="styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jqxcore.js"></script>
+    <script type="text/javascript" src="jqxdraw.js"></script>
+    <script type="text/javascript" src="jqxgauge.js"></script>
+	<script type="text/javascript" src="jqxslider.js"></script>
+    <script type="text/javascript" src="jqxbuttons.js"></script>
+    <script type="text/javascript" src="jqxscrollbar.js"></script>
+    <script type="text/javascript" src="jqxpanel.js"></script>
+	<script type="text/javascript" src="jqxnotification.js"></script>
+	<script type="text/javascript" src="jqxswitchbutton.js"></script>
+	<script type="text/javascript" src="jqxtooltip.js"></script>
+
+    <style>
+        html, body {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        }
+
+    </style>
+</head>
+
+<body>
+	<OBJECT id="pcm" height="0" width="0" classid="clsid:48A185F1-FFDB-11D3-80E3-00C04F176153">
+	</OBJECT>
+
+	<font size="5" style="position:absolute; top:0px; left:300px;">LPCXPRESSO55S36 Dual Motor Application</font>
+
+	<!-- MOTOR M1 -->
+	<div style="position:absolute; top:40px; left:150px; font-weight:bold; font-size: 21px" >Motor M1</div>
+	<font id="tag_gauge1" color="blue" size="1" style="position:absolute; top:200px; left:179px; z-index:4; font-size: 14px" >Speed</font>
+	<font size="2" style="position:absolute; top:36px; left:15px; font-size: 12px" >Required</font>
+	<div  id="tag_required1" style="position:absolute; top:46px; left:15px; font-size: 12px" >speed</div>
+	<div id="units1" style="position:absolute; top:270px; left:180px; z-index:3" >[rpm]</div>
+	<font size="1" color="blue" style="position:absolute; top:406px; left:177px; z-index:5; font-size: 11px" >Current i<sub>q</sub></font> <!-- default left=262px, top=326 -->
+	<font size="1" style="position:absolute; top:443px; left:191px; z-index:10; font-size: 11px" >[A]</font> <!-- default lef=276px, top=363px -->
+	<div id="tag_required_max1" style="position:absolute; top:90px; left:50px;" >4000</div>
+	<font size="1" style="position:absolute; top:185px; left:50px; z-index:10; font-size: 12px" >0</font>
+	<div id="tag_required_min1" style="position:absolute; top:280px; left:50px;" >-4000</div>
+
+	<div id="gaugeContainerPositionM1" style="position:absolute; top:70px; left:80px; visibility: hidden" ></div>
+	<div id="gaugeContainerSpeedM1" style="position:absolute; top:70px; left:80px; z-index:2" ></div>
+	<div id="gaugeContainerSpeedRequiredM1" style="position:absolute; top:70px; left:80px; z-index:8;" ></div>
+	<div id="gaugeContainerPositionRequiredM1" style="position:absolute; top:70px; left:80px; visibility: hidden" ></div>
+  <div id="gaugeContainerCurrentM1" style="position:absolute; top:320px; left:125px; z-index:4" ></div>                   <!-- default left=210px, top=240px -->
+	<div id="jqxSliderSetSpeedM1" style="position:absolute; top:70px; left:15px; z-index:8;" ></div>
+	<div id="jqxSliderSetPositionM1" style="position:absolute; top:70px; left:15px; visibility: hidden"  ></div>
+
+
+	<!-- MOTOR M2 -->
+	<div style="position:absolute; top:40px; left:878px; font-weight:bold; font-size: 21px" >Motor M2</div>
+	<font id="tag_gauge2" color="blue" size="1" style="position:absolute; top:200px; left:903px; z-index:4; font-size: 14px" >Speed</font>
+	<font size="2" style="position:absolute; top:36px; left:1070px; font-size: 12px" >Required</font>
+	<div  id="tag_required2" style="position:absolute; top:46px; left:1070px; font-size: 12px" >speed</div>
+	<div id="units2" style="position:absolute; top:270px; left:907px; z-index:3" >[rpm]</div>
+	<font size="1" color="blue" style="position:absolute; top:406px; left:906px; z-index:5; font-size: 11px" >Current i<sub>q</sub></font>
+	<font size="1" style="position:absolute; top:443px; left:919px; z-index:10; font-size: 11px" >[A]</font>
+	<div id="tag_required_max2" style="position:absolute; top:90px; left:1040px;" >4000</div>
+	<font size="1" style="position:absolute; top:185px; left:1065px; z-index:10; font-size: 12px" >0</font>
+	<div id="tag_required_min2" style="position:absolute; top:280px; left:1037px;" >-4000</div>
+
+	<div id="gaugeContainerSpeedM2" style="position:absolute; top:70px; left:805px; z-index:2" ></div>
+	<div id="gaugeContainerPositionM2" style="position:absolute; top:70px; left:805px; visibility: hidden" ></div>
+	<div id="gaugeContainerSpeedRequiredM2" style="position:absolute; top:70px; left:805px; z-index:8;" ></div>
+	<div id="gaugeContainerPositionRequiredM2" style="position:absolute; top:70px; left:805px; visibility: hidden" ></div>
+	<div id="gaugeContainerCurrentM2" style="position:absolute; top:320px; left:853px; z-index:4" ></div>
+	<div id="jqxSliderSetSpeedM2" style="position:absolute; top:70px; left:1080px; z-index:8;" ></div>
+	<div id="jqxSliderSetPositionM2" style="position:absolute; top:70px; left:1080px; visibility: hidden" ></div>
+
+
+	<!-- OTHERS -->
+	<font size="3" style="position:absolute; top:533px; left:500px" >CPU Load [%]</font>
+	<div id="jqxGaugeLinearCycleNumber" style="position:absolute; top:300px; left:510px" ></div>         <!-- default left=460px, top=300px -->
+	<font size="3" style="position:absolute; top:533px; left:330px" >M1 DCB [V]</font>
+	<div id="gaugeLinearDCBusVoltageM1" style="position:absolute; top:300px; left:340px;" ></div>           <!-- default left=350px, top=300px -->
+  <font size="3" style="position:absolute; top:533px; left:670px" >M2 DCB [V]</font>
+  <div id="gaugeLinearDCBusVoltageM2" style="position:absolute; top:300px; left:670px;" ></div>
+	<font size="2" style="position:absolute; top:46px; left:425px; font-size: 16px" >Control M1</font>
+	<div id='jqxSwitchButtonM1' style="position:absolute; top:70px; left:365px;"></div>                <!-- Speed/Position switch M1 -->
+  <font size="2" style="position:absolute; top:46px; left:645px; font-size: 16px" >Control M2</font>
+  <div id='jqxSwitchButtonM2' style="position:absolute; top:70px; left:585px;"></div>                <!-- Speed/Position switch M2 -->
+  <button id='jqxAppSwitchButtonM1' style="position:absolute; top:108px; left:350px" type="button">RUN M1</button>  <!-- RUN/STOP application button M1 -->
+  <button id='jqxAppSwitchButtonM2' style="position:absolute; top:108px; left:570px" type="button">RUN M2</button>  <!-- RUN/STOP application switch M2 -->
+  <button id='jqxDemoButtonM1' style="position:absolute; top:154px; left:350px" type="button">Demo Mode M1</button>      <!-- Demo mode M1 -->
+  <button id='jqxDemoButtonM2' style="position:absolute; top:154px; left:570px" type="button">Demo Mode M2</button>      <!-- Demo mode M2 -->
+  <div id='jqxAppStateNotificationM1' style="position:absolute; top:200px; left:350px; width:200px"><div align="center"><span id="jqxAppStateNotifTextM1"></span></div></div>   <!-- App state M1 -->
+  <div id='jqxAppStateNotificationM2' style="position:absolute; top:200px; left:570px; width:200px"><div align="center"><span id="jqxAppStateNotifTextM2"></span></div></div>   <!-- App state M1 -->
+
+	<img src="logo.png" style="position:absolute; top:600px; left:480px" width="177" height="64" >
+
+	<font size="3" color="#808080" style="position:absolute; top:698px; left:702px; font-weight:bold" >NXP Semiconductors</font>
+	<font size="3" color="#808080" style="position:absolute; top:710px; left:702px; font-weight:bold" >Rožnov pod Radhoštěm</font>
+	<font size="3" color="#808080" style="position:absolute; top:722px; left:702px; font-weight:bold" >Czech republic</font>
+	<A size="3" color="#808080" style="position:absolute; top:734px; left:702px; font-weight:bold" HREF="microsoft-edge:http://www.nxp.com/motorcontrol_pmsm">www.nxp.com/motorcontrol_pmsm</A>
+
+	<script src="source.js" language="JScript"></script>
+
+	<script language="VBScript">
+		Sub pcm_OnVariableChanged(varName , nSubscriptionId)
+			event_OnVariableChanged varName, nSubscriptionId
+		End Sub
+	</script>
+
+	<script type="text/javascript">
+
+	var speed_or_position_M1 = 0; // 0=speed, 1=position
+	var speed_or_position_M2 = 0; // 0=speed, 1=position
+	var M1_demoMode = 0;
+  var M2_demoMode = 0;
+	var SpeedPositionRequired = 500; //500
+	var SpeedPositionRequiredReading = 750;//1500
+
+	var cpuFreq = 150000000; // 150MHz
+	var PWMFreq = 10000; // 10KHz
+	var maxCycleNumber = cpuFreq/PWMFreq;
+
+	var minSpeed = 1;
+	var nominalSpeed = 1000;
+	var gaugeNominalSpeed = nominalSpeed;
+	var gaugeLimit = gaugeNominalSpeed*1.25;
+	var gaugeMinSpeed = minSpeed;
+	var gaugeSpeedTicksMajor = 100;
+	var gaugeSpeedTicksMinor = 10;
+
+	var gaugeSpeedWidth = 240;
+	var gaugeSpeedHeight = 240;
+	var gaugeCurrentWidth = 150;
+	var animationDur = 75;
+	var sliderSetSpeedWidth = 250;
+	var dcBusVoltageWidth = 240;
+
+	var succ, succ2, succ3, succ4;
+
+	var GaugeTemp = 0;
+
+	var cycleNumberAct = 0;
+  var M1_dcbvoltage = 0;
+	var M1_dcbcurrent= 0;
+	var M1_speed= 0;
+	var M1_position= 0;
+	var set_M1_speed;
+	var AppState1;
+	var M1_speed_sub;
+	var M1_current_sub;
+	var M1_voltage_sub;
+	var M1_AppState_sub;
+	var faultM1_sub;
+	var M1_app_switch_sub;
+	var	M1_req_speed_sub;
+	var M1_init_CL_sub;
+	var M1_speed_init;
+	var M1_curr_limit_init;
+
+	var M2_dcbvoltage= 0;
+	var M2_dcbcurrent= 0;
+	var M2_speed= 0;
+	var M2_position= 0;
+	var set_M2_speed;
+	var AppState2;
+	var M2_speed_sub;
+	var M2_current_sub;
+	var M2_voltage_sub;
+	var M2_AppState_sub;
+	var faultM2_sub;
+	var M2_app_switch_sub;
+	var M2_req_speed_sub;
+	var M2_init_CL_sub;
+	var M2_speed_init;
+	var M2_curr_limit_init;
+
+	var vValue0, tValue0, retMsg;
+	var bsRetMsg;
+	var fault;
+	var speedReqNew; //
+	var cycleNumberAct = 0; //
+	var appStateM1  = 0; //
+	var appStateM2  = 0; //
+	var appSwitchM1 = 0; //
+	var appSwitchM2 = 0; //
+	var faultState = 0; //
+
+	var label_dist = 51;
+	var label_interval = 10;
+
+	// TIMER
+	var myVar = setInterval(GaugeWriting, 150); //200!!
+
+	// Speed M1
+	$('#gaugeContainerSpeedM1').jqxGauge({
+        ranges: [{ startValue: -4000, endValue: -4000, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 6, startWidth: 6 },
+				{ startValue: -4000, endValue: -500, style: { fill: '#1f227e', stroke: '#1f227e' }, endWidth: 6, startWidth: 6 },
+				{ startValue: -500, endValue: 500, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 6, startWidth: 6 },
+				{ startValue: 500, endValue: 4000, style: { fill: '#1f227e', stroke: '#1f227e' }, endWidth: 6, startWidth: 6 },
+                { startValue: 4000, endValue: 4000, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 6, startWidth: 6 }],
+        ticksMinor: { interval: 100, size: '5%' },
+        ticksMajor: { interval: 1000, size: '9%' },
+		max: 4000,
+		min: -4000,
+		labels: { distance: label_dist,  interval: 1000},
+		startAngle: 67,
+		endAngle: 382,
+		border: {  size: '5%'},
+        value: 0,
+        width: gaugeSpeedWidth,
+        height: gaugeSpeedHeight,
+		pointer:{style: {fill: '#1f227e', stroke: '#1f227e'},
+        length:'70%',width:'2%'},
+        colorScheme: 'scheme05',
+        animationDuration: animationDur
+    });
+
+	// Speed M2
+	$('#gaugeContainerSpeedM2').jqxGauge({
+        ranges: [{ startValue: -4000, endValue: -4000, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 6, startWidth: 6 },
+				{ startValue: -4000, endValue: -500, style: { fill: '#1f227e', stroke: '#1f227e' }, endWidth: 6, startWidth: 6 },
+				{ startValue: -500, endValue: 500, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 6, startWidth: 6 },
+				{ startValue: 500, endValue: 4000, style: { fill: '#1f227e', stroke: '#1f227e' }, endWidth: 6, startWidth: 6 },
+                { startValue: 4000, endValue: 4000, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 6, startWidth: 6 }],
+        ticksMinor: { interval: 100, size: '5%' },
+        ticksMajor: { interval: 1000, size: '9%' },
+		max: 4000,
+		min: -4000,
+		labels: { distance: label_dist,  interval: 1000},
+		startAngle: 67,
+		endAngle: 382,
+		border: {  size: '5%'},
+        value: 0,
+        width: gaugeSpeedWidth,
+        height: gaugeSpeedHeight,
+		pointer:{style: {fill: '#1f227e', stroke: '#1f227e'},
+        length:'70%',width:'2%'},
+        colorScheme: 'scheme05',
+        animationDuration: animationDur
+    });
+
+	// Position M1
+    $('#gaugeContainerPositionM1').jqxGauge({
+        ranges: [{ startValue: -gaugeNominalSpeed, endValue: gaugeNominalSpeed, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 6, startWidth: 6 }],
+        ticksMinor: { interval: gaugeSpeedTicksMinor, size: '5%' },
+        ticksMajor: { interval: gaugeSpeedTicksMajor, size: '9%' },
+		max: 500,
+		min: -500,
+		labels: { distance: label_dist,  interval: 100},
+		startAngle: 67,
+		endAngle: 382,
+		border: {  size: '5%'},
+        value: 0,
+        width: gaugeSpeedWidth,
+        height: gaugeSpeedHeight,
+		pointer:{style: {fill: '#1f227e', stroke: '#1f227e'},
+        length:'70%',width:'2%'},
+        colorScheme: 'scheme05',
+        animationDuration: animationDur
+    });
+
+	// Position M2
+    $('#gaugeContainerPositionM2').jqxGauge({
+        ranges: [{ startValue: -gaugeNominalSpeed, endValue: gaugeNominalSpeed, style: { fill: '#4bb648', stroke: '#4bb648' }, endWidth: 6, startWidth: 6 }],
+        ticksMinor: { interval: gaugeSpeedTicksMinor, size: '5%' },
+        ticksMajor: { interval: gaugeSpeedTicksMajor, size: '9%' },
+		max: 500,
+		min: -500,
+		labels: { distance: label_dist,  interval: 100},
+		startAngle: 67,
+		endAngle: 382,
+		border: {  size: '5%'},
+        value: 0,
+        width: gaugeSpeedWidth,
+        height: gaugeSpeedHeight,
+		pointer:{style: {fill: '#1f227e', stroke: '#1f227e'},
+        length:'70%',width:'2%'},
+        colorScheme: 'scheme05',
+        animationDuration: animationDur
+    });
+
+    // Required Speed M1
+    $('#gaugeContainerSpeedRequiredM1').jqxGauge({
+        ranges: [{ startValue: -4000, endValue: -4000, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 },
+        { startValue: -4000, endValue: -500, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 },
+        { startValue: -500, endValue: 500, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 },
+        { startValue: 500, endValue: 4000, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 },
+        { startValue: 4000, endValue: 4000, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 }],
+        ticksMinor: { interval: gaugeSpeedTicksMinor, size: '5%',visible:false },
+        ticksMajor: { interval: gaugeSpeedTicksMajor, size: '9%',visible:false },
+        caption: {value: 'x100 rpm', position: 'bottom', offset: [0, gaugeNominalSpeed], visible: false},
+        max: 4000,
+        min: -4000,
+        labels: { distance: 35, interval: 10, visible:false},
+        startAngle: 67,
+        endAngle: 382,
+        border: {  style:{fill:'none', stroke:'none'}, showGradient: false },
+        style:{  fill:'none', stroke:'none'},
+        value: 0,
+        width: gaugeSpeedWidth,
+        height: gaugeSpeedHeight,
+        cap: {size: '6%', style: {fill: 'black', stroke: 'black'},
+        visible:true},
+        pointer:{style: {fill: '#e02629', stroke: '#e02629'},
+        length:'55%',width:'2%'},
+        animationDuration: animationDur
+    });
+
+    // Required Speed M2
+    $('#gaugeContainerSpeedRequiredM2').jqxGauge({
+        ranges: [{ startValue: -4000, endValue: -4000, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 },
+        { startValue: -4000, endValue: -500, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 },
+        { startValue: -500, endValue: 500, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 },
+        { startValue: 500, endValue: 4000, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 },
+        { startValue: 4000, endValue: 4000, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 }],
+        ticksMinor: { interval: gaugeSpeedTicksMinor, size: '5%',visible:false },
+        ticksMajor: { interval: gaugeSpeedTicksMajor, size: '9%',visible:false },
+        caption: {value: 'x100 rpm', position: 'bottom', offset: [0, gaugeNominalSpeed], visible: false},
+        max: 4000,
+        min: -4000,
+        labels: { distance: 35, interval: 10, visible:false},
+        startAngle: 67,
+        endAngle: 382,
+        border: {  style:{fill:'none', stroke:'none'}, showGradient: false },
+        style:{  fill:'none', stroke:'none'},
+        value: 0,
+        width: gaugeSpeedWidth,
+        height: gaugeSpeedHeight,
+        cap: {size: '6%', style: {fill: 'black', stroke: 'black'},
+        visible:true},
+        pointer:{style: {fill: '#e02629', stroke: '#e02629'},
+        length:'55%',width:'2%'},
+        animationDuration: animationDur
+    });
+
+    // Required Position M1
+    $('#gaugeContainerPositionRequiredM1').jqxGauge({
+        ranges: [{ startValue: -gaugeNominalSpeed, endValue: gaugeNominalSpeed, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6}],
+        ticksMinor: { interval: gaugeSpeedTicksMinor, size: '5%',visible:false },
+        ticksMajor: { interval: gaugeSpeedTicksMajor, size: '9%',visible:false },
+        caption: {value: 'x100 rpm', position: 'bottom', offset: [0, gaugeNominalSpeed], visible: false},
+        max: 500,
+        min: -500,
+        labels: { distance: label_dist, interval: 100, visible:false},
+        startAngle: 67,
+        endAngle: 382,
+        border: {  style:{fill:'none', stroke:'none'}, showGradient: false },
+        style:{  fill:'none', stroke:'none'},
+        value: 0,
+        width: gaugeSpeedWidth,
+        height: gaugeSpeedHeight,
+        cap: {size: '6%', style: {fill: 'black', stroke: 'black'},
+        visible:true},
+        pointer:{style: {fill: '#e02629', stroke: '#e02629'},
+        length:'55%',width:'2%'},
+        animationDuration: animationDur
+    });
+
+    // Required Position M2
+    $('#gaugeContainerPositionRequiredM2').jqxGauge({
+        ranges: [{ startValue: -gaugeNominalSpeed, endValue: gaugeNominalSpeed, style: { fill: 'none', stroke: 'none' }, endWidth: 6, startWidth: 6 }],
+        ticksMinor: { interval: gaugeSpeedTicksMinor, size: '5%',visible:false },
+        ticksMajor: { interval: gaugeSpeedTicksMajor, size: '9%',visible:false },
+        caption: {value: 'x100 rpm', position: 'bottom', offset: [0, gaugeNominalSpeed], visible: false},
+        max: 500,
+        min: -500,
+        labels: { distance: label_dist, interval: 100, visible:false},
+        startAngle: 67,
+        endAngle: 382,
+        border: {  style:{fill:'none', stroke:'none'}, showGradient: false },
+        style:{  fill:'none', stroke:'none'},
+        value: 0,
+        width: gaugeSpeedWidth,
+        height: gaugeSpeedHeight,
+        cap: {size: '6%', style: {fill: 'black', stroke: 'black'},
+        visible:true},
+        pointer:{style: {fill: '#e02629', stroke: '#e02629'},
+        length:'55%',width:'2%'},
+        animationDuration: animationDur
+    });
+
+	// Current M1
+    $('#gaugeContainerCurrentM1').jqxGauge({
+        ranges: [{ startValue: -3, endValue: -2, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 3, startWidth: 3 },
+                { startValue: -2, endValue: 2, style: { fill: '#2b8020', stroke: '#2b8020' }, endWidth: 3, startWidth: 3 },
+				{ startValue: 2, endValue: 3, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 3, startWidth: 3 }],
+        ticksMinor: { interval: 0.25, size: '5%' },
+        ticksMajor: { interval: 0.5, size: '9%' },
+		min: -3,
+		max: 3,
+		labels: { distance: 30,  interval: 1},
+		startAngle: 70,
+		endAngle: 390,
+		border: {  size: '5%'},
+        value: 0,
+        width:  gaugeCurrentWidth,
+        height: '60%',
+		cap: {size: '6%', style: {fill: 'black', stroke: 'black'}, visible:true},
+        colorScheme: 'scheme05',
+		pointer:{style: {fill: '#e02629', stroke: '#e02629'},
+        length:'55%',width:'2%'},
+        animationDuration: animationDur
+    });
+
+	// Current M2
+	$('#gaugeContainerCurrentM2').jqxGauge({
+ranges: [{ startValue: -3, endValue: -2, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 3, startWidth: 3 },
+                { startValue: -2, endValue: 2, style: { fill: '#2b8020', stroke: '#2b8020' }, endWidth: 3, startWidth: 3 },
+				{ startValue: 2, endValue: 3, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 3, startWidth: 3 }],
+        ticksMinor: { interval: 0.25, size: '5%' },
+        ticksMajor: { interval: 0.5, size: '9%' },
+		min: -3,
+		max: 3,
+		labels: { distance: 30,  interval: 1},
+		startAngle: 70,
+		endAngle: 390,
+		border: {  size: '5%'},
+        value: 0,
+        width:  gaugeCurrentWidth,
+        height: '60%',
+		cap: {size: '6%', style: {fill: 'black', stroke: 'black'}, visible:true},
+        colorScheme: 'scheme05',
+		pointer:{style: {fill: '#e02629', stroke: '#e02629'},
+        length:'55%',width:'2%'},
+		animationDuration: animationDur
+	});
+
+	// Speed M1 Slider
+	$('#jqxSliderSetSpeedM1').jqxSlider({
+		orientation: 'vertical',
+		template: "danger",
+		tooltip: true,
+		tooltipPosition: "far",
+		theme:'darkblue',
+		mode: 'default',
+		showButtons: true,
+		height: 250,
+		width: 40,
+		min: -4000, max: 4000,
+		step: 500,
+		ticksFrequency: 500,
+		values: [-4000, 4000]
+
+	});
+
+	// Speed M2 Slider
+	$('#jqxSliderSetSpeedM2').jqxSlider({
+		orientation: 'vertical',
+		tooltip: true,
+		tooltipPosition: "far",
+		template: "danger",
+		mode: 'default',
+		showButtons: true,
+		height: 250,
+		width: 40,
+		min: -4000, max: 4000,
+		step: 500,
+		ticksFrequency: 500,
+		values: [-4000, 4000]
+	});
+
+	// Position M1 Slider
+	$('#jqxSliderSetPositionM1').jqxSlider({
+		orientation: 'vertical',
+		//tooltip: true,
+		template: "danger",
+		mode: 'default',
+		showButtons: true,
+		height: 250,
+		width: 40,
+		min: -500, max: 500,
+		step: 500,
+		ticksFrequency: 500,
+		values: [-500, 500]
+	});
+
+	// Position M2 Slider
+	$('#jqxSliderSetPositionM2').jqxSlider({
+		orientation: 'vertical',
+		//tooltip: true,
+		template: "danger",
+		mode: 'default',
+		showButtons: true,
+		height: 250,
+		width: 40,
+		min: -500, max: 500,
+		step: 500,
+		ticksFrequency: 500,
+		values: [-500, 500]
+	});
+
+	// CPU Load
+    $('#jqxGaugeLinearCycleNumber').jqxLinearGauge({
+        orientation: 'vertical',
+        width: 100,
+        height: 240,
+        ticksMajor: { size: '16%', interval: 50 },
+        ticksMinor: { size: '9%', interval: 10, style: { 'stroke-width': 1, stroke: '#aaaaaa'} },
+        max: 100,
+        min: 0,
+        pointer: { size: '13%' ,style: { fill: '#1f227e', stroke: '#1f227e'}},
+		background: { style: { stroke: '#ffaaaa', fill: '#ffaaaa' }, visible: false, backgroundType: 'rectangle' },
+        colorScheme: 'scheme02',
+        labels: { interval: 50, position: 'near' },
+        value: 0,
+        ranges: [
+        { startValue: 0, endValue: 90, style: { fill: '#2b8020', stroke: '#2b8020'}},
+        { startValue: 90, endValue: 100, style: { fill: '#FF4800', stroke: '#FF4800'} } ],
+        animationDuration: animationDur
+    });
+
+	// DCBus Voltage
+	$('#gaugeLinearDCBusVoltageM1').jqxLinearGauge({
+		orientation: 'vertical',
+		width: 100,
+		height: 240,
+		ticksMajor: { size: '16%', interval: 10 },
+		ticksMinor: { size: '9%', interval: 5, style: { 'stroke-width': 1, stroke: '#aaaaaa'} },
+		max: 40,
+		min: 0,
+		pointer: { size: '13%' ,style: { fill: '#1f227e', stroke: '#1f227e'}},
+		background: { style: { stroke: '#ffaaaa', fill: '#ffaaaa' }, visible: false, backgroundType: 'rectangle' },
+		colorScheme: 'scheme02',
+		labels: { interval: 10, position: 'near' },
+		value: 0,
+		ranges: [
+		{ startValue: 0, endValue: 10, style: { fill: '#FF4800', stroke: '#FF4800'} },
+		{ startValue: 10, endValue: 30, style: { fill: '#2b8020', stroke: '#2b8020'} },
+		{ startValue: 30, endValue: 40, style: { fill: '#FF4800', stroke: '#FF4800'}}],
+		animationDuration: animationDur
+	});
+
+  $('#gaugeLinearDCBusVoltageM2').jqxLinearGauge({
+		orientation: 'vertical',
+		width: 100,
+		height: 240,
+		ticksMajor: { size: '16%', interval: 10 },
+		ticksMinor: { size: '9%', interval: 5, style: { 'stroke-width': 1, stroke: '#aaaaaa'} },
+		max: 40,
+		min: 0,
+		pointer: { size: '13%' ,style: { fill: '#1f227e', stroke: '#1f227e'}},
+		background: { style: { stroke: '#ffaaaa', fill: '#ffaaaa' }, visible: false, backgroundType: 'rectangle' },
+		colorScheme: 'scheme02',
+		labels: { interval: 10, position: 'near' },
+		value: 0,
+		ranges: [
+		{ startValue: 0, endValue: 10, style: { fill: '#FF4800', stroke: '#FF4800'} },
+		{ startValue: 10, endValue: 30, style: { fill: '#2b8020', stroke: '#2b8020'} },
+		{ startValue: 30, endValue: 40, style: { fill: '#FF4800', stroke: '#FF4800'}}],
+		animationDuration: animationDur
+	});
+
+  // M1 notification
+	$("#jqxAppStateNotificationM1").jqxNotification(
+    {
+        width: 200,
+        height: 50,
+        opacity: 1,
+        autoOpen:  false,
+        autoClose: false,
+        showCloseButton: false,
+        template: "info"
+    });
+
+  // M2 notification
+	$("#jqxAppStateNotificationM2").jqxNotification(
+    {
+        width: 200,
+        height: 50,
+        opacity: 1,
+        autoOpen:  false,
+        autoClose: false,
+        showCloseButton: false,
+        template: "info"
+    });
+
+	// RUN/STOP button M1
+	$("#jqxAppSwitchButtonM1").jqxButton(
+    {
+        width: 200,
+        height: 40,
+        disabled: false,
+        template: "success"
+    });
+
+  // RUN/STOP button M2
+	$("#jqxAppSwitchButtonM2").jqxButton(
+    {
+        width: 200,
+        height: 40,
+        disabled: false,
+        template: "success"
+    });
+
+	// Demo button M1
+	$("#jqxDemoButtonM1").jqxButton(
+    {
+        width: 200,
+        height: 40,
+        template: "success"
+    });
+
+  // Demo button M2
+	$("#jqxDemoButtonM2").jqxButton(
+    {
+        width: 200,
+        height: 40,
+        template: "success"
+    });
+
+	// Switch button - Position/Speed M1
+    $("#jqxSwitchButtonM1").jqxSwitchButton(
+    {
+    	theme: 'classic',
+    	width: '170',
+    	height: '30',
+    	checked: true,
+    	onLabel: "SPEED",
+        offLabel: "POSITION",
+    });
+
+  // Switch button - Position/Speed M2
+    $("#jqxSwitchButtonM2").jqxSwitchButton(
+    {
+    	theme: 'classic',
+    	width: '170',
+    	height: '30',
+    	checked: true,
+    	onLabel: "SPEED",
+        offLabel: "POSITION",
+    });
+
+	M1_speed_control();
+	M2_speed_control();
+
+	M1_current_sub 		= pcm.SubscribeVariable("M1 Iq", 500, bsRetMsg);
+	M2_current_sub 		= pcm.SubscribeVariable("M2 Iq", 500, bsRetMsg);
+
+	M1_voltage_sub 		= pcm.SubscribeVariable("M1 DCB Voltage Filtered", 200, bsRetMsg);
+  M2_voltage_sub 		= pcm.SubscribeVariable("M2 DCB Voltage Filtered", 200, bsRetMsg);
+
+	M1_AppState_sub 	= pcm.SubscribeVariable("M1 Application State", 5000, bsRetMsg);
+	M2_AppState_sub 	= pcm.SubscribeVariable("M2 Application State", 5000, bsRetMsg);
+
+	M1_app_switch_sub 	= pcm.SubscribeVariable("M1 Application Switch", 5000, bsRetMsg);
+	M2_app_switch_sub 	= pcm.SubscribeVariable("M2 Application Switch", 5000, bsRetMsg);
+
+	M1_control_sub 	= pcm.SubscribeVariable("M1 MCAT Control", 5000, bsRetMsg);
+	M2_control_sub 	= pcm.SubscribeVariable("M2 MCAT Control", 5000, bsRetMsg);
+
+	cycleNumber_sub		= pcm.SubscribeVariable("M2 Cycle Number", 200, bsRetMsg);
+	M1_positionDemoMode	= pcm.SubscribeVariable("Demo Mode Position", 5000, bsRetMsg);
+	M1_speedDemoMode		= pcm.SubscribeVariable("Demo Mode Speed", 5000, bsRetMsg);
+  M2_positionDemoMode	= pcm.SubscribeVariable("M2 Demo Mode Position", 5000, bsRetMsg);
+  M2_speedDemoMode		= pcm.SubscribeVariable("M2 Demo Mode Speed", 5000, bsRetMsg);
+
+	/* UPDATE VARIABLES */
+	M1_control();
+	M2_control();
+
+	M1_req_speed();
+	M2_req_speed();
+
+	M1_req_position();
+	M2_req_position();
+
+	M1_speed_read();
+	M2_speed_read();
+
+	M1_position_read();
+	M2_position_read();
+
+	M1_voltage_read();
+  M2_voltage_read();
+
+	M1_current_read();
+	M2_current_read();
+
+	PositionDemoModeUpdate();
+	SpeedDemoModeUpdate();
+	AppStateNotificUpdate();
+	AppSwitch_read();
+	CycleNumberUpdate();
+
+	// reset to default
+	pcm.WriteVariable("M1 Position Required",0,retMsg);
+	pcm.WriteVariable("M1 Speed Required",0,retMsg);
+	pcm.WriteVariable("M2 Position Required",0,retMsg);
+	pcm.WriteVariable("M2 Speed Required",0,retMsg);
+
+	pcm.WriteVariable("Demo Mode Position",0,retMsg);
+	pcm.WriteVariable("Demo Mode Speed",0,retMsg);
+  pcm.WriteVariable("M2 Demo Mode Position",0,retMsg);
+  pcm.WriteVariable("M2 Demo Mode Speed",0,retMsg);
+	pcm.WriteVariable("M1 MCAT Control",3,retMsg);
+	pcm.WriteVariable("M2 MCAT Control",3,retMsg);
+
+
+	/* ON CHANGE/CLICK EVENTS CALLBACKS DEFINITIONS */
+	$(document).ready(function ()
+	{
+		$('#jqxSliderSetSpeedM1').on('change', function (event)
+	    {
+	        if(M1_speedDemoMode == 0)
+	        {
+	            speedReqNew = $('#jqxSliderSetSpeedM1').jqxSlider('getValue');
+	            pcm.WriteVariable("M1 Speed Required", speedReqNew, retMsg);
+	            $('#gaugeContainerSpeedRequiredM1').jqxGauge({value: speedReqNew }); // .jqxGauge({value: speedReqNew, });
+	            if(speedReqNew != 0)
+	            {
+	                pcm.WriteVariable("M1 Application Switch", 1, retMsg);
+	            }
+	        }
+	    });
+
+		$('#jqxSliderSetSpeedM2').on('change', function (event)
+	    {
+	        if(M2_speedDemoMode == 0)
+	        {
+	            speedReqNew = $('#jqxSliderSetSpeedM2').jqxSlider('getValue');
+	            pcm.WriteVariable("M2 Speed Required", speedReqNew, retMsg);
+	            $('#gaugeContainerSpeedRequiredM2').jqxGauge({value: speedReqNew });
+	            if(speedReqNew != 0)
+	            {
+	                pcm.WriteVariable("M2 Application Switch", 1, retMsg);
+	            }
+	        }
+	    });
+
+	    $('#jqxSliderSetPositionM1').on('change', function (event)
+	    {
+	        if(M1_positionDemoMode == 0)
+	        {
+	            speedReqNew = $('#jqxSliderSetPositionM1').jqxSlider('getValue');
+	            pcm.WriteVariable("M1 Position Required", speedReqNew, retMsg);
+	            $('#gaugeContainerPositionRequiredM1').jqxGauge({value: speedReqNew });
+	            if(speedReqNew != 0)
+	            {
+	                pcm.WriteVariable("M1 Application Switch", 1, retMsg);
+	            }
+	        }
+	    });
+
+	    $('#jqxSliderSetPositionM2').on('change', function (event)
+	    {
+	        if(M2_positionDemoMode == 0)
+	        {
+	            speedReqNew = $('#jqxSliderSetPositionM2').jqxSlider('getValue');
+	            pcm.WriteVariable("M2 Position Required", speedReqNew, retMsg);
+	            $('#gaugeContainerPositionRequiredM2').jqxGauge({value: speedReqNew });
+	            if(speedReqNew != 0)
+	            {
+	                pcm.WriteVariable("M2 Application Switch", 1, retMsg);
+	            }
+	        }
+	    });
+
+    // Switch button - Position/Speed M1
+	 	$("#jqxSwitchButtonM1").on('change', function (event) {
+	    	if (speed_or_position_M1== 0) // change to position
+	    	{
+				//POSITION CONTROL
+				M1_position_control();
+
+				pcm.WriteVariable("M1 Application Switch", 0, retMsg);
+
+				pcm.WriteVariable("Demo Mode Speed",0,retMsg);
+
+        pcm.WriteVariable("M1 MCAT POSPE Sensor",1,retMsg);
+
+	    	speed_or_position_M1= 1; // set to position control
+	    	}
+	    	else
+	    	{
+				//SPEED CONTROL
+	    	M1_speed_control();
+
+				pcm.WriteVariable("M1 Application Switch", 0, retMsg);
+
+				pcm.WriteVariable("Demo Mode Position",0,retMsg);
+
+        pcm.WriteVariable("M1 MCAT POSPE Sensor",0,retMsg);
+
+	    	speed_or_position_M1= 0; // set to speed control
+	    	}
+        });
+
+    // Switch button - Position/Speed M2
+	 	$("#jqxSwitchButtonM2").on('change', function (event) {
+	    	if (speed_or_position_M2 == 0) // change to position
+	    	{
+				//POSITION CONTROL
+				M2_position_control();
+
+				pcm.WriteVariable("M2 Application Switch", 0, retMsg);
+
+				pcm.WriteVariable("M2 Demo Mode Speed",0,retMsg);
+
+        pcm.WriteVariable("M2 MCAT POSPE Sensor",1,retMsg);
+
+	    	speed_or_position_M2 = 1; // set to position control
+	    	}
+	    	else
+	    	{
+				//SPEED CONTROL
+				M2_speed_control();
+
+				pcm.WriteVariable("M2 Application Switch", 0, retMsg);
+
+				pcm.WriteVariable("M2 Demo Mode Position",0,retMsg);
+
+        pcm.WriteVariable("M2 MCAT POSPE Sensor",0,retMsg);
+
+	    	speed_or_position_M2 = 0; // set to speed control
+	    	}
+        });
+
+		/* APPLICATION SWITCH M1 */
+		$("#jqxAppSwitchButtonM1").on('click', function ()
+    	{
+	        appSwitchM1 = 0;
+			    appStateM1  = 0;
+
+	        /* read State variable from FreeMASTER */
+	        succ = pcm.ReadVariable("M1 Application State", vValue0, tValue0, retMsg)
+	        if(succ) appStateM1 = pcm.LastVariable_vValue;
+
+	        /* for fault state clear fault */
+	        if (appStateM1==0)
+	        {
+	        	pcm.WriteVariable("Demo Mode Speed", 0, retMsg);
+	        	pcm.WriteVariable("Demo Mode Position", 0, retMsg);
+              /*
+	            if (appStateM1==0)
+	            {
+	                pcm.WriteVariable("M1 Fault Clear", 1, retMsg);
+	                pcm.WriteVariable("M1 Application State", 2, retMsg);
+	                pcm.WriteVariable("M1 Speed Required",0, retMsg);
+	                pcm.WriteVariable("M1 Speed Actual",0, retMsg);
+	                pcm.WriteVariable("M1 Position Required",0, retMsg);
+	                pcm.WriteVariable("M1 Position Actual",0, retMsg);
+	                pcm.WriteVariable("M1 Iq",0, retMsg);
+	                M1_current_read();
+	            }
+              */
+	        }
+	        else
+	        {
+	            /* read switch */
+	            succ = pcm.ReadVariable("M1 Application Switch", vValue0, tValue0, retMsg)
+	            if(succ) appSwitchM1 = pcm.LastVariable_vValue;
+
+	            /* toggle switch */
+	            if(appSwitchM1==0)
+	            {
+	                succ = pcm.WriteVariable("M1 Application Switch", 1, retMsg);    /*  M1 Application switch ON */
+					        succ = pcm.WriteVariable("M1 Application State", 3, retMsg);     /*  RUN application */
+	            }
+	            else
+	            {
+					        succ = pcm.WriteVariable("Demo Mode Position",0,retMsg);
+	                succ = pcm.WriteVariable("Demo Mode Speed",0,retMsg);
+	                succ = pcm.WriteVariable("M1 Application Switch", 0, retMsg);    /*  M1 Application switch OFF */
+	            }
+	        }
+
+			AppStateNotificUpdate();
+    	});
+
+    /* APPLICATION SWITCH M2 */
+		$("#jqxAppSwitchButtonM2").on('click', function ()
+    	{
+	        appSwitchM2 = 0;
+			    appStateM2  = 0;
+
+	        /* read State variable from FreeMASTER */
+	        succ = pcm.ReadVariable("M2 Application State", vValue0, tValue0, retMsg)
+	        if(succ) appStateM2 = pcm.LastVariable_vValue;
+
+	        /* for fault state clear fault */
+	        if (appStateM2==0)
+	        {
+	        	pcm.WriteVariable("M2 Demo Mode Speed", 0, retMsg);
+	        	pcm.WriteVariable("M2 Demo Mode Position", 0, retMsg);
+              /*
+	            if (appStateM2==0)
+	            {
+	                pcm.WriteVariable("M2 Fault Clear", 1, retMsg);
+	                pcm.WriteVariable("M2 Application State", 2, retMsg);
+	                pcm.WriteVariable("M2 Speed Required",0, retMsg);
+	                pcm.WriteVariable("M2 Speed Actual",0, retMsg);
+	                pcm.WriteVariable("M2 Position Required",0, retMsg);
+	                pcm.WriteVariable("M2 Position Actual",0, retMsg);
+	                pcm.WriteVariable("M2 Iq",0, retMsg);
+	                M2_current_read();
+	            }
+              */
+	        }
+	        else
+	        {
+	            /* read switch */
+	            succ = pcm.ReadVariable("M2 Application Switch", vValue0, tValue0, retMsg)
+	            if(succ) appSwitchM2 = pcm.LastVariable_vValue;
+
+	            /* toggle switch */
+	            if(appSwitchM2==0)
+	            {
+	                succ = pcm.WriteVariable("M2 Application Switch", 1, retMsg);    /*  M2 Application switch ON */
+					        succ = pcm.WriteVariable("M2 Application State", 3, retMsg);     /* RUN application */
+	            }
+	            else
+	            {
+					        succ = pcm.WriteVariable("M2 Demo Mode Position",0,retMsg);
+	                succ = pcm.WriteVariable("M2 Demo Mode Speed",0,retMsg);
+                  succ = pcm.WriteVariable("M2 Application Switch", 0, retMsg);   /*  M2 Application switch OFF */
+	            }
+	        }
+
+			AppStateNotificUpdate();
+    	});
+
+	    $("#jqxAppStateNotificationM1").on('click',function()
+	    {
+	        /* refresh application state box, otherwise is disappeares */
+	        AppStateNotificUpdate();
+	    });
+
+      $("#jqxAppStateNotificationM2").on('click',function()
+      {
+          /* refresh application state box, otherwise is disappeares */
+          AppStateNotificUpdate();
+      });
+
+		/* DEMO SWITCH M1 */
+    $("#jqxDemoButtonM1").on('click',function()
+    {
+    	var demoTmp = 0;
+    	if (speed_or_position_M1) // 0=speed, 1=position
+    	{
+			    succ = pcm.ReadVariable("Demo Mode Position", vValue0, tValue0, retMsg);
+	        if (succ) demoTmp = pcm.LastVariable_vValue;
+	        if(demoTmp)
+	        {
+	            pcm.WriteVariable("Demo Mode Position",0,retMsg);
+	            pcm.WriteVariable("M1 Position Required", 0, retMsg);
+	            $("#jqxDemoButtonM1").jqxButton({template: 'success'});
+	        }
+	        else
+	        {
+				      pcm.WriteVariable("Demo Mode Speed",0,retMsg); //PB
+	            pcm.WriteVariable("Demo Mode Position",1,retMsg);
+	            $("#jqxDemoButtonM1").jqxButton({template: 'danger'});
+	        }
+    	}
+    	else
+    	{
+    		  succ = pcm.ReadVariable("Demo Mode Speed", vValue0, tValue0, retMsg);
+	        if (succ) demoTmp = pcm.LastVariable_vValue;
+	        if(demoTmp)
+	        {
+	            pcm.WriteVariable("Demo Mode Speed",0,retMsg);
+	            pcm.WriteVariable("M1 Speed Required", 0, retMsg);
+	            $("#jqxDemoButtonM1").jqxButton({template: 'success'});
+	        }
+	        else
+	        {
+				      pcm.WriteVariable("Demo Mode Position",0,retMsg); //PB
+	            pcm.WriteVariable("Demo Mode Speed",1,retMsg);
+	            $("#jqxDemoButtonM1").jqxButton({template: 'danger'});
+	        }
+    	}
+
+    });
+
+    /* DEMO SWITCH M2 */
+    $("#jqxDemoButtonM2").on('click',function()
+    {
+    	var demoTmp = 0;
+    	if (speed_or_position_M2) // 0=speed, 1=position
+    	{
+			succ = pcm.ReadVariable("M2 Demo Mode Position", vValue0, tValue0, retMsg);
+	        if (succ) demoTmp = pcm.LastVariable_vValue;
+	        if(demoTmp)
+	        {
+	            pcm.WriteVariable("M2 Demo Mode Position",0,retMsg);
+	            pcm.WriteVariable("M2 Position Required", 0, retMsg);
+
+	            $("#jqxDemoButtonM2").jqxButton({template: 'success'});
+	        }
+	        else
+	        {
+				      pcm.WriteVariable("M2 Demo Mode Speed",0,retMsg); //PB
+	            pcm.WriteVariable("M2 Demo Mode Position",1,retMsg);
+	            $("#jqxDemoButtonM2").jqxButton({template: 'danger'});
+	        }
+    	}
+    	else
+    	{
+    		succ = pcm.ReadVariable("M2 Demo Mode Speed", vValue0, tValue0, retMsg);
+	        if (succ) demoTmp = pcm.LastVariable_vValue;
+	        if(demoTmp)
+	        {
+	            pcm.WriteVariable("M2 Demo Mode Speed",0,retMsg);
+	            pcm.WriteVariable("M2 Speed Required", 0, retMsg);
+	            $("#jqxDemoButtonM2").jqxButton({template: 'success'});
+	        }
+	        else
+	        {
+				      pcm.WriteVariable("M2 Demo Mode Position",0,retMsg); //PB
+	            pcm.WriteVariable("M2 Demo Mode Speed",1,retMsg);
+	            $("#jqxDemoButtonM2").jqxButton({template: 'danger'});
+	        }
+    	}
+
+    });
+
+	});
+
+	function M1_position_control()
+	{
+		document.getElementById("jqxSliderSetSpeedM1").style.zIndex = "0";
+		document.getElementById("jqxSliderSetPositionM1").style.zIndex = "8";
+		document.getElementById("gaugeContainerSpeedM1").style.visibility = "hidden";
+		document.getElementById("gaugeContainerPositionM1").style.visibility = "visible";
+		document.getElementById("gaugeContainerSpeedRequiredM1").style.visibility = "hidden";
+		document.getElementById("gaugeContainerPositionRequiredM1").style.visibility = "visible";
+		document.getElementById("jqxSliderSetSpeedM1").style.visibility = "hidden";
+		document.getElementById("jqxSliderSetPositionM1").style.visibility = "visible";
+		document.getElementById("tag_required1").innerHTML = "position";
+		document.getElementById("tag_gauge1").innerHTML = "Position";
+		document.getElementById("units1").innerHTML = "[rev]";
+		document.getElementById("tag_required_min1").innerHTML = "-500";
+		document.getElementById("tag_required_max1").innerHTML = "500";
+		pcm.WriteVariable("M1 Speed Required",0,retMsg);
+		pcm.WriteVariable("M1 Position Required",0,retMsg);
+		pcm.WriteVariable("M1 MCAT Control",4,retMsg);
+
+		$("#gaugeContainerSpeedRequiredM1").jqxGauge({pointer:{ visible: false }});
+		$("#gaugeContainerSpeedM1").jqxGauge({pointer:{ visible: false }});
+		$("#gaugeContainerPositionRequiredM1").jqxGauge({pointer:{style: {fill: '#e02629', stroke: '#e02629'}}});
+		$("#gaugeContainerPositionM1").jqxGauge({pointer:{style: {fill: '#1f227e', stroke: '#1f227e'}}});
+
+		//pcm.WriteVariable("M1 Application Switch", 0, retMsg);
+	    //pcm.WriteVariable("M1 Position Required", 0, retMsg);
+		$('#gaugeContainerPositionRequiredM1').jqxGauge({value: 0 });
+
+		M1_dcbvoltage= 0;
+		M1_dcbcurrent= 0;
+		M1_speed= 0;
+		M1_position= 0;
+	}
+
+	function M2_position_control()
+	{
+		document.getElementById("jqxSliderSetSpeedM2").style.zIndex = "0";
+		document.getElementById("jqxSliderSetPositionM2").style.zIndex = "8";
+		document.getElementById("gaugeContainerSpeedM2").style.visibility = "hidden";
+		document.getElementById("gaugeContainerPositionM2").style.visibility = "visible";
+		document.getElementById("gaugeContainerSpeedRequiredM2").style.visibility = "hidden";
+		document.getElementById("gaugeContainerPositionRequiredM2").style.visibility = "visible";
+		document.getElementById("jqxSliderSetSpeedM2").style.visibility = "hidden";
+		document.getElementById("jqxSliderSetPositionM2").style.visibility = "visible";
+		document.getElementById("tag_required2").innerHTML = "position";
+		document.getElementById("tag_gauge2").innerHTML = "Position";
+		document.getElementById("units2").innerHTML = "[rev]";
+		document.getElementById("tag_required_min2").innerHTML = "-500";
+		document.getElementById("tag_required_max2").innerHTML = "500";
+		pcm.WriteVariable("M2 Speed Required",0,retMsg);
+		pcm.WriteVariable("M2 Position Required",0,retMsg);
+		pcm.WriteVariable("M2 MCAT Control",4,retMsg);
+
+		$("#gaugeContainerSpeedRequiredM2").jqxGauge({pointer:{ visible: false }});
+		$("#gaugeContainerSpeedM2").jqxGauge({pointer:{ visible: false }});
+		$("#gaugeContainerPositionRequiredM2").jqxGauge({pointer:{style: {fill: '#e02629', stroke: '#e02629'}}});
+		$("#gaugeContainerPositionM2").jqxGauge({pointer:{style: {fill: '#1f227e', stroke: '#1f227e'}}});
+
+		//pcm.WriteVariable("M2 Application Switch", 0, retMsg);
+		//pcm.WriteVariable("M2 Position Required", 0, retMsg);
+		$('#gaugeContainerPositionRequiredM2').jqxGauge({value: 0 });
+
+		M2_dcbvoltage= 0;
+		M2_dcbcurrent= 0;
+		M2_speed= 0;
+		M2_position= 0;
+	}
+
+	function M1_speed_control()
+	{
+		document.getElementById("jqxSliderSetSpeedM1").style.zIndex = "8";
+		document.getElementById("jqxSliderSetPositionM1").style.zIndex = "0";
+		document.getElementById("gaugeContainerSpeedM1").style.visibility = "visible";
+		document.getElementById("gaugeContainerPositionM1").style.visibility = "hidden";
+		document.getElementById("gaugeContainerSpeedRequiredM1").style.visibility = "visible";
+		document.getElementById("gaugeContainerPositionRequiredM1").style.visibility = "hidden";
+		document.getElementById("jqxSliderSetSpeedM1").style.visibility = "visible";
+		document.getElementById("jqxSliderSetPositionM1").style.visibility = "hidden";
+		document.getElementById("tag_required1").innerHTML = "speed";
+		document.getElementById("tag_gauge1").innerHTML = "Speed";
+		document.getElementById("units1").innerHTML = "[rpm]";
+		document.getElementById("tag_required_min1").innerHTML = "-4000";
+		document.getElementById("tag_required_max1").innerHTML = "4000";
+		pcm.WriteVariable("M1 Speed Required",0,retMsg);
+		pcm.WriteVariable("M1 Position Required",0,retMsg);
+		pcm.WriteVariable("M1 MCAT Control",3,retMsg);
+
+		$("#gaugeContainerSpeedM1").jqxGauge({pointer:{style: {fill: '#1f227e', stroke: '#1f227e'}}});
+		$("#gaugeContainerSpeedRequiredM1").jqxGauge({pointer:{style: {fill: '#e02629', stroke: '#e02629'}}});
+		$("#gaugeContainerPositionRequiredM1").jqxGauge({pointer:{ visible: false }});
+		$("#gaugeContainerPositionM1").jqxGauge({pointer:{ visible: false }});
+
+		//pcm.WriteVariable("M1 Application Switch", 0, retMsg);
+		//pcm.WriteVariable("M1 Speed Required", 0, retMsg);
+		$('#gaugeContainerSpeedRequiredM1').jqxGauge({value: 0 });
+
+		M1_dcbvoltage= 0;
+		M1_dcbcurrent= 0;
+		M1_speed= 0;
+		M1_position= 0;
+	}
+	function M2_speed_control()
+	{
+		document.getElementById("jqxSliderSetSpeedM2").style.zIndex = "8";
+		document.getElementById("jqxSliderSetPositionM2").style.zIndex = "0";
+		document.getElementById("gaugeContainerSpeedM2").style.visibility = "visible";
+		document.getElementById("gaugeContainerPositionM2").style.visibility = "hidden";
+		document.getElementById("gaugeContainerSpeedRequiredM2").style.visibility = "visible";
+		document.getElementById("gaugeContainerPositionRequiredM2").style.visibility = "hidden";
+		document.getElementById("jqxSliderSetSpeedM2").style.visibility = "visible";
+		document.getElementById("jqxSliderSetPositionM2").style.visibility = "hidden";
+		document.getElementById("tag_required2").innerHTML = "speed";
+		document.getElementById("tag_gauge2").innerHTML = "Speed";
+		document.getElementById("units2").innerHTML = "[rpm]";
+		document.getElementById("tag_required_min2").innerHTML = "-4000";
+		document.getElementById("tag_required_max2").innerHTML = "4000";
+		pcm.WriteVariable("M2 Speed Required",0,retMsg);
+		pcm.WriteVariable("M2 Position Required",0,retMsg);
+		pcm.WriteVariable("M2 MCAT Control",3,retMsg);
+
+		$("#gaugeContainerSpeedM2").jqxGauge({pointer:{visible: true, style: {fill: '#1f227e', stroke: '#1f227e'}}});
+		$("#gaugeContainerSpeedRequiredM2").jqxGauge({pointer:{visible: true, style: {fill: '#e02629', stroke: '#e02629'}}});
+		$("#gaugeContainerPositionRequiredM2").jqxGauge({pointer:{ visible: false }});
+		$("#gaugeContainerPositionM2").jqxGauge({pointer:{ visible: false }});
+
+		//pcm.WriteVariable("M2 Application Switch", 0, retMsg);
+		//pcm.WriteVariable("M2 Speed Required", 0, retMsg);
+		$('#gaugeContainerSpeedRequiredM2').jqxGauge({value: 0 });
+
+		M2_dcbvoltage= 0;
+		M2_dcbcurrent= 0;
+		M2_speed= 0;
+		M2_position= 0;
+	}
+
+	//OnVariableChanged EVENT GENERATED BY FreeMASTER
+	function event_OnVariableChanged(VariableName,IDsubscribedVariable)
+	{
+	    switch(IDsubscribedVariable){
+	        case M1_voltage_sub:
+	            M1_voltage_read();
+	            break;
+          case M2_voltage_sub:
+	            M2_voltage_read();
+	            break;
+
+	        case M1_speed_sub:
+	            M1_speed_read();
+	            break;
+	        case M2_speed_sub:
+	            M2_speed_read();
+	            break;
+
+	        case M1_position_sub:
+	            M1_position_read();
+	            break;
+	        case M2_position_sub:
+	            M2_position_read();
+	            break;
+
+	        case M1_current_sub:
+	            M1_current_read();
+	            break;
+	        case M2_current_sub:
+				M2_current_read();
+	            break;
+
+	        case M1_app_switch_sub:
+	            AppSwitch_read();
+	            break;
+	        case M2_app_switch_sub:
+	            AppSwitch_read();
+				break;
+
+	        case M1_req_speed_sub:
+	            M1_req_speed();
+	            break;
+	        case M2_req_speed_sub:
+	            M2_req_speed();
+	            break;
+
+	        case M1_req_position_sub:
+	            M1_req_position();
+	            break;
+	        case M2_req_position_sub:
+	            M2_req_position();
+	            break;
+			case cycleNumber_sub:
+				CycleNumberUpdate();
+				break;
+			////////////////////////
+			case M1_control_sub:
+				M1_control();
+				break;
+			case M2_control_sub:
+				M2_control();
+				break;
+			////////////////////////
+			case M1_AppState_sub:
+			case M2_AppState_sub:
+				AppStateNotificUpdate();
+				break;
+	    case M1_positionDemoMode:
+      case M2_positionDemoMode:
+	    	PositionDemoModeUpdate();
+	    	break;
+	    case M1_speedDemoMode:
+      case M2_speedDemoMode:
+	    	SpeedDemoModeUpdate();
+	    	break;
+        default:
+	    }
+	}
+
+	//////////////////////////////////////////
+	function M1_control(){
+
+		succ = pcm.ReadVariable("M1 MCAT Control", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			var M1_control = pcm.LastVariable_vValue;
+			if(M1_control == 3)//Speed control
+			{
+				// unsubscribing unneccesary variables
+				M1_position_sub 	= pcm.UnSubscribeVariable("M1 Position Actual", bsRetMsg);
+				M1_req_position_sub	= pcm.UnSubscribeVariable("M1 Position Required", bsRetMsg);
+				// clear variables
+				M1_position_sub 	= 0;
+				M1_req_position_sub	= 0;
+				// subscribing variables
+				M1_speed_sub 		= pcm.SubscribeVariable("M1 Speed Actual", SpeedPositionRequired, bsRetMsg);
+				M1_req_speed_sub 	= pcm.SubscribeVariable("M1 Speed Required", SpeedPositionRequiredReading, bsRetMsg);
+				M1_speed_control();
+
+			}
+			if(M1_control == 4)//Position control
+			{
+				// unsubscribing unneccesary variables
+				pcm.UnSubscribeVariable("M1 Speed Actual", bsRetMsg);
+				pcm.UnSubscribeVariable("M1 Speed Required", bsRetMsg);
+				// clear variables
+				M1_speed_sub 		= 0;
+				M1_req_speed_sub 	= 0;
+				//subscribe neccesary variables
+				M1_position_sub 	= pcm.SubscribeVariable("M1 Position Actual", SpeedPositionRequired, bsRetMsg);
+				M1_req_position_sub	= pcm.SubscribeVariable("M1 Position Required", SpeedPositionRequiredReading, bsRetMsg);
+				M1_position_control();
+			}
+		}
+
+	}
+
+	function M2_control(){
+
+		succ = pcm.ReadVariable("M2 MCAT Control", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			var M2_control = pcm.LastVariable_vValue;
+			if(M2_control == 3)//Speed control
+			{
+				// unsubscribing unneccesary variables
+				M2_position_sub 	= pcm.UnSubscribeVariable("M2 Position Actual", bsRetMsg);
+				M2_req_position_sub	= pcm.UnSubscribeVariable("M2 Position Required", bsRetMsg);
+				// clear variables
+				M2_position_sub 	= 0;
+				M2_req_position_sub	= 0;
+				// subscribing variables
+				M2_speed_sub 		= pcm.SubscribeVariable("M2 Speed Actual", SpeedPositionRequired, bsRetMsg);
+				M2_req_speed_sub 	= pcm.SubscribeVariable("M2 Speed Required", SpeedPositionRequiredReading, bsRetMsg);
+				M2_speed_control();
+			}
+			if(M2_control == 4)//Position control
+			{
+				// unsubscribing unneccesary variables
+				pcm.UnSubscribeVariable("M2 Speed Actual", bsRetMsg);
+				pcm.UnSubscribeVariable("M2 Speed Required", bsRetMsg);
+				// clear variables
+				M2_speed_sub 		= 0;
+				M2_req_speed_sub 	= 0;
+				//subscribe neccesary variables
+				M2_position_sub 	= pcm.SubscribeVariable("M2 Position Actual", SpeedPositionRequired, bsRetMsg);
+				M2_req_position_sub	= pcm.SubscribeVariable("M2 Position Required", SpeedPositionRequiredReading, bsRetMsg);
+				M2_position_control();
+			}
+		}
+
+	}
+
+	function AppStateNotificUpdate()
+	{
+	    appStateM1 = 0;
+	    appStateM2 = 0;
+
+	    /* read State variable from FreeMASTER */
+	    succ = pcm.ReadVariable("M1 Application State", vValue0, tValue0, retMsg)
+	    if(succ) appStateM1 = pcm.LastVariable_vValue;
+	    else appStateM1 = 99; /* error state */
+
+	    /* close all previous notifications M1 */
+	    $("#jqxAppStateNotificationM1").jqxNotification("closeAll");
+	    /* select particular Application State */
+	    if (appStateM1 == 3)
+	    {
+	        succ = pcm.ReadVariable("Demo Mode Position", vValue0, tValue0, retMsg);
+	        succ2 = pcm.ReadVariable("Demo Mode Speed", vValue0, tValue0, retMsg);
+	        if (succ || succ2)
+	            M1_demoMode = pcm.LastVariable_vValue;
+	        /* if Demo Mode Position is active, update App state notification */
+	        if (M1_demoMode)
+	        {
+	        	  $("#jqxAppStateNotificationM1").jqxNotification("closeAll");
+	            $("#jqxAppStateNotifTextM1").text("Application State: DEMO RUN");
+	            $("#jqxAppStateNotificationM1").jqxNotification("open");
+	        }
+	        else
+	        {
+	            $("#jqxAppStateNotifTextM1").text("Application State: RUN");
+	            $("#jqxAppStateNotificationM1").jqxNotification("open");
+	        }
+	    }
+	    else if (appStateM1 == 2)
+	    {
+	        $("#jqxAppStateNotifTextM1").text("Application State: STOP");
+	        $("#jqxAppStateNotificationM1").jqxNotification("open");
+	    }
+	    else if (appStateM1 == 1)
+	    {
+	        $("#jqxAppStateNotifTextM1").text("Application State: INIT");
+	        $("#jqxAppStateNotificationM1").jqxNotification("open");
+	    }
+	    else if (appStateM1 == 0)
+	    {
+	    	  $("#jqxAppStateNotificationM1").jqxNotification("closeAll");
+	        $("#jqxAppStateNotifTextM1").text("Application State: FAULT");
+	        //$("#jqxAppStateNotificationM1").jqxNotification("open");
+	        SetFaultSource();
+	    }
+	    else
+	    {
+	        $("#jqxAppStateNotifTextM1").text("FAULT: UNDEFINED STATE");
+	        $("#jqxAppStateNotificationM1").jqxNotification("open");
+	    }
+
+      /* read State variable from FreeMASTER */
+	    succ = pcm.ReadVariable("M2 Application State", vValue0, tValue0, retMsg)
+	    if(succ) appStateM2 = pcm.LastVariable_vValue;
+	    else appStateM2 = 99; /* error state */
+
+      /* close all previous notifications M2*/
+	    $("#jqxAppStateNotificationM2").jqxNotification("closeAll");
+	    /* select particular Application State */
+	    if (appStateM2 == 3)
+	    {
+	        succ = pcm.ReadVariable("M2 Demo Mode Position", vValue0, tValue0, retMsg);
+	        succ2 = pcm.ReadVariable("M2 Demo Mode Speed", vValue0, tValue0, retMsg);
+	        if (succ || succ2)
+	            M2_demoMode = pcm.LastVariable_vValue;
+	        /* if Demo Mode Position is active, update App state notification */
+	        if (M2_demoMode)
+	        {
+	        	  $("#jqxAppStateNotificationM2").jqxNotification("closeAll");
+	            $("#jqxAppStateNotifTextM2").text("Application State: DEMO RUN");
+	            $("#jqxAppStateNotificationM2").jqxNotification("open");
+	        }
+	        else
+	        {
+	            $("#jqxAppStateNotifTextM2").text("Application State: RUN");
+	            $("#jqxAppStateNotificationM2").jqxNotification("open");
+	        }
+	    }
+	    else if (appStateM2 == 2)
+	    {
+	        $("#jqxAppStateNotifTextM2").text("Application State: STOP");
+	        $("#jqxAppStateNotificationM2").jqxNotification("open");
+	    }
+	    else if (appStateM2 == 1)
+	    {
+	        $("#jqxAppStateNotifTextM2").text("Application State: INIT");
+	        $("#jqxAppStateNotificationM2").jqxNotification("open");
+	    }
+	    else if (appStateM2 == 0)
+	    {
+	    	  $("#jqxAppStateNotificationM2").jqxNotification("closeAll");
+	        $("#jqxAppStateNotifTextM2").text("Application State: FAULT");
+	        //$("#jqxAppStateNotificationM2").jqxNotification("open");
+	        SetFaultSource();
+	    }
+	    else
+	    {
+	        $("#jqxAppStateNotifTextM2").text("FAULT: UNDEFINED STATE");
+	        $("#jqxAppStateNotificationM2").jqxNotification("open");
+	    }
+
+	    /* update Application switch button accroding to actual state  */
+	    AppSwitch_read();
+	}
+
+
+	function AppSwitch_read()
+	{
+		  appStateM1  = 0; appSwitchM1 = 0;
+	    appStateM2  = 0; appSwitchM2 = 0;
+
+	    /* read State variable from FreeMASTER */
+	    succ = pcm.ReadVariable("M1 Application State", vValue0, tValue0, retMsg)
+	    if (succ) appStateM1 = pcm.LastVariable_vValue;
+	    succ2 = pcm.ReadVariable("M2 Application State", vValue0, tValue0, retMsg)
+	    if (succ2) appStateM2 = pcm.LastVariable_vValue;
+
+      /* Motor M1 */
+	    if(succ)
+	    {
+	        /* for fault state clear fault */
+	        if(appStateM1==0)
+	        {
+            $("#jqxAppSwitchButtonM1").jqxButton('val', "CLEAR FAULT");
+            $("#jqxAppSwitchButtonM1").jqxButton({template: 'warning'});
+    				$("#jqxAppStateNotificationM1").jqxNotification("closeAll");
+    				$("#jqxAppStateNotifTextM1").text("Application State: FAULT");
+    				$("#jqxAppStateNotificationM1").jqxNotification("open");
+	        }
+	        else
+	        {
+            /* read switch variables */
+            succ = pcm.ReadVariable("M1 Application Switch", vValue0, tValue0, retMsg)
+            if (succ) appSwitchM1 = pcm.LastVariable_vValue;
+
+            if (appSwitchM1==1)
+            {
+                $("#jqxAppSwitchButtonM1").jqxButton('val', "STOP");
+                $("#jqxAppSwitchButtonM1").jqxButton({template: 'danger'});
+                $("#jqxDemoButtonM1").jqxButton({disabled:false});
+            }
+            else
+            {
+                $("#jqxAppSwitchButtonM1").jqxButton('val', "RUN");
+                $("#jqxAppSwitchButtonM1").jqxButton({template: 'success'});
+                $("#jqxDemoButtonM1").jqxButton({template: 'success'});
+                $("#jqxDemoButtonM1").jqxButton({disabled:true});
+            }
+	        }
+	    }
+	    else
+	    {
+	        $("#jqxAppSwitchButtonM1").jqxButton('val', "COMMUNICATION ERROR");
+	        $("#jqxAppSwitchButtonM1").jqxButton({template: 'danger'});
+	    }
+
+      /* Motor M2 */
+      if(succ2)
+	    {
+	        /* for fault state clear fault */
+	        if(appStateM2==0)
+	        {
+            $("#jqxAppSwitchButtonM2").jqxButton('val', "CLEAR FAULT");
+            $("#jqxAppSwitchButtonM2").jqxButton({template: 'warning'});
+    				$("#jqxAppStateNotificationM2").jqxNotification("closeAll");
+    				$("#jqxAppStateNotifTextM2").text("Application State: FAULT");
+    				$("#jqxAppStateNotificationM2").jqxNotification("open");
+	        }
+	        else
+	        {
+            /* read switch variables */
+            succ2 = pcm.ReadVariable("M2 Application Switch", vValue0, tValue0, retMsg)
+            if (succ2) appSwitchM2 = pcm.LastVariable_vValue;
+
+            if (appSwitchM2==1)
+            {
+                $("#jqxAppSwitchButtonM2").jqxButton('val', "STOP");
+                $("#jqxAppSwitchButtonM2").jqxButton({template: 'danger'});
+                $("#jqxDemoButtonM2").jqxButton({disabled:false});
+            }
+            else
+            {
+                $("#jqxAppSwitchButtonM2").jqxButton('val', "RUN");
+                $("#jqxAppSwitchButtonM2").jqxButton({template: 'success'});
+                $("#jqxDemoButtonM2").jqxButton({template: 'success'});
+                $("#jqxDemoButtonM2").jqxButton({disabled:true});
+            }
+	        }
+	    }
+	    else
+	    {
+	        $("#jqxAppSwitchButtonM2").jqxButton('val', "COMMUNICATION ERROR");
+	        $("#jqxAppSwitchButtonM2").jqxButton({template: 'danger'});
+	    }
+	}
+
+
+
+	function PositionDemoModeUpdate(){
+		succ = pcm.ReadVariable("Demo Mode Position", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M1_positionDemoMode = pcm.LastVariable_vValue; // update global variable
+			pcm.WriteVariable("Demo Mode Position", M1_positionDemoMode, retMsg);
+		}
+
+    succ2 = pcm.ReadVariable("M2 Demo Mode Position", vValue0, tValue0, retMsg)
+    if (succ2)
+    {
+      M2_positionDemoMode = pcm.LastVariable_vValue; // update global variable
+      pcm.WriteVariable("M2 Demo Mode Position", M2_positionDemoMode, retMsg);
+    }
+
+		AppStateNotificUpdate();
+	}
+
+	function SpeedDemoModeUpdate(){
+		succ = pcm.ReadVariable("Demo Mode Speed", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M1_speedDemoMode = pcm.LastVariable_vValue; // update global variable
+			pcm.WriteVariable("Demo Mode Speed", M1_speedDemoMode, retMsg);
+		}
+
+    succ2 = pcm.ReadVariable("M2 Demo Mode Speed", vValue0, tValue0, retMsg)
+    if (succ2)
+    {
+      M2_speedDemoMode = pcm.LastVariable_vValue; // update global variable
+      pcm.WriteVariable("M2 Demo Mode Speed", M2_speedDemoMode, retMsg);
+    }
+
+		AppStateNotificUpdate();
+	}
+
+	/* READ FUNCTIONS */
+	/* read voltage */
+	function M1_voltage_read(){
+
+		succ = pcm.ReadVariable("M1 DCB Voltage Filtered", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M1_dcbvoltage = pcm.LastVariable_vValue;
+			//GaugeTemp = pcm.LastVariable_vValue;
+
+		}
+		//$('#gaugeLinearDCBusVoltageM1').jqxLinearGauge({value: GaugeTemp  });
+	}
+
+	function M2_voltage_read(){
+
+		succ = pcm.ReadVariable("M2 DCB Voltage Filtered", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M2_dcbvoltage = pcm.LastVariable_vValue;
+			//GaugeTemp = pcm.LastVariable_vValue;
+		}
+		//$('#gaugeLinearDCBusVoltageM2').jqxLinearGauge({value: GaugeTemp  });
+	}
+
+  function CycleNumberUpdate()
+	{
+	    /* CPU load M1 */
+	    succ = pcm.ReadVariable("M1 Cycle Number", vValue0, tValue0, retMsg)
+	    if (succ) cycleNumberAct = pcm.LastVariable_vValue;
+      /* CPU load M2 */
+	    succ = pcm.ReadVariable("M2 Cycle Number", vValue0, tValue0, retMsg)
+	    if (succ) cycleNumberAct = cycleNumberAct + pcm.LastVariable_vValue;
+
+	    $('#jqxGaugeLinearCycleNumber').jqxLinearGauge({value: cycleNumberAct/(maxCycleNumber/100),  });
+	}
+
+	/* read speed */
+	function M1_speed_read(){
+
+		succ = pcm.ReadVariable("M1 Speed Actual", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M1_speed = pcm.LastVariable_vValue;
+			//GaugeTemp = pcm.LastVariable_vValue;
+		}
+		//$('#gaugeContainerSpeedM1').jqxGauge({value: GaugeTemp });
+	}
+
+	function M2_speed_read(){
+
+		succ = pcm.ReadVariable("M2 Speed Actual", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M2_speed = pcm.LastVariable_vValue;
+			//GaugeTemp = pcm.LastVariable_vValue;
+		}
+		//$('#gaugeContainerSpeedM2').jqxGauge({value: GaugeTemp });
+	}
+
+	/* read position */
+	function M1_position_read(){
+
+		succ = pcm.ReadVariable("M1 Position Actual", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M1_speed = pcm.LastVariable_vValue;
+			//M1_position = pcm.LastVariable_vValue;
+			//GaugeTemp = pcm.LastVariable_vValue;
+		}
+		//$('#gaugeContainerPositionM1').jqxGauge({value: GaugeTemp });
+	}
+
+	function M2_position_read(){
+
+		succ = pcm.ReadVariable("M2 Position Actual", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M2_speed = pcm.LastVariable_vValue;
+			//M2_position = pcm.LastVariable_vValue;
+			//GaugeTemp = pcm.LastVariable_vValue;
+		}
+		//$('#gaugeContainerPositionM2').jqxGauge({value: GaugeTemp });
+	}
+
+	/* read current */
+	function M1_current_read(){
+
+		succ = pcm.ReadVariable("M1 Iq", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M1_dcbcurrent = pcm.LastVariable_vValue;
+			//GaugeTemp = pcm.LastVariable_vValue;
+		}
+		//$('#gaugeContainerCurrentM1').jqxGauge({value: GaugeTemp });
+	}
+
+	function M2_current_read(){
+
+		succ = pcm.ReadVariable("M2 Iq", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M2_dcbcurrent = pcm.LastVariable_vValue;
+			//GaugeTemp = pcm.LastVariable_vValue;
+		}
+		//$('#gaugeContainerCurrentM2').jqxGauge({value: GaugeTemp });
+	}
+
+	function GaugeWriting(){
+
+		$('#gaugeContainerSpeedM1').jqxGauge({value: M1_speed });
+		$('#gaugeContainerSpeedM2').jqxGauge({value: M2_speed });
+
+		$('#gaugeContainerPositionM1').jqxGauge({value: M1_speed });
+		$('#gaugeContainerPositionM2').jqxGauge({value: M2_speed });
+
+		$('#gaugeContainerCurrentM1').jqxGauge({value: M1_dcbcurrent });
+		$('#gaugeContainerCurrentM2').jqxGauge({value: M2_dcbcurrent });
+
+		$('#gaugeLinearDCBusVoltageM1').jqxLinearGauge({value: M1_dcbvoltage });
+		$('#gaugeLinearDCBusVoltageM2').jqxLinearGauge({value: M2_dcbvoltage });
+
+	}
+
+	function DemoMode_read()
+	{
+	    /* call application state update function */
+	    AppStateNotificUpdate();
+	}
+
+	/* INIT FUNCTIONS */
+	/* init speed */
+	function M1_req_speed() {
+		succ = pcm.ReadVariable("M1 Speed Required", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M1_speed_init = pcm.LastVariable_vValue;
+			$('#jqxSliderSetSpeedM1').jqxSlider({value: M1_speed_init});
+		}
+	}
+
+	function M2_req_speed() {
+		succ = pcm.ReadVariable("M2 Speed Required", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M2_speed_init = pcm.LastVariable_vValue;
+			$('#jqxSliderSetSpeedM2').jqxSlider({value: M2_speed_init});
+		}
+	}
+
+
+	/* init position */
+	function M1_req_position() {
+		succ = pcm.ReadVariable("M1 Position Required", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M1_speed_init = pcm.LastVariable_vValue;
+			$('#jqxSliderSetPositionM1').jqxSlider({value: M1_speed_init});
+		}
+	}
+
+	function M2_req_position() {
+		succ = pcm.ReadVariable("M2 Position Required", vValue0, tValue0, retMsg)
+		if (succ)
+		{
+			M2_speed_init = pcm.LastVariable_vValue;
+			$('#jqxSliderSetPositionM2').jqxSlider({value: M2_speed_init});
+		}
+	}
+
+	function SetFaultSource()
+	{
+	    faultState = 0;
+
+	    /* M1 */
+	    /* read Fault variable from FreeMASTER */
+	    succ = pcm.ReadVariable("M1 Fault Pending", vValue0, tValue0, retMsg);
+	    if(succ)
+	        faultState = pcm.LastVariable_vValue;
+
+	    /* select particular Fault State Message*/
+	    switch(faultState){
+	    case (0x1): //Over Current
+	        $("#jqxAppStateNotifTextM1").text("M1 FAULT: Over Current");
+	        $("#jqxAppStateNotificationM1").jqxNotification("open");
+	        break;
+	    case (0x2): //Under Voltage
+	        $("#jqxAppStateNotifTextM1").text("M1 FAULT: Under Voltage");
+	        $("#jqxAppStateNotificationM1").jqxNotification("open");
+	        break;
+	    case (0x4): //Over Voltage
+	        $("#jqxAppStateNotifTextM1").text("M1 FAULT: Over Voltage");
+	        $("#jqxAppStateNotificationM1").jqxNotification("open");
+	        break;
+	    case (0x8): //Overload
+	        $("#jqxAppStateNotifTextM1").text("M1 FAULT: Overload");
+	        $("#jqxAppStateNotificationM1").jqxNotification("open");
+	        break;
+	    case (0x10): //Overspeed
+	        $("#jqxAppStateNotifTextM1").text("M1 FAULT: Overspeed");
+	        $("#jqxAppStateNotificationM1").jqxNotification("open");
+	        break;
+	    case (0x20): //Blocked Rotor
+	        $("#jqxAppStateNotifTextM1").text("M1 FAULT: Blocked Rotor");
+	        $("#jqxAppStateNotificationM1").jqxNotification("open");
+	        break;
+	    default:
+	        break;
+	    }
+
+	    /* M2 */
+	    faultState = 0;
+	    /* read Fault variable from FreeMASTER */
+	    succ = pcm.ReadVariable("M2 Fault Pending", vValue0, tValue0, retMsg);
+	    if(succ)
+	        faultState = pcm.LastVariable_vValue;
+
+	    /* select particular Fault State Message*/
+	    switch(faultState){
+	    case (0x1): //Over Current
+	        $("#jqxAppStateNotifTextM2").text("M2 FAULT: Over Current");
+	        $("#jqxAppStateNotificationM2").jqxNotification("open");
+	        break;
+	    case (0x2): //Under Voltage
+	        $("#jqxAppStateNotifTextM2").text("M2 FAULT: Under Voltage");
+	        $("#jqxAppStateNotificationM2").jqxNotification("open");
+	        break;
+	    case (0x4): //Over Voltage
+	        $("#jqxAppStateNotifTextM2").text("M2 FAULT: Over Voltage");
+	        $("#jqxAppStateNotificationM2").jqxNotification("open");
+	        break;
+	    case (0x8): //Overload
+	        $("#jqxAppStateNotifTextM2").text("M2 FAULT: Overload");
+	        $("#jqxAppStateNotificationM2").jqxNotification("open");
+	        break;
+	    case (0x10): //Overspeed
+	        $("#jqxAppStateNotifTextM2").text("M2 FAULT: Overspeed");
+	        $("#jqxAppStateNotificationM2").jqxNotification("open");
+	        break;
+	    case (0x20): //Blocked Rotor
+	        $("#jqxAppStateNotifTextM2").text("M2 FAULT: Blocked Rotor");
+	        $("#jqxAppStateNotificationM2").jqxNotification("open");
+	        break;
+	    default:
+	        break;
+	    }
+
+	}
+
+    </script>
+
+</body>
+</html>

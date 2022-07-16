@@ -24,6 +24,7 @@
 
 #define BOOT_LOG_LEVEL BOOT_LOG_LEVEL_ERROR
 #include <bootutil/bootutil_log.h>
+#include "bootutil/crypto/common.h"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 
@@ -42,7 +43,7 @@ extern int sim_flash_read(uint8_t flash_id, uint32_t offset, uint8_t *dest,
         uint32_t size);
 extern int sim_flash_write(uint8_t flash_id, uint32_t offset, const uint8_t *src,
         uint32_t size);
-extern uint16_t sim_flash_align(uint8_t flash_id);
+extern uint32_t sim_flash_align(uint8_t flash_id);
 extern uint8_t sim_flash_erased_val(uint8_t flash_id);
 
 struct sim_context {
@@ -91,15 +92,15 @@ parse_pubkey(mbedtls_rsa_context *ctx, uint8_t **p, uint8_t *end)
         return -6;
     }
 
-    if (mbedtls_asn1_get_mpi(p, end, &ctx->N) != 0) {
+    if (mbedtls_asn1_get_mpi(p, end, &ctx->MBEDTLS_CONTEXT_MEMBER(N)) != 0) {
         return -7;
     }
 
-    if (mbedtls_asn1_get_mpi(p, end, &ctx->E) != 0) {
+    if (mbedtls_asn1_get_mpi(p, end, &ctx->MBEDTLS_CONTEXT_MEMBER(E)) != 0) {
         return -8;
     }
 
-    ctx->len = mbedtls_mpi_size(&ctx->N);
+    ctx->MBEDTLS_CONTEXT_MEMBER(len) = mbedtls_mpi_size(&ctx->MBEDTLS_CONTEXT_MEMBER(N));
 
     if (*p != end) {
         return -9;
@@ -141,7 +142,12 @@ int rsa_oaep_encrypt_(const uint8_t *pubkey, unsigned pubkey_len,
 
     mbedtls_platform_set_calloc_free(calloc, free);
 
+#if MBEDTLS_VERSION_NUMBER >= 0x03000000
+    mbedtls_rsa_init(&ctx);
+    mbedtls_rsa_set_padding(&ctx, MBEDTLS_RSA_PKCS_V21, MBEDTLS_MD_SHA256);
+#else
     mbedtls_rsa_init(&ctx, MBEDTLS_RSA_PKCS_V21, MBEDTLS_MD_SHA256);
+#endif
 
     cp = (uint8_t *)pubkey;
     cpend = cp + pubkey_len;
@@ -151,8 +157,13 @@ int rsa_oaep_encrypt_(const uint8_t *pubkey, unsigned pubkey_len,
         goto done;
     }
 
+#if MBEDTLS_VERSION_NUMBER >= 0x03000000
+    rc = mbedtls_rsa_rsaes_oaep_encrypt(&ctx, fake_rng, NULL,
+            NULL, 0, seckey_len, seckey, encbuf);
+#else
     rc = mbedtls_rsa_rsaes_oaep_encrypt(&ctx, fake_rng, NULL, MBEDTLS_RSA_PUBLIC,
             NULL, 0, seckey_len, seckey, encbuf);
+#endif
     if (rc) {
         goto done;
     }
@@ -174,6 +185,15 @@ done:
 int kw_encrypt_(const uint8_t *kek, const uint8_t *seckey, uint8_t *encbuf)
 {
 #ifdef MCUBOOT_ENCRYPT_KW
+#ifdef MCUBOOT_AES_256
+    int key_len = 256;
+    int out_size = 40;
+    int in_len = 32;
+#else
+    int key_len = 128;
+    int out_size = 24;
+    int in_len = 16;
+#endif
     mbedtls_nist_kw_context kw;
     size_t olen;
     int rc;
@@ -182,13 +202,13 @@ int kw_encrypt_(const uint8_t *kek, const uint8_t *seckey, uint8_t *encbuf)
 
     mbedtls_nist_kw_init(&kw);
 
-    rc = mbedtls_nist_kw_setkey(&kw, MBEDTLS_CIPHER_ID_AES, kek, 128, 1);
+    rc = mbedtls_nist_kw_setkey(&kw, MBEDTLS_CIPHER_ID_AES, kek, key_len, 1);
     if (rc) {
         goto done;
     }
 
-    rc = mbedtls_nist_kw_wrap(&kw, MBEDTLS_KW_MODE_KW, seckey, 16, encbuf,
-            &olen, 24);
+    rc = mbedtls_nist_kw_wrap(&kw, MBEDTLS_KW_MODE_KW, seckey, in_len, encbuf,
+            &olen, out_size);
 
 done:
     mbedtls_nist_kw_free(&kw);
@@ -202,7 +222,7 @@ done:
 #endif
 }
 
-uint16_t flash_area_align(const struct flash_area *area)
+uint32_t flash_area_align(const struct flash_area *area)
 {
     return sim_flash_align(area->fa_device_id);
 }
@@ -224,24 +244,37 @@ struct area_desc {
     uint32_t num_slots;
 };
 
-int invoke_boot_go(struct sim_context *ctx, struct area_desc *adesc)
+int invoke_boot_go(struct sim_context *ctx, struct area_desc *adesc,
+                   struct boot_rsp *rsp, int image_id)
 {
     int res;
-    struct boot_rsp rsp;
     struct boot_loader_state *state;
 
-#if defined(MCUBOOT_SIGN_RSA)
+#if defined(MCUBOOT_SIGN_RSA) || \
+    (defined(MCUBOOT_SIGN_EC256) && defined(MCUBOOT_USE_MBED_TLS)) ||\
+    (defined(MCUBOOT_ENCRYPT_EC256) && defined(MCUBOOT_USE_MBED_TLS)) ||\
+    (defined(MCUBOOT_ENCRYPT_X25519) && defined(MCUBOOT_USE_MBED_TLS))
     mbedtls_platform_set_calloc_free(calloc, free);
 #endif
 
-    // NOTE: cleared internally by context_boot_go
     state = malloc(sizeof(struct boot_loader_state));
 
     sim_set_flash_areas(adesc);
     sim_set_context(ctx);
 
     if (setjmp(ctx->boot_jmpbuf) == 0) {
-        res = context_boot_go(state, &rsp);
+        boot_state_clear(state);
+
+#if BOOT_IMAGE_NUMBER > 1
+        if (image_id >= 0) {
+            memset(state->img_mask, 1, sizeof(state->img_mask));
+            state->img_mask[image_id] = 0;
+        }
+#else
+        (void) image_id;
+#endif /* BOOT_IMAGE_NUMBER > 1 */
+
+        res = context_boot_go(state, rsp);
         sim_reset_flash_areas();
         sim_reset_context();
         free(state);
@@ -410,6 +443,16 @@ int flash_area_id_to_multi_image_slot(int image_index, int area_id)
     abort();
 }
 
+uint8_t flash_area_get_device_id(const struct flash_area *fa)
+{
+    return fa->fa_device_id;
+}
+
+int flash_area_id_from_image_slot(int slot) {
+    /* For single image cases, just use the first image. */
+    return flash_area_id_from_multi_image_slot(0, slot);
+}
+
 void sim_assert(int x, const char *assertion, const char *file, unsigned int line, const char *function)
 {
     if (!(x)) {
@@ -434,5 +477,5 @@ uint32_t boot_max_align(void)
 
 uint32_t boot_magic_sz(void)
 {
-    return BOOT_MAGIC_SZ;
+    return BOOT_MAGIC_ALIGN_SIZE;
 }

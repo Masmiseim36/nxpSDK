@@ -27,8 +27,6 @@
 #include "wifi_ping.h"
 #include "iperf.h"
 
-#include "fsl_sdmmc_host.h"
-
 
 #ifdef CONFIG_WIFI_FW_DEBUG
 #include "usb_api.h"

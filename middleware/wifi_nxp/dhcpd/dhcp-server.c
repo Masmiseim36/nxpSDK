@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -568,7 +552,7 @@ int dhcp_create_and_bind_udp_socket(struct sockaddr_in *address, void *intrfc_ha
     struct ifreq req;
 
     (void)memset(req.ifr_name, 0, sizeof(req.ifr_name));
-    (void)strncpy(req.ifr_name, "ua2", 3);
+    (void)net_get_if_name(req.ifr_name, intrfc_handle);
 
     int sock = net_socket(PF_INET, SOCK_DGRAM, 0);
     if (sock == -1)
@@ -781,7 +765,7 @@ static void get_broadcast_addr(struct sockaddr_in *addr)
 {
     addr->sin_family = AF_INET;
     /* limited broadcast addr (255.255.255.255) */
-    addr->sin_addr.s_addr = 0xffffffff;
+    addr->sin_addr.s_addr = 0xffffffffU;
     addr->sin_len         = (uint8_t)sizeof(struct sockaddr_in);
 }
 

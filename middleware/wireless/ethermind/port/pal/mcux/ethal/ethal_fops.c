@@ -1054,6 +1054,80 @@ EM_RESULT EM_fops_file_get_formatted
     return retval;
 }
 
+#if EM_FOPS_FILE_SYNC_IN_IDLE
+static void EM_fops_file_flush_pending_write
+(
+    /* IN */  EM_fops_file_handle  file_handle
+)
+{
+    fops_file_handle_t *fhandle;
+    fops_file_write_buffer_node_t *node;
+    uint32_t regMask;
+    FRESULT ret;
+
+    /* NULL Check */
+    if (NULL == file_handle)
+    {
+        return;
+    }
+
+    fhandle = (fops_file_handle_t *)file_handle;
+
+    (void) OSA_MutexLock(s_fopsFileObjListLock, osaWaitForever_c);
+    if ((NULL != fhandle) && (NULL != fhandle->fullMsgq))
+    {
+#if EM_FOPS_FILE_SYNC_TASK_LOG
+        PRINTF("Sync(%d) S(%d)", fhandle->index, OSA_TimeGetMsec());
+#endif
+        while (KOSA_StatusSuccess == OSA_MsgQGet(fhandle->fullMsgq, &node, 0U))
+        {
+            UINT bytes_written = 0u;
+            ret = f_write((FIL *)&fhandle->fileHandle, node->buffer, node->bufferLength, (UINT *)&bytes_written);
+            if ((ret) || (bytes_written != node->bufferLength))
+            {
+#if EM_FOPS_FILE_SYNC_TASK_LOG
+                PRINTF("x");
+#endif
+            }
+            else
+            {
+#if EM_FOPS_FILE_SYNC_TASK_LOG
+                PRINTF(".");
+#endif
+            }
+            node->bufferLength = 0u;
+            (void)OSA_MsgQPut(s_emptyMsgq, &node);
+        };
+
+        OSA_EnterCritical(&regMask);
+        node = fhandle->busyBuffer;
+        fhandle->busyBuffer = NULL;
+        OSA_ExitCritical(regMask);
+
+        if (NULL != node)
+        {
+            UINT bytes_written = 0u;
+            ret = f_write((FIL *)&fhandle->fileHandle, node->buffer, node->bufferLength, (UINT *)&bytes_written);
+            if ((ret) || (bytes_written != node->bufferLength))
+            {
+#if EM_FOPS_FILE_SYNC_TASK_LOG
+                PRINTF("x");
+#endif
+            }
+            else
+            {
+#if EM_FOPS_FILE_SYNC_TASK_LOG
+                PRINTF("-");
+#endif
+            }
+            node->bufferLength = 0u;
+            (void)OSA_MsgQPut(s_emptyMsgq, &node);
+        }
+    }
+    (void) OSA_MutexUnlock(s_fopsFileObjListLock);
+}
+#endif
+
 /**
  *  \fn EM_fops_file_close
  *
@@ -1098,20 +1172,7 @@ EM_RESULT EM_fops_file_close
     OSA_EnterCritical(&regMask);
     fhandle->closing = 1U;
     OSA_ExitCritical(regMask);
-
-    while ((NULL != fhandle->busyBuffer))
-    {
-        OSA_TimeDelay(1U);
-    }
-    if (NULL != fhandle->fullMsgq)
-    {
-        while (OSA_MsgQAvailableMsgs(fhandle->fullMsgq) > 0u)
-        {
-            OSA_TimeDelay(1U);
-        }
-        fhandle->fullMsgq = NULL;
-        (void)OSA_MsgQDestroy((osa_msgq_handle_t)fhandle->fullMsgqBuffer);
-    }
+    EM_fops_file_flush_pending_write(file_handle);
 
     if (NULL != s_fopsFileObjListLock)
     {

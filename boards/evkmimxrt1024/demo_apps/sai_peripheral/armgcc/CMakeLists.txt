@@ -65,11 +65,13 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../CMSIS/DSP
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT1024
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/osa
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/utilities
@@ -98,7 +100,7 @@ include(component_codec_i2c_MIMXRT1024)
 
 include(component_lpi2c_adapter_MIMXRT1024)
 
-include(CMSIS_DSP_Library_MIMXRT1024)
+include(CMSIS_DSP_Source_MIMXRT1024)
 
 include(middleware_sdmmc_sd_MIMXRT1024)
 
@@ -111,6 +113,8 @@ include(middleware_sdmmc_host_usdhc_interrupt_MIMXRT1024)
 include(utility_debug_console_lite_MIMXRT1024)
 
 include(utility_assert_lite_MIMXRT1024)
+
+include(component_igpio_adapter_MIMXRT1024)
 
 include(driver_clock_MIMXRT1024)
 
@@ -140,6 +144,8 @@ include(driver_xip_device_MIMXRT1024)
 
 include(driver_xip_board_evkmimxrt1024_MIMXRT1024)
 
+include(component_silicon_id_MIMXRT1024)
+
 include(CMSIS_Include_core_cm_MIMXRT1024)
 
 include(middleware_sdmmc_osa_bm_MIMXRT1024)
@@ -160,14 +166,6 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

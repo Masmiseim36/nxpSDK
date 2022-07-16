@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_freertos-aws_iot_libraries_3rdparty_pkcs11 component is included.")
 
 

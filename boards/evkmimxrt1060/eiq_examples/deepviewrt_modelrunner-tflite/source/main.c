@@ -26,6 +26,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "fsl_silicon_id.h"
 #include "fsl_phy.h"
 #include "modelrunner.h"
 
@@ -79,14 +80,6 @@
 #endif
 #ifndef configGW_ADDR3
 #define configGW_ADDR3 100
-#endif
-
-/* MAC address configuration. */
-#ifndef configMAC_ADDR
-#define configMAC_ADDR                     \
-    {                                      \
-        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
-    }
 #endif
 
 /* Address of PHY interface. */
@@ -155,13 +148,18 @@ static void stack_init(void)
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
         .phyHandle  = &phyHandle,
+#ifdef configMAC_ADDR
         .macAddress = configMAC_ADDR,
+#endif
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
+#ifndef configMAC_ADDR
+    SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
 
     tcpip_init(NULL, NULL);
 

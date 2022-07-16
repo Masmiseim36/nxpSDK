@@ -1,3 +1,3 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_baremetal component is included.")
 

@@ -2,7 +2,49 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.11.0.
+  The current version of Multicore SDK is 2.12.0.
+  - 2.12.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.9.1
+      - eRPC generator (erpcgen) v.1.9.1
+      - Multicore Manager (MCMgr) v4.1.2
+      - RPMsg-Lite v4.0.0
+    - New features:
+      - eRPC: Construct the USB CDC transport, rather than a client, GitHub PR #220.
+      - eRPC: Fix premature import of package, causing failure when attempting installation of Python library in a clean environment, GitHub PR #38, #226.
+      - eRPC: Improve python detection in make, GitHub PR #225.
+      - eRPC: Fix several warnings with deprecated call in pytest, GitHub PR #227.
+      - eRPC: Fix freeing union members when only default need be freed, GitHub PR #228.
+      - eRPC: Fix making test under Linux, GitHub PR #229.
+      - eRPC: Assert costumizing, GitHub PR #148.
+      - eRPC: Fix corrupt clientList bug in TransportArbitrator, GitHub PR #199.
+      - eRPC: Fix build issue when invoking g++ with -Wno-error=free-nonheap-object, GitHub PR #233.
+      - eRPC: Fix inout cases, GitHub PR #237.
+      - eRPC: Remove ERPC_PRE_POST_ACTION dependency on return type, GitHub PR #238.
+      - eRPC: Adding NULL to ptr when codec function failed, fixing memcpy when fail is present during deserialization, GitHub PR #253.
+      - eRPC: MessageBuffer usage improvement, GitHub PR #258.
+      - eRPC: Get rid for serial and enum34 dependency (enum34 is in python3 since 3.4 (from 2014)), GitHub PR #247.
+      - eRPC: Several MISRA violations addressed.
+      - eRPC: Fix timeout for Freertos semaphore, GitHub PR #251.
+      - eRPC: Use of rpmsg_lite_wait_for_link_up() in rpmsg_lite based transports, GitHub PR #223.
+      - eRPC: Fix codec nullptr dereferencing, GitHub PR #264.
+      - erpcgen: Fix two syntax errors in erpcgen Python output related to non-encapsulated unions, improved test for union, GitHub PR #206, #224.
+      - erpcgen: Fix serialization of list/binary types, GitHub PR #240.
+      - erpcgen: Fix empty list parsing, GitHub PR #72.
+      - erpcgen: Fix templates for malloc errors, GitHub PR #110.
+      - erpcgen: Get rid of encapsulated union declarations in global scale, improve enum usage in unions, GitHub PR #249, #250.
+      - erpcgen: Fix compile error:UniqueIdChecker.cpp:156:104:'sort' was not declared, GitHub PR #265.
+      - MCMgr: Update mcmgr_stop_core_internal() implementations to set core state to kMCMGR_ResetCoreState.
+      - RPMsg-Lite: Introduce new rpmsg_lite_wait_for_link_up() API function - this allows to avoid using busy loops in rtos environments, GitHub PR #21.
+      - RPMsg-Lite: Adjust rpmsg_lite_is_link_up() to return RL_TRUE/RL_FALSE.
+  - 2.11.1
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.9.0
+      - eRPC generator (erpcgen) v.1.9.0
+      - Multicore Manager (MCMgr) v4.1.1
+      - RPMsg-Lite v3.2.1
+    - New features:
+      - RPMsg-Lite: Add support for custom shared memory arangement per the RPMsg_Lite instance.
   - 2.11.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.9.0

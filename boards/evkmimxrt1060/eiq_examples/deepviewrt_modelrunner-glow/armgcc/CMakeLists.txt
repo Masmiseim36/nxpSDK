@@ -74,17 +74,17 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/phy
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../middleware/eiq
     ${ProjDirPath}/../../../../../components/phy/device/phyksz8081
     ${ProjDirPath}/../../../../../components/phy/mdio/enet
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
+    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
-    ${ProjDirPath}/../../../../../CMSIS/DSP
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -102,8 +102,6 @@ include(middleware_lwip_enet_ethernetif_MIMXRT1062)
 include(driver_phy-common_MIMXRT1062)
 
 include(driver_enet_MIMXRT1062)
-
-include(utility_debug_console_MIMXRT1062)
 
 include(middleware_lwip_empty_ethernetif_MIMXRT1062)
 
@@ -133,6 +131,10 @@ include(middleware_eiq_deepviewrt_deps_stb_MIMXRT1062)
 
 include(middleware_eiq_deepviewrt_deps_flatcc_MIMXRT1062)
 
+include(component_silicon_id_MIMXRT1062)
+
+include(driver_common_MIMXRT1062)
+
 include(middleware_eiq_deepviewrt_MIMXRT1062)
 
 include(component_lists_MIMXRT1062)
@@ -141,11 +143,11 @@ include(component_lpuart_adapter_MIMXRT1062)
 
 include(component_serial_manager_MIMXRT1062)
 
-include(driver_common_MIMXRT1062)
-
 include(component_serial_manager_uart_MIMXRT1062)
 
 include(driver_lpuart_MIMXRT1062)
+
+include(utility_debug_console_MIMXRT1062)
 
 include(device_MIMXRT1062_CMSIS_MIMXRT1062)
 
@@ -162,8 +164,6 @@ include(driver_xip_device_MIMXRT1062)
 include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
 
 include(utility_assert_MIMXRT1062)
-
-include(CMSIS_DSP_Library_MIMXRT1062)
 
 include(middleware_freertos-kernel_extension_MIMXRT1062)
 
@@ -194,20 +194,12 @@ if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libdeepview-rt-cortex-m7f.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
 
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
-
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libmodelrunner-rt-flash.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/deepviewrt/lib/libdeepview-rt-cortex-m7f.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_cortexM7lfdp_math.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)

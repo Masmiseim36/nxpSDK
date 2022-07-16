@@ -3,19 +3,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -23,17 +14,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -65,6 +48,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DIOT_MQTT_ENABLE_SERIALIZER_OVERRIDES=1 \
     -DSDK_DEBUGCONSOLE_UART=1 \
     -DCONTROLLER_INIT_ESCAPE=1 \
+    -DCFG_BLE \
     -DNVM_NO_COMPONNET=1 \
     -DSDIO_ENABLED=1 \
     -DCPU_MIMXRT1062DVL6A_cm7 \
@@ -124,6 +108,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DIOT_MQTT_ENABLE_SERIALIZER_OVERRIDES=1 \
     -DSDK_DEBUGCONSOLE_UART=1 \
     -DCONTROLLER_INIT_ESCAPE=1 \
+    -DCFG_BLE \
     -DNVM_NO_COMPONNET=1 \
     -DSDIO_ENABLED=1 \
     -DCPU_MIMXRT1062DVL6A_cm7 \

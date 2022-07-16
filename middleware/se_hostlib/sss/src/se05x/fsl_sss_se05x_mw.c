@@ -174,9 +174,19 @@ smStatus_t Se05x_API_EC_CurveGetId(pSe05xSession_t session_ctx, uint32_t objectI
 int add_taglength_to_data(
     uint8_t **buf, size_t *bufLen, SE05x_TAG_t tag, const uint8_t *cmd, size_t cmdLen, bool extendedLength)
 {
-    uint8_t *pBuf         = *buf;
+    uint8_t *pBuf         = NULL;
     size_t size_of_length = 3;
     size_t size_of_tlv    = 0;
+
+    if ((buf == NULL) || (bufLen == NULL) || (cmd == NULL)) {
+        return 1;
+    }
+
+    pBuf = *buf;
+
+    if (pBuf == NULL) {
+        return 1;
+    }
 
     *pBuf++ = (uint8_t)tag;
 
@@ -435,7 +445,7 @@ smStatus_t Se05x_i2c_master_attst_txn(sss_session_t *sess,
         }
     }
     SendLen = bufferLen;
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
     retval = Se05x_API_I2CM_ExecuteCommandSet(se050session_id,
         pSendbuf,
         SendLen,

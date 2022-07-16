@@ -33,20 +33,19 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../lvgl_demo_benchmark.c"
 "${ProjDirPath}/../lv_conf.h"
-"${ProjDirPath}/../lv_demo_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark/lv_demo_benchmark.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark/lv_demo_benchmark.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/lv_demo.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_alpha16.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_rgb.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_argb.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_indexed16.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_chroma_keyed.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets/lv_font_montserrat_28_compr_az.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets/lv_font_montserrat_16_compr_az.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets/lv_font_montserrat_12_compr_az.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/lv_demos.h"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
@@ -60,16 +59,18 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark
-    ${ProjDirPath}/../../../../../middleware/lvgl/lv_examples
+    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/benchmark
+    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos
     ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/examples/assets
-    ${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets
+    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/stress/assets
     ${ProjDirPath}/../..
 )
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../components/ft5406_rt
+    ${ProjDirPath}/../../../../../components/gt911
+    ${ProjDirPath}/../../../../../components/video
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/lvgl
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
@@ -79,6 +80,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -92,6 +94,10 @@ include(driver_ft5406_rt_MIMXRT1062)
 include(driver_pxp_MIMXRT1062)
 
 include(driver_cache_armv7_m7_MIMXRT1062)
+
+include(driver_gt911_MIMXRT1062)
+
+include(driver_video-common_MIMXRT1062)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1062)
 
@@ -126,6 +132,8 @@ include(driver_igpio_MIMXRT1062)
 include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
+
+include(component_silicon_id_MIMXRT1062)
 
 include(CMSIS_Include_core_cm_MIMXRT1062)
 

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -114,7 +114,7 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gae78d379ef6bde2ad08e1fe64f1f09bf5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gae78d379ef6bde2ad08e1fe64f1f09bf5">FSL_LPUART_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00209.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td></tr>
+<tr class="memitem:gae78d379ef6bde2ad08e1fe64f1f09bf5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gae78d379ef6bde2ad08e1fe64f1f09bf5">FSL_LPUART_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00209.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
 <tr class="memdesc:gae78d379ef6bde2ad08e1fe64f1f09bf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPUART FreeRTOS driver version.  <a href="#gae78d379ef6bde2ad08e1fe64f1f09bf5">More...</a><br/></td></tr>
 <tr class="separator:gae78d379ef6bde2ad08e1fe64f1f09bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -135,6 +135,12 @@ LPUART transactional Operation</h2></td></tr>
 <tr class="memitem:ga0561f87122863c6e9b20f8991a73a0fb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga0561f87122863c6e9b20f8991a73a0fb">LPUART_RTOS_Receive</a> (lpuart_rtos_handle_t *handle, uint8_t *buffer, uint32_t length, size_t *received)</td></tr>
 <tr class="memdesc:ga0561f87122863c6e9b20f8991a73a0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data.  <a href="#ga0561f87122863c6e9b20f8991a73a0fb">More...</a><br/></td></tr>
 <tr class="separator:ga0561f87122863c6e9b20f8991a73a0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3e211e0c1a2c93d9bdd73d6ca4639a10"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ga3e211e0c1a2c93d9bdd73d6ca4639a10">LPUART_RTOS_SetRxTimeout</a> (lpuart_rtos_handle_t *handle, uint32_t rx_timeout_constant_ms, uint32_t rx_timeout_multiplier_ms)</td></tr>
+<tr class="memdesc:ga3e211e0c1a2c93d9bdd73d6ca4639a10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set RX timeout in runtime.  <a href="#ga3e211e0c1a2c93d9bdd73d6ca4639a10">More...</a><br/></td></tr>
+<tr class="separator:ga3e211e0c1a2c93d9bdd73d6ca4639a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad2317ff04710f0f4a2dc7d219f850c85"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#gad2317ff04710f0f4a2dc7d219f850c85">LPUART_RTOS_SetTxTimeout</a> (lpuart_rtos_handle_t *handle, uint32_t tx_timeout_constant_ms, uint32_t tx_timeout_multiplier_ms)</td></tr>
+<tr class="memdesc:gad2317ff04710f0f4a2dc7d219f850c85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set TX timeout in runtime.  <a href="#gad2317ff04710f0f4a2dc7d219f850c85">More...</a><br/></td></tr>
+<tr class="separator:gad2317ff04710f0f4a2dc7d219f850c85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="a00339" id="a00339"></a>
@@ -176,6 +182,20 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#ad8ba8f4845a222fef29714542876ae55">buffer_size</a></td></tr>
 <tr class="memdesc:ad8ba8f4845a222fef29714542876ae55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size of buffer for background reception. <br/></td></tr>
 <tr class="separator:ad8ba8f4845a222fef29714542876ae55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8dc452650aae3faefd0f92cffe2b6ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8dc452650aae3faefd0f92cffe2b6ab"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#aa8dc452650aae3faefd0f92cffe2b6ab">rx_timeout_constant_ms</a></td></tr>
+<tr class="memdesc:aa8dc452650aae3faefd0f92cffe2b6ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX timeout applied per receive. <br/></td></tr>
+<tr class="separator:aa8dc452650aae3faefd0f92cffe2b6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7deed5c320a55485e10ccf7fb6f39d3b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a7deed5c320a55485e10ccf7fb6f39d3b">rx_timeout_multiplier_ms</a></td></tr>
+<tr class="memdesc:a7deed5c320a55485e10ccf7fb6f39d3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX timeout added for each byte of the receive.  <a href="#a7deed5c320a55485e10ccf7fb6f39d3b">More...</a><br/></td></tr>
+<tr class="separator:a7deed5c320a55485e10ccf7fb6f39d3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42dc67e6be0ad089f67a8d404aee72d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a42dc67e6be0ad089f67a8d404aee72d4"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a42dc67e6be0ad089f67a8d404aee72d4">tx_timeout_constant_ms</a></td></tr>
+<tr class="memdesc:a42dc67e6be0ad089f67a8d404aee72d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX timeout applied per transmition. <br/></td></tr>
+<tr class="separator:a42dc67e6be0ad089f67a8d404aee72d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fa692dea066c6e1393912ae32a5fc3a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a8fa692dea066c6e1393912ae32a5fc3a">tx_timeout_multiplier_ms</a></td></tr>
+<tr class="memdesc:a8fa692dea066c6e1393912ae32a5fc3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX timeout added for each byte of the transmition.  <a href="#a8fa692dea066c6e1393912ae32a5fc3a">More...</a><br/></td></tr>
+<tr class="separator:a8fa692dea066c6e1393912ae32a5fc3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bf2ba5df12af74dd4049e4377caa213"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6bf2ba5df12af74dd4049e4377caa213"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00043.html#a6bf2ba5df12af74dd4049e4377caa213">enableRxRTS</a></td></tr>
 <tr class="memdesc:a6bf2ba5df12af74dd4049e4377caa213"><td class="mdescLeft">&#160;</td><td class="mdescRight">RX RTS enable. <br/></td></tr>
@@ -193,6 +213,31 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <tr class="memdesc:af09c2955ab27338fac430062ae812388"><td class="mdescLeft">&#160;</td><td class="mdescRight">TX CTS configure. <br/></td></tr>
 <tr class="separator:af09c2955ab27338fac430062ae812388"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h4 class="groupheader">Field Documentation</h4>
+<a class="anchor" id="a7deed5c320a55485e10ccf7fb6f39d3b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t lpuart_rtos_config_t::rx_timeout_multiplier_ms</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a8fa692dea066c6e1393912ae32a5fc3a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t lpuart_rtos_config_t::tx_timeout_multiplier_ms</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 
 </div>
 </div>
@@ -202,7 +247,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPUART_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00209.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 0))</td>
+          <td class="memname">#define FSL_LPUART_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00209.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -360,6 +405,74 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3e211e0c1a2c93d9bdd73d6ca4639a10"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int LPUART_RTOS_SetRxTimeout </td>
+          <td>(</td>
+          <td class="paramtype">lpuart_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>rx_timeout_constant_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>rx_timeout_multiplier_ms</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function can modify RX timeout between initialization and receive.</p>
+<p>param handle The RTOS LPUART handle. param rx_timeout_constant_ms RX timeout applied per receive. param rx_timeout_multiplier_ms RX timeout added for each byte of the receive. </p>
+
+</div>
+</div>
+<a class="anchor" id="gad2317ff04710f0f4a2dc7d219f850c85"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int LPUART_RTOS_SetTxTimeout </td>
+          <td>(</td>
+          <td class="paramtype">lpuart_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>tx_timeout_constant_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>tx_timeout_multiplier_ms</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function can modify TX timeout between initialization and send.</p>
+<p>param handle The RTOS LPUART handle. param tx_timeout_constant_ms TX timeout applied per transmition. param tx_timeout_multiplier_ms TX timeout added for each byte of the transmition. </p>
 
 </div>
 </div>

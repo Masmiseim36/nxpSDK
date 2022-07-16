@@ -828,6 +828,11 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_NoOpt_1_8.h</FilePath>
             </File>
             <File>
+              <FileName>GUIDRV_Null.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_Null.h</FilePath>
+            </File>
+            <File>
               <FileName>GUIDRV_S1D13748.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_S1D13748.h</FilePath>
@@ -1456,6 +1461,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -2311,6 +2321,11 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_NoOpt_1_8.h</FilePath>
             </File>
             <File>
+              <FileName>GUIDRV_Null.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_Null.h</FilePath>
+            </File>
+            <File>
               <FileName>GUIDRV_S1D13748.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_S1D13748.h</FilePath>
@@ -2939,6 +2954,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>

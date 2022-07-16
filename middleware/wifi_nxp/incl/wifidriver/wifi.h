@@ -1,23 +1,7 @@
 /*
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -30,8 +14,6 @@
 #define __WIFI_H__
 
 
-#define BANDWIDTH_20MHZ 1U
-#define BANDWIDTH_40MHZ 2U
 
 
 #include <wifi-decl.h>
@@ -39,6 +21,8 @@
 #include <wm_os.h>
 #include <wmerrno.h>
 
+#define BANDWIDTH_20MHZ 1U
+#define BANDWIDTH_40MHZ 2U
 extern int16_t g_bcn_nf_last;
 extern uint8_t g_rssi;
 extern uint16_t g_data_nf_last;
@@ -271,6 +255,7 @@ unsigned wifi_get_last_cmd_sent_ms(void);
 uint32_t wifi_get_value1(void);
 
 uint8_t *wifi_get_outbuf(uint32_t *outbuf_len);
+
 
 /**
  * This will update the last command sent variable value to current
@@ -570,7 +555,8 @@ int wifi_set_country(int country);
 int wifi_uap_set_country(int country);
 int wifi_get_country(void);
 #ifdef OTP_CHANINFO
-int wifi_get_fw_region_and_cfp_tables();
+int wifi_get_fw_region_and_cfp_tables(void);
+void wifi_free_fw_region_and_cfp_tables(void);
 #endif
 int wifi_set_htcapinfo(unsigned int htcapinfo);
 int wifi_set_httxcfg(unsigned short httxcfg);
@@ -616,7 +602,7 @@ int wrapper_wlan_cmd_11n_delba_rspgen(void *saved_event_buff);
 
 int wrapper_wlan_ecsa_enable(void);
 
-int wifi_uap_start(int type,
+int wifi_uap_start(mlan_bss_type type,
                    char *ssid,
                    uint8_t *mac_addr,
                    int security,
@@ -625,7 +611,8 @@ int wifi_uap_start(int type,
                    int channel,
                    wifi_scan_chan_list_t scan_chan_list,
                    bool mfpc,
-                   bool mfpr);
+                   bool mfpr
+);
 
 #ifdef CONFIG_WMM
 int wrapper_wlan_sta_ampdu_enable(t_u8 tid);
@@ -643,6 +630,7 @@ int wifi_set_packet_filters(wifi_flt_cfg_t *flt_cfg);
 
 int wifi_uap_stop(int type);
 int wifi_uap_set_bandwidth(const t_u8 bandwidth);
+
 
 
 
@@ -739,5 +727,5 @@ int wifi_wmm_get_pkt_prio(t_u8 *buf, t_u8 *tid, bool *is_udp_frame);
 
 uint8_t *wifi_wmm_get_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue);
 #endif
-wifi_domain_param_t *get_11d_domain_params(int country, wifi_sub_band_set_t *sub_band, int nr_sb);
+wifi_domain_param_t *get_11d_domain_params(int country, wifi_sub_band_set_t *sub_band, t_u8 nr_sb);
 #endif

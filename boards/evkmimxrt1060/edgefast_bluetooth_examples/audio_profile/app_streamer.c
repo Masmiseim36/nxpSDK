@@ -4,7 +4,6 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "osa_common.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 
@@ -19,7 +18,7 @@
 #define STREAMER_TASK_STACK_SIZE         8 * 1024
 #define STREAMER_MESSAGE_TASK_STACK_SIZE 2 * 1024
 
-OsaThread msg_thread;
+OSA_TASK_HANDLE_DEFINE(msg_thread);
 
 #define ENABLE_STREAMER_MESSAGE_TASK (1U)
 
@@ -36,35 +35,39 @@ OsaThread msg_thread;
  */
 static void STREAMER_MessageTask(void *arg)
 {
-    OsaMq mq;
     STREAMER_MSG_T msg;
     streamer_handle_t *handle;
     bool exit_thread = false;
-    int ret;
+    osa_status_t ret;
 
     handle = (streamer_handle_t *)arg;
 
     PRINTF("[STREAMER] Message Task started\r\n");
 
-    ret = osa_mq_open(&mq, APP_STREAMER_MSG_QUEUE, STREAMER_MSG_SIZE, true);
-    if (ERRCODE_NO_ERROR != ret)
+    while (!handle->streamer)
     {
-        PRINTF("osa_mq_open failed: %d\r\n", ret);
-        osa_thread_destroy(NULL);
+        OSA_TimeDelay(1);
+    }
+    if (handle->streamer->mq_out == NULL)
+    {
+        PRINTF("[EAP STREAMER] osa_mq_open failed: %d\r\n");
+        OSA_TaskDestroy(msg_thread);
         return;
     }
 
     do
     {
-        ret = osa_mq_receive(&mq, (void *)&msg, STREAMER_MSG_SIZE, 0, NULL);
-        if (ret != ERRCODE_NO_ERROR)
+        ret = OSA_MsgQGet(&handle->streamer->mq_out, (void *)&msg, osaWaitForever_c);
+        if (ret != KOSA_StatusSuccess)
         {
-            PRINTF("osa_mq_receiver error: %d\r\n", ret);
+            PRINTF("[EAP STREAMER] OSA_MsgQGet error: %d\r\n", ret);
             continue;
         }
 
         switch (msg.id)
         {
+            case STREAM_MSG_DESTROY_PIPELINE:
+                break;
             case STREAM_MSG_ERROR:
                 PRINTF("STREAM_MSG_ERROR\r\n");
                 exit_thread = true;
@@ -72,14 +75,14 @@ static void STREAMER_MessageTask(void *arg)
                 break;
             case STREAM_MSG_EOS:
                 PRINTF("STREAM_MSG_EOS\r\n");
-
-                /* Indicate to other software layers that playing has ended. */
-                /* STREAMER_Stop(handle); */
+                exit_thread = true;
                 music_play_next();
                 break;
             case STREAM_MSG_UPDATE_POSITION:
                 PRINTF("STREAM_MSG_UPDATE_POSITION\r\n");
                 PRINTF("  position: %d ms\r\n", msg.event_data);
+                break;
+            case STREAM_MSG_UPDATE_DURATION:
                 break;
             case STREAM_MSG_CLOSE_TASK:
                 PRINTF("STREAM_MSG_CLOSE_TASK\r\n");
@@ -91,10 +94,10 @@ static void STREAMER_MessageTask(void *arg)
 
     } while (!exit_thread);
 
-    osa_mq_close(&mq);
-    osa_mq_destroy(APP_STREAMER_MSG_QUEUE);
+    OSA_MsgQDestroy(&handle->streamer->mq_out);
+    handle->streamer->mq_out = NULL;
 
-    osa_thread_destroy(NULL);
+    OSA_TaskDestroy(msg_thread);
 }
 #endif
 
@@ -132,31 +135,24 @@ void STREAMER_Resume(streamer_handle_t *handle)
 status_t STREAMER_file_Create(streamer_handle_t *handle, char *filename)
 {
     STREAMER_CREATE_PARAM params;
-#if (defined ENABLE_STREAMER_MESSAGE_TASK) && (ENABLE_STREAMER_MESSAGE_TASK)
-    OsaThreadAttr thread_attr;
+    ELEMENT_PROPERTY_T prop;
+    osa_task_def_t thread_attr;
     int ret;
-#endif
 
-#if (defined ENABLE_STREAMER_MESSAGE_TASK) && (ENABLE_STREAMER_MESSAGE_TASK)
     /* Create message process thread */
-    osa_thread_attr_init(&thread_attr);
-    osa_thread_attr_set_name(&thread_attr, STREAMER_MESSAGE_TASK_NAME);
-    osa_thread_attr_set_stack_size(&thread_attr, STREAMER_MESSAGE_TASK_STACK_SIZE / sizeof(portSTACK_TYPE));
-    ret = osa_thread_create(&msg_thread, &thread_attr, STREAMER_MessageTask, (void *)handle);
-    osa_thread_attr_destroy(&thread_attr);
-    if (ERRCODE_NO_ERROR != ret)
+    thread_attr.tpriority = OSA_PRIORITY_HIGH;
+    thread_attr.tname     = (uint8_t *)STREAMER_MESSAGE_TASK_NAME;
+    thread_attr.pthread   = &STREAMER_MessageTask;
+    thread_attr.stacksize = STREAMER_MESSAGE_TASK_STACK_SIZE;
+    ret                   = OSA_TaskCreate(&msg_thread, &thread_attr, (void *)handle);
+    if (KOSA_StatusSuccess != ret)
     {
         return kStatus_Fail;
     }
-#endif
 
     /* Create streamer */
-#if (defined ENABLE_STREAMER_MESSAGE_TASK) && (ENABLE_STREAMER_MESSAGE_TASK)
     strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
-#else
-    memset(params.out_mq_name, 0, sizeof(params.out_mq_name));
-#endif
-    params.stack_size    = STREAMER_TASK_STACK_SIZE / sizeof(portSTACK_TYPE);
+    params.stack_size    = STREAMER_TASK_STACK_SIZE;
     params.pipeline_type = STREAM_PIPELINE_FILESYSTEM;
     params.task_name     = STREAMER_TASK_NAME;
     params.in_dev_name   = "";
@@ -178,23 +174,13 @@ status_t STREAMER_file_Create(streamer_handle_t *handle, char *filename)
 void STREAMER_Destroy(streamer_handle_t *handle)
 {
     streamer_destroy(handle->streamer);
+    handle->streamer = NULL;
 }
 
 void STREAMER_Init(void)
 {
-    /* Initialize OSA*/
-    osa_init();
-
     /* Initialize logging */
     init_logging();
-
-    add_module_name(LOGMDL_STREAMER, "STREAMER");
-
-    /* Uncomment below to turn on full debug logging for the streamer. */
-    /* set_debug_module(0xffffffff); */
-    /* set_debug_level(LOGLVL_DEBUG); */
-    /* get_debug_state(); */
-
     /* Initialize streamer PCM management library. */
     streamer_pcm_init();
 }

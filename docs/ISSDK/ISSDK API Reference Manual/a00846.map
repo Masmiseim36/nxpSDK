@@ -1,8 +1,9 @@
-<map id="algorithms/sensorfusion/sources/main_freertos_agm02_power_cycling.c" name="algorithms/sensorfusion/sources/main_freertos_agm02_power_cycling.c">
-<area shape="rect" id="node14" href="$a00161.html" title="The register_io_i2c.h file declares low&#45;level interface functions for reading and writing sensor regi..." alt="" coords="1333,109,1450,136"/>
-<area shape="rect" id="node17" href="$a00878.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="1888,184,2001,211"/>
-<area shape="rect" id="node18" href="$a00743.html" title="Defines control sub&#45;system. " alt="" coords="1805,109,1877,136"/>
-<area shape="rect" id="node19" href="$a00887.html" title="Application&#45;specific status subsystem. " alt="" coords="1901,109,1970,136"/>
-<area shape="rect" id="node20" href="$a00806.html" title="Provides function prototypes for driver level interfaces. " alt="" coords="1995,109,2065,136"/>
-<area shape="rect" id="node21" href="$a00812.html" title="Lower level sensor fusion interface. " alt="" coords="2090,109,2157,136"/>
+<map id="algorithms/sensorfusion/sources/fusion.c" name="algorithms/sensorfusion/sources/fusion.c">
+<area shape="rect" id="node5" href="$a00914.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="126,169,239,196"/>
+<area shape="rect" id="node6" href="$a00899.html" title="Functions to convert between various orientation representations. " alt="" coords="179,244,272,271"/>
+<area shape="rect" id="node7" href="$a00890.html" title="Matrix manipulation functions. " alt="" coords="296,244,365,271"/>
+<area shape="rect" id="node8" href="$a00848.html" title="Lower level sensor fusion interface. " alt="" coords="175,95,241,121"/>
+<area shape="rect" id="node9" href="$a00764.html" title="Math approximations file. " alt="" coords="455,95,577,121"/>
+<area shape="rect" id="node10" href="$a00842.html" title="Provides function prototypes for driver level interfaces. " alt="" coords="601,95,671,121"/>
+<area shape="rect" id="node11" href="$a00779.html" title="Defines control sub&#45;system. " alt="" coords="696,95,768,121"/>
 </map>

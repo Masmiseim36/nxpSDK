@@ -298,7 +298,6 @@ WORD32 xa_nn_fully_connected_sym8sxasym8s_asym8s
   XA_NNLIB_ARG_CHK_PTR(p_out, -1);
   XA_NNLIB_ARG_CHK_PTR(p_weight, -1);
   XA_NNLIB_ARG_CHK_PTR(p_inp, -1);
-  XA_NNLIB_ARG_CHK_PTR(p_bias, -1);
   /* Pointer alignment checks */
 #if 0
   XA_NNLIB_ARG_CHK_ALIGN(p_out, ALIGNMENT, -1);
@@ -310,7 +309,8 @@ WORD32 xa_nn_fully_connected_sym8sxasym8s_asym8s
   XA_NNLIB_ARG_CHK_ALIGN(p_out, sizeof(WORD8), -1);
   XA_NNLIB_ARG_CHK_ALIGN(p_weight, sizeof(WORD8), -1);
   XA_NNLIB_ARG_CHK_ALIGN(p_inp, sizeof(WORD8), -1);
-  XA_NNLIB_ARG_CHK_ALIGN(p_bias, sizeof(WORD32), -1);
+  if (p_bias != NULL)
+    XA_NNLIB_ARG_CHK_ALIGN(p_bias, sizeof(WORD32), -1);
 #endif
   /* Basic Parameter checks */
   XA_NNLIB_ARG_CHK_COND((out_depth <= 0), -1);

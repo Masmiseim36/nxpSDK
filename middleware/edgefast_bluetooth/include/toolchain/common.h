@@ -192,29 +192,29 @@
  * In the linker script, create output sections for these using
  * Z_ITERABLE_SECTION_ROM or Z_ITERABLE_SECTION_RAM.
  */
-#define Z_STRUCT_SECTION_ITERABLE(struct_type, name) \
+#define STRUCT_SECTION_ITERABLE(struct_type, name) \
 	Z_DECL_ALIGN(struct struct_type) name \
 	__in_section(_##struct_type, static, name) __used
 
-/* Special variant of Z_STRUCT_SECTION_ITERABLE, for placing alternate
+/* Special variant of STRUCT_SECTION_ITERABLE, for placing alternate
  * data types within the iterable section of a specific data type. The
  * data type sizes and semantics must be equivalent!
  */
-#define Z_STRUCT_SECTION_ITERABLE_ALTERNATE(out_type, struct_type, name) \
+#define STRUCT_SECTION_ITERABLE_ALTERNATE(out_type, struct_type, name) \
 	Z_DECL_ALIGN(struct struct_type) name \
 	__in_section(_##out_type, static, name) __used
 
 /*
- * Iterator for structure instances gathered by Z_STRUCT_SECTION_ITERABLE().
+ * Iterator for structure instances gathered by STRUCT_SECTION_ITERABLE().
  * The linker must provide a _<struct_type>_list_start symbol and a
  * _<struct_type>_list_end symbol to mark the start and the end of the
  * list of struct objects to iterate over.
  */
-#define Z_STRUCT_SECTION_DEFINE(struct_type) \
+#define STRUCT_SECTION_DEFINE(struct_type) \
   __get_section_start(_##struct_type, struct struct_type, _CONCAT(_##struct_type, _list_start)); \
   __get_section_end(_##struct_type, struct struct_type, _CONCAT(_##struct_type, _list_end)); \
 
-#define Z_STRUCT_SECTION_FOREACH(struct_type, iterator) \
+#define STRUCT_SECTION_FOREACH(struct_type, iterator) \
 	for (struct struct_type *iterator = \
 			_CONCAT(_##struct_type, _list_start); \
 	     ({ __ASSERT(iterator <= _CONCAT(_##struct_type, _list_end), \

@@ -10,15 +10,15 @@
 #define __KEYS_H__
 
 enum {
-	BT_KEYS_SLAVE_LTK      = BIT(0),
+	BT_KEYS_PERIPH_LTK     = BIT(0),
 	BT_KEYS_IRK            = BIT(1),
 	BT_KEYS_LTK            = BIT(2),
 	BT_KEYS_LOCAL_CSRK     = BIT(3),
 	BT_KEYS_REMOTE_CSRK    = BIT(4),
 	BT_KEYS_LTK_P256       = BIT(5),
 
-	BT_KEYS_ALL            = (BT_KEYS_SLAVE_LTK | BT_KEYS_IRK | \
-				  BT_KEYS_LTK | BT_KEYS_LOCAL_CSRK | \
+	BT_KEYS_ALL            = (BT_KEYS_PERIPH_LTK | BT_KEYS_IRK |
+				  BT_KEYS_LTK | BT_KEYS_LOCAL_CSRK |
 				  BT_KEYS_REMOTE_CSRK | BT_KEYS_LTK_P256),
 };
 
@@ -70,7 +70,7 @@ struct bt_keys {
 			struct bt_csrk  remote_csrk;
 #endif /* BT_SIGNING */
 #if !(defined(CONFIG_BT_SMP_SC_PAIR_ONLY) && (CONFIG_BT_SMP_SC_PAIR_ONLY > 0))
-			struct bt_ltk   slave_ltk;
+	struct bt_ltk           periph_ltk;
 #endif /* CONFIG_BT_SMP_SC_PAIR_ONLY */
 #if (defined(CONFIG_BT_KEYS_OVERWRITE_OLDEST) && (CONFIG_BT_KEYS_OVERWRITE_OLDEST > 0))
 			uint32_t           aging_counter;
@@ -139,5 +139,7 @@ void bt_keys_link_key_store(struct bt_keys_link_key *link_key);
 /* BT_KEYS_SAVE_AGING_COUNTER_ON_PAIRING is enabled */
 void bt_keys_update_usage(uint8_t id, const bt_addr_le_t *addr);
 void bt_keys_link_key_update_usage(const bt_addr_t *addr);
+
+void bt_keys_show_sniffer_info(struct bt_keys *keys, void *data);
 
 #endif /* __KEYS_H__ */

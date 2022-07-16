@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <fileVersion>2</fileVersion>
+  <fileVersion>3</fileVersion>
   <configuration>
     <name>flexspi_nor_debug</name>
     <toolchain>
@@ -11,9 +11,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Debug\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/flexspi_nor_debug</state>
@@ -31,22 +35,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -59,12 +53,12 @@
         <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>RTDescription</name>
@@ -76,15 +70,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>7.80.4.12487</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
+          <state>9.30.1.48832</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -107,26 +93,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
         </option>
         <option>
@@ -143,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
         </option>
         <option>
@@ -166,8 +138,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Debug</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -175,7 +217,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -189,14 +231,16 @@
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
-          <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>MP3_DECODER=1</state>
-          <state>OPUS_DECODER=1</state>
-          <state>SAI_XFER_QUEUE_SIZE=3</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
+          <state>CASCFG_PLATFORM_FREERTOS</state>
+          <state>FSL_OS_SELECTED=SDK_OS_FREERTOS</state>
+          <state>FSL_OSA_TASK_ENABLE=1</state>
+          <state>STREAMER_ENABLE_FILESRC</state>
+          <state>STREAMER_ENABLE_FILE_SINK</state>
+          <state>STREAMER_ENABLE_MEM_SRC</state>
+          <state>STREAMER_ENABLE_MEM_SINK</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -237,7 +281,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa050,Pa082,Pe186,Pe815</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -274,11 +318,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--align_sp_on_irq  --macro_positions_in_diagnostics  --header_context  --no_unaligned_access</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -290,10 +334,6 @@
         </option>
         <option>
           <name>CCRequirePrototypes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCMultibyteSupport</name>
           <state>0</state>
         </option>
         <option>
@@ -321,10 +361,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
@@ -341,13 +377,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/config</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-libs/osa</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-libs/osa/freertos</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-libs/common</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/encoders/cei</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -359,10 +390,19 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/decoders/cci_dec</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/encoders/opus</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/encoders/cei</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -371,10 +411,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -392,16 +428,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -425,19 +451,7 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -472,13 +486,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -608,10 +654,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -638,6 +680,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -678,12 +724,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -697,16 +739,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -747,7 +785,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
-          <state>__heap_size__=0x10000</state>
+          <state>__heap_size__=0x2500</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -826,13 +864,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_cci.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_streamer.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_utils.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmp3.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libogg.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libopus.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libsrc48.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libwav.a</state>
         </option>
         <option>
@@ -996,6 +1028,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1019,11 +1131,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>flexspi_nor_release</name>
@@ -1035,9 +1142,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>24</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Release\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/flexspi_nor_release</state>
@@ -1055,22 +1166,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>Input variant</name>
-          <version>3</version>
-          <state>6</state>
-        </option>
-        <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter.</state>
-        </option>
-        <option>
-          <name>Output variant</name>
-          <version>2</version>
-          <state>5</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1083,12 +1184,12 @@
         <option>
           <name>GRuntimeLibSelect</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>2</state>
         </option>
         <option>
           <name>RTDescription</name>
@@ -1101,14 +1202,6 @@
         <option>
           <name>OGLastSavedByProductVersion</name>
           <state>7.60.1.11206</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -1131,26 +1224,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
-          <state>$TOOLKIT_DIR$\INC\c\DLib_Config_Normal.h</state>
+          <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
         </option>
         <option>
@@ -1167,7 +1246,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
         </option>
         <option>
@@ -1190,8 +1269,78 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>24</version>
+          <version>32</version>
           <state>41</state>
+        </option>
+        <option>
+          <name>OGCMSISPackSelectDevice</name>
+        </option>
+        <option>
+          <name>OgLibHeap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGLibAdditionalLocale</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGPrintfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGPrintfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGScanfVariant</name>
+          <version>0</version>
+          <state>3</state>
+        </option>
+        <option>
+          <name>OGScanfMultibyteSupport</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GenLocaleTags</name>
+          <state/>
+        </option>
+        <option>
+          <name>GenLocaleDisplayOnly</name>
+          <state/>
+        </option>
+        <option>
+          <name>DSPExtension</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZone</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>TrustZoneModes</name>
+          <version>0</version>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Release</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1199,7 +1348,7 @@
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>31</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1213,14 +1362,16 @@
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
-          <state>PRINTF_ADVANCED_ENABLE=1</state>
-          <state>PRINTF_FLOAT_ENABLE=1</state>
-          <state>MP3_DECODER=1</state>
-          <state>OPUS_DECODER=1</state>
-          <state>SAI_XFER_QUEUE_SIZE=3</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>SDK_OS_FREE_RTOS</state>
+          <state>CASCFG_PLATFORM_FREERTOS</state>
+          <state>FSL_OS_SELECTED=SDK_OS_FREERTOS</state>
+          <state>FSL_OSA_TASK_ENABLE=1</state>
+          <state>STREAMER_ENABLE_FILESRC</state>
+          <state>STREAMER_ENABLE_FILE_SINK</state>
+          <state>STREAMER_ENABLE_MEM_SRC</state>
+          <state>STREAMER_ENABLE_MEM_SINK</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1261,7 +1412,7 @@
         </option>
         <option>
           <name>CCDiagSuppress</name>
-          <state>Pa082,Pa050</state>
+          <state>Pa050,Pa082,Pe186,Pe815</state>
         </option>
         <option>
           <name>CCDiagRemark</name>
@@ -1298,11 +1449,11 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IExtraOptions</name>
-          <state/>
+          <state>--align_sp_on_irq  --macro_positions_in_diagnostics  --header_context  --no_unaligned_access</state>
         </option>
         <option>
           <name>CCLangConformance</name>
@@ -1314,10 +1465,6 @@
         </option>
         <option>
           <name>CCRequirePrototypes</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>CCMultibyteSupport</name>
           <state>0</state>
         </option>
         <option>
@@ -1345,10 +1492,6 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
@@ -1365,13 +1508,8 @@
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/config</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-libs/osa</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-libs/osa/freertos</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-libs/common</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/encoders/cei</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
@@ -1383,10 +1521,19 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../components/silicon_id</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/decoders/cci_dec</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/encoders/opus</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/encoders/cei</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1395,10 +1542,6 @@
         <option>
           <name>CCCodeSection</name>
           <state>.text</state>
-        </option>
-        <option>
-          <name>IInterwork2</name>
-          <state>0</state>
         </option>
         <option>
           <name>IProcessorMode2</name>
@@ -1416,16 +1559,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>2</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1449,19 +1582,7 @@
         </option>
         <option>
           <name>IccAllowVLA</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccCppDialect</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccExceptions</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>IccRTTI</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>IccStaticDestr</name>
@@ -1496,13 +1617,45 @@
           <name>CCGuardCalls</name>
           <state>1</state>
         </option>
+        <option>
+          <name>CCEncSource</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccExceptions2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>9</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1632,10 +1785,6 @@
           <state>$FILE_BNAME$.o</state>
         </option>
         <option>
-          <name>AMultibyteSupport</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>ALimitErrorsCheck</name>
           <state>0</state>
         </option>
@@ -1662,6 +1811,10 @@
         <option>
           <name>AsmNoLiteralPool</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
         </option>
       </data>
     </settings>
@@ -1702,12 +1855,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -1721,16 +1870,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>18</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -1771,7 +1916,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
-          <state>__heap_size__=0x10000</state>
+          <state>__heap_size__=0x2500</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1850,13 +1995,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_cci.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_streamer.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmaestro_utils.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libmp3.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libogg.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libopus.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libsrc48.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/release/libwav.a</state>
         </option>
         <option>
@@ -2020,6 +2159,86 @@
           <name>IlinkIcfFile_AltDefault</name>
           <state/>
         </option>
+        <option>
+          <name>IlinkEncInput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkEncOutputBom</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkHeapSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkLocaleSelect</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkTrustzoneImportLibraryOut</name>
+          <state>###Unitialized###</state>
+        </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2042,11 +2261,6 @@
           <state/>
         </option>
       </data>
-    </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
   </configuration>
   <group>
@@ -2321,6 +2535,15 @@
         <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
+    <group>
+      <name>silicon_id</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/silicon_id/fsl_silicon_id.h</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>sdmmc</name>
@@ -2585,9 +2808,6 @@
     <group>
       <name>inc</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/container.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/error.h</name>
       </file>
       <file>
@@ -2597,55 +2817,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/general_utils.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/lib_common.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/logging.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_cond.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_dir.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_event.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_freertos.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_init.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_isr.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_memory.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_message.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_misc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_mutex.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_sem.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_thread.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_time.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_types.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/ringbuffer.h</name>
@@ -2657,69 +2829,261 @@
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_element_properties.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_error.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_message.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_pcm.h</name>
       </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/vector.h</name>
-      </file>
     </group>
     <group>
-      <name>mcu-audio</name>
-      <group>
-        <name>opus</name>
-        <group>
-          <name>include</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/config.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/opus.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/opus_cci.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/opus_cci_raw.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/opus_custom.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/opus_defines.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/opus_multistream.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/opus_projection.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/opus_types.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/maestro/mcu-audio/opus/include/test_opus_common.h</name>
-          </file>
-        </group>
-      </group>
+      <name>config</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/config/audio_cfg.h</name>
+      </file>
     </group>
     <group>
       <name>streamer</name>
       <group>
-        <name>inc</name>
+        <name>cci</name>
+        <group>
+          <name>include</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/include/cci_metadata.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/include/codec_interface.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/include/codec_interface_public_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/include/errordefs.h</name>
+          </file>
+        </group>
+        <group>
+          <name>metadata</name>
+          <group>
+            <name>src</name>
+            <group>
+              <name>mp3</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_extractmetadata.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_id3v2.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_vbr.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_id3v2.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_id3v2_internal.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/mp3/mp3_metadata.h</name>
+              </file>
+            </group>
+            <group>
+              <name>adpcm</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/adpcm/adpcm_extractmetadata.c</name>
+              </file>
+            </group>
+            <group>
+              <name>opus</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/cci/metadata/src/opus/opus_extractmetadata.c</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+      <group>
+        <name>core</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc/af_error.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core/pad.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc/memtypes.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core/pipeline.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc/metadata_error.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core/streamer.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core/streamer_element.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core/pad.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core/pipeline.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core/streamer.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core/streamer_element.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/core/streamer_msg.c</name>
+        </file>
+      </group>
+      <group>
+        <name>decoders</name>
+        <group>
+          <name>cci_dec</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/decoders/cci_dec/ccidec.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/decoders/cci_dec/ccidec.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/decoders/cci_dec/codec_interface.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/decoders/cci_dec/codecextractmetadata.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>devices</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices/audio_sink_pcmrtos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices/audio_src_pcmrtos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices/freertos_pcm.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices/audio_sink_pcmrtos.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/devices/audio_src_pcmrtos.c</name>
+        </file>
+      </group>
+      <group>
+        <name>elements</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/audio_sink.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/audio_src.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/decoder.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/decoder_pads.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/eap.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/encoder.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/file_sink.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/file_src_freertos.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/mem_sink.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/mem_src.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/netbuf_src.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/vit_sink.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/audio_sink.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/audio_src.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/decoder.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/decoder_pads.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/eap.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/file_sink.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/file_src_freertos.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/mem_sink.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/vit_sink.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/mem_src.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/netbuf_src.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/elements/encoder.c</name>
+        </file>
+      </group>
+      <group>
+        <name>pipelines</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_audiosrc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_fs.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_mic2file.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_opusmem2mem.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_eap_speaker.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_vit.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_audiosrc.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_fs.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_mic2file.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_opusmem2mem.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_pcm_eap_speaker.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_testeapfile2file.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/pipelines/streamer_vit.c</name>
         </file>
       </group>
       <group>
@@ -2736,6 +3100,39 @@
             <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/encoders/cei/cei_table.h</name>
           </file>
         </group>
+        <group>
+          <name>opus</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/encoders/opus/opusenc_cei.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/encoders/opus/opusenc_cei.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>parsers</name>
+        <group>
+          <name>cci</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/parsers/cci/cci_codec_type_conversion.c</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>utils</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/utils/file_utils.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/utils/general_utils.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/utils/logging.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/utils/ringbuffer.c</name>
+        </file>
       </group>
     </group>
   </group>
@@ -2863,6 +3260,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/cachel1_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Core/Include/mpu_armv7.h</name>

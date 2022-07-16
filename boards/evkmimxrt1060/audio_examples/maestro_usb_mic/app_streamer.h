@@ -4,13 +4,12 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#ifndef _FSL_STREAMER_H_
-#define _FSL_STREAMER_H_
+#ifndef _APP_STREAMER_H_
+#define _APP_STREAMER_H_
 
 /* streamer library includes. */
 #include "streamer_api.h"
 #include "streamer_element_properties.h"
-#include "streamer_error.h"
 
 /*******************************************************************************
  * Definitions

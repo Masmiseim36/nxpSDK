@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_hcd_ohci_initialize                             PORTABLE C      */ 
-/*                                                           6.1.9.1      */
+/*                                                           6.1.10       */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -79,9 +79,9 @@
 /*                                            optimized based on compile  */
 /*                                            definitions,                */
 /*                                            resulting in version 6.1    */
-/*  12-09-2021     Xiuwen Cai               Modified comment(s),          */
+/*  01-31-2022     Xiuwen Cai               Modified comment(s),          */
 /*                                            fixed HcPeriodicStart value,*/
-/*                                            resulting in version 6.1.9.1*/
+/*                                            resulting in version 6.1.10 */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_hcd_ohci_initialize(UX_HCD *hcd)

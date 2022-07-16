@@ -29,6 +29,12 @@ namespace tflite {
 
 int ElementCount(const TfLiteIntArray& dims);
 
+size_t EvalTensorBytes(const TfLiteEvalTensor* tensor);
+
+// C++11 does not support constexpr max; hence, use ternary conditional to
+// create our own constexpr Max function.
+constexpr int Max(int a, int b) { return a >= b ? a : b; }
+
 // Converts a float value into a quantized value.  Note that large values (close
 // to max int and min int) may see significant error due to a lack of floating
 // point granularity for large values.
@@ -44,11 +50,13 @@ T FloatToQuantizedType(const float value, const float scale, int zero_point) {
 
 template <typename T>
 T FloatToSymmetricQuantizedType(const float value, const float scale) {
-  int32_t result = round(value / scale);
-  result =
-      std::max(static_cast<int32_t>(std::numeric_limits<T>::min() + 1), result);
-  result =
-      std::min(static_cast<int32_t>(std::numeric_limits<T>::max()), result);
+  // 64-bit values are required since 8x16 conv accumulates to int64, meaning
+  // an int64 bias is required.
+  std::int64_t result = round(value / scale);
+  result = std::max(
+      static_cast<std::int64_t>(std::numeric_limits<T>::min() + 1), result);
+  result = std::min(static_cast<std::int64_t>(std::numeric_limits<T>::max()),
+                    result);
   return result;
 }
 

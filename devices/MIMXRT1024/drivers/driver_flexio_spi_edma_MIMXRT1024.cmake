@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("driver_flexio_spi_edma component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -11,7 +11,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 )
 
 
-include(driver_flexio_spi_MIMXRT1024)
-
 include(driver_edma_MIMXRT1024)
+
+include(driver_flexio_spi_MIMXRT1024)
 

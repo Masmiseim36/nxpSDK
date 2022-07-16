@@ -1,5 +1,6 @@
-// Copyright (c) 2017-2020 Linaro LTD
+// Copyright (c) 2017-2021 Linaro LTD
 // Copyright (c) 2017-2020 JUUL Labs
+// Copyright (c) 2021 Arm Limited
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -16,9 +17,9 @@
 use byteorder::{
     LittleEndian, WriteBytesExt,
 };
+use cipher::FromBlockCipher;
+use crate::caps::Caps;
 use crate::image::ImageVersion;
-use pem;
-use base64;
 use log::info;
 use ring::{digest, rand, agreement, hkdf, hmac};
 use ring::rand::SecureRandom;
@@ -29,15 +30,19 @@ use ring::signature::{
     ECDSA_P256_SHA256_ASN1_SIGNING,
     Ed25519KeyPair,
 };
-use aes_ctr::{
+use aes::{
+    Aes128,
     Aes128Ctr,
-    stream_cipher::{
-        generic_array::GenericArray,
-        NewStreamCipher,
-        SyncStreamCipher,
-    },
+    Aes256,
+    Aes256Ctr,
+    NewBlockCipher
+};
+use cipher::{
+    generic_array::GenericArray,
+    StreamCipher,
 };
 use mcuboot_sys::c;
+use typenum::{U16, U32};
 
 #[repr(u16)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -51,7 +56,7 @@ pub enum TlvKinds {
     RSA3072 = 0x23,
     ED25519 = 0x24,
     ENCRSA2048 = 0x30,
-    ENCKW128 = 0x31,
+    ENCKW = 0x31,
     ENCEC256 = 0x32,
     ENCX25519 = 0x33,
     DEPENDENCY = 0x40,
@@ -61,7 +66,8 @@ pub enum TlvKinds {
 pub enum TlvFlags {
     PIC = 0x01,
     NON_BOOTABLE = 0x02,
-    ENCRYPTED = 0x04,
+    ENCRYPTED_AES128 = 0x04,
+    ENCRYPTED_AES256 = 0x08,
     RAM_LOAD = 0x20,
 }
 
@@ -90,6 +96,11 @@ pub trait ManifestGen {
     /// corrupt the signature.
     fn corrupt_sig(&mut self);
 
+    /// Estimate the size of the TLV.  This can be called before the payload is added (but after
+    /// other information is added).  Some of the signature algorithms can generate variable sized
+    /// data, and therefore, this can slightly overestimate the size.
+    fn estimate_size(&self) -> usize;
+
     /// Construct the manifest for this payload.
     fn make_tlv(self: Box<Self>) -> Vec<u8>;
 
@@ -116,8 +127,6 @@ struct Dependency {
     id: u8,
     version: ImageVersion,
 }
-
-const AES_KEY_LEN: usize = 16;
 
 impl TlvGen {
     /// Construct a new tlv generator that will only contain a hash of the data.
@@ -162,81 +171,126 @@ impl TlvGen {
     }
 
     #[allow(dead_code)]
-    pub fn new_enc_rsa() -> TlvGen {
+    pub fn new_enc_rsa(aes_key_size: u32) -> TlvGen {
+        let flag = if aes_key_size == 256 {
+            TlvFlags::ENCRYPTED_AES256 as u32
+        } else {
+            TlvFlags::ENCRYPTED_AES128 as u32
+        };
         TlvGen {
-            flags: TlvFlags::ENCRYPTED as u32,
+            flags: flag,
             kinds: vec![TlvKinds::SHA256, TlvKinds::ENCRSA2048],
             ..Default::default()
         }
     }
 
     #[allow(dead_code)]
-    pub fn new_sig_enc_rsa() -> TlvGen {
+    pub fn new_sig_enc_rsa(aes_key_size: u32) -> TlvGen {
+        let flag = if aes_key_size == 256 {
+            TlvFlags::ENCRYPTED_AES256 as u32
+        } else {
+            TlvFlags::ENCRYPTED_AES128 as u32
+        };
         TlvGen {
-            flags: TlvFlags::ENCRYPTED as u32,
+            flags: flag,
             kinds: vec![TlvKinds::SHA256, TlvKinds::RSA2048, TlvKinds::ENCRSA2048],
             ..Default::default()
         }
     }
 
     #[allow(dead_code)]
-    pub fn new_enc_kw() -> TlvGen {
+    pub fn new_enc_kw(aes_key_size: u32) -> TlvGen {
+        let flag = if aes_key_size == 256 {
+            TlvFlags::ENCRYPTED_AES256 as u32
+        } else {
+            TlvFlags::ENCRYPTED_AES128 as u32
+        };
         TlvGen {
-            flags: TlvFlags::ENCRYPTED as u32,
-            kinds: vec![TlvKinds::SHA256, TlvKinds::ENCKW128],
+            flags: flag,
+            kinds: vec![TlvKinds::SHA256, TlvKinds::ENCKW],
             ..Default::default()
         }
     }
 
     #[allow(dead_code)]
-    pub fn new_rsa_kw() -> TlvGen {
+    pub fn new_rsa_kw(aes_key_size: u32) -> TlvGen {
+        let flag = if aes_key_size == 256 {
+            TlvFlags::ENCRYPTED_AES256 as u32
+        } else {
+            TlvFlags::ENCRYPTED_AES128 as u32
+        };
         TlvGen {
-            flags: TlvFlags::ENCRYPTED as u32,
-            kinds: vec![TlvKinds::SHA256, TlvKinds::RSA2048, TlvKinds::ENCKW128],
+            flags: flag,
+            kinds: vec![TlvKinds::SHA256, TlvKinds::RSA2048, TlvKinds::ENCKW],
             ..Default::default()
         }
     }
 
     #[allow(dead_code)]
-    pub fn new_ecdsa_kw() -> TlvGen {
+    pub fn new_ecdsa_kw(aes_key_size: u32) -> TlvGen {
+        let flag = if aes_key_size == 256 {
+            TlvFlags::ENCRYPTED_AES256 as u32
+        } else {
+            TlvFlags::ENCRYPTED_AES128 as u32
+        };
         TlvGen {
-            flags: TlvFlags::ENCRYPTED as u32,
-            kinds: vec![TlvKinds::SHA256, TlvKinds::ECDSA256, TlvKinds::ENCKW128],
+            flags: flag,
+            kinds: vec![TlvKinds::SHA256, TlvKinds::ECDSA256, TlvKinds::ENCKW],
             ..Default::default()
         }
     }
 
     #[allow(dead_code)]
-    pub fn new_ecies_p256() -> TlvGen {
+    pub fn new_ecies_p256(aes_key_size: u32) -> TlvGen {
+        let flag = if aes_key_size == 256 {
+            TlvFlags::ENCRYPTED_AES256 as u32
+        } else {
+            TlvFlags::ENCRYPTED_AES128 as u32
+        };
         TlvGen {
-            flags: TlvFlags::ENCRYPTED as u32,
+            flags: flag,
             kinds: vec![TlvKinds::SHA256, TlvKinds::ENCEC256],
             ..Default::default()
         }
     }
 
     #[allow(dead_code)]
-    pub fn new_ecdsa_ecies_p256() -> TlvGen {
+    pub fn new_ecdsa_ecies_p256(aes_key_size: u32) -> TlvGen {
+        let flag = if aes_key_size == 256 {
+            TlvFlags::ENCRYPTED_AES256 as u32
+        } else {
+            TlvFlags::ENCRYPTED_AES128 as u32
+        };
         TlvGen {
-            flags: TlvFlags::ENCRYPTED as u32,
+            flags: flag,
             kinds: vec![TlvKinds::SHA256, TlvKinds::ECDSA256, TlvKinds::ENCEC256],
             ..Default::default()
         }
     }
 
     #[allow(dead_code)]
-    pub fn new_ecies_x25519() -> TlvGen {
+    pub fn new_ecies_x25519(aes_key_size: u32) -> TlvGen {
+        let flag = if aes_key_size == 256 {
+            TlvFlags::ENCRYPTED_AES256 as u32
+        } else {
+            TlvFlags::ENCRYPTED_AES128 as u32
+        };
         TlvGen {
-            flags: TlvFlags::ENCRYPTED as u32,
+            flags: flag,
             kinds: vec![TlvKinds::SHA256, TlvKinds::ENCX25519],
             ..Default::default()
         }
     }
 
     #[allow(dead_code)]
-    pub fn new_ed25519_ecies_x25519() -> TlvGen {
+    pub fn new_ed25519_ecies_x25519(aes_key_size: u32) -> TlvGen {
+        let flag = if aes_key_size == 256 {
+            TlvFlags::ENCRYPTED_AES256 as u32
+        } else {
+            TlvFlags::ENCRYPTED_AES128 as u32
+        };
         TlvGen {
-            flags: TlvFlags::ENCRYPTED as u32,
+            flags: flag,
             kinds: vec![TlvKinds::SHA256, TlvKinds::ED25519, TlvKinds::ENCX25519],
             ..Default::default()
         }
@@ -250,7 +304,12 @@ impl ManifestGen for TlvGen {
 
     /// Retrieve the header flags for this configuration.  This can be called at any time.
     fn get_flags(&self) -> u32 {
-        self.flags
+        // For the RamLoad case, add in the flag for this feature.
+        if Caps::RamLoad.present() {
+            self.flags | (TlvFlags::RAM_LOAD as u32)
+        } else {
+            self.flags
+        }
     }
 
     /// Add bytes to the covered hash.
@@ -269,7 +328,7 @@ impl ManifestGen for TlvGen {
 
     fn add_dependency(&mut self, id: u8, version: &ImageVersion) {
         self.dependencies.push(Dependency {
-            id: id,
+            id,
             version: version.clone(),
         });
     }
@@ -278,8 +337,67 @@ impl ManifestGen for TlvGen {
         self.gen_corrupted = true;
     }
 
+    fn estimate_size(&self) -> usize {
+        // Begin the estimate with the 4 byte header.
+        let mut estimate = 4;
+        // A very poor estimate.
+
+        // Estimate the size of the image hash.
+        if self.kinds.contains(&TlvKinds::SHA256) {
+            estimate += 4 + 32;
+        }
+
+        // Add an estimate in for each of the signature algorithms.
+        if self.kinds.contains(&TlvKinds::RSA2048) {
+            estimate += 4 + 32; // keyhash
+            estimate += 4 + 256; // RSA2048
+        }
+        if self.kinds.contains(&TlvKinds::RSA3072) {
+            estimate += 4 + 32; // keyhash
+            estimate += 4 + 384; // RSA3072
+        }
+        if self.kinds.contains(&TlvKinds::ECDSA256) {
+            estimate += 4 + 32; // keyhash
+
+            // ECDSA signatures are encoded as ASN.1 with the x and y values stored as signed
+            // integers.  As such, the size can vary by 2 bytes, if the 256-bit value has the high
+            // bit, it takes an extra 0 byte to avoid it being seen as a negative number.
+            estimate += 4 + 72; // ECDSA256 (varies)
+        }
+        if self.kinds.contains(&TlvKinds::ED25519) {
+            estimate += 4 + 32; // keyhash
+            estimate += 4 + 64; // ED25519 signature.
+        }
+
+        // Estimate encryption.
+        let flag = TlvFlags::ENCRYPTED_AES256 as u32;
+        let aes256 = (self.get_flags() & flag) == flag;
+
+        if self.kinds.contains(&TlvKinds::ENCRSA2048) {
+            estimate += 4 + 256;
+        }
+        if self.kinds.contains(&TlvKinds::ENCKW) {
+            estimate += 4 + if aes256 { 40 } else { 24 };
+        }
+        if self.kinds.contains(&TlvKinds::ENCEC256) {
+            estimate += 4 + if aes256 { 129 } else { 113 };
+        }
+        if self.kinds.contains(&TlvKinds::ENCX25519) {
+            estimate += 4 + if aes256 { 96 } else { 80 };
+        }
+
+        // Gather the size of the dependency information.
+        if self.protect_size() > 0 {
+            estimate += 4 + (16 * self.dependencies.len());
+        }
+
+        estimate
+    }
+
     /// Compute the TLV given the specified block of data.
     fn make_tlv(self: Box<Self>) -> Vec<u8> {
+        let size_estimate = self.estimate_size();
+
         let mut protected_tlv: Vec<u8> = vec![];
 
         if self.protect_size() > 0 {
@@ -293,9 +411,8 @@ impl ManifestGen for TlvGen {
 
                 // The dependency.
                 protected_tlv.push(dep.id);
-                for _ in 0 .. 3 {
-                    protected_tlv.push(0);
-                }
+                protected_tlv.push(0);
+                protected_tlv.write_u16::<LittleEndian>(0).unwrap();
                 protected_tlv.push(dep.version.major);
                 protected_tlv.push(dep.version.minor);
                 protected_tlv.write_u16::<LittleEndian>(dep.version.revision).unwrap();
@@ -482,20 +599,28 @@ impl ManifestGen for TlvGen {
             result.extend_from_slice(&encbuf);
         }
 
-        if self.kinds.contains(&TlvKinds::ENCKW128) {
-            let key_bytes = base64::decode(
-                include_str!("../../enc-aes128kw.b64").trim()).unwrap();
-
+        if self.kinds.contains(&TlvKinds::ENCKW) {
+            let flag = TlvFlags::ENCRYPTED_AES256 as u32;
+            let aes256 = (self.get_flags() & flag) == flag;
+            let key_bytes = if aes256 {
+                base64::decode(
+                    include_str!("../../enc-aes256kw.b64").trim()).unwrap()
+            } else {
+                base64::decode(
+                    include_str!("../../enc-aes128kw.b64").trim()).unwrap()
+            };
             let cipherkey = self.get_enc_key();
             let cipherkey = cipherkey.as_slice();
-            let encbuf = match c::kw_encrypt(&key_bytes, cipherkey) {
+            let keylen = if aes256 { 32 } else { 16 };
+            let encbuf = match c::kw_encrypt(&key_bytes, cipherkey, keylen) {
                 Ok(v) => v,
                 Err(_) => panic!("Failed to encrypt secret key"),
             };
 
-            assert!(encbuf.len() == 24);
-            result.write_u16::<LittleEndian>(TlvKinds::ENCKW128 as u16).unwrap();
-            result.write_u16::<LittleEndian>(24).unwrap();
+            let size = if aes256 { 40 } else { 24 };
+            assert!(encbuf.len() == size);
+            result.write_u16::<LittleEndian>(TlvKinds::ENCKW as u16).unwrap();
+            result.write_u16::<LittleEndian>(size as u16).unwrap();
             result.extend_from_slice(&encbuf);
         }
 
@@ -506,7 +631,6 @@ impl ManifestGen for TlvGen {
                 pem::parse(include_bytes!("../../enc-x25519-pub.pem").as_ref()).unwrap()
             };
             assert_eq!(key_bytes.tag, "PUBLIC KEY");
-
             let rng = rand::SystemRandom::new();
             let alg = if self.kinds.contains(&TlvKinds::ENCEC256) {
                 &agreement::ECDH_P256
@@ -538,15 +662,19 @@ impl ManifestGen for TlvGen {
                 }
             }
 
+            let flag = TlvFlags::ENCRYPTED_AES256 as u32;
+            let aes256 = (self.get_flags() & flag) == flag;
+
             let derived_key = match agreement::agree_ephemeral(
                 pk, &peer_pubk, ring::error::Unspecified, |shared| {
                     let salt = hkdf::Salt::new(hkdf::HKDF_SHA256, &[]);
                     let prk = salt.extract(&shared);
-                    let okm = match prk.expand(&[b"MCUBoot_ECIES_v1"], OkmLen(48)) {
+                    let okm_len = if aes256 { 64 } else { 48 };
+                    let okm = match prk.expand(&[b"MCUBoot_ECIES_v1"], OkmLen(okm_len)) {
                         Ok(okm) => okm,
                         Err(_) => panic!("Failed building HKDF OKM"),
                     };
-                    let mut buf = [0u8; 48];
+                    let mut buf = if aes256 { vec![0u8; 64] } else { vec![0u8; 48] };
                     match okm.fill(&mut buf) {
                         Ok(_) => Ok(buf),
                         Err(_) => panic!("Failed generating HKDF output"),
@@ -557,13 +685,22 @@ impl ManifestGen for TlvGen {
                 Err(_) => panic!("Failed building HKDF"),
             };
 
-            let key = GenericArray::from_slice(&derived_key[..16]);
             let nonce = GenericArray::from_slice(&[0; 16]);
-            let mut cipher = Aes128Ctr::new(&key, &nonce);
             let mut cipherkey = self.get_enc_key();
-            cipher.apply_keystream(&mut cipherkey);
+            if aes256 {
+                let key: &GenericArray<u8, U32> = GenericArray::from_slice(&derived_key[..32]);
+                let block = Aes256::new(&key);
+                let mut cipher = Aes256Ctr::from_block_cipher(block, &nonce);
+                cipher.apply_keystream(&mut cipherkey);
+            } else {
+                let key: &GenericArray<u8, U16> = GenericArray::from_slice(&derived_key[..16]);
+                let block = Aes128::new(&key);
+                let mut cipher = Aes128Ctr::from_block_cipher(block, &nonce);
+                cipher.apply_keystream(&mut cipherkey);
+            }
 
-            let key = hmac::Key::new(hmac::HMAC_SHA256, &derived_key[16..]);
+            let size = if aes256 { 32 } else { 16 };
+            let key = hmac::Key::new(hmac::HMAC_SHA256, &derived_key[size..]);
             let tag = hmac::sign(&key, &cipherkey);
 
             let mut buf = vec![];
@@ -572,13 +709,15 @@ impl ManifestGen for TlvGen {
             buf.append(&mut cipherkey);
 
             if self.kinds.contains(&TlvKinds::ENCEC256) {
-                assert!(buf.len() == 113);
+                let size = if aes256 { 129 } else { 113 };
+                assert!(buf.len() == size);
                 result.write_u16::<LittleEndian>(TlvKinds::ENCEC256 as u16).unwrap();
-                result.write_u16::<LittleEndian>(113).unwrap();
+                result.write_u16::<LittleEndian>(size as u16).unwrap();
             } else {
-                assert!(buf.len() == 80);
+                let size = if aes256 { 96 } else { 80 };
+                assert!(buf.len() == size);
                 result.write_u16::<LittleEndian>(TlvKinds::ENCX25519 as u16).unwrap();
-                result.write_u16::<LittleEndian>(80).unwrap();
+                result.write_u16::<LittleEndian>(size as u16).unwrap();
             }
             result.extend_from_slice(&buf);
         }
@@ -588,22 +727,46 @@ impl ManifestGen for TlvGen {
         let mut size_buf = &mut result[npro_pos + 2 .. npro_pos + 4];
         size_buf.write_u16::<LittleEndian>(size).unwrap();
 
+        // ECDSA is stored as an ASN.1 integer.  For a 128-bit value, this maximally results in 33
+        // bytes of storage for each of the two values.  If the high bit is zero, it will take 32
+        // bytes, if the top 8 bits are zero, it will take 31 bits, and so on.  The smaller size
+        // will occur with decreasing likelihood.  We'll allow this to get a bit smaller, hopefully
+        // allowing the tests to pass with false failures rare.  For this case, we'll handle up to
+        // the top 16 bits of both numbers being all zeros (1 in 2^32).
+        if !Caps::has_ecdsa() {
+            if size_estimate != result.len() {
+                panic!("Incorrect size estimate: {} (actual {})", size_estimate, result.len());
+            }
+        } else {
+            if size_estimate < result.len() || size_estimate > result.len() + 6 {
+                panic!("Incorrect size estimate: {} (actual {})", size_estimate, result.len());
+            }
+        }
+        if size_estimate != result.len() {
+            log::warn!("Size off: {} actual {}", size_estimate, result.len());
+        }
+
         result
     }
 
     fn generate_enc_key(&mut self) {
         let rng = rand::SystemRandom::new();
-        let mut buf = vec![0u8; AES_KEY_LEN];
-        match rng.fill(&mut buf) {
-            Err(_) => panic!("Error generating encrypted key"),
-            Ok(_) => (),
+        let flag = TlvFlags::ENCRYPTED_AES256 as u32;
+        let aes256 = (self.get_flags() & flag) == flag;
+        let mut buf = if aes256 {
+            vec![0u8; 32]
+        } else {
+            vec![0u8; 16]
+        };
+        if rng.fill(&mut buf).is_err() {
+            panic!("Error generating encrypted key");
         }
         info!("New encryption key: {:02x?}", buf);
         self.enc_key = buf;
     }
 
     fn get_enc_key(&self) -> Vec<u8> {
-        if self.enc_key.len() != AES_KEY_LEN {
+        if self.enc_key.len() != 32 && self.enc_key.len() != 16 {
             panic!("No random key was generated");
         }
         self.enc_key.clone()

@@ -23,6 +23,7 @@
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_QdEncGet(mcdrv_qd_enc_t *this)
 {
 
@@ -47,9 +48,9 @@ void MCDRV_QdEncGet(mcdrv_qd_enc_t *this)
 
     /* calculating position for position control */
     if (((this->ui32RevCounter) > 32767) & ((this->ui32RevCounter) <= 65535))
-        this->a32PosMeReal = (acc32_t)((uint16_t)(this->f16PosMe) + (65535U * this->ui32RevCounter) + 65535U);
+        this->a32PosMeReal = (acc32_t)((uint16_t)(this->f16PosMe) + (65536U * this->ui32RevCounter) + 65535U);
     else
-        this->a32PosMeReal = (acc32_t)((uint16_t)(this->f16PosMe) + (65535U * this->ui32RevCounter));
+        this->a32PosMeReal = (acc32_t)((uint16_t)(this->f16PosMe) + (65536U * this->ui32RevCounter));
 
     /* pass estimator speed values lower than minimal encoder speed */
     if ((MLIB_Abs_FLT(this->fltSpdMeEst) < (this->fltSpdEncMin)))
@@ -70,6 +71,7 @@ void MCDRV_QdEncGet(mcdrv_qd_enc_t *this)
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_QdEncClear(mcdrv_qd_enc_t *this)
 {
 
@@ -98,6 +100,7 @@ void MCDRV_QdEncClear(mcdrv_qd_enc_t *this)
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe)
 {
     frac16_t f16CntMod;
@@ -119,6 +122,7 @@ void MCDRV_QdEncSetPosMe(mcdrv_qd_enc_t *this, frac16_t f16PosMe)
  *
  * @return none
  */
+RAM_FUNC_LIB
 void MCDRV_QdEncSetDirection(mcdrv_qd_enc_t *this)
 {
 
@@ -128,4 +132,19 @@ void MCDRV_QdEncSetDirection(mcdrv_qd_enc_t *this)
     else
         this->pui32QdBase->CTRL &= ~ENC_CTRL_REV_MASK;
 
+}
+
+/*!
+ * @brief Function set quadrature encoder pulses per one revolution
+ *
+ * @param this            Pointer to the current object
+ *        ui16PulseNumber Encoder pulses per revolution
+ *
+ * @return none
+ */
+RAM_FUNC_LIB
+void MCDRV_QdEncSetPulses(mcdrv_qd_enc_t *this)
+{
+     /* Set modulo counter to encoder number of pulses * 4 - 1 */
+    this->pui32QdBase->LMOD = (this->ui16PulseNumber * 4U) - 1U;
 }

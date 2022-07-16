@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: boardkit/evk-mimxrt1064/evkmimxrt1064.c File Reference</title>
+<title>ISSDK: boardkit/evk-mimxrt1015/evkmimxrt1015.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,32 +40,42 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_6994211064bad48d3d63a6227f5100d6.html">boardkit</a></li><li class="navelem"><a class="el" href="dir_992809400ee97e2aed6ab35d100d1993.html">evk-mimxrt1064</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_6994211064bad48d3d63a6227f5100d6.html">boardkit</a></li><li class="navelem"><a class="el" href="dir_955806e634ba701fbc47e731f4cdaaa6.html">evk-mimxrt1015</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">evkmimxrt1064.c File Reference</div>  </div>
+<div class="title">evkmimxrt1015.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="a00707.html" title="The evkmimxrt1064.c file defines GPIO pins and I2C CMSIS utilities for evkmimxrt1064 board...">evkmimxrt1064.c</a> file defines GPIO pins and I2C CMSIS utilities for evkmimxrt1064 board.  
+<p>The <a class="el" href="a00707.html" title="The evkmimxrt1015.c file defines GPIO pins and I2C CMSIS utilities for evkmimxrt1015 board...">evkmimxrt1015.c</a> file defines GPIO pins and I2C CMSIS utilities for evkmimxrt1015 board.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="a00710_source.html">evkmimxrt1064.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00710_source.html">evkmimxrt1015.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for evkmimxrt1064.c:</div>
+Include dependency graph for evkmimxrt1015.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00708.png" border="0" usemap="#boardkit_2evk-mimxrt1064_2evkmimxrt1064_8c" alt=""/></div>
-<map name="boardkit_2evk-mimxrt1064_2evkmimxrt1064_8c" id="boardkit_2evk-mimxrt1064_2evkmimxrt1064_8c">
-<area shape="rect" id="node2" href="a00710.html" title="The evkmimxrt1064.h file defines GPIO pin mappings for evkmimxrt1064 board. " alt="" coords="27,95,147,121"/>
+<div class="center"><img src="a00708.png" border="0" usemap="#boardkit_2evk-mimxrt1015_2evkmimxrt1015_8c" alt=""/></div>
+<map name="boardkit_2evk-mimxrt1015_2evkmimxrt1015_8c" id="boardkit_2evk-mimxrt1015_2evkmimxrt1015_8c">
+<area shape="rect" id="node2" href="a00710.html" title="The evkmimxrt1015.h file defines GPIO pin mappings for evkmimxrt1015 board. " alt="" coords="27,95,147,121"/>
 </map>
 </div>
 </div>
 <p><a href="a00707_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a24da11cc04d25444c4e40ccfa60b8e53"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a24da11cc04d25444c4e40ccfa60b8e53">LPI2C_CLOCK_SOURCE_SELECT</a>&#160;&#160;&#160;(0U)</td></tr>
+<tr class="separator:a24da11cc04d25444c4e40ccfa60b8e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f8818144f66142acf55589c4dda9f71"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a4f8818144f66142acf55589c4dda9f71">LPI2C_CLOCK_SOURCE_DIVIDER</a>&#160;&#160;&#160;(5U)</td></tr>
+<tr class="separator:a4f8818144f66142acf55589c4dda9f71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa76bf8389067ef4c11eb785cbc28fd49"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aa76bf8389067ef4c11eb785cbc28fd49">LPI2C_CLOCK_FREQUENCY</a>&#160;&#160;&#160;((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (<a class="el" href="a04625.html#a4f8818144f66142acf55589c4dda9f71">LPI2C_CLOCK_SOURCE_DIVIDER</a> + 1U))</td></tr>
+<tr class="separator:aa76bf8389067ef4c11eb785cbc28fd49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5423cac017d1d1a8ac8bba8e91e80e29"><td class="memItemLeft" align="right" valign="top">status_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a5423cac017d1d1a8ac8bba8e91e80e29">SMC_SetPowerModeWait</a> (void *arg)</td></tr>
@@ -86,66 +96,119 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:af737e0035c476cc99dc43f06f14bc903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#af737e0035c476cc99dc43f06f14bc903">D15</a></td></tr>
+<tr class="memitem:af737e0035c476cc99dc43f06f14bc903"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#af737e0035c476cc99dc43f06f14bc903">D15</a></td></tr>
 <tr class="separator:af737e0035c476cc99dc43f06f14bc903"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a200bed4320ad8e5b530b09a72ee28a67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a200bed4320ad8e5b530b09a72ee28a67">D14</a></td></tr>
+<tr class="memitem:a200bed4320ad8e5b530b09a72ee28a67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a200bed4320ad8e5b530b09a72ee28a67">D14</a></td></tr>
 <tr class="separator:a200bed4320ad8e5b530b09a72ee28a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35f81e910c15d3a9bf082177a3f46e1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a35f81e910c15d3a9bf082177a3f46e1f">A5</a></td></tr>
+<tr class="memitem:a35f81e910c15d3a9bf082177a3f46e1f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a35f81e910c15d3a9bf082177a3f46e1f">A5</a></td></tr>
 <tr class="separator:a35f81e910c15d3a9bf082177a3f46e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28090489a8ceacf570194306b36cfd51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a28090489a8ceacf570194306b36cfd51">A4</a></td></tr>
+<tr class="memitem:a28090489a8ceacf570194306b36cfd51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a28090489a8ceacf570194306b36cfd51">A4</a></td></tr>
 <tr class="separator:a28090489a8ceacf570194306b36cfd51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c38f3a9306691273aabcc4c240fa4cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a8c38f3a9306691273aabcc4c240fa4cc">D13</a></td></tr>
+<tr class="memitem:a8c38f3a9306691273aabcc4c240fa4cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a8c38f3a9306691273aabcc4c240fa4cc">D13</a></td></tr>
 <tr class="separator:a8c38f3a9306691273aabcc4c240fa4cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a875bcd4b44e213419a7adb00510fff03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a875bcd4b44e213419a7adb00510fff03">D12</a></td></tr>
+<tr class="memitem:a875bcd4b44e213419a7adb00510fff03"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a875bcd4b44e213419a7adb00510fff03">D12</a></td></tr>
 <tr class="separator:a875bcd4b44e213419a7adb00510fff03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a937ba98855a41d31fee47587678bacbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a937ba98855a41d31fee47587678bacbd">D11</a></td></tr>
+<tr class="memitem:a937ba98855a41d31fee47587678bacbd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a937ba98855a41d31fee47587678bacbd">D11</a></td></tr>
 <tr class="separator:a937ba98855a41d31fee47587678bacbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae77145e0b1544c827ce67803c53cc156"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ae77145e0b1544c827ce67803c53cc156">D10</a></td></tr>
+<tr class="memitem:ae77145e0b1544c827ce67803c53cc156"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ae77145e0b1544c827ce67803c53cc156">D10</a></td></tr>
 <tr class="separator:ae77145e0b1544c827ce67803c53cc156"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae12f5a914d6c42d956b60ad754a480c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aae12f5a914d6c42d956b60ad754a480c">D0</a></td></tr>
+<tr class="memitem:aae12f5a914d6c42d956b60ad754a480c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aae12f5a914d6c42d956b60ad754a480c">D0</a></td></tr>
 <tr class="separator:aae12f5a914d6c42d956b60ad754a480c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad35533335ea3ab58b35636f851a28144"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ad35533335ea3ab58b35636f851a28144">D1</a></td></tr>
+<tr class="memitem:ad35533335ea3ab58b35636f851a28144"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ad35533335ea3ab58b35636f851a28144">D1</a></td></tr>
 <tr class="separator:ad35533335ea3ab58b35636f851a28144"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d1512a3af0606181dc1a8df49e5c02e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a1d1512a3af0606181dc1a8df49e5c02e">A0</a></td></tr>
+<tr class="memitem:a1d1512a3af0606181dc1a8df49e5c02e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a1d1512a3af0606181dc1a8df49e5c02e">A0</a></td></tr>
 <tr class="separator:a1d1512a3af0606181dc1a8df49e5c02e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca96179cbd5c47c707ade9a6a9aef767"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aca96179cbd5c47c707ade9a6a9aef767">A1</a></td></tr>
+<tr class="memitem:aca96179cbd5c47c707ade9a6a9aef767"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aca96179cbd5c47c707ade9a6a9aef767">A1</a></td></tr>
 <tr class="separator:aca96179cbd5c47c707ade9a6a9aef767"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5f69ff51d126604e9b5030a8440337e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ad5f69ff51d126604e9b5030a8440337e">A2</a></td></tr>
+<tr class="memitem:ad5f69ff51d126604e9b5030a8440337e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ad5f69ff51d126604e9b5030a8440337e">A2</a></td></tr>
 <tr class="separator:ad5f69ff51d126604e9b5030a8440337e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a949d0959a6fda5b6bccf44e1f8d231ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a949d0959a6fda5b6bccf44e1f8d231ae">A3</a></td></tr>
+<tr class="memitem:a949d0959a6fda5b6bccf44e1f8d231ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a949d0959a6fda5b6bccf44e1f8d231ae">A3</a></td></tr>
 <tr class="separator:a949d0959a6fda5b6bccf44e1f8d231ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca89dbe0d84936b3a96108c93cfd2c3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aca89dbe0d84936b3a96108c93cfd2c3b">D2</a></td></tr>
+<tr class="memitem:aca89dbe0d84936b3a96108c93cfd2c3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aca89dbe0d84936b3a96108c93cfd2c3b">D2</a></td></tr>
 <tr class="separator:aca89dbe0d84936b3a96108c93cfd2c3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81f7a6aa4e0b301599dfe3d9d73d0da9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a81f7a6aa4e0b301599dfe3d9d73d0da9">D3</a></td></tr>
+<tr class="memitem:a81f7a6aa4e0b301599dfe3d9d73d0da9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a81f7a6aa4e0b301599dfe3d9d73d0da9">D3</a></td></tr>
 <tr class="separator:a81f7a6aa4e0b301599dfe3d9d73d0da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6703954bcdc8e384d25ea5b53792090"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ad6703954bcdc8e384d25ea5b53792090">D4</a></td></tr>
+<tr class="memitem:ad6703954bcdc8e384d25ea5b53792090"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ad6703954bcdc8e384d25ea5b53792090">D4</a></td></tr>
 <tr class="separator:ad6703954bcdc8e384d25ea5b53792090"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad062598fcf28c6474b6d04394e636d01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ad062598fcf28c6474b6d04394e636d01">D5</a></td></tr>
+<tr class="memitem:ad062598fcf28c6474b6d04394e636d01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ad062598fcf28c6474b6d04394e636d01">D5</a></td></tr>
 <tr class="separator:ad062598fcf28c6474b6d04394e636d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71c13fcdd6282c0473a683128269c2b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a71c13fcdd6282c0473a683128269c2b7">D6</a></td></tr>
+<tr class="memitem:a71c13fcdd6282c0473a683128269c2b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a71c13fcdd6282c0473a683128269c2b7">D6</a></td></tr>
 <tr class="separator:a71c13fcdd6282c0473a683128269c2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a150b9edd5e5c5922c6186d29a39352"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a7a150b9edd5e5c5922c6186d29a39352">D7</a></td></tr>
+<tr class="memitem:a7a150b9edd5e5c5922c6186d29a39352"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a7a150b9edd5e5c5922c6186d29a39352">D7</a></td></tr>
 <tr class="separator:a7a150b9edd5e5c5922c6186d29a39352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8758e93c1d4e601e230c676e3d8f463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ab8758e93c1d4e601e230c676e3d8f463">D8</a></td></tr>
+<tr class="memitem:ab8758e93c1d4e601e230c676e3d8f463"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#ab8758e93c1d4e601e230c676e3d8f463">D8</a></td></tr>
 <tr class="separator:ab8758e93c1d4e601e230c676e3d8f463"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30d53ee80675fa4bab04175fa2f467c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a30d53ee80675fa4bab04175fa2f467c4">D9</a></td></tr>
+<tr class="memitem:a30d53ee80675fa4bab04175fa2f467c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a30d53ee80675fa4bab04175fa2f467c4">D9</a></td></tr>
 <tr class="separator:a30d53ee80675fa4bab04175fa2f467c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d31418d0a20b69e789ce7f2e5822f5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a6d31418d0a20b69e789ce7f2e5822f5f">RED_LED</a></td></tr>
+<tr class="memitem:a6d31418d0a20b69e789ce7f2e5822f5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a6d31418d0a20b69e789ce7f2e5822f5f">RED_LED</a></td></tr>
 <tr class="separator:a6d31418d0a20b69e789ce7f2e5822f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae955c51168a1ecea4396bfa89d95e38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aae955c51168a1ecea4396bfa89d95e38">GREEN_LED</a></td></tr>
+<tr class="memitem:aae955c51168a1ecea4396bfa89d95e38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aae955c51168a1ecea4396bfa89d95e38">GREEN_LED</a></td></tr>
 <tr class="separator:aae955c51168a1ecea4396bfa89d95e38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cf7d23a44075565c551eadb96d0c7fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a8cf7d23a44075565c551eadb96d0c7fa">BLUE_LED</a></td></tr>
+<tr class="memitem:a8cf7d23a44075565c551eadb96d0c7fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a8cf7d23a44075565c551eadb96d0c7fa">BLUE_LED</a></td></tr>
 <tr class="separator:a8cf7d23a44075565c551eadb96d0c7fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab6ca3bdbca6ee98fffb620e89b17977"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aab6ca3bdbca6ee98fffb620e89b17977">INT1</a></td></tr>
+<tr class="memitem:aab6ca3bdbca6ee98fffb620e89b17977"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#aab6ca3bdbca6ee98fffb620e89b17977">INT1</a></td></tr>
 <tr class="separator:aab6ca3bdbca6ee98fffb620e89b17977"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b40110c099ff6bd6c28ad436887af38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a2b40110c099ff6bd6c28ad436887af38">INT2</a></td></tr>
+<tr class="memitem:a2b40110c099ff6bd6c28ad436887af38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00707.html#a2b40110c099ff6bd6c28ad436887af38">INT2</a></td></tr>
 <tr class="separator:a2b40110c099ff6bd6c28ad436887af38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="a00707.html" title="The evkmimxrt1064.c file defines GPIO pins and I2C CMSIS utilities for evkmimxrt1064 board...">evkmimxrt1064.c</a> file defines GPIO pins and I2C CMSIS utilities for evkmimxrt1064 board. </p>
+<div class="textblock"><p>The <a class="el" href="a00707.html" title="The evkmimxrt1015.c file defines GPIO pins and I2C CMSIS utilities for evkmimxrt1015 board...">evkmimxrt1015.c</a> file defines GPIO pins and I2C CMSIS utilities for evkmimxrt1015 board. </p>
 
-<p class="definition">Definition in file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
-</div><h2 class="groupheader">Function Documentation</h2>
+<p class="definition">Definition in file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="aa76bf8389067ef4c11eb785cbc28fd49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa76bf8389067ef4c11eb785cbc28fd49">&#9670;&nbsp;</a></span>LPI2C_CLOCK_FREQUENCY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LPI2C_CLOCK_FREQUENCY&#160;&#160;&#160;((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (<a class="el" href="a04625.html#a4f8818144f66142acf55589c4dda9f71">LPI2C_CLOCK_SOURCE_DIVIDER</a> + 1U))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00023">23</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
+
+</div>
+</div>
+<a id="a4f8818144f66142acf55589c4dda9f71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f8818144f66142acf55589c4dda9f71">&#9670;&nbsp;</a></span>LPI2C_CLOCK_SOURCE_DIVIDER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LPI2C_CLOCK_SOURCE_DIVIDER&#160;&#160;&#160;(5U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00021">21</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00707_source.html#l00162">LPI2C1_GetFreq()</a>.</p>
+
+</div>
+</div>
+<a id="a24da11cc04d25444c4e40ccfa60b8e53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24da11cc04d25444c4e40ccfa60b8e53">&#9670;&nbsp;</a></span>LPI2C_CLOCK_SOURCE_SELECT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LPI2C_CLOCK_SOURCE_SELECT&#160;&#160;&#160;(0U)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00019">19</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00707_source.html#l00162">LPI2C1_GetFreq()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
 <a id="a7e9a78d0068cb0ce85db008ec5f42462"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e9a78d0068cb0ce85db008ec5f42462">&#9670;&nbsp;</a></span>LPI2C1_GetFreq()</h2>
 
@@ -173,7 +236,9 @@ Variables</h2></td></tr>
 <dl class="section user"><dt>Reentrant: Yes</dt><dd></dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>uint32_t Returns the clock frequency . </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00224">224</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00162">162</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a00707_source.html#l00021">LPI2C_CLOCK_SOURCE_DIVIDER</a>, and <a class="el" href="a00707_source.html#l00019">LPI2C_CLOCK_SOURCE_SELECT</a>.</p>
 
 </div>
 </div>
@@ -204,7 +269,7 @@ Variables</h2></td></tr>
 <dl class="section user"><dt>Reentrant: Yes</dt><dd></dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>uint32_t Returns the clock frequency . </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00236">236</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00177">177</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -235,7 +300,7 @@ Variables</h2></td></tr>
 <dl class="section user"><dt>Reentrant: Yes</dt><dd></dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>uint32_t Returns the clock frequency . </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00212">212</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00150">150</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -264,7 +329,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Configuration error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00197">197</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00135">135</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -293,7 +358,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Configuration error code. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00182">182</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00120">120</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -305,13 +370,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A0</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A0</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 26,</div><div class="line">                        .mask = 1 &lt;&lt; (26),</div><div class="line">                        .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 26, .mask = 1 &lt;&lt; (26), .irq = GPIO1_Combined_16_31_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00074">74</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00064">64</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -322,13 +387,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A1</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A1</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 27,</div><div class="line">                        .mask = 1 &lt;&lt; (27),</div><div class="line">                        .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 27, .mask = 1 &lt;&lt; (27), .irq = GPIO1_Combined_16_31_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00079">79</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00066">66</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -339,13 +404,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A2</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A2</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 20,</div><div class="line">                        .mask = 1 &lt;&lt; (20),</div><div class="line">                        .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 20, .mask = 1 &lt;&lt; (20), .irq = GPIO1_Combined_16_31_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00084">84</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00068">68</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -356,13 +421,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A3</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A3</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 21,</div><div class="line">                        .mask = 1 &lt;&lt; (21),</div><div class="line">                        .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 21, .mask = 1 &lt;&lt; (21), .irq = GPIO1_Combined_16_31_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00089">89</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00070">70</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -373,13 +438,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A4</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A4</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 17,</div><div class="line">                        .mask = 1 &lt;&lt; (17),</div><div class="line">                        .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 15, .mask = 1 &lt;&lt; (15), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00033">33</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00038">38</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -390,13 +455,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A5</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> A5</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 16,</div><div class="line">                        .mask = 1 &lt;&lt; (16),</div><div class="line">                        .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 14, .mask = 1 &lt;&lt; (14), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00028">28</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00035">35</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -407,13 +472,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> BLUE_LED</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> BLUE_LED</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                              .pinNumber = 9,</div><div class="line">                              .mask = 1 &lt;&lt; (9),</div><div class="line">                              .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                              .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 9, .mask = 1 &lt;&lt; (9), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00147">147</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00095">95</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -424,13 +489,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D0</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D0</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 23,</div><div class="line">                        .mask = 1 &lt;&lt; (23),</div><div class="line">                        .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO2, .pinNumber = 9, .mask = 1 &lt;&lt; (9), .irq = GPIO2_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a90daaaf2b7b2f80652a0bd7bb2806abf">GPIO2_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21a90daaaf2b7b2f80652a0bd7bb2806abf"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a90daaaf2b7b2f80652a0bd7bb2806abf">GPIO2_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00030">gpio_driver.h:30</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00062">62</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00057">57</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -441,13 +506,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D1</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D1</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 22,</div><div class="line">                        .mask = 1 &lt;&lt; (22),</div><div class="line">                        .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO2, .pinNumber = 8, .mask = 1 &lt;&lt; (8), .irq = GPIO2_Combined_16_31_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a90daaaf2b7b2f80652a0bd7bb2806abf">GPIO2_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21a90daaaf2b7b2f80652a0bd7bb2806abf"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a90daaaf2b7b2f80652a0bd7bb2806abf">GPIO2_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00030">gpio_driver.h:30</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00067">67</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00060">60</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -458,13 +523,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D10</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D10</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO3,</div><div class="line">                        .pinNumber = 13,</div><div class="line">                        .mask = 1 &lt;&lt; (13),</div><div class="line">                        .irq = GPIO3_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00031">gpio_driver.h:31</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO3, .pinNumber = 11, .mask = 1 &lt;&lt; (11), .irq = GPIO3_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00031">gpio_driver.h:31</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00055">55</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00052">52</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -475,13 +540,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D11</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D11</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO3,</div><div class="line">                        .pinNumber = 14,</div><div class="line">                        .mask = 1 &lt;&lt; (14),</div><div class="line">                        .irq = GPIO3_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00031">gpio_driver.h:31</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO3, .pinNumber = 12, .mask = 1 &lt;&lt; (12), .irq = GPIO3_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00031">gpio_driver.h:31</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00050">50</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00049">49</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -492,13 +557,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D12</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D12</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO3,</div><div class="line">                        .pinNumber = 15,</div><div class="line">                        .mask = 1 &lt;&lt; (15),</div><div class="line">                        .irq = GPIO3_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00031">gpio_driver.h:31</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO3, .pinNumber = 13, .mask = 1 &lt;&lt; (13), .irq = GPIO3_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00031">gpio_driver.h:31</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00045">45</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00046">46</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -509,13 +574,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D13</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D13</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO3,</div><div class="line">                        .pinNumber = 12,</div><div class="line">                        .mask = 1 &lt;&lt; (12),</div><div class="line">                        .irq = GPIO3_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00031">gpio_driver.h:31</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO3, .pinNumber = 10, .mask = 1 &lt;&lt; (10), .irq = GPIO3_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21a2f53b6bb634aa42b545d958df1423d44">GPIO3_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00031">gpio_driver.h:31</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00040">40</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00043">43</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -526,13 +591,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D14</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D14</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 1,</div><div class="line">                        .mask = 1 &lt;&lt; (1),</div><div class="line">                        .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 3, .mask = 1 &lt;&lt; (3), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00021">21</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00030">30</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -543,13 +608,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D15</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D15</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 0,</div><div class="line">                        .mask = 1 &lt;&lt; (0),</div><div class="line">                        .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 2, .mask = 1 &lt;&lt; (2), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00016">16</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00027">27</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -560,13 +625,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D2</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D2</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 11,</div><div class="line">                        .mask = 1 &lt;&lt; (11),</div><div class="line">                        .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 11, .mask = 1 &lt;&lt; (11), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00094">94</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00072">72</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -577,13 +642,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D3</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D3</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                        .pinNumber = 24,</div><div class="line">                        .mask = 1 &lt;&lt; (24),</div><div class="line">                        .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 24, .mask = 1 &lt;&lt; (24), .irq = GPIO1_Combined_16_31_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00099">99</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00074">74</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -594,13 +659,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D4</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D4</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                         .pinNumber = 9,</div><div class="line">                         .mask = 1 &lt;&lt; (9),</div><div class="line">                         .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 9, .mask = 1 &lt;&lt; (9), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00104">104</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00076">76</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -611,13 +676,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D5</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D5</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                         .pinNumber = 10,</div><div class="line">                         .mask = 1 &lt;&lt; (10),</div><div class="line">                         .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 10, .mask = 1 &lt;&lt; (10), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00109">109</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00078">78</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -628,13 +693,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D6</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D6</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                         .pinNumber = 18,</div><div class="line">                         .mask = 1 &lt;&lt; (18),</div><div class="line">                         .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 18, .mask = 1 &lt;&lt; (18), .irq = GPIO1_Combined_16_31_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00114">114</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00080">80</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -645,13 +710,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D7</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D7</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                         .pinNumber = 19,</div><div class="line">                         .mask = 1 &lt;&lt; (19),</div><div class="line">                         .irq = GPIO1_Combined_16_31_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 19, .mask = 1 &lt;&lt; (19), .irq = GPIO1_Combined_16_31_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00119">119</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00082">82</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -662,13 +727,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D8</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D8</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                         .pinNumber = 3,</div><div class="line">                         .mask = 1 &lt;&lt; (3),</div><div class="line">                         .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 3, .mask = 1 &lt;&lt; (3), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00124">124</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00084">84</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -679,13 +744,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D9</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> D9</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                         .pinNumber = 2,</div><div class="line">                         .mask = 1 &lt;&lt; (2),</div><div class="line">                         .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                        .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 2, .mask = 1 &lt;&lt; (2), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00129">129</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00086">86</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -696,13 +761,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> GREEN_LED</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> GREEN_LED</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                              .pinNumber = 9,</div><div class="line">                              .mask = 1 &lt;&lt; (9),</div><div class="line">                              .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                              .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 9, .mask = 1 &lt;&lt; (9), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00142">142</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00093">93</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -713,13 +778,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> INT1</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> INT1</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                           .pinNumber = 10,</div><div class="line">                           .mask = 1 &lt;&lt; (10),</div><div class="line">                           .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                           .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 10, .mask = 1 &lt;&lt; (10), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00154">154</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00099">99</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -730,13 +795,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> INT2</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> INT2</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                           .pinNumber = 11,</div><div class="line">                           .mask = 1 &lt;&lt; (11),</div><div class="line">                           .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                           .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 11, .mask = 1 &lt;&lt; (11), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00159">159</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00101">101</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>
@@ -747,13 +812,13 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a04576.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> RED_LED</td>
+          <td class="memname"><a class="el" href="a04835.html#a19402042eca05d6c956827033437066c">gpioHandleiMXSDK_t</a> RED_LED</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {.base = GPIO1,</div><div class="line">                              .pinNumber = 9,</div><div class="line">                              .mask = 1 &lt;&lt; (9),</div><div class="line">                              .irq = GPIO1_Combined_0_15_IRQn,</div><div class="line">                              .portNumber = <a class="code" href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04576_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04576.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04576_source.html#l00029">gpio_driver.h:29</a></div></div>
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .base = GPIO1, .pinNumber = 9, .mask = 1 &lt;&lt; (9), .irq = GPIO1_Combined_0_15_IRQn, .portNumber = <a class="code" href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a>}</div><div class="ttc" id="a04835_html_a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d"><div class="ttname"><a href="a04835.html#a60ca43e29822e24fc8281ec5d5125a21af6af69a09328ecf2f0a7ae545ee0dc2d">GPIO1_NUM</a></div><div class="ttdef"><b>Definition:</b> <a href="a04835_source.html#l00029">gpio_driver.h:29</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00137">137</a> of file <a class="el" href="a00707_source.html">evkmimxrt1064.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00707_source.html#l00091">91</a> of file <a class="el" href="a00707_source.html">evkmimxrt1015.c</a>.</p>
 
 </div>
 </div>

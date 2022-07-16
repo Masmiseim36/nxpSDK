@@ -26,6 +26,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "fsl_silicon_id.h"
 #include "fsl_phy.h"
 
 #include "fsl_phyksz8081.h"
@@ -78,14 +79,6 @@
 #endif
 #ifndef configGW_ADDR3
 #define configGW_ADDR3 100
-#endif
-
-/* MAC address configuration. */
-#ifndef configMAC_ADDR
-#define configMAC_ADDR                     \
-    {                                      \
-        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
-    }
 #endif
 
 /* Address of PHY interface. */
@@ -226,8 +219,10 @@ int main(void)
     struct netif netif;
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
+        .phyHandle = &phyHandle,
+#ifdef configMAC_ADDR
         .macAddress = configMAC_ADDR,
+#endif
     };
 
     gpio_pin_config_t gpio_config = {kGPIO_DigitalOutput, 0, kGPIO_NoIntmode};
@@ -251,6 +246,11 @@ int main(void)
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     time_init();
+
+#ifndef configMAC_ADDR
+    /* Set special address for each chip. */
+    (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
 
     IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
     IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);

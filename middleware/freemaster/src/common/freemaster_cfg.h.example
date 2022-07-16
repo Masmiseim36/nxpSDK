@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
- * FreeMASTER Communication Driver - User Configuration File
+ * FreeMASTER Communication Driver - User Configuration File - EXAMPLE
  */
 
 #ifndef __FREEMASTER_CFG_H
@@ -14,9 +14,11 @@
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
 
-#define FMSTR_PLATFORM_CORTEX_M 1   // Cortex-M platform (see freemaster.h for list of all supported platforms)
-// #define FMSTR_PLATFORM_S12Z  0   // Use with S12Z platform
-// #define FMSTR_PLATFORM_PA32  0   // Use with 32bit Power Architecture platforms
+// see freemaster.h for list of all supported platforms
+#define FMSTR_PLATFORM_CORTEX_M 1    // Cortex-M platform
+// #define FMSTR_PLATFORM_56F800E 0  // 56F800E platform
+// #define FMSTR_PLATFORM_S12Z  0    // Use with S12Z platform
+// #define FMSTR_PLATFORM_PA32  0    // Use with 32bit Power Architecture platforms
 
 //! Enable/Disable FreeMASTER support as a whole
 #define FMSTR_DISABLE           0   // To disable all FreeMASTER functionalities
@@ -32,11 +34,17 @@
 //    FMSTR_SERIAL_MCUX_LPUART -   MCUXSDK driver for LPUART peripheral
 //    FMSTR_SERIAL_MCUX_USART  -   MCUXSDK driver for USART peripheral
 //    FMSTR_SERIAL_MCUX_MINIUSART -MCUXSDK driver for MINIUSART peripheral
+//    FMSTR_SERIAL_MCUX_QSCI   -   MCUXSDK driver for DSC QSCI peripheral
 //    FMSTR_SERIAL_MCUX_USB    -   MCUXSDK driver for USB peripheral with CDC class
+//    FMSTR_SERIAL_56F800E_EONCE - 56F800E-specific driver for JTAG EOnCE communication
 // FMSTR_CAN      -   Standard CAN transport protocol (Used by various types of CAN peripherals)
 //    FMSTR_CAN_MCUX_FLEXCAN   -   MCUXSDK driver for FlexCAN peripheral
 //    FMSTR_CAN_MCUX_MCAN      -   MCUXSDK driver for MCAN peripheral
 //    FMSTR_CAN_MCUX_MSCAN     -   MCUXSDK driver for msCAN peripheral
+// FMSTR_NET      -   Network communication using TCP or UDP protocol
+//    FMSTR_NET_LWIP_TCP       -   TCP using lwIP stack
+//    FMSTR_NET_LWIP_UDP       -   UDP using lwIP stack
+//    FMSTR_NET_SEGGER_RTT     -   SEGGER RTT using J-Link debugger
 // FMSTR_PDBDM    -   Packet Driven BDM (direct memory access via JTAG, SWD or BDM debug probes). No low-level driver used.
 
 //! Select communication interface
@@ -44,8 +52,8 @@
 #define FMSTR_SERIAL_DRV        FMSTR_SERIAL_MCUX_UART // Use serial driver for UART
 
 //! Define communication interface base address or leave undefined for runtime setting
-// #undef FMSTR_SERIAL_BASE   // Serial base will be assigned in runtime (when FMSTR_USE_UART)
-// #undef FMSTR_CAN_BASE      // CAN base will be assigned in runtime (when FMSTR_USE_FLEXCAN)
+// #undef FMSTR_SERIAL_BASE   // Serial base will be assigned in runtime (for FMSTR_SERIAL transport)
+// #undef FMSTR_CAN_BASE      // CAN base will be assigned in runtime (for FMSTR_CAN transoprot)
 
 //! FlexCAN-specific, communication message buffers
 #define FMSTR_FLEXCAN_TXMB      0

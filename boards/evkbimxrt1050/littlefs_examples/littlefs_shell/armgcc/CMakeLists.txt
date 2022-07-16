@@ -59,6 +59,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
@@ -97,6 +98,8 @@ include(driver_iomuxc_MIMXRT1052)
 include(utility_assert_MIMXRT1052)
 
 include(driver_igpio_MIMXRT1052)
+
+include(component_silicon_id_MIMXRT1052)
 
 include(component_mflash_common_MIMXRT1052)
 

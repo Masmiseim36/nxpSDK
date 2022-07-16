@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v8.0
+product: Pins v11.0
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 0.9.0
+processor_version: 11.0.1
 board: IMXRT1050-EVKB
 pin_labels:
 - {pin_num: F14, pin_signal: GPIO_AD_B0_09, label: USER_LED}
@@ -51,10 +51,10 @@ void BOARD_InitBootPins(void) {
 BOARD_InitADC:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: J13, peripheral: ADC2, signal: 'IN, 0', pin_signal: GPIO_AD_B1_11}
-  - {pin_num: J11, peripheral: ADC2, signal: 'IN, 5', pin_signal: GPIO_AD_B1_00}
-  - {pin_num: K11, peripheral: ADC2, signal: 'IN, 6', pin_signal: GPIO_AD_B1_01}
-  - {pin_num: L11, peripheral: ADC2, signal: 'IN, 7', pin_signal: GPIO_AD_B1_02}
+  - {pin_num: J13, peripheral: ADC2, signal: 'IN, 0', pin_signal: GPIO_AD_B1_11, pull_keeper_enable: Disable}
+  - {pin_num: J11, peripheral: ADC2, signal: 'IN, 5', pin_signal: GPIO_AD_B1_00, pull_keeper_enable: Disable}
+  - {pin_num: K11, peripheral: ADC2, signal: 'IN, 6', pin_signal: GPIO_AD_B1_01, pull_keeper_enable: Disable}
+  - {pin_num: L11, peripheral: ADC2, signal: 'IN, 7', pin_signal: GPIO_AD_B1_02, pull_keeper_enable: Disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -71,6 +71,10 @@ void BOARD_InitADC(void) {
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_01_GPIO1_IO17, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_02_GPIO1_IO18, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_11_GPIO1_IO27, 0U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B1_00_GPIO1_IO16, 0xB0U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B1_01_GPIO1_IO17, 0xB0U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B1_02_GPIO1_IO18, 0xB0U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B1_11_GPIO1_IO27, 0xB0U); 
 }
 
 
@@ -93,8 +97,16 @@ BOARD_InitLPUART:
 void BOARD_InitLPUART(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           
 
+#if FSL_IOMUXC_DRIVER_VERSION >= MAKE_VERSION(2, 0, 3)
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_12_LPUART1_TXD, 0U); 
+#else
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_12_LPUART1_TX, 0U); 
+#endif
+#if FSL_IOMUXC_DRIVER_VERSION >= MAKE_VERSION(2, 0, 3)
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_13_LPUART1_RXD, 0U); 
+#else
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_13_LPUART1_RX, 0U); 
+#endif
 }
 
 
@@ -123,12 +135,36 @@ void BOARD_InitPWM(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           
   CLOCK_EnableClock(kCLOCK_Xbar1);            
 
+#if FSL_IOMUXC_DRIVER_VERSION >= MAKE_VERSION(2, 0, 3)
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_10_FLEXPWM1_PWM3_A, 0U); 
+#else
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_10_FLEXPWM1_PWMA03, 0U); 
+#endif
+#if FSL_IOMUXC_DRIVER_VERSION >= MAKE_VERSION(2, 0, 3)
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_11_FLEXPWM1_PWM3_B, 0U); 
+#else
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_11_FLEXPWM1_PWMB03, 0U); 
+#endif
+#if FSL_IOMUXC_DRIVER_VERSION >= MAKE_VERSION(2, 0, 3)
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_00_FLEXPWM1_PWM0_A, 0U); 
+#else
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_00_FLEXPWM1_PWMA00, 0U); 
+#endif
+#if FSL_IOMUXC_DRIVER_VERSION >= MAKE_VERSION(2, 0, 3)
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_01_FLEXPWM1_PWM0_B, 0U); 
+#else
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_01_FLEXPWM1_PWMB00, 0U); 
+#endif
+#if FSL_IOMUXC_DRIVER_VERSION >= MAKE_VERSION(2, 0, 3)
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_02_FLEXPWM1_PWM1_A, 0U); 
+#else
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_02_FLEXPWM1_PWMA01, 0U); 
+#endif
+#if FSL_IOMUXC_DRIVER_VERSION >= MAKE_VERSION(2, 0, 3)
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_03_FLEXPWM1_PWM1_B, 0U); 
+#else
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_03_FLEXPWM1_PWMB01, 0U); 
+#endif
   XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputAcmp2Out, kXBARA1_OutputFlexpwm1Fault0); 
 }
 
@@ -185,8 +221,8 @@ void BOARD_InitCMP(void) {
 BOARD_InitENC:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: M14, peripheral: ENC1, signal: 'PHASE, A', pin_signal: GPIO_AD_B0_00}
-  - {pin_num: H10, peripheral: ENC1, signal: 'PHASE, B', pin_signal: GPIO_AD_B0_01}
+  - {pin_num: M11, peripheral: ENC1, signal: 'PHASE, A', pin_signal: GPIO_AD_B0_02}
+  - {pin_num: G11, peripheral: ENC1, signal: 'PHASE, B', pin_signal: GPIO_AD_B0_03}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -200,15 +236,15 @@ void BOARD_InitENC(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           
   CLOCK_EnableClock(kCLOCK_Xbar1);            
 
-  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_00_XBAR1_INOUT14, 0U); 
-  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_01_XBAR1_INOUT15, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_02_XBAR1_INOUT16, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_03_XBAR1_INOUT17, 0U); 
   IOMUXC_GPR->GPR6 = ((IOMUXC_GPR->GPR6 &
-    (~(IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_14_MASK | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_15_MASK))) 
-      | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_14(0x00U) 
-      | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_15(0x00U) 
+    (~(IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_16_MASK | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_17_MASK))) 
+      | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_16(0x00U) 
+      | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_17(0x00U) 
     );
-  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarInout14, kXBARA1_OutputEnc1PhaseAInput); 
-  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarInout15, kXBARA1_OutputEnc1PhaseBInput); 
+  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarInout16, kXBARA1_OutputEnc1PhaseAInput); 
+  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarInout17, kXBARA1_OutputEnc1PhaseBInput); 
 }
 
 /***********************************************************************************************************************

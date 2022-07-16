@@ -218,6 +218,14 @@ struct bt_hci_cp_vs_set_usb_transport_mode {
 	uint8_t  mode;
 } STRUCT_PACKED_POST;
 
+#define BT_HCI_OP_VS_SET_MIN_NUM_USED_CHANS    BT_OP(BT_OGF_VS, 0x0012)
+STRUCT_PACKED_PRE
+struct bt_hci_cp_vs_set_min_num_used_chans {
+	uint16_t handle;
+	uint8_t  phys;
+	uint8_t  min_used_chans;
+} STRUCT_PACKED_POST;
+
 /* Events */
 
 STRUCT_PACKED_PRE

@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("CMSIS_Include_core_cm component is included.")
 
 

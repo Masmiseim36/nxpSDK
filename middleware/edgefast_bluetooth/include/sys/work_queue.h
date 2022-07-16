@@ -99,6 +99,7 @@ void bt_work_submit(struct bt_work *work);
 void bt_delayed_work_init(struct bt_delayed_work *work, bt_work_handler_t handler);
 int bt_delayed_work_remaining_get(struct bt_delayed_work *work);
 int bt_delayed_work_submit(struct bt_delayed_work *work, int32_t delay);
+int bt_delayed_work_submit_anyways(struct bt_delayed_work *work, int32_t delay);
 int bt_delayed_work_cancel(struct bt_delayed_work *work);
 
 #define k_work_queue_init bt_work_queue_init
@@ -111,6 +112,9 @@ int bt_delayed_work_cancel(struct bt_delayed_work *work);
 #define k_work_init_delayable bt_delayed_work_init
 #define k_work_delayable_remaining_get bt_delayed_work_remaining_get
 #define k_work_schedule bt_delayed_work_submit
+#define k_work_reschedule bt_delayed_work_submit_anyways
 #define k_work_cancel_delayable bt_delayed_work_cancel
+
+struct k_work_delayable * k_work_delayable_from_work(struct k_work *work);
 
 #endif /* _WORK_QUEUE_H_ */

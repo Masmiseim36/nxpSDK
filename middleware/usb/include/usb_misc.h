@@ -40,10 +40,22 @@ extern int DbgConsole_Printf(const char *fmt_s, ...);
 }
 #endif /* __cplusplus */
 
-#if defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE < 1)
+/*! @brief Definition to select sdk or toolchain printf, scanf. */
+#ifndef SDK_DEBUGCONSOLE
+#define SDK_DEBUGCONSOLE 1U
+#endif
+
+/*! @brief 0U: DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN, 1U: DEBUGCONSOLE_REDIRECT_TO_SDK, 2U: DEBUGCONSOLE_DISABLE*/
+#if defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == 0U)
 #define usb_echo printf
-#else
+#elif defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == 1U)
 #define usb_echo DbgConsole_Printf
+#elif defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == 2U)
+static inline int USB_DbgConsole_Disabled(void)
+{
+    return -1;
+}
+#define usb_echo(...) USB_DbgConsole_Disabled()
 #endif
 
 #if defined(__ICCARM__)

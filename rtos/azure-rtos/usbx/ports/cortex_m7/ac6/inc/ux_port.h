@@ -25,14 +25,14 @@
 /*                                                                        */ 
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */ 
 /*                                                                        */ 
-/*    ux_port.h                                          Cortex-M7/MDK    */ 
-/*                                                           6.0          */ 
+/*    ux_port.h                                            Generic        */ 
+/*                                                           6.1.10       */
 /*                                                                        */
-/*  AUTHOR                                                                */ 
-/*                                                                        */ 
-/*    Yuxin Zhou, Microsoft Corporation                                   */ 
-/*                                                                        */ 
-/*  DESCRIPTION                                                           */ 
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Chaoqiong Xiao, Microsoft Corporation                               */
+/*                                                                        */
+/*  DESCRIPTION                                                           */
 /*                                                                        */ 
 /*    This file contains data type definitions that make USBX function    */ 
 /*    identically on a variety of different processor architectures.      */ 
@@ -41,9 +41,13 @@
 /*                                                                        */ 
 /*    DATE              NAME                      DESCRIPTION             */ 
 /*                                                                        */ 
-/*  08-03-2020     Jianchao Wang               Initial Version 6.0        */
-/*                                                                        */ 
-/**************************************************************************/ 
+/*  12-31-2020     Chaoqiong Xiao           Initial Version 6.1.3         */
+/*  01-31-2022     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            moved tx_api.h include and  */
+/*                                            typedefs from ux_api.h,     */
+/*                                            resulting in version 6.1.10 */
+/*                                                                        */
+/**************************************************************************/
 
 #ifndef UX_PORT_H
 #define UX_PORT_H
@@ -65,6 +69,34 @@
 
 #include <stdio.h>
 #include <string.h>
+
+
+#if !defined(UX_STANDALONE)
+#include "tx_api.h"
+#else
+
+/* VAR types used in UX,
+   if TX still used, expects tx_api.h included before include this.  */
+#if !defined(TX_API_H) && !defined(TX_PORT_H)
+
+#include <stdint.h>
+typedef void                                    VOID;
+typedef char                                    CHAR;
+typedef unsigned char                           UCHAR;
+typedef int                                     INT;
+typedef unsigned int                            UINT;
+typedef long                                    LONG;
+typedef unsigned long                           ULONG;
+typedef short                                   SHORT;
+typedef unsigned short                          USHORT;
+typedef uint64_t                                ULONG64;
+
+#ifndef ALIGN_TYPE_DEFINED
+#define ALIGN_TYPE                              ULONG
+#endif
+
+#endif
+#endif
 
 
 /* CPU definition for X86 systems without preemptive timer function.
@@ -115,6 +147,10 @@ typedef long                        SLONG;
 #define UX_MAX_ISO_TD                                       128
 #endif
 
+#ifndef UX_HOST_ENUM_THREAD_STACK_SIZE
+#define UX_HOST_ENUM_THREAD_STACK_SIZE                      (2*1024)
+#endif
+
 #ifndef UX_THREAD_STACK_SIZE
 #define UX_THREAD_STACK_SIZE                                (1*1024)
 #endif
@@ -151,6 +187,9 @@ typedef long                        SLONG;
 #define UX_MAX_HOST_LUN                                     16
 #endif
 
+#ifndef UX_HOST_CLASS_STORAGE_MAX_MEDIA
+#define UX_HOST_CLASS_STORAGE_MAX_MEDIA                     1
+#endif
 
 #ifndef UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH
 #define UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH                 256
@@ -197,9 +236,9 @@ VOID    outpl(ULONG,ULONG);
 
 /* Define the version ID of USBX.  This may be utilized by the application.  */
 
-#ifdef  UX_SYSTEM_HOST_INIT
+#ifdef  UX_SYSTEM_INIT
 CHAR                            _ux_version_id[] = 
-                                   "Copyright (c) Microsoft Corporation. All rights reserved.  *  USBX Cortex-M7/MDK Version G6.0 *";
+                                    "Copyright (c) Microsoft Corporation. All rights reserved. * USBX Generic Version 6.1.10 *";
 #else
 extern  CHAR                    _ux_version_id[];
 #endif

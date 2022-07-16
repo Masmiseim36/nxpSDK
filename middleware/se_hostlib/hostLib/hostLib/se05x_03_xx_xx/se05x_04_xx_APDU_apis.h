@@ -735,7 +735,7 @@ smStatus_t Se05x_API_ReadObjectAttributes(
 smStatus_t Se05x_API_TriggerSelfTest(
     pSe05xSession_t session_ctx, SE05x_HealthCheckMode_t healthCheckMode, uint8_t *result);
 
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 /** Se05x_API_TriggerSelfTest_W_Attst
  *
  * Trigger a system health check for the system. When calling this command, a self-test is
@@ -975,7 +975,7 @@ smStatus_t Se05x_API_TriggerSelfTest_W_Attst(pSe05xSession_t session_ctx,
     size_t *pchipIdLen,
     uint8_t *signature,
     size_t *psignatureLen);
-#endif // SSS_HAVE_SE05X_VER_GTE_06_16
+#endif // SSS_HAVE_SE05X_VER_GTE_07_02
 
 /** Se05x_API_ECDHGenerateSharedSecret_InObject
  *
@@ -1330,8 +1330,24 @@ smStatus_t Se05x_API_UpdatePCR(
 smStatus_t Se05x_API_UpdateCounter(
     pSe05xSession_t session_ctx, pSe05xPolicy_t policy, uint32_t objectID, uint16_t size, uint64_t value);
 
+/** Se05x_API_WriteSymmKey_Ver_extended
+*
+* See @ref Extension of Se05x_API_WriteSymmKey_Ver api. Allows to set minimum tag length for AEAD (2 bytes).
+*
+*/
+smStatus_t Se05x_API_WriteSymmKey_Ver_extended(pSe05xSession_t session_ctx,
+    pSe05xPolicy_t policy,
+    SE05x_MaxAttemps_t maxAttempt,
+    uint32_t objectID,
+    SE05x_KeyID_t kekID,
+    const uint8_t *keyValue,
+    size_t keyValueLen,
+    const SE05x_INS_t ins_type,
+    const SE05x_SymmKeyType_t type,
+    uint32_t version,
+    uint16_t min_aead_tag_len);
 
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 
 /** Se05x_API_PBKDF2_extended
 *
@@ -1361,7 +1377,6 @@ smStatus_t Se05x_API_PBKDF2_extended(pSe05xSession_t session_ctx,
     uint32_t derivedSessionKeyID,
     uint8_t *derivedSessionKey,
     size_t *pderivedSessionKeyLen);
-
 
 /** Se05x_API_ECDHGenerateSharedSecret_InObject_extended
 *

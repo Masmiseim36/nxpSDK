@@ -1,4 +1,4 @@
-eIQ TensorFlow Lite for Microcontrollers library 2.6.0
+eIQ TensorFlow Lite for Microcontrollers library 22-02-16
 
 Content
 -------
@@ -17,8 +17,8 @@ inference. Models trained by TensorFlow can be converted into a binary
 FlatBuffers format with the TensorFlow Lite Converter (available in
 the TensorFlow distributions). Converted .tflite files can be then downloaded
 into an embedded device. The eIQ TensorFlow Lite for Microcontrollers library
-is based on TensorFlow Lite for Microcontrollers 2.6.0 and is therefore
-fully compatible.
+is based on TensorFlow Lite for Microcontrollers, state from
+the 16th of February 2022, and is therefore fully compatible.
 Note: TensorFlow Lite supports only a subset of operators available in
       TensorFlow. The conversion tool reports any unsupported operators during
       the conversion.
@@ -47,7 +47,7 @@ the eIQ TensorFlow Lite for Microcontrollers library. The build projects can
 be found in the /boards/<board>/eiq_examples/tensorflow_lite_micro_* folders.
 The following boards are currently supported: evkbimxrt1050, evkmimxrt1060,
 evkbimxrt1060, evkmimxrt1064, evkmimxrt1160, evkmimxrt1170, evkmimxrt595,
-evkmimxrt685.
+evkmimxrt685, mimxrt685audevk.
 The following toolchains are currently supported:
 MCUXpresso IDE, IAR Embedded Workbench, Keil MDK, GNU ARM Embedded Toolchain
 
@@ -117,22 +117,24 @@ Optimized kernels for Cadence Xtensa cores leverage the Xtensa HiFi4 NN library.
 
 6. Release notes
 ----------------
-The library is based on TensorFlow Lite for Microcontrollers (TFLM) version 2.6.0
-available at https://github.com/tensorflow/tensorflow/tree/v2.6.0/tensorflow/lite/micro.
+The library is based on TensorFlow Lite for Microcontrollers (TFLM) from
+the 16th of February 2022 available at https://github.com/tensorflow/tflite-micro/commit/9efa395baa7d85db5807202b3420550300d9297d.
 Main modifications introduced to the original library source code:
   * Removed files not containing the TFLM library source codes
     or not needed for building the TFLM library
   * Added third party library source codes
-    * CMSIS-NN (https://github.com/ARM-software/CMSIS_5/archive/59d62498924a20bd77d519d5b7d3a184a3783244.zip)
+    * CMSIS-NN (https://github.com/ARM-software/CMSIS_5/archive/977abe9849781a2e788b02282986480ff4e25ea6.zip)
       * Removed files not needed for compiling the TFLM library
-    * Xtensa HiFi4 NN (https://github.com/foss-xtensa/nnlib-hifi4/blob/master/archive/xa_nnlib_hifi4_07_27_2021.zip)
+    * Xtensa HiFi4 NN (https://github.com/foss-xtensa/nnlib-hifi4/blob/master/archive/xa_nnlib_hifi4_11_09_2021.zip)
     * FFT2D (http://mirror.tensorflow.org/www.kurims.kyoto-u.ac.jp/~ooura/fft.tgz)
       * Removed files not needed for compiling the TFLM library
-    * FlatBuffers (https://github.com/google/flatbuffers/archive/dca12522a9f9e37f126ab925fd385c807ab4f84e.zip)
+    * KissFFT (https://github.com/mborgerding/kissfft/archive/refs/tags/v130.zip)
+      * Removed files not needed for compiling the TFLM library
+    * FlatBuffers (https://github.com/google/flatbuffers/archive/f28c2b29364970e23c8ba3d751ca188f8a08c71e.zip)
       * Removed files not needed for compiling the TFLM library
     * Gemmlowp (https://github.com/google/gemmlowp/archive/719139ce755a0f31cbf1c37f7f98adcc7fc9f425.zip)
       * Removed files not needed for compiling the TFLM library
-    * Ruy (https://github.com/google/ruy/archive/e6c1b8dc8a8b00ee74e7268aac8b18d7260ab1ce.zip)
+    * Ruy (https://github.com/google/ruy/archive/d37128311b445e758136b8602d1bbd2a755e115d.zip)
       * Removed files not needed for compiling the TFLM library
   * Added build projects for MCUXpresso SDK supported toolchains
 

@@ -66,7 +66,7 @@ extern const lv_obj_class_t lv_spangroup_class;
  **********************/
 
 /**
- * Create a spangroup objects
+ * Create a spangroup object
  * @param par pointer to an object, it will be the parent of the new spangroup
  * @return pointer to the created spangroup
  */
@@ -138,6 +138,27 @@ void lv_spangroup_set_mode(lv_obj_t * obj, lv_span_mode_t mode);
  *====================*/
 
 /**
+ * Get a spangroup child by its index.
+ *
+ * @param obj   The spangroup object
+ * @param id    the index of the child.
+ *              0: the oldest (firstly created) child
+ *              1: the second oldest
+ *              child count-1: the youngest
+ *              -1: the youngest
+ *              -2: the second youngest
+ * @return      The child span at index `id`, or NULL if the ID does not exist
+ */
+lv_span_t * lv_spangroup_get_child(const lv_obj_t * obj, int32_t id);
+
+/**
+ *
+ * @param obj   The spangroup object to get the child count of.
+ * @return      The span count of the spangroup.
+ */
+uint32_t lv_spangroup_get_child_cnt(const lv_obj_t * obj);
+
+/**
  * get the align of the spangroup.
  * @param obj pointer to a spangroup object.
  * @return the align value.
@@ -171,13 +192,16 @@ lv_span_mode_t lv_spangroup_get_mode(lv_obj_t * obj);
 lv_coord_t lv_spangroup_get_max_line_h(lv_obj_t * obj);
 
 /**
- * get the width when all span of spangroup on a line. include spangroup pad.
+ * get the text content width when all span of spangroup on a line.
  * @param obj pointer to a spangroup object.
+ * @param max_width if text content width >= max_width, return max_width
+ * to reduce computation, if max_width == 0, returns the text content width.
+ * @return text content width or max_width.
  */
-lv_coord_t lv_spangroup_get_expand_width(lv_obj_t * obj);
+uint32_t lv_spangroup_get_expand_width(lv_obj_t * obj, uint32_t max_width);
 
 /**
- * get the height with width fixed. the height include spangroup pad.
+ * get the text content height with width fixed.
  * @param obj pointer to a spangroup object.
  */
 lv_coord_t lv_spangroup_get_expand_height(lv_obj_t * obj, lv_coord_t width);

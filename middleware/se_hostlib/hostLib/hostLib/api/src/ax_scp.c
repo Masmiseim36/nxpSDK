@@ -281,7 +281,7 @@ U16 SCP_HostLocal_CalculateSessionKeys(ChannelId_t channelId, U8 *hostChallenge,
     U16 contextLen = 0;
     U8 sessionEncKey[AES_KEY_LEN_nBYTE];
     U8 sessionMacKey[AES_KEY_LEN_nBYTE];
-    U8 sessionRmacKey[AES_KEY_LEN_nBYTE] = {0};
+    U8 sessionRmacKey[AES_KEY_LEN_nBYTE];
     U8 masterEncKey[AES_KEY_LEN_nBYTE];
     U8 masterMacKey[AES_KEY_LEN_nBYTE];
     HLSE_MECHANISM_INFO mechInfo;
@@ -352,7 +352,7 @@ U16 SCP_HostLocal_CalculateHostCryptogram(ChannelId_t channelId, U8 *hostChallen
     U8 context[128];
     U16 contextLen = 0;
     U8 sessionMacKey[AES_KEY_LEN_nBYTE];
-    U8 hostCryptogramFullLength[AES_KEY_LEN_nBYTE] = {0};
+    U8 hostCryptogramFullLength[AES_KEY_LEN_nBYTE];
     HLSE_MECHANISM_INFO mechInfo;
     U32 signatureLen = sizeof(hostCryptogramFullLength);
     S32 ret;
@@ -400,7 +400,7 @@ U16 SCP_HostLocal_VerifyCardCryptogram(ChannelId_t channelId, U8 *hostChallenge,
     U8 context[128];
     U16 contextLen = 0;
     U8 sessionMacKey[AES_KEY_LEN_nBYTE];
-    U8 cardCryptogramFullLength[AES_KEY_LEN_nBYTE] = {0};
+    U8 cardCryptogramFullLength[AES_KEY_LEN_nBYTE];
     U16 rv = SCP_OK;
     HLSE_MECHANISM_INFO mechInfo;
     U32 signatureLen = sizeof(cardCryptogramFullLength);
@@ -712,7 +712,7 @@ static U8 createKeyDataField(U8 keyType, U8 *key, U8 *currentKeyDek, U8 *targetS
     U8 refOneArray[AES_KEY_LEN_nBYTE] = { 0 };
     U8 refOneArrayCiphered[AES_KEY_LEN_nBYTE] = { 0 };
 
-    U8 encKey[AES_KEY_LEN_nBYTE] = {0};
+    U8 encKey[AES_KEY_LEN_nBYTE];
 
     if (currentKeyDek == NULL)
     {

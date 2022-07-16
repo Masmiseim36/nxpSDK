@@ -50,10 +50,12 @@ void* InitReduce(TfLiteContext* context, const char* buffer, size_t length) {
 }
 
 TfLiteStatus PrepareSimple(TfLiteContext* context, TfLiteNode* node) {
+  MicroContext* micro_context = GetMicroContext(context);
+
   // Inputs Tensor (dtype depends on quantization):
   // [0] = Input
   // [1] = Axis
-  const TfLiteTensor* input = GetInput(context, node, 0);
+  TfLiteTensor* input = micro_context->AllocateTempInputTensor(node, 0);
 
   // Outputs Tensor (dtype depends on quantization):
   // [0] = Output
@@ -63,28 +65,31 @@ TfLiteStatus PrepareSimple(TfLiteContext* context, TfLiteNode* node) {
   TF_LITE_ENSURE_EQ(context, node->outputs->size, 1);
 
   // Validate axis type
-  const TfLiteTensor* axis = GetInput(context, node, 1);
+  TfLiteTensor* axis = micro_context->AllocateTempInputTensor(node, 1);
   TF_LITE_ENSURE(context, axis != nullptr);
   TF_LITE_ENSURE_TYPES_EQ(context, axis->type, kTfLiteInt32);
 
   if (input->type == kTfLiteInt8) {
     OpData* data = static_cast<OpData*>(node->user_data);
-    const TfLiteTensor* output = GetOutput(context, node, 0);
+    TfLiteTensor* output = micro_context->AllocateTempOutputTensor(node, 0);
     const double real_multiplier = static_cast<double>(input->params.scale) /
                                    static_cast<double>(output->params.scale);
     QuantizeMultiplier(real_multiplier, &data->multiplier, &data->shift);
+    micro_context->DeallocateTempTfLiteTensor(output);
   }
-
+  micro_context->DeallocateTempTfLiteTensor(axis);
+  micro_context->DeallocateTempTfLiteTensor(input);
   return kTfLiteOk;
 }
 
 TfLiteStatus PrepareMax(TfLiteContext* context, TfLiteNode* node) {
   TF_LITE_ENSURE_OK(context, PrepareSimple(context, node));
 
+  MicroContext* micro_context = GetMicroContext(context);
   OpData* op_data = static_cast<OpData*>(node->user_data);
-  const TfLiteTensor* input = GetInput(context, node, 0);
-  const TfLiteTensor* output = GetOutput(context, node, 0);
-  const TfLiteTensor* axis = GetInput(context, node, 1);
+  TfLiteTensor* input = micro_context->AllocateTempInputTensor(node, 0);
+  TfLiteTensor* output = micro_context->AllocateTempOutputTensor(node, 0);
+  TfLiteTensor* axis = micro_context->AllocateTempInputTensor(node, 1);
 
   op_data->input_scale = input->params.scale;
   op_data->output_scale = output->params.scale;
@@ -96,21 +101,25 @@ TfLiteStatus PrepareMax(TfLiteContext* context, TfLiteNode* node) {
       context, sizeof(int) * static_cast<int>(ElementCount(*axis->dims)),
       &op_data->resolved_axis_idx);
 
+  micro_context->DeallocateTempTfLiteTensor(input);
+  micro_context->DeallocateTempTfLiteTensor(output);
+  micro_context->DeallocateTempTfLiteTensor(axis);
   return kTfLiteOk;
 }
 
 TfLiteStatus PrepareMeanOrSum(TfLiteContext* context, TfLiteNode* node) {
-  const TfLiteTensor* input = GetInput(context, node, 0);
+  MicroContext* micro_context = GetMicroContext(context);
+  TfLiteTensor* input = micro_context->AllocateTempInputTensor(node, 0);
   OpData* op_data = reinterpret_cast<OpData*>(node->user_data);
-  const TfLiteTensor* output = GetOutput(context, node, 0);
-  if (input->type == kTfLiteInt8) {
+  TfLiteTensor* output = micro_context->AllocateTempOutputTensor(node, 0);
+  if (input->type == kTfLiteInt8 || input->type == kTfLiteInt16) {
     const double real_multiplier = static_cast<double>(input->params.scale) /
                                    static_cast<double>(output->params.scale);
     QuantizeMultiplier(real_multiplier, &op_data->multiplier, &op_data->shift);
   }
 
   int output_size = NumElements(output);
-  if (input->type == kTfLiteInt8 || input->type == kTfLiteUInt8) {
+  if (input->type == kTfLiteInt8 || input->type == kTfLiteInt16) {
     context->RequestScratchBufferInArena(context, output_size * sizeof(int32_t),
                                          &op_data->temp_buffer_idx);
     op_data->input_zp = input->params.zero_point;
@@ -121,6 +130,8 @@ TfLiteStatus PrepareMeanOrSum(TfLiteContext* context, TfLiteNode* node) {
 
   TF_LITE_ENSURE_OK(context, PrepareSimple(context, node));
   // TODO(b/144955155): Support uint8_t(b/144955155) and int8_t(b/144955018)
+  micro_context->DeallocateTempTfLiteTensor(input);
+  micro_context->DeallocateTempTfLiteTensor(output);
   return kTfLiteOk;
 }
 
@@ -213,37 +224,37 @@ TfLiteStatus EvalMean(TfLiteContext* context, TfLiteNode* node) {
                 temp_buffer, false));
       }
     } break;
-    case kTfLiteUInt8: {
+    case kTfLiteInt16: {
       // Defer to specialized implementation for 4D Mean across axes 1 & 2.
       if (params->keep_dims && special_case_4d_axes_1_and_2) {
-        reference_ops::Mean(op_params, tflite::micro::GetTensorShape(input),
-                            tflite::micro::GetTensorData<uint8_t>(input),
-                            op_data->input_zp, op_data->input_scale,
-                            tflite::micro::GetTensorShape(output),
-                            tflite::micro::GetTensorData<uint8_t>(output),
-                            op_data->output_zp, op_data->output_scale);
+        reference_integer_ops::Mean(
+            op_params, op_data->multiplier, op_data->shift,
+            tflite::micro::GetTensorShape(input),
+            tflite::micro::GetTensorData<int16_t>(input), op_data->input_zp,
+            tflite::micro::GetTensorShape(output),
+            tflite::micro::GetTensorData<int16_t>(output), op_data->output_zp);
       } else if (op_data->input_zp == op_data->output_zp &&
                  op_data->input_scale == op_data->output_scale) {
-        uint32_t* temp_buffer = static_cast<uint32_t*>(
+        int32_t* temp_buffer = static_cast<int32_t*>(
             context->GetScratchBuffer(context, op_data->temp_buffer_idx));
         TF_LITE_ENSURE(
             context,
-            reference_ops::Mean(tflite::micro::GetTensorData<uint8_t>(input),
+            reference_ops::Mean(tflite::micro::GetTensorData<int16_t>(input),
                                 input->dims->data, input->dims->size,
-                                tflite::micro::GetTensorData<uint8_t>(output),
+                                tflite::micro::GetTensorData<int16_t>(output),
                                 output->dims->data, output->dims->size,
                                 tflite::micro::GetTensorData<int>(axis),
                                 num_axis, params->keep_dims, temp_index,
                                 resolved_axis, temp_buffer));
       } else {
-        uint32_t* temp_buffer = static_cast<uint32_t*>(
+        int32_t* temp_buffer = static_cast<int32_t*>(
             context->GetScratchBuffer(context, op_data->temp_buffer_idx));
         TF_LITE_ENSURE(
             context,
             reference_ops::QuantizedMeanOrSum(
-                tflite::micro::GetTensorData<uint8_t>(input), op_data->input_zp,
+                tflite::micro::GetTensorData<int16_t>(input), op_data->input_zp,
                 op_data->input_scale, input->dims->data, input->dims->size,
-                tflite::micro::GetTensorData<uint8_t>(output),
+                tflite::micro::GetTensorData<int16_t>(output),
                 op_data->output_zp, op_data->output_scale, output->dims->data,
                 output->dims->size, tflite::micro::GetTensorData<int>(axis),
                 num_axis, params->keep_dims, temp_index, resolved_axis,

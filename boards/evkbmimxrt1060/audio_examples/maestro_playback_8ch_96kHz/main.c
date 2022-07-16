@@ -153,10 +153,10 @@ app_data_t *get_app_data()
 status_t list_files(bool autoInput)
 {
     FRESULT error;
-    DIR directory;
-    FILINFO fileInformation;
-    char *dot;
-    uint32_t count = 0;
+    DIR directory           = {0};
+    FILINFO fileInformation = {0};
+    char *dot               = NULL;
+    uint32_t count          = 0;
 
     if (!app.sdcardInserted)
     {
@@ -345,6 +345,9 @@ int main(void)
     PRINTF("Maestro audio playback demo start\r\n");
     PRINTF("*********************************\r\n");
     PRINTF("\r\n");
+
+    /* Initialize OSA*/
+    OSA_Init();
 
     ret = BOARD_CODEC_Init();
     if (ret)

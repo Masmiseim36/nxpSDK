@@ -8,6 +8,7 @@
 #ifndef __BT_BLE_SETTINGS_H__
 #define __BT_BLE_SETTINGS_H__
 
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 #include "porting.h"
 
 #ifdef __cplusplus
@@ -108,7 +109,7 @@ struct settings_handler_static {
 
 #define SETTINGS_STATIC_HANDLER_DEFINE(_hname, _tree, _get, _set, _commit,   \
 				       _export)				     \
-	const Z_STRUCT_SECTION_ITERABLE(settings_handler_static,	     \
+	const STRUCT_SECTION_ITERABLE(settings_handler_static,	     \
 					settings_handler_ ## _hname) = {     \
 		.name = _tree,						     \
 		.h_get = _get,						     \
@@ -303,5 +304,5 @@ int settings_commit_subtree(const char *subtree);
 #ifdef __cplusplus
 }
 #endif
-
+#endif /* CONFIG_BT_SETTINGS */
 #endif /* __BT_BLE_SETTINGS_H__ */

@@ -163,6 +163,7 @@
     <ClInclude Include="..\..\include\mbedtls\compat-1.3.h" />
     <ClInclude Include="..\..\include\mbedtls\config.h" />
     <ClInclude Include="..\..\include\mbedtls\config_psa.h" />
+    <ClInclude Include="..\..\include\mbedtls\constant_time.h" />
     <ClInclude Include="..\..\include\mbedtls\ctr_drbg.h" />
     <ClInclude Include="..\..\include\mbedtls\debug.h" />
     <ClInclude Include="..\..\include\mbedtls\des.h" />
@@ -247,6 +248,8 @@
     <ClInclude Include="..\..\tests\include\test\random.h" />
     <ClInclude Include="..\..\tests\include\test\drivers\aead.h" />
     <ClInclude Include="..\..\tests\include\test\drivers\cipher.h" />
+    <ClInclude Include="..\..\tests\include\test\drivers\config_test_driver.h" />
+    <ClInclude Include="..\..\tests\include\test\drivers\crypto_config_test_driver_extension.h" />
     <ClInclude Include="..\..\tests\include\test\drivers\hash.h" />
     <ClInclude Include="..\..\tests\include\test\drivers\key_management.h" />
     <ClInclude Include="..\..\tests\include\test\drivers\mac.h" />
@@ -255,6 +258,8 @@
     <ClInclude Include="..\..\tests\include\test\drivers\test_driver.h" />
     <ClInclude Include="..\..\library\check_crypto_config.h" />
     <ClInclude Include="..\..\library\common.h" />
+    <ClInclude Include="..\..\library\constant_time_internal.h" />
+    <ClInclude Include="..\..\library\constant_time_invasive.h" />
     <ClInclude Include="..\..\library\ecp_invasive.h" />
     <ClInclude Include="..\..\library\mps_common.h" />
     <ClInclude Include="..\..\library\mps_error.h" />
@@ -274,7 +279,6 @@
     <ClInclude Include="..\..\library\psa_crypto_se.h" />
     <ClInclude Include="..\..\library\psa_crypto_slot_management.h" />
     <ClInclude Include="..\..\library\psa_crypto_storage.h" />
-    <ClInclude Include="..\..\library\ssl_invasive.h" />
     <ClInclude Include="..\..\library\ssl_tls13_keys.h" />
     <ClInclude Include="..\..\3rdparty\everest\include\everest\everest.h" />
     <ClInclude Include="..\..\3rdparty\everest\include\everest\Hacl_Curve25519.h" />
@@ -299,6 +303,7 @@
     <ClCompile Include="..\..\library\cipher.c" />
     <ClCompile Include="..\..\library\cipher_wrap.c" />
     <ClCompile Include="..\..\library\cmac.c" />
+    <ClCompile Include="..\..\library\constant_time.c" />
     <ClCompile Include="..\..\library\ctr_drbg.c" />
     <ClCompile Include="..\..\library\debug.c" />
     <ClCompile Include="..\..\library\des.c" />

@@ -7,6 +7,13 @@
 extern "C" {
 #endif // __cplusplus
 
+#define DEMO_PANEL_RK043FN02H  0 /* RK043FN02H-CT */
+#define DEMO_PANEL_RK043FN66HS 1 /* RK043FN66HS-CTG */
+
+#ifndef DEMO_PANEL
+#define DEMO_PANEL DEMO_PANEL_RK043FN66HS
+#endif
+
 // Init/deinit
 int BOARD_Touch_Init(void);
 void BOARD_Touch_Deinit(void);

@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_freertos-kernel_extension component is included.")
 
 

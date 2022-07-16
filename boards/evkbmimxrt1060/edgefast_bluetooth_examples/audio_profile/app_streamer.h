@@ -10,7 +10,6 @@
 /* streamer library includes. */
 #include "streamer_api.h"
 #include "streamer_element_properties.h"
-#include "streamer_error.h"
 
 /*******************************************************************************
  * Definitions

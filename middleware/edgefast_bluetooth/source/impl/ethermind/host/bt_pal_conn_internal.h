@@ -5,12 +5,15 @@
 /*
  * Copyright 2021 NXP
  * Copyright (c) 2015 Intel Corporation
+ * Copyright (c) 2021 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: Apache-2.0
  */
 
 #ifndef __CONN_INTERNAL_H__
 #define __CONN_INTERNAL_H__
+
+#include <bluetooth/iso.h>
 
 typedef enum {
 	BT_CONN_DISCONNECTED,
@@ -34,9 +37,9 @@ enum {
 	BT_CONN_BR_PAIRING_INITIATOR,	/* local host starts authentication */
 	BT_CONN_CLEANUP,                /* Disconnected, pending cleanup */
 	BT_CONN_AUTO_PHY_UPDATE,        /* Auto-update PHY */
-	BT_CONN_SLAVE_PARAM_UPDATE,	/* If slave param update timer fired */
-	BT_CONN_SLAVE_PARAM_SET,	/* If slave param were set from app */
-	BT_CONN_SLAVE_PARAM_L2CAP,	/* If should force L2CAP for CPUP */
+	BT_CONN_PERIPHERAL_PARAM_UPDATE,/* If periph param update timer fired */
+	BT_CONN_PERIPHERAL_PARAM_SET,	/* If periph param were set from app */
+	BT_CONN_PERIPHERAL_PARAM_L2CAP,	/* If should force L2CAP for CPUP */
 	BT_CONN_FORCE_PAIR,             /* Pairing even with existing keys. */
 
 	BT_CONN_AUTO_PHY_COMPLETE,      /* Auto-initiated PHY procedure done */
@@ -46,6 +49,12 @@ enum {
 	/* Auto-initiated Data Length done. Auto-initiated Data Length Update
 	 * is only needed for controllers with BT_QUIRK_NO_AUTO_DLE. */
 	BT_CONN_AUTO_DATA_LEN_COMPLETE,
+
+	BT_CONN_CTE_RX_ENABLED,          /* CTE receive and sampling is enabled */
+	BT_CONN_CTE_RX_PARAMS_SET,       /* CTE parameters are set */
+	BT_CONN_CTE_TX_PARAMS_SET,       /* CTE transmission parameters are set */
+	BT_CONN_CTE_REQ_ENABLED,         /* CTE request procedure is enabled */
+	BT_CONN_CTE_RSP_ENABLED,         /* CTE response procedure is enabled */
 
     BT_CONN_UNPAIRING,                /* Disconnected, unpairing */
 
@@ -106,6 +115,10 @@ struct bt_conn_sco {
 struct bt_conn_iso {
 	/* Reference to ACL Connection */
 	struct bt_conn          *acl;
+
+	/* Reference to the struct bt_iso_chan */
+	struct bt_iso_chan      *chan;
+
 	union {
 		/* CIG ID */
 		uint8_t			cig_id;
@@ -114,15 +127,15 @@ struct bt_conn_iso {
 	};
 
 	union {
-		/* CIS ID */
+		/* CIS ID within the CIG */
 		uint8_t			cis_id;
 
-		/* BIS ID */
+		/* BIS ID within the BIG*/
 		uint8_t			bis_id;
 	};
 
-	/** If true, this is a ISO for a BIS, else it is a ISO for a CIS */
-	bool is_bis;
+	/** Type of the ISO channel */
+	enum bt_iso_chan_type type;
 };
 
 typedef void (*bt_conn_tx_cb_t)(struct bt_conn *conn, void *user_data);
@@ -164,6 +177,15 @@ struct bt_conn {
 	uint8_t			encrypt;
 #endif /* CONFIG_BT_SMP || CONFIG_BT_BREDR */
 
+#if (defined(CONFIG_BT_DF_CONNECTION_CTE_RX) && ((CONFIG_BT_DF_CONNECTION_CTE_RX) > 0U))
+	/**
+	 * @brief Bitfield with allowed CTE types.
+	 *
+	 *  Allowed values are defined by @ref bt_df_cte_type, except BT_DF_CTE_TYPE_NONE.
+	 */
+	uint8_t cte_types;
+#endif /* CONFIG_BT_DF_CONNECTION_CTE_RX */
+
 	/* Connection error or reason for disconnect */
 	uint8_t			err;
 
@@ -188,7 +210,7 @@ struct bt_conn {
 	osa_msgq_handle_t		tx_queue;
     OSA_MSGQ_HANDLE_DEFINE(tx_queue_handle, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(void*));
 
-	/* Active L2CAP/ISO channels */
+	/* Active L2CAP channels */
 	sys_slist_t		channels;
 
 	/* Delayed work deferred tasks:
@@ -206,7 +228,7 @@ struct bt_conn {
 		struct bt_conn_br	br;
 		struct bt_conn_sco	sco;
 #endif
-#if (defined(CONFIG_BT_AUDIO) && ((CONFIG_BT_AUDIO) > 0U))
+#if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0U))
 		struct bt_conn_iso	iso;
 #endif
 #if 0
@@ -262,17 +284,13 @@ struct bt_iso_create_param {
 	struct bt_iso_chan	**chans;
 };
 
-/* Bind ISO connections parameters */
-int bt_conn_bind_iso(struct bt_iso_create_param *param);
-
-/* Connect ISO connections */
-int bt_conn_connect_iso(struct bt_conn **conns, uint8_t num_conns);
+int bt_conn_iso_init(void);
 
 /* Add a new ISO connection */
 struct bt_conn *bt_conn_add_iso(struct bt_conn *acl);
 
 /* Cleanup ISO references */
-void bt_iso_cleanup(struct bt_conn *iso_conn);
+void bt_iso_cleanup_acl(struct bt_conn *iso_conn);
 
 /* Add a new BR/EDR connection */
 struct bt_conn *bt_conn_add_br(const bt_addr_t *peer);

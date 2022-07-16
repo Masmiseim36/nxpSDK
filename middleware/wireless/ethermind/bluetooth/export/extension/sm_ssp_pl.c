@@ -133,6 +133,52 @@ API_RESULT BT_sm_set_device_oob_data
 }
 #endif /* BT_SSP_OOB */
 
+API_RESULT BT_sm_get_remote_io_cap
+           (
+               /* IN */  DEVICE_HANDLE    * device_handle,
+               /* OUT */ SM_IO_CAPS *    io_cap
+           )
+{
+    UINT32 di;
+
+    /* Search for the Device Database entry */
+    for (di = 0; di < SM_MAX_DEVICES; di ++)
+    {
+        if (SM_DEVICE_INVALID != sm_devices[di].valid)
+        {
+            if (NULL != device_handle)
+            {
+                if ((*device_handle) == sm_devices[di].device_handle)
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    if (SM_MAX_DEVICES <= di)
+    {
+        return API_FAILURE;
+    }
+
+    /*
+     *  Set remote Authentication Requirements.
+     */
+    io_cap->auth_reqs = sm_devices[di].remote_io_cap.auth_reqs;
+
+    /* Set Local IO Cap */
+    io_cap->io_cap = sm_devices[di].remote_io_cap.io_cap;
+
+    /* Set authentication */
+    io_cap->oob_present = sm_devices[di].remote_io_cap.oob_present;
+
+    SM_INF(
+    "[SM] Local IO Cap Generated: IO Cap %02X, OOB %02X, AuthReqs %02X\n",
+    io_cap->io_cap, io_cap->oob_present, io_cap->auth_reqs);
+
+    return API_SUCCESS;
+}
+
 #ifdef SM_AUTHREQ_DYNAMIC
 API_RESULT BT_sm_set_local_authreq
            (

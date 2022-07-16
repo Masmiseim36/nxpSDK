@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -154,7 +154,7 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00084.html#gga8e4281860299afa4b037f46a43d194bca074420520b90004cbbc9fe1cf6d95b18">kXBARA_RequestDMAEnable</a> = 1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00084.html#gga8e4281860299afa4b037f46a43d194bca12e1a53356dbfc00a5df9310eca29f91">kXBARA_RequestInterruptEnalbe</a> = 2U
+&#160;&#160;<a class="el" href="a00084.html#gga8e4281860299afa4b037f46a43d194bca90c054b76f1e59c9e159e2bb89f82541">kXBARA_RequestInterruptEnable</a> = 2U
 <br/>
  }</td></tr>
 <tr class="memdesc:ga8e4281860299afa4b037f46a43d194bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the XBARA DMA and interrupt configurations.  <a href="a00084.html#ga8e4281860299afa4b037f46a43d194bc">More...</a><br/></td></tr>
@@ -284,7 +284,7 @@ XBARA functional Operation.</h2></td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga8e4281860299afa4b037f46a43d194bca074420520b90004cbbc9fe1cf6d95b18"></a>kXBARA_RequestDMAEnable</em>&nbsp;</td><td class="fielddoc">
 <p>DMA enabled, interrupt disabled. </p>
 </td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga8e4281860299afa4b037f46a43d194bca12e1a53356dbfc00a5df9310eca29f91"></a>kXBARA_RequestInterruptEnalbe</em>&nbsp;</td><td class="fielddoc">
+<tr><td class="fieldname"><em><a class="anchor" id="gga8e4281860299afa4b037f46a43d194bca90c054b76f1e59c9e159e2bb89f82541"></a>kXBARA_RequestInterruptEnable</em>&nbsp;</td><td class="fielddoc">
 <p>Interrupt enabled, DMA disabled. </p>
 </td></tr>
 </table>
@@ -498,7 +498,7 @@ XBARA functional Operation.</h2></td></tr>
 <p>Example: </p>
 <div class="fragment"><div class="line"><a class="code" href="a00084.html#a00551">xbara_control_config_t</a> userConfig;</div>
 <div class="line">userConfig.<a class="code" href="a00084.html#a115969c58f3d6d8642a1095a7c685167">activeEdge</a> = <a class="code" href="a00084.html#ggacf40a09fdbb3dd3f141697fb08ce224caa9f6a89ba6b33bb42492a01a32e125d2">kXBARA_EdgeRising</a>;</div>
-<div class="line">userConfig.<a class="code" href="a00084.html#ae5ec7c11cc4f3164a562917fbc8f9183">requestType</a> = <a class="code" href="a00084.html#gga8e4281860299afa4b037f46a43d194bca12e1a53356dbfc00a5df9310eca29f91">kXBARA_RequestInterruptEnalbe</a>;</div>
+<div class="line">userConfig.<a class="code" href="a00084.html#ae5ec7c11cc4f3164a562917fbc8f9183">requestType</a> = kXBARA_RequestInterruptEnalbe;</div>
 <div class="line"><a class="code" href="a00084.html#gaa010e6aecc627b857b04d9c2e8f5178b">XBARA_SetOutputSignalConfig</a>(XBARA, kXBARA_OutputDMAMUX18, &amp;userConfig);</div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

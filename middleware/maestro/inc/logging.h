@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP.
+ * Copyright 2018-2022 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -19,37 +19,40 @@
  * CONSTANTS, DEFINES AND MACROS
  */
 
-/*!@{
+/*! @{
  * @name The level of the error will be defined as:
  */
-#define LOGLVL_CATASTROPHIC  0x01  /*!<  Serious error. System cannot recover. */
-#define LOGLVL_ERROR         0x02  /*!<  An error has occurred. The system should
-                                         be able to continue but an individual
-                                         module may not be able to. */
-#define LOGLVL_WARNING       0x04  /*!<  A warning about a potential problem. */
-#define LOGLVL_INFO          0x08  /*!<  Information that could be useful to the
-                                         user. */
-#define LOGLVL_DEBUG         0x10  /*!<  For developers for debugging */
-#define LOGLVL_FUNCTION_INFO 0x20  /*!<  For developers debugging. Function
-                                          Enter/Exit info. */
+#define LOGLVL_CATASTROPHIC 0x01 /*!< @brief  Serious error. System cannot recover. */
+#define LOGLVL_ERROR                                                              \
+    0x02                    /*!< @brief  An error has occurred. The system should \
+                                  be able to continue but an individual           \
+                                  module may not be able to. */
+#define LOGLVL_WARNING 0x04 /*!< @brief  A warning about a potential problem. */
+#define LOGLVL_INFO                                                            \
+    0x08                  /*!< @brief  Information that could be useful to the \
+                                user. */
+#define LOGLVL_DEBUG 0x10 /*!< @brief  For developers for debugging */
+#define LOGLVL_FUNCTION_INFO                             \
+    0x20 /*!< @brief  For developers debugging. Function \
+                Enter/Exit info. */
 /*! @} */
 
 /*! @{
  * @name Additional level specifications used by set_debug_level()
  * These levels cannot be used by lprintf()
  */
-#define LOGLVL_NONE          0x00  /*!< No error messages reported. */
-#define LOGLVL_DEFAULT       0x03
-#define LOGLVL_ALL           0xFF  /*!< All error messages reported. */
+#define LOGLVL_NONE    0x00 /*!< @brief No error messages reported. */
+#define LOGLVL_DEFAULT 0x03 /*!< @brief Default log level */
+#define LOGLVL_ALL     0xFF /*!< @brief All error messages reported. */
 /*! @} */
 
 /*! @{
  * @name Output location for the error logs
  */
-#define LOGPUT_NONE          0x0  /*!< No output */
-#define LOGPUT_CONSOLE       0x1  /*!< Output goes to the terminal window */
-#define LOGPUT_FILE          0x2  /*!< Output goes to a file */
-#define LOGPUT_ALL           0x3  /*!< Output to all possibilities */
+#define LOGPUT_NONE    0x0 /*!< @brief No output */
+#define LOGPUT_CONSOLE 0x1 /*!< @brief Output goes to the terminal window */
+#define LOGPUT_FILE    0x2 /*!< @brief Output goes to a file */
+#define LOGPUT_ALL     0x3 /*!< @brief Output to all possibilities */
 /*! @} */
 
 /*! @{
@@ -57,10 +60,11 @@
  * The modules will be defined as bit settings in a 32 bit value so this is
  * limited to 32 modules.
  */
-#define LOGMDL_COMMON     0x00000001
-#define LOGMDL_OSA        0x00000002
-#define LOGMDL_APP        0x00000004
-#define LOGMDL_GUI        0x00000008
+#define LOGMDL_COMMON   0x00000001 /*!< @brief Common module */
+#define LOGMDL_OSA      0x00000002 /*!< @brief OSA module */
+#define LOGMDL_APP      0x00000004 /*!< @brief Application module */
+#define LOGMDL_GUI      0x00000008 /*!< @brief GUI module */
+#define LOGMDL_STREAMER 0x00000010 /*!< @brief Streamer module */
 /*! @} */
 
 /*! @{
@@ -68,20 +72,24 @@
  * These levels cannot be used by lprintf().
  * The user can also OR several modules together for a custom selection.
  */
-#define LOGMDL_NONE       0x00000000
-#define LOGMDL_ALL        0x3FFFFFFF
+#define LOGMDL_NONE 0x00000000 /*!< @brief None module allowed */
+#define LOGMDL_ALL  0x3FFFFFFF /*!< @brief All modulew allowed */
 /*! @} */
 
-/*! Maximum number of modules supported. */
-#define LOGMDL_MAX_MODULES 6
+#define LOGMDL_MAX_MODULES 6 /*!< @brief Maximum number of modules supported. */
 
-/*! Maximum string length for module name. */
-#define LOG_NAME_LENGTH 19
+#define LOGMDL_MAX_ERRORS 17 /*!< @brief Maximum number of modules supported. */
+
+#define LOG_NAME_LENGTH 19 /*!< @brief Maximum string length for module name. */
 
 /*
  * Configuration settings
  */
 
+/**
+ * @brief Logging enabled
+ *
+ */
 #define LOG_ENABLED
 
 /*!
@@ -90,14 +98,13 @@
  */
 
 /*!
- * @ingroup libcommon
+ * @ingroup utils
  * @brief  Convenience function that prints a debug level message specifically
  *         for entering a function.
  *
  * @param[in]  module: module id
  */
-#define LOG_ENTER(module) lprintf(module, LOGLVL_FUNCTION_INFO, 0, \
-                            "Entering: %s\n", __FUNCTION__)
+#define LOG_ENTER(module) lprintf(module, LOGLVL_FUNCTION_INFO, 0, "Entering: %s\n", __FUNCTION__)
 
 /*!
  * @brief  Convenience function that prints a debug level message specifically
@@ -105,9 +112,7 @@
  *
  * @param[in]  module: module id
  */
-#define LOG_EXIT(module) lprintf(module, LOGLVL_FUNCTION_INFO, 0, \
-                            "Exiting: %s\n\n", __FUNCTION__)
-
+#define LOG_EXIT(module) lprintf(module, LOGLVL_FUNCTION_INFO, 0, "Exiting: %s\n\n", __FUNCTION__)
 
 /*!
  * @brief The function lprintf() is used in module code in place of
@@ -122,8 +127,7 @@
  * @param[in]  message is a text message describing the error.
  *             The message can use args just as a standard printf.
  */
-void lprintf(const uint32_t module, const uint8_t level, const uint32_t error,
-             const char* message, ...);
+void lprintf(const uint32_t module, const uint8_t level, const uint32_t error, const char *message, ...);
 
 /*!
  * @brief   This function is the information-specific shortcut variant of
@@ -135,7 +139,7 @@ void lprintf(const uint32_t module, const uint8_t level, const uint32_t error,
  * @param[in]  message is a text message describing the error.
  *             The message can use args just as a standard printf.
  */
-void dlprintf(const uint32_t module, const char* message, ...);
+void dlprintf(const uint32_t module, const char *message, ...);
 
 /*!
  * @brief   This function is the information-specific shortcut variant of
@@ -147,7 +151,7 @@ void dlprintf(const uint32_t module, const char* message, ...);
  * @param[in]  message is a text message describing the error.
  *             The message can use args just as a standard printf.
  */
-void ilprintf(const uint32_t module, const char* message, ...);
+void ilprintf(const uint32_t module, const char *message, ...);
 
 /*!
  * @brief  Sets the module of interest based on bits set in <i>module</i>.
@@ -212,7 +216,7 @@ void clear_debug_out(const uint8_t output);
  * @retval  ERRCODE_SYSTEM_LIMIT the system has run out of places to store
  *          module information
  */
-uint32_t add_module_name(const uint32_t module, const char* name);
+uint32_t add_module_name(const uint32_t module, const char *name);
 
 /*!
  * @brief  Removes the name for a module.
@@ -238,7 +242,7 @@ uint32_t remove_module_name(const uint32_t module);
  * @retval  ERRCODE_SYSTEM_LIMIT the system has run out of places to store
  *          error information
  */
-uint32_t add_error_name(const uint32_t error_id, const char* text);
+uint32_t add_error_name(const uint32_t error_id, const char *text);
 
 /*!
  * @brief  Returns a simple name for an error code, if it was pre-set with
@@ -248,7 +252,7 @@ uint32_t add_error_name(const uint32_t error_id, const char* text);
  *
  * @returns a descriptive text identification will be returned for this error id
  */
-char* error_name(const uint32_t error_id);
+char *error_name(const uint32_t error_id);
 
 /*!
  * @brief  Initializes the module and error tables.
@@ -270,4 +274,3 @@ void get_debug_state(void);
 
 /*! @} */
 #endif
-

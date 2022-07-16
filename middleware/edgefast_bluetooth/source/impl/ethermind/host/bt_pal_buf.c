@@ -18,17 +18,27 @@
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#if (defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0U))
+#if defined(CONFIG_BT_CONN)
+#if defined(CONFIG_BT_ISO)
+#define MAX_EVENT_COUNT CONFIG_BT_MAX_CONN + CONFIG_BT_ISO_MAX_CHAN
+#else
+#define MAX_EVENT_COUNT CONFIG_BT_MAX_CONN
+#endif /* CONFIG_BT_ISO */
+#elif defined(CONFIG_BT_ISO)
+#define MAX_EVENT_COUNT CONFIG_BT_ISO_MAX_CHAN
+#endif /* CONFIG_BT_CONN */
+
+#if ((defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0U)) || (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0U)))
 #define NUM_COMLETE_EVENT_SIZE BT_BUF_EVT_SIZE(                        \
 	sizeof(struct bt_hci_cp_host_num_completed_packets) +          \
-	CONFIG_BT_MAX_CONN * sizeof(struct bt_hci_handle_count))
+	MAX_EVENT_COUNT * sizeof(struct bt_hci_handle_count))
 /* Dedicated pool for HCI_Number_of_Completed_Packets. This event is always
  * consumed synchronously by bt_recv_prio() so a single buffer is enough.
  * Having a dedicated pool for it ensures that exhaustion of the RX pool
  * cannot block the delivery of this priority event.
  */
 NET_BUF_POOL_FIXED_DEFINE(num_complete_pool, 1, NUM_COMLETE_EVENT_SIZE, NULL);
-#endif /* CONFIG_BT_CONN */
+#endif /* CONFIG_BT_CONN || CONFIG_BT_ISO */
 
 #if (defined(CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT) && (CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT > 0U))
 NET_BUF_POOL_FIXED_DEFINE(discardable_pool, CONFIG_BT_BUF_EVT_DISCARDABLE_COUNT,
@@ -45,7 +55,6 @@ NET_BUF_POOL_FIXED_DEFINE(evt_pool, CONFIG_BT_BUF_EVT_RX_COUNT,
 			  BT_BUF_EVT_RX_SIZE,
 			  NULL);
 #else
-#define BT_BUF_RX_COUNT MAX(CONFIG_BT_BUF_EVT_RX_COUNT, CONFIG_BT_BUF_ACL_RX_COUNT)
 NET_BUF_POOL_FIXED_DEFINE(hci_rx_pool, BT_BUF_RX_COUNT,
 			  BT_BUF_RX_SIZE,
 			  NULL);
@@ -58,11 +67,13 @@ struct net_buf *bt_buf_get_rx(enum bt_buf_type type, k_timeout_t timeout)
 	__ASSERT(type == BT_BUF_EVT || type == BT_BUF_ACL_IN ||
 		 type == BT_BUF_ISO_IN, "Invalid buffer type requested");
 
-#if (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0U))
-	if (IS_ENABLED(CONFIG_BT_ISO) && type == BT_BUF_ISO_IN) {
+#if ((defined(CONFIG_BT_ISO_UNICAST) && (CONFIG_BT_ISO_UNICAST > 0U)) || (defined(CONFIG_BT_ISO_SYNC_RECEIVER) && (CONFIG_BT_ISO_SYNC_RECEIVER > 0U)))
+	if ((IS_ENABLED(CONFIG_BT_ISO_UNICAST) ||
+	     IS_ENABLED(CONFIG_BT_ISO_SYNC_RECEIVER)) &&
+	     type == BT_BUF_ISO_IN) {
 		return bt_iso_get_rx(timeout);
 	}
-#endif
+#endif /* CONFIG_BT_ISO_UNICAST || CONFIG_BT_ISO_SYNC_RECEIVER */
 #if (defined(CONFIG_BT_HCI_ACL_FLOW_CONTROL) && ((CONFIG_BT_HCI_ACL_FLOW_CONTROL) > 0U))
 	if (type == BT_BUF_EVT) {
 		buf = net_buf_alloc(&evt_pool, timeout);
@@ -84,16 +95,9 @@ struct net_buf *bt_buf_get_rx(enum bt_buf_type type, k_timeout_t timeout)
 struct net_buf *bt_buf_get_cmd_complete(k_timeout_t timeout)
 {
 	struct net_buf *buf;
-	unsigned int key;
 
-	key = DisableGlobalIRQ();
-	buf = bt_dev.sent_cmd;
-	bt_dev.sent_cmd = NULL;
-	EnableGlobalIRQ(key);
-
-	BT_DBG("sent_cmd %p", buf);
-
-	if (buf) {
+	if (bt_dev.sent_cmd) {
+		buf = net_buf_ref(bt_dev.sent_cmd);
 
 		bt_buf_set_type(buf, BT_BUF_EVT);
 		buf->len = 0U;
@@ -109,7 +113,7 @@ struct net_buf *bt_buf_get_evt(uint8_t evt, bool discardable,
 			       k_timeout_t timeout)
 {
 	switch (evt) {
-#if (defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0U))
+#if ((defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0U)) || (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0U)))
 	case BT_HCI_EVT_NUM_COMPLETED_PACKETS:
 		{
 			struct net_buf *buf;
@@ -122,7 +126,7 @@ struct net_buf *bt_buf_get_evt(uint8_t evt, bool discardable,
 
 			return buf;
 		}
-#endif /* CONFIG_BT_CONN */
+#endif /* CONFIG_BT_CONN || CONFIG_BT_ISO */
 	case BT_HCI_EVT_CMD_COMPLETE:
 	case BT_HCI_EVT_CMD_STATUS:
 		return bt_buf_get_cmd_complete(timeout);
@@ -144,4 +148,3 @@ struct net_buf *bt_buf_get_evt(uint8_t evt, bool discardable,
 		return bt_buf_get_rx(BT_BUF_EVT, timeout);
 	}
 }
-

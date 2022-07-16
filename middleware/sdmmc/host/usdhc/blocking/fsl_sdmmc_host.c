@@ -411,6 +411,7 @@ static status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd
     /* disable standard tuning */
     USDHC_EnableStandardTuning(host->hostController.base, SDMMCHOST_STANDARD_TUNING_START, SDMMCHOST_TUINIG_STEP,
                                false);
+    USDHC_ForceClockOn(host->hostController.base, true);
     /*
      * Tuning fail found on some SOCS caused by the difference of delay cell, so we need to i
      * ncrease the tuning counter to cover the adjustable tuninig window
@@ -455,7 +456,7 @@ static status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd
     {
         return kStatus_SDMMC_TuningFail;
     }
-
+    USDHC_ForceClockOn(host->hostController.base, false);
     USDHC_EnableAutoTuning(host->hostController.base, true);
     /* do not handle tuning error status, since the tuning error detect circuit is very sensetive which may drop down
      * the transfer performance */

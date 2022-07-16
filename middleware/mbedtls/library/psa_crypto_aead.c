@@ -32,6 +32,8 @@
 
 typedef struct
 {
+    psa_algorithm_t core_alg;
+    uint8_t tag_length;
     union
     {
         unsigned dummy; /* Make the union non-empty even with no supported algorithms. */
@@ -45,11 +47,9 @@ typedef struct
         mbedtls_chachapoly_context chachapoly;
 #endif /* MBEDTLS_PSA_BUILTIN_ALG_CHACHA20_POLY1305 */
     } ctx;
-    psa_algorithm_t core_alg;
-    uint8_t tag_length;
 } aead_operation_t;
 
-#define AEAD_OPERATION_INIT {{0}, 0, 0}
+#define AEAD_OPERATION_INIT {0, 0, {0}}
 
 static void psa_aead_abort_internal( aead_operation_t *operation )
 {
@@ -151,6 +151,8 @@ static psa_status_t psa_aead_setup(
 #endif /* MBEDTLS_PSA_BUILTIN_ALG_CHACHA20_POLY1305 */
 
         default:
+            (void) status;
+            (void) key_buffer;
             return( PSA_ERROR_NOT_SUPPORTED );
     }
 
@@ -224,7 +226,16 @@ psa_status_t mbedtls_psa_aead_encrypt(
 #if defined(MBEDTLS_PSA_BUILTIN_ALG_CHACHA20_POLY1305)
     if( operation.core_alg == PSA_ALG_CHACHA20_POLY1305 )
     {
-        if( nonce_length != 12 || operation.tag_length != 16 )
+        if( nonce_length != 12 )
+        {
+            if( nonce_length == 8 )
+                status = PSA_ERROR_NOT_SUPPORTED;
+            else
+                status = PSA_ERROR_INVALID_ARGUMENT;
+            goto exit;
+        }
+
+        if( operation.tag_length != 16 )
         {
             status = PSA_ERROR_NOT_SUPPORTED;
             goto exit;
@@ -243,6 +254,11 @@ psa_status_t mbedtls_psa_aead_encrypt(
 #endif /* MBEDTLS_PSA_BUILTIN_ALG_CHACHA20_POLY1305 */
     {
         (void) tag;
+        (void) nonce;
+        (void) nonce_length;
+        (void) additional_data;
+        (void) additional_data_length;
+        (void) plaintext;
         return( PSA_ERROR_NOT_SUPPORTED );
     }
 
@@ -331,7 +347,16 @@ psa_status_t mbedtls_psa_aead_decrypt(
 #if defined(MBEDTLS_PSA_BUILTIN_ALG_CHACHA20_POLY1305)
     if( operation.core_alg == PSA_ALG_CHACHA20_POLY1305 )
     {
-        if( nonce_length != 12 || operation.tag_length != 16 )
+        if( nonce_length != 12 )
+        {
+            if( nonce_length == 8 )
+                status = PSA_ERROR_NOT_SUPPORTED;
+            else
+                status = PSA_ERROR_INVALID_ARGUMENT;
+            goto exit;
+        }
+
+        if( operation.tag_length != 16 )
         {
             status = PSA_ERROR_NOT_SUPPORTED;
             goto exit;
@@ -349,6 +374,11 @@ psa_status_t mbedtls_psa_aead_decrypt(
     else
 #endif /* MBEDTLS_PSA_BUILTIN_ALG_CHACHA20_POLY1305 */
     {
+        (void) nonce;
+        (void) nonce_length;
+        (void) additional_data;
+        (void) additional_data_length;
+        (void) plaintext;
         return( PSA_ERROR_NOT_SUPPORTED );
     }
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2017-2021 NXP
+ * Copyright 2017-2022 NXP
  * Copyright 2019-2021 ACRIOS Systems s.r.o.
  * All rights reserved.
  *
@@ -9,13 +9,10 @@
  */
 
 #include "erpc_rpmsg_tty_rtos_transport.h"
-
 #include "erpc_config_internal.h"
 #include "erpc_framed_transport.h"
 
 #include "rpmsg_ns.h"
-
-#include <cassert>
 
 using namespace erpc;
 using namespace std;
@@ -74,7 +71,7 @@ RPMsgTTYRTOSTransport::~RPMsgTTYRTOSTransport(void)
 
 void RPMsgTTYRTOSTransport::setCrc16(Crc16 *crcImpl)
 {
-    assert(crcImpl);
+    erpc_assert(crcImpl != NULL);
     m_crcImpl = crcImpl;
 }
 
@@ -174,9 +171,7 @@ erpc_status_t RPMsgTTYRTOSTransport::init(uint32_t src_addr, uint32_t dst_addr, 
                 ready_cb();
             }
 
-            while (0 == rpmsg_lite_is_link_up(s_rpmsg))
-            {
-            }
+            rpmsg_lite_wait_for_link_up(s_rpmsg);
 
 #if RL_USE_STATIC_API
             m_rpmsg_queue = rpmsg_queue_create(s_rpmsg, m_queue_stack, &m_queue_context);
@@ -258,8 +253,8 @@ erpc_status_t RPMsgTTYRTOSTransport::receive(MessageBuffer *message)
     int32_t ret_val = rpmsg_queue_recv_nocopy(s_rpmsg, m_rpmsg_queue, &m_dst_addr, &buf, &length, RL_BLOCK);
     uint16_t computedCrc;
 
-    assert(m_crcImpl && "Uninitialized Crc16 object.");
-    assert(buf);
+    erpc_assert((m_crcImpl != NULL) && ("Uninitialized Crc16 object." != NULL));
+    erpc_assert(buf != NULL);
 
     if (ret_val == RL_SUCCESS)
     {
@@ -294,7 +289,7 @@ erpc_status_t RPMsgTTYRTOSTransport::send(MessageBuffer *message)
     uint32_t used = message->getUsed();
     int32_t ret_val;
 
-    assert(m_crcImpl && "Uninitialized Crc16 object.");
+    erpc_assert((m_crcImpl != NULL) && ("Uninitialized Crc16 object." != NULL));
     message->set(NULL, 0);
 
     h.m_crc = m_crcImpl->computeCRC16(buf, used);

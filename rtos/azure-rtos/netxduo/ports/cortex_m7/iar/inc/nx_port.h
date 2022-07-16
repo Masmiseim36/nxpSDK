@@ -66,6 +66,16 @@
 #define NX_LITTLE_ENDIAN    1
 
 
+/* By default IPv6 is enabled. */
+
+#ifndef FEATURE_NX_IPV6
+#define FEATURE_NX_IPV6
+#endif /* FEATURE_NX_IPV6 */
+
+#ifdef NX_DISABLE_IPV6
+#undef FEATURE_NX_IPV6
+#endif /* !NX_DISABLE_IPV6 */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -181,7 +191,7 @@
 
 #ifdef NX_SYSTEM_INIT
 CHAR                            _nx_version_id[] = 
-                                    "Copyright (c) Microsoft Corporation. All rights reserved.  *  NetX Duo Cortex-M7/IAR Version 6.1 *";
+                                    "Copyright (c) Microsoft Corporation. All rights reserved.  *  NetX Duo Cortex-M7/IAR Version 6.1.10 *";
 #else
 extern  CHAR                    _nx_version_id[];
 #endif

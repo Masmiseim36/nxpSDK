@@ -9,6 +9,7 @@
 #define __SYSFLASH_H__
 
 #include <string.h>
+#include "fsl_common.h"
 #include "flash_info.h"
 #include "mcuboot_config.h"
 
@@ -60,21 +61,6 @@
         .fa_off       = FLASH_AREA_IMAGE_##i##_OFFSET, \
         .fa_size      = FLASH_AREA_IMAGE_##i##_SIZE,   \
     },
-
-typedef status_t (*init_t)(void);
-typedef status_t (*erase_t)(uint32_t, size_t);
-typedef status_t (*read_t)(uint32_t, void *, size_t);
-typedef status_t (*write_t)(uint32_t, const void *, size_t);
-
-typedef struct
-{
-    init_t flash_init;
-    erase_t flash_erase;
-    read_t flash_read;
-    write_t flash_write;
-    uint8_t align_val;
-    uint8_t erased_val;
-} flash_ops_s;
 
 int flash_area_id_from_multi_image_slot(int image_index, int slot);
 

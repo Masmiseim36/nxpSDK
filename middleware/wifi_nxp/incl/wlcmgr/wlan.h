@@ -1,23 +1,7 @@
 /*
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -143,11 +127,11 @@
 #include <wifi.h>
 #include <wlan_11d.h>
 
-#define WLAN_DRV_VERSION "v1.3.r40.p4"
+#define WLAN_DRV_VERSION "v1.3.r41.p2"
 
 /* Configuration */
 
-#define CONFIG_WLAN_KNOWN_NETWORKS 5
+#define CONFIG_WLAN_KNOWN_NETWORKS 5U
 
 #include <wmlog.h>
 #define wlcm_e(...) wmlog_e("wlcm", ##__VA_ARGS__)
@@ -198,16 +182,16 @@ typedef enum
 /** The space reserved for storing PSK (password) phrases. */
 /* Min WPA2 passphrase can be upto 8 ASCII chars */
 #define WLAN_PSK_MIN_LENGTH 8U
-/* Max WPA2 passphrase can be upto 63 ASCII chars as per standards + 1 '\0' char */
-#define WLAN_PSK_MAX_LENGTH 64
-/* Min WPA3 password can be upto 1 ASCII chars */
-#define WLAN_PASSWORD_MIN_LENGTH 1
+/* Max WPA2 passphrase can be upto 63 ASCII chars or 64 hexadecimal digits*/
+#define WLAN_PSK_MAX_LENGTH 65U
+/* Min WPA3 password can be upto 8 ASCII chars */
+#define WLAN_PASSWORD_MIN_LENGTH 8U
 /* Max WPA3 password can be upto 255 ASCII chars */
-#define WLAN_PASSWORD_MAX_LENGTH 255
+#define WLAN_PASSWORD_MAX_LENGTH 255U
 /* Max WPA2 Enterprise identity can be upto 256 characters */
-#define IDENTITY_MAX_LENGTH 256
+#define IDENTITY_MAX_LENGTH 256U
 /* Max WPA2 Enterprise password can be upto 256 unicode characters */
-#define PASSWORD_MAX_LENGTH 256
+#define PASSWORD_MAX_LENGTH 256U
 
 #ifdef CONFIG_WLAN_KNOWN_NETWORKS
 /** The size of the list of known networks maintained by the WLAN
@@ -387,7 +371,7 @@ enum wlan_connection_state
 /* Data Structures */
 
 /** Station Power save mode */
-enum wlan_ps_mode
+typedef enum wlan_ps_mode
 {
     /** Active mode */
     WLAN_ACTIVE = 0,
@@ -395,7 +379,7 @@ enum wlan_ps_mode
     WLAN_IEEE,
     /** Deep sleep power save mode */
     WLAN_DEEP_SLEEP,
-};
+} wlan_ps_mode;
 
 enum wlan_ps_state
 {
@@ -687,6 +671,16 @@ typedef wifi_chanlist_t wlan_chanlist_t;
  * \ref wifi_txpwrlimit_t
  */
 typedef wifi_txpwrlimit_t wlan_txpwrlimit_t;
+#ifdef SD8801
+/** Statistic of External Coex from
+ * \ref wifi_ext_coex_config_t
+ */
+typedef wifi_ext_coex_stats_t wlan_ext_coex_stats_t;
+/** Configuration for External Coex from
+ * \ref wifi_ext_coex_config_t
+ */
+typedef wifi_ext_coex_config_t wlan_ext_coex_config_t;
+#endif
 
 int verify_scan_duration_value(int scan_duration);
 int verify_scan_channel_value(int channel);
@@ -717,7 +711,7 @@ struct ipv4_config
      *  using DHCP, the ip, gw, netmask and dns are overwritten by the
      *  values obtained from the DHCP server. They should be zeroed out if
      *  not used. */
-    unsigned addr_type : 2;
+    enum address_types addr_type;
     /** The system's IP address in network order. */
     unsigned address;
     /** The system's default gateway in network order. */
@@ -872,6 +866,7 @@ struct wlan_network
     uint8_t dtim_period;
 };
 
+
 /* WLAN Connection Manager API */
 
 /** Initialize the SDIO driver and create the wifi driver thread.
@@ -965,7 +960,14 @@ void wlan_initialize_uap_network(struct wlan_network *net);
  *          is not unique or the network name length is not valid
  *          or network security is \ref WLAN_SECURITY_WPA3_SAE but
  *          Management Frame Protection Capable is not enabled.
- *          in \ref wlan_network_security field.
+ *          in \ref wlan_network_security field. if network security type is
+ *          \ref WLAN_SECURITY_WPA or \ref WLAN_SECURITY_WPA2 or \ref
+ *          WLAN_SECURITY_WPA_WPA2_MIXED, but the passphrase length is less
+ *          than 8 or greater than 63, or the psk length equal to 64 but not
+ *          hexadecimal digits. if network security type is \ref WLAN_SECURITY_WPA3_SAE,
+ *          but the password length is less than 8 or greater than 255.
+ *          if network security type is \ref WLAN_SECURITY_WEP_OPEN or
+ *          \ref WLAN_SECURITY_WEP_SHARED.
  *  \return -WM_E_NOMEM if there was no room to add the network.
  *  \return WLAN_ERROR_STATE if the WLAN Connection Manager
  *          was running and not in the \ref WLAN_DISCONNECTED,
@@ -1160,6 +1162,22 @@ int wlan_get_address(struct wlan_ip_config *addr);
  */
 int wlan_get_uap_address(struct wlan_ip_config *addr);
 
+/** Retrieve the channel of micro-AP interface.
+ *
+ *  This function retrieves the channel number of micro-AP
+ *  and copies it to the memory location pointed to by \a channel.
+ *
+ *  \note This function may only be called when the micro-AP interface is in the
+ *  \ref WLAN_UAP_STARTED state.
+ *
+ *  \param[out] channel A pointer to variable that stores channel number.
+ *
+ *  \return WM_SUCCESS if successful.
+ *  \return -WM_E_INVAL if \a channel is NULL.
+ *  \return -WM_FAIL if an internal error has occurred.
+ */
+int wlan_get_uap_channel(int *channel);
+
 /** Retrieve the current network configuration of station interface.
  *
  *  This function retrieves the current network configuration of station
@@ -1189,12 +1207,13 @@ int wlan_get_current_network(struct wlan_network *network);
  */
 int wlan_get_current_uap_network(struct wlan_network *network);
 
+
 /** Retrieve the status information of the micro-AP interface.
  *
  *  \return TRUE if micro-AP interface is in \ref WLAN_UAP_STARTED state.
  *  \return FALSE otherwise.
  */
-int is_uap_started(void);
+bool is_uap_started(void);
 
 /** Retrieve the status information of the station interface.
  *
@@ -1480,6 +1499,7 @@ void wlan_set_cal_data(uint8_t *cal_data, unsigned int cal_data_size);
  *
  */
 void wlan_set_mac_addr(uint8_t *mac);
+
 
 /** Configure Listen interval of IEEE power save mode.
  *
@@ -2265,6 +2285,30 @@ int wlan_get_mgmt_ie(enum wlan_bss_type bss_type, IEEEtypes_ElementId_t index, v
  */
 int wlan_set_mgmt_ie(enum wlan_bss_type bss_type, IEEEtypes_ElementId_t id, void *buf, unsigned int buf_len);
 
+#ifdef SD8801
+/**
+ * Get External Radio Coex statistics.
+ *
+ * \param[out] ext_coex_stats A pointer to structure to get coex statistics.
+ *
+ * \return WM_SUCCESS if successful.
+ * \return -WM_FAIL if unsuccessful.
+ *
+ */
+int wlan_get_ext_coex_stats(wlan_ext_coex_stats_t *ext_coex_stats);
+
+/**
+ * Set External Radio Coex configuration.
+ *
+ * \param[in] ext_coex_config to apply coex configuration.
+ *
+ * \return IE index if successful.
+ * \return -WM_FAIL if unsuccessful.
+ *
+ */
+int wlan_set_ext_coex_config(const wlan_ext_coex_config_t ext_coex_config);
+#endif
+
 /**
  * Clear Management IE for given BSS type (interface) and index.
  *
@@ -2447,7 +2491,7 @@ void wlan_uap_set_beacon_period(const uint16_t beacon_period);
 /** API to set the bandwidth of uAP
  *
  *\param[in] Wi-Fi AP Bandwidth (20MHz/40MHz)
-                        1: 20 MHz 2: 40 MHz
+    1: 20 MHz 2: 40 MHz
  *
  *\return WM_SUCCESS if successful otherwise failure.
  *\return -WM_FAIL if command fails.
@@ -2589,6 +2633,7 @@ void wlan_sta_ampdu_rx_disable(void);
  *      this API before every uAP start API.
  */
 void wlan_uap_set_scan_chan_list(wifi_scan_chan_list_t scan_chan_list);
+
 
 
 
@@ -2835,6 +2880,7 @@ void wlan_register_fw_dump_cb(void (*wlan_usb_init_cb)(void),
                               int (*wlan_usb_file_close_cb)());
 
 #endif
+
 
 /**
  * This function sends the host command to f/w and copies back response to caller provided buffer in case of

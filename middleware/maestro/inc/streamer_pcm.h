@@ -45,7 +45,6 @@ extern "C" {
  */
 void streamer_pcm_init(void);
 
-
 /*!
  * @brief Open the PCM interface for writing and configuring
  *
@@ -58,7 +57,7 @@ void streamer_pcm_init(void);
  * @param num_buffers Number of buffers to be used
  * @return Pointer to handle for PCM interface
  */
-pcm_rtos_t* streamer_pcm_open(uint32_t num_buffers);
+pcm_rtos_t *streamer_pcm_open(uint32_t num_buffers);
 
 /*!
  * @brief Open the receive PCM interface for reading and configuring
@@ -196,10 +195,7 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
  * @param bit_width Pointer to pcm handle bit width
  * @param num_channels Pointer to pcm handle number of channels
  */
-void streamer_pcm_getparams(pcm_rtos_t *pcm,
-                            uint32_t *sample_rate,
-                            uint32_t *bit_width,
-                            uint8_t *num_channels);
+void streamer_pcm_getparams(pcm_rtos_t *pcm, uint32_t *sample_rate, uint32_t *bit_width, uint8_t *num_channels);
 
 /*!
  * @brief Set PCM interface mute status
@@ -231,4 +227,3 @@ int streamer_pcm_set_volume(pcm_rtos_t *pcm, int volume);
 #endif
 
 #endif
-

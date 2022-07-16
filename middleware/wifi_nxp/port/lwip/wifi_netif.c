@@ -70,7 +70,7 @@ void deliver_packet_above(struct pbuf *p, int recv_interface)
         case ETHTYPE_IPV6:
 #endif
         case ETHTYPE_ARP:
-            if (recv_interface >= MAX_INTERFACES_SUPPORTED)
+            if ((unsigned)recv_interface >= MAX_INTERFACES_SUPPORTED)
             {
                 while (true)
                 {
@@ -80,7 +80,7 @@ void deliver_packet_above(struct pbuf *p, int recv_interface)
 
             /* full packet send to tcpip_thread to process */
             lwiperr = netif_arr[recv_interface]->input(p, netif_arr[recv_interface]);
-            if (lwiperr != ERR_OK)
+            if (lwiperr != (s8_t)ERR_OK)
             {
                 LINK_STATS_INC(link.proterr);
                 LWIP_DEBUGF(NETIF_DEBUG, ("ethernetif_input: IP input error\n"));
@@ -177,10 +177,8 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
 #ifdef CONFIG_IPV6
         case ETHTYPE_IPV6:
 #endif
-            /* To avoid processing of unwanted udp broadcast packets, adding
-             * filter for dropping packets received on ports other than
-             * pre-defined ports.
-             */
+        /* Unicast ARP also need do rx reorder */
+        case ETHTYPE_ARP:
             LINK_STATS_INC(link.recv);
             if (recv_interface == MLAN_BSS_TYPE_STA)
             {
@@ -199,7 +197,6 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
             }
             p = NULL;
             break;
-        case ETHTYPE_ARP:
         case ETHTYPE_EAPOL:
             LINK_STATS_INC(link.recv);
             deliver_packet_above(p, recv_interface);
@@ -215,7 +212,7 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
 /* Callback function called from the wifi module */
 void handle_data_packet(const t_u8 interface, const t_u8 *rcvdata, const t_u16 datalen)
 {
-    if (netif_arr[interface] != NULL)
+    if (interface < MAX_INTERFACES_SUPPORTED && netif_arr[interface] != NULL)
     {
         process_data_packet(rcvdata, datalen);
     }

@@ -205,7 +205,7 @@ void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8 *hash)
     /* copy while reversing byte order */
     for (i = 0U; i < 4U; i++)
     {
-        FMSTR_SIZE shift = 24U - i * 8U;
+        FMSTR_SIZE shift = (FMSTR_SIZE)(24U - i * 8U);
         hash[i]          = (FMSTR_U8)((ctx->state[0] >> shift) & 0xffU);
         hash[i + 4U]     = (FMSTR_U8)((ctx->state[1] >> shift) & 0xffU);
         hash[i + 8U]     = (FMSTR_U8)((ctx->state[2] >> shift) & 0xffU);

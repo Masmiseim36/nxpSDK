@@ -40,7 +40,7 @@ static ft6x06_handle_t touch_handle;
 static volatile uint32_t spi_event;
 static volatile bool spi_event_received;
 static ft6x06_handle_t touch_handle;
-SDK_ALIGN(static uint8_t s_frameBuffer[1][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_frameBuffer[1][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -118,7 +118,7 @@ static void DEMO_InitLcd(void)
     /* SPI master init */
     BOARD_LCD_SPI.Initialize(SPI_MasterSignalEvent);
     BOARD_LCD_SPI.PowerControl(ARM_POWER_FULL);
-    BOARD_LCD_SPI.Control(ARM_SPI_MODE_MASTER, BOARD_LCD_SPI_BAUDRATE);
+    BOARD_LCD_SPI.Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA1 | ARM_SPI_DATA_BITS(8), BOARD_LCD_SPI_BAUDRATE);
 
     FT9341_Init(APP_pfWrite8_A1, APP_pfWrite8_A0);
     APP_pfWrite8_A0(ILI9341_CMD_MAC);
@@ -140,8 +140,8 @@ void lv_port_disp_init(void)
      * Register the display in LittlevGL
      *----------------------------------*/
 
-    static lv_disp_drv_t disp_drv;      /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv); /*Basic initialization*/
+    static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
+    lv_disp_drv_init(&disp_drv);   /*Basic initialization*/
 
     /*Set the resolution of the display*/
     disp_drv.hor_res = LCD_WIDTH;

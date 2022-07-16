@@ -90,14 +90,14 @@ var a00057 =
       [ "pixelFormat", "a00057.html#ac15c61290e370d1747c1c3eb6ad84545", null ]
     ] ],
     [ "_pxp_interrupt_enable", "a00057.html#ga787bb04b14535d1a7fb12858a5aff57a", [
-      [ "kPXP_CommandLoadInterruptEnable", "a00057.html#gga787bb04b14535d1a7fb12858a5aff57aa96d381c9a0cdea60157cfdc8429b8b65", null ],
-      [ "kPXP_CompleteInterruptEnable", "a00057.html#gga787bb04b14535d1a7fb12858a5aff57aa5c1c6478ad505703ddfc468170397f14", null ]
+      [ "kPXP_CompleteInterruptEnable", "a00057.html#gga787bb04b14535d1a7fb12858a5aff57aa5c1c6478ad505703ddfc468170397f14", null ],
+      [ "kPXP_CommandLoadInterruptEnable", "a00057.html#gga787bb04b14535d1a7fb12858a5aff57aa96d381c9a0cdea60157cfdc8429b8b65", null ]
     ] ],
     [ "_pxp_flags", "a00057.html#ga3c7b2be9f32c3f271db63e8407edf17b", [
-      [ "kPXP_CommandLoadFlag", "a00057.html#gga3c7b2be9f32c3f271db63e8407edf17bab93f6041d28b20a8f1669e9387488cdb", null ],
       [ "kPXP_CompleteFlag", "a00057.html#gga3c7b2be9f32c3f271db63e8407edf17ba13a71611ba7eae5d7c2ea22f52a295b0", null ],
+      [ "kPXP_Axi0WriteErrorFlag", "a00057.html#gga3c7b2be9f32c3f271db63e8407edf17ba5a551270574bf0f2af8e6ced72367acb", null ],
       [ "kPXP_Axi0ReadErrorFlag", "a00057.html#gga3c7b2be9f32c3f271db63e8407edf17ba0ed4ec1c5c34a2e9a2297c5c1ea328c3", null ],
-      [ "kPXP_Axi0WriteErrorFlag", "a00057.html#gga3c7b2be9f32c3f271db63e8407edf17ba5a551270574bf0f2af8e6ced72367acb", null ]
+      [ "kPXP_CommandLoadFlag", "a00057.html#gga3c7b2be9f32c3f271db63e8407edf17bab93f6041d28b20a8f1669e9387488cdb", null ]
     ] ],
     [ "pxp_flip_mode_t", "a00057.html#ga6610f6e27126b8396c480000f707c2c0", [
       [ "kPXP_FlipDisable", "a00057.html#gga6610f6e27126b8396c480000f707c2c0afb69e48028732dcbaac963b73e0edfab", null ],
@@ -211,8 +211,11 @@ var a00057 =
     ] ],
     [ "_pxp_dither_mode", "a00057.html#ga9a3b7de382ab7c0e248bdbf1455d4e9d", [
       [ "kPXP_DitherPassThrough", "a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9daee11acef06e5c5d1b72942150f5f3e8f", null ],
+      [ "kPXP_DitherFloydSteinberg", "a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da7470de3eef671f5fb19d002bf91e778b", null ],
+      [ "kPXP_DitherAtkinson", "a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9dae05a63fd2ed52bcb06a152c6676165bf", null ],
       [ "kPXP_DitherOrdered", "a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da1db96bc75153a786108b9561ad084310", null ],
-      [ "kPXP_DitherQuantOnly", "a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da1a8a1ba8ce7954f9876c206ebc9d16dc", null ]
+      [ "kPXP_DitherQuantOnly", "a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da1a8a1ba8ce7954f9876c206ebc9d16dc", null ],
+      [ "kPXP_DitherSierra", "a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9dacdf0f29b5deb584ed7dec4a16879a076", null ]
     ] ],
     [ "_pxp_dither_lut_mode", "a00057.html#gac35579ae4349603f9117a4fcdb8201a9", [
       [ "kPXP_DitherLutOff", "a00057.html#ggac35579ae4349603f9117a4fcdb8201a9a5d80cca733746088c28f6f21df61478f", null ],
@@ -220,6 +223,7 @@ var a00057 =
       [ "kPXP_DitherLutPostDither", "a00057.html#ggac35579ae4349603f9117a4fcdb8201a9afd50e5f33c9e35e6cd026a24ad023213", null ]
     ] ],
     [ "_pxp_dither_matrix_size", "a00057.html#ga43a03327d849a22a988027c42080c0a9", [
+      [ "kPXP_DitherMatrix4", "a00057.html#gga43a03327d849a22a988027c42080c0a9a46143a4e61d528043fc57e0c446d0d52", null ],
       [ "kPXP_DitherMatrix8", "a00057.html#gga43a03327d849a22a988027c42080c0a9a1373965c19df33a172236e4559c88f02", null ],
       [ "kPXP_DitherMatrix16", "a00057.html#gga43a03327d849a22a988027c42080c0a9a15a3e964fd00ffd6348e276082a2b953", null ],
       [ "kPXP_PorterDuffFactorOne", "a00057.html#ggaf715e26dfffd1f8de1c18449e2770cffaee2241ad5c9daeac9b38a37589fb748f", null ],
@@ -277,13 +281,12 @@ var a00057 =
     [ "PXP_SetOverwrittenAlphaValue", "a00057.html#gaeaeba8fb29eb8a2fa75cd40decfafaf9", null ],
     [ "PXP_EnableOverWrittenAlpha", "a00057.html#ga3d9291f51c95e186ae89beed19961678", null ],
     [ "PXP_SetRotateConfig", "a00057.html#ga0ae3e7e2b902aed4ad4a1e3de73e3345", null ],
+    [ "PXP_BuildRect", "a00057.html#gaf75a0bda73f3b24179509cf9e1eff23d", null ],
     [ "PXP_SetNextCommand", "a00057.html#ga15216b9c7a873f10337efebe2358ae24", null ],
     [ "PXP_IsNextCommandPending", "a00057.html#ga55f4c6c2b370e6fcf0bdfad3ab098196", null ],
     [ "PXP_CancelNextCommand", "a00057.html#ga8261582d4b35311cd03231e4d27b8a19", null ],
     [ "PXP_SetCsc1Mode", "a00057.html#ga158e8e23f871bef08cb3955817a469d4", null ],
     [ "PXP_EnableCsc1", "a00057.html#ga4e968190d9fccbdfc32b668a3f48eff0", null ],
     [ "PXP_SetPorterDuffConfig", "a00057.html#ga5fcb8f65b3ceba0e144564cec3957780", null ],
-    [ "PXP_GetPorterDuffConfig", "a00057.html#gadfd83e920d1877401e97bc243f56835d", null ],
-    [ "PXP_StartPictureCopy", "a00057.html#ga5b151a90a397af37d8844a4a4d716042", null ],
-    [ "PXP_StartMemCopy", "a00057.html#ga9a0982380fc4bdfd546bfe6e1f83b0c4", null ]
+    [ "PXP_GetPorterDuffConfig", "a00057.html#gadfd83e920d1877401e97bc243f56835d", null ]
 ];

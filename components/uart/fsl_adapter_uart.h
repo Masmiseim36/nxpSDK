@@ -153,15 +153,6 @@ typedef enum _hal_uart_parity_mode
     kHAL_UartParityOdd      = 0x3U, /*!< Parity odd enabled */
 } hal_uart_parity_mode_t;
 
-#if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
-/*! @brief UART Block Mode. */
-typedef enum _hal_uart_block_mode
-{
-    kHAL_UartNonBlockMode = 0x0U, /*!< Uart NonBlock Mode */
-    kHAL_UartBlockMode    = 0x1U, /*!< Uart Block Mode */
-} hal_uart_block_mode_t;
-#endif /* UART_ADAPTER_NON_BLOCKING_MODE */
-
 /*! @brief UART stop bit count. */
 typedef enum _hal_uart_stop_bit_count
 {
@@ -183,9 +174,6 @@ typedef struct _hal_uart_config
     uint8_t instance; /*!< Instance (0 - UART0, 1 - UART1, ...), detail information please refer to the
                            SOC corresponding RM.
                            Invalid instance value will cause initialization failure. */
-#if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
-    hal_uart_block_mode_t mode; /*!< Uart  block mode */
-#endif                          /* UART_ADAPTER_NON_BLOCKING_MODE */
 #if (defined(HAL_UART_ADAPTER_FIFO) && (HAL_UART_ADAPTER_FIFO > 0u))
     uint8_t txFifoWatermark;
     uint8_t rxFifoWatermark;

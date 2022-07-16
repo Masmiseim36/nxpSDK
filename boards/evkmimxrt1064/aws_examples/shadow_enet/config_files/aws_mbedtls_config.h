@@ -156,14 +156,18 @@
 //
 //#endif
 
-///* Enable SHA use in library if there is SHA on chip. */
-//#if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
-//#include "fsl_sha.h"
-//
-//#define SHA_INSTANCE SHA0            /* AES base register.*/
+/* Enable SHA use in library if there is SHA on chip. */
+#if defined(FSL_FEATURE_SOC_SHA_COUNT) && (FSL_FEATURE_SOC_SHA_COUNT > 0)
+#include "fsl_sha.h"
+
+/* SHA HW accelerator does not support to compute multiple interleaved hashes,
+ * it doesn't support context switch.
+ * HW acceleration of SHA is disabled by default in MbedTLS integration.
+ */
+#define SHA_INSTANCE SHA0            /* SHA base register.*/
 //#define MBEDTLS_FREESCALE_LPC_SHA1   /* Enable use of LPC SHA.*/
 //#define MBEDTLS_FREESCALE_LPC_SHA256 /* Enable use of LPC SHA256.*/
-//#endif
+#endif
 
 /* Enable CASPER use in library if there is CASPER on chip. */
 #if defined(FSL_FEATURE_SOC_CASPER_COUNT) && (FSL_FEATURE_SOC_CASPER_COUNT > 0)
@@ -183,8 +187,8 @@
  * \def MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT
  *
  * Enable implementation for FreeRTOS's pvPortCalloc() in ksdk_mbedtls.c module.
- * You can comment this macro if you provide your own alternate implementation. 
- * 
+ * You can comment this macro if you provide your own alternate implementation.
+ *
  */
 #if USE_RTOS && defined(SDK_OS_FREE_RTOS)
 //#define MBEDTLS_FREESCALE_FREERTOS_CALLOC_ALT

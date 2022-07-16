@@ -1,23 +1,7 @@
 /*
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -111,7 +95,7 @@ static inline unsigned int hex2bin(const uint8_t *ibuf, uint8_t *obuf, unsigned 
                          "Truncating to avoid overflow.\r\n");
             return j + 1U;
         }
-        ch = toupper(*ibuf++); /* get next uppercase character */
+        ch = (unsigned char)toupper(*ibuf++); /* get next uppercase character */
 
         /* do the conversion */
         if (ch >= '0' && ch <= '9')
@@ -131,7 +115,7 @@ static inline unsigned int hex2bin(const uint8_t *ibuf, uint8_t *obuf, unsigned 
         if ((i & 1) == 1U)
         {
             j       = ((i + 1U) / 2U) - 1U;
-            obuf[j] = by & 0xffU;
+            obuf[j] = (uint8_t)(by & 0xffU);
         }
     }
     return j + 1U;

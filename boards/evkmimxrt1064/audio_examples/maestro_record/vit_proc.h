@@ -8,12 +8,14 @@
 #ifndef _VIT_PROC_H_
 #define _VIT_PROC_H_
 
-#include "PL_platformTypes_CortexM7.h"
+#include "PL_platformTypes_CortexM.h"
 #include "VIT.h"
 
 typedef int (*VIT_Initialize_T)(void *arg);
 typedef int (*VIT_Execute_T)(void *arg, void *inputBuffer, int size);
 typedef int (*VIT_Deinit_T)(void);
+
+void DeInterleave(const PL_INT16 *pDataInput, PL_INT16 *pDataOutput, PL_UINT16 FrameSize, PL_UINT16 ChannelNumber);
 
 extern VIT_Initialize_T VIT_Initialize_func;
 extern VIT_Execute_T VIT_Execute_func;

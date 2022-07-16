@@ -5,8 +5,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "osa_common.h"
-
 #include "board.h"
 #include "streamer_pcm_app.h"
 #include "fsl_codec_common.h"
@@ -49,8 +47,8 @@ void SAI1_IRQHandler(void)
  */
 static void saiRxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
-    pcm_rtos_t *pcm = (pcm_rtos_t *)userData;
-    BaseType_t reschedule;
+    pcm_rtos_t *pcm       = (pcm_rtos_t *)userData;
+    BaseType_t reschedule = -1;
     xSemaphoreGiveFromISR(pcm->semaphoreRX, &reschedule);
     portYIELD_FROM_ISR(reschedule);
 }
@@ -75,7 +73,6 @@ void streamer_pcm_init(void)
     SAI_Init(DEMO_SAI);
 
     pcmHandle.semaphoreRX = xSemaphoreCreateBinary();
-    pcmHandle.isFirstRx   = 1;
 
     EnableIRQ(DEMO_SAI_RX_IRQ);
 }
@@ -131,16 +128,11 @@ int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
     return 0;
 }
 
-int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint32_t size)
+int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 {
     /* Ensure write size is a multiple of 32, otherwise EDMA will assert
      * failure.  Round down for the last chunk of a file/stream. */
-    if (size % 32)
-    {
-        pcm->saiRx.dataSize = size - (size % 32);
-    }
-
-    pcm->saiRx.dataSize = size;
+    pcm->saiRx.dataSize = size - (size % 32);
     pcm->saiRx.data     = data;
 
     /* Start the first transfer */
@@ -150,15 +142,12 @@ int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint
         pcm->isFirstRx = 0;
     }
 
-    /* Wait for transfer to finish */
+    /* Wait for the previous transfer to finish */
     if (xSemaphoreTake(pcm->semaphoreRX, portMAX_DELAY) != pdTRUE)
-    {
         return -1;
-    }
 
     DCACHE_InvalidateByRange((uint32_t)pcm->saiRx.data, pcm->saiRx.dataSize);
 
-    pcm->saiRx.data = next_buffer;
     /* Start the consecutive transfer */
     SAI_TransferReceiveEDMA(DEMO_SAI, &pcm->saiRxHandle, &pcm->saiRx);
 
@@ -231,6 +220,7 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     sai_transceiver_t saiConfig;
     uint32_t masterClockHz = 0U;
 
+    pcm->isFirstRx    = transfer ? pcm->isFirstRx : 1U;
     pcm->sample_rate  = sample_rate;
     pcm->bit_width    = bit_width;
     pcm->num_channels = num_channels;

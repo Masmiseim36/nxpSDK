@@ -52,7 +52,6 @@ Jumper settings on AzureWave AW-CM358-uSD Module:
 
 u-blox Modules Settings
 =======================
-
 Jumper settings on u-blox EVK-LILY-W131/-W132:
   - J2 7-8: SDIO interface selection
   - J3 3-4: VIO 3.3V (Voltage level of SDIO pins is 3.3V)
@@ -70,37 +69,3 @@ Jumper settings on u-blox EVK-MAYA-W161/-W166:
   - J8  3-4,7-8: VIO/VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
 User Guide: https://www.u-blox.com/sites/default/files/EVK-MAYA-W1_UserGuide_UBX-21039658.pdf
 
-Board macros for u-blox modules (must be added in app_config.h):
-
-/* u-blox EVK-LILY-W131/-W132 */
-#elif defined(WIFI_88W8801_BOARD_UBX_LILY_W1_USD)
-#define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_WW.h"
-#define SD8801
-#define SDMMCHOST_OPERATION_VOLTAGE_3V3
-#define WIFI_BT_USE_USD_INTERFACE
-#define WLAN_ED_MAC_CTRL                        \
-    {                                           \
-        .ed_ctrl_2g = 0x1, .ed_offset_2g = 0x1B \
-    }
-
-/* u-blox EVK-JODY-W263 */
-#elif defined(WIFI_88W8987_BOARD_UBX_JODY_W2_USD)
-#define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_WW.h"
-#define SD8987
-#define SDMMCHOST_OPERATION_VOLTAGE_1V8
-#define WIFI_BT_USE_USD_INTERFACE
-#define WLAN_ED_MAC_CTRL                                                               \
-    {                                                                                  \
-        .ed_ctrl_2g = 0x1, .ed_offset_2g = 0x9, .ed_ctrl_5g = 0x1, .ed_offset_5g = 0xC \
-    }
-
-/* u-blox EVK-MAYA-W161/-W166 */
-#elif defined(WIFI_IW416_BOARD_UBX_MAYA_W1_USD)
-#define WIFI_BT_TX_PWR_LIMITS "wlan_txpwrlimit_cfg_WW.h"
-#define SD8978
-#define SDMMCHOST_OPERATION_VOLTAGE_1V8
-#define WIFI_BT_USE_USD_INTERFACE
-#define WLAN_ED_MAC_CTRL                                                               \
-    {                                                                                  \
-        .ed_ctrl_2g = 0x1, .ed_offset_2g = 0x9, .ed_ctrl_5g = 0x1, .ed_offset_5g = 0xC \
-    }

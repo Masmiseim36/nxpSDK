@@ -21,8 +21,7 @@ typedef struct _app_data
 {
     int lastXOOperatingMode; // buffer for Crossover enable/disable request handling
     int lastPreset;          // buffer for last active preset selection
-
-    int logEnabled; // enable log to increase debug verbosity
+    int logEnabled;          // enable log to increase debug verbosity
     ext_proc_args eap_args;
 } app_data_t;
 

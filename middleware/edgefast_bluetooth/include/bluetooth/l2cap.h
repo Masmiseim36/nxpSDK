@@ -179,6 +179,10 @@ struct bt_l2cap_le_chan {
 	 *  @ref BT_L2CAP_SDU_RX_MTU by the stack.
 	 */
 	struct bt_l2cap_le_endpoint	rx;
+
+	/** Pending RX MTU on ECFC reconfigure, used internally by stack */
+	uint16_t pending_rx_mtu;
+
 	/** Channel Transmission Endpoint */
 	struct bt_l2cap_le_endpoint	tx;
 	/** Channel Transmission queue */
@@ -388,6 +392,17 @@ struct bt_l2cap_chan_ops {
 	 * references to the channel object.
 	 */
 	void (*released)(struct bt_l2cap_chan *chan);
+
+	/** @brief Channel reconfigured callback
+	 *
+	 *  If this callback is provided it will be called whenever peer or
+	 *  local device requested reconfiguration. Application may check
+	 *  updated MTU and MPS values by inspecting chan->le endpoints.
+	 *
+	 *  @param chan The channel which was reconfigured
+	 */
+	void (*reconfigured)(struct bt_l2cap_chan *chan);
+
 #if (defined(CONFIG_BT_L2CAP_IFRAME_SUPPORT) && (CONFIG_BT_L2CAP_IFRAME_SUPPORT > 0U))
 	/** @brief get configuration callback
 	 *
@@ -520,6 +535,20 @@ int bt_l2cap_br_server_register(struct bt_l2cap_server *server);
  */
 int bt_l2cap_ecred_chan_connect(struct bt_conn *conn,
 				struct bt_l2cap_chan **chans, uint16_t psm);
+
+/** @brief Reconfigure Enhanced Credit Based L2CAP channels
+ *
+ *  Reconfigure up to 5 L2CAP channels. Channels must be from the same bt_conn.
+ *  Once reconfiguration is completed each channel reconfigured() callback will
+ *  be called. MTU cannot be decreased on any of provided channels.
+ *
+ *  @param chans Array of channel objects. Null-terminated. Elements after the
+ *               first 5 are silently ignored.
+ *  @param mtu Channel MTU to reconfigure to.
+ *
+ *  @return 0 in case of success or negative value in case of error.
+ */
+int bt_l2cap_ecred_chan_reconfigure(struct bt_l2cap_chan **chans, uint16_t mtu);
 
 /** @brief Connect L2CAP channel
  *

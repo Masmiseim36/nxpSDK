@@ -8,7 +8,6 @@
 #include <string.h>
 #include <stdint.h>
 #include <porting.h>
-#include "osa_common.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "app_streamer.h"
@@ -101,7 +100,6 @@ static void app_music_resume_internal(void)
     if (app_playing_state == APP_STREAMER_PAUSE)
     {
         app_playing_state = APP_STREAMER_PLAYING;
-        STREAMER_Resume(&app_streamer_handle);
     }
 }
 
@@ -122,7 +120,6 @@ static status_t app_music_pause_internal(void)
     if (app_playing_state == APP_STREAMER_PLAYING)
     {
         app_playing_state = APP_STREAMER_PAUSE;
-        STREAMER_Pause(&app_streamer_handle);
     }
     return kStatus_Success;
 }

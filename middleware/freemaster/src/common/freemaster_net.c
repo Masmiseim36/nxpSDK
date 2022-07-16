@@ -75,6 +75,7 @@ static void _FMSTR_NetSendStatus(FMSTR_BCHR nErrCode, FMSTR_NET_SESSION *session
 #if FMSTR_NET_AUTODISCOVERY != 0
 static void _FMSTR_NetSendDiscovery(const FMSTR_NET_ADDR *address);
 #endif /* FMSTR_NET_AUTODISCOVERY */
+
 /***********************************
  *  global variables
  ***********************************/

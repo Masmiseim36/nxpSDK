@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_se_hostlib_cloud_enet_evkmimxrt1060 component is included.")
 
 

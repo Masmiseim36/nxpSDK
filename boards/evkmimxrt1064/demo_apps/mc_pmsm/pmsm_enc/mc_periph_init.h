@@ -9,7 +9,7 @@
 #ifndef _MC_PERIPH_INIT_H_
 #define _MC_PERIPH_INIT_H_
 
-#include "mcdrv_adc_imxrt.h"
+#include "mcdrv_adcetc_imxrt.h"
 #include "mcdrv_pwm3ph_pwma.h"
 #include "mcdrv_enc_qd.h"
 #include "m1_pmsm_appconfig.h"
@@ -38,7 +38,7 @@ typedef struct _clock_setup
 /******************************************************************************
  * Clock & PWM definition for motor 1
  ******************************************************************************/
-#define M1_PWM_FREQ (10000)         /* PWM frequency - 10kHz */
+#define M1_PWM_FREQ (16000)         /* PWM frequency - 16kHz */
 #define M1_FOC_FREQ_VS_PWM_FREQ (1) /* FOC calculation is called every n-th PWM reload */
 #define M1_SPEED_LOOP_FREQ (1000)   /* Speed loop frequency */
 #define M1_PWM_DEADTIME (500)       /* Output PWM deadtime value in nanoseconds */
@@ -51,15 +51,6 @@ typedef struct _clock_setup
 #define M1_FAST_LOOP_FREQ       (M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
 /* Slow control loop frequency */
 #define M1_SLOW_LOOP_FREQ       (1000U)
-
-/* Assignment of eFlexPWM channels to motor 1 phases
- * 0 - PWM channels A0&B0 - sub-module 0
- * 1 - PWM channels A1&B1 - sub-module 1
- * 2 - WPM channels A2&B2 - sub-module 3
- */
-#define M1_PWM_PAIR_PHA (0)
-#define M1_PWM_PAIR_PHB (1)
-#define M1_PWM_PAIR_PHC (3)
 
 /* Over Current Fault detection */
 #define M1_FAULT_NUM (0)
@@ -87,13 +78,13 @@ typedef struct _clock_setup
 /* Phase current A assigned to ADC1 and ADC2 */
 #define M1_ADC1_PH_A (0)
 #define M1_ADC2_PH_A (0)
-/* Phase current A assigned to ADC1 and ADC2 */
+/* Phase current B assigned to ADC1 and ADC2 */
 #define M1_ADC1_PH_B (5)
 #define M1_ADC2_PH_B (5)
-/* Phase current A assigned to ADC1 and ADC2 */
+/* Phase current C assigned to ADC1 and ADC2 */
 #define M1_ADC1_PH_C (6)
 #define M1_ADC2_PH_C (6)
-/* Phase current A assigned to ADC1 and ADC2 */
+/* Phase voltage UDCB assigned to ADC1 and ADC2 */
 #define M1_ADC1_UDCB (7)
 #define M1_ADC2_UDCB (7)
 
@@ -145,7 +136,7 @@ typedef struct _clock_setup
 /******************************************************************************
  * Global variable definitions
  ******************************************************************************/
-extern mcdrv_adc_t g_sM1AdcSensor;
+extern mcdrv_adcetc_t g_sM1AdcSensor;
 extern mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
 extern mcdrv_qd_enc_t g_sM1Enc;
 

@@ -55,12 +55,15 @@ static mbedtls_ecp_group_id mbedtls_ecdh_grp_id(
 #endif
 }
 
+/* NXP added */
+#if !defined(MBEDTLS_ECDH_CANDO_ALT)
 int mbedtls_ecdh_can_do( mbedtls_ecp_group_id gid )
 {
     /* At this time, all groups support ECDH. */
     (void) gid;
     return( 1 );
 }
+#endif /* MBEDTLS_ECDH_CANDO_ALT */
 
 #if !defined(MBEDTLS_ECDH_GEN_PUBLIC_ALT)
 /*

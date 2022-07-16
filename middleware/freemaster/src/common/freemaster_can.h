@@ -46,14 +46,14 @@
 
 /* CAN-related constants */
 #ifdef FMSTR_CAN_EXTID
-#if FMSTR_CAN_EXTID != 0x80000000U
-#error FMSTR_CAN_EXTID must be defined as 0x80000000U
+#if FMSTR_CAN_EXTID != 0x80000000UL
+#error FMSTR_CAN_EXTID must be defined as 0x80000000UL
 #undef FMSTR_CAN_EXTID
 #endif
 #endif
 
 #ifndef FMSTR_CAN_EXTID
-#define FMSTR_CAN_EXTID 0x80000000U
+#define FMSTR_CAN_EXTID 0x80000000UL
 #endif
 
 /* obsolete dynamic address selection */
@@ -68,7 +68,7 @@
 
 /* incoming (command) CAN message ID */
 #ifndef FMSTR_CAN_CMDID
-#define FMSTR_CAN_CMDID 0x7aa
+#define FMSTR_CAN_CMDID 0x7AAU
 #endif
 
 /* obsolete dynamic ID selection */

@@ -1,3 +1,3 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_mbedtls_rt component is included.")
 

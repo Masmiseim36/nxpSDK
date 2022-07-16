@@ -257,7 +257,7 @@ void ILI9341_Init(void)
     /* SPI master init */
     BOARD_LCD_SPI.Initialize(SPI_MasterSignalEvent);
     BOARD_LCD_SPI.PowerControl(ARM_POWER_FULL);
-    BOARD_LCD_SPI.Control(ARM_SPI_MODE_MASTER, BOARD_LCD_SPI_BAUDRATE);
+    BOARD_LCD_SPI.Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA1 | ARM_SPI_DATA_BITS(8), BOARD_LCD_SPI_BAUDRATE);
 
     /* perform reset of LCD */
     ILI9341_ResetDisplay();

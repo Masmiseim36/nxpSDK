@@ -58,6 +58,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../CMSIS/Driver/Include
     ${ProjDirPath}/../../../../../../components/phy
@@ -100,6 +101,8 @@ include(driver_igpio_MIMXRT1062)
 include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkbmimxrt1060_MIMXRT1062)
+
+include(component_silicon_id_MIMXRT1062)
 
 include(CMSIS_Include_core_cm_MIMXRT1062)
 

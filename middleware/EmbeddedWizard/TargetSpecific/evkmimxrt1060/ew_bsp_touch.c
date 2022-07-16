@@ -27,13 +27,6 @@
 *
 *******************************************************************************/
 
-#include "fsl_lpi2c.h"
-#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
-#include "fsl_gt911.h"
-#else
-#include "fsl_ft5406_rt.h"
-#endif
-
 #include "ewconfig.h"
 #include "ewrte.h"
 #include "ewgfxdriver.h"
@@ -43,6 +36,14 @@
 #include "ew_bsp_touch.h"
 #include "board.h"
 #include "fsl_video_common.h"
+
+#include "fsl_lpi2c.h"
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#include "fsl_gt911.h"
+#else
+#include "fsl_ft5406_rt.h"
+#endif
+
 
 #if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
 #define NO_OF_FINGERS                   GT911_MAX_TOUCHES
@@ -93,11 +94,11 @@ static XTouchData    TouchData[ NO_OF_FINGERS ];
 #define BOARD_TOUCH_I2C_CLOCK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 #define BOARD_TOUCH_I2C_BAUDRATE 100000U
 
+/* Touch driver handle. */
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
 static void BOARD_PullTouchResetPin(bool pullUp);
 static void BOARD_ConfigTouchIntPin(gt911_int_pin_mode_t mode);
 
-/* Touch driver handle. */
-#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
 static gt911_handle_t s_touchHandle;
 static const gt911_config_t s_touchConfig = {
     .I2C_SendFunc     = BOARD_Touch_I2C_Send,

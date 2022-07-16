@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUI_Private.h
@@ -344,8 +344,8 @@ void GUI__AddSpaceHex       (U32 v, U8 Len, char ** ps);
 void GUI__CalcTextRect      (const char * pText, const GUI_RECT * pTextRectIn, GUI_RECT * pTextRectOut, int TextAlign);
 int  GUI__IsPointInRect     (GUI_RECT * pRect, int x, int y);
 
-void GUI__DrawNonExistingCharacter(LCD_DRAWMODE DrawMode);
-int  GUI__GetNonExistingCharWidth (void);
+void GUI__DrawNonExistingCharacter(U16 c, LCD_DRAWMODE DrawMode);
+int  GUI__GetNonExistingCharWidth (U16 c, int * pSizeX);
 
 void GUI__ClearTextBackground(int xDist, int yDist);
 
@@ -683,6 +683,7 @@ extern GUI_DEVICE * GUI__apDevice[GUI_NUM_LAYERS];
 // Function pointer for drawing string characters with EXT fonts
 //
 extern U16 (* GUI__pfDrawCharEXT)(int RemChars, const char ** ps);
+extern int (* GUI__pfGetShiftY)(U16 Code);
 
 //
 // Function pointer for converting a palette containing a color array into an index array
@@ -750,8 +751,8 @@ GUI_EXTERN           WM_tfHandlePID * WM_pfHandlePID;
 GUI_EXTERN   void (* GUI_pfDispCharStyle)(U16 Char);
 GUI_EXTERN   void (* GUI_pfDispCharLine)(int x0);
 
-GUI_EXTERN           int GUI__BufferSize; // Required buffer size in pixels for alpha blending and/or antialiasing
-GUI_EXTERN           int GUI_AA__ClipX0;  // x0-clipping value for AA module
+GUI_EXTERN           int GUI_AA__BufferSize;  // Required buffer size in pixels for alpha blending and/or antialiasing
+GUI_EXTERN           int GUI_AA__ClipX0;      // x0-clipping value for AA module
 
 GUI_EXTERN           I8  GUI__aNumBuffers[GUI_NUM_LAYERS]; // Number of buffers used per layer
 GUI_EXTERN           U8  GUI__PreserveTrans;

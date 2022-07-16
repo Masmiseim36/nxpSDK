@@ -1231,7 +1231,7 @@ exit:
 }
 
 #if SSS_HAVE_ECDAA
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 sss_status_t sss_util_asn1_ecdaa_get_signature(
     uint8_t *signature, size_t *signatureLen, uint8_t *rawSignature, size_t rawSignatureLen)
 {
@@ -1325,7 +1325,7 @@ sss_status_t sss_util_asn1_ecdaa_get_signature(
 exit:
     return status;
 }
-#endif // SSS_HAVE_SE05X_VER_GTE_06_16
+#endif // SSS_HAVE_SE05X_VER_GTE_07_02
 #endif
 
 #if 0

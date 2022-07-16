@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -391,7 +375,7 @@ static mlan_status wlan_cmd_tx_power_cfg(IN pmlan_private pmpriv,
                                 sizeof(HostCmd_DS_TXPWR_CFG) + sizeof(MrvlTypes_Power_Group_t) + ppg_tlv->length);
 
                 ppg_tlv = (MrvlTypes_Power_Group_t *)(void *)((t_u8 *)&cmd->params + sizeof(HostCmd_DS_TXPWR_CFG));
-                cmd->size += wlan_cpu_to_le16(sizeof(MrvlTypes_Power_Group_t) + ppg_tlv->length);
+                cmd->size += (t_u16)(wlan_cpu_to_le16(sizeof(MrvlTypes_Power_Group_t) + ppg_tlv->length));
                 ppg_tlv->type   = wlan_cpu_to_le16(ppg_tlv->type);
                 ppg_tlv->length = wlan_cpu_to_le16(ppg_tlv->length);
             }
@@ -1006,8 +990,8 @@ static mlan_status wlan_cmd_mgmt_ie_list(IN pmlan_private pmpriv,
         while (req_len > sizeof(t_u16))
         {
             cptr = (custom_ie *)(void *)(((t_u8 *)cust_ie->ie_data_list) + travel_len);
-            travel_len += cptr->ie_length + sizeof(custom_ie) - MAX_IE_SIZE;
-            req_len -= cptr->ie_length + sizeof(custom_ie) - MAX_IE_SIZE;
+            travel_len += (t_u16)(cptr->ie_length + sizeof(custom_ie) - MAX_IE_SIZE);
+            req_len -= (t_u16)(cptr->ie_length + sizeof(custom_ie) - MAX_IE_SIZE);
             cptr->ie_index          = wlan_cpu_to_le16(cptr->ie_index);
             cptr->mgmt_subtype_mask = wlan_cpu_to_le16(cptr->mgmt_subtype_mask);
             cptr->ie_length         = wlan_cpu_to_le16(cptr->ie_length);
@@ -1191,6 +1175,7 @@ mlan_status wlan_cmd_rx_mgmt_indication(IN pmlan_private pmpriv,
     return MLAN_STATUS_SUCCESS;
 }
 #endif
+
 
 
 /**

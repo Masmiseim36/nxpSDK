@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("CMSIS_Driver_Include_SPI component is included.")
 
 

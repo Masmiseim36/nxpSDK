@@ -26,6 +26,7 @@ var searchData=
   ['format',['format',['../a00014.html#a390b84d16170a8a88a1630f4a4f0de19',1,'cs42888_config_t::format()'],['../a00015.html#a6a6dafa5858a985ed3711c3b427a9a0b',1,'da7212_config_t::format()'],['../a00057.html#af41c4ad8e8dfb29b4fde75d76f9f43c8',1,'sgtl_config_t::format()'],['../a00066.html#a2d2ffaa9970fecbcc786b1135897fbc2',1,'wm8904_config_t::format()'],['../a00067.html#a1f604d76836bba22c48628d1790abbf1',1,'wm8960_config_t::format()']]],
   ['framesync',['frameSync',['../a00052.html#a46ce7801a6ba02d5dd8f56e431d681f1',1,'sai_transceiver_t']]],
   ['framesyncearly',['frameSyncEarly',['../a00052.html#af23c63fada62140420230a61abe37d4e',1,'sai_frame_sync_t']]],
+  ['framesyncgenerateondemand',['frameSyncGenerateOnDemand',['../a00052.html#adcc4ee55d055827215038e2cc4ea8b1b',1,'sai_frame_sync_t']]],
   ['framesyncpolarity',['frameSyncPolarity',['../a00052.html#a6fbff9ec23d1ba0bb54ca7d91b7f40d9',1,'sai_frame_sync_t']]],
   ['framesyncwidth',['frameSyncWidth',['../a00052.html#a220329ad330217786663fee4457a7281',1,'sai_frame_sync_t']]],
   ['frequency',['frequency',['../a00063.html#a207108996ebfd8421548f96bd4d3afaf',1,'tempmon_config_t']]],

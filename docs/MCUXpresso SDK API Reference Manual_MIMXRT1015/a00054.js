@@ -40,7 +40,9 @@ var a00054 =
     [ "serial_write_handle_t", "a00054.html#gac8319b6189019680778f230eb319530e", null ],
     [ "serial_read_handle_t", "a00054.html#ga8bfec9c49e40728806d775fdb4bbf78e", null ],
     [ "serial_manager_callback_t", "a00054.html#gabe6a6263bb1570ea715938b2420af773", null ],
+    [ "serial_manager_lowpower_critical_callback_t", "a00054.html#ga856d80a20772bd9d9ad950b8ec852635", null ],
     [ "serial_port_type_t", "a00054.html#ga103db7d7f3fc8234978efadef0fdaf80", [
+      [ "kSerialPort_None", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb", null ],
       [ "kSerialPort_Uart", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77", null ],
       [ "kSerialPort_UsbCdc", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2", null ],
       [ "kSerialPort_Swo", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80af6a37935b2767a9ae22825f0bc49ef77", null ],
@@ -48,8 +50,7 @@ var a00054 =
       [ "kSerialPort_Rpmsg", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80aa0ec8166f72522a029c7bdb44dbd8cbe", null ],
       [ "kSerialPort_UartDma", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80acad7e31b320242ceb4088c8a32635c5e", null ],
       [ "kSerialPort_SpiMaster", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80aedeec3b53f1439f00620cadea84b0fea", null ],
-      [ "kSerialPort_SpiSlave", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a", null ],
-      [ "kSerialPort_None", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb", null ]
+      [ "kSerialPort_SpiSlave", "a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a", null ]
     ] ],
     [ "serial_manager_type_t", "a00054.html#ga7799e0e52d9e9fe5bf5198f0a337331d", [
       [ "kSerialManager_NonBlocking", "a00054.html#gga7799e0e52d9e9fe5bf5198f0a337331dacae754a7dbe5f0d48d345a8b6120227c", null ],
@@ -75,5 +76,5 @@ var a00054 =
     [ "SerialManager_ReadBlocking", "a00054.html#ga03b1bb5c3dbaa5ea2f0a6e7003f0b4eb", null ],
     [ "SerialManager_EnterLowpower", "a00054.html#ga32cdccd6df5d87f17037f34cf9f1e416", null ],
     [ "SerialManager_ExitLowpower", "a00054.html#gaef5c404d43871f6d8f761b27dbf183fa", null ],
-    [ "SerialManager_needPollingIsr", "a00054.html#ga26a6c26eacf1277930e69676ab77cbec", null ]
+    [ "SerialManager_SetLowpowerCriticalCb", "a00054.html#ga71bd55adb7a6a552ce5dac06b5794cea", null ]
 ];

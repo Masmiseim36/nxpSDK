@@ -70,7 +70,7 @@ typedef union
 
 typedef struct
 {
-    FMSTR_U8 *buff;
+    FMSTR_LP_U8 buff;
     FMSTR_PIPE_SIZE size;
     FMSTR_PIPE_SIZE wp;
     FMSTR_PIPE_SIZE rp;

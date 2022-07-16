@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("component_mflash_rt1060 component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

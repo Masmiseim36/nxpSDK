@@ -13,7 +13,7 @@ var a00083 =
     [ "xbara_request_t", "a00083.html#ga8e4281860299afa4b037f46a43d194bc", [
       [ "kXBARA_RequestDisable", "a00083.html#gga8e4281860299afa4b037f46a43d194bca67befcfe617c522f75f9c58aca037aef", null ],
       [ "kXBARA_RequestDMAEnable", "a00083.html#gga8e4281860299afa4b037f46a43d194bca074420520b90004cbbc9fe1cf6d95b18", null ],
-      [ "kXBARA_RequestInterruptEnalbe", "a00083.html#gga8e4281860299afa4b037f46a43d194bca12e1a53356dbfc00a5df9310eca29f91", null ]
+      [ "kXBARA_RequestInterruptEnable", "a00083.html#gga8e4281860299afa4b037f46a43d194bca90c054b76f1e59c9e159e2bb89f82541", null ]
     ] ],
     [ "xbara_status_flag_t", "a00083.html#ga0c8c0b6bbacda08f8d646f2ba109158e", [
       [ "kXBARA_EdgeDetectionOut0", "a00083.html#gga0c8c0b6bbacda08f8d646f2ba109158ea7fd07691d8d5cd8b7cbfa21c080464af", null ],

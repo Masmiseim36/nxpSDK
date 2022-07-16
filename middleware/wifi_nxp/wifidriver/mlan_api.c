@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -1150,6 +1134,7 @@ int wifi_send_scan_cmd(t_u8 bss_mode,
     user_scan_cfg->bss_mode           = bss_mode;
     user_scan_cfg->keep_previous_scan = keep_previous_scan;
 
+
     if (num_probes > 0U && num_probes <= MAX_PROBES)
     {
         user_scan_cfg->num_probes = num_probes;
@@ -1632,28 +1617,21 @@ int wifi_set_mac_multicast_addr(const char *mlist, t_u32 num_of_addr)
         return -WM_E_INVAL;
     }
 
-    mlan_multicast_list *pmcast_list;
-    pmcast_list = os_mem_alloc(sizeof(mlan_multicast_list));
-    if (pmcast_list == MNULL)
-    {
-        return -WM_E_NOMEM;
-    }
+    mlan_multicast_list mcast_list;
 
-    (void)memcpy((void *)pmcast_list->mac_list, (const void *)mlist, num_of_addr * MLAN_MAC_ADDR_LENGTH);
-    pmcast_list->num_multicast_addr = num_of_addr;
+    (void)memcpy((void *)mcast_list.mac_list, (const void *)mlist, num_of_addr * MLAN_MAC_ADDR_LENGTH);
+    mcast_list.num_multicast_addr = num_of_addr;
     (void)wifi_get_command_lock();
     HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
 
     mlan_status rv = wlan_ops_sta_prepare_cmd((mlan_private *)mlan_adap->priv[0], HostCmd_CMD_MAC_MULTICAST_ADR,
-                                              HostCmd_ACT_GEN_SET, 0, NULL, pmcast_list, cmd);
+                                              HostCmd_ACT_GEN_SET, 0, NULL, &mcast_list, cmd);
 
     if (rv != MLAN_STATUS_SUCCESS)
     {
-        os_mem_free(pmcast_list);
         return -WM_FAIL;
     }
     (void)wifi_wait_for_cmdresp(NULL);
-    os_mem_free(pmcast_list);
     return WM_SUCCESS;
 }
 
@@ -1882,7 +1860,7 @@ int wifi_set_domain_params(wifi_domain_param_t *dp)
 
     wifi_sub_band_set_t *is  = dp->sub_band;
     mlan_ds_subband_set_t *s = d_cfg.param.domain_info.sub_band;
-    int i;
+    t_u8 i;
     for (i = 0; i < dp->no_of_sub_band; i++)
     {
         s[i].first_chan = is[i].first_chan;
@@ -1913,7 +1891,7 @@ int wifi_enable_11d_support_APIs(void)
     return wlan_11d_support_APIs(pmpriv);
 }
 
-wifi_sub_band_set_t *get_sub_band_from_country(int country, int *nr_sb)
+wifi_sub_band_set_t *get_sub_band_from_country(int country, t_u8 *nr_sb)
 {
     *nr_sb = 1;
 
@@ -1939,7 +1917,7 @@ wifi_sub_band_set_t *get_sub_band_from_country(int country, int *nr_sb)
     }
 }
 
-static wifi_sub_band_set_t *get_sub_band_from_region_code(int region_code, int *nr_sb)
+static wifi_sub_band_set_t *get_sub_band_from_region_code(int region_code, t_u8 *nr_sb)
 {
     *nr_sb = 1;
 
@@ -1961,7 +1939,7 @@ static wifi_sub_band_set_t *get_sub_band_from_region_code(int region_code, int *
 }
 
 #ifdef CONFIG_5GHz_SUPPORT
-static wifi_sub_band_set_t *get_sub_band_from_country_5ghz(int country, int *nr_sb)
+static wifi_sub_band_set_t *get_sub_band_from_country_5ghz(int country, t_u8 *nr_sb)
 {
     *nr_sb = 1;
 
@@ -1994,7 +1972,7 @@ static wifi_sub_band_set_t *get_sub_band_from_country_5ghz(int country, int *nr_
     }
 }
 
-static wifi_sub_band_set_t *get_sub_band_from_region_code_5ghz(int region_code, int *nr_sb)
+static wifi_sub_band_set_t *get_sub_band_from_region_code_5ghz(int region_code, t_u8 *nr_sb)
 {
     *nr_sb = 1;
 
@@ -2027,8 +2005,9 @@ static wifi_sub_band_set_t *get_sub_band_from_region_code_5ghz(int region_code, 
 
 bool wifi_11d_is_channel_allowed(int channel)
 {
-    int i, j, nr_sb = 0;
+    t_u8 i, j;
     t_u8 k;
+    t_u8 nr_sb = 0;
 
     mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
 
@@ -2116,7 +2095,7 @@ char *wifi_get_country_str(int country)
     }
 }
 
-wifi_domain_param_t *get_11d_domain_params(int country, wifi_sub_band_set_t *sub_band, int nr_sb)
+wifi_domain_param_t *get_11d_domain_params(int country, wifi_sub_band_set_t *sub_band, t_u8 nr_sb)
 {
     wifi_domain_param_t *dp = os_mem_alloc(sizeof(wifi_domain_param_t) + (sizeof(wifi_sub_band_set_t) * (nr_sb - 1U)));
 
@@ -2135,7 +2114,8 @@ int wifi_get_country(void)
 
 int wifi_set_country(int country)
 {
-    int ret, nr_sb;
+    int ret;
+    t_u8 nr_sb;
 
     if (wlan_enable_11d() != WM_SUCCESS)
     {
@@ -2206,6 +2186,42 @@ static void clear_ie_index(int index)
     mgmt_ie_index_bitmap &= ~(MBIT(index));
 }
 
+#ifdef SD8801
+static int wifi_config_ext_coex(int action, const wifi_ext_coex_config_t *ext_coex_config, wifi_ext_coex_stats_t *ext_coex_stats)
+{
+    int ret;
+    HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
+
+    (void)wifi_get_command_lock();
+
+    cmd->command = HostCmd_CMD_ROBUST_COEX;
+    cmd->size = sizeof(HostCmd_DS_ExtBLECoex_Config_t) + S_DS_GEN;
+    cmd->seq_num = 0;
+    cmd->result = 0;
+    cmd->params.ext_ble_coex_cfg.action = action;
+    cmd->params.ext_ble_coex_cfg.reserved = 0;
+    cmd->params.ext_ble_coex_cfg.coex_cfg_data.header.type = TLV_TYPE_EXT_BLE_COEX_CFG;
+    cmd->params.ext_ble_coex_cfg.coex_cfg_data.header.len = sizeof(MrvlIETypes_ExtBLECoex_Config_t) - sizeof(MrvlIEtypesHeader_t);
+
+    if (action == HostCmd_ACT_GEN_SET)
+    {
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.Enabled = ext_coex_config->Enabled;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.IgnorePriority = ext_coex_config->IgnorePriority;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.DefaultPriority = ext_coex_config->DefaultPriority;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_REQ_ip_gpio_num = ext_coex_config->EXT_RADIO_REQ_ip_gpio_num;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_REQ_ip_gpio_polarity = ext_coex_config->EXT_RADIO_REQ_ip_gpio_polarity;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_PRI_ip_gpio_num = ext_coex_config->EXT_RADIO_PRI_ip_gpio_num;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_PRI_ip_gpio_polarity = ext_coex_config->EXT_RADIO_PRI_ip_gpio_polarity;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.WLAN_GRANT_op_gpio_num = ext_coex_config->WLAN_GRANT_op_gpio_num;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.WLAN_GRANT_op_gpio_polarity = ext_coex_config->WLAN_GRANT_op_gpio_polarity;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.reserved_1 = ext_coex_config->reserved_1;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.reserved_2 = ext_coex_config->reserved_2;
+    }
+    ret = wifi_wait_for_cmdresp(ext_coex_stats);
+    return ret;
+}
+#endif
+
 int wifi_config_mgmt_ie(
     mlan_bss_type bss_type, int action, IEEEtypes_ElementId_t index, void *buffer, unsigned int *ie_len)
 {
@@ -2257,8 +2273,8 @@ int wifi_config_mgmt_ie(
             ie_ptr                    = (custom_ie *)(void *)(((uint8_t *)ie_ptr) + sizeof(custom_ie) - MAX_IE_SIZE);
             ie_ptr->mgmt_subtype_mask = MGMT_MASK_CLEAR;
             ie_ptr->ie_length         = 0;
-            ie_ptr->ie_index          = index + 1;
-            tlv->length               = 2 * (sizeof(custom_ie) - MAX_IE_SIZE);
+            ie_ptr->ie_index          = (t_u16)index + 1U;
+            tlv->length               = 2U * (sizeof(custom_ie) - MAX_IE_SIZE);
             buf_len += tlv->length;
             clear_ie_index(index);
         }
@@ -2367,6 +2383,30 @@ int wifi_clear_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index)
     unsigned int data_len = 0;
     return wifi_config_mgmt_ie(bss_type, HostCmd_ACT_GEN_SET, index, NULL, &data_len);
 }
+
+#ifdef SD8801
+int wifi_get_ext_coex_stats(wifi_ext_coex_stats_t *ext_coex_stats)
+{
+    if (ext_coex_stats == NULL)
+    {
+        wifi_e("Invalid structure passed");
+        return -WM_FAIL;
+    }
+
+    return wifi_config_ext_coex(HostCmd_ACT_GEN_GET, NULL, ext_coex_stats);
+}
+
+int wifi_set_ext_coex_config(const wifi_ext_coex_config_t *ext_coex_config)
+{
+    if ( ext_coex_config == NULL)
+    {
+        wifi_e("Invalid structure passed");
+        return -WM_FAIL;
+    }
+
+    return wifi_config_ext_coex(HostCmd_ACT_GEN_SET, ext_coex_config, NULL);
+}
+#endif
 
 int wifi_set_chanlist(wifi_chanlist_t *chanlist)
 {
@@ -2547,8 +2587,9 @@ void wifi_set_curr_bss_channel(uint8_t channel)
     pmpriv->curr_bss_params.bss_descriptor.channel = channel;
 }
 
+
 #ifdef OTP_CHANINFO
-int wifi_get_fw_region_and_cfp_tables()
+int wifi_get_fw_region_and_cfp_tables(void)
 {
     int ret;
 
@@ -2567,6 +2608,12 @@ int wifi_get_fw_region_and_cfp_tables()
 
     ret = wifi_wait_for_cmdresp(NULL);
     return ret;
+}
+
+void wifi_free_fw_region_and_cfp_tables(void)
+{
+    mlan_adapter *pmadapter = mlan_adap->priv[0]->adapter;
+    wlan_free_fw_cfp_tables(pmadapter);
 }
 #endif
 

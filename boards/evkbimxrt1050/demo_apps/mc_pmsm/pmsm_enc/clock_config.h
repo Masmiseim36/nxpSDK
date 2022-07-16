@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -52,9 +52,10 @@ void BOARD_InitBootClocks(void);
 #define BOARD_BOOTCLOCKRUN_CLK_1M                     1000000UL
 #define BOARD_BOOTCLOCKRUN_CLK_24M                    24000000UL
 #define BOARD_BOOTCLOCKRUN_CSI_CLK_ROOT               12000000UL
-#define BOARD_BOOTCLOCKRUN_ENET1_TX_CLK               2400000UL
 #define BOARD_BOOTCLOCKRUN_ENET_125M_CLK              2400000UL
 #define BOARD_BOOTCLOCKRUN_ENET_25M_REF_CLK           1200000UL
+#define BOARD_BOOTCLOCKRUN_ENET_REF_CLK               0UL
+#define BOARD_BOOTCLOCKRUN_ENET_TX_CLK                0UL
 #define BOARD_BOOTCLOCKRUN_FLEXIO1_CLK_ROOT           30000000UL
 #define BOARD_BOOTCLOCKRUN_FLEXIO2_CLK_ROOT           30000000UL
 #define BOARD_BOOTCLOCKRUN_FLEXSPI_CLK_ROOT           160000000UL

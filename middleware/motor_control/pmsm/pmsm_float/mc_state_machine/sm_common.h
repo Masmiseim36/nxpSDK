@@ -36,6 +36,7 @@ typedef enum _mcs_ctrl_mode_t
     kControlMode_VoltageFOC = 1,
     kControlMode_CurrentFOC = 2,
     kControlMode_SpeedFOC   = 3,
+	kControlMode_OpenLoop 	= 4
 } mcs_ctrl_mode_t;
 
 /*! @brief Device fault thresholds */
@@ -56,6 +57,7 @@ typedef struct _mcdef_pmsm_t
 {
     mcs_pmsm_foc_t sFocPMSM;                   /* Field Oriented Control structure */
     mcs_speed_t sSpeed;                        /* Speed control loop structure */
+    mcs_openloop_t sOpenloop;
     mcs_pmsm_startup_t sStartUp;               /* Open loop start-up */
     mcs_alignment_t sAlignment;                /* PMSM simple two-step Ud voltage alignment */
     mcs_mcat_ctrl_t sMCATctrl;                 /* Structure containing control variables directly updated from MCAT */

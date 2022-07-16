@@ -34,6 +34,21 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
 /*******************************************************************************
  * Code
  ******************************************************************************/
+RAM_FUNC_LIB
+void MCS_PMSMOpenloop(mcs_openloop_t *psOpenloop){
+
+	psOpenloop->f16PosElExt = MLIB_Add_F16(
+		psOpenloop->f16Theta,
+		GFLIB_Integrator_F16(
+			MLIB_ConvSc_F16ff(
+				psOpenloop->fltFreqReq,
+				psOpenloop->fltFreqMax
+			),
+			&psOpenloop->sFreqIntegrator
+		)
+	);
+
+}
 
 /*!
  * @brief PMSM field oriented current control.
@@ -44,6 +59,7 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
  *
  * @return None
  */
+RAM_FUNC_LIB  
 void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
 {
     /* pass electrical position from outside function if enabled else estimated
@@ -141,6 +157,7 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
  *
  * @return None
  */
+RAM_FUNC_LIB  
 void MCS_PMSMFocCtrlSpeed(mcs_speed_t *psSpeed)
 {
     /* Speed saturation flag given by the Q current controller saturation flag and speed controller saturation flag */
@@ -167,6 +184,7 @@ void MCS_PMSMFocCtrlSpeed(mcs_speed_t *psSpeed)
  *
  * @return None
  */
+RAM_FUNC_LIB  
 void MCS_PMSMFocCtrlPosition(mcs_position_t *psPosition)
 {
     /* Position error calculation */
@@ -184,6 +202,7 @@ void MCS_PMSMFocCtrlPosition(mcs_position_t *psPosition)
  *
  * @return None
  */
+RAM_FUNC_LIB  
 void MCS_PMSMAlignment(mcs_alignment_t *psAlignment)
 {
     /* first half duration time is position set to 120 degree */
@@ -207,6 +226,7 @@ void MCS_PMSMAlignment(mcs_alignment_t *psAlignment)
  *
  * @return None
  */
+RAM_FUNC_LIB  
 void MCS_PMSMOpenLoopStartUp(mcs_pmsm_startup_t *psStartUp)
 {
     /* Open loop startup speed ramp */
@@ -248,6 +268,7 @@ void MCS_PMSMOpenLoopStartUp(mcs_pmsm_startup_t *psStartUp)
  *
  * @return None
  */
+RAM_FUNC_LIB  
 void MCS_PMSMScalarCtrl(mcs_pmsm_scalar_ctrl_t *psScalarPMSM)
 {
     /* this part of code is executed when scalar control is turned-on */
@@ -282,6 +303,7 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_scalar_ctrl_t *psScalarPMSM)
 
 @return  N/A
 ******************************************************************************/
+RAM_FUNC_LIB  
 static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
                        GMCLIB_3COOR_T_FLT *sIABC,
                        float_t fltUDcBusFilt,

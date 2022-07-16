@@ -323,7 +323,12 @@ static void init(void)
 #endif
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+    {
+        printf("Error: Could not initialize audio codec! Please, reconnect the board power supply.\r\n");
+        for (;;)
+            ;
+    }
 }
 
 /*!

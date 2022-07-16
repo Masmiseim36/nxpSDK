@@ -853,7 +853,8 @@ void mac_key_policy( int policy_usage_arg,
                      int key_type_arg,
                      data_t *key_data,
                      int exercise_alg_arg,
-                     int expected_status_arg )
+                     int expected_status_sign_arg,
+                     int expected_status_verify_arg )
 {
     mbedtls_svc_key_id_t key = MBEDTLS_SVC_KEY_ID_INIT;
     psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
@@ -863,7 +864,8 @@ void mac_key_policy( int policy_usage_arg,
     psa_algorithm_t exercise_alg = exercise_alg_arg;
     psa_key_usage_t policy_usage = policy_usage_arg;
     psa_status_t status;
-    psa_status_t expected_status = expected_status_arg;
+    psa_status_t expected_status_sign = expected_status_sign_arg;
+    psa_status_t expected_status_verify = expected_status_verify_arg;
     unsigned char mac[PSA_MAC_MAX_SIZE];
 
     PSA_ASSERT( psa_crypto_init( ) );
@@ -879,19 +881,30 @@ void mac_key_policy( int policy_usage_arg,
                 mbedtls_test_update_key_usage_flags( policy_usage ) );
 
     status = psa_mac_sign_setup( &operation, key, exercise_alg );
-    if( ( policy_usage & PSA_KEY_USAGE_SIGN_HASH ) == 0 )
-        TEST_EQUAL( status, PSA_ERROR_NOT_PERMITTED );
+    TEST_EQUAL( status, expected_status_sign );
+
+    /* Calculate the MAC, one-shot case. */
+    uint8_t input[128] = {0};
+    size_t mac_len;
+    TEST_EQUAL( psa_mac_compute( key, exercise_alg,
+                                 input, 128,
+                                 mac, PSA_MAC_MAX_SIZE, &mac_len ),
+                expected_status_sign );
+
+    /* Verify correct MAC, one-shot case. */
+    status = psa_mac_verify( key, exercise_alg, input, 128,
+                                mac, mac_len );
+
+    if( expected_status_sign != PSA_SUCCESS && expected_status_verify == PSA_SUCCESS )
+        TEST_EQUAL( status, PSA_ERROR_INVALID_SIGNATURE );
     else
-        TEST_EQUAL( status, expected_status );
+        TEST_EQUAL( status, expected_status_verify );
 
     psa_mac_abort( &operation );
 
     memset( mac, 0, sizeof( mac ) );
     status = psa_mac_verify_setup( &operation, key, exercise_alg );
-    if( ( policy_usage & PSA_KEY_USAGE_VERIFY_HASH ) == 0 )
-        TEST_EQUAL( status, PSA_ERROR_NOT_PERMITTED );
-    else
-        TEST_EQUAL( status, expected_status );
+    TEST_EQUAL( status, expected_status_verify );
 
 exit:
     psa_mac_abort( &operation );
@@ -1146,7 +1159,7 @@ void asymmetric_signature_key_policy( int policy_usage_arg,
     else
         TEST_EQUAL( status, PSA_ERROR_NOT_PERMITTED );
 
-    if( PSA_ALG_IS_HASH_AND_SIGN( exercise_alg ) &&
+    if( PSA_ALG_IS_SIGN_HASH( exercise_alg ) &&
         PSA_ALG_IS_HASH( PSA_ALG_SIGN_GET_HASH( exercise_alg ) ) )
     {
         status = psa_sign_message( key, exercise_alg,
@@ -2587,6 +2600,9 @@ void cipher_encrypt_alg_without_iv( int alg_arg,
     mbedtls_svc_key_id_t key = MBEDTLS_SVC_KEY_ID_INIT;
     psa_key_type_t key_type = key_type_arg;
     psa_algorithm_t alg = alg_arg;
+    psa_cipher_operation_t operation = PSA_CIPHER_OPERATION_INIT;
+    uint8_t iv[1] = { 0x5a };
+    size_t iv_length;
     unsigned char *output = NULL;
     size_t output_buffer_size = 0;
     size_t output_length = 0;
@@ -2604,6 +2620,14 @@ void cipher_encrypt_alg_without_iv( int alg_arg,
     PSA_ASSERT( psa_import_key( &attributes, key_data->x, key_data->len,
                                 &key ) );
 
+    PSA_ASSERT( psa_cipher_encrypt_setup( &operation, key, alg ) );
+    TEST_EQUAL( psa_cipher_set_iv( &operation, iv, sizeof( iv ) ),
+                PSA_ERROR_BAD_STATE );
+    PSA_ASSERT( psa_cipher_encrypt_setup( &operation, key, alg ) );
+    TEST_EQUAL( psa_cipher_generate_iv( &operation, iv, sizeof( iv ),
+                                        &iv_length ),
+                PSA_ERROR_BAD_STATE );
+
     PSA_ASSERT( psa_cipher_encrypt( key, alg, input->x, input->len, output,
                                     output_buffer_size, &output_length ) );
     TEST_ASSERT( output_length <=
@@ -2615,6 +2639,46 @@ void cipher_encrypt_alg_without_iv( int alg_arg,
                     output, output_length );
 exit:
     mbedtls_free( output );
+    psa_destroy_key( key );
+    PSA_DONE( );
+}
+/* END_CASE */
+
+/* BEGIN_CASE */
+void cipher_bad_key( int alg_arg, int key_type_arg, data_t *key_data )
+{
+    mbedtls_svc_key_id_t key = MBEDTLS_SVC_KEY_ID_INIT;
+    psa_algorithm_t alg = alg_arg;
+    psa_key_type_t key_type = key_type_arg;
+    psa_key_attributes_t attributes = PSA_KEY_ATTRIBUTES_INIT;
+    psa_cipher_operation_t operation = PSA_CIPHER_OPERATION_INIT;
+    psa_status_t status;
+
+    PSA_ASSERT( psa_crypto_init( ) );
+
+    psa_set_key_usage_flags( &attributes, PSA_KEY_USAGE_ENCRYPT );
+    psa_set_key_algorithm( &attributes, alg );
+    psa_set_key_type( &attributes, key_type );
+
+    /* Usage of either of these two size macros would cause divide by zero
+     * with incorrect key types previously. Input length should be irrelevant
+     * here. */
+    TEST_EQUAL( PSA_CIPHER_ENCRYPT_OUTPUT_SIZE( key_type, alg, 16 ),
+                0 );
+    TEST_EQUAL( PSA_CIPHER_UPDATE_OUTPUT_SIZE( key_type, alg, 16 ), 0 );
+
+
+    PSA_ASSERT( psa_import_key( &attributes, key_data->x, key_data->len,
+                                &key ) );
+
+    /* Should fail due to invalid alg type (to support invalid key type).
+     * Encrypt or decrypt will end up in the same place. */
+    status = psa_cipher_encrypt_setup( &operation, key, alg );
+
+    TEST_EQUAL( status, PSA_ERROR_INVALID_ARGUMENT );
+
+exit:
+    psa_cipher_abort( &operation );
     psa_destroy_key( key );
     PSA_DONE( );
 }
@@ -4411,7 +4475,7 @@ void derive_input( int alg_arg,
     if( output_key_type != PSA_KEY_TYPE_NONE )
     {
         psa_reset_key_attributes( &attributes );
-        psa_set_key_type( &attributes, PSA_KEY_TYPE_RAW_DATA );
+        psa_set_key_type( &attributes, output_key_type );
         psa_set_key_bits( &attributes, 8 );
         actual_output_status =
             psa_key_derivation_output_key( &attributes, &operation,

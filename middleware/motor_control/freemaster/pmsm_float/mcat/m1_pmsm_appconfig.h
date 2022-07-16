@@ -5,9 +5,8 @@
 */
 
 /*
-	* FILE NAME: ../boards/lpcxpresso55s36/mc_pmsm/pmsm_enc/m1_pmsm_appconfig.h
-	* DATE: Fri Oct 22 2021, 09:24:55
-	* DESCRIPTION: Generated file for static configuration of the PMSM FOC application
+    * FILE NAME: ../../../boards/hvpkv31f120m/demo_apps/mc_pmsm/pmsm_snsless/m1_pmsm_appconfig.h
+    * DATE: Wed Dec 15 2021, 12:45:43
 */
 
 /*
@@ -81,11 +80,17 @@
 }
 */
 
+/*
+{
+    "motorName": "teknic",
+    "motorDescription": "Configuration for Teknic motor."
+}
+*/
 
 #ifndef __M1_PMSM_APPCONFIG_H 
 #define __M1_PMSM_APPCONFIG_H 
 
-/* PARAMETERS */
+/* PARAMETERS*/
 #define M1_MOTOR_PP (4)
 #define M1_I_PH_NOM (2.0F)
 #define M1_N_NOM (1675.52F)
@@ -107,6 +112,7 @@
 #define M1_ALIGN_DURATION (1000)
 #define M1_U_MAX (35.1029F)
 #define M1_FREQ_MAX (293.333F)
+#define M1_N_ANGULAR_MAX (2.38732F)
 #define M1_UDCB_IIR_B0 (0.0304590F)
 #define M1_UDCB_IIR_B1 (0.0304590F)
 #define M1_UDCB_IIR_A1 (0.939082F)
@@ -114,13 +120,13 @@
 #define M1_SCALAR_INTEG_GAIN ACC32(0.0586667)
 #define M1_SCALAR_RAMP_UP (0.0666667F)
 #define M1_SCALAR_RAMP_DOWN (0.0666667F)
-/* CURRENTLOOP */
+/* CURRENTLOOP*/
 #define M1_D_KP_GAIN (0.459831F)
 #define M1_D_KI_GAIN (0.106749F)
 #define M1_Q_KP_GAIN (0.344020F)
 #define M1_Q_KI_GAIN (0.0962702F)
 #define M1_CLOOP_LIMIT (0.519615F)
-/* SPEEDLOOP */
+/* SPEEDLOOP*/
 #define M1_SPEED_RAMP_UP (4.18879F)
 #define M1_SPEED_RAMP_DOWN (4.18879F)
 #define M1_SPEED_LOOP_HIGH_LIMIT (2.0F)
@@ -157,9 +163,6 @@
 #define M1_TO_SPEED_IIR_B1 (0.111635F)
 #define M1_TO_SPEED_IIR_A1 (0.776730F)
 /* USER INPUT START */
-
-
-
 #define AA 1
 #define BB 3
 #define CC 4

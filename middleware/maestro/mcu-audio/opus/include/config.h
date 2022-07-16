@@ -24,7 +24,7 @@
 /* #undef DISABLE_UPDATE_DRAFT */
 
 /* Assertions */
-#define ENABLE_ASSERTIONS 
+#define ENABLE_ASSERTIONS
 
 /* Hardening */
 #define ENABLE_HARDENING 1
@@ -90,7 +90,7 @@
 /* #define HAVE___MALLOC_HOOK 1 */
 
 /* Make use of ARM asm optimization */
-/* #undef OPUS_ARM_ASM */
+/* #define OPUS_ARM_ASM */
 
 /* Use generic ARMv4 inline asm optimizations */
 /* #undef OPUS_ARM_INLINE_ASM */
@@ -206,7 +206,9 @@
 /* Define to the equivalent of the C99 'restrict' keyword, or to
    nothing if this is not supported.  Do not define if restrict is
    supported directly.  */
+#ifndef restrict
 #define restrict __restrict
+#endif
 
 
 #endif

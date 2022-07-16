@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -302,7 +302,7 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gaa3cc9c79870a53a1419015cd9b03f4a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa3cc9c79870a53a1419015cd9b03f4a3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gaa3cc9c79870a53a1419015cd9b03f4a3">FSL_QTMR_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 2))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#gaa3cc9c79870a53a1419015cd9b03f4a3">FSL_QTMR_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00266.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 1, 0))</td></tr>
 <tr class="memdesc:gaa3cc9c79870a53a1419015cd9b03f4a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version. <br/></td></tr>
 <tr class="separator:gaa3cc9c79870a53a1419015cd9b03f4a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -344,6 +344,12 @@ Read and Write the timer period</h2></td></tr>
 <tr class="memitem:ga1d1fe996963cd527aabb034888e994b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga1d1fe996963cd527aabb034888e994b4">QTMR_SetTimerPeriod</a> (TMR_Type *base, <a class="el" href="a00059.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint16_t ticks)</td></tr>
 <tr class="memdesc:ga1d1fe996963cd527aabb034888e994b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the timer period in ticks.  <a href="#ga1d1fe996963cd527aabb034888e994b4">More...</a><br/></td></tr>
 <tr class="separator:ga1d1fe996963cd527aabb034888e994b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9764da43797074b65a4689a6df999cba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga9764da43797074b65a4689a6df999cba">QTMR_SetCompareValue</a> (TMR_Type *base, <a class="el" href="a00059.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint16_t ticks)</td></tr>
+<tr class="memdesc:ga9764da43797074b65a4689a6df999cba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set compare value.  <a href="#ga9764da43797074b65a4689a6df999cba">More...</a><br/></td></tr>
+<tr class="separator:ga9764da43797074b65a4689a6df999cba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3db9e42ab0f483438a720139353937f7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga3db9e42ab0f483438a720139353937f7">QTMR_SetLoadValue</a> (TMR_Type *base, <a class="el" href="a00059.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel, uint16_t value)</td></tr>
+<tr class="memdesc:ga3db9e42ab0f483438a720139353937f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set load value.  <a href="#ga3db9e42ab0f483438a720139353937f7">More...</a><br/></td></tr>
+<tr class="separator:ga3db9e42ab0f483438a720139353937f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1691975f2406bcaf64a24a065dd2c679"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00059.html#ga1691975f2406bcaf64a24a065dd2c679">QTMR_GetCurrentTimerCount</a> (TMR_Type *base, <a class="el" href="a00059.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a> channel)</td></tr>
 <tr class="memdesc:ga1691975f2406bcaf64a24a065dd2c679"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the current timer counting value.  <a href="#ga1691975f2406bcaf64a24a065dd2c679">More...</a><br/></td></tr>
 <tr class="separator:ga1691975f2406bcaf64a24a065dd2c679"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1219,6 +1225,96 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
     <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
     <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
     <tr><td class="paramname">ticks</td><td>Timer period in units of ticks </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga9764da43797074b65a4689a6df999cba"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void QTMR_SetCompareValue </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>ticks</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function sets the value used for comparison with the counter value.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">ticks</td><td>Timer period in units of ticks. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga3db9e42ab0f483438a720139353937f7"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void QTMR_SetLoadValue </td>
+          <td>(</td>
+          <td class="paramtype">TMR_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00059.html#ga2493eb75ca8a9be865abc69c9c94c756">qtmr_channel_selection_t</a>&#160;</td>
+          <td class="paramname"><em>channel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function sets the value used to initialize the counter after a counter comparison.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Quad Timer peripheral base address </td></tr>
+    <tr><td class="paramname">channel</td><td>Quad Timer channel number </td></tr>
+    <tr><td class="paramname">value</td><td>Load register initialization value. </td></tr>
   </table>
   </dd>
 </dl>

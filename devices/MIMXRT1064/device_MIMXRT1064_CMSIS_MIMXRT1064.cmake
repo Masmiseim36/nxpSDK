@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("device_MIMXRT1064_CMSIS component is included.")
 
 

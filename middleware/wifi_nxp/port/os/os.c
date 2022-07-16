@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 #include <inttypes.h>
@@ -72,7 +56,7 @@ int os_timer_create(os_timer_t *timer_t,
 {
     int auto_reload = (reload == OS_TIMER_ONE_SHOT) ? pdFALSE : pdTRUE;
 
-    *timer_t = xTimerCreate(name, ticks, auto_reload, cb_arg, call_back);
+    *timer_t = xTimerCreate(name, ticks, (UBaseType_t)auto_reload, cb_arg, call_back);
     if (*timer_t == NULL)
     {
         return -WM_FAIL;
@@ -91,7 +75,7 @@ int os_queue_create(os_queue_t *qhandle, const char *name, int msgsize, os_queue
     /** The size of the pool divided by the max. message size gives the
      * max. number of items in the queue. */
     os_dprintf(" Queue Create: name = %s poolsize = %d msgsize = %d\r\n", name, poolname->size, msgsize);
-    *qhandle = xQueueCreate(poolname->size / msgsize, msgsize);
+    *qhandle = xQueueCreate((UBaseType_t)(poolname->size / msgsize), (UBaseType_t)msgsize);
     os_dprintf(" Queue Create: handle %p\r\n", *qhandle);
     if (*qhandle != NULL)
     {

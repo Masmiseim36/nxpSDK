@@ -36,6 +36,10 @@ void BOARD_InitNetwork(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+/* Binary semaphore to block thread until valid IPv4 address is obtained from DHCP */
+SemaphoreHandle_t BOARD_sem_ipv4_addr_valid;
+/* Memory for lwIP stack needed registration of callback */
+NETIF_DECLARE_EXT_CALLBACK(netif_ext_cb_mem);
 
 /*******************************************************************************
  * Code
@@ -56,9 +60,29 @@ void delay(void)
 }
 
 
+static void netif_ext_cb(struct netif *cb_netif, netif_nsc_reason_t reason, const netif_ext_callback_args_t *args)
+{
+    (void)cb_netif;
+    (void)args;
+
+    if (0U != (reason & (netif_nsc_reason_t)LWIP_NSC_IPV4_ADDR_VALID))
+    {
+        (void)xSemaphoreGive(BOARD_sem_ipv4_addr_valid);
+    }
+}
+
+void tcpip_init_callback(void *arg)
+{
+    /* register lwIP callback */
+    netif_add_ext_callback(&netif_ext_cb_mem, netif_ext_cb);
+}
+
 void BOARD_InitNetwork(void)
 {
     struct dhcp *dhcp;
+
+    /* create semaphore */
+    BOARD_sem_ipv4_addr_valid = xSemaphoreCreateBinary();
 
     BOARD_InitLwip();
 
@@ -66,10 +90,7 @@ void BOARD_InitNetwork(void)
 
     dhcp = (struct dhcp *)netif_get_client_data(&lwIP_netif0, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
 
-    while (dhcp->state != DHCP_STATE_BOUND)
-    {
-        vTaskDelay(1000);
-    }
+    xSemaphoreTake(BOARD_sem_ipv4_addr_valid, portMAX_DELAY);
 
     if (dhcp->state == DHCP_STATE_BOUND)
     {

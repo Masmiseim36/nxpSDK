@@ -545,7 +545,11 @@ static int prvInitializeClientCredential( TLSContext_t * pxCtx )
 #if SSS_HAVE_SSS
     char keyLabel[20];
     memset(keyLabel, 0, sizeof(keyLabel));
-    snprintf(keyLabel, sizeof(keyLabel), "sss:%08lx", pex_sss_demo_tls_ctx->client_keyPair_index);
+    uint32_t sss_keyId = (uint32_t)((((pex_sss_demo_tls_ctx->client_keyPair_index >> (8 * 0)) & 0x000000FF) << (8 * 3)) |
+                            (((pex_sss_demo_tls_ctx->client_keyPair_index >> (8 * 1)) & 0x000000FF) << (8 * 2)) |
+                            (((pex_sss_demo_tls_ctx->client_keyPair_index >> (8 * 2)) & 0x000000FF) << (8 * 1)) |
+                            (((pex_sss_demo_tls_ctx->client_keyPair_index >> (8 * 3)) & 0x000000FF) << (8 * 0)));
+    snprintf(keyLabel, sizeof(keyLabel), "sss:%08lx", sss_keyId);
     char * pcKeyLabelName = (char * ) &keyLabel[0];
 #else
     char * pcKeyLabelName = pkcs11configLABEL_DEVICE_PRIVATE_KEY_FOR_TLS;
@@ -611,7 +615,11 @@ static int prvInitializeClientCredential( TLSContext_t * pxCtx )
 #if SSS_HAVE_SSS
     char certLabel[20];
     memset(certLabel, 0, sizeof(certLabel));
-    snprintf(certLabel, sizeof(certLabel), "sss:%08lx", pex_sss_demo_tls_ctx->client_cert_index);
+    sss_keyId = (uint32_t)((((pex_sss_demo_tls_ctx->client_cert_index >> (8 * 0)) & 0x000000FF) << (8 * 3)) |
+                            (((pex_sss_demo_tls_ctx->client_cert_index >> (8 * 1)) & 0x000000FF) << (8 * 2)) |
+                            (((pex_sss_demo_tls_ctx->client_cert_index >> (8 * 2)) & 0x000000FF) << (8 * 1)) |
+                            (((pex_sss_demo_tls_ctx->client_cert_index >> (8 * 3)) & 0x000000FF) << (8 * 0)));
+    snprintf(certLabel, sizeof(certLabel), "sss:%08lx", sss_keyId);
     char * pcCertLabelName = (char * ) &certLabel[0];
 #else
     char * pcCertLabelName = pkcs11configLABEL_DEVICE_CERTIFICATE_FOR_TLS;

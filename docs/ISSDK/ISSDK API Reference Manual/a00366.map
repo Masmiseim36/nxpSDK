@@ -1,4 +1,4 @@
-<map id="driverexamples/fxps7250d4/dbap_app.c" name="driverexamples/fxps7250d4/dbap_app.c">
-<area shape="rect" id="node6" href="$a00500.html" title="ARM Systick Utilities. " alt="" coords="496,95,603,121"/>
-<area shape="rect" id="node9" href="$a00023.html" title="The dbap_drv.h file describes the DBAP driver interface and structures. " alt="" coords="854,95,938,121"/>
+<map id="driverexamples/fxls896xaf/fxls896xaf_interrupt.c" name="driverexamples/fxls896xaf/fxls896xaf_interrupt.c">
+<area shape="rect" id="node9" href="$a00068.html" title="The fxls896x_drv.h file describes the FXLS8964/67AF driver interface and structures. " alt="" coords="843,95,947,121"/>
+<area shape="rect" id="node10" href="$a00533.html" title="ARM Systick Utilities. " alt="" coords="971,95,1077,121"/>
 </map>

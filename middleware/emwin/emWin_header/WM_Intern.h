@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WM_Intern.h
@@ -84,7 +84,11 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 
 #define WM_SF_CONST_OUTLINE     WM_CF_CONST_OUTLINE       /* Constant outline.*/
 
-#define WM_H2P(hWin)            ((WM_Obj*)GUI_ALLOC_h2p(hWin))
+#if WM_VALIDATE_HANDLE
+  #define WM_H2P(hWin)            ((WM_Obj*)WM__GetValidPointer(hWin))
+#else
+  #define WM_H2P(hWin)            ((WM_Obj*)GUI_ALLOC_h2p(hWin))
+#endif
 
 
 #if GUI_DEBUG_LEVEL  >= GUI_DEBUG_LEVEL_LOG_WARNINGS
@@ -236,6 +240,15 @@ void    WM__SetLastTouched          (WM_HWIN hWin);
   void    WM__InvalidateDrawAndDescs(WM_HWIN hWin);
 #else
   #define WM__InvalidateDrawAndDescs(hWin)
+#endif
+
+/*********************************************************************
+*
+*       Validate WM handles
+*/
+#if WM_VALIDATE_HANDLE
+  void   * WM__GetValidPointer(WM_HWIN hWin);
+  WM_Obj * WM__LockValid      (WM_HWIN hWin);
 #endif
 
 /* Static memory devices */

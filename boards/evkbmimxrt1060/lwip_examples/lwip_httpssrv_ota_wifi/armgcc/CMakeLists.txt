@@ -76,19 +76,21 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt1062
     ${ProjDirPath}/../../../../../middleware/mbedtls
-    ${ProjDirPath}/../../../../../middleware/lwip
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
-    ${ProjDirPath}/../../../../../middleware/wifi_nxp
-    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/gpio
+    ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../components/osa
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
 )
 
 # include modules
@@ -104,23 +106,15 @@ include(middleware_mbedtls_port_ksdk_MIMXRT1062)
 
 include(middleware_mbedtls_rt_MIMXRT1062)
 
-include(middleware_lwip_apps_httpssrv_MIMXRT1062)
-
-include(driver_clock_MIMXRT1062)
+include(middleware_wifi_wifidriver_MIMXRT1062)
 
 include(middleware_freertos-kernel_MIMXRT1062)
 
-include(middleware_freertos-kernel_heap_3_MIMXRT1062)
-
-include(middleware_lwip_MIMXRT1062)
-
 include(utility_debug_console_MIMXRT1062)
 
-include(middleware_wifi_MIMXRT1062)
+include(middleware_wifi_sdio_MIMXRT1062)
 
-include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1062)
-
-include(driver_usdhc_MIMXRT1062)
+include(middleware_wifi_fwdnld_MIMXRT1062)
 
 include(middleware_sdmmc_sdio_MIMXRT1062)
 
@@ -129,6 +123,18 @@ include(middleware_sdmmc_common_MIMXRT1062)
 include(middleware_sdmmc_host_usdhc_MIMXRT1062)
 
 include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1062)
+
+include(component_igpio_adapter_MIMXRT1062)
+
+include(middleware_lwip_apps_httpssrv_MIMXRT1062)
+
+include(driver_clock_MIMXRT1062)
+
+include(middleware_freertos-kernel_heap_3_MIMXRT1062)
+
+include(middleware_lwip_MIMXRT1062)
+
+include(middleware_wifi_MIMXRT1062)
 
 include(driver_common_MIMXRT1062)
 
@@ -152,6 +158,8 @@ include(utility_assert_MIMXRT1062)
 
 include(driver_igpio_MIMXRT1062)
 
+include(component_silicon_id_MIMXRT1062)
+
 include(CMSIS_Include_core_cm_MIMXRT1062)
 
 include(component_mflash_common_MIMXRT1062)
@@ -160,17 +168,19 @@ include(driver_dcp_MIMXRT1062)
 
 include(driver_trng_MIMXRT1062)
 
-include(middleware_lwip_apps_httpsrv_MIMXRT1062)
-
 include(middleware_freertos-kernel_extension_MIMXRT1062)
 
-include(middleware_wifi_wifidriver_MIMXRT1062)
-
-include(middleware_wifi_fwdnld_MIMXRT1062)
+include(middleware_wifi_sdio-2_MIMXRT1062)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT1062)
 
 include(component_osa_free_rtos_MIMXRT1062)
+
+include(driver_usdhc_MIMXRT1062)
+
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT1062)
+
+include(middleware_lwip_apps_httpsrv_MIMXRT1062)
 
 include(utilities_misc_utilities_MIMXRT1062)
 

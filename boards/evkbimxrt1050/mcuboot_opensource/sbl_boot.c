@@ -22,9 +22,11 @@
 #include "bootutil/bootutil_log.h"
 #include "bootutil/image.h"
 #include "bootutil/bootutil.h"
-#include "sysflash.h"
+#include "sysflash/sysflash.h"
 #include "flash_map.h"
 #include "bootutil_priv.h"
+
+#include "mflash_drv.h"
 
 /*******************************************************************************
  * Definitions
@@ -35,17 +37,6 @@
 #define BOOTLOADER_VERSION STR(MAJOR_VERSION) VERSION_SPACER STR(MINOR_VERSION) VERSION_SPACER STR(REVISE_VERSION)
 
 #define IMAGE_TRAILER_SIZE sizeof(struct image_trailer)
-
-typedef enum
-{
-    Temporary_mode = 0U, /*!< If do not set the flag in app, the next reset will cause the image swap back */
-    Permanent_mode = 1U, /*!< The image swap is irreversible */
-} image2_mode_t;
-
-#ifdef TEST_FUNCTION
-/* write the image trailer at the end of the flash partition */
-void enable_image(image2_mode_t mode);
-#endif
 
 #ifdef SINGLE_IMAGE
 int boot_single_go(struct boot_rsp *rsp);
@@ -65,15 +56,10 @@ int boot_remap_go(struct boot_rsp *rsp);
 #ifdef CONFIG_BOOT_SIGNATURE
 status_t CRYPTO_InitHardware(void);
 #endif
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-flash_ops_s mcuboot_flash = {.flash_init  = sbl_flash_init,
-                             .flash_erase = sbl_flash_erase,
-                             .flash_read  = sbl_flash_read,
-                             .flash_write = sbl_flash_write,
-                             .align_val   = 1,
-                             .erased_val  = 0xFF};
 
 struct image_trailer image_trailer2;
 /*******************************************************************************
@@ -274,11 +260,8 @@ int sbl_boot_main(void)
     CRYPTO_InitHardware();
 #endif
 
-    sbl_flash_init();
+    mflash_drv_init();
 
-#ifdef TEST_FUNCTION
-    enable_image(Permanent_mode);
-#endif
     BOOT_LOG_INF("Bootloader Version %s", BOOTLOADER_VERSION);
     os_heap_init();
 
@@ -317,29 +300,3 @@ void cleanup(void)
 #endif
     SBL_DisablePeripherals();
 }
-
-#ifdef TEST_FUNCTION
-/* write the image trailer at the end of the flash partition */
-void enable_image(image2_mode_t mode)
-{
-    uint32_t off;
-    uint32_t erase_off;
-
-    memset((void *)&image_trailer2, 0xff, IMAGE_TRAILER_SIZE);
-    memcpy((void *)image_trailer2.magic, boot_img_magic, sizeof(boot_img_magic));
-
-    if (mode == Permanent_mode)
-    {
-        image_trailer2.image_ok = BOOT_FLAG_SET;
-    }
-    off = FLASH_AREA_IMAGE_2_OFFSET + FLASH_AREA_IMAGE_2_SIZE - IMAGE_TRAILER_SIZE;
-
-    erase_off = FLASH_AREA_IMAGE_2_OFFSET + FLASH_AREA_IMAGE_2_SIZE - FLASH_AREA_IMAGE_SECTOR_SIZE;
-
-    sbl_flash_erase(erase_off, FLASH_AREA_IMAGE_SECTOR_SIZE);
-
-    PRINTF("Write OK flag: off = 0x%x\r\n", off);
-
-    sbl_flash_write(off, (void *)&image_trailer2, IMAGE_TRAILER_SIZE);
-}
-#endif

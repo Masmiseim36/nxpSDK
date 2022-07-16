@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_lwip_apps_httpd_support component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

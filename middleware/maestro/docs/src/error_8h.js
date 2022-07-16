@@ -1,0 +1,26 @@
+var error_8h =
+[
+    [ "ERRCODE_NO_ERROR", "error_8h.html#a525ed06b46426bec5f5d603ce26b0bd0", null ],
+    [ "ERRCODE_TRY_AGAIN", "error_8h.html#a0276b49fcb893fc64e2aac5c9571a415", null ],
+    [ "ERRCODE_INVALID_ARGUMENT", "error_8h.html#ab2f31bcc2d1e1eb61dde6b386e2780b0", null ],
+    [ "ERRCODE_OUT_OF_MEMORY", "error_8h.html#a19e70890c2aec203f291e595155633c7", null ],
+    [ "ERRCODE_OUT_OF_SPACE", "error_8h.html#a2e838effe9b31927b0ff3cbb779cb5ae", null ],
+    [ "ERRCODE_GENERAL_ERROR", "error_8h.html#a9de97ce7b81ab895a78ddcf18e393771", null ],
+    [ "ERRCODE_DEADLOCK", "error_8h.html#a5581d12a6262b53df1558427ba36e35d", null ],
+    [ "ERRCODE_NOT_SUPPORTED", "error_8h.html#ab727969ff2ff7c46090061ef15684506", null ],
+    [ "ERRCODE_BUSY", "error_8h.html#a0b348714f19d8765ae95c0fd9a245da7", null ],
+    [ "ERRCODE_PERMISSION_DENIED", "error_8h.html#a770fcea31404f65fcd4d3e8ac67c49ea", null ],
+    [ "ERRCODE_TIMED_OUT", "error_8h.html#a5f4aed4c558ef3ac58513fb547ba74ad", null ],
+    [ "ERRCODE_SYSTEM_LIMIT", "error_8h.html#af993366fc08712948165f50f053f7437", null ],
+    [ "ERRCODE_PARAMETER_EXISTS", "error_8h.html#a0be5f7656467e2a87bcf9e3c85e18a83", null ],
+    [ "ERRCODE_END_OF_DIRECTORY", "error_8h.html#a7bd790bea919ef5c8e1419faece1a97e", null ],
+    [ "ERRCODE_NOT_FOUND", "error_8h.html#a80e3bf3696e86e379a683f7ee169398b", null ],
+    [ "ERRCODE_UNKNOWN", "error_8h.html#ae8c6ed146c2cefa54e9ca89af1108986", null ],
+    [ "ERRCODE_INTERNAL", "error_8h.html#ad5f9bc0a6f343a8cf343550d4043767a", null ],
+    [ "ERRCODE_OVERFLOW", "error_8h.html#aa95cb5cef9070315b7c994f45e0a963e", null ],
+    [ "ERRCODE_MSG_FAILURE", "error_8h.html#a7fd826533685f0617569aa427f13764e", null ],
+    [ "ERRCODE_THREAD_FAILURE", "error_8h.html#aa8cc018df8731c5589ac83c25281acea", null ],
+    [ "ERRCODE_MUTEX_FAILURE", "error_8h.html#a723bb9f336a558bfc805b21253275f0a", null ],
+    [ "ERRCODE_DEVICE_ELEMENT_EXISTS", "error_8h.html#a6f4d52ef5f4133b23ecdcb95d994e509", null ],
+    [ "ERRCODE_NOT_SEEKABLE", "error_8h.html#acb612291ec09d633e06292fcb23863c3", null ]
+];

@@ -38,15 +38,17 @@ public:
     void EndEvent(uint32_t event_handle) {
         int64_t end_time = os_clock_now() - start_time_;
         server_->run_ns += end_time;
+#ifdef DEBUG
         printf("%s - %s took %lld us\r\n", server_->output.name[server_->output.num_outputs], event_tag_, (int64_t)(end_time));
-        server_->output.timing[server_->output.num_outputs] += (end_time/1e6);
+#endif
+        server_->output.timing[server_->output.num_outputs] += end_time;
         server_->output.type[server_->output.num_outputs] = (char*)event_tag_;
         server_->output.num_outputs++;}
 
 private:
     NNServer* server_;
-    int64_t start_time_;
-    const char* event_tag_;
+    int64_t start_time_ = { 0 };
+    const char* event_tag_ = { nullptr };
     TF_LITE_REMOVE_VIRTUAL_DELETE;
 };
 
@@ -119,6 +121,31 @@ int Model_Setup(NNServer* server) {
         }
     }
 
+    server->input.inputs_size = subgraph->inputs()->size();
+    for (int i=0; i < server->input.inputs_size; i++){
+        int idx = (int)(*subgraph->inputs())[i];
+        auto tensor = (*tensors)[idx];
+        server->input.name[i] = (char*) tensor->name ()->c_str();
+        server->input.shape_data[i] = tensor->shape()->data();
+        server->input.shape_size[i] = tensor->shape()->size();
+        switch (tensor->type()){
+        case tflite::TensorType_FLOAT32:
+            strcpy(server->input.data_type [i], "FLOAT32");
+            break;
+        case tflite::TensorType_UINT8:
+            strcpy(server->input.data_type [i], "UINT8");
+            break;
+        case tflite::TensorType_INT8:
+            strcpy(server->input.data_type [i], "INT8");
+            break;
+        case tflite::TensorType_INT16:
+            strcpy(server->input.data_type [i], "INT16");
+            break;
+        default:
+            break;
+        }
+    }
+
     server->output.outputs_size = subgraph->outputs()->size();
     for (int i = 0; i < server->output.outputs_size; i++)
     {
@@ -131,6 +158,9 @@ int Model_Setup(NNServer* server) {
             }
         }
     }
+
+    server->inference_count = 1;
+    Model_RunInference (server);
     return 0;
 }
 
@@ -139,7 +169,8 @@ int Model_RunInference(NNServer* server) {
     tflite::AllOpsResolver resolver;
 
     // Build an interpreter to run the model with.
-    tflite::MicroInterpreter static_interpreter(model, resolver, tensor_arena, kTensorArenaSize, &micro_error_reporter, &profiler);
+    tflite::MicroInterpreter static_interpreter(
+					model, resolver, tensor_arena, kTensorArenaSize, &micro_error_reporter, nullptr, &profiler);
     interpreter = &static_interpreter;
 
     // Allocate memory from the tensor_arena for the model's tensors.
@@ -149,13 +180,37 @@ int Model_RunInference(NNServer* server) {
         printf("tflite allocate tensors failed.\r\n");
         return 1;
     }
-
-    // Obtain pointers to the model's input and output tensors.
     input = interpreter->input(0);
     output = interpreter->output(0);
 
+    for (int i=0; i<interpreter->inputs_size(); i++){
+        server->input.scale [i] = interpreter->input(i)->params.scale;
+        server->input.zero_point [i] = interpreter->input(i)->params.zero_point;
+    }
+
+    for (int i=0; i<interpreter->outputs_size(); i++){
+        server->output.scale [i] = interpreter->output(i)->params.scale;
+        server->output.zero_point [i] = interpreter->output(i)->params.zero_point;
+    }
+
+    for (int i=0; i<interpreter->inputs_size(); i++){
+        if ( server->input.input_data [i] ){
+            memcpy ( interpreter->input(i)->data.raw, server->input.input_data[i], interpreter->input(i)->bytes);
+            free (server->input.input_data [i]);
+            server->input.input_data[i] = nullptr;
+        }
+    }
+
+    if (server->image_upload_data){
+        MODEL_ConvertInput(server->image_upload_data,
+                           input->dims->data[1] * input->dims->data[3] * input->dims->data[2], input->type);
+        free(server->image_upload_data);
+        server->image_upload_data = nullptr;
+    }
+
     server->input_dims_data = input->dims->data;
 
+    // Obtain pointers to the model's input and output tensors.
     int64_t run_ns = 0;
     for(int i=0; i< server->output.num_outputs; i++)
     {
@@ -164,9 +219,9 @@ int Model_RunInference(NNServer* server) {
     for(int i = 1; i <= server->inference_count; i++)
     {
         server->output.num_outputs = 0;
+#ifdef DEBUG
         printf("loop %d: \r\n", i);
-        MODEL_ConvertInput(server->image_upload_data,
-                           input->dims->data[1] * input->dims->data[3] * input->dims->data[2], input->type);
+#endif
         server->run_ns = 0;
         // Run inference, and report any error
         TfLiteStatus invoke_status = interpreter->Invoke();
@@ -175,7 +230,9 @@ int Model_RunInference(NNServer* server) {
             return -1;
         }
 
-        printf("run ms: %f ", (float)(server->run_ns/1e6));
+#ifdef DEBUG
+        printf("run ms: %f ", (float)(server->run_ns/1e3));
+#endif
 
         run_ns += server->run_ns;
 
@@ -221,7 +278,6 @@ int Model_RunInference(NNServer* server) {
 
         MODEL_GetTopN(output->data.uint8, output->dims->data[output->dims->size - 1], outputType, 1, 0, topResults);
 
-        printf("index %d, score: %f \r\n", topResults[0].index, topResults[0].score);
         server->timing.run = topResults[0].index;
     }
 

@@ -67,6 +67,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../components/ft5406_rt
+    ${ProjDirPath}/../../../../../components/gt911
+    ${ProjDirPath}/../../../../../components/video
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/lvgl
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
@@ -76,6 +78,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -89,6 +92,10 @@ include(driver_ft5406_rt_MIMXRT1062)
 include(driver_pxp_MIMXRT1062)
 
 include(driver_cache_armv7_m7_MIMXRT1062)
+
+include(driver_gt911_MIMXRT1062)
+
+include(driver_video-common_MIMXRT1062)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1062)
 
@@ -123,6 +130,8 @@ include(driver_igpio_MIMXRT1062)
 include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
+
+include(component_silicon_id_MIMXRT1062)
 
 include(CMSIS_Include_core_cm_MIMXRT1062)
 

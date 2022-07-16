@@ -2681,6 +2681,7 @@ struct bt_a2dp *bt_a2dp_connect(struct bt_conn *conn)
         ethermind_a2dp_avdtp_notify_cb
     );
 
+    (void)memset(&info, 0, sizeof(info));
     bt_conn_get_info(conn, &info);
     if (info.type == BT_CONN_TYPE_LE)
     {

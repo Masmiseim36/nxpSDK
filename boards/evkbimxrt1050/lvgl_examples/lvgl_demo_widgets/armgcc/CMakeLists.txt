@@ -33,15 +33,14 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../lvgl_demo_widgets.c"
 "${ProjDirPath}/../lv_conf.h"
-"${ProjDirPath}/../lv_demo_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/lv_demo_widgets.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/lv_demo_widgets.h"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/assets/img_clothes.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/assets/img_demo_widgets_avatar.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/assets/img_lvgl_logo.c"
-"${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/lv_demo.h"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/lv_demo_widgets.h"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_clothes.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_demo_widgets_avatar.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets/img_lvgl_logo.c"
+"${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/lv_demos.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
@@ -55,15 +54,17 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
-    ${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets
-    ${ProjDirPath}/../../../../../middleware/lvgl/lv_examples/src/lv_demo_widgets/assets
-    ${ProjDirPath}/../../../../../middleware/lvgl/lv_examples
+    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets
+    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos/widgets/assets
+    ${ProjDirPath}/../../../../../middleware/lvgl/lvgl/demos
     ${ProjDirPath}/../..
 )
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../components/ft5406_rt
+    ${ProjDirPath}/../../../../../components/gt911
+    ${ProjDirPath}/../../../../../components/video
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/lvgl
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
@@ -73,6 +74,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -86,6 +88,10 @@ include(driver_ft5406_rt_MIMXRT1052)
 include(driver_pxp_MIMXRT1052)
 
 include(driver_cache_armv7_m7_MIMXRT1052)
+
+include(driver_gt911_MIMXRT1052)
+
+include(driver_video-common_MIMXRT1052)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1052)
 
@@ -120,6 +126,8 @@ include(driver_igpio_MIMXRT1052)
 include(driver_xip_device_MIMXRT1052)
 
 include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
+
+include(component_silicon_id_MIMXRT1052)
 
 include(CMSIS_Include_core_cm_MIMXRT1052)
 

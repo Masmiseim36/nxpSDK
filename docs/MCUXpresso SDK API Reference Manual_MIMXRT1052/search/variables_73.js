@@ -110,6 +110,6 @@ var searchData=
   ['swapconfig',['swapConfig',['../a00019.html#a2d15c1d34f59af1fbc90c82662f1b2c5',1,'dcp_handle_t']]],
   ['syncmode',['syncMode',['../a00060.html#a1c625b880a5721c9bf58ab081c08fea5',1,'sai_config_t::syncMode()'],['../a00060.html#a7663dbc354c343623c7f7569f6595390',1,'sai_transceiver_t::syncMode()']]],
   ['sysclkfreq',['sysclkFreq',['../a00082.html#a351c89e7074a75ea90e4a69b70721a7a',1,'wm8960_master_sysclk_config_t']]],
-  ['sysclksource',['sysClkSource',['../a00017.html#a545d9de5fb4daa0eeea6e23ddab53e00',1,'da7212_config_t::sysClkSource()'],['../a00081.html#a425f10e0fb06972de639c70355365993',1,'wm8904_config_t::sysClkSource()'],['../a00082.html#a9d65bbccb784d7bd1850e0c4bd505469',1,'wm8960_master_sysclk_config_t::sysclkSource()']]],
+  ['sysclksource',['sysclkSource',['../a00082.html#a9d65bbccb784d7bd1850e0c4bd505469',1,'wm8960_master_sysclk_config_t::sysclkSource()'],['../a00017.html#a545d9de5fb4daa0eeea6e23ddab53e00',1,'da7212_config_t::sysClkSource()'],['../a00081.html#a425f10e0fb06972de639c70355365993',1,'wm8904_config_t::sysClkSource()']]],
   ['systemspecificationversion',['systemSpecificationVersion',['../a00051.html#abf942a027033d294d03681d658bf38c5',1,'mmc_csd_t']]]
 ];

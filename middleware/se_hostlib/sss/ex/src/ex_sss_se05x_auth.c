@@ -460,10 +460,10 @@ static sss_status_t ex_sss_se05x_prepare_host_platformscp(
     }
 
     /* Init Allocate DEK Static Key */
-    //status = Alloc_Scp03key_toSE05xAuthctx(&pStatic_ctx->Dek, pKs, MAKE_TEST_ID(__LINE__));
-    //if (status != kStatus_SSS_Success) {
-    //    return status;
-    //}
+    status = Alloc_Scp03key_toSE05xAuthctx(&pStatic_ctx->Dek, pKs, MAKE_TEST_ID(__LINE__));
+    if (status != kStatus_SSS_Success) {
+        return status;
+    }
     ///* Set DEK Static Key */
     //status = sss_host_key_store_set_key(pKs, &pStatic_ctx->Dek, KEY_DEK, sizeof(KEY_DEK), sizeof(KEY_DEK) * 8, NULL, 0);
     //if (status != kStatus_SSS_Success) {

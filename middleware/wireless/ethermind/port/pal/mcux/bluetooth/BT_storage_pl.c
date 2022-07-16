@@ -19,17 +19,19 @@
 
 #ifdef BT_STORAGE
 
-#define CONFIG_NVM_SIZE (2U * 1024U)
+#define CONFIG_NVM_SIZE (3U * 1024U)
 
 /* --------------------------------------------- External Global Variables */
 
 /* --------------------------------------------- Exported Global Variables */
 
 /* --------------------------------------------- Static Global Variables */
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 /* Storage File Handle array */
 DECL_STATIC lfs_file_t * fp[STORAGE_NUM_TYPES];
 
 DECL_STATIC lfs_file_t lfs_file[STORAGE_NUM_TYPES];
+#endif /* CONFIG_BT_SETTINGS */
 
 /* Storage File Name array */
 DECL_STATIC UCHAR * fn[STORAGE_NUM_TYPES] =
@@ -40,7 +42,9 @@ DECL_STATIC UCHAR * fn[STORAGE_NUM_TYPES] =
 #endif /* STORAGE_RETENTION_SUPPORT */
 };
 
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 DECL_STATIC lfs_t * lfs;
+#endif /* CONFIG_BT_SETTINGS */
 
 #if (STORAGE_SKEY_SIZE != 0)
 /* Storage Signature Key array */
@@ -69,7 +73,9 @@ static volatile bool g_nvWriteBackState[STORAGE_NUM_TYPES];
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
 static void storage_idle_task(osa_task_param_t arg)
 {
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
     int err;
+#endif
     osa_status_t ret;
     while (1)
     {
@@ -82,6 +88,7 @@ static void storage_idle_task(osa_task_param_t arg)
                 {
                     g_nvWriteBackState[i] = false;
 
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
                     err = lfs_file_open (lfs, &lfs_file[i], (CHAR *)fn[i], LFS_O_WRONLY | LFS_O_CREAT);
                     if (err >= 0)
                     {
@@ -89,6 +96,7 @@ static void storage_idle_task(osa_task_param_t arg)
                         assert(err >= 0);
                         (void)lfs_file_close(lfs, &lfs_file[i]);
                     }
+#endif /* CONFIG_BT_SETTINGS */
                 }
             }
         }
@@ -98,11 +106,13 @@ static void storage_idle_task(osa_task_param_t arg)
 
 void storage_bt_init_pl (void)
 {
-    UCHAR i;
+
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
     osa_status_t ret;
 #endif
-
+    BT_IGNORE_UNUSED_PARAM(fn); /*fix build warning: set but never used.*/
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
+    UCHAR i;
     for (i = 0; i < STORAGE_NUM_TYPES; i++)
     {
         fp[i] = NULL;
@@ -111,6 +121,7 @@ void storage_bt_init_pl (void)
     lfs = lfs_pl_init();
 
     assert(NULL != lfs);
+#endif /* CONFIG_BT_SETTINGS */
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
     if (NULL == g_nvWriteBack)
@@ -137,6 +148,7 @@ void storage_bt_init_pl (void)
 
 void storage_bt_shutdown_pl (void)
 {
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
     UCHAR i;
 
     for (i = 0; i < STORAGE_NUM_TYPES; i++)
@@ -150,10 +162,12 @@ void storage_bt_shutdown_pl (void)
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
     s_nvLoadData = false;
 #endif
+#endif /* CONFIG_BT_SETTINGS */
 }
 
 API_RESULT storage_open_pl (UCHAR type, UCHAR mode)
 {
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
     int err;
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
@@ -196,6 +210,7 @@ API_RESULT storage_open_pl (UCHAR type, UCHAR mode)
     fp[type] = &lfs_file[type];
 
 #endif
+#endif /* CONFIG_BT_SETTINGS */
 
     return API_SUCCESS;
 }
@@ -231,7 +246,17 @@ INT16 storage_write_pl (UCHAR type, void * buffer, UINT16 size)
 
 #if ((defined STORAGE_IDLE_TASK_SYNC_ENABLE) && (STORAGE_IDLE_TASK_SYNC_ENABLE))
     nbytes = (INT16)size;
-    BT_mem_copy((NvmSaveBuf + nv_offset), buffer, size);
+    if ((nv_offset + nbytes) < CONFIG_NVM_SIZE)
+    {
+        BT_mem_copy((NvmSaveBuf + nv_offset), buffer, size);
+    }
+    else
+    {
+        /* assert here, the buffer length CONFIG_NVM_SIZE is less than the
+         * length of the write data.
+         */
+        assert(1 == 0);
+    }
     nv_offset += size;
 #else
     nbytes = 0;

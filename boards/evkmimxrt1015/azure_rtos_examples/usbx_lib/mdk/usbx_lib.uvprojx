@@ -350,7 +350,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1015DAF5A, MIMXRT, UX_OTG_SUPPORT, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, UX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -974,6 +974,11 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
             </File>
             <File>
+              <FileName>ux_device_class_printer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_printer.h</FilePath>
+            </File>
+            <File>
               <FileName>ux_device_class_rndis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_rndis.h</FilePath>
@@ -1102,16 +1107,6 @@
               <FileName>ux_pictbridge.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc/ux_pictbridge.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/usbx/common/core/src</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_system_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/src/ux_system_initialize.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1601,12 +1596,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1979,7 +1974,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1015DAF5A, MIMXRT, UX_OTG_SUPPORT, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, UX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2603,6 +2598,11 @@
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
             </File>
             <File>
+              <FileName>ux_device_class_printer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_printer.h</FilePath>
+            </File>
+            <File>
               <FileName>ux_device_class_rndis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_rndis.h</FilePath>
@@ -2731,16 +2731,6 @@
               <FileName>ux_pictbridge.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc/ux_pictbridge.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>azure-rtos/usbx/common/core/src</GroupName>
-          <Files>
-            <File>
-              <FileName>ux_system_initialize.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/usbx/common/core/src/ux_system_initialize.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3230,12 +3220,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>

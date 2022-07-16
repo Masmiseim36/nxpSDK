@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : WM.h
@@ -124,7 +124,19 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #define WM_LOCK()   GUI_LOCK()
 #define WM_UNLOCK() GUI_UNLOCK()
 
-#define WM_LOCK_H(hWin) (WM_Obj *)GUI_LOCK_H(hWin)
+/*********************************************************************
+*
+*       Validate window handles
+*/
+#ifndef WM_VALIDATE_HANDLE
+  #define WM_VALIDATE_HANDLE  (0)
+#endif
+
+#if WM_VALIDATE_HANDLE
+  #define WM_LOCK_H(hWin) (WM_Obj *)WM__LockValid(hWin)
+#else
+  #define WM_LOCK_H(hWin) (WM_Obj *)GUI_LOCK_H(hWin)
+#endif
 
 /*********************************************************************
 *
@@ -213,6 +225,7 @@ typedef struct {
   U32             Flags;       // To be used to enable motion support.
   GUI_PID_STATE * pState;
   GUI_HMEM        hContext;
+  int             Dest;
 } WM_MOTION_INFO;
 
 /*********************************************************************
@@ -228,16 +241,16 @@ typedef struct {
 *    to get the exact size of the window in unscaled state.
 */
 typedef struct {
-  I32       FactorMin;   // Minimum factor to be used (<< 16).
-  I32       FactorMax;   // Maximum factor to be used (<< 16).
-  U32       xSize;       // Native xSize of window to be zoomed in pixels.
-  U32       ySize;       // Native ySize of window to be zoomed in pixels.
-  U32       xSizeParent; /* xSize of parent window.                                  */
-  U32       ySizeParent; /* ySize of parent window.                                  */
-  I32       Factor0;     /* Primary factor when starting zoom gesture (<< 16).       */
-  int       xPos0;       /* Primary window position in x when starting the gesture.  */
-  int       yPos0;       /* Primary window position in y when starting the gesture.  */
-  GUI_POINT Center0;     /* Primary center point when starting the gesture.          */
+  I32       FactorMin;    // Minimum factor to be used (<< 16).
+  I32       FactorMax;    // Maximum factor to be used (<< 16).
+  U32       xSize;        // Native xSize of window to be zoomed in pixels.
+  U32       ySize;        // Native ySize of window to be zoomed in pixels.
+  U32       xSizeParent;  /* xSize of parent window.                                  */
+  U32       ySizeParent;  /* ySize of parent window.                                  */
+  I32       Factor0;      /* Primary factor when starting zoom gesture (<< 16).       */
+  int       xPos0;        /* Primary window position in x when starting the gesture.  */
+  int       yPos0;        /* Primary window position in y when starting the gesture.  */
+  GUI_POINT Center0;      /* Primary center point when starting the gesture.          */
 } WM_ZOOM_INFO;
 
 /*********************************************************************
@@ -248,14 +261,14 @@ typedef struct {
 *    Stores the information about a gesture.
 */
 typedef struct {
-  int            Flags;     // Information regarding gesture type. See \ref{MultiTouch gesture flags}.
-  GUI_POINT      Point;     // Relative movement to be processed by the application.
-  GUI_POINT      Center;    // Center point for zooming.
-  I32            Angle;     // Relative angle difference to be processed by the application.
-  I32            Factor;    // When starting a zoom gesture the application has to set the element to the initial value for the gesture. After that during
-                            // the gesture it contains the updated value to be processed by the application.
-  WM_ZOOM_INFO * pZoomInfo; // Pointer to be set to a valid location of a WM_ZOOM_INFO structure. The application should keep sure, that the
-                            // location remains valid during the gesture.
+  int            Flags;      // Information regarding gesture type. See \ref{MultiTouch gesture flags}.
+  GUI_POINT      Point;      // Relative movement to be processed by the application.
+  GUI_POINT      Center;     // Center point for zooming.
+  I32            Angle;      // Relative angle difference to be processed by the application.
+  I32            Factor;     // When starting a zoom gesture the application has to set the element to the initial value for the gesture. After that during
+                             // the gesture it contains the updated value to be processed by the application.
+  WM_ZOOM_INFO * pZoomInfo;  // Pointer to be set to a valid location of a WM_ZOOM_INFO structure. The application should keep sure, that the
+                             // location remains valid during the gesture.
 } WM_GESTURE_INFO;
 
 /*********************************************************************
@@ -277,13 +290,13 @@ typedef struct {
 *   Description
 *     Flags used for processing gesture input.
 */
-#define WM_GF_BEGIN  (1 << 0)    // This flag is set when sending the first message for the gesture.
-#define WM_GF_END    (1 << 1)    // A panning gesture is detected. The element "Point" of WM_GESTURE_INFO contains the relative movement in pixels to be processed by the application.
-#define WM_GF_PAN    (1 << 2)    // Rotation is active. The element "Angle" of WM_GESTURE_INFO contains the relative movement in degrees (<< 16) to be processed by the application.
-                                 // To be able to achieve a smooth rotation the value is passed in 1/65536 degrees. If movement should be considered simultaneously the element "Point" contains also the relative movement.
-#define WM_GF_ZOOM   (1 << 3)    // Zooming is active. When starting a zooming gesture the element "Factor" of WM_GESTURE_INFO has to be set to the initial value to be used by the gesture.
-                                 // During the gesture the same element contains the updated value to be processed by the application. If movement should be considered simultaneously the element "Point" contains also the relative movement.
-#define WM_GF_ROTATE (1 << 4)    // Set when releasing a touch point at the end of a gesture.
+#define WM_GF_BEGIN  (1 << 0)  // This flag is set when sending the first message for the gesture.
+#define WM_GF_END    (1 << 1)  // Set when releasing a touch point at the end of a gesture.
+#define WM_GF_PAN    (1 << 2)  // A panning gesture is detected. The element "Point" of WM_GESTURE_INFO contains the relative movement in pixels to be processed by the application.
+#define WM_GF_ZOOM   (1 << 3)  // Zooming is active. When starting a zooming gesture the element "Factor" of WM_GESTURE_INFO has to be set to the initial value to be used by the gesture.
+                               // During the gesture the same element contains the updated value to be processed by the application. If movement should be considered simultaneously the element "Point" contains also the relative movement.
+#define WM_GF_ROTATE (1 << 4)  // Rotation is active. The element "Angle" of WM_GESTURE_INFO contains the relative movement in degrees (<< 16) to be processed by the application.
+                               // To be able to achieve a smooth rotation the value is passed in 1/65536 degrees. If movement should be considered simultaneously the element "Point" contains also the relative movement.
 #define WM_GF_DTAP   (1 << 5)
 
 /*********************************************************************
@@ -384,6 +397,8 @@ typedef struct {
 #define WM_MOTION_MOVE       1   // Sent to a window to achieve custom moving operations.
 #define WM_MOTION_GETPOS     2   // Sent to get the current position of custom moving operations.
 #define WM_MOTION_GETCONTEXT 3
+#define WM_MOTION_GETDEST    4   // Sent to receive the desired position to move to
+#define WM_MOTION_GETSNAP    5   // Sent to receive the nearest snap position
 
 /*********************************************************************
 *
@@ -516,7 +531,14 @@ typedef struct {
 
 #define WM_CF_UNTOUCHABLE      (1UL << 22) // A window created with this flag routes its touch input to its parent. This makes a window 'untouchable'.
 
-#define WM_CF_APPWIZARD        (1UL << 23)
+#define WM_CF_APPWIZARD        (1UL << 23) // Window is an AppWizard object
+
+#define WM_CF_MEMDEV_CLIPPING  (1UL << 24) // Reactivates the window manager when drawing into memory devices created via WM_CF_MEMDEV. Otherwise
+                                           // it can happen that invisible windows (e.g. a window covered completely by another window) still draws
+                                           // its content into a memory device but the memory device doesn't get drawn to the LCD. With this flag
+                                           // these unnecessary drawing operations can be avoided. Attention, if there is a non transparent window
+                                           // in the foreground, which is smaller than the window in the back, tiling will be used and multiple paint
+                                           // events into the memory device will be performed!
 
 /*********************************************************************
 *
@@ -600,6 +622,7 @@ void    WM_ClrHasTrans               (WM_HWIN hWin);
 WM_HWIN WM_CreateWindow              (int x0, int y0, int xSize, int ySize, U32 Style, WM_CALLBACK * cb, int NumExtraBytes);
 WM_HWIN WM_CreateWindowAsChild       (int x0, int y0, int xSize, int ySize, WM_HWIN hWinParent, U32 Style, WM_CALLBACK* cb, int NumExtraBytes);
 void    WM_DeleteWindow              (WM_HWIN hWin);
+void    WM_DeleteWindowSecure        (WM_HWIN hWin);
 void    WM_DetachWindow              (WM_HWIN hWin);
 void    WM_EnableGestures            (WM_HWIN hWin, int OnOff);
 int     WM_GetHasTrans               (WM_HWIN hWin);

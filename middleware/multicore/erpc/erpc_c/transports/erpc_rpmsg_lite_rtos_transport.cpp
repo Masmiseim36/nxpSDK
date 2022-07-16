@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * Copyright 2021 ACRIOS Systems s.r.o.
  * All rights reserved.
  *
@@ -9,12 +9,9 @@
  */
 
 #include "erpc_rpmsg_lite_rtos_transport.h"
-
 #include "erpc_config_internal.h"
 
 #include "rpmsg_ns.h"
-
-#include <cassert>
 
 using namespace erpc;
 
@@ -167,9 +164,7 @@ erpc_status_t RPMsgRTOSTransport::init(uint32_t src_addr, uint32_t dst_addr, voi
                 ready_cb();
             }
 
-            while (0 == rpmsg_lite_is_link_up(s_rpmsg))
-            {
-            }
+            rpmsg_lite_wait_for_link_up(s_rpmsg);
 
 #if RL_USE_STATIC_API
             m_rpmsg_queue = rpmsg_queue_create(s_rpmsg, m_queue_stack, &m_queue_context);
@@ -249,7 +244,7 @@ erpc_status_t RPMsgRTOSTransport::receive(MessageBuffer *message)
     int32_t ret_val;
 
     ret_val = rpmsg_queue_recv_nocopy(s_rpmsg, m_rpmsg_queue, &m_dst_addr, &buf, &length, RL_BLOCK);
-    assert(buf);
+    erpc_assert(buf != NULL);
     message->set((uint8_t *)buf, length);
     message->setUsed(length);
 

@@ -1085,6 +1085,7 @@ int bt_hfp_ag_connect(struct bt_conn *conn,
     }
     hfp_ag->serverChannel = config->server_channel;
 
+    (void)memset(&info, 0, sizeof(info));
     bt_conn_get_info(conn, &info);
     memcpy(hfp_ag->peerAddr, info.br.dst, BT_BD_ADDR_SIZE);
     BT_hfp_ag_connect(config->server_channel, hfp_ag->peerAddr);

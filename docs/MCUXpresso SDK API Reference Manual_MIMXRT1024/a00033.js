@@ -48,6 +48,7 @@ var a00033 =
     [ "FSL_FLEXIO_SPI_DRIVER_VERSION", "a00033.html#gadd4392d8b86be4236270866fa214dcbe", null ],
     [ "FLEXIO_SPI_DUMMYDATA", "a00033.html#gad411a43e379e70215b462831b24c5c5b", null ],
     [ "SPI_RETRY_TIMES", "a00033.html#gaa4717c15ca9604c505a5e5c60df29ebe", null ],
+    [ "FLEXIO_SPI_XFER_DATA_FORMAT", "a00033.html#ga7b59f53366b1e5bb10a0491a20543382", null ],
     [ "flexio_spi_slave_handle_t", "a00033.html#ga1950678efd37cb3665e303e094cec428", null ],
     [ "flexio_spi_master_transfer_callback_t", "a00033.html#ga9c8b509b90588dea1921de0bdb3cfec8", null ],
     [ "flexio_spi_slave_transfer_callback_t", "a00033.html#gad2accadc980b51b0d65e41d122abe261", [
@@ -66,7 +67,8 @@ var a00033 =
     ] ],
     [ "flexio_spi_data_bitcount_mode_t", "a00033.html#gae4e518a5b077982fca7b6bf1025c7aaf", [
       [ "kFLEXIO_SPI_8BitMode", "a00033.html#ggae4e518a5b077982fca7b6bf1025c7aafaef0c633539e44547b47ad7b754234752", null ],
-      [ "kFLEXIO_SPI_16BitMode", "a00033.html#ggae4e518a5b077982fca7b6bf1025c7aafa343c7a9db539019f0c99fb82b4adab35", null ]
+      [ "kFLEXIO_SPI_16BitMode", "a00033.html#ggae4e518a5b077982fca7b6bf1025c7aafa343c7a9db539019f0c99fb82b4adab35", null ],
+      [ "kFLEXIO_SPI_32BitMode", "a00033.html#ggae4e518a5b077982fca7b6bf1025c7aafa7f4a057b24ac43b60fa4795d2a79b25a", null ]
     ] ],
     [ "_flexio_spi_interrupt_enable", "a00033.html#ga239e9a0ff79e0d36ecf6ae7c68dfd357", [
       [ "kFLEXIO_SPI_TxEmptyInterruptEnable", "a00033.html#gga239e9a0ff79e0d36ecf6ae7c68dfd357a5243ceb746eebfdeef2ba2d791e32ff9", null ],
@@ -85,7 +87,10 @@ var a00033 =
       [ "kFLEXIO_SPI_8bitMsb", "a00033.html#ggabf4ebfbc0d68b969e1b7dd838c45512da7979c2a48d6662af1777827c1afa5537", null ],
       [ "kFLEXIO_SPI_8bitLsb", "a00033.html#ggabf4ebfbc0d68b969e1b7dd838c45512da1d31a5996c45efebdc7aeb1a894647f8", null ],
       [ "kFLEXIO_SPI_16bitMsb", "a00033.html#ggabf4ebfbc0d68b969e1b7dd838c45512dabeb4baa55114987385ab398ceda142f9", null ],
-      [ "kFLEXIO_SPI_16bitLsb", "a00033.html#ggabf4ebfbc0d68b969e1b7dd838c45512dad6774d8673e5aa247be136e38c8fad91", null ]
+      [ "kFLEXIO_SPI_16bitLsb", "a00033.html#ggabf4ebfbc0d68b969e1b7dd838c45512dad6774d8673e5aa247be136e38c8fad91", null ],
+      [ "kFLEXIO_SPI_32bitMsb", "a00033.html#ggabf4ebfbc0d68b969e1b7dd838c45512da79f81ba5984c5821bf9c42b0f3a3a4c1", null ],
+      [ "kFLEXIO_SPI_32bitLsb", "a00033.html#ggabf4ebfbc0d68b969e1b7dd838c45512daca30199b74b090f722c32b03b2762ac9", null ],
+      [ "kFLEXIO_SPI_csContinuous", "a00033.html#ggabf4ebfbc0d68b969e1b7dd838c45512da9ee2a3142a3bc89e1ff4d645d9118287", null ]
     ] ],
     [ "FLEXIO_SPI_MasterInit", "a00033.html#gacc68d67c46d897e6e9b2268c0fe999d2", null ],
     [ "FLEXIO_SPI_MasterDeinit", "a00033.html#gae403f64c6c1268e5dfb62e0b20bd267c", null ],
@@ -102,11 +107,12 @@ var a00033 =
     [ "FLEXIO_SPI_GetRxDataRegisterAddress", "a00033.html#ga061dcced42575767baf53f6b6e5da609", null ],
     [ "FLEXIO_SPI_Enable", "a00033.html#ga68656f6d77e46b59e311e1a97f3b5878", null ],
     [ "FLEXIO_SPI_MasterSetBaudRate", "a00033.html#gaa9287322d22895ac0352db5fe0dd909e", null ],
-    [ "FLEXIO_SPI_WriteData", "a00033.html#ga1eb1063ea3e7b0af749f899d86e85c42", null ],
-    [ "FLEXIO_SPI_ReadData", "a00033.html#gaa36e294b6b74373a5466a3c69ecdbf18", null ],
+    [ "FLEXIO_SPI_WriteData", "a00033.html#gab8d90deb9e0a4ae7ee4564125218ed29", null ],
+    [ "FLEXIO_SPI_ReadData", "a00033.html#ga14411234ecd9a094371d27405ad990cd", null ],
     [ "FLEXIO_SPI_WriteBlocking", "a00033.html#ga0ddf107d6d5a9d4b6b33a7a07a7679b2", null ],
     [ "FLEXIO_SPI_ReadBlocking", "a00033.html#gaeead8252ae85745aa02f56baffb4df12", null ],
     [ "FLEXIO_SPI_MasterTransferBlocking", "a00033.html#gae02f160899c2ccb93651e4bac473b65e", null ],
+    [ "FLEXIO_SPI_FlushShifters", "a00033.html#ga4de03d39977efdcd5292cfb8f0da2189", null ],
     [ "FLEXIO_SPI_MasterTransferCreateHandle", "a00033.html#ga0123f1825a83093ad07377d86f4e2bf1", null ],
     [ "FLEXIO_SPI_MasterTransferNonBlocking", "a00033.html#gabcfcbee985cb49bdbd02ab1698d2c041", null ],
     [ "FLEXIO_SPI_MasterTransferAbort", "a00033.html#ga7ee4149cd9c0bab50f91eaf6322ccd45", null ],

@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064;../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RTE;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../components/gt911;../../../../../components/video;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064;../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RTE;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -589,6 +589,31 @@
               <FileName>fsl_ft5406_rt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gt911.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/gt911/fsl_gt911.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gt911.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/gt911/fsl_gt911.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>video</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_video_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/fsl_video_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_video_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1528,6 +1553,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -1569,6 +1609,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>
@@ -1904,9 +1949,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SDK_I2C_BASED_COMPONENT_USED=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064;../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RTE;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../components/gt911;../../../../../components/video;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/evkmimxrt1064;../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/evkmimxrt1064/RTE;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../components/silicon_id;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2165,6 +2210,31 @@
               <FileName>fsl_ft5406_rt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gt911.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/gt911/fsl_gt911.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gt911.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/gt911/fsl_gt911.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>video</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_video_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/video/fsl_video_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_video_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3104,6 +3174,21 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>component/silicon_id</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_silicon_id.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_silicon_id.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/silicon_id/fsl_silicon_id.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
@@ -3145,6 +3230,11 @@
               <FileName>core_cm7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
             </File>
             <File>
               <FileName>mpu_armv7.h</FileName>

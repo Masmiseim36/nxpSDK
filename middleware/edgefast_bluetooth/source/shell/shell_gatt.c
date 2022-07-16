@@ -294,7 +294,8 @@ static shell_status_t cmd_mread(shell_handle_t shell, int32_t argc, char *argv[]
 
 	read_params.func = read_func;
 	read_params.handle_count = i;
-	read_params.handles = h; /* not used in read func */
+	read_params.multiple.handles = h;
+	read_params.multiple.variable = true;
 
 	err = bt_gatt_read(default_conn, &read_params);
 	if (err) {
@@ -719,7 +720,7 @@ static shell_status_t cmd_show_db(shell_handle_t shell, int32_t argc, char *argv
 	total_len += stats.ccc_count * sizeof(struct _bt_gatt_ccc);
 
 	shell_print(shell, "=================================================");
-	shell_print(shell, "Total: %u services %u attributes (%u bytes)",
+	shell_print(shell, "Total: %u services %u attributes (%zu bytes)",
 		    stats.svc_count, stats.attr_count, total_len);
 
 	return kStatus_SHELL_Success;
@@ -727,28 +728,26 @@ static shell_status_t cmd_show_db(shell_handle_t shell, int32_t argc, char *argv
 
 #if (defined(CONFIG_BT_GATT_DYNAMIC_DB) && (CONFIG_BT_GATT_DYNAMIC_DB > 0))
 /* Custom Service Variables */
+
 static struct bt_uuid_128 vnd_uuid = BT_UUID_INIT_128(
-	0xf0, 0xde, 0xbc, 0x9a, 0x78, 0x56, 0x34, 0x12,
-	0x78, 0x56, 0x34, 0x12, 0x78, 0x56, 0x34, 0x12);
+	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef0));
+
 static struct bt_uuid_128 vnd_auth_uuid = BT_UUID_INIT_128(
-	0xf2, 0xde, 0xbc, 0x9a, 0x78, 0x56, 0x34, 0x12,
-	0x78, 0x56, 0x34, 0x12, 0x78, 0x56, 0x34, 0x12);
+	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef2));
+
 static const struct bt_uuid_128 vnd_long_uuid1 = BT_UUID_INIT_128(
-	0xf3, 0xde, 0xbc, 0x9a, 0x78, 0x56, 0x34, 0x12,
-	0x78, 0x56, 0x34, 0x12, 0x78, 0x56, 0x34, 0x12);
+	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcdef3));
+
 static const struct bt_uuid_128 vnd_long_uuid2 = BT_UUID_INIT_128(
-	0xde, 0xad, 0xfa, 0xce, 0x78, 0x56, 0x34, 0x12,
-	0x78, 0x56, 0x34, 0x12, 0x78, 0x56, 0x34, 0x12);
+	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x12340, 0x5678cefaadde));
 
 static uint8_t vnd_value[] = { 'V', 'e', 'n', 'd', 'o', 'r' };
 
 static struct bt_uuid_128 vnd1_uuid = BT_UUID_INIT_128(
-	0xf4, 0xde, 0xbc, 0x9a, 0x78, 0x56, 0x34, 0x12,
-	0x78, 0x56, 0x34, 0x12, 0x78, 0x56, 0x34, 0x12);
+	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x12340, 0x56789abcdef4));
 
 static const struct bt_uuid_128 vnd1_echo_uuid = BT_UUID_INIT_128(
-	0xf5, 0xde, 0xbc, 0x9a, 0x78, 0x56, 0x34, 0x12,
-	0x78, 0x56, 0x34, 0x12, 0x78, 0x56, 0x34, 0x12);
+	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x12340, 0x56789abcdef5));
 
 static uint8_t echo_enabled;
 
@@ -874,20 +873,50 @@ static struct bt_gatt_service vnd1_svc = BT_GATT_SERVICE(vnd1_attrs);
 static shell_status_t cmd_register_test_svc(shell_handle_t shell,
 				  int32_t argc, char *argv[])
 {
-	bt_gatt_service_register(&vnd_svc);
-	bt_gatt_service_register(&vnd1_svc);
+	char str[BT_UUID_STR_LEN];
+	int err;
 
-	shell_print(shell, "Registering test vendor services");
+	bt_uuid_to_str(&vnd_uuid.uuid, str, sizeof(str));
+	err = bt_gatt_service_register(&vnd_svc);
+	if (!err) {
+		shell_print(shell, "Registered test vendor service %s", str);
+	} else {
+		shell_error(shell, "Failed to register test vendor service %s (%d)", str, err);
+	}
+
+	bt_uuid_to_str(&vnd1_uuid.uuid, str, sizeof(str));
+	err = bt_gatt_service_register(&vnd1_svc);
+	if (!err) {
+		shell_print(shell, "Registered test vendor service %s", str);
+	} else {
+		shell_error(shell, "Failed to register test vendor service %s (%d)", str, err);
+	}
+
 	return kStatus_SHELL_Success;
 }
 
 static shell_status_t cmd_unregister_test_svc(shell_handle_t shell,
 				    int32_t argc, char *argv[])
 {
-	bt_gatt_service_unregister(&vnd_svc);
-	bt_gatt_service_unregister(&vnd1_svc);
+	char str[BT_UUID_STR_LEN];
+	int err;
 
-	shell_print(shell, "Unregistering test vendor services");
+	bt_uuid_to_str(&vnd_uuid.uuid, str, sizeof(str));
+	err = bt_gatt_service_unregister(&vnd_svc);
+	if (!err) {
+		shell_print(shell, "Unregistered test vendor service %s", str);
+	} else {
+		shell_error(shell, "Failed to unregister test vendor service %s (%d)", str, err);
+	}
+
+	bt_uuid_to_str(&vnd1_uuid.uuid, str, sizeof(str));
+	err = bt_gatt_service_unregister(&vnd1_svc);
+	if (!err) {
+		shell_print(shell, "Unregistered test vendor service %s", str);
+	} else {
+		shell_error(shell, "Failed to unregister test vendor service %s (%d)", str, err);
+	}
+
 	return kStatus_SHELL_Success;
 }
 
@@ -927,12 +956,9 @@ static shell_status_t cmd_notify(shell_handle_t shell, int32_t argc, char *argv[
 }
 
 static struct bt_uuid_128 met_svc_uuid = BT_UUID_INIT_128(
-	0x01, 0xde, 0xbc, 0x9a, 0x78, 0x56, 0x34, 0x12,
-	0x78, 0x56, 0x34, 0x12, 0x78, 0x56, 0x34, 0x12);
-
+	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcde01));
 static const struct bt_uuid_128 met_char_uuid = BT_UUID_INIT_128(
-	0x02, 0xde, 0xbc, 0x9a, 0x78, 0x56, 0x34, 0x12,
-	0x78, 0x56, 0x34, 0x12, 0x78, 0x56, 0x34, 0x12);
+	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcde02));
 
 static uint8_t met_char_value[CHAR_SIZE_MAX] = {
 	'M', 'e', 't', 'r', 'i', 'c', 's' };
@@ -1024,7 +1050,7 @@ static uint8_t get_cb(const struct bt_gatt_attr *attr, uint16_t handle,
 
 	ret = attr->read(NULL, attr, (void *)buf, sizeof(buf), 0);
 	if (ret < 0) {
-		shell_print(shell, "Failed to read: %d", ret);
+		shell_print(shell, "Failed to read: %zd", ret);
 		return BT_GATT_ITER_STOP;
 	}
 
@@ -1077,7 +1103,7 @@ static uint8_t set_cb(const struct bt_gatt_attr *attr, uint16_t handle,
 	ret = attr->write(NULL, attr, (void *)buf, i, 0, 0);
 	if (ret < 0) {
 		data->err = ret;
-		shell_error(data->shell, "Failed to write: %d", ret);
+		shell_error(data->shell, "Failed to write: %zd", ret);
 		return BT_GATT_ITER_STOP;
 	}
 
@@ -1113,7 +1139,7 @@ shell_status_t cmd_att_mtu(shell_handle_t shell, int32_t argc, char *argv[])
 
 	if (default_conn) {
 		mtu = bt_gatt_get_mtu(default_conn);
-		shell_print(shell, "MTU size: %d", mtu);
+		shell_print(shell, "MTU size: %u", mtu);
 	} else {
 		shell_print(shell, "No default connection");
 	}

@@ -1,4 +1,3 @@
-<map id="driverexamples/fxls8962/fxls8962_fifo_spi.c" name="driverexamples/fxls8962/fxls8962_fifo_spi.c">
-<area shape="rect" id="node8" href="$a00059.html" title="The fxls8962_drv.h file describes the FXLS8962AF driver interface and structures. ..." alt="" coords="728,95,832,121"/>
-<area shape="rect" id="node9" href="$a00500.html" title="ARM Systick Utilities. " alt="" coords="856,95,963,121"/>
+<map id="driverexamples/fxpq3115/fxpq3115_normal_interrupt.c" name="driverexamples/fxpq3115/fxpq3115_normal_interrupt.c">
+<area shape="rect" id="node9" href="$a00095.html" title="The fxpq3115_drv.h file describes the fxpq3115 driver interface and structures. " alt="" coords="842,95,950,121"/>
 </map>

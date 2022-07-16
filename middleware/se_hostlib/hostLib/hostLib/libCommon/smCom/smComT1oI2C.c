@@ -39,6 +39,11 @@ U16 smComT1oI2C_AnswerToReset(void* conn_ctx, U8 *T1oI2Catr, U16 *T1oI2CatrLen);
 U16 smComT1oI2C_Close(void *conn_ctx, U8 mode)
 {
     ESESTATUS status;
+    /* Do not pass conn_ctx = NULL to next layer.
+     * Multiple sessions can be present to different SEs.
+     * Since the port information is contained in the conn_ctx,
+     * the application must pass conn_ctx to close the connection.
+     */
     if (conn_ctx) {
         status=phNxpEse_EndOfApdu(conn_ctx);
         //status=phNxpEse_chipReset();
@@ -69,6 +74,24 @@ U16 smComT1oI2C_Init(void **conn_ctx, const char *pConnString)
     ESESTATUS ret;
     phNxpEse_initParams initParams;
     initParams.initMode = ESE_MODE_NORMAL;
+
+    if(conn_ctx != NULL) {
+        *conn_ctx = NULL;
+    }
+    ret = phNxpEse_open(conn_ctx, initParams, pConnString);
+    if (ret != ESESTATUS_SUCCESS)
+    {
+        LOG_E(" Failed to create physical connection with ESE ");
+        return SMCOM_COM_FAILED;
+    }
+    return SMCOM_OK;
+}
+
+U16 smComT1oI2C_Resume(void **conn_ctx, const char *pConnString)
+{
+    ESESTATUS ret;
+    phNxpEse_initParams initParams;
+    initParams.initMode = ESE_MODE_RESUME;
 
     if(conn_ctx != NULL) {
         *conn_ctx = NULL;

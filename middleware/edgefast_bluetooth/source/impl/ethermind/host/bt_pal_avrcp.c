@@ -455,6 +455,7 @@ int bt_avrcp_control_connect(struct bt_conn *conn)
     struct bt_conn_info info;
     struct bt_avrcp_instance *avrcp = bt_avrcp_get_instance(conn);
 
+    (void)memset(&info, 0, sizeof(info));
     bt_conn_get_info(conn, &info);
     if (info.type == BT_CONN_TYPE_LE)
     {

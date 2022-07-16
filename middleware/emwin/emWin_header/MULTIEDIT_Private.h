@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : MULTIEDIT_Private.h
@@ -73,11 +73,24 @@ Purpose     : MULTIEDIT include
 #define INVALID_CURSORXY (1 << 3)
 #define INVALID_LINEPOSB (1 << 4)
 
+//
+// MULTIEDIT properties
+//
+typedef struct {
+  GUI_COLOR        aBkColor    [NUM_DISP_MODES];
+  GUI_COLOR        aColor      [NUM_DISP_MODES];
+  GUI_COLOR        aCursorColor[2];
+  U16              Align;
+  const GUI_FONT * pFont;
+  U8               HBorder;
+} MULTIEDIT_PROPS;
+
+//
+// MULTIEDIT object
+//
 typedef struct {
   WIDGET           Widget;
-  GUI_COLOR        aBkColor[NUM_DISP_MODES];
-  GUI_COLOR        aColor[NUM_DISP_MODES];
-  GUI_COLOR        aCursorColor[2];
+  MULTIEDIT_PROPS  Props;
   WM_HMEM          hText;
   U16              MaxNumChars;         /* Maximum number of characters including the prompt */
   U16              NumChars;            /* Number of characters (text and prompt) in object */
@@ -94,14 +107,11 @@ typedef struct {
   U16              CacheLineNumber;     /*  */
   U16              CacheFirstVisibleLine;
   U16              CacheFirstVisibleByte;
-  U16              Align;
   WM_SCROLL_STATE  ScrollStateV;
   WM_SCROLL_STATE  ScrollStateH;
-  const GUI_FONT * pFont;
-  U8               Flags;
+  U16              Flags;
   U8               InvalidFlags;         /* Flags to save validation status */
   U8               EditMode;
-  U8               HBorder;
   U8               Radius;               // Currently only used by AppWizard
   WM_HTIMER        hTimer;
   U8               CursorVis;            /* Indicates whether cursor is visible or not*/
@@ -111,6 +121,14 @@ typedef struct {
   int              MotionPosY;
   U8               MotionActive;
 } MULTIEDIT_OBJ;
+
+/*********************************************************************
+*
+*       Private (module internal) data
+*
+**********************************************************************
+*/
+extern MULTIEDIT_PROPS MULTIEDIT_DefaultProps;
 
 #if defined(__cplusplus)
   }

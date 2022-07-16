@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['last_5faudio_5fsink_5fdevice_5fdriver_5ftype_0',['LAST_AUDIO_SINK_DEVICE_DRIVER_TYPE',['../streamer__api_8h.html#a304cec254bfec02fe7e137f03acc136da7f94a296a7fa479af618aff91d148792',1,'streamer_api.h']]],
-  ['last_5faudiosrc_5fdevice_5fdriver_5ftype_1',['LAST_AUDIOSRC_DEVICE_DRIVER_TYPE',['../streamer__api_8h.html#ae5dcd38e8148989fa09363a3b9779baca9fa1b1ab89132c641a8ac9585c5e044f',1,'streamer_api.h']]],
-  ['last_5fdecoder_5ftype_2',['LAST_DECODER_TYPE',['../streamer__api_8h.html#a477bc238b10958849277f79d585eff2aac00b0cad682ca1a4b681dba7aca43eed',1,'streamer_api.h']]],
-  ['last_5fparser_5ftype_3',['LAST_PARSER_TYPE',['../streamer__api_8h.html#a4c55c16d7c784070b26231f015e33a10abd1aed9929cedc986f225551223b67cf',1,'streamer_api.h']]]
+  ['decoder_5ftype_5fmp3_0',['DECODER_TYPE_MP3',['../streamer__api_8h.html#a477bc238b10958849277f79d585eff2aa8ab4d1752775bbc70372d7dc8b20065b',1,'streamer_api.h']]],
+  ['decoder_5ftype_5fogg_5fopus_1',['DECODER_TYPE_OGG_OPUS',['../streamer__api_8h.html#a477bc238b10958849277f79d585eff2aaf2ea1924600d531de3bdb9bf116f0c1e',1,'streamer_api.h']]],
+  ['decoder_5ftype_5fopus_2',['DECODER_TYPE_OPUS',['../streamer__api_8h.html#a477bc238b10958849277f79d585eff2aa7ad79a7a0e1c249f22ef51a1bf16233f',1,'streamer_api.h']]],
+  ['decoder_5ftype_5funknown_3',['DECODER_TYPE_UNKNOWN',['../streamer__api_8h.html#a477bc238b10958849277f79d585eff2aafd66720792dd525b02ec8413a976a9f6',1,'streamer_api.h']]],
+  ['decoder_5ftype_5fwav_4',['DECODER_TYPE_WAV',['../streamer__api_8h.html#a477bc238b10958849277f79d585eff2aaab2f52db44e6d61c707554d99db9ac91',1,'streamer_api.h']]]
 ];

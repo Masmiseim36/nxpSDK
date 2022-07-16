@@ -216,10 +216,12 @@
 #define FMSTR_USE_TSA_INROM 0
 #endif
 
+#ifndef FMSTR_TSA_CDECL
 #if FMSTR_USE_TSA_INROM > 0
 #define FMSTR_TSA_CDECL const
 #else
 #define FMSTR_TSA_CDECL
+#endif
 #endif
 
 #ifndef FMSTR_USE_TSA_DYNAMIC

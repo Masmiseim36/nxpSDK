@@ -75,6 +75,8 @@ var searchData=
   ['twriterecovery_5fns',['tWriteRecovery_Ns',['../a00067.html#aa691d1fee9112ae402987c7f97a0f207',1,'semc_sdram_config_t']]],
   ['twritesetup_5fns',['tWriteSetup_Ns',['../a00067.html#a0c685d8fefdb854560b35ee389b1fb4a',1,'semc_sram_config_t']]],
   ['tx',['tx',['../a00045.html#a34f2297e0a8b3531676e3f8de07ec3b5',1,'_lpi2c_master_edma_handle']]],
+  ['tx_5ftimeout_5fconstant_5fms',['tx_timeout_constant_ms',['../a00051.html#a42dc67e6be0ad089f67a8d404aee72d4',1,'lpuart_rtos_config_t']]],
+  ['tx_5ftimeout_5fmultiplier_5fms',['tx_timeout_multiplier_ms',['../a00051.html#a8fa692dea066c6e1393912ae32a5fc3a',1,'lpuart_rtos_config_t']]],
   ['txaccelerconfig',['txAccelerConfig',['../a00024.html#a033caacd25725e29eb07aa98936e6814',1,'enet_config_t']]],
   ['txbdbase',['txBdBase',['../a00024.html#ac8ea415a5a4e475fc8186a64fe5c7f42',1,'enet_tx_bd_ring_t']]],
   ['txbdnumber',['txBdNumber',['../a00024.html#a4f2cfe59fad3a3ea6274ef33edc66676',1,'enet_buffer_config_t']]],

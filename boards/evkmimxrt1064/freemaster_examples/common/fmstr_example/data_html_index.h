@@ -1,13 +1,13 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * FreeMASTER data file index.html
  */
 
-const char index_htm[]  =
+FMSTR_DEMO_CONTENT char index_htm[]  =
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"
 "<html><head>"
 "<style>"
@@ -40,7 +40,7 @@ const char index_htm[]  =
 "As a standard HTML file, you can use references to other files stored in the target device. Here are few examples implemented by this demo:"
 
 "<ul class=\"files\">"
-"<li><a href=\"pcmaster:appctl:openprj:fmstr://demo.pmp\"><img src=\"//images/fmstrlogo.png\" />Demo project</a> <br />General demo project fetched from the target memory.</li>"
+"<li><a href=\"pcmaster:appctl:openprj:fmstr://demo.pmp.zip\"><img src=\"//images/fmstrlogo.png\" />Demo project</a> <br />General demo project fetched from the target memory.</li>"
 "<li><a href=\"fmstr://readme.txt\"><img src=\"//images/file.png\" />/readme.txt</a><br />Plain-text file.</li>"
 "<li><a href=\"fmstr://text_files/one.txt\"><img src=\"//images/file.png\" />/text_files/one.txt</a><br />Plain-text file located in a virtual folder.</li>"
 "<li><a href=\"fmstr://text_files/two.txt\"><img src=\"//images/file.png\" />/text_files/two.txt</a><br />Plain-text file in the same virtual folder.</li>"

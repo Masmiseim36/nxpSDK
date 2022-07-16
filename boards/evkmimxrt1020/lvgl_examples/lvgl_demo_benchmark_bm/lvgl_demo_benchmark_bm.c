@@ -11,7 +11,7 @@
 #include "clock_config.h"
 #include "board.h"
 #include "lvgl.h"
-#include "lv_examples/src/lv_demo_benchmark/lv_demo_benchmark.h"
+#include "demos/lv_demos.h"
 
 #include "fsl_edma.h"
 #include "fsl_dmamux.h"
@@ -41,6 +41,9 @@ static volatile bool s_lvglTaskPending = false;
  * Prototypes
  ******************************************************************************/
 static void DEMO_SetupTick(void);
+#if LV_USE_LOG
+static void print_cb(const char *buf);
+#endif
 
 /*******************************************************************************
  * Code
@@ -67,6 +70,10 @@ int main(void)
     PRINTF("lvgl bare metal benchmark demo\r\n");
 
     DEMO_SetupTick();
+
+#if LV_USE_LOG
+    lv_log_register_print_cb(print_cb);
+#endif
 
     lv_port_pre_init();
     lv_init();
@@ -105,3 +112,10 @@ void SysTick_Handler(void)
         s_lvglTaskPending = true;
     }
 }
+
+#if LV_USE_LOG
+static void print_cb(const char *buf)
+{
+    PRINTF("\r%s\n", buf);
+}
+#endif

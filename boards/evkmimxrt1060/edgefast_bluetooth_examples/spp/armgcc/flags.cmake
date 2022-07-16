@@ -3,19 +3,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -23,17 +14,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -71,6 +54,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DOSA_USED=1 \
     -DSHELL_USE_COMMON_TASK=0 \
     -DSHELL_TASK_STACK_SIZE=2048 \
+    -DLPUART_RING_BUFFER_SIZE=1024U \
     -DNVM_NO_COMPONNET=1 \
     -DCPU_MIMXRT1062DVL6A_cm7 \
     -DHAL_UART_DMA_ENABLE=1 \
@@ -93,6 +77,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mthumb \
     -MMD \
     -MP \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -137,6 +123,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DOSA_USED=1 \
     -DSHELL_USE_COMMON_TASK=0 \
     -DSHELL_TASK_STACK_SIZE=2048 \
+    -DLPUART_RING_BUFFER_SIZE=1024U \
     -DNVM_NO_COMPONNET=1 \
     -DCPU_MIMXRT1062DVL6A_cm7 \
     -DHAL_UART_DMA_ENABLE=1 \
@@ -158,6 +145,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mthumb \
     -MMD \
     -MP \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \

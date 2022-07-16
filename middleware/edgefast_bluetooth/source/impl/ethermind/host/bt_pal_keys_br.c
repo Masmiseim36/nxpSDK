@@ -26,7 +26,7 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 #include "bt_pal_settings.h"
 #include "bt_pal_keys.h"
 
-static struct bt_keys_link_key key_pool_br[CONFIG_BT_MAX_PAIRED];
+static struct bt_keys_link_key key_pool[CONFIG_BT_MAX_PAIRED];
 
 #if IS_ENABLED(CONFIG_BT_KEYS_OVERWRITE_OLDEST)
 static uint32_t aging_counter_val;
@@ -40,8 +40,8 @@ struct bt_keys_link_key *bt_keys_find_link_key(const bt_addr_t *addr)
 
 	BT_DBG("%s", bt_addr_str(addr));
 
-	for (i = 0; i < ARRAY_SIZE(key_pool_br); i++) {
-		key = &key_pool_br[i];
+	for (i = 0; i < ARRAY_SIZE(key_pool); i++) {
+		key = &key_pool[i];
 
 		if (!bt_addr_cmp(&key->addr, addr)) {
 			return key;
@@ -65,9 +65,9 @@ struct bt_keys_link_key *bt_keys_get_link_key(const bt_addr_t *addr)
 	if (!key) {
 		int i;
 
-		key = &key_pool_br[0];
-		for (i = 1; i < ARRAY_SIZE(key_pool_br); i++) {
-			struct bt_keys_link_key *current = &key_pool_br[i];
+		key = &key_pool[0];
+		for (i = 1; i < ARRAY_SIZE(key_pool); i++) {
+			struct bt_keys_link_key *current = &key_pool[i];
 
 			if (current->aging_counter < key->aging_counter) {
 				key = current;
@@ -127,8 +127,8 @@ void bt_keys_link_key_clear_addr(const bt_addr_t *addr)
 	(void)retval;
 
 	if (!addr) {
-		for (i = 0; i < ARRAY_SIZE(key_pool_br); i++) {
-			key = &key_pool_br[i];
+		for (i = 0; i < ARRAY_SIZE(key_pool); i++) {
+			key = &key_pool[i];
 			bt_keys_link_key_clear(key);
 		}
 		return;
@@ -224,6 +224,7 @@ static int link_key_commit(void)
 SETTINGS_STATIC_HANDLER_DEFINE(bt_link_key, "bt/link_key", NULL, link_key_set,
 			       link_key_commit, NULL);
 
+#if IS_ENABLED(CONFIG_BT_KEYS_OVERWRITE_OLDEST)
 void bt_keys_link_key_update_usage(const bt_addr_t *addr)
 {
 	struct bt_keys_link_key *link_key = bt_keys_find_link_key(addr);
@@ -246,5 +247,6 @@ void bt_keys_link_key_update_usage(const bt_addr_t *addr)
 		bt_keys_link_key_store(link_key);
 	}
 }
+#endif  /* CONFIG_BT_KEYS_OVERWRITE_OLDEST */
 
-#endif
+#endif /* defined(CONFIG_BT_SETTINGS) */

@@ -270,7 +270,7 @@ void CoreGroup_Draw( CoreGroup _this, GraphicsCanvas aCanvas, XRect aClip, XPoin
    procedure for the next behind view until a willing view has been found or all 
    views are evaluated.
    In the implementation of the method the view can evaluate the passed aArea parameter. 
-   It determines the place where the user has tapped the view with his fingertip 
+   It determines the place where the user has tapped the view with their fingertip 
    expressed in the coordinates of the views @Owner. The method can test e.g. whether 
    the tapped area does intersect any touchable areas within the view, etc. The 
    affected finger is identified in the parameter aFinger. The first finger (or 

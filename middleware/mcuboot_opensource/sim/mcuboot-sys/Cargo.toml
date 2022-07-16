@@ -21,6 +21,9 @@ sig-rsa3072 = []
 # Verify ECDSA (secp256r1) signatures.
 sig-ecdsa = []
 
+# Verify ECDSA (secp256r1) signatures using mbed TLS
+sig-ecdsa-mbedtls = []
+
 # Verify ED25519 signatures.
 sig-ed25519 = []
 
@@ -35,14 +38,29 @@ validate-primary-slot = []
 # Encrypt image in the secondary slot using RSA-OAEP-2048
 enc-rsa = []
 
+# Encrypt  image in the secondary slot using AES-256-CTR and RSA-OAEP-2048
+enc-aes256-rsa = []
+
 # Encrypt image in the secondary slot using AES-KW-128
 enc-kw = []
+
+# Encrypt image in the secondary slot using AES-256-CTR and AES-KW-256
+enc-aes256-kw = []
 
 # Encrypt image in the secondary slot using ECIES-P256
 enc-ec256 = []
 
+# Encrypt image in the secondary slot using AES-256-CTR and ECIES-P256
+enc-aes256-ec256 = []
+
+# Encrypt image in the secondary slot using ECIES-P256 using Mbed TLS
+enc-ec256-mbedtls = []
+
 # Encrypt image in the secondary slot using ECIES-X25519
 enc-x25519 = []
+
+# Encrypt image in the secondary slot using AES-256-CTR and ECIES-X25519
+enc-aes256-x25519 = []
 
 # Allow bootstrapping an empty/invalid primary slot from a valid secondary slot
 bootstrap = []
@@ -50,8 +68,20 @@ bootstrap = []
 # Support multiple images (currently 2 instead of 1).
 multiimage = []
 
+# Support simulation of ram-loading.  No swaps are performed, and the
+# image is copied to RAM before loading it.
+ram-load = []
+
+# Support simulation of direct XIP.  No swaps are performed, the image
+# is directly executed out of whichever partition contains the most
+# appropriate image.
+direct-xip = []
+
 # Check (in software) against version downgrades.
 downgrade-prevention = []
+
+# Support images with 32-byte maximum write alignment value.
+max-align-32 = []
 
 [build-dependencies]
 cc = "1.0.25"
@@ -60,8 +90,3 @@ cc = "1.0.25"
 libc = "0.2"
 log = "0.4"
 simflash = { path = "../simflash" }
-
-# Optimize some, even when building for debugging, otherwise the tests
-# are too slow.
-[profile.test]
-opt-level = 1

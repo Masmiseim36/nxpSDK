@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -756,6 +740,8 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
 
         /* Set the number of probes to send, use Adapter setting if unset */
         num_probes = (puser_scan_in->num_probes ? puser_scan_in->num_probes : pmadapter->scan_probes);
+
+
         /*
          * Set the BSSID filter to the incoming configuration,
          *   if non-zero.  If not set, it will remain disabled (all zeros).
@@ -902,6 +888,8 @@ static mlan_status wlan_scan_setup_scan_config(IN mlan_private *pmpriv,
         ptlv_pos += len;
     }
 #endif
+
+
     /* fixme: enable this later when req. */
 
     /*
@@ -1145,8 +1133,10 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
     /* IEEEtypes_ERPInfo_t *perp_info; */
 
     IEEEtypes_VendorSpecific_t *pvendor_ie;
-    const t_u8 wpa_oui[4] = {0x00, 0x50, 0xf2, 0x01};
-    const t_u8 wmm_oui[4] = {0x00, 0x50, 0xf2, 0x02};
+    const t_u8 wpa_oui[3]  = {0x00, 0x50, 0xf2};
+    const t_u8 wpa_type[1] = {0x01};
+    const t_u8 wmm_oui[3]  = {0x00, 0x50, 0xf2};
+    const t_u8 wmm_type[1] = {0x02};
     IEEEtypes_CountryInfoSet_t *pcountry_info;
 #ifdef CONFIG_11AX
     IEEEtypes_Extension_t *pext_tlv;
@@ -1422,7 +1412,8 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
             case VENDOR_SPECIFIC_221:
                 pvendor_ie = (IEEEtypes_VendorSpecific_t *)(void *)pcurrent_ptr;
 
-                if (!__memcmp(pmadapter, pvendor_ie->vend_hdr.oui, wpa_oui, sizeof(wpa_oui)))
+                if (!(__memcmp(pmadapter, pvendor_ie->vend_hdr.oui, wpa_oui, sizeof(wpa_oui))) &&
+                    (pvendor_ie->vend_hdr.oui_type == wpa_type[0]))
                 {
                     /* Save it here since we do not have beacon buffer */
                     /* fixme : Verify if this is the right approach. This had to be
@@ -1452,7 +1443,8 @@ static mlan_status wlan_interpret_bss_desc_with_ie(IN pmlan_adapter pmadapter,
                     HEXDUMP("InterpretIE: Resp WPA_IE", (t_u8 *)pbss_entry->pwpa_ie,
                             ((*(pbss_entry->pwpa_ie)).vend_hdr.len + sizeof(IEEEtypes_Header_t)));
                 }
-                else if (!__memcmp(pmadapter, pvendor_ie->vend_hdr.oui, wmm_oui, sizeof(wmm_oui)))
+                else if (!(__memcmp(pmadapter, pvendor_ie->vend_hdr.oui, wmm_oui, sizeof(wmm_oui))) &&
+                         (pvendor_ie->vend_hdr.oui_type == wmm_type[0]))
                 {
                     if (total_ie_len == sizeof(IEEEtypes_WmmParameter_t) || total_ie_len == sizeof(IEEEtypes_WmmInfo_t))
                     {
@@ -2426,7 +2418,7 @@ static mlan_status wlan_parse_ext_scan_result(IN mlan_private *pmpriv,
     MrvlIEtypes_Data_t *ptlv                    = MNULL;
     MrvlIEtypes_Bss_Scan_Rsp_t *pscan_rsp_tlv   = MNULL;
     MrvlIEtypes_Bss_Scan_Info_t *pscan_info_tlv = MNULL;
-    t_u8 band;
+    mlan_band_def band;
     /* t_u32 age_ts_usec; */
     t_u32 lowest_rssi_index = 0;
 
@@ -2595,7 +2587,7 @@ static mlan_status wlan_parse_ext_scan_result(IN mlan_private *pmpriv,
             }
             /* Save the band designation for this entry for use in join */
             bss_new_entry->bss_band = band;
-            cfp                     = wlan_find_cfp_by_band_and_channel(pmadapter, (t_u8)bss_new_entry->bss_band,
+            cfp                     = wlan_find_cfp_by_band_and_channel(pmadapter, bss_new_entry->bss_band,
                                                     (t_u16)bss_new_entry->channel);
 
             if (cfp)

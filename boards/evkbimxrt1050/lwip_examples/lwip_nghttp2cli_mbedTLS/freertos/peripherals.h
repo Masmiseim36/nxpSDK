@@ -1,5 +1,5 @@
 /* 
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,6 +16,8 @@
  * Included files
  **********************************************************************************************************************/
 #include "fsl_common.h"
+#include "fsl_lpuart.h"
+#include "fsl_clock.h"
 #include "board.h"
 #include "lwip/opt.h"
 #include "lwip/tcpip.h"
@@ -29,8 +31,8 @@
 #include "enet_ethernetif.h"
 #include "fsl_enet.h"
 #include "fsl_enet_mdio.h"
-#include "fsl_clock.h"
 #include "fsl_phyksz8081.h"
+#include "fsl_silicon_id.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -39,19 +41,68 @@ extern "C" {
 /***********************************************************************************************************************
  * Definitions
  **********************************************************************************************************************/
+/* Definitions for BOARD_InitPeripherals functional group */
+/* Definition of peripheral ID */
+#define LPUART1_PERIPHERAL LPUART1
+/* Definition of the clock source frequency */
+#define LPUART1_CLOCK_SOURCE 80000000UL
+
 /* Definitions for BOARD_InitLwip functional group */
-/* MAC address definition */
-#define LWIP_NETIF0_MAC_ADDRESS {0x2, 0x12, 0x13, 0x10, 0x15, 0x25}
+/* @TEST_ANCHOR */
+/* IP address definitions */
+#ifndef LWIP_NETIF0_IPADDR0
+#define LWIP_NETIF0_IPADDR0 0U
+#endif
+#ifndef LWIP_NETIF0_IPADDR1
+#define LWIP_NETIF0_IPADDR1 0U
+#endif
+#ifndef LWIP_NETIF0_IPADDR2
+#define LWIP_NETIF0_IPADDR2 0U
+#endif
+#ifndef LWIP_NETIF0_IPADDR3
+#define LWIP_NETIF0_IPADDR3 0U
+#endif
+/* Subnet mask definitions */
+#ifndef LWIP_NETIF0_NETMASK0
+#define LWIP_NETIF0_NETMASK0 0U
+#endif
+#ifndef LWIP_NETIF0_NETMASK1
+#define LWIP_NETIF0_NETMASK1 0U
+#endif
+#ifndef LWIP_NETIF0_NETMASK2
+#define LWIP_NETIF0_NETMASK2 0U
+#endif
+#ifndef LWIP_NETIF0_NETMASK3
+#define LWIP_NETIF0_NETMASK3 0U
+#endif
+/* Default gateway definitions */
+#ifndef LWIP_NETIF0_GW0
+#define LWIP_NETIF0_GW0 0U
+#endif
+#ifndef LWIP_NETIF0_GW1
+#define LWIP_NETIF0_GW1 0U
+#endif
+#ifndef LWIP_NETIF0_GW2
+#define LWIP_NETIF0_GW2 0U
+#endif
+#ifndef LWIP_NETIF0_GW3
+#define LWIP_NETIF0_GW3 0U
+#endif
 /* PHY address definition */
+#ifndef LWIP_NETIF0_PHY_ADDRESS
 #define LWIP_NETIF0_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
+#endif
 /* PHY options definition */
 #define LWIP_NETIF0_PHY_OPS phyksz8081_ops
 /* MDIO options definition */
 #define LWIP_NETIF0_MDIO_OPS enet_ops
+/* MDIO resource definition */
+#define LWIP_NETIF0_MDIO_RESOURCE {ENET, 150000000UL}
 
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
+extern const lpuart_config_t LPUART1_config;
 /* Network interface structure */
 extern struct netif lwIP_netif0;
 /* IPv4 adress handle */
@@ -59,7 +110,13 @@ extern ip4_addr_t lwIP_netif0_ipaddr;
 /* IPv4 netmask handle */
 extern ip4_addr_t lwIP_netif0_netmask;
 /* IPv4 gateway handle */
-extern ip4_addr_t lwIP_netif0_netif_gw;
+extern ip4_addr_t lwIP_netif0_gw;
+
+/***********************************************************************************************************************
+ * Callback functions
+ **********************************************************************************************************************/
+/* Thread init callback function*/
+extern void tcpip_init_callback(void *arg);
 
 /***********************************************************************************************************************
  * Initialization functions

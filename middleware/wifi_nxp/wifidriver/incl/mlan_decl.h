@@ -2,25 +2,9 @@
  *
  *  @brief This file declares the generic data structures and APIs.
  *
- *  Copyright 2008-2021 NXP
+ *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -33,6 +17,7 @@ Change log:
 #define _MLAN_DECL_H_
 
 #include "type_decls.h"
+#include <wm_os.h>
 
 /** MLAN release version */
 #define MLAN_RELEASE_VERSION "310"
@@ -114,12 +99,14 @@ Change log:
 /** Default Win size attached during ADDBA request */
 #define MLAN_STA_AMPDU_DEF_TXWINSIZE 16
 #endif
+#ifndef MLAN_STA_AMPDU_DEF_RXWINSIZE
 #ifdef SD8801
 /** Default Win size attached during ADDBA response */
 #define MLAN_STA_AMPDU_DEF_RXWINSIZE 16
 #else
 /** Default Win size attached during ADDBA response */
 #define MLAN_STA_AMPDU_DEF_RXWINSIZE 32
+#endif
 #endif
 #ifdef SD8801
 /** Default Win size attached during ADDBA request */
@@ -136,7 +123,7 @@ Change log:
 #define MLAN_UAP_AMPDU_DEF_RXWINSIZE 32
 #endif
 /** Block ack timeout value */
-#define MLAN_DEFAULT_BLOCK_ACK_TIMEOUT 0xffff
+#define MLAN_DEFAULT_BLOCK_ACK_TIMEOUT 0U
 /** Maximum Tx Win size configured for ADDBA request [10 bits] */
 #define MLAN_AMPDU_MAX_TXWINSIZE 0x3ff
 /** Maximum Rx Win size configured for ADDBA request [10 bits] */
@@ -226,7 +213,7 @@ typedef t_u8 mlan_802_11_mac_addr[MLAN_MAC_ADDR_LENGTH];
 /** SDIO IO Port mask */
 #define MLAN_SDIO_IO_PORT_MASK 0xfffff
 /** SDIO Block/Byte mode mask */
-#define MLAN_SDIO_BYTE_MODE_MASK 0x80000000
+#define MLAN_SDIO_BYTE_MODE_MASK 0x80000000U
 
 /** Max retry number of IO write */
 #define MAX_READ_IOMEM_RETRY 2
@@ -352,7 +339,7 @@ typedef enum _mlan_bss_role
 #define BSS_ROLE_BIT_MASK MBIT(0)
 
 /** Get BSS role */
-#define GET_BSS_ROLE(priv) ((priv)->bss_role & BSS_ROLE_BIT_MASK)
+#define GET_BSS_ROLE(priv) (mlan_bss_role)((priv)->bss_role & (BSS_ROLE_BIT_MASK))
 
 /** mlan_data_frame_type */
 typedef enum _mlan_data_frame_type
@@ -569,7 +556,7 @@ typedef struct _mlan_buffer
 typedef struct _mlan_bss_attr
 {
     /** BSS type */
-    t_u32 bss_type;
+    mlan_bss_type bss_type;
     /** Data frame type: Ethernet II, 802.11, etc. */
     t_u32 frame_type;
     /** The BSS is active (non-0) or not (0). */
@@ -792,7 +779,7 @@ typedef struct _mlan_callbacks
        /** moal_init_timer*/
     mlan_status (*moal_init_timer)(IN t_void *pmoal_handle,
                                    OUT t_void **pptimer,
-                                   IN t_void (*callback)(t_void *pcontext),
+                                   IN t_void (*callback)(os_timer_arg_t arg),
                                    IN t_void *pcontext);
     /** moal_free_timer */
     mlan_status (*moal_free_timer)(IN t_void *pmoal_handle, IN t_void **pptimer);
@@ -846,6 +833,9 @@ typedef struct _mlan_device
 
 /** Registration */
 MLAN_API mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter);
+
+/** Un-registration */
+MLAN_API mlan_status mlan_unregister(IN t_void *pmlan_adapter);
 
 
 /** Firmware Initialization */

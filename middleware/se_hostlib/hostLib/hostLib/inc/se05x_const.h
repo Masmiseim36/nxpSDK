@@ -143,7 +143,7 @@ example : B1b8 : 0x80000000
 #define POLICY_OBJ_ALLOW_KA             0x04000000
 #define POLICY_OBJ_ALLOW_ENC            0x02000000
 #define POLICY_OBJ_ALLOW_DEC            0x01000000
-#if !SSS_HAVE_SE05X_VER_GTE_06_16
+#if !SSS_HAVE_SE05X_VER_GTE_07_02
 #define POLICY_OBJ_ALLOW_KDF            0x00800000
 #endif
 #define POLICY_OBJ_ALLOW_WRAP           0x00400000
@@ -164,7 +164,7 @@ example : B1b8 : 0x80000000
 #define POLICY_OBJ_ALLOW_KDF_EXT_RANDOM     0x00000400
 #endif
 
-#if SSS_HAVE_SE05X_VER_GTE_06_16
+#if SSS_HAVE_SE05X_VER_GTE_07_02
 #define POLICY_OBJ_ALLOW_TLS_KDF                    0x80000000
 #define POLICY_OBJ_ALLOW_TLS_PMS                    0x40000000
 #define POLICY_OBJ_ALLOW_HKDF                       0x00800000

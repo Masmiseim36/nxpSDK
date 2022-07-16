@@ -410,6 +410,7 @@ void GUI_X_Delay(int Period)
     volatile uint32_t tNow = GPT_GetCurrentTimerCount(EXAMPLE_GPT);
     while ((GPT_GetCurrentTimerCount(EXAMPLE_GPT) - tNow) < Period * EXAMPLE_GPT_TICK_TO_MS)
         ;
+    BOARD_Touch_Poll();
 }
 
 void *emWin_memcpy(void *pDst, const void *pSrc, long size)

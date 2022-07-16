@@ -386,8 +386,8 @@ cleanup:
 
 int tlvGet_ValueIndex(uint8_t *buf, size_t *pBufIndex, const size_t bufLen, SE05x_TAG_t tag)
 {
-    int retVal = 1;
-    uint8_t *pBuf = buf + (*pBufIndex);
+    int retVal      = 1;
+    uint8_t *pBuf   = buf + (*pBufIndex);
     uint8_t got_tag = *pBuf++;
     size_t extendedLen;
     size_t rspLen;

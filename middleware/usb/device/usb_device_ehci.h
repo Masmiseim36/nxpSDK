@@ -142,7 +142,9 @@ typedef struct _usb_device_ehci_state_struct
     usb_device_struct_t *deviceHandle; /*!< Device handle used to identify the device object is belonged to */
     USBHS_Type *registerBase;          /*!< The base address of the register */
 #if (defined(USB_DEVICE_CONFIG_LOW_POWER_MODE) && (USB_DEVICE_CONFIG_LOW_POWER_MODE > 0U))
+#if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
     USBPHY_Type *registerPhyBase; /*!< The base address of the PHY register */
+#endif
 #if (defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 0U))
     USBNC_Type *registerNcBase; /*!< The base address of the USBNC register */
 #endif

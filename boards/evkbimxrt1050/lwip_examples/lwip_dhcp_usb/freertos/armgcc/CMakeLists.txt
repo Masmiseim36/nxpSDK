@@ -55,14 +55,15 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../components/osa
     ${ProjDirPath}/../../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052
+    ${ProjDirPath}/../../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
@@ -85,8 +86,6 @@ include(middleware_usb_host_cdc_MIMXRT1052)
 
 include(middleware_usb_host_cdc_rndis_MIMXRT1052)
 
-include(utility_debug_console_MIMXRT1052)
-
 include(driver_clock_MIMXRT1052)
 
 include(middleware_freertos-kernel_heap_3_MIMXRT1052)
@@ -96,6 +95,8 @@ include(middleware_lwip_contrib_ping_MIMXRT1052)
 include(driver_common_MIMXRT1052)
 
 include(device_MIMXRT1052_CMSIS_MIMXRT1052)
+
+include(utility_debug_console_MIMXRT1052)
 
 include(component_lpuart_adapter_MIMXRT1052)
 
@@ -118,6 +119,8 @@ include(driver_igpio_MIMXRT1052)
 include(driver_xip_device_MIMXRT1052)
 
 include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
+
+include(component_silicon_id_MIMXRT1052)
 
 include(CMSIS_Include_core_cm_MIMXRT1052)
 

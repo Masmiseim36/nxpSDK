@@ -53,14 +53,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board_setup.c"
 "${ProjDirPath}/../board_setup.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_misc.h"
-"${ProjDirPath}/../../../../../middleware/usb/include/usb_spec.h"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.c"
-"${ProjDirPath}/../../../../../middleware/usb/phy/usb_phy.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_bm.h"
-"${ProjDirPath}/../../../../../components/osa/fsl_os_abstraction_config.h"
 "${ProjDirPath}/../usbx_host_mass_storage.c"
 "${ProjDirPath}/../tx_user.h"
 "${ProjDirPath}/../fx_user.h"
@@ -74,14 +66,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../../../../middleware/usb/include
-    ${ProjDirPath}/../../../../../middleware/usb/phy
-    ${ProjDirPath}/../../../../../components/osa
     ${ProjDirPath}/..
 )
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/azure-rtos
+    ${ProjDirPath}/../../../../../components/osa
+    ${ProjDirPath}/../../../../../middleware/usb
     ${ProjDirPath}/../../../../../devices/MIMXRT1011/drivers
     ${ProjDirPath}/../../../../../devices/MIMXRT1011
     ${ProjDirPath}/../../../../../devices/MIMXRT1011/utilities
@@ -95,6 +86,10 @@ set(CMAKE_MODULE_PATH
 
 # include modules
 include(middleware_azure_rtos_ux_sp_MIMXRT1011)
+
+include(component_osa_thread_MIMXRT1011)
+
+include(middleware_usb_phy_MIMXRT1011)
 
 include(driver_clock_MIMXRT1011)
 
@@ -140,9 +135,13 @@ include(middleware_azure_rtos_tx_sp_MIMXRT1011)
 
 include(middleware_azure_rtos_tx_template_MIMXRT1011)
 
-include(utilities_misc_utilities_MIMXRT1011)
-
 include(CMSIS_Include_core_cm_MIMXRT1011)
+
+include(middleware_usb_common_header_MIMXRT1011)
+
+include(component_osa_MIMXRT1011)
+
+include(utilities_misc_utilities_MIMXRT1011)
 
 include(device_MIMXRT1011_system_MIMXRT1011)
 

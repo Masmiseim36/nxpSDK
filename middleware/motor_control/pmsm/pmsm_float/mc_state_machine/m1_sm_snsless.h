@@ -57,6 +57,7 @@ extern "C" {
  *
  * @return None
  */
+RAM_FUNC_LIB
 void M1_SetAppSwitch(bool_t bValue);
 
 /*!
@@ -66,6 +67,7 @@ void M1_SetAppSwitch(bool_t bValue);
  *
  * @return bool_t Return bool value, true or false
  */
+RAM_FUNC_LIB
 bool_t M1_GetAppSwitch(void);
 
 /*!
@@ -75,6 +77,7 @@ bool_t M1_GetAppSwitch(void);
  *
  * @return uint16_t Return current application state
  */
+RAM_FUNC_LIB
 uint16_t M1_GetAppState(void);
 
 /*!
@@ -84,6 +87,7 @@ uint16_t M1_GetAppState(void);
  *
  * @return None
  */
+RAM_FUNC_LIB
 void M1_SetSpeed(float_t fltSpeedCmd);
 
 /*!
@@ -93,6 +97,7 @@ void M1_SetSpeed(float_t fltSpeedCmd);
  *
  * @return float_t Float value of the current speed
  */
+RAM_FUNC_LIB
 float_t M1_GetSpeed(void);
 
 #ifdef __cplusplus

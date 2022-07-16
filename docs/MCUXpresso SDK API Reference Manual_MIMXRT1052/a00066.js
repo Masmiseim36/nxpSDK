@@ -382,7 +382,7 @@ var a00066 =
     [ "SEMC_GetStatusFlag", "a00066.html#ga05d162058987704db4a0d7873f40683e", null ],
     [ "SEMC_ClearStatusFlags", "a00066.html#gae77b2945736c7d5d8bf3cf946ed83b62", null ],
     [ "SEMC_IsInIdle", "a00066.html#ga849744b0431363dde9dbcdf62f89f322", null ],
-    [ "SEMC_SendIPCommand", "a00066.html#ga5dddc066bed4822f0cd3c216fcdfd0f6", null ],
+    [ "SEMC_SendIPCommand", "a00066.html#gad059eaa4f55d5f336939bab9999fe4b2", null ],
     [ "SEMC_BuildNandIPCommand", "a00066.html#ga7f22152163146e1106ca425234683e4c", null ],
     [ "SEMC_IsNandReady", "a00066.html#ga6f2beaba717621aa383c0090d14e7c1e", null ],
     [ "SEMC_IPCommandNandWrite", "a00066.html#ga9994d6924542ecce9a3fdb22bd925194", null ],

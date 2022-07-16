@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2020 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -121,7 +105,7 @@ int sdio_drv_read(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uin
     return 1;
 }
 
-int sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uint8_t *buf, uint32_t *resp)
+bool sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, uint8_t *buf, uint32_t *resp)
 {
     int ret;
     uint32_t flags = 0;
@@ -131,7 +115,7 @@ int sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, ui
     if (ret == -WM_FAIL)
     {
         sdio_e("failed to get mutex\r\n");
-        return 0;
+        return false;
     }
 
     if (bcnt > 1U)
@@ -147,12 +131,12 @@ int sdio_drv_write(uint32_t addr, uint32_t fn, uint32_t bcnt, uint32_t bsize, ui
     if (SDIO_IO_Write_Extended(&wm_g_sd, (sdio_func_num_t)fn, addr, buf, param, flags) != kStatus_Success)
     {
         (void)os_mutex_put(&sdio_mutex);
-        return 0;
+        return false;
     }
 
     (void)os_mutex_put(&sdio_mutex);
 
-    return 1;
+    return true;
 }
 
 static void SDIO_CardInterruptCallBack(void *userData)
@@ -247,7 +231,7 @@ int sdio_drv_init(void (*cd_int)(int))
     ret = os_mutex_create(&sdio_mutex, "sdio-mutex", OS_MUTEX_INHERIT);
     if (ret == -WM_FAIL)
     {
-        sdio_e("Failed to create mutex\r\n");
+        sdio_e("Failed to create mutex");
         return -WM_FAIL;
     }
 
@@ -264,4 +248,17 @@ int sdio_drv_init(void (*cd_int)(int))
     }
 
     return WM_SUCCESS;
+}
+
+void sdio_drv_deinit(void)
+{
+    int ret;
+
+    SDIO_Deinit(&wm_g_sd);
+
+    ret = os_mutex_delete(&sdio_mutex);
+    if (ret != WM_SUCCESS)
+    {
+        sdio_e("Failed to delete mutex");
+    }
 }

@@ -4,10 +4,10 @@ A demo application to show lvgl widgets.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
-- MCUXpresso  11.5.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- MCUXpresso  11.6.0
+- GCC ARM Embedded  10.3.1
 
 Hardware requirements
 =====================
@@ -28,7 +28,7 @@ Attach the LCD shield to the board.
 
 Prepare the Demo
 ================
-1.  Connect a micro USB cable between the PC host and the J6 micro USB port on the board.
+1.  Connect a micro USB cable between the PC host and the J23 micro USB port on the board.
 2.  Build the project.
 3.  Download the program to the target board.
 4.  Reset the SoC and run the project.

@@ -157,7 +157,7 @@ int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size);
  * @param size Size in bytes of the data buffer
  * @return 0 on succes, non-zero on failure
  */
-int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint32_t size);
+int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size);
 
 /*!
  * @brief Set transfer PCM interface parameters
@@ -180,8 +180,13 @@ int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint
  * @param transfer setting for transfer or receive
  * @return 0 on succes, non-zero on failure
  */
-int streamer_pcm_setparams(
-    pcm_rtos_t *pcm, uint32_t sample_rate, uint32_t bit_width, uint8_t num_channels, bool transfer);
+int streamer_pcm_setparams(pcm_rtos_t *pcm,
+                           uint32_t sample_rate,
+                           uint32_t bit_width,
+                           uint8_t num_channels,
+                           bool transfer,
+                           bool dummy_tx,
+                           int volume);
 
 /*!
  * @brief Get PCM interface parameters
@@ -222,7 +227,7 @@ int streamer_pcm_mute(pcm_rtos_t *pcm, bool mute);
  * @param volume Volume on a scale from 0-100
  * @return 0 on success, non-zero on failure
  */
-int streamer_pcm_set_volume(uint32_t volume);
+int streamer_pcm_set_volume(pcm_rtos_t *pcm, int volume);
 
 void streamer_pcm_get_buffer(uint8_t evenOdd, uint8_t **buffer, uint32_t *length);
 

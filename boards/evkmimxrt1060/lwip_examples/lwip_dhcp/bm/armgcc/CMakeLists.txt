@@ -53,13 +53,14 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../../components/phy
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062
+    ${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
@@ -80,11 +81,11 @@ include(driver_phy-common_MIMXRT1062)
 
 include(driver_enet_MIMXRT1062)
 
-include(utility_debug_console_MIMXRT1062)
-
 include(driver_common_MIMXRT1062)
 
 include(device_MIMXRT1062_CMSIS_MIMXRT1062)
+
+include(utility_debug_console_MIMXRT1062)
 
 include(component_lpuart_adapter_MIMXRT1062)
 
@@ -107,6 +108,8 @@ include(driver_igpio_MIMXRT1062)
 include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
+
+include(component_silicon_id_MIMXRT1062)
 
 include(driver_mdio-common_MIMXRT1062)
 

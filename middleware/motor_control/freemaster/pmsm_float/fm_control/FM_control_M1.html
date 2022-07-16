@@ -46,25 +46,29 @@
     </script>
 
     <div align = "center" style="position:absolute; top:5px; left:80px; font-family : courier;"><span id="title" size="6"><b> NXP</b></span></div>
-    <div align = "center" style="position:absolute; top:470px; left:90px; "><span id="heel" size="6"><b> NXP Semiconductors, Inc. 2019. Designed by Motor Control Team / Microcontroller Product Group</b></span></div>
-    <div align = "center" style="position:absolute; top:240px; left:530px; "><span id="DCVoltage" size="6"><b> DC Bus Voltage </b></span></div>
-    <div align = "center" style="position:absolute; top:400px; left:530px; "><span id="CurrentLimit" size="6"><b> Current Limitation </b></span></div>
-    <div align = "center" style="position:absolute; top:320px; left:535px; "><span id="CurrentAct" size="6"><b> Motor Current </b></span></div>
-    <div align = "center" style="position:absolute; top:400px; left:150px; "><span id="SpeedSlider" size="6"><b> Speed Slider </b></span></div>
+    <div align = "center" style="position:absolute; top:470px; left:90px; "><span id="heel" size="6"><b> NXP Semiconductors, Inc. 2019. Designed by Motor Control Team / Microcontroller Product Group</b></span></div>   
+	<div align = "center" style="position:absolute; top:240px; left:515px; "><span id="DCVoltage" size="6"><b> DCBus</b></span></div>
+    <div align = "center" style="position:absolute; top:400px; left:510px; "><span id="CurrentLimit" size="6"><b> Current Limitation </b></span></div>
+    <div align = "center" style="position:absolute; top:320px; left:525px; "><span id="CPULoad" size="6"><b> MC CPU Load [%]</b></span></div>
+    <div align = "center" style="position:absolute; top:400px; left:135px; "><span id="SpeedSlider" size="6"><b> Speed Slider </b></span></div>
+	<font id="tag_gauge1" color="blue" size="1" style="position:absolute; top:242px; left:200px; z-index:4; font-size: 14px" >Speed</font>
+	<font id="tag_gauge2" color="blue" size="1" style="position:absolute; top:325px; left:343px; z-index:5; font-size: 11px" >Current i<sub>q</sub></font>
+	<font id="tag_gauge3" color="black" size="1" style="position:absolute; top:360px; left:355px; z-index:5; font-size: 11px" >[A]</font>
  
     
 	<div id="gaugeContainerSpeedActual" style="position:absolute; top:80px; left:70px;" ></div><!-- top:100px; left:5px; -->
      <img src="logo.png" style=" width: 60px; position:absolute; top:270px; left:188px ">
 	<div id="gaugeContainerSpeedRequired" style="position:absolute; top:80px; left:70px;" ></div><!-- top:100px; left:5px; -->
+	<div id="gaugeContainerCurrentActual" style="position:absolute; top:240px; left:290px; z-index:4" ></div>
     <div id="gaugeLinearDCBusVoltage" style="position:absolute; top:260px; left:450px;" ></div> <!-- top:670px; left:50px; -->
-    <div id="gaugeLinearCurrent" style="position:absolute; top:340px; left:450px;" ></div> <!-- top:670px; left:50px; -->
+    <div id="gaugeLinearCPULoad" style="position:absolute; top:340px; left:450px;" ></div> <!-- top:670px; left:50px; -->
     <div id="jqxSliderSetSpeed" style="position:absolute; top:420px; left:60px; " ></div>  <!-- top:550px; left:50px;" --> <!-- top:80%; left:11%; -->
     <div id="jqxSliderSetCurrentLimit" style="position:absolute; top:420px; left:450px;" ></div>  <!-- top:400px; left:510px;" -->
    
      
-    <button id='jqxAppSwitchButton' style="position:absolute; top:120px; left:450px;"/>STOP</button>
-    <button id='jqxDemoButton'  style="position:absolute; top:60px; left:450px;"/>Demo RUN/STOP</button>
-    <div id="jqxAppState"  style="position:absolute; top:160px; left:450px; z-index:1;"align="center"><div><span id="jqxAppStateText"></span></div></div>
+    <button id='jqxAppSwitchButton' style="position:absolute; top:120px; left:480px;"/>STOP</button>
+    <button id='jqxDemoButton'  style="position:absolute; top:60px; left:480px;"/>Demo Mode On/Off</button>
+    <div id="jqxAppState"  style="position:absolute; top:160px; left:480px; z-index:1;"align="center"><div><span id="jqxAppStateText"></span></div></div>
 	<div id='jqxInfoMenu' style="position:absolute; top:20px; left:5px; width:1000px;height:1000px; z-index:2; visibility:hidden"></div>
 
 </body>

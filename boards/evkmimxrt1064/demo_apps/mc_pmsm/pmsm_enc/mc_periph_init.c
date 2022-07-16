@@ -18,7 +18,7 @@
 
 /* Motor 1 */
 /* Structure for current and voltage measurement */
-mcdrv_adc_t g_sM1AdcSensor;
+mcdrv_adcetc_t g_sM1AdcSensor;
 
 /* Structure for 3-phase PWM MC driver */
 mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
@@ -70,6 +70,7 @@ void MCDRV_Init_M1(void)
 
     /* Comparator CMP2 */
     M1_MCDRV_CMP2_INIT();
+
 }
 
 /*!
@@ -89,7 +90,7 @@ void InitClock(void)
     g_sClockSetup.ui32CpuFrequency = CLOCK_GetFreq(kCLOCK_CpuClk);
 
     /* Parameters for motor M1 */
-    g_sClockSetup.ui16M1PwmFreq   = M1_PWM_FREQ; /* 10 kHz */
+    g_sClockSetup.ui16M1PwmFreq   = M1_PWM_FREQ; /* 16 kHz */
     g_sClockSetup.ui16M1PwmModulo = g_sClockSetup.ui32FastPeripheralClock / g_sClockSetup.ui16M1PwmFreq;
     ui32CyclesNumber =
         ((M1_PWM_DEADTIME * (g_sClockSetup.ui32FastPeripheralClock / 1000000U)) / 1000U); /* max 2047 cycles */
@@ -112,17 +113,18 @@ void InitADC(void)
     /* Enable clock to ADC module 2 */
     CLOCK_EnableClock(kCLOCK_Adc2);
 
-    /* Single-ended 10-bit conversion (MODE = 0x1) */
+    /* Single-ended 12-bit conversion (MODE = 0x2) */
     /* Set divide ratio to 2 (ADIV = 0x1) */
     /* 4 samples averaged (AVGS = 0x0) */
-    /* IPG clock select (ADICLK = 0x0) */
-    ADC1->CFG = (ADC_CFG_ADICLK(0U) | ADC_CFG_MODE(1U) | ADC_CFG_ADIV(1U) | ADC_CFG_AVGS(0U) | ADC_CFG_ADTRG(0U));
-    ADC2->CFG = (ADC_CFG_ADICLK(0U) | ADC_CFG_MODE(1U) | ADC_CFG_ADIV(1U) | ADC_CFG_AVGS(0U) | ADC_CFG_ADTRG(0U));
+    /* IPG clock / 2 (ADICLK = 0x1) */
+    /* High speed conversion selected (ADHCS = 0x1) */
+    ADC1->CFG = (ADC_CFG_ADICLK(1U) | ADC_CFG_MODE(2U) | ADC_CFG_ADIV(1U) | ADC_CFG_AVGS(0U) | ADC_CFG_ADTRG(0U) | ADC_CFG_ADHSC(1U));
+    ADC2->CFG = (ADC_CFG_ADICLK(1U) | ADC_CFG_MODE(2U) | ADC_CFG_ADIV(1U) | ADC_CFG_AVGS(0U) | ADC_CFG_ADTRG(0U) | ADC_CFG_ADHSC(1U));
 
-    /* HW averaging disabled (AVGE = 0) */
+    /* HW averaging enabled (AVGE = 1) */
     /* One conversion or one set of conversion (ADCO = 0) */
-    ADC1->GC = (ADC_GC_AVGE(0U) | ADC_GC_ADCO(0U));
-    ADC2->GC = (ADC_GC_AVGE(0U) | ADC_GC_ADCO(0U));
+    ADC1->GC = (ADC_GC_AVGE(1U) | ADC_GC_ADCO(0U));
+    ADC2->GC = (ADC_GC_AVGE(1U) | ADC_GC_ADCO(0U));
 
     /* Asynchronous clock output disabled */
     ADC1->GC |= ADC_GC_ADACKEN(0U);
@@ -169,64 +171,43 @@ void InitADC(void)
     /* hardware trigger selected */
     ADC2->CFG |= ADC_CFG_ADTRG(1U);
 
-    /* Set ADC channels for ADC_ETC */
-    /* Withouth this setting ADC_ETC not working properly!!! */
-    ADC1->HC[0] = ADC_HC_ADCH(0x01U);
-    ADC1->HC[1] = ADC_HC_ADCH(0x02U);
-    ADC1->HC[2] = ADC_HC_ADCH(0x03U);
-    ADC2->HC[0] = ADC_HC_ADCH(0x04U);
-    ADC2->HC[1] = ADC_HC_ADCH(0x05U);
-    ADC2->HC[2] = ADC_HC_ADCH(0x06U);
+    /* ADC channels controled from ADC_ETC */
+    ADC1->HC[0] = ADC_HC_ADCH(0x10U);
+    ADC1->HC[1] = ADC_HC_ADCH(0x10U);
+    ADC2->HC[0] = ADC_HC_ADCH(0x10U);
+    ADC2->HC[1] = ADC_HC_ADCH(0x10U);
 
-    /**************************************/
-    /* motor M1 ADC driver initialization */
-    /**************************************/
+    /**************************************
+     * motor M1 ADC driver initialization *
+     **************************************/
     /* offset filter window */
     g_sM1AdcSensor.ui16OffsetFiltWindow = ADC_OFFSET_WINDOW;
 
     /* Phase current measurement */
-    /* Sector 1,6 - measured currents Ic & Ib */
-    /* ADC1, channel Ic = M1_ADC1_PH_C, , RESULT = 0 */
-    g_sM1AdcSensor.sCurrSec16.pAdcBasePhaC    = (ADC_Type *)ADC1;
-    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaC = M1_ADC1_PH_C;
-    g_sM1AdcSensor.sCurrSec16.ui16RsltRegPhaC = 0U;
-    /* ADC2, channel Ib = M1_ADC2_PH_B, RESULT = 0 */
-    g_sM1AdcSensor.sCurrSec16.pAdcBasePhaB    = (ADC_Type *)ADC2;
-    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaB = M1_ADC2_PH_B;
-    g_sM1AdcSensor.sCurrSec16.ui16RsltRegPhaB = 0U;
+    /* Sector 1,6 - measured currents Ib & Ic */
+    /* ADC1, channel Ib = M1_ADC1_PH_B (ADC_ETC trigger 0, chain 0) */
+    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaB = M1_ADC1_PH_B;
+    /* ADC2, channel Ic = M1_ADC2_PH_C (ADC_ETC trigger 4, chain 0) */
+    g_sM1AdcSensor.sCurrSec16.ui16ChanNumPhaC = M1_ADC2_PH_C;
 
-    /* Sector 2,3 - measured currents Ic & Ia*/
-    /* ADC1, channel Ic = M1_ADC1_PH_C, RESULT = 0 */
-    g_sM1AdcSensor.sCurrSec23.pAdcBasePhaC    = (ADC_Type *)ADC1;
-    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC = M1_ADC1_PH_C;
-    g_sM1AdcSensor.sCurrSec23.ui16RsltRegPhaC = 0U;
-    /* ADC2, channel Ia = M1_ADC2_PH_A, RESULT = 0 */
-    g_sM1AdcSensor.sCurrSec23.pAdcBasePhaA    = (ADC_Type *)ADC2;
-    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA = M1_ADC2_PH_A;
-    g_sM1AdcSensor.sCurrSec23.ui16RsltRegPhaA = 0U;
+    /* Sector 2,3 - measured currents Ia & Ic*/
+    /* ADC1, channel Ia = M1_ADC1_PH_A (ADC_ETC trigger 0, chain 0) */
+    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA = M1_ADC1_PH_A;
+    /* ADC2, channel Ic = M1_ADC2_PH_C (ADC_ETC trigger 4, chain 0) */
+    g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC = M1_ADC2_PH_C;
 
     /* Sector 4,5 - measured currents Ia & Ib */
-    /* ADC1, channel Ia = M1_ADC1_PH_A, RESULT = 0 */
-    g_sM1AdcSensor.sCurrSec45.pAdcBasePhaA    = (ADC_Type *)ADC1;
+    /* ADC1, channel Ia = M1_ADC1_PH_A (ADC_ETC trigger 0, chain 0) */
     g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaA = M1_ADC1_PH_A;
-    g_sM1AdcSensor.sCurrSec45.ui16RsltRegPhaA = 0U;
-    /* ADC2, channel Ib = M1_ADC2_PH_B, RESULT = 0 */
-    g_sM1AdcSensor.sCurrSec45.pAdcBasePhaB    = (ADC_Type *)ADC2;
+    /* ADC2, channel Ib = M1_ADC2_PH_B (ADC_ETC trigger 4, chain 0) */
     g_sM1AdcSensor.sCurrSec45.ui16ChanNumPhaB = M1_ADC2_PH_B;
-    g_sM1AdcSensor.sCurrSec45.ui16RsltRegPhaB = 0U;
 
     /* UDCbus channel measurement */
-    /* ADC1, channel Udcb = M1_ADC1_UDCB, RESULT = 2 */
-    g_sM1AdcSensor.pui32UdcbAdcBase = (ADC_Type *)ADC1;
+    /* ADC1, channel Udcb = M1_ADC1_UDCB (ADC_ETC trigger 0, chain 1) */
     g_sM1AdcSensor.ui16ChanNumVDcb  = M1_ADC1_UDCB;
-    g_sM1AdcSensor.ui16RsltRegVDcb  = 1U;
+    /* ADC2, channel AUX (ADC_ETC trigger 4, chain 1) */
+    g_sM1AdcSensor.ui16ChanNumAux = 25U;
 
-    /* Assign channels and init all pointers */
-    MCDRV_Curr3Ph2ShChanAssignInit(&g_sM1AdcSensor);
-
-    /* Enable & setup interrupt from ADC */
-    EnableIRQ(ADC1_IRQn);
-    NVIC_SetPriority(ADC1_IRQn, 1U);
 }
 
 /*!
@@ -276,6 +257,7 @@ void InitTMR1(void)
     /* Enable & setup interrupt from TMR1 */
     EnableIRQ(TMR1_IRQn);
     NVIC_SetPriority(TMR1_IRQn, 3U);
+
 }
 
 /*!
@@ -391,9 +373,9 @@ void M1_InitPWM(void)
     /* Initialize MC driver */
     g_sM1Pwm3ph.pui32PwmBaseAddress = (PWM_Type *)PWMBase;
 
-    g_sM1Pwm3ph.ui16PhASubNum = M1_PWM_PAIR_PHA; /* PWMA phase A sub-module number */
-    g_sM1Pwm3ph.ui16PhBSubNum = M1_PWM_PAIR_PHB; /* PWMA phase B sub-module number */
-    g_sM1Pwm3ph.ui16PhCSubNum = M1_PWM_PAIR_PHC; /* PWMA phase C sub-module number */
+    g_sM1Pwm3ph.ui16PhASubNum = 0U; /* PWMA phase A sub-module number */
+    g_sM1Pwm3ph.ui16PhBSubNum = 1U; /* PWMA phase B sub-module number */
+    g_sM1Pwm3ph.ui16PhCSubNum = 3U; /* PWMA phase C sub-module number */
 
     g_sM1Pwm3ph.ui16FaultFixNum = M1_FAULT_NUM; /* PWMA fixed-value over-current fault number */
     g_sM1Pwm3ph.ui16FaultAdjNum = M1_FAULT_NUM; /* PWMA adjustable over-current fault number */
@@ -415,16 +397,12 @@ void InitXBARA(void)
     /* Configure the XBARA signal connections. (set for sync mode in ADC_ETC) */
     XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputFlexpwm1Pwm1OutTrig01, kXBARA1_OutputAdcEtcXbar0Trig0);
 
-    /* M1 Enc phase A */
-    XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarInout16, kXBARA1_OutputEnc1PhaseAInput);
-
-    /* M1 Enc phase B */
-    XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarInout17, kXBARA1_OutputEnc1PhaseBInput);
 }
 
 /*!
  * @brief   void InitADC_ETC(void)
  *           - Initialization of the ADC_ETC peripheral
+ *           - Default channel assigment for Sector 2
  *
  * @param   void
  *
@@ -432,6 +410,18 @@ void InitXBARA(void)
  */
 void InitADC_ETC(void)
 {
+
+  /****************************************************************************
+   *                          ADC1                          ADC2              *
+   *                          trigger0   <-synchronized->   trigger4          *
+   *                                                                          *
+   * chain0 --> (SVM sec16)   Ib (M1_ADC1_PH_B)             Ic (M1_ADC2_PH_C) *
+   *            (SVM sec23)   Ia (M1_ADC1_PH_A)             Ic (M1_ADC2_PH_C) *
+   *            (SVM sec45)   Ia (M1_ADC1_PH_A)             Ib (M1_ADC2_PH_B) *
+   * chain1 -->               Udcb (M1_ADC1_UDCB)           Aux               *
+   *                                                                          *
+   ****************************************************************************/
+
     adc_etc_config_t adcEtcConfig;
     adc_etc_trigger_config_t adcEtcTriggerConfig;
     adc_etc_trigger_chain_config_t adcEtcTriggerChainConfig;
@@ -455,14 +445,12 @@ void InitADC_ETC(void)
     adcEtcTriggerChainConfig.enableB2BMode = true;
 
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 0U; /* Select ADC_HC0 register to trigger. */
-    adcEtcTriggerChainConfig.ADCChannelSelect =
-        0U; /* ADC_HC0 will be triggered to sample Corresponding channel. (ch.0) */
+    adcEtcTriggerChainConfig.ADCChannelSelect = g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaA; /* ADC_HC0 will be triggered to sample Corresponding channel. */
     adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_InterruptDisable;      /* Enable the Done0 interrupt. */
     ADC_ETC_SetTriggerChainConfig(ADC_ETC, 0U, 0U, &adcEtcTriggerChainConfig); /* Configure the trigger0 chain0. */
 
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 1U; /* Select ADC_HC1 register to trigger. */
-    adcEtcTriggerChainConfig.ADCChannelSelect =
-        1U; /* ADC_HC1 will be triggered to sample Corresponding channel. (ch.1) */
+    adcEtcTriggerChainConfig.ADCChannelSelect = g_sM1AdcSensor.ui16ChanNumVDcb; /* ADC_HC1 will be triggered to sample Corresponding channel. */
     adcEtcTriggerChainConfig.InterruptEnable = kADC_ETC_InterruptDisable;      /* Enable the Done1 interrupt. */
     ADC_ETC_SetTriggerChainConfig(ADC_ETC, 0U, 1U, &adcEtcTriggerChainConfig); /* Configure the trigger0 chain1. */
 
@@ -477,14 +465,19 @@ void InitADC_ETC(void)
     ADC_ETC_SetTriggerConfig(ADC_ETC, 4U, &adcEtcTriggerConfig);
 
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 0U; /* Select ADC_HC0 register to trigger. */
-    adcEtcTriggerChainConfig.ADCChannelSelect    = 0U; /* ADC_HC0 will be triggered to sample Corresponding channel. */
+    adcEtcTriggerChainConfig.ADCChannelSelect    = g_sM1AdcSensor.sCurrSec23.ui16ChanNumPhaC; /* ADC_HC0 will be triggered to sample Corresponding channel. */
     adcEtcTriggerChainConfig.InterruptEnable     = kADC_ETC_InterruptDisable;  /* Enable the Done0 interrupt. */
     ADC_ETC_SetTriggerChainConfig(ADC_ETC, 4U, 0U, &adcEtcTriggerChainConfig); /* Configure the trigger4 chain0. */
 
     adcEtcTriggerChainConfig.ADCHCRegisterSelect = 1U << 1U; /* Select ADC_HC1 register to trigger. */
-    adcEtcTriggerChainConfig.ADCChannelSelect    = 15U; /* ADC_HC1 will be triggered to sample Corresponding channel. */
-    adcEtcTriggerChainConfig.InterruptEnable     = kADC_ETC_InterruptDisable;  /* Enable the Done1 interrupt. */
+    adcEtcTriggerChainConfig.ADCChannelSelect    = g_sM1AdcSensor.ui16ChanNumAux; /* ADC_HC1 will be triggered to sample Corresponding channel. */
+    adcEtcTriggerChainConfig.InterruptEnable     = kADC_ETC_Done0InterruptEnable; /* Enable the Done1 interrupt. */
     ADC_ETC_SetTriggerChainConfig(ADC_ETC, 4U, 1U, &adcEtcTriggerChainConfig); /* Configure the trigger4 chain1. */
+
+	/* Enable & setup interrupt from ADC_ETC */
+    EnableIRQ(ADC_ETC_IRQ0_IRQn);
+    NVIC_SetPriority(ADC_ETC_IRQ0_IRQn, 0U);
+
 }
 
 /*!
@@ -501,12 +494,6 @@ void M1_InitQD(void)
     /* Enable clock to ENC modules */
     CLOCK_EnableClock(kCLOCK_Enc1);
 
-    /* Initialization modulo counter to encoder number of pulses * 4 - 1 */
-    ENC1->LMOD = (M1_POSPE_ENC_PULSES * 4U) - 1U;
-
-    /* Enable modulo counting and revolution counter increment on roll-over */
-    ENC1->CTRL2 = (ENC_CTRL2_MOD_MASK | ENC_CTRL2_REVMOD_MASK);
-
     /* Pass initialization data into encoder driver structure */
     /* encoder position and speed measurement */
     g_sM1Enc.pui32QdBase   = (ENC_Type *)ENC1;
@@ -517,7 +504,14 @@ void M1_InitQD(void)
     g_sM1Enc.ui16Pp        = M1_MOTOR_PP;
     g_sM1Enc.bDirection    = M1_POSPE_ENC_DIRECTION;
     g_sM1Enc.fltSpdEncMin  = M1_POSPE_ENC_N_MIN;
+    g_sM1Enc.ui16PulseNumber = M1_POSPE_ENC_PULSES;
     MCDRV_QdEncSetDirection(&g_sM1Enc);
+
+    /* Initialization modulo counter*/
+    MCDRV_QdEncSetPulses(&g_sM1Enc);
+
+    /* Enable modulo counting and revolution counter increment on roll-over */
+    ENC1->CTRL2 = (ENC_CTRL2_MOD_MASK | ENC_CTRL2_REVMOD_MASK);
 }
 
 /*!

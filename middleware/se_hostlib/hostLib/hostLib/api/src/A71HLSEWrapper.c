@@ -234,7 +234,7 @@ static void SortTable(HLSE_GP_DATA_TABLE* table)
  */
 static HLSE_RET_CODE ReadGPDataTable(HLSE_GP_DATA_TABLE* table, U8 forceReadFromGPData)
 {
-    U16 gpSize = 0;
+    U16 gpSize;
     HLSE_RET_CODE lReturn = HLSE_SW_OK;
     // Storage to be able to read from GP memoy up to theortical max number of entries in the GP table
     // this storage will mirror the end of GP Memory containing the GP table
@@ -375,7 +375,7 @@ static HLSE_RET_CODE ReadGPDataTable(HLSE_GP_DATA_TABLE* table, U8 forceReadFrom
  */
 static HLSE_RET_CODE WriteGPDataTable(HLSE_GP_DATA_TABLE* table)
 {
-    U16 gpSize = 0;
+    U16 gpSize;
     HLSE_RET_CODE lReturn = HLSE_SW_OK;
     U8 dataToBeWritten[HLSE_GP_DATA_CHUNK * HLSE_GP_DATA_CHUNKS_NUM];
     U8 entryNum;
@@ -763,7 +763,7 @@ static HLSE_RET_CODE GetOffsetForNewObjectAndAddNewEntry(U16 newObjectSize, HLSE
 {
     HLSE_RET_CODE lReturn = HLSE_SW_OK;
     HLSE_GP_DATA_TABLE table;
-    U16 gpSize = 0;
+    U16 gpSize;
     U16 newObjectSizeInChunks;
     U8 found = 0;
     U8 entryNum;
@@ -2207,3 +2207,4 @@ HLSE_RET_CODE Debug_ForceReadGPDataTable()
 }
 
 #endif /* SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM */
+

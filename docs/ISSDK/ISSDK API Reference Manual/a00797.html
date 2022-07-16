@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: algorithms/sensorfusion/sources/driver_pit.c File Reference</title>
+<title>ISSDK: algorithms/sensorfusion/sources/driver_ctimer.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -49,7 +49,7 @@ $(function() {
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">driver_pit.c File Reference</div>  </div>
+<div class="title">driver_ctimer.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -57,99 +57,121 @@ $(function() {
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;issdk_hal.h&quot;</code><br />
 <code>#include &quot;board.h&quot;</code><br />
-<code>#include &quot;fsl_pit.h&quot;</code><br />
+<code>#include &quot;fsl_ctimer.h&quot;</code><br />
 <code>#include &quot;pin_mux.h&quot;</code><br />
 <code>#include &quot;clock_config.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for driver_pit.c:</div>
+Include dependency graph for driver_ctimer.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00798.png" border="0" usemap="#algorithms_2sensorfusion_2sources_2driver__pit_8c" alt=""/></div>
-<map name="algorithms_2sensorfusion_2sources_2driver__pit_8c" id="algorithms_2sensorfusion_2sources_2driver__pit_8c">
-</map>
+<div class="center"><img src="a00798.png" border="0" usemap="#algorithms_2sensorfusion_2sources_2driver__ctimer_8c" alt=""/></div>
 </div>
 </div>
 <p><a href="a00797_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad856669f6cb00c21152914f238a5b13a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#ad856669f6cb00c21152914f238a5b13a">PIT_LED_HANDLER</a>&#160;&#160;&#160;PIT0_IRQHandler</td></tr>
-<tr class="separator:ad856669f6cb00c21152914f238a5b13a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e2f2a63c91f6a3fc3efaa78c0f40e62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#a5e2f2a63c91f6a3fc3efaa78c0f40e62">PIT_IRQ_ID</a>&#160;&#160;&#160;PIT0_IRQn</td></tr>
-<tr class="separator:a5e2f2a63c91f6a3fc3efaa78c0f40e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a411cc0f5ce23365479e23727ea7e27a9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#a411cc0f5ce23365479e23727ea7e27a9">PIT_SOURCE_CLOCK</a>&#160;&#160;&#160;CLOCK_GetFreq(kCLOCK_BusClk)</td></tr>
-<tr class="separator:a411cc0f5ce23365479e23727ea7e27a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7786fe5adcd1d885491257b0ebc27b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#ab7786fe5adcd1d885491257b0ebc27b8">CTIMER</a>&#160;&#160;&#160;CTIMER0                 /* Timer 0 */</td></tr>
+<tr class="separator:ab7786fe5adcd1d885491257b0ebc27b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31628cf818c8dea7d3311a53c65cb924"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#a31628cf818c8dea7d3311a53c65cb924">CTIMER_MAT0_OUT</a>&#160;&#160;&#160;kCTIMER_Match_0 /* Match output 0 */</td></tr>
+<tr class="separator:a31628cf818c8dea7d3311a53c65cb924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2843c40242a2189260e8fb4bbad4b06a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#a2843c40242a2189260e8fb4bbad4b06a">BUS_CLK_FREQ</a>&#160;&#160;&#160;CLOCK_GetFreq(kCLOCK_BusClk)</td></tr>
+<tr class="separator:a2843c40242a2189260e8fb4bbad4b06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a06fa5975f12d96fe146671dfd5af4b2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#a06fa5975f12d96fe146671dfd5af4b2f">PIT_LED_HANDLER</a> (void)</td></tr>
-<tr class="separator:a06fa5975f12d96fe146671dfd5af4b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ad9361b48550aacb336c3a1f0776953"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#a9ad9361b48550aacb336c3a1f0776953">ctimer_callback</a> (uint32_t flags)</td></tr>
+<tr class="separator:a9ad9361b48550aacb336c3a1f0776953"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa9242caadd99e8ac4fdce86681b61740"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#aa9242caadd99e8ac4fdce86681b61740">pit_init</a> (uint32_t microseconds)</td></tr>
 <tr class="separator:aa9242caadd99e8ac4fdce86681b61740"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a4bd7666380e01cee8eb7cd5f0df5e3bf"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#a4bd7666380e01cee8eb7cd5f0df5e3bf">pitIsrFlag</a> = <a class="el" href="a00878.html#a65e9886d74aaee76545e83dd09011727">false</a></td></tr>
+<tr class="memitem:af2243d3e8556d4be713b2ef15c9a2738"><td class="memItemLeft" align="right" valign="top">ctimer_callback_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#af2243d3e8556d4be713b2ef15c9a2738">ctimer_callback_table</a> []</td></tr>
+<tr class="separator:af2243d3e8556d4be713b2ef15c9a2738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bd7666380e01cee8eb7cd5f0df5e3bf"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00797.html#a4bd7666380e01cee8eb7cd5f0df5e3bf">pitIsrFlag</a> = <a class="el" href="a00914.html#a65e9886d74aaee76545e83dd09011727">false</a></td></tr>
 <tr class="separator:a4bd7666380e01cee8eb7cd5f0df5e3bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides a simple abstraction for a periodic interval timer. </p>
-<p>Bare metal implementations of the sensor fusion library require at least one periodic interrupt for use as a timebase for sensor fusion functions. The Periodic Interval Timer (PIT) is one such module that is commonly found on NXP Kinetis MCUs. The PIT functions are only referenced at the <a class="el" href="a04483.html#a840291bc02cba5474a4cb46a9b9566fe" title="Main function. ">main()</a> level. There is no interaction within the fusion routines themselves. </p>
+<p>Bare metal implementations of the sensor fusion library require at least one periodic interrupt for use as a timebase for sensor fusion functions. The CTIMER module on the LPC is one such module. The timer functions are only referenced at the <a class="el" href="a04733.html#a840291bc02cba5474a4cb46a9b9566fe" title="Main function. ">main()</a> level. There is no interaction within the fusion routines themselves. </p>
 
-<p class="definition">Definition in file <a class="el" href="a00797_source.html">driver_pit.c</a>.</p>
+<p class="definition">Definition in file <a class="el" href="a00797_source.html">driver_ctimer.c</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a5e2f2a63c91f6a3fc3efaa78c0f40e62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e2f2a63c91f6a3fc3efaa78c0f40e62">&#9670;&nbsp;</a></span>PIT_IRQ_ID</h2>
+<a id="a2843c40242a2189260e8fb4bbad4b06a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2843c40242a2189260e8fb4bbad4b06a">&#9670;&nbsp;</a></span>BUS_CLK_FREQ</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PIT_IRQ_ID&#160;&#160;&#160;PIT0_IRQn</td>
+          <td class="memname">#define BUS_CLK_FREQ&#160;&#160;&#160;CLOCK_GetFreq(kCLOCK_BusClk)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00031">31</a> of file <a class="el" href="a00797_source.html">driver_pit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00029">29</a> of file <a class="el" href="a00797_source.html">driver_ctimer.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a00797_source.html#l00044">pit_init()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00797_source.html#l00064">pit_init()</a>.</p>
 
 </div>
 </div>
-<a id="ad856669f6cb00c21152914f238a5b13a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad856669f6cb00c21152914f238a5b13a">&#9670;&nbsp;</a></span>PIT_LED_HANDLER</h2>
+<a id="ab7786fe5adcd1d885491257b0ebc27b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7786fe5adcd1d885491257b0ebc27b8">&#9670;&nbsp;</a></span>CTIMER</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PIT_LED_HANDLER&#160;&#160;&#160;PIT0_IRQHandler</td>
+          <td class="memname">#define CTIMER&#160;&#160;&#160;CTIMER0                 /* Timer 0 */</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00028">28</a> of file <a class="el" href="a00797_source.html">driver_pit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00027">27</a> of file <a class="el" href="a00797_source.html">driver_ctimer.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00797_source.html#l00051">ctimer_callback()</a>, and <a class="el" href="a00797_source.html#l00064">pit_init()</a>.</p>
 
 </div>
 </div>
-<a id="a411cc0f5ce23365479e23727ea7e27a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a411cc0f5ce23365479e23727ea7e27a9">&#9670;&nbsp;</a></span>PIT_SOURCE_CLOCK</h2>
+<a id="a31628cf818c8dea7d3311a53c65cb924"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31628cf818c8dea7d3311a53c65cb924">&#9670;&nbsp;</a></span>CTIMER_MAT0_OUT</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PIT_SOURCE_CLOCK&#160;&#160;&#160;CLOCK_GetFreq(kCLOCK_BusClk)</td>
+          <td class="memname">#define CTIMER_MAT0_OUT&#160;&#160;&#160;kCTIMER_Match_0 /* Match output 0 */</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00033">33</a> of file <a class="el" href="a00797_source.html">driver_pit.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00797_source.html#l00044">pit_init()</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00028">28</a> of file <a class="el" href="a00797_source.html">driver_ctimer.c</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a9ad9361b48550aacb336c3a1f0776953"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ad9361b48550aacb336c3a1f0776953">&#9670;&nbsp;</a></span>ctimer_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ctimer_callback </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>flags</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00051">51</a> of file <a class="el" href="a00797_source.html">driver_ctimer.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a00797_source.html#l00027">CTIMER</a>, and <a class="el" href="a00797_source.html#l00049">pitIsrFlag</a>.</p>
+
+</div>
+</div>
 <a id="aa9242caadd99e8ac4fdce86681b61740"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa9242caadd99e8ac4fdce86681b61740">&#9670;&nbsp;</a></span>pit_init()</h2>
 
@@ -166,35 +188,38 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00044">44</a> of file <a class="el" href="a00797_source.html">driver_pit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00064">64</a> of file <a class="el" href="a00797_source.html">driver_ctimer.c</a>.</p>
 
-<p class="reference">References <a class="el" href="a00761_source.html#l00029">BUS_CLK_FREQ</a>, <a class="el" href="a00761_source.html#l00027">CTIMER</a>, <a class="el" href="a00797_source.html#l00031">PIT_IRQ_ID</a>, and <a class="el" href="a00797_source.html#l00033">PIT_SOURCE_CLOCK</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00869_source.html#l00055">main()</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00797_aa9242caadd99e8ac4fdce86681b61740_icgraph.png" border="0" usemap="#a00797_aa9242caadd99e8ac4fdce86681b61740_icgraph" alt=""/></div>
+<map name="a00797_aa9242caadd99e8ac4fdce86681b61740_icgraph" id="a00797_aa9242caadd99e8ac4fdce86681b61740_icgraph">
+<area shape="rect" id="node2" href="a00869.html#a840291bc02cba5474a4cb46a9b9566fe" title="This is a bare&#45;metal implementation of the NXP sensor fusion demo build. " alt="" coords="113,5,164,32"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a06fa5975f12d96fe146671dfd5af4b2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06fa5975f12d96fe146671dfd5af4b2f">&#9670;&nbsp;</a></span>PIT_LED_HANDLER()</h2>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="af2243d3e8556d4be713b2ef15c9a2738"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2243d3e8556d4be713b2ef15c9a2738">&#9670;&nbsp;</a></span>ctimer_callback_table</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void PIT_LED_HANDLER </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">ctimer_callback_t ctimer_callback_table[]</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00037">37</a> of file <a class="el" href="a00797_source.html">driver_pit.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a00797_source.html#l00035">pitIsrFlag</a>.</p>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">{</div><div class="line">    <a class="code" href="a00797.html#a9ad9361b48550aacb336c3a1f0776953">ctimer_callback</a>,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL</div><div class="line">}</div><div class="ttc" id="a00797_html_a9ad9361b48550aacb336c3a1f0776953"><div class="ttname"><a href="a00797.html#a9ad9361b48550aacb336c3a1f0776953">ctimer_callback</a></div><div class="ttdeci">void ctimer_callback(uint32_t flags)</div><div class="ttdef"><b>Definition:</b> <a href="a00797_source.html#l00051">driver_ctimer.c:51</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00037">37</a> of file <a class="el" href="a00797_source.html">driver_ctimer.c</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Variable Documentation</h2>
 <a id="a4bd7666380e01cee8eb7cd5f0df5e3bf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4bd7666380e01cee8eb7cd5f0df5e3bf">&#9670;&nbsp;</a></span>pitIsrFlag</h2>
 
@@ -202,14 +227,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile bool pitIsrFlag = <a class="el" href="a00878.html#a65e9886d74aaee76545e83dd09011727">false</a></td>
+          <td class="memname">volatile bool pitIsrFlag = <a class="el" href="a00914.html#a65e9886d74aaee76545e83dd09011727">false</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00035">35</a> of file <a class="el" href="a00797_source.html">driver_pit.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00797_source.html#l00049">49</a> of file <a class="el" href="a00797_source.html">driver_ctimer.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a00797_source.html#l00037">PIT_LED_HANDLER()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00797_source.html#l00051">ctimer_callback()</a>, and <a class="el" href="a00869_source.html#l00055">main()</a>.</p>
 
 </div>
 </div>

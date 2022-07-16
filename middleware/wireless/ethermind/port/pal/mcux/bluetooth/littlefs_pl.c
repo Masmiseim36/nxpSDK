@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 
 #include "fsl_common.h"
 
@@ -84,13 +85,20 @@ static int lfs_mflash_prog(
     const struct lfs_config *lfsc, lfs_block_t block, lfs_off_t off, const void *buffer, lfs_size_t size);
 static int lfs_mflash_erase(const struct lfs_config *lfsc, lfs_block_t block);
 static int lfs_mflash_sync(const struct lfs_config *lfsc);
-
+#ifdef LFS_THREADSAFE
+static int lfs_mflash_lock(const struct lfs_config *lfsc);
+static int lfs_mflash_unlock(const struct lfs_config *lfsc);
+#endif
 static struct lfs_config LittleFS_config = {
   .context = (void*)NULL,
   .read = lfs_mflash_read,
   .prog = lfs_mflash_prog,
   .erase = lfs_mflash_erase,
   .sync = lfs_mflash_sync,
+#ifdef LFS_THREADSAFE
+  .lock = lfs_mflash_lock,
+  .unlock = lfs_mflash_unlock,
+#endif
   .read_size = LITTLEFS_READ_SIZE,
   .prog_size = LITTLEFS_PROG_SIZE,
   .block_size = LITTLEFS_BLOCK_SIZE,
@@ -207,6 +215,19 @@ static int lfs_mflash_sync(const struct lfs_config *lfsc)
     return LFS_ERR_OK;
 }
 
+#ifdef LFS_THREADSAFE
+static int lfs_mflash_lock(const struct lfs_config *lfsc)
+{
+    assert(lfsc);
+    return LFS_ERR_OK;
+}
+static int lfs_mflash_unlock(const struct lfs_config *lfsc)
+{
+    assert(lfsc);
+    return LFS_ERR_OK;
+}
+#endif
+
 lfs_t * lfs_pl_init(void)
 {
     static uint8_t initialized = 0;
@@ -253,5 +274,6 @@ lfs_t * lfs_pl_init(void)
         return NULL;
     }
 }
+#endif /* CONFIG_BT_SETTINGS */
 
 

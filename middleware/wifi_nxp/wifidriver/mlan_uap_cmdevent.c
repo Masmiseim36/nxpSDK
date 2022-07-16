@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -393,7 +377,7 @@ static mlan_status wlan_uap_cmd_sys_configure(pmlan_private pmpriv,
         }
     }
 
-    if (pioctl_buf->req_id == MLAN_IOCTL_BSS)
+    if (pioctl_buf->req_id == (t_u32)MLAN_IOCTL_BSS)
     {
         bss = (mlan_ds_bss *)(void *)pioctl_buf->pbuf;
         if (bss->sub_command == MLAN_OID_BSS_MAC_ADDR)
@@ -408,7 +392,7 @@ static mlan_status wlan_uap_cmd_sys_configure(pmlan_private pmpriv,
         { /* Do Nothing */
         }
     }
-    else if (pioctl_buf->req_id == MLAN_IOCTL_MISC_CFG)
+    else if (pioctl_buf->req_id == (t_u32)MLAN_IOCTL_MISC_CFG)
     {
     }
     else
@@ -472,7 +456,7 @@ static mlan_status wlan_uap_cmd_snmp_mib(pmlan_private pmpriv,
     {
         cmd->command          = wlan_cpu_to_le16(HostCmd_CMD_802_11_SNMP_MIB);
         psnmp_mib->query_type = wlan_cpu_to_le16(HostCmd_ACT_GEN_GET);
-        if (cmd_oid == StopDeauth_i)
+        if (cmd_oid == (t_u32)StopDeauth_i)
         {
             psnmp_mib->oid      = wlan_cpu_to_le16((t_u16)StopDeauth_i);
             psnmp_mib->buf_size = wlan_cpu_to_le16(sizeof(t_u8));

@@ -166,7 +166,17 @@ U16 SM_RjctConnectSocket(void **conn_ctx, const char *connectString, SmCommState
     }
 #endif
 
+#ifdef ACCESS_MGR_UNIX_SOCKETS
+    if (strlen(connectString) < sizeof(szServer)){
+        strcpy(szServer, connectString);
+        rv = SW_OK;
+    }
+    else {
+        rv = 0;
+    }
+#else
     rv = getSocketParams(connectString, szServer, szServerLen, (unsigned int *)&port);
+#endif
 
 #if defined(SMCOM_JRCP_V1)
     FPRINTF("Connection to secure element over socket to %s\r\n", connectString);
@@ -339,9 +349,13 @@ U16 SM_RjctConnect(void **conn_ctx, const char *connectString, SmCommState_t *co
         LOG_W("connectString is NULL. Aborting.");
         return ERR_NO_VALID_IP_PORT_PATTERN;
     }
+#ifdef ACCESS_MGR_UNIX_SOCKETS
+    is_socket = TRUE;
+#else
     if (NULL != strchr(connectString, ':')) {
         is_socket = TRUE;
     }
+#endif
 #endif
 #if RJCT_VCOM
     if (is_vcom) {
@@ -385,7 +399,14 @@ U16 SM_I2CConnect(void **conn_ctx, SmCommState_t *commState, U8 *atr, U16 *atrLe
 {
     U16 status = SMCOM_COM_FAILED;
 #if defined(T1oI2C)
-    status = smComT1oI2C_Init(conn_ctx, pConnString);
+    if (commState->sessionResume == 1) {
+        status = smComT1oI2C_Resume(conn_ctx, pConnString);
+    }
+    else {
+        status = smComT1oI2C_Init(conn_ctx, pConnString);
+    }
+#elif defined (SMCOM_PN7150)
+    smComPN7150_Init();
 #elif defined (SCI2C)
     status = smComSCI2C_Init(conn_ctx, pConnString);
 #endif

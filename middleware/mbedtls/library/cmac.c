@@ -47,6 +47,12 @@
 #include "mbedtls/error.h"
 #include "mbedtls/platform.h"
 
+/* NXP added */
+#if defined(MBEDTLS_AES_CMAC_ALT)
+#include "mbedtls/cipher_internal.h"
+#include "cmac_alt.h"
+#endif /* MBEDTLS_AES_CMAC_ALT */
+
 #include <string.h>
 
 #if !defined(MBEDTLS_CMAC_ALT) || defined(MBEDTLS_SELF_TEST)
@@ -201,8 +207,11 @@ int mbedtls_cipher_cmac_starts( mbedtls_cipher_context_t *ctx,
     switch( type )
     {
         case MBEDTLS_CIPHER_AES_128_ECB:
-        case MBEDTLS_CIPHER_AES_192_ECB:
         case MBEDTLS_CIPHER_AES_256_ECB:
+#if defined(MBEDTLS_AES_CMAC_ALT) /* NXP Added */
+            return mbedtls_cipher_aes_cmac_starts(ctx);
+#endif /* MBEDTLS_AES_CMAC_ALT */
+        case MBEDTLS_CIPHER_AES_192_ECB: // no HW acceleration for AES-192 bits keys
         case MBEDTLS_CIPHER_DES_EDE3_ECB:
             break;
         default:
@@ -233,6 +242,15 @@ int mbedtls_cipher_cmac_update( mbedtls_cipher_context_t *ctx,
     if( ctx == NULL || ctx->cipher_info == NULL || input == NULL ||
         ctx->cmac_ctx == NULL )
         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );
+
+/* NXP added */
+#if defined(MBEDTLS_AES_CMAC_ALT)
+    if( (MBEDTLS_CIPHER_AES_128_ECB == ctx->cipher_info->type) || // no HW acceleration for AES-192 bits keys
+        (MBEDTLS_CIPHER_AES_256_ECB == ctx->cipher_info->type) )
+    {
+        return mbedtls_cipher_aes_cmac_update(ctx, input, ilen);
+    }
+#endif /* MBEDTLS_AES_CMAC_ALT */
 
     cmac_ctx = ctx->cmac_ctx;
     block_size = ctx->cipher_info->block_size;
@@ -301,9 +319,17 @@ int mbedtls_cipher_cmac_finish( mbedtls_cipher_context_t *ctx,
     int ret = MBEDTLS_ERR_ERROR_CORRUPTION_DETECTED;
     size_t olen, block_size;
 
-    if( ctx == NULL || ctx->cipher_info == NULL || ctx->cmac_ctx == NULL ||
-        output == NULL )
+    if( ctx == NULL || ctx->cipher_info == NULL || ctx->cmac_ctx == NULL) /* NXP edited */
         return( MBEDTLS_ERR_CIPHER_BAD_INPUT_DATA );
+
+/* NXP added */
+#if defined(MBEDTLS_AES_CMAC_ALT)
+    if( (MBEDTLS_CIPHER_AES_128_ECB == ctx->cipher_info->type) || // no HW acceleration for AES-192 bits keys
+        (MBEDTLS_CIPHER_AES_256_ECB == ctx->cipher_info->type) )
+    {
+        return mbedtls_cipher_aes_cmac_finish(ctx, output);
+    }
+#endif /* MBEDTLS_AES_CMAC_ALT */
 
     cmac_ctx = ctx->cmac_ctx;
     block_size = ctx->cipher_info->block_size;

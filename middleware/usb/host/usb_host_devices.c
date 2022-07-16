@@ -406,7 +406,9 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
     void *temp;
     usb_host_device_enumeration_status_t state;
 #if (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
+#if (defined(USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB))
     usb_host_hub_instance_t *hubInstance4Device = NULL;
+#endif
 #endif
 
     state = (usb_host_device_enumeration_status_t)deviceInstance->state;
@@ -502,6 +504,7 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
             }
 
 #if (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
+#if (defined(USB_HOST_CONFIG_HUB) && (USB_HOST_CONFIG_HUB))
             hubInstance4Device = USB_HostHubGetHubDeviceHandle(hostInstance, deviceInstance->hubNumber);
             if ((!(((usb_descriptor_configuration_t *)deviceInstance->configurationDesc)->bmAttributes &
                    USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_MASK)) &&
@@ -515,6 +518,7 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
                 usb_echo("The device power exceeded\r\n");
                 return kStatus_USB_Error;
             }
+#endif
 #endif
             temp = (void *)deviceInstance->configurationDesc;
             if (((usb_descriptor_configuration_t *)temp)->bMaxPower > USB_HOST_CONFIG_MAX_POWER)

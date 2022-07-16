@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  *
@@ -23,6 +23,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "fsl_silicon_id.h"
 #include "fsl_phy.h"
 
 #include "lwip/netif.h"
@@ -88,14 +89,6 @@
 #endif
 #ifndef configGW_ADDR3
 #define configGW_ADDR3 100
-#endif
-
-/* MAC address configuration. */
-#ifndef configMAC_ADDR
-#define configMAC_ADDR                     \
-    {                                      \
-        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
-    }
 #endif
 
 /* Address of PHY interface. */
@@ -531,13 +524,20 @@ static void stack_init(void)
 {
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
+        .phyHandle = &phyHandle,
+#ifdef configMAC_ADDR
         .macAddress = configMAC_ADDR,
+#endif
     };
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     tcpip_init(NULL, NULL);
+
+#ifndef configMAC_ADDR
+    /* Set special address for each chip. */
+    (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
 
     IP4_ADDR(&netif_ipaddr, configIP_ADDR0, configIP_ADDR1, configIP_ADDR2, configIP_ADDR3);
     IP4_ADDR(&netif_netmask, configNET_MASK0, configNET_MASK1, configNET_MASK2, configNET_MASK3);

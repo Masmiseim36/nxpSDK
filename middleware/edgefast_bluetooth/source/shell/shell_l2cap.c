@@ -36,14 +36,15 @@
 #define DATA_MTU		(23 * CREDITS)
 
 #define L2CAP_POLICY_NONE		0x00
-#define L2CAP_POLICY_WHITELIST		0x01
+#define L2CAP_POLICY_ALLOWLIST		0x01
 #define L2CAP_POLICY_16BYTE_KEY		0x02
 
-NET_BUF_POOL_FIXED_DEFINE(data_tx_pool, 1, DATA_MTU, NULL);
+NET_BUF_POOL_FIXED_DEFINE(data_tx_pool, 1,
+			  BT_L2CAP_SDU_BUF_SIZE(DATA_MTU), NULL);
 NET_BUF_POOL_FIXED_DEFINE(data_rx_pool, 1, DATA_MTU, NULL);
 
 static uint8_t l2cap_policy;
-static struct bt_conn *l2cap_whitelist[CONFIG_BT_MAX_CONN];
+static struct bt_conn *l2cap_allowlist[CONFIG_BT_MAX_CONN];
 
 static uint32_t l2cap_rate;
 static uint32_t l2cap_recv_delay_ms;
@@ -134,7 +135,7 @@ static void l2cap_sent(struct bt_l2cap_chan *chan)
 
 static void l2cap_status(struct bt_l2cap_chan *chan, atomic_t *status)
 {
-	shell_print(ctx_shell, "Channel %p status %u", chan, status);
+	shell_print(ctx_shell, "Channel %p status %u", chan, (uint32_t)*status);
 }
 
 static void l2cap_connected(struct bt_l2cap_chan *chan)
@@ -208,20 +209,20 @@ static struct l2ch * l2cap_channel_lookup_conn(struct bt_conn *conn)
 	return NULL;
 }
 
-static void l2cap_whitelist_remove(struct bt_conn *conn, uint8_t reason)
+static void l2cap_allowlist_remove(struct bt_conn *conn, uint8_t reason)
 {
 	int i;
 
-	for (i = 0; i < ARRAY_SIZE(l2cap_whitelist); i++) {
-		if (l2cap_whitelist[i] == conn) {
-			bt_conn_unref(l2cap_whitelist[i]);
-			l2cap_whitelist[i] = NULL;
+	for (i = 0; i < ARRAY_SIZE(l2cap_allowlist); i++) {
+		if (l2cap_allowlist[i] == conn) {
+			bt_conn_unref(l2cap_allowlist[i]);
+			l2cap_allowlist[i] = NULL;
 		}
 	}
 }
 
 static struct bt_conn_cb l2cap_conn_callbacks = {
-	.disconnected = l2cap_whitelist_remove,
+	.disconnected = l2cap_allowlist_remove,
 };
 
 static int l2cap_accept_policy(struct bt_conn *conn)
@@ -234,9 +235,9 @@ static int l2cap_accept_policy(struct bt_conn *conn)
 		if (enc_key_size && enc_key_size < BT_ENC_KEY_SIZE_MAX) {
 			return -EPERM;
 		}
-	} else if (l2cap_policy == L2CAP_POLICY_WHITELIST) {
-		for (i = 0; i < ARRAY_SIZE(l2cap_whitelist); i++) {
-			if (l2cap_whitelist[i] == conn) {
+	} else if (l2cap_policy == L2CAP_POLICY_ALLOWLIST) {
+		for (i = 0; i < ARRAY_SIZE(l2cap_allowlist); i++) {
+			if (l2cap_allowlist[i] == conn) {
 				return 0;
 			}
 		}
@@ -292,8 +293,8 @@ static shell_status_t cmd_register(shell_handle_t shell, int32_t argc, char *arg
 	if (argc > 3) {
 		policy = argv[3];
 
-		if (!strcmp(policy, "whitelist")) {
-			l2cap_policy = L2CAP_POLICY_WHITELIST;
+		if (!strcmp(policy, "allowlist")) {
+			l2cap_policy = L2CAP_POLICY_ALLOWLIST;
 		} else if (!strcmp(policy, "16byte_key")) {
 			l2cap_policy = L2CAP_POLICY_16BYTE_KEY;
 		} else {
@@ -445,7 +446,7 @@ static shell_status_t cmd_metrics(shell_handle_t shell, int32_t argc, char *argv
 	return kStatus_SHELL_Success;
 }
 
-static shell_status_t cmd_whitelist_add(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_allowlist_add(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	int i;
 
@@ -454,9 +455,9 @@ static shell_status_t cmd_whitelist_add(shell_handle_t shell, int32_t argc, char
 		return kStatus_SHELL_Success;
 	}
 
-	for (i = 0; i < ARRAY_SIZE(l2cap_whitelist); i++) {
-		if (l2cap_whitelist[i] == NULL) {
-			l2cap_whitelist[i] = bt_conn_ref(default_conn);
+	for (i = 0; i < ARRAY_SIZE(l2cap_allowlist); i++) {
+		if (l2cap_allowlist[i] == NULL) {
+			l2cap_allowlist[i] = bt_conn_ref(default_conn);
 			return kStatus_SHELL_Success;
 		}
 	}
@@ -464,23 +465,23 @@ static shell_status_t cmd_whitelist_add(shell_handle_t shell, int32_t argc, char
 	return (shell_status_t)-ENOMEM;
 }
 
-static shell_status_t cmd_whitelist_remove(shell_handle_t shell, int32_t argc, char *argv[])
+static shell_status_t cmd_allowlist_remove(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	if (!default_conn) {
 		shell_error(shell, "Not connected");
 		return kStatus_SHELL_Success;
 	}
 
-	l2cap_whitelist_remove(default_conn, 0);
+	l2cap_allowlist_remove(default_conn, 0);
 
 	return kStatus_SHELL_Success;
 }
 
 #define HELP_NONE "[none]"
 
-SHELL_STATIC_SUBCMD_SET_CREATE(whitelist_cmds,
-	SHELL_CMD_ARG(add, NULL, HELP_NONE, cmd_whitelist_add, 1, 0),
-	SHELL_CMD_ARG(remove, NULL, HELP_NONE, cmd_whitelist_remove, 1, 0),
+SHELL_STATIC_SUBCMD_SET_CREATE(allowlist_cmds,
+	SHELL_CMD_ARG(add, NULL, HELP_NONE, cmd_allowlist_add, 1, 0),
+	SHELL_CMD_ARG(remove, NULL, HELP_NONE, cmd_allowlist_remove, 1, 0),
 	SHELL_SUBCMD_SET_END
 );
 
@@ -490,9 +491,9 @@ SHELL_STATIC_SUBCMD_SET_CREATE(l2cap_cmds,
 	SHELL_CMD_ARG(metrics, NULL, "<value on, off>", cmd_metrics, 2, 0),
 	SHELL_CMD_ARG(recv, NULL, "[delay (in miliseconds)", cmd_recv, 1, 1),
 	SHELL_CMD_ARG(register, NULL, "<psm> [sec_level] "
-		      "[policy: whitelist, 16byte_key]", cmd_register, 2, 2),
+		      "[policy: allowlist, 16byte_key]", cmd_register, 2, 2),
 	SHELL_CMD_ARG(send, NULL, "<number of packets>", cmd_send, 2, 0),
-	SHELL_CMD_ARG(whitelist, whitelist_cmds, HELP_NONE, NULL, 1, 0),
+	SHELL_CMD_ARG(allowlist, allowlist_cmds, HELP_NONE, NULL, 1, 0),
 	SHELL_SUBCMD_SET_END
 );
 

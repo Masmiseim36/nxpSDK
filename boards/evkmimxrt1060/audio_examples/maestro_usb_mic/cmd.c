@@ -108,7 +108,7 @@ static shell_status_t shellUsbMIC(shell_handle_t shellHandle, int32_t argc, char
         while (true)
         {
             USB_AudioCodecTask();
-            osa_time_delay(0); // Due to switch to another task
+            OSA_TimeDelay(0); // Due to switch to another task
         }
     }
     else
@@ -117,7 +117,7 @@ static shell_status_t shellUsbMIC(shell_handle_t shellHandle, int32_t argc, char
         while (xTaskGetTickCount() <= (milliSec + ((TickType_t)time2Run * 1000)))
         {
             USB_AudioCodecTask();
-            osa_time_delay(0); // Due to switch to another task
+            OSA_TimeDelay(0); // Due to switch to another task
         }
     }
 

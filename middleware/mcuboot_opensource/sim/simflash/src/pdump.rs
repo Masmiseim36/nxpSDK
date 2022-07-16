@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Linaro LTD
+// Copyright (c) 2017,2021 Linaro LTD
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -34,7 +34,7 @@ impl Dumper {
             self.hex.push(' ');
         }
         self.hex.push_str(&format!(" {:02x}", ch)[..]);
-        self.ascii.push(if ch >= ' ' as u8 && ch <= '~' as u8 {
+        self.ascii.push(if (b' '..=b'~').contains(&ch) {
             ch as char
         } else {
             '.'

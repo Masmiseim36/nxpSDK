@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: drivers/host/data_format_json.c File Reference</title>
+<title>ISSDK: drivers/gpio/Driver_GPIO.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -40,480 +40,198 @@ $(function() {
 <div id="main-nav"></div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_14bc92f4b96c8519b376567118ac28b3.html">drivers</a></li><li class="navelem"><a class="el" href="dir_32464e4af507982e116bd625f186503f.html">host</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_14bc92f4b96c8519b376567118ac28b3.html">drivers</a></li><li class="navelem"><a class="el" href="dir_999ea29f6fe13f1ec5dc080b8071f0d8.html">gpio</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">data_format_json.c File Reference</div>  </div>
+<div class="title">Driver_GPIO.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="a00482.html" title="The data_format_json.c file implements JSON data format interfaces and services. ">data_format_json.c</a> file implements JSON data format interfaces and services.  
+<p>The <a class="el" href="a00482.html" title="The Driver_GPIO.h file contains the definitions for GPIO Driver direction. ">Driver_GPIO.h</a> file contains the definitions for GPIO Driver direction.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
-<code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &lt;string.h&gt;</code><br />
-<code>#include &lt;stdbool.h&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00485_source.html">data_format_json.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;Driver_Common.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for data_format_json.c:</div>
+Include dependency graph for Driver_GPIO.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00483.png" border="0" usemap="#drivers_2host_2data__format__json_8c" alt=""/></div>
-<map name="drivers_2host_2data__format__json_8c" id="drivers_2host_2data__format__json_8c">
-<area shape="rect" id="node6" href="a00485.html" title="The format_json.h file describes the structures and definitions for the data&#45;format standard JSON..." alt="" coords="119,95,251,121"/>
+<div class="center"><img src="a00483.png" border="0" usemap="#drivers_2gpio_2_driver___g_p_i_o_8h" alt=""/></div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00484.png" border="0" usemap="#drivers_2gpio_2_driver___g_p_i_o_8hdep" alt=""/></div>
+<map name="drivers_2gpio_2_driver___g_p_i_o_8hdep" id="drivers_2gpio_2_driver___g_p_i_o_8hdep">
+<area shape="rect" id="node2" href="a04835.html" title="drivers/gpio/i.mx/gpio\l_driver.h" alt="" coords="5,95,149,136"/>
+<area shape="rect" id="node3" href="a04838.html" title="drivers/gpio/i.mx/i.mxrt600\l/gpio_driver.h" alt="" coords="174,95,349,136"/>
+<area shape="rect" id="node4" href="a04841.html" title="drivers/gpio/kinetis\l/gpio_driver.h" alt="" coords="373,95,502,136"/>
+<area shape="rect" id="node5" href="a04844.html" title="drivers/gpio/lpc/gpio\l_driver.h" alt="" coords="527,95,663,136"/>
+<area shape="rect" id="node6" href="a04847.html" title="drivers/gpio/qn/gpio\l_driver.h" alt="" coords="687,95,820,136"/>
 </map>
 </div>
 </div>
 <p><a href="a00482_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03903.html">GENERIC_DRIVER_GPIO</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access structure of the GPIO Driver.  <a href="a03903.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ae0a5830a947ec10817f3ee074debf8ae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#ae0a5830a947ec10817f3ee074debf8ae">GPIO_API_VERSION</a>&#160;&#160;&#160;ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0) /* API version */</td></tr>
+<tr class="separator:ae0a5830a947ec10817f3ee074debf8ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a5d3d87cba8b8251cd733a3d2e05bbc69"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00482.html#ab1508ba25371674f0983a7ad139a7ada">_json_packet_state_</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a5d3d87cba8b8251cd733a3d2e05bbc69">json_packet_state_t</a></td></tr>
-<tr class="separator:a5d3d87cba8b8251cd733a3d2e05bbc69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16a748419e746f966071ce8bba0d0b62"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="a00482.html#a631d09668ec8f40a64ff69613cdbbba5">gpio_direction_en</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a16a748419e746f966071ce8bba0d0b62">gpio_direction_t</a></td></tr>
+<tr class="separator:a16a748419e746f966071ce8bba0d0b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a127c358e754822722634da3e2cd2388c"><td class="memItemLeft" align="right" valign="top">typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a></td></tr>
+<tr class="memdesc:a127c358e754822722634da3e2cd2388c"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Driver direction.  <a href="#a127c358e754822722634da3e2cd2388c">More...</a><br /></td></tr>
+<tr class="separator:a127c358e754822722634da3e2cd2388c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7495862c94a8312f1d27be97be4b9931"><td class="memItemLeft" align="right" valign="top">typedef ARM_DRIVER_VERSION&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a7495862c94a8312f1d27be97be4b9931">GENERIC_DRIVER_VERSION</a></td></tr>
+<tr class="separator:a7495862c94a8312f1d27be97be4b9931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56bff9ec9179f75450e04d2261b1212f"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a56bff9ec9179f75450e04d2261b1212f">gpio_isr_handler_t</a>) (void *apUserData)</td></tr>
+<tr class="separator:a56bff9ec9179f75450e04d2261b1212f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac58178eb2cc477c6695f302b3b09d0fc"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="a03903.html">GENERIC_DRIVER_GPIO</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#ac58178eb2cc477c6695f302b3b09d0fc">GENERIC_DRIVER_GPIO</a></td></tr>
+<tr class="memdesc:ac58178eb2cc477c6695f302b3b09d0fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access structure of the GPIO Driver.  <a href="#ac58178eb2cc477c6695f302b3b09d0fc">More...</a><br /></td></tr>
+<tr class="separator:ac58178eb2cc477c6695f302b3b09d0fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ab1508ba25371674f0983a7ad139a7ada"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#ab1508ba25371674f0983a7ad139a7ada">_json_packet_state_</a> { <a class="el" href="a00482.html#ab1508ba25371674f0983a7ad139a7adaac36e5c9ac597253191be83acf0b51d25">STATE_NONE</a>, 
-<a class="el" href="a00482.html#ab1508ba25371674f0983a7ad139a7adaa2941d8fde4a53bd9278dfb772e56368a">STATE_START_PACKET</a>, 
-<a class="el" href="a00482.html#ab1508ba25371674f0983a7ad139a7adaa2e6b4f5e66a3f2cabc44f28b8e273871">STATE_PAYLOAD</a>, 
-<a class="el" href="a00482.html#ab1508ba25371674f0983a7ad139a7adaa8f86e84d0e6eda1efff87cddd51969a0">STATE_END_PACKET</a>
+<tr class="memitem:a631d09668ec8f40a64ff69613cdbbba5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a631d09668ec8f40a64ff69613cdbbba5">gpio_direction_en</a> { <a class="el" href="a00482.html#a631d09668ec8f40a64ff69613cdbbba5aea9c54895635603d054830602ba5fb4e">GPIO_DIRECTION_IN</a> = 0U, 
+<a class="el" href="a00482.html#a631d09668ec8f40a64ff69613cdbbba5a869f710c2bafc06d7ef192861b8358ab">GPIO_DIRECTION_OUT</a> = 1U
  }</td></tr>
-<tr class="separator:ab1508ba25371674f0983a7ad139a7ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a0e2d3b161cc458e4e69a2165518a9ac3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f">int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a0e2d3b161cc458e4e69a2165518a9ac3">JSON_Serialize</a> (char *pStr, char *pDataTagStr, char *pDataValue, <a class="el" href="a00485.html#ae0038000e88bf208b3967036ea637ac8">json_format_t</a> type, bool end)</td></tr>
-<tr class="memdesc:a0e2d3b161cc458e4e69a2165518a9ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to serialize the data,.  <a href="#a0e2d3b161cc458e4e69a2165518a9ac3">More...</a><br /></td></tr>
-<tr class="separator:a0e2d3b161cc458e4e69a2165518a9ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e245cde75a5f95724bffe0ba96ce8ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f">int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a8e245cde75a5f95724bffe0ba96ce8ef">JSON_Deserialize</a> (void *pInData, void *pDataTag, char *pDataValue, <a class="el" href="a00485.html#ae0038000e88bf208b3967036ea637ac8">json_format_t</a> type)</td></tr>
-<tr class="memdesc:a8e245cde75a5f95724bffe0ba96ce8ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function to deserialize the data,.  <a href="#a8e245cde75a5f95724bffe0ba96ce8ef">More...</a><br /></td></tr>
-<tr class="separator:a8e245cde75a5f95724bffe0ba96ce8ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72cbdc06fad472bcc047c7e7761ec67c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a72cbdc06fad472bcc047c7e7761ec67c">JSON_BlockDataRead_BlockingCall</a> (<a class="el" href="a00494.html#abaf1b61f9d5a80cabf1f3351bbd569e8">host_interface_handle_t</a> *pHandle, void *pRecvData)</td></tr>
-<tr class="memdesc:a72cbdc06fad472bcc047c7e7761ec67c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The function provides block data read for the JSON stream, This is for Blocking receive call.  <a href="#a72cbdc06fad472bcc047c7e7761ec67c">More...</a><br /></td></tr>
-<tr class="separator:a72cbdc06fad472bcc047c7e7761ec67c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac17175f026a8004c8faa6e5217704797"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f">int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#ac17175f026a8004c8faa6e5217704797">JSON_Get_Stream_NonBlockingCall</a> (void *pRecvData, uint8_t <a class="el" href="a00395.html#a0155cf01983779a6f386fb8eac40d37c">data</a>, uint8_t *state, uint8_t *buffIndex)</td></tr>
-<tr class="memdesc:ac17175f026a8004c8faa6e5217704797"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is a helper function to get json stream where the data length is unknown.  <a href="#ac17175f026a8004c8faa6e5217704797">More...</a><br /></td></tr>
-<tr class="separator:ac17175f026a8004c8faa6e5217704797"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a82cfef5d07d5b3c2b1f8795309ab9e67"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a82cfef5d07d5b3c2b1f8795309ab9e67">JSON_Process_Rx_Byte</a> (uint8_t c, <a class="el" href="a02692.html">host_rx_packet_t</a> *pHostRxPkt)</td></tr>
-<tr class="memdesc:a82cfef5d07d5b3c2b1f8795309ab9e67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to handle incomming JSON encoded bytes form the Host over UART.  <a href="#a82cfef5d07d5b3c2b1f8795309ab9e67">More...</a><br /></td></tr>
-<tr class="separator:a82cfef5d07d5b3c2b1f8795309ab9e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abab3c54ca70a6f8384cd4aab3e475c19"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#abab3c54ca70a6f8384cd4aab3e475c19">JSON_Process_Tx_Msg</a> (const uint8_t *pBuffer, uint8_t *pMsg, size_t <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a>)</td></tr>
-<tr class="separator:abab3c54ca70a6f8384cd4aab3e475c19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a3f2c348b5e628fc5b008a52cb7955d1f"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a3f2c348b5e628fc5b008a52cb7955d1f">gpJsonHeader</a> = {&quot;{\&quot;d\&quot;:{&quot;}</td></tr>
-<tr class="separator:a3f2c348b5e628fc5b008a52cb7955d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ffa857c07814f48d027f9580b545b27"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00482.html#a0ffa857c07814f48d027f9580b545b27">gpJsonFooter</a> = &quot;}}&quot;</td></tr>
-<tr class="separator:a0ffa857c07814f48d027f9580b545b27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a631d09668ec8f40a64ff69613cdbbba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="a00482.html" title="The data_format_json.c file implements JSON data format interfaces and services. ">data_format_json.c</a> file implements JSON data format interfaces and services. </p>
+<div class="textblock"><p>The <a class="el" href="a00482.html" title="The Driver_GPIO.h file contains the definitions for GPIO Driver direction. ">Driver_GPIO.h</a> file contains the definitions for GPIO Driver direction. </p>
 
-<p class="definition">Definition in file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a5d3d87cba8b8251cd733a3d2e05bbc69"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d3d87cba8b8251cd733a3d2e05bbc69">&#9670;&nbsp;</a></span>json_packet_state_t</h2>
+<p class="definition">Definition in file <a class="el" href="a00482_source.html">Driver_GPIO.h</a>.</p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ae0a5830a947ec10817f3ee074debf8ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0a5830a947ec10817f3ee074debf8ae">&#9670;&nbsp;</a></span>GPIO_API_VERSION</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef enum <a class="el" href="a00482.html#ab1508ba25371674f0983a7ad139a7ada">_json_packet_state_</a>  <a class="el" href="a00482.html#a5d3d87cba8b8251cd733a3d2e05bbc69">json_packet_state_t</a></td>
+          <td class="memname">#define GPIO_API_VERSION&#160;&#160;&#160;ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0) /* API version */</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00014">14</a> of file <a class="el" href="a00482_source.html">Driver_GPIO.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ac58178eb2cc477c6695f302b3b09d0fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac58178eb2cc477c6695f302b3b09d0fc">&#9670;&nbsp;</a></span>GENERIC_DRIVER_GPIO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct <a class="el" href="a03903.html">GENERIC_DRIVER_GPIO</a> <a class="el" href="a03903.html">GENERIC_DRIVER_GPIO</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Access structure of the GPIO Driver. </p>
+
+</div>
+</div>
+<a id="a7495862c94a8312f1d27be97be4b9931"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7495862c94a8312f1d27be97be4b9931">&#9670;&nbsp;</a></span>GENERIC_DRIVER_VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef ARM_DRIVER_VERSION <a class="el" href="a00482.html#a7495862c94a8312f1d27be97be4b9931">GENERIC_DRIVER_VERSION</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00032">32</a> of file <a class="el" href="a00482_source.html">Driver_GPIO.h</a>.</p>
+
+</div>
+</div>
+<a id="a16a748419e746f966071ce8bba0d0b62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16a748419e746f966071ce8bba0d0b62">&#9670;&nbsp;</a></span>gpio_direction_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef enum <a class="el" href="a00482.html#a631d09668ec8f40a64ff69613cdbbba5">gpio_direction_en</a>  <a class="el" href="a00482.html#a16a748419e746f966071ce8bba0d0b62">gpio_direction_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a56bff9ec9179f75450e04d2261b1212f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56bff9ec9179f75450e04d2261b1212f">&#9670;&nbsp;</a></span>gpio_isr_handler_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* gpio_isr_handler_t) (void *apUserData)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00034">34</a> of file <a class="el" href="a00482_source.html">Driver_GPIO.h</a>.</p>
+
+</div>
+</div>
+<a id="a127c358e754822722634da3e2cd2388c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a127c358e754822722634da3e2cd2388c">&#9670;&nbsp;</a></span>pinID_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void* <a class="el" href="a00482.html#a127c358e754822722634da3e2cd2388c">pinID_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>GPIO Driver direction. </p>
+
+<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00030">30</a> of file <a class="el" href="a00482_source.html">Driver_GPIO.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="ab1508ba25371674f0983a7ad139a7ada"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1508ba25371674f0983a7ad139a7ada">&#9670;&nbsp;</a></span>_json_packet_state_</h2>
+<a id="a631d09668ec8f40a64ff69613cdbbba5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a631d09668ec8f40a64ff69613cdbbba5">&#9670;&nbsp;</a></span>gpio_direction_en</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="a00482.html#ab1508ba25371674f0983a7ad139a7ada">_json_packet_state_</a></td>
+          <td class="memname">enum <a class="el" href="a00482.html#a631d09668ec8f40a64ff69613cdbbba5">gpio_direction_en</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab1508ba25371674f0983a7ad139a7adaac36e5c9ac597253191be83acf0b51d25"></a>STATE_NONE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ab1508ba25371674f0983a7ad139a7adaa2941d8fde4a53bd9278dfb772e56368a"></a>STATE_START_PACKET&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ab1508ba25371674f0983a7ad139a7adaa2e6b4f5e66a3f2cabc44f28b8e273871"></a>STATE_PAYLOAD&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ab1508ba25371674f0983a7ad139a7adaa8f86e84d0e6eda1efff87cddd51969a0"></a>STATE_END_PACKET&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a631d09668ec8f40a64ff69613cdbbba5aea9c54895635603d054830602ba5fb4e"></a>GPIO_DIRECTION_IN&#160;</td><td class="fielddoc"><p>IN. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a631d09668ec8f40a64ff69613cdbbba5a869f710c2bafc06d7ef192861b8358ab"></a>GPIO_DIRECTION_OUT&#160;</td><td class="fielddoc"><p>OUT. </p>
+</td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00028">28</a> of file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a72cbdc06fad472bcc047c7e7761ec67c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72cbdc06fad472bcc047c7e7761ec67c">&#9670;&nbsp;</a></span>JSON_BlockDataRead_BlockingCall()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void JSON_BlockDataRead_BlockingCall </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00494.html#abaf1b61f9d5a80cabf1f3351bbd569e8">host_interface_handle_t</a> *&#160;</td>
-          <td class="paramname"><em>pHandle</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>pRecvData</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The function provides block data read for the JSON stream, This is for Blocking receive call. </p>
-<p>This can be the argument to host interface</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pHandle</td><td>- pointer to a formated data stream </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pRecvData</td><td>- Pointer to RecvBuffer; </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>None.</dd></dl>
-<dl class="section user"><dt>Constraints:</dt><dd>None</dd></dl>
-<dl class="section user"><dt>Reentrant: Yes</dt><dd></dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00075">75</a> of file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a00494_source.html#l00036">_host_interface_handle_::commHandle</a>, <a class="el" href="a00395_source.html#l00174">data</a>, <a class="el" href="a00494_source.html#l00033">_host_interface_handle_::pCommInterface</a>, <a class="el" href="a00473_source.html#l00084">_comm_interface_::Receive</a>, <a class="el" href="a00482_source.html#l00030">STATE_NONE</a>, <a class="el" href="a00482_source.html#l00032">STATE_PAYLOAD</a>, and <a class="el" href="a00482_source.html#l00031">STATE_START_PACKET</a>.</p>
-
-</div>
-</div>
-<a id="a8e245cde75a5f95724bffe0ba96ce8ef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e245cde75a5f95724bffe0ba96ce8ef">&#9670;&nbsp;</a></span>JSON_Deserialize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f">int32_t</a> JSON_Deserialize </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>pInData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>pDataTag</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>pDataValue</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00485.html#ae0038000e88bf208b3967036ea637ac8">json_format_t</a>&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The function to deserialize the data,. </p>
-<p>it applys the deserialization in a single data element,</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pStr</td><td>- pointer to a formated data stream </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pDataTagStr</td><td>- Data tag name for a data </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">pDataValue</td><td>- Data value </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>- Json data type </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00485.html#a8e245cde75a5f95724bffe0ba96ce8ef" title="The function to deserialize the data,. ">JSON_Deserialize()</a> returns the status .</dd></dl>
-<dl class="section user"><dt>Constraints:</dt><dd>None</dd></dl>
-<dl class="section user"><dt>Reentrant: Yes</dt><dd></dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00069">69</a> of file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a00485_source.html#l00023">DATA_FORMAT_JSON_OK</a>.</p>
-
-</div>
-</div>
-<a id="ac17175f026a8004c8faa6e5217704797"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac17175f026a8004c8faa6e5217704797">&#9670;&nbsp;</a></span>JSON_Get_Stream_NonBlockingCall()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f">int32_t</a> JSON_Get_Stream_NonBlockingCall </td>
-          <td>(</td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>pRecvData</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>state</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>buffIndex</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>This function is a helper function to get json stream where the data length is unknown. </p>
-<p>Basically look for start and end packets and form a packet</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">pRecvData</td><td>- Pointer to RecvBuffer; </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">data</td><td>- one byte of data received. [in] event - status event for send complete and receive complete </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>DATA_FORMAT_JSON_OK, if data read is completed. else still get more data.</dd></dl>
-<dl class="section user"><dt>Constraints:</dt><dd>None</dd></dl>
-<dl class="section user"><dt>Reentrant: Yes</dt><dd></dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00117">117</a> of file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a00485_source.html#l00023">DATA_FORMAT_JSON_OK</a>, <a class="el" href="a00482_source.html#l00030">STATE_NONE</a>, <a class="el" href="a00482_source.html#l00032">STATE_PAYLOAD</a>, and <a class="el" href="a00482_source.html#l00031">STATE_START_PACKET</a>.</p>
-
-</div>
-</div>
-<a id="a82cfef5d07d5b3c2b1f8795309ab9e67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82cfef5d07d5b3c2b1f8795309ab9e67">&#9670;&nbsp;</a></span>JSON_Process_Rx_Byte()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool JSON_Process_Rx_Byte </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a02692.html">host_rx_packet_t</a> *&#160;</td>
-          <td class="paramname"><em>pHostRxPkt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Function to handle incomming JSON encoded bytes form the Host over UART. </p>
-<p>This function will be called on receipt of every UART Byte and will do the JSON combination to create a Host Message. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">uint8_t</td><td>c The character in the UART payload. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname"><a class="el" href="a02692.html" title="This structure holds information to receive a packet of data to the host. ">host_rx_packet_t</a></td><td>*pHostRxPkt The Host Packet context structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>bool Success/Failure. </dd></dl>
-<dl class="section user"><dt>Constraints:</dt><dd>This should be the called only after DEBUG/UART has been initialized.  No </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00158">158</a> of file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00089_source.html#l00207">Host_IO_Receive()</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a00482_a82cfef5d07d5b3c2b1f8795309ab9e67_icgraph.png" border="0" usemap="#a00482_a82cfef5d07d5b3c2b1f8795309ab9e67_icgraph" alt=""/></div>
-<map name="a00482_a82cfef5d07d5b3c2b1f8795309ab9e67_icgraph" id="a00482_a82cfef5d07d5b3c2b1f8795309ab9e67_icgraph">
-<area shape="rect" id="node2" href="a00092.html#a3924d21a0703878695ebdb68f720fff9" title="Host_IO_Receive" alt="" coords="221,5,343,32"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="abab3c54ca70a6f8384cd4aab3e475c19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abab3c54ca70a6f8384cd4aab3e475c19">&#9670;&nbsp;</a></span>JSON_Process_Tx_Msg()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t JSON_Process_Tx_Msg </td>
-          <td>(</td>
-          <td class="paramtype">const uint8_t *&#160;</td>
-          <td class="paramname"><em>pBuffer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pMsg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00164">164</a> of file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00089_source.html#l00136">Host_IO_Send()</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="a00482_abab3c54ca70a6f8384cd4aab3e475c19_icgraph.png" border="0" usemap="#a00482_abab3c54ca70a6f8384cd4aab3e475c19_icgraph" alt=""/></div>
-<map name="a00482_abab3c54ca70a6f8384cd4aab3e475c19_icgraph" id="a00482_abab3c54ca70a6f8384cd4aab3e475c19_icgraph">
-<area shape="rect" id="node2" href="a00092.html#a719ad6da4502e713f1573b5353af9617" title="Host_IO_Send" alt="" coords="217,5,324,32"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a0e2d3b161cc458e4e69a2165518a9ac3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e2d3b161cc458e4e69a2165518a9ac3">&#9670;&nbsp;</a></span>JSON_Serialize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f">int32_t</a> JSON_Serialize </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>pStr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>pDataTagStr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>pDataValue</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a00485.html#ae0038000e88bf208b3967036ea637ac8">json_format_t</a>&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>end</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The function to serialize the data,. </p>
-<p>it applys the serialization in single data element, Once user finishes the data stream with different data tag, set end flag to TRUE.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">pStr</td><td>- pointer to the data stream - formated data put into this buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pDataTagStr</td><td>- Data tag name for a data </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pDataValue</td><td>- Data value </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>- Json data type </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">end</td><td>- flag determine the end of data stream serialization. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="a00485.html#a0e2d3b161cc458e4e69a2165518a9ac3" title="The function to serialize the data,. ">JSON_Serialize()</a> returns the status .</dd></dl>
-<dl class="section user"><dt>Constraints:</dt><dd>None</dd></dl>
-<dl class="section user"><dt>Reentrant: Yes</dt><dd></dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00038">38</a> of file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a00485_source.html#l00023">DATA_FORMAT_JSON_OK</a>, <a class="el" href="a00482_source.html#l00021">gpJsonFooter</a>, <a class="el" href="a00482_source.html#l00020">gpJsonHeader</a>, and <a class="el" href="a00485_source.html#l00030">JSON_TYPE_OBJECT</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="a0ffa857c07814f48d027f9580b545b27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ffa857c07814f48d027f9580b545b27">&#9670;&nbsp;</a></span>gpJsonFooter</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const char* gpJsonFooter = &quot;}}&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00021">21</a> of file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00482_source.html#l00038">JSON_Serialize()</a>.</p>
-
-</div>
-</div>
-<a id="a3f2c348b5e628fc5b008a52cb7955d1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f2c348b5e628fc5b008a52cb7955d1f">&#9670;&nbsp;</a></span>gpJsonHeader</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const char* gpJsonHeader = {&quot;{\&quot;d\&quot;:{&quot;}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00020">20</a> of file <a class="el" href="a00482_source.html">data_format_json.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00482_source.html#l00038">JSON_Serialize()</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00482_source.html#l00021">21</a> of file <a class="el" href="a00482_source.html">Driver_GPIO.h</a>.</p>
 
 </div>
 </div>

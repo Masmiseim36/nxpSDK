@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: boardkit/frdm-k32w042/board.c File Reference</title>
+<title>ISSDK: dp5004_pressuredata_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -38,61 +38,76 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_6994211064bad48d3d63a6227f5100d6.html">boardkit</a></li><li class="navelem"><a class="el" href="dir_2692879e20973b44d33f0adfa9bd527e.html">frdm-k32w042</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
-<div class="title">board.c File Reference</div>  </div>
+<div class="title">dp5004_pressuredata_t Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
-<code>#include &quot;fsl_common.h&quot;</code><br />
-<code>#include &quot;fsl_debug_console.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a03928_source.html">board.h</a>&quot;</code><br />
-</div><div class="textblock"><div class="dynheader">
-Include dependency graph for board.c:</div>
+
+<p>This structure defines the mpxv5004dp data buffer.  
+ <a href="a03871.html#details">More...</a></p>
+<div class="dynheader">
+Collaboration diagram for dp5004_pressuredata_t:</div>
 <div class="dyncontent">
-<div class="center"><img src="a03872.png" border="0" usemap="#boardkit_2frdm-k32w042_2board_8c" alt=""/></div>
-<map name="boardkit_2frdm-k32w042_2board_8c" id="boardkit_2frdm-k32w042_2board_8c">
-<area shape="rect" id="node5" href="a03928.html" title="board.h" alt="" coords="385,95,451,121"/>
-</map>
+<div class="center"><img src="a03869.png" border="0" usemap="#dp5004__pressuredata__t_coll__map" alt="Collaboration graph"/></div>
 </div>
-</div>
-<p><a href="a03871_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a4c84ccb952cb083367d7040cf9de3db8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03871.html#a4c84ccb952cb083367d7040cf9de3db8">BOARD_InitDebugConsole</a> (void)</td></tr>
-<tr class="separator:a4c84ccb952cb083367d7040cf9de3db8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:ab20b0c7772544cf5d318507f34231fbe"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03871.html#ab20b0c7772544cf5d318507f34231fbe">timestamp</a></td></tr>
+<tr class="separator:ab20b0c7772544cf5d318507f34231fbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f079b1c606a20607e789abe28c98c25"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a03871.html#a8f079b1c606a20607e789abe28c98c25">pressure</a></td></tr>
+<tr class="separator:a8f079b1c606a20607e789abe28c98c25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="a4c84ccb952cb083367d7040cf9de3db8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c84ccb952cb083367d7040cf9de3db8">&#9670;&nbsp;</a></span>BOARD_InitDebugConsole()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This structure defines the mpxv5004dp data buffer. </p>
+
+<p class="definition">Definition at line <a class="el" href="a00410_source.html#l00060">60</a> of file <a class="el" href="a00410_source.html">dp5004_demo.c</a>.</p>
+</div><h2 class="groupheader">Field Documentation</h2>
+<a id="a8f079b1c606a20607e789abe28c98c25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f079b1c606a20607e789abe28c98c25">&#9670;&nbsp;</a></span>pressure</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void BOARD_InitDebugConsole </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="memname">uint16_t pressure</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Sensor pressure output: unsigned 16-bits. </p>
 
-<p class="definition">Definition at line <a class="el" href="a03871_source.html#l00022">22</a> of file <a class="el" href="a03871_source.html">board.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00410_source.html#l00063">63</a> of file <a class="el" href="a00410_source.html">dp5004_demo.c</a>.</p>
 
-<p class="reference">References <a class="el" href="a03907_source.html#l00024">BOARD_DEBUG_UART_BASEADDR</a>, <a class="el" href="a03907_source.html#l00031">BOARD_DEBUG_UART_BAUDRATE</a>, <a class="el" href="a03907_source.html#l00026">BOARD_DEBUG_UART_CLK_FREQ</a>, and <a class="el" href="a03907_source.html#l00023">BOARD_DEBUG_UART_TYPE</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00410_source.html#l00215">main()</a>.</p>
 
 </div>
 </div>
+<a id="ab20b0c7772544cf5d318507f34231fbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab20b0c7772544cf5d318507f34231fbe">&#9670;&nbsp;</a></span>timestamp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t timestamp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Time stamp value in micro-seconds. </p>
+
+<p class="definition">Definition at line <a class="el" href="a00410_source.html#l00062">62</a> of file <a class="el" href="a00410_source.html">dp5004_demo.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00410_source.html#l00215">main()</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>driverexamples/demos/<a class="el" href="a00410_source.html">dp5004_demo.c</a></li>
+</ul>
 </div><!-- contents -->
 
 <hr class="footer"/><address class="footer"><small>

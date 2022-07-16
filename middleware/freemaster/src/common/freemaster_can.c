@@ -356,7 +356,7 @@ static FMSTR_BOOL _FMSTR_TxCan(void)
         /* the next frame */
         fmstr_uTxCtlByte &= (FMSTR_U8) ~(FMSTR_CANCTL_FST | FMSTR_CANCTL_LEN_MASK);
         fmstr_uTxCtlByte ^= FMSTR_CANCTL_TGL;
-        fmstr_uTxCtlByte |= len;
+        fmstr_uTxCtlByte |= (FMSTR_U8)len;
         fmstr_uTxFrmCtr++;
     }
 
@@ -502,7 +502,7 @@ static FMSTR_BOOL _FMSTR_RxCan(FMSTR_SIZE8 rxLen)
         fmstr_pRxBuff = FMSTR_ValueToBuffer8(fmstr_pRxBuff, ch);
 
         /* the very last byte is a checksum and must match the CRC computed so far*/
-        if (last != 0U && i == len)
+        if (last != FMSTR_FALSE && i == len)
         {
             fmstr_nRxCrc8 = fmstr_nRxCrc8 == ch ? 0U : 1U; /* 0 signals a correct CRC */
         }
@@ -571,7 +571,7 @@ static void _FMSTR_RxDone(void)
 
             /* now the len received should match the data bytes received
                note that command-byte, length and checksum are included in the nRxCtr */
-            if (fmstr_nRxCtr != (len + 3U))
+            if (fmstr_nRxCtr != (FMSTR_SIZE8)(len + 3U))
             {
                 fmstr_nRxErr = FMSTR_STC_CMDCSERR;
             }
@@ -681,22 +681,26 @@ void FMSTR_ProcessCanRx(void)
 
 void FMSTR_ProcessCanTx(void)
 {
-    /* Any TX buffer available? */
-    if (fmstr_wFlags.flg.bTxActive != 0U && FMSTR_CAN_DRV.PrepareTxFrame() != FMSTR_FALSE)
+    /* Currently transmitting? */
+    if (fmstr_wFlags.flg.bTxActive != 0U)
     {
-#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
-        /* send one CAN frame */
-        if (_FMSTR_TxCan() == FMSTR_FALSE)
+        /* Any TX buffer available? */
+        if (FMSTR_CAN_DRV.PrepareTxFrame() != FMSTR_FALSE)
         {
-            /* no more frames, disable TX Interrupt */
-            FMSTR_CAN_DRV.EnableTxInterrupt(FMSTR_FALSE);
-        }
+#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+            /* send one CAN frame */
+            if (_FMSTR_TxCan() == FMSTR_FALSE)
+            {
+                /* no more frames, disable TX Interrupt */
+                FMSTR_CAN_DRV.EnableTxInterrupt(FMSTR_FALSE);
+            }
 #else
-        /* send if you have anything to be sent */
-        FMSTR_BOOL result;
-        result = _FMSTR_TxCan();
-        FMSTR_UNUSED(result);
+            /* send if you have anything to be sent */
+            FMSTR_BOOL result;
+            result = _FMSTR_TxCan();
+            FMSTR_UNUSED(result);
 #endif
+        }
     }
 }
 

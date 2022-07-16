@@ -35,6 +35,7 @@ var searchData=
   ['framebufferqueue',['frameBufferQueue',['../a00016.html#aa1a9c395647713b07bc92e4b89a9a547',1,'_csi_handle']]],
   ['framesync',['frameSync',['../a00061.html#a46ce7801a6ba02d5dd8f56e431d681f1',1,'sai_transceiver_t']]],
   ['framesyncearly',['frameSyncEarly',['../a00061.html#af23c63fada62140420230a61abe37d4e',1,'sai_frame_sync_t']]],
+  ['framesyncgenerateondemand',['frameSyncGenerateOnDemand',['../a00061.html#adcc4ee55d055827215038e2cc4ea8b1b',1,'sai_frame_sync_t']]],
   ['framesyncpolarity',['frameSyncPolarity',['../a00061.html#a6fbff9ec23d1ba0bb54ca7d91b7f40d9',1,'sai_frame_sync_t']]],
   ['framesyncwidth',['frameSyncWidth',['../a00061.html#a220329ad330217786663fee4457a7281',1,'sai_frame_sync_t']]],
   ['frequency',['frequency',['../a00077.html#a207108996ebfd8421548f96bd4d3afaf',1,'tempmon_config_t']]],

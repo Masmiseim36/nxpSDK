@@ -18,7 +18,7 @@
 #include "portable.h"
 
 #ifdef VIT_PROC
-#include "PL_platformTypes_CortexM7.h"
+#include "PL_platformTypes_CortexM.h"
 #include "VIT.h"
 #include "vit_proc.h"
 #endif
@@ -37,7 +37,9 @@
 /*${prototype:start}*/
 static shell_status_t shellEcho(shell_handle_t shellHandle, int32_t argc, char **argv);
 static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char **argv);
+#ifdef OPUS_ENCODE
 static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, char **argv);
+#endif
 /*${prototype:end}*/
 
 /*******************************************************************************
@@ -72,11 +74,13 @@ SHELL_COMMAND_DEFINE(record_mic,
                      shellRecMIC,
                      SHELL_IGNORE_PARAMETER_COUNT);
 
+#ifdef OPUS_ENCODE
 SHELL_COMMAND_DEFINE(opus_encode,
                      "\r\n\"opus_encode\": Initializes the streamer with the Opus memory-to-memory pipeline and\r\n"
                      "encodes a hardcoded buffer.\r\n",
                      shellOpusEncode,
                      0);
+#endif
 
 SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
 static shell_handle_t s_shellHandle;
@@ -130,7 +134,6 @@ static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char
 #endif
     else
     {
-        PRINTF("Undefined command - recording to a file on sd-card.\r\n");
         /* Save the samples to the file with the defined name */
         out_sink  = FILE_SINK;
         file_name = argv[1];
@@ -153,6 +156,23 @@ static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char
     }
 #endif
 
+    if (duration <= 0)
+    {
+        PRINTF("Record length in seconds must be greater than 0\r\n");
+        return kStatus_SHELL_Success;
+    }
+
+    if (out_sink == FILE_SINK)
+    {
+        if (!SDCARD_inserted())
+        {
+            PRINTF("Insert the SD card first\r\n");
+            return kStatus_SHELL_Success;
+        }
+        else
+            PRINTF("Recording to a file on sd-card\r\n");
+    }
+
     PRINTF("\r\nStarting streamer demo application for %d sec\r\n", duration);
 
     STREAMER_Init();
@@ -174,7 +194,7 @@ static shell_status_t shellRecMIC(shell_handle_t shellHandle, int32_t argc, char
 #endif
     STREAMER_Start(&streamerHandle);
 
-    osa_time_delay(duration * 1000);
+    OSA_TimeDelay(duration * 1000);
 
     STREAMER_Stop(&streamerHandle);
 
@@ -182,10 +202,11 @@ error:
     PRINTF("Cleanup\r\n");
     STREAMER_Destroy(&streamerHandle);
     /* Delay for cleanup */
-    osa_time_delay(100);
+    OSA_TimeDelay(100);
     return kStatus_SHELL_Success;
 }
 
+#ifdef OPUS_ENCODE
 static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
     void *inBuf                   = NULL;
@@ -193,16 +214,17 @@ static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, 
     MEMSRC_SET_BUFFER_T inBufInfo = {0};
     SET_BUFFER_DESC_T outBufInfo  = {0};
     bool streamerInitialized      = false;
+    uint32_t i                    = 0;
 
     status_t ret;
     CeiBitstreamInfo info = {
-        .sample_rate = 48000, .num_channels = 1, .endian = 0, .sign = TRUE, .sample_size = 16, .interleaved = TRUE};
+        .sample_rate = 48000, .num_channels = 1, .endian = 0, .sign = true, .sample_size = 16, .interleaved = true};
 
     PRINTF("Starting streamer with the preliminary Opus memory-to-memory pipeline.\r\n");
 
     PRINTF("Allocating buffers...\r\n");
 
-    inBuf = pvPortMalloc(OPUSMEM2MEM_INBUF_SIZE);
+    inBuf = OSA_MemoryAllocate(OPUSMEM2MEM_INBUF_SIZE);
     if (inBuf == NULL)
     {
         PRINTF("Inbuf allocation failed\r\n");
@@ -210,7 +232,7 @@ static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, 
     }
     memcpy(inBuf, &OPUSMEM2MEM_INBUF_CONTENT, OPUSMEM2MEM_INBUF_SIZE);
 
-    outBuf = pvPortMalloc(OPUSMEM2MEM_OUTBUF_SIZE);
+    outBuf = OSA_MemoryAllocate(OPUSMEM2MEM_OUTBUF_SIZE);
     if (outBuf == NULL)
     {
         PRINTF("Outbuf allocation failed\r\n");
@@ -236,20 +258,44 @@ static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, 
     CeiOpusConfig cfg;
     streamer_get_property(streamerHandle.streamer, PROP_ENCODER_CONFIG, (uint32_t *)&cfg, true);
 
-    cfg.application = OPUS_APPLICATION_VOIP;
+    cfg.bitrate            = 512000;
+    cfg.application        = OPUS_APPLICATION_AUDIO;
+    cfg.predictionDisabled = 1;
     streamer_set_property(streamerHandle.streamer,
                           (ELEMENT_PROPERTY_T){.prop = PROP_ENCODER_CONFIG, .val = (uintptr_t)&cfg}, true);
 
     PRINTF("Start encoding...\r\n");
     STREAMER_Start(&streamerHandle);
     while (streamerHandle.audioPlaying)
+    {
         ;
+    }
+
     PRINTF("Encoding finished.\r\n");
+
+    /* Compare the result with the reference */
+    for (i = 0; i < OPUSMEM2MEM_OUTBUF_SIZE; i++)
+    {
+        if (OPUSMEM2MEM_REFERENCE_CONTENT[i] != outBufInfo.ptr[i])
+        {
+            break;
+        }
+    }
+
+    if (i == OPUSMEM2MEM_OUTBUF_SIZE)
+    {
+        PRINTF("The result of the OPUS encoder fully corresponds to the expected result.\r\n");
+    }
+    else
+    {
+        PRINTF("The result of the OPUS encoder doesn't match the expected result. The difference is in %u byte.\r\n",
+               i);
+    }
 
 error:
     PRINTF("Cleanup\r\n");
-    vPortFree(inBuf);
-    vPortFree(outBuf);
+    OSA_MemoryFree(inBuf);
+    OSA_MemoryFree(outBuf);
 
     if (streamerInitialized)
     {
@@ -257,9 +303,10 @@ error:
     }
 
     /* Delay for cleanup */
-    osa_time_delay(100);
+    OSA_TimeDelay(100);
     return kStatus_SHELL_Success;
 }
+#endif
 
 void shellCmd(void)
 {
@@ -270,7 +317,9 @@ void shellCmd(void)
     /* Add new command to commands list */
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(version));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(record_mic));
+#ifdef OPUS_ENCODE
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(opus_encode));
+#endif
 
 #if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
     while (1)

@@ -10,7 +10,6 @@
 
 #include "erpc_threading.h"
 
-#include <cassert>
 #include <errno.h>
 
 #if ERPC_THREADS_IS(FREERTOS)
@@ -150,7 +149,7 @@ void Thread::threadEntryPoint(void)
 void Thread::threadEntryPointStub(void *arg)
 {
     Thread *_this = reinterpret_cast<Thread *>(arg);
-    assert(_this && "Reinterpreting 'void *arg' to 'Thread *' failed.");
+    erpc_assert((_this != NULL) && ("Reinterpreting 'void *arg' to 'Thread *' failed." != NULL));
     _this->threadEntryPoint();
 
     // Remove this thread from the linked list.
@@ -265,23 +264,33 @@ void Semaphore::putFromISR(void)
     portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
-bool Semaphore::get(uint32_t timeout)
+bool Semaphore::get(uint32_t timeoutUsecs)
 {
-#if configUSE_16_BIT_TICKS
-    if (timeout == kWaitForever)
+    if (timeoutUsecs != kWaitForever)
     {
-        timeout = portMAX_DELAY;
+        if (timeoutUsecs > 0U)
+        {
+            timeoutUsecs /= 1000U * portTICK_PERIOD_MS;
+            if (timeoutUsecs == 0U)
+            {
+                timeoutUsecs = 1U;
+            }
+#if configUSE_16_BIT_TICKS
+            else if (timeoutUsecs > (portMAX_DELAY - 1))
+            {
+                timeoutUsecs = portMAX_DELAY - 1;
+            }
+#endif
+        }
     }
+#if configUSE_16_BIT_TICKS
     else
     {
-        if (timeout > (portMAX_DELAY - 1))
-        {
-            timeout = portMAX_DELAY - 1;
-        }
+        timeoutUsecs = portMAX_DELAY;
     }
 #endif
 
-    return (pdTRUE == xSemaphoreTake(m_sem, timeout / 1000U / portTICK_PERIOD_MS));
+    return (pdTRUE == xSemaphoreTake(m_sem, (TickType_t)timeoutUsecs));
 }
 
 int Semaphore::getCount(void) const

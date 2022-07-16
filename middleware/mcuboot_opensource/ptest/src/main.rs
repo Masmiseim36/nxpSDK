@@ -14,9 +14,10 @@ use chrono::Local;
 use log::{debug, error, warn};
 use std::{
     collections::HashSet,
+    env,
     fs::{self, OpenOptions},
     io::{ErrorKind, stdout, Write},
-    process::{Command, Output},
+    process::Command,
     result,
     sync::{
         Arc,
@@ -42,7 +43,7 @@ fn main() -> Result<()> {
     let ncpus = num_cpus::get();
     let limiter = Arc::new(Semaphore::new(ncpus as isize));
 
-    let matrix = Matrix::from_yaml(&workflow)?;
+    let matrix = Matrix::from_yaml(&workflow);
 
     let mut children = vec![];
     let state = State::new(matrix.envs.len());
@@ -70,7 +71,7 @@ fn main() -> Result<()> {
         child.join().unwrap();
     }
 
-    println!("");
+    println!();
 
     Ok(())
 }
@@ -82,12 +83,21 @@ struct State {
     total: usize,
 }
 
+/// Result of a test run.
+struct TestResult {
+    /// Was this run successful.
+    success: bool,
+
+    /// The captured output.
+    output: Vec<u8>,
+}
+
 impl State {
     fn new(total: usize) -> Arc<Mutex<State>> {
         Arc::new(Mutex::new(State {
             running: HashSet::new(),
             done: HashSet::new(),
-            total: total,
+            total,
         }))
     }
 
@@ -101,46 +111,41 @@ impl State {
         self.status();
     }
 
-    fn done(&mut self, fs: &FeatureSet, output: Result<Option<Output>>) {
+    fn done(&mut self, fs: &FeatureSet, output: Result<TestResult>) {
         let key = fs.textual();
         self.running.remove(&key);
         self.done.insert(key.clone());
         match output {
-            Ok(None) => {
-                // println!("Success {} ({} running)", key, self.running.len());
-            }
-            Ok(Some(output)) => {
-                // Write the output into a file.
-                let mut count = 1;
-                let (mut fd, logname) = loop {
-                    let name = format!("./failure-{:04}.log", count);
-                    count += 1;
-                    match OpenOptions::new()
-                        .create_new(true)
-                        .write(true)
-                        .open(&name)
-                    {
-                        Ok(file) => break (file, name),
-                        Err(ref err) if err.kind() == ErrorKind::AlreadyExists => continue,
-                        Err(err) => {
-                            error!("Unable to write log file to current directory: {:?}", err);
-                            return;
+            Ok(output) => {
+                if !output.success || log_all() {
+                    // Write the output into a file.
+                    let mut count = 1;
+                    let (mut fd, logname) = loop {
+                        let base = if output.success { "success" } else { "failure" };
+                        let name = format!("./{}-{:04}.log", base, count);
+                        count += 1;
+                        match OpenOptions::new()
+                            .create_new(true)
+                            .write(true)
+                            .open(&name)
+                        {
+                            Ok(file) => break (file, name),
+                            Err(ref err) if err.kind() == ErrorKind::AlreadyExists => continue,
+                            Err(err) => {
+                                error!("Unable to write log file to current directory: {:?}", err);
+                                return;
+                            }
                         }
+                    };
+                    fd.write_all(&output.output).unwrap();
+                    if !output.success {
+                        error!("Failure {} log:{:?} ({} running)", key, logname,
+                        self.running.len());
                     }
-                };
-                writeln!(&mut fd, "Test failure {}", key).unwrap();
-                writeln!(&mut fd, "time: {}", Local::now().to_rfc3339()).unwrap();
-                writeln!(&mut fd, "----------------------------------------").unwrap();
-                writeln!(&mut fd, "stdout:").unwrap();
-                fd.write_all(&output.stdout).unwrap();
-                writeln!(&mut fd, "----------------------------------------").unwrap();
-                writeln!(&mut fd, "\nstderr:").unwrap();
-                fd.write_all(&output.stderr).unwrap();
-                error!("Failure {} log:{:?} ({} running)", key, logname,
-                    self.running.len());
+                }
             }
             Err(err) => {
-                error!("Unable to run test {:?} ({:?})", key, err);
+                error!("Unable to run test {:?} ({:?}", key, err);
             }
         }
         self.status();
@@ -169,7 +174,7 @@ struct FeatureSet {
 }
 
 impl Matrix {
-    fn from_yaml(yaml: &[Yaml]) -> Result<Matrix> {
+    fn from_yaml(yaml: &[Yaml]) -> Matrix {
         let mut envs = vec![];
 
         let mut all_tests = HashSet::new();
@@ -187,13 +192,7 @@ impl Matrix {
                     }
                     Some(e) => e,
                 };
-                let fset = match FeatureSet::decode(elt) {
-                    Ok(fset) => fset,
-                    Err(err) => {
-                        warn!("Skipping: {:?}", err);
-                        continue;
-                    }
-                };
+                let fset = FeatureSet::decode(elt);
 
                 if false {
                     // Respect the groupings in the `.workflow.yml` file.
@@ -217,40 +216,53 @@ impl Matrix {
             }
         }
 
-        Ok(Matrix {
-            envs: envs,
-        })
+        Matrix {
+            envs,
+        }
     }
 }
 
 impl FeatureSet {
-    fn decode(text: &str) -> Result<FeatureSet> {
+    fn decode(text: &str) -> FeatureSet {
         // The github workflow is just a space separated set of values.
         let values: Vec<_> = text
             .split(',')
             .map(|s| s.to_string())
             .collect();
-        Ok(FeatureSet {
+        FeatureSet {
             env: "MULTI_FEATURES".to_string(),
-            values: values,
-        })
+            values,
+        }
     }
 
     /// Run a test for this given feature set.  Output is captured and will be returned if there is
     /// an error.  Each will be run successively, and the first failure will be returned.
     /// Otherwise, it returns None, which means everything worked.
-    fn run(&self) -> Result<Option<Output>> {
+    fn run(&self) -> Result<TestResult> {
+        let mut output = vec![];
+        let mut success = true;
         for v in &self.values {
-            let output = Command::new("bash")
+            let cmdout = Command::new("bash")
                .arg("./ci/sim_run.sh")
                .current_dir("..")
                .env(&self.env, v)
                .output()?;
-            if !output.status.success() {
-                return Ok(Some(output));
+            // Grab the output for logging, etc.
+            writeln!(&mut output, "Test {} {}",
+                if cmdout.status.success() { "success" } else { "FAILURE" },
+                self.textual())?;
+            writeln!(&mut output, "time: {}", Local::now().to_rfc3339())?;
+            writeln!(&mut output, "----------------------------------------")?;
+            writeln!(&mut output, "stdout:")?;
+            output.extend(&cmdout.stdout);
+            writeln!(&mut output, "----------------------------------------")?;
+            writeln!(&mut output, "stderr:")?;
+            output.extend(&cmdout.stderr);
+            if !cmdout.status.success() {
+                success = false;
             }
         }
-        return Ok(None);
+        Ok(TestResult { success, output })
     }
 
     /// Convert this feature set into a textual representation
@@ -281,4 +293,9 @@ fn lookup_matrix(y: &Yaml) -> Option<&Vec<Yaml>> {
         .as_hash()?.get(&matrix)?
         .as_hash()?.get(&features)?
         .as_vec()
+}
+
+/// Query if we should be logging all tests and not only failures.
+fn log_all() -> bool {
+    env::var("PTEST_LOG_ALL").is_ok()
 }

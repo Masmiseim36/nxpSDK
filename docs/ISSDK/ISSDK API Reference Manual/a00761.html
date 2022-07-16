@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: algorithms/sensorfusion/sources/driver_ctimer.c File Reference</title>
+<title>ISSDK: algorithms/sensorfusion/sources/approximations.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -46,25 +46,24 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">driver_ctimer.c File Reference</div>  </div>
+<div class="title">approximations.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Provides a simple abstraction for a periodic interval timer.  
+<p>Math approximations file.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;issdk_hal.h&quot;</code><br />
-<code>#include &quot;board.h&quot;</code><br />
-<code>#include &quot;fsl_ctimer.h&quot;</code><br />
-<code>#include &quot;pin_mux.h&quot;</code><br />
-<code>#include &quot;clock_config.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;math.h&quot;</code><br />
+<code>#include &quot;stdlib.h&quot;</code><br />
+<code>#include &quot;stdint.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00764_source.html">approximations.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for driver_ctimer.c:</div>
+Include dependency graph for approximations.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00762.png" border="0" usemap="#algorithms_2sensorfusion_2sources_2driver__ctimer_8c" alt=""/></div>
-<map name="algorithms_2sensorfusion_2sources_2driver__ctimer_8c" id="algorithms_2sensorfusion_2sources_2driver__ctimer_8c">
+<div class="center"><img src="a00762.png" border="0" usemap="#algorithms_2sensorfusion_2sources_2approximations_8c" alt=""/></div>
+<map name="algorithms_2sensorfusion_2sources_2approximations_8c" id="algorithms_2sensorfusion_2sources_2approximations_8c">
+<area shape="rect" id="node5" href="a00764.html" title="Math approximations file. " alt="" coords="271,95,392,121"/>
 </map>
 </div>
 </div>
@@ -72,171 +71,328 @@ Include dependency graph for driver_ctimer.c:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ab7786fe5adcd1d885491257b0ebc27b8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#ab7786fe5adcd1d885491257b0ebc27b8">CTIMER</a>&#160;&#160;&#160;CTIMER0                 /* Timer 0 */</td></tr>
-<tr class="separator:ab7786fe5adcd1d885491257b0ebc27b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31628cf818c8dea7d3311a53c65cb924"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#a31628cf818c8dea7d3311a53c65cb924">CTIMER_MAT0_OUT</a>&#160;&#160;&#160;kCTIMER_Match_0 /* Match output 0 */</td></tr>
-<tr class="separator:a31628cf818c8dea7d3311a53c65cb924"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2843c40242a2189260e8fb4bbad4b06a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#a2843c40242a2189260e8fb4bbad4b06a">BUS_CLK_FREQ</a>&#160;&#160;&#160;CLOCK_GetFreq(kCLOCK_BusClk)</td></tr>
-<tr class="separator:a2843c40242a2189260e8fb4bbad4b06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3c8dd0138fad67491f72c8888b8476b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#af3c8dd0138fad67491f72c8888b8476b">TAN15DEG</a>&#160;&#160;&#160;0.26794919243F</td></tr>
+<tr class="separator:af3c8dd0138fad67491f72c8888b8476b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b284aae960aeb6640b0c7cbc583145"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#a95b284aae960aeb6640b0c7cbc583145">TAN30DEG</a>&#160;&#160;&#160;0.57735026919F</td></tr>
+<tr class="separator:a95b284aae960aeb6640b0c7cbc583145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb080357bd17e75e99457e4784de58b5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#adb080357bd17e75e99457e4784de58b5">PADE_A</a>&#160;&#160;&#160;96.644395816F</td></tr>
+<tr class="separator:adb080357bd17e75e99457e4784de58b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa333bd5cecf10cb50fc1be1d9ab859b7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#aa333bd5cecf10cb50fc1be1d9ab859b7">PADE_B</a>&#160;&#160;&#160;25.086941612F</td></tr>
+<tr class="separator:aa333bd5cecf10cb50fc1be1d9ab859b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fa3184d75c706cea6e8f26261630100"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#a1fa3184d75c706cea6e8f26261630100">PADE_C</a>&#160;&#160;&#160;1.6867633134F</td></tr>
+<tr class="separator:a1fa3184d75c706cea6e8f26261630100"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9ad9361b48550aacb336c3a1f0776953"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#a9ad9361b48550aacb336c3a1f0776953">ctimer_callback</a> (uint32_t flags)</td></tr>
-<tr class="separator:a9ad9361b48550aacb336c3a1f0776953"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9242caadd99e8ac4fdce86681b61740"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#aa9242caadd99e8ac4fdce86681b61740">pit_init</a> (uint32_t microseconds)</td></tr>
-<tr class="separator:aa9242caadd99e8ac4fdce86681b61740"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:af2243d3e8556d4be713b2ef15c9a2738"><td class="memItemLeft" align="right" valign="top">ctimer_callback_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#af2243d3e8556d4be713b2ef15c9a2738">ctimer_callback_table</a> []</td></tr>
-<tr class="separator:af2243d3e8556d4be713b2ef15c9a2738"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bd7666380e01cee8eb7cd5f0df5e3bf"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#a4bd7666380e01cee8eb7cd5f0df5e3bf">pitIsrFlag</a> = <a class="el" href="a00878.html#a65e9886d74aaee76545e83dd09011727">false</a></td></tr>
-<tr class="separator:a4bd7666380e01cee8eb7cd5f0df5e3bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a956336cb9e7270c6cfbf667b1075c063"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#a956336cb9e7270c6cfbf667b1075c063">fasin_deg</a> (float x)</td></tr>
+<tr class="separator:a956336cb9e7270c6cfbf667b1075c063"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a084fe0ff189767dca40fbe330d7394f0"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#a084fe0ff189767dca40fbe330d7394f0">facos_deg</a> (float x)</td></tr>
+<tr class="separator:a084fe0ff189767dca40fbe330d7394f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09d50b3d2c3d4d24e447a9b960eb5267"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#a09d50b3d2c3d4d24e447a9b960eb5267">fatan_deg</a> (float x)</td></tr>
+<tr class="separator:a09d50b3d2c3d4d24e447a9b960eb5267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebfdfbd2df0fe4472f9861b0738bb410"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#aebfdfbd2df0fe4472f9861b0738bb410">fatan2_deg</a> (float y, float x)</td></tr>
+<tr class="separator:aebfdfbd2df0fe4472f9861b0738bb410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab17a1fee362e4247f1636fb8fa984a3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00761.html#aab17a1fee362e4247f1636fb8fa984a3">fatan_15deg</a> (float x)</td></tr>
+<tr class="separator:aab17a1fee362e4247f1636fb8fa984a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides a simple abstraction for a periodic interval timer. </p>
-<p>Bare metal implementations of the sensor fusion library require at least one periodic interrupt for use as a timebase for sensor fusion functions. The CTIMER module on the LPC is one such module. The timer functions are only referenced at the <a class="el" href="a04483.html#a840291bc02cba5474a4cb46a9b9566fe" title="Main function. ">main()</a> level. There is no interaction within the fusion routines themselves. </p>
+<div class="textblock"><p>Math approximations file. </p>
+<p>Significant efficiencies were found by creating a set of trig functions which trade off precision for improved power/CPU performance. Full details are included in Application Note AN5015: Trigonometry Approximations </p>
 
-<p class="definition">Definition in file <a class="el" href="a00761_source.html">driver_ctimer.c</a>.</p>
+<p class="definition">Definition in file <a class="el" href="a00761_source.html">approximations.c</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a2843c40242a2189260e8fb4bbad4b06a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2843c40242a2189260e8fb4bbad4b06a">&#9670;&nbsp;</a></span>BUS_CLK_FREQ</h2>
+<a id="adb080357bd17e75e99457e4784de58b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb080357bd17e75e99457e4784de58b5">&#9670;&nbsp;</a></span>PADE_A</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BUS_CLK_FREQ&#160;&#160;&#160;CLOCK_GetFreq(kCLOCK_BusClk)</td>
+          <td class="memname">#define PADE_A&#160;&#160;&#160;96.644395816F</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00029">29</a> of file <a class="el" href="a00761_source.html">driver_ctimer.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00064">pit_init()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00139">fatan_15deg()</a>.</p>
 
 </div>
 </div>
-<a id="ab7786fe5adcd1d885491257b0ebc27b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7786fe5adcd1d885491257b0ebc27b8">&#9670;&nbsp;</a></span>CTIMER</h2>
+<a id="aa333bd5cecf10cb50fc1be1d9ab859b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa333bd5cecf10cb50fc1be1d9ab859b7">&#9670;&nbsp;</a></span>PADE_B</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CTIMER&#160;&#160;&#160;CTIMER0                 /* Timer 0 */</td>
+          <td class="memname">#define PADE_B&#160;&#160;&#160;25.086941612F</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00027">27</a> of file <a class="el" href="a00761_source.html">driver_ctimer.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00051">ctimer_callback()</a>, and <a class="el" href="a00761_source.html#l00064">pit_init()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00139">fatan_15deg()</a>.</p>
 
 </div>
 </div>
-<a id="a31628cf818c8dea7d3311a53c65cb924"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31628cf818c8dea7d3311a53c65cb924">&#9670;&nbsp;</a></span>CTIMER_MAT0_OUT</h2>
+<a id="a1fa3184d75c706cea6e8f26261630100"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fa3184d75c706cea6e8f26261630100">&#9670;&nbsp;</a></span>PADE_C</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define CTIMER_MAT0_OUT&#160;&#160;&#160;kCTIMER_Match_0 /* Match output 0 */</td>
+          <td class="memname">#define PADE_C&#160;&#160;&#160;1.6867633134F</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00028">28</a> of file <a class="el" href="a00761_source.html">driver_ctimer.c</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00139">fatan_15deg()</a>.</p>
+
+</div>
+</div>
+<a id="af3c8dd0138fad67491f72c8888b8476b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3c8dd0138fad67491f72c8888b8476b">&#9670;&nbsp;</a></span>TAN15DEG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TAN15DEG&#160;&#160;&#160;0.26794919243F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00059">fatan_deg()</a>.</p>
+
+</div>
+</div>
+<a id="a95b284aae960aeb6640b0c7cbc583145"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95b284aae960aeb6640b0c7cbc583145">&#9670;&nbsp;</a></span>TAN30DEG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TAN30DEG&#160;&#160;&#160;0.57735026919F</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00059">fatan_deg()</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a9ad9361b48550aacb336c3a1f0776953"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ad9361b48550aacb336c3a1f0776953">&#9670;&nbsp;</a></span>ctimer_callback()</h2>
+<a id="a084fe0ff189767dca40fbe330d7394f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a084fe0ff189767dca40fbe330d7394f0">&#9670;&nbsp;</a></span>facos_deg()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void ctimer_callback </td>
+          <td class="memname">float facos_deg </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>flags</em></td><td>)</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00051">51</a> of file <a class="el" href="a00761_source.html">driver_ctimer.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00043">43</a> of file <a class="el" href="a00761_source.html">approximations.c</a>.</p>
 
-<p class="reference">References <a class="el" href="a00761_source.html#l00027">CTIMER</a>, and <a class="el" href="a00761_source.html#l00049">pitIsrFlag</a>.</p>
+<p class="reference">References <a class="el" href="a00761_source.html#l00059">fatan_deg()</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="a00896_source.html#l00548">fAndroidAnglesDegFromRotationMatrix()</a>, <a class="el" href="a00896_source.html#l00492">fNEDAnglesDegFromRotationMatrix()</a>, and <a class="el" href="a00896_source.html#l00605">fWin8AnglesDegFromRotationMatrix()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00761_a084fe0ff189767dca40fbe330d7394f0_cgraph.png" border="0" usemap="#a00761_a084fe0ff189767dca40fbe330d7394f0_cgraph" alt=""/></div>
+<map name="a00761_a084fe0ff189767dca40fbe330d7394f0_cgraph" id="a00761_a084fe0ff189767dca40fbe330d7394f0_cgraph">
+<area shape="rect" id="node2" href="a00761.html#a09d50b3d2c3d4d24e447a9b960eb5267" title="fatan_deg" alt="" coords="135,5,213,32"/>
+</map>
 </div>
-</div>
-<a id="aa9242caadd99e8ac4fdce86681b61740"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9242caadd99e8ac4fdce86681b61740">&#9670;&nbsp;</a></span>pit_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void pit_init </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>microseconds</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00064">64</a> of file <a class="el" href="a00761_source.html">driver_ctimer.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00833_source.html#l00055">main()</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00761_aa9242caadd99e8ac4fdce86681b61740_icgraph.png" border="0" usemap="#a00761_aa9242caadd99e8ac4fdce86681b61740_icgraph" alt=""/></div>
-<map name="a00761_aa9242caadd99e8ac4fdce86681b61740_icgraph" id="a00761_aa9242caadd99e8ac4fdce86681b61740_icgraph">
-<area shape="rect" id="node2" href="a00833.html#a840291bc02cba5474a4cb46a9b9566fe" title="This is a bare&#45;metal implementation of the NXP sensor fusion demo build. " alt="" coords="113,5,164,32"/>
+<div class="center"><img src="a00761_a084fe0ff189767dca40fbe330d7394f0_icgraph.png" border="0" usemap="#a00761_a084fe0ff189767dca40fbe330d7394f0_icgraph" alt=""/></div>
+<map name="a00761_a084fe0ff189767dca40fbe330d7394f0_icgraph" id="a00761_a084fe0ff189767dca40fbe330d7394f0_icgraph">
+<area shape="rect" id="node2" href="a00899.html#a77eeda9a699b1456bb8b02665ad80522" title="extract the Android angles in degrees from the Android rotation matrix " alt="" coords="135,5,345,47"/>
+<area shape="rect" id="node3" href="a00899.html#aa781ea4b9430531df4697d3cb39f7454" title="extract the NED angles in degrees from the NED rotation matrix " alt="" coords="143,71,337,112"/>
+<area shape="rect" id="node4" href="a00899.html#a13cd93780206a620abc7bdf7907e6dc6" title="extract the Windows 8 angles in degrees from the Windows 8 rotation matrix " alt="" coords="142,136,338,177"/>
 </map>
 </div>
 
 </div>
 </div>
-<h2 class="groupheader">Variable Documentation</h2>
-<a id="af2243d3e8556d4be713b2ef15c9a2738"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2243d3e8556d4be713b2ef15c9a2738">&#9670;&nbsp;</a></span>ctimer_callback_table</h2>
+<a id="a956336cb9e7270c6cfbf667b1075c063"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a956336cb9e7270c6cfbf667b1075c063">&#9670;&nbsp;</a></span>fasin_deg()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ctimer_callback_t ctimer_callback_table[]</td>
+          <td class="memname">float fasin_deg </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">{</div><div class="line">    <a class="code" href="a00761.html#a9ad9361b48550aacb336c3a1f0776953">ctimer_callback</a>,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL,</div><div class="line">    NULL</div><div class="line">}</div><div class="ttc" id="a00761_html_a9ad9361b48550aacb336c3a1f0776953"><div class="ttname"><a href="a00761.html#a9ad9361b48550aacb336c3a1f0776953">ctimer_callback</a></div><div class="ttdeci">void ctimer_callback(uint32_t flags)</div><div class="ttdef"><b>Definition:</b> <a href="a00761_source.html#l00051">driver_ctimer.c:51</a></div></div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00037">37</a> of file <a class="el" href="a00761_source.html">driver_ctimer.c</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00028">28</a> of file <a class="el" href="a00761_source.html">approximations.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a00761_source.html#l00059">fatan_deg()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00896_source.html#l00548">fAndroidAnglesDegFromRotationMatrix()</a>, <a class="el" href="a00896_source.html#l00343">feCompassAndroid()</a>, <a class="el" href="a00896_source.html#l00270">feCompassNED()</a>, <a class="el" href="a00896_source.html#l00417">feCompassWin8()</a>, <a class="el" href="a00896_source.html#l00492">fNEDAnglesDegFromRotationMatrix()</a>, and <a class="el" href="a00896_source.html#l00605">fWin8AnglesDegFromRotationMatrix()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00761_a956336cb9e7270c6cfbf667b1075c063_cgraph.png" border="0" usemap="#a00761_a956336cb9e7270c6cfbf667b1075c063_cgraph" alt=""/></div>
+<map name="a00761_a956336cb9e7270c6cfbf667b1075c063_cgraph" id="a00761_a956336cb9e7270c6cfbf667b1075c063_cgraph">
+<area shape="rect" id="node2" href="a00761.html#a09d50b3d2c3d4d24e447a9b960eb5267" title="fatan_deg" alt="" coords="131,5,209,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00761_a956336cb9e7270c6cfbf667b1075c063_icgraph.png" border="0" usemap="#a00761_a956336cb9e7270c6cfbf667b1075c063_icgraph" alt=""/></div>
+<map name="a00761_a956336cb9e7270c6cfbf667b1075c063_icgraph" id="a00761_a956336cb9e7270c6cfbf667b1075c063_icgraph">
+<area shape="rect" id="node2" href="a00899.html#a77eeda9a699b1456bb8b02665ad80522" title="extract the Android angles in degrees from the Android rotation matrix " alt="" coords="131,5,341,47"/>
+<area shape="rect" id="node3" href="a00899.html#a43ad72cf13f54b0f96355bb7005b6872" title="Android: basic 6DOF e&#45;Compass function, computing rotation matrix fR and magnetic inclination angle f..." alt="" coords="171,71,301,98"/>
+<area shape="rect" id="node4" href="a00899.html#afcde979fba0bcae15591096fe68648c9" title="NED: basic 6DOF e&#45;Compass function, computing rotation matrix fR and magnetic inclination angle fDelt..." alt="" coords="179,122,293,149"/>
+<area shape="rect" id="node5" href="a00899.html#aabc044b27a0cdd7db677c3203b77de90" title="Win8: basic 6DOF e&#45;Compass function, computing rotation matrix fR and magnetic inclination angle fDel..." alt="" coords="177,173,295,199"/>
+<area shape="rect" id="node6" href="a00899.html#aa781ea4b9430531df4697d3cb39f7454" title="extract the NED angles in degrees from the NED rotation matrix " alt="" coords="139,224,333,265"/>
+<area shape="rect" id="node7" href="a00899.html#a13cd93780206a620abc7bdf7907e6dc6" title="extract the Windows 8 angles in degrees from the Windows 8 rotation matrix " alt="" coords="138,289,334,331"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="a4bd7666380e01cee8eb7cd5f0df5e3bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4bd7666380e01cee8eb7cd5f0df5e3bf">&#9670;&nbsp;</a></span>pitIsrFlag</h2>
+<a id="aebfdfbd2df0fe4472f9861b0738bb410"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebfdfbd2df0fe4472f9861b0738bb410">&#9670;&nbsp;</a></span>fatan2_deg()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile bool pitIsrFlag = <a class="el" href="a00878.html#a65e9886d74aaee76545e83dd09011727">false</a></td>
+          <td class="memname">float fatan2_deg </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00049">49</a> of file <a class="el" href="a00761_source.html">driver_ctimer.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00109">109</a> of file <a class="el" href="a00761_source.html">approximations.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00051">ctimer_callback()</a>, and <a class="el" href="a00833_source.html#l00055">main()</a>.</p>
+<p class="reference">References <a class="el" href="a00761_source.html#l00059">fatan_deg()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00896_source.html#l00548">fAndroidAnglesDegFromRotationMatrix()</a>, <a class="el" href="a00896_source.html#l00492">fNEDAnglesDegFromRotationMatrix()</a>, and <a class="el" href="a00896_source.html#l00605">fWin8AnglesDegFromRotationMatrix()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00761_aebfdfbd2df0fe4472f9861b0738bb410_cgraph.png" border="0" usemap="#a00761_aebfdfbd2df0fe4472f9861b0738bb410_cgraph" alt=""/></div>
+<map name="a00761_aebfdfbd2df0fe4472f9861b0738bb410_cgraph" id="a00761_aebfdfbd2df0fe4472f9861b0738bb410_cgraph">
+<area shape="rect" id="node2" href="a00761.html#a09d50b3d2c3d4d24e447a9b960eb5267" title="fatan_deg" alt="" coords="139,5,217,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00761_aebfdfbd2df0fe4472f9861b0738bb410_icgraph.png" border="0" usemap="#a00761_aebfdfbd2df0fe4472f9861b0738bb410_icgraph" alt=""/></div>
+<map name="a00761_aebfdfbd2df0fe4472f9861b0738bb410_icgraph" id="a00761_aebfdfbd2df0fe4472f9861b0738bb410_icgraph">
+<area shape="rect" id="node2" href="a00899.html#a77eeda9a699b1456bb8b02665ad80522" title="extract the Android angles in degrees from the Android rotation matrix " alt="" coords="139,5,349,47"/>
+<area shape="rect" id="node3" href="a00899.html#aa781ea4b9430531df4697d3cb39f7454" title="extract the NED angles in degrees from the NED rotation matrix " alt="" coords="147,71,341,112"/>
+<area shape="rect" id="node4" href="a00899.html#a13cd93780206a620abc7bdf7907e6dc6" title="extract the Windows 8 angles in degrees from the Windows 8 rotation matrix " alt="" coords="146,136,342,177"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="aab17a1fee362e4247f1636fb8fa984a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab17a1fee362e4247f1636fb8fa984a3">&#9670;&nbsp;</a></span>fatan_15deg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float fatan_15deg </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00139">139</a> of file <a class="el" href="a00761_source.html">approximations.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a00761.html#adb080357bd17e75e99457e4784de58b5">PADE_A</a>, <a class="el" href="a00761.html#aa333bd5cecf10cb50fc1be1d9ab859b7">PADE_B</a>, and <a class="el" href="a00761.html#a1fa3184d75c706cea6e8f26261630100">PADE_C</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00059">fatan_deg()</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00761_aab17a1fee362e4247f1636fb8fa984a3_icgraph.png" border="0" usemap="#a00761_aab17a1fee362e4247f1636fb8fa984a3_icgraph" alt=""/></div>
+<map name="a00761_aab17a1fee362e4247f1636fb8fa984a3_icgraph" id="a00761_aab17a1fee362e4247f1636fb8fa984a3_icgraph">
+<area shape="rect" id="node2" href="a00764.html#a09d50b3d2c3d4d24e447a9b960eb5267" title="fatan_deg" alt="" coords="145,5,224,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a09d50b3d2c3d4d24e447a9b960eb5267"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09d50b3d2c3d4d24e447a9b960eb5267">&#9670;&nbsp;</a></span>fatan_deg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float fatan_deg </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00761_source.html#l00059">59</a> of file <a class="el" href="a00761_source.html">approximations.c</a>.</p>
+
+<p class="reference">References <a class="el" href="a00761_source.html#l00139">fatan_15deg()</a>, <a class="el" href="a00761.html#af3c8dd0138fad67491f72c8888b8476b">TAN15DEG</a>, and <a class="el" href="a00761.html#a95b284aae960aeb6640b0c7cbc583145">TAN30DEG</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00761_source.html#l00043">facos_deg()</a>, <a class="el" href="a00761_source.html#l00028">fasin_deg()</a>, <a class="el" href="a00761_source.html#l00109">fatan2_deg()</a>, and <a class="el" href="a00896_source.html#l00605">fWin8AnglesDegFromRotationMatrix()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00761_a09d50b3d2c3d4d24e447a9b960eb5267_cgraph.png" border="0" usemap="#a00761_a09d50b3d2c3d4d24e447a9b960eb5267_cgraph" alt=""/></div>
+<map name="a00761_a09d50b3d2c3d4d24e447a9b960eb5267_cgraph" id="a00761_a09d50b3d2c3d4d24e447a9b960eb5267_cgraph">
+<area shape="rect" id="node2" href="a00761.html#aab17a1fee362e4247f1636fb8fa984a3" title="fatan_15deg" alt="" coords="132,5,224,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00761_a09d50b3d2c3d4d24e447a9b960eb5267_icgraph.png" border="0" usemap="#a00761_a09d50b3d2c3d4d24e447a9b960eb5267_icgraph" alt=""/></div>
+<map name="a00761_a09d50b3d2c3d4d24e447a9b960eb5267_icgraph" id="a00761_a09d50b3d2c3d4d24e447a9b960eb5267_icgraph">
+<area shape="rect" id="node2" href="a00764.html#a084fe0ff189767dca40fbe330d7394f0" title="facos_deg" alt="" coords="134,5,215,32"/>
+<area shape="rect" id="node3" href="a00899.html#a13cd93780206a620abc7bdf7907e6dc6" title="extract the Windows 8 angles in degrees from the Windows 8 rotation matrix " alt="" coords="265,74,461,115"/>
+<area shape="rect" id="node4" href="a00764.html#a956336cb9e7270c6cfbf667b1075c063" title="fasin_deg" alt="" coords="136,107,213,133"/>
+<area shape="rect" id="node5" href="a00764.html#aebfdfbd2df0fe4472f9861b0738bb410" title="fatan2_deg" alt="" coords="132,157,217,184"/>
+</map>
+</div>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
-<map id="boardkit/evk&#45;mimxrt1015/evkmimxrt1015.h" name="boardkit/evk&#45;mimxrt1015/evkmimxrt1015.h">
-<area shape="rect" id="node2" href="$a04369.html" title="pin_mux.h" alt="" coords="5,95,88,121"/>
-<area shape="rect" id="node3" href="$a04438.html" title="RTE_Device.h" alt="" coords="113,95,215,121"/>
+<map id="boardkit/frdm&#45;ke15z/frdm_ke15z.h" name="boardkit/frdm&#45;ke15z/frdm_ke15z.h">
+<area shape="rect" id="node2" href="$a04607.html" title="pin_mux.h" alt="" coords="5,95,88,121"/>
+<area shape="rect" id="node5" href="$a04670.html" title="RTE_Device.h" alt="" coords="331,95,434,121"/>
 </map>

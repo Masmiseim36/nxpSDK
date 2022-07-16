@@ -16,6 +16,7 @@ mod caps;
 mod depends;
 mod image;
 mod tlv;
+mod utils;
 pub mod testlog;
 
 pub use crate::{
@@ -33,7 +34,7 @@ pub use crate::{
     },
 };
 
-const USAGE: &'static str = "
+const USAGE: &str = "
 Mcuboot simulator
 
 Usage:
@@ -52,8 +53,6 @@ Options:
 
 #[derive(Debug, Deserialize)]
 struct Args {
-    flag_help: bool,
-    flag_version: bool,
     flag_device: Option<DeviceName>,
     flag_align: Option<AlignArg>,
     cmd_sizes: bool,
@@ -67,7 +66,7 @@ pub enum DeviceName {
     Nrf52840UnequalSlots,
 }
 
-pub static ALL_DEVICES: &'static [DeviceName] = &[
+pub static ALL_DEVICES: &[DeviceName] = &[
     DeviceName::Stm32f4,
     DeviceName::K64f,
     DeviceName::K64fBig,
@@ -169,6 +168,7 @@ pub fn main() {
     }
 }
 
+#[derive(Default)]
 pub struct RunStatus {
     failures: usize,
     passes: usize,
@@ -228,4 +228,3 @@ impl RunStatus {
         self.failures
     }
 }
-

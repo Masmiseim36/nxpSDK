@@ -55,15 +55,16 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/phy/device/phyksz8081
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/drivers
     ${ProjDirPath}/../../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../../components/phy
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062
+    ${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
 )
 
@@ -80,8 +81,6 @@ include(middleware_lwip_apps_mdns_MIMXRT1062)
 
 include(middleware_lwip_MIMXRT1062)
 
-include(utility_debug_console_MIMXRT1062)
-
 include(middleware_lwip_enet_ethernetif_MIMXRT1062)
 
 include(driver_phy-common_MIMXRT1062)
@@ -95,6 +94,8 @@ include(middleware_freertos-kernel_heap_3_MIMXRT1062)
 include(driver_common_MIMXRT1062)
 
 include(device_MIMXRT1062_CMSIS_MIMXRT1062)
+
+include(utility_debug_console_MIMXRT1062)
 
 include(component_lpuart_adapter_MIMXRT1062)
 
@@ -117,6 +118,8 @@ include(driver_igpio_MIMXRT1062)
 include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkbmimxrt1060_MIMXRT1062)
+
+include(component_silicon_id_MIMXRT1062)
 
 include(driver_mdio-common_MIMXRT1062)
 

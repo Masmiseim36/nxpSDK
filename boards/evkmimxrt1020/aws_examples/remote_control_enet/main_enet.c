@@ -53,6 +53,11 @@
 #include "fsl_mma.h"
 #endif
 
+#include "fsl_phyksz8081.h"
+#include "fsl_enet_mdio.h"
+#include "fsl_gpio.h"
+#include "fsl_iomuxc.h"
+#include "fsl_silicon_id.h"
 #include "fsl_phy.h"
 /* lwIP Includes */
 #include "lwip/tcpip.h"
@@ -61,26 +66,9 @@
 #include "netif/ethernet.h"
 #include "enet_ethernetif.h"
 #include "lwip/netifapi.h"
-#include "fsl_phyksz8081.h"
-#include "fsl_enet_mdio.h"
-#include "fsl_gpio.h"
-#include "fsl_iomuxc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#ifndef EXAMPLE_NETIF_INIT_FN
-/*! @brief Network interface initialization function. */
-#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
-#endif /* EXAMPLE_NETIF_INIT_FN */
-
-#define INIT_SUCCESS 0
-#define INIT_FAIL    1
-
-/* MAC address configuration. */
-#define configMAC_ADDR                     \
-    {                                      \
-        0x02, 0x12, 0x13, 0x10, 0x15, 0x25 \
-    }
 
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
@@ -100,6 +88,13 @@
 /* Clock divider for LPI2C clock source */
 #define BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER (5U)
 #define BOARD_ACCEL_I2C_CLOCK_FREQ           (CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8 / (BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER + 1U))
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#endif /* EXAMPLE_NETIF_INIT_FN */
+
+#define INIT_SUCCESS 0
+#define INIT_FAIL    1
 #define LOGGING_TASK_PRIORITY   (tskIDLE_PRIORITY + 1)
 #define LOGGING_TASK_STACK_SIZE (200)
 #define LOGGING_QUEUE_LENGTH    (16)
@@ -154,62 +149,23 @@ extern int initNetwork(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
-static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
-
-struct netif netif;
 /* Count of LED which can be controlled */
 uint8_t ledCount = 1;
 /* Array of LED names */
 char *ledName[] = {"LED"};
 /* Array of LED colors in JSON */
 char ledColors[] = "[\"green\"]";
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
+struct netif netif;
+
+static SemaphoreHandle_t sem_ipv4_addr_valid;
+NETIF_DECLARE_EXT_CALLBACK(netif_ext_cb_mem);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-int initNetwork(void)
-{
-    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
-    ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
-        .macAddress = configMAC_ADDR,
-    };
-
-    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
-
-    IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
-    IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
-    IP4_ADDR(&netif_gw, 0, 0, 0, 0);
-
-    tcpip_init(NULL, NULL);
-
-    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
-                       tcpip_input);
-    netifapi_netif_set_default(&netif);
-    netifapi_netif_set_up(&netif);
-
-    configPRINTF(("Getting IP address from DHCP ...\r\n"));
-    netifapi_dhcp_start(&netif);
-
-    struct dhcp *dhcp;
-    dhcp = (struct dhcp *)netif_get_client_data(&netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
-
-    while (dhcp->state != DHCP_STATE_BOUND)
-    {
-        vTaskDelay(1000);
-    }
-
-    if (dhcp->state == DHCP_STATE_BOUND)
-    {
-        configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&netif.ip_addr.addr)[0],
-                      ((u8_t *)&netif.ip_addr.addr)[1], ((u8_t *)&netif.ip_addr.addr)[2],
-                      ((u8_t *)&netif.ip_addr.addr)[3]));
-    }
-    configPRINTF(("DHCP OK\r\n"));
-
-    return INIT_SUCCESS;
-}
 void turnOnLed(uint8_t id)
 {
     if (id == 0)
@@ -250,6 +206,68 @@ void delay(void)
     }
 }
 
+static void netif_ext_cb(struct netif *cb_netif, netif_nsc_reason_t reason, const netif_ext_callback_args_t *args)
+{
+    (void)cb_netif;
+    (void)args;
+
+    if (0U != (reason & (netif_nsc_reason_t)LWIP_NSC_IPV4_ADDR_VALID))
+    {
+        (void)xSemaphoreGive(sem_ipv4_addr_valid);
+    }
+}
+
+int initNetwork(void)
+{
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
+        .phyHandle = &phyHandle,
+#ifdef configMAC_ADDR
+        .macAddress = configMAC_ADDR,
+#endif
+    };
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
+
+#ifndef configMAC_ADDR
+    /* Set special address for each chip. */
+    (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
+
+    IP4_ADDR(&netif_ipaddr, 0, 0, 0, 0);
+    IP4_ADDR(&netif_netmask, 0, 0, 0, 0);
+    IP4_ADDR(&netif_gw, 0, 0, 0, 0);
+
+    tcpip_init(NULL, NULL);
+
+    sem_ipv4_addr_valid = xSemaphoreCreateBinary();
+    LOCK_TCPIP_CORE();
+    netif_add_ext_callback(&netif_ext_cb_mem, netif_ext_cb);
+    UNLOCK_TCPIP_CORE();
+
+    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
+                       tcpip_input);
+    netifapi_netif_set_default(&netif);
+    netifapi_netif_set_up(&netif);
+
+    configPRINTF(("Getting IP address from DHCP ...\r\n"));
+    netifapi_dhcp_start(&netif);
+
+    struct dhcp *dhcp;
+    dhcp = (struct dhcp *)netif_get_client_data(&netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);
+
+    xSemaphoreTake(sem_ipv4_addr_valid, portMAX_DELAY);
+
+    if (dhcp->state == DHCP_STATE_BOUND)
+    {
+        configPRINTF(("IPv4 Address: %u.%u.%u.%u\r\n", ((u8_t *)&netif.ip_addr.addr)[0],
+                      ((u8_t *)&netif.ip_addr.addr)[1], ((u8_t *)&netif.ip_addr.addr)[2],
+                      ((u8_t *)&netif.ip_addr.addr)[3]));
+    }
+    configPRINTF(("DHCP OK\r\n"));
+
+    return INIT_SUCCESS;
+}
 void print_string(const char *string)
 {
     PRINTF(string);

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -195,7 +195,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:gaae959bcddd181966d6c8bf4cbf140fea"><td class="mdescLeft">&#160;</td><td class="mdescRight">SERIAL_PORT_UART_HANDLE_SIZE/SERIAL_PORT_USB_CDC_HANDLE_SIZE + serial manager dedicated size.  <a href="#gaae959bcddd181966d6c8bf4cbf140fea">More...</a><br/></td></tr>
 <tr class="separator:gaae959bcddd181966d6c8bf4cbf140fea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc4aa7ae83c31b66e437d7fd264aaebc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gabc4aa7ae83c31b66e437d7fd264aaebc">SERIAL_MANAGER_HANDLE_SIZE</a>&#160;&#160;&#160;(SERIAL_MANAGER_HANDLE_SIZE_TEMP + 12U)</td></tr>
-<tr class="memdesc:gabc4aa7ae83c31b66e437d7fd264aaebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macro to determine whether use common task.  <a href="#gabc4aa7ae83c31b66e437d7fd264aaebc">More...</a><br/></td></tr>
+<tr class="memdesc:gabc4aa7ae83c31b66e437d7fd264aaebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition of serial manager handle size.  <a href="#gabc4aa7ae83c31b66e437d7fd264aaebc">More...</a><br/></td></tr>
 <tr class="separator:gabc4aa7ae83c31b66e437d7fd264aaebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad145f5877828fd4ec335f09b6790c673"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(name)&#160;&#160;&#160;uint32_t name[((<a class="el" href="a00054.html#gabc4aa7ae83c31b66e437d7fd264aaebc">SERIAL_MANAGER_HANDLE_SIZE</a> + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]</td></tr>
 <tr class="memdesc:gad145f5877828fd4ec335f09b6790c673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the serial manager handle.  <a href="#gad145f5877828fd4ec335f09b6790c673">More...</a><br/></td></tr>
@@ -229,12 +229,18 @@ typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" 
 <tr class="separator:ga8bfec9c49e40728806d775fdb4bbf78e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe6a6263bb1570ea715938b2420af773"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabe6a6263bb1570ea715938b2420af773"></a>
 typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gabe6a6263bb1570ea715938b2420af773">serial_manager_callback_t</a> )(void *callbackParam, <a class="el" href="a00054.html#a00375">serial_manager_callback_message_t</a> *message, <a class="el" href="a00054.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a> status)</td></tr>
-<tr class="memdesc:gabe6a6263bb1570ea715938b2420af773"><td class="mdescLeft">&#160;</td><td class="mdescRight">callback function <br/></td></tr>
+<tr class="memdesc:gabe6a6263bb1570ea715938b2420af773"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager callback function <br/></td></tr>
 <tr class="separator:gabe6a6263bb1570ea715938b2420af773"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga856d80a20772bd9d9ad950b8ec852635"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga856d80a20772bd9d9ad950b8ec852635"></a>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga856d80a20772bd9d9ad950b8ec852635">serial_manager_lowpower_critical_callback_t</a> )(void)</td></tr>
+<tr class="memdesc:ga856d80a20772bd9d9ad950b8ec852635"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial manager Lowpower Critical callback function <br/></td></tr>
+<tr class="separator:ga856d80a20772bd9d9ad950b8ec852635"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga103db7d7f3fc8234978efadef0fdaf80"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a> { <br/>
+&#160;&#160;<a class="el" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb">kSerialPort_None</a> = 0U, 
+<br/>
 &#160;&#160;<a class="el" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a> = 1U, 
 <br/>
 &#160;&#160;<a class="el" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2">kSerialPort_UsbCdc</a>, 
@@ -249,9 +255,7 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80aedeec3b53f1439f00620cadea84b0fea">kSerialPort_SpiMaster</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a">kSerialPort_SpiSlave</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb">kSerialPort_None</a>
+&#160;&#160;<a class="el" href="a00054.html#gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a">kSerialPort_SpiSlave</a>
 <br/>
  }</td></tr>
 <tr class="memdesc:ga103db7d7f3fc8234978efadef0fdaf80"><td class="mdescLeft">&#160;</td><td class="mdescRight">serial port type  <a href="a00054.html#ga103db7d7f3fc8234978efadef0fdaf80">More...</a><br/></td></tr>
@@ -317,9 +321,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaef5c404d43871f6d8f761b27dbf183fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00054.html#gae9a330e1f3a81509399832c7b2c2872f">serial_manager_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#gaef5c404d43871f6d8f761b27dbf183fa">SerialManager_ExitLowpower</a> (<a class="el" href="a00054.html#gaba1cc3859c4f829ee0bc6091184d4b08">serial_handle_t</a> serialHandle)</td></tr>
 <tr class="memdesc:gaef5c404d43871f6d8f761b27dbf183fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restores from low power consumption.  <a href="#gaef5c404d43871f6d8f761b27dbf183fa">More...</a><br/></td></tr>
 <tr class="separator:gaef5c404d43871f6d8f761b27dbf183fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga26a6c26eacf1277930e69676ab77cbec"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga26a6c26eacf1277930e69676ab77cbec">SerialManager_needPollingIsr</a> (void)</td></tr>
-<tr class="memdesc:ga26a6c26eacf1277930e69676ab77cbec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if need polling ISR.  <a href="#ga26a6c26eacf1277930e69676ab77cbec">More...</a><br/></td></tr>
-<tr class="separator:ga26a6c26eacf1277930e69676ab77cbec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga71bd55adb7a6a552ce5dac06b5794cea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html#ga71bd55adb7a6a552ce5dac06b5794cea">SerialManager_SetLowpowerCriticalCb</a> (const serial_manager_lowpower_critical_CBs_t *pfCallback)</td></tr>
+<tr class="memdesc:ga71bd55adb7a6a552ce5dac06b5794cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function performs initialization of the callbacks structure used to disable lowpower when serial manager is active.  <a href="#ga71bd55adb7a6a552ce5dac06b5794cea">More...</a><br/></td></tr>
+<tr class="separator:ga71bd55adb7a6a552ce5dac06b5794cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="a00376" id="a00376"></a>
@@ -440,7 +444,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Definition of serial manager handle size. </p>
 
 </div>
 </div>
@@ -560,7 +563,10 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77"></a>kSerialPort_Uart</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb"></a>kSerialPort_None</em>&nbsp;</td><td class="fielddoc">
+<p>Serial port is none. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77"></a>kSerialPort_Uart</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port UART. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a3785825f30826c61a4ef13bf983381c2"></a>kSerialPort_UsbCdc</em>&nbsp;</td><td class="fielddoc">
@@ -583,9 +589,6 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a7ae48951cbd3ca0ee687468af7f0a99a"></a>kSerialPort_SpiSlave</em>&nbsp;</td><td class="fielddoc">
 <p>Serial port SPISLAVE. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb"></a>kSerialPort_None</em>&nbsp;</td><td class="fielddoc">
-<p>Serial port is none. </p>
 </td></tr>
 </table>
 
@@ -673,7 +676,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This function configures the Serial Manager module with user-defined settings. The user can configure the configuration structure. The parameter serialHandle is a pointer to point to a memory space of size <a class="el" href="a00054.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Macro to determine whether use common task. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The Serial Manager module supports three types of serial port, UART (includes UART, USART, LPSCI, LPUART, etc), USB CDC and swo. Please refer to <a class="el" href="a00054.html#ga103db7d7f3fc8234978efadef0fdaf80" title="serial port type ">serial_port_type_t</a> for serial port setting. These three types can be set by using <a class="el" href="a00054.html#a00376" title="serial manager config structure ">serial_manager_config_t</a>.</p>
+<p>This function configures the Serial Manager module with user-defined settings. The user can configure the configuration structure. The parameter serialHandle is a pointer to point to a memory space of size <a class="el" href="a00054.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Definition of serial manager handle size. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The Serial Manager module supports three types of serial port, UART (includes UART, USART, LPSCI, LPUART, etc), USB CDC and swo. Please refer to <a class="el" href="a00054.html#ga103db7d7f3fc8234978efadef0fdaf80" title="serial port type ">serial_port_type_t</a> for serial port setting. These three types can be set by using <a class="el" href="a00054.html#a00376" title="serial manager config structure ">serial_manager_config_t</a>.</p>
 <p>Example below shows how to use this API to configure the Serial Manager. For UART, </p>
 <div class="fragment"><div class="line">*   #define SERIAL_MANAGER_RING_BUFFER_SIZE (256U)</div>
 <div class="line">*   <span class="keyword">static</span> <a class="code" href="a00054.html#gad145f5877828fd4ec335f09b6790c673">SERIAL_MANAGER_HANDLE_DEFINE</a>(s_serialHandle);</div>
@@ -712,7 +715,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="line">*  </div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">serialHandle</td><td>Pointer to point to a memory space of size <a class="el" href="a00054.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Macro to determine whether use common task. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00054.html#gad145f5877828fd4ec335f09b6790c673" title="Defines the serial manager handle. ">SERIAL_MANAGER_HANDLE_DEFINE(serialHandle)</a>; or uint32_t serialHandle[((SERIAL_MANAGER_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
+    <tr><td class="paramname">serialHandle</td><td>Pointer to point to a memory space of size <a class="el" href="a00054.html#gabc4aa7ae83c31b66e437d7fd264aaebc" title="Definition of serial manager handle size. ">SERIAL_MANAGER_HANDLE_SIZE</a> allocated by the caller. The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices. You can define the handle in the following two ways: <a class="el" href="a00054.html#gad145f5877828fd4ec335f09b6790c673" title="Defines the serial manager handle. ">SERIAL_MANAGER_HANDLE_DEFINE(serialHandle)</a>; or uint32_t serialHandle[((SERIAL_MANAGER_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]; </td></tr>
     <tr><td class="paramname">config</td><td>Pointer to user-defined configuration structure. </td></tr>
   </table>
   </dd>
@@ -1090,31 +1093,22 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a class="anchor" id="ga26a6c26eacf1277930e69676ab77cbec"></a>
+<a class="anchor" id="ga71bd55adb7a6a552ce5dac06b5794cea"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static bool SerialManager_needPollingIsr </td>
+          <td class="memname">void SerialManager_SetLowpowerCriticalCb </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const serial_manager_lowpower_critical_CBs_t *&#160;</td>
+          <td class="paramname"><em>pfCallback</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
-<p>This function is used to check if need polling ISR.</p>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">TRUE</td><td>if need polling. </td></tr>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pfCallback</td><td>Pointer to the function structure used to allow/disable lowpower. </td></tr>
   </table>
   </dd>
 </dl>

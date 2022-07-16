@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
+ * Copyright 2019-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -35,7 +35,7 @@
 #define BOARD_LCD_SPI_BAUDRATE   10000000U
 #define BOARD_LCD_SPI_IRQ        LPSPI1_IRQn
 #define BOARD_LCD_SPI_FREQ_FUNC  LPSPI1_GetFreq
-#define BOARD_LCD_SPI_FREQ       CLOCK_GetFreq(kCLOCK_SysPllClk) / LPSPI_CLOCK_SOURCE_DIVIDER
+#define BOARD_LCD_SPI_FREQ       CLOCK_GetFreq(kCLOCK_SysPllClk) / (LPSPI_CLOCK_SOURCE_DIVIDER + 1)
 #define BOARD_LCD_SPI_DMA_TX_IRQ DMA11_DMA27_IRQn
 #define BOARD_LCD_SPI_DMA_RX_IRQ DMA10_DMA26_IRQn
 
@@ -60,7 +60,7 @@ static SemaphoreHandle_t s_transferDone;
 #else
 static volatile bool s_transferDone;
 #endif
-SDK_ALIGN(static uint8_t s_frameBuffer[1][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
+AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_frameBuffer[1][LCD_VIRTUAL_BUF_SIZE * LCD_FB_BYTE_PER_PIXEL], 4);
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -170,7 +170,7 @@ static void DEMO_InitLcd(void)
     /* SPI master init */
     BOARD_LCD_SPI.Initialize(SPI_MasterSignalEvent);
     BOARD_LCD_SPI.PowerControl(ARM_POWER_FULL);
-    BOARD_LCD_SPI.Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA0 | ARM_SPI_DATA_BITS(8), BOARD_LCD_SPI_BAUDRATE);
+    BOARD_LCD_SPI.Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA1 | ARM_SPI_DATA_BITS(8), BOARD_LCD_SPI_BAUDRATE);
 
     FT9341_Init(DEMO_SPI_LCD_WriteData, DEMO_SPI_LCD_WriteCmd);
     /* Change to landscape view. */
@@ -194,8 +194,8 @@ void lv_port_disp_init(void)
      * Register the display in LittlevGL
      *----------------------------------*/
 
-    static lv_disp_drv_t disp_drv;      /*Descriptor of a display driver*/
-    lv_disp_drv_init(&disp_drv); /*Basic initialization*/
+    static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
+    lv_disp_drv_init(&disp_drv);   /*Basic initialization*/
 
     /*Set the resolution of the display*/
     disp_drv.hor_res = LCD_WIDTH;

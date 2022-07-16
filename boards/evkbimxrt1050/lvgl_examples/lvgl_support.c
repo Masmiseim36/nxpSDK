@@ -12,17 +12,18 @@
 #include "semphr.h"
 #endif
 
+#include "board.h"
+#include "fsl_video_common.h"
 #include "fsl_elcdif.h"
 #include "fsl_lpi2c.h"
 #include "fsl_gpio.h"
 #include "fsl_cache.h"
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+#include "fsl_gt911.h"
+#else
 #include "fsl_ft5406_rt.h"
-#include "fsl_debug_console.h"
-
-#if LV_USE_GPU_NXP_PXP
-#include "src/gpu/lv_gpu_nxp_pxp.h"
-#include "src/gpu/lv_gpu_nxp_pxp_osa.h"
 #endif
+#include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
@@ -40,12 +41,26 @@
 #define TOUCH_I2C_BAUDRATE   100000U
 
 /* Macros for panel. */
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+
+#define LCD_HSW 4
+#define LCD_HFP 8
+#define LCD_HBP 43
+#define LCD_VSW 4
+#define LCD_VFP 8
+#define LCD_VBP 12
+
+#else
+
 #define LCD_HSW 41
 #define LCD_HFP 4
 #define LCD_HBP 8
 #define LCD_VSW 10
 #define LCD_VFP 4
 #define LCD_VBP 2
+
+#endif
+
 #define LCD_POL_FLAGS \
     (kELCDIF_DataEnableActiveHigh | kELCDIF_VsyncActiveLow | kELCDIF_HsyncActiveLow | kELCDIF_DriveDataOnRisingClkEdge)
 #define LCD_LCDIF_DATA_BUS kELCDIF_DataBus16Bit
@@ -79,7 +94,8 @@
 #define DEMO_FB_ALIGN LV_ATTRIBUTE_MEM_ALIGN_SIZE
 #endif
 
-#define DEMO_FB_SIZE (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
+#define DEMO_FB_SIZE \
+    (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
 
 /*******************************************************************************
  * Prototypes
@@ -92,8 +108,6 @@ static void DEMO_InitLcdBackLight(void);
 
 static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
 
-static void DEMO_WaitFlush(lv_disp_drv_t *disp_drv);
-
 #if LV_USE_GPU_NXP_PXP
 static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv);
 #endif
@@ -102,6 +116,12 @@ static void DEMO_InitTouch(void);
 
 static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
 
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+static void BOARD_PullTouchResetPin(bool pullUp);
+
+static void BOARD_ConfigTouchIntPin(gt911_int_pin_mode_t mode);
+#endif
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -109,9 +129,24 @@ static volatile bool s_framePending;
 #if defined(SDK_OS_FREE_RTOS)
 static SemaphoreHandle_t s_frameSema;
 #endif
-static ft5406_rt_handle_t touchHandle;
 
-static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+static gt911_handle_t s_touchHandle;
+static const gt911_config_t s_touchConfig = {
+    .I2C_SendFunc     = BOARD_Touch_I2C_Send,
+    .I2C_ReceiveFunc  = BOARD_Touch_I2C_Receive,
+    .pullResetPinFunc = BOARD_PullTouchResetPin,
+    .intPinFunc       = BOARD_ConfigTouchIntPin,
+    .timeDelayMsFunc  = VIDEO_DelayMs,
+    .touchPointNum    = 1,
+    .i2cAddrMode      = kGT911_I2cAddrMode0,
+    .intTrigMode      = kGT911_IntRisingEdge,
+};
+static int s_touchResolutionX;
+static int s_touchResolutionY;
+#else
+static ft5406_rt_handle_t touchHandle;
+#endif
 
 SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
 
@@ -138,6 +173,7 @@ void lv_port_disp_init(void)
      * Register the display in LittlevGL
      *----------------------------------*/
 
+    static lv_disp_drv_t disp_drv;      /*Descriptor of a display driver*/
     lv_disp_drv_init(&disp_drv); /*Basic initialization*/
 
     /*Set up the functions to access to your display*/
@@ -148,8 +184,6 @@ void lv_port_disp_init(void)
 
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = DEMO_FlushDisplay;
-
-    disp_drv.wait_cb = DEMO_WaitFlush;
 
 #if LV_USE_GPU_NXP_PXP
     disp_drv.clean_dcache_cb = DEMO_CleanInvalidateCache;
@@ -179,10 +213,6 @@ void LCDIF_IRQHandler(void)
     {
         if (intStatus & kELCDIF_CurFrameDone)
         {
-            /* IMPORTANT!!!
-             * Inform the graphics library that you are ready with the flushing*/
-            lv_disp_flush_ready(&disp_drv);
-
             s_framePending = false;
 
 #if defined(SDK_OS_FREE_RTOS)
@@ -298,10 +328,22 @@ static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv)
 }
 #endif
 
-static void DEMO_WaitFlush(lv_disp_drv_t *disp_drv)
+static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
+    DCACHE_CleanInvalidateByRange((uint32_t)color_p, DEMO_FB_SIZE);
+
+    ELCDIF_SetNextBufferAddr(LCDIF, (uint32_t)color_p);
+
+    s_framePending = true;
+
 #if defined(SDK_OS_FREE_RTOS)
-    if (xSemaphoreTake(s_frameSema, portMAX_DELAY) != pdTRUE)
+    if (xSemaphoreTake(s_frameSema, portMAX_DELAY) == pdTRUE)
+    {
+        /* IMPORTANT!!!
+         * Inform the graphics library that you are ready with the flushing*/
+        lv_disp_flush_ready(disp_drv);
+    }
+    else
     {
         PRINTF("Display flush failed\r\n");
         assert(0);
@@ -310,23 +352,11 @@ static void DEMO_WaitFlush(lv_disp_drv_t *disp_drv)
     while (s_framePending)
     {
     }
+
+    /* IMPORTANT!!!
+     * Inform the graphics library that you are ready with the flushing*/
+    lv_disp_flush_ready(disp_drv);
 #endif
-}
-
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
-{
-#if defined(SDK_OS_FREE_RTOS)
-    /*
-     * Before new frame flushing, clear previous frame flush done status.
-     */
-    (void)xSemaphoreTake(s_frameSema, 0);
-#endif
-
-    DCACHE_CleanInvalidateByRange((uint32_t)color_p, DEMO_FB_SIZE);
-
-    ELCDIF_SetNextBufferAddr(LCDIF, (uint32_t)color_p);
-
-    s_framePending = true;
 }
 
 void lv_port_indev_init(void)
@@ -347,6 +377,87 @@ void lv_port_indev_init(void)
     lv_indev_drv_register(&indev_drv);
 }
 
+#if (DEMO_PANEL == DEMO_PANEL_RK043FN66HS)
+static void BOARD_PullTouchResetPin(bool pullUp)
+{
+    if (pullUp)
+    {
+        GPIO_PinWrite(BOARD_TOUCH_RST_GPIO, BOARD_TOUCH_RST_PIN, 1);
+    }
+    else
+    {
+        GPIO_PinWrite(BOARD_TOUCH_RST_GPIO, BOARD_TOUCH_RST_PIN, 0);
+    }
+}
+
+static void BOARD_ConfigTouchIntPin(gt911_int_pin_mode_t mode)
+{
+    if (mode == kGT911_IntPinInput)
+    {
+        BOARD_TOUCH_INT_GPIO->GDIR &= ~(1UL << BOARD_TOUCH_INT_PIN);
+    }
+    else
+    {
+        if (mode == kGT911_IntPinPullDown)
+        {
+            GPIO_PinWrite(BOARD_TOUCH_INT_GPIO, BOARD_TOUCH_INT_PIN, 0);
+        }
+        else
+        {
+            GPIO_PinWrite(BOARD_TOUCH_INT_GPIO, BOARD_TOUCH_INT_PIN, 1);
+        }
+
+        BOARD_TOUCH_INT_GPIO->GDIR |= (1UL << BOARD_TOUCH_INT_PIN);
+    }
+}
+
+/*Initialize your touchpad*/
+static void DEMO_InitTouch(void)
+{
+    status_t status;
+
+    const gpio_pin_config_t resetPinConfig = {
+        .direction = kGPIO_DigitalOutput, .outputLogic = 0, .interruptMode = kGPIO_NoIntmode};
+    GPIO_PinInit(BOARD_TOUCH_INT_GPIO, BOARD_TOUCH_INT_PIN, &resetPinConfig);
+    GPIO_PinInit(BOARD_TOUCH_RST_GPIO, BOARD_TOUCH_RST_PIN, &resetPinConfig);
+
+    /*Clock setting for LPI2C*/
+    CLOCK_SetMux(kCLOCK_Lpi2cMux, TOUCH_LPI2C_CLOCK_SOURCE_SELECT);
+    CLOCK_SetDiv(kCLOCK_Lpi2cDiv, TOUCH_LPI2C_CLOCK_SOURCE_DIVIDER);
+
+    BOARD_LPI2C_Init(TOUCH_I2C, TOUCH_I2C_CLOCK_FREQ);
+
+    status = GT911_Init(&s_touchHandle, &s_touchConfig);
+
+    if (kStatus_Success != status)
+    {
+        PRINTF("Touch IC initialization failed\r\n");
+        assert(false);
+    }
+
+    GT911_GetResolution(&s_touchHandle, &s_touchResolutionX, &s_touchResolutionY);
+}
+
+/* Will be called by the library to read the touchpad */
+static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
+{
+    static int touch_x = 0;
+    static int touch_y = 0;
+
+    if (kStatus_Success == GT911_GetSingleTouch(&s_touchHandle, &touch_x, &touch_y))
+    {
+        data->state = LV_INDEV_STATE_PR;
+    }
+    else
+    {
+        data->state = LV_INDEV_STATE_REL;
+    }
+
+    /*Set the last pressed coordinates*/
+    data->point.x = touch_x * LCD_WIDTH / s_touchResolutionX;
+    data->point.y = touch_y * LCD_HEIGHT / s_touchResolutionY;
+}
+#else
 /*Initialize your touchpad*/
 static void DEMO_InitTouch(void)
 {
@@ -406,3 +517,4 @@ static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
     data->point.x = touch_y;
     data->point.y = touch_x;
 }
+#endif

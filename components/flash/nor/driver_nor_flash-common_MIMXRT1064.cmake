@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("driver_nor_flash-common component is included.")
 
 

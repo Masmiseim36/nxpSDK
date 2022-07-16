@@ -6,23 +6,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -95,6 +79,7 @@ typedef MLAN_PACK_START struct
 #define SHORT_SLOT_TIME_DISABLED(CapInfo) ((CapInfo) &= ~MBIT(10))
 /** CapInfo Short Slot Time Enabled */
 #define SHORT_SLOT_TIME_ENABLED(CapInfo) ((CapInfo) |= MBIT(10))
+
 
 /** Setup the number of rates passed in the driver/firmware API */
 #define HOSTCMD_SUPPORTED_RATES 14
@@ -445,13 +430,12 @@ typedef enum _WLAN_802_11_WEP_STATUS
 #define CAPINFO_40MHZ_INTOLARENT MBIT(8)
 
 /** Default 11n capability mask for 2.4GHz */
-#if defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || \
-defined(SD9098) || defined(IW61x)
+#if defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || \
+    defined(IW61x)
 #define DEFAULT_11N_CAP_MASK_BG \
     (HWSPEC_SHORTGI20_SUPP | HWSPEC_RXSTBC_SUPP | HWSPEC_SHORTGI40_SUPP | HWSPEC_CHANBW40_SUPP)
 #elif defined(SD8801)
-#define DEFAULT_11N_CAP_MASK_BG \
-    (HWSPEC_SHORTGI20_SUPP | HWSPEC_RXSTBC_SUPP)
+#define DEFAULT_11N_CAP_MASK_BG (HWSPEC_SHORTGI20_SUPP | HWSPEC_RXSTBC_SUPP)
 #endif
 /** Default 11n capability mask for 5GHz */
 #define DEFAULT_11N_CAP_MASK_A \
@@ -482,10 +466,8 @@ defined(SD9098) || defined(IW61x)
 #define ISSUPP_SHORTGI20(Dot11nDevCap) ((Dot11nDevCap)&MBIT(23))
 /** HW_SPEC Dot11nDevCap : Rx LDPC support */
 #define ISSUPP_RXLDPC(Dot11nDevCap) ((Dot11nDevCap)&MBIT(22))
-/** HW_SPEC Dot11nDevCap : Delayed ACK */
-#define GET_DELAYEDBACK(Dot11nDevCap) ((((Dot11nDevCap) >> 20) & 0x03U))
-/** HW_SPEC Dot11nDevCap : Immediate ACK */
-#define GET_IMMEDIATEBACK(Dot11nDevCap) ((((Dot11nDevCap) >> 18) & 0x03))
+/** HW_SPEC Dot11nDevCap : Number of TX BA streams supported */
+#define ISSUPP_GETTXBASTREAM(Dot11nDevCap) ((Dot11nDevCap >> 18) & 0xF)
 /** HW_SPEC Dot11nDevCap : Channel BW support @ 40Mhz  support */
 #define ISSUPP_CHANWIDTH40(Dot11nDevCap) ((Dot11nDevCap)&MBIT(17))
 /** HW_SPEC Dot11nDevCap : Channel BW support @ 20Mhz  support */
@@ -780,7 +762,8 @@ defined(SD9098) || defined(IW61x)
 #define GET_DEVRXMCSMAP(DevMCSMap)             ((DevMCSMap)&0xFFFFU)
 #define GET_DEVNSSRXMCS(DevMCSMap, nss)        (((DevMCSMap) >> (2 * ((nss)-1))) & 0x3)
 #define SET_DEVNSSRXMCS(DevMCSMap, nss, value) ((DevMCSMap) |= ((value)&0x3) << (2 * ((nss)-1)))
-#define RESET_DEVRXMCSMAP(DevMCSMap)           ((DevMCSMap) &= 0xFFFF0000)
+#define RESET_DEVRXMCSMAP(DevMCSMap)           ((DevMCSMap) &= 0xFFFF0000U)
+
 
 #ifdef CONFIG_11AX
 /** FW cap info bit 7 11AX */
@@ -1010,6 +993,7 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_fw_cap_info_t
 /** Host Command ID : Get memory */
 #define HostCmd_CMD_GET_MEM 0x008c
 
+
 /** Host Command ID : Cal data dnld */
 #define HostCmd_CMD_CFG_DATA 0x008f
 
@@ -1123,6 +1107,7 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_fw_cap_info_t
 /** Host Command ID : OTP user data */
 #define HostCmd_CMD_OTP_READ_USER_DATA 0x0114
 
+
 #ifdef SD8801
 #define HostCmd_CMD_ED_MAC_MODE 0x0124
 #else
@@ -1189,6 +1174,7 @@ typedef enum _ENH_PS_MODES
 #define HostCmd_ACT_GET_TX 0x0008
 /** Host command action : Get both Rx and Tx */
 #define HostCmd_ACT_GET_BOTH 0x000cU
+
 
 /** General Result Code*/
 /** General result code OK */
@@ -1300,7 +1286,7 @@ typedef enum _ENH_PS_MODES
 
 /** Set BSS information to Host Command */
 #define HostCmd_SET_SEQ_NO_BSS_INFO(seq, num, type) \
-    (((seq)&0x00ff) | (((num)&0x000f) << 8U)) | (((type)&0x000fU) << 12U)
+    (((seq)&0x00ffU) | (((num)&0x000fU) << 8U)) | (((type)&0x000fU) << 12U)
 
 /** Get Sequence Number from Host Command (bit 7:0) */
 #define HostCmd_GET_SEQ_NO(seq) ((seq)&HostCmd_SEQ_NUM_MASK)
@@ -1835,6 +1821,7 @@ typedef MLAN_PACK_START struct _wlan_802_11_header
     mlan_802_11_mac_addr addr4;
 } MLAN_PACK_END wlan_802_11_header;
 
+
 /** wlan_802_11_header packet from FW with length */
 typedef MLAN_PACK_START struct _wlan_mgmt_pkt
 {
@@ -1949,6 +1936,7 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_ChanBandListParamSet_t
     /** Channel Band parameters */
     ChanBandParamSet_t chan_band_param[1];
 } MLAN_PACK_END MrvlIEtypes_ChanBandListParamSet_t;
+
 
 /** MrvlIEtypes_RatesParamSet_t */
 typedef MLAN_PACK_START struct _MrvlIEtypes_RatesParamSet_t
@@ -2370,7 +2358,7 @@ typedef MLAN_PACK_START struct _MrvlIETypes_ChanTRPCConfig_t
 #define ETHER_TYPE_ARP 0x0608
 
 /** IPv4 address any */
-#define IPV4_ADDR_ANY 0xffffffff
+#define IPV4_ADDR_ANY 0xffffffffU
 
 /** Header structure for ARP filter */
 typedef MLAN_PACK_START struct _arpfilter_header
@@ -2540,7 +2528,7 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_ps_param_t
 typedef MLAN_PACK_START struct _HostCmd_DS_PS_MODE_ENH
 {
     /** Action */
-    ENH_PS_MODES action;
+    uint16_t action;
     /** Data speciifc to action */
     /* For IEEE power save data will be as UINT16 mode (0x01 - firmware to
        automatically choose PS_POLL or NULL mode, 0x02 - PS_POLL, 0x03 - NULL
@@ -3302,6 +3290,7 @@ typedef MLAN_PACK_START struct _HostCmd_DS_TX_RATE_CFG
     t_u16 cfg_index;
     /* MrvlRateScope_t RateScope; MrvlRateDropPattern_t RateDrop; */
 } MLAN_PACK_END HostCmd_DS_TX_RATE_CFG;
+
 
 /** Power_Group_t */
 typedef MLAN_PACK_START struct _Power_Group_t
@@ -4577,23 +4566,52 @@ typedef MLAN_PACK_START struct _MrvlIEtypes_MacAddr_t
     t_u8 mac[MLAN_MAC_ADDR_LENGTH];
 } MLAN_PACK_END MrvlIEtypes_MacAddr_t;
 
+#ifdef SD8801
 typedef MLAN_PACK_START struct _MrvlIETypes_ExtBLECoex_Config_t
 {
-    t_u16 action;
-    t_u16 reserved;
-    MrvlIEtypesHeader_t IEParam;
+    /** Header */
+    MrvlIEtypesHeader_t header;
+    /** Enable or disable external coexistence */
     t_u8 Enabled;
+    /** Ignore the priority of the external radio request */
     t_u8 IgnorePriority;
+    /** Default priority when the priority of the external radio
+request is ignored */
     t_u8 DefaultPriority;
-    t_u8 BLE_EIP_Input_GPIO_num;
-    t_u8 BLE_EIP_Input_GPIO_polarity;
-    t_u8 BLE_Pri_Input_GPIO_num;
-    t_u8 BLE_Pri_Input_GPIO_polarity;
-    t_u8 WLAN_EIP_Output_GPIO_num;
-    t_u8 WLAN_EIP_Output_GPIO_polarity;
-    t_u16 WLAN_Time;
-    t_u16 BT_Time;
+    /** Input request GPIO pin for EXT_RADIO_REQ signal */
+    t_u8 EXT_RADIO_REQ_ip_gpio_num;
+    /** Input request GPIO polarity for EXT_RADIO_REQ signal */
+    t_u8 EXT_RADIO_REQ_ip_gpio_polarity;
+    /** Input priority GPIO pin for EXT_RADIO_PRI signal */
+    t_u8 EXT_RADIO_PRI_ip_gpio_num;
+    /** Input priority GPIO polarity for EXT_RADIO_PRI signal */
+    t_u8 EXT_RADIO_PRI_ip_gpio_polarity;
+    /** Output grant GPIO pin for WLAN_GRANT signal */
+    t_u8 WLAN_GRANT_op_gpio_num;
+    /** Output grant GPIO polarity of WLAN_GRANT */
+    t_u8 WLAN_GRANT_op_gpio_polarity;
+    /** Reserved Bytes */
+    t_u16 reserved_1;
+    /** Reserved Bytes */
+    t_u16 reserved_2;
+    /** External Radio Request count */
+    t_u16 EXT_RADIO_REQ_count;
+    /** External Radio Priority count */
+    t_u16 EXT_RADIO_PRI_count;
+    /** WLAN GRANT count */
+    t_u16 WLAN_GRANT_count;
 } MLAN_PACK_END MrvlIETypes_ExtBLECoex_Config_t;
+
+typedef MLAN_PACK_START struct _HostCmd_DS_ExtBLECoex_Config_t
+{
+    /** Action */
+    t_u16 action;
+    /** Reserved field */
+    t_u16 reserved;
+    /** External Coex Configuration Data */
+    MrvlIETypes_ExtBLECoex_Config_t coex_cfg_data;
+} MLAN_PACK_END HostCmd_DS_ExtBLECoex_Config_t;
+#endif
 
 /** Assoc Request */
 #define SUBTYPE_ASSOC_REQUEST 0U
@@ -4619,7 +4637,7 @@ typedef MLAN_PACK_START struct _MrvlIETypes_ExtBLECoex_Config_t
 /** TLV type : AP DTIM period */
 #define TLV_TYPE_UAP_DTIM_PERIOD (PROPRIETARY_TLV_BASE_ID + 0x2d) // 0x012d
 /** TLV type : AP Tx power */
-#define TLV_TYPE_UAP_TX_POWER (PROPRIETARY_TLV_BASE_ID + 0x2f) // 0x012f
+#define TLV_TYPE_UAP_TX_POWER (PROPRIETARY_TLV_BASE_ID + 0x2fU) // 0x012f
 /** TLV type : AP SSID broadcast control */
 #define TLV_TYPE_UAP_BCAST_SSID_CTL (PROPRIETARY_TLV_BASE_ID + 0x30) // 0x0130
 /** TLV type : AP Preamble control */
@@ -5899,6 +5917,9 @@ typedef MLAN_PACK_START struct _HostCmd_DS_COMMAND
 #endif
 #ifdef CONFIG_11AX
         HostCmd_DS_11AX_CMD_CFG axcmd;
+#endif
+#ifdef SD8801
+        HostCmd_DS_ExtBLECoex_Config_t ext_ble_coex_cfg;
 #endif
     } params;
 } MLAN_PACK_END HostCmd_DS_COMMAND;

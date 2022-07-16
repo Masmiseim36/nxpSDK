@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_freertos-aws_iot_libraries_corehttp component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -8,6 +8,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/libraries/coreHTTP/source/include
+    ${CMAKE_CURRENT_LIST_DIR}/libraries/coreHTTP/source/interface
 )
 
 

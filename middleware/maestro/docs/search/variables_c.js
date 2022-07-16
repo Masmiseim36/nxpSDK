@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['path_0',['path',['../structTrackInfo.html#a7ec9acd8c0c1920a0a6de72d8db46a71',1,'TrackInfo']]],
-  ['pipeline_5findex_1',['pipeline_index',['../structSTREAMER__MSG__T.html#a35d353959a209f3c7f318a9814462f58',1,'STREAMER_MSG_T']]],
-  ['pipeline_5ftype_2',['pipeline_type',['../structSTREAMER__MSG__T.html#a794f2d427114dd2a9d6eeca5ab39958a',1,'STREAMER_MSG_T::pipeline_type()'],['../structSTREAMER__CREATE__PARAM.html#a8c58fc73dce1a154af96614ad0da243c',1,'STREAMER_CREATE_PARAM::pipeline_type()']]],
-  ['pipes_3',['pipes',['../structSTREAMER__T.html#afec62c3d653dae165434b72e6835154b',1,'STREAMER_T']]],
-  ['policy_4',['policy',['../structOsaThreadAttr.html#ac97898f1707f577344a0f85c2e562655',1,'OsaThreadAttr']]],
-  ['priority_5',['priority',['../structOsaThreadAttr.html#acd4336f4166d30c4dfec35a93d099640',1,'OsaThreadAttr']]],
-  ['processed_6',['processed',['../structSTREAMER__MSG__T.html#a4c86041095d43112c527b23cbd839c3a',1,'STREAMER_MSG_T']]]
+  ['no_5faudio_0',['no_audio',['../structfile__meta__data__t.html#a6811ab1afead7f10cd5e52f4c7eba64e',1,'file_meta_data_t']]],
+  ['num_5fbytes_1',['num_bytes',['../structfile__meta__data__t.html#ae688daa34e77b275be1b8ff4b3d5df98',1,'file_meta_data_t']]],
+  ['num_5fchannels_2',['num_channels',['../structext__proc__args.html#aafe38668226089cdad43d79016d6c012',1,'ext_proc_args::num_channels()'],['../structfile__meta__data__t.html#aa152b0e025afc11722f6063122e2ab59',1,'file_meta_data_t::num_channels()'],['../structAudioPacketHeader.html#afa7628cd7d858cfcc9b050ab648db7d5',1,'AudioPacketHeader::num_channels()'],['../structAudioDataPacket.html#a2ff40c7cf9e0d50c1d47df6342c8606c',1,'AudioDataPacket::num_channels()'],['../struct__ElementAudioSink.html#afe91c9d878898c4ec77fb91b5b35f07d',1,'_ElementAudioSink::num_channels()'],['../struct__ElementDecoder.html#a81a21ba65afb49bffa90da3a2c85a5c2',1,'_ElementDecoder::num_channels()'],['../struct__ElementFileSrc.html#a4e589496f2be5ef919b3f0a037dfdd9f',1,'_ElementFileSrc::num_channels()'],['../structCeiBitstreamInfo.html#af84ab0ca28c0c20220f726326be190f9',1,'CeiBitstreamInfo::num_channels()']]],
+  ['num_5fchars_3',['num_chars',['../structStreamStringType.html#a09456bbde3b3d3ae37f9013d0c00e2f0',1,'StreamStringType']]],
+  ['num_5fdecoded_5fframes_4',['num_decoded_frames',['../struct__ElementDecoder.html#a140a033a21199dd2d2c062053fb92ad4',1,'_ElementDecoder']]]
 ];

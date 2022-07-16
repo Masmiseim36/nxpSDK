@@ -802,7 +802,7 @@ static void SHELL_ProcessCommand(shell_context_handle_t *shellContextHandle, con
                         continue;
                     }
                     /* support commands with optional number of parameters */
-                    if (tmpCommand->parameter.cExpectedNumberOfParameters >= 
+                    if (tmpCommand->parameter.cExpectedNumberOfParameters >=
                         (uint32_t)(((uint32_t)SHELL_IGNORE_PARAMETER_COUNT) | (((uint32_t)SHELL_IGNORE_PARAMETER_COUNT) << 16)))
                     {
                         flag = 0;
@@ -979,13 +979,19 @@ static shell_status_t SHELL_PrintCommandPathRecursion(shell_context_handle_t *sh
                 if (kStatus_SHELL_Success == SHELL_PrintCommandPathRecursion(shellContextHandle, cmdP, cmdTarget, path, pathLength))
                 {
                     uint32_t length = strlen(path);
-                    for (uint32_t index = 0;index < length;index++)
+                    if((length + strlen(cmdP->pcCommand)) < pathLength)
                     {
-                        path[(length - index) + strlen(cmdP->pcCommand)] = path[(length - index) - 1];
+                        for (uint32_t index = 0;index < length;index++)
+                        {
+                            path[(length - index) + strlen(cmdP->pcCommand)] = path[(length - index) - 1];
+                        }
+                        memcpy(path, cmdP->pcCommand, strlen(cmdP->pcCommand));
+                        path[strlen(cmdP->pcCommand)]     = SHELL_COMMAND_CONNECTOR;
+                        path[pathLength-1] = '\0';
+                        return kStatus_SHELL_Success;
                     }
-                    memcpy(path, cmdP->pcCommand, strlen(cmdP->pcCommand));
-                    path[strlen(cmdP->pcCommand)] = SHELL_COMMAND_CONNECTOR;
-                    return kStatus_SHELL_Success;
+
+                    return kStatus_SHELL_Error;
                 }
             }
             i++;
@@ -1007,13 +1013,19 @@ static shell_status_t SHELL_PrintCommandPath(shell_context_handle_t *shellContex
         if (kStatus_SHELL_Success == SHELL_PrintCommandPathRecursion(shellContextHandle, cmdTemp, cmd, path, pathLength))
         {
             uint32_t length = strlen(path);
-            for (uint32_t index = 0;index < length;index++)
+            if((length + strlen(cmdTemp->pcCommand)) < pathLength)
             {
-                path[(length - index) + strlen(cmdTemp->pcCommand)] = path[(length - index) - 1];
+                for (uint32_t index = 0;index < length;index++)
+                {
+                    path[(length - index) + strlen(cmdTemp->pcCommand)] = path[(length - index) - 1];
+                }
+                memcpy(path, cmdTemp->pcCommand, strlen(cmdTemp->pcCommand));
+                path[strlen(cmdTemp->pcCommand)]     = SHELL_COMMAND_CONNECTOR;
+                path[pathLength-1] = '\0';
+                return kStatus_SHELL_Success;
             }
-            memcpy(path, cmdTemp->pcCommand, strlen(cmdTemp->pcCommand));
-            path[strlen(cmdTemp->pcCommand)] = SHELL_COMMAND_CONNECTOR;
-            return kStatus_SHELL_Success;
+
+            return kStatus_SHELL_Error;
         }
         if (cmdTemp == cmd)
         {
@@ -1046,6 +1058,7 @@ static shell_status_t SHELL_AutoCompleteCommand(shell_context_handle_t *shellCon
         }
         else
         {
+            memset(s_cmdLineBuffer, 0U, sizeof(s_cmdLineBuffer));
             /* Show possible matches */
             if (kStatus_SHELL_Success == SHELL_PrintCommandPath(shellContextHandle, cmd, s_cmdLineBuffer, sizeof(s_cmdLineBuffer)))
             {
@@ -1121,6 +1134,7 @@ static void SHELL_AutoComplete(shell_context_handle_t *shellContextHandle)
             shell_command_t *cmdTemp = NULL;
             if (kStatus_SHELL_Success == SHELL_AutoCompleteCommand(shellContextHandle, tmpCommand, shellContextHandle->line, &cmdTemp))
             {
+                memset(s_cmdLineBuffer, 0U, sizeof(s_cmdLineBuffer));
                 if (kStatus_SHELL_Success == SHELL_PrintCommandPath(shellContextHandle, cmdTemp, s_cmdLineBuffer, sizeof(s_cmdLineBuffer)))
                 {
                     namePtr = s_cmdLineBuffer;

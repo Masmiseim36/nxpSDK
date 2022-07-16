@@ -13,7 +13,6 @@
 #include <toolchain.h>
 #include <porting.h>
 #include <fsl_debug_console.h>
-#include <EmbeddedTypes.h>
 #include <sys/byteorder.h>
 
 #include <bluetooth/bluetooth.h>
@@ -76,7 +75,7 @@ static BT_GATT_SERVICE_DEFINE(dev_info,
 static void htmc_ccc_cfg_changed(const struct bt_gatt_attr *attr,
          uint16_t value)
 {
-    cccd_written = (value == BT_GATT_CCC_INDICATE) ? TRUE : FALSE;
+    cccd_written = (value == BT_GATT_CCC_INDICATE) ? true : false;
 }
 
 static void indicate_cb(struct bt_conn *conn,

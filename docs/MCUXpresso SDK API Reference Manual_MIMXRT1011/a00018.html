@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -365,9 +365,9 @@ eDMA Channel Operation</h2></td></tr>
 <tr class="memitem:ga136076d50d98d4eadfaa9cd592b273e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga136076d50d98d4eadfaa9cd592b273e7">EDMA_SetChannelPreemptionConfig</a> (DMA_Type *base, uint32_t channel, const <a class="el" href="a00018.html#a00295">edma_channel_Preemption_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga136076d50d98d4eadfaa9cd592b273e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the eDMA channel preemption feature.  <a href="#ga136076d50d98d4eadfaa9cd592b273e7">More...</a><br/></td></tr>
 <tr class="separator:ga136076d50d98d4eadfaa9cd592b273e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d0f2eac212bad0a1998b05d34a65619"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga7d0f2eac212bad0a1998b05d34a65619">EDMA_SetChannelLink</a> (DMA_Type *base, uint32_t channel, <a class="el" href="a00018.html#ga9b736ab8d1dd10d8a277712904b29c91">edma_channel_link_type_t</a> type, uint32_t linkedChannel)</td></tr>
-<tr class="memdesc:ga7d0f2eac212bad0a1998b05d34a65619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the channel link for the eDMA transfer.  <a href="#ga7d0f2eac212bad0a1998b05d34a65619">More...</a><br/></td></tr>
-<tr class="separator:ga7d0f2eac212bad0a1998b05d34a65619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8cd3ca8512357b64af15846a2b87edd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga8cd3ca8512357b64af15846a2b87edd6">EDMA_SetChannelLink</a> (DMA_Type *base, uint32_t channel, <a class="el" href="a00018.html#ga9b736ab8d1dd10d8a277712904b29c91">edma_channel_link_type_t</a> linkType, uint32_t linkedChannel)</td></tr>
+<tr class="memdesc:ga8cd3ca8512357b64af15846a2b87edd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the channel link for the eDMA transfer.  <a href="#ga8cd3ca8512357b64af15846a2b87edd6">More...</a><br/></td></tr>
+<tr class="separator:ga8cd3ca8512357b64af15846a2b87edd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf2997a300751b52e3c2e699e3f2296f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gaf2997a300751b52e3c2e699e3f2296f2">EDMA_SetBandWidth</a> (DMA_Type *base, uint32_t channel, <a class="el" href="a00018.html#ga77dde4bf7218f5dff3f5eeeccd565d0f">edma_bandwidth_t</a> bandWidth)</td></tr>
 <tr class="memdesc:gaf2997a300751b52e3c2e699e3f2296f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the bandwidth for the eDMA transfer.  <a href="#gaf2997a300751b52e3c2e699e3f2296f2">More...</a><br/></td></tr>
 <tr class="separator:gaf2997a300751b52e3c2e699e3f2296f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -401,9 +401,9 @@ eDMA TCD Operation</h2></td></tr>
 <tr class="memitem:ga5409f4a24baec461a186df10fe1f8c52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga5409f4a24baec461a186df10fe1f8c52">EDMA_TcdSetMinorOffsetConfig</a> (<a class="el" href="a00018.html#a00299">edma_tcd_t</a> *tcd, const <a class="el" href="a00018.html#a00298">edma_minor_offset_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga5409f4a24baec461a186df10fe1f8c52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the eDMA TCD minor offset feature.  <a href="#ga5409f4a24baec461a186df10fe1f8c52">More...</a><br/></td></tr>
 <tr class="separator:ga5409f4a24baec461a186df10fe1f8c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab8ab8f65a2f29d7683fede1d3b239655"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#gab8ab8f65a2f29d7683fede1d3b239655">EDMA_TcdSetChannelLink</a> (<a class="el" href="a00018.html#a00299">edma_tcd_t</a> *tcd, <a class="el" href="a00018.html#ga9b736ab8d1dd10d8a277712904b29c91">edma_channel_link_type_t</a> type, uint32_t linkedChannel)</td></tr>
-<tr class="memdesc:gab8ab8f65a2f29d7683fede1d3b239655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the channel link for the eDMA TCD.  <a href="#gab8ab8f65a2f29d7683fede1d3b239655">More...</a><br/></td></tr>
-<tr class="separator:gab8ab8f65a2f29d7683fede1d3b239655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga04ee251c7c7efd9ab4f5b2182ef8a626"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga04ee251c7c7efd9ab4f5b2182ef8a626">EDMA_TcdSetChannelLink</a> (<a class="el" href="a00018.html#a00299">edma_tcd_t</a> *tcd, <a class="el" href="a00018.html#ga9b736ab8d1dd10d8a277712904b29c91">edma_channel_link_type_t</a> linkType, uint32_t linkedChannel)</td></tr>
+<tr class="memdesc:ga04ee251c7c7efd9ab4f5b2182ef8a626"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the channel link for the eDMA TCD.  <a href="#ga04ee251c7c7efd9ab4f5b2182ef8a626">More...</a><br/></td></tr>
+<tr class="separator:ga04ee251c7c7efd9ab4f5b2182ef8a626"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7357cc963fb15ce336ea8fb78f3475a7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga7357cc963fb15ce336ea8fb78f3475a7">EDMA_TcdSetBandWidth</a> (<a class="el" href="a00018.html#a00299">edma_tcd_t</a> *tcd, <a class="el" href="a00018.html#ga77dde4bf7218f5dff3f5eeeccd565d0f">edma_bandwidth_t</a> bandWidth)</td></tr>
 <tr class="memdesc:ga7357cc963fb15ce336ea8fb78f3475a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the bandwidth for the eDMA TCD.  <a href="#ga7357cc963fb15ce336ea8fb78f3475a7">More...</a><br/></td></tr>
 <tr class="separator:ga7357cc963fb15ce336ea8fb78f3475a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -464,9 +464,9 @@ eDMA Transactional Operation</h2></td></tr>
 <tr class="memitem:ga5d1bb30d93e3fd08656d77f0e3a9f75f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga5d1bb30d93e3fd08656d77f0e3a9f75f">EDMA_PrepareTransferConfig</a> (<a class="el" href="a00018.html#a00300">edma_transfer_config_t</a> *config, void *srcAddr, uint32_t srcWidth, int16_t srcOffset, void *destAddr, uint32_t destWidth, int16_t destOffset, uint32_t bytesEachRequest, uint32_t transferBytes)</td></tr>
 <tr class="memdesc:ga5d1bb30d93e3fd08656d77f0e3a9f75f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the eDMA transfer structure configurations.  <a href="#ga5d1bb30d93e3fd08656d77f0e3a9f75f">More...</a><br/></td></tr>
 <tr class="separator:ga5d1bb30d93e3fd08656d77f0e3a9f75f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ae2d264213737df083b4a7089f826d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga9ae2d264213737df083b4a7089f826d8">EDMA_PrepareTransfer</a> (<a class="el" href="a00018.html#a00300">edma_transfer_config_t</a> *config, void *srcAddr, uint32_t srcWidth, void *destAddr, uint32_t destWidth, uint32_t bytesEachRequest, uint32_t transferBytes, <a class="el" href="a00018.html#ga7803399034b374663f76a589da7d8419">edma_transfer_type_t</a> type)</td></tr>
-<tr class="memdesc:ga9ae2d264213737df083b4a7089f826d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the eDMA transfer structure.  <a href="#ga9ae2d264213737df083b4a7089f826d8">More...</a><br/></td></tr>
-<tr class="separator:ga9ae2d264213737df083b4a7089f826d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b9fea80d9316b081f4dfb33b393bbb0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga7b9fea80d9316b081f4dfb33b393bbb0">EDMA_PrepareTransfer</a> (<a class="el" href="a00018.html#a00300">edma_transfer_config_t</a> *config, void *srcAddr, uint32_t srcWidth, void *destAddr, uint32_t destWidth, uint32_t bytesEachRequest, uint32_t transferBytes, <a class="el" href="a00018.html#ga7803399034b374663f76a589da7d8419">edma_transfer_type_t</a> transferType)</td></tr>
+<tr class="memdesc:ga7b9fea80d9316b081f4dfb33b393bbb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the eDMA transfer structure.  <a href="#ga7b9fea80d9316b081f4dfb33b393bbb0">More...</a><br/></td></tr>
+<tr class="separator:ga7b9fea80d9316b081f4dfb33b393bbb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8a78ca4c4c941f0ba5fa60033b81b61b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00209.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00018.html#ga8a78ca4c4c941f0ba5fa60033b81b61b">EDMA_SubmitTransfer</a> (<a class="el" href="a00018.html#a00297">edma_handle_t</a> *handle, const <a class="el" href="a00018.html#a00300">edma_transfer_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga8a78ca4c4c941f0ba5fa60033b81b61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Submits the eDMA transfer request.  <a href="#ga8a78ca4c4c941f0ba5fa60033b81b61b">More...</a><br/></td></tr>
 <tr class="separator:ga8a78ca4c4c941f0ba5fa60033b81b61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1779,7 +1779,7 @@ This function enables the auto stop request feature. </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ga7d0f2eac212bad0a1998b05d34a65619"></a>
+<a class="anchor" id="ga8cd3ca8512357b64af15846a2b87edd6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1799,7 +1799,7 @@ This function enables the auto stop request feature. </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="a00018.html#ga9b736ab8d1dd10d8a277712904b29c91">edma_channel_link_type_t</a>&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
+          <td class="paramname"><em>linkType</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1819,7 +1819,7 @@ This function enables the auto stop request feature. </dd></dl>
   <table class="params">
     <tr><td class="paramname">base</td><td>eDMA peripheral base address. </td></tr>
     <tr><td class="paramname">channel</td><td>eDMA channel number. </td></tr>
-    <tr><td class="paramname">type</td><td>A channel link type, which can be one of the following: <ul>
+    <tr><td class="paramname">linkType</td><td>A channel link type, which can be one of the following: <ul>
 <li>kEDMA_LinkNone </li>
 <li>kEDMA_MinorLink </li>
 <li>kEDMA_MajorLink </li>
@@ -2205,7 +2205,7 @@ This function enables the auto stop request feature. </dd></dl>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The TCD is a transfer control descriptor. The content of the TCD is the same as the hardware TCD registers. The STCD is used in the scatter-gather mode. This function configures the TCD transfer attribute, including source address, destination address, transfer size, address offset, and so on. It also configures the scatter gather feature if the user supplies the next TCD address. Example: </p>
+<p>The TCD is a transfer control descriptor. The content of the TCD is the same as the hardware TCD registers. The TCD is used in the scatter-gather mode. This function configures the TCD transfer attribute, including source address, destination address, transfer size, address offset, and so on. It also configures the scatter gather feature if the user supplies the next TCD address. Example: </p>
 <div class="fragment"><div class="line">*   edma_transfer_t config = {</div>
 <div class="line">*   ...</div>
 <div class="line">*   }</div>
@@ -2261,7 +2261,7 @@ If the nextTcd is not NULL, the scatter gather feature is enabled and DREQ bit i
 
 </div>
 </div>
-<a class="anchor" id="gab8ab8f65a2f29d7683fede1d3b239655"></a>
+<a class="anchor" id="ga04ee251c7c7efd9ab4f5b2182ef8a626"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -2275,7 +2275,7 @@ If the nextTcd is not NULL, the scatter gather feature is enabled and DREQ bit i
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="a00018.html#ga9b736ab8d1dd10d8a277712904b29c91">edma_channel_link_type_t</a>&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
+          <td class="paramname"><em>linkType</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -2295,7 +2295,7 @@ If the nextTcd is not NULL, the scatter gather feature is enabled and DREQ bit i
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tcd</td><td>Point to the TCD structure. </td></tr>
-    <tr><td class="paramname">type</td><td>Channel link type, it can be one of: <ul>
+    <tr><td class="paramname">linkType</td><td>Channel link type, it can be one of: <ul>
 <li>kEDMA_LinkNone </li>
 <li>kEDMA_MinorLink </li>
 <li>kEDMA_MajorLink </li>
@@ -3022,7 +3022,7 @@ If the nextTcd is not NULL, the scatter gather feature is enabled and DREQ bit i
 
 </div>
 </div>
-<a class="anchor" id="ga9ae2d264213737df083b4a7089f826d8"></a>
+<a class="anchor" id="ga7b9fea80d9316b081f4dfb33b393bbb0"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -3072,7 +3072,7 @@ If the nextTcd is not NULL, the scatter gather feature is enabled and DREQ bit i
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="a00018.html#ga7803399034b374663f76a589da7d8419">edma_transfer_type_t</a>&#160;</td>
-          <td class="paramname"><em>type</em>&#160;</td>
+          <td class="paramname"><em>transferType</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -3091,7 +3091,7 @@ If the nextTcd is not NULL, the scatter gather feature is enabled and DREQ bit i
     <tr><td class="paramname">destWidth</td><td>eDMA transfer destination address width(bytes). </td></tr>
     <tr><td class="paramname">bytesEachRequest</td><td>eDMA transfer bytes per channel request. </td></tr>
     <tr><td class="paramname">transferBytes</td><td>eDMA transfer bytes to be transferred. </td></tr>
-    <tr><td class="paramname">type</td><td>eDMA transfer type. </td></tr>
+    <tr><td class="paramname">transferType</td><td>eDMA transfer type. </td></tr>
   </table>
   </dd>
 </dl>

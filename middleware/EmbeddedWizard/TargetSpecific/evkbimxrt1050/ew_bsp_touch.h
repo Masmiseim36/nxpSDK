@@ -46,6 +46,13 @@
 /* flag to indicate end of a touch cycle for a certain finger (event up) */
 #define EW_BSP_TOUCH_UP                 3
 
+#define DEMO_PANEL_RK043FN02H  0 /* RK043FN02H-CT */
+#define DEMO_PANEL_RK043FN66HS 1 /* RK043FN66HS-CTG */
+
+#ifndef DEMO_PANEL
+#define DEMO_PANEL DEMO_PANEL_RK043FN66HS
+#endif
+
 
 /******************************************************************************
 * TYPE:

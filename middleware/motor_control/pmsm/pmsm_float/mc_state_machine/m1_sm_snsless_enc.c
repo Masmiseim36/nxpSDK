@@ -20,50 +20,88 @@
  * Prototypes
  ******************************************************************************/
 
+RAM_FUNC_LIB
 static void M1_StateFaultFast(void);
+RAM_FUNC_LIB
 static void M1_StateInitFast(void);
+RAM_FUNC_LIB
 static void M1_StateStopFast(void);
+RAM_FUNC_LIB
 static void M1_StateRunFast(void);
 
+RAM_FUNC_LIB
 static void M1_StateFaultSlow(void);
+RAM_FUNC_LIB
 static void M1_StateInitSlow(void);
+RAM_FUNC_LIB
 static void M1_StateStopSlow(void);
+RAM_FUNC_LIB
 static void M1_StateRunSlow(void);
 
+RAM_FUNC_LIB
 static void M1_TransFaultStop(void);
+RAM_FUNC_LIB 
 static void M1_TransInitFault(void);
+RAM_FUNC_LIB
 static void M1_TransInitStop(void);
+RAM_FUNC_LIB
 static void M1_TransStopFault(void);
+RAM_FUNC_LIB
 static void M1_TransStopRun(void);
+RAM_FUNC_LIB
 static void M1_TransRunFault(void);
+RAM_FUNC_LIB
 static void M1_TransRunStop(void);
 
+RAM_FUNC_LIB 
 static void M1_StateRunCalibFast(void);
+RAM_FUNC_LIB 
 static void M1_StateRunReadyFast(void);
+RAM_FUNC_LIB 
 static void M1_StateRunAlignFast(void);
+RAM_FUNC_LIB 
 static void M1_StateRunStartupFast(void);
+RAM_FUNC_LIB 
 static void M1_StateRunSpinFast(void);
+RAM_FUNC_LIB 
 static void M1_StateRunFreewheelFast(void);
 
+RAM_FUNC_LIB 
 static void M1_StateRunCalibSlow(void);
+RAM_FUNC_LIB 
 static void M1_StateRunReadySlow(void);
+RAM_FUNC_LIB 
 static void M1_StateRunAlignSlow(void);
+RAM_FUNC_LIB 
 static void M1_StateRunStartupSlow(void);
+RAM_FUNC_LIB 
 static void M1_StateRunSpinSlow(void);
+RAM_FUNC_LIB 
 static void M1_StateRunFreewheelSlow(void);
 
+RAM_FUNC_LIB 
 static void M1_TransRunCalibReady(void);
+RAM_FUNC_LIB 
 static void M1_TransRunReadyAlign(void);
+RAM_FUNC_LIB 
 static void M1_TransRunAlignStartup(void);
+RAM_FUNC_LIB 
 static void M1_TransRunAlignReady(void);
+RAM_FUNC_LIB
 static void M1_TransRunAlignSpin(void);
+RAM_FUNC_LIB
 static void M1_TransRunStartupSpin(void);
+RAM_FUNC_LIB 
 static void M1_TransRunStartupFreewheel(void);
+RAM_FUNC_LIB 
 static void M1_TransRunSpinFreewheel(void);
+RAM_FUNC_LIB 
 static void M1_TransRunFreewheelReady(void);
 
+RAM_FUNC_LIB 
 static void M1_ClearFOCVariables(void);
 
+RAM_FUNC_LIB 
 static void M1_FaultDetection(void);
 
 /*******************************************************************************
@@ -136,6 +174,7 @@ sm_app_ctrl_t g_sM1Ctrl = {
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateFaultFast(void)
 {
     /* read ADC results (ADC triggered by HW trigger from PDB) */
@@ -176,6 +215,7 @@ static void M1_StateFaultFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateInitFast(void)
 {
     /* Type the code to do when in the INIT state */
@@ -200,7 +240,7 @@ static void M1_StateInitFast(void)
     g_sM1Drive.sFocPMSM.fltDutyCycleLimit = M1_CLOOP_LIMIT;
 
     /* Enable dead-time compensation */
-    g_sM1Drive.sFocPMSM.bFlagDTComp = TRUE;
+    g_sM1Drive.sFocPMSM.bFlagDTComp = FALSE;
 
     g_sM1Drive.sFocPMSM.fltUDcBus                     = 0.0F;
     g_sM1Drive.sFocPMSM.fltUDcBusFilt                 = 0.0F;
@@ -309,7 +349,7 @@ static void M1_StateInitFast(void)
     g_fltM1currentScale         = M1_I_MAX;
     g_fltM1DCBvoltageScale      = M1_U_DCB_MAX;
     g_fltM1speedScale           = M1_N_MAX;
-    g_fltM1speedAngularScale    = (60.0F / (M1_MOTOR_PP * 2.0F * FLOAT_PI));
+    g_fltM1speedAngularScale    = M1_N_ANGULAR_MAX;
     g_fltM1speedMechanicalScale = (60.0F / (2.0F * FLOAT_PI));
 
     /* Application timing */
@@ -351,6 +391,7 @@ static void M1_StateInitFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateStopFast(void)
 {
     /* read ADC results (ADC triggered by HW trigger from PDB) */
@@ -410,6 +451,7 @@ static void M1_StateStopFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunFast(void)
 {
     /* get all adc samples - DC-bus voltage, current, bemf and aux sample */
@@ -477,6 +519,7 @@ static void M1_StateRunFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateFaultSlow(void)
 {
     /* After fault condition ends wait defined time to clear fault state */
@@ -501,6 +544,7 @@ static void M1_StateFaultSlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateInitSlow(void)
 {
 }
@@ -512,6 +556,7 @@ static void M1_StateInitSlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateStopSlow(void)
 {
 }
@@ -523,6 +568,7 @@ static void M1_StateStopSlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunSlow(void)
 {
     /* Run sub-state function */
@@ -536,6 +582,7 @@ static void M1_StateRunSlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransFaultStop(void)
 {
     /* Type the code to do when going from the FAULT to the INIT state */
@@ -550,6 +597,7 @@ static void M1_TransFaultStop(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransInitFault(void)
 {
     /* Type the code to do when going from the INIT to the FAULT state */
@@ -567,6 +615,7 @@ static void M1_TransInitFault(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransInitStop(void)
 {
     /* Type the code to do when going from the INIT to the STOP state */
@@ -584,6 +633,7 @@ static void M1_TransInitStop(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransStopFault(void)
 {
     /* Type the code to do when going from the STOP to the FAULT state */
@@ -598,6 +648,7 @@ static void M1_TransStopFault(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransStopRun(void)
 {
     /* Type the code to do when going from the STOP to the RUN state */
@@ -617,6 +668,9 @@ static void M1_TransStopRun(void)
 
     /* pass calibration routine duration to state counter*/
     g_sM1Drive.ui16CounterState = g_sM1Drive.ui16TimeCalibration;
+    
+    /* Update modulo counter */
+    MCDRV_QdEncSetPulses(&g_sM1Enc);
 
     /* Calibration sub-state when transition to RUN */
     g_eM1StateRun = kRunState_Calib;
@@ -632,6 +686,7 @@ static void M1_TransStopRun(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunFault(void)
 {
     /* Type the code to do when going from the RUN to the FAULT state */
@@ -663,6 +718,7 @@ static void M1_TransRunFault(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunStop(void)
 {
     /* Type the code to do when going from the RUN to the STOP state */
@@ -690,6 +746,7 @@ static void M1_TransRunStop(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunCalibFast(void)
 {
     /* Type the code to do when in the RUN CALIB sub-state
@@ -712,6 +769,7 @@ static void M1_StateRunCalibFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunReadyFast(void)
 {
     /* Type the code to do when in the RUN READY sub-state */
@@ -795,6 +853,7 @@ static void M1_StateRunReadyFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunAlignFast(void)
 {
     /* Type the code to do when in the RUN ALIGN sub-state */
@@ -839,6 +898,7 @@ static void M1_StateRunAlignFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunStartupFast(void)
 {
     /* If f16SpeedCmd = 0, go to Free-wheel state */
@@ -939,6 +999,7 @@ static void M1_StateRunStartupFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunSpinFast(void)
 {
     /* Type the code to do when in the RUN SPIN sub-state */
@@ -1063,6 +1124,7 @@ static void M1_StateRunSpinFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunFreewheelFast(void)
 {
     /* Type the code to do when in the RUN FREEWHEEL sub-state */
@@ -1081,6 +1143,7 @@ static void M1_StateRunFreewheelFast(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunCalibSlow(void)
 {
     /* Write calibrated offset values */
@@ -1100,6 +1163,7 @@ static void M1_StateRunCalibSlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunReadySlow(void)
 {
 }
@@ -1111,6 +1175,7 @@ static void M1_StateRunReadySlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunAlignSlow(void)
 {
 }
@@ -1122,6 +1187,7 @@ static void M1_StateRunAlignSlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunStartupSlow(void)
 {
     if (g_sM1Drive.eControl == kControlMode_SpeedFOC)
@@ -1153,6 +1219,7 @@ static void M1_StateRunStartupSlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunSpinSlow(void)
 {
     if (g_sM1Drive.eControl == kControlMode_SpeedFOC)
@@ -1237,6 +1304,7 @@ static void M1_StateRunSpinSlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_StateRunFreewheelSlow(void)
 {
     /* Wait until free-wheel time passes */
@@ -1254,6 +1322,7 @@ static void M1_StateRunFreewheelSlow(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunCalibReady(void)
 {
     /* Type the code to do when going from the RUN CALIB to the RUN READY sub-state */
@@ -1274,6 +1343,7 @@ static void M1_TransRunCalibReady(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunReadyAlign(void)
 {
     /* Type the code to do when going from the RUN kRunState_Ready to the RUN kRunState_Align sub-state */
@@ -1309,6 +1379,7 @@ static void M1_TransRunReadyAlign(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunAlignStartup(void)
 {
     /* Type the code to do when going from the RUN kRunState_Align to the RUN kRunState_Startup sub-state */
@@ -1349,6 +1420,7 @@ static void M1_TransRunAlignStartup(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunAlignSpin(void)
 {
     /* Type the code to do when going from the RUN STARTUP to the RUN SPIN sub-state */
@@ -1375,6 +1447,7 @@ static void M1_TransRunAlignSpin(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunAlignReady(void)
 {
     /* Type the code to do when going from the RUN kRunState_Align to the RUN kRunState_Ready sub-state */
@@ -1393,6 +1466,7 @@ static void M1_TransRunAlignReady(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunStartupSpin(void)
 {
     /* Type the code to do when going from the RUN kRunState_Startup to the RUN kRunState_Spin sub-state */
@@ -1417,6 +1491,7 @@ static void M1_TransRunStartupSpin(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunStartupFreewheel(void)
 {
     M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
@@ -1435,6 +1510,7 @@ static void M1_TransRunStartupFreewheel(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunSpinFreewheel(void)
 {
     /* Type the code to do when going from the RUN SPIN to the RUN FREEWHEEL sub-state */
@@ -1472,6 +1548,7 @@ static void M1_TransRunSpinFreewheel(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_TransRunFreewheelReady(void)
 {
     /* Type the code to do when going from the RUN kRunState_FreeWheel to the RUN kRunState_Ready sub-state */
@@ -1491,6 +1568,7 @@ static void M1_TransRunFreewheelReady(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_ClearFOCVariables(void)
 {
     g_sM1Drive.sAlignment.ui16TimeHalf = 0U;
@@ -1576,6 +1654,7 @@ static void M1_ClearFOCVariables(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 static void M1_FaultDetection(void)
 {
     /* Clearing actual faults before detecting them again  */
@@ -1629,22 +1708,25 @@ static void M1_FaultDetection(void)
         {
         	FAULT_SET(g_sM1Drive.sFaultIdPending, FAULT_SPEED_OVER);
         }
-
+		
         /* Fault: Blocked rotor detection */
-        /* Filter of bemf Uq voltage */
-        g_sM1Drive.fltBemfUqAvg =
-            GDFLIB_FilterMA_FLT(g_sM1Drive.sFocPMSM.sBemfObsrv.sEObsrv.fltQ, &g_sM1Drive.msM1BlockedRotorUqFilt);
-        /* Check the bemf Uq voltage threshold only in kRunState_Spin - RUN state */
-        if ((MLIB_Abs_FLT(g_sM1Drive.fltBemfUqAvg) < g_sM1Drive.sFaultThresholds.fltUqBemf) &&
-            (g_eM1StateRun == kRunState_Spin))
+        if(g_sM1Drive.sMCATctrl.ui16PospeSensor == 0U)
         {
-        	g_sM1Drive.ui16BlockRotorCnt++;
+            /* Filter of bemf Uq voltage */
+            g_sM1Drive.fltBemfUqAvg =
+                MLIB_Abs_FLT(GDFLIB_FilterMA_FLT(g_sM1Drive.sFocPMSM.sBemfObsrv.sEObsrv.fltQ, &g_sM1Drive.msM1BlockedRotorUqFilt));
+          
+            /* Check the bemf Uq voltage threshold only in kRunState_Spin - RUN state */
+            if ((g_sM1Drive.fltBemfUqAvg < g_sM1Drive.sFaultThresholds.fltUqBemf) && (g_eM1StateRun == kRunState_Spin))
+            {
+                    g_sM1Drive.ui16BlockRotorCnt++;
+            }
+            else
+            {
+                    g_sM1Drive.ui16BlockRotorCnt = 0U;
+            }
         }
-        else
-        {
-        	g_sM1Drive.ui16BlockRotorCnt = 0U;
-        }
-
+               
         /* For bemf voltage detected above limit longer than defined period number set blocked rotor fault*/
         if (g_sM1Drive.ui16BlockRotorCnt > g_sM1Drive.sFaultThresholds.ui16BlockedPerNum)
         {
@@ -1667,6 +1749,7 @@ static void M1_FaultDetection(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 void M1_SetAppSwitch(bool_t bValue)
 {
     g_bM1SwitchAppOnOff = bValue;
@@ -1679,6 +1762,7 @@ void M1_SetAppSwitch(bool_t bValue)
  *
  * @return bool_t Return bool value, true or false
  */
+RAM_FUNC_LIB
 bool_t M1_GetAppSwitch(void)
 {
     return (g_bM1SwitchAppOnOff);
@@ -1691,6 +1775,7 @@ bool_t M1_GetAppSwitch(void)
  *
  * @return uint16_t Return current application state
  */
+RAM_FUNC_LIB
 uint16_t M1_GetAppState(void)
 {
     return ((uint16_t)g_sM1Ctrl.eState);
@@ -1703,6 +1788,7 @@ uint16_t M1_GetAppState(void)
  *
  * @return None
  */
+RAM_FUNC_LIB
 void M1_SetSpeed(float_t fltSpeedCmd)
 {
     if (g_bM1SwitchAppOnOff)
@@ -1735,6 +1821,7 @@ void M1_SetSpeed(float_t fltSpeedCmd)
  *
  * @return None
  */
+RAM_FUNC_LIB
 void M1_SetPosition(acc32_t a32PositionCmdDemo)
 {
     if (g_bM1SwitchAppOnOff)
@@ -1756,6 +1843,7 @@ void M1_SetPosition(acc32_t a32PositionCmdDemo)
  *
  * @return float_t Float value of the current speed
  */
+RAM_FUNC_LIB
 float_t M1_GetSpeed(void)
 {
     /* Return speed */

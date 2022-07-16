@@ -25,11 +25,6 @@
 #endif
 #include "fsl_debug_console.h"
 
-#if LV_USE_GPU_NXP_PXP
-#include "src/gpu/lv_gpu_nxp_pxp.h"
-#include "src/gpu/lv_gpu_nxp_pxp_osa.h"
-#endif
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -99,7 +94,8 @@
 #define DEMO_FB_ALIGN LV_ATTRIBUTE_MEM_ALIGN_SIZE
 #endif
 
-#define DEMO_FB_SIZE (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
+#define DEMO_FB_SIZE \
+    (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_FB_ALIGN - 1) & ~(DEMO_FB_ALIGN - 1))
 
 /*******************************************************************************
  * Prototypes
@@ -111,8 +107,6 @@ static void DEMO_InitLcdClock(void);
 static void DEMO_InitLcdBackLight(void);
 
 static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
-
-static void DEMO_WaitFlush(lv_disp_drv_t *disp_drv);
 
 #if LV_USE_GPU_NXP_PXP
 static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv);
@@ -153,8 +147,6 @@ static int s_touchResolutionY;
 static ft5406_rt_handle_t touchHandle;
 #endif
 
-static lv_disp_drv_t disp_drv; /*Descriptor of a display driver*/
-
 SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
 
 /*******************************************************************************
@@ -180,6 +172,7 @@ void lv_port_disp_init(void)
      * Register the display in LittlevGL
      *----------------------------------*/
 
+    static lv_disp_drv_t disp_drv;      /*Descriptor of a display driver*/
     lv_disp_drv_init(&disp_drv); /*Basic initialization*/
 
     /*Set up the functions to access to your display*/
@@ -190,8 +183,6 @@ void lv_port_disp_init(void)
 
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = DEMO_FlushDisplay;
-
-    disp_drv.wait_cb = DEMO_WaitFlush;
 
 #if LV_USE_GPU_NXP_PXP
     disp_drv.clean_dcache_cb = DEMO_CleanInvalidateCache;
@@ -221,10 +212,6 @@ void LCDIF_IRQHandler(void)
     {
         if (intStatus & kELCDIF_CurFrameDone)
         {
-            /* IMPORTANT!!!
-             * Inform the graphics library that you are ready with the flushing*/
-            lv_disp_flush_ready(&disp_drv);
-
             s_framePending = false;
 
 #if defined(SDK_OS_FREE_RTOS)
@@ -340,10 +327,22 @@ static void DEMO_CleanInvalidateCache(lv_disp_drv_t *disp_drv)
 }
 #endif
 
-static void DEMO_WaitFlush(lv_disp_drv_t *disp_drv)
+static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
+    DCACHE_CleanInvalidateByRange((uint32_t)color_p, DEMO_FB_SIZE);
+
+    ELCDIF_SetNextBufferAddr(LCDIF, (uint32_t)color_p);
+
+    s_framePending = true;
+
 #if defined(SDK_OS_FREE_RTOS)
-    if (xSemaphoreTake(s_frameSema, portMAX_DELAY) != pdTRUE)
+    if (xSemaphoreTake(s_frameSema, portMAX_DELAY) == pdTRUE)
+    {
+        /* IMPORTANT!!!
+         * Inform the graphics library that you are ready with the flushing*/
+        lv_disp_flush_ready(disp_drv);
+    }
+    else
     {
         PRINTF("Display flush failed\r\n");
         assert(0);
@@ -352,23 +351,11 @@ static void DEMO_WaitFlush(lv_disp_drv_t *disp_drv)
     while (s_framePending)
     {
     }
+
+    /* IMPORTANT!!!
+     * Inform the graphics library that you are ready with the flushing*/
+    lv_disp_flush_ready(disp_drv);
 #endif
-}
-
-static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
-{
-#if defined(SDK_OS_FREE_RTOS)
-    /*
-     * Before new frame flushing, clear previous frame flush done status.
-     */
-    (void)xSemaphoreTake(s_frameSema, 0);
-#endif
-
-    DCACHE_CleanInvalidateByRange((uint32_t)color_p, DEMO_FB_SIZE);
-
-    ELCDIF_SetNextBufferAddr(LCDIF, (uint32_t)color_p);
-
-    s_framePending = true;
 }
 
 void lv_port_indev_init(void)

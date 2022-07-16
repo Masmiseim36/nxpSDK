@@ -10,8 +10,12 @@
 #include "fsl_component_log.h"
 #include "fsl_debug_console.h"
 
-#include "SecLib.h"
-#include "CryptoLibSW.h"
+#if ((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP))
+#include "mbedtls/entropy.h"
+#include "mbedtls/ctr_drbg.h"
+static mbedtls_entropy_context entropy;
+static mbedtls_ctr_drbg_context rng_ctx;
+#endif /* CONFIG_BT_SMP */
 
 #if defined(__CC_ARM) || (defined(__ARMCC_VERSION))
 #ifndef porting_errno
@@ -56,6 +60,7 @@ __WEAK_FUNC int16_t RNG_GetPseudoRandomNo (uint8_t* pOut,
                                uint8_t  outBytes,
                                uint8_t* pSeed)
 {
+#if ((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP))
     uint32_t rng;
 
     if (NULL == pOut)
@@ -65,18 +70,38 @@ __WEAK_FUNC int16_t RNG_GetPseudoRandomNo (uint8_t* pOut,
 
     if (NULL != pSeed)
     {
-        (void)SecLib_set_rng_seed(*((uint32_t *)pSeed));
+        mbedtls_entropy_init(&entropy);
+
+        mbedtls_ctr_drbg_init(&rng_ctx);
+
+        if(0 != mbedtls_ctr_drbg_seed(&rng_ctx, mbedtls_entropy_func, &entropy, NULL, 0))
+        {
+            return -1;
+        }
     }
 
     for (size_t index = 0; index < outBytes; index+=sizeof(rng))
     {
-        rng = SecLib_get_random();
+        if(0 != mbedtls_ctr_drbg_random(&rng_ctx, (unsigned char *)&rng, 4))
+        {
+            return -1;
+        }
+
         for (size_t i = 0; i < MIN(outBytes, (outBytes - index));i++)
         {
             ((uint8_t *)pOut)[index + i] = ((uint8_t *)&rng)[i];
         }
     }
+
+    mbedtls_ctr_drbg_free(&rng_ctx);
+
+    mbedtls_entropy_free(&entropy);
+
     return 0;
+#else
+    return -1;
+#endif /* CONFIG_BT_SMP */
+
 }
 
 void k_fifo_init(k_fifo_t *fifo)

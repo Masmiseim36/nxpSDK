@@ -98,7 +98,11 @@ void SystemInit(void)
     }
 #endif /* (DISABLE_WDOG) */
 
-    SCB_EnableICache();
+    /* Disable SysTick in case it is enabled in ROM bootloader */
+    if ((SysTick->CTRL & SysTick_CTRL_ENABLE_Msk) != 0U)
+    {
+        SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+    }
 }
 
 /* ----------------------------------------------------------------------------

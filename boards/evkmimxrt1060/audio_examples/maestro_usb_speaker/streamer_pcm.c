@@ -5,8 +5,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "osa_common.h"
-
 #include "board.h"
 #include "streamer_pcm_app.h"
 #include "fsl_codec_common.h"
@@ -51,8 +49,8 @@ void SAI1_IRQHandler(void)
  */
 static void saiTxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
-    pcm_rtos_t *pcm = (pcm_rtos_t *)userData;
-    BaseType_t reschedule;
+    pcm_rtos_t *pcm       = (pcm_rtos_t *)userData;
+    BaseType_t reschedule = -1;
     xSemaphoreGiveFromISR(pcm->semaphoreTX, &reschedule);
     portYIELD_FROM_ISR(reschedule);
 }
@@ -115,30 +113,29 @@ int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 {
     /* Ensure write size is a multiple of 32, otherwise EDMA will assert
      * failure.  Round down for the last chunk of a file/stream. */
-    if (size % 32)
-    {
-        pcm->saiTx.dataSize = size - (size % 32);
-    }
-
-    pcm->saiTx.dataSize = size;
+    pcm->saiTx.dataSize = size - (size % 32);
     pcm->saiTx.data     = data;
 
-    /* Start transfer */
     DCACHE_CleanByRange((uint32_t)pcm->saiTx.data, pcm->saiTx.dataSize);
-    if (SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx) == kStatus_SAI_QueueFull)
+
+    if (pcm->isFirstTx)
     {
-        /* Wait for transfer to finish */
-        if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
-        {
-            return -1;
-        }
-        SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx);
+        pcm->isFirstTx = 0;
     }
+    else
+    {
+        /* Wait for the previous transfer to finish */
+        if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
+            return -1;
+    }
+
+    /* Start the consecutive transfer */
+    SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx);
 
     return 0;
 }
 
-int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint8_t *next_buffer, uint32_t size)
+int streamer_pcm_read(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 {
     uint32_t audioSpeakerPreReadDataCount = 0U;
     uint32_t preAudioSendCount            = 0U;
@@ -259,6 +256,7 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     sai_transceiver_t saiConfig;
     uint32_t masterClockHz = 0U;
 
+    pcm->isFirstTx    = transfer ? 1U : pcm->isFirstTx;
     pcm->sample_rate  = sample_rate;
     pcm->bit_width    = bit_width;
     pcm->num_channels = num_channels;

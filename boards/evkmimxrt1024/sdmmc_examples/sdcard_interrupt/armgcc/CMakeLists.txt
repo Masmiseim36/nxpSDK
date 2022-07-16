@@ -52,11 +52,13 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/drivers
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT1024
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/osa
     ${ProjDirPath}/../../../../../devices/MIMXRT1024/utilities
@@ -79,6 +81,8 @@ include(utility_debug_console_lite_MIMXRT1024)
 
 include(utility_assert_lite_MIMXRT1024)
 
+include(component_igpio_adapter_MIMXRT1024)
+
 include(driver_clock_MIMXRT1024)
 
 include(driver_common_MIMXRT1024)
@@ -100,6 +104,8 @@ include(driver_igpio_MIMXRT1024)
 include(driver_xip_device_MIMXRT1024)
 
 include(driver_xip_board_evkmimxrt1024_MIMXRT1024)
+
+include(component_silicon_id_MIMXRT1024)
 
 include(CMSIS_Include_core_cm_MIMXRT1024)
 

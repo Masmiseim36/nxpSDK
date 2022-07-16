@@ -17,7 +17,7 @@
     <dwHighDateTime>0</dwHighDateTime>
   </DaveTm>
   <Target>
-    <TargetName>usbx_device_hid_mouse debug</TargetName>
+    <TargetName>usbx_device_hid_mouse sdram_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -106,7 +106,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1020_ram.ini</tIfile>
+        <tIfile>evkmimxrt1020_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -319,7 +319,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>usbx_device_hid_mouse release</TargetName>
+    <TargetName>usbx_device_hid_mouse sdram_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -408,7 +408,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1020_ram.ini</tIfile>
+        <tIfile>evkmimxrt1020_sdram_init.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

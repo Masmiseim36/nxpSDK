@@ -17,7 +17,7 @@
 /* ----------------------------------------- Header File Inclusion */
 /* EtherMind Common Header Files */
 #include "BT_common.h"
-
+#include "BT_device_queue.h"
 
 /* ----------------------------------------- Global Definitions */
 /** IO Capability Constants */
@@ -72,6 +72,12 @@ typedef struct
 
 
 /* ----------------------------------------- API Declarations */
+/** To return IO Capability to caller */
+API_RESULT BT_sm_get_remote_io_cap
+           (
+               /* IN */  DEVICE_HANDLE    * device_handle,
+               /* OUT */ SM_IO_CAPS *    io_cap
+           );
 #ifdef SM_IO_CAP_DYNAMIC
 /**
  *  API to set local IO Capability from application.

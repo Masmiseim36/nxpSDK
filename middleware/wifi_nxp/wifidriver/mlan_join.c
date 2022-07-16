@@ -7,23 +7,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -202,6 +186,7 @@ mlan_status wlan_update_rsn_ie(mlan_private *pmpriv, MrvlIEtypes_RsnParamSet_t *
     t_u16 pairwise_cipher_count = 0;
     t_u16 akm_suite_count       = 0;
     t_u16 temp_akm_suite_count  = 0;
+    t_u32 rsn_ie_shift_len      = 0;
     int found                   = 0;
     t_u8 sha_256_oui[4]         = {0x00, 0x0f, 0xac, 0x06};
 
@@ -244,20 +229,28 @@ mlan_status wlan_update_rsn_ie(mlan_private *pmpriv, MrvlIEtypes_RsnParamSet_t *
                                                   pairwise_cipher_count * PAIRWISE_CIPHER_SUITE_LEN + sizeof(t_u16)),
                            sha_256_oui, AKM_SUITE_LEN);
             /* Shift remaining bytes of RSN IE after this */
-            (void)__memmove(pmadapter,
-                            ptlv_rsn_ie->rsn_ie +
-                                (sizeof(t_u16) + 4 * sizeof(t_u8) + sizeof(t_u16) +
-                                 pairwise_cipher_count * PAIRWISE_CIPHER_SUITE_LEN + sizeof(t_u16) + AKM_SUITE_LEN),
-                            ptlv_rsn_ie->rsn_ie + (sizeof(t_u16) + 4 * sizeof(t_u8) + sizeof(t_u16) +
-                                                   pairwise_cipher_count * PAIRWISE_CIPHER_SUITE_LEN + sizeof(t_u16) +
-                                                   akm_suite_count * AKM_SUITE_LEN),
-                            ptlv_rsn_ie->header.len - (sizeof(t_u16) + 4 * sizeof(t_u8) + sizeof(t_u16) +
+            rsn_ie_shift_len = ptlv_rsn_ie->header.len - (sizeof(t_u16) + 4 * sizeof(t_u8) + sizeof(t_u16) +
+                                                          pairwise_cipher_count * PAIRWISE_CIPHER_SUITE_LEN +
+                                                          sizeof(t_u16) + akm_suite_count * AKM_SUITE_LEN);
+            if (rsn_ie_shift_len <= MLAN_WMSDK_MAX_WPA_IE_LEN)
+            {
+                (void)__memmove(pmadapter,
+                                ptlv_rsn_ie->rsn_ie +
+                                    (sizeof(t_u16) + 4 * sizeof(t_u8) + sizeof(t_u16) +
+                                     pairwise_cipher_count * PAIRWISE_CIPHER_SUITE_LEN + sizeof(t_u16) + AKM_SUITE_LEN),
+                                ptlv_rsn_ie->rsn_ie + (sizeof(t_u16) + 4 * sizeof(t_u8) + sizeof(t_u16) +
                                                        pairwise_cipher_count * PAIRWISE_CIPHER_SUITE_LEN +
-                                                       sizeof(t_u16) + akm_suite_count * AKM_SUITE_LEN));
-            ptlv_rsn_ie->header.len = ptlv_rsn_ie->header.len - (akm_suite_count - 1) * AKM_SUITE_LEN;
-            /* Update akm suite count */
-            akm_suite_count      = 1;
-            *akm_suite_count_ptr = akm_suite_count;
+                                                       sizeof(t_u16) + akm_suite_count * AKM_SUITE_LEN),
+                                rsn_ie_shift_len);
+                ptlv_rsn_ie->header.len = ptlv_rsn_ie->header.len - (akm_suite_count - 1) * AKM_SUITE_LEN;
+                /* Update akm suite count */
+                akm_suite_count      = 1;
+                *akm_suite_count_ptr = akm_suite_count;
+            }
+            else
+            {
+                return MLAN_STATUS_FAILURE;
+            }
         }
     }
     ptr      = (t_u16 *)(void *)(ptlv_rsn_ie->rsn_ie + sizeof(t_u16) + 4 * sizeof(t_u8) + sizeof(t_u16) +
@@ -580,6 +573,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     {
         SHORT_SLOT_TIME_DISABLED(tmp_cap);
     }
+
 
     tmp_cap &= CAPINFO_MASK;
     PRINTM(MINFO, "ASSOC_CMD: tmp_cap=%4X CAPINFO_MASK=%4lX\n", tmp_cap, CAPINFO_MASK);

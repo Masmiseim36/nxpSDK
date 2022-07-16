@@ -13,7 +13,8 @@
 #if defined(MIMXRT1021_SERIES) || defined(MIMXRT1024_SERIES) || defined(MIMXRT1051_SERIES) || \
     defined(MIMXRT1052_SERIES) || defined(MIMXRT1061_SERIES) || defined(MIMXRT1062_SERIES) || \
     defined(MIMXRT1064_SERIES) || defined(MIMXRT106A_SERIES) || defined(MIMXRT106C_SERIES) || \
-    defined(MIMXRT106F_SERIES) || defined(MIMXRT106L_SERIES) || defined(MIMXRT1015_SERIES)
+    defined(MIMXRT106F_SERIES) || defined(MIMXRT106L_SERIES) || defined(MIMXRT1015_SERIES) || \
+    defined(MIMXRT1042_SERIES)  
 
 #define LEGACY_KEYBLOB_SUPPORT
 

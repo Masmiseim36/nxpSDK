@@ -1,4 +1,4 @@
-<map id="boardkit/lpcxpresso54114/lpc54114.h" name="boardkit/lpcxpresso54114/lpc54114.h">
-<area shape="rect" id="node2" href="$a04348.html" title="pin_mux.h" alt="" coords="5,95,88,121"/>
-<area shape="rect" id="node4" href="$a04411.html" title="RTE_Device.h" alt="" coords="223,95,326,121"/>
+<map id="boardkit/frdm&#45;k22f/frdm_k22f.h" name="boardkit/frdm&#45;k22f/frdm_k22f.h">
+<area shape="rect" id="node2" href="$a04589.html" title="pin_mux.h" alt="" coords="5,95,88,121"/>
+<area shape="rect" id="node5" href="$a04652.html" title="RTE_Device.h" alt="" coords="350,95,453,121"/>
 </map>

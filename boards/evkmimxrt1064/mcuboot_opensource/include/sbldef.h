@@ -20,8 +20,8 @@ extern "C" {
 
 /* SBL version information */
 #define MAJOR_VERSION  1 /**< major version number */
-#define MINOR_VERSION  7 /**< minor version number */
-#define REVISE_VERSION 2 /**< revise version number */
+#define MINOR_VERSION  9 /**< minor version number */
+#define REVISE_VERSION 0 /**< revise version number */
 
 /* SBL version */
 #define SBL_VERSION ((MAJOR_VERSION * 10000L) + (MINOR_VERSION * 100L) + REVISE_VERSION)

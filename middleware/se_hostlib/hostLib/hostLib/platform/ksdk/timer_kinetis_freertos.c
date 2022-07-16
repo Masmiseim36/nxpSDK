@@ -39,12 +39,8 @@ uint32_t sm_initSleep() {
 	((((uint32_t)configTICK_RATE_HZ * (uint32_t)(msec))) / 1000L)
 #endif /* MSEC_TO_TICK */
 
-void sm_sleep(uint32_t msec) {
-/*as configTICK_RATE_HZ for qn9090 is 200Hz 1 tick will happen after 5msec*/
-#ifdef QN9090DK6
-	if(msec < 5)
-		msec = 5;
-#endif
+void sm_sleep(uint32_t msec)
+{
     vTaskDelay(1 >= pdMS_TO_TICKS(msec) ? 1 : pdMS_TO_TICKS(msec));
 }
 

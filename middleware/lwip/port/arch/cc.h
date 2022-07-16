@@ -33,7 +33,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018, 2020-2021 NXP
+ * Copyright 2016-2018, 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -41,7 +41,7 @@
 #ifndef __CC_H__
 #define __CC_H__
 
-//FSL
+// FSL
 #ifdef __REDLIB__
 #define LWIP_NO_INTTYPES_H 1
 #endif
@@ -64,17 +64,17 @@
 
 // Typedefs for the types used by lwip
 #if LWIP_NO_STDINT_H
-typedef unsigned char  u8_t;
-typedef signed   char  s8_t;
+typedef unsigned char u8_t;
+typedef signed char s8_t;
 typedef unsigned short u16_t;
-typedef signed   short s16_t;
-typedef unsigned int   u32_t;
-typedef signed   int   s32_t;
-typedef u32_t          mem_ptr_t;
+typedef signed short s16_t;
+typedef unsigned int u32_t;
+typedef signed int s32_t;
+typedef u32_t mem_ptr_t;
 #endif
 
 // Compiler hints for packing lwip's structures
-//FSL: very important at high optimization level
+// FSL: very important at high optimization level
 
 #if defined(__arm__) && defined(__ARMCC_VERSION)
 
@@ -86,7 +86,7 @@ typedef u32_t          mem_ptr_t;
 #elif defined(__GNUC__) && (__GNUC__ != 0)
 
 #define PACK_STRUCT_BEGIN
-#define PACK_STRUCT_STRUCT __attribute__ ((__packed__))
+#define PACK_STRUCT_STRUCT __attribute__((__packed__))
 #define PACK_STRUCT_END
 #define PACK_STRUCT_FIELD(x) x
 
@@ -94,7 +94,7 @@ typedef u32_t          mem_ptr_t;
 
 #define PACK_STRUCT_BEGIN _Pragma("pack(1)")
 #define PACK_STRUCT_STRUCT
-#define PACK_STRUCT_END _Pragma("pack()")
+#define PACK_STRUCT_END      _Pragma("pack()")
 #define PACK_STRUCT_FIELD(x) x
 
 #else
@@ -107,13 +107,28 @@ typedef u32_t          mem_ptr_t;
 #endif
 
 // Platform specific diagnostic output
-//FSL
+// FSL
+#include "lwipopts.h"
+
+#include "cmsis_compiler.h"
+
+#ifdef LWIP_DEBUG
 #include "fsl_debug_console.h"
-#include "sys_arch.h"
 
 // non-fatal, print a message.
-#define LWIP_PLATFORM_DIAG(x)                     do {PRINTF x;PRINTF("\r\n");} while(0)
+#define LWIP_PLATFORM_DIAG(x) \
+    do                        \
+    {                         \
+        PRINTF x;             \
+        PRINTF("\r\n");       \
+    } while (0)
+#else
+#define LWIP_PLATFORM_DIAG(x)
+#endif
+
+#include "sys_arch.h"
+
 // fatal, print message and abandon execution.
-#define LWIP_PLATFORM_ASSERT(x)                   sys_assert( x )
+#define LWIP_PLATFORM_ASSERT(x) sys_assert(x)
 
 #endif /* __CC_H__ */

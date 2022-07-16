@@ -20,12 +20,16 @@
 var boardID = new String();
 var motorType = new String();
 var appVersion;
+var CpuFreq;
+var SlowLoopFreq;
+var MaxCycleNumber;
 
 /* Default ranges and texts in case communication between MCU nad FM is not established */
 var heel            = "NXP Semiconductors, Inc. 2019. Designed by Motor Control Team / Microcontroller Product Group";
-var voltageSpan     = "DC-Bus Voltage";
-var currentLimSpan  = "Current Limitation";
-var sliderSpeedSpan = "Speed Required";
+var voltageSpan     = "DC-Bus Voltage [Volts]";
+var CPUloadSpan     = "MC CPU Load [%]";
+var currentLimSpan  = "Current Limitation [Amps]";
+var sliderSpeedSpan = "Speed Required [rpm]";
 var currentScale    = 8;
 var currentInterMaj = 1;
 var speedScale      = 4500/100;
@@ -112,6 +116,14 @@ var pmsm_evk_imxrt1060 = {
     title   :   "PMSM  Control using evk-imxrt1060",
 }
 
+var pmsm_evkb_imxrt1060 = {
+    title   :   "PMSM  Control using evkb-imxrt1060",
+}
+
+var pmsm_evk_imxrt1064 = {
+    title   :   "PMSM  Control using evk-imxrt1064",
+}
+
 var pmsm_evk_imxrt1024 = {
     title   :   "PMSM  Control using evk-imxrt1024",
 }
@@ -122,6 +134,10 @@ var pmsm_evk_imxrt1020 = {
 
 var pmsm_evk_imxrt1010 = {
     title   :   "PMSM  Control using evk-imxrt1010",
+}
+
+var pmsm_evk_imxrt1170 = {
+    title   :   "PMSM  Control using evk-imxrt1170",
 }
 
 var pmsm_evk_lpc55s69 = {
@@ -155,7 +171,21 @@ function AppIdenInit()
     succ = pcm.ReadVariable("App Version", vValue0, tValue0, retMsg)
     if (succ)
         appVersion = Math.round(pcm.LastVariable_vValue*100)/100;
-
+	
+	succ = pcm.ReadVariable("M1 CPU Frequency", vValue0, tValue0, retMsg)
+    if (succ)
+        CpuFreq = Math.round(pcm.LastVariable_vValue*100)/100;
+	else
+		CpuFreq = 600000000;
+	
+	succ = pcm.ReadVariable("M1 Fast Control Loop Frequency", vValue0, tValue0, retMsg)
+    if (succ)
+        SlowLoopFreq = Math.round(pcm.LastVariable_vValue*100)/100;
+	else
+		SlowLoopFreq = 10000;
+		
+	MaxCycleNumber = (10000*CpuFreq/SlowLoopFreq);
+	
     /* put together motor type and board */
     appId = motorType + '_' + boardID;
 
@@ -214,8 +244,17 @@ function AppIdenInit()
 	case "pmsm_evk-imxrt1010":
         document.getElementById("title").innerHTML = pmsm_evk_imxrt1010.title;
         break;
+	case "pmsm_evk-imxrt1170":
+        document.getElementById("title").innerHTML = pmsm_evk_imxrt1170.title;
+        break;
 	case "pmsm_evk-imxrt1060":
         document.getElementById("title").innerHTML = pmsm_evk_imxrt1060.title;
+        break;
+	case "pmsm_evkb-imxrt1060":
+        document.getElementById("title").innerHTML = pmsm_evkb_imxrt1060.title;
+        break;
+	case "pmsm_evk-imxrt1064":
+        document.getElementById("title").innerHTML = pmsm_evk_imxrt1064.title;
         break;
 	case "pmsm_evk-lpc55s69":
         document.getElementById("title").innerHTML = pmsm_evk_lpc55s69.title;
@@ -238,6 +277,10 @@ function AppIdenInit()
 
     document.getElementById("DCVoltage").innerHTML = voltageSpan;
     var voltSpan = document.getElementById("DCVoltage");
+    voltSpan.style.fontSize = "15px";voltSpan.style.fontWeight = 'bold';
+	
+	document.getElementById("CPULoad").innerHTML = CPUloadSpan;
+    var voltSpan = document.getElementById("CPULoad");
     voltSpan.style.fontSize = "15px";voltSpan.style.fontWeight = 'bold';
 
     document.getElementById("CurrentLimit").innerHTML = currentLimSpan;

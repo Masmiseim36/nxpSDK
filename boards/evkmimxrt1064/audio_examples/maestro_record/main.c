@@ -89,7 +89,7 @@ int BOARD_CODEC_Init(void)
     CODEC_Init(&codecHandle, &boardCodecConfig);
 
     /* Initial volume kept low for hearing safety. */
-    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 50);
+    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, DEMO_VOLUME);
 
     return 0;
 }
@@ -101,6 +101,11 @@ static void APP_SDCARD_DetectCallBack(bool isInserted, void *userData)
 
     app->sdcardInserted = isInserted;
     xSemaphoreGiveFromISR(app->sdcardSem, NULL);
+}
+
+bool SDCARD_inserted(void)
+{
+    return (app.sdcardInserted);
 }
 
 void APP_SDCARD_Task(void *param)
@@ -208,6 +213,9 @@ int main(void)
     PRINTF("Maestro audio record demo start\r\n");
     PRINTF("*******************************\r\n");
     PRINTF("\r\n");
+
+    /* Initialize OSA*/
+    OSA_Init();
 
     ret = BOARD_CODEC_Init();
     if (ret)

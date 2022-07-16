@@ -48,11 +48,15 @@ extern "C" {
  ******************************************************************************/
 
 /* FreeMASTER types used */
-typedef unsigned char
-    *FMSTR_ADDR; /* CPU address size depends on memory model 16 or 32 bits. We use "bp" address on DSC. */
+#if __has_feature(FE_POINTER_MODIFIERS)
+typedef unsigned char *__attribute__((far)) FMSTR_ADDR; /* Use far pointer in all models */
+#else
+typedef unsigned char *FMSTR_ADDR; /* Use pointers according to model */
+#endif
+
 typedef unsigned int FMSTR_SIZE;    /* general size type (at least 16 bits) */
 typedef unsigned int FMSTR_SIZE8;   /* one-byte size value */
-typedef unsigned long FMSTR_SIZE32; /* general size type (at least size of address (typicaly 32bits)) */
+typedef unsigned long FMSTR_SIZE32; /* general size type (at least size of address) */
 typedef unsigned int FMSTR_BOOL;    /* general boolean type  */
 
 typedef unsigned char FMSTR_U8;       /* smallest memory entity */
@@ -76,13 +80,33 @@ typedef unsigned char *FMSTR_BPTR; /* pointer within a communication buffer */
 
 typedef char FMSTR_CHAR; /* regular character, part of string */
 
+#if __has_feature(FE_POINTER_MODIFIERS)
+/* TSA object pointer will also use far if possible */
+#define FMSTR_TSATBL_VOIDPTR volatile const void * __attribute__((far))
+#endif
+
 #ifdef __cplusplus
 }
 #endif
 
-/*********************************************************************************
- * Platform depending functionalities
- *********************************************************************************/
+/******************************************************************************
+ * If possible we use 'far' declaration of long pointer type so this driver
+ * is able to access far variables (beyond word address 0x8000 (= .bp 0x10000).
+ * Also the Recorder buffers may be located in the far memory.
+ ******************************************************************************/
+
+#if __has_feature(FE_POINTER_MODIFIERS)
+/* The compiler supports the 'far' attribute. We use it in our FMSTR_LP_xx types. */
+#define FMSTR_TYPEDEF_LPTR(type, ptrtype) typedef type *__attribute__((far)) ptrtype
+#else
+/* Default pointer type will be used according to LDM or SDM model. */
+#if defined(__SDM__)
+/* In SDM, be aware that the FreeMASTER driver will only be able to access a memory
+ * in word address range 0x0000..0x8000. Update the CodeWarrior compiler to the latest
+ * version in order to get a 'far' attribute support. */
+/* #warning Compiler does not support 'far' pointers. Address range visible to FreeMASTER is limited in SDM. */
+#endif
+#endif
 
 #if 0 /* Uncomment to take standard C functions taken from stdlib */
 #define FMSTR_StrLen(str)              ((FMSTR_SIZE)strlen(str))

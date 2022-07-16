@@ -151,6 +151,8 @@ var searchData=
   ['lpuart_5frtos_5finit',['LPUART_RTOS_Init',['../a00043.html#ga5be9370b1fa0187c194475769e7138fc',1,'fsl_lpuart_freertos.h']]],
   ['lpuart_5frtos_5freceive',['LPUART_RTOS_Receive',['../a00043.html#ga0561f87122863c6e9b20f8991a73a0fb',1,'fsl_lpuart_freertos.h']]],
   ['lpuart_5frtos_5fsend',['LPUART_RTOS_Send',['../a00043.html#ga275e067e13ecc77dde83d2d7938c038e',1,'fsl_lpuart_freertos.h']]],
+  ['lpuart_5frtos_5fsetrxtimeout',['LPUART_RTOS_SetRxTimeout',['../a00043.html#ga3e211e0c1a2c93d9bdd73d6ca4639a10',1,'fsl_lpuart_freertos.h']]],
+  ['lpuart_5frtos_5fsettxtimeout',['LPUART_RTOS_SetTxTimeout',['../a00043.html#gad2317ff04710f0f4a2dc7d219f850c85',1,'fsl_lpuart_freertos.h']]],
   ['lpuart_5fsendaddress',['LPUART_SendAddress',['../a00041.html#ga85a7dbe15a9f822847791cebe75d5394',1,'fsl_lpuart.h']]],
   ['lpuart_5fsendedma',['LPUART_SendEDMA',['../a00042.html#ga24c9dff9f142243ed5ffb3112a356386',1,'fsl_lpuart_edma.h']]],
   ['lpuart_5fsetbaudrate',['LPUART_SetBaudRate',['../a00041.html#gaf03d9292f8b4cb6e9748cb0bc1db7577',1,'fsl_lpuart.h']]],

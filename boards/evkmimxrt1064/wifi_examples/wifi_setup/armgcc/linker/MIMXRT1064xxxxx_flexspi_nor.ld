@@ -8,13 +8,13 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMXRT1064RM Rev.0.1, 12/2018 | IMXRT1064SRM Rev.3
 **     Version:             rev. 0.1, 2018-06-22
-**     Build:               b200110
+**     Build:               b210709
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -39,6 +39,7 @@ MEMORY
   m_ivt                 (RX)  : ORIGIN = 0x70001000, LENGTH = 0x00001000
   m_interrupts          (RX)  : ORIGIN = 0x70002000, LENGTH = 0x00000400
   m_text                (RX)  : ORIGIN = 0x70002400, LENGTH = 0x003FDC00
+  m_qacode              (RX)  : ORIGIN = 0x00000000, LENGTH = 0x00020000
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00020000
   m_data2               (RW)  : ORIGIN = 0x20200000, LENGTH = 0x000C0000
 }
@@ -57,7 +58,7 @@ SECTIONS
     . = ALIGN(4);
   } > m_flash_config
 
-  ivt_begin= ORIGIN(m_flash_config) + LENGTH(m_flash_config);
+  ivt_begin = ORIGIN(m_flash_config) + LENGTH(m_flash_config);
 
   .ivt : AT(ivt_begin)
   {
@@ -82,8 +83,27 @@ SECTIONS
   .text :
   {
     . = ALIGN(4);
-    *(.text)                 /* .text sections (code) */
-    *(.text*)                /* .text* sections (code) */
+    *(EXCLUDE_FILE(
+        *fsl_memcpy.S.obj
+    ) .text)                 /* .text sections (code) */
+    *(EXCLUDE_FILE(
+        *queue.c.obj
+        *tcp_out.c.obj
+        *mlan_11n_rxreorder.c.obj
+        *tcp_in.c.obj
+        *inet_chksum.c.obj
+        *timers.c.obj
+        *fsl_usdhc.c.obj
+        *port.c.obj
+        *wifi-sdio.c.obj
+        *fsl_sdio.c.obj
+        *pbuf.c.obj
+        *tasks.c.obj
+        *lib_a-memset.o
+        *fsl_cache.c.obj
+        *wifi.c.obj
+        *fsl_memcpy.S.obj
+      ) .text*)              /* .text* sections (code) */
     *(.rodata)               /* .rodata sections (constants, strings, etc.) */
     *(.rodata*)              /* .rodata* sections (constants, strings, etc.) */
     *(.glue_7)               /* glue arm to thumb code */
@@ -189,12 +209,41 @@ SECTIONS
     *(m_usb_dma_init_data)
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
+    *(DataQuickAccess)       /* quick access data section */
+    *(.wlan_data .wlan_data.*)
     KEEP(*(.jcr*))
     . = ALIGN(4);
     __data_end__ = .;        /* define a global symbol at data end */
-  } > m_data2
+  } > m_data
 
-  __NDATA_ROM = __DATA_ROM + (__data_end__ - __data_start__);
+  __ram_function_flash_start = __DATA_ROM + (__data_end__ - __data_start__); /* Symbol is used by startup for TCM data initialization */
+
+  .ram_function : AT(__ram_function_flash_start)
+  {
+    . = ALIGN(32);
+    __ram_function_start__ = .;
+    *(CodeQuickAccess)
+    *queue.c.obj(.text*)
+    *tcp_out.c.obj(.text*)
+    *mlan_11n_rxreorder.c.obj(.text*)
+    *tcp_in.c.obj(.text*)
+    *inet_chksum.c.obj(.text*)
+    *timers.c.obj(.text*)
+    *fsl_usdhc.c.obj(.text*)
+    *port.c.obj(.text*)
+    *wifi-sdio.c.obj(.text*)
+    *fsl_sdio.c.obj(.text*)
+    *pbuf.c.obj(.text*)
+    *tasks.c.obj(.text*)  
+    *lib_a-memset.o(.text*)
+    *fsl_cache.c.obj(.text*)
+    *wifi.c.obj(.text*)
+    *fsl_memcpy.S.obj(.text)
+    . = ALIGN(128);
+    __ram_function_end__ = .;
+  } > m_qacode
+
+  __NDATA_ROM = __ram_function_flash_start + (__ram_function_end__ - __ram_function_start__);
   .ncache.init : AT(__NDATA_ROM)
   {
     __noncachedata_start__ = .;   /* create a global symbol at ncache data start */
@@ -256,4 +305,3 @@ SECTIONS
 
   ASSERT(__StackLimit >= __HeapLimit, "region m_data overflowed with stack and heap")
 }
-

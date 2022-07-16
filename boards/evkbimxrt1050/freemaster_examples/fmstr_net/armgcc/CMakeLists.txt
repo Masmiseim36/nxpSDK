@@ -67,9 +67,9 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../components/phy
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../middleware/freemaster
+    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
@@ -91,8 +91,6 @@ include(middleware_lwip_MIMXRT1052)
 include(driver_phy-common_MIMXRT1052)
 
 include(driver_enet_MIMXRT1052)
-
-include(utility_debug_console_MIMXRT1052)
 
 include(middleware_freertos-kernel_heap_3_MIMXRT1052)
 
@@ -137,6 +135,8 @@ include(CMSIS_Include_core_cm_MIMXRT1052)
 include(middleware_freertos-kernel_MIMXRT1052)
 
 include(middleware_freertos-kernel_extension_MIMXRT1052)
+
+include(utility_debug_console_MIMXRT1052)
 
 include(utilities_misc_utilities_MIMXRT1052)
 

@@ -56,12 +56,14 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/i2c
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/lists
     ${ProjDirPath}/../../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../../xip
+    ${ProjDirPath}/../../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../../components/osa
     ${ProjDirPath}/../../../../../../components/codec/cs42448
@@ -95,6 +97,8 @@ include(utility_debug_console_lite_MIMXRT1062)
 
 include(utility_assert_lite_MIMXRT1062)
 
+include(component_igpio_adapter_MIMXRT1062)
+
 include(driver_clock_MIMXRT1062)
 
 include(driver_sai_MIMXRT1062)
@@ -126,6 +130,8 @@ include(driver_igpio_MIMXRT1062)
 include(driver_xip_device_MIMXRT1062)
 
 include(driver_xip_board_evkbmimxrt1060_MIMXRT1062)
+
+include(component_silicon_id_MIMXRT1062)
 
 include(CMSIS_Include_core_cm_MIMXRT1062)
 

@@ -2335,19 +2335,13 @@ void smp_lesc_oob_handle_cmd_complete(UCHAR * data, UINT16 datalen)
             BT_mem_set(smp_lesc_oob_data.rand,0x00,SMP_OOB_RANDOM_VAL_SIZE);
 
 #ifndef SMP_LESC_CONST_OOB_VAL_SUPPORT
-            if (SMP_OOB_RANDOM_VAL_SIZE == datalen)
-            {
-                /*
-                 *  NOTE: If SMP_LESC_CONST_OOB_VAL_SUPPORT make the random
-                 *        number as all zeros.
-                 */
-                BT_mem_copy(smp_lesc_oob_data.rand, data, datalen);
-            }
-            else
-            {
-                SMP_ERR("[SMP_PL] SMP_OOB_RANDOM_VAL_SIZE != datalen\n");
-            }
+
+            BT_mem_copy(smp_lesc_oob_data.rand, data, ((datalen > SMP_OOB_RANDOM_VAL_SIZE) ? SMP_OOB_RANDOM_VAL_SIZE : datalen));
 #else
+            /*
+             *  NOTE: If SMP_LESC_CONST_OOB_VAL_SUPPORT make the random
+             *        number as all zeros.
+             */
             BT_IGNORE_UNUSED_PARAM(datalen);
 #endif /* SMP_LESC_CONST_OOB_VAL_SUPPORT */
 

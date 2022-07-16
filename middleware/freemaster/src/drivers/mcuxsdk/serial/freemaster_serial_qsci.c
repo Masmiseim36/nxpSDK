@@ -142,11 +142,11 @@ static void _FMSTR_QSCIEnableTransmitInterrupt(FMSTR_BOOL enable)
 {
     if (enable != FMSTR_FALSE)
     {
-        QSCI_EnableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_TxEmptyInterruptEnable);
+        QSCI_EnableInterrupts(fmstr_serialBaseAddr, (uint8_t)kQSCI_TxEmptyInterruptEnable);
     }
     else
     {
-        QSCI_DisableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_TxEmptyInterruptEnable);
+        QSCI_DisableInterrupts(fmstr_serialBaseAddr, (uint8_t)kQSCI_TxEmptyInterruptEnable);
     }
 }
 
@@ -160,11 +160,11 @@ static void _FMSTR_QSCIEnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 {
     if (enable != FMSTR_FALSE)
     {
-        QSCI_EnableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_TxIdleInterruptEnable);
+        QSCI_EnableInterrupts(fmstr_serialBaseAddr, (uint8_t)kQSCI_TxIdleInterruptEnable);
     }
     else
     {
-        QSCI_DisableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_TxIdleInterruptEnable);
+        QSCI_DisableInterrupts(fmstr_serialBaseAddr, (uint8_t)kQSCI_TxIdleInterruptEnable);
     }
 }
 
@@ -180,18 +180,17 @@ static void _FMSTR_QSCIEnableReceiveInterrupt(FMSTR_BOOL enable)
      * them along with the RX Data interrupt. This avoids unnecessary interrupts to be serviced. */
     if (enable != FMSTR_FALSE)
     {
-        QSCI_EnableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_RxFullInterruptEnable);
+        QSCI_EnableInterrupts(fmstr_serialBaseAddr, (uint8_t)kQSCI_RxFullInterruptEnable);
     }
     else
     {
-        QSCI_DisableInterrupts(
-            fmstr_serialBaseAddr,
-            (uint32_t)(kQSCI_RxFullInterruptEnable 
-            		| kQSCI_RxErrorInterruptEnable 
+        QSCI_DisableInterrupts(fmstr_serialBaseAddr, (uint8_t)(
+            (uint8_t)kQSCI_RxFullInterruptEnable | 
+            (uint8_t)kQSCI_RxErrorInterruptEnable 
 #if defined(FSL_FEATURE_QSCI_HAS_RX_IDLE_INTERRUPT) && FSL_FEATURE_QSCI_HAS_RX_IDLE_INTERRUPT
-            		| kQSCI_RxIdleLineInterruptEnable
+            | (uint8_t)kQSCI_RxIdleLineInterruptEnable
 #endif
-            		));
+            ));
     }
 }
 

@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_mcu-boot_MIMXRT1062_drivers component is included.")
 
 

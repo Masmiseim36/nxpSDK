@@ -1,4 +1,7 @@
-<map id="algorithms/pedometer/examples/pedometer_stepcount_fxls896xaf.c" name="algorithms/pedometer/examples/pedometer_stepcount_fxls896xaf.c">
-<area shape="rect" id="node8" href="$a00917.html" title="The pedometer.h file contains the interface and structure definitions for pedometer application..." alt="" coords="723,109,818,136"/>
-<area shape="rect" id="node10" href="$a00068.html" title="The fxls896x_drv.h file describes the FXLS8964/67AF driver interface and structures. " alt="" coords="961,109,1065,136"/>
+<map id="algorithms/sensorfusion/sources/orientation.c" name="algorithms/sensorfusion/sources/orientation.c">
+<area shape="rect" id="node7" href="$a00914.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="126,169,239,196"/>
+<area shape="rect" id="node8" href="$a00899.html" title="Functions to convert between various orientation representations. " alt="" coords="179,244,272,271"/>
+<area shape="rect" id="node9" href="$a00890.html" title="Matrix manipulation functions. " alt="" coords="296,244,365,271"/>
+<area shape="rect" id="node10" href="$a00848.html" title="Lower level sensor fusion interface. " alt="" coords="175,95,241,121"/>
+<area shape="rect" id="node11" href="$a00764.html" title="Math approximations file. " alt="" coords="627,95,749,121"/>
 </map>

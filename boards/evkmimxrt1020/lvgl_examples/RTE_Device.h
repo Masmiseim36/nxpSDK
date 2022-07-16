@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,8 +12,6 @@ extern void LPSPI1_InitPins();
 extern void LPSPI1_DeinitPins();
 extern void LPI2C4_InitPins();
 extern void LPI2C4_DeinitPins();
-extern void LPSPI1_InitPins();
-extern void LPSPI1_DeinitPins();
 
 /* Driver name mapping. */
 /* User needs to provide the implementation of LPSPIX_GetFreq/LPSPIX_InitPins/LPSPIX_DeinitPins for the enabled LPSPI
@@ -37,8 +35,6 @@ extern void LPSPI1_DeinitPins();
 #define SPI1_TX_FIFO_SIZE 8
 
 #define RTE_SPI1_SSEL_NUM           kSPI_Ssel0
-#define RTE_SPI1_PIN_INIT           LPSPI1_InitPins
-#define RTE_SPI1_PIN_DEINIT         LPSPI1_DeinitPins
 #define RTE_SPI1_DMA_TX_CH          11
 #define RTE_SPI1_DMA_TX_PERI_SEL    (uint8_t) kDmaRequestMuxLPSPI1Tx
 #define RTE_SPI1_DMA_TX_DMAMUX_BASE DMAMUX
@@ -49,8 +45,10 @@ extern void LPSPI1_DeinitPins();
 #define RTE_SPI1_DMA_RX_DMA_BASE    DMA0
 
 #define RTE_SPI1_PCS_TO_SCK_DELAY       0
-#define RTE_SPI1_SCK_TO_PSC_DELAY       0
+#define RTE_SPI1_SCK_TO_PCS_DELAY       0
 #define RTE_SPI1_BETWEEN_TRANSFER_DELAY 50 /* For 10MHz baudrate. delay(ns) = 10^9/baudrate/2. */
 #define RTE_SPI1_MASTER_PCS_PIN_SEL     kLPSPI_MasterPcs0
+
+#define RTE_SPI1_SCK_TO_PSC_DELAY RTE_SPI1_SCK_TO_PCS_DELAY
 
 #endif /* _RTE_DEVICE_H */

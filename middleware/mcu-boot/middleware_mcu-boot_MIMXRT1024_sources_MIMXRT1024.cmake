@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_mcu-boot_MIMXRT1024_sources component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

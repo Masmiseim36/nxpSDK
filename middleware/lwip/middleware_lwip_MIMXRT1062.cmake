@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_lwip component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -65,12 +65,12 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/chap_ms.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/demand.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/eap.c
+    ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/ecp.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/eui64.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/fsm.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/ipcp.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/ipv6cp.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/lcp.c
-    ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/lwip_ecp.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/magic.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/mppe.c
     ${CMAKE_CURRENT_LIST_DIR}/src/netif/ppp/multilink.c
@@ -103,22 +103,11 @@ endif()
 if(CONFIG_USE_middleware_lwip_enet_ethernetif_MIMXRT1062)
      include(middleware_lwip_enet_ethernetif_MIMXRT1062)
 endif()
-if(CONFIG_USE_middleware_wifi_wiced_MURATA_TYPE1LV_MIMXRT1062)
-     include(middleware_wifi_wiced_MURATA_TYPE1LV_MIMXRT1062)
-endif()
-if(CONFIG_USE_middleware_wifi_wiced_MURATA_TYPE1DX_MIMXRT1062)
-     include(middleware_wifi_wiced_MURATA_TYPE1DX_MIMXRT1062)
-endif()
-if(CONFIG_USE_middleware_wifi_wiced_AW_NM372SM_MIMXRT1062)
-     include(middleware_wifi_wiced_AW_NM372SM_MIMXRT1062)
-endif()
 if(CONFIG_USE_middleware_wifi_MIMXRT1062)
      include(middleware_wifi_MIMXRT1062)
 endif()
-if(NOT (CONFIG_USE_middleware_lwip_empty_ethernetif_MIMXRT1062 OR CONFIG_USE_middleware_lwip_usb_ethernetif_MIMXRT1062 OR CONFIG_USE_middleware_lwip_enet_ethernetif_MIMXRT1062 OR CONFIG_USE_middleware_wifi_wiced_MURATA_TYPE1LV_MIMXRT1062 OR CONFIG_USE_middleware_wifi_wiced_MURATA_TYPE1DX_MIMXRT1062 OR CONFIG_USE_middleware_wifi_wiced_AW_NM372SM_MIMXRT1062 OR CONFIG_USE_middleware_wifi_MIMXRT1062))
-    message(WARNING "Since middleware_lwip_empty_ethernetif_MIMXRT1062/middleware_lwip_usb_ethernetif_MIMXRT1062/middleware_lwip_enet_ethernetif_MIMXRT1062/middleware_wifi_wiced_MURATA_TYPE1LV_MIMXRT1062/middleware_wifi_wiced_MURATA_TYPE1DX_MIMXRT1062/middleware_wifi_wiced_AW_NM372SM_MIMXRT1062/middleware_wifi_MIMXRT1062 is not included at first or config in config.cmake file, use middleware_lwip_empty_ethernetif_MIMXRT1062 by default.")
+if(NOT (CONFIG_USE_middleware_lwip_empty_ethernetif_MIMXRT1062 OR CONFIG_USE_middleware_lwip_usb_ethernetif_MIMXRT1062 OR CONFIG_USE_middleware_lwip_enet_ethernetif_MIMXRT1062 OR CONFIG_USE_middleware_wifi_MIMXRT1062))
+    message(WARNING "Since middleware_lwip_empty_ethernetif_MIMXRT1062/middleware_lwip_usb_ethernetif_MIMXRT1062/middleware_lwip_enet_ethernetif_MIMXRT1062/middleware_wifi_MIMXRT1062 is not included at first or config in config.cmake file, use middleware_lwip_empty_ethernetif_MIMXRT1062 by default.")
     include(middleware_lwip_empty_ethernetif_MIMXRT1062)
 endif()
-
-include(utility_debug_console_MIMXRT1062)
 

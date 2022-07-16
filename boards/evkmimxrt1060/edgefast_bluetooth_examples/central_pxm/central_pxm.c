@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "EmbeddedTypes.h"
 #include <zephyr/types.h>
 #include <stdio.h>
 #include <stddef.h>
@@ -40,7 +39,7 @@ static uint16_t tps_value_handle = 0xFFU;
 
 static int8_t peer_tx_power_level = 0U;
 
-static bool_t ias_alert_triggered = FALSE;
+static bool ias_alert_triggered = false;
 
 static void read_conn_rssi(uint16_t handle, int8_t *rssi)
 {
@@ -473,7 +472,7 @@ int check_rssi(void)
             }
             else
             {
-                ias_alert_triggered = TRUE;
+                ias_alert_triggered = true;
             }
         }
         else if ((rssi >= RSSI_THRESHOLD) && ias_alert_triggered)
@@ -493,7 +492,7 @@ int check_rssi(void)
             }
             else
             {
-                ias_alert_triggered = FALSE;
+                ias_alert_triggered = false;
             }
         }
     }

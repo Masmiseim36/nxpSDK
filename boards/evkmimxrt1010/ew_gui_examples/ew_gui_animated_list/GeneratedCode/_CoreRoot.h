@@ -536,7 +536,7 @@ XBool CoreRoot__DriveMultiTouchMovement( void* _this, XInt32 aFinger, XPoint aPo
    target system. Usually the method will be invoked in response to to touch events 
    received in the main() message loop from the target specific touch screen driver.
    The parameters passed to the method determine the event. aDown determines whether 
-   the user has pressed (== 'true') or released (== 'false') his finger at the position 
+   the user has pressed (== 'true') or released (== 'false') their finger at the position 
    aPos relative to the top-left origin of the GUI application area. The parameter 
    aFinger specifies the finger (or mouse button) the user pressed for this operation. 
    The first finger (mouse button) has the number 0, the second 1, and so far.
@@ -558,7 +558,7 @@ XBool CoreRoot__DriveCursorHitting( void* _this, XBool aDown, XInt32 aFinger, XP
    events received in the main() message loop from the target specific touch screen 
    driver.
    The parameters passed to the method determine the event. aDown determines whether 
-   the user has pressed (== 'true') or released (== 'false') his finger at the position 
+   the user has pressed (== 'true') or released (== 'false') their finger at the position 
    aPos relative to the top-left origin of the GUI application area. The parameter 
    aFinger identifies the associated finger. The first finger has the number 0, 
    the second 1 and so far till 9. 

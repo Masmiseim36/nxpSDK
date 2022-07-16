@@ -7,40 +7,112 @@
  */
 
 #include "fsl_common.h"
-#include "main.h"
+#include "mc_periph_init.h"
+#include "freemaster.h"
+#include "pin_mux.h"
+#include "peripherals.h"
+#include "fsl_gpio.h"
+#include "fsl_lpuart.h"
+#include "fsl_adc_etc.h"
+#include "m1_sm_snsless_enc.h"
+
+#include "freemaster_serial_lpuart.h"
+#include "board.h"
+#include "mid_sm_states.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* Version info */
+#define MCRSP_VER "2.0.0" /* motor control package version */
+
+#define DAPENG_TEST /* Dapeng test */
+
+/* Example's feature set in form of bits inside ui16featureSet.
+   This feature set is expected to be growing over time.
+   ... | FEATURE_S_RAMP | FEATURE_FIELD_WEAKENING | FEATURE_ENC
+*/
+#define FEATURE_ENC (1)               /* Encoder feature flag */
+#define FEATURE_FIELD_WEAKENING (0)   /* Field weakening feature flag */
+#define FEATURE_S_RAMP (0)            /* S-ramp feature flag */
+
+#define FEATURE_SET (FEATURE_ENC << (0) | \
+                     FEATURE_FIELD_WEAKENING << (1) | \
+                     FEATURE_S_RAMP << (2))
+
+#define BOARD_USER_BUTTON_PRIORITY 4
+
+/* CPU load measurement SysTick START / STOP macros */
+#define SYSTICK_START_COUNT() (SysTick->VAL = SysTick->LOAD)
+#define SYSTICK_STOP_COUNT(par1)   \
+    uint32_t val  = SysTick->VAL;  \
+    uint32_t load = SysTick->LOAD; \
+    par1          = load - val
+
+/* Three instruction added after interrupt flag clearing as required */
+#define M1_END_OF_ISR \
+    {                 \
+        __DSB();      \
+        __ISB();      \
+    }
+
+/* Init SDK HW */
+static void BOARD_Init(void);
+/* ADC COCO interrupt */
+RAM_FUNC_LIB 
+void ADC1_IRQHandler(void);
+/* TMR1 reload ISR called with 1ms period */
+RAM_FUNC_LIB 
+void TMR1_IRQHandler(void);
+/* SW8 Button interrupt handler */
+RAM_FUNC_LIB 
+void GPIO5_Combined_0_15_IRQHandler(void);
+/* Demo Speed Stimulator */
+RAM_FUNC_LIB 
+static void DemoSpeedStimulator(void);
+/* Demo Position Stimulator */
+RAM_FUNC_LIB
+static void DemoPositionStimulator(void);
+
+static void BOARD_InitSysTick(void);
+static void BOARD_InitGPIO(void);
+static void Application_Control_BL(void);
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
-/* CPU load measurement using Systick*/
-uint32_t g_ui32NumberOfCycles    = 0;
-uint32_t g_ui32MaxNumberOfCycles = 0;
+/* CPU load measurement using Systick */
+uint32_t g_ui32NumberOfCycles    = 0U;
+uint32_t g_ui32MaxNumberOfCycles = 0U;
+
+#ifdef DAPENG_TEST
+/* ISR counters */
+uint32_t ui32FastIsrCount = 0U;
+uint32_t ui32SlowIsrCount = 0U;
+#endif
 
 /* Demo mode enabled/disabled */
 bool_t bDemoModeSpeed    = FALSE;
 bool_t bDemoModePosition = FALSE;
 
 /* Counters used for demo mode */
-static uint32_t ui32SpeedStimulatorCnt    = 0;
-static uint32_t ui32PositionStimulatorCnt = 0;
+static uint32_t ui32SpeedStimulatorCnt    = 0U;
+static uint32_t ui32PositionStimulatorCnt = 0U;
 
 /* Counter for button pressing */
-static uint32_t ui32ButtonFilter = 0;
-
-/* Application and board ID  */
-app_ver_t g_sAppId = {
-    "evk-imxrt1024", /* board id */
-    "pmsm",          /* motor type */
-    MCRSP_VER,       /* sw version */
-};
+static uint32_t ui32ButtonFilter = 0U;
 
 /* Structure used in FM to get required ID's */
-app_ver_t g_sAppIdFM;
+app_ver_t g_sAppIdFM = {
+    "evkmimxrt1024", /* board id */
+    "pmsm_enc", /* example id */
+    MCRSP_VER,      /* sw version */
+    FEATURE_SET,    /* example's feature-set */
+};
+
+mid_app_cmd_t g_eMidCmd;                  /* Start/Stop MID command */
+ctrl_m1_mid_t g_sSpinMidSwitch;           /* Control Spin/MID switching */
 
 /*******************************************************************************
  * Prototypes
@@ -55,6 +127,9 @@ app_ver_t g_sAppIdFM;
  */
 int main(void)
 {
+    /*Accessing ID structure to prevent optimization*/
+    g_sAppIdFM.ui16FeatureSet = FEATURE_SET;
+
     uint32_t ui32PrimaskReg;
 
     /* Disable all interrupts before peripherals are initialized */
@@ -63,9 +138,6 @@ int main(void)
     /* Disable demo mode after reset */
     bDemoModeSpeed    = FALSE;
     bDemoModePosition = FALSE;
-
-    /* Pass actual demo id and board info to FM */
-    g_sAppIdFM = g_sAppId;
 
     /* Init board hardware. */
     BOARD_Init();
@@ -77,7 +149,18 @@ int main(void)
     MCDRV_Init_M1();
 
     /* Turn off application */
-    M1_SetAppSwitch(0);
+    M1_SetAppSwitch(FALSE);
+
+    /* Init MID state machine - call before the spin state machine */
+    g_sSpinMidSwitch.eAppState = kAppStateMID;         
+    
+    if(g_sSpinMidSwitch.eAppState == kAppStateMID)
+    {
+      MID_Init_AR();
+    }
+    
+    /* Spin state machine is default */
+    g_sSpinMidSwitch.eAppState = kAppStateSpin; 
 
     /* Enable interrupts */
     EnableGlobalIRQ(ui32PrimaskReg);
@@ -85,6 +168,8 @@ int main(void)
     /* Infinite loop */
     while (1)
     {
+        Application_Control_BL();
+        
         /* FreeMASTER Polling function */
         FMSTR_Poll();
     }
@@ -98,13 +183,23 @@ int main(void)
  *
  * @return  none
  */
-void ADC1_IRQHandler(void)
+RAM_FUNC_LIB
+void ADC_ETC_IRQ0_IRQHandler(void)
 {
     /* Start CPU tick number couting */
     SYSTICK_START_COUNT();
 
-    /* M1 State machine */
-    SM_StateMachineFast(&g_sM1Ctrl);
+    switch(g_sSpinMidSwitch.eAppState)
+    {
+    case kAppStateSpin:
+        /* M1 state machine */
+        SM_StateMachineFast(&g_sM1Ctrl);
+      break;
+    default:
+        /* MID state machine */
+        MID_ProcessFast_FL();
+      break;
+    }
 
     /* Stop CPU tick number couting and store actual and maximum ticks */
     SYSTICK_STOP_COUNT(g_ui32NumberOfCycles);
@@ -113,6 +208,14 @@ void ADC1_IRQHandler(void)
 
     /* Call FreeMASTER recorder */
     FMSTR_Recorder(0);
+    
+#ifdef DAPENG_TEST
+    /* Increment ISR counter */
+    ui32FastIsrCount++;
+#endif
+        
+    ADC_ETC_ClearInterruptStatusFlags(ADC_ETC, kADC_ETC_Trg0TriggerSource, kADC_ETC_Done0StatusFlagMask);
+    ADC_ETC_ClearInterruptStatusFlags(ADC_ETC, kADC_ETC_Trg4TriggerSource, kADC_ETC_Done0StatusFlagMask);
 
     /* Add empty instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
@@ -126,6 +229,7 @@ void ADC1_IRQHandler(void)
  *
  * @return  none
  */
+RAM_FUNC_LIB
 void TMR1_IRQHandler(void)
 {
     /* M1 Slow StateMachine call */
@@ -144,6 +248,11 @@ void TMR1_IRQHandler(void)
     /* Demo position stimulator */
     DemoPositionStimulator();
 
+#ifdef DAPENG_TEST    
+    /* Increment ISR counter */
+    ui32SlowIsrCount++;
+#endif
+    
     /* Clear the CSCTRL0[TCF1] flag */
     TMR1->CHANNEL[0].CSCTRL |= TMR_CSCTRL_TCF1(0x00);
     TMR1->CHANNEL[0].CSCTRL &= ~(TMR_CSCTRL_TCF1_MASK);
@@ -162,6 +271,7 @@ void TMR1_IRQHandler(void)
  *
  * @return  none
  */
+RAM_FUNC_LIB
 void GPIO5_Combined_0_15_IRQHandler(void)
 {
     if (GPIO5->ISR & GPIO_ICR1_ICR0_MASK)
@@ -205,11 +315,14 @@ void GPIO5_Combined_0_15_IRQHandler(void)
  *
  * @return  none
  */
-void DemoSpeedStimulator(void)
+RAM_FUNC_LIB
+static void DemoSpeedStimulator(void)
 {
     /* Increase push button pressing counter  */
     if (ui32ButtonFilter < 1000)
-        ui32ButtonFilter++;
+    {
+    	ui32ButtonFilter++;
+    }
 
     if (bDemoModeSpeed)
     {
@@ -244,7 +357,8 @@ void DemoSpeedStimulator(void)
                 M1_SetAppSwitch(0);
                 break;
             default:
-                break;
+            	;
+            	break;
         }
     }
 }
@@ -258,7 +372,8 @@ void DemoSpeedStimulator(void)
  *
  * @return  none
  */
-void DemoPositionStimulator(void)
+RAM_FUNC_LIB
+static void DemoPositionStimulator(void)
 {
     if (bDemoModePosition)
     {
@@ -296,9 +411,66 @@ void DemoPositionStimulator(void)
                 M1_SetAppSwitch(0);
                 break;
             default:
-                break;
+                ;
+            	break;
         }
     }
+}
+
+/*!
+ * @brief   Application_Control_BL
+ *           - Control switching between Spin and MID
+ *
+ * @param   void
+ *
+ * @return  none
+ */
+static void Application_Control_BL(void)
+{
+  switch(g_sSpinMidSwitch.eAppState)
+  {
+    case kAppStateSpin:
+        /* M1 state machine */
+        if(g_sSpinMidSwitch.bCmdRunMid == TRUE)
+        {
+          if((kSM_AppStop == M1_GetAppState()) && (FALSE == M1_GetAppSwitch()) )
+          {
+            MID_Init_AR();
+            g_sSpinMidSwitch.sFaultCtrlM1_Mid &= ~(FAULT_APP_SPIN);
+            g_eMidCmd = kMID_Cmd_Stop;                          /* Reset MID control command */
+            g_sSpinMidSwitch.eAppState = kAppStateMID;          /* MID routines will be processed */ 
+          }
+          else
+            g_sSpinMidSwitch.sFaultCtrlM1_Mid |= FAULT_APP_SPIN;
+                           
+          g_sSpinMidSwitch.bCmdRunMid = FALSE;                  /* Always clear request */
+        }
+        
+        g_sSpinMidSwitch.bCmdRunM1 = FALSE;
+        break;
+    default:
+        /* MID state machine */
+        if(g_sSpinMidSwitch.bCmdRunM1 == TRUE)
+        {
+          if((g_eMidCmd == kMID_Cmd_Stop) && (kMID_Stop == MID_GetActualState()))
+          {
+            g_sSpinMidSwitch.sFaultCtrlM1_Mid &= ~(FAULT_APP_MID);
+            g_sM1Ctrl.eState = kSM_AppInit;                      /* Set Init state for M1 state machine */
+            g_sSpinMidSwitch.eAppState = kAppStateSpin;          /* Switch application state to Spin */
+          }
+          else
+            g_sSpinMidSwitch.sFaultCtrlM1_Mid |= FAULT_APP_MID;
+          
+           /* Always clear request */ 
+          g_sSpinMidSwitch.bCmdRunM1 = FALSE;   
+          g_sSpinMidSwitch.bCmdRunMid = FALSE;
+          break;
+        }
+        
+        g_sSpinMidSwitch.bCmdRunMid = FALSE;
+        MID_Process_BL(&g_eMidCmd);
+        break;
+  }
 }
 
 /*!
@@ -308,7 +480,7 @@ void DemoPositionStimulator(void)
  *
  *@return     none
  */
-void BOARD_Init(void)
+static void BOARD_Init(void)
 {
     /* Init board hardware. */
     BOARD_InitBootPins();
@@ -321,14 +493,14 @@ void BOARD_Init(void)
 }
 
 /*!
- * @brief   void BOARD_InitGPIO(void)
+ * @brief   static void BOARD_InitGPIO(void)
  *           - Initialization of the GPIO peripherals
  *
  * @param   void
  *
  * @return  none
  */
-void BOARD_InitGPIO(void)
+static void BOARD_InitGPIO(void)
 {
     /* SW4 Button configuration */
     const gpio_pin_config_t user_button_config = {
@@ -352,7 +524,7 @@ void BOARD_InitGPIO(void)
  *
  *@return     none
  */
-void BOARD_InitSysTick(void)
+static void BOARD_InitSysTick(void)
 {
     /* Initialize SysTick core timer to run free */
     /* Set period to maximum value 2^24*/

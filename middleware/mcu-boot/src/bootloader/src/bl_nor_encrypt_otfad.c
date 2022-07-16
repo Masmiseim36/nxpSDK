@@ -160,6 +160,13 @@ status_t bl_nor_encrypt_init(void *arg)
         }
         g_otfad_key_blob[index].startaddr = enc_option->context[index].startaddr;
         g_otfad_key_blob[index].endaddr = enc_option->context[index].endaddr;
+#ifdef OTFAD_KEYBLOB_RANDOM_PADDING
+        status = TRNG_GetRandomData(TRNG, &(g_otfad_key_blob[index].zero_fill), sizeof(g_otfad_key_blob[index].zero_fill));
+        if (kStatus_Success != status)
+        {
+            return status;
+        }
+#endif
         // store vital info for data encryption
         memcpy((void *)&(g_otfad_context[index].key), (const void *)&(g_otfad_key_blob[index].key),
                OTFAD_CTX_KEY_BYTE_SIZE);

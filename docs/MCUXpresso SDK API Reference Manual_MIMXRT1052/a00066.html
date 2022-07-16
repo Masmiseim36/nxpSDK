@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -605,8 +605,8 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga4c00c905a9849fed0957c80dee8fbf4c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00066.html#ga4c00c905a9849fed0957c80dee8fbf4c">FSL_SEMC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td></tr>
-<tr class="memdesc:ga4c00c905a9849fed0957c80dee8fbf4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMC driver version 2.3.1.  <a href="#ga4c00c905a9849fed0957c80dee8fbf4c">More...</a><br/></td></tr>
+<tr class="memitem:ga4c00c905a9849fed0957c80dee8fbf4c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00066.html#ga4c00c905a9849fed0957c80dee8fbf4c">FSL_SEMC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 3))</td></tr>
+<tr class="memdesc:ga4c00c905a9849fed0957c80dee8fbf4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMC driver version.  <a href="#ga4c00c905a9849fed0957c80dee8fbf4c">More...</a><br/></td></tr>
 <tr class="separator:ga4c00c905a9849fed0957c80dee8fbf4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -662,9 +662,9 @@ SEMC Memory Access Operation</h2></td></tr>
 <tr class="memitem:ga849744b0431363dde9dbcdf62f89f322"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00066.html#ga849744b0431363dde9dbcdf62f89f322">SEMC_IsInIdle</a> (SEMC_Type *base)</td></tr>
 <tr class="memdesc:ga849744b0431363dde9dbcdf62f89f322"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if SEMC is in idle.  <a href="#ga849744b0431363dde9dbcdf62f89f322">More...</a><br/></td></tr>
 <tr class="separator:ga849744b0431363dde9dbcdf62f89f322"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5dddc066bed4822f0cd3c216fcdfd0f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00066.html#ga5dddc066bed4822f0cd3c216fcdfd0f6">SEMC_SendIPCommand</a> (SEMC_Type *base, <a class="el" href="a00066.html#ga08735245d3d4ede425f932fa71b0e0d4">semc_mem_type_t</a> type, uint32_t address, uint32_t command, uint32_t write, uint32_t *read)</td></tr>
-<tr class="memdesc:ga5dddc066bed4822f0cd3c216fcdfd0f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMC IP command access.  <a href="#ga5dddc066bed4822f0cd3c216fcdfd0f6">More...</a><br/></td></tr>
-<tr class="separator:ga5dddc066bed4822f0cd3c216fcdfd0f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad059eaa4f55d5f336939bab9999fe4b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00066.html#gad059eaa4f55d5f336939bab9999fe4b2">SEMC_SendIPCommand</a> (SEMC_Type *base, <a class="el" href="a00066.html#ga08735245d3d4ede425f932fa71b0e0d4">semc_mem_type_t</a> memType, uint32_t address, uint32_t command, uint32_t write, uint32_t *read)</td></tr>
+<tr class="memdesc:gad059eaa4f55d5f336939bab9999fe4b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">SEMC IP command access.  <a href="#gad059eaa4f55d5f336939bab9999fe4b2">More...</a><br/></td></tr>
+<tr class="separator:gad059eaa4f55d5f336939bab9999fe4b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f22152163146e1106ca425234683e4c"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00066.html#ga7f22152163146e1106ca425234683e4c">SEMC_BuildNandIPCommand</a> (uint8_t userCommand, <a class="el" href="a00066.html#ga6890b74950685e25fd7c0a4bf54abd3b">semc_ipcmd_nand_addrmode_t</a> addrMode, <a class="el" href="a00066.html#gad058900025e14fff21e488e4f13eeaae">semc_ipcmd_nand_cmdmode_t</a> cmdMode)</td></tr>
 <tr class="memdesc:ga7f22152163146e1106ca425234683e4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build SEMC IP command for NAND.  <a href="#ga7f22152163146e1106ca425234683e4c">More...</a><br/></td></tr>
 <tr class="separator:ga7f22152163146e1106ca425234683e4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -2720,7 +2720,7 @@ SEMC Memory Access Operation</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_SEMC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td>
+          <td class="memname">#define FSL_SEMC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 3))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -4192,7 +4192,7 @@ SEMC Memory Access Operation</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga5dddc066bed4822f0cd3c216fcdfd0f6"></a>
+<a class="anchor" id="gad059eaa4f55d5f336939bab9999fe4b2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -4206,7 +4206,7 @@ SEMC Memory Access Operation</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="a00066.html#ga08735245d3d4ede425f932fa71b0e0d4">semc_mem_type_t</a>&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
+          <td class="paramname"><em>memType</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -4242,7 +4242,7 @@ SEMC Memory Access Operation</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>SEMC peripheral base address. </td></tr>
-    <tr><td class="paramname">type</td><td>SEMC memory type. refer to "semc_mem_type_t" </td></tr>
+    <tr><td class="paramname">memType</td><td>SEMC memory type. refer to "semc_mem_type_t" </td></tr>
     <tr><td class="paramname">address</td><td>SEMC device address. </td></tr>
     <tr><td class="paramname">command</td><td>SEMC IP command. For NAND device, we should use the SEMC_BuildNandIPCommand to get the right nand command. For NOR/DBI device, take refer to "semc_ipcmd_nor_dbi_t". For SRAM device, take refer to "semc_ipcmd_sram_t". For SDRAM device, take refer to "semc_ipcmd_sdram_t". </td></tr>
     <tr><td class="paramname">write</td><td>Data for write access. </td></tr>

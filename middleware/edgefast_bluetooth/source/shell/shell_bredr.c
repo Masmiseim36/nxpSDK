@@ -44,7 +44,7 @@ static struct bt_conn *pairing_conn;
 #endif
 #define DATA_BREDR_MTU		48
 
-NET_BUF_POOL_FIXED_DEFINE(data_pool, 4, DATA_BREDR_MTU, NULL);
+NET_BUF_POOL_FIXED_DEFINE(data_pool, 1, DATA_BREDR_MTU, NULL);
 
 #define SDP_CLIENT_USER_BUF_LEN		512
 NET_BUF_POOL_FIXED_DEFINE(sdp_client_pool, CONFIG_BT_MAX_CONN,

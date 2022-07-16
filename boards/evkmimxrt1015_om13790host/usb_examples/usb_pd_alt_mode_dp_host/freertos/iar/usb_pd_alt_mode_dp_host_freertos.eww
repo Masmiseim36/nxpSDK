@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>usb_pd_alt_mode_dp_host_freertos</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+      <member>
+        <project>usb_pd_alt_mode_dp_host_freertos</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_debug</name>
+      <member>
+        <project>usb_pd_alt_mode_dp_host_freertos</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_release</name>
+      <member>
+        <project>usb_pd_alt_mode_dp_host_freertos</project>
+        <configuration>flexspi_nor_release</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/usb_pd_alt_mode_dp_host_freertos.ewp</path>
+  </project>
+</workspace>

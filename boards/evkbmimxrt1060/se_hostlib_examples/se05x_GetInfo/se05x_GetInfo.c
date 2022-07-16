@@ -189,11 +189,12 @@ static sss_status_t sems_lite_verify_GetDataResponse(uint8_t tag_P2, uint8_t *pR
     smStatus_t retStatus  = SM_NOT_OK;
     if (*pRspBufLen > 2) {
         getDataRspLen = *pRspBufLen;
-        retStatus     = (pRspBuf[getDataRspLen - 2] << 8) | (pRspBuf[getDataRspLen - 1]);
+        retStatus     = (smStatus_t)((pRspBuf[getDataRspLen - 2] << 8) | (pRspBuf[getDataRspLen - 1]));
         if (retStatus == SM_OK) {
             if (pRspBuf[0] == tag_P2) {
-                if (pRspBuf[1] > 0) {
-                    *pRspBufLen = pRspBuf[1];
+                // pRspBuf[1] is data length. It should be less than response buffer - tag - lenght - SW1SW2 field.
+                if (pRspBuf[1] <= getDataRspLen - 4) {
+                    *pRspBufLen = (size_t)(pRspBuf[1]);
                     memmove(pRspBuf, pRspBuf + 2, pRspBuf[1]);
                     sss_stat = kStatus_SSS_Success;
                 }

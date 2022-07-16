@@ -107,6 +107,8 @@ var a00055 =
     [ "QTMR_GetStatus", "a00055.html#ga89d05673c74e2f8ccc6c5cbecdab962c", null ],
     [ "QTMR_ClearStatusFlags", "a00055.html#gac453dce78b2f4079aacbb02d857273ae", null ],
     [ "QTMR_SetTimerPeriod", "a00055.html#ga1d1fe996963cd527aabb034888e994b4", null ],
+    [ "QTMR_SetCompareValue", "a00055.html#ga9764da43797074b65a4689a6df999cba", null ],
+    [ "QTMR_SetLoadValue", "a00055.html#ga3db9e42ab0f483438a720139353937f7", null ],
     [ "QTMR_GetCurrentTimerCount", "a00055.html#ga1691975f2406bcaf64a24a065dd2c679", null ],
     [ "QTMR_StartTimer", "a00055.html#ga14d9ab0215127155e559a9f98f4fc7f4", null ],
     [ "QTMR_StopTimer", "a00055.html#gad1a85cff4fe7e16d497b59d9fea2ad58", null ],

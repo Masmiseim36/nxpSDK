@@ -6,6 +6,7 @@
  */
 #include <stdint.h>
 #include <string.h>
+
 #include "bl_dcp.h"
 #include "fsl_device_registers.h"
 
@@ -364,7 +365,7 @@ int dcp_aes_ecb_crypt(dcp_alg_ctx_t *ctx, aes_mode_t mode, uint8_t *input, uint8
 
         dcp_desc.next = NULL;
 // AES ECB mode
-#ifdef CPU_MIMXRT1011CAE4A
+#ifdef MIMXRT1011_SERIES
         dcp_desc.ctrl0 = DCP_CTRL0_CIPHER_INIT(1) | DCP_CTRL0_ENABLE_CIPHER(1) | DCP_CTRL0_DECR_SEMAPHORE(1) |
                          DCP_CTRL0_INTRRUPT(1) | DCP_CTRL0_CIPHER_ENCRYPT(mode) |
                          DCP_CTRL0_KEY_WORDSWAP(OTPMK_SNVS_LOW_FLAG_LE == ctx->_private[KEY_SEL_INDEX] ||

@@ -1,3 +1,4 @@
-<map id="boardkit/frdm&#45;k32l3a6/frdm_k32l3a6.c" name="boardkit/frdm&#45;k32l3a6/frdm_k32l3a6.c">
-<area shape="rect" id="node2" href="$a00644.html" title="The frdm_k32w042.h file defines GPIO pin mappings for FRDM&#45;K64F board. " alt="" coords="21,95,137,121"/>
+<map id="boardkit/lpcxpresso55s16/lpc55s16.h" name="boardkit/lpcxpresso55s16/lpc55s16.h">
+<area shape="rect" id="node2" href="$a04601.html" title="pin_mux.h" alt="" coords="5,95,88,121"/>
+<area shape="rect" id="node4" href="$a04664.html" title="RTE_Device.h" alt="" coords="223,95,326,121"/>
 </map>

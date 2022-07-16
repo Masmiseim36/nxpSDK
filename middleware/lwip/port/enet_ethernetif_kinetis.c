@@ -32,7 +32,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -81,6 +81,7 @@
 
 /* The number of ENET buffers needed to receive frame of maximum length. */
 #define MAX_BUFFERS_PER_FRAME \
+                              \
     ((ENET_FRAME_MAX_FRAMELEN / ENET_RXBUFF_SIZE) + ((ENET_FRAME_MAX_FRAMELEN % ENET_RXBUFF_SIZE == 0) ? 0 : 1))
 
 /* The length of TX buffer. */
@@ -155,8 +156,7 @@ typedef struct rx_pbuf_wrapper
 struct ethernetif
 {
     ENET_Type *base;
-#if (defined(FSL_FEATURE_SOC_ENET_COUNT) && (FSL_FEATURE_SOC_ENET_COUNT > 0)) || \
-    (USE_RTOS && defined(SDK_OS_FREE_RTOS))
+#if (defined(FSL_FEATURE_SOC_ENET_COUNT) && (FSL_FEATURE_SOC_ENET_COUNT > 0)) || (USE_RTOS && defined(SDK_OS_FREE_RTOS))
     enet_handle_t handle;
 #endif
 #if USE_RTOS && defined(SDK_OS_FREE_RTOS)
@@ -248,7 +248,10 @@ err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, e
     {
         case IGMP_ADD_MAC_FILTER:
             /* Adds the ENET device to a multicast group.*/
-            ENET_AddMulticastGroup(ethernetif->base, multicastMacAddr);
+        	if (ethernetif_add_mmac_flt_needed(netif, multicastMacAddr))
+	        {
+				ENET_AddMulticastGroup(ethernetif->base, multicastMacAddr);
+            }
             result = ERR_OK;
             break;
         case IGMP_DEL_MAC_FILTER:
@@ -257,7 +260,10 @@ err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, e
              * Since the ENET_LeaveMulticastGroup() could filter out also other
              * group addresses having the same hash, the call is commented out.
              */
-            /* ENET_LeaveMulticastGroup(ethernetif->base, multicastMacAddr); */
+        	if (ethernetif_rm_mmac_flt_needed(netif, multicastMacAddr))
+	        {
+				ENET_LeaveMulticastGroup(ethernetif->base, multicastMacAddr);
+	        }
             result = ERR_OK;
             break;
         default:
@@ -287,16 +293,18 @@ err_t ethernetif_mld_mac_filter(struct netif *netif, const ip6_addr_t *group, en
     {
         case NETIF_ADD_MAC_FILTER:
             /* Adds the ENET device to a multicast group.*/
-            ENET_AddMulticastGroup(ethernetif->base, multicastMacAddr);
+        	if (ethernetif_add_mmac_flt_needed(netif, multicastMacAddr))
+            {
+                ENET_AddMulticastGroup(ethernetif->base, multicastMacAddr);
+            }
             result = ERR_OK;
             break;
         case NETIF_DEL_MAC_FILTER:
-            /*
-             * Moves the ENET device from a multicast group.
-             * Since the ENET_LeaveMulticastGroup() could filter out also other
-             * group addresses having the same hash, the call is commented out.
-             */
-            /* ENET_LeaveMulticastGroup(ethernetif->base, multicastMacAddr); */
+            /* Moves the ENET device from a multicast group.*/
+        	if (ethernetif_rm_mmac_flt_needed(netif, multicastMacAddr))
+	        {
+        		ENET_LeaveMulticastGroup(ethernetif->base, multicastMacAddr);
+        	}
             result = ERR_OK;
             break;
         default:
@@ -308,7 +316,7 @@ err_t ethernetif_mld_mac_filter(struct netif *netif, const ip6_addr_t *group, en
 }
 #endif
 
-/*! @brief Defines the ENET Rx memeory buffer free function pointer. */
+/*! @brief Defines the ENET Rx memory buffer free function pointer. */
 static void *ethernetif_rx_alloc(ENET_Type *base, void *userData, uint8_t ringId)
 {
     struct netif *netif           = (struct netif *)userData;

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : IMAGE.h
@@ -82,6 +82,7 @@ Purpose     : Image include
 #define IMAGE_CF_ALPHA    (1 << 2)      // Needs to be set if alpha blending is required (PNG).
 #define IMAGE_CF_ATTACHED (1 << 3)      // Widget size is fixed to the parent border.
 #define IMAGE_CF_AUTOSIZE (1 << 4)      // Widget size is taken from the attached image.
+#define IMAGE_CF_LQ       (1 << 5)      // Fast mode (lower quality) should be used for rotating/scaling.
 
 /*********************************************************************
 *
@@ -124,7 +125,15 @@ void IMAGE_SetPNG      (IMAGE_Handle hObj, const void * pData, U32 FileSize);
 void IMAGE_SetPNGEx    (IMAGE_Handle hObj, GUI_GET_DATA_FUNC * pfGetData, void * pVoid);
 void IMAGE_SetTiled    (IMAGE_Handle hObj, int OnOff);
 int  IMAGE_SetUserData (IMAGE_Handle hObj, const void * pSrc, int NumBytes);
+void IMAGE_SetAlign    (IMAGE_Handle hObj, int Align);
+void IMAGE_SetOffset   (IMAGE_Handle hObj, int xOff, int yOff);
 
+#if GUI_SUPPORT_MEMDEV
+U8   IMAGE_SetAlpha    (IMAGE_Handle hObj, U8 Alpha);
+int  IMAGE_SetAngle    (IMAGE_Handle hObj, unsigned Angle);
+void IMAGE_EnableLQ    (IMAGE_Handle hObj, int OnOff);
+int  IMAGE_SetScale    (IMAGE_Handle hObj, unsigned Scale);
+#endif
 
 #if defined(__cplusplus)
   }

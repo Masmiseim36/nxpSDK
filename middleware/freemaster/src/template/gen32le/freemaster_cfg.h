@@ -17,7 +17,7 @@
  * the Peripheral tool. The ConfigTools will also help you to configure the physical communication 
  * interface, device pins and clocks.
  * 
- * EDIT MANUALLY: Alternatively, you may edit this file manually. See options marked as “TODO:” 
+ * EDIT MANUALLY: Alternatively, you may edit this file manually. See options marked as 'TODO:' 
  * below. The FMSTR_TRANSPORT and related low-level communication driver options must be set. 
  * Also ensure that the configuration, device pins and clocks are initialized by the application.
  * 
@@ -63,6 +63,7 @@
 // FMSTR_NET      -   Network interface supporting TCP or UDP protocols
 //    FMSTR_NET_LWIP_TCP       -   TCP using lwIP stack
 //    FMSTR_NET_LWIP_UDP       -   UDP using lwIP stack
+//    FMSTR_NET_SEGGER_RTT     -   SEGGER RTT using J-Link debugger
 // FMSTR_PDBDM    -   Packet Driven BDM (direct memory access via JTAG/BDM debug probes). No low-level driver used.
 
 // Select communication interface
@@ -72,8 +73,8 @@
 #define FMSTR_NET_DRV    // TODO: when using FMSTR_NET: select TCP, UDP or other low-level communication driver
 
 // Define communication interface base address or leave undefined for runtime setting
-#undef FMSTR_SERIAL_BASE // Serial base will be assigned in runtime (when FMSTR_USE_UART)
-#undef FMSTR_CAN_BASE    // CAN base will be assigned in runtime (when FMSTR_USE_FLEXCAN)
+#undef FMSTR_SERIAL_BASE // Serial base will be assigned in runtime (for FMSTR_SERIAL transport)
+#undef FMSTR_CAN_BASE    // CAN base will be assigned in runtime (for FMSTR_CAN transoprot)
 
 // FlexCAN-specific, communication message buffers
 #define FMSTR_FLEXCAN_TXMB 0

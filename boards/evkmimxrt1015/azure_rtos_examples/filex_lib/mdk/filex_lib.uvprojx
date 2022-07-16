@@ -350,7 +350,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1015DAF5A, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1736,12 +1736,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2094,7 +2094,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1015DAF5A, TX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc</IncludePath>
+              <IncludePath>..;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3480,12 +3480,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>

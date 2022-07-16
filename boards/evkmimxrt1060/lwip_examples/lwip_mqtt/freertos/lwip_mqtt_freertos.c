@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  *
@@ -17,6 +17,7 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#include "fsl_silicon_id.h"
 #include "fsl_phy.h"
 
 #include "lwip/api.h"
@@ -29,7 +30,7 @@
 #include "lwip/timeouts.h"
 #include "netif/ethernet.h"
 #include "enet_ethernetif.h"
-#include "lwip_mqtt_id.h"
+#include "fsl_silicon_id.h"
 
 #include "ctype.h"
 #include "stdio.h"
@@ -86,14 +87,6 @@
 #define configGW_ADDR3 100
 #endif
 
-/* MAC address configuration. */
-#ifndef configMAC_ADDR
-#define configMAC_ADDR                     \
-    {                                      \
-        0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
-    }
-#endif
-
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
@@ -147,7 +140,7 @@ static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle =
 static mqtt_client_t *mqtt_client;
 
 /*! @brief MQTT client ID string. */
-static char client_id[40];
+static char client_id[(SILICONID_MAX_LENGTH * 2) + 5];
 
 /*! @brief MQTT client information. */
 static const struct mqtt_connect_client_info_t mqtt_client_info = {
@@ -170,6 +163,12 @@ static ip_addr_t mqtt_addr;
 /*! @brief Indicates connection to MQTT broker. */
 static volatile bool connected = false;
 
+/*! @brief Binary semaphore to block thread until valid IPv4 address is obtained from DHCP*/
+static SemaphoreHandle_t sem_ipv4_addr_valid;
+
+/*! @brief Memory for lwIP stack needed registration of callback*/
+NETIF_DECLARE_EXT_CALLBACK(netif_ext_cb_mem);
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -189,6 +188,20 @@ void delay(void)
 }
 
 
+
+/*!
+ * @brief Callback called by lwIP stack on various events.
+ */
+static void netif_ext_cb(struct netif *cb_netif, netif_nsc_reason_t reason, const netif_ext_callback_args_t *args)
+{
+    (void)cb_netif;
+    (void)args;
+
+    if (0U != (reason & (netif_nsc_reason_t)LWIP_NSC_IPV4_ADDR_VALID))
+    {
+        (void)xSemaphoreGive(sem_ipv4_addr_valid);
+    }
+}
 
 /*!
  * @brief Called when subscription request finishes.
@@ -369,7 +382,6 @@ static void publish_message(void *ctx)
 static void app_thread(void *arg)
 {
     struct netif *netif = (struct netif *)arg;
-    struct dhcp *dhcp;
     err_t err;
     int i;
 
@@ -377,20 +389,7 @@ static void app_thread(void *arg)
 
     PRINTF("Getting IP address from DHCP...\r\n");
 
-    do
-    {
-        if (netif_is_up(netif))
-        {
-            dhcp = netif_dhcp_data(netif);
-        }
-        else
-        {
-            dhcp = NULL;
-        }
-
-        sys_msleep(20U);
-
-    } while ((dhcp == NULL) || (dhcp->state != DHCP_STATE_BOUND));
+    xSemaphoreTake(sem_ipv4_addr_valid, portMAX_DELAY);
 
     PRINTF("\r\nIPv4 Address     : %s\r\n", ipaddr_ntoa(&netif->ip_addr));
     PRINTF("IPv4 Subnet mask : %s\r\n", ipaddr_ntoa(&netif->netmask));
@@ -448,20 +447,40 @@ static void app_thread(void *arg)
 
 static void generate_client_id(void)
 {
-    uint32_t mqtt_id[MQTT_ID_SIZE];
-    int res;
+    uint8_t silicon_id[SILICONID_MAX_LENGTH];
+    const char *hex = "0123456789abcdef";
+    status_t status;
+    uint32_t id_len;
+    int idx = 0;
+    int i;
 
-    get_mqtt_id(&mqtt_id[0]);
+    /* Get unique ID of SoC */
+    status = SILICONID_GetID(&silicon_id[0], &id_len);
+    assert(status == kStatus_Success);
+    assert(id_len > 0U);
+    (void)status;
 
-    res = snprintf(client_id, sizeof(client_id), "nxp_%08lx%08lx%08lx%08lx", mqtt_id[3], mqtt_id[2], mqtt_id[1],
-                   mqtt_id[0]);
-    if ((res < 0) || (res >= sizeof(client_id)))
+    /* Covert unique ID to client ID string in form: nxp_hex-unique-id */
+
+    /* Check if client_id can accomodate prefix, id and terminator */
+    assert(sizeof(client_id) >= (5U + (2U * id_len)));
+
+    /* Fill in prefix */
+    client_id[idx++] = 'n';
+    client_id[idx++] = 'x';
+    client_id[idx++] = 'p';
+    client_id[idx++] = '_';
+
+    /* Append unique ID */
+    for (i = (int)id_len - 1; i >= 0; i--)
     {
-        PRINTF("snprintf failed: %d\r\n", res);
-        while (1)
-        {
-        }
+        uint8_t value    = silicon_id[i];
+        client_id[idx++] = hex[value >> 4];
+        client_id[idx++] = hex[value & 0xFU];
     }
+
+    /* Terminate string */
+    client_id[idx] = '\0';
 }
 
 /*!
@@ -474,8 +493,10 @@ static void stack_init(void *arg)
     static struct netif netif;
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyHandle  = &phyHandle,
+        .phyHandle = &phyHandle,
+#ifdef configMAC_ADDR
         .macAddress = configMAC_ADDR,
+#endif
     };
 
     LWIP_UNUSED_ARG(arg);
@@ -483,13 +504,21 @@ static void stack_init(void *arg)
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
+#ifndef configMAC_ADDR
+    /* Set special address for each chip. */
+    (void)SILICONID_ConvertToMacAddr(&enet_config.macAddress);
+#endif
+
     IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
     IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
     IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
 
     tcpip_init(NULL, NULL);
 
+    sem_ipv4_addr_valid = xSemaphoreCreateBinary();
     LOCK_TCPIP_CORE();
+    netif_add_ext_callback(&netif_ext_cb_mem, netif_ext_cb);
+
     mqtt_client = mqtt_client_new();
     UNLOCK_TCPIP_CORE();
     if (mqtt_client == NULL)

@@ -17,10 +17,9 @@
 #ifndef _H_BT_OS_
 #define _H_BT_OS_
 
+#include "eBT_os.h"
 /* EtherMind Features */
 #include "BT_features.h"
-
-#include "eBT_os.h"
 
 #endif /* _H_BT_OS_ */
 

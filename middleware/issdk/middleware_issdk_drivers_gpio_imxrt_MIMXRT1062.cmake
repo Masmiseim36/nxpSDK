@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_issdk_drivers_gpio_imxrt component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -11,4 +11,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/drivers/gpio
 )
 
+
+include(middleware_issdk_drivers_cmsis_drivers_MIMXRT1062)
 

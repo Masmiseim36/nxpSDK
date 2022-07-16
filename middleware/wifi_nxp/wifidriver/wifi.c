@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -92,7 +76,7 @@ typedef enum __mlan_status
 
 static os_thread_stack_define(wifi_core_stack, WIFI_CORE_STACK_SIZE * sizeof(portSTACK_TYPE));
 static os_thread_stack_define(wifi_drv_stack, 1024);
-static os_queue_pool_define(g_io_events_queue_data, sizeof(struct bus_message) * MAX_EVENTS);
+static os_queue_pool_define(g_io_events_queue_data, (int)(sizeof(struct bus_message) * MAX_EVENTS));
 #ifdef CONFIG_WMM
 static os_queue_pool_define(g_tx_data_queue_data, sizeof(struct bus_message) * MAX_EVENTS);
 #endif
@@ -899,7 +883,7 @@ void wifi_event_completion(int event, enum wifi_event_reason result, void *data)
 
     msg.data   = data;
     msg.reason = result;
-    msg.event  = event;
+    msg.event  = (uint16_t)event;
     if (os_queue_send(wm_wifi.wlc_mgr_event_queue, &msg, OS_NO_WAIT) != WM_SUCCESS)
     {
         wifi_e("Failed to send response on Queue");
@@ -1013,7 +997,7 @@ static int remove_mcast_ip(uint8_t *mac_addr)
 static int make_filter_list(char *mlist, int maxlen)
 {
     mcast_filter *node_t;
-    uint8_t maddr_cnt = 0;
+    int maddr_cnt = 0;
     (void)wifi_get_mcastf_lock();
     node_t = wm_wifi.start_list;
     while (node_t != NULL)
@@ -1046,12 +1030,12 @@ void wifi_get_ipv4_multicast_mac(uint32_t ipaddr, uint8_t *mac_addr)
      */
     for (i = 2; i >= 0; i--, j++)
     {
-        mac_addr[j] = (char)(mac_addr_r >> 8 * i) & 0xFF;
+        mac_addr[j] = (uint8_t)((char)(mac_addr_r >> 8 * i) & 0xFF);
     }
 
     for (i = 2; i >= 0; i--, j++)
     {
-        mac_addr[j] = (char)(ipaddr >> 8 * i) & 0xFF;
+        mac_addr[j] = (uint8_t)((char)(ipaddr >> 8 * i) & 0xFF);
     }
 }
 
@@ -1094,8 +1078,8 @@ int wifi_add_mcast_filter(uint8_t *mac_addr)
     {
         return ret;
     }
-    len = make_filter_list(mlist, MAX_MCAST_LEN);
-    return wifi_set_mac_multicast_addr(mlist, len);
+    len = make_filter_list(mlist, (int)MAX_MCAST_LEN);
+    return wifi_set_mac_multicast_addr(mlist, (t_u32)len);
 }
 
 int wifi_remove_mcast_filter(uint8_t *mac_addr)
@@ -1118,8 +1102,8 @@ int wifi_remove_mcast_filter(uint8_t *mac_addr)
     {
         return ret;
     }
-    len = make_filter_list(mlist, MAX_MCAST_LEN);
-    ret = wifi_set_mac_multicast_addr(mlist, len);
+    len = make_filter_list(mlist, (int)MAX_MCAST_LEN);
+    ret = wifi_set_mac_multicast_addr(mlist, (uint32_t)len);
     return ret;
 }
 
@@ -1158,7 +1142,7 @@ int wifi_get_scan_result(unsigned int index, struct wifi_scan_result **desc)
 {
     (void)memset(&common_desc, 0x00, sizeof(struct wifi_scan_result));
     int rv = wrapper_bssdesc_first_set(
-        index, common_desc.bssid, &common_desc.is_ibss_bit_set, &common_desc.ssid_len, common_desc.ssid,
+        (int)index, common_desc.bssid, &common_desc.is_ibss_bit_set, &common_desc.ssid_len, common_desc.ssid,
         &common_desc.Channel, &common_desc.RSSI, &common_desc.beacon_period, &common_desc.dtim_period,
         &common_desc.WPA_WPA2_WEP, &common_desc.wpa_mcstCipher, &common_desc.wpa_ucstCipher,
         &common_desc.rsn_mcstCipher, &common_desc.rsn_ucstCipher, &common_desc.is_pmf_required);
@@ -1169,7 +1153,7 @@ int wifi_get_scan_result(unsigned int index, struct wifi_scan_result **desc)
     }
 
     /* Country info not populated */
-    rv = wrapper_bssdesc_second_set(index, &common_desc.phtcap_ie_present, &common_desc.phtinfo_ie_present,
+    rv = wrapper_bssdesc_second_set((int)index, &common_desc.phtcap_ie_present, &common_desc.phtinfo_ie_present,
                                     &common_desc.wmm_ie_present, &common_desc.band, &common_desc.wps_IE_exist,
                                     &common_desc.wps_session, &common_desc.wpa2_entp_IE_exist, &common_desc.trans_mode,
                                     common_desc.trans_bssid, &common_desc.trans_ssid_len, common_desc.trans_ssid);
@@ -1225,6 +1209,8 @@ static void wifi_driver_main_loop(void *argv)
     int ret;
     struct bus_message msg;
 
+    (void)memset((void *)&msg, 0, sizeof(struct bus_message));
+
     /* Main Loop */
     while (true)
     {
@@ -1262,20 +1248,20 @@ static void wifi_driver_main_loop(void *argv)
  * This function should be called when a packet is ready to be read
  * from the interface.
  */
-static void wifi_core_input(void)
+static void wifi_core_input(void *argv)
 {
     int sta;
 
     for (;;)
     {
-        sta = os_enter_critical_section();
+        sta = (int)os_enter_critical_section();
         /* Allow interrupt handler to deliver us a packet */
         g_txrx_flag = true;
         //		SDIOC_IntMask(SDIOC_INT_CDINT, UNMASK);
         //		SDIOC_IntSigMask(SDIOC_INT_CDINT, UNMASK);
         sdio_enable_interrupt();
 
-        os_exit_critical_section(sta);
+        os_exit_critical_section((unsigned long)sta);
 
         /* Wait till we receive a packet from SDIO */
         (void)os_event_notify_get(OS_WAIT_FOREVER);
@@ -1333,7 +1319,8 @@ static int wifi_core_init(void)
     (void)wifi_get_command_resp_sem(OS_WAIT_FOREVER);
     wm_wifi.io_events_queue_data = g_io_events_queue_data;
 
-    ret = os_queue_create(&wm_wifi.io_events, "io-events", sizeof(struct bus_message), &wm_wifi.io_events_queue_data);
+    ret = os_queue_create(&wm_wifi.io_events, "io-events", (int)sizeof(struct bus_message),
+                          &wm_wifi.io_events_queue_data);
     if (ret != WM_SUCCESS)
     {
         wifi_e("Create io events queue failed");
@@ -1362,8 +1349,8 @@ static int wifi_core_init(void)
         goto fail;
     }
 
-    ret = os_thread_create(&wm_wifi.wm_wifi_core_thread, "stack_dispatcher", (void (*)(os_thread_arg_t))wifi_core_input,
-                           NULL, &wifi_core_stack, OS_PRIO_1);
+    ret = os_thread_create(&wm_wifi.wm_wifi_core_thread, "stack_dispatcher", wifi_core_input, NULL, &wifi_core_stack,
+                           OS_PRIO_1);
 
     if (ret != WM_SUCCESS)
     {
@@ -1472,7 +1459,7 @@ int wifi_init(const uint8_t *fw_ram_start_addr, const size_t size)
         return WM_SUCCESS;
     }
 
-    int ret = sd_wifi_init(WLAN_TYPE_NORMAL, WLAN_FW_IN_RAM, fw_ram_start_addr, size);
+    int ret = (int)sd_wifi_init(WLAN_TYPE_NORMAL, WLAN_FW_IN_RAM, fw_ram_start_addr, size);
     if (ret != 0)
     {
         wifi_e("sd_wifi_init failed. status code %d", ret);
@@ -1514,7 +1501,7 @@ int wifi_init_fcc(const uint8_t *fw_ram_start_addr, const size_t size)
     if (wifi_init_done != 0U)
         return WM_SUCCESS;
 
-    int ret = sd_wifi_init(WLAN_TYPE_FCC_CERTIFICATION, WLAN_FW_IN_RAM, fw_ram_start_addr, size);
+    int ret = (int)sd_wifi_init(WLAN_TYPE_FCC_CERTIFICATION, WLAN_FW_IN_RAM, fw_ram_start_addr, size);
     if (ret != 0)
     {
         wifi_e("sd_wifi_init failed. status code %d", ret);

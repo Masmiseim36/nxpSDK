@@ -4,23 +4,7 @@
  *
  *  Copyright 2008-2021 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -143,6 +127,7 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->pmfcfg.mfpc = 0;
     priv->pmfcfg.mfpr = 0;
 
+
     for (i = 0; i < MAX_NUM_TID; i++)
         priv->addba_reject[i] = ADDBA_RSP_STATUS_ACCEPT;
     priv->max_amsdu = 0;
@@ -208,6 +193,7 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->ext_scan = 1;
 #endif
     pmadapter->scan_probes = DEFAULT_PROBES;
+
 
     /* fixme: enable this later when required */
     pmadapter->multiple_dtim         = MRVDRV_DEFAULT_MULTIPLE_DTIM;

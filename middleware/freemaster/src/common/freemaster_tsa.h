@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -22,7 +22,7 @@
 #ifndef __FREEMASTER_TSA_H
 #define __FREEMASTER_TSA_H
 
-#include "freemaster_defcfg.h"
+#include "freemaster.h"
 
 /*****************************************************************************
  Target-side Address translation structures and macros
@@ -216,7 +216,7 @@ typedef struct
  * it is platform-specific, so made as external constant variable and
  * implemented in freemaster_tsa.c */
 #if FMSTR_USE_TSA > 0
-extern FMSTR_TSA_CDECL char FMSTR_TSA_POINTER[];
+extern const char FMSTR_TSA_POINTER[];
 #else
 #define FMSTR_TSA_POINTER ""
 #endif
@@ -233,7 +233,7 @@ extern FMSTR_TSA_CDECL char FMSTR_TSA_POINTER[];
 #if FMSTR_USE_TSA > 0
 
 #define FMSTR_TSA_FUNC(id)       FMSTR_TsaGetTable_##id
-#define FMSTR_TSA_FUNC_PROTO(id) const FMSTR_TSA_ENTRY *FMSTR_TSA_FUNC(id)(FMSTR_SIZE * tableSize)
+#define FMSTR_TSA_FUNC_PROTO(id) FMSTR_ADDR FMSTR_TSA_FUNC(id)(FMSTR_SIZE *tableSize)
 
 #define FMSTR_TSA_TABLE_BEGIN(id) \
     FMSTR_TSA_FUNC_PROTO(id);     \
@@ -276,7 +276,7 @@ extern FMSTR_TSA_CDECL char FMSTR_TSA_POINTER[];
 /* TSA entry describing virtual file content statically mapped in memory (static content cached by PC)
    The 'filename' may be specified with relative paths using normal slash */
 #define FMSTR_TSA_MEMFILE(filename, filemem, filesize) \
-    {FMSTR_TSA_RO_ENTRY(filename, FMSTR_TSA_SPECIAL_MEM ":MEMFILE", &(filemem), (filesize))},
+    {FMSTR_TSA_RO_ENTRY(filename, FMSTR_TSA_SPECIAL_MEM ":MEMFILE", filemem, (filesize))},
 
 /* TSA entry describing project to be opened in FreeMASTER
    'project_uri' may be a existing file (one of FILE entries) or a web URI */
@@ -313,7 +313,7 @@ extern FMSTR_TSA_CDECL char FMSTR_TSA_POINTER[];
     {                                        \
         *tableSize = sizeof(fmstr_tsatable); \
     }                                        \
-    return fmstr_tsatable;                   \
+    return (FMSTR_ADDR)fmstr_tsatable;       \
     }
 
 #else /* FMSTR_USE_TSA */
@@ -350,10 +350,10 @@ extern "C" {
 #if FMSTR_USE_TSA > 0
 
 #define FMSTR_TSA_TABLE_LIST_BEGIN()                                                       \
-    const FMSTR_TSA_ENTRY *FMSTR_TsaGetTable(FMSTR_SIZE tableIndex, FMSTR_SIZE *tableSize) \
+    FMSTR_ADDR FMSTR_TsaGetTable(FMSTR_SIZE tableIndex, FMSTR_SIZE *tableSize) \
     {
 #define FMSTR_TSA_TABLE(id)                   \
-    if (tableIndex-- == 0U)                    \
+    if (tableIndex-- == 0U)                   \
     {                                         \
         FMSTR_TSA_FUNC_PROTO(id);             \
         return FMSTR_TSA_FUNC(id)(tableSize); \
@@ -363,7 +363,7 @@ extern "C" {
 #if FMSTR_USE_TSA_DYNAMIC > 0
 #define FMSTR_TSA_TABLE_LIST_END()                         \
     {                                                      \
-        if (tableIndex-- == 0U)                             \
+        if (tableIndex-- == 0U)                            \
         {                                                  \
             FMSTR_TSA_FUNC_PROTO(dynamic_tsa);             \
             return FMSTR_TSA_FUNC(dynamic_tsa)(tableSize); \
@@ -387,8 +387,8 @@ extern "C" {
 ******************************************************************************/
 
 /* master TSA table-retrieval function */
-const FMSTR_TSA_ENTRY *FMSTR_TsaGetTable(FMSTR_SIZE tableIndex, FMSTR_SIZE *tableSize);
-const FMSTR_TSA_ENTRY *FMSTR_FindUresInTsa(FMSTR_ADDR resourceId);
+FMSTR_ADDR FMSTR_TsaGetTable(FMSTR_SIZE tableIndex, FMSTR_SIZE *tableSize);
+FMSTR_ADDR FMSTR_FindUresInTsa(FMSTR_ADDR resourceId);
 FMSTR_TSA_FUNC_PROTO(dynamic_tsa);
 
 #else /* FMSTR_USE_TSA */

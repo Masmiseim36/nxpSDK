@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../components/osa;..;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/osa;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -394,46 +394,6 @@
               <FileName>board_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board_setup.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -519,6 +479,56 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_threadx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_threadx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -854,6 +864,11 @@
               <FileName>ux_device_class_pima.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_printer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_printer.h</FilePath>
             </File>
             <File>
               <FileName>ux_device_class_rndis.h</FileName>
@@ -1843,12 +1858,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2031,9 +2046,34 @@
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2364,9 +2404,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, DATA_SECTION_IS_CACHEABLE=1, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../components/osa;..;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/osa;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2430,46 +2470,6 @@
               <FileName>board_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board_setup.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -2555,6 +2555,56 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_threadx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_threadx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2890,6 +2940,11 @@
               <FileName>ux_device_class_pima.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_printer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_printer.h</FilePath>
             </File>
             <File>
               <FileName>ux_device_class_rndis.h</FileName>
@@ -3879,12 +3934,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4067,9 +4122,34 @@
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4400,9 +4480,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../components/osa;..;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/osa;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4466,46 +4546,6 @@
               <FileName>board_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board_setup.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -4591,6 +4631,56 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_threadx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_threadx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4926,6 +5016,11 @@
               <FileName>ux_device_class_pima.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_printer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_printer.h</FilePath>
             </File>
             <File>
               <FileName>ux_device_class_rndis.h</FileName>
@@ -5915,12 +6010,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6103,9 +6198,34 @@
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6436,9 +6556,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, __CLANG_ARM, CPU_MIMXRT1021DAG5A, MIMXRT, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, SCANF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SCANF_ADVANCED_ENABLE=0, SERIAL_PORT_TYPE_UART=1, SAMPLE_PACKET_COUNT=20, DATA_SECTION_IS_CACHEABLE=1, UX_OTG_SUPPORT, UX_INCLUDE_USER_DEFINE_FILE, NX_INCLUDE_USER_DEFINE_FILE, FX_INCLUDE_USER_DEFINE_FILE, TX_INCLUDE_USER_DEFINE_FILE, FSL_RTOS_THREADX, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../middleware/usb/include;../../../../../middleware/usb/phy;../../../../../components/osa;..;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../components/osa;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1021/drivers;../../../../../devices/MIMXRT1021;../../../../../devices/MIMXRT1021/utilities/str;../../../../../devices/MIMXRT1021/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1021/xip;../../../xip;../../../../../rtos/azure-rtos/usbx/common/core/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc;../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc;../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/netxduo/addons/auto_ip;../../../../../rtos/azure-rtos/netxduo/addons/cloud;../../../../../rtos/azure-rtos/netxduo/addons/BSD;../../../../../rtos/azure-rtos/netxduo/addons/dhcp;../../../../../rtos/azure-rtos/netxduo/addons/dns;../../../../../rtos/azure-rtos/netxduo/addons/ftp;../../../../../rtos/azure-rtos/netxduo/addons/http;../../../../../rtos/azure-rtos/netxduo/addons/lwm2m;../../../../../rtos/azure-rtos/netxduo/addons/mdns;../../../../../rtos/azure-rtos/netxduo/addons/mqtt;../../../../../rtos/azure-rtos/netxduo/addons/nat;../../../../../rtos/azure-rtos/netxduo/addons/pop3;../../../../../rtos/azure-rtos/netxduo/addons/ppp;../../../../../rtos/azure-rtos/netxduo/addons/pppoe;../../../../../rtos/azure-rtos/netxduo/addons/ptp;../../../../../rtos/azure-rtos/netxduo/addons/smtp;../../../../../rtos/azure-rtos/netxduo/addons/snmp;../../../../../rtos/azure-rtos/netxduo/addons/sntp;../../../../../rtos/azure-rtos/netxduo/addons/telnet;../../../../../rtos/azure-rtos/netxduo/addons/tftp;../../../../../rtos/azure-rtos/netxduo/addons/web;../../../../../rtos/azure-rtos/netxduo/common/inc;../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/inc;../../../../../rtos/azure-rtos/netxduo/nx_secure/ports;../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/ac6/inc;../../../../../rtos/azure-rtos/filex/common/inc;../../../../../rtos/azure-rtos/filex/ports/generic/inc;../../../../../rtos/azure-rtos/threadx/common/inc;../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/ac6/inc;../../../../../CMSIS/Core/Include;../../../../../middleware/usb/include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -6502,46 +6622,6 @@
               <FileName>board_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board_setup.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_misc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_spec.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/usb/phy/usb_phy.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_phy.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_bm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_os_abstraction_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
               <FileName>board.c</FileName>
@@ -6627,6 +6707,56 @@
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/osa</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_threadx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_threadx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_threadx.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/phy</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_phy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_phy.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/phy/usb_phy.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6962,6 +7092,11 @@
               <FileName>ux_device_class_pima.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</FilePath>
+            </File>
+            <File>
+              <FileName>ux_device_class_printer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_printer.h</FilePath>
             </File>
             <File>
               <FileName>ux_device_class_rndis.h</FileName>
@@ -7951,12 +8086,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>azure-rtos/filex/ports/cortex_m7/ac6/inc</GroupName>
+          <GroupName>azure-rtos/filex/ports/generic/inc</GroupName>
           <Files>
             <File>
               <FileName>fx_port.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../rtos/azure-rtos/filex/ports/cortex_m7/ac6/inc/fx_port.h</FilePath>
+              <FilePath>../../../../../rtos/azure-rtos/filex/ports/generic/inc/fx_port.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -8139,9 +8274,34 @@
               <FilePath>../../../../../CMSIS/Core/Include/core_cm7.h</FilePath>
             </File>
             <File>
+              <FileName>cachel1_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Core/Include/cachel1_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>mpu_armv7.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Core/Include/mpu_armv7.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/include</GroupName>
+          <Files>
+            <File>
+              <FileName>usb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_misc.h</FilePath>
+            </File>
+            <File>
+              <FileName>usb_spec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/usb/include/usb_spec.h</FilePath>
             </File>
           </Files>
         </Group>

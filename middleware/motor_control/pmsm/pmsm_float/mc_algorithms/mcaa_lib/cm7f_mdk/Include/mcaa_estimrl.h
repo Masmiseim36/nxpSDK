@@ -59,6 +59,10 @@ extern "C" {
         MCAA_EstimRLInit_FLT_FC(u32SamplingFreq, psParam, psCtrl)
 #define MCAA_EstimRL_FLT_C(fltUDcBus, psIAlBeFbck, psCtrl, sParam, psUAlBeReq) \
         MCAA_EstimRL_FLT_FC(fltUDcBus, psIAlBeFbck, psCtrl, sParam, psUAlBeReq)
+#define MCAA_EstimRLInit_FLT_CRam(u32SamplingFreq, psParam, psCtrl)                    \
+        MCAA_EstimRLInit_FLT_FCRam(u32SamplingFreq, psParam, psCtrl)
+#define MCAA_EstimRL_FLT_CRam(fltUDcBus, psIAlBeFbck, psCtrl, psParam, psUAlBeReq)     \
+        MCAA_EstimRL_FLT_FCRam(fltUDcBus, psIAlBeFbck, psCtrl, psParam, psUAlBeReq)
 
 /*******************************************************************************
 * Types

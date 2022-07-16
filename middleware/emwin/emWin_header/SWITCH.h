@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : SWITCH.h
@@ -169,18 +169,19 @@ void SWITCH_Callback(WM_MESSAGE *pMsg);
 *
 **********************************************************************
 */
-void SWITCH_AnimState   (SWITCH_Handle hObj, int State);
-int  SWITCH_GetState    (SWITCH_Handle hObj);
-int  SWITCH_GetUserData (SWITCH_Handle hObj, void * pDest, int NumBytes);
-void SWITCH_SetBitmap   (SWITCH_Handle hObj, unsigned int Index, const GUI_BITMAP * pBitmap);
-void SWITCH_SetFont     (SWITCH_Handle hObj, const GUI_FONT * pfont);
-void SWITCH_SetMode     (SWITCH_Handle hObj, int Mode);
-void SWITCH_SetPeriod   (SWITCH_Handle hObj, I32 Period);
-void SWITCH_SetState    (SWITCH_Handle hObj, int State);
-int  SWITCH_SetText     (SWITCH_Handle hObj, unsigned int Index, const char * pText);
-void SWITCH_SetTextColor(SWITCH_Handle hObj, unsigned int Index, GUI_COLOR Color);
-int  SWITCH_SetUserData (SWITCH_Handle hObj, const void * pSrc, int NumBytes);
-void SWITCH_Toggle      (SWITCH_Handle hObj);
+void SWITCH_AnimState       (SWITCH_Handle hObj, int State);
+void SWITCH_DisableAnimation(SWITCH_Handle hObj, U8 Disable);
+int  SWITCH_GetState        (SWITCH_Handle hObj);
+int  SWITCH_GetUserData     (SWITCH_Handle hObj, void * pDest, int NumBytes);
+void SWITCH_SetBitmap       (SWITCH_Handle hObj, unsigned int Index, const GUI_BITMAP * pBitmap);
+void SWITCH_SetFont         (SWITCH_Handle hObj, const GUI_FONT * pfont);
+void SWITCH_SetMode         (SWITCH_Handle hObj, int Mode);
+void SWITCH_SetPeriod       (SWITCH_Handle hObj, I32 Period);
+void SWITCH_SetState        (SWITCH_Handle hObj, int State);
+int  SWITCH_SetText         (SWITCH_Handle hObj, unsigned int Index, const char * pText);
+void SWITCH_SetTextColor    (SWITCH_Handle hObj, unsigned int Index, GUI_COLOR Color);
+int  SWITCH_SetUserData     (SWITCH_Handle hObj, const void * pSrc, int NumBytes);
+void SWITCH_Toggle          (SWITCH_Handle hObj);
 
 /*********************************************************************
 *

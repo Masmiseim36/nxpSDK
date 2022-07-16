@@ -8,6 +8,11 @@
   The development versions (X.Y.Z.dev) do not refer to a single source code snapshots. To avoid ambiguity,
   change log below contains SHA-1 hashes of GIT commits used when importing the code into the SDK.
 
+  - 2.2.0_rev6
+    - New features:
+      - Ported lwIP 2.2.0.dev (2022-03-25, branch: master, SHA-1: 124dc0a64ef5d7c14a27e3115e5888df6559cb72) to MCUXpresso SDK.
+      - Implemented leaving of multicast groups on ENET and ENET QOS.
+
   - 2.2.0_rev5
     - New features:
       - Ported lwIP 2.2.0.dev (2021-05-11, branch: master, SHA-1: 7ec4e9be304e7f8953740f10b2c810a292e89449) to MCUXpresso SDK.

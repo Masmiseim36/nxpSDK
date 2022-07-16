@@ -3,25 +3,9 @@
  *  @brief This file contains related macros, enum, and struct
  *  of 11n RxReordering functionalities
  *
- *  Copyright 2008-2021 NXP
+ *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -78,7 +62,7 @@ Change log:
 #define DEFAULT_SEQ_NUM 0xffff
 
 /** Indicate packet has been dropped in FW */
-#define RX_PKT_DROPPED_IN_FW 0xffffffff
+#define RX_PKT_DROPPED_IN_FW 0xffffffffU
 
 mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seqNum, t_u16 tid, t_u8 *ta, t_u8 pkttype, void *payload);
 void mlan_11n_delete_bastream_tbl(mlan_private *priv, int Tid, t_u8 *PeerMACAddr, t_u8 type, int initiator);

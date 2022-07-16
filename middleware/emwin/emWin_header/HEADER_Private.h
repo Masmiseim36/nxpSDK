@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.16 - Graphical user interface for embedded applications **
+** emWin V6.24 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2021-09-02
+SUA period:               2011-08-19 - 2022-09-02
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : HEADER_Private.h
@@ -75,6 +75,8 @@ typedef struct {
   GUI_COLOR           TextColor;
   GUI_COLOR           ArrowColor;
   HEADER_SKIN_PRIVATE SkinPrivate;
+  U8                  BorderH;
+  U8                  BorderV;
 } HEADER_PROPS;
 
 typedef struct {
@@ -91,6 +93,8 @@ typedef struct {
   unsigned            Fixed;
   U8                  DragLimit;
   U8                  ResizeableColumns;
+  U8                  Height;
+  U8                  xOff;
 } HEADER_Obj;
 
 /*********************************************************************
@@ -102,8 +106,6 @@ typedef struct {
 
 extern HEADER_PROPS        HEADER__DefaultProps;
 extern const GUI_CURSOR  * HEADER__pDefaultCursor;
-extern int                 HEADER__DefaultBorderH;
-extern int                 HEADER__DefaultBorderV;
 
 extern const WIDGET_SKIN   HEADER__SkinClassic;
 extern       WIDGET_SKIN   HEADER__Skin;
@@ -126,11 +128,18 @@ extern WIDGET_SKIN const * HEADER__pSkinDefault;
   HEADER_Obj * HEADER_LockH(HEADER_Handle h);
   #define HEADER_LOCK_H(h)   HEADER_LockH(h)
 #else
-  #define HEADER_LOCK_H(h)   (HEADER_Obj *)GUI_LOCK_H(h)
+  #define HEADER_LOCK_H(h)   (HEADER_Obj *)WM_LOCK_H(h)
 #endif
 
-void HEADER__SetDrawObj(HEADER_Handle hObj, unsigned Index, GUI_DRAW_HANDLE hDrawObj);
-
+/*********************************************************************
+*
+*       Private (module internal) functions
+*
+**********************************************************************
+*/
+void         HEADER__SetDrawObj       (HEADER_Handle hObj, unsigned Index, GUI_DRAW_HANDLE hDrawObj);
+void         HEADER__SetOffset        (HEADER_Handle hObj, U8 xOff);
+const char * HEADER__GetItemTextLocked(HEADER_Handle hObj, unsigned Index, void ** ppUnlock);
 
 #endif // GUI_WINSUPPORT
 #endif // Avoid multiple inclusion

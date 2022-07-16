@@ -71,6 +71,11 @@ ESESTATUS phNxpEse_init(void *conn_ctx, phNxpEse_initParams initParams, phNxpEse
     {
         protoInitParam.interfaceReset = TRUE;
     }
+    else if (ESE_MODE_RESUME == initParams.initMode)
+    {
+        /* To skip GetAtr command */
+        protoInitParam.interfaceReset = FALSE;
+    }
     else
     {
         protoInitParam.interfaceReset = FALSE;

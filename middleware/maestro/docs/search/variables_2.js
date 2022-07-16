@@ -1,8 +1,20 @@
 var searchData=
 [
-  ['cap_0',['cap',['../structVector.html#a26d8871f592f8179686fa596b3eea845',1,'Vector']]],
-  ['channels_1',['channels',['../structTrackInfo.html#a01e160c122d6f652f21d8fec69c88bc6',1,'TrackInfo']]],
-  ['codec_5finfo_2',['codec_info',['../structTrackInfo.html#acf817dd30b1bb08ece18409001be3d95',1,'TrackInfo']]],
-  ['cond_3',['cond',['../structSTREAMER__MSG__T.html#a3852e497d9b94bb845f8bcc1d16ce007',1,'STREAMER_MSG_T']]],
-  ['core_4',['core',['../structOsaThreadAttr.html#a96c24acdc44f05a1cb91d62341573121',1,'OsaThreadAttr']]]
+  ['cci_5fdec_5fread_0',['cci_dec_read',['../structCCI__Ctx.html#a3858c665bcfa004bb3d41343fa45d959',1,'CCI_Ctx']]],
+  ['cci_5fdec_5fseek_1',['cci_dec_seek',['../structCCI__Ctx.html#a9f47ff455383a86219ebaafbe3dc9a55',1,'CCI_Ctx']]],
+  ['cci_5fdec_5ftell_2',['cci_dec_tell',['../structCCI__Ctx.html#a53eef61b77c0421b2ba09d30e99152d5',1,'CCI_Ctx']]],
+  ['ccidec_5fmemory_3',['ccidec_memory',['../structCCIDecInfo.html#ac112491fee93e11a5e814b4fe7ffc7ee',1,'CCIDecInfo']]],
+  ['ceiencconfigsizetable_4',['ceiEncConfigSizeTable',['../cei__table_8h.html#aafd6b30a345f4f78a82948fd2ab1ca75',1,'cei_table.h']]],
+  ['ceienctable_5',['ceiEncTable',['../cei__table_8h.html#adac1357e6432eed6b9566f5f91c031b7',1,'cei_table.h']]],
+  ['chain_5ffunc_6',['chain_func',['../structAudioSinkPadDeviceIOFuncType.html#a180e1150f2b90ba5e5452f1c5035d288',1,'AudioSinkPadDeviceIOFuncType']]],
+  ['chain_5fhandler_7',['chain_handler',['../struct__PadSink.html#a56b906b18af223f4af14c0a0514d4264',1,'_PadSink']]],
+  ['change_5fstate_8',['change_state',['../struct__StreamElement.html#a547d69b797ecba142758c14d0c5ce639',1,'_StreamElement::change_state()'],['../struct__ElementAudioSink.html#aea07e3c4d83dc20e1d5285c3b36e206d',1,'_ElementAudioSink::change_state()'],['../struct__ElementAudioSrc.html#a45b0956a959a79669b0a9b1c0002f394',1,'_ElementAudioSrc::change_state()'],['../struct__ElementDecoder.html#aaa9459464ee995863805dbb1107d3ab2',1,'_ElementDecoder::change_state()'],['../struct__ElementEap.html#a4072ee53ccd47ed09635f43e153d5134',1,'_ElementEap::change_state()'],['../structElementEncoder.html#a923414a7b669c43e540a2940820f8ddd',1,'ElementEncoder::change_state()'],['../struct__ElementFileSink.html#a50c8f076da0def44e91841b3e3e12907',1,'_ElementFileSink::change_state()'],['../struct__ElementFileSrc.html#a6214af7c79fa311c4ae1206c5e4fce3c',1,'_ElementFileSrc::change_state()'],['../struct__ElementMemSink.html#a041f3704bde4cdca72375d0410642981',1,'_ElementMemSink::change_state()'],['../struct__ElementMemSrc.html#ad308d21ad15627f217efad2340324aea',1,'_ElementMemSrc::change_state()'],['../structElementNetbufSrc.html#a5b6efc20974c230219fe48950c83b071',1,'ElementNetbufSrc::change_state()'],['../struct__ElementVitSink.html#a398d311447b66c083cbee601e3bff651',1,'_ElementVitSink::change_state()']]],
+  ['channels_9',['channels',['../structTrackInfo.html#a01e160c122d6f652f21d8fec69c88bc6',1,'TrackInfo']]],
+  ['chunk_5fsize_10',['chunk_size',['../struct__ElementAudioSink.html#aacbbe13c04e06eb56e127e7a60247aa2',1,'_ElementAudioSink::chunk_size()'],['../struct__ElementAudioSrc.html#a8100162fe397d524a2b5506b06fcc660',1,'_ElementAudioSrc::chunk_size()'],['../struct__ElementDecoder.html#a541c815856fe8fae436a3137deef34b5',1,'_ElementDecoder::chunk_size()'],['../structElementEncoder.html#a48f645d77b3f7ff9dd737161099d476f',1,'ElementEncoder::chunk_size()'],['../struct__ElementFileSink.html#a1702c450760b2e828af6141d8af20841',1,'_ElementFileSink::chunk_size()'],['../struct__ElementFileSrc.html#a731ca6576d35f1c6e5c05daebd408c16',1,'_ElementFileSrc::chunk_size()'],['../struct__ElementMemSrc.html#a6b3eb92fad239b21a8fa8d0536a33b98',1,'_ElementMemSrc::chunk_size()'],['../structAudioDataPacket.html#ad850a9fa926dc42a49f3512df030d921',1,'AudioDataPacket::chunk_size()'],['../structAudioPacketHeader.html#afc0abff7e11b3840213afaf56ba85622',1,'AudioPacketHeader::chunk_size()']]],
+  ['close_5fdevice_5ffunc_11',['close_device_func',['../structAudioSinkPadDeviceIOFuncType.html#aa298599f69e29cc115d90931523a782b',1,'AudioSinkPadDeviceIOFuncType']]],
+  ['codec_5finfo_12',['codec_info',['../structTrackInfo.html#acf817dd30b1bb08ece18409001be3d95',1,'TrackInfo']]],
+  ['complexity_13',['complexity',['../structCeiOpusConfig.html#a930eb232dbaf19bc2c026c8ba64eae7e',1,'CeiOpusConfig']]],
+  ['continuous_5fread_14',['continuous_read',['../structPCMRtosDeviceInfo.html#a15be35d426ed7f14250847be593b9b6e',1,'PCMRtosDeviceInfo::continuous_read()'],['../struct__ElementAudioSrc.html#a9c60119579c3c8aca7a434e64c77f5ff',1,'_ElementAudioSrc::continuous_read()']]],
+  ['current_5fbit_5frate_15',['current_bit_rate',['../struct__ElementDecoder.html#aff827bd8e9981bed546fc1b7c246789b',1,'_ElementDecoder']]],
+  ['current_5findex_16',['current_index',['../struct__ElementEap.html#af3c58b71e84cf85b019f4128c052e6d6',1,'_ElementEap::current_index()'],['../struct__ElementMemSink.html#a356056e786ea630a928a623cbfb89e57',1,'_ElementMemSink::current_index()'],['../struct__ElementVitSink.html#a44244c88798103744db3a9ffcd3e20a3',1,'_ElementVitSink::current_index()']]]
 ];

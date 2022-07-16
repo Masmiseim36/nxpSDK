@@ -42,7 +42,7 @@ typedef struct
 typedef struct
 {
     uint32_t timestamp; /*!< Time stamp value in micro-seconds. */
-    int16_t pressure;   /*!< Sensor pressure output: unsigned 16-bits justified to MSBs. */
+    uint16_t pressure;   /*!< Sensor pressure output: unsigned 16-bits justified to MSBs. */
     int8_t temperature; /*!< Sensor temperature output; 2's complement 8-bits justified to MSBs. */
 } dbap_pressuredata_t;
 

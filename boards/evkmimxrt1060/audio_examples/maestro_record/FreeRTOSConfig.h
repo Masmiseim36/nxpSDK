@@ -69,7 +69,15 @@
 /* Memory allocation related definitions. */
 #define configSUPPORT_STATIC_ALLOCATION         0
 #define configSUPPORT_DYNAMIC_ALLOCATION        1
+#if ((defined(CPU_MIMXRT1051DVL6B) || defined(CPU_MIMXRT1052DVL6B) || defined(CPU_MIMXRT1041XJM5B) || defined(CPU_MIMXRT1042XJM5B)) && defined(VIT_PROC))
+#define configTOTAL_HEAP_SIZE                   ((size_t) (478 * 1024))
+#elif ((defined(CPU_MIMXRT1051DVL6B) || defined(CPU_MIMXRT1052DVL6B) || defined(CPU_MIMXRT1041XJM5B) || defined(CPU_MIMXRT1042XJM5B)) && !defined(VIT_PROC))
+#define configTOTAL_HEAP_SIZE                   ((size_t) (252 * 1024))
+#elif defined(CPU_LPC55S69JBD100_cm33_core0)
+#define configTOTAL_HEAP_SIZE                   ((size_t) (220 * 1024))
+#else
 #define configTOTAL_HEAP_SIZE                   ((size_t) (734 * 1024))
+#endif
 #define configAPPLICATION_ALLOCATED_HEAP        0
 
 #define configCHECK_FOR_STACK_OVERFLOW          1

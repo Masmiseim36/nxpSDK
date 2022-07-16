@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ISSDK: driverexamples/demos/orientaion_application_baremetal_agm01.c File Reference</title>
+<title>ISSDK: driverexamples/demos/fxpq3115_demo.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -49,48 +49,31 @@ $(function() {
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">orientaion_application_baremetal_agm01.c File Reference</div>  </div>
+<div class="title">fxpq3115_demo.c File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="a00437.html" title="The orientaion_application_baremetal_agm01.c file implements the ISSDK baremetal orientation applicat...">orientaion_application_baremetal_agm01.c</a> file implements the ISSDK baremetal orientation application for FRDM-STBC-AGM01 using sensor fusion core functional interfaces and host i/o interface.  
+<p>The <a class="el" href="a00437.html" title="The fxpq3115_demo.c file implements the ISSDK FXPQ3115 sensor demo example demonstration with One-Sho...">fxpq3115_demo.c</a> file implements the ISSDK FXPQ3115 sensor demo example demonstration with One-Shot mode.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;board.h&quot;</code><br />
 <code>#include &quot;pin_mux.h&quot;</code><br />
 <code>#include &quot;clock_config.h&quot;</code><br />
-<code>#include &quot;fsl_port.h&quot;</code><br />
-<code>#include &quot;fsl_i2c.h&quot;</code><br />
-<code>#include &quot;fsl_pit.h&quot;</code><br />
+<code>#include &quot;Driver_I2C.h&quot;</code><br />
 <code>#include &quot;Driver_USART.h&quot;</code><br />
-<code>#include &quot;fsl_i2c_cmsis.h&quot;</code><br />
-<code>#include &quot;fsl_uart_cmsis.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00026_source.html">fxas21002.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00071_source.html">fxos8700.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00161_source.html">register_io_i2c.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00092_source.html">host_io_uart.h</a>&quot;</code><br />
+<code>#include &quot;issdk_hal.h&quot;</code><br />
 <code>#include &quot;gpio_driver.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00095_source.html">fxpq3115_drv.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00101_source.html">host_io_uart.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00533_source.html">systick_utils.h</a>&quot;</code><br />
 <code>#include &quot;auto_detection_service.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00500_source.html">systick_utils.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00878_source.html">sensor_fusion.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00743_source.html">control.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00887_source.html">status.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00806_source.html">drivers.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00800_source.html">driver_pit.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for orientaion_application_baremetal_agm01.c:</div>
+Include dependency graph for fxpq3115_demo.c:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00438.png" border="0" usemap="#driverexamples_2demos_2orientaion__application__baremetal__agm01_8c" alt=""/></div>
-<map name="driverexamples_2demos_2orientaion__application__baremetal__agm01_8c" id="driverexamples_2demos_2orientaion__application__baremetal__agm01_8c">
-<area shape="rect" id="node11" href="a00026.html" title="The fxas21002.h contains the fxas21002 sensor register definitions and its bit mask. " alt="" coords="947,109,1039,136"/>
-<area shape="rect" id="node12" href="a00071.html" title="The fxos8700.h file contains the register definitions for FXOS8700 sensor driver. ..." alt="" coords="1063,109,1149,136"/>
-<area shape="rect" id="node13" href="a00161.html" title="The register_io_i2c.h file declares low&#45;level interface functions for reading and writing sensor regi..." alt="" coords="1173,109,1290,136"/>
-<area shape="rect" id="node14" href="a00092.html" title="The host_io_uart.h file contains the Host Protocol interface definitions and configuration. " alt="" coords="1314,109,1418,136"/>
-<area shape="rect" id="node17" href="a00500.html" title="ARM Systick Utilities. " alt="" coords="1751,109,1858,136"/>
-<area shape="rect" id="node18" href="a00878.html" title="The sensor_fusion.h file implements the top level programming interface. " alt="" coords="1883,109,1996,136"/>
-<area shape="rect" id="node19" href="a00743.html" title="Defines control sub&#45;system. " alt="" coords="2021,109,2093,136"/>
-<area shape="rect" id="node20" href="a00887.html" title="Application&#45;specific status subsystem. " alt="" coords="2117,109,2186,136"/>
-<area shape="rect" id="node21" href="a00806.html" title="Provides function prototypes for driver level interfaces. " alt="" coords="2211,109,2281,136"/>
-<area shape="rect" id="node22" href="a00800.html" title="Provides a simple abstraction for a periodic interval timer. " alt="" coords="2305,109,2389,136"/>
+<div class="center"><img src="a00438.png" border="0" usemap="#driverexamples_2demos_2fxpq3115__demo_8c" alt=""/></div>
+<map name="driverexamples_2demos_2fxpq3115__demo_8c" id="driverexamples_2demos_2fxpq3115__demo_8c">
+<area shape="rect" id="node9" href="a00095.html" title="The fxpq3115_drv.h file describes the fxpq3115 driver interface and structures. " alt="" coords="729,95,837,121"/>
+<area shape="rect" id="node10" href="a00101.html" title="The host_io_uart.h file contains the Host Protocol interface definitions and configuration. " alt="" coords="862,95,966,121"/>
+<area shape="rect" id="node11" href="a00533.html" title="ARM Systick Utilities. " alt="" coords="990,95,1097,121"/>
 </map>
 </div>
 </div>
@@ -98,76 +81,63 @@ Include dependency graph for orientaion_application_baremetal_agm01.c:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad35aa53071a58d71bf2e6b0969dcb9ff"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#ad35aa53071a58d71bf2e6b0969dcb9ff">TIMESTAMP_DATA_SIZE</a>&#160;&#160;&#160;(4)                             /* Orientation Packet: TimeStamp field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td></tr>
-<tr class="separator:ad35aa53071a58d71bf2e6b0969dcb9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1ca867d8bda62a5d05bc7b7076bf0cc"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#af1ca867d8bda62a5d05bc7b7076bf0cc">NINEAXISSENSOR_DATA_SIZE</a>&#160;&#160;&#160;(18)                            /* Orientation Packet: 9 Axis Sensor Data, Accel, Mag, Gyro field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td></tr>
-<tr class="separator:af1ca867d8bda62a5d05bc7b7076bf0cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d10b4fe945d6eaad527773e84835341"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a7d10b4fe945d6eaad527773e84835341">QUATERNION_SIZE</a>&#160;&#160;&#160;(8)                             /* Orientation Packet: <a class="el" href="a03732.html">Quaternion</a> field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td></tr>
-<tr class="separator:a7d10b4fe945d6eaad527773e84835341"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57acace0eb7ea3d82f09773287d905ca"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a57acace0eb7ea3d82f09773287d905ca">EULERANGLE_DATA_SIZE</a>&#160;&#160;&#160;(6)                             /* Orientation Packet: Roll,Pitch,Compass Euler angles packet field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td></tr>
-<tr class="separator:a57acace0eb7ea3d82f09773287d905ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4bacf46ced48e561f654169d78f32ba2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a4bacf46ced48e561f654169d78f32ba2">FITERROR_DATA_SIZE</a>&#160;&#160;&#160;(2)                             /* Orientation Packet: FitError% field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td></tr>
-<tr class="separator:a4bacf46ced48e561f654169d78f32ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83a0c0694e47645c3e42be4491f2e5e0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a83a0c0694e47645c3e42be4491f2e5e0">COORDINATES_SIZE</a>&#160;&#160;&#160;(1)                             /* Orientation Packet: coordinates field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td></tr>
-<tr class="separator:a83a0c0694e47645c3e42be4491f2e5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a930f8c6c3310e382be6a72ca8f14cb8c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a930f8c6c3310e382be6a72ca8f14cb8c">BOARDINFO_SIZE</a>&#160;&#160;&#160;(1)                             /* Orientation Packet: BoardInfo field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td></tr>
-<tr class="separator:a930f8c6c3310e382be6a72ca8f14cb8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a45d9695319d28f8901f42d88df3778"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a6a45d9695319d28f8901f42d88df3778">BUILDNAME_SIZE</a>&#160;&#160;&#160;(2)                             /* Orientation Packet: BuildInfo field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td></tr>
-<tr class="separator:a6a45d9695319d28f8901f42d88df3778"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6326f5d80c5fc4299c64f82e9765a27a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a6326f5d80c5fc4299c64f82e9765a27a">SYSTICKINFO_SIZE</a>&#160;&#160;&#160;(2)                             /* Orientation Packet: SysTick field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td></tr>
-<tr class="separator:a6326f5d80c5fc4299c64f82e9765a27a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf41b2857036247c970bc8594b6a636a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#adf41b2857036247c970bc8594b6a636a">APPLICATION_NAME</a>&#160;&#160;&#160;&quot;9 Axis Orientation Sensor Demo&quot;                /* Orientation Application Name */</td></tr>
+<tr class="memitem:a78240bf2cdd569b7d1865486a3d47e1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a78240bf2cdd569b7d1865486a3d47e1c">FXPQ3115_DATA_SIZE</a>&#160;&#160;&#160;5         /* 3 <a class="el" href="a00914.html#a0c8186d9b9b7880309c27230bbb5e69d">byte</a> Pressure and 2 <a class="el" href="a00914.html#a0c8186d9b9b7880309c27230bbb5e69d">byte</a> Temperature. */</td></tr>
+<tr class="separator:a78240bf2cdd569b7d1865486a3d47e1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a935a127b0dd3c07dc7443a2dbeddcd82"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a935a127b0dd3c07dc7443a2dbeddcd82">FXPQ3115_STREAM_DATA_SIZE</a>&#160;&#160;&#160;10 /* 6 <a class="el" href="a00914.html#a0c8186d9b9b7880309c27230bbb5e69d">byte</a> Data */</td></tr>
+<tr class="separator:a935a127b0dd3c07dc7443a2dbeddcd82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adab71cf94c8c48971c6349893ff46957"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#adab71cf94c8c48971c6349893ff46957">LED_TOGGLE_RATE</a>&#160;&#160;&#160;100         /* Toggle LED after every 100 samples. */</td></tr>
+<tr class="separator:adab71cf94c8c48971c6349893ff46957"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf41b2857036247c970bc8594b6a636a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#adf41b2857036247c970bc8594b6a636a">APPLICATION_NAME</a>&#160;&#160;&#160;&quot;FXPQ3115BV BIO Pressure Demo&quot;</td></tr>
 <tr class="memdesc:adf41b2857036247c970bc8594b6a636a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique Name for this application which should match the target GUI pkg name.  <a href="#adf41b2857036247c970bc8594b6a636a">More...</a><br /></td></tr>
 <tr class="separator:adf41b2857036247c970bc8594b6a636a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6efa9917d91d75dcb9036443bc2483cd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a6efa9917d91d75dcb9036443bc2483cd">APPLICATION_VERSION</a>&#160;&#160;&#160;&quot;2.5&quot;</td></tr>
 <tr class="memdesc:a6efa9917d91d75dcb9036443bc2483cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version to distinguish between instances the same application based on target Shield and updates.  <a href="#a6efa9917d91d75dcb9036443bc2483cd">More...</a><br /></td></tr>
 <tr class="separator:a6efa9917d91d75dcb9036443bc2483cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad02dd76540fcad6aa2f8413f4e3b7bf8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#ad02dd76540fcad6aa2f8413f4e3b7bf8">STREAMING_PAYLOAD_LEN</a>&#160;&#160;&#160;(<a class="el" href="a00443.html#ad35aa53071a58d71bf2e6b0969dcb9ff">TIMESTAMP_DATA_SIZE</a> + <a class="el" href="a00443.html#af1ca867d8bda62a5d05bc7b7076bf0cc">NINEAXISSENSOR_DATA_SIZE</a> + <a class="el" href="a00443.html#a7d10b4fe945d6eaad527773e84835341">QUATERNION_SIZE</a> + <a class="el" href="a00443.html#a57acace0eb7ea3d82f09773287d905ca">EULERANGLE_DATA_SIZE</a> + <a class="el" href="a00443.html#a4bacf46ced48e561f654169d78f32ba2">FITERROR_DATA_SIZE</a> + <a class="el" href="a00443.html#a83a0c0694e47645c3e42be4491f2e5e0">COORDINATES_SIZE</a> + <a class="el" href="a00443.html#a930f8c6c3310e382be6a72ca8f14cb8c">BOARDINFO_SIZE</a> + <a class="el" href="a00443.html#a6a45d9695319d28f8901f42d88df3778">BUILDNAME_SIZE</a> + <a class="el" href="a00443.html#a6326f5d80c5fc4299c64f82e9765a27a">SYSTICKINFO_SIZE</a>)</td></tr>
-<tr class="separator:ad02dd76540fcad6aa2f8413f4e3b7bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:afc1406a51c0cc9804d56dc92ef0d950e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#afc1406a51c0cc9804d56dc92ef0d950e">readAlgoParams</a> (<a class="el" href="a00878.html#a3fe0b3e3d934e9d4af406ff60f451387">SV_ptr</a> <a class="el" href="a00395.html#a0155cf01983779a6f386fb8eac40d37c">data</a>, <a class="el" href="a03732.html">Quaternion</a> *fq, int16_t *iPhi, int16_t *iThe, int16_t *iRho, int16_t iOmega[], uint16_t *isystick)</td></tr>
-<tr class="memdesc:afc1406a51c0cc9804d56dc92ef0d950e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function for reading common algorithm parameters.  <a href="#afc1406a51c0cc9804d56dc92ef0d950e">More...</a><br /></td></tr>
-<tr class="separator:afc1406a51c0cc9804d56dc92ef0d950e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09daca5a907540e949927a712eb4e5fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a09daca5a907540e949927a712eb4e5fc">fxpq3115_int_data_ready_callback</a> (void *pUserData)</td></tr>
+<tr class="separator:a09daca5a907540e949927a712eb4e5fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0076d28c9a17cd6908c7b3b0f5c6006c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a0076d28c9a17cd6908c7b3b0f5c6006c">process_host_command</a> (uint8_t tag, uint8_t *hostCommand, uint8_t *hostResponse, size_t *hostMsgSize, size_t respBufferSize)</td></tr>
 <tr class="separator:a0076d28c9a17cd6908c7b3b0f5c6006c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affc6785c2a861503e9d86d9ab0b09330"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#affc6785c2a861503e9d86d9ab0b09330">appendZerosOrientBuf</a> (uint8_t *pDest, uint16_t *pIndex, uint16_t numZeros)</td></tr>
-<tr class="memdesc:affc6785c2a861503e9d86d9ab0b09330"><td class="mdescLeft">&#160;</td><td class="mdescRight">appendZerosOrientBuf utility function  <a href="#affc6785c2a861503e9d86d9ab0b09330">More...</a><br /></td></tr>
-<tr class="separator:affc6785c2a861503e9d86d9ab0b09330"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
 <tr class="memdesc:a840291bc02cba5474a4cb46a9b9566fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main function.  <a href="#a840291bc02cba5474a4cb46a9b9566fe">More...</a><br /></td></tr>
 <tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:afa81c629d378fe700f351a1bce411ad5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03800.html">SensorFusionGlobals</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#afa81c629d378fe700f351a1bce411ad5">sfg</a></td></tr>
-<tr class="separator:afa81c629d378fe700f351a1bce411ad5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac92dd324ab87fabfb7a61647e6273fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03720.html">ControlSubsystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#aac92dd324ab87fabfb7a61647e6273fe">gOrientationControlSubsystem</a></td></tr>
-<tr class="separator:aac92dd324ab87fabfb7a61647e6273fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a875f795e25aaef1b828061bbfae4764a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03804.html">StatusSubsystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a875f795e25aaef1b828061bbfae4764a">statusSubsystem</a></td></tr>
-<tr class="separator:a875f795e25aaef1b828061bbfae4764a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44681c771b24906b93d52a830b4ec968"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a44681c771b24906b93d52a830b4ec968">boardString</a> [<a class="el" href="a04558.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td></tr>
+<tr class="memitem:a7a75b2f3c17524048eefc72ab9ae87b5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a03807.html">registerwritelist_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a7a75b2f3c17524048eefc72ab9ae87b5">cMpl3115ConfigINT</a> []</td></tr>
+<tr class="memdesc:a7a75b2f3c17524048eefc72ab9ae87b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register settings for Interrupt (non buffered) Enablement with ONe-Shot Mode.  <a href="#a7a75b2f3c17524048eefc72ab9ae87b5">More...</a><br /></td></tr>
+<tr class="separator:a7a75b2f3c17524048eefc72ab9ae87b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc2aafd6d65396802dfdff930f33d170"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a03807.html">registerwritelist_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#acc2aafd6d65396802dfdff930f33d170">cMpl3115SetOST</a> []</td></tr>
+<tr class="memdesc:acc2aafd6d65396802dfdff930f33d170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register settings for Triggring One-Shot Sampling.  <a href="#acc2aafd6d65396802dfdff930f33d170">More...</a><br /></td></tr>
+<tr class="separator:acc2aafd6d65396802dfdff930f33d170"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe135f4090b21bcc8346bb48961d79fa"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="a03811.html">registerreadlist_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#afe135f4090b21bcc8346bb48961d79fa">cMpl3115OutputNormal</a> []</td></tr>
+<tr class="memdesc:afe135f4090b21bcc8346bb48961d79fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Address and size of Raw Pressure+Temperature Data in Normal Mode.  <a href="#afe135f4090b21bcc8346bb48961d79fa">More...</a><br /></td></tr>
+<tr class="separator:afe135f4090b21bcc8346bb48961d79fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44681c771b24906b93d52a830b4ec968"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a44681c771b24906b93d52a830b4ec968">boardString</a> [<a class="el" href="a04817.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td></tr>
 <tr class="separator:a44681c771b24906b93d52a830b4ec968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c419755be00b2aebbd8d31da9b66142"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a1c419755be00b2aebbd8d31da9b66142">shieldString</a> [<a class="el" href="a04558.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td></tr>
+<tr class="memitem:a1c419755be00b2aebbd8d31da9b66142"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a1c419755be00b2aebbd8d31da9b66142">shieldString</a> [<a class="el" href="a04817.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td></tr>
 <tr class="separator:a1c419755be00b2aebbd8d31da9b66142"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70385ff3e0081022336573247e5ecaec"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a70385ff3e0081022336573247e5ecaec">embAppName</a> [<a class="el" href="a04558.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td></tr>
+<tr class="memitem:a70385ff3e0081022336573247e5ecaec"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a70385ff3e0081022336573247e5ecaec">embAppName</a> [<a class="el" href="a04817.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td></tr>
 <tr class="separator:a70385ff3e0081022336573247e5ecaec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9410ef028d5df163bf575ae767fa3b2c"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a9410ef028d5df163bf575ae767fa3b2c">gStreamingEnabled</a></td></tr>
-<tr class="separator:a9410ef028d5df163bf575ae767fa3b2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae69294e40b64a92ce4a1c9636db4118a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#ae69294e40b64a92ce4a1c9636db4118a">gPrimaryStreamID</a></td></tr>
-<tr class="separator:ae69294e40b64a92ce4a1c9636db4118a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb44e114427310fd48b45c61bbb5b066"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#abb44e114427310fd48b45c61bbb5b066">orientOutputBuffer</a> [<a class="el" href="a00092.html#adc72f7a14386aae7a4025ca511c06f54">STREAMING_HEADER_LEN</a>+<a class="el" href="a00443.html#ad02dd76540fcad6aa2f8413f4e3b7bf8">STREAMING_PAYLOAD_LEN</a>]</td></tr>
-<tr class="separator:abb44e114427310fd48b45c61bbb5b066"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae23e87080aee459739b8a96e8a5bffca"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="a03744.html">PhysicalSensor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#ae23e87080aee459739b8a96e8a5bffca">sensors</a> [2]</td></tr>
-<tr class="separator:ae23e87080aee459739b8a96e8a5bffca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75f40af5caf43ce58b7a18015c210e4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03584.html">registerDeviceInfo_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a75f40af5caf43ce58b7a18015c210e4a">i2cBusInfo</a></td></tr>
-<tr class="separator:a75f40af5caf43ce58b7a18015c210e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf56ae4c156374e195890d3459adda93"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#aaf56ae4c156374e195890d3459adda93">bStreamingEnabled</a> = <a class="el" href="a00914.html#a65e9886d74aaee76545e83dd09011727">false</a></td></tr>
+<tr class="separator:aaf56ae4c156374e195890d3459adda93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4bae8677fb2915f3fddccd4461a1738"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#ad4bae8677fb2915f3fddccd4461a1738">bMpl3115DataReady</a> = <a class="el" href="a00914.html#a65e9886d74aaee76545e83dd09011727">false</a></td></tr>
+<tr class="separator:ad4bae8677fb2915f3fddccd4461a1738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae75d06a97add6b42441fbc3f6f0cdd2f"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#ae75d06a97add6b42441fbc3f6f0cdd2f">bMpl3115Ready</a> = <a class="el" href="a00914.html#a65e9886d74aaee76545e83dd09011727">false</a></td></tr>
+<tr class="separator:ae75d06a97add6b42441fbc3f6f0cdd2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a868ff2a7606d02288b18d3b7c21ebce6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#a868ff2a7606d02288b18d3b7c21ebce6">gStreamID</a></td></tr>
+<tr class="separator:a868ff2a7606d02288b18d3b7c21ebce6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafa5fcc299fb9a0db111332f5111b7df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00521.html#a5d7069350a7d7e65686c77a8038f462f">int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#aafa5fcc299fb9a0db111332f5111b7df">gSystick</a></td></tr>
+<tr class="separator:aafa5fcc299fb9a0db111332f5111b7df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac61bf859f26cd2541c3958bff34e2bda"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a03903.html">GENERIC_DRIVER_GPIO</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00437.html#ac61bf859f26cd2541c3958bff34e2bda">pGpioDriver</a> = &amp;<a class="el" href="a04847.html#a2c39f234913855fad752a8f96f245b27">Driver_GPIO_KSDK</a></td></tr>
+<tr class="separator:ac61bf859f26cd2541c3958bff34e2bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="a00437.html" title="The orientaion_application_baremetal_agm01.c file implements the ISSDK baremetal orientation applicat...">orientaion_application_baremetal_agm01.c</a> file implements the ISSDK baremetal orientation application for FRDM-STBC-AGM01 using sensor fusion core functional interfaces and host i/o interface. </p>
+<div class="textblock"><p>The <a class="el" href="a00437.html" title="The fxpq3115_demo.c file implements the ISSDK FXPQ3115 sensor demo example demonstration with One-Sho...">fxpq3115_demo.c</a> file implements the ISSDK FXPQ3115 sensor demo example demonstration with One-Shot mode. </p>
 
-<p class="definition">Definition in file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition in file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="adf41b2857036247c970bc8594b6a636a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adf41b2857036247c970bc8594b6a636a">&#9670;&nbsp;</a></span>APPLICATION_NAME</h2>
@@ -176,16 +146,16 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define APPLICATION_NAME&#160;&#160;&#160;&quot;9 Axis Orientation Sensor Demo&quot;                /* Orientation Application Name */</td>
+          <td class="memname">#define APPLICATION_NAME&#160;&#160;&#160;&quot;FXPQ3115BV BIO Pressure Demo&quot;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Unique Name for this application which should match the target GUI pkg name. </p>
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00064">64</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00046">46</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00438">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>.</p>
 
 </div>
 </div>
@@ -203,218 +173,95 @@ Variables</h2></td></tr>
 
 <p>Version to distinguish between instances the same application based on target Shield and updates. </p>
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00066">66</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00048">48</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00438">main()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>.</p>
 
 </div>
 </div>
-<a id="a930f8c6c3310e382be6a72ca8f14cb8c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a930f8c6c3310e382be6a72ca8f14cb8c">&#9670;&nbsp;</a></span>BOARDINFO_SIZE</h2>
+<a id="a78240bf2cdd569b7d1865486a3d47e1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78240bf2cdd569b7d1865486a3d47e1c">&#9670;&nbsp;</a></span>FXPQ3115_DATA_SIZE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BOARDINFO_SIZE&#160;&#160;&#160;(1)                             /* Orientation Packet: BoardInfo field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td>
+          <td class="memname">#define FXPQ3115_DATA_SIZE&#160;&#160;&#160;5         /* 3 <a class="el" href="a00914.html#a0c8186d9b9b7880309c27230bbb5e69d">byte</a> Pressure and 2 <a class="el" href="a00914.html#a0c8186d9b9b7880309c27230bbb5e69d">byte</a> Temperature. */</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00060">60</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00041">41</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>.</p>
 
 </div>
 </div>
-<a id="a6a45d9695319d28f8901f42d88df3778"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a45d9695319d28f8901f42d88df3778">&#9670;&nbsp;</a></span>BUILDNAME_SIZE</h2>
+<a id="a935a127b0dd3c07dc7443a2dbeddcd82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a935a127b0dd3c07dc7443a2dbeddcd82">&#9670;&nbsp;</a></span>FXPQ3115_STREAM_DATA_SIZE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BUILDNAME_SIZE&#160;&#160;&#160;(2)                             /* Orientation Packet: BuildInfo field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td>
+          <td class="memname">#define FXPQ3115_STREAM_DATA_SIZE&#160;&#160;&#160;10 /* 6 <a class="el" href="a00914.html#a0c8186d9b9b7880309c27230bbb5e69d">byte</a> Data */</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00061">61</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00042">42</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>.</p>
 
 </div>
 </div>
-<a id="a83a0c0694e47645c3e42be4491f2e5e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83a0c0694e47645c3e42be4491f2e5e0">&#9670;&nbsp;</a></span>COORDINATES_SIZE</h2>
+<a id="adab71cf94c8c48971c6349893ff46957"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adab71cf94c8c48971c6349893ff46957">&#9670;&nbsp;</a></span>LED_TOGGLE_RATE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define COORDINATES_SIZE&#160;&#160;&#160;(1)                             /* Orientation Packet: coordinates field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td>
+          <td class="memname">#define LED_TOGGLE_RATE&#160;&#160;&#160;100         /* Toggle LED after every 100 samples. */</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00059">59</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00043">43</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-</div>
-</div>
-<a id="a57acace0eb7ea3d82f09773287d905ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57acace0eb7ea3d82f09773287d905ca">&#9670;&nbsp;</a></span>EULERANGLE_DATA_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define EULERANGLE_DATA_SIZE&#160;&#160;&#160;(6)                             /* Orientation Packet: Roll,Pitch,Compass Euler angles packet field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00057">57</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-</div>
-</div>
-<a id="a4bacf46ced48e561f654169d78f32ba2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4bacf46ced48e561f654169d78f32ba2">&#9670;&nbsp;</a></span>FITERROR_DATA_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FITERROR_DATA_SIZE&#160;&#160;&#160;(2)                             /* Orientation Packet: FitError% field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00058">58</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-</div>
-</div>
-<a id="af1ca867d8bda62a5d05bc7b7076bf0cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1ca867d8bda62a5d05bc7b7076bf0cc">&#9670;&nbsp;</a></span>NINEAXISSENSOR_DATA_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define NINEAXISSENSOR_DATA_SIZE&#160;&#160;&#160;(18)                            /* Orientation Packet: 9 Axis Sensor Data, Accel, Mag, Gyro field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00055">55</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-</div>
-</div>
-<a id="a7d10b4fe945d6eaad527773e84835341"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7d10b4fe945d6eaad527773e84835341">&#9670;&nbsp;</a></span>QUATERNION_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define QUATERNION_SIZE&#160;&#160;&#160;(8)                             /* Orientation Packet: <a class="el" href="a03732.html">Quaternion</a> field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00056">56</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-</div>
-</div>
-<a id="ad02dd76540fcad6aa2f8413f4e3b7bf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad02dd76540fcad6aa2f8413f4e3b7bf8">&#9670;&nbsp;</a></span>STREAMING_PAYLOAD_LEN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define STREAMING_PAYLOAD_LEN&#160;&#160;&#160;(<a class="el" href="a00443.html#ad35aa53071a58d71bf2e6b0969dcb9ff">TIMESTAMP_DATA_SIZE</a> + <a class="el" href="a00443.html#af1ca867d8bda62a5d05bc7b7076bf0cc">NINEAXISSENSOR_DATA_SIZE</a> + <a class="el" href="a00443.html#a7d10b4fe945d6eaad527773e84835341">QUATERNION_SIZE</a> + <a class="el" href="a00443.html#a57acace0eb7ea3d82f09773287d905ca">EULERANGLE_DATA_SIZE</a> + <a class="el" href="a00443.html#a4bacf46ced48e561f654169d78f32ba2">FITERROR_DATA_SIZE</a> + <a class="el" href="a00443.html#a83a0c0694e47645c3e42be4491f2e5e0">COORDINATES_SIZE</a> + <a class="el" href="a00443.html#a930f8c6c3310e382be6a72ca8f14cb8c">BOARDINFO_SIZE</a> + <a class="el" href="a00443.html#a6a45d9695319d28f8901f42d88df3778">BUILDNAME_SIZE</a> + <a class="el" href="a00443.html#a6326f5d80c5fc4299c64f82e9765a27a">SYSTICKINFO_SIZE</a>)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00069">69</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-</div>
-</div>
-<a id="a6326f5d80c5fc4299c64f82e9765a27a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6326f5d80c5fc4299c64f82e9765a27a">&#9670;&nbsp;</a></span>SYSTICKINFO_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SYSTICKINFO_SIZE&#160;&#160;&#160;(2)                             /* Orientation Packet: SysTick field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00062">62</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-</div>
-</div>
-<a id="ad35aa53071a58d71bf2e6b0969dcb9ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad35aa53071a58d71bf2e6b0969dcb9ff">&#9670;&nbsp;</a></span>TIMESTAMP_DATA_SIZE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TIMESTAMP_DATA_SIZE&#160;&#160;&#160;(4)                             /* Orientation Packet: TimeStamp field <a class="el" href="a00488.html#a18e09d6eabccd6dfc2d5066542020e59">size</a> */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<h2>Orient Packet Structure: 44 Bytes </h2>
-<h2>| TimeStamp | 9 Axis Sensor data | <a class="el" href="a03732.html" title="quaternion structure definition ">Quaternion</a> data | Euler angles data | FitError% data | Co-ordinates data | BoardInfo data | BuildInfo data | SysTick data | | </h2>
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00054">54</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="affc6785c2a861503e9d86d9ab0b09330"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affc6785c2a861503e9d86d9ab0b09330">&#9670;&nbsp;</a></span>appendZerosOrientBuf()</h2>
+<a id="a09daca5a907540e949927a712eb4e5fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09daca5a907540e949927a712eb4e5fc">&#9670;&nbsp;</a></span>fxpq3115_int_data_ready_callback()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void appendZerosOrientBuf </td>
+          <td class="memname">void fxpq3115_int_data_ready_callback </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&#160;</td>
-          <td class="paramname"><em>pDest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>pUserData</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>pIndex</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
-          <td class="paramname"><em>numZeros</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set flag to indicate Sensor has signalled data ready. </p>
 
-<p>appendZerosOrientBuf utility function </p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00094">94</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00216">216</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="reference">References <a class="el" href="a00437_source.html#l00085">bMpl3115DataReady</a>.</p>
 
-<p class="reference">References <a class="el" href="a00866_source.html#l00037">sBufAppendItem()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>.</p>
 <div class="dynheader">
-Here is the call graph for this function:</div>
+Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00437_affc6785c2a861503e9d86d9ab0b09330_cgraph.png" border="0" usemap="#a00437_affc6785c2a861503e9d86d9ab0b09330_cgraph" alt=""/></div>
-<map name="a00437_affc6785c2a861503e9d86d9ab0b09330_cgraph" id="a00437_affc6785c2a861503e9d86d9ab0b09330_cgraph">
-<area shape="rect" id="node2" href="a00743.html#a7ad6e53b35d6fc860a1299ceff40a299" title="Utility function used to place data in output buffer about to be transmitted via UART. " alt="" coords="204,5,321,32"/>
+<div class="center"><img src="a00437_a09daca5a907540e949927a712eb4e5fc_icgraph.png" border="0" usemap="#a00437_a09daca5a907540e949927a712eb4e5fc_icgraph" alt=""/></div>
+<map name="a00437_a09daca5a907540e949927a712eb4e5fc_icgraph" id="a00437_a09daca5a907540e949927a712eb4e5fc_icgraph">
+<area shape="rect" id="node2" href="a00437.html#a840291bc02cba5474a4cb46a9b9566fe" title="Main function. " alt="" coords="220,13,271,39"/>
 </map>
 </div>
 
@@ -438,37 +285,47 @@ Here is the call graph for this function:</div>
 
 <p>Main function. </p>
 <p>Initialize the MCU hardware.</p>
-<p>Initialize and set the KSDK driver for the I2C port</p>
+<p>Initialize INT1 FXPQ3115 pin used by FRDM board</p>
+<p>Initialize GREEN LED pin used by FRDM board</p>
+<p>Initialize the I2C driver.</p>
+<p>Set the I2C Power mode.</p>
+<p>Set the I2C bus speed.</p>
 <p>Initialize the UART driver.</p>
-<p>Set UART Power mode.</p>
+<p>Set the UART Power mode.</p>
 <p>Set UART Baud Rate.</p>
-<p>Initialize control sub-system for orientation packet streaming</p>
-<p>Initialize sensor fusion status sub-system</p>
-<p>Initialize sensor fusion global metadata</p>
-<p>Install the sensors to be used by sensor fusion</p>
-<p>Initialize streaming and assign Stream IDs.</p>
-<p>Initialize sensor fusion engine</p>
-<p>pitIsrFlag will be set true at FUSION_HZ periodic intervals</p>
-<p>Check whether occur interupt</p>
-<p>Check for incoming commands form Host.</p>
-<p>Reads sensors, applies HAL and does averaging (if applicable)</p>
-<p>Condition sensor data, magCal is run as part of this</p>
-<p>Run fusion algorithms</p>
-<p>Apply debug perturbation</p>
-<p>assume NORMAL status for next pass through the loop</p>
-<p>Encode Orietantion Stream Packet and send packet to host </p>
+<p>Initialize the FXPQ3115 sensor driver.</p>
+<p>Set the task to be executed while waiting for I2C transactions to complete.</p>
+<p>We do not call <a class="el" href="a00092.html#a02cdde2f932058060c53dc8314e8d03f" title="The interface function to configure he sensor. ">FXPQ3115_I2C_Configure()</a> in this case as we are going to read samples on demand. We explicitly only enable ISR settings.</p>
+<p>Initialize streaming and assign a Stream ID.</p>
+<p>Populate streaming header.</p>
+<p>Clear the data ready flag, it will be set again by the ODR CB.</p>
+<p>Read raw sensor data from the FXPQ3115.</p>
+<p>Convert the raw sensor data to signed 32-bit and 16-bit containers for display to the debug port. </p>
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00438">438</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00183">183</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="reference">References <a class="el" href="a04552_source.html#l00024">ADS_MAX_STRING_LENGTH</a>, <a class="el" href="a00437_source.html#l00064">APPLICATION_NAME</a>, <a class="el" href="a00437_source.html#l00066">APPLICATION_VERSION</a>, <a class="el" href="a04033_source.html#l00019">BOARD_BootClockRUN</a>, <a class="el" href="a03907_source.html#l00031">BOARD_DEBUG_UART_BAUDRATE</a>, <a class="el" href="a04543_source.html#l00917">BOARD_RunADS()</a>, <a class="el" href="a00497_source.html#l00035">BOARD_SystickEnable()</a>, <a class="el" href="a00437_source.html#l00078">boardString</a>, <a class="el" href="a00437_source.html#l00079">embAppName</a>, <a class="el" href="a00545_source.html#l00093">HOST_S_DRIVER</a>, <a class="el" href="a00545_source.html#l00094">HOST_S_SIGNAL_EVENT</a>, <a class="el" href="a04084_source.html#l00033">I2C_S_DRIVER</a>, <a class="el" href="a04084_source.html#l00034">I2C_S_SIGNAL_EVENT</a>, <a class="el" href="a00353_source.html#l00083">I2Cdrv</a>, <a class="el" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f">int32_t()</a>, <a class="el" href="a04078_source.html#l00019">SHIELD_NAME</a>, <a class="el" href="a00437_source.html#l00078">shieldString</a>, and <a class="el" href="a00395_source.html#l00177">status</a>.</p>
+<p class="reference">References <a class="el" href="a04811_source.html#l00024">ADS_MAX_STRING_LENGTH</a>, <a class="el" href="a00437_source.html#l00046">APPLICATION_NAME</a>, <a class="el" href="a00437_source.html#l00048">APPLICATION_VERSION</a>, <a class="el" href="a00437_source.html#l00085">bMpl3115DataReady</a>, <a class="el" href="a00437_source.html#l00085">bMpl3115Ready</a>, <a class="el" href="a04280_source.html#l00019">BOARD_BootClockRUN</a>, <a class="el" href="a04154_source.html#l00031">BOARD_DEBUG_UART_BAUDRATE</a>, <a class="el" href="a04802_source.html#l00917">BOARD_RunADS()</a>, <a class="el" href="a00530_source.html#l00064">BOARD_SystickElapsedTime_us()</a>, <a class="el" href="a00530_source.html#l00035">BOARD_SystickEnable()</a>, <a class="el" href="a00437_source.html#l00083">boardString</a>, <a class="el" href="a00437_source.html#l00085">bStreamingEnabled</a>, <a class="el" href="a00482_source.html#l00047">GENERIC_DRIVER_GPIO::clr_pin</a>, <a class="el" href="a00428_source.html#l00174">data</a>, <a class="el" href="a00095_source.html#l00038">fxpq3115_i2c_sensorhandle_t::deviceInfo</a>, <a class="el" href="a00437_source.html#l00084">embAppName</a>, <a class="el" href="a00437_source.html#l00041">FXPQ3115_DATA_SIZE</a>, <a class="el" href="a00545_source.html#l00049">FXPQ3115_I2C_ADDR</a>, <a class="el" href="a00092_source.html#l00022">FXPQ3115_I2C_Initialize()</a>, <a class="el" href="a00092_source.html#l00106">FXPQ3115_I2C_ReadData()</a>, <a class="el" href="a00092_source.html#l00053">FXPQ3115_I2C_SetIdleTask()</a>, <a class="el" href="a00629_source.html#l00023">FXPQ3115_INT1</a>, <a class="el" href="a00437_source.html#l00094">fxpq3115_int_data_ready_callback()</a>, <a class="el" href="a00437_source.html#l00042">FXPQ3115_STREAM_DATA_SIZE</a>, <a class="el" href="a00089_source.html#l00065">FXPQ3115_WHOAMI_VALUE</a>, <a class="el" href="a00482_source.html#l00023">GPIO_DIRECTION_IN</a>, <a class="el" href="a00482_source.html#l00024">GPIO_DIRECTION_OUT</a>, <a class="el" href="a00575_source.html#l00188">GREEN_LED</a>, <a class="el" href="a00437_source.html#l00086">gStreamID</a>, <a class="el" href="a00437_source.html#l00087">gSystick</a>, <a class="el" href="a00101_source.html#l00074">HOST_FORMAT_HDLC</a>, <a class="el" href="a00098_source.html#l00086">Host_IO_Add_ISO_Header()</a>, <a class="el" href="a00098_source.html#l00100">Host_IO_Init()</a>, <a class="el" href="a00098_source.html#l00207">Host_IO_Receive()</a>, <a class="el" href="a00098_source.html#l00136">Host_IO_Send()</a>, <a class="el" href="a00578_source.html#l00093">HOST_S_DRIVER</a>, <a class="el" href="a00578_source.html#l00094">HOST_S_SIGNAL_EVENT</a>, <a class="el" href="a04331_source.html#l00035">I2C_S_DEVICE_INDEX</a>, <a class="el" href="a04331_source.html#l00033">I2C_S_DRIVER</a>, <a class="el" href="a04331_source.html#l00034">I2C_S_SIGNAL_EVENT</a>, <a class="el" href="a00521.html#a5d7069350a7d7e65686c77a8038f462f">int32_t()</a>, <a class="el" href="a00437_source.html#l00043">LED_TOGGLE_RATE</a>, <a class="el" href="a00095_source.html#l00039">fxpq3115_i2c_sensorhandle_t::pCommDrv</a>, <a class="el" href="a00482_source.html#l00041">GENERIC_DRIVER_GPIO::pin_init</a>, <a class="el" href="a00095_source.html#l00048">fxpq3115_pressuredata_t::pressure</a>, <a class="el" href="a00437_source.html#l00100">process_host_command()</a>, <a class="el" href="a00227_source.html#l00218">rawData</a>, <a class="el" href="a00179_source.html#l00033">SENSOR_ERROR_NONE</a>, <a class="el" href="a00182_source.html#l00071">Sensor_I2C_Write()</a>, <a class="el" href="a04325_source.html#l00019">SHIELD_NAME</a>, <a class="el" href="a00437_source.html#l00083">shieldString</a>, <a class="el" href="a00095_source.html#l00041">fxpq3115_i2c_sensorhandle_t::slaveAddress</a>, <a class="el" href="a00641_source.html#l00118">SMC</a>, <a class="el" href="a00638_source.html#l00169">SMC_SetPowerModeVlpr()</a>, <a class="el" href="a00638_source.html#l00155">SMC_SetPowerModeWait()</a>, <a class="el" href="a00359_source.html#l00244">status</a>, <a class="el" href="a00101_source.html#l00025">STREAMING_HEADER_LEN</a>, <a class="el" href="a00428_source.html#l00174">streamingPacket</a>, <a class="el" href="a00095_source.html#l00049">fxpq3115_pressuredata_t::temperature</a>, <a class="el" href="a00095_source.html#l00047">fxpq3115_pressuredata_t::timestamp</a>, <a class="el" href="a00086_source.html#l00055">fxos8700_accelmagdata_t::timestamp</a>, and <a class="el" href="a00482_source.html#l00048">GENERIC_DRIVER_GPIO::toggle_pin</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="a00437_a840291bc02cba5474a4cb46a9b9566fe_cgraph.png" border="0" usemap="#a00437_a840291bc02cba5474a4cb46a9b9566fe_cgraph" alt=""/></div>
 <map name="a00437_a840291bc02cba5474a4cb46a9b9566fe_cgraph" id="a00437_a840291bc02cba5474a4cb46a9b9566fe_cgraph">
-<area shape="rect" id="node2" href="a04543.html#a95285f14f6707e326e523c82d926c900" title="The function to register Application Name and initialte ADS. " alt="" coords="121,5,246,32"/>
-<area shape="rect" id="node3" href="a00497.html#ad43629969994e92bd3620e630bda24c8" title="Function to enable systicks framework. " alt="" coords="104,56,263,83"/>
-<area shape="rect" id="node4" href="a00488.html#a5d7069350a7d7e65686c77a8038f462f" title="The interface function to append the data on the formated stream. " alt="" coords="153,107,214,133"/>
+<area shape="rect" id="node2" href="a04802.html#a95285f14f6707e326e523c82d926c900" title="The function to register Application Name and initialte ADS. " alt="" coords="149,5,274,32"/>
+<area shape="rect" id="node3" href="a00530.html#a85a32737b730fbb713ec910e1ad17c74" title="Function to compute the Elapsed Time. " alt="" coords="104,56,319,83"/>
+<area shape="rect" id="node4" href="a00530.html#ad43629969994e92bd3620e630bda24c8" title="Function to enable systicks framework. " alt="" coords="132,107,291,133"/>
+<area shape="rect" id="node5" href="a00092.html#adc40ddb8a9c7c0a986035679f04541c7" title="The interface function to initialize the sensor. " alt="" coords="129,157,293,184"/>
+<area shape="rect" id="node6" href="a00521.html#a5d7069350a7d7e65686c77a8038f462f" title="The interface function to append the data on the formated stream. " alt="" coords="389,259,451,285"/>
+<area shape="rect" id="node7" href="a00092.html#ac85f1d786d7edcd444ef6d6cea0a8728" title="The interface function to read the sensor data. " alt="" coords="124,259,299,285"/>
+<area shape="rect" id="node8" href="a00092.html#a40b2889e4563cb5224f64e9728cef257" title=": The interface function to set the I2C Idle Task. " alt="" coords="119,309,304,336"/>
+<area shape="rect" id="node9" href="a00437.html#a09daca5a907540e949927a712eb4e5fc" title="fxpq3115_int_data_ready\l_callback" alt="" coords="128,361,295,402"/>
+<area shape="rect" id="node10" href="a00098.html#a68a2c033a0f6f967149dca76897f5c8a" title="Host_IO_Add_ISO_Header" alt="" coords="123,427,299,453"/>
+<area shape="rect" id="node11" href="a00098.html#ab4b858422bbaae71aff2ab540ae0e2b1" title="Host_IO_Init" alt="" coords="165,477,258,504"/>
+<area shape="rect" id="node12" href="a00098.html#a3924d21a0703878695ebdb68f720fff9" title="Host_IO_Receive" alt="" coords="151,579,272,605"/>
+<area shape="rect" id="node13" href="a00098.html#a719ad6da4502e713f1573b5353af9617" title="Host_IO_Send" alt="" coords="367,629,473,656"/>
+<area shape="rect" id="node14" href="a00437.html#a0076d28c9a17cd6908c7b3b0f5c6006c" title="process_host_command" alt="" coords="129,629,293,656"/>
+<area shape="rect" id="node15" href="a00182.html#aaac4c4f34b4dd37d3f202a1dbb4b000b" title="Write register data to a sensor. " alt="" coords="148,528,275,555"/>
+<area shape="rect" id="node16" href="a00638.html#a82cb114bb9a5ea2f235a0216709d70f8" title="Configures the system to VLPR power mode. API name used from Kinetis family to maintain compatibility..." alt="" coords="127,731,296,757"/>
+<area shape="rect" id="node17" href="a00638.html#a5423cac017d1d1a8ac8bba8e91e80e29" title="Configures the system to WAIT power mode. API name used from Kinetis family to maintain compatibility..." alt="" coords="125,781,298,808"/>
 </map>
 </div>
 
@@ -518,77 +375,67 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00119">119</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00100">100</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="reference">References <a class="el" href="a00437_source.html#l00078">boardString</a>, <a class="el" href="a00437_source.html#l00079">embAppName</a>, <a class="el" href="a00437_source.html#l00081">gPrimaryStreamID</a>, <a class="el" href="a00437_source.html#l00080">gStreamingEnabled</a>, <a class="el" href="a00092_source.html#l00102">HOST_CMD_START</a>, <a class="el" href="a00092_source.html#l00103">HOST_CMD_STOP</a>, <a class="el" href="a00092_source.html#l00086">HOST_MSG_CMD_ACT_OFFSET</a>, <a class="el" href="a00092_source.html#l00084">HOST_MSG_LEN_LSB_OFFSET</a>, <a class="el" href="a00092_source.html#l00063">HOST_PRO_CMD_W_CFG_TAG</a>, <a class="el" href="a00092_source.html#l00057">HOST_PRO_INT_CMD_TAG</a>, <a class="el" href="a00092_source.html#l00059">HOST_PRO_INT_DEV_TAG</a>, <a class="el" href="a03907_source.html#l00089">LED_GREEN_ON</a>, and <a class="el" href="a00437_source.html#l00078">shieldString</a>.</p>
+<p class="reference">References <a class="el" href="a00437_source.html#l00085">bMpl3115Ready</a>, <a class="el" href="a00530_source.html#l00044">BOARD_SystickStart()</a>, <a class="el" href="a00437_source.html#l00083">boardString</a>, <a class="el" href="a00437_source.html#l00085">bStreamingEnabled</a>, <a class="el" href="a00482_source.html#l00047">GENERIC_DRIVER_GPIO::clr_pin</a>, <a class="el" href="a00437_source.html#l00084">embAppName</a>, <a class="el" href="a00575_source.html#l00188">GREEN_LED</a>, <a class="el" href="a00437_source.html#l00086">gStreamID</a>, <a class="el" href="a00437_source.html#l00087">gSystick</a>, <a class="el" href="a00101_source.html#l00102">HOST_CMD_START</a>, <a class="el" href="a00101_source.html#l00103">HOST_CMD_STOP</a>, <a class="el" href="a00101_source.html#l00086">HOST_MSG_CMD_ACT_OFFSET</a>, <a class="el" href="a00101_source.html#l00084">HOST_MSG_LEN_LSB_OFFSET</a>, <a class="el" href="a00101_source.html#l00063">HOST_PRO_CMD_W_CFG_TAG</a>, <a class="el" href="a00101_source.html#l00057">HOST_PRO_INT_CMD_TAG</a>, <a class="el" href="a00101_source.html#l00059">HOST_PRO_INT_DEV_TAG</a>, and <a class="el" href="a00437_source.html#l00083">shieldString</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00437_a0076d28c9a17cd6908c7b3b0f5c6006c_cgraph.png" border="0" usemap="#a00437_a0076d28c9a17cd6908c7b3b0f5c6006c_cgraph" alt=""/></div>
+<map name="a00437_a0076d28c9a17cd6908c7b3b0f5c6006c_cgraph" id="a00437_a0076d28c9a17cd6908c7b3b0f5c6006c_cgraph">
+<area shape="rect" id="node2" href="a00530.html#ac4471deeef0c2a93b7d4263259b0ed63" title="Function to Record the Start systick. " alt="" coords="217,5,364,32"/>
+</map>
+</div>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00437_a0076d28c9a17cd6908c7b3b0f5c6006c_icgraph.png" border="0" usemap="#a00437_a0076d28c9a17cd6908c7b3b0f5c6006c_icgraph" alt=""/></div>
+<map name="a00437_a0076d28c9a17cd6908c7b3b0f5c6006c_icgraph" id="a00437_a0076d28c9a17cd6908c7b3b0f5c6006c_icgraph">
+<area shape="rect" id="node2" href="a00437.html#a840291bc02cba5474a4cb46a9b9566fe" title="Main function. " alt="" coords="217,5,268,32"/>
+</map>
+</div>
 
 </div>
 </div>
-<a id="afc1406a51c0cc9804d56dc92ef0d950e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc1406a51c0cc9804d56dc92ef0d950e">&#9670;&nbsp;</a></span>readAlgoParams()</h2>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ad4bae8677fb2915f3fddccd4461a1738"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4bae8677fb2915f3fddccd4461a1738">&#9670;&nbsp;</a></span>bMpl3115DataReady</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readAlgoParams </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="a00878.html#a3fe0b3e3d934e9d4af406ff60f451387">SV_ptr</a>&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="a03732.html">Quaternion</a> *&#160;</td>
-          <td class="paramname"><em>fq</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>iPhi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>iThe</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t *&#160;</td>
-          <td class="paramname"><em>iRho</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t&#160;</td>
-          <td class="paramname"><em>iOmega</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t *&#160;</td>
-          <td class="paramname"><em>isystick</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">volatile bool bMpl3115DataReady = <a class="el" href="a00914.html#a65e9886d74aaee76545e83dd09011727">false</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Utility function for reading common algorithm parameters. </p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00085">85</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00227">227</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-<p class="reference">References <a class="el" href="a00878_source.html#l00060">CHX</a>, <a class="el" href="a00878_source.html#l00061">CHY</a>, <a class="el" href="a00878_source.html#l00062">CHZ</a>, <a class="el" href="a00878_source.html#l00444">SV_COMMON::fOmega</a>, <a class="el" href="a00878_source.html#l00436">SV_COMMON::fPhi</a>, <a class="el" href="a00878_source.html#l00442">SV_COMMON::fq</a>, <a class="el" href="a00878_source.html#l00439">SV_COMMON::fRho</a>, <a class="el" href="a00878_source.html#l00437">SV_COMMON::fThe</a>, and <a class="el" href="a00878_source.html#l00445">SV_COMMON::systick</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00094">fxpq3115_int_data_ready_callback()</a>, and <a class="el" href="a00437_source.html#l00183">main()</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Variable Documentation</h2>
+<a id="ae75d06a97add6b42441fbc3f6f0cdd2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae75d06a97add6b42441fbc3f6f0cdd2f">&#9670;&nbsp;</a></span>bMpl3115Ready</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool bMpl3115Ready = <a class="el" href="a00914.html#a65e9886d74aaee76545e83dd09011727">false</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00085">85</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>, and <a class="el" href="a00437_source.html#l00100">process_host_command()</a>.</p>
+
+</div>
+</div>
 <a id="a44681c771b24906b93d52a830b4ec968"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a44681c771b24906b93d52a830b4ec968">&#9670;&nbsp;</a></span>boardString</h2>
 
@@ -596,14 +443,115 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char boardString[<a class="el" href="a04558.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td>
+          <td class="memname">char boardString[<a class="el" href="a04817.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00078">78</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00083">83</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00438">main()</a>, and <a class="el" href="a00437_source.html#l00119">process_host_command()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>, and <a class="el" href="a00437_source.html#l00100">process_host_command()</a>.</p>
+
+</div>
+</div>
+<a id="aaf56ae4c156374e195890d3459adda93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf56ae4c156374e195890d3459adda93">&#9670;&nbsp;</a></span>bStreamingEnabled</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool bStreamingEnabled = <a class="el" href="a00914.html#a65e9886d74aaee76545e83dd09011727">false</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00085">85</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>, and <a class="el" href="a00437_source.html#l00100">process_host_command()</a>.</p>
+
+</div>
+</div>
+<a id="a7a75b2f3c17524048eefc72ab9ae87b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a75b2f3c17524048eefc72ab9ae87b5">&#9670;&nbsp;</a></span>cMpl3115ConfigINT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a03807.html">registerwritelist_t</a> cMpl3115ConfigINT[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    </div><div class="line">    {<a class="code" href="a00089.html#af26f449e73437e60d22c20b4f2cb2aceac0be780f2af21b0c6b7d8162bb814137">FXPQ3115_PT_DATA_CFG</a>,</div><div class="line">     <a class="code" href="a00089.html#a63be0c7cfc65210c48a27b9a0fa30702">FXPQ3115_PT_DATA_CFG_TDEFE_ENABLED</a> | <a class="code" href="a00089.html#a08c40a148f082f2702bd1264cf927c3a">FXPQ3115_PT_DATA_CFG_PDEFE_ENABLED</a> | <a class="code" href="a00089.html#af8292e722574fa292c06f5d4d205f882">FXPQ3115_PT_DATA_CFG_DREM_ENABLED</a>,</div><div class="line">     <a class="code" href="a00089.html#a9cb3a7a70e079a8bf44fbcc1b3becac2">FXPQ3115_PT_DATA_CFG_TDEFE_MASK</a> | <a class="code" href="a00089.html#ac02ece485a93f9b66da0ac162717a9a2">FXPQ3115_PT_DATA_CFG_PDEFE_MASK</a> | <a class="code" href="a00089.html#af7410d05c6122449f742dc38ab7b3c50">FXPQ3115_PT_DATA_CFG_DREM_MASK</a>},</div><div class="line">    </div><div class="line">    {<a class="code" href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea97b13539f5451f49718b36ef06c26464">FXPQ3115_CTRL_REG1</a>, <a class="code" href="a00089.html#af41adb15e40cfd5930192c768f87bccf">FXPQ3115_CTRL_REG1_OS_OSR_2</a> | <a class="code" href="a00089.html#a2e74a66dedbf0512d69626558a45195f">FXPQ3115_CTRL_REG1_OST_SET</a>,</div><div class="line">                         <a class="code" href="a00089.html#aea125388cfe2f93a79e3c5cc0fcf7875">FXPQ3115_CTRL_REG1_OS_MASK</a> | <a class="code" href="a00089.html#a8110fc3aa1ec8aab270efcc5c22f6db4">FXPQ3115_CTRL_REG1_OST_MASK</a>},</div><div class="line">    </div><div class="line">    {<a class="code" href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea1494defafec3dbea91b787bf99c8c38c">FXPQ3115_CTRL_REG3</a>, <a class="code" href="a00089.html#a0a70739e39375babbf1031608f034c10">FXPQ3115_CTRL_REG3_IPOL1_HIGH</a>, <a class="code" href="a00089.html#a713a5e1a85e91267ba377a57ef74eaeb">FXPQ3115_CTRL_REG3_IPOL1_MASK</a>},</div><div class="line">    </div><div class="line">    {<a class="code" href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea2ee3d309c0291f3a34e4f13c79a95494">FXPQ3115_CTRL_REG4</a>, <a class="code" href="a00089.html#aac0ad9aa1dc688a8cf7d795d789c6155">FXPQ3115_CTRL_REG4_INT_EN_DRDY_INTENABLED</a>, <a class="code" href="a00089.html#ad2a506e4ec8b834b23f5daaf5858831f">FXPQ3115_CTRL_REG4_INT_EN_DRDY_MASK</a>},</div><div class="line">    </div><div class="line">    {<a class="code" href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea95883440ecfd532e694138a5ab351e34">FXPQ3115_CTRL_REG5</a>, <a class="code" href="a00089.html#a69c3ddb550570c199b36e458f3713d08">FXPQ3115_CTRL_REG5_INT_CFG_DRDY_INT1</a>, <a class="code" href="a00089.html#a01fb6293a60a482bb372fbdcd4113d36">FXPQ3115_CTRL_REG5_INT_CFG_DRDY_MASK</a>},</div><div class="line">    <a class="code" href="a00179.html#a2cedde333a6373a3ee274bde6af145d0">__END_WRITE_DATA__</a>}</div><div class="ttc" id="a00089_html_a01fb6293a60a482bb372fbdcd4113d36"><div class="ttname"><a href="a00089.html#a01fb6293a60a482bb372fbdcd4113d36">FXPQ3115_CTRL_REG5_INT_CFG_DRDY_MASK</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG5_INT_CFG_DRDY_MASK</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l01131">fxpq3115.h:1131</a></div></div>
+<div class="ttc" id="a00089_html_aac0ad9aa1dc688a8cf7d795d789c6155"><div class="ttname"><a href="a00089.html#aac0ad9aa1dc688a8cf7d795d789c6155">FXPQ3115_CTRL_REG4_INT_EN_DRDY_INTENABLED</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG4_INT_EN_DRDY_INTENABLED</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l01073">fxpq3115.h:1073</a></div></div>
+<div class="ttc" id="a00089_html_af26f449e73437e60d22c20b4f2cb2acea97b13539f5451f49718b36ef06c26464"><div class="ttname"><a href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea97b13539f5451f49718b36ef06c26464">FXPQ3115_CTRL_REG1</a></div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00054">fxpq3115.h:54</a></div></div>
+<div class="ttc" id="a00089_html_a9cb3a7a70e079a8bf44fbcc1b3becac2"><div class="ttname"><a href="a00089.html#a9cb3a7a70e079a8bf44fbcc1b3becac2">FXPQ3115_PT_DATA_CFG_TDEFE_MASK</a></div><div class="ttdeci">#define FXPQ3115_PT_DATA_CFG_TDEFE_MASK</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00550">fxpq3115.h:550</a></div></div>
+<div class="ttc" id="a00089_html_a63be0c7cfc65210c48a27b9a0fa30702"><div class="ttname"><a href="a00089.html#a63be0c7cfc65210c48a27b9a0fa30702">FXPQ3115_PT_DATA_CFG_TDEFE_ENABLED</a></div><div class="ttdeci">#define FXPQ3115_PT_DATA_CFG_TDEFE_ENABLED</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00564">fxpq3115.h:564</a></div></div>
+<div class="ttc" id="a00089_html_a0a70739e39375babbf1031608f034c10"><div class="ttname"><a href="a00089.html#a0a70739e39375babbf1031608f034c10">FXPQ3115_CTRL_REG3_IPOL1_HIGH</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG3_IPOL1_HIGH</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00993">fxpq3115.h:993</a></div></div>
+<div class="ttc" id="a00089_html_aea125388cfe2f93a79e3c5cc0fcf7875"><div class="ttname"><a href="a00089.html#aea125388cfe2f93a79e3c5cc0fcf7875">FXPQ3115_CTRL_REG1_OS_MASK</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG1_OS_MASK</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00855">fxpq3115.h:855</a></div></div>
+<div class="ttc" id="a00179_html_a2cedde333a6373a3ee274bde6af145d0"><div class="ttname"><a href="a00179.html#a2cedde333a6373a3ee274bde6af145d0">__END_WRITE_DATA__</a></div><div class="ttdeci">#define __END_WRITE_DATA__</div><div class="ttdef"><b>Definition:</b> <a href="a00179_source.html#l00045">sensor_drv.h:45</a></div></div>
+<div class="ttc" id="a00089_html_ac02ece485a93f9b66da0ac162717a9a2"><div class="ttname"><a href="a00089.html#ac02ece485a93f9b66da0ac162717a9a2">FXPQ3115_PT_DATA_CFG_PDEFE_MASK</a></div><div class="ttdeci">#define FXPQ3115_PT_DATA_CFG_PDEFE_MASK</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00553">fxpq3115.h:553</a></div></div>
+<div class="ttc" id="a00089_html_af7410d05c6122449f742dc38ab7b3c50"><div class="ttname"><a href="a00089.html#af7410d05c6122449f742dc38ab7b3c50">FXPQ3115_PT_DATA_CFG_DREM_MASK</a></div><div class="ttdeci">#define FXPQ3115_PT_DATA_CFG_DREM_MASK</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00556">fxpq3115.h:556</a></div></div>
+<div class="ttc" id="a00089_html_ad2a506e4ec8b834b23f5daaf5858831f"><div class="ttname"><a href="a00089.html#ad2a506e4ec8b834b23f5daaf5858831f">FXPQ3115_CTRL_REG4_INT_EN_DRDY_MASK</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG4_INT_EN_DRDY_MASK</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l01051">fxpq3115.h:1051</a></div></div>
+<div class="ttc" id="a00089_html_a69c3ddb550570c199b36e458f3713d08"><div class="ttname"><a href="a00089.html#a69c3ddb550570c199b36e458f3713d08">FXPQ3115_CTRL_REG5_INT_CFG_DRDY_INT1</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG5_INT_CFG_DRDY_INT1</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l01153">fxpq3115.h:1153</a></div></div>
+<div class="ttc" id="a00089_html_af26f449e73437e60d22c20b4f2cb2aceac0be780f2af21b0c6b7d8162bb814137"><div class="ttname"><a href="a00089.html#af26f449e73437e60d22c20b4f2cb2aceac0be780f2af21b0c6b7d8162bb814137">FXPQ3115_PT_DATA_CFG</a></div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00035">fxpq3115.h:35</a></div></div>
+<div class="ttc" id="a00089_html_af41adb15e40cfd5930192c768f87bccf"><div class="ttname"><a href="a00089.html#af41adb15e40cfd5930192c768f87bccf">FXPQ3115_CTRL_REG1_OS_OSR_2</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG1_OS_OSR_2</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00875">fxpq3115.h:875</a></div></div>
+<div class="ttc" id="a00089_html_a2e74a66dedbf0512d69626558a45195f"><div class="ttname"><a href="a00089.html#a2e74a66dedbf0512d69626558a45195f">FXPQ3115_CTRL_REG1_OST_SET</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG1_OST_SET</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00871">fxpq3115.h:871</a></div></div>
+<div class="ttc" id="a00089_html_a713a5e1a85e91267ba377a57ef74eaeb"><div class="ttname"><a href="a00089.html#a713a5e1a85e91267ba377a57ef74eaeb">FXPQ3115_CTRL_REG3_IPOL1_MASK</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG3_IPOL1_MASK</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00979">fxpq3115.h:979</a></div></div>
+<div class="ttc" id="a00089_html_a08c40a148f082f2702bd1264cf927c3a"><div class="ttname"><a href="a00089.html#a08c40a148f082f2702bd1264cf927c3a">FXPQ3115_PT_DATA_CFG_PDEFE_ENABLED</a></div><div class="ttdeci">#define FXPQ3115_PT_DATA_CFG_PDEFE_ENABLED</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00567">fxpq3115.h:567</a></div></div>
+<div class="ttc" id="a00089_html_af26f449e73437e60d22c20b4f2cb2acea95883440ecfd532e694138a5ab351e34"><div class="ttname"><a href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea95883440ecfd532e694138a5ab351e34">FXPQ3115_CTRL_REG5</a></div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00058">fxpq3115.h:58</a></div></div>
+<div class="ttc" id="a00089_html_a8110fc3aa1ec8aab270efcc5c22f6db4"><div class="ttname"><a href="a00089.html#a8110fc3aa1ec8aab270efcc5c22f6db4">FXPQ3115_CTRL_REG1_OST_MASK</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG1_OST_MASK</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00849">fxpq3115.h:849</a></div></div>
+<div class="ttc" id="a00089_html_af26f449e73437e60d22c20b4f2cb2acea2ee3d309c0291f3a34e4f13c79a95494"><div class="ttname"><a href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea2ee3d309c0291f3a34e4f13c79a95494">FXPQ3115_CTRL_REG4</a></div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00057">fxpq3115.h:57</a></div></div>
+<div class="ttc" id="a00089_html_af8292e722574fa292c06f5d4d205f882"><div class="ttname"><a href="a00089.html#af8292e722574fa292c06f5d4d205f882">FXPQ3115_PT_DATA_CFG_DREM_ENABLED</a></div><div class="ttdeci">#define FXPQ3115_PT_DATA_CFG_DREM_ENABLED</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00570">fxpq3115.h:570</a></div></div>
+<div class="ttc" id="a00089_html_af26f449e73437e60d22c20b4f2cb2acea1494defafec3dbea91b787bf99c8c38c"><div class="ttname"><a href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea1494defafec3dbea91b787bf99c8c38c">FXPQ3115_CTRL_REG3</a></div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00056">fxpq3115.h:56</a></div></div>
+</div><!-- fragment -->
+<p>Register settings for Interrupt (non buffered) Enablement with ONe-Shot Mode. </p>
+
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00054">54</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
+
+</div>
+</div>
+<a id="afe135f4090b21bcc8346bb48961d79fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe135f4090b21bcc8346bb48961d79fa">&#9670;&nbsp;</a></span>cMpl3115OutputNormal</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a03811.html">registerreadlist_t</a> cMpl3115OutputNormal[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {{.readFrom = <a class="code" href="a00089.html#af26f449e73437e60d22c20b4f2cb2aceac030a9e2fe4494373fa5edcab3319c63">FXPQ3115_OUT_P_MSB</a>, .numBytes = <a class="code" href="a00437.html#a78240bf2cdd569b7d1865486a3d47e1c">FXPQ3115_DATA_SIZE</a>},</div><div class="line">                                                   <a class="code" href="a00179.html#aebb58a1bb3df30b7df4f6f14d0f1a81d">__END_READ_DATA__</a>}</div><div class="ttc" id="a00089_html_af26f449e73437e60d22c20b4f2cb2aceac030a9e2fe4494373fa5edcab3319c63"><div class="ttname"><a href="a00089.html#af26f449e73437e60d22c20b4f2cb2aceac030a9e2fe4494373fa5edcab3319c63">FXPQ3115_OUT_P_MSB</a></div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00017">fxpq3115.h:17</a></div></div>
+<div class="ttc" id="a00179_html_aebb58a1bb3df30b7df4f6f14d0f1a81d"><div class="ttname"><a href="a00179.html#aebb58a1bb3df30b7df4f6f14d0f1a81d">__END_READ_DATA__</a></div><div class="ttdeci">#define __END_READ_DATA__</div><div class="ttdef"><b>Definition:</b> <a href="a00179_source.html#l00051">sensor_drv.h:51</a></div></div>
+<div class="ttc" id="a00437_html_a78240bf2cdd569b7d1865486a3d47e1c"><div class="ttname"><a href="a00437.html#a78240bf2cdd569b7d1865486a3d47e1c">FXPQ3115_DATA_SIZE</a></div><div class="ttdeci">#define FXPQ3115_DATA_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="a00437_source.html#l00041">fxpq3115_demo.c:41</a></div></div>
+</div><!-- fragment -->
+<p>Address and size of Raw Pressure+Temperature Data in Normal Mode. </p>
+
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00077">77</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
+
+</div>
+</div>
+<a id="acc2aafd6d65396802dfdff930f33d170"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc2aafd6d65396802dfdff930f33d170">&#9670;&nbsp;</a></span>cMpl3115SetOST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="a03807.html">registerwritelist_t</a> cMpl3115SetOST[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    </div><div class="line">    {<a class="code" href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea97b13539f5451f49718b36ef06c26464">FXPQ3115_CTRL_REG1</a>, <a class="code" href="a00089.html#a2e74a66dedbf0512d69626558a45195f">FXPQ3115_CTRL_REG1_OST_SET</a>, <a class="code" href="a00089.html#a8110fc3aa1ec8aab270efcc5c22f6db4">FXPQ3115_CTRL_REG1_OST_MASK</a>},</div><div class="line">    <a class="code" href="a00179.html#a2cedde333a6373a3ee274bde6af145d0">__END_WRITE_DATA__</a>}</div><div class="ttc" id="a00089_html_af26f449e73437e60d22c20b4f2cb2acea97b13539f5451f49718b36ef06c26464"><div class="ttname"><a href="a00089.html#af26f449e73437e60d22c20b4f2cb2acea97b13539f5451f49718b36ef06c26464">FXPQ3115_CTRL_REG1</a></div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00054">fxpq3115.h:54</a></div></div>
+<div class="ttc" id="a00179_html_a2cedde333a6373a3ee274bde6af145d0"><div class="ttname"><a href="a00179.html#a2cedde333a6373a3ee274bde6af145d0">__END_WRITE_DATA__</a></div><div class="ttdeci">#define __END_WRITE_DATA__</div><div class="ttdef"><b>Definition:</b> <a href="a00179_source.html#l00045">sensor_drv.h:45</a></div></div>
+<div class="ttc" id="a00089_html_a2e74a66dedbf0512d69626558a45195f"><div class="ttname"><a href="a00089.html#a2e74a66dedbf0512d69626558a45195f">FXPQ3115_CTRL_REG1_OST_SET</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG1_OST_SET</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00871">fxpq3115.h:871</a></div></div>
+<div class="ttc" id="a00089_html_a8110fc3aa1ec8aab270efcc5c22f6db4"><div class="ttname"><a href="a00089.html#a8110fc3aa1ec8aab270efcc5c22f6db4">FXPQ3115_CTRL_REG1_OST_MASK</a></div><div class="ttdeci">#define FXPQ3115_CTRL_REG1_OST_MASK</div><div class="ttdef"><b>Definition:</b> <a href="a00089_source.html#l00849">fxpq3115.h:849</a></div></div>
+</div><!-- fragment -->
+<p>Register settings for Triggring One-Shot Sampling. </p>
+
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00071">71</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
 </div>
 </div>
@@ -614,133 +562,66 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char embAppName[<a class="el" href="a04558.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td>
+          <td class="memname">char embAppName[<a class="el" href="a04817.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00079">79</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00084">84</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00438">main()</a>, and <a class="el" href="a00437_source.html#l00119">process_host_command()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>, and <a class="el" href="a00437_source.html#l00100">process_host_command()</a>.</p>
 
 </div>
 </div>
-<a id="aac92dd324ab87fabfb7a61647e6273fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac92dd324ab87fabfb7a61647e6273fe">&#9670;&nbsp;</a></span>gOrientationControlSubsystem</h2>
+<a id="a868ff2a7606d02288b18d3b7c21ebce6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a868ff2a7606d02288b18d3b7c21ebce6">&#9670;&nbsp;</a></span>gStreamID</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a03720.html">ControlSubsystem</a> gOrientationControlSubsystem</td>
+          <td class="memname">uint8_t gStreamID</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00076">76</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00086">86</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>, and <a class="el" href="a00437_source.html#l00100">process_host_command()</a>.</p>
 
 </div>
 </div>
-<a id="ae69294e40b64a92ce4a1c9636db4118a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae69294e40b64a92ce4a1c9636db4118a">&#9670;&nbsp;</a></span>gPrimaryStreamID</h2>
+<a id="aafa5fcc299fb9a0db111332f5111b7df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafa5fcc299fb9a0db111332f5111b7df">&#9670;&nbsp;</a></span>gSystick</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t gPrimaryStreamID</td>
+          <td class="memname"><a class="el" href="a00521.html#a5d7069350a7d7e65686c77a8038f462f">int32_t</a> gSystick</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00081">81</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00087">87</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00119">process_host_command()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>, and <a class="el" href="a00437_source.html#l00100">process_host_command()</a>.</p>
 
 </div>
 </div>
-<a id="a9410ef028d5df163bf575ae767fa3b2c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9410ef028d5df163bf575ae767fa3b2c">&#9670;&nbsp;</a></span>gStreamingEnabled</h2>
+<a id="ac61bf859f26cd2541c3958bff34e2bda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac61bf859f26cd2541c3958bff34e2bda">&#9670;&nbsp;</a></span>pGpioDriver</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">volatile bool gStreamingEnabled</td>
+          <td class="memname"><a class="el" href="a03903.html">GENERIC_DRIVER_GPIO</a>* pGpioDriver = &amp;<a class="el" href="a04847.html#a2c39f234913855fad752a8f96f245b27">Driver_GPIO_KSDK</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00080">80</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00119">process_host_command()</a>.</p>
-
-</div>
-</div>
-<a id="a75f40af5caf43ce58b7a18015c210e4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75f40af5caf43ce58b7a18015c210e4a">&#9670;&nbsp;</a></span>i2cBusInfo</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a03584.html">registerDeviceInfo_t</a> i2cBusInfo</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= {</div><div class="line">    .deviceInstance     = <a class="code" href="a04084.html#ab0c7969a7fffaabe78d43db2b12ad840">I2C_S_DEVICE_INDEX</a>,</div><div class="line">    .functionParam      = NULL,</div><div class="line">    .idleFunction       = NULL</div><div class="line">}</div><div class="ttc" id="a04084_html_ab0c7969a7fffaabe78d43db2b12ad840"><div class="ttname"><a href="a04084.html#ab0c7969a7fffaabe78d43db2b12ad840">I2C_S_DEVICE_INDEX</a></div><div class="ttdeci">#define I2C_S_DEVICE_INDEX</div><div class="ttdef"><b>Definition:</b> <a href="a04084_source.html#l00035">issdk_hal.h:35</a></div></div>
-</div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00088">88</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-</div>
-</div>
-<a id="abb44e114427310fd48b45c61bbb5b066"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb44e114427310fd48b45c61bbb5b066">&#9670;&nbsp;</a></span>orientOutputBuffer</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t orientOutputBuffer[<a class="el" href="a00092.html#adc72f7a14386aae7a4025ca511c06f54">STREAMING_HEADER_LEN</a>+<a class="el" href="a00443.html#ad02dd76540fcad6aa2f8413f4e3b7bf8">STREAMING_PAYLOAD_LEN</a>]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00083">83</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-</div>
-</div>
-<a id="ae23e87080aee459739b8a96e8a5bffca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae23e87080aee459739b8a96e8a5bffca">&#9670;&nbsp;</a></span>sensors</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="a03744.html">PhysicalSensor</a> sensors[2]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00086">86</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-</div>
-</div>
-<a id="afa81c629d378fe700f351a1bce411ad5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa81c629d378fe700f351a1bce411ad5">&#9670;&nbsp;</a></span>sfg</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a03800.html">SensorFusionGlobals</a> sfg</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00075">75</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="a00776_source.html#l00130">FXOS8700_Init()</a>, and <a class="el" href="a00875_source.html#l00145">initializeSensors()</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00088">88</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
 </div>
 </div>
@@ -751,30 +632,14 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char shieldString[<a class="el" href="a04558.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td>
+          <td class="memname">char shieldString[<a class="el" href="a04817.html#a4296d0603c5898f7baef119cbfe42858">ADS_MAX_STRING_LENGTH</a>] = {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00078">78</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00083">83</a> of file <a class="el" href="a00437_source.html">fxpq3115_demo.c</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00438">main()</a>, and <a class="el" href="a00437_source.html#l00119">process_host_command()</a>.</p>
-
-</div>
-</div>
-<a id="a875f795e25aaef1b828061bbfae4764a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a875f795e25aaef1b828061bbfae4764a">&#9670;&nbsp;</a></span>statusSubsystem</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a03804.html">StatusSubsystem</a> statusSubsystem</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="a00437_source.html#l00077">77</a> of file <a class="el" href="a00437_source.html">orientaion_application_baremetal_agm01.c</a>.</p>
+<p class="reference">Referenced by <a class="el" href="a00437_source.html#l00183">main()</a>, and <a class="el" href="a00437_source.html#l00100">process_host_command()</a>.</p>
 
 </div>
 </div>

@@ -53,6 +53,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/drivers
     ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
@@ -62,6 +63,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../components/silicon_id
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/osa
 )
@@ -78,6 +80,8 @@ include(middleware_sdmmc_common_MIMXRT1052)
 include(middleware_sdmmc_host_usdhc_MIMXRT1052)
 
 include(middleware_sdmmc_host_usdhc_freertos_MIMXRT1052)
+
+include(component_igpio_adapter_MIMXRT1052)
 
 include(middleware_fatfs_MIMXRT1052)
 
@@ -114,6 +118,8 @@ include(driver_igpio_MIMXRT1052)
 include(driver_xip_device_MIMXRT1052)
 
 include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
+
+include(component_silicon_id_MIMXRT1052)
 
 include(CMSIS_Include_core_cm_MIMXRT1052)
 

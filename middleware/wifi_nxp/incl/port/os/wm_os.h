@@ -1,23 +1,7 @@
 /*
- *  Copyright 2008-2020 NXP
+ *  Copyright 2008-2022 NXP
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
+ *  Licensed under the LA_OPT_NXP_Software_License.txt (the "Agreement")
  *
  */
 
@@ -50,7 +34,7 @@
  *    de-activate the timer using os_timer_activate() or
  *    os_timer_deactivate(). Reset a timer using os_timer_reset().
  * - Dynamic Memory Allocation: Dynamically allocate memory using
- *    os_mem_alloc(), os_mem_calloc() or os_mem_realloc() and free it using
+ *    os_mem_alloc(), os_mem_calloc() and free it using
  *    os_mem_free().
  *
  */
@@ -180,10 +164,10 @@ typedef xTaskHandle os_thread_t;
 
 static inline const char *get_current_taskname(void)
 {
-    os_thread_t *handle = (os_thread_t *)xTaskGetCurrentTaskHandle();
+    os_thread_t handle = xTaskGetCurrentTaskHandle();
     if (handle != NULL)
     {
-        return pcTaskGetTaskName(*handle);
+        return pcTaskGetTaskName(handle);
     }
     else
     {
@@ -232,7 +216,7 @@ static inline int os_thread_create(os_thread_t *thandle,
 {
     int ret;
 
-    ret = xTaskCreate(main_func, name, stack->size, arg, prio, thandle);
+    ret = xTaskCreate(main_func, name, (uint16_t)stack->size, arg, (uint32_t)prio, thandle);
 
     os_dprintf(
         " Thread Create: ret %d thandle %p"
@@ -540,7 +524,7 @@ static inline int os_queue_get_msgs_waiting(os_queue_t *qhandle)
     {
         return -WM_E_INVAL;
     }
-    nmsg = uxQueueMessagesWaiting(*qhandle);
+    nmsg = (int)uxQueueMessagesWaiting(*qhandle);
     os_dprintf("OS: Queue Msg Count: handle %p, count %d\r\n", *qhandle, nmsg);
     return nmsg;
 }
@@ -923,7 +907,7 @@ static inline int os_mutex_delete(os_mutex_t *mhandle)
  */
 static inline int os_event_notify_get(unsigned long wait_time)
 {
-    int ret = ulTaskNotifyTake(pdTRUE, wait_time);
+    int ret = (int)ulTaskNotifyTake(pdTRUE, wait_time);
     return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
 }
 
@@ -1121,7 +1105,7 @@ static inline int os_semaphore_put(os_semaphore_t *mhandle)
 static inline int os_semaphore_getcount(os_semaphore_t *mhandle)
 {
     os_dprintf("OS: Semaphore Get Count: handle %p\r\n", *mhandle);
-    return uxQueueMessagesWaiting(*mhandle);
+    return (int)uxQueueMessagesWaiting(*mhandle);
 }
 
 /** Delete a semaphore
@@ -1573,17 +1557,6 @@ static inline void *os_mem_calloc(size_t size)
     return ptr;
 }
 
-/** Reallocate memory
- *
- * This function attempts to resize a previously allocated memory block.
- *
- *  @param[in] old_ptr Pointer to earlier allocated memory
- *  @param[in] new_size The new size
- *
- * @return Pointer to the newly resized memory block
- * @return NULL if reallocation fails
- */
-#define os_mem_realloc(old_ptr, new_size) pvPortReAlloc(old_ptr, new_size)
 /** Free Memory
  *
  * This function frees dynamically allocated memory using any of the dynamic
@@ -1595,7 +1568,6 @@ static inline void *os_mem_calloc(size_t size)
 #else  /* ! CONFIG_HEAP_DEBUG */
 static inline void *os_mem_alloc(size_t size) WARN_UNUSED_RET;
 static inline void *os_mem_calloc(size_t size) WARN_UNUSED_RET;
-static inline void *os_mem_realloc(void *ptr, size_t size) WARN_UNUSED_RET;
 
 /** This function allocates memory dynamically
  *  @param [in] size Size of memory to be allocated
@@ -1629,23 +1601,6 @@ static inline void *os_mem_calloc(size_t size)
     return ptr;
 }
 
-/**This function attempts to resize the memory block pointed to by
- *  ptr that was previously allocated with a call to os_mem_alloc()
- *  or os_mem_calloc()
- * @param [in] ptr  Pointer to earlier alocated memory
- * @param [in] size New size
- *
- * @return Pointer to the newly resized memory block
- * @return NULL if reallocation fails
- */
-static inline void *os_mem_realloc(void *ptr, size_t size)
-{
-    void *new_ptr = pvPortReAlloc(ptr, size);
-    if (new_ptr)
-        (void)PRINTF("MDC:R:%x:%x:%d\r\n", ptr, new_ptr, size);
-
-    return new_ptr;
-}
 /** This function frees dynamically allocated memory
  *  @param [in] ptr Pointer to memory to be freed
  */
@@ -1656,27 +1611,37 @@ static inline void os_mem_free(void *ptr)
 }
 #endif /* CONFIG_HEAP_DEBUG */
 
+#ifdef CONFIG_HEAP_STAT
 /** This function dumps complete statistics
  *  of the heap memory.
  */
 static inline void os_dump_mem_stats(void)
 {
     unsigned sta = os_enter_critical_section();
-    //#ifdef FREERTOS_ENABLE_MALLOC_STATS
     HeapStats_t HS;
+
+    HS.xAvailableHeapSpaceInBytes      = 0;
+    HS.xSizeOfLargestFreeBlockInBytes  = 0;
+    HS.xSizeOfSmallestFreeBlockInBytes = 0;
+    HS.xNumberOfFreeBlocks             = 0;
+    HS.xNumberOfSuccessfulAllocations  = 0;
+    HS.xNumberOfSuccessfulFrees        = 0;
+    HS.xMinimumEverFreeBytesRemaining  = 0;
+
     vPortGetHeapStats(&HS);
 
     (void)PRINTF("\n\r");
     (void)PRINTF("Heap size ---------------------- : %d\n\r", HS.xAvailableHeapSpaceInBytes);
-    (void)PRINTF("Largest Free Block size ---------: %d\n\r", HS.xSizeOfLargestFreeBlockInBytes);
+    (void)PRINTF("Largest Free Block size -------- : %d\n\r", HS.xSizeOfLargestFreeBlockInBytes);
     (void)PRINTF("Smallest Free Block size ------- : %d\n\r", HS.xSizeOfSmallestFreeBlockInBytes);
     (void)PRINTF("Number of Free Blocks ---------- : %d\n\r", HS.xNumberOfFreeBlocks);
     (void)PRINTF("Total successful allocations --- : %d\n\r", HS.xNumberOfSuccessfulAllocations);
     (void)PRINTF("Total successful frees --------- : %d\n\r", HS.xNumberOfSuccessfulFrees);
     (void)PRINTF("Min Free since system boot ----- : %d\n\r", HS.xMinimumEverFreeBytesRemaining);
-    //#endif /* FREERTOS_ENABLE_MALLOC_STATS */
+
     os_exit_critical_section(sta);
 }
+#endif
 
 #if 0
 /** This function returns the size of biggest free block

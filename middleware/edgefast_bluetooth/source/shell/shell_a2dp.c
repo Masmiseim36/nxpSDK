@@ -32,6 +32,7 @@
 #include "shell_bt.h"
 
 #if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined(CONFIG_BT_A2DP) && ((CONFIG_BT_A2DP) > 0U))
 
 struct bt_a2dp_ep_test {
     struct bt_a2dp_endpoint *ep;
@@ -1837,4 +1838,5 @@ void bt_ShellA2dpInit(shell_handle_t shell)
         shell_print(shell, "Shell register command %s failed!", g_shellCommanda2dp.pcCommand);
     }
 }
+#endif /* CONFIG_BT_A2DP */
 #endif /* CONFIG_BT_BREDR */

@@ -104,6 +104,19 @@ typedef struct _mcs_speed_a1
     bool_t bIqPiLimFlag;                     /* Saturation flag of Iq controller */
 } mcs_speed_t;
 
+/*! @brief mcs openloop structure */
+typedef struct _mcs_openloop_a1
+{
+	GFLIB_INTEGRATOR_T_A32 sFreqIntegrator;
+	GMCLIB_2COOR_DQ_T_FLT sUDQReq;
+	GMCLIB_2COOR_DQ_T_FLT sIDQReq;
+	float_t fltFreqMax;
+	float_t fltFreqReq;
+	bool_t bCurrentControl;
+	frac16_t f16Theta;
+    frac16_t f16PosElExt;
+} mcs_openloop_t;
+
 /*! @brief mcs position structure */
 typedef struct _mcs_position_a1
 {
@@ -159,6 +172,8 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
+RAM_FUNC_LIB
+void MCS_PMSMOpenloop(mcs_openloop_t *psOpenloop);
 
 /*!
  * @brief PMSM field oriented current control.
@@ -169,6 +184,7 @@ extern "C" {
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM);
 
 /*!
@@ -180,6 +196,7 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM);
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_PMSMFocCtrlSpeed(mcs_speed_t *psSpeed);
 
 /*!
@@ -191,6 +208,7 @@ void MCS_PMSMFocCtrlSpeed(mcs_speed_t *psSpeed);
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_PMSMFocCtrlPosition(mcs_position_t *psPosition);
 
 /*!
@@ -202,6 +220,7 @@ void MCS_PMSMFocCtrlPosition(mcs_position_t *psPosition);
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_PMSMAlignment(mcs_alignment_t *psAlignment);
 
 /*!
@@ -213,6 +232,7 @@ void MCS_PMSMAlignment(mcs_alignment_t *psAlignment);
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_PMSMOpenLoopStartUp(mcs_pmsm_startup_t *psStartUp);
 
 /*!
@@ -224,7 +244,10 @@ void MCS_PMSMOpenLoopStartUp(mcs_pmsm_startup_t *psStartUp);
  *
  * @return None
  */
+RAM_FUNC_LIB
 void MCS_PMSMScalarCtrl(mcs_pmsm_scalar_ctrl_t *psScalarPMSM);
+
+void MCS_PMSMOpenloop(mcs_openloop_t *psOpenloop);
 
 #ifdef __cplusplus
 }

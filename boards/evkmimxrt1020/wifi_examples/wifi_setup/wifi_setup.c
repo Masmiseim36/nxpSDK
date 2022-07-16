@@ -19,7 +19,6 @@
 #include "wm_net.h"
 #include <wm_os.h>
 
-#include "fsl_sdmmc_host.h"
 #include "lwip/tcpip.h"
 #include "ping.h"
 

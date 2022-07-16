@@ -3,19 +3,10 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_DEBUG " \
     -D__STARTUP_CLEAR_BSS \
     -DDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
-    -g \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE} \
@@ -23,17 +14,9 @@ SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DNDEBUG \
     -D__STARTUP_INITIALIZE_NONCACHEDATA \
     -mcpu=cortex-m7 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     ${CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG} \
@@ -42,6 +25,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DDEBUG \
     -DCPU_MIMXRT1062DVL6A \
+    -DSDIO_ENABLED=1 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DAPPL_USE_STANDARD_IO \
     -DGATT_CLIENT \
@@ -60,7 +44,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DSDK_OS_FREE_RTOS \
     -DFSL_OSA_TASK_ENABLE=1 \
-    -DSDIO_ENABLED=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DSDK_DEBUGCONSOLE_UART=1 \
     -DCONFIG_BT_BREDR=1 \
@@ -69,6 +52,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -DCONFIG_BT_SMP=1 \
     -DCONFIG_BT_GATT_CLIENT=1 \
     -DSHELL_TASK_STACK_SIZE=2048 \
+    -DLPUART_RING_BUFFER_SIZE=1024U \
     -DNVM_NO_COMPONNET=1 \
     -DCPU_MIMXRT1062DVL6A_cm7 \
     -DHAL_UART_DMA_ENABLE=1 \
@@ -95,6 +79,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_DEBUG " \
     -mthumb \
     -MMD \
     -MP \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \
@@ -110,6 +96,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DXIP_BOOT_HEADER_ENABLE=1 \
     -DNDEBUG \
     -DCPU_MIMXRT1062DVL6A \
+    -DSDIO_ENABLED=1 \
     -DFSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1 \
     -DAPPL_USE_STANDARD_IO \
     -DGATT_CLIENT \
@@ -128,7 +115,6 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DPRINTF_ADVANCED_ENABLE=1 \
     -DSDK_OS_FREE_RTOS \
     -DFSL_OSA_TASK_ENABLE=1 \
-    -DSDIO_ENABLED=1 \
     -DDEBUG_CONSOLE_TRANSFER_NON_BLOCKING \
     -DSDK_DEBUGCONSOLE_UART=1 \
     -DCONFIG_BT_BREDR=1 \
@@ -137,6 +123,7 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -DCONFIG_BT_SMP=1 \
     -DCONFIG_BT_GATT_CLIENT=1 \
     -DSHELL_TASK_STACK_SIZE=2048 \
+    -DLPUART_RING_BUFFER_SIZE=1024U \
     -DNVM_NO_COMPONNET=1 \
     -DCPU_MIMXRT1062DVL6A_cm7 \
     -DHAL_UART_DMA_ENABLE=1 \
@@ -162,6 +149,8 @@ SET(CMAKE_C_FLAGS_FLEXSPI_NOR_RELEASE " \
     -mthumb \
     -MMD \
     -MP \
+    -fomit-frame-pointer \
+    -Wno-unused-function \
     -fno-common \
     -ffunction-sections \
     -fdata-sections \

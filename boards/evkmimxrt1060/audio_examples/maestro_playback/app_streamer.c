@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "osa_common.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "fsl_codec_common.h"
@@ -14,6 +13,7 @@
 #include "app_streamer.h"
 #include "streamer_pcm_app.h"
 #include "main.h"
+#include "logging.h"
 
 #ifdef EAP_PROC
 #include "eap_proc.h"
@@ -23,13 +23,13 @@
 #define STREAMER_TASK_NAME         "Streamer"
 #define STREAMER_MESSAGE_TASK_NAME "StreamerMessage"
 
-#define STREAMER_TASK_STACK_SIZE         4 * 1024
-#define STREAMER_MESSAGE_TASK_STACK_SIZE 512
+#define STREAMER_TASK_STACK_SIZE         16 * 1024
+#define STREAMER_MESSAGE_TASK_STACK_SIZE 1024
 
 static STREAMER_T *streamer;
 static ringbuf_t *audioBuffer;
-static OsaMutex audioMutex;
-static OsaThread msg_thread;
+OSA_MUTEX_HANDLE_DEFINE(audioMutex);
+OSA_TASK_HANDLE_DEFINE(msg_thread);
 
 static void (*progress_handler)(int current, int total);
 
@@ -48,20 +48,22 @@ extern app_handle_t app;
  */
 static void STREAMER_MessageTask(void *arg)
 {
-    OsaMq mq;
     STREAMER_MSG_T msg;
     bool exit_thread = false;
-    int ret;
+    osa_status_t ret;
 
     if (get_app_data()->logEnabled)
     {
         PRINTF("[EAP STREAMER] Message Task started\r\n");
     }
 
-    ret = osa_mq_open(&mq, APP_STREAMER_MSG_QUEUE, STREAMER_MSG_SIZE, true);
-    if (ERRCODE_NO_ERROR != ret)
+    while (!streamer)
     {
-        PRINTF("[EAP STREAMER] osa_mq_open failed: %d\r\n", ret);
+        OSA_TimeDelay(1);
+    }
+    if (streamer->mq_out == NULL)
+    {
+        PRINTF("[EAP STREAMER] osa_mq_open failed: %d\r\n");
         return;
     }
 
@@ -71,10 +73,10 @@ static void STREAMER_MessageTask(void *arg)
 
     do
     {
-        ret = osa_mq_receive(&mq, (void *)&msg, STREAMER_MSG_SIZE, 0, NULL);
-        if (ret != ERRCODE_NO_ERROR)
+        ret = OSA_MsgQGet(&streamer->mq_out, (void *)&msg, osaWaitForever_c);
+        if (ret != KOSA_StatusSuccess)
         {
-            PRINTF("[EAP STREAMER] osa_mq_receiver error: %d\r\n", ret);
+            PRINTF("[EAP STREAMER] OSA_MsgQGet error: %d\r\n", ret);
             continue;
         }
 
@@ -128,19 +130,19 @@ static void STREAMER_MessageTask(void *arg)
 
     } while (!exit_thread);
 
-    osa_mq_close(&mq);
-    osa_mq_destroy(APP_STREAMER_MSG_QUEUE);
+    OSA_MsgQDestroy(&streamer->mq_out);
+    streamer->mq_out = NULL;
 
-    osa_thread_exit(NULL);
+    OSA_TaskDestroy(msg_thread);
 }
 
 int STREAMER_Read(uint8_t *data, uint32_t size)
 {
     uint32_t bytes_read;
 
-    osa_mutex_lock(&audioMutex);
+    OSA_MutexLock(&audioMutex, osaWaitForever_c);
     bytes_read = ringbuf_read(audioBuffer, data, size);
-    osa_mutex_unlock(&audioMutex);
+    OSA_MutexUnlock(&audioMutex);
 
     if (bytes_read != size)
     {
@@ -154,9 +156,9 @@ int STREAMER_Write(uint8_t *data, uint32_t size)
 {
     uint32_t written;
 
-    osa_mutex_lock(&audioMutex);
+    OSA_MutexLock(&audioMutex, osaWaitForever_c);
     written = ringbuf_write(audioBuffer, data, size);
-    osa_mutex_unlock(&audioMutex);
+    OSA_MutexUnlock(&audioMutex);
 
     if (written != size)
     {
@@ -193,77 +195,22 @@ void STREAMER_Stop(streamer_handle_t *handle)
     }
 }
 
-// UNUSED - could be removed?
-status_t STREAMER_Create(streamer_handle_t *handle)
-{
-    STREAMER_CREATE_PARAM params;
-    ELEMENT_PROPERTY_T prop;
-    OsaThreadAttr thread_attr;
-    int ret;
-
-    osa_mutex_create(&audioMutex, false);
-    audioBuffer = ringbuf_create(AUDIO_BUFFER_SIZE);
-    if (!audioBuffer)
-    {
-        return kStatus_Fail;
-    }
-
-    /* Create message process thread */
-    osa_thread_attr_init(&thread_attr);
-    osa_thread_attr_set_name(&thread_attr, STREAMER_MESSAGE_TASK_NAME);
-    osa_thread_attr_set_stack_size(&thread_attr, STREAMER_MESSAGE_TASK_STACK_SIZE);
-    ret = osa_thread_create(&msg_thread, &thread_attr, STREAMER_MessageTask, (void *)handle);
-    osa_thread_attr_destroy(&thread_attr);
-    if (ERRCODE_NO_ERROR != ret)
-    {
-        return kStatus_Fail;
-    }
-
-    /* Create streamer */
-    strcpy(params.out_mq_name, APP_STREAMER_MSG_QUEUE);
-    params.stack_size    = STREAMER_TASK_STACK_SIZE;
-    params.pipeline_type = STREAM_PIPELINE_NETBUF;
-    params.task_name     = STREAMER_TASK_NAME;
-    params.in_dev_name   = "";
-    params.out_dev_name  = "";
-
-    handle->streamer = streamer_create(&params);
-    if (!handle->streamer)
-    {
-        return kStatus_Fail;
-    }
-
-    prop.prop = PROP_NETBUFSRC_SET_CALLBACK;
-    prop.val  = (uintptr_t)STREAMER_Read;
-
-    streamer_set_property(handle->streamer, prop, true);
-
-    prop.prop = PROP_DECODER_DECODER_TYPE;
-    prop.val  = DECODER_TYPE_MP3;
-
-    streamer_set_property(handle->streamer, prop, true);
-
-    handle->audioPlaying = false;
-
-    return kStatus_Success;
-}
-
 status_t STREAMER_file_Create(char *filename, int volume)
 {
     STREAMER_CREATE_PARAM params;
     ELEMENT_PROPERTY_T prop;
-    OsaThreadAttr thread_attr;
+    osa_task_def_t thread_attr;
     int ret;
 
     eap_att_control_t *control = get_eap_att_control();
 
     /* Create message process thread */
-    osa_thread_attr_init(&thread_attr);
-    osa_thread_attr_set_name(&thread_attr, STREAMER_MESSAGE_TASK_NAME);
-    osa_thread_attr_set_stack_size(&thread_attr, STREAMER_MESSAGE_TASK_STACK_SIZE);
-    ret = osa_thread_create(&msg_thread, &thread_attr, STREAMER_MessageTask, (void *)control);
-    osa_thread_attr_destroy(&thread_attr);
-    if (ERRCODE_NO_ERROR != ret)
+    thread_attr.tpriority = OSA_PRIORITY_HIGH;
+    thread_attr.tname     = (uint8_t *)STREAMER_MESSAGE_TASK_NAME;
+    thread_attr.pthread   = &STREAMER_MessageTask;
+    thread_attr.stacksize = STREAMER_MESSAGE_TASK_STACK_SIZE;
+    ret                   = OSA_TaskCreate(&msg_thread, &thread_attr, (void *)control);
+    if (KOSA_StatusSuccess != ret)
     {
         return kStatus_Fail;
     }
@@ -303,38 +250,31 @@ status_t STREAMER_file_Create(char *filename, int volume)
 /* this functions should not be called internally to prevent possible issues caused by broken state machine */
 eap_att_code_t play()
 {
-    if (osa_init() != ERRCODE_NO_ERROR)
-    {
-        return kEapAttCodeError;
-    }
     init_logging();
 
-    if (add_module_name(LOGMDL_STREAMER, "STREAMER") == ERRCODE_NO_ERROR)
-    {
-        /* Uncomment below to turn on full debug logging for the streamer. */
-        // set_debug_module(0xffffffff);
-        // set_debug_level(LOGLVL_DEBUG);
-        // get_debug_state();
-        streamer_pcm_init();
+    /* Uncomment below to turn on full debug logging for the streamer. */
+    //     set_debug_module(0xffffffff);
+    //     set_debug_level(LOGLVL_DEBUG);
+    //     get_debug_state();
+    streamer_pcm_init();
 
-        if (STREAMER_file_Create((char *)get_eap_att_control()->input, (int)get_eap_att_control()->volume) ==
-            kStatus_Success)
+    if (STREAMER_file_Create((char *)get_eap_att_control()->input, (int)get_eap_att_control()->volume) ==
+        kStatus_Success)
+    {
+        if (streamer_set_state(streamer, 0, STATE_PLAYING, true) == 0)
         {
-            if (streamer_set_state(streamer, 0, STATE_PLAYING, true) == 0)
-            {
-                PRINTF("[EAP STREAMER] Starting playback\r\n");
-                return kEapAttCodeOk;
-            }
-            else
-            {
-                PRINTF("[EAP STREAMER] Playback start failed\r\n");
-                return kEapAttCodeStreamControlFailure;
-            }
+            PRINTF("[EAP STREAMER] Starting playback\r\n");
+            return kEapAttCodeOk;
         }
         else
         {
-            PRINTF("[EAP STREAMER] create_stream failed\r\n");
+            PRINTF("[EAP STREAMER] Playback start failed\r\n");
+            return kEapAttCodeStreamControlFailure;
         }
+    }
+    else
+    {
+        PRINTF("[EAP STREAMER] create_stream failed\r\n");
     }
     return kEapAttCodeStreamCreateFailed;
 }
@@ -385,11 +325,6 @@ eap_att_code_t destroy()
         vTaskDelay(100);
         vTaskResume(app.shell_task_handle);
 
-        if (audioMutex != NULL)
-        {
-            osa_mutex_destroy(&audioMutex);
-            audioMutex = NULL;
-        }
         if (audioBuffer != NULL)
         {
             ringbuf_destroy(audioBuffer);
@@ -397,7 +332,6 @@ eap_att_code_t destroy()
         }
 
         deinit_logging();
-        osa_deinit();
 #ifdef EAP_PROC
         eap_att_control_t *control = get_eap_att_control();
         control->handle            = 0;

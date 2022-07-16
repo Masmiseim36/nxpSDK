@@ -9,34 +9,61 @@
 #include <string.h>
 #include <math.h>
 
+#include "app_definitions.h"
 #include "fsl_debug_console.h"
-#include "osa_memory.h"
+#include "fsl_os_abstraction.h"
 
-#define NUMBER_OF_CHANNELS     _1CHAN
-#define MODEL_LOCATION         VIT_MODEL_IN_ROM
-#define VIT_OPERATING_MODE     VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+#include "vit_proc.h"
+#include "VIT_Model_en.h"
+#include "VIT_Model_cn.h"
+#include "VIT.h"
+
+#define VIT_CMD_TIME_SPAN 3.0
+
+#if (defined(DEMO_CODEC_CS42448) && (DEMO_CODEC_CS42448 > 0))
+#define NUMBER_OF_CHANNELS 2
+#define BYTE_DEPTH         4
+#elif (defined(PLATFORM_RT1170) || defined(PLATFORM_RT1160))
+#define NUMBER_OF_CHANNELS 1
+#define BYTE_DEPTH         4
+#else
+#define NUMBER_OF_CHANNELS 1
+#define BYTE_DEPTH         2
+#endif
+
+#define MODEL_LOCATION VIT_MODEL_IN_ROM
+#if (NUMBER_OF_CHANNELS == 1)
+#define VIT_OPERATING_MODE VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE
+#else
+#define VIT_OPERATING_MODE VIT_WAKEWORD_ENABLE | VIT_VOICECMD_ENABLE | VIT_AFE_ENABLE
+#endif
+
+#if (NUMBER_OF_CHANNELS == 1)
 #define VIT_MIC1_MIC2_DISTANCE 0
+#else
+#define VIT_MIC1_MIC2_DISTANCE 65
+#endif
 #define VIT_MIC1_MIC3_DISTANCE 0
 
-#ifdef PLATFORM_RT1060
+#if defined(PLATFORM_RT1040)
+#define DEVICE_ID VIT_IMXRT1040
+
+#elif defined(PLATFORM_RT1050)
+#define DEVICE_ID VIT_IMXRT1050
+
+#elif defined(PLATFORM_RT1060)
 #define DEVICE_ID VIT_IMXRT1060
 
-#elif defined PLATFORM_RT1160
+#elif defined(PLATFORM_RT1160)
 #define DEVICE_ID VIT_IMXRT1160
 
-#elif defined PLATFORM_RT1170
+#elif defined(PLATFORM_RT1170)
 #define DEVICE_ID VIT_IMXRT1170
 
 #else
 #error "No platform selected"
 
 #endif
-
-#include "vit_proc.h"
-#include "VIT_Model_en.h"
-#include "VIT_Model_cn.h"
-#include "VIT.h"
-#include "PL_platformTypes_CortexM7.h"
 
 #define MEMORY_ALIGNMENT 8 // in bytes
 
@@ -48,6 +75,9 @@ static PL_BOOL InitPhase_Error        = PL_FALSE;
 static VIT_DataIn_st VIT_InputBuffers = {PL_NULL, PL_NULL,
                                          PL_NULL}; // Resetting Input Buffer addresses provided to VIT_process() API
 static PL_INT8 *pMemory[PL_NR_MEMORY_REGIONS];
+#if DEMO_CODEC_CS42448 || PLATFORM_RT1170 || PLATFORM_RT1160
+static PL_INT16 DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME * DEMO_CHANNEL_NUM];
+#endif
 
 VIT_ReturnStatus_en VIT_ModelInfo(void)
 {
@@ -66,7 +96,8 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
     {
         PRINTF("  Language supported: %s \r\n", Model_Info.pLanguage);
     }
-    PRINTF("  Number of Commands supported: %d \r\n", Model_Info.NbOfVoiceCmds);
+    PRINTF("  Number of WakeWords supported : %d \r\n", Model_Info.NbOfWakeWords);
+    PRINTF("  Number of Commands supported : %d \r\n", Model_Info.NbOfVoiceCmds);
 
     if (!Model_Info.WW_VoiceCmds_Strings) // Check here if Model is containing WW and CMDs strings
     {
@@ -77,10 +108,15 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
         const char *ptr;
 
         PRINTF("  VIT_Model integrating WakeWord and Voice Commands strings: YES\r\n");
+        PRINTF("  WakeWords supported : \r\n");
         ptr = Model_Info.pWakeWord;
         if (ptr != PL_NULL)
         {
-            PRINTF("  WakeWord supported: %s \r\n", ptr);
+            for (PL_UINT16 i = 0; i < Model_Info.NbOfWakeWords; i++)
+            {
+                PRINTF("   '%s' \r\n", ptr);
+                ptr += strlen(ptr) + 1; // to consider NULL char
+            }
         }
         PRINTF("  Voice commands supported: \r\n");
         ptr = Model_Info.pVoiceCmds_List;
@@ -181,7 +217,7 @@ int VIT_Initialize(void *arg)
             // reserve memory space
             // NB: VITMemoryTable.Region[PL_MEMREGION_PERSISTENT_FAST_DATA] should be allocated
             //      in the fastest memory of the platform (when possible) - this is not the case in this example.
-            pMemory[i]                            = osa_malloc(VITMemoryTable.Region[i].Size + MEMORY_ALIGNMENT);
+            pMemory[i] = OSA_MemoryAllocate(VITMemoryTable.Region[i].Size + MEMORY_ALIGNMENT);
             VITMemoryTable.Region[i].pBaseAddress = (void *)pMemory[i];
         }
     }
@@ -216,6 +252,7 @@ int VIT_Initialize(void *arg)
     VITControlParams.OperatingMode      = VIT_OPERATING_MODE;
     VITControlParams.MIC1_MIC2_Distance = VIT_MIC1_MIC2_DISTANCE;
     VITControlParams.MIC1_MIC3_Distance = VIT_MIC1_MIC3_DISTANCE;
+    VITControlParams.Command_Time_Span  = VIT_CMD_TIME_SPAN;
 
     if (!InitPhase_Error)
     {
@@ -254,14 +291,19 @@ int VIT_Initialize(void *arg)
 int VIT_Execute(void *arg, void *inputBuffer, int size)
 {
     VIT_ReturnStatus_en VIT_Status;
-    VIT_VoiceCommand_st VoiceCommand;                               // Voice Command id
+    VIT_VoiceCommand_st VoiceCommand; // Voice Command info
+    VIT_WakeWord_st WakeWord;         // Wakeword info
+
     VIT_DetectionStatus_en VIT_DetectionResults = VIT_NO_DETECTION; // VIT detection result
 
-    if (size != VIT_SAMPLES_PER_FRAME)
+    if (size != VIT_SAMPLES_PER_FRAME * NUMBER_OF_CHANNELS * BYTE_DEPTH)
     {
         PRINTF("Input buffer format issue\r\n");
         return VIT_INVALID_FRAME_SIZE;
     }
+#if DEMO_CODEC_CS42448 || PLATFORM_RT1170 || PLATFORM_RT1160
+    DeInterleave(inputBuffer, DeInterleavedBuffer, VIT_SAMPLES_PER_FRAME, DEMO_CHANNEL_NUM);
+#endif
     /*
      *   VIT Process
      */
@@ -272,16 +314,23 @@ int VIT_Execute(void *arg, void *inputBuffer, int size)
     // example app.
     if (VITInstParams.NumberOfChannel == _1CHAN)
     {
+#if PLATFORM_RT1170 || PLATFORM_RT1160
+        VIT_InputBuffers.pBuffer_Chan1 = DeInterleavedBuffer;
+#else
         VIT_InputBuffers.pBuffer_Chan1 = (PL_INT16 *)inputBuffer; // PCM buffer: 16-bit - 16kHz - mono
+#endif
         VIT_InputBuffers.pBuffer_Chan2 = PL_NULL;
         VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
     }
-    else
+#if DEMO_CODEC_CS42448
+    if (VITInstParams.NumberOfChannel == _2CHAN)
     {
-        PRINTF("Input buffer format issue\r\n"); // could be implemented if needed, see VIT_ExApp.c
-        return VIT_INVALID_PARAMETER_OUTOFRANGE;
+        VIT_InputBuffers.pBuffer_Chan1 =
+            &DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME * 4]; // PCM buffer: 16-bit - 16kHz - mono
+        VIT_InputBuffers.pBuffer_Chan2 = &DeInterleavedBuffer[VIT_SAMPLES_PER_FRAME * 5];
+        VIT_InputBuffers.pBuffer_Chan3 = PL_NULL;
     }
-
+#endif
     VIT_Status = VIT_Process(VITHandle,
                              &VIT_InputBuffers, // temporal audio input data
                              &VIT_DetectionResults);
@@ -294,7 +343,25 @@ int VIT_Execute(void *arg, void *inputBuffer, int size)
 
     if (VIT_DetectionResults == VIT_WW_DETECTED)
     {
-        PRINTF(" - WakeWord detected \r\n");
+        // Retrieve id of the WakeWord detected
+        // String of the Command can also be retrieved (when WW and CMDs strings are integrated in Model)
+        VIT_Status = VIT_GetWakeWordFound(VITHandle, &WakeWord);
+        if (VIT_Status != VIT_SUCCESS)
+        {
+            PRINTF("VIT_GetWakeWordFound error : %d\r\n", VIT_Status);
+            return VIT_Status; // will stop processing VIT and go directly to MEM free
+        }
+        else
+        {
+            PRINTF(" - WakeWord detected %d", WakeWord.WW_Id);
+
+            // Retrieve WakeWord Name : OPTIONAL
+            // Check first if WakeWord string is present
+            if (WakeWord.pWW_Name != PL_NULL)
+            {
+                PRINTF(" %s\r\n", WakeWord.pWW_Name);
+            }
+        }
     }
     else if (VIT_DetectionResults == VIT_VC_DETECTED)
     {
@@ -343,11 +410,32 @@ int VIT_Deinit(void)
     {
         if (VITMemoryTable.Region[i].Size != 0)
         {
-            osa_free((PL_INT8 *)pMemory[i]);
+            OSA_MemoryFree((PL_INT8 *)pMemory[i]);
             pMemory[i] = NULL;
         }
     }
     return VIT_Status;
+}
+
+//  de-Interleave Multichannel signal
+//   example:  A1.B1.C1.A2.B2.C2.A3.B3.C3....An.Bn.Cn   (3 Channels case : A, B, C)
+//             will become
+//             A1.A2.A3....An.B1.B2.B3....Bn.C1.C2.C3....Cn
+
+// Simple helper function for de-interleaving Multichannel stream
+// The caller function shall ensure that all arguments are correct.
+// This function assumes the input data as 32 bit width and transforms it into 16 bit width
+void DeInterleave(const PL_INT16 *pDataInput, PL_INT16 *pDataOutput, PL_UINT16 FrameSize, PL_UINT16 ChannelNumber)
+{
+    for (PL_UINT16 ichan = 0; ichan < ChannelNumber; ichan++)
+    {
+        for (PL_UINT16 i = 0; i < FrameSize; i++)
+        {
+            /* Select the 16 MSB of the 32 input bits */
+            pDataOutput[i + (ichan * FrameSize)] = pDataInput[(i * 2 * ChannelNumber) + (ichan * 2) + 1];
+        }
+    }
+    return;
 }
 
 VIT_Initialize_T VIT_Initialize_func = VIT_Initialize;

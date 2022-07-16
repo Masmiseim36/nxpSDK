@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_issdk_sensor_fxos8700 component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

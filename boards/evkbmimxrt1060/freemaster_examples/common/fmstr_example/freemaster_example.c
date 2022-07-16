@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -44,6 +44,11 @@
 #endif
 #ifndef FMSTR_DEMO_SUPPORT_DBL
 #define FMSTR_DEMO_SUPPORT_DBL 1 /* support for double type */
+#endif
+
+/* User may re-declare this to put the TSA Active Content to a specific section. */
+#ifndef FMSTR_DEMO_CONTENT 
+#define FMSTR_DEMO_CONTENT const  /* By default, it is just const. */
 #endif
 
 /****************************************************************************
@@ -568,12 +573,14 @@ void FMSTR_Example_Init_Ex(FMSTR_BOOL callFmstrInit)
        need to be set up during initialization (see below). */
 
     /* Setup the buffer for Recorder #1 */
+#if FMSTR_USE_RECORDER >= 2
     recBuffCfg.addr          = (FMSTR_ADDR)recBuffer;
     recBuffCfg.size          = sizeof(recBuffer);
     recBuffCfg.basePeriod_ns = 0; /* Unknown period, use FMSTR_RecorderSetTimeBase to set in runtime later */
     recBuffCfg.name          = "Example of additional recorder";
     FMSTR_RecorderCreate(1, &recBuffCfg);
-
+#endif
+    
     /* Open pipes. The first pipe at port 1 */
     hpipe = FMSTR_PipeOpen(1, my_pipe_handler, (FMSTR_ADDR)pipe1_rxb, sizeof(pipe1_rxb), (FMSTR_ADDR)pipe1_txb,
                            sizeof(pipe1_txb), FMSTR_PIPE_TYPE_ANSI_TERMINAL, "Pipe 1");

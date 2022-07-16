@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -153,21 +153,21 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:ga787bb04b14535d1a7fb12858a5aff57a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga787bb04b14535d1a7fb12858a5aff57a">_pxp_interrupt_enable</a> { <br/>
-&#160;&#160;<a class="el" href="a00057.html#gga787bb04b14535d1a7fb12858a5aff57aa96d381c9a0cdea60157cfdc8429b8b65">kPXP_CommandLoadInterruptEnable</a> = PXP_CTRL_NEXT_IRQ_ENABLE_MASK, 
+&#160;&#160;<a class="el" href="a00057.html#gga787bb04b14535d1a7fb12858a5aff57aa5c1c6478ad505703ddfc468170397f14">kPXP_CompleteInterruptEnable</a> = PXP_CTRL_IRQ_ENABLE_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00057.html#gga787bb04b14535d1a7fb12858a5aff57aa5c1c6478ad505703ddfc468170397f14">kPXP_CompleteInterruptEnable</a> = PXP_CTRL_IRQ_ENABLE_MASK
+&#160;&#160;<a class="el" href="a00057.html#gga787bb04b14535d1a7fb12858a5aff57aa96d381c9a0cdea60157cfdc8429b8b65">kPXP_CommandLoadInterruptEnable</a> = PXP_CTRL_NEXT_IRQ_ENABLE_MASK
 <br/>
  }</td></tr>
 <tr class="memdesc:ga787bb04b14535d1a7fb12858a5aff57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">PXP interrupts to enable.  <a href="a00057.html#ga787bb04b14535d1a7fb12858a5aff57a">More...</a><br/></td></tr>
 <tr class="separator:ga787bb04b14535d1a7fb12858a5aff57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c7b2be9f32c3f271db63e8407edf17b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga3c7b2be9f32c3f271db63e8407edf17b">_pxp_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00057.html#gga3c7b2be9f32c3f271db63e8407edf17bab93f6041d28b20a8f1669e9387488cdb">kPXP_CommandLoadFlag</a> = PXP_STAT_NEXT_IRQ_MASK, 
-<br/>
 &#160;&#160;<a class="el" href="a00057.html#gga3c7b2be9f32c3f271db63e8407edf17ba13a71611ba7eae5d7c2ea22f52a295b0">kPXP_CompleteFlag</a> = PXP_STAT_IRQ0_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00057.html#gga3c7b2be9f32c3f271db63e8407edf17ba5a551270574bf0f2af8e6ced72367acb">kPXP_Axi0WriteErrorFlag</a> = PXP_STAT_AXI_WRITE_ERROR_0_MASK, 
 <br/>
 &#160;&#160;<a class="el" href="a00057.html#gga3c7b2be9f32c3f271db63e8407edf17ba0ed4ec1c5c34a2e9a2297c5c1ea328c3">kPXP_Axi0ReadErrorFlag</a> = PXP_STAT_AXI_READ_ERROR_0_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00057.html#gga3c7b2be9f32c3f271db63e8407edf17ba5a551270574bf0f2af8e6ced72367acb">kPXP_Axi0WriteErrorFlag</a> = PXP_STAT_AXI_WRITE_ERROR_0_MASK
+&#160;&#160;<a class="el" href="a00057.html#gga3c7b2be9f32c3f271db63e8407edf17bab93f6041d28b20a8f1669e9387488cdb">kPXP_CommandLoadFlag</a> = PXP_STAT_NEXT_IRQ_MASK
 <br/>
  }</td></tr>
 <tr class="memdesc:ga3c7b2be9f32c3f271db63e8407edf17b"><td class="mdescLeft">&#160;</td><td class="mdescRight">PXP status flags.  <a href="a00057.html#ga3c7b2be9f32c3f271db63e8407edf17b">More...</a><br/></td></tr>
@@ -395,9 +395,15 @@ Enumerations</h2></td></tr>
 <tr class="memitem:ga9a3b7de382ab7c0e248bdbf1455d4e9d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga9a3b7de382ab7c0e248bdbf1455d4e9d">_pxp_dither_mode</a> { <br/>
 &#160;&#160;<a class="el" href="a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9daee11acef06e5c5d1b72942150f5f3e8f">kPXP_DitherPassThrough</a> = 0U, 
 <br/>
+&#160;&#160;<a class="el" href="a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da7470de3eef671f5fb19d002bf91e778b">kPXP_DitherFloydSteinberg</a> = 1U, 
+<br/>
+&#160;&#160;<a class="el" href="a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9dae05a63fd2ed52bcb06a152c6676165bf">kPXP_DitherAtkinson</a> = 2U, 
+<br/>
 &#160;&#160;<a class="el" href="a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da1db96bc75153a786108b9561ad084310">kPXP_DitherOrdered</a> = 3U, 
 <br/>
-&#160;&#160;<a class="el" href="a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da1a8a1ba8ce7954f9876c206ebc9d16dc">kPXP_DitherQuantOnly</a> = 4U
+&#160;&#160;<a class="el" href="a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9da1a8a1ba8ce7954f9876c206ebc9d16dc">kPXP_DitherQuantOnly</a> = 4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00057.html#gga9a3b7de382ab7c0e248bdbf1455d4e9dacdf0f29b5deb584ed7dec4a16879a076">kPXP_DitherSierra</a> = 5U
 <br/>
  }</td></tr>
 <tr class="memdesc:ga9a3b7de382ab7c0e248bdbf1455d4e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">PXP dither mode.  <a href="a00057.html#ga9a3b7de382ab7c0e248bdbf1455d4e9d">More...</a><br/></td></tr>
@@ -413,7 +419,9 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:gac35579ae4349603f9117a4fcdb8201a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">PXP dither LUT mode.  <a href="a00057.html#gac35579ae4349603f9117a4fcdb8201a9">More...</a><br/></td></tr>
 <tr class="separator:gac35579ae4349603f9117a4fcdb8201a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga43a03327d849a22a988027c42080c0a9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga43a03327d849a22a988027c42080c0a9">_pxp_dither_matrix_size</a> { <br/>
-&#160;&#160;<a class="el" href="a00057.html#gga43a03327d849a22a988027c42080c0a9a1373965c19df33a172236e4559c88f02">kPXP_DitherMatrix8</a> = 1, 
+&#160;&#160;<a class="el" href="a00057.html#gga43a03327d849a22a988027c42080c0a9a46143a4e61d528043fc57e0c446d0d52">kPXP_DitherMatrix4</a> = 0, 
+<br/>
+&#160;&#160;<a class="el" href="a00057.html#gga43a03327d849a22a988027c42080c0a9a1373965c19df33a172236e4559c88f02">kPXP_DitherMatrix8</a>, 
 <br/>
 &#160;&#160;<a class="el" href="a00057.html#gga43a03327d849a22a988027c42080c0a9a15a3e964fd00ffd6348e276082a2b953">kPXP_DitherMatrix16</a>
 <br/>
@@ -494,7 +502,7 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:gabe72e45d478c9c68cc4d8cef43734133"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabe72e45d478c9c68cc4d8cef43734133"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_PXP_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSL_PXP_DRIVER_VERSION</b>&#160;&#160;&#160;(<a class="el" href="a00264.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 4, 0))</td></tr>
 <tr class="separator:gabe72e45d478c9c68cc4d8cef43734133"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -598,6 +606,9 @@ Output buffer</h2></td></tr>
 <tr class="memitem:ga0ae3e7e2b902aed4ad4a1e3de73e3345"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga0ae3e7e2b902aed4ad4a1e3de73e3345">PXP_SetRotateConfig</a> (PXP_Type *base, <a class="el" href="a00057.html#gae6965fc38e9b83d8394be60a64770412">pxp_rotate_position_t</a> position, <a class="el" href="a00057.html#gac189a95c15f9a0bb306a5374150f0bc5">pxp_rotate_degree_t</a> degree, <a class="el" href="a00057.html#ga6610f6e27126b8396c480000f707c2c0">pxp_flip_mode_t</a> flipMode)</td></tr>
 <tr class="memdesc:ga0ae3e7e2b902aed4ad4a1e3de73e3345"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the rotation configuration.  <a href="#ga0ae3e7e2b902aed4ad4a1e3de73e3345">More...</a><br/></td></tr>
 <tr class="separator:ga0ae3e7e2b902aed4ad4a1e3de73e3345"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf75a0bda73f3b24179509cf9e1eff23d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#gaf75a0bda73f3b24179509cf9e1eff23d">PXP_BuildRect</a> (PXP_Type *base, <a class="el" href="a00057.html#ga29e1c4f5d0473b1f8d07f5ace135d0d7">pxp_output_pixel_format_t</a> outFormat, uint32_t value, uint16_t width, uint16_t height, uint16_t pitch, uint32_t outAddr)</td></tr>
+<tr class="memdesc:gaf75a0bda73f3b24179509cf9e1eff23d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build a solid rectangle of given pixel value.  <a href="#gaf75a0bda73f3b24179509cf9e1eff23d">More...</a><br/></td></tr>
+<tr class="separator:gaf75a0bda73f3b24179509cf9e1eff23d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Command queue</h2></td></tr>
@@ -628,15 +639,6 @@ Porter Duff</h2></td></tr>
 <tr class="memitem:gadfd83e920d1877401e97bc243f56835d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#gadfd83e920d1877401e97bc243f56835d">PXP_GetPorterDuffConfig</a> (<a class="el" href="a00057.html#gac41f435d780b24b84bec4842f96fa70c">pxp_porter_duff_blend_mode_t</a> mode, <a class="el" href="a00057.html#a00462">pxp_porter_duff_config_t</a> *config)</td></tr>
 <tr class="memdesc:gadfd83e920d1877401e97bc243f56835d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Porter Duff configuration by blend mode.  <a href="#gadfd83e920d1877401e97bc243f56835d">More...</a><br/></td></tr>
 <tr class="separator:gadfd83e920d1877401e97bc243f56835d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Buffer copy</h2></td></tr>
-<tr class="memitem:ga5b151a90a397af37d8844a4a4d716042"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga5b151a90a397af37d8844a4a4d716042">PXP_StartPictureCopy</a> (PXP_Type *base, const <a class="el" href="a00057.html#a00461">pxp_pic_copy_config_t</a> *config)</td></tr>
-<tr class="memdesc:ga5b151a90a397af37d8844a4a4d716042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy picture from one buffer to another buffer.  <a href="#ga5b151a90a397af37d8844a4a4d716042">More...</a><br/></td></tr>
-<tr class="separator:ga5b151a90a397af37d8844a4a4d716042"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9a0982380fc4bdfd546bfe6e1f83b0c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00057.html#ga9a0982380fc4bdfd546bfe6e1f83b0c4">PXP_StartMemCopy</a> (PXP_Type *base, uint32_t srcAddr, uint32_t destAddr, uint32_t size)</td></tr>
-<tr class="memdesc:ga9a0982380fc4bdfd546bfe6e1f83b0c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy continous memory.  <a href="#ga9a0982380fc4bdfd546bfe6e1f83b0c4">More...</a><br/></td></tr>
-<tr class="separator:ga9a0982380fc4bdfd546bfe6e1f83b0c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
 <a name="a00460" id="a00460"></a>
@@ -1872,11 +1874,13 @@ Buffer copy</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga787bb04b14535d1a7fb12858a5aff57aa96d381c9a0cdea60157cfdc8429b8b65"></a>kPXP_CommandLoadInterruptEnable</em>&nbsp;</td><td class="fielddoc">
-<p>Interrupt to show that the command set by <a class="el" href="a00057.html#ga15216b9c7a873f10337efebe2358ae24">PXP_SetNextCommand</a> has been loaded. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga787bb04b14535d1a7fb12858a5aff57aa5c1c6478ad505703ddfc468170397f14"></a>kPXP_CompleteInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga787bb04b14535d1a7fb12858a5aff57aa5c1c6478ad505703ddfc468170397f14"></a>kPXP_CompleteInterruptEnable</em>&nbsp;</td><td class="fielddoc">
 <p>PXP process completed. </p>
+<p>bit 1 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga787bb04b14535d1a7fb12858a5aff57aa96d381c9a0cdea60157cfdc8429b8b65"></a>kPXP_CommandLoadInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Interrupt to show that the command set by <a class="el" href="a00057.html#ga15216b9c7a873f10337efebe2358ae24">PXP_SetNextCommand</a> has been loaded. </p>
+<p>bit 2 </p>
 </td></tr>
 </table>
 
@@ -1893,17 +1897,21 @@ Buffer copy</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section note"><dt>Note</dt><dd>These enumerations are meant to be OR'd together to form a bit mask. </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3c7b2be9f32c3f271db63e8407edf17bab93f6041d28b20a8f1669e9387488cdb"></a>kPXP_CommandLoadFlag</em>&nbsp;</td><td class="fielddoc">
-<p>The command set by <a class="el" href="a00057.html#ga15216b9c7a873f10337efebe2358ae24">PXP_SetNextCommand</a> has been loaded, could set new command. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c7b2be9f32c3f271db63e8407edf17ba13a71611ba7eae5d7c2ea22f52a295b0"></a>kPXP_CompleteFlag</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga3c7b2be9f32c3f271db63e8407edf17ba13a71611ba7eae5d7c2ea22f52a295b0"></a>kPXP_CompleteFlag</em>&nbsp;</td><td class="fielddoc">
 <p>PXP process completed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="gga3c7b2be9f32c3f271db63e8407edf17ba0ed4ec1c5c34a2e9a2297c5c1ea328c3"></a>kPXP_Axi0ReadErrorFlag</em>&nbsp;</td><td class="fielddoc">
-<p>PXP encountered an AXI read error and processing has been terminated. </p>
+<p>bit 0 </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga3c7b2be9f32c3f271db63e8407edf17ba5a551270574bf0f2af8e6ced72367acb"></a>kPXP_Axi0WriteErrorFlag</em>&nbsp;</td><td class="fielddoc">
 <p>PXP encountered an AXI write error and processing has been terminated. </p>
+<p>bit 1 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3c7b2be9f32c3f271db63e8407edf17ba0ed4ec1c5c34a2e9a2297c5c1ea328c3"></a>kPXP_Axi0ReadErrorFlag</em>&nbsp;</td><td class="fielddoc">
+<p>PXP encountered an AXI read error and processing has been terminated. </p>
+<p>bit 2 </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga3c7b2be9f32c3f271db63e8407edf17bab93f6041d28b20a8f1669e9387488cdb"></a>kPXP_CommandLoadFlag</em>&nbsp;</td><td class="fielddoc">
+<p>The command set by <a class="el" href="a00057.html#ga15216b9c7a873f10337efebe2358ae24">PXP_SetNextCommand</a> has been loaded, could set new command. </p>
+<p>bit 3 </p>
 </td></tr>
 </table>
 
@@ -2371,11 +2379,23 @@ Buffer copy</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga9a3b7de382ab7c0e248bdbf1455d4e9daee11acef06e5c5d1b72942150f5f3e8f"></a>kPXP_DitherPassThrough</em>&nbsp;</td><td class="fielddoc">
 <p>Pass through, no dither. </p>
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9a3b7de382ab7c0e248bdbf1455d4e9da7470de3eef671f5fb19d002bf91e778b"></a>kPXP_DitherFloydSteinberg</em>&nbsp;</td><td class="fielddoc">
+<p>Floyd-Steinberg. </p>
+<p>For dither engine 0 only. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9a3b7de382ab7c0e248bdbf1455d4e9dae05a63fd2ed52bcb06a152c6676165bf"></a>kPXP_DitherAtkinson</em>&nbsp;</td><td class="fielddoc">
+<p>Atkinson. </p>
+<p>For dither engine 0 only. </p>
+</td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga9a3b7de382ab7c0e248bdbf1455d4e9da1db96bc75153a786108b9561ad084310"></a>kPXP_DitherOrdered</em>&nbsp;</td><td class="fielddoc">
 <p>Ordered dither. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga9a3b7de382ab7c0e248bdbf1455d4e9da1a8a1ba8ce7954f9876c206ebc9d16dc"></a>kPXP_DitherQuantOnly</em>&nbsp;</td><td class="fielddoc">
 <p>No dithering, only quantization. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga9a3b7de382ab7c0e248bdbf1455d4e9dacdf0f29b5deb584ed7dec4a16879a076"></a>kPXP_DitherSierra</em>&nbsp;</td><td class="fielddoc">
+<p>Sierra. </p>
+<p>For dither engine 0 only. </p>
 </td></tr>
 </table>
 
@@ -2414,7 +2434,10 @@ Buffer copy</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga43a03327d849a22a988027c42080c0a9a1373965c19df33a172236e4559c88f02"></a>kPXP_DitherMatrix8</em>&nbsp;</td><td class="fielddoc">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga43a03327d849a22a988027c42080c0a9a46143a4e61d528043fc57e0c446d0d52"></a>kPXP_DitherMatrix4</em>&nbsp;</td><td class="fielddoc">
+<p>The dither index matrix is 4x4. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga43a03327d849a22a988027c42080c0a9a1373965c19df33a172236e4559c88f02"></a>kPXP_DitherMatrix8</em>&nbsp;</td><td class="fielddoc">
 <p>The dither index matrix is 8x8. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga43a03327d849a22a988027c42080c0a9a15a3e964fd00ffd6348e276082a2b953"></a>kPXP_DitherMatrix16</em>&nbsp;</td><td class="fielddoc">
@@ -3105,7 +3128,7 @@ Buffer copy</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>If a pixel in the current overlay image with a color that falls in the range from the <code>colorKeyLow</code> to <code>colorKeyHigh</code> range, it will use the process surface pixel value for that location. If no PS image is present or if the PS image also matches its colorkey range, the PS background color is used.</p>
+<p>If a pixel in the current overlay image with a color that falls in the range from the p colorKeyLow to p colorKeyHigh range, it will use the process surface pixel value for that location. If no PS image is present or if the PS image also matches its colorkey range, the PS background color is used.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>PXP peripheral base address. </td></tr>
@@ -3658,6 +3681,74 @@ Buffer copy</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="gaf75a0bda73f3b24179509cf9e1eff23d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void PXP_BuildRect </td>
+          <td>(</td>
+          <td class="paramtype">PXP_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="a00057.html#ga29e1c4f5d0473b1f8d07f5ace135d0d7">pxp_output_pixel_format_t</a>&#160;</td>
+          <td class="paramname"><em>outFormat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>height</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>pitch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>outAddr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>PXP peripheral base address. </td></tr>
+    <tr><td class="paramname">outFormat</td><td>output pixel format. </td></tr>
+    <tr><td class="paramname">value</td><td>The value of the pixel to be filled in the rectangle in ARGB8888 format. </td></tr>
+    <tr><td class="paramname">width</td><td>width of the rectangle. </td></tr>
+    <tr><td class="paramname">height</td><td>height of the rectangle. </td></tr>
+    <tr><td class="paramname">pitch</td><td>output pitch in byte. </td></tr>
+    <tr><td class="paramname">outAddr</td><td>address of the memory to store the rectangle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ga15216b9c7a873f10337efebe2358ae24"></a>
 <div class="memitem">
 <div class="memproto">
@@ -3923,142 +4014,6 @@ Buffer copy</h2></td></tr>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>Successfully get the configuratoin. </td></tr>
     <tr><td class="paramname">kStatus_InvalidArgument</td><td>The blend mode not supported. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga5b151a90a397af37d8844a4a4d716042"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> PXP_StartPictureCopy </td>
-          <td>(</td>
-          <td class="paramtype">PXP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="a00057.html#a00461">pxp_pic_copy_config_t</a> *&#160;</td>
-          <td class="paramname"><em>config</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>This function copies a rectangle from one buffer to another buffer.</p>
-<pre class="fragment">                   Source buffer:
-srcPicBaseAddr
-+-----------------------------------------------------------+
-|                                                           |
-|  (srcOffsetX, srcOffsetY)                                 |
-|           +-------------------+                           |
-|           |                   |                           |
-|           |                   |                           |
-|           |                   | height                    |
-|           |                   |                           |
-|           |                   |                           |
-|           +-------------------+                           |
-|                 width                                     |
-|                                                           |
-|                       srcPicthBytes                       |
-+-----------------------------------------------------------+
-
-                  Destination buffer:
-destPicBaseAddr
-+-------------------------------------------+
-|                                           |
-|                                           |
-|                                           |
-|  (destOffsetX, destOffsetY)               |
-|       +-------------------+               |
-|       |                   |               |
-|       |                   |               |
-|       |                   | height        |
-|       |                   |               |
-|       |                   |               |
-|       +-------------------+               |
-|             width                         |
-|                                           |
-|                                           |
-|                                           |
-|                  destPicthBytes           |
-+-------------------------------------------+
-</pre><dl class="section note"><dt>Note</dt><dd>This function resets the old PXP settings, which means the settings like rotate, flip, will be reseted to disabled status.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PXP peripheral base address. </td></tr>
-    <tr><td class="paramname">config</td><td>Pointer to the picture copy configuration structure. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Successfully started the copy process. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Invalid argument. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga9a0982380fc4bdfd546bfe6e1f83b0c4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="a00264.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> PXP_StartMemCopy </td>
-          <td>(</td>
-          <td class="paramtype">PXP_Type *&#160;</td>
-          <td class="paramname"><em>base</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>srcAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>destAddr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>The copy size should be 512 byte aligned. </dd>
-<dd>
-This function resets the old PXP settings, which means the settings like rotate, flip, will be reseted to disabled status.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">base</td><td>PXP peripheral base address. </td></tr>
-    <tr><td class="paramname">srcAddr</td><td>Source memory address. </td></tr>
-    <tr><td class="paramname">destAddr</td><td>Destination memory address. </td></tr>
-    <tr><td class="paramname">size</td><td>How many bytes to copy, should be 512 byte aligned. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">kStatus_Success</td><td>Successfully started the copy process. </td></tr>
-    <tr><td class="paramname">kStatus_InvalidArgument</td><td>Invalid argument. </td></tr>
   </table>
   </dd>
 </dl>

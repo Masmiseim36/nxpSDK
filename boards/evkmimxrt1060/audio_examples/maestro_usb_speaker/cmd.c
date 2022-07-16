@@ -109,7 +109,7 @@ static shell_status_t shellUsbSpeaker(shell_handle_t shellHandle, int32_t argc, 
         {
             USB_AudioSpeakerResetTask();
             USB_AudioCodecTask();
-            osa_time_delay(0); // Due to switch to another task
+            OSA_TimeDelay(0); // Due to switch to another task
         }
     }
     else
@@ -119,7 +119,7 @@ static shell_status_t shellUsbSpeaker(shell_handle_t shellHandle, int32_t argc, 
         {
             USB_AudioSpeakerResetTask();
             USB_AudioCodecTask();
-            osa_time_delay(0); // Due to switch to another task
+            OSA_TimeDelay(0); // Due to switch to another task
         }
     }
 

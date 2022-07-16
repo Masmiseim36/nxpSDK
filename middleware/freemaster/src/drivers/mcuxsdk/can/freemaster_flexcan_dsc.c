@@ -142,8 +142,8 @@ static FMSTR_BOOL _FMSTR_FlexCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx)
     /* initialize Tx MB */
     FMSTR_MemSet(&fmstr_txmsg, 0, sizeof(fmstr_txmsg));
     fmstr_txmsg.bitsId    = FMSTR_FCAN_ID2IDR(idTx);
-    fmstr_txmsg.bitFormat = (idTx & FMSTR_CAN_EXTID) != 0U ? kFLEXCAN_FrameFormatExtend : kFLEXCAN_FrameFormatStandard;
-    fmstr_txmsg.bitType   = kFLEXCAN_FrameTypeData;
+    fmstr_txmsg.bitFormat = (uint32_t)((idTx & FMSTR_CAN_EXTID) != 0U ? kFLEXCAN_FrameFormatExtend : kFLEXCAN_FrameFormatStandard);
+    fmstr_txmsg.bitType   = (uint32_t)kFLEXCAN_FrameTypeData;
     FLEXCAN_SetTxMbConfig(fmstr_canBaseAddr, FMSTR_FLEXCAN_TXMB, true);
 
     {
@@ -215,7 +215,7 @@ static FMSTR_SIZE8 _FMSTR_FlexCAN_GetRxFrameLen(void)
     }
 
     /* we have got some frame, return its length */
-    return fmstr_rxmsg.bitsLength;
+    return (FMSTR_SIZE8)fmstr_rxmsg.bitsLength;
 }
 
 static FMSTR_BCHR _FMSTR_FlexCAN_GetRxFrameByte(FMSTR_SIZE8 index)

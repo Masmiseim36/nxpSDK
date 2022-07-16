@@ -1,4 +1,4 @@
-// Copyright (c) 2019 Linaro LTD
+// Copyright (c) 2019-2021 Linaro LTD
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -30,7 +30,7 @@ pub struct BoringDep {
 impl BoringDep {
     pub fn new(number: usize, test: &DepTest) -> BoringDep {
         BoringDep {
-            number: number,
+            number,
             test: test.clone(),
         }
     }
@@ -179,7 +179,7 @@ impl ImageVersion {
     fn new_synthetic(image_id: u8, slot: u8, minor: u8) -> ImageVersion {
         ImageVersion {
             major: image_id * 20 + slot,
-            minor: minor,
+            minor,
             revision: 1,
             build_num: slot as u32,
         }

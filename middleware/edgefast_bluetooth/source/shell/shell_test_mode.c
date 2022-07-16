@@ -37,10 +37,148 @@
  ******************************************************************************/
 #if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0))
 
+
+static void shell_print_response(shell_handle_t shell, const uint8_t *data, size_t len)
+{
+    shell_dump(shell, " HCI Command Response : ");
+
+    while (len--) {
+        shell_dump(shell, "%02X ", *data++);
+    }
+	shell_dump(shell, "\r\n");
+}
+
+static shell_status_t hci_cmd_interface(shell_handle_t shell, int32_t argc, char **argv)
+{
+    int err;
+    struct net_buf *buf = NULL;
+    struct net_buf *rsp = NULL;
+    struct bt_hci_command command_buffer;
+
+
+    if (argc < 3)
+    {
+    	shell_print(shell, "the parameter count is wrong\r\n");
+        shell_print(shell, "Usage: le_test.set_tx_power tx_power[1]\n");
+        return kStatus_SHELL_Error;
+    }
+
+    command_buffer.ogf = strtol(argv[1],NULL,16);
+    command_buffer.ocf = strtol(argv[2],NULL,16);
+
+    command_buffer.opcode = ( command_buffer.ocf | (command_buffer.ogf << 10 ));
+    command_buffer.param_len = argc - 3 ;
+
+    uint8_t *bt_hci_cmd_params = NULL;
+
+    buf = bt_hci_cmd_create(command_buffer.opcode, command_buffer.param_len);
+    if (buf != NULL)
+    {
+    	bt_hci_cmd_params = net_buf_add(buf, command_buffer.param_len);
+
+        for(int i= 0 ; i < command_buffer.param_len ; i++)
+        {
+        	bt_hci_cmd_params[i] = strtol(argv[i+3],NULL, 16);
+        }
+
+    	err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_TX_POWER, buf, &rsp);
+    }
+    else
+    {
+    	err = -ENOBUFS;
+    	shell_print(shell, "No buffer space available\r\n");
+    }
+
+    if (err)
+    {
+        shell_print(shell, "HCI command failed (err %d)\n", err);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Error;
+    }
+    else
+    {
+    	shell_print_response(shell,rsp->data,rsp->len);
+    	net_buf_unref(rsp);
+    	return kStatus_SHELL_Success;
+    }
+}
+
+
+
+static shell_status_t bt_enter_test_mode(shell_handle_t shell, int32_t argc, char **argv)
+{
+    int err;
+    struct net_buf *buf = NULL, *rsp=NULL;
+
+    shell_print(shell, "Enable device under test mode \r\n");
+
+    err = bt_hci_cmd_send_sync(BT_HCI_OP_ENABLE_TEST_MODE, NULL, &rsp);
+    if (err)
+    {
+        shell_print(shell, "Enable device under test mode command failed (err %d)\n", err);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Error;
+    }
+    else
+    {
+    	shell_print_response(shell,rsp->data,rsp->len);
+    	net_buf_unref(rsp);
+        return kStatus_SHELL_Success;
+    }
+}
+
+
+static shell_status_t le_set_tx_power(shell_handle_t shell, int32_t argc, char **argv)
+{
+    int err;
+    struct net_buf *buf = NULL, *rsp=NULL;
+
+    if (argc < 1)
+    {
+    	shell_print(shell, "the parameter count is wrong\r\n");
+        shell_print(shell, "Usage: le_test.set_tx_power tx_power[1]\n");
+        return kStatus_SHELL_Error;
+    }
+
+    struct bt_hci_le_config *cp;
+    buf = bt_hci_cmd_create(BT_HCI_OP_LE_SET_TX_POWER, sizeof(*cp));
+    if (buf != NULL)
+    {
+    	cp = net_buf_add(buf, sizeof(*cp));
+
+    	cp->tx_power = strtol(argv[1],NULL,16);
+
+    	shell_print(shell, "tx_power= %x\n", cp->tx_power);
+
+    	err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_TX_POWER, buf, &rsp);
+    }
+    else
+    {
+    	err = -ENOBUFS;
+    	shell_print(shell, "No buffer space available\r\n");
+    }
+
+    if (err)
+    {
+        shell_print(shell, "LE Set TX Power command failed (err %d)\n", err);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Error;
+    }
+    else
+    {
+        shell_print_response(shell,rsp->data,rsp->len);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Success;
+    }
+}
+
+
+
 static shell_status_t bt_tx_test(shell_handle_t shell, int32_t argc, char **argv)
 {
     int err;
     struct net_buf *buf = NULL;
+    struct net_buf *rsp = NULL;
 
     if (argc < 1)
     {
@@ -112,7 +250,7 @@ static shell_status_t bt_tx_test(shell_handle_t shell, int32_t argc, char **argv
         cp->tx_pwr = strtol(argv[14],NULL,16);
         shell_print(shell, "tx_pwr= %x\n", cp->tx_pwr);
 
-        err = bt_hci_cmd_send_sync(BT_HCI_OP_TX_TEST, buf, NULL);
+        err = bt_hci_cmd_send_sync(BT_HCI_OP_TX_TEST, buf, &rsp);
     }
     else
     {
@@ -123,21 +261,23 @@ static shell_status_t bt_tx_test(shell_handle_t shell, int32_t argc, char **argv
     if (err)
     {
         shell_print(shell, "BR/EDR transmitter test command failed (err %d)\n", err);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Error;
     }
     else
     {
-        shell_print(shell, "API returned success...\n");
+        shell_print_response(shell,rsp->data,rsp->len);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Success;
     }
-
-    
-
-    return kStatus_SHELL_Success;
 }
+
 
 static shell_status_t bt_rx_test(shell_handle_t shell, int32_t argc, char **argv)
 {
     int err;
     struct net_buf *buf = NULL;
+    struct net_buf *rsp = NULL;
 
     if (argc < 1)
     {
@@ -202,7 +342,7 @@ static shell_status_t bt_rx_test(shell_handle_t shell, int32_t argc, char **argv
         cp->report_err_pkt = strtol(argv[17], NULL, 16);
         shell_print(shell, "report_err_pkt= %x\n", cp->report_err_pkt);
 
-        err = bt_hci_cmd_send_sync(BT_HCI_OP_RX_TEST, buf, NULL);
+        err = bt_hci_cmd_send_sync(BT_HCI_OP_RX_TEST, buf, &rsp);
     }
     else
     {
@@ -213,13 +353,15 @@ static shell_status_t bt_rx_test(shell_handle_t shell, int32_t argc, char **argv
     if (err)
     {
         shell_print(shell, "BR/EDR receiver test command failed (err %d)\n", err);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Error;	    
     }
     else
     {
-        shell_print(shell, "API returned success...\n");
+        shell_print_response(shell,rsp->data,rsp->len);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Success;
     }
-
-    return kStatus_SHELL_Success;
 }
 
 static shell_status_t bt_reset(shell_handle_t shell, int32_t argc, char **argv)
@@ -231,25 +373,26 @@ static shell_status_t bt_reset(shell_handle_t shell, int32_t argc, char **argv)
         shell_print(shell, "the parameter count is wrong\r\n");
     }
 
-
-
     err = bt_hci_cmd_send_sync(BT_HCI_OP_RESET,NULL,NULL);
     if (err)
     {
         shell_print(shell, "HCI reset command failed (err %d)\n", err);
+        return kStatus_SHELL_Error;
     }
     else
     {
         shell_print(shell, "API returned success...\r\n");
+    	return kStatus_SHELL_Success;
     }
-
-    return kStatus_SHELL_Success;
 }
+
 #endif
+
 static shell_status_t le_tx_test(shell_handle_t shell, int32_t argc, char **argv)
 {
     int err;
     struct net_buf *buf = NULL;
+    struct net_buf *rsp = NULL;
 
     if (argc < 1)
     {
@@ -280,7 +423,7 @@ static shell_status_t le_tx_test(shell_handle_t shell, int32_t argc, char **argv
 
         cp->phy = strtol(argv[4],NULL,16);
         shell_print(shell, "phy= %x\n", cp->phy);
-        err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_ENH_TX_TEST, buf, NULL);
+        err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_ENH_TX_TEST, buf, &rsp);
     }
     else
     {
@@ -291,25 +434,23 @@ static shell_status_t le_tx_test(shell_handle_t shell, int32_t argc, char **argv
     if (err)
     {
         shell_print(shell, "LE enhanced transmitter test command failed (err %d)\n", err);
-    }
-    else
-    {
-        shell_print(shell, "API returned success...\n");
-    }
-
-    if (err)
-    {
+        net_buf_unref(rsp);
         return kStatus_SHELL_Error;
     }
     else
     {
-       return kStatus_SHELL_Success;
+        shell_print_response(shell,rsp->data,rsp->len);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Success;
     }
 }
+
+
 static shell_status_t le_rx_test(shell_handle_t shell, int32_t argc, char **argv)
 {
     int err;
     struct net_buf *buf = NULL;
+    struct net_buf *rsp = NULL;
 
     if (argc < 1)
     {
@@ -338,7 +479,7 @@ static shell_status_t le_rx_test(shell_handle_t shell, int32_t argc, char **argv
         cp->mod_index = strtol(argv[3],NULL,16);
         shell_print(shell, "modulation_index= %x\n", cp->mod_index);
 
-        err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_ENH_RX_TEST, buf, NULL);
+        err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_ENH_RX_TEST, buf, &rsp);
     }
     else
     {
@@ -349,21 +490,17 @@ static shell_status_t le_rx_test(shell_handle_t shell, int32_t argc, char **argv
     if (err)
     {
         shell_print(shell, "LE enhanced receiver test command failed (err %d)\n", err);
-    }
-    else
-    {
-        shell_print(shell, "API returned success...\n");
-    }
-
-    if (err)
-    {
+        net_buf_unref(rsp);
         return kStatus_SHELL_Error;
     }
     else
     {
-       return kStatus_SHELL_Success;
+        shell_print_response(shell,rsp->data,rsp->len);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Success;
     }
 }
+
 static shell_status_t le_end_test(shell_handle_t shell, int32_t argc, char **argv)
 {
     int err;
@@ -378,35 +515,39 @@ static shell_status_t le_end_test(shell_handle_t shell, int32_t argc, char **arg
     if (err)
     {
         shell_print(shell, "LE test end command failed (err %d)\n", err);
-    }
-    else
-    {
-        shell_print(shell, "API returned success...\n");
-    }
-
-    if (err)
-    {
         return kStatus_SHELL_Error;
     }
     else
     {
-       return kStatus_SHELL_Success;
+        shell_print(shell, "API returned success...\n");
+    	return kStatus_SHELL_Success;
     }
 }
+
+
+SHELL_STATIC_SUBCMD_SET_CREATE(hci_cmds,
+    SHELL_CMD_ARG(generic_command, NULL, "ogf[1] ocf[1] params....", hci_cmd_interface, 2, 255),
+    SHELL_SUBCMD_SET_END
+);
+
 SHELL_STATIC_SUBCMD_SET_CREATE(le_cmds,
+    SHELL_CMD_ARG(set_tx_power, NULL, "tx_power[1]", le_set_tx_power, 2, 0),
     SHELL_CMD_ARG(tx_test, NULL, "tx_channel[1] data_length[1] payload[1] phy[1]", le_tx_test, 2, 6),
     SHELL_CMD_ARG(rx_test, NULL, "rc_channel[1] phy[1] modulation[1]", le_rx_test, 2, 5),
     SHELL_CMD_ARG(end_test, NULL, "end the le test", le_end_test, 1, 0),
     SHELL_SUBCMD_SET_END
 );
+
 #if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0))
 SHELL_STATIC_SUBCMD_SET_CREATE(bt_cmds,
+    SHELL_CMD_ARG(enter_test_mode, NULL, "Enable device under test mode", bt_enter_test_mode, 1, 0),
     SHELL_CMD_ARG(tx_test, NULL, "test_scenario[1] hopping_mode[1] tx_channel[1] rx_channel[1] tx_test_interval[1] pkt_type[1] data_length[2] whitening[1] num_pkt[4] tx_pwr[1]", bt_tx_test, 2, 19),
     SHELL_CMD_ARG(rx_test, NULL, "test_scenario[1] tx_channel[1] rx_channel[1] pkt_type[1] num_pkt[4] data_length[2] tx_addr[6] report_err_pkt[1]", bt_rx_test, 2, 19),
     SHELL_CMD_ARG(reset, NULL, " Reset the HCI interface", bt_reset, 1, 0),
     SHELL_SUBCMD_SET_END
 );
 #endif
+
 static shell_status_t cmd_bt_test(shell_handle_t shell, int32_t argc, char **argv)
 {
     if (argc == 1) {
@@ -425,6 +566,11 @@ SHELL_CMD_REGISTER(bt_test, bt_cmds, "Bluetooth BR/EDR test mode commands",
 #endif
 SHELL_CMD_REGISTER(le_test, le_cmds, "Bluetooth BLE test mode commands",
                cmd_bt_test, 1, 6);
+
+SHELL_CMD_REGISTER(hci, hci_cmds, "Bluetooth HCI Command interface",
+               cmd_bt_test, 1, 255);
+
+
 void bt_ShellTestModeInit(shell_handle_t shell)
 {
     /* Add new command to commands list */
@@ -435,6 +581,11 @@ void bt_ShellTestModeInit(shell_handle_t shell)
     }
 #endif /* CONFIG_BT_BREDR */
     if ((shell_status_t)kStatus_Success != SHELL_RegisterCommand(shell, &g_shellCommandle_test))
+    {
+        shell_print(shell, "Shell register command %s failed!", g_shellCommandle_test.pcCommand);
+    }
+
+    if ((shell_status_t)kStatus_Success != SHELL_RegisterCommand(shell, &g_shellCommandhci))
     {
         shell_print(shell, "Shell register command %s failed!", g_shellCommandle_test.pcCommand);
     }

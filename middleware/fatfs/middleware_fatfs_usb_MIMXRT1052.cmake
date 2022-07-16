@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_fatfs_usb component is included.")
 
 if(CONFIG_USE_middleware_baremetal_MIMXRT1052)

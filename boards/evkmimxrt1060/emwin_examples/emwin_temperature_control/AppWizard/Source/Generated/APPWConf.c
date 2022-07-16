@@ -79,6 +79,9 @@ static const APPW_TEXT_INIT _TextInit = {
   GUI_COUNTOF(_apLang),
 };
 
+static APPW_DRAWING_ITEM ** ppDrawingList;
+static int NumDrawings;
+
 /*********************************************************************
 *
 *       Static code
@@ -107,7 +110,7 @@ void APPW_X_Setup(void) {
   APPW_SetpfInitText(_InitText);
   APPW_X_FS_Init();
   APPW_MULTIBUF_Enable(_MultibufEnable);
-  APPW_SetData(_apRootList, _NumScreens, _aVarList, _NumVars);
+  APPW_SetData(_apRootList, _NumScreens, _aVarList, _NumVars, ppDrawingList, NumDrawings);
 }
 
 /*********************************************************************

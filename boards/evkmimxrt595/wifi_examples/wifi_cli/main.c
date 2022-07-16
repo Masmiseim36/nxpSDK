@@ -26,9 +26,7 @@
 #include "cli.h"
 #include "wifi_ping.h"
 #include "iperf.h"
-
-#include "fsl_sdmmc_host.h"
-
+#include "wifi_bt_config.h"
 
 /*******************************************************************************
  * Definitions
@@ -45,6 +43,10 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+int wlan_driver_init(void);
+int wlan_driver_deinit(void);
+int wlan_driver_reset(void);
+int wlan_reset_cli_init(void);
 
 /*******************************************************************************
  * Code
@@ -144,6 +146,9 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_INITIALIZATION_FAILED:
             PRINTF("app_cb: WLAN: initialization failed\r\n");
             break;
+        case WLAN_REASON_AUTH_SUCCESS:
+            PRINTF("app_cb: WLAN: authenticated to network\r\n");
+            break;
         case WLAN_REASON_SUCCESS:
             PRINTF("app_cb: WLAN: connected to network\r\n");
             ret = wlan_get_address(&addr);
@@ -163,7 +168,23 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             }
 
             PRINTF("Connected to following BSS:\r\n");
-            PRINTF("SSID = [%s], IP = [%s]\r\n", sta_network.ssid, ip);
+            PRINTF("SSID = [%s]\r\n", sta_network.ssid);
+            if (addr.ipv4.address != 0U)
+            {
+                PRINTF("IPv4 Address: [%s]\r\n", ip);
+            }
+#ifdef CONFIG_IPV6
+            int i;
+            for (i = 0; i < CONFIG_MAX_IPV6_ADDRESSES; i++)
+            {
+                if (ip6_addr_isvalid(addr.ipv6[i].addr_state))
+                {
+                    (void)PRINTF("IPv6 Address: %-13s:\t%s (%s)\r\n", ipv6_addr_type_to_desc(&addr.ipv6[i]),
+                                 inet6_ntoa(addr.ipv6[i].address), ipv6_addr_state_to_desc(addr.ipv6[i].addr_state));
+                }
+            }
+            (void)PRINTF("\r\n");
+#endif
             auth_fail = 0;
             break;
         case WLAN_REASON_CONNECT_FAILED:
@@ -256,6 +277,79 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
     return 0;
 }
 
+int wlan_driver_init(void)
+{
+    int result = 0;
+
+    /* Initialize WIFI Driver */
+    result = wlan_init(wlan_fw_bin, wlan_fw_bin_len);
+
+    assert(0 == result);
+
+    result = wlan_start(wlan_event_callback);
+
+    assert(0 == result);
+
+    return result;
+}
+
+int wlan_driver_deinit(void)
+{
+    int result = 0;
+
+    result = wlan_stop();
+    assert(0 == result);
+    wlan_deinit(0);
+
+    return result;
+}
+
+static void wlan_hw_reset(void)
+{
+    BOARD_WIFI_BT_Enable(false);
+    os_thread_sleep(1);
+    BOARD_WIFI_BT_Enable(true);
+}
+
+int wlan_driver_reset(void)
+{
+    int result = 0;
+
+    result = wlan_driver_deinit();
+    assert(0 == result);
+
+    wlan_hw_reset();
+
+    result = wlan_driver_init();
+    assert(0 == result);
+
+    return result;
+}
+
+static void test_wlan_reset(int argc, char **argv)
+{
+    (void)wlan_driver_reset();
+}
+
+static struct cli_command wlan_reset_commands[] = {
+    {"wlan-reset", NULL, test_wlan_reset},
+};
+
+int wlan_reset_cli_init(void)
+{
+    unsigned int i;
+
+    for (i = 0; i < sizeof(wlan_reset_commands) / sizeof(struct cli_command); i++)
+    {
+        if (cli_register_command(&wlan_reset_commands[i]) != 0)
+        {
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
 void task_main(void *param)
 {
     int32_t result = 0;
@@ -272,11 +366,11 @@ void task_main(void *param)
     printSeparator();
 
     /* Initialize WIFI Driver */
-    result = wlan_init(wlan_fw_bin, wlan_fw_bin_len);
+    result = wlan_driver_init();
 
     assert(WM_SUCCESS == result);
 
-    result = wlan_start(wlan_event_callback);
+    result = wlan_reset_cli_init();
 
     assert(WM_SUCCESS == result);
 

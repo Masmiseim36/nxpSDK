@@ -1,6 +1,6 @@
 var a00019 =
 [
-    [ "dsp_copy_image_t", "a00019.html#a00302", null ],
+    [ "dsp_copy_image_t", "a00019.html#a00303", null ],
     [ "FSL_DSP_DRIVER_VERSION", "a00019.html#ga90d07af74388f302e2ad6ae6c97c5447", null ],
     [ "DSP_Init", "a00019.html#ga4863922efe70c56bd3e3290e8fc679cd", null ],
     [ "DSP_Deinit", "a00019.html#gabe1b96413237706eee6ce5a5725c47b6", null ],

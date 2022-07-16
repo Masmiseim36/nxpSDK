@@ -41,12 +41,14 @@
 /* Filter instance structure. */
 #include "bqriir32x32_df2_common.h"
 
+#if (ALG32X32_DF2_ND==0)
 #define AE_PKSRF32_( st, acc, offs ) \
   {                                  \
     ae_f32x2 st_ = st;               \
     AE_PKSRF32( st_, acc, offs );    \
     st = st_;                        \
   }
+#endif
 
 /*-------------------------------------------------------------------------
   Bi-quad Real Block IIR
@@ -67,7 +69,13 @@
   parameter gain of each filter initialization function.
   2. 16x16 filters may suffer more from accumulation of the roundoff errors,
   so filters should be properly designed to match noise requirements
-
+  3. Due to the performance reasons, IIR biquad filters may introduce 
+  additional algorithmic delay of several sampless. Amount of that delay
+  might be requested by the  xxx_groupDelay API. For sensitive applications
+  all the filters have delayless implementations (with  _nd  suffix in the name).
+  Formally, the xxx_groupDelay APIs is also implemented for that kind of filters,
+  but return zero.
+  
   Precision: 
   16x16         16-bit data, 16-bit coefficients, 16-bit intermediate 
                 stage outputs (DF1, DF1 stereo, DF II form)
@@ -129,6 +137,9 @@ void bqriir32x32_df2( bqriir32x32_df2_handle_t _bqriir,
                       int32_t * restrict       r,
                 const int32_t *                x, int N )
 {
+#if (ALG32X32_DF2_ND==1)
+  bqriir32x32_df2_nd( _bqriir, s, r, x, N);
+#else
   bqriir32x32_df2_ptr_t bqriir = (bqriir32x32_df2_ptr_t)_bqriir;
 
   const ae_int32x2*          coef_gsos;
@@ -397,4 +408,5 @@ void bqriir32x32_df2( bqriir32x32_df2_handle_t _bqriir,
         }
     }
   }
+#endif
 } // bqriir32x32_df2_process()

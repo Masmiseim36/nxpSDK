@@ -1,9 +1,10 @@
 # config to select component, the format is CONFIG_USE_${component}
 set(CONFIG_USE_middleware_mbedtls_rt1_MIMXRT685S_cm33 true)
 set(CONFIG_USE_component_mflash_mimxrt685audevk_MIMXRT685S_cm33 true)
-set(CONFIG_USE_middleware_wifi_MIMXRT685S_cm33 true)
+set(CONFIG_USE_middleware_wifi_sdio_MIMXRT685S_cm33 true)
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_MIMXRT685S_cm33 true)
 set(CONFIG_USE_middleware_sdmmc_host_usdhc_freertos_MIMXRT685S_cm33 true)
+set(CONFIG_USE_middleware_wifi_MIMXRT685S_cm33 true)
 set(CONFIG_USE_middleware_freertos-aws_iot_libraries_coremqtt_MIMXRT685S_cm33 true)
 set(CONFIG_USE_component_serial_manager_uart_MIMXRT685S_cm33 true)
 set(CONFIG_USE_driver_flexcomm_usart_MIMXRT685S_cm33 true)

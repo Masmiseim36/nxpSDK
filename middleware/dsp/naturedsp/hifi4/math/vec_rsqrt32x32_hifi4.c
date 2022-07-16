@@ -108,7 +108,8 @@ void vec_rsqrt32x32(int32_t * frac,
   pFw = (ae_int32x2   *)frac;
   fr_align = AE_LA64_PP(pFr);
   fw_align = AE_ZALIGN64();
-  for (n = 0; n<(N>>1); n++)
+
+  for (n = 0; n<(N>>2); n++)
   {
     xtbool2 sx, iszero;
     ae_f32x2 t;
@@ -174,7 +175,139 @@ void vec_rsqrt32x32(int32_t * frac,
     AE_MOVT32X2(Y, AE_MOVDA32(0x80000000), sx);
 
     AE_SA32X2_IP(Y, fw_align, pFw);
+
+	// UNROLL
+
+	AE_LA32X2_IP(X, fr_align, pFr);/* Q31 */
+	sx = AE_LT32(X, AE_ZERO32());
+	iszero = AE_EQ32(X, AE_ZERO32());
+	_0x80000000 = AE_MOVDA32(0x80000000);
+	_0x20000000 = AE_MOVDA32(0x20000000);
+	Y = AE_SUB32(_0x80000000, AE_SRAI32(X, 1)); /* Q30 */
+	AE_MOVT32X2(Y, AE_MOVDA32(0x7fffffff), iszero);
+
+	/*1-st iteration*/
+	Z = AE_MULFP32X2RAS(Y, Y);
+	t = _0x20000000; AE_MULSFP32X2RAS(t, X, Z); E = t;
+	Z = AE_MULFP32X2RAS(Y, E);
+#if 0
+	Z = AE_ADD32(Z, Z);
+	Y = AE_ADD32(Y, Z);
+#else
+	AE_MULAP32X2(Y, Z, AE_MOVDA32(2));
+#endif
+	/*2-nd iteration*/
+	Z = AE_MULFP32X2RAS(Y, Y);
+	t = _0x20000000; AE_MULSFP32X2RAS(t, X, Z); E = t;
+	Z = AE_MULFP32X2RAS(Y, E);
+#if 0
+	Z = AE_ADD32(Z, Z);
+	Y = AE_ADD32(Y, Z);
+#else
+	AE_MULAP32X2(Y, Z, AE_MOVDA32(2));
+#endif
+	/*3-rd iteration*/
+	Z = AE_MULFP32X2RAS(Y, Y);
+	t = _0x20000000; AE_MULSFP32X2RAS(t, X, Z); E = t;
+	Z = AE_MULFP32X2RAS(Y, E);
+#if 0
+	Z = AE_ADD32(Z, Z);
+	Y = AE_ADD32(Y, Z);
+#else
+	AE_MULAP32X2(Y, Z, AE_MOVDA32(2));
+#endif
+
+	/*last iteration will be done in bit higher precision*/
+	U64_l = AE_MUL32_LL(Y, Y);
+	U64_h = AE_MUL32_HH(Y, Y);
+	U64_l = AE_ADD64(U64_l, 0x20000000);
+	U64_h = AE_ADD64(U64_h, 0x20000000);
+	U64_l = AE_SLLI64(U64_l, 2);
+	U64_h = AE_SLLI64(U64_h, 2);
+	U = AE_SEL32_HH(AE_MOVINT32X2_FROMINT64(U64_h), AE_MOVINT32X2_FROMINT64(U64_l));
+	Z = AE_SEL32_HH(AE_MOVINT32X2_FROMINT64(U64_l), AE_MOVINT32X2_FROMINT64(U64_h));
+
+	U64_l = AE_MUL32U_LL(X, U);
+	X = AE_SEL32_HH(X, X);
+	U64_h = AE_MUL32U_LL(X, Z);
+	U64_l = AE_SRLI64(U64_l, 29);
+	U64_h = AE_SRLI64(U64_h, 29);
+	E = AE_SEL32_LL(AE_MOVINT32X2_FROMINT64(U64_h), AE_MOVINT32X2_FROMINT64(U64_l));
+	Z = AE_MULFP32X2RAS(Y, E);
+	Z = AE_ADD32(Z, AE_MOVDA32(2));
+	Y = AE_SUB32S(Y, AE_SRAI32(Z, 2));
+	AE_MOVT32X2(Y, AE_MOVDA32(0x80000000), sx);
+
+	AE_SA32X2_IP(Y, fw_align, pFw);
   } 
+
+  if (N & 2)
+  {
+	  xtbool2 sx, iszero;
+	  ae_f32x2 t;
+	  ae_int64 U64_l, U64_h;
+	  AE_LA32X2_IP(X, fr_align, pFr);/* Q31 */
+	  sx = AE_LT32(X, AE_ZERO32());
+	  iszero = AE_EQ32(X, AE_ZERO32());
+	  _0x80000000 = AE_MOVDA32(0x80000000);
+	  _0x20000000 = AE_MOVDA32(0x20000000);
+	  Y = AE_SUB32(_0x80000000, AE_SRAI32(X, 1)); /* Q30 */
+	  AE_MOVT32X2(Y, AE_MOVDA32(0x7fffffff), iszero);
+
+	  /*1-st iteration*/
+	  Z = AE_MULFP32X2RAS(Y, Y);
+	  t = _0x20000000; AE_MULSFP32X2RAS(t, X, Z); E = t;
+	  Z = AE_MULFP32X2RAS(Y, E);
+#if 0
+	  Z = AE_ADD32(Z, Z);
+	  Y = AE_ADD32(Y, Z);
+#else
+	  AE_MULAP32X2(Y, Z, AE_MOVDA32(2));
+#endif
+	  /*2-nd iteration*/
+	  Z = AE_MULFP32X2RAS(Y, Y);
+	  t = _0x20000000; AE_MULSFP32X2RAS(t, X, Z); E = t;
+	  Z = AE_MULFP32X2RAS(Y, E);
+#if 0
+	  Z = AE_ADD32(Z, Z);
+	  Y = AE_ADD32(Y, Z);
+#else
+	  AE_MULAP32X2(Y, Z, AE_MOVDA32(2));
+#endif
+	  /*3-rd iteration*/
+	  Z = AE_MULFP32X2RAS(Y, Y);
+	  t = _0x20000000; AE_MULSFP32X2RAS(t, X, Z); E = t;
+	  Z = AE_MULFP32X2RAS(Y, E);
+#if 0
+	  Z = AE_ADD32(Z, Z);
+	  Y = AE_ADD32(Y, Z);
+#else
+	  AE_MULAP32X2(Y, Z, AE_MOVDA32(2));
+#endif
+
+	  /*last iteration will be done in bit higher precision*/
+	  U64_l = AE_MUL32_LL(Y, Y);
+	  U64_h = AE_MUL32_HH(Y, Y);
+	  U64_l = AE_ADD64(U64_l, 0x20000000);
+	  U64_h = AE_ADD64(U64_h, 0x20000000);
+	  U64_l = AE_SLLI64(U64_l, 2);
+	  U64_h = AE_SLLI64(U64_h, 2);
+	  U = AE_SEL32_HH(AE_MOVINT32X2_FROMINT64(U64_h), AE_MOVINT32X2_FROMINT64(U64_l));
+	  Z = AE_SEL32_HH(AE_MOVINT32X2_FROMINT64(U64_l), AE_MOVINT32X2_FROMINT64(U64_h));
+
+	  U64_l = AE_MUL32U_LL(X, U);
+	  X = AE_SEL32_HH(X, X);
+	  U64_h = AE_MUL32U_LL(X, Z);
+	  U64_l = AE_SRLI64(U64_l, 29);
+	  U64_h = AE_SRLI64(U64_h, 29);
+	  E = AE_SEL32_LL(AE_MOVINT32X2_FROMINT64(U64_h), AE_MOVINT32X2_FROMINT64(U64_l));
+	  Z = AE_MULFP32X2RAS(Y, E);
+	  Z = AE_ADD32(Z, AE_MOVDA32(2));
+	  Y = AE_SUB32S(Y, AE_SRAI32(Z, 2));
+	  AE_MOVT32X2(Y, AE_MOVDA32(0x80000000), sx);
+
+	  AE_SA32X2_IP(Y, fw_align, pFw);
+  }
   AE_SA64POS_FP(fw_align, pFw);
   
   if (N&1)

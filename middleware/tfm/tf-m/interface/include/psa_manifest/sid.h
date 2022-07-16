@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/*********** WARNING: This is an auto-generated file. Do not edit! ***********/
+/***********  WARNING: This is an auto-generated file. Do not edit!  ***********/
 
 #ifndef __PSA_MANIFEST_SID_H__
 #define __PSA_MANIFEST_SID_H__
@@ -67,13 +67,9 @@ extern "C" {
 #define SPM_CORE_TEST_SS_TO_SS_BUFFER_VERSION                      (1U)
 #define SPM_CORE_TEST_OUTVEC_WRITE_SID                             (0x0000F026U)
 #define SPM_CORE_TEST_OUTVEC_WRITE_VERSION                         (1U)
-#define SPM_CORE_TEST_PERIPHERAL_ACCESS_SID                        (0x0000F027U)
-#define SPM_CORE_TEST_PERIPHERAL_ACCESS_VERSION                    (1U)
-#define SPM_CORE_TEST_GET_CALLER_CLIENT_ID_SID                     (0x0000F028U)
+#define SPM_CORE_TEST_GET_CALLER_CLIENT_ID_SID                     (0x0000F027U)
 #define SPM_CORE_TEST_GET_CALLER_CLIENT_ID_VERSION                 (1U)
-#define SPM_CORE_TEST_BLOCK_SID                                    (0x0000F029U)
-#define SPM_CORE_TEST_BLOCK_VERSION                                (1U)
-#define SPM_CORE_TEST_NS_THREAD_SID                                (0x0000F02AU)
+#define SPM_CORE_TEST_NS_THREAD_SID                                (0x0000F028U)
 #define SPM_CORE_TEST_NS_THREAD_VERSION                            (1U)
 
 /******** TFM_SP_CORE_TEST_2 ********/
@@ -87,8 +83,8 @@ extern "C" {
 #define SPM_CORE_TEST_2_INVERT_VERSION                             (1U)
 
 /******** TFM_SP_SECURE_TEST_PARTITION ********/
-#define TFM_SECURE_CLIENT_SFN_RUN_TESTS_SID                        (0x0000F000U)
-#define TFM_SECURE_CLIENT_SFN_RUN_TESTS_VERSION                    (1U)
+#define TFM_SECURE_CLIENT_SRV_DUMMY_SID                            (0x0000F000U)
+#define TFM_SECURE_CLIENT_SRV_DUMMY_VERSION                        (1U)
 
 /******** TFM_SP_IPC_SERVICE_TEST ********/
 #define IPC_SERVICE_TEST_BASIC_SID                                 (0x0000F080U)
@@ -104,10 +100,11 @@ extern "C" {
 #define IPC_SERVICE_TEST_STATELESS_ROT_SID                         (0x0000F085U)
 #define IPC_SERVICE_TEST_STATELESS_ROT_VERSION                     (1U)
 #define IPC_SERVICE_TEST_STATELESS_ROT_HANDLE                      (0x40000104U)
+#define IPC_SERVICE_TEST_MMIOVEC_SID                               (0x0000F086U)
+#define IPC_SERVICE_TEST_MMIOVEC_VERSION                           (1U)
+#define IPC_SERVICE_TEST_MMIOVEC_HANDLE                            (0x40000105U)
 
 /******** TFM_SP_IPC_CLIENT_TEST ********/
-#define IPC_CLIENT_TEST_BASIC_SID                                  (0x0000F060U)
-#define IPC_CLIENT_TEST_BASIC_VERSION                              (1U)
 #define IPC_CLIENT_TEST_PSA_ACCESS_APP_MEM_SID                     (0x0000F061U)
 #define IPC_CLIENT_TEST_PSA_ACCESS_APP_MEM_VERSION                 (1U)
 #define IPC_CLIENT_TEST_PSA_ACCESS_APP_READ_ONLY_MEM_SID           (0x0000F062U)
@@ -127,19 +124,27 @@ extern "C" {
 #define TFM_SECURE_CLIENT_2_SID                                    (0x0000F0E0U)
 #define TFM_SECURE_CLIENT_2_VERSION                                (1U)
 
-/******** TFM_SP_ATTEST_TEST ********/
-#define TFM_ATTEST_TEST_GET_PUBLIC_KEY_SID                         (0x0000F140U)
-#define TFM_ATTEST_TEST_GET_PUBLIC_KEY_VERSION                     (1U)
-
 /******** TFM_SP_SLIH_TEST ********/
 #define TFM_SLIH_TEST_CASE_SID                                     (0x0000F0A0U)
 #define TFM_SLIH_TEST_CASE_VERSION                                 (1U)
-#define TFM_SLIH_TEST_CASE_HANDLE                                  (0x40000105U)
+#define TFM_SLIH_TEST_CASE_HANDLE                                  (0x40000106U)
 
 /******** TFM_SP_FLIH_TEST ********/
 #define TFM_FLIH_TEST_CASE_SID                                     (0x0000F0B0U)
 #define TFM_FLIH_TEST_CASE_VERSION                                 (1U)
-#define TFM_FLIH_TEST_CASE_HANDLE                                  (0x40000106U)
+#define TFM_FLIH_TEST_CASE_HANDLE                                  (0x40000107U)
+
+/******** TFM_SP_FPU_SERVICE_TEST ********/
+#define TFM_FPU_SERVICE_CLEAR_FP_REGISTER_SID                      (0x0000F090U)
+#define TFM_FPU_SERVICE_CLEAR_FP_REGISTER_VERSION                  (1U)
+#define TFM_FPU_SERVICE_CHECK_FP_REGISTER_SID                      (0x0000F091U)
+#define TFM_FPU_SERVICE_CHECK_FP_REGISTER_VERSION                  (1U)
+#define TFM_FPU_SERVICE_START_S_TIMER_SID                          (0x0000F092U)
+#define TFM_FPU_SERVICE_START_S_TIMER_VERSION                      (1U)
+#define TFM_FPU_SERVICE_CHECK_S_TIMER_TRIGGERED_SID                (0x0000F093U)
+#define TFM_FPU_SERVICE_CHECK_S_TIMER_TRIGGERED_VERSION            (1U)
+#define TFM_FPU_SERVICE_CHECK_NS_INTERRUPT_S_TEST_SID              (0x0000F094U)
+#define TFM_FPU_SERVICE_CHECK_NS_INTERRUPT_S_TEST_VERSION          (1U)
 
 #ifdef __cplusplus
 }

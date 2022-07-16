@@ -37,3 +37,5 @@
 #else
 #error The transceiver module is unsupported
 #endif
+
+#define CONFIG_BT_SETTINGS 1

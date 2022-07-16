@@ -331,10 +331,11 @@ int fft_16x16_stage_inner_scl2_DFT2(const int16_t *tw, const int16_t *x, int16_t
   NASSERT_ALIGN8(x);
   NASSERT_ALIGN8(y);
   NASSERT(tw_step == 1);
-
   c1 = 1;
   accbits = 0;
   _v = *v;
+  NASSERT(((stride / _v) & 1) == 0);
+
   al_y1 = AE_ZALIGN64();
   __Pragma("loop_count min=1");
   for (j = 0; j < (_v>>1); j++)

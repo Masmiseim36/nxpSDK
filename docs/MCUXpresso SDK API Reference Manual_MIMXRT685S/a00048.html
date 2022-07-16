@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('a00048.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">SD Card Driver<div class="ingroups"><a class="el" href="a00243.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
+<div class="title">SD Card Driver<div class="ingroups"><a class="el" href="a00244.html">Cards: Secure Digital Card/Embedded MultiMedia Card/SDIO Card</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -115,8 +115,8 @@ SD CARD Operation</h1>
 <h2>User configurable</h2>
 <div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>_sd_card</div>
 <div class="line">{</div>
-<div class="line">    <a class="code" href="a00051.html#a00370">sdmmchost_t</a> *host; </div>
-<div class="line">    <a class="code" href="a00039.html#a00362">sd_usr_param_t</a> usrParam; </div>
+<div class="line">    <a class="code" href="a00051.html#a00371">sdmmchost_t</a> *host; </div>
+<div class="line">    <a class="code" href="a00039.html#a00363">sd_usr_param_t</a> usrParam; </div>
 <div class="line">    <span class="keywordtype">bool</span> isHostReady;        </div>
 <div class="line">    <span class="keywordtype">bool</span> noInteralAlign;      </div>
 <div class="line">    uint32_t busClock_Hz;     </div>
@@ -125,18 +125,18 @@ SD CARD Operation</h1>
 <div class="line">    uint32_t flags;           </div>
 <div class="line">    uint8_t internalBuffer[<a class="code" href="a00039.html#ga4dd122ccc71f9eef692acf27d5f851c3">FSL_SDMMC_CARD_INTERNAL_BUFFER_SIZE</a>]; </div>
 <div class="line">    uint32_t ocr;                                                </div>
-<div class="line">    <a class="code" href="a00039.html#a00356">sd_cid_t</a> cid;                                                </div>
-<div class="line">    <a class="code" href="a00039.html#a00357">sd_csd_t</a> csd;                                                </div>
-<div class="line">    <a class="code" href="a00039.html#a00360">sd_scr_t</a> scr;                                                </div>
-<div class="line">    <a class="code" href="a00039.html#a00361">sd_status_t</a> stat;                                            </div>
+<div class="line">    <a class="code" href="a00039.html#a00357">sd_cid_t</a> cid;                                                </div>
+<div class="line">    <a class="code" href="a00039.html#a00358">sd_csd_t</a> csd;                                                </div>
+<div class="line">    <a class="code" href="a00039.html#a00361">sd_scr_t</a> scr;                                                </div>
+<div class="line">    <a class="code" href="a00039.html#a00362">sd_status_t</a> stat;                                            </div>
 <div class="line">    uint32_t blockCount;                                         </div>
 <div class="line">    uint32_t blockSize;                                          </div>
 <div class="line">    <a class="code" href="a00039.html#ga508c3d50863e57dce5fa1b7758972e1b">sd_timing_mode_t</a> currentTiming;                              </div>
 <div class="line">    <a class="code" href="a00039.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a> driverStrength;                         </div>
 <div class="line">    <a class="code" href="a00039.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a> maxCurrent;                                 </div>
 <div class="line">    <a class="code" href="a00039.html#ga27fd895fac89bbc0288543ca0b1e371c">sdmmc_operation_voltage_t</a> operationVoltage;                  </div>
-<div class="line">    <a class="code" href="a00050.html#a00369">sdmmc_osa_mutex_t</a> lock;                                      </div>
-<div class="line">} <a class="code" href="a00048.html#a00355">sd_card_t</a>;</div>
+<div class="line">    <a class="code" href="a00050.html#a00370">sdmmc_osa_mutex_t</a> lock;                                      </div>
+<div class="line">} <a class="code" href="a00048.html#a00356">sd_card_t</a>;</div>
 </div><!-- fragment --><p>Part of The variables above is user configurable,</p>
 <ol type="1">
 <li><p class="startli">host</p>
@@ -145,21 +145,21 @@ SD CARD Operation</h1>
 <div class="line">s_host.dmaDesBuffer                                      = s_sdmmcHostDmaBuffer;</div>
 <div class="line">s_host.dmaDesBufferWordsNum                              = xxx;</div>
 <div class="line"><span class="comment">/*  */</span></div>
-<div class="line">((<a class="code" href="a00048.html#a00355">sd_card_t</a> *)card)-&gt;host                                = &amp;s_host;</div>
-<div class="line">((<a class="code" href="a00048.html#a00355">sd_card_t</a> *)card)-&gt;host-&gt;hostController.base           = BOARD_SDMMC_SD_HOST_BASEADDR;</div>
-<div class="line">((<a class="code" href="a00048.html#a00355">sd_card_t</a> *)card)-&gt;host-&gt;hostController.sourceClock_Hz = BOARD_USDHC1ClockConfiguration();</div>
+<div class="line">((<a class="code" href="a00048.html#a00356">sd_card_t</a> *)card)-&gt;host                                = &amp;s_host;</div>
+<div class="line">((<a class="code" href="a00048.html#a00356">sd_card_t</a> *)card)-&gt;host-&gt;hostController.base           = BOARD_SDMMC_SD_HOST_BASEADDR;</div>
+<div class="line">((<a class="code" href="a00048.html#a00356">sd_card_t</a> *)card)-&gt;host-&gt;hostController.sourceClock_Hz = BOARD_USDHC1ClockConfiguration();</div>
 <div class="line"></div>
 <div class="line"><span class="comment">/* allocate resource for sdmmc osa layer */</span></div>
-<div class="line">((<a class="code" href="a00048.html#a00355">sd_card_t</a> *)card)-&gt;host-&gt;hostEvent     = &amp;s_event;</div>
+<div class="line">((<a class="code" href="a00048.html#a00356">sd_card_t</a> *)card)-&gt;host-&gt;hostEvent     = &amp;s_event;</div>
 </div><!-- fragment --></li>
 <li>sdcard_usr_param_t usrParam</li>
 </ol>
 <div class="fragment"><div class="line"><span class="comment">/* board layer configuration register */</span></div>
-<div class="line">((<a class="code" href="a00048.html#a00355">sd_card_t</a> *)card)-&gt;usrParam.cd         = &amp;s_cd;</div>
-<div class="line">((<a class="code" href="a00048.html#a00355">sd_card_t</a> *)card)-&gt;usrParam.pwr        = BOARD_SDCardPowerControl;</div>
-<div class="line">((<a class="code" href="a00048.html#a00355">sd_card_t</a> *)card)-&gt;usrParam.ioStrength = BOARD_SD_Pin_Config;</div>
-<div class="line">((<a class="code" href="a00048.html#a00355">sd_card_t</a> *)card)-&gt;usrParam.ioVoltage  = &amp;s_ioVoltage;</div>
-<div class="line">((<a class="code" href="a00048.html#a00355">sd_card_t</a> *)card)-&gt;usrParam.maxFreq    = BOARD_SDMMC_SD_HOST_SUPPORT_SDR104_FREQ;</div>
+<div class="line">((<a class="code" href="a00048.html#a00356">sd_card_t</a> *)card)-&gt;usrParam.cd         = &amp;s_cd;</div>
+<div class="line">((<a class="code" href="a00048.html#a00356">sd_card_t</a> *)card)-&gt;usrParam.pwr        = BOARD_SDCardPowerControl;</div>
+<div class="line">((<a class="code" href="a00048.html#a00356">sd_card_t</a> *)card)-&gt;usrParam.ioStrength = BOARD_SD_Pin_Config;</div>
+<div class="line">((<a class="code" href="a00048.html#a00356">sd_card_t</a> *)card)-&gt;usrParam.ioVoltage  = &amp;s_ioVoltage;</div>
+<div class="line">((<a class="code" href="a00048.html#a00356">sd_card_t</a> *)card)-&gt;usrParam.maxFreq    = BOARD_SDMMC_SD_HOST_SUPPORT_SDR104_FREQ;</div>
 <div class="line"></div>
 <div class="line">a. cd-which allow application define the card insert/<span class="keyword">remove</span> callback <span class="keyword">function</span>, redefine the card detect timeout ms and also allow application determine how to detect card.</div>
 <div class="line">b. pwr-which allow application redefine the card power on/off <span class="keyword">function</span>.</div>
@@ -189,9 +189,9 @@ SD CARD Operation</h1>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00355"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00355">sd_card_t</a></td></tr>
-<tr class="memdesc:a00355"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD card state.  <a href="a00048.html#a00355">More...</a><br/></td></tr>
-<tr class="separator:a00355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00356"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a00356">sd_card_t</a></td></tr>
+<tr class="memdesc:a00356"><td class="mdescLeft">&#160;</td><td class="mdescRight">SD card state.  <a href="a00048.html#a00356">More...</a><br/></td></tr>
+<tr class="separator:a00356"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -222,66 +222,66 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 SDCARD Function</h2></td></tr>
-<tr class="memitem:ga281fb14816d236446ee2d047be0c7155"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga281fb14816d236446ee2d047be0c7155">SD_Init</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:ga281fb14816d236446ee2d047be0c7155"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga281fb14816d236446ee2d047be0c7155">SD_Init</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:ga281fb14816d236446ee2d047be0c7155"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the card on a specific host controller.  <a href="#ga281fb14816d236446ee2d047be0c7155">More...</a><br/></td></tr>
 <tr class="separator:ga281fb14816d236446ee2d047be0c7155"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50dee2b5bc071a01480b0ab3671c8524"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga50dee2b5bc071a01480b0ab3671c8524">SD_Deinit</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:ga50dee2b5bc071a01480b0ab3671c8524"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga50dee2b5bc071a01480b0ab3671c8524">SD_Deinit</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:ga50dee2b5bc071a01480b0ab3671c8524"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card.  <a href="#ga50dee2b5bc071a01480b0ab3671c8524">More...</a><br/></td></tr>
 <tr class="separator:ga50dee2b5bc071a01480b0ab3671c8524"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22154dd3ecedaaf63ed951fb248b0265"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga22154dd3ecedaaf63ed951fb248b0265">SD_CardInit</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:ga22154dd3ecedaaf63ed951fb248b0265"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga22154dd3ecedaaf63ed951fb248b0265">SD_CardInit</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:ga22154dd3ecedaaf63ed951fb248b0265"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the card.  <a href="#ga22154dd3ecedaaf63ed951fb248b0265">More...</a><br/></td></tr>
 <tr class="separator:ga22154dd3ecedaaf63ed951fb248b0265"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2683393842666aa39ec74898a7ad6e8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga2683393842666aa39ec74898a7ad6e8a">SD_CardDeinit</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:ga2683393842666aa39ec74898a7ad6e8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga2683393842666aa39ec74898a7ad6e8a">SD_CardDeinit</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:ga2683393842666aa39ec74898a7ad6e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the card.  <a href="#ga2683393842666aa39ec74898a7ad6e8a">More...</a><br/></td></tr>
 <tr class="separator:ga2683393842666aa39ec74898a7ad6e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga47f15fb31bcb60a2eeb474081cde54e4">SD_HostInit</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga47f15fb31bcb60a2eeb474081cde54e4">SD_HostInit</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize the host.  <a href="#ga47f15fb31bcb60a2eeb474081cde54e4">More...</a><br/></td></tr>
 <tr class="separator:ga47f15fb31bcb60a2eeb474081cde54e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac44a13a36870f276b1f323a5b519bb9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac44a13a36870f276b1f323a5b519bb9f">SD_HostDeinit</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:gac44a13a36870f276b1f323a5b519bb9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gac44a13a36870f276b1f323a5b519bb9f">SD_HostDeinit</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:gac44a13a36870f276b1f323a5b519bb9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the host.  <a href="#gac44a13a36870f276b1f323a5b519bb9f">More...</a><br/></td></tr>
 <tr class="separator:gac44a13a36870f276b1f323a5b519bb9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga75785c0a29f560b0bfd14b572106bda0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga75785c0a29f560b0bfd14b572106bda0">SD_HostDoReset</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:ga75785c0a29f560b0bfd14b572106bda0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga75785c0a29f560b0bfd14b572106bda0">SD_HostDoReset</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:ga75785c0a29f560b0bfd14b572106bda0"><td class="mdescLeft">&#160;</td><td class="mdescRight">reset the host.  <a href="#ga75785c0a29f560b0bfd14b572106bda0">More...</a><br/></td></tr>
 <tr class="separator:ga75785c0a29f560b0bfd14b572106bda0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga5e8b2d7768c7d916a1953583035fdbb3">SD_SetCardPower</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card, bool enable)</td></tr>
+<tr class="memitem:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga5e8b2d7768c7d916a1953583035fdbb3">SD_SetCardPower</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card, bool enable)</td></tr>
 <tr class="memdesc:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">set card power.  <a href="#ga5e8b2d7768c7d916a1953583035fdbb3">More...</a><br/></td></tr>
 <tr class="separator:ga5e8b2d7768c7d916a1953583035fdbb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga38c82aa0e0daaec4c6be8ba3acd56da2">SD_PollingCardInsert</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card, uint32_t status)</td></tr>
+<tr class="memitem:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga38c82aa0e0daaec4c6be8ba3acd56da2">SD_PollingCardInsert</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card, uint32_t status)</td></tr>
 <tr class="memdesc:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">sd wait card detect function.  <a href="#ga38c82aa0e0daaec4c6be8ba3acd56da2">More...</a><br/></td></tr>
 <tr class="separator:ga38c82aa0e0daaec4c6be8ba3acd56da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga6de9f134ae84e25053647e2c0ba8ef27">SD_IsCardPresent</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga6de9f134ae84e25053647e2c0ba8ef27">SD_IsCardPresent</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="mdescLeft">&#160;</td><td class="mdescRight">sd card present check function.  <a href="#ga6de9f134ae84e25053647e2c0ba8ef27">More...</a><br/></td></tr>
 <tr class="separator:ga6de9f134ae84e25053647e2c0ba8ef27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gad9b5c3ecc8acf18ee06ffd4154eb0352">SD_CheckReadOnly</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gad9b5c3ecc8acf18ee06ffd4154eb0352">SD_CheckReadOnly</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the card is write-protected.  <a href="#gad9b5c3ecc8acf18ee06ffd4154eb0352">More...</a><br/></td></tr>
 <tr class="separator:gad9b5c3ecc8acf18ee06ffd4154eb0352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab8b91d51f045d43e32770599a9406e3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gab8b91d51f045d43e32770599a9406e3b">SD_SelectCard</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card, bool isSelected)</td></tr>
+<tr class="memitem:gab8b91d51f045d43e32770599a9406e3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gab8b91d51f045d43e32770599a9406e3b">SD_SelectCard</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card, bool isSelected)</td></tr>
 <tr class="memdesc:gab8b91d51f045d43e32770599a9406e3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send SELECT_CARD command to set the card to be transfer state or not.  <a href="#gab8b91d51f045d43e32770599a9406e3b">More...</a><br/></td></tr>
 <tr class="separator:gab8b91d51f045d43e32770599a9406e3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf3537757745005c2b103be314ddfaa7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaf3537757745005c2b103be314ddfaa7b">SD_ReadStatus</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card)</td></tr>
+<tr class="memitem:gaf3537757745005c2b103be314ddfaa7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#gaf3537757745005c2b103be314ddfaa7b">SD_ReadStatus</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card)</td></tr>
 <tr class="memdesc:gaf3537757745005c2b103be314ddfaa7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send ACMD13 to get the card current status.  <a href="#gaf3537757745005c2b103be314ddfaa7b">More...</a><br/></td></tr>
 <tr class="separator:gaf3537757745005c2b103be314ddfaa7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1d134e8244b6641352d1a374d0e8b848"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga1d134e8244b6641352d1a374d0e8b848">SD_ReadBlocks</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card, uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
+<tr class="memitem:ga1d134e8244b6641352d1a374d0e8b848"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga1d134e8244b6641352d1a374d0e8b848">SD_ReadBlocks</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card, uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
 <tr class="memdesc:ga1d134e8244b6641352d1a374d0e8b848"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads blocks from the specific card.  <a href="#ga1d134e8244b6641352d1a374d0e8b848">More...</a><br/></td></tr>
 <tr class="separator:ga1d134e8244b6641352d1a374d0e8b848"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga9ab9d1eb512dec6e15beb2cee4e9691e">SD_WriteBlocks</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card, const uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
+<tr class="memitem:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga9ab9d1eb512dec6e15beb2cee4e9691e">SD_WriteBlocks</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card, const uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)</td></tr>
 <tr class="memdesc:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes blocks of data to the specific card.  <a href="#ga9ab9d1eb512dec6e15beb2cee4e9691e">More...</a><br/></td></tr>
 <tr class="separator:ga9ab9d1eb512dec6e15beb2cee4e9691e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga04e7b25d9776e92ddfcf72063af02418"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga04e7b25d9776e92ddfcf72063af02418">SD_EraseBlocks</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card, uint32_t startBlock, uint32_t blockCount)</td></tr>
+<tr class="memitem:ga04e7b25d9776e92ddfcf72063af02418"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga04e7b25d9776e92ddfcf72063af02418">SD_EraseBlocks</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card, uint32_t startBlock, uint32_t blockCount)</td></tr>
 <tr class="memdesc:ga04e7b25d9776e92ddfcf72063af02418"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases blocks of the specific card.  <a href="#ga04e7b25d9776e92ddfcf72063af02418">More...</a><br/></td></tr>
 <tr class="separator:ga04e7b25d9776e92ddfcf72063af02418"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga07178b3047e22e71bd7a3bd60322e7b6">SD_SetDriverStrength</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card, <a class="el" href="a00039.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a> driverStrength)</td></tr>
+<tr class="memitem:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga07178b3047e22e71bd7a3bd60322e7b6">SD_SetDriverStrength</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card, <a class="el" href="a00039.html#ga5960ea249182610db9f6e495ca3984da">sd_driver_strength_t</a> driverStrength)</td></tr>
 <tr class="memdesc:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">select card driver strength select card driver strength  <a href="#ga07178b3047e22e71bd7a3bd60322e7b6">More...</a><br/></td></tr>
 <tr class="separator:ga07178b3047e22e71bd7a3bd60322e7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a3a34d76af9ee378086a4dcc1259936"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga6a3a34d76af9ee378086a4dcc1259936">SD_SetMaxCurrent</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card, <a class="el" href="a00039.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a> maxCurrent)</td></tr>
+<tr class="memitem:ga6a3a34d76af9ee378086a4dcc1259936"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga6a3a34d76af9ee378086a4dcc1259936">SD_SetMaxCurrent</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card, <a class="el" href="a00039.html#ga47f2d06751444a78cbf1792022d0a3cb">sd_max_current_t</a> maxCurrent)</td></tr>
 <tr class="memdesc:ga6a3a34d76af9ee378086a4dcc1259936"><td class="mdescLeft">&#160;</td><td class="mdescRight">select max current select max operation current  <a href="#ga6a3a34d76af9ee378086a4dcc1259936">More...</a><br/></td></tr>
 <tr class="separator:ga6a3a34d76af9ee378086a4dcc1259936"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33babf402c15dae5d2712793230158a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga33babf402c15dae5d2712793230158a9">SD_PollingCardStatusBusy</a> (<a class="el" href="a00048.html#a00355">sd_card_t</a> *card, uint32_t timeoutMs)</td></tr>
+<tr class="memitem:ga33babf402c15dae5d2712793230158a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ga33babf402c15dae5d2712793230158a9">SD_PollingCardStatusBusy</a> (<a class="el" href="a00048.html#a00356">sd_card_t</a> *card, uint32_t timeoutMs)</td></tr>
 <tr class="memdesc:ga33babf402c15dae5d2712793230158a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Polling card idle status.  <a href="#ga33babf402c15dae5d2712793230158a9">More...</a><br/></td></tr>
 <tr class="separator:ga33babf402c15dae5d2712793230158a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00355" id="a00355"></a>
+<a name="a00356" id="a00356"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -294,11 +294,11 @@ SDCARD Function</h2></td></tr>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
 <tr class="memitem:ae1d68ff4edbc243d840cae5614d31a68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1d68ff4edbc243d840cae5614d31a68"></a>
-<a class="el" href="a00051.html#a00370">sdmmchost_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ae1d68ff4edbc243d840cae5614d31a68">host</a></td></tr>
+<a class="el" href="a00051.html#a00371">sdmmchost_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ae1d68ff4edbc243d840cae5614d31a68">host</a></td></tr>
 <tr class="memdesc:ae1d68ff4edbc243d840cae5614d31a68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host configuration. <br/></td></tr>
 <tr class="separator:ae1d68ff4edbc243d840cae5614d31a68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4566720b02d4de772cd3cbcb54eaafb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4566720b02d4de772cd3cbcb54eaafb"></a>
-<a class="el" href="a00039.html#a00362">sd_usr_param_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ab4566720b02d4de772cd3cbcb54eaafb">usrParam</a></td></tr>
+<a class="el" href="a00039.html#a00363">sd_usr_param_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ab4566720b02d4de772cd3cbcb54eaafb">usrParam</a></td></tr>
 <tr class="memdesc:ab4566720b02d4de772cd3cbcb54eaafb"><td class="mdescLeft">&#160;</td><td class="mdescRight">user parameter <br/></td></tr>
 <tr class="separator:ab4566720b02d4de772cd3cbcb54eaafb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a966fb2f61556afb59ab11f5f634e0578"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a966fb2f61556afb59ab11f5f634e0578"></a>
@@ -334,19 +334,19 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memdesc:a4dfdb06355545a94755d7b7b8b8bb708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw OCR content. <br/></td></tr>
 <tr class="separator:a4dfdb06355545a94755d7b7b8b8bb708"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0efb67f15239d1406b0b0f8b91345669"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0efb67f15239d1406b0b0f8b91345669"></a>
-<a class="el" href="a00039.html#a00356">sd_cid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a0efb67f15239d1406b0b0f8b91345669">cid</a></td></tr>
+<a class="el" href="a00039.html#a00357">sd_cid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a0efb67f15239d1406b0b0f8b91345669">cid</a></td></tr>
 <tr class="memdesc:a0efb67f15239d1406b0b0f8b91345669"><td class="mdescLeft">&#160;</td><td class="mdescRight">CID. <br/></td></tr>
 <tr class="separator:a0efb67f15239d1406b0b0f8b91345669"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1958a5fde8f395573ccdff37a26aa455"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1958a5fde8f395573ccdff37a26aa455"></a>
-<a class="el" href="a00039.html#a00357">sd_csd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a1958a5fde8f395573ccdff37a26aa455">csd</a></td></tr>
+<a class="el" href="a00039.html#a00358">sd_csd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a1958a5fde8f395573ccdff37a26aa455">csd</a></td></tr>
 <tr class="memdesc:a1958a5fde8f395573ccdff37a26aa455"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSD. <br/></td></tr>
 <tr class="separator:a1958a5fde8f395573ccdff37a26aa455"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae47527a4d44dfb1754d97149e71d7744"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae47527a4d44dfb1754d97149e71d7744"></a>
-<a class="el" href="a00039.html#a00360">sd_scr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ae47527a4d44dfb1754d97149e71d7744">scr</a></td></tr>
+<a class="el" href="a00039.html#a00361">sd_scr_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ae47527a4d44dfb1754d97149e71d7744">scr</a></td></tr>
 <tr class="memdesc:ae47527a4d44dfb1754d97149e71d7744"><td class="mdescLeft">&#160;</td><td class="mdescRight">SCR. <br/></td></tr>
 <tr class="separator:ae47527a4d44dfb1754d97149e71d7744"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9b7cf861f3224f3a8f14d9b7c52ca1b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9b7cf861f3224f3a8f14d9b7c52ca1b"></a>
-<a class="el" href="a00039.html#a00361">sd_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ac9b7cf861f3224f3a8f14d9b7c52ca1b">stat</a></td></tr>
+<a class="el" href="a00039.html#a00362">sd_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#ac9b7cf861f3224f3a8f14d9b7c52ca1b">stat</a></td></tr>
 <tr class="memdesc:ac9b7cf861f3224f3a8f14d9b7c52ca1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">sd 512 bit status <br/></td></tr>
 <tr class="separator:ac9b7cf861f3224f3a8f14d9b7c52ca1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee36dc7f6472b4efb5c8c00fcaeb8a55"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee36dc7f6472b4efb5c8c00fcaeb8a55"></a>
@@ -374,7 +374,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memdesc:aef60a9196a9789f243660bb76f3a0ef2"><td class="mdescLeft">&#160;</td><td class="mdescRight">card operation voltage <br/></td></tr>
 <tr class="separator:aef60a9196a9789f243660bb76f3a0ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a617e4f6ef3604042d7ae2851bd1ae50c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a617e4f6ef3604042d7ae2851bd1ae50c"></a>
-<a class="el" href="a00050.html#a00369">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a617e4f6ef3604042d7ae2851bd1ae50c">lock</a></td></tr>
+<a class="el" href="a00050.html#a00370">sdmmc_osa_mutex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00048.html#a617e4f6ef3604042d7ae2851bd1ae50c">lock</a></td></tr>
 <tr class="memdesc:a617e4f6ef3604042d7ae2851bd1ae50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">card access lock <br/></td></tr>
 <tr class="separator:a617e4f6ef3604042d7ae2851bd1ae50c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -439,7 +439,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -484,7 +484,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void SD_Deinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -507,7 +507,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_CardInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -552,7 +552,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void SD_CardDeinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -575,7 +575,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_HostInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -598,7 +598,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void SD_HostDeinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -621,7 +621,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void SD_HostDoReset </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -644,7 +644,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void SD_SetCardPower </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -678,7 +678,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_PollingCardInsert </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -712,7 +712,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">bool SD_IsCardPresent </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -734,7 +734,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">bool SD_CheckReadOnly </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -764,7 +764,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_SelectCard </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -804,7 +804,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_ReadStatus </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em></td><td>)</td>
           <td></td>
         </tr>
@@ -834,7 +834,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_ReadBlocks </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -895,7 +895,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_WriteBlocks </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -960,7 +960,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_EraseBlocks </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -1016,7 +1016,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_SetDriverStrength </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -1049,7 +1049,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_SetMaxCurrent </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>
@@ -1082,7 +1082,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> SD_PollingCardStatusBusy </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00048.html#a00355">sd_card_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00048.html#a00356">sd_card_t</a> *&#160;</td>
           <td class="paramname"><em>card</em>, </td>
         </tr>
         <tr>

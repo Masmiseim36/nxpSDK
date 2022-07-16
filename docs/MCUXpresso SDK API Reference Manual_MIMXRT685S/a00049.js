@@ -1,6 +1,6 @@
 var a00049 =
 [
-    [ "sdio_card_t", "a00049.html#a00269", [
+    [ "sdio_card_t", "a00049.html#a00270", [
       [ "host", "a00049.html#aff91723723609dbd00d027e7e6cee4e8", null ],
       [ "usrParam", "a00049.html#a85fb84502cfbe41a1264c1dfbe4ae37f", null ],
       [ "noInternalAlign", "a00049.html#aa3a92263c58ded5911a0c0bce688352f", null ],

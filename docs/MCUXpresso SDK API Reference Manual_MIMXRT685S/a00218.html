@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -114,7 +114,7 @@ $(document).ready(function(){initNavTree('a00218.html','');});
 Typical use case</h1>
 <h2><a class="anchor" id="I2CMasterOpsFunctional"></a>
 Master Operation in functional method</h2>
-<div class="fragment"><div class="line"><a class="code" href="a00026.html#a00315">i2c_master_config_t</a> masterConfig;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00026.html#a00316">i2c_master_config_t</a> masterConfig;</div>
 <div class="line">uint8_t status;</div>
 <div class="line"><a class="code" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
 <div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
@@ -159,7 +159,7 @@ Master Operation in functional method</h2>
 Master Operation in interrupt transactional method</h2>
 <div class="fragment"><div class="line">i2c_master_handle_t g_m_handle;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-<div class="line"><a class="code" href="a00026.html#a00315">i2c_master_config_t</a> masterConfig;</div>
+<div class="line"><a class="code" href="a00026.html#a00316">i2c_master_config_t</a> masterConfig;</div>
 <div class="line">uint8_t status;</div>
 <div class="line"><a class="code" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
 <div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
@@ -199,9 +199,9 @@ Master Operation in interrupt transactional method</h2>
 </div><!-- fragment --><h2><a class="anchor" id="I2CMasterOpsTransDMA"></a>
 Master Operation in DMA transactional method</h2>
 <div class="fragment"><div class="line">i2c_master_dma_handle_t g_m_dma_handle;</div>
-<div class="line"><a class="code" href="a00016.html#a00297">dma_handle_t</a> dmaHandle;</div>
+<div class="line"><a class="code" href="a00016.html#a00298">dma_handle_t</a> dmaHandle;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
-<div class="line"><a class="code" href="a00026.html#a00315">i2c_master_config_t</a> masterConfig;</div>
+<div class="line"><a class="code" href="a00026.html#a00316">i2c_master_config_t</a> masterConfig;</div>
 <div class="line">uint8_t txBuff[BUFFER_SIZE];</div>
 <div class="line">i2c_master_transfer_t masterXfer;</div>
 <div class="line"></div>
@@ -241,7 +241,7 @@ Master Operation in DMA transactional method</h2>
 <div class="line">g_MasterCompletionFlag = <span class="keyword">false</span>;</div>
 </div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsFunctional"></a>
 Slave Operation in functional method</h2>
-<div class="fragment"><div class="line"><a class="code" href="a00029.html#a00318">i2c_slave_config_t</a> slaveConfig;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00029.html#a00319">i2c_slave_config_t</a> slaveConfig;</div>
 <div class="line">uint8_t status;</div>
 <div class="line"><a class="code" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> result = <a class="code" href="a00214.html#gga99fb83031ce9923c84392b4e92f956b5a829bee76c6b02225d9c891ae8ef70881">kStatus_Success</a>;</div>
 <div class="line"></div>
@@ -269,11 +269,11 @@ Slave Operation in functional method</h2>
 <div class="line"><span class="keywordflow">return</span> result;</div>
 </div><!-- fragment --><h2><a class="anchor" id="I2CSlaveOpsTransIRQ"></a>
 Slave Operation in interrupt transactional method</h2>
-<div class="fragment"><div class="line"><a class="code" href="a00029.html#a00318">i2c_slave_config_t</a> slaveConfig;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00029.html#a00319">i2c_slave_config_t</a> slaveConfig;</div>
 <div class="line">i2c_slave_handle_t g_s_handle;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> g_SlaveCompletionFlag = <span class="keyword">false</span>;</div>
 <div class="line"></div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_slave_callback(I2C_Type *base, <a class="code" href="a00029.html#a00319">i2c_slave_transfer_t</a> *xfer, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">void</span> i2c_slave_callback(I2C_Type *base, <a class="code" href="a00029.html#a00320">i2c_slave_transfer_t</a> *xfer, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    <span class="keywordflow">switch</span> (xfer-&gt;<a class="code" href="a00029.html#ad0a9e837e9df16d89bab98a78af5bd10">event</a>)</div>
 <div class="line">    {</div>

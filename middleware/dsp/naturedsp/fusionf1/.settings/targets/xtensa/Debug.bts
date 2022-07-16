@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BuildTarget tool="xtensa" version="1.0">
+    <BuildSettings>
+        <BaseSettings path="project">
+            <PreprocessorOptions>
+                <KeyValueListMapOptions>
+                    <KeyValueListMapEntry>
+                        <key>Defines</key>
+                        <value flag="-D" inheritance="append">
+                            <ListEntry key="_DEBUG" value=""/>
+                        </value>
+                    </KeyValueListMapEntry>
+                </KeyValueListMapOptions>
+            </PreprocessorOptions>
+            <CompilerOptions>
+                <FlagValueMapOptions>
+                    <FlagValueMapEntry>
+                        <key>Optimization</key>
+                        <value level="0" flag="-O" use="true"/>
+                    </FlagValueMapEntry>
+                    <FlagValueMapEntry>
+                        <key>Debug</key>
+                        <value level="-3" flag="-g" use="true"/>
+                    </FlagValueMapEntry>
+                </FlagValueMapOptions>
+            </CompilerOptions>
+            <AssemblerOptions>
+                <SingleFlagMapOptions>
+                    <SingleFlagMapEntry>
+                        <key>AssemblerIncludeDebug</key>
+                        <value flag="--gdwarf-2" use="true"/>
+                    </SingleFlagMapEntry>
+                </SingleFlagMapOptions>
+            </AssemblerOptions>
+            <LinkerOptions>
+                <BooleanMapOptions>
+                    <BooleanMapEntry>
+                        <key>CreateMinsize</key>
+                        <value selected="true"/>
+                    </BooleanMapEntry>
+                </BooleanMapOptions>
+                <LinkerSupport custom="false" key="-mlsp=" value="sim"/>
+            </LinkerOptions>
+        </BaseSettings>
+<OverriddenSettings>
+<OverriddenSettingsEntry>
+<key>/$(subst.c</key>
+<value path="/$(subst.c">
+<CompilerOptions>
+<StringListMapOptions>
+<StringListMapEntry>
+<key>CompilerAdditionalOptions</key>
+<value flag="" inheritance="append">
+<ListEntry>-,_,$(CSTUB_MODULES))</ListEntry>
+</value>
+</StringListMapEntry>
+</StringListMapOptions>
+</CompilerOptions>
+</value>
+</OverriddenSettingsEntry>
+<OverriddenSettingsEntry>
+<key>/=.c</key>
+<value path="/=.c">
+<CompilerOptions>
+<StringListMapOptions>
+<StringListMapEntry>
+<key>CompilerAdditionalOptions</key>
+<value flag="" inheritance="append">
+<ListEntry>-Dasm=__asm__</ListEntry>
+</value>
+</StringListMapEntry>
+</StringListMapOptions>
+</CompilerOptions>
+</value>
+</OverriddenSettingsEntry>
+<OverriddenSettingsEntry>
+<key>/-O0.c</key>
+<value path="/-O0.c">
+<CompilerOptions>
+<StringListMapOptions>
+<StringListMapEntry>
+<key>CompilerAdditionalOptions</key>
+<value flag="" inheritance="append">
+<ListEntry></ListEntry>
+</value>
+</StringListMapEntry>
+</StringListMapOptions>
+</CompilerOptions>
+</value>
+</OverriddenSettingsEntry>
+</OverriddenSettings>
+    </BuildSettings>
+</BuildTarget>

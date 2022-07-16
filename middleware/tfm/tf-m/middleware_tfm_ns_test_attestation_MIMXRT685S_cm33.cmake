@@ -1,15 +1,12 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_tfm_ns_test_attestation component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common/template/tfm_initial_attest_pub_key.c
-    ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/plat_attestation_key.c
-    ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/initial_attestation/attest_asymmetric_key.c
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/src/ieee754.c
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/src/qcbor_decode.c
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/src/qcbor_encode.c
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/src/UsefulBuf.c
-    ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/util/qcbor_util.c
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/test/half_to_double_from_rfc7049.c
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/test/qcbor_encode_tests.c
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/test/qcbor_decode_tests.c
@@ -28,7 +25,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/spm/include
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/inc
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/src
-    ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/util
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/qcbor/test
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/t_cose/src
     ${CMAKE_CURRENT_LIST_DIR}/lib/ext/t_cose/inc

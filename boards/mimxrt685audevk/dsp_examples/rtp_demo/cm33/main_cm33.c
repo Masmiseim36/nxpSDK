@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "dsp_ipc.h"
 #include "fsl_debug_console.h"
 
 
@@ -17,7 +18,6 @@
 #include "main_cm33.h"
 #include "app_dsp_ipc.h"
 #include "dsp_support.h"
-#include "dsp_ipc.h"
 #include "rtp_buffer.h"
 #include "rtp_receiver.h"
 #include "wifi_client.h"

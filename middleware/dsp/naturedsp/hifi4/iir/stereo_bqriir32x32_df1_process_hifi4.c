@@ -58,7 +58,13 @@
   parameter gain of each filter initialization function.
   2. 16x16 filters may suffer more from accumulation of the roundoff errors,
   so filters should be properly designed to match noise requirements
-
+  3. Due to the performance reasons, IIR biquad filters may introduce 
+  additional algorithmic delay of several sampless. Amount of that delay
+  might be requested by the  xxx_groupDelay API. For sensitive applications
+  all the filters have delayless implementations (with  _nd  suffix in the name).
+  Formally, the xxx_groupDelay APIs is also implemented for that kind of filters,
+  but return zero.
+  
   Precision: 
   16x16         16-bit data, 16-bit coefficients, 16-bit intermediate 
                 stage outputs (DF1, DF1 stereo, DF II form)
@@ -116,18 +122,23 @@
   s[] - whenever supplied must be aligned on an 8-bytes boundary
 -------------------------------------------------------------------------*/
 
+#if (ALG_STEREO_32X32_DF1_ND==0)
 #define AE_PKSRF32_( st, acc, offs ) \
   {                                  \
     ae_f32x2 st_ = st;               \
     AE_PKSRF32( st_, acc, offs );    \
     st = st_;                        \
   }
+#endif
 
 void stereo_bqriir32x32_df1( stereo_bqriir32x32_df1_handle_t _bqriir,
                              void    * restrict       s,
                              int32_t * restrict       r,
                        const int32_t *                x, int N )
 {
+#if (ALG_STEREO_32X32_DF1_ND==1)
+  stereo_bqriir32x32_df1_nd(_bqriir, s, r, x, N);
+#else
   stereo_bqriir32x32_df1_ptr_t stereo_bqriir = (stereo_bqriir32x32_df1_ptr_t)_bqriir;
 
   const ae_int32x2*          coef_gsosl;
@@ -489,4 +500,5 @@ void stereo_bqriir32x32_df1( stereo_bqriir32x32_df1_handle_t _bqriir,
 	  AE_S32_L_IP( t0, castxcc(ae_int32,pr), sizeof(ae_int32x2) );
     }
   }
+#endif
 } /* stereo_bqriir32x32_df1() */

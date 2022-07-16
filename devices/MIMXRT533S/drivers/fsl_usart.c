@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -708,13 +708,9 @@ status_t USART_TransferCreateHandle(USART_Type *base,
  * all data is written to the TX register in the IRQ handler, the USART driver calls the callback
  * function and passes the ref kStatus_USART_TxIdle as status parameter.
  *
- * note The kStatus_USART_TxIdle is passed to the upper layer when all data is written
- * to the TX register. However it does not ensure that all data are sent out. Before disabling the TX,
- * check the kUSART_TransmissionCompleteFlag to ensure that the TX is finished.
- *
  * param base USART peripheral base address.
  * param handle USART handle pointer.
- * param xfer USART transfer structure. See  #usart_transfer_t.
+ * param xfer USART transfer structure. See #usart_transfer_t.
  * retval kStatus_Success Successfully start the data transmission.
  * retval kStatus_USART_TxBusy Previous transmission still not finished, data not all written to TX register yet.
  * retval kStatus_InvalidArgument Invalid argument.
@@ -1037,6 +1033,56 @@ void USART_TransferHandleIRQ(USART_Type *base, usart_handle_t *handle)
         if (handle->callback != NULL)
         {
             handle->callback(base, handle, kStatus_USART_RxError, handle->userData);
+        }
+    }
+    /* TX under run, happens when slave is in synchronous mode and the data is not written in tx register in time. */
+    if ((base->FIFOSTAT & USART_FIFOSTAT_TXERR_MASK) != 0U)
+    {
+        /* Clear tx error state. */
+        base->FIFOSTAT |= USART_FIFOSTAT_TXERR_MASK;
+        /* Trigger callback. */
+        if (handle->callback != NULL)
+        {
+            handle->callback(base, handle, kStatus_USART_TxError, handle->userData);
+        }
+    }
+    /* If noise error. */
+    if ((base->STAT & USART_STAT_RXNOISEINT_MASK) != 0U)
+    {
+        /* Clear rx error state. */
+        base->STAT |= USART_STAT_RXNOISEINT_MASK;
+        /* clear rxFIFO */
+        base->FIFOCFG |= USART_FIFOCFG_EMPTYRX_MASK;
+        /* Trigger callback. */
+        if (handle->callback != NULL)
+        {
+            handle->callback(base, handle, kStatus_USART_NoiseError, handle->userData);
+        }
+    }
+    /* If framing error. */
+    if ((base->STAT & USART_STAT_FRAMERRINT_MASK) != 0U)
+    {
+        /* Clear rx error state. */
+        base->STAT |= USART_STAT_FRAMERRINT_MASK;
+        /* clear rxFIFO */
+        base->FIFOCFG |= USART_FIFOCFG_EMPTYRX_MASK;
+        /* Trigger callback. */
+        if (handle->callback != NULL)
+        {
+            handle->callback(base, handle, kStatus_USART_FramingError, handle->userData);
+        }
+    }
+    /* If parity error. */
+    if ((base->STAT & USART_STAT_PARITYERRINT_MASK) != 0U)
+    {
+        /* Clear rx error state. */
+        base->STAT |= USART_STAT_PARITYERRINT_MASK;
+        /* clear rxFIFO */
+        base->FIFOCFG |= USART_FIFOCFG_EMPTYRX_MASK;
+        /* Trigger callback. */
+        if (handle->callback != NULL)
+        {
+            handle->callback(base, handle, kStatus_USART_ParityError, handle->userData);
         }
     }
     while ((receiveEnabled && ((base->FIFOSTAT & USART_FIFOSTAT_RXNOTEMPTY_MASK) != 0U)) ||

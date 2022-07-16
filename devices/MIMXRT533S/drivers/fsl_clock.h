@@ -36,6 +36,10 @@
 #define SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY (198000000UL)
 #endif
 
+/* Definition for compatiblity with other platforms. */
+#define CLOCK_GetFlexCommClkFreq CLOCK_GetFlexcommClkFreq
+#define CLOCK_GetCTimerClkFreq   CLOCK_GetCtimerClkFreq
+
 /*! @brief External XTAL (SYSOSC) clock frequency.
  *
  * The XTAL (YSOSC) clock frequency in Hz, when the clock is setup, use the
@@ -667,15 +671,15 @@ typedef enum _clock_attach_id
     kNONE_to_WDT1_CLK  = CLKCTL1_TUPLE_MUXA(WDT1FCLKSEL_OFFSET, 7), /*!< Attach NONE to WDT1_CLK. */
 
     kOSC32K_to_32KHZWAKE_CLK = CLKCTL0_TUPLE_MUXA(A32KHZWAKECLKSEL_OFFSET, 0), /*!< Attach OSC32K to 32KHZWAKE_CLK. */
-    kLPOSC_DIV32_to_32KHZWAKE_CLK =
-        CLKCTL0_TUPLE_MUXA(A32KHZWAKECLKSEL_OFFSET, 1), /*!< Attach LPOSC_DIV32 to 32KHZWAKE_CLK. */
+    kLPOSC_DIV32_to_32KHZWAKE_CLK = CLKCTL0_TUPLE_MUXA(A32KHZWAKECLKSEL_OFFSET, 1), /*!< Attach LPOSC_DIV32
+                                                                                    to 32KHZWAKE_CLK. */
     kNONE_to_32KHZWAKE_CLK = CLKCTL0_TUPLE_MUXA(A32KHZWAKECLKSEL_OFFSET, 7), /*!< Attach NONE to 32KHZWAKE_CLK. */
 
-    kMAIN_CLK_DIV_to_SYSTICK_CLK =
-        CLKCTL0_TUPLE_MUXA(SYSTICKFCLKSEL_OFFSET, 0),                      /*!< Attach MAIN_CLK_DIV to SYSTICK_CLK. */
-    kLPOSC_to_SYSTICK_CLK  = CLKCTL0_TUPLE_MUXA(SYSTICKFCLKSEL_OFFSET, 1), /*!< Attach LPOSC to SYSTICK_CLK. */
-    kOSC32K_to_SYSTICK_CLK = CLKCTL0_TUPLE_MUXA(SYSTICKFCLKSEL_OFFSET, 2), /*!< Attach OSC32K to SYSTICK_CLK. */
-    kNONE_to_SYSTICK_CLK   = CLKCTL0_TUPLE_MUXA(SYSTICKFCLKSEL_OFFSET, 7), /*!< Attach NONE to SYSTICK_CLK. */
+    kMAIN_CLK_DIV_to_SYSTICK_CLK = CLKCTL0_TUPLE_MUXA(SYSTICKFCLKSEL_OFFSET, 0), /*!< Attach MAIN_CLK_DIV
+                                                                                    to SYSTICK_CLK. */
+    kLPOSC_to_SYSTICK_CLK  = CLKCTL0_TUPLE_MUXA(SYSTICKFCLKSEL_OFFSET, 1),       /*!< Attach LPOSC to SYSTICK_CLK. */
+    kOSC32K_to_SYSTICK_CLK = CLKCTL0_TUPLE_MUXA(SYSTICKFCLKSEL_OFFSET, 2),       /*!< Attach OSC32K to SYSTICK_CLK. */
+    kNONE_to_SYSTICK_CLK   = CLKCTL0_TUPLE_MUXA(SYSTICKFCLKSEL_OFFSET, 7),       /*!< Attach NONE to SYSTICK_CLK. */
 
     kMAIN_CLK_to_SDIO0_CLK = CLKCTL0_TUPLE_MUXA(SDIO0FCLKSEL_OFFSET, 0), /*!< Attach MAIN_CLK to SDIO0_CLK. */
     kMAIN_PLL_to_SDIO0_CLK = CLKCTL0_TUPLE_MUXA(SDIO0FCLKSEL_OFFSET, 1), /*!< Attach MAIN_PLL to SDIO0_CLK. */
@@ -935,9 +939,9 @@ typedef enum _clock_attach_id
     kNONE_to_MIPI_DPHY_CLK     = CLKCTL0_TUPLE_MUXA(DPHYCLKSEL_OFFSET, 7), /*!< Attach NONE to MIPI_DPHY_CLK. */
 
     kFRO_DIV1_to_MIPI_DPHYESC_CLK = CLKCTL0_TUPLE_MUXA(DPHYESCCLKSEL_OFFSET, 0),  /*!< Attach FRO_DIV1
-                                                                                     to MIPI_DPHYESC_CLK. */
+                                                                                         to MIPI_DPHYESC_CLK. */
     kFRO_DIV16_to_MIPI_DPHYESC_CLK = CLKCTL0_TUPLE_MUXA(DPHYESCCLKSEL_OFFSET, 1), /*!< Attach FRO_DIV16
-                                                                                     to MIPI_DPHYESC_CLK. */
+                                                                                    to MIPI_DPHYESC_CLK. */
     kAUX0_PLL_to_MIPI_DPHYESC_CLK = CLKCTL0_TUPLE_MUXA(DPHYESCCLKSEL_OFFSET, 2),  /*!< Attach AUX0_PLL
                                                                                      to MIPI_DPHYESC_CLK. */
     kAUX1_PLL_to_MIPI_DPHYESC_CLK = CLKCTL0_TUPLE_MUXA(DPHYESCCLKSEL_OFFSET, 3),  /*!< Attach AUX1_PLL

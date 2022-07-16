@@ -67,7 +67,7 @@ void mtx_transposef_fast     (float32_t*  y, const float32_t *  x, int M, int N)
   NASSERT( y );
   NASSERT(x != y);
   NASSERT(N%4==0 && M%4==0);
-  NASSERT_ALIGN(x,XCHAL_DATA_WIDTH);
-  NASSERT_ALIGN(y,XCHAL_DATA_WIDTH);
+  NASSERT_ALIGN(x,HIFI_SIMD_WIDTH);
+  NASSERT_ALIGN(y,HIFI_SIMD_WIDTH);
   mtx_transpose32x32_fast((int32_t*)y,(const int32_t*)x,M,N);
 }

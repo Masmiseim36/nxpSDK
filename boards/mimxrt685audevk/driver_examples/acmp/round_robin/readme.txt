@@ -11,10 +11,10 @@ channel changed by user.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
-- MCUXpresso  11.5.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- GCC ARM Embedded  10.3.1
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================
@@ -24,10 +24,10 @@ Hardware requirements
 
 Board settings
 ==============
-This example project uses ACMP instance 0 to compare the voltage signal input from channel A(J48-21)
+This example project uses ACMP instance 0 to compare the voltage signal input from channel A(J48-22)
 with the voltage signal(half of VDDA) output by ACMP's internal DAC. In order to observe the low
-power wakeup phenomenon, channel A(J48-21) should be connected to GND signal(J25-1) on the board before
-the example running. Example will exit deep sleep mode when channel A(J48-21) is disconnected from GND signal
+power wakeup phenomenon, channel A(J48-22) should be connected to GND signal(J25-1) on the board before
+the example running. Example will exit deep sleep mode when channel A(J48-22) is disconnected from GND signal
 and the disconnected time is last for about 1s.
 
 Prepare the Demo

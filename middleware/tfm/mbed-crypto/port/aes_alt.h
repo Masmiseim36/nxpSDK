@@ -49,10 +49,32 @@ extern "C" {
 #if defined(MBEDTLS_AES_ALT)
 
 #if defined(MBEDTLS_MCUX_HASHCRYPT_AES) && MBEDTLS_MCUX_HASHCRYPT_AES
+/* Hashcrypt AES */
 /**
  * \brief          AES context structure
  */
 #define mbedtls_aes_context hashcrypt_handle_t
+
+#elif defined(MBEDTLS_MCUX_CSS_AES) && MBEDTLS_MCUX_CSS_AES
+/* CSS AES */
+typedef struct
+{
+    uint32_t keyLength;  /*!< AES key length in bytes. */
+    uint32_t pKey[32u / (sizeof(uint32_t))];  /*!< CPU word-aligned buffer storing 128/192/256-bit AES key. */
+} mbedtls_aes_context;
+
+#if defined(MBEDTLS_CIPHER_MODE_XTS)
+/**
+ * \brief The AES XTS context-type definition.
+ */
+typedef struct mbedtls_aes_xts_context
+{
+    mbedtls_aes_context crypt; /*!< The AES context to use for AES block
+                                        encryption or decryption. */
+    mbedtls_aes_context tweak; /*!< The AES context used for tweak
+                                        computation. */
+} mbedtls_aes_xts_context;
+#endif /* MBEDTLS_CIPHER_MODE_XTS */
 
 #else
 // Regular implementation

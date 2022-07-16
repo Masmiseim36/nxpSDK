@@ -1,14 +1,14 @@
 var a00066 =
 [
-    [ "smartdma_flexio_mculcd_param_t", "a00066.html#a00439", null ],
-    [ "smartdma_flexio_onelane_mculcd_param_t", "a00066.html#a00440", null ],
-    [ "smartdma_dsi_param_t", "a00066.html#a00438", [
+    [ "smartdma_flexio_mculcd_param_t", "a00066.html#a00440", null ],
+    [ "smartdma_flexio_onelane_mculcd_param_t", "a00066.html#a00441", null ],
+    [ "smartdma_dsi_param_t", "a00066.html#a00439", [
       [ "p_buffer", "a00066.html#a35d9912bc77bd698c788ed5343ee03d6", null ],
       [ "buffersize", "a00066.html#a5d1d927902078988bf40b85b8b16f060", null ],
       [ "smartdma_stack", "a00066.html#a810c20a6405868e960d1824c0b09655e", null ],
       [ "disablePixelByteSwap", "a00066.html#a6fd4fd15d869669034fe69d4245e1a3e", null ]
     ] ],
-    [ "smartdma_rgb565_rgb888_param_t", "a00066.html#a00441", null ],
+    [ "smartdma_rgb565_rgb888_param_t", "a00066.html#a00442", null ],
     [ "FSL_SMARTDMA_DRIVER_VERSION", "a00066.html#ga7b5e8b00441c9f9c17e65e207da3996a", null ],
     [ "SMARTDMA_DISPLAY_MEM_ADDR", "a00066.html#gac92722a2c2b3d0719e1d8a58f5b83253", null ],
     [ "SMARTDMA_DISPLAY_FIRMWARE_SIZE", "a00066.html#gafb05655b19a7e403a699761657301141", null ],

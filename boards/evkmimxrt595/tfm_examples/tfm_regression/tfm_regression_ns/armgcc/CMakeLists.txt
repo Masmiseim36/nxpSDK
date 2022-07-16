@@ -74,8 +74,6 @@ include(driver_ctimer_MIMXRT595S_cm33)
 
 include(middleware_tfm_ns_evkmimxrt595_MIMXRT595S_cm33)
 
-include(middleware_tfm_ns_rtx_MIMXRT595S_cm33)
-
 include(middleware_tfm_ns_test_MIMXRT595S_cm33)
 
 include(middleware_tfm_ns_test_s_MIMXRT595S_cm33)

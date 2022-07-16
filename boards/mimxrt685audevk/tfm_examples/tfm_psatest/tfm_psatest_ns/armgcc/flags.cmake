@@ -2,36 +2,19 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
-    -g \
     -mcpu=cortex-m33 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
@@ -42,11 +25,9 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DTFM_LVL=2 \
     -DITS_MAX_ASSET_SIZE=512 \
     -DPS_MAX_ASSET_SIZE=512 \
+    -DOS_DYNAMIC_MEM_SIZE=7168 \
     -DPSA_API_TEST_NS=1 \
     -DTF_M_PROFILE_MEDIUM \
-    -D__DOMAIN_NS=1 \
-    -DDOMAIN_NS=1 \
-    -DOS_DYNAMIC_MEM_SIZE=8192 \
     -DTFM_PSA_API \
     -DINITIAL_ATTESTATION \
     -DCRYPTO \
@@ -55,6 +36,10 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DPROTECTED_STORAGE \
     -DPS_TEST \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DCONFIG_TFM_FP=2 \
+    -DCONFIG_TFM_LAZY_STACKING \
+    -D__DOMAIN_NS=1 \
+    -DDOMAIN_NS=1 \
     -DMCUXPRESSO_SDK \
     -O1 \
     -g \
@@ -87,11 +72,9 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DTFM_LVL=2 \
     -DITS_MAX_ASSET_SIZE=512 \
     -DPS_MAX_ASSET_SIZE=512 \
+    -DOS_DYNAMIC_MEM_SIZE=7168 \
     -DPSA_API_TEST_NS=1 \
     -DTF_M_PROFILE_MEDIUM \
-    -D__DOMAIN_NS=1 \
-    -DDOMAIN_NS=1 \
-    -DOS_DYNAMIC_MEM_SIZE=8192 \
     -DTFM_PSA_API \
     -DINITIAL_ATTESTATION \
     -DCRYPTO \
@@ -100,6 +83,10 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DPROTECTED_STORAGE \
     -DPS_TEST \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DCONFIG_TFM_FP=2 \
+    -DCONFIG_TFM_LAZY_STACKING \
+    -D__DOMAIN_NS=1 \
+    -DDOMAIN_NS=1 \
     -DMCUXPRESSO_SDK \
     -Os \
     -Wno-unused-variable \

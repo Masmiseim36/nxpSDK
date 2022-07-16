@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -125,15 +125,15 @@ Files</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00284"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#a00284">clock_sys_pll_config_t</a></td></tr>
-<tr class="memdesc:a00284"><td class="mdescLeft">&#160;</td><td class="mdescRight">PLL configuration for SYSPLL.  <a href="a00010.html#a00284">More...</a><br/></td></tr>
-<tr class="separator:a00284"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00282"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#a00282">clock_audio_pll_config_t</a></td></tr>
-<tr class="memdesc:a00282"><td class="mdescLeft">&#160;</td><td class="mdescRight">PLL configuration for SYSPLL.  <a href="a00010.html#a00282">More...</a><br/></td></tr>
-<tr class="separator:a00282"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00283"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#a00283">clock_frg_clk_config_t</a></td></tr>
-<tr class="memdesc:a00283"><td class="mdescLeft">&#160;</td><td class="mdescRight">PLL configuration for FRG.  <a href="a00010.html#a00283">More...</a><br/></td></tr>
+<tr class="memitem:a00285"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#a00285">clock_sys_pll_config_t</a></td></tr>
+<tr class="memdesc:a00285"><td class="mdescLeft">&#160;</td><td class="mdescRight">PLL configuration for SYSPLL.  <a href="a00010.html#a00285">More...</a><br/></td></tr>
+<tr class="separator:a00285"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00283"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#a00283">clock_audio_pll_config_t</a></td></tr>
+<tr class="memdesc:a00283"><td class="mdescLeft">&#160;</td><td class="mdescRight">PLL configuration for SYSPLL.  <a href="a00010.html#a00283">More...</a><br/></td></tr>
 <tr class="separator:a00283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00284"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#a00284">clock_frg_clk_config_t</a></td></tr>
+<tr class="memdesc:a00284"><td class="mdescLeft">&#160;</td><td class="mdescRight">PLL configuration for FRG.  <a href="a00010.html#a00284">More...</a><br/></td></tr>
+<tr class="separator:a00284"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -217,6 +217,18 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gab18b7bd076b589884d9a3a3715d99a18">TRNG_CLOCKS</a></td></tr>
 <tr class="memdesc:gab18b7bd076b589884d9a3a3715d99a18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock ip name array for RNG. <br/></td></tr>
 <tr class="separator:gab18b7bd076b589884d9a3a3715d99a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga607ac27dd77b81511952e50a8d2d7edf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga607ac27dd77b81511952e50a8d2d7edf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga607ac27dd77b81511952e50a8d2d7edf">PUF_CLOCKS</a></td></tr>
+<tr class="memdesc:ga607ac27dd77b81511952e50a8d2d7edf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock ip name array for PUF. <br/></td></tr>
+<tr class="separator:ga607ac27dd77b81511952e50a8d2d7edf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1be58ec031166db04e1f7747f58a34d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1be58ec031166db04e1f7747f58a34d1"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga1be58ec031166db04e1f7747f58a34d1">HASHCRYPT_CLOCKS</a></td></tr>
+<tr class="memdesc:ga1be58ec031166db04e1f7747f58a34d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock ip name array for HashCrypt. <br/></td></tr>
+<tr class="separator:ga1be58ec031166db04e1f7747f58a34d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga08a434f48a2ea4860840dd536d32cde0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga08a434f48a2ea4860840dd536d32cde0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga08a434f48a2ea4860840dd536d32cde0">CASPER_CLOCKS</a></td></tr>
+<tr class="memdesc:ga08a434f48a2ea4860840dd536d32cde0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock ip name array for Casper. <br/></td></tr>
+<tr class="separator:ga08a434f48a2ea4860840dd536d32cde0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7d7003d1ce3ac20bff7dab7d0ab8a44f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7d7003d1ce3ac20bff7dab7d0ab8a44f"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga7d7003d1ce3ac20bff7dab7d0ab8a44f">USDHC_CLOCKS</a></td></tr>
 <tr class="memdesc:ga7d7003d1ce3ac20bff7dab7d0ab8a44f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clock ip name array for uSDHC. <br/></td></tr>
@@ -1047,7 +1059,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga69744af6e82e9f8218bfd56663e4ac0c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga69744af6e82e9f8218bfd56663e4ac0c">CLOCK_GetFRGClock</a> (uint32_t id)</td></tr>
 <tr class="memdesc:ga69744af6e82e9f8218bfd56663e4ac0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Input frequency for the Fractional baud rate generator.  <a href="#ga69744af6e82e9f8218bfd56663e4ac0c">More...</a><br/></td></tr>
 <tr class="separator:ga69744af6e82e9f8218bfd56663e4ac0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab4d2b794218ad36c1c72cfaa9318a798"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gab4d2b794218ad36c1c72cfaa9318a798">CLOCK_SetFRGClock</a> (const <a class="el" href="a00010.html#a00283">clock_frg_clk_config_t</a> *config)</td></tr>
+<tr class="memitem:gab4d2b794218ad36c1c72cfaa9318a798"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gab4d2b794218ad36c1c72cfaa9318a798">CLOCK_SetFRGClock</a> (const <a class="el" href="a00010.html#a00284">clock_frg_clk_config_t</a> *config)</td></tr>
 <tr class="memdesc:gab4d2b794218ad36c1c72cfaa9318a798"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set output of the Fractional baud rate generator.  <a href="#gab4d2b794218ad36c1c72cfaa9318a798">More...</a><br/></td></tr>
 <tr class="separator:gab4d2b794218ad36c1c72cfaa9318a798"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe35c6072c514b8520cd9ef3e8fb1d18"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gabe35c6072c514b8520cd9ef3e8fb1d18">CLOCK_GetSFroFreq</a> (void)</td></tr>
@@ -1150,7 +1162,7 @@ Functions</h2></td></tr>
 <tr class="separator:ga0ed66a2b0e56663ecd3fb38aad9bdaab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32dd95f427a802c5b511072c2a1af890"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga32dd95f427a802c5b511072c2a1af890">CLOCK_EnableSfroClk</a> (void)</td></tr>
 <tr class="separator:ga32dd95f427a802c5b511072c2a1af890"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadb43c9a30579d598516fa701dde7c62f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gadb43c9a30579d598516fa701dde7c62f">CLOCK_InitSysPll</a> (const <a class="el" href="a00010.html#a00284">clock_sys_pll_config_t</a> *config)</td></tr>
+<tr class="memitem:gadb43c9a30579d598516fa701dde7c62f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gadb43c9a30579d598516fa701dde7c62f">CLOCK_InitSysPll</a> (const <a class="el" href="a00010.html#a00285">clock_sys_pll_config_t</a> *config)</td></tr>
 <tr class="memdesc:gadb43c9a30579d598516fa701dde7c62f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the System PLL.  <a href="#gadb43c9a30579d598516fa701dde7c62f">More...</a><br/></td></tr>
 <tr class="separator:gadb43c9a30579d598516fa701dde7c62f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8a40177fefd87f0f6bf78a1989b1382f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga8a40177fefd87f0f6bf78a1989b1382f">CLOCK_DeinitSysPll</a> (void)</td></tr>
@@ -1162,7 +1174,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ga7d60ca14dbaf243de2d08a92d145fe5d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga7d60ca14dbaf243de2d08a92d145fe5d">CLOCK_DeinitSysPfd</a> (<a class="el" href="a00010.html#gabc59289e7cbc33069a31fa843efb7bf0">clock_pfd_t</a> pfd)</td></tr>
 <tr class="memdesc:ga7d60ca14dbaf243de2d08a92d145fe5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">brief Disable the audio PLL PFD.  <a href="#ga7d60ca14dbaf243de2d08a92d145fe5d">More...</a><br/></td></tr>
 <tr class="separator:ga7d60ca14dbaf243de2d08a92d145fe5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad227c26531adbc30e077f46f8a7906bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gad227c26531adbc30e077f46f8a7906bd">CLOCK_InitAudioPll</a> (const <a class="el" href="a00010.html#a00282">clock_audio_pll_config_t</a> *config)</td></tr>
+<tr class="memitem:gad227c26531adbc30e077f46f8a7906bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gad227c26531adbc30e077f46f8a7906bd">CLOCK_InitAudioPll</a> (const <a class="el" href="a00010.html#a00283">clock_audio_pll_config_t</a> *config)</td></tr>
 <tr class="memdesc:gad227c26531adbc30e077f46f8a7906bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the audio PLL.  <a href="#gad227c26531adbc30e077f46f8a7906bd">More...</a><br/></td></tr>
 <tr class="separator:gad227c26531adbc30e077f46f8a7906bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8e8fb0421677e45e9f9d59fc0cfeca97"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga8e8fb0421677e45e9f9d59fc0cfeca97">CLOCK_DeinitAudioPll</a> (void)</td></tr>
@@ -1198,12 +1210,12 @@ Variables</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:ga0c0cf401613f31feb4a9eb723ad51154"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga0c0cf401613f31feb4a9eb723ad51154">FSL_CLOCK_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 1))</td></tr>
-<tr class="memdesc:ga0c0cf401613f31feb4a9eb723ad51154"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLOCK driver version 2.7.1.  <a href="#ga0c0cf401613f31feb4a9eb723ad51154">More...</a><br/></td></tr>
+<tr class="memitem:ga0c0cf401613f31feb4a9eb723ad51154"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga0c0cf401613f31feb4a9eb723ad51154">FSL_CLOCK_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 2))</td></tr>
+<tr class="memdesc:ga0c0cf401613f31feb4a9eb723ad51154"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLOCK driver version 2.7.2.  <a href="#ga0c0cf401613f31feb4a9eb723ad51154">More...</a><br/></td></tr>
 <tr class="separator:ga0c0cf401613f31feb4a9eb723ad51154"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00284" id="a00284"></a>
+<a name="a00285" id="a00285"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1257,7 +1269,7 @@ Driver version</h2></td></tr>
 
 </div>
 </div>
-<a name="a00282" id="a00282"></a>
+<a name="a00283" id="a00283"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1311,7 +1323,7 @@ Driver version</h2></td></tr>
 
 </div>
 </div>
-<a name="a00283" id="a00283"></a>
+<a name="a00284" id="a00284"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1406,7 +1418,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_CLOCK_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 1))</td>
+          <td class="memname">#define FSL_CLOCK_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1425,7 +1437,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{                <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da0022477381dbb3b4ee2a5d16699b5002">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da0022477381dbb3b4ee2a5d16699b5002">        kCLOCK_Acmp0</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da0022477381dbb3b4ee2a5d16699b5002"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da0022477381dbb3b4ee2a5d16699b5002">kCLOCK_Acmp0</a></div><div class="ttdoc">Clock gate name: Acmp0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:270</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da0022477381dbb3b4ee2a5d16699b5002"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da0022477381dbb3b4ee2a5d16699b5002">kCLOCK_Acmp0</a></div><div class="ttdoc">Clock gate name: Acmp0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:285</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1442,16 +1454,16 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dac260572bf9b0ebf2fb241636d98abe99">        kCLOCK_Flexcomm0</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da1af575571fb968521a09d2b53db87271">kCLOCK_Flexcomm1</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da70ec7961a12db89d5d1c7fe72431183f">kCLOCK_Flexcomm2</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da98f93d09e592e13e90121dd40a943b7d">kCLOCK_Flexcomm3</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daf9c4ecf58d79c96c7790e76e88f1bd1f">kCLOCK_Flexcomm4</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa7e3bc9249e4906ca0cb72590fd009c8">kCLOCK_Flexcomm5</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dae2bec62736dddf47387722b8a0e8ed4d">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dae2bec62736dddf47387722b8a0e8ed4d">            kCLOCK_Flexcomm6</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dafe1efce22bf26b3e409382c1edec7cf7">kCLOCK_Flexcomm7</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da54ea340df20e02feb15bf873868ddc7d">kCLOCK_Flexcomm14</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8fbe22a8d8f8edd1c003baa4a1624f46">kCLOCK_Flexcomm15</a>                                \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dafe1efce22bf26b3e409382c1edec7cf7"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dafe1efce22bf26b3e409382c1edec7cf7">kCLOCK_Flexcomm7</a></div><div class="ttdoc">Clock gate name: Flexcomm7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:284</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da1af575571fb968521a09d2b53db87271"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da1af575571fb968521a09d2b53db87271">kCLOCK_Flexcomm1</a></div><div class="ttdoc">Clock gate name: Flexcomm1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:278</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dac260572bf9b0ebf2fb241636d98abe99"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dac260572bf9b0ebf2fb241636d98abe99">kCLOCK_Flexcomm0</a></div><div class="ttdoc">Clock gate name: Flexcomm0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:277</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da70ec7961a12db89d5d1c7fe72431183f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da70ec7961a12db89d5d1c7fe72431183f">kCLOCK_Flexcomm2</a></div><div class="ttdoc">Clock gate name: Flexcomm2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:279</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daa7e3bc9249e4906ca0cb72590fd009c8"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa7e3bc9249e4906ca0cb72590fd009c8">kCLOCK_Flexcomm5</a></div><div class="ttdoc">Clock gate name: Flexcomm5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:282</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da98f93d09e592e13e90121dd40a943b7d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da98f93d09e592e13e90121dd40a943b7d">kCLOCK_Flexcomm3</a></div><div class="ttdoc">Clock gate name: Flexcomm3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:280</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daf9c4ecf58d79c96c7790e76e88f1bd1f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daf9c4ecf58d79c96c7790e76e88f1bd1f">kCLOCK_Flexcomm4</a></div><div class="ttdoc">Clock gate name: Flexcomm4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:281</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da54ea340df20e02feb15bf873868ddc7d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da54ea340df20e02feb15bf873868ddc7d">kCLOCK_Flexcomm14</a></div><div class="ttdoc">Clock gate name: Flexcomm14. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:285</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dae2bec62736dddf47387722b8a0e8ed4d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dae2bec62736dddf47387722b8a0e8ed4d">kCLOCK_Flexcomm6</a></div><div class="ttdoc">Clock gate name: Flexcomm6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:283</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da8fbe22a8d8f8edd1c003baa4a1624f46"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8fbe22a8d8f8edd1c003baa4a1624f46">kCLOCK_Flexcomm15</a></div><div class="ttdoc">Clock gate name: Flexcomm15. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:286</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dafe1efce22bf26b3e409382c1edec7cf7"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dafe1efce22bf26b3e409382c1edec7cf7">kCLOCK_Flexcomm7</a></div><div class="ttdoc">Clock gate name: Flexcomm7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:299</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da1af575571fb968521a09d2b53db87271"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da1af575571fb968521a09d2b53db87271">kCLOCK_Flexcomm1</a></div><div class="ttdoc">Clock gate name: Flexcomm1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:293</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dac260572bf9b0ebf2fb241636d98abe99"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dac260572bf9b0ebf2fb241636d98abe99">kCLOCK_Flexcomm0</a></div><div class="ttdoc">Clock gate name: Flexcomm0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:292</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da70ec7961a12db89d5d1c7fe72431183f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da70ec7961a12db89d5d1c7fe72431183f">kCLOCK_Flexcomm2</a></div><div class="ttdoc">Clock gate name: Flexcomm2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:294</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daa7e3bc9249e4906ca0cb72590fd009c8"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa7e3bc9249e4906ca0cb72590fd009c8">kCLOCK_Flexcomm5</a></div><div class="ttdoc">Clock gate name: Flexcomm5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:297</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da98f93d09e592e13e90121dd40a943b7d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da98f93d09e592e13e90121dd40a943b7d">kCLOCK_Flexcomm3</a></div><div class="ttdoc">Clock gate name: Flexcomm3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:295</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daf9c4ecf58d79c96c7790e76e88f1bd1f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daf9c4ecf58d79c96c7790e76e88f1bd1f">kCLOCK_Flexcomm4</a></div><div class="ttdoc">Clock gate name: Flexcomm4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:296</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da54ea340df20e02feb15bf873868ddc7d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da54ea340df20e02feb15bf873868ddc7d">kCLOCK_Flexcomm14</a></div><div class="ttdoc">Clock gate name: Flexcomm14. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:300</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dae2bec62736dddf47387722b8a0e8ed4d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dae2bec62736dddf47387722b8a0e8ed4d">kCLOCK_Flexcomm6</a></div><div class="ttdoc">Clock gate name: Flexcomm6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:298</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da8fbe22a8d8f8edd1c003baa4a1624f46"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8fbe22a8d8f8edd1c003baa4a1624f46">kCLOCK_Flexcomm15</a></div><div class="ttdoc">Clock gate name: Flexcomm15. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:301</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1468,14 +1480,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da55b3378f23a3f9e33485589535f1365f">        kCLOCK_Usart0</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da31ef0713b9722ffba9f3b29ed3207b74">kCLOCK_Usart1</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da69e10c4d8f8afadc3c2a6df6531e9463">kCLOCK_Usart2</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da6d637a8524c39a2d946cd41429bef812">kCLOCK_Usart3</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da16b16f0cea413f5f2f0150391a70558d">kCLOCK_Usart4</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da255711db63f2974a53078b7ed7f3ba57">kCLOCK_Usart5</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da9c3c3cee1adb44944e692b54be440fad">kCLOCK_Usart6</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da49f43998e88923d9a5d2bcc715021b70">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da49f43998e88923d9a5d2bcc715021b70">            kCLOCK_Usart7</a>                                                                                        \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da69e10c4d8f8afadc3c2a6df6531e9463"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da69e10c4d8f8afadc3c2a6df6531e9463">kCLOCK_Usart2</a></div><div class="ttdoc">Clock gate name: Usart2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:289</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da55b3378f23a3f9e33485589535f1365f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da55b3378f23a3f9e33485589535f1365f">kCLOCK_Usart0</a></div><div class="ttdoc">Clock gate name: Usart0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:287</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da31ef0713b9722ffba9f3b29ed3207b74"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da31ef0713b9722ffba9f3b29ed3207b74">kCLOCK_Usart1</a></div><div class="ttdoc">Clock gate name: Usart1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:288</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da9c3c3cee1adb44944e692b54be440fad"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da9c3c3cee1adb44944e692b54be440fad">kCLOCK_Usart6</a></div><div class="ttdoc">Clock gate name: Usart6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:293</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da255711db63f2974a53078b7ed7f3ba57"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da255711db63f2974a53078b7ed7f3ba57">kCLOCK_Usart5</a></div><div class="ttdoc">Clock gate name: Usart5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:292</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da6d637a8524c39a2d946cd41429bef812"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da6d637a8524c39a2d946cd41429bef812">kCLOCK_Usart3</a></div><div class="ttdoc">Clock gate name: Usart3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:290</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da49f43998e88923d9a5d2bcc715021b70"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da49f43998e88923d9a5d2bcc715021b70">kCLOCK_Usart7</a></div><div class="ttdoc">Clock gate name: Usart7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:294</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da16b16f0cea413f5f2f0150391a70558d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da16b16f0cea413f5f2f0150391a70558d">kCLOCK_Usart4</a></div><div class="ttdoc">Clock gate name: Usart4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:291</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da69e10c4d8f8afadc3c2a6df6531e9463"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da69e10c4d8f8afadc3c2a6df6531e9463">kCLOCK_Usart2</a></div><div class="ttdoc">Clock gate name: Usart2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:304</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da55b3378f23a3f9e33485589535f1365f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da55b3378f23a3f9e33485589535f1365f">kCLOCK_Usart0</a></div><div class="ttdoc">Clock gate name: Usart0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:302</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da31ef0713b9722ffba9f3b29ed3207b74"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da31ef0713b9722ffba9f3b29ed3207b74">kCLOCK_Usart1</a></div><div class="ttdoc">Clock gate name: Usart1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:303</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da9c3c3cee1adb44944e692b54be440fad"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da9c3c3cee1adb44944e692b54be440fad">kCLOCK_Usart6</a></div><div class="ttdoc">Clock gate name: Usart6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:308</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da255711db63f2974a53078b7ed7f3ba57"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da255711db63f2974a53078b7ed7f3ba57">kCLOCK_Usart5</a></div><div class="ttdoc">Clock gate name: Usart5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:307</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da6d637a8524c39a2d946cd41429bef812"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da6d637a8524c39a2d946cd41429bef812">kCLOCK_Usart3</a></div><div class="ttdoc">Clock gate name: Usart3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:305</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da49f43998e88923d9a5d2bcc715021b70"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da49f43998e88923d9a5d2bcc715021b70">kCLOCK_Usart7</a></div><div class="ttdoc">Clock gate name: Usart7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:309</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da16b16f0cea413f5f2f0150391a70558d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da16b16f0cea413f5f2f0150391a70558d">kCLOCK_Usart4</a></div><div class="ttdoc">Clock gate name: Usart4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:306</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1492,15 +1504,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dac6e6ee6e9f7b28e5c3818324c852b05f">        kCLOCK_I2c0</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da689e957d82ca723a1a0cc671ba216bf5">kCLOCK_I2c1</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da239422d8b3e53afadaf651015ffb5065">kCLOCK_I2c2</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5f0100f89ed9f83b8eb76dc0de0d08fd">kCLOCK_I2c3</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da39b85efdf49f6a041c2c03835c3f9078">kCLOCK_I2c4</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da4f08f50cfe9ec50a90f5634705284839">kCLOCK_I2c5</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8de4824c22708f42361b63132401199b">kCLOCK_I2c6</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dacaf3884451eee3066087d45082f2561f">kCLOCK_I2c7</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da239de5b1ea1c02dd1c886bd86656ce7a">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da239de5b1ea1c02dd1c886bd86656ce7a">            kCLOCK_I2c15</a>                                                                                        \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dac6e6ee6e9f7b28e5c3818324c852b05f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dac6e6ee6e9f7b28e5c3818324c852b05f">kCLOCK_I2c0</a></div><div class="ttdoc">Clock gate name: I2c0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:303</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da5f0100f89ed9f83b8eb76dc0de0d08fd"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5f0100f89ed9f83b8eb76dc0de0d08fd">kCLOCK_I2c3</a></div><div class="ttdoc">Clock gate name: I2c3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:306</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da689e957d82ca723a1a0cc671ba216bf5"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da689e957d82ca723a1a0cc671ba216bf5">kCLOCK_I2c1</a></div><div class="ttdoc">Clock gate name: I2c1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:304</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da4f08f50cfe9ec50a90f5634705284839"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da4f08f50cfe9ec50a90f5634705284839">kCLOCK_I2c5</a></div><div class="ttdoc">Clock gate name: I2c5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:308</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da39b85efdf49f6a041c2c03835c3f9078"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da39b85efdf49f6a041c2c03835c3f9078">kCLOCK_I2c4</a></div><div class="ttdoc">Clock gate name: I2c4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:307</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dacaf3884451eee3066087d45082f2561f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dacaf3884451eee3066087d45082f2561f">kCLOCK_I2c7</a></div><div class="ttdoc">Clock gate name: I2c7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:310</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da8de4824c22708f42361b63132401199b"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8de4824c22708f42361b63132401199b">kCLOCK_I2c6</a></div><div class="ttdoc">Clock gate name: I2c6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:309</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da239422d8b3e53afadaf651015ffb5065"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da239422d8b3e53afadaf651015ffb5065">kCLOCK_I2c2</a></div><div class="ttdoc">Clock gate name: I2c2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:305</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da239de5b1ea1c02dd1c886bd86656ce7a"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da239de5b1ea1c02dd1c886bd86656ce7a">kCLOCK_I2c15</a></div><div class="ttdoc">Clock gate name: I2c15. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:311</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dac6e6ee6e9f7b28e5c3818324c852b05f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dac6e6ee6e9f7b28e5c3818324c852b05f">kCLOCK_I2c0</a></div><div class="ttdoc">Clock gate name: I2c0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:318</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da5f0100f89ed9f83b8eb76dc0de0d08fd"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5f0100f89ed9f83b8eb76dc0de0d08fd">kCLOCK_I2c3</a></div><div class="ttdoc">Clock gate name: I2c3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:321</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da689e957d82ca723a1a0cc671ba216bf5"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da689e957d82ca723a1a0cc671ba216bf5">kCLOCK_I2c1</a></div><div class="ttdoc">Clock gate name: I2c1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:319</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da4f08f50cfe9ec50a90f5634705284839"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da4f08f50cfe9ec50a90f5634705284839">kCLOCK_I2c5</a></div><div class="ttdoc">Clock gate name: I2c5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:323</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da39b85efdf49f6a041c2c03835c3f9078"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da39b85efdf49f6a041c2c03835c3f9078">kCLOCK_I2c4</a></div><div class="ttdoc">Clock gate name: I2c4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:322</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dacaf3884451eee3066087d45082f2561f"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dacaf3884451eee3066087d45082f2561f">kCLOCK_I2c7</a></div><div class="ttdoc">Clock gate name: I2c7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:325</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da8de4824c22708f42361b63132401199b"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8de4824c22708f42361b63132401199b">kCLOCK_I2c6</a></div><div class="ttdoc">Clock gate name: I2c6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:324</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da239422d8b3e53afadaf651015ffb5065"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da239422d8b3e53afadaf651015ffb5065">kCLOCK_I2c2</a></div><div class="ttdoc">Clock gate name: I2c2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:320</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da239de5b1ea1c02dd1c886bd86656ce7a"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da239de5b1ea1c02dd1c886bd86656ce7a">kCLOCK_I2c15</a></div><div class="ttdoc">Clock gate name: I2c15. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:326</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1516,7 +1528,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{               <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da2c9fbd113984ecca29f982790d831c9c">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da2c9fbd113984ecca29f982790d831c9c">        kCLOCK_I3c0</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da2c9fbd113984ecca29f982790d831c9c"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da2c9fbd113984ecca29f982790d831c9c">kCLOCK_I3c0</a></div><div class="ttdoc">Clock gate name: I3c0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:347</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da2c9fbd113984ecca29f982790d831c9c"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da2c9fbd113984ecca29f982790d831c9c">kCLOCK_I3c0</a></div><div class="ttdoc">Clock gate name: I3c0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:362</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1533,15 +1545,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dac6997ec12e66b5e4fad9aa52ef6a2db0">        kCLOCK_Spi0</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dadd0ceacddcfe95c6e7c8bbcfd2f4ca60">kCLOCK_Spi1</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da741399f2f00078abedcb4d25e500741a">kCLOCK_Spi2</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dafcf3bc6e9bb50ca4a5ec438c55595566">kCLOCK_Spi3</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5d73f4cad2c9781ad5294b55dc094915">kCLOCK_Spi4</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dab8b7b0b08981b49af4534dde62663652">kCLOCK_Spi5</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daca550a3c44f480e6d2f9d7071e979445">kCLOCK_Spi6</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8a98f4eed4b9a7d1bc20b54f745bc2cb">kCLOCK_Spi7</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da57477d6f8f7a8e5c38581b1eab96ca5a">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da57477d6f8f7a8e5c38581b1eab96ca5a">            kCLOCK_Spi14</a>                                                                                        \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dab8b7b0b08981b49af4534dde62663652"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dab8b7b0b08981b49af4534dde62663652">kCLOCK_Spi5</a></div><div class="ttdoc">Clock gate name: Spi5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:317</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da741399f2f00078abedcb4d25e500741a"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da741399f2f00078abedcb4d25e500741a">kCLOCK_Spi2</a></div><div class="ttdoc">Clock gate name: Spi2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:314</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da5d73f4cad2c9781ad5294b55dc094915"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5d73f4cad2c9781ad5294b55dc094915">kCLOCK_Spi4</a></div><div class="ttdoc">Clock gate name: Spi4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:316</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da57477d6f8f7a8e5c38581b1eab96ca5a"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da57477d6f8f7a8e5c38581b1eab96ca5a">kCLOCK_Spi14</a></div><div class="ttdoc">Clock gate name: Spi14. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:320</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dac6997ec12e66b5e4fad9aa52ef6a2db0"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dac6997ec12e66b5e4fad9aa52ef6a2db0">kCLOCK_Spi0</a></div><div class="ttdoc">Clock gate name: Spi0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:312</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daca550a3c44f480e6d2f9d7071e979445"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daca550a3c44f480e6d2f9d7071e979445">kCLOCK_Spi6</a></div><div class="ttdoc">Clock gate name: Spi6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:318</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dafcf3bc6e9bb50ca4a5ec438c55595566"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dafcf3bc6e9bb50ca4a5ec438c55595566">kCLOCK_Spi3</a></div><div class="ttdoc">Clock gate name: Spi3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:315</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dadd0ceacddcfe95c6e7c8bbcfd2f4ca60"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dadd0ceacddcfe95c6e7c8bbcfd2f4ca60">kCLOCK_Spi1</a></div><div class="ttdoc">Clock gate name: Spi1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:313</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da8a98f4eed4b9a7d1bc20b54f745bc2cb"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8a98f4eed4b9a7d1bc20b54f745bc2cb">kCLOCK_Spi7</a></div><div class="ttdoc">Clock gate name: Spi7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:319</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dab8b7b0b08981b49af4534dde62663652"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dab8b7b0b08981b49af4534dde62663652">kCLOCK_Spi5</a></div><div class="ttdoc">Clock gate name: Spi5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:332</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da741399f2f00078abedcb4d25e500741a"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da741399f2f00078abedcb4d25e500741a">kCLOCK_Spi2</a></div><div class="ttdoc">Clock gate name: Spi2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:329</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da5d73f4cad2c9781ad5294b55dc094915"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5d73f4cad2c9781ad5294b55dc094915">kCLOCK_Spi4</a></div><div class="ttdoc">Clock gate name: Spi4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:331</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da57477d6f8f7a8e5c38581b1eab96ca5a"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da57477d6f8f7a8e5c38581b1eab96ca5a">kCLOCK_Spi14</a></div><div class="ttdoc">Clock gate name: Spi14. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:335</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dac6997ec12e66b5e4fad9aa52ef6a2db0"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dac6997ec12e66b5e4fad9aa52ef6a2db0">kCLOCK_Spi0</a></div><div class="ttdoc">Clock gate name: Spi0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:327</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daca550a3c44f480e6d2f9d7071e979445"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daca550a3c44f480e6d2f9d7071e979445">kCLOCK_Spi6</a></div><div class="ttdoc">Clock gate name: Spi6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:333</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dafcf3bc6e9bb50ca4a5ec438c55595566"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dafcf3bc6e9bb50ca4a5ec438c55595566">kCLOCK_Spi3</a></div><div class="ttdoc">Clock gate name: Spi3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:330</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dadd0ceacddcfe95c6e7c8bbcfd2f4ca60"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dadd0ceacddcfe95c6e7c8bbcfd2f4ca60">kCLOCK_Spi1</a></div><div class="ttdoc">Clock gate name: Spi1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:328</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da8a98f4eed4b9a7d1bc20b54f745bc2cb"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8a98f4eed4b9a7d1bc20b54f745bc2cb">kCLOCK_Spi7</a></div><div class="ttdoc">Clock gate name: Spi7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:334</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1573,7 +1585,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{                 <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da9625e56daab4c18a34308b88365805cb">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da9625e56daab4c18a34308b88365805cb">        kCLOCK_Utick0</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da9625e56daab4c18a34308b88365805cb"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da9625e56daab4c18a34308b88365805cb">kCLOCK_Utick0</a></div><div class="ttdoc">Clock gate name: Utick0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:274</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da9625e56daab4c18a34308b88365805cb"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da9625e56daab4c18a34308b88365805cb">kCLOCK_Utick0</a></div><div class="ttdoc">Clock gate name: Utick0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:289</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1589,7 +1601,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{                <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dabcafc83f1ef07ba12fd262575242b84d">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dabcafc83f1ef07ba12fd262575242b84d">        kCLOCK_Dmic0</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dabcafc83f1ef07ba12fd262575242b84d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dabcafc83f1ef07ba12fd262575242b84d">kCLOCK_Dmic0</a></div><div class="ttdoc">Clock gate name: Dmic0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:321</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dabcafc83f1ef07ba12fd262575242b84d"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dabcafc83f1ef07ba12fd262575242b84d">kCLOCK_Dmic0</a></div><div class="ttdoc">Clock gate name: Dmic0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:336</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1605,11 +1617,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{                                                                             <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dad05863fa9596dbe1b80e636f7ac920b8">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dad05863fa9596dbe1b80e636f7ac920b8">        kCLOCK_Ct32b0</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dad23de4f2026e9b2729372c4f3bb9a2f2">kCLOCK_Ct32b1</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daafada7a3a0df7e315011847e60bb4f38">kCLOCK_Ct32b2</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da76b6d7fdde3d2430ca18686141d9eb19">kCLOCK_Ct32b3</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dacf94c12b83d29a65b4898d6279e6cd23">kCLOCK_Ct32b4</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dad05863fa9596dbe1b80e636f7ac920b8"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dad05863fa9596dbe1b80e636f7ac920b8">kCLOCK_Ct32b0</a></div><div class="ttdoc">Clock gate name: Ct32b0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:339</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dacf94c12b83d29a65b4898d6279e6cd23"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dacf94c12b83d29a65b4898d6279e6cd23">kCLOCK_Ct32b4</a></div><div class="ttdoc">Clock gate name: Ct32b4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:343</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dad23de4f2026e9b2729372c4f3bb9a2f2"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dad23de4f2026e9b2729372c4f3bb9a2f2">kCLOCK_Ct32b1</a></div><div class="ttdoc">Clock gate name: Ct32b1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:340</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daafada7a3a0df7e315011847e60bb4f38"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daafada7a3a0df7e315011847e60bb4f38">kCLOCK_Ct32b2</a></div><div class="ttdoc">Clock gate name: Ct32b2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:341</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da76b6d7fdde3d2430ca18686141d9eb19"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da76b6d7fdde3d2430ca18686141d9eb19">kCLOCK_Ct32b3</a></div><div class="ttdoc">Clock gate name: Ct32b3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:342</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dad05863fa9596dbe1b80e636f7ac920b8"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dad05863fa9596dbe1b80e636f7ac920b8">kCLOCK_Ct32b0</a></div><div class="ttdoc">Clock gate name: Ct32b0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:354</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dacf94c12b83d29a65b4898d6279e6cd23"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dacf94c12b83d29a65b4898d6279e6cd23">kCLOCK_Ct32b4</a></div><div class="ttdoc">Clock gate name: Ct32b4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:358</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dad23de4f2026e9b2729372c4f3bb9a2f2"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dad23de4f2026e9b2729372c4f3bb9a2f2">kCLOCK_Ct32b1</a></div><div class="ttdoc">Clock gate name: Ct32b1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:355</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daafada7a3a0df7e315011847e60bb4f38"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daafada7a3a0df7e315011847e60bb4f38">kCLOCK_Ct32b2</a></div><div class="ttdoc">Clock gate name: Ct32b2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:356</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da76b6d7fdde3d2430ca18686141d9eb19"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da76b6d7fdde3d2430ca18686141d9eb19">kCLOCK_Ct32b3</a></div><div class="ttdoc">Clock gate name: Ct32b3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:357</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1626,14 +1638,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da24ea30c160b02a23bfe27c710b8e6c93">        kCLOCK_HsGpio0</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8d8dedf88aff982148f145f8b14f8297">kCLOCK_HsGpio1</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da867030457ddcd4d15916cfb95ff18a78">kCLOCK_HsGpio2</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daebd6309cf85537a789648d215f709093">kCLOCK_HsGpio3</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da583754f100def06313a11500f6c42bb8">kCLOCK_HsGpio4</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da10d363b845192d7b62d6a710ee793646">kCLOCK_HsGpio5</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa640c7aefd1f1c93a3baffb4410aef04">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa640c7aefd1f1c93a3baffb4410aef04">            kCLOCK_HsGpio6</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da58fbac2682b4047eb27044c83f2373ae">kCLOCK_HsGpio7</a>                                                              \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da867030457ddcd4d15916cfb95ff18a78"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da867030457ddcd4d15916cfb95ff18a78">kCLOCK_HsGpio2</a></div><div class="ttdoc">Clock gate name: HsGpio2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:326</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daa640c7aefd1f1c93a3baffb4410aef04"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa640c7aefd1f1c93a3baffb4410aef04">kCLOCK_HsGpio6</a></div><div class="ttdoc">Clock gate name: HsGpio6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:330</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da10d363b845192d7b62d6a710ee793646"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da10d363b845192d7b62d6a710ee793646">kCLOCK_HsGpio5</a></div><div class="ttdoc">Clock gate name: HsGpio5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:329</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da583754f100def06313a11500f6c42bb8"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da583754f100def06313a11500f6c42bb8">kCLOCK_HsGpio4</a></div><div class="ttdoc">Clock gate name: HsGpio4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:328</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da58fbac2682b4047eb27044c83f2373ae"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da58fbac2682b4047eb27044c83f2373ae">kCLOCK_HsGpio7</a></div><div class="ttdoc">Clock gate name: HsGpio7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:331</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da24ea30c160b02a23bfe27c710b8e6c93"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da24ea30c160b02a23bfe27c710b8e6c93">kCLOCK_HsGpio0</a></div><div class="ttdoc">Clock gate name: HsGpio0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:324</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da8d8dedf88aff982148f145f8b14f8297"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8d8dedf88aff982148f145f8b14f8297">kCLOCK_HsGpio1</a></div><div class="ttdoc">Clock gate name: HsGpio1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:325</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daebd6309cf85537a789648d215f709093"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daebd6309cf85537a789648d215f709093">kCLOCK_HsGpio3</a></div><div class="ttdoc">Clock gate name: HsGpio3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:327</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da867030457ddcd4d15916cfb95ff18a78"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da867030457ddcd4d15916cfb95ff18a78">kCLOCK_HsGpio2</a></div><div class="ttdoc">Clock gate name: HsGpio2. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:341</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daa640c7aefd1f1c93a3baffb4410aef04"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa640c7aefd1f1c93a3baffb4410aef04">kCLOCK_HsGpio6</a></div><div class="ttdoc">Clock gate name: HsGpio6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:345</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da10d363b845192d7b62d6a710ee793646"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da10d363b845192d7b62d6a710ee793646">kCLOCK_HsGpio5</a></div><div class="ttdoc">Clock gate name: HsGpio5. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:344</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da583754f100def06313a11500f6c42bb8"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da583754f100def06313a11500f6c42bb8">kCLOCK_HsGpio4</a></div><div class="ttdoc">Clock gate name: HsGpio4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:343</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da58fbac2682b4047eb27044c83f2373ae"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da58fbac2682b4047eb27044c83f2373ae">kCLOCK_HsGpio7</a></div><div class="ttdoc">Clock gate name: HsGpio7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:346</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da24ea30c160b02a23bfe27c710b8e6c93"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da24ea30c160b02a23bfe27c710b8e6c93">kCLOCK_HsGpio0</a></div><div class="ttdoc">Clock gate name: HsGpio0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:339</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da8d8dedf88aff982148f145f8b14f8297"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da8d8dedf88aff982148f145f8b14f8297">kCLOCK_HsGpio1</a></div><div class="ttdoc">Clock gate name: HsGpio1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:340</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daebd6309cf85537a789648d215f709093"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daebd6309cf85537a789648d215f709093">kCLOCK_HsGpio3</a></div><div class="ttdoc">Clock gate name: HsGpio3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:342</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1649,7 +1661,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{                <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dab6e662f5742d8b5530206a1f8dc48db1">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dab6e662f5742d8b5530206a1f8dc48db1">        kCLOCK_Adc0</a>  \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dab6e662f5742d8b5530206a1f8dc48db1"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dab6e662f5742d8b5530206a1f8dc48db1">kCLOCK_Adc0</a></div><div class="ttdoc">Clock gate name: Adc0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:271</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946dab6e662f5742d8b5530206a1f8dc48db1"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946dab6e662f5742d8b5530206a1f8dc48db1">kCLOCK_Adc0</a></div><div class="ttdoc">Clock gate name: Adc0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:286</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1665,7 +1677,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{               <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da2f734c09560b3045ed8ed026fd7414b9">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da2f734c09560b3045ed8ed026fd7414b9">        kCLOCK_Mrt0</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da2f734c09560b3045ed8ed026fd7414b9"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da2f734c09560b3045ed8ed026fd7414b9">kCLOCK_Mrt0</a></div><div class="ttdoc">Clock gate name: Mrt0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:345</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da2f734c09560b3045ed8ed026fd7414b9"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da2f734c09560b3045ed8ed026fd7414b9">kCLOCK_Mrt0</a></div><div class="ttdoc">Clock gate name: Mrt0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:360</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1681,7 +1693,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{              <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da7b405d8427fbdfbf1a7f910f828d8ed6">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da7b405d8427fbdfbf1a7f910f828d8ed6">        kCLOCK_Sct</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da7b405d8427fbdfbf1a7f910f828d8ed6"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da7b405d8427fbdfbf1a7f910f828d8ed6">kCLOCK_Sct</a></div><div class="ttdoc">Clock gate name: Sct. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:266</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da7b405d8427fbdfbf1a7f910f828d8ed6"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da7b405d8427fbdfbf1a7f910f828d8ed6">kCLOCK_Sct</a></div><div class="ttdoc">Clock gate name: Sct. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:281</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1697,7 +1709,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{              <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daed4a7bc03383d23976529219bb451d3c">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daed4a7bc03383d23976529219bb451d3c">        kCLOCK_Rtc</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daed4a7bc03383d23976529219bb451d3c"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daed4a7bc03383d23976529219bb451d3c">kCLOCK_Rtc</a></div><div class="ttdoc">Clock gate name: Rtc. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:344</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daed4a7bc03383d23976529219bb451d3c"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daed4a7bc03383d23976529219bb451d3c">kCLOCK_Rtc</a></div><div class="ttdoc">Clock gate name: Rtc. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:359</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1713,8 +1725,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{                              <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da71e71c61f1d9c4ab5f99a7d10950a969">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da71e71c61f1d9c4ab5f99a7d10950a969">        kCLOCK_Wwdt0</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5e410459a8d871240a2e952ac3d5880e">kCLOCK_Wwdt1</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da71e71c61f1d9c4ab5f99a7d10950a969"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da71e71c61f1d9c4ab5f99a7d10950a969">kCLOCK_Wwdt0</a></div><div class="ttdoc">Clock gate name: Wwdt0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:275</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da5e410459a8d871240a2e952ac3d5880e"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5e410459a8d871240a2e952ac3d5880e">kCLOCK_Wwdt1</a></div><div class="ttdoc">Clock gate name: Wwdt1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:346</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da71e71c61f1d9c4ab5f99a7d10950a969"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da71e71c61f1d9c4ab5f99a7d10950a969">kCLOCK_Wwdt0</a></div><div class="ttdoc">Clock gate name: Wwdt0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:290</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da5e410459a8d871240a2e952ac3d5880e"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5e410459a8d871240a2e952ac3d5880e">kCLOCK_Wwdt1</a></div><div class="ttdoc">Clock gate name: Wwdt1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:361</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1730,7 +1742,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{              <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa1cfbe8497997fc6dff0d7f0c070aa5a">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa1cfbe8497997fc6dff0d7f0c070aa5a">        kCLOCK_Crc</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daa1cfbe8497997fc6dff0d7f0c070aa5a"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa1cfbe8497997fc6dff0d7f0c070aa5a">kCLOCK_Crc</a></div><div class="ttdoc">Clock gate name: Crc. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:332</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946daa1cfbe8497997fc6dff0d7f0c070aa5a"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946daa1cfbe8497997fc6dff0d7f0c070aa5a">kCLOCK_Crc</a></div><div class="ttdoc">Clock gate name: Crc. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:347</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1746,7 +1758,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{                      <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da07a5d0f86452b2bd2ab6045a9c4c3d23">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da07a5d0f86452b2bd2ab6045a9c4c3d23">        kCLOCK_UsbhsDevice</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da07a5d0f86452b2bd2ab6045a9c4c3d23"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da07a5d0f86452b2bd2ab6045a9c4c3d23">kCLOCK_UsbhsDevice</a></div><div class="ttdoc">Clock gate name: UsbhsDevice. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:263</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da07a5d0f86452b2bd2ab6045a9c4c3d23"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da07a5d0f86452b2bd2ab6045a9c4c3d23">kCLOCK_UsbhsDevice</a></div><div class="ttdoc">Clock gate name: UsbhsDevice. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:278</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1762,8 +1774,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{                              <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da76b447290132065cb2e9f6e46a149a14">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da76b447290132065cb2e9f6e46a149a14">        kCLOCK_Dmac0</a>, <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5e321375a35694e5d8b98a7bd7efd794">kCLOCK_Dmac1</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da76b447290132065cb2e9f6e46a149a14"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da76b447290132065cb2e9f6e46a149a14">kCLOCK_Dmac0</a></div><div class="ttdoc">Clock gate name: Dmac0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:333</div></div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da5e321375a35694e5d8b98a7bd7efd794"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5e321375a35694e5d8b98a7bd7efd794">kCLOCK_Dmac1</a></div><div class="ttdoc">Clock gate name: Dmac1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:334</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da76b447290132065cb2e9f6e46a149a14"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da76b447290132065cb2e9f6e46a149a14">kCLOCK_Dmac0</a></div><div class="ttdoc">Clock gate name: Dmac0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:348</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da5e321375a35694e5d8b98a7bd7efd794"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da5e321375a35694e5d8b98a7bd7efd794">kCLOCK_Dmac1</a></div><div class="ttdoc">Clock gate name: Dmac1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:349</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1779,7 +1791,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <b>Value:</b><div class="fragment"><div class="line">{               <a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da454d95362d54fbd9f9c9425ba37e7eb4">\</a></div>
 <div class="line"><a class="code" href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da454d95362d54fbd9f9c9425ba37e7eb4">        kCLOCK_Pint</a> \</div>
 <div class="line">    }</div>
-<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da454d95362d54fbd9f9c9425ba37e7eb4"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da454d95362d54fbd9f9c9425ba37e7eb4">kCLOCK_Pint</a></div><div class="ttdoc">Clock gate name: Pint. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:348</div></div>
+<div class="ttc" id="a00010_html_gga23c8b3ae62f7865b2e228408be95946da454d95362d54fbd9f9c9425ba37e7eb4"><div class="ttname"><a href="a00010.html#gga23c8b3ae62f7865b2e228408be95946da454d95362d54fbd9f9c9425ba37e7eb4">kCLOCK_Pint</a></div><div class="ttdoc">Clock gate name: Pint. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:363</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -3179,7 +3191,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void CLOCK_SetFRGClock </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00010.html#a00283">clock_frg_clk_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00010.html#a00284">clock_frg_clk_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -3938,7 +3950,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void CLOCK_InitSysPll </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00010.html#a00284">clock_sys_pll_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00010.html#a00285">clock_sys_pll_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -4044,7 +4056,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void CLOCK_InitAudioPll </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="a00010.html#a00282">clock_audio_pll_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00010.html#a00283">clock_audio_pll_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>

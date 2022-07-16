@@ -13,6 +13,7 @@ void tfm_core_panic(void)
 {
     fih_delay();
 
+while(1){};//NXP to avoid infinte loop.
     /*
      * FixMe: In the first stage, the SPM will restart the entire system when a
      * programmer error is detected in either the SPE or NSPE.

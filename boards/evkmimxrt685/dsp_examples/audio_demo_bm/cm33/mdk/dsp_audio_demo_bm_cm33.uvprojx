@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DSP_IMAGE_COPY_TO_RAM=0, DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DSP_IMAGE_COPY_TO_RAM=0, DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DEBUG_CONSOLE_RX_ENABLE=0, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/pca9420;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec/wm8904;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -516,14 +516,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -544,16 +544,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -594,6 +584,16 @@
               <FileName>fsl_inputmux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -648,41 +648,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>codec</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_wm8904.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_wm8904.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -728,6 +693,56 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec/port/wm8904</GroupName>
           <Files>
             <File>
@@ -764,21 +779,6 @@
               <FileName>fsl_adapter_i3c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1288,9 +1288,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DSP_IMAGE_COPY_TO_RAM=0, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DSP_IMAGE_COPY_TO_RAM=0, DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DEBUG_CONSOLE_RX_ENABLE=0, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/pca9420;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec/wm8904;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1472,14 +1472,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1500,16 +1500,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -1550,6 +1540,16 @@
               <FileName>fsl_inputmux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -1604,41 +1604,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>codec</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_wm8904.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_wm8904.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -1684,6 +1649,56 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec/port/wm8904</GroupName>
           <Files>
             <File>
@@ -1720,21 +1735,6 @@
               <FileName>fsl_adapter_i3c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2244,9 +2244,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DSP_IMAGE_COPY_TO_RAM=1, NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DEBUG_CONSOLE_RX_ENABLE=0, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/pca9420;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec/wm8904;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2428,14 +2428,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -2456,16 +2456,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -2506,6 +2496,16 @@
               <FileName>fsl_inputmux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -2560,41 +2560,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>codec</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_wm8904.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_wm8904.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -2640,6 +2605,56 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec/port/wm8904</GroupName>
           <Files>
             <File>
@@ -2676,21 +2691,6 @@
               <FileName>fsl_adapter_i3c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3200,9 +3200,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DSP_IMAGE_COPY_TO_RAM=1, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DSP_IMAGE_COPY_TO_RAM=1, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, DSP_NCACHE, DEBUG_CONSOLE_RX_ENABLE=0, SDK_I2C_BASED_COMPONENT_USED=1, BOARD_USE_CODEC=1, CODEC_WM8904_ENABLE, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/codec/wm8904;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities;../../../../../../components/pca9420;../../../../../../components/codec;../../../../../../components/codec/port/wm8904;../../../../../../components/codec/port;../../../../../../components/codec/i2c;../../../../../../components/i2c;../../../../../../components/codec/wm8904;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3384,14 +3384,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i3c.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -3412,16 +3412,6 @@
               <FileName>fsl_common_arm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common_arm.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -3462,6 +3452,16 @@
               <FileName>fsl_inputmux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i3c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexspi.c</FileName>
@@ -3516,41 +3516,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>codec</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_wm8904.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_wm8904.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_codec_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -3596,6 +3561,56 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>pmic_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_pca9420.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>codec</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_codec_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/fsl_codec_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_codec_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/i2c/fsl_codec_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_wm8904.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/codec/wm8904/fsl_wm8904.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>codec/port/wm8904</GroupName>
           <Files>
             <File>
@@ -3632,21 +3647,6 @@
               <FileName>fsl_adapter_i3c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../components/i2c/fsl_adapter_i3c.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>pmic_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_pca9420.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
             </File>
           </Files>
         </Group>

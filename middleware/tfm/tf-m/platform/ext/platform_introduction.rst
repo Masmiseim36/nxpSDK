@@ -2,12 +2,19 @@
 Platforms introduction
 ######################
 
+    - Olympus system
+
+        - Corstone-Polaris Ethos-U55 FVP (Olympus CPU plus Ethos-U55)
+
     - Cortex-M55 system:
 
         - `FPGA image loaded on MPS3 board (AN547).
-          <https://developer.arm.com/products/system-design/development-boards/cortex-m-prototyping-systems/mps3>`_
-        - `Fast model FVP_SSE300_MPS2.
+          <https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/download-fpga-images>`_
+        - `FPGA image loaded on MPS3 board (AN552).
+          <https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/download-fpga-images>`_
+        - `Corstone-300 Ethos-U55 Ecosystem FVP
           <https://developer.arm.com/tools-and-software/open-source-software/arm-platforms-software/arm-ecosystem-fvps>`_
+
 
     - Cortex-M33 system:
 
@@ -23,6 +30,8 @@ Platforms introduction
           <https://developer.arm.com/tools-and-software/development-boards/fpga-prototyping-boards/mps3>`_
         - `LPC55S69.
           <https://www.nxp.com/products/processors-and-microcontrollers/arm-microcontrollers/general-purpose-mcus/lpc5500-cortex-m33/lpcxpresso55s69-development-board:LPC55S69-EVK>`_
+        - `B-U585I-IOT02A.
+          <https://www.st.com/en/evaluation-tools/B-U585I-IOT02A.html>`_
         - `NUCLEO L552ZE Q.
           <https://www.st.com/content/st_com/en/products/evaluation-tools/product-evaluation-tools/mcu-mpu-eval-tools/stm32-mcu-mpu-eval-tools/stm32-nucleo-boards/nucleo-l552ze-q.html>`_
         - `DISCO L562QE.
@@ -55,4 +64,4 @@ lists the deprecated platforms planned to be removed from upstream.
 
 --------------
 
-*Copyright (c) 2017-2021, Arm Limited. All rights reserved.*
+*Copyright (c) 2017-2022, Arm Limited. All rights reserved.*

@@ -17,6 +17,7 @@ fih_int FIH_FAILURE = FIH_INT_INIT(FIH_NEGATIVE_VALUE);
 #ifdef FIH_ENABLE_CFI
 fih_int _fih_cfi_ctr = FIH_INT_INIT(0);
 
+#ifndef FIH_CFI_ALT //NXP
 fih_int fih_cfi_get_and_increment(uint8_t cnt)
 {
     fih_int saved_ctr = _fih_cfi_ctr;
@@ -58,6 +59,7 @@ void fih_cfi_decrement(void)
 
     fih_int_validate(_fih_cfi_ctr);
 }
+#endif /* FIH_CFI_ALT */ //NXP
 #endif /* FIH_ENABLE_CFI */
 
 #ifdef FIH_ENABLE_GLOBAL_FAIL

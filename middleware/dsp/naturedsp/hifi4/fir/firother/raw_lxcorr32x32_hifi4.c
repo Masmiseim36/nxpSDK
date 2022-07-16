@@ -35,14 +35,14 @@
 #include "raw_lxcorr32x32.h"
 
 /*-----------------------------------------------------
-    raw linear correlation:
-    Input:
-    x[N] padded with extra 3 zeroes
-    y[M] padded with extra 3 zeroes
-    Output:
-    r[N+M-1]
-    restriction:
-    M should be >0
+raw linear correlation:
+Input:
+x[N] padded with extra 3 zeroes
+y[M] padded with extra 3 zeroes
+Output:
+r[N+M-1]
+restriction:
+M should be >0
 -----------------------------------------------------*/
 void fir_lxcorr32x32(int32_t * r, const int32_t * restrict x, const int32_t * restrict y, int N, int M)
 {

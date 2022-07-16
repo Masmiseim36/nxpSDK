@@ -32,6 +32,8 @@
 #include "__renaming__.h"
 #endif
 
+#define HIFI_SIMD_WIDTH 8 /* HiFi specific define: 8 - for HiFi4, 16 - for HiFi5 */
+
 #if defined COMPILER_XTENSA
   #include <xtensa/config/core-isa.h>
   #include <xtensa/tie/xt_core.h>

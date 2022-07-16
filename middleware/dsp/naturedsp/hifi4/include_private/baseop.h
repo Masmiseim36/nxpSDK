@@ -492,6 +492,15 @@ inline_ int72_t sla72(int64_t a,int shift)
     return b;
 }
 
+/* sign extend 64 bit number into 72 bit */
+inline_ int72_t sext72(int64_t a)
+{
+    int72_t b;
+    b.lo=(uint64_t)(a);
+    b.hi=(int8_t)(a>>63);
+    return b;
+}
+
 inline_ int64_t sat72(int72_t a)
 {
     int sgn=(int)sra72(a,63);   // if no overflow, this should be 0 or -1

@@ -1,18 +1,18 @@
 var a00010 =
 [
-    [ "clock_sys_pll_config_t", "a00010.html#a00317", [
+    [ "clock_sys_pll_config_t", "a00010.html#a00318", [
       [ "sys_pll_src", "a00010.html#ae0da7e45fc83e2972df5556cbe63a539", null ],
       [ "numerator", "a00010.html#a42c71fd94e7cb5d25c7e3a648c4769e5", null ],
       [ "denominator", "a00010.html#a6fb3a6bff97bcb87b08022b9cb17f120", null ],
       [ "sys_pll_mult", "a00010.html#ac0a6ce54fdeee5c4b12443fb36c65f4d", null ]
     ] ],
-    [ "clock_audio_pll_config_t", "a00010.html#a00315", [
+    [ "clock_audio_pll_config_t", "a00010.html#a00316", [
       [ "audio_pll_src", "a00010.html#a1f00d8ef61aff8d5047e10ad7fcf679c", null ],
       [ "numerator", "a00010.html#a7cdf80b89c5dc408bcace6cd2e7096e5", null ],
       [ "denominator", "a00010.html#afb6a4a0662f6a1e044765baa5505f8be", null ],
       [ "audio_pll_mult", "a00010.html#a2632cef26714bef37106d125b4173e7e", null ]
     ] ],
-    [ "clock_frg_clk_config_t", "a00010.html#a00316", [
+    [ "clock_frg_clk_config_t", "a00010.html#a00317", [
       [ "kCLOCK_FrgMainClk", "a00010.html#ac156ab14516d8211a53840c0c248057faa4e381f3e32f419857944399c5ddd78b", null ],
       [ "kCLOCK_FrgPllDiv", "a00010.html#ac156ab14516d8211a53840c0c248057fabc9a294bd59b6e9138d3b09e3bd748df", null ],
       [ "kCLOCK_FrgFroDiv4", "a00010.html#ac156ab14516d8211a53840c0c248057fa4fa96839fc352e920b5c2ad26ceba816", null ],

@@ -54,6 +54,14 @@ NOTES:
   4. 16x16 routine may converge slower on small errors due to roundoff 
      errors. In that cases, 16x32 routine will give better results although
      convergence rate on bigger errors is the same.
+  5. Terms near-end and far-end come from echo cancellation theory where the 
+     LMS is used widely. For echo cancellation them term far-end means the 
+     output of speakerphone (far end designates that the origin of it is 
+     somewhere outside say came from the remote speaker). The near-end is 
+     a signal from the local microphone representing a sum of the echo, 
+     speech of local speaker and the noise. The LMS is used to estimate the 
+     equivalent impulse response of the echopath further compensation and 
+     removal the echo from the near-end signal.
 
   Precision: 
   16x16    16-bit coefficients, 16-bit data, 16-bit output

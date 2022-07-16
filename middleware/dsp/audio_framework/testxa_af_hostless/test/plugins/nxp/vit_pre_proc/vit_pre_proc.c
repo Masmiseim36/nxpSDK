@@ -25,7 +25,6 @@
 /*******************************************************************************
  * Includes
  ******************************************************************************/
-
 #if (XA_VIT_PRE_PROC)
 
 #include <stdio.h>
@@ -50,6 +49,8 @@ extern clk_t vit_pre_proc_cycles;
 /* VIT Library, configuration */
 #include "PL_platformTypes_HIFI4_FUSIONF1.h"
 #include "VIT.h"
+
+#define VIT_CMD_TIME_SPAN 3.0
 
 //VIT Lib
 #define NUMBER_OF_CHANNELS          BOARD_DMIC_NUM
@@ -218,8 +219,9 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
     WORD16    *pOut = (WORD16 *) d->output;
     UWORD32   filled = d->input_avail;
     WORD16    input, output;
-    VIT_ReturnStatus_en    VIT_Status;
-    VIT_VoiceCommand_st     VoiceCommand;                             // Voice Command id
+    VIT_ReturnStatus_en VIT_Status;
+    VIT_VoiceCommand_st VoiceCommand;                   	         // Voice Command info
+    VIT_WakeWord_st WakeWord;                    		             // Wakeword info
     VIT_DetectionStatus_en VIT_DetectionResults = VIT_NO_DETECTION;  // VIT detection result
 
     nSize = filled >> 1;    //size of each sample is 2 bytes
@@ -266,8 +268,25 @@ static XA_ERRORCODE xa_vit_pre_proc_do_execute_16bit(vit_pre_proc_t *d)
 
     if (VIT_DetectionResults == VIT_WW_DETECTED)
     {
-        DSP_PRINTF(" - WakeWord detected \r\n");
+    	// Retrieve id of the WakeWord detected
+		// String of the Command can also be retrieved (when WW and CMDs strings are integrated in Model)
+    	VIT_Status = VIT_GetWakeWordFound( VITHandle, &WakeWord);
+		if (VIT_Status != VIT_SUCCESS)
+		{
+			DSP_PRINTF("VIT_GetWakeWordFound error : %d\r\n", VIT_Status);
+			return VIT_SYSTEM_ERROR;
+		}
+		else
+		{
+			DSP_PRINTF(" - WakeWord detected %d", WakeWord.WW_Id);
 
+			// Retrieve WakeWord Name : OPTIONAL
+			// Check first if WakeWord string is present
+			if (WakeWord.pWW_Name != PL_NULL)
+			{
+				DSP_PRINTF(" %s\r\n", WakeWord.pWW_Name);
+			}
+		}
     }
     else if (VIT_DetectionResults == VIT_VC_DETECTED)
     {
@@ -842,7 +861,7 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
     *   VIT Get Model Info (OPTIONAL)
     *       To retrieve information on the VIT_Model registered in VIT:
     *               - Model Release Number, number of commands supported
-    *               - WakeWord supported (when info is present)
+    *               - WakeWords supported (when info is present)
     *               - list of commands (when info is present)
     *
     */
@@ -861,7 +880,8 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
         DSP_PRINTF("  Language supported : %s \r\n", Model_Info.pLanguage);
     }
 
-    DSP_PRINTF("  Number of Commands supported : %d \r\n", Model_Info.NbOfVoiceCmds);
+    DSP_PRINTF("  Number of WakeWords supported : %d \r\n", Model_Info.NbOfWakeWords);
+    DSP_PRINTF("  Number of Commands supported : %d \r\n",  Model_Info.NbOfVoiceCmds);
 
     if (!Model_Info.WW_VoiceCmds_Strings)               // Check here if Model is containing WW and CMDs strings
     {
@@ -872,10 +892,15 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
         const char* ptr;
 
         DSP_PRINTF("  VIT_Model integrating WakeWord and Voice Commands strings : YES\r\n");
+        DSP_PRINTF("  WakeWords supported : \r\n");
         ptr = Model_Info.pWakeWord;
         if (ptr != PL_NULL)
         {
-            DSP_PRINTF("  WakeWord supported : %s \r\n", ptr);
+        	for (PL_UINT16 i = 0; i < Model_Info.NbOfWakeWords; i++)
+			{
+        		DSP_PRINTF("   '%s' \r\n", ptr);
+				ptr += strlen(ptr) + 1;                 // to consider NULL char
+			}
         }
         DSP_PRINTF("  Voice commands supported : \r\n");
         ptr = Model_Info.pVoiceCmds_List;
@@ -979,9 +1004,10 @@ VIT_ReturnStatus_en VIT_Initialize(vit_pre_proc_t *d)
     /*
     *   Set and Apply VIT control parameters
     */
-    VITControlParams.OperatingMode   = VIT_OPERATING_MODE;
+    VITControlParams.OperatingMode      = VIT_OPERATING_MODE;
     VITControlParams.MIC1_MIC2_Distance = VIT_MIC1_MIC2_DISTANCE;
     VITControlParams.MIC1_MIC3_Distance = VIT_MIC1_MIC3_DISTANCE;
+    VITControlParams.Command_Time_Span  = VIT_CMD_TIME_SPAN;
 
     if (!InitPhase_Error)
     {

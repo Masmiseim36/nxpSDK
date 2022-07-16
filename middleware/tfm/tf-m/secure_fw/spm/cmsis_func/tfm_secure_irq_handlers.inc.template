@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-{{utilities.donotedit_warning}}
+/***********{{utilities.donotedit_warning}}***********/
 
 #include "psa_manifest/pid.h"
 
 {% for partition in partitions %}
     {% if partition.manifest.irqs %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}}  //NXP
         {% if partition.manifest.psa_framework_version != 1.0 %}
 #error "Framework version greater than 1.0 is not supported"
         {% endif %}
@@ -24,7 +24,7 @@
                 {% set irq_signal.bit = irq_signal.bit - 1 %}
             {% endif %}
         {% endfor %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 {% endfor %}
 {% macro _irq_record(partition_name, signal, line) -%}
@@ -36,7 +36,7 @@ const struct tfm_core_irq_signal_data_t tfm_core_irq_signals[] = {
 {% for partition in partitions %}
     {% if partition.manifest.irqs %}
         {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}}   //NXP
         {% endif %}
         {% for handler in partition.manifest.irqs %}
             {% set irq_data = namespace() %}
@@ -48,7 +48,7 @@ const struct tfm_core_irq_signal_data_t tfm_core_irq_signals[] = {
     {{ _irq_record(partition.manifest.name, handler.signal, irq_data.line) }}
         {% endfor %}
         {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
         {% endif %}
    {% endif %}
 {% endfor %}
@@ -67,13 +67,13 @@ extern void priv_irq_handler_main(uint32_t partition_id,
 {% for partition in partitions %}
     {% if partition.manifest.irqs %}
         {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} ///NXP
         {% endif %}
         {% for handler in partition.manifest.irqs %}
 extern void {{handler.signal}}_isr(void);
         {% endfor %}
         {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
         {% endif %}
 
     {% endif %}
@@ -83,7 +83,7 @@ extern void {{handler.signal}}_isr(void);
 {% for partition in partitions %}
     {% if partition.manifest.irqs %}
         {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
         {% endif %}
         {% for handler in partition.manifest.irqs %}
             {% if handler.source is number %}
@@ -106,7 +106,7 @@ void {{handler.source}}_Handler(void)
 
         {% endfor %}
         {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
         {% endif %}
 
     {% endif %}

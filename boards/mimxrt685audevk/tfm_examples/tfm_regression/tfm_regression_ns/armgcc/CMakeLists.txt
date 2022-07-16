@@ -74,8 +74,6 @@ include(driver_ctimer_MIMXRT685S_cm33)
 
 include(middleware_tfm_ns_mimxrt685audevk_MIMXRT685S_cm33)
 
-include(middleware_tfm_ns_rtx_MIMXRT685S_cm33)
-
 include(middleware_tfm_ns_test_MIMXRT685S_cm33)
 
 include(middleware_tfm_ns_test_s_MIMXRT685S_cm33)

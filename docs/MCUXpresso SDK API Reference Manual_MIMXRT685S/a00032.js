@@ -1,15 +1,15 @@
 var a00032 =
 [
-    [ "i3c_register_ibi_addr_t", "a00032.html#a00327", [
+    [ "i3c_register_ibi_addr_t", "a00032.html#a00328", [
       [ "address", "a00032.html#a0aba1cfc2aea5858f2a660d978448c63", null ],
       [ "ibiHasPayload", "a00032.html#a3f3521acf6aa258181bb482c47d2d0fd", null ]
     ] ],
-    [ "i3c_baudrate_hz_t", "a00032.html#a00322", [
+    [ "i3c_baudrate_hz_t", "a00032.html#a00323", [
       [ "i2cBaud", "a00032.html#af36092c5749c19f9cecdc3c2ed1b2aac", null ],
       [ "i3cPushPullBaud", "a00032.html#ab2a4e7b867c2e2f7f5db172b0fac15ad", null ],
       [ "i3cOpenDrainBaud", "a00032.html#a366afd993b96f79934271321b567048e", null ]
     ] ],
-    [ "i3c_master_config_t", "a00032.html#a00325", [
+    [ "i3c_master_config_t", "a00032.html#a00326", [
       [ "enableMaster", "a00032.html#a6a6d2101ea54756fdc8dfb62c1b5c6d7", null ],
       [ "disableTimeout", "a00032.html#a2f44f7ffd96f13965390705b0ccf7857", null ],
       [ "hKeep", "a00032.html#a8063af1c56f6e56568e9ed521264d552", null ],
@@ -17,12 +17,12 @@ var a00032 =
       [ "enableOpenDrainHigh", "a00032.html#aacb29404b3812093a6585d23378493b9", null ],
       [ "baudRate_Hz", "a00032.html#ade8d4a66d41250e92500504891f30914", null ]
     ] ],
-    [ "i3c_master_transfer_callback_t", "a00032.html#a00326", [
+    [ "i3c_master_transfer_callback_t", "a00032.html#a00327", [
       [ "slave2Master", "a00032.html#ad9fee2ce6f680841ff6e9c0d0c887482", null ],
       [ "ibiCallback", "a00032.html#a6d42aad3611beb397bcc8ec4184def61", null ],
       [ "transferComplete", "a00032.html#aa40d4a35313debc5c67134bc953d50e0", null ]
     ] ],
-    [ "i3c_master_transfer_t", "a00032.html#a00267", [
+    [ "i3c_master_transfer_t", "a00032.html#a00268", [
       [ "flags", "a00032.html#aec9a81ea02e19c36c6643dc85ed868d2", null ],
       [ "slaveAddress", "a00032.html#a33ff10d5cd0a6221d5fda6c003dcaf0e", null ],
       [ "direction", "a00032.html#a8382b4f8a4e3f4cac7c0c756d2bb2f98", null ],
@@ -33,7 +33,7 @@ var a00032 =
       [ "busType", "a00032.html#a80a8cf853d5884d1b358cf549996d306", null ],
       [ "ibiResponse", "a00032.html#a20a11a4b7bbd43315ed03c91762f5a53", null ]
     ] ],
-    [ "i3c_master_handle_t", "a00032.html#a00266", [
+    [ "i3c_master_handle_t", "a00032.html#a00267", [
       [ "state", "a00032.html#a9a67e46c098a6617d683a2928728d7bb", null ],
       [ "remainingBytes", "a00032.html#a4f67af21e75862ddda5f0e98f35c15da", null ],
       [ "isReadTerm", "a00032.html#ac89ead0f9ab8ad4abd308fcd3c618d5f", null ],

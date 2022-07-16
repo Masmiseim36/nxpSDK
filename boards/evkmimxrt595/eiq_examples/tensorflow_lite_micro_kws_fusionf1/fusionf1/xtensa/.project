@@ -638,6 +638,736 @@
       <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_math.h</locationURI>
     </link>
     <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_common_tables_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_common_tables_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_const_structs_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_const_structs_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_helium_utils.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_helium_utils.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_math_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_math_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_math_memory.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_math_memory.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_math_types.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_math_types.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_math_types_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_math_types_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_mve_tables.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_mve_tables.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_mve_tables_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_mve_tables_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_vec_math.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_vec_math.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/arm_vec_math_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/arm_vec_math_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/basic_math_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/basic_math_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/bayes_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/bayes_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/bayes_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/bayes_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/complex_math_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/complex_math_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/controller_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/controller_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/controller_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/controller_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/distance_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/distance_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/distance_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/distance_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/fast_math_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/fast_math_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/filtering_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/filtering_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/filtering_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/filtering_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/interpolation_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/interpolation_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/matrix_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/matrix_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/matrix_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/matrix_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/none.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/none.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/quaternion_math_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/quaternion_math_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/statistics_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/statistics_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/statistics_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/statistics_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/support_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/support_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/support_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/support_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/svm_defines.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/svm_defines.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/svm_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/svm_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/svm_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/svm_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/transform_functions.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/transform_functions.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/transform_functions_f16.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/transform_functions_f16.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Include/dsp/utils.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Include/dsp/utils.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/PrivateInclude</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/PrivateInclude/arm_sorting.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/PrivateInclude/arm_sorting.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/PrivateInclude</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/PrivateInclude/arm_vec_fft.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/PrivateInclude/arm_vec_fft.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/PrivateInclude</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/PrivateInclude/arm_vec_filtering.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/PrivateInclude/arm_vec_filtering.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/BasicMathFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/BasicMathFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/BasicMathFunctions/BasicMathFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/BayesFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/BayesFunctions/BayesFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/BayesFunctions/BayesFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/BayesFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/BayesFunctions/BayesFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/BayesFunctions/BayesFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/CommonTables</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/CommonTables/CommonTables.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/CommonTables/CommonTables.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/CommonTables</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/CommonTables/CommonTablesF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/CommonTables/CommonTablesF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/ComplexMathFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/ComplexMathFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/ComplexMathFunctions/ComplexMathFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/ControllerFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/ControllerFunctions/ControllerFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/ControllerFunctions/ControllerFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/DistanceFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/DistanceFunctions/DistanceFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/DistanceFunctions/DistanceFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/DistanceFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/DistanceFunctions/arm_boolean_distance_template.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/DistanceFunctions/arm_boolean_distance_template.h</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/DistanceFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/DistanceFunctions/DistanceFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/DistanceFunctions/DistanceFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/FastMathFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/FastMathFunctions/FastMathFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/FastMathFunctions/FastMathFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/FastMathFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/FastMathFunctions/FastMathFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/FastMathFunctions/FastMathFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/FilteringFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/FilteringFunctions/FilteringFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/FilteringFunctions/FilteringFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/FilteringFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/FilteringFunctions/FilteringFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/FilteringFunctions/FilteringFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/InterpolationFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/InterpolationFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/InterpolationFunctions/InterpolationFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/MatrixFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/MatrixFunctions/MatrixFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/MatrixFunctions/MatrixFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/MatrixFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/MatrixFunctions/MatrixFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/MatrixFunctions/MatrixFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/QuaternionMathFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/QuaternionMathFunctions/QuaternionMathFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/QuaternionMathFunctions/QuaternionMathFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/SVMFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/SVMFunctions/SVMFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/SVMFunctions/SVMFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/SVMFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/SVMFunctions/SVMFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/SVMFunctions/SVMFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/StatisticsFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/StatisticsFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/SupportFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/SupportFunctions/SupportFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/SupportFunctions/SupportFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/SupportFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/SupportFunctions/SupportFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/SupportFunctions/SupportFunctionsF16.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/TransformFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/TransformFunctions/TransformFunctions.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/TransformFunctions/TransformFunctions.c</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/TransformFunctions</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/CMSIS/DSP/Source/TransformFunctions/TransformFunctionsF16.c</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -873,6 +1603,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/portable_tensor_utils.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/portable_tensor_utils.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/quantization_util.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/quantization_util.h</locationURI>
@@ -886,6 +1626,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/quantization_util.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/quantization_util.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/runtime_shape.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/runtime_shape.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal</name>
@@ -1243,6 +1993,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/portable_tensor_utils_impl.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/portable_tensor_utils_impl.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/prelu.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/prelu.h</locationURI>
@@ -1323,6 +2083,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/slice.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/slice.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/softmax.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/softmax.h</locationURI>
@@ -1336,6 +2106,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/space_to_batch_nd.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/space_to_batch_nd.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/space_to_depth.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/space_to_depth.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference</name>
@@ -1386,6 +2166,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/transpose_conv.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/transpose_conv.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops</name>
@@ -1553,6 +2343,46 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/fake_micro_context.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/fake_micro_context.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/fake_micro_context.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/fake_micro_context.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.cpp</locationURI>
@@ -1586,6 +2416,36 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/micro_arena_constants.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_arena_constants.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/micro_context.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_context.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/micro_context.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_context.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
@@ -1686,6 +2546,26 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/micro_resource_variable.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_resource_variable.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/micro_resource_variable.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_resource_variable.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro</name>
@@ -1823,6 +2703,36 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/conv.h</locationURI>
@@ -1836,6 +2746,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depthwise_conv.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/depthwise_conv.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -1863,9 +2783,59 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_runner.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_runner.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_util.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/kernel_util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logical.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logical.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -1893,6 +2863,36 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize.h</locationURI>
@@ -1913,9 +2913,39 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations_common.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add_common.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -1943,9 +2973,29 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/assign_variable.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/assign_variable.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/call_once.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/call_once.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -1976,6 +3026,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer_common.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -2046,6 +3106,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize_common.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -2183,6 +3253,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish_common.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/if.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/if.cpp</locationURI>
@@ -2223,9 +3303,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.cpp</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu_common.cpp</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.cpp</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu_common.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -2253,9 +3333,49 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logical_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logical_common.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic_common.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mirror_pad.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mirror_pad.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul_common.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -2293,6 +3413,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling_common.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.cpp</locationURI>
@@ -2303,9 +3433,29 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu_common.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize_common.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize_common.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/read_variable.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/read_variable.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -2373,6 +3523,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/slice.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/slice.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax_common.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax_common.cpp</locationURI>
@@ -2386,6 +3546,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_batch_nd.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_batch_nd.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_depth.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_depth.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -2443,6 +3613,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub_common.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub_common.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf_common.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf_common.cpp</locationURI>
@@ -2473,9 +3653,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.cpp</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.cpp</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -2483,9 +3663,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/var_handle.cpp</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/var_handle.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
@@ -2523,9 +3703,29 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/memory_planner.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/memory_plan_struct.h</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/memory_planner.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/memory_plan_struct.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/micro_memory_planner.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/micro_memory_planner.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner</name>
@@ -2546,6 +3746,16 @@
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/linear_memory_planner.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/linear_memory_planner.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/schema</name>
@@ -2623,6 +3833,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/add.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/add.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv.cpp</locationURI>
@@ -2643,9 +3863,19 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_hifimini.cpp</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int16_reference.cpp</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_hifimini.cpp</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int16_reference.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int8_reference.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int8_reference.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
@@ -2663,9 +3893,69 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/depthwise_conv_hifi.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/depthwise_conv_hifi.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fully_connected.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fully_connected.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/leaky_relu.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/leaky_relu.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/logistic.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/logistic.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval_hifi.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval_hifi.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/pooling.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/pooling.cpp</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
@@ -2713,9 +4003,39 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fixedpoint_utils.h</name>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/transpose_conv.cpp</name>
       <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fixedpoint_utils.h</locationURI>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/transpose_conv.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/unidirectional_sequence_lstm.cpp</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/unidirectional_sequence_lstm.cpp</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_shared.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_shared.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
@@ -2743,6 +4063,16 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_depthwise_conv.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_depthwise_conv.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_softmax.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/xtensa_softmax.h</locationURI>
@@ -2763,16 +4093,6 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.cpp</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.cpp</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/floor.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/floor.cpp</locationURI>
@@ -2783,29 +4103,9 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.cpp</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.cpp</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
       <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul.cpp</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul.cpp</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling.cpp</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling.cpp</locationURI>
     </link>
     <link>
       <name>drivers</name>
@@ -2983,9 +4283,79 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/allocator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/allocator.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/array.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/array.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/base.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/base.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/buffer.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/buffer.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/buffer_ref.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/buffer_ref.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/default_allocator.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/default_allocator.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/detached_buffer.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/detached_buffer.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffer_builder.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffer_builder.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
@@ -3023,9 +4393,69 @@
       <locationURI>virtual:/virtual</locationURI>
     </link>
     <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/strings.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/strings.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/struct.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/struct.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/table.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/table.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
       <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/util.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/util.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/vector.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/vector.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/vector_downward.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/vector_downward.h</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/verifier.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/verifier.h</locationURI>
     </link>
     <link>
       <name>eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint</name>

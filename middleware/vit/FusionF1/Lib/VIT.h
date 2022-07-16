@@ -1,5 +1,5 @@
 /*
-* Copyright 2020-2021 NXP
+* Copyright 2020-2022 NXP
 *
 * NXP Confidential. This software is owned or controlled by NXP and may only
 * be used strictly in accordance with the applicable license terms found in
@@ -28,9 +28,6 @@ extern "C" {
 /****************************************************************************************/
 
 /*
-*     VITControlParams.OperatingMode : WakeWord shall be always ENABLE
-*
-*
 *     VITControlParams.OperatingMode vs VITInstParams.NumberOfChannel
 *              - VIT lib integrating AFE :
 *                       - AFE DISABLE : 1 MIC supported
@@ -53,18 +50,19 @@ typedef enum { _1CHAN = 1, _2CHAN, _3CHAN} NumberOfChannel_en;
 //     - a SAMPLE can have 1, 2 or N channels (N defined by VIT_MAX_CHANNEL_NUMBER here after)
 //     - a FRAME is composed of multi-channel samples : 160 multi-channel samples in the VIT input buffer
 //       meaning that VIT_SAMPLES_PER_FRAME should be always 160 whatever the number of channels 
-#define VIT_SAMPLES_PER_FRAME             160                 // corresponds to 10ms @16kHz                        
+#define VIT_SAMPLES_PER_FRAME             160                 // corresponds to 10ms @16kHz
 #define VIT_SAMPLE_RATE                   16000               // sample rate in Hz
 
 
 /*
  *  VIT lib not integrating AFE :
+ *               - IMXRT1050          : VIT_MAX_NUMBER_OF_CHANNEL  = _1CHAN
  *               - IMXRT500           : VIT_MAX_NUMBER_OF_CHANNEL  = _1CHAN
+ *               - IMX8MA53           : VIT_MAX_NUMBER_OF_CHANNEL  = _1CHAN
  *  VIT lib integrating AFE :
  *               - IMXRT1060          : VIT_MAX_NUMBER_OF_CHANNEL  = _3CHAN
  *               - IMXRT1160 / RT1170 : VIT_MAX_NUMBER_OF_CHANNEL  = _3CHAN
  *               - IMXRT600           : VIT_MAX_NUMBER_OF_CHANNEL  = _3CHAN
- 
  */
 
 
@@ -140,13 +138,17 @@ typedef enum
 */
 typedef enum
 {
-    VIT_IMXRT1060 = 1,                         // I.MXRT1060 : VIT running on Cortex-M7
+    VIT_IMXRT1040 = 1,                         // I.MXRT1040 : VIT running on Cortex-M7
+    VIT_IMXRT1050 ,                            // I.MXRT1050 : VIT running on Cortex-M7
+    VIT_IMXRT1060 ,                            // I.MXRT1060 : VIT running on Cortex-M7
     VIT_IMXRT1160 ,                            // I.MXRT1160 : VIT running on Cortex-M7
     VIT_IMXRT1170,                             // I.MXRT1170 : VIT running on Cortex-M7
     VIT_IMXRT500,                              // I.MXRT500  : VIT running on FusionF1
     VIT_IMXRT600,                              // I.MXRT600  : VIT running on HIFI4
-    VIT_IMX8MINIM4,                            // I.MX8MINI  : VIT running on Cortex-M4
-    VIT_NB_OF_DEVICES = VIT_IMX8MINIM4,
+    VIT_IMX8MMINIM4,                           // I.MX8MINI  : VIT running on Cortex-M4
+    VIT_IMX8MPLUSM7,                           // I.MX8PLUS  : VIT running on Cortex-M7
+    VIT_IMX8MA53,                              // I.MX8MA53  : VIT running on Cortex-A (i.MX8MPlus and i.MX8MMini)
+    VIT_NB_OF_DEVICES = VIT_IMX8MA53,
     VIT_DUMMY_DEVICE  = PL_MAXENUM
 }VIT_DeviceId_en;
 
@@ -184,6 +186,13 @@ typedef struct
     const PL_INT16               *pBuffer_Chan3;       // Linked to MIC3
 } VIT_DataIn_st;
 
+/* Wakeword structure */
+typedef struct
+{
+    PL_UINT16                    WW_Id;
+    const char                   *pWW_Name;
+} VIT_WakeWord_st;
+
 /* Voice Command structure */
 typedef struct
 {
@@ -197,6 +206,9 @@ typedef struct
     VIT_OperatingMode_en         OperatingMode;
     PL_UINT16                    MIC1_MIC2_Distance;   // Distance between MIC2 and the reference MIC in mm
     PL_UINT16                    MIC1_MIC3_Distance;   // Distance between MIC3 and the reference MIC in mm
+    PL_FLOAT                     Command_Time_Span;    // Corresponding to the detection period in second for each command (Max allowed 8.0 seconds)
+                                                       // VIT will return UNKNOWN if no command is recognized during this time span.
+    PL_BOOL                      Feature_LowRes;       // Compute features in low resolution - considered only if OperatingMode equals to VIT_ALL_MODULE_DISABLE
     PL_UINT32                    Reserved;
 } VIT_ControlParams_st;
 
@@ -234,6 +246,7 @@ typedef struct
     PL_UINT16                     NumberOfChannels_Selected;         // Number of Channels selected 
     PL_BOOL                       WakeWord_In_Text2Model;
     VIT_DeviceId_en               Device_Selected;
+    PL_UINT16                     VIT_Sequencer_Slot;
     PL_BOOL                       LPVAD_EventDetected;
     PL_UINT8                      Reserved[20];
 } VIT_StatusParams_st;
@@ -371,10 +384,10 @@ VIT_ReturnStatus_en VIT_GetControlParameters(VIT_Handle_t           phInstance,
 *
 * @pre phInstance should be valid handle.
 *
-* @return VIT_SUCCESS                  Succeeded
-* @return VIT_INVALID_NULLADDRESS      When phInstance or pNewParams is NULL
-* @return VIT_INVALID_ARGUMENT         When WakeWord not enable
-* @return VIT_INVALID_AFE_CONFIG       when AFE configuration is wrong
+* @return VIT_SUCCESS                        Succeeded
+* @return VIT_INVALID_NULLADDRESS            When phInstance or pNewParams is NULL
+* @return VIT_INVALID_PARAMETER_OUTOFRANGE   When one parameter is not in the right range
+* @return VIT_INVALID_AFE_CONFIG             when AFE configuration is wrong
 *
 * Valid VIT configurations :
 *     VITControlParams.OperatingMode : WakeWord shall be always ENABLE
@@ -446,6 +459,7 @@ VIT_ReturnStatus_en VIT_Process(  VIT_Handle_t            phInstance,
                                   VIT_DetectionStatus_en  *pVIT_DetectionResults
                                 );
 
+
 /**
 * @brief Retrieve the current VIT status parameters.
 *
@@ -469,6 +483,33 @@ VIT_ReturnStatus_en VIT_GetStatusParameters( VIT_Handle_t           phInstance,
                                              VIT_StatusParams_st    *pStatusParams,
                                              PL_UINT16              StatusParamsSize
                                             );
+
+
+/**
+* @brief Retrieve the Wakeword Detected.
+*
+* This function returns the Wakeword Id and string (when present in model) detected by the VIT instance.
+* The function shall be called only when VIT_Process() is informing that a Wakeword is detected (*pVIT_DetectionResults==VIT_WW_DETECTED)
+* The function will return VIT_INVALID_STATE if the calling sequence is not followed (i.e VIT_GetWakeWordFound() to be called after VIT_Process()
+* only if a Wakeword has been detected). 
+*
+* @param phInstance                   Instance handle
+*
+* @pre   phInstance should be valid handle.
+*
+* @pre   pWakeWord should be allocated by caller.
+* @post  pWakeWord will be filled with the Id and string of the Wakeword detected.
+*
+* @return VIT_SUCCESS                  Succeeded
+* @return VIT_INVALID_NULLADDRESS      When phInstance or pWakeWord is NULL
+*
+* @note The function shall be called only when VIT_Process() is informing that a Wakeword is detected (*pVIT_DetectionResults==VIT_WW_DETECTED)
+*
+*/
+VIT_ReturnStatus_en VIT_GetWakeWordFound     ( VIT_Handle_t         pVIT_Instance,
+                                               VIT_WakeWord_st      *pWakeWord
+                                             );
+
 
 /**
 * @brief Retrieve the Voice Command Detected.
@@ -496,7 +537,7 @@ VIT_ReturnStatus_en VIT_GetVoiceCommandFound ( VIT_Handle_t         pVIT_Instanc
                                              );
 
 
-/*
+/**
 * @brief Retrieve information of the VIT model.
 *
 * This function returns different information of the VIT model regitered within VIT lib (registration done via VIT_SetModel()).

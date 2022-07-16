@@ -35,13 +35,13 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
+"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/aws_mbedtls_config.h"
 "${ProjDirPath}/../config_files/aws_demo_config.h"
 "${ProjDirPath}/../config_files/aws_wifi_config.h"
 "${ProjDirPath}/../config_files/core_http_config.h"
 "${ProjDirPath}/../config_files/core_mqtt_config.h"
 "${ProjDirPath}/../config_files/core_pkcs11_config.h"
-"${ProjDirPath}/../config_files/FreeRTOSConfig.h"
 "${ProjDirPath}/../config_files/FreeRTOSIPConfig.h"
 "${ProjDirPath}/../config_files/iot_config.h"
 "${ProjDirPath}/../config_files/iot_secure_sockets_config.h"
@@ -64,8 +64,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
-    ${ProjDirPath}/../../..
     ${ProjDirPath}/../config_files
+    ${ProjDirPath}/../../..
     ${ProjDirPath}/..
     ${ProjDirPath}/../../common
 )
@@ -93,11 +93,12 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/pca9420
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt685
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
+    ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
+    ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
-    ${ProjDirPath}/../../../../../middleware/wifi
-    ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../components/uart
@@ -124,6 +125,26 @@ include(component_mflash_file_MIMXRT685S_cm33)
 
 include(component_mflash_rt685_MIMXRT685S_cm33)
 
+include(middleware_wifi_wifidriver_MIMXRT685S_cm33)
+
+include(middleware_freertos-kernel_MIMXRT685S_cm33)
+
+include(utility_debug_console_MIMXRT685S_cm33)
+
+include(middleware_wifi_sdio_MIMXRT685S_cm33)
+
+include(middleware_wifi_fwdnld_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_sdio_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_common_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_host_usdhc_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_host_usdhc_freertos_MIMXRT685S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT685S_cm33)
+
 include(middleware_freertos-aws_iot_demos_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_demos_dev_mode_key_provisioning_MIMXRT685S_cm33)
@@ -140,21 +161,9 @@ include(middleware_freertos-aws_iot_vendor_nxp_ota_pal_MIMXRT685S_cm33)
 
 include(middleware_lwip_MIMXRT685S_cm33)
 
-include(utility_debug_console_MIMXRT685S_cm33)
-
 include(middleware_wifi_MIMXRT685S_cm33)
 
-include(middleware_sdmmc_host_usdhc_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_sdio_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_common_MIMXRT685S_cm33)
-
 include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT685S_cm33)
-
-include(middleware_freertos-kernel_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT685S_cm33)
 
@@ -222,6 +231,14 @@ include(middleware_freertos-kernel_extension_MIMXRT685S_cm33)
 
 include(component_mflash_common_MIMXRT685S_cm33)
 
+include(middleware_wifi_sdio-2_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_osa_freertos_MIMXRT685S_cm33)
+
+include(component_osa_free_rtos_MIMXRT685S_cm33)
+
+include(driver_usdhc_MIMXRT685S_cm33)
+
 include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT685S_cm33)
@@ -253,16 +270,6 @@ include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMX
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT685S_cm33)
-
-include(middleware_wifi_wifidriver_MIMXRT685S_cm33)
-
-include(middleware_wifi_fwdnld_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_osa_freertos_MIMXRT685S_cm33)
-
-include(component_osa_free_rtos_MIMXRT685S_cm33)
-
-include(driver_usdhc_MIMXRT685S_cm33)
 
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 

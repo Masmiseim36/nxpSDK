@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -17,8 +17,7 @@
 #include "internal_errors.h"
 #include "utilities.h"
 #include "psa/service.h"
-#include "tfm_thread.h"
-#include "tfm_wait.h"
+#include "thread.h"
 #include "tfm_spm_hal.h"
 #include "spm_ipc.h"
 #include "load/partition_defs.h"
@@ -154,7 +153,6 @@ void tfm_core_get_boot_data_handler(uint32_t args[])
                 tfm_spm_partition_get_running_partition_idx();
     uint32_t res;
 #else
-    struct partition_t *partition = NULL;
     uint32_t privileged;
 #endif
 
@@ -173,12 +171,7 @@ void tfm_core_get_boot_data_handler(uint32_t args[])
         return;
     }
 #else
-    partition = tfm_spm_get_running_partition();
-    if (!partition) {
-        tfm_core_panic();
-    }
-    privileged =
-        tfm_spm_partition_get_privileged_mode(partition->p_ldinf->flags);
+    privileged = GET_CURRENT_PARTITION_PRIVILEGED_MODE();
 
     if (tfm_memory_check(buf_start, buf_size, false, TFM_MEMORY_ACCESS_RW,
         privileged) != SPM_SUCCESS) {

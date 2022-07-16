@@ -14,16 +14,16 @@
 #include "tfm_core_trustzone.h"
 #include "utilities.h"
 
-#define EXC_RETURN_INDICATOR                    (0xFF << 24)
-#define EXC_RETURN_RES1                         (0x1FFFF << 7)
-#define EXC_RETURN_SECURE_STACK                 (1 << 6)
-#define EXC_RETURN_STACK_RULE                   (1 << 5)
-#define EXC_RETURN_FPU_FRAME_BASIC              (1 << 4)
-#define EXC_RETURN_MODE_THREAD                  (1 << 3)
-#define EXC_RETURN_STACK_PROCESS                (1 << 2)
-#define EXC_RETURN_STACK_MAIN                   (0 << 2)
-#define EXC_RETURN_RES0                         (0 << 1)
-#define EXC_RETURN_EXC_SECURE                   (1)
+#define EXC_RETURN_INDICATOR                    (0xFFUL << 24)
+#define EXC_RETURN_RES1                         (0x1FFFFUL << 7)
+#define EXC_RETURN_SECURE_STACK                 (1UL << 6)
+#define EXC_RETURN_STACK_RULE                   (1UL << 5)
+#define EXC_RETURN_FPU_FRAME_BASIC              (1UL << 4)
+#define EXC_RETURN_MODE_THREAD                  (1UL << 3)
+#define EXC_RETURN_STACK_PROCESS                (1UL << 2)
+#define EXC_RETURN_STACK_MAIN                   (0UL << 2)
+#define EXC_RETURN_RES0                         (0UL << 1)
+#define EXC_RETURN_EXC_SECURE                   (1UL)
 
 /* Initial EXC_RETURN value in LR when a thread is loaded at the first time */
 #define EXC_RETURN_THREAD_S_PSP                                 \
@@ -40,42 +40,20 @@
         EXC_RETURN_STACK_MAIN | EXC_RETURN_RES0 |               \
         EXC_RETURN_EXC_SECURE
 
+#define EXC_RETURN_HANDLER_S_MSP                                \
+        EXC_RETURN_INDICATOR | EXC_RETURN_RES1 |                \
+        EXC_RETURN_SECURE_STACK | EXC_RETURN_STACK_RULE |       \
+        EXC_RETURN_FPU_FRAME_BASIC |                            \
+        EXC_RETURN_STACK_MAIN | EXC_RETURN_RES0 |               \
+        EXC_RETURN_EXC_SECURE
+
 /* Exception numbers */
 #define EXC_NUM_THREAD_MODE                     (0)
 #define EXC_NUM_SVCALL                          (11)
 #define EXC_NUM_PENDSV                          (14)
 
-#if defined(__ARM_ARCH_8_1M_MAIN__) || defined(__ARM_ARCH_8M_MAIN__)
-struct tfm_arch_ctx_t {
-    uint32_t    r4;
-    uint32_t    r5;
-    uint32_t    r6;
-    uint32_t    r7;
-    uint32_t    r8;
-    uint32_t    r9;
-    uint32_t    r10;
-    uint32_t    r11;
-    uint32_t    sp;
-    uint32_t    sp_limit;
-    uint32_t    dummy;
-    uint32_t    lr;
-};
-#elif defined(__ARM_ARCH_8M_BASE__)
-struct tfm_arch_ctx_t {
-    uint32_t    r8;
-    uint32_t    r9;
-    uint32_t    r10;
-    uint32_t    r11;
-    uint32_t    r4;
-    uint32_t    r5;
-    uint32_t    r6;
-    uint32_t    r7;
-    uint32_t    sp;
-    uint32_t    sp_limit;
-    uint32_t    dummy;
-    uint32_t    lr;
-};
-#endif
+#define SCB_ICSR_ADDR                    (0xE000ED04)
+#define SCB_ICSR_PENDSVSET_BIT           (0x10000000)
 
 /* Disable NS exceptions by setting NS PRIMASK to 1 */
 #define TFM_NS_EXC_DISABLE()    __TZ_set_PRIMASK_NS(1)
@@ -123,6 +101,16 @@ __STATIC_INLINE void tfm_arch_set_psplim(uint32_t psplim)
 }
 
 /**
+ * \brief Set MSP limit value.
+ *
+ * \param[in] msplim        MSP limit value to be written.
+ */
+__STATIC_INLINE void tfm_arch_set_msplim(uint32_t msplim)
+{
+    __set_MSPLIM(msplim);
+}
+
+/**
  * \brief Seal the thread stack.
  *
  * This function must be called only when the caller is using MSP.
@@ -131,7 +119,7 @@ __STATIC_INLINE void tfm_arch_set_psplim(uint32_t psplim)
  *
  * \retval stack         Updated thread stack address.
  */
-__STATIC_INLINE uintptr_t tfm_arch_seal_thread_stack(uintptr_t stk)
+__STATIC_INLINE uintptr_t arch_seal_thread_stack(uintptr_t stk)
 {
     TFM_CORE_ASSERT((stk & 0x7) == 0);
     stk -= TFM_STACK_SEALED_SIZE;
@@ -140,28 +128,6 @@ __STATIC_INLINE uintptr_t tfm_arch_seal_thread_stack(uintptr_t stk)
     *((uint32_t *)(stk + 4)) = TFM_STACK_SEAL_VALUE;
 
     return stk;
-}
-
-/**
- * \brief Get architecture context value into context struct
- *
- * \param[in] p_actx        Pointer of context data
- */
-__STATIC_INLINE void tfm_arch_get_ctx(struct tfm_arch_ctx_t *p_actx)
-{
-    p_actx->sp = __get_PSP();
-    p_actx->sp_limit = __get_PSPLIM();
-}
-
-/**
- * \brief Set architecture context value into hardware
- *
- * \param[in] p_actx        Pointer of context data
- */
-__STATIC_INLINE void tfm_arch_set_ctx(struct tfm_arch_ctx_t *p_actx)
-{
-    __set_PSP(p_actx->sp);
-    __set_PSPLIM(p_actx->sp_limit);
 }
 
 /**

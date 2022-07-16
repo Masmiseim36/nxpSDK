@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------ */
 /* Copyright (c) 2016 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
-/* These coded instructions, statements, and computer programs (“Cadence    */
-/* Libraries”) are the copyrighted works of Cadence Design Systems Inc.	    */
+/* These coded instructions, statements, and computer programs (ï¿½Cadence    */
+/* Librariesï¿½) are the copyrighted works of Cadence Design Systems Inc.	    */
 /* Cadence IP is licensed for use with Cadence processor cores only and     */
 /* must not be used for any other processors and platforms. Your use of the */
 /* Cadence Libraries is subject to the terms of the license agreement you   */
@@ -154,11 +154,8 @@ F_UNDERSCORE STRINGIZE(name) ":\n"          \
 #endif
 
 #if defined(COMPILER_XTENSA)
-#define DISCARD_FUN(retval_type,name,arglist) \
-__attribute__ ((section ("/DISCARD/"))) \
-retval_type name arglist \
-{  }
-#endif
+#define DISCARD_FUN(retval_type,name,arglist)  __asm__(".type "#name", @object\n\t.global "#name"\n\t.align 4\n\t"#name":\n\t.long 0x49438B96,0x4D73F192\n\t");
+#endif 
 
 #ifdef __cplusplus
 #define externC extern "C" 
@@ -429,8 +426,8 @@ inline_ ae_f16x4 __AE_MULFP16X4RAS(const void* px,const void* py)
 /* -----------------------------------------------------------------*/
 /* redefine some xtfloat2 stuff - to be removed                     */
 /* -----------------------------------------------------------------*/
-#define XT_AE_MOVXTFLOAT_FROMINT32(x) XT_xtfloatx2_rtor_xtfloat( XT_ae_int32x2_rtor_xtfloatx2( AE_MOVINT32X2_FROMINT32( x ) ) )
-#define XT_AE_MOVINT32_FROMXTFLOAT(x) AE_MOVINT32_FROMINT32X2( XT_xtfloatx2_rtor_ae_int32x2( XT_xtfloat_rtor_xtfloatx2( x ) ) );
+#define XT_AE_MOVXTFLOAT_FROMINT32(x) XT_xtfloatx2_rtor_xtfloat( XT_AE_MOVXTFLOATX2_FROMINT32X2( AE_MOVINT32X2_FROMINT32( x ) ) )
+#define XT_AE_MOVINT32_FROMXTFLOAT(x) AE_MOVINT32_FROMINT32X2( XT_AE_MOVINT32X2_FROMXTFLOATX2( XT_xtfloat_rtor_xtfloatx2( x ) ) );
 
 #if 0
 /* -----------------------------------------------------------------*/
@@ -579,12 +576,10 @@ inline_ xtfloatx2 __XT_MAX_SX2(const void*  pb,const void*  pc)
     return XT_SEL32_LL_SX2((xtfloatx2)ah,(xtfloatx2)al);
 }
 
-#define XT_AE_MOVXTFLOATX2_FROMINT32X2(x) XT_ae_int32x2_rtor_xtfloatx2(x)
-#define XT_AE_MOVXTFLOATX2_FROMF32X2(x) XT_ae_int32x2_rtor_xtfloatx2(AE_MOVF32X2_FROMINT32X2(x))
-#define XT_AE_MOVINT32X2_FROMXTFLOATX2(x) XT_xtfloatx2_rtor_ae_int32x2(x)
+#define XT_AE_MOVXTFLOATX2_FROMF32X2(x) XT_AE_MOVXTFLOATX2_FROMINT32X2(AE_MOVF32X2_FROMINT32X2(x))
 
-#define XT_AE_MOVINT32_FROMXTFLOAT(x) AE_MOVINT32_FROMINT32X2( XT_xtfloatx2_rtor_ae_int32x2( XT_xtfloat_rtor_xtfloatx2( x ) ) );
-#define XT_AE_MOVXTFLOAT_FROMINT32(x) XT_xtfloatx2_rtor_xtfloat( XT_ae_int32x2_rtor_xtfloatx2( AE_MOVINT32X2_FROMINT32( x ) ) )
+#define XT_AE_MOVINT32_FROMXTFLOAT(x) AE_MOVINT32_FROMINT32X2( XT_AE_MOVINT32X2_FROMXTFLOATX2( XT_xtfloat_rtor_xtfloatx2( x ) ) );
+#define XT_AE_MOVXTFLOAT_FROMINT32(x) XT_xtfloatx2_rtor_xtfloat( XT_AE_MOVXTFLOATX2_FROMINT32X2( AE_MOVINT32X2_FROMINT32( x ) ) )
 
 #define XT_MULC_S(x,y) __XT_MULC_S(&x,&y)
 #define XT_MULCCONJ_S(x,y) __XT_MULCCONJ_S(&x,&y)

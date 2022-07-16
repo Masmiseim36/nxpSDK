@@ -83,8 +83,20 @@ int64_t vec_dot32x32_fast (const int32_t * restrict x,const int32_t * restrict y
   NASSERT_ALIGN8(y);
   NASSERT((N&3)==0);
   if(N<=0) return 0;
-  __Pragma("loop_count min=2")
-  for (n=0; n<(N>>1); n++)
+  __Pragma("loop_count min=1")
+  for (n=0; n<(N>>2); n++)
+  {
+    AE_L32X2_IP(x0, px, 8);
+    AE_L32X2_IP(y0, py, 8);
+    AE_MULAAFD32RA_HH_LL(t,x0,y0);
+
+	// UNROLL
+
+	AE_L32X2_IP(x0, px, 8);
+	AE_L32X2_IP(y0, py, 8);
+	AE_MULAAFD32RA_HH_LL(t, x0, y0);
+  }
+  if (N & 2)
   {
     AE_L32X2_IP(x0, px, 8);
     AE_L32X2_IP(y0, py, 8);

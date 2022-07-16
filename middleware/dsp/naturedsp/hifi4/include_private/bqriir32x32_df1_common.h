@@ -41,6 +41,8 @@
 #define MAGIC     0x41c77c8a
 #define USE_INTEGER_32X32   1 // if 1, code uses integer 32x32 multiplies instead of legacy Q31xQ31->Q47 multiplies
 
+/* Calling delayless implementations, when delay = 0  */
+#define ALG32X32_DF1_ND 1
 //----------------------------------------------------------------------------------------
 // use integer 32x32 multiplies
 //----------------------------------------------------------------------------------------

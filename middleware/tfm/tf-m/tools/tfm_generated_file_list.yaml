@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+# Copyright (c) 2018-2022, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -40,12 +40,6 @@
         "output": "secure_fw/spm/cmsis_func/tfm_secure_irq_handlers.inc"
     },
     {
-        "name": "Secure IRQ handlers for PSA API",
-        "short_name": "tfm_secure_irq_handlers_ipc",
-        "template": "secure_fw/spm/cmsis_psa/tfm_secure_irq_handlers_ipc.inc.template",
-        "output": "secure_fw/spm/cmsis_psa/tfm_secure_irq_handlers_ipc.inc"
-    },
-    {
         "name": "SID H file",
         "short_name": "sid.h",
         "template": "interface/include/psa_manifest/sid.h.template",
@@ -56,6 +50,18 @@
         "short_name": "pid.h",
         "template": "interface/include/psa_manifest/pid.h.template",
         "output": "interface/include/psa_manifest/pid.h"
+    },
+    {
+        "name": "SPM config header",
+        "short_name": "config_impl.h",
+        "template": "interface/include/config_impl.h.template",
+        "output": "interface/include/config_impl.h"
+    },
+    {
+        "name": "CMake variables generated",
+        "short_name": "config_impl.cmake",
+        "template": "tools/config_impl.cmake.template",
+        "output": "tools/config_impl.cmake"
     }
   ]
 }

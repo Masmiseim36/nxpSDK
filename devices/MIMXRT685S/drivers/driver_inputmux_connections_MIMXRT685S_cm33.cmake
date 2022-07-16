@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("driver_inputmux_connections component is included.")
 
 

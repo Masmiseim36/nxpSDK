@@ -11,15 +11,25 @@
 #include "tfm_plat_nv_counters.h"
 #include "tfm_secure_api.h"
 #include "psa_manifest/pid.h"
+#include "load/partition_defs.h"
 
 #define NV_COUNTER_ID_SIZE  sizeof(enum tfm_nv_counter_t)
+
+#ifdef TFM_PARTITION_PROTECTED_STORAGE
 #define NV_COUNTER_MAP_SIZE   3
+#else /* TFM_PARTITION_PROTECTED_STORAGE */
+#define NV_COUNTER_MAP_SIZE   1
+#endif /* TFM_PARTITION_PROTECTED_STORAGE */
 
 /* Access map using NVCOUNTER_IDX -> tfm_partition-id key-value pairs */
 static const int32_t nv_counter_access_map[NV_COUNTER_MAP_SIZE] = {
-                                          [PLAT_NV_COUNTER_0] = TFM_SP_PS,
-                                          [PLAT_NV_COUNTER_1] = TFM_SP_PS,
-                                          [PLAT_NV_COUNTER_2] = TFM_SP_PS
+#ifdef TFM_PARTITION_PROTECTED_STORAGE
+                                          [PLAT_NV_COUNTER_PS_0] = TFM_SP_PS,
+                                          [PLAT_NV_COUNTER_PS_1] = TFM_SP_PS,
+                                          [PLAT_NV_COUNTER_PS_2] = TFM_SP_PS
+#else
+                                          [0] = INVALID_PARTITION_ID
+#endif
               };
 
 #ifdef TFM_PSA_API
@@ -32,7 +42,7 @@ static const int32_t nv_counter_access_map[NV_COUNTER_MAP_SIZE] = {
 #define OUTPUT_BUFFER_SIZE 64
 
 typedef enum tfm_platform_err_t (*plat_func_t)(const psa_msg_t *msg);
-#endif
+#endif /* TFM_PSA_API */
 
 /*
  * \brief Verifies ownership of a nv_counter resource to a partition id.
@@ -48,8 +58,12 @@ static bool nv_counter_access_grant(int32_t client_id,
     int32_t req_id;
 
     /* Boundary check the input argument */
-    if (nv_counter_no >= NV_COUNTER_MAP_SIZE ||
-        (int32_t)nv_counter_no < 0 || nv_counter_no >= PLAT_NV_COUNTER_MAX) {
+    const uint32_t bounds[] = {PLAT_NV_COUNTER_MAX, NV_COUNTER_MAP_SIZE};
+    const uint32_t lower_bound_check = bounds[0] < bounds[1] ?
+                                       bounds[0] : bounds[1];
+
+    /* Check that nv_counter no is in [0; lower_bound_check-1] */
+    if (!((uint32_t)nv_counter_no < lower_bound_check)) {
         return false;
     }
 
@@ -211,10 +225,13 @@ platform_sp_nv_counter_ipc(const psa_msg_t *msg)
         err = tfm_plat_increment_nv_counter(counter_id);
         break;
     case TFM_PLATFORM_API_ID_NV_READ:
-        num = psa_read(msg->handle, 0, &counter_id, msg->in_size[0]);
-
         if (msg->in_size[0] != NV_COUNTER_ID_SIZE ||
             in_len != 1 || out_len != 1) {
+            return TFM_PLATFORM_ERR_SYSTEM_ERROR;
+        }
+
+        num = psa_read(msg->handle, 0, &counter_id, msg->in_size[0]);
+        if (num != msg->in_size[0]) {
             return TFM_PLATFORM_ERR_SYSTEM_ERROR;
         }
 
@@ -344,7 +361,7 @@ enum tfm_platform_err_t platform_sp_init(void)
 #endif
     }
 #ifdef TFM_PSA_API
-    psa_signal_t signals = 0;
+    psa_signal_t signals;
 
     while (1) {
         signals = psa_wait(PSA_WAIT_ANY, PSA_BLOCK);

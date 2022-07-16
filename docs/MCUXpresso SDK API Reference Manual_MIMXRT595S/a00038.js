@@ -1,10 +1,10 @@
 var a00038 =
 [
-    [ "i2c_slave_address_t", "a00038.html#a00372", [
+    [ "i2c_slave_address_t", "a00038.html#a00373", [
       [ "address", "a00038.html#ad7af2a58faba6a178daa97bd06ebce36", null ],
       [ "addressDisable", "a00038.html#aca3dcdb3ab2710d991ada52d64bf102c", null ]
     ] ],
-    [ "i2c_slave_config_t", "a00038.html#a00373", [
+    [ "i2c_slave_config_t", "a00038.html#a00374", [
       [ "address0", "a00038.html#a4738c7cd55260f7e8a3825d0b2278a34", null ],
       [ "address1", "a00038.html#ae19c45c96699bb3a6821150ab820b029", null ],
       [ "address2", "a00038.html#ae855ba5c53f7e585c44eae8bada85e9d", null ],
@@ -14,7 +14,7 @@ var a00038 =
       [ "busSpeed", "a00038.html#a14acc40a290c779fde0825f3a8bdbb25", null ],
       [ "enableSlave", "a00038.html#a92d20835618a946b8f7702455877ef7a", null ]
     ] ],
-    [ "i2c_slave_transfer_t", "a00038.html#a00374", [
+    [ "i2c_slave_transfer_t", "a00038.html#a00375", [
       [ "handle", "a00038.html#ab74516c1edb1424ddb1554de7cae69bc", null ],
       [ "event", "a00038.html#ad0a9e837e9df16d89bab98a78af5bd10", null ],
       [ "receivedAddress", "a00038.html#ad6f3b291ee81b69cf91c161ae26d65ae", null ],
@@ -26,7 +26,7 @@ var a00038 =
       [ "transferredCount", "a00038.html#a0394563c8d0f9eeeecd242a65cee2ad4", null ],
       [ "completionStatus", "a00038.html#a35adbf64ca65dd2c1b52f9260f5b9e90", null ]
     ] ],
-    [ "i2c_slave_handle_t", "a00038.html#a00296", [
+    [ "i2c_slave_handle_t", "a00038.html#a00297", [
       [ "transfer", "a00038.html#a9934cd1a4d4b4e02ac5856e28f86a229", null ],
       [ "isBusy", "a00038.html#a81ece18a362fc9779750be91f7cc6b30", null ],
       [ "slaveFsm", "a00038.html#a18589a5de9b06b2eaf7d4260eac03a58", null ],

@@ -13,7 +13,6 @@
 #include "its_flash_fs_dblock.h"
 #include "tfm_memory_utils.h"
 #include "its_utils.h"
-#include "log/tfm_log.h" //NXP DM
 
 /* Filesystem-internal flags, which cannot be passed by the caller */
 #define ITS_FLASH_FS_INTERNAL_FLAGS_MASK  (UINT32_MAX - ((1U << 24) - 1))
@@ -102,10 +101,6 @@ static psa_status_t its_flash_fs_validate_config(
 {
     psa_status_t ret = PSA_SUCCESS;
 
-#if 0 //NXP
-    LOG_MSG("metadata_size: %d \r\n block_size: %d\r\n num_blocks: %d\r\n max_file_size: %d\r\n", its_flash_fs_all_metadata_size(cfg),  cfg->block_size, cfg->num_blocks, cfg->max_file_size );
-#endif
-    
     /* The minimum number of blocks is 2. In this case, metadata and data are
      * stored in the same physical block, and the other block is required for
      * power failure safe operation.
@@ -116,7 +111,7 @@ static psa_status_t its_flash_fs_validate_config(
     if ((cfg->num_blocks < 2) || (cfg->num_blocks == 3)) {
         ret = PSA_ERROR_INVALID_ARGUMENT;
     }
-    else //NXP
+
     if (cfg->num_blocks == 2) {
         /* Metadata and data are stored in the same physical block */
         if (cfg->max_file_size >
@@ -133,12 +128,9 @@ static psa_status_t its_flash_fs_validate_config(
     if (cfg->max_file_size > cfg->block_size) {
         ret = PSA_ERROR_INVALID_ARGUMENT;
     }
-    else //NXP
+
     /* Metadata must fit in a flash block */
     if (its_flash_fs_all_metadata_size(cfg) > cfg->block_size) {
-#if 0 //NXP        
-        LOG_MSG("metadata_size (%d) > block_size (%d)\r\n", its_flash_fs_all_metadata_size(cfg),  cfg->block_size );
-#endif
         ret = PSA_ERROR_INVALID_ARGUMENT;
     }
 
@@ -257,7 +249,7 @@ psa_status_t its_flash_fs_file_write(struct its_flash_fs_ctx_t *fs_ctx,
                                      const uint8_t *data)
 {
     struct its_block_meta_t block_meta;
-    struct its_file_meta_t file_meta;
+    struct its_file_meta_t file_meta = {0};
     uint32_t cur_phys_block;
     psa_status_t err;
     uint32_t idx;

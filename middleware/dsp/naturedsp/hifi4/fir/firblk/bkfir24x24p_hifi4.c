@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------ */
-/* Copyright (c) 2018 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
+/* Copyright (c) 2016 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
 /* These coded instructions, statements, and computer programs (ÿCadence    */
 /* Librariesÿ) are the copyrighted works of Cadence Design Systems Inc.	    */
 /* Cadence IP is licensed for use with Cadence processor cores only and     */
@@ -33,7 +33,7 @@
 /* Portable data types. */
 #include "NatureDSP_types.h"
 /* Signal Processing Library API. */
-#include "NatureDSP_Signal.h"
+#include "NatureDSP_Signal_fir.h"
 /* Common utility and macros declarations. */
 #include "common.h"
 #include "bkfir24x24p_common.h"

@@ -69,9 +69,9 @@ File architecture
 The platform selection when building TF-M is set via the CMake
 variable TFM_PLATFORM. This variable holds part of the path to the platform.
 
-When using -DTFM_PLATFORM="``arm/mps2/an521``" (as in the build instruction example)
+When using ``-DTFM_PLATFORM=arm/mps2/an521`` or ``-DTFM_PLATFORM=an521``
 TF-M build system will look for the platform in
-<TF-M ROOT>/platform/ext/target/``arm/mps2/an521``.
+<TF-M ROOT>/platform/ext/target/arm/mps2/an521.
 
 Therefore all hardware dependent code for your platform should go to
 <TF-M ROOT>/platform/ext/target/.
@@ -93,26 +93,28 @@ shims to the CMSIS drivers. It also contains the scatter files that can be
 used for the tfm_s partition.
 
 This folder also contains another folder named template. The latter contains
-dummy/example implementations for a set of features which will be
-init and used during development.
+example implementations that are used for platforms by default, but which can be
+altered or replaced if other functionality is required.
 
-    +------------------------------+---------------------------------------------------------------------------+
-    |    name                      |        description                                                        |
-    +==============================+===========================================================================+
-    |PLATFORM_DUMMY_ATTEST_HAL     |Use the dummy implementation of the attestation HAL (default True)         |
-    +------------------------------+---------------------------------------------------------------------------+
-    |PLATFORM_DUMMY_NV_COUNTERS    |Use the dummy implementation of the counters in NV (default True)          |
-    +------------------------------+---------------------------------------------------------------------------+
-    |PLATFORM_DUMMY_CRYPTO_KEYS    |Use the dummy implementation of crypto keys (default True)                 |
-    +------------------------------+---------------------------------------------------------------------------+
-    |PLATFORM_DUMMY_ROTPK          |Use the dummy implementation of the RoT Public Key (default True)          |
-    +------------------------------+---------------------------------------------------------------------------+
-    |PLATFORM_DUMMY_IAK            |Use the dummy implementation of the initial attestation key (default True) |
-    +------------------------------+---------------------------------------------------------------------------+
-
-.. Note::
-
-   Do not use the dummy implementations in production.
+    +------------------------------+-----------------------------------------------------------------------------+
+    |    name                      |        description                                                          |
+    +==============================+=============================================================================+
+    |PLATFORM_DEFAULT_ATTEST_HAL   |Use the default implementation of the attestation HAL (default True)         |
+    +------------------------------+-----------------------------------------------------------------------------+
+    |PLATFORM_DEFAULT_NV_COUNTERS  |Use the default implementation of the counters in NV (default True)          |
+    +------------------------------+-----------------------------------------------------------------------------+
+    |PLATFORM_DEFAULT_CRYPTO_KEYS  |Use the default implementation of crypto keys (default True)                 |
+    +------------------------------+-----------------------------------------------------------------------------+
+    |PLATFORM_DEFAULT_ROTPK        |Use the default implementation of the RoT Public Key (default True)          |
+    +------------------------------+-----------------------------------------------------------------------------+
+    |PLATFORM_DEFAULT_IAK          |Use the default implementation of the initial attestation key (default True) |
+    +------------------------------+-----------------------------------------------------------------------------+
+    |PLATFORM_DEFAULT_UART_STDOUT  |Use the default implementation of the uart for stdout output (default True)  |
+    +------------------------------+-----------------------------------------------------------------------------+
+    |PLATFORM_DEFAULT_NV_SEED      |Use the default implementation of the NV seed in the RNG (default True)      |
+    +------------------------------+-----------------------------------------------------------------------------+
+    |PLATFORM_DEFAULT_OTP          |Use the default implementation of the OTP (default True)                     |
+    +------------------------------+-----------------------------------------------------------------------------+
 
 ***************
 Platform Folder
@@ -329,7 +331,7 @@ region_defs.h:
     +----------------------------------+-------------------------------------------------------------------+-----------------------------------------------+
     |S_MSP_STACK_SIZE                  | Size of the Secure (S) world Main stack                           | yes                                           |
     +----------------------------------+-------------------------------------------------------------------+-----------------------------------------------+
-    |S_PSP_STACK_SIZE                  | Size of the Secure (S) world Process stack                        | yes                                           |
+    |S_PSP_STACK_SIZE                  | Size of the Secure (S) world Process stack                        | no for IPC model                              |
     +----------------------------------+-------------------------------------------------------------------+-----------------------------------------------+
     |NS_HEAP_SIZE                      | Size of the Non-Secure (NS) world Heap                            | if tfm_ns is built                            |
     +----------------------------------+-------------------------------------------------------------------+-----------------------------------------------+
@@ -407,10 +409,6 @@ CMSIS_Driver/Driver_Flash.c:
     Refer to the CMSIS `FLASH <https://www.keil.com/pack/doc/CMSIS/Driver/html/group__flash__interface__gr.html>`_
     documentation.
 
-    Note: there is a known misalignment with the current CMSIS Flash interface
-    in TF-M. Currently TF-M expects and returns the size whereas CMSIS Flash
-    specifies the number of elements.
-
 CMSIS_Driver/Driver_USART.c:
 ----------------------------
 
@@ -441,6 +439,20 @@ target_cfg.[ch]:
     to memory protection (e.g. SAU/PPC/MPC). These functions will not be called
     by TF-M directly, but are expected to be called from the function
     tfm_hal_set_up_static_boundaries() in tfm_hal_isolation.c.
+
+tfm_hal_platform.c:
+-------------------
+
+    (location as defined in CMakeLists.txt)
+
+    Each platform is expected to implement the following API declared in
+    platform/include/tfm_hal_platform.h
+
+.. code-block:: c
+
+    enum tfm_hal_status_t tfm_hal_platform_init(void);
+
+    The function will be called before SPM initialization.
 
 tfm_hal_isolation.c:
 --------------------
@@ -517,7 +529,7 @@ tfm_spm_hal_configure_default_isolation:
 
 .. code-block:: c
 
-    enum tfm_plat_err_t tfm_spm_hal_configure_default_isolation(uint32_t partition_idx, const struct platform_data_t *platform_data);
+    enum tfm_plat_err_t tfm_spm_hal_configure_default_isolation(bool privileged, const struct platform_data_t *platform_data);
 
 .. Note::
 
@@ -565,42 +577,32 @@ tfm_spm_hal_get_ns_access_attr:
 
     void tfm_spm_hal_get_ns_access_attr(const void *p, size_t s, struct mem_attr_info_t *p_attr);
 
-tfm_spm_hal_nvic_interrupt_enable:
-----------------------------------
-
-    This function enables the interrupts associated with the secure peripherals
-    (plus the isolation boundary violation interrupts).
-
-.. code-block:: c
-
-    enum tfm_plat_err_t tfm_spm_hal_nvic_interrupt_enable(void);
-
-tfm_spm_hal_clear_pending_irq:
-------------------------------
+tfm_hal_irq_clear_pending:
+--------------------------
 
     This function clears any pending IRQ.
 
 .. code-block:: c
 
-    void tfm_spm_hal_clear_pending_irq(IRQn_Type irq_line);
+    void tfm_hal_irq_clear_pending(uint32_t irq_num);
 
-tfm_spm_hal_enable_irq:
------------------------
+tfm_hal_irq_enable:
+-------------------
 
     This function enable an IRQ.
 
 .. code-block:: c
 
-    void tfm_spm_hal_enable_irq(IRQn_Type irq_line);
+    void tfm_hal_irq_enable(uint32_t irq_num);
 
-tfm_spm_hal_disable_irq:
-------------------------
+tfm_hal_irq_disable:
+--------------------
 
     This function disable an IRQ.
 
 .. code-block:: c
 
-    void tfm_spm_hal_disable_irq(IRQn_Type irq_line);
+    void tfm_hal_irq_disable(uint32_t irq_num);
 
 tfm_spm_hal_set_irq_target_state:
 ---------------------------------
@@ -610,53 +612,6 @@ tfm_spm_hal_set_irq_target_state:
 .. code-block:: c
 
     enum irq_target_state_t tfm_spm_hal_set_irq_target_state(IRQn_Type irq_line, enum irq_target_state_t target_state);
-
-tfm_spm_hal_nvic_interrupt_target_state_cfg:
---------------------------------------------
-
-    This function configures all external interrupts to target the NS state,
-    apart from the ones associated with secure peripherals (plus MPC and PPC).
-
-.. code-block:: c
-
-    enum tfm_plat_err_t tfm_spm_hal_nvic_interrupt_target_state_cfg(void);
-
-tfm_spm_hal_enable_fault_handlers:
-----------------------------------
-
-    This function enables the fault handlers and sets priorities.
-
-.. code-block:: c
-
-    enum tfm_plat_err_t tfm_spm_hal_enable_fault_handlers(void);
-
-tfm_spm_hal_system_reset_cfg:
------------------------------
-
-    This function will be called at init time, and should configure the
-    hardware to allow the system reset call to happen. Such configuration
-    could be to allow only the Secure world to call for a system reset.
-
-.. code-block:: c
-
-    enum tfm_plat_err_t tfm_spm_hal_system_reset_cfg(void);
-
-tfm_spm_hal_init_debug:
------------------------
-
-    This function configures the system debug properties.
-    The default configuration of this function should disable secure debug
-    when either DAUTH_NONE or DAUTH_NS_ONLY define is set. It is up to the
-    platform owner to decide if secure debug can be turned on in their
-    system, if DAUTH_FULL define is present.
-    The DAUTH_CHIP_DEFAULT define should not be considered a safe default
-    option unless explicitly noted by the chip vendor.
-    The implementation should trigger a compilation error if none of these
-    defines are set.
-
-.. code-block:: c
-
-    enum tfm_plat_err_t tfm_spm_hal_init_debug(void);
 
 Annex
 =====
@@ -787,8 +742,7 @@ Annex
 
     [config_cmake]
     set(BL2                                 OFF         CACHE BOOL      "Whether to build BL2")
-    set(TFM_PSA_API                         ON           CACHE BOOL      "Use PSA api (IPC mode) instead of secure library mode" FORCE)
-    set(NS                                  FALSE        CACHE BOOL      "Whether to build NS app" FORCE)
+    set(NS                                  FALSE       CACHE BOOL      "Whether to build NS app" FORCE)
 
 ------------
 
@@ -813,4 +767,4 @@ Annex
     # Requires armclang >= 6.10.1
     tfm_invalid_config((CMAKE_C_COMPILER_ID STREQUAL "ARMClang") AND (CMAKE_C_COMPILER_VERSION VERSION_LESS "6.10.1"))
 
-*Copyright (c) 2021, Arm Limited. All rights reserved.*
+*Copyright (c) 2021-2022, Arm Limited. All rights reserved.*

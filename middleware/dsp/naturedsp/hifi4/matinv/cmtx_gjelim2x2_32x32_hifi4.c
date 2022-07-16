@@ -278,6 +278,7 @@ int  cmtx_gjelim2x2_32x32  (void* pScr, complex_fract32 *y, const complex_fract3
             }
             pB=(B+k);
             for (i=0; i<N; i++)  AE_S32X2_XP(AE_ZERO32(),pB,N*sizeof(ae_int32x2));
+            __Pragma("no_reorder");
         }
     }
     // copy back to the output

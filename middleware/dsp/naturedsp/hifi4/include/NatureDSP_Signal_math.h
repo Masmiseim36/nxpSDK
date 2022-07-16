@@ -308,28 +308,83 @@ float32_t scl_antilog10f(float32_t x);
 
 /*-------------------------------------------------------------------------
   Power function
-  This routine calculates power function for 32-bit fixed-point numbers. 
-  The  base is represented in Q31, the exponent is represented in Q6.25. 
-  Results are represented as normalized fixed point  number with separate
-  mantissa in Q31 and exponent.
-  NOTE: function returns 0 for negative or zero base
+  These routines calculate power function for 32-bit fixed-point numbers or 
+  floating point numbers. 
+  For the fixed point API, The  base is represented in Q31, the exponent 
+  is represented in Q6.25. Results are represented as normalized fixed point
+  number with separate mantissa in Q31 and exponent.
 
   Precision:
-  32x32  32-bit inputs, 32-bit outputs. Accuracy: 2 ULP
+  32x32  32-bit inputs, 32-bit outputs
+  f      floating point input, floating point output
+
+  Accuracy: 
+  2 ULP for fixed point API
+  2 ULP under condition that |y|<=100
+
+  Notes:
+1. Scalar floating point raise  to a power functions conform to ANSI C requirements on 
+   standard math library functions in respect to treatment of errno and floating-
+   point exceptions. Vectorized function does not touch errno and may raise or not raise 
+   floating point exceptions.
+2. For floating point API, If x<0 is finite, y is finite and not an integer value, 
+   then the respective result z is set to NaN
+3. For fixed point API, function returns zero for all non-positive x. Fixed point 
+   functions never touch errno
+
+    Special cases:
+          x   |   y    | Result |  Extra Conditions    
+      --------+--------+--------+---------------------
+      floating point API
+      --------+--------+--------+---------------------
+        +/-0  | y      | +/-inf | odd y<0
+        +/-0  | y      | +inf   | even y<0
+        +/-0  | y      | +/-0   | odd y>0
+        +/-0  | y      | 0      | even y>0
+        +/-1  | +/-inf | 1      | 
+        1     | y      | 1      | any y including NaN
+        x     | +/-0   | 1      | any x including NaN
+        x     | y      | NaN    | finite x<0 and finite 
+              |        |        | non-integer y (see 
+              |        |        | note 2)
+        x     | -inf   | +inf   | |x|<1
+        x     | -inf   | 0      | |x|>1
+        x     | +inf   | 0      | |x|<1
+        x     | +inf   | +inf   | |x|>1
+        -inf  | y      | -0     | y an odd integer <0
+        -inf  | y      | 0      | y<0 and not an odd 
+              |        |        | integer
+        -inf  | y      | -inf   | y an odd integer >0
+        -inf  | y      | +inf   | y>0 and not an odd 
+              |        |        | integer
+        +inf  | y      | 0      | y<0
+        +inf  | y      | +inf   | y>0
+      --------+--------+--------+---------------------
+      fixed point API
+      --------+--------+--------+---------------------
+         x    | y      | 0      | x<=0
+      --------+--------+--------+---------------------
 
   Input:
-  x[N]  input data,Q0.31
-  y[N]  input data,Q6.25 
+  x[N]  input data,Q0.31 or floating point
+  y[N]  input data,Q6.25 or floating point
   N     length of vectors
-  Output:
+  Output (fixed point API):
   m[N]  mantissa of output, Q31 
   e[N]  exponent of output  
+  Output (floating point API):
+  z[N]  results: floating point
 
   Restriction:
-  x,y,m should not overlap
+  z,x,y,m should not overlap
 -------------------------------------------------------------------------*/
 void vec_pow_32x32(int32_t *  m, int16_t *e, 
                    const int32_t *  x, const int32_t*  y, int N);
+void vec_powf (   float32_t * restrict z, 
+            const float32_t * restrict x, 
+            const float32_t * restrict y, 
+            int N );
+float32_t scl_powf ( float32_t x, float32_t y );
 
 /*-------------------------------------------------------------------------
   Square Root

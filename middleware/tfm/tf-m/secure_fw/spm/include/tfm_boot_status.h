@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -36,8 +36,9 @@ extern "C" {
  *    header structure: struct shared_data_tlv_entry and the data. In the entry
  *    header is a type field (tly_type) which identify the consumer of the
  *    entry in the runtime SW and specify the subtype of that data item. There
- *    is a size field (tlv_len) which covers the size of the entry header and
- *    the data. After this structure comes the actual data.
+ *    is a size field (tlv_len) which covers the length of the data
+ *    (not including the entry header structure). After this structure comes
+ *    the actual data.
  *  - Arbitrary number and size of data entry can be in the shared memory area.
  *
  * This table gives of overview about the tlv_type field in the entry header.
@@ -92,53 +93,6 @@ extern "C" {
 #define BOOT_SEED          0x00
 #define HW_VERSION         0x01
 #define SECURITY_LIFECYCLE 0x02
-
-/* Minor numbers (12 bit) to identify attestation service related data */
-#define TLV_MINOR_IAS_BOOT_SEED       ((SW_GENERAL << 6) | BOOT_SEED)
-#define TLV_MINOR_IAS_HW_VERSION      ((SW_GENERAL << 6) | HW_VERSION)
-#define TLV_MINOR_IAS_SLC             ((SW_GENERAL << 6) | SECURITY_LIFECYCLE)
-
-/* Bootloader - It can be more stage */
-#define TLV_MINOR_IAS_BL2_MEASURE_VALUE  ((SW_BL2  << 6) | SW_MEASURE_VALUE)
-#define TLV_MINOR_IAS_BL2_MEASURE_TYPE   ((SW_BL2  << 6) | SW_MEASURE_TYPE)
-#define TLV_MINOR_IAS_BL2_VERSION        ((SW_BL2  << 6) | SW_VERSION)
-#define TLV_MINOR_IAS_BL2_SIGNER_ID      ((SW_BL2  << 6) | SW_SIGNER_ID)
-#define TLV_MINOR_IAS_BL2_TYPE           ((SW_BL2  << 6) | SW_TYPE)
-
-/* PROT: PSA Root of Trust */
-#define TLV_MINOR_IAS_PROT_MEASURE_VALUE ((SW_PROT << 6) | SW_MEASURE_VALUE)
-#define TLV_MINOR_IAS_PROT_MEASURE_TYPE  ((SW_PROT << 6) | SW_MEASURE_TYPE)
-#define TLV_MINOR_IAS_PROT_VERSION       ((SW_PROT << 6) | SW_VERSION)
-#define TLV_MINOR_IAS_PROT_SIGNER_ID     ((SW_PROT << 6) | SW_SIGNER_ID)
-#define TLV_MINOR_IAS_PROT_TYPE          ((SW_PROT << 6) | SW_TYPE)
-
-/* AROT: Application Root of Trust */
-#define TLV_MINOR_IAS_AROT_MEASURE_VALUE ((SW_AROT << 6) | SW_MEASURE_VALUE)
-#define TLV_MINOR_IAS_AROT_MEASURE_TYPE  ((SW_AROT << 6) | SW_MEASURE_TYPE)
-#define TLV_MINOR_IAS_AROT_VERSION       ((SW_AROT << 6) | SW_VERSION)
-#define TLV_MINOR_IAS_AROT_SIGNER_ID     ((SW_AROT << 6) | SW_SIGNER_ID)
-#define TLV_MINOR_IAS_AROT_TYPE          ((SW_AROT << 6) | SW_TYPE)
-
-/* Non-secure processing environment - single non-secure image */
-#define TLV_MINOR_IAS_NSPE_MEASURE_VALUE ((SW_NSPE << 6) | SW_MEASURE_VALUE)
-#define TLV_MINOR_IAS_NSPE_MEASURE_TYPE  ((SW_NSPE << 6) | SW_MEASURE_TYPE)
-#define TLV_MINOR_IAS_NSPE_VERSION       ((SW_NSPE << 6) | SW_VERSION)
-#define TLV_MINOR_IAS_NSPE_SIGNER_ID     ((SW_NSPE << 6) | SW_SIGNER_ID)
-#define TLV_MINOR_IAS_NSPE_TYPE          ((SW_NSPE << 6) | SW_TYPE)
-
-/* Secure processing environment (ARoT + PRoT) - single secure image */
-#define TLV_MINOR_IAS_SPE_MEASURE_VALUE  ((SW_SPE  << 6) | SW_MEASURE_VALUE)
-#define TLV_MINOR_IAS_SPE_MEASURE_TYPE   ((SW_SPE  << 6) | SW_MEASURE_TYPE)
-#define TLV_MINOR_IAS_SPE_VERSION        ((SW_SPE  << 6) | SW_VERSION)
-#define TLV_MINOR_IAS_SPE_SIGNER_ID      ((SW_SPE  << 6) | SW_SIGNER_ID)
-#define TLV_MINOR_IAS_SPE_TYPE           ((SW_SPE  << 6) | SW_TYPE)
-
-/* SPE + NSPE - combined secure and non-secure image */
-#define TLV_MINOR_IAS_S_NS_MEASURE_VALUE ((SW_S_NS << 6) | SW_MEASURE_VALUE)
-#define TLV_MINOR_IAS_S_NS_MEASURE_TYPE  ((SW_S_NS << 6) | SW_MEASURE_TYPE)
-#define TLV_MINOR_IAS_S_NS_VERSION       ((SW_S_NS << 6) | SW_VERSION)
-#define TLV_MINOR_IAS_S_NS_SIGNER_ID     ((SW_S_NS << 6) | SW_SIGNER_ID)
-#define TLV_MINOR_IAS_S_NS_TYPE          ((SW_S_NS << 6) | SW_TYPE)
 
 /* General macros to handle TLV type */
 #define MAJOR_MASK 0xF     /* 4  bit */
@@ -198,7 +152,7 @@ struct shared_data_tlv_header {
  */
 struct shared_data_tlv_entry {
     uint16_t tlv_type;
-    uint16_t tlv_len; /* size of single TLV entry (including this header). */
+    uint16_t tlv_len; /* size of single TLV entry (not including this header) */
 };
 
 /**

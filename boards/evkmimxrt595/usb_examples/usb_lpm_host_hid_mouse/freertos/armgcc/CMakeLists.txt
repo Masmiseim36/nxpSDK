@@ -57,6 +57,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/timer
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
@@ -86,6 +87,8 @@ include(driver_inputmux_connections_MIMXRT595S_cm33)
 include(driver_flexcomm_i2c_MIMXRT595S_cm33)
 
 include(driver_pca9420_MIMXRT595S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT595S_cm33)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
 

@@ -399,14 +399,14 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>board_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board_init.c</FilePath>
-            </File>
-            <File>
               <FileName>board_init.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>board_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board_init.c</FilePath>
             </File>
             <File>
               <FileName>dsp_support.c</FileName>
@@ -1303,14 +1303,14 @@
               <FilePath>../clock_config.h</FilePath>
             </File>
             <File>
-              <FileName>board_init.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../board_init.c</FilePath>
-            </File>
-            <File>
               <FileName>board_init.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>board_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board_init.c</FilePath>
             </File>
             <File>
               <FileName>dsp_support.c</FileName>

@@ -1,6 +1,6 @@
 var a00062 =
 [
-    [ "usart_config_t", "a00062.html#a00389", [
+    [ "usart_config_t", "a00062.html#a00390", [
       [ "baudRate_Bps", "a00062.html#a5d2631bc772901b4114b01770f9bb337", null ],
       [ "parityMode", "a00062.html#aff1d7e368b35ae89db8aa393207e7ccc", null ],
       [ "stopBitCount", "a00062.html#aeb0b8a38f5d7e0def2aa1b079643682f", null ],
@@ -16,13 +16,13 @@ var a00062 =
       [ "syncMode", "a00062.html#ad5debb2aa90fc8fa732edd1ab4bdbbea", null ],
       [ "clockPolarity", "a00062.html#ac808e4908f1d6f9ca78fec3d0b8f118a", null ]
     ] ],
-    [ "usart_transfer_t", "a00062.html#a00391", [
+    [ "usart_transfer_t", "a00062.html#a00392", [
       [ "data", "a00062.html#acad21ced979ce0c2af98f0b1837863c9", null ],
       [ "rxData", "a00062.html#a44bd38d7d89b7e185ac9bb49bd7214ea", null ],
       [ "txData", "a00062.html#ad081b93c86f16dedd57dfc105a71e7fa", null ],
       [ "dataSize", "a00062.html#a605c0a56df2815ffb3461aaaf116752a", null ]
     ] ],
-    [ "usart_handle_t", "a00062.html#a00273", [
+    [ "usart_handle_t", "a00062.html#a00274", [
       [ "txData", "a00062.html#a2e0eada6edeef87ca5609381a495caa0", null ],
       [ "txDataSize", "a00062.html#aafb090dd1831c9e83df2d60cf3cd25f0", null ],
       [ "txDataSizeAll", "a00062.html#add7cbfa096ebb8bfe5084c9940d0a9d8", null ],
@@ -54,8 +54,7 @@ var a00062 =
       [ "kStatus_USART_NoiseError", "a00062.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a3f21596ffe8300152d7f9f5587402e19", null ],
       [ "kStatus_USART_FramingError", "a00062.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a9e2f548075400b4c0a719ee1b0a534a9", null ],
       [ "kStatus_USART_ParityError", "a00062.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a579872694419f8708e38935593105868", null ],
-      [ "kStatus_USART_BaudrateNotSupport", "a00062.html#ggab04a0655cd1e3bcac5e8f48c18df1a57ae427c8491ce7294dfeaa3b87e506bd81", null ],
-      [ "kStatus_USART_Timeout", "a00062.html#ggab04a0655cd1e3bcac5e8f48c18df1a57ad434a2fb3d728550dd2e784ce0a3e14c", null ]
+      [ "kStatus_USART_BaudrateNotSupport", "a00062.html#ggab04a0655cd1e3bcac5e8f48c18df1a57ae427c8491ce7294dfeaa3b87e506bd81", null ]
     ] ],
     [ "usart_sync_mode_t", "a00062.html#ga7ecd603d2579abbe714d58eb582821b8", [
       [ "kUSART_SyncModeDisabled", "a00062.html#gga7ecd603d2579abbe714d58eb582821b8af7a378247f82677090007d0c38be78f2", null ],
@@ -99,14 +98,34 @@ var a00062 =
       [ "kUSART_RxFifo7", "a00062.html#ggadc4d91bd718e2b3748ec626875703f15a9bb99b104055213d54116ea79f0a2586", null ],
       [ "kUSART_RxFifo8", "a00062.html#ggadc4d91bd718e2b3748ec626875703f15a6e09aeee58582acc9b9baeb10315f024", null ]
     ] ],
-    [ "_usart_interrupt_enable", "a00062.html#ga78b340bf3b25bfae957d0c5532b9b853", null ],
+    [ "_usart_interrupt_enable", "a00062.html#ga78b340bf3b25bfae957d0c5532b9b853", [
+      [ "kUSART_TxIdleInterruptEnable", "a00062.html#gga78b340bf3b25bfae957d0c5532b9b853ac5611ab6b973e6777a7d7db8321f62f2", null ],
+      [ "kUSART_CtsChangeInterruptEnable", "a00062.html#gga78b340bf3b25bfae957d0c5532b9b853a3d02580815ae2cc516b2eceaa5af7cb1", null ],
+      [ "kUSART_RxBreakChangeInterruptEnable", "a00062.html#gga78b340bf3b25bfae957d0c5532b9b853a8025155917fdba2167f615ac1f6fd0e8", null ],
+      [ "kUSART_RxStartInterruptEnable", "a00062.html#gga78b340bf3b25bfae957d0c5532b9b853ae642012aae33bd8954699572e4adb475", null ],
+      [ "kUSART_FramingErrorInterruptEnable", "a00062.html#gga78b340bf3b25bfae957d0c5532b9b853a5cd5bf36e32a46d994643a712fd08ea9", null ],
+      [ "kUSART_ParityErrorInterruptEnable", "a00062.html#gga78b340bf3b25bfae957d0c5532b9b853a3dc275bab22f77a1182bbab5fd5cea3b", null ],
+      [ "kUSART_NoiseErrorInterruptEnable", "a00062.html#gga78b340bf3b25bfae957d0c5532b9b853ac8d3050ed3df9d9278f74c9ab27b2ddc", null ],
+      [ "kUSART_AutoBaudErrorInterruptEnable", "a00062.html#gga78b340bf3b25bfae957d0c5532b9b853a7154c6ede60243bf5f9e727a5cb18ce5", null ]
+    ] ],
     [ "_usart_flags", "a00062.html#gaa6a81e7e82e236bb1c3c5ba306466610", [
       [ "kUSART_TxError", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a88f35fb71e2d5a7bea4f8eed7b6a050c", null ],
       [ "kUSART_RxError", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a8aa9eb127699721457f3ec9e1025246b", null ],
       [ "kUSART_TxFifoEmptyFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610af11f0420c46f24642414bb66d2e389c7", null ],
       [ "kUSART_TxFifoNotFullFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a584ded6df831827495ab206619c81174", null ],
       [ "kUSART_RxFifoNotEmptyFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a39952b4f24141f895bab7822dc330330", null ],
-      [ "kUSART_RxFifoFullFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a519cf0825b102a001c88bfba6506824c", null ]
+      [ "kUSART_RxFifoFullFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a519cf0825b102a001c88bfba6506824c", null ],
+      [ "kUSART_RxIdleFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610abc766d479d00f480e78d05f21f8e1d59", null ],
+      [ "kUSART_TxIdleFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a8106fa188ea138f48c7740dcf5c2b294", null ],
+      [ "kUSART_CtsAssertFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a43d6b4aef70a978f4794efabd5457f51", null ],
+      [ "kUSART_CtsChangeFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a7119fd7ce16b8aa8a98b1d82271698dd", null ],
+      [ "kUSART_BreakDetectFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610aca92bd8dc74c45b62e3f9b4c707b8638", null ],
+      [ "kUSART_BreakDetectChangeFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610aa73bdb740d60558f33c28c7bc4cffab3", null ],
+      [ "kUSART_RxStartFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a2fab8368a6a3246714c83405202626b3", null ],
+      [ "kUSART_FramingErrorFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a44b58335a118179dd7b3f5d760a314fa", null ],
+      [ "kUSART_ParityErrorFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a46d487d50d8392d25c5c4e76cdfb6674", null ],
+      [ "kUSART_NoiseErrorFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610a989650ce4c9a8f57ad771a33a2cb0335", null ],
+      [ "kUSART_AutobaudErrorFlag", "a00062.html#ggaa6a81e7e82e236bb1c3c5ba306466610ae1cf980779fba1c617584d5ebc8ac3f8", null ]
     ] ],
     [ "USART_GetInstance", "a00062.html#ga0433386bbc6c2ac7e2ec7925fea263db", null ],
     [ "USART_Init", "a00062.html#ga2aeb4e11fdf0eb515d090865ffcf2ba2", null ],

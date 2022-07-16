@@ -51,6 +51,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
     ${ProjDirPath}/../../../../../components/uart
@@ -77,6 +78,8 @@ include(middleware_sdmmc_common_MIMXRT595S_cm33)
 include(middleware_sdmmc_host_usdhc_MIMXRT595S_cm33)
 
 include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT595S_cm33)
 
 include(driver_clock_MIMXRT595S_cm33)
 

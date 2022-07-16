@@ -40,6 +40,9 @@
 #define MAGIC     0xb6766c94
 #define USE_INTEGER_32X32   1 // if 1, code uses integer 32x32 multiplies instead of legacy Q31xQ31->Q47 multiplies
 
+/* Calling delayless implementations, when delay = 0  */
+#define ALG32X32_DF2_ND 1
+
 /* Filter instance structure. */
 typedef struct tag_bqriir32x32_df2_t
 {

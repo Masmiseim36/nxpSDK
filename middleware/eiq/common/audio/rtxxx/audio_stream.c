@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
@@ -222,7 +223,9 @@ void AUDIO_Init(void)
 
     if (CODEC_Init(&s_codecHandle, &s_boardCodecConfig) != kStatus_Success)
     {
-        assert(false);
+        printf("Error: Could not initialize audio codec! Please, reconnect the board power supply.\r\n");
+        for (;;)
+            ;
     }
 
     /* Initial volume kept low for hearing safety.
@@ -231,7 +234,7 @@ void AUDIO_Init(void)
     if (CODEC_SetVolume(&s_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 32U) !=
         kStatus_Success)
     {
-        assert(false);
+        printf("Warning: Could not set volume!\r\n");
     }
 
     DMA_Init(DEMO_DMA);

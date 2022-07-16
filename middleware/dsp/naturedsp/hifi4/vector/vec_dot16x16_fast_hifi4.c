@@ -90,11 +90,25 @@ int32_t vec_dot16x16_fast (const int16_t * restrict x,const int16_t * restrict y
   vaf = (vai);
   vbf = (vbi);
 
-  __Pragma("loop_count min=1")
-  for (n=0; n<N; n+=4)
+  //__Pragma("loop_count min=1")
+  for (n=0; n<(N>>3); n+=1)
   {
     AE_L16X4_IP(vxh, px, sizeof(*px));
     AE_L16X4_IP(vyh, py, sizeof(*py));
+
+    AE_MULAF16X4SS(vaf, vbf, vxh, vyh);
+
+	// UNROLL
+
+	AE_L16X4_IP(vxh, px, sizeof(*px));
+	AE_L16X4_IP(vyh, py, sizeof(*py));
+
+	AE_MULAF16X4SS(vaf, vbf, vxh, vyh);
+  }
+  if (N & 4)
+  {
+	  AE_L16X4_IP(vxh, px, sizeof(*px));
+	  AE_L16X4_IP(vyh, py, sizeof(*py));
 
     AE_MULAF16X4SS(vaf, vbf, vxh, vyh);
   }

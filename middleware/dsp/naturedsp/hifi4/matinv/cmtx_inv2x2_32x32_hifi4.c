@@ -225,7 +225,8 @@ int  cmtx_inv2x2_32x32  (void* pScr, complex_fract32 *x, int qX)
         {
             pB[n]=AE_SLAA32S(pB[n],expB);
             pC[n]=AE_SLAA32S(pC[n],expC);
-       }
+        }
+        __Pragma("no_reorder");
         pB=(B+k*N);
         pT=(T+k);
         AE_ADDCIRC32X2_XC (pB,sizeof(ae_int32x2)*N);

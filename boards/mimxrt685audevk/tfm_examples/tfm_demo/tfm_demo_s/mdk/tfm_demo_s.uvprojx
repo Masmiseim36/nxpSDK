@@ -68,7 +68,7 @@
           <BeforeMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>$KARM/ARMCLANG/bin/armclang -DTFM_LVL=2 -DTFM_PSA_API --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition" "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s.sct" -o "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s_pre.sct"</UserProg1Name>
+            <UserProg1Name>$KARM/ARMCLANG/bin/armclang -DTFM_LVL=2 -DTFM_PSA_API -DCONFIG_TFM_PARTITION_META --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition" "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s.sct" -o "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s_pre.sct"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Wno-gnu-variable-sized-type-not-at-end  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, TFM_SPM_LOG_LEVEL=TFM_SPM_LOG_LEVEL_INFO, TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO, TFM_CRYPTO_IOVEC_BUFFER_SIZE=5120, TFM_CRYPTO_ENGINE_BUF_SIZE=9600, ITS_MAX_ASSET_SIZE=512, ITS_NUM_ASSETS=5, PS_MAX_ASSET_SIZE=512, PS_NUM_ASSETS=5, PS_RAM_FS, PS_CREATE_FLASH_LAYOUT, ITS_RAM_FS, ITS_CREATE_FLASH_LAYOUT, DAUTH_CHIP_DEFAULT, __SEMIHOST_HARDFAULT_DISABLE, CRYPTO_HW_ACCELERATOR, TFM_PSA_API, CONFIG_TFM_ENABLE_MEMORY_PROTECT, TFM_PARTITION_CRYPTO, TFM_PARTITION_INITIAL_ATTESTATION, T_COSE_USE_PSA_CRYPTO, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TFM_PARTITION_PROTECTED_STORAGE, PS_ENCRYPTION, PS_ROLLBACK_PROTECTION, TFM_PARTITION_PLATFORM, MBEDTLS_CONFIG_FILE='\"tfm_mbedcrypto_config_profile_medium.h\"', MBEDTLS_USER_CONFIG_FILE='\"mbedcrypto_user_config.h\"', TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, TFM_SPM_LOG_LEVEL=TFM_SPM_LOG_LEVEL_INFO, TFM_SP_LOG_RAW_ENABLED, TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO, TFM_CRYPTO_IOVEC_BUFFER_SIZE=5120, TFM_CRYPTO_ENGINE_BUF_SIZE=9600, ITS_MAX_ASSET_SIZE=512, ITS_NUM_ASSETS=5, PS_MAX_ASSET_SIZE=512, PS_NUM_ASSETS=5, PS_RAM_FS, PS_CREATE_FLASH_LAYOUT, ITS_RAM_FS, ITS_CREATE_FLASH_LAYOUT, CONFIG_TFM_CONN_HANDLE_MAX_NUM=8, OTP_NV_COUNTERS_RAM_EMULATION, DAUTH_CHIP_DEFAULT, __SEMIHOST_HARDFAULT_DISABLE, CRYPTO_HW_ACCELERATOR, TFM_PSA_API, CONFIG_TFM_ENABLE_MEMORY_PROTECT, TFM_PARTITION_CRYPTO, TFM_PARTITION_INITIAL_ATTESTATION, T_COSE_USE_PSA_CRYPTO, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TFM_PARTITION_PROTECTED_STORAGE, PS_ENCRYPTION, PS_ROLLBACK_PROTECTION, TFM_PARTITION_PLATFORM, MBEDTLS_CONFIG_FILE='\"tfm_mbedcrypto_config_profile_medium.h\"', MBEDTLS_USER_CONFIG_FILE='\"mbedcrypto_user_config.h\"', TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_BUILDING_SPE=1, PLATFORM_DEFAULT_NV_COUNTERS, PLATFORM_DEFAULT_OTP, PLATFORM_DEFAULT_PROVISIONING, OTP_WRITEABLE, TFM_DUMMY_PROVISIONING, CONFIG_TFM_PSA_API_SUPERVISOR_CALL, CONFIG_TFM_PARTITION_META, CONFIG_TFM_FP=2, CONFIG_TFM_LAZY_STACKING, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/tfm/mbed-crypto/include/mbedtls;../../../../../../middleware/tfm/mbed-crypto/include/mbed_psa;../../../../../../middleware/tfm/mbed-crypto/library;../../../../../../middleware/tfm/mbed-crypto/port;../../../../../../middleware/tfm/mbed-crypto/include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include/ext;../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash_fs;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/nv_counters;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/bl2/ext/mcuboot/bootutil/include/bootutil;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Native_Driver;../../../../../../middleware/tfm/tf-m/platform/ext/accelerator/interface;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/interface/include/log;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m/secure_fw/spm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface;../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_func/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/audit_logging/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include;../../../../../../middleware/tfm/tf-m/lib/fih/inc</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/tfm/mbed-crypto/include/mbedtls;../../../../../../middleware/tfm/mbed-crypto/include/mbed_psa;../../../../../../middleware/tfm/mbed-crypto/library;../../../../../../middleware/tfm/mbed-crypto/port;../../../../../../middleware/tfm/mbed-crypto/include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash_fs;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/nv_counters;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/bl2/ext/mcuboot/bootutil/include/bootutil;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/common/template;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Native_Driver;../../../../../../middleware/tfm/tf-m/platform/ext/accelerator/interface;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m/secure_fw/spm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface;../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_func/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/audit_logging/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include;../../../../../../middleware/tfm/tf-m/lib/fih/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -730,6 +730,11 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
+              <FileName>constant_time.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/constant_time.h</FilePath>
+            </File>
+            <File>
               <FileName>ctr_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ctr_drbg.h</FilePath>
@@ -1085,6 +1090,21 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/common.h</FilePath>
             </File>
             <File>
+              <FileName>constant_time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/constant_time.c</FilePath>
+            </File>
+            <File>
+              <FileName>constant_time_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/constant_time_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>constant_time_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/constant_time_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>ctr_drbg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/ctr_drbg.c</FilePath>
@@ -1108,6 +1128,11 @@
               <FileName>ecdh.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/ecdh.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecdh_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/ecdh_misc.h</FilePath>
             </File>
             <File>
               <FileName>ecdsa.c</FileName>
@@ -1475,6 +1500,11 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_casper.c</FilePath>
             </File>
             <File>
+              <FileName>mbedcrypto_mcux_css.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_css.c</FilePath>
+            </File>
+            <File>
               <FileName>mbedcrypto_mcux_hashcrypt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_hashcrypt.c</FilePath>
@@ -1490,6 +1520,11 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_entropy.c</FilePath>
             </File>
             <File>
+              <FileName>mbedcrypto_mcux_pkc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_pkc.c</FilePath>
+            </File>
+            <File>
               <FileName>mbedtls_accelerator_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedtls_accelerator_config.h</FilePath>
@@ -1503,6 +1538,11 @@
               <FileName>sha256_alt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha512_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/sha512_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1527,43 +1567,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config</GroupName>
-          <Files>
-            <File>
-              <FileName>device_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config/device_cfg.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>device_definition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/device_definition.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_description.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_description.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_irq.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_irq.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_regs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_regs.h</FilePath>
-            </File>
             <File>
               <FileName>platform_base_address.h</FileName>
               <FileType>5</FileType>
@@ -1602,22 +1607,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/interface/include/ext</GroupName>
+          <GroupName>tf-m/interface/src</GroupName>
           <Files>
             <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/ext/tz_context.h</FilePath>
+              <FileName>tfm_psa_call_pack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_psa_call_pack.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/secure_fw/partitions/ns_agent</GroupName>
+          <GroupName>tf-m/secure_fw/partitions/ns_agent_tz</GroupName>
           <Files>
             <File>
-              <FileName>load_info_ns_agent.c</FileName>
+              <FileName>load_info_ns_agent_tz.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/ns_agent/load_info_ns_agent.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/ns_agent_tz/load_info_ns_agent_tz.c</FilePath>
+            </File>
+            <File>
+              <FileName>ns_agent_tz.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/ns_agent_tz/ns_agent_tz.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_psa_api_veneers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/ns_agent_tz/tfm_psa_api_veneers.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1639,11 +1654,6 @@
         <Group>
           <GroupName>tf-m/secure_fw/spm/cmsis_psa</GroupName>
           <Files>
-            <File>
-              <FileName>exception_info.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/exception_info.c</FilePath>
-            </File>
             <File>
               <FileName>internal_errors.h</FileName>
               <FileType>5</FileType>
@@ -1670,14 +1680,9 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_svcalls.h</FilePath>
             </File>
             <File>
-              <FileName>tfm_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_thread.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_wait.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_wait.h</FilePath>
+              <FileName>psa_interface_svc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/psa_interface_svc.c</FilePath>
             </File>
             <File>
               <FileName>spm_ipc.c</FileName>
@@ -1700,39 +1705,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_core_svcalls_ipc.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_nspm_ipc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_nspm_ipc.c</FilePath>
-            </File>
-            <File>
               <FileName>tfm_pools.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_pools.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_psa_api_veneers.c</FileName>
+              <FileName>thread.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_psa_api_veneers.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/thread.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_secure_irq_handlers_ipc.inc</FileName>
+              <FileName>thread.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_secure_irq_handlers_ipc.inc</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_thread.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_thread.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_wait.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_wait.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_wait.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_wait.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/thread.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1752,22 +1737,177 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/interface/src/psa</GroupName>
+          <GroupName>tf-m/secure_fw/spm/ffm</GroupName>
           <Files>
             <File>
-              <FileName>psa_client.c</FileName>
+              <FileName>backend_ipc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/psa/psa_client.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/backend_ipc.c</FilePath>
             </File>
             <File>
-              <FileName>psa_service.c</FileName>
+              <FileName>psa_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/psa/psa_service.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_api.c</FilePath>
             </File>
             <File>
-              <FileName>psa_lifecycle.c</FileName>
+              <FileName>interrupt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/psa/psa_lifecycle.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/interrupt.c</FilePath>
+            </File>
+            <File>
+              <FileName>interrupt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/interrupt.h</FilePath>
+            </File>
+            <File>
+              <FileName>spm_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/spm_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_boot_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_boot_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_mem_check.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_core_mem_check.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_core_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>utilities.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/utilities.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/include/ffm</GroupName>
+          <Files>
+            <File>
+              <FileName>backend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/backend.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/psa_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>spm_error_base.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/spm_error_base.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/include</GroupName>
+          <Files>
+            <File>
+              <FileName>critical_section.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/critical_section.h</FilePath>
+            </File>
+            <File>
+              <FileName>aapcs_local.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/aapcs_local.h</FilePath>
+            </File>
+            <File>
+              <FileName>bitops.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/bitops.h</FilePath>
+            </File>
+            <File>
+              <FileName>current.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/current.h</FilePath>
+            </File>
+            <File>
+              <FileName>lists.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/lists.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_boot_status.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_boot_status.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_mem_check.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_mem_check.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_trustzone.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_trustzone.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_nspm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_nspm.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_platform_core_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_platform_core_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_secure_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_secure_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_spm_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_spm_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_arch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_arch_v8m.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_memory_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_memory_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1828,6 +1968,11 @@
               <FileName>crypto_key_derivation.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/crypto_key_derivation.c</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_key_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/crypto_key_management.c</FilePath>
             </File>
             <File>
               <FileName>crypto_mac.c</FileName>
@@ -1895,9 +2040,24 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ps_defs.h</FilePath>
             </File>
             <File>
+              <FileName>config_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_audit_defs.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_audit_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_interface_redirect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_interface_redirect.h</FilePath>
             </File>
             <File>
               <FileName>tfm_api.h</FileName>
@@ -1910,14 +2070,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_crypto_defs.h</FilePath>
             </File>
             <File>
+              <FileName>tfm_ns_client_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_client_ext.h</FilePath>
+            </File>
+            <File>
               <FileName>tfm_platform_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_platform_api.h</FilePath>
             </File>
             <File>
-              <FileName>tfm_psa_call_param.h</FileName>
+              <FileName>tfm_psa_call_pack.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_param.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
             </File>
             <File>
               <FileName>tfm_veneers.h</FileName>
@@ -1935,9 +2100,29 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/tfm_initial_attest_pub_key.c</FilePath>
             </File>
             <File>
+              <FileName>crypto_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/crypto_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash_otp_nv_counters_backend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/flash_otp_nv_counters_backend.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash_otp_nv_counters_backend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/flash_otp_nv_counters_backend.h</FilePath>
+            </File>
+            <File>
               <FileName>nv_counters.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/nv_counters.c</FilePath>
+            </File>
+            <File>
+              <FileName>otp_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/otp_flash.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2138,21 +2323,6 @@
               <FileName>UsefulBuf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc/UsefulBuf.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/lib/ext/qcbor/util</GroupName>
-          <Files>
-            <File>
-              <FileName>qcbor_util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util/qcbor_util.c</FilePath>
-            </File>
-            <File>
-              <FileName>qcbor_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util/qcbor_util.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2489,6 +2659,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config/tfm_mbedcrypto_config_profile_medium.h</FilePath>
             </File>
+            <File>
+              <FileName>tfm_mbedcrypto_config_extra_nv_seed.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config/tfm_mbedcrypto_config_extra_nv_seed.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2520,14 +2695,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/tfm_hal_isolation.c</FilePath>
             </File>
             <File>
-              <FileName>plat_attestation_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/plat_attestation_key.c</FilePath>
+              <FileName>mmio_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/mmio_defs.h</FilePath>
             </File>
             <File>
-              <FileName>plat_huk_key.c</FileName>
+              <FileName>plat_huk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/plat_huk_key.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/plat_huk.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_hal_platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/tfm_hal_platform.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2720,6 +2900,26 @@
           <GroupName>tf-m/platform/ext/common</GroupName>
           <Files>
             <File>
+              <FileName>core_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/core_ext.h</FilePath>
+            </File>
+            <File>
+              <FileName>exception_info.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/exception_info.c</FilePath>
+            </File>
+            <File>
+              <FileName>faults.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/faults.c</FilePath>
+            </File>
+            <File>
+              <FileName>provisioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/provisioning.c</FilePath>
+            </File>
+            <File>
               <FileName>tfm_hal_isolation_mpu_v8m.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/tfm_hal_isolation_mpu_v8m.c</FilePath>
@@ -2733,6 +2933,11 @@
               <FileName>tfm_hal_memory_symbols.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/tfm_hal_memory_symbols.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_hal_nvic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/tfm_hal_nvic.c</FilePath>
             </File>
             <File>
               <FileName>tfm_hal_ps.c</FileName>
@@ -2842,8 +3047,53 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Config</GroupName>
+          <Files>
+            <File>
+              <FileName>device_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config/device_cfg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>device_definition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/device_definition.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_description.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_description.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_irq.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_irq.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_regs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_regs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/platform/include</GroupName>
           <Files>
+            <File>
+              <FileName>exception_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/exception_info.h</FilePath>
+            </File>
             <File>
               <FileName>mbedtls_entropy_nv_seed_config.h</FileName>
               <FileType>5</FileType>
@@ -2868,6 +3118,11 @@
               <FileName>tfm_hal_device_header.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_hal_interrupt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_interrupt.h</FilePath>
             </File>
             <File>
               <FileName>tfm_hal_isolation.h</FileName>
@@ -2930,6 +3185,16 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_nv_counters.h</FilePath>
             </File>
             <File>
+              <FileName>tfm_plat_otp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_otp.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_provisioning.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_provisioning.h</FilePath>
+            </File>
+            <File>
               <FileName>tfm_plat_test.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</FilePath>
@@ -2943,21 +3208,6 @@
               <FileName>tfm_spm_hal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_spm_hal.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/interface/include/log</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/log/tfm_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_log_raw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/log/tfm_log_raw.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3015,6 +3265,11 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/error.h</FilePath>
             </File>
             <File>
+              <FileName>framework_feature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/framework_feature.h</FilePath>
+            </File>
+            <File>
               <FileName>initial_attestation.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/initial_attestation.h</FilePath>
@@ -3047,127 +3302,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/interface/src/log</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_log_raw.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/log/tfm_log_raw.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/secure_fw/spm/include/ffm</GroupName>
-          <Files>
-            <File>
-              <FileName>spm_error_base.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/spm_error_base.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m/secure_fw/spm/include/interface</GroupName>
           <Files>
+            <File>
+              <FileName>runtime_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface/runtime_defs.h</FilePath>
+            </File>
             <File>
               <FileName>svc_num.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface/svc_num.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/secure_fw/spm/include</GroupName>
-          <Files>
-            <File>
-              <FileName>bitops.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/bitops.h</FilePath>
-            </File>
-            <File>
-              <FileName>compiler_ext_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/compiler_ext_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>exception_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/exception_info.h</FilePath>
-            </File>
-            <File>
-              <FileName>lists.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/lists.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_assert.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_assert.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_boot_status.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_boot_status.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_mem_check.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_mem_check.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_trustzone.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_trustzone.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_utils.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_nspm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_nspm.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_platform_core_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_platform_core_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_secure_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_secure_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_spm_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_spm_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch_v8m.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_memory_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_memory_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3180,9 +3325,9 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/load/asset_defs.h</FilePath>
             </File>
             <File>
-              <FileName>irq_defs.h</FileName>
+              <FileName>interrupt_defs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/load/irq_defs.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/load/interrupt_defs.h</FilePath>
             </File>
             <File>
               <FileName>partition_defs.h</FileName>
@@ -3202,51 +3347,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/secure_fw/spm/ffm</GroupName>
-          <Files>
-            <File>
-              <FileName>psa_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_api.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>spm_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/spm_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_boot_data.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_boot_data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_mem_check.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_core_mem_check.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_core_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>utilities.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/utilities.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m/secure_fw/spm/cmsis_func/include</GroupName>
           <Files>
             <File>
@@ -3258,6 +3358,21 @@
               <FileName>spm_func.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_func/include/spm_func.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/ns_client_ext</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_ns_ctx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ns_client_ext/tfm_ns_ctx.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_spm_ns_ctx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ns_client_ext/tfm_spm_ns_ctx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3274,6 +3389,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/include/compile_check_defs.h</FilePath>
             </File>
+            <File>
+              <FileName>compiler_ext_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/include/compiler_ext_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>security_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/include/security_defs.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3285,9 +3410,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include/service_api.h</FilePath>
             </File>
             <File>
+              <FileName>sprt_main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include/sprt_main.h</FilePath>
+            </File>
+            <File>
               <FileName>tfm_sp_log.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include/tfm_sp_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_strnlen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include/tfm_strnlen.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3300,14 +3435,34 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/service_api.c</FilePath>
             </File>
             <File>
+              <FileName>sfn_common_thread.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/sfn_common_thread.c</FilePath>
+            </File>
+            <File>
+              <FileName>sprt_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/sprt_main.c</FilePath>
+            </File>
+            <File>
               <FileName>sprt_partition_metadata_indicator.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/sprt_partition_metadata_indicator.c</FilePath>
             </File>
             <File>
+              <FileName>sprt_partition_metadata_indicator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/sprt_partition_metadata_indicator.h</FilePath>
+            </File>
+            <File>
               <FileName>tfm_sp_log_raw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/tfm_sp_log_raw.c</FilePath>
+            </File>
+            <File>
+              <FileName>crt_strnlen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/crt_strnlen.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3378,7 +3533,7 @@
           <BeforeMake>
             <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>$KARM/ARMCLANG/bin/armclang -DTFM_LVL=2 -DTFM_PSA_API --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition" "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s.sct" -o "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s_pre.sct"</UserProg1Name>
+            <UserProg1Name>$KARM/ARMCLANG/bin/armclang -DTFM_LVL=2 -DTFM_PSA_API -DCONFIG_TFM_PARTITION_META --target=arm-arm-none-eabi -march=armv8-m.main -E -P -xc -I"$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition" "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s.sct" -o "$P../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang/tfm_common_s_pre.sct"</UserProg1Name>
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -3643,9 +3798,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-Wno-gnu-variable-sized-type-not-at-end  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, TFM_SPM_LOG_LEVEL=TFM_SPM_LOG_LEVEL_INFO, TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO, TFM_CRYPTO_IOVEC_BUFFER_SIZE=5120, TFM_CRYPTO_ENGINE_BUF_SIZE=9600, ITS_MAX_ASSET_SIZE=512, ITS_NUM_ASSETS=5, PS_MAX_ASSET_SIZE=512, PS_NUM_ASSETS=5, PS_RAM_FS, PS_CREATE_FLASH_LAYOUT, ITS_RAM_FS, ITS_CREATE_FLASH_LAYOUT, DAUTH_CHIP_DEFAULT, __SEMIHOST_HARDFAULT_DISABLE, CRYPTO_HW_ACCELERATOR, TFM_PSA_API, CONFIG_TFM_ENABLE_MEMORY_PROTECT, TFM_PARTITION_CRYPTO, TFM_PARTITION_INITIAL_ATTESTATION, T_COSE_USE_PSA_CRYPTO, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TFM_PARTITION_PROTECTED_STORAGE, PS_ENCRYPTION, PS_ROLLBACK_PROTECTION, TFM_PARTITION_PLATFORM, MBEDTLS_CONFIG_FILE='\"tfm_mbedcrypto_config_profile_medium.h\"', MBEDTLS_USER_CONFIG_FILE='\"mbedcrypto_user_config.h\"', TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, TFM_SPM_LOG_LEVEL=TFM_SPM_LOG_LEVEL_INFO, TFM_SP_LOG_RAW_ENABLED, TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO, TFM_CRYPTO_IOVEC_BUFFER_SIZE=5120, TFM_CRYPTO_ENGINE_BUF_SIZE=9600, ITS_MAX_ASSET_SIZE=512, ITS_NUM_ASSETS=5, PS_MAX_ASSET_SIZE=512, PS_NUM_ASSETS=5, PS_RAM_FS, PS_CREATE_FLASH_LAYOUT, ITS_RAM_FS, ITS_CREATE_FLASH_LAYOUT, CONFIG_TFM_CONN_HANDLE_MAX_NUM=8, OTP_NV_COUNTERS_RAM_EMULATION, DAUTH_CHIP_DEFAULT, __SEMIHOST_HARDFAULT_DISABLE, CRYPTO_HW_ACCELERATOR, TFM_PSA_API, CONFIG_TFM_ENABLE_MEMORY_PROTECT, TFM_PARTITION_CRYPTO, TFM_PARTITION_INITIAL_ATTESTATION, T_COSE_USE_PSA_CRYPTO, TFM_PARTITION_INTERNAL_TRUSTED_STORAGE, TFM_PARTITION_PROTECTED_STORAGE, PS_ENCRYPTION, PS_ROLLBACK_PROTECTION, TFM_PARTITION_PLATFORM, MBEDTLS_CONFIG_FILE='\"tfm_mbedcrypto_config_profile_medium.h\"', MBEDTLS_USER_CONFIG_FILE='\"mbedcrypto_user_config.h\"', TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_BUILDING_SPE=1, PLATFORM_DEFAULT_NV_COUNTERS, PLATFORM_DEFAULT_OTP, PLATFORM_DEFAULT_PROVISIONING, OTP_WRITEABLE, TFM_DUMMY_PROVISIONING, CONFIG_TFM_PSA_API_SUPERVISOR_CALL, CONFIG_TFM_PARTITION_META, CONFIG_TFM_FP=2, CONFIG_TFM_LAZY_STACKING, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/tfm/mbed-crypto/include/mbedtls;../../../../../../middleware/tfm/mbed-crypto/include/mbed_psa;../../../../../../middleware/tfm/mbed-crypto/library;../../../../../../middleware/tfm/mbed-crypto/port;../../../../../../middleware/tfm/mbed-crypto/include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include/ext;../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash_fs;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/nv_counters;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/bl2/ext/mcuboot/bootutil/include/bootutil;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Native_Driver;../../../../../../middleware/tfm/tf-m/platform/ext/accelerator/interface;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/interface/include/log;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m/secure_fw/spm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface;../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_func/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/audit_logging/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include;../../../../../../middleware/tfm/tf-m/lib/fih/inc</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../devices/MIMXRT685S/drivers;../../../../../../middleware/tfm/mbed-crypto/include/mbedtls;../../../../../../middleware/tfm/mbed-crypto/include/mbed_psa;../../../../../../middleware/tfm/mbed-crypto/library;../../../../../../middleware/tfm/mbed-crypto/port;../../../../../../middleware/tfm/mbed-crypto/include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src;../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src;../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/flash_fs;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/crypto;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/nv_counters;../../../../../../middleware/tfm/tf-m;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform;../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/bl2/ext/mcuboot/bootutil/include/bootutil;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/common/template;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Native_Driver;../../../../../../middleware/tfm/tf-m/platform/ext/accelerator/interface;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/secure_fw/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m/secure_fw/spm;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface;../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_func/include;../../../../../../middleware/tfm/tf-m/secure_fw/partitions;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/protected_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/audit_logging/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/platform/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/internal_trusted_storage/psa_manifest;../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include;../../../../../../middleware/tfm/tf-m/lib/fih/inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4040,6 +4195,11 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/config_psa.h</FilePath>
             </File>
             <File>
+              <FileName>constant_time.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/constant_time.h</FilePath>
+            </File>
+            <File>
               <FileName>ctr_drbg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/include/mbedtls/ctr_drbg.h</FilePath>
@@ -4395,6 +4555,21 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/common.h</FilePath>
             </File>
             <File>
+              <FileName>constant_time.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/constant_time.c</FilePath>
+            </File>
+            <File>
+              <FileName>constant_time_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/constant_time_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>constant_time_invasive.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/constant_time_invasive.h</FilePath>
+            </File>
+            <File>
               <FileName>ctr_drbg.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/ctr_drbg.c</FilePath>
@@ -4418,6 +4593,11 @@
               <FileName>ecdh.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/ecdh.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecdh_misc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/library/ecdh_misc.h</FilePath>
             </File>
             <File>
               <FileName>ecdsa.c</FileName>
@@ -4785,6 +4965,11 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_casper.c</FilePath>
             </File>
             <File>
+              <FileName>mbedcrypto_mcux_css.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_css.c</FilePath>
+            </File>
+            <File>
               <FileName>mbedcrypto_mcux_hashcrypt.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_hashcrypt.c</FilePath>
@@ -4800,6 +4985,11 @@
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_entropy.c</FilePath>
             </File>
             <File>
+              <FileName>mbedcrypto_mcux_pkc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedcrypto_mcux_pkc.c</FilePath>
+            </File>
+            <File>
               <FileName>mbedtls_accelerator_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/mbedtls_accelerator_config.h</FilePath>
@@ -4813,6 +5003,11 @@
               <FileName>sha256_alt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha512_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/mbed-crypto/port/sha512_alt.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4837,43 +5032,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config</GroupName>
-          <Files>
-            <File>
-              <FileName>device_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config/device_cfg.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</GroupName>
           <Files>
-            <File>
-              <FileName>cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>device_definition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/device_definition.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_description.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_description.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_irq.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_irq.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_regs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_regs.h</FilePath>
-            </File>
             <File>
               <FileName>platform_base_address.h</FileName>
               <FileType>5</FileType>
@@ -4912,22 +5072,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/interface/include/ext</GroupName>
+          <GroupName>tf-m/interface/src</GroupName>
           <Files>
             <File>
-              <FileName>tz_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/ext/tz_context.h</FilePath>
+              <FileName>tfm_psa_call_pack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/tfm_psa_call_pack.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/secure_fw/partitions/ns_agent</GroupName>
+          <GroupName>tf-m/secure_fw/partitions/ns_agent_tz</GroupName>
           <Files>
             <File>
-              <FileName>load_info_ns_agent.c</FileName>
+              <FileName>load_info_ns_agent_tz.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/ns_agent/load_info_ns_agent.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/ns_agent_tz/load_info_ns_agent_tz.c</FilePath>
+            </File>
+            <File>
+              <FileName>ns_agent_tz.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/ns_agent_tz/ns_agent_tz.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_psa_api_veneers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/ns_agent_tz/tfm_psa_api_veneers.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4949,11 +5119,6 @@
         <Group>
           <GroupName>tf-m/secure_fw/spm/cmsis_psa</GroupName>
           <Files>
-            <File>
-              <FileName>exception_info.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/exception_info.c</FilePath>
-            </File>
             <File>
               <FileName>internal_errors.h</FileName>
               <FileType>5</FileType>
@@ -4980,14 +5145,9 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_svcalls.h</FilePath>
             </File>
             <File>
-              <FileName>tfm_thread.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_thread.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_wait.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_wait.h</FilePath>
+              <FileName>psa_interface_svc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/psa_interface_svc.c</FilePath>
             </File>
             <File>
               <FileName>spm_ipc.c</FileName>
@@ -5010,39 +5170,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_core_svcalls_ipc.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_nspm_ipc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_nspm_ipc.c</FilePath>
-            </File>
-            <File>
               <FileName>tfm_pools.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_pools.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_psa_api_veneers.c</FileName>
+              <FileName>thread.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_psa_api_veneers.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/thread.c</FilePath>
             </File>
             <File>
-              <FileName>tfm_secure_irq_handlers_ipc.inc</FileName>
+              <FileName>thread.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_secure_irq_handlers_ipc.inc</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_thread.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_thread.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_wait.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_wait.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_wait.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/tfm_wait.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_psa/thread.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5062,22 +5202,177 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/interface/src/psa</GroupName>
+          <GroupName>tf-m/secure_fw/spm/ffm</GroupName>
           <Files>
             <File>
-              <FileName>psa_client.c</FileName>
+              <FileName>backend_ipc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/psa/psa_client.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/backend_ipc.c</FilePath>
             </File>
             <File>
-              <FileName>psa_service.c</FileName>
+              <FileName>psa_api.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/psa/psa_service.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_api.c</FilePath>
             </File>
             <File>
-              <FileName>psa_lifecycle.c</FileName>
+              <FileName>interrupt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/psa/psa_lifecycle.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/interrupt.c</FilePath>
+            </File>
+            <File>
+              <FileName>interrupt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/interrupt.h</FilePath>
+            </File>
+            <File>
+              <FileName>spm_log.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/spm_log.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_boot_data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_boot_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_mem_check.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_core_mem_check.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_core_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>utilities.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/utilities.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/include/ffm</GroupName>
+          <Files>
+            <File>
+              <FileName>backend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/backend.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/psa_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>spm_error_base.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/spm_error_base.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/include</GroupName>
+          <Files>
+            <File>
+              <FileName>critical_section.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/critical_section.h</FilePath>
+            </File>
+            <File>
+              <FileName>aapcs_local.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/aapcs_local.h</FilePath>
+            </File>
+            <File>
+              <FileName>bitops.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/bitops.h</FilePath>
+            </File>
+            <File>
+              <FileName>current.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/current.h</FilePath>
+            </File>
+            <File>
+              <FileName>lists.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/lists.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_assert.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_boot_status.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_boot_status.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_mem_check.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_mem_check.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_trustzone.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_trustzone.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_core_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_nspm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_nspm.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_platform_core_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_platform_core_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_secure_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_secure_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_spm_log.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_spm_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_arch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_arch_v8m.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_memory_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_memory_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5138,6 +5433,11 @@
               <FileName>crypto_key_derivation.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/crypto_key_derivation.c</FilePath>
+            </File>
+            <File>
+              <FileName>crypto_key_management.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/crypto/crypto_key_management.c</FilePath>
             </File>
             <File>
               <FileName>crypto_mac.c</FileName>
@@ -5205,9 +5505,24 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ps_defs.h</FilePath>
             </File>
             <File>
+              <FileName>config_impl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
+            </File>
+            <File>
               <FileName>psa_audit_defs.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_audit_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_interface_redirect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_interface_redirect.h</FilePath>
             </File>
             <File>
               <FileName>tfm_api.h</FileName>
@@ -5220,14 +5535,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_crypto_defs.h</FilePath>
             </File>
             <File>
+              <FileName>tfm_ns_client_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_client_ext.h</FilePath>
+            </File>
+            <File>
               <FileName>tfm_platform_api.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_platform_api.h</FilePath>
             </File>
             <File>
-              <FileName>tfm_psa_call_param.h</FileName>
+              <FileName>tfm_psa_call_pack.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_param.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
             </File>
             <File>
               <FileName>tfm_veneers.h</FileName>
@@ -5245,9 +5565,29 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/tfm_initial_attest_pub_key.c</FilePath>
             </File>
             <File>
+              <FileName>crypto_keys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/crypto_keys.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash_otp_nv_counters_backend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/flash_otp_nv_counters_backend.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash_otp_nv_counters_backend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/flash_otp_nv_counters_backend.h</FilePath>
+            </File>
+            <File>
               <FileName>nv_counters.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/nv_counters.c</FilePath>
+            </File>
+            <File>
+              <FileName>otp_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/template/otp_flash.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5448,21 +5788,6 @@
               <FileName>UsefulBuf.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc/UsefulBuf.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/lib/ext/qcbor/util</GroupName>
-          <Files>
-            <File>
-              <FileName>qcbor_util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util/qcbor_util.c</FilePath>
-            </File>
-            <File>
-              <FileName>qcbor_util.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util/qcbor_util.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5799,6 +6124,11 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config/tfm_mbedcrypto_config_profile_medium.h</FilePath>
             </File>
+            <File>
+              <FileName>tfm_mbedcrypto_config_extra_nv_seed.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/lib/ext/mbedcrypto/mbedcrypto_config/tfm_mbedcrypto_config_extra_nv_seed.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -5830,14 +6160,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/tfm_hal_isolation.c</FilePath>
             </File>
             <File>
-              <FileName>plat_attestation_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/plat_attestation_key.c</FilePath>
+              <FileName>mmio_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/mmio_defs.h</FilePath>
             </File>
             <File>
-              <FileName>plat_huk_key.c</FileName>
+              <FileName>plat_huk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/plat_huk_key.c</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/plat_huk.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_hal_platform.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/tfm_hal_platform.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6030,6 +6365,26 @@
           <GroupName>tf-m/platform/ext/common</GroupName>
           <Files>
             <File>
+              <FileName>core_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/core_ext.h</FilePath>
+            </File>
+            <File>
+              <FileName>exception_info.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/exception_info.c</FilePath>
+            </File>
+            <File>
+              <FileName>faults.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/faults.c</FilePath>
+            </File>
+            <File>
+              <FileName>provisioning.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/provisioning.c</FilePath>
+            </File>
+            <File>
               <FileName>tfm_hal_isolation_mpu_v8m.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/tfm_hal_isolation_mpu_v8m.c</FilePath>
@@ -6043,6 +6398,11 @@
               <FileName>tfm_hal_memory_symbols.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/tfm_hal_memory_symbols.c</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_hal_nvic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/common/tfm_hal_nvic.c</FilePath>
             </File>
             <File>
               <FileName>tfm_hal_ps.c</FileName>
@@ -6152,8 +6512,53 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Config</GroupName>
+          <Files>
+            <File>
+              <FileName>device_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config/device_cfg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>device_definition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/device_definition.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_description.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_description.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_irq.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_irq.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_regs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_regs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/platform/include</GroupName>
           <Files>
+            <File>
+              <FileName>exception_info.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/exception_info.h</FilePath>
+            </File>
             <File>
               <FileName>mbedtls_entropy_nv_seed_config.h</FileName>
               <FileType>5</FileType>
@@ -6178,6 +6583,11 @@
               <FileName>tfm_hal_device_header.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_device_header.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_hal_interrupt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_hal_interrupt.h</FilePath>
             </File>
             <File>
               <FileName>tfm_hal_isolation.h</FileName>
@@ -6240,6 +6650,16 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_nv_counters.h</FilePath>
             </File>
             <File>
+              <FileName>tfm_plat_otp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_otp.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_plat_provisioning.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_provisioning.h</FilePath>
+            </File>
+            <File>
               <FileName>tfm_plat_test.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_plat_test.h</FilePath>
@@ -6253,21 +6673,6 @@
               <FileName>tfm_spm_hal.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/platform/include/tfm_spm_hal.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/interface/include/log</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/log/tfm_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_log_raw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/log/tfm_log_raw.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6325,6 +6730,11 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/error.h</FilePath>
             </File>
             <File>
+              <FileName>framework_feature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/framework_feature.h</FilePath>
+            </File>
+            <File>
               <FileName>initial_attestation.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/initial_attestation.h</FilePath>
@@ -6357,127 +6767,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/interface/src/log</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_log_raw.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/src/log/tfm_log_raw.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/secure_fw/spm/include/ffm</GroupName>
-          <Files>
-            <File>
-              <FileName>spm_error_base.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/ffm/spm_error_base.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m/secure_fw/spm/include/interface</GroupName>
           <Files>
+            <File>
+              <FileName>runtime_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface/runtime_defs.h</FilePath>
+            </File>
             <File>
               <FileName>svc_num.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/interface/svc_num.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>tf-m/secure_fw/spm/include</GroupName>
-          <Files>
-            <File>
-              <FileName>bitops.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/bitops.h</FilePath>
-            </File>
-            <File>
-              <FileName>compiler_ext_defs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/compiler_ext_defs.h</FilePath>
-            </File>
-            <File>
-              <FileName>exception_info.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/exception_info.h</FilePath>
-            </File>
-            <File>
-              <FileName>lists.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/lists.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_assert.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_assert.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_boot_status.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_boot_status.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_mem_check.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_mem_check.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_trustzone.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_trustzone.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_core_utils.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_nspm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_nspm.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_platform_core_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_platform_core_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_secure_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_secure_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_spm_log.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_spm_log.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>utilities.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_arch_v8m.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_arch_v8m.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_memory_utils.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/tfm_memory_utils.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6490,9 +6790,9 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/load/asset_defs.h</FilePath>
             </File>
             <File>
-              <FileName>irq_defs.h</FileName>
+              <FileName>interrupt_defs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/load/irq_defs.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/include/load/interrupt_defs.h</FilePath>
             </File>
             <File>
               <FileName>partition_defs.h</FileName>
@@ -6512,51 +6812,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/secure_fw/spm/ffm</GroupName>
-          <Files>
-            <File>
-              <FileName>psa_api.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_api.c</FilePath>
-            </File>
-            <File>
-              <FileName>psa_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/psa_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>spm_log.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/spm_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_boot_data.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_boot_data.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_boot_data.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_mem_check.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_core_mem_check.c</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_core_utils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/tfm_core_utils.c</FilePath>
-            </File>
-            <File>
-              <FileName>utilities.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ffm/utilities.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m/secure_fw/spm/cmsis_func/include</GroupName>
           <Files>
             <File>
@@ -6568,6 +6823,21 @@
               <FileName>spm_func.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/cmsis_func/include/spm_func.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/secure_fw/spm/ns_client_ext</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_ns_ctx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ns_client_ext/tfm_ns_ctx.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_spm_ns_ctx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/spm/ns_client_ext/tfm_spm_ns_ctx.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6584,6 +6854,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/include/compile_check_defs.h</FilePath>
             </File>
+            <File>
+              <FileName>compiler_ext_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/include/compiler_ext_defs.h</FilePath>
+            </File>
+            <File>
+              <FileName>security_defs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/include/security_defs.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -6595,9 +6875,19 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include/service_api.h</FilePath>
             </File>
             <File>
+              <FileName>sprt_main.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include/sprt_main.h</FilePath>
+            </File>
+            <File>
               <FileName>tfm_sp_log.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include/tfm_sp_log.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_strnlen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/include/tfm_strnlen.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6610,14 +6900,34 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/service_api.c</FilePath>
             </File>
             <File>
+              <FileName>sfn_common_thread.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/sfn_common_thread.c</FilePath>
+            </File>
+            <File>
+              <FileName>sprt_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/sprt_main.c</FilePath>
+            </File>
+            <File>
               <FileName>sprt_partition_metadata_indicator.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/sprt_partition_metadata_indicator.c</FilePath>
             </File>
             <File>
+              <FileName>sprt_partition_metadata_indicator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/sprt_partition_metadata_indicator.h</FilePath>
+            </File>
+            <File>
               <FileName>tfm_sp_log_raw.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/tfm_sp_log_raw.c</FilePath>
+            </File>
+            <File>
+              <FileName>crt_strnlen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/secure_fw/partitions/lib/sprt/crt_strnlen.c</FilePath>
             </File>
           </Files>
         </Group>

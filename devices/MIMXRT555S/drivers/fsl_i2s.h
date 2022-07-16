@@ -26,8 +26,8 @@
 /*! @name Driver version */
 /*@{*/
 
-/*! @brief I2S driver version 2.2.2. */
-#define FSL_I2S_DRIVER_VERSION (MAKE_VERSION(2, 2, 2))
+/*! @brief I2S driver version 2.3.1. */
+#define FSL_I2S_DRIVER_VERSION (MAKE_VERSION(2, 3, 1))
 /*@}*/
 
 #ifndef I2S_NUM_BUFFERS
@@ -477,6 +477,14 @@ static inline uint32_t I2S_GetEnabledInterrupts(I2S_Type *base)
 {
     return base->FIFOINTENSET;
 }
+
+/*!
+ * @brief Flush the valid data in TX fifo.
+ *
+ * @param base I2S base pointer.
+ * @return kStatus_Fail empty TX fifo failed, kStatus_Success empty tx fifo success.
+ */
+status_t I2S_EmptyTxFifo(I2S_Type *base);
 
 /*!
  * @brief Invoked from interrupt handler when transmit FIFO level decreases.

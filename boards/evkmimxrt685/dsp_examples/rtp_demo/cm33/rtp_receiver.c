@@ -5,6 +5,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "rtp.h"
 #include "rtp_receiver.h"
 
 #include "app_dsp_ipc.h"
@@ -14,7 +15,6 @@
 #include "lwip/ip_addr.h"
 #include "lwip/sockets.h"
 #include "main_cm33.h"
-#include "rtp.h"
 #include "rtp_buffer.h"
 #include "task.h"
 #include "user_config.h"

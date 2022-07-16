@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------ */
-/* Copyright (c) 2018 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
+/* Copyright (c) 2017 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
 /* These coded instructions, statements, and computer programs ("Cadence    */
 /* Libraries") are the copyrighted works of Cadence Design Systems Inc.	    */
 /* Cadence IP is licensed for use with Cadence processor cores only and     */

@@ -52,6 +52,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT685S/drivers
     ${ProjDirPath}/../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
     ${ProjDirPath}/../../../../../components/uart
@@ -84,6 +85,8 @@ include(middleware_freertos-kernel_cm33_nonsecure_port_MIMXRT685S_cm33)
 include(driver_flexcomm_i2c_MIMXRT685S_cm33)
 
 include(driver_pca9420_MIMXRT685S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT685S_cm33)
 
 include(driver_clock_MIMXRT685S_cm33)
 

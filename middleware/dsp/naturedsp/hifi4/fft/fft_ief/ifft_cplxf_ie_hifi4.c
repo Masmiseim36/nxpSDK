@@ -194,6 +194,7 @@ int ifft_cplxf_ie    (complex_float* y,complex_float* x, const complex_float* tw
 
       /* Two middle quartiles are swapped on all but the last stage to use the bit reversal
        * permutation instead of the digit reverse. */
+      __Pragma("no_reorder")
       XT_SSX2IP(b0, p0_st, SZ_CF32);
       XT_SSX2IP(b2, p1_st, SZ_CF32);
       XT_SSX2IP(b1, p2_st, SZ_CF32);
@@ -237,6 +238,7 @@ int ifft_cplxf_ie    (complex_float* y,complex_float* x, const complex_float* tw
       XT_MADDMUX_S(a1, recipN, b3, 1);
       XT_MADDMUX_S(a3, recipN, b3, 3);
       
+      __Pragma("no_reorder")
       XT_SSX2X(a0, p0_st, idx);
       XT_SSX2X(a1, p1_st, idx);
       XT_SSX2X(a2, p2_st, idx);

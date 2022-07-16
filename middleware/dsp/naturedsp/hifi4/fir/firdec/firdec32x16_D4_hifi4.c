@@ -187,51 +187,46 @@
       t4 = t6; t5 = t7;
       t6 = t8; t7 = t9;
     }
-    __Pragma("loop_count min=1")
+	__Pragma("loop_count min=1, avg=4")
     for ( m=0; m<((M>>2)+1)>>1; m++ )
-    {
+	{
       // Load the next 4 tap coefficients.
       // Q15
-      AE_L16X4_XC1(c0, C0, 16);                             
-
-      // Load 2 samples for each even-numbered accumulator.
-      // Q31
-      AE_L32X2_XC( t8, D_rd0, 16 );              
-      AE_L32X2_XC( t9, D_rd1, 16 );
-
+      AE_L16X4_XC1(c0, C0, 16);
 
       //Q16.47
-      AE_MULAAAAFQ32X16(q0,t0,t1,c0);
-      AE_MULAAAAFQ32X16(q1,t2,t3,c0);
-      AE_MULAAAAFQ32X16(q2,t4,t5,c0);
-      AE_MULAAAAFQ32X16(q3,t6,t7,c0);
-
-      t0 = t2; t1 = t3;
-      t2 = t4; t3 = t5;
-      t4 = t6; t5 = t7;
-      t6 = t8; t7 = t9;
+	  AE_MULAAAAFQ32X16(q0, t0, t1, c0);
+	  AE_MULAAAAFQ32X16(q1, t2, t3, c0);
+	  AE_MULAAAAFQ32X16(q2, t4, t5, c0);
+	  AE_MULAAAAFQ32X16(q3, t6, t7, c0);
 
       // Load the next 4 tap coefficients.
       // Q15
-      AE_L16X4_XC1(c0, C1, 16);                             
+	  AE_L16X4_XC1(c0, C1, 16);
 
-      // Load 2 samples for each even-numbered accumulator.
-      // Q31
-      AE_L32X2_XC( t8, D_rd0, 16 );              
-      AE_L32X2_XC( t9, D_rd1, 16 );
+	  // Move optimisation:
+	  // t6 --> t8; t7 --> t9;
+	  // Load 2 samples for each even-numbered accumulator.
+	  // Q31
+	  AE_L32X2_XC(t8, D_rd0, 16); // t6
+	  AE_L32X2_XC(t9, D_rd1, 16); // t7
 
-
+	  // Move optimisation:
+	  // t{n} --> t{n+2};
       //Q16.47
-      AE_MULAAAAFQ32X16(q0,t0,t1,c0);
-      AE_MULAAAAFQ32X16(q1,t2,t3,c0);
-      AE_MULAAAAFQ32X16(q2,t4,t5,c0);
-      AE_MULAAAAFQ32X16(q3,t6,t7,c0);
+	  AE_MULAAAAFQ32X16(q0, t2, t3, c0); // q0 += t0 * t1
+	  AE_MULAAAAFQ32X16(q1, t4, t5, c0); // q1 += t2 * t3
+	  AE_MULAAAAFQ32X16(q2, t6, t7, c0); // q2 += t4 * t5
+	  AE_MULAAAAFQ32X16(q3, t8, t9, c0); // q3 += t6 * t7
 
-      t0 = t2; t1 = t3;
-      t2 = t4; t3 = t5;
-      t4 = t6; t5 = t7;
-      t6 = t8; t7 = t9;
+	  t0 = t4; t1 = t5; t2 = t6; t3 = t7; t4 = t8; t5 = t9;
 
+	  // Move optimisation:
+	  // t8 --> t6; t9 --> t7;
+	  // Load 2 samples for each even-numbered accumulator.
+	  // Q31
+	  AE_L32X2_XC(t6, D_rd0, 16); // t8
+	  AE_L32X2_XC(t7, D_rd1, 16); // t9
     }
     // Convert and save 8 outputs.
     // 2xQ31 <- 2xQ16.47 - 16 w/ rounding and saturation.

@@ -1,11 +1,11 @@
 var a00047 =
 [
-    [ "sctimer_pwm_signal_param_t", "a00047.html#a00354", [
+    [ "sctimer_pwm_signal_param_t", "a00047.html#a00355", [
       [ "output", "a00047.html#ae030d75078255fd25e577c14d0a0fc80", null ],
       [ "level", "a00047.html#a8734c80f138c70349b10e6204d8db899", null ],
       [ "dutyCyclePercent", "a00047.html#a17414a2d234412e960c98e4c8e4df853", null ]
     ] ],
-    [ "sctimer_config_t", "a00047.html#a00353", [
+    [ "sctimer_config_t", "a00047.html#a00354", [
       [ "enableCounterUnify", "a00047.html#a6caacf7ae4f800be829c32ed87cd6149", null ],
       [ "clockMode", "a00047.html#aaba4aecfe1173c11bb8d77a8f9913196", null ],
       [ "clockSelect", "a00047.html#ad5d7a18f1b860f5fa7d0800d8e464127", null ],

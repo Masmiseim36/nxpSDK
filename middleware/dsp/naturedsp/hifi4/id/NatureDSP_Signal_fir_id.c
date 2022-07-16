@@ -132,3 +132,6 @@ ANNOTATE_FUN(conv2d_11x7_8x16           ,"2D Convolution ( 11x7 8-bit kernel, 16
 ANNOTATE_FUN(conv2d_3x3_8x8             ,"2D Convolution ( 3x3 8-bit kernel, 8-bit data )                                ");
 ANNOTATE_FUN(conv2d_5x5_8x8             ,"2D Convolution ( 5x5 8-bit kernel, 8-bit data )                                ");
 ANNOTATE_FUN(conv2d_11x7_8x8            ,"2D Convolution ( 11x7 8-bit kernel, 8-bit data )                               ");
+ANNOTATE_FUN(conv2d_3x3f                ,"2D Convolution ( 3x3 kernel, floating point data )                             ");
+ANNOTATE_FUN(conv2d_5x5f                ,"2D Convolution ( 5x5 kernel, floating point data )                             ");
+ANNOTATE_FUN(conv2d_11x7f               ,"2D Convolution ( 11x7 kernel, floating point data )                            ");

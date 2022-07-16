@@ -5,8 +5,8 @@ This sample demonstrates the Storyboard engine to provide a UI that mimics somet
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- MCUXpresso  11.5.0
+- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================

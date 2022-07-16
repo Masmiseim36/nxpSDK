@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -110,9 +110,9 @@ $(document).ready(function(){initNavTree('a00022.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00257"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#a00257">flexspi_dma_handle_t</a></td></tr>
-<tr class="memdesc:a00257"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI DMA transfer handle, users should not touch the content of the handle.  <a href="a00022.html#a00257">More...</a><br/></td></tr>
-<tr class="separator:a00257"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00258"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#a00258">flexspi_dma_handle_t</a></td></tr>
+<tr class="memdesc:a00258"><td class="mdescLeft">&#160;</td><td class="mdescRight">FLEXSPI DMA transfer handle, users should not touch the content of the handle.  <a href="a00022.html#a00258">More...</a><br/></td></tr>
+<tr class="separator:a00258"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -142,13 +142,13 @@ Driver version</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 FLEXSPI dma Transactional</h2></td></tr>
-<tr class="memitem:gae88b65d392f6c30ce5732124afe0e95a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#gae88b65d392f6c30ce5732124afe0e95a">FLEXSPI_TransferCreateHandleDMA</a> (FLEXSPI_Type *base, flexspi_dma_handle_t *handle, <a class="el" href="a00022.html#ga4548186e58deb0eba54955ce18d5906c">flexspi_dma_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#a00297">dma_handle_t</a> *txDmaHandle, <a class="el" href="a00016.html#a00297">dma_handle_t</a> *rxDmaHandle)</td></tr>
+<tr class="memitem:gae88b65d392f6c30ce5732124afe0e95a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#gae88b65d392f6c30ce5732124afe0e95a">FLEXSPI_TransferCreateHandleDMA</a> (FLEXSPI_Type *base, flexspi_dma_handle_t *handle, <a class="el" href="a00022.html#ga4548186e58deb0eba54955ce18d5906c">flexspi_dma_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#a00298">dma_handle_t</a> *txDmaHandle, <a class="el" href="a00016.html#a00298">dma_handle_t</a> *rxDmaHandle)</td></tr>
 <tr class="memdesc:gae88b65d392f6c30ce5732124afe0e95a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the FLEXSPI handle for transfer which is used in transactional functions and set the callback.  <a href="#gae88b65d392f6c30ce5732124afe0e95a">More...</a><br/></td></tr>
 <tr class="separator:gae88b65d392f6c30ce5732124afe0e95a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9be1bdb2969ccbe519ec6ebb5c1a234d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#ga9be1bdb2969ccbe519ec6ebb5c1a234d">FLEXSPI_TransferUpdateSizeDMA</a> (FLEXSPI_Type *base, flexspi_dma_handle_t *handle, <a class="el" href="a00022.html#ga4fd2904aa9ac7635bbececd7d6ee66f5">flexspi_dma_transfer_nsize_t</a> nsize)</td></tr>
 <tr class="memdesc:ga9be1bdb2969ccbe519ec6ebb5c1a234d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update FLEXSPI DMA transfer source data transfer size(SSIZE) and destination data transfer size(DSIZE).  <a href="#ga9be1bdb2969ccbe519ec6ebb5c1a234d">More...</a><br/></td></tr>
 <tr class="separator:ga9be1bdb2969ccbe519ec6ebb5c1a234d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7cac9456562361635cfa34361faa9fed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#ga7cac9456562361635cfa34361faa9fed">FLEXSPI_TransferDMA</a> (FLEXSPI_Type *base, flexspi_dma_handle_t *handle, <a class="el" href="a00021.html#a00310">flexspi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga7cac9456562361635cfa34361faa9fed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#ga7cac9456562361635cfa34361faa9fed">FLEXSPI_TransferDMA</a> (FLEXSPI_Type *base, flexspi_dma_handle_t *handle, <a class="el" href="a00021.html#a00311">flexspi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga7cac9456562361635cfa34361faa9fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfers FLEXSPI data using an dma non-blocking method.  <a href="#ga7cac9456562361635cfa34361faa9fed">More...</a><br/></td></tr>
 <tr class="separator:ga7cac9456562361635cfa34361faa9fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaab504891f94a7ed4d8895f8ac706e518"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#gaab504891f94a7ed4d8895f8ac706e518">FLEXSPI_TransferAbortDMA</a> (FLEXSPI_Type *base, flexspi_dma_handle_t *handle)</td></tr>
@@ -159,7 +159,7 @@ FLEXSPI dma Transactional</h2></td></tr>
 <tr class="separator:gade38f72f518dab6e49a8ac8781f8382b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00257" id="a00257"></a>
+<a name="a00258" id="a00258"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -170,10 +170,10 @@ FLEXSPI dma Transactional</h2></td></tr>
 </div><div class="memdoc">
 <div class="textblock"></div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a4a39fe76e651a3353c88481c46ed02e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00016.html#a00297">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#a4a39fe76e651a3353c88481c46ed02e5">txDmaHandle</a></td></tr>
+<tr class="memitem:a4a39fe76e651a3353c88481c46ed02e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00016.html#a00298">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#a4a39fe76e651a3353c88481c46ed02e5">txDmaHandle</a></td></tr>
 <tr class="memdesc:a4a39fe76e651a3353c88481c46ed02e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">dma handler for FLEXSPI Tx.  <a href="#a4a39fe76e651a3353c88481c46ed02e5">More...</a><br/></td></tr>
 <tr class="separator:a4a39fe76e651a3353c88481c46ed02e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d30eb057fce28654c11c2e3e301fa68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00016.html#a00297">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#a9d30eb057fce28654c11c2e3e301fa68">rxDmaHandle</a></td></tr>
+<tr class="memitem:a9d30eb057fce28654c11c2e3e301fa68"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00016.html#a00298">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#a9d30eb057fce28654c11c2e3e301fa68">rxDmaHandle</a></td></tr>
 <tr class="memdesc:a9d30eb057fce28654c11c2e3e301fa68"><td class="mdescLeft">&#160;</td><td class="mdescRight">dma handler for FLEXSPI Rx.  <a href="#a9d30eb057fce28654c11c2e3e301fa68">More...</a><br/></td></tr>
 <tr class="separator:a9d30eb057fce28654c11c2e3e301fa68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac5cd76e7a53e77b4d79f8538b286ceae"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00022.html#ac5cd76e7a53e77b4d79f8538b286ceae">transferSize</a></td></tr>
@@ -205,7 +205,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00016.html#a00297">dma_handle_t</a>* flexspi_dma_handle_t::txDmaHandle</td>
+          <td class="memname"><a class="el" href="a00016.html#a00298">dma_handle_t</a>* flexspi_dma_handle_t::txDmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -217,7 +217,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00016.html#a00297">dma_handle_t</a>* flexspi_dma_handle_t::rxDmaHandle</td>
+          <td class="memname"><a class="el" href="a00016.html#a00298">dma_handle_t</a>* flexspi_dma_handle_t::rxDmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -368,13 +368,13 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#a00297">dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00016.html#a00298">dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>txDmaHandle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#a00297">dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00016.html#a00298">dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>rxDmaHandle</em>&#160;</td>
         </tr>
         <tr>
@@ -458,7 +458,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00021.html#a00310">flexspi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00021.html#a00311">flexspi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>

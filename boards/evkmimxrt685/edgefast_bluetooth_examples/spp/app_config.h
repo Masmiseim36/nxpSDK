@@ -47,5 +47,7 @@
 #define CONFIG_BT_RFCOMM_SESSION_MAX_COUNT 3
 #define CONFIG_BT_RFCOMM_CLIENT_MAX_COUNT  5
 #define CONFIG_BT_RFCOMM_SERVER_MAX_COUNT  5
+#define CONFIG_BT_SETTINGS                 1
+#define CONFIG_BT_KEYS_OVERWRITE_OLDEST    1
 
 #include "edgefast_bluetooth_config.h"

@@ -62,7 +62,7 @@ DISCARD_FUN(void  , logmelf_process       , (logmelf_handle_t handle, void * res
 #else
 
 #define PROFILE_ENABLE  0 /* If non-zero, measure cycles and print a report to stdout. */
-#define ALIGN_SIZE      (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE      (HIFI_SIMD_WIDTH)
 #define ALIGN_PAD       (ALIGN_SIZE-1)
 #define ALIGN_PTR(p)    (void*)(((uintptr_t)(p)+ALIGN_PAD)&~ALIGN_PAD)
 #define sz_i16          sizeof(int16_t)
@@ -164,8 +164,8 @@ void logmelf_process( logmelf_handle_t handle, void * restrict pScr, float32_t *
     static const float32_t onef = 1.f;
     int m, n, N, binNum, p_fbeSclInc;
     NASSERT(logmel && logmel->magic==LOGMELF_MAGIC);
-    NASSERT_ALIGN(logFbe, XCHAL_DATA_WIDTH);
-    NASSERT_ALIGN(spectra, XCHAL_DATA_WIDTH);
+    NASSERT_ALIGN(logFbe, HIFI_SIMD_WIDTH);
+    NASSERT_ALIGN(spectra, HIFI_SIMD_WIDTH);
     /* Profiler scores should be explicitly reset because this module does not invoke 
      * PROFILE_REPORT macro for them. */
     PROFILE_RESET(logmelf_vec_complex2mag_logmel);
@@ -288,8 +288,8 @@ void logmelf_process( logmelf_handle_t handle, void * restrict pScr, float32_t *
     int m, n, binNum, p_fbeSclInc;
     static const float32_t onef = 1.f;
     NASSERT(logmel && logmel->magic==LOGMELF_MAGIC);
-    NASSERT_ALIGN(logFbe, XCHAL_DATA_WIDTH);
-    NASSERT_ALIGN(spectra, XCHAL_DATA_WIDTH);
+    NASSERT_ALIGN(logFbe, HIFI_SIMD_WIDTH);
+    NASSERT_ALIGN(spectra, HIFI_SIMD_WIDTH);
     /* Profiler scores should be explicitly reset because this module does not invoke 
      * PROFILE_REPORT macro for them. */
     PROFILE_RESET(logmelf_vec_complex2mag_logmel);

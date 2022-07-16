@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------ */
-/* Copyright (c) 2018 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
+/* Copyright (c) 2016 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
 /* These coded instructions, statements, and computer programs (“Cadence    */
 /* Libraries”) are the copyrighted works of Cadence Design Systems Inc.	    */
 /* Cadence IP is licensed for use with Cadence processor cores only and     */
@@ -35,5 +35,6 @@
 externC const union ufloat32uint32 minusInff; /* -Inf */
 externC const union ufloat32uint32 plusInff ; /* +Inf */
 externC const union ufloat32uint32 realmaxf ; /* maximum floating point number */
+externC const union ufloat32uint32 realminf; /* minimum floating point number */
 
 #endif /* INFF_H__ */

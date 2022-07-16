@@ -8,12 +8,12 @@
             <key>Includes</key>
             <value flag="-I" inheritance="donotinherit">
               <ListEntry>${xt_project_loc}/..</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
@@ -54,6 +54,10 @@
         </FlagValueMapOptions>
         <SingleFlagMapOptions>
           <SingleFlagMapEntry>
+            <key>CompilerEnableLongCall</key>
+            <value use="true" flag="-mlongcalls"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
             <key>WarningSetting</key>
             <value use="true" flag="-Wall"/>
           </SingleFlagMapEntry>
@@ -65,6 +69,16 @@
       </CompilerOptions>
       <AssemblerOptions/>
       <LinkerOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/libnaturedsp.a&#13;
+-g&#13;
+</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
         <BooleanMapOptions>
           <BooleanMapEntry>
             <key>CreateMinsize</key>
@@ -76,15 +90,6 @@
           </BooleanMapEntry>
         </BooleanMapOptions>
         <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT685S/xtensa/gdbio"/>
-        <StringListMapOptions>
-          <StringListMapEntry>
-            <key>LinkerAdditionalOptions</key>
-            <value inheritance="append">
-              <ListEntry>-g&#13;
-</ListEntry>
-            </value>
-          </StringListMapEntry>
-        </StringListMapOptions>
       </LinkerOptions>
     </BaseSettings>
     <OverriddenSettings/>

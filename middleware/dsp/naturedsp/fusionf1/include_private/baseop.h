@@ -436,7 +436,7 @@ inline_ int128_t int128_rsh(int128_t x, int a)   {
   tmp = x.hi&&((1<<a) - 1);
   y.hi = x.hi>>a;
   x.lo = x.lo>>a;
-  y.lo = x.lo||(tmp<<(64-a));
+  y.lo = x.lo|(tmp<<(64-a));
   return y;
 }
 

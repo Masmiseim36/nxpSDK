@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, __DOMAIN_NS=1, DOMAIN_NS=1, TFM_PSA_API, OS_DYNAMIC_MEM_SIZE=8192, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_PSA_API, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FP=2, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -472,36 +472,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>device_definition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/device_definition.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_irq.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_irq.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_regs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_regs.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_base_address.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_base_address.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk</GroupName>
           <Files>
             <File>
@@ -517,12 +487,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config</GroupName>
+          <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</GroupName>
           <Files>
             <File>
-              <FileName>device_cfg.h</FileName>
+              <FileName>platform_base_address.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config/device_cfg.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_base_address.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -550,9 +520,9 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_attest_defs.h</FilePath>
             </File>
             <File>
-              <FileName>tfm_psa_call_param.h</FileName>
+              <FileName>config_impl.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_param.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
             </File>
             <File>
               <FileName>tfm_veneers.h</FileName>
@@ -583,6 +553,21 @@
               <FileName>tfm_ns_interface.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_psa_call_pack.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ns_client_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_client_ext.h</FilePath>
             </File>
             <File>
               <FileName>tfm_platform_api.h</FileName>
@@ -942,6 +927,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>device_definition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/device_definition.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_irq.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_irq.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_regs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_regs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Config</GroupName>
+          <Files>
+            <File>
+              <FileName>device_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config/device_cfg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/interface/include/psa</GroupName>
           <Files>
             <File>
@@ -988,6 +1008,11 @@
               <FileName>error.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/error.h</FilePath>
+            </File>
+            <File>
+              <FileName>framework_feature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/framework_feature.h</FilePath>
             </File>
             <File>
               <FileName>initial_attestation.h</FileName>
@@ -1102,32 +1127,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m-tests/ns_interface/ns_client_id</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_ns_svc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_ns_svc.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_nspm_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_nspm_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_nspm_svc_handler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_nspm_svc_handler.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m-tests/ns_interface/os_wrapper</GroupName>
           <Files>
             <File>
               <FileName>common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/common.h</FilePath>
+            </File>
+            <File>
+              <FileName>delay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/delay.h</FilePath>
             </File>
             <File>
               <FileName>msg_queue.h</FileName>
@@ -1148,6 +1158,21 @@
               <FileName>thread.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/thread.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m-tests/ns_interface/ns_client_ext</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_nsid_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext/tfm_nsid_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_shim_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext/tz_shim_layer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1193,6 +1218,11 @@
               <FileName>rtx_os.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/RTOS2/RTX/Include/rtx_os.h</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_def.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/RTOS2/RTX/Include/rtx_def.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1613,9 +1643,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, __DOMAIN_NS=1, DOMAIN_NS=1, TFM_PSA_API, OS_DYNAMIC_MEM_SIZE=8192, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, TFM_LVL=2, ITS_MAX_ASSET_SIZE=512, PS_MAX_ASSET_SIZE=512, OS_DYNAMIC_MEM_SIZE=7168, TFM_PSA_API, SERIAL_PORT_TYPE_UART=1, CONFIG_TFM_FP=2, CONFIG_TFM_LAZY_STACKING, __DOMAIN_NS=1, DOMAIN_NS=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../../../../../../devices/MIMXRT685S;..;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/partition;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest;../../../../../../middleware/tfm/tf-m/interface/include;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../middleware/tfm/tf-m/platform/include;../../../../../../middleware/tfm/tf-m/platform/ext;../../../../../../middleware/tfm/tf-m/platform/ext/common;../../../../../../middleware/tfm/tf-m/platform/ext/driver;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config;../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include;../../../../../../middleware/tfm/tf-m/interface/include/psa;../../../../../../middleware/tfm/tf-m/bl2/include;../../../../../../middleware/tfm/tf-m/secure_fw/spm/include;../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm;../../../../../../middleware/tfm/tf-m-tests/app;../../../../../../middleware/tfm/tf-m-tests/log;../../../../../../middleware/tfm/tf-m-tests/ns_interface;../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext;../../../../../../CMSIS/RTOS2/RTX/Source;../../../../../../CMSIS/RTOS2/RTX/Include;../../../../../../CMSIS/RTOS2/RTX/Config;../../../../../../CMSIS/RTOS2/Include;../../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1752,36 +1782,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</GroupName>
-          <Files>
-            <File>
-              <FileName>cmsis.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/cmsis.h</FilePath>
-            </File>
-            <File>
-              <FileName>device_definition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/device_definition.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_irq.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_irq.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_regs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_regs.h</FilePath>
-            </File>
-            <File>
-              <FileName>platform_base_address.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_base_address.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk</GroupName>
           <Files>
             <File>
@@ -1797,12 +1797,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config</GroupName>
+          <GroupName>tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include</GroupName>
           <Files>
             <File>
-              <FileName>device_cfg.h</FileName>
+              <FileName>platform_base_address.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Config/device_cfg.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/mimxrt685audevk/Device/Include/platform_base_address.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1830,9 +1830,9 @@
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_attest_defs.h</FilePath>
             </File>
             <File>
-              <FileName>tfm_psa_call_param.h</FileName>
+              <FileName>config_impl.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_param.h</FilePath>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</FilePath>
             </File>
             <File>
               <FileName>tfm_veneers.h</FileName>
@@ -1863,6 +1863,21 @@
               <FileName>tfm_ns_interface.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</FilePath>
+            </File>
+            <File>
+              <FileName>psa_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_psa_call_pack.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</FilePath>
+            </File>
+            <File>
+              <FileName>tfm_ns_client_ext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_client_ext.h</FilePath>
             </File>
             <File>
               <FileName>tfm_platform_api.h</FileName>
@@ -2222,6 +2237,41 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Include</GroupName>
+          <Files>
+            <File>
+              <FileName>cmsis.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>device_definition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/device_definition.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_irq.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_irq.h</FilePath>
+            </File>
+            <File>
+              <FileName>platform_regs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_regs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m/platform/ext/target/nxp/common/Device/Config</GroupName>
+          <Files>
+            <File>
+              <FileName>device_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config/device_cfg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>tf-m/interface/include/psa</GroupName>
           <Files>
             <File>
@@ -2268,6 +2318,11 @@
               <FileName>error.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/error.h</FilePath>
+            </File>
+            <File>
+              <FileName>framework_feature.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m/interface/include/psa/framework_feature.h</FilePath>
             </File>
             <File>
               <FileName>initial_attestation.h</FileName>
@@ -2382,32 +2437,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>tf-m-tests/ns_interface/ns_client_id</GroupName>
-          <Files>
-            <File>
-              <FileName>tfm_ns_svc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_ns_svc.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_nspm_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_nspm_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>tfm_nspm_svc_handler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_nspm_svc_handler.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tf-m-tests/ns_interface/os_wrapper</GroupName>
           <Files>
             <File>
               <FileName>common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/common.h</FilePath>
+            </File>
+            <File>
+              <FileName>delay.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/delay.h</FilePath>
             </File>
             <File>
               <FileName>msg_queue.h</FileName>
@@ -2428,6 +2468,21 @@
               <FileName>thread.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/thread.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tf-m-tests/ns_interface/ns_client_ext</GroupName>
+          <Files>
+            <File>
+              <FileName>tfm_nsid_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext/tfm_nsid_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>tz_shim_layer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext/tz_shim_layer.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2473,6 +2528,11 @@
               <FileName>rtx_os.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/RTOS2/RTX/Include/rtx_os.h</FilePath>
+            </File>
+            <File>
+              <FileName>rtx_def.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/RTOS2/RTX/Include/rtx_def.h</FilePath>
             </File>
           </Files>
         </Group>

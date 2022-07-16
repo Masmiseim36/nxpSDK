@@ -44,6 +44,7 @@ extern "C" {
   vec_mul multiply
   vec_mac multiply accumulate
   vec_dot dot-product
+  vec_dot_batch batch computation of dot-products for multiple inputs
   These routines make basic operations with emulated floating point data 
   representing in pairs 32-bit mantissa/16-bit exponent. All functions form 
   normalized output. Denormalized numbers on input may cause degraded accuracy. 
@@ -102,6 +103,52 @@ int64_t vec_dot64x64i_fast(const int64_t * x,const int64_t * y,int N);
 int64_t vec_dot32x32_fast (const int32_t * x,const int32_t * y,int N);
 int64_t vec_dot32x16_fast (const int32_t * x,const int16_t * y,int N);
 int32_t vec_dot16x16_fast (const int16_t * x,const int16_t * y,int N);
+
+/*-------------------------------------------------------------------------
+  Batch Computation of Vector Dot products
+  These routines take a set of input vectors and compute their dot product 
+  with specific reference data.
+  Two versions of routines are available: 
+  - regular versions (vec_dot_batch8x8, vec_dot_batch8x16, vec_dot_batch16x16, 
+    vec_dot_batchf). They work with arbitratry arguments
+  - fast versions (vec_dot_batch8x8_fast, vec_dot_batch8x16_fast, 
+    vec_dot_batch16x16_fast, vec_dot_batchf_fast) apply some restrictions.  
+
+  Precision: 
+  8x8    8x8-bit data, 16-bit output (fractional multiply Q7xQ7->Q15)
+  8x16   8x16-bit data, 16-bit output (fractional multiply Q7xQ15->Q15)
+  16x16  16x16-bit data, 16-bit output (fractional multiply Q15xQ15->Q31)
+  f      single precision floating point
+
+  Input:
+  x[N]     input (reference) data, Q7, Q15 or floating point
+  y[M][N]  pointers to M input vectors, Q7, Q15 or floating point
+  N        length of vectors
+  M        number of vectors
+  rsh      right shift for output (for fixed point API only!)
+  Output:
+  z[M]     dot products between references and M inputs, Q15, Q31 or 
+           floating point
+
+  Restrictions:
+  Regular versions:
+    none
+  Faster versions:
+    x,y[m] - aligned on 8-byte boundary
+    N      - multiple of 8
+    M        multiple of 4
+-------------------------------------------------------------------------*/
+typedef const int8_t   * cint8ptr_t ;
+typedef const int16_t   * cint16ptr_t ;
+typedef const float32_t * cfloat32ptr_t ;
+void vec_dot_batch8x8  (int16_t   *z, const int8_t      * x,const cint8ptr_t    * y,int rsh, int N, int M);
+void vec_dot_batch8x16 (int16_t   *z, const int8_t      * x,const cint16ptr_t   * y,int rsh, int N, int M);
+void vec_dot_batch16x16(int32_t   *z, const int16_t     * x,const cint16ptr_t   * y,int rsh, int N, int M);
+void vec_dot_batchf    (float32_t *z, const float32_t   * x,const cfloat32ptr_t * y        , int N, int M);
+void vec_dot_batch8x8_fast  (int16_t   *z, const int8_t      * x,const cint8ptr_t    * y,int rsh, int N, int M);
+void vec_dot_batch8x16_fast (int16_t   *z, const int8_t      * x,const cint16ptr_t   * y,int rsh, int N, int M);
+void vec_dot_batch16x16_fast(int32_t   *z, const int16_t     * x,const cint16ptr_t   * y,int rsh, int N, int M);
+void vec_dot_batchf_fast    (float32_t *z, const float32_t   * x,const cfloat32ptr_t * y        , int N, int M);
 
 /*-------------------------------------------------------------------------
   Vector Sum

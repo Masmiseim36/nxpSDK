@@ -42,7 +42,7 @@
 #include "NatureDSP_Signal_audio.h"
 #include "NatureDSP_Signal_math.h"
 
-#define ALIGN_SIZE       (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE       (HIFI_SIMD_WIDTH)
 #define ALIGN_PAD        (ALIGN_SIZE-1)
 #define ALIGN_PTR(p)     (void*)(((uintptr_t)(p)+ALIGN_PAD)&~ALIGN_PAD)
 #define sz_i16           sizeof(int16_t)

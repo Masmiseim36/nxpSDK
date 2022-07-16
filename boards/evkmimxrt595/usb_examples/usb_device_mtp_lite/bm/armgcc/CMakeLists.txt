@@ -69,6 +69,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../middleware/fatfs
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../middleware
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
@@ -98,6 +99,8 @@ include(middleware_sdmmc_host_usdhc_interrupt_MIMXRT595S_cm33)
 include(middleware_fatfs_MIMXRT595S_cm33)
 
 include(middleware_fatfs_mmc_MIMXRT595S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT595S_cm33)
 
 include(middleware_baremetal_MIMXRT595S_cm33)
 

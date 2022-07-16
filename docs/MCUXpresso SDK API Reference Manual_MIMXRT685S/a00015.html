@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -142,12 +142,12 @@ Files</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00293"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00293">ctimer_match_config_t</a></td></tr>
-<tr class="memdesc:a00293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Match configuration.  <a href="a00015.html#a00293">More...</a><br/></td></tr>
+<tr class="memitem:a00294"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00294">ctimer_match_config_t</a></td></tr>
+<tr class="memdesc:a00294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Match configuration.  <a href="a00015.html#a00294">More...</a><br/></td></tr>
+<tr class="separator:a00294"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00293"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00293">ctimer_config_t</a></td></tr>
+<tr class="memdesc:a00293"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer configuration structure.  <a href="a00015.html#a00293">More...</a><br/></td></tr>
 <tr class="separator:a00293"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00292"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#a00292">ctimer_config_t</a></td></tr>
-<tr class="memdesc:a00292"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timer configuration structure.  <a href="a00015.html#a00292">More...</a><br/></td></tr>
-<tr class="separator:a00292"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -156,7 +156,9 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fac4fcf23f15faa447489ef7ccc4d6cb25">kCTIMER_Capture_1</a>, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d6d30f6a5498d009cd87fafee3bccd5">kCTIMER_Capture_2</a>
+&#160;&#160;<a class="el" href="a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d6d30f6a5498d009cd87fafee3bccd5">kCTIMER_Capture_2</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d2f295d94d98bc376159ecea3ff2461">kCTIMER_Capture_3</a>
 <br/>
  }</td></tr>
 <tr class="memdesc:ga2fbf5cfa219c31ac16f3786d6897dc3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of Timer capture channels.  <a href="a00015.html#ga2fbf5cfa219c31ac16f3786d6897dc3f">More...</a><br/></td></tr>
@@ -223,7 +225,9 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00015.html#gga0971c614f932bcf55994bf6c92325eb2a5d70800d3cc33733d42f525242edbbf4">kCTIMER_Capture1InterruptEnable</a> = CTIMER_CCR_CAP1I_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#gga0971c614f932bcf55994bf6c92325eb2a68a56db3574cd0ea3bb783c7d13f0894">kCTIMER_Capture2InterruptEnable</a> = CTIMER_CCR_CAP2I_MASK
+&#160;&#160;<a class="el" href="a00015.html#gga0971c614f932bcf55994bf6c92325eb2a68a56db3574cd0ea3bb783c7d13f0894">kCTIMER_Capture2InterruptEnable</a> = CTIMER_CCR_CAP2I_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00015.html#gga0971c614f932bcf55994bf6c92325eb2a347ceee25f668e7af7a459da9bbc9418">kCTIMER_Capture3InterruptEnable</a> = CTIMER_CCR_CAP3I_MASK
 <br/>
  }</td></tr>
 <tr class="memdesc:ga0971c614f932bcf55994bf6c92325eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of Timer interrupts.  <a href="a00015.html#ga0971c614f932bcf55994bf6c92325eb2">More...</a><br/></td></tr>
@@ -241,7 +245,9 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00015.html#ggae64285eb2e52bf5cc2b723870392ff60af3a0db73d48116ea419af737c706b30b">kCTIMER_Capture1Flag</a> = CTIMER_IR_CR1INT_MASK, 
 <br/>
-&#160;&#160;<a class="el" href="a00015.html#ggae64285eb2e52bf5cc2b723870392ff60aaf0224295d4f330d0d61d10ab30f38ea">kCTIMER_Capture2Flag</a> = CTIMER_IR_CR2INT_MASK
+&#160;&#160;<a class="el" href="a00015.html#ggae64285eb2e52bf5cc2b723870392ff60aaf0224295d4f330d0d61d10ab30f38ea">kCTIMER_Capture2Flag</a> = CTIMER_IR_CR2INT_MASK, 
+<br/>
+&#160;&#160;<a class="el" href="a00015.html#ggae64285eb2e52bf5cc2b723870392ff60a2bd4b55092422d4faa550293c529dacf">kCTIMER_Capture3Flag</a> = CTIMER_IR_CR3INT_MASK
 <br/>
  }</td></tr>
 <tr class="memdesc:gae64285eb2e52bf5cc2b723870392ff60"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of Timer flags.  <a href="a00015.html#gae64285eb2e52bf5cc2b723870392ff60">More...</a><br/></td></tr>
@@ -257,7 +263,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga64b1d0ba86d952b5ec30e201880c7bb5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga64b1d0ba86d952b5ec30e201880c7bb5">CTIMER_SetupMatch</a> (CTIMER_Type *base, <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> matchChannel, const <a class="el" href="a00015.html#a00293">ctimer_match_config_t</a> *config)</td></tr>
+<tr class="memitem:ga64b1d0ba86d952b5ec30e201880c7bb5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga64b1d0ba86d952b5ec30e201880c7bb5">CTIMER_SetupMatch</a> (CTIMER_Type *base, <a class="el" href="a00015.html#gae60f7d34c9e499abba96e5979ee1818d">ctimer_match_t</a> matchChannel, const <a class="el" href="a00015.html#a00294">ctimer_match_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga64b1d0ba86d952b5ec30e201880c7bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup the match register.  <a href="#ga64b1d0ba86d952b5ec30e201880c7bb5">More...</a><br/></td></tr>
 <tr class="separator:ga64b1d0ba86d952b5ec30e201880c7bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae4d610de22fd8b8c9577e774dac88ac5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gae4d610de22fd8b8c9577e774dac88ac5">CTIMER_GetOutputMatchStatus</a> (CTIMER_Type *base, uint32_t matchChannel)</td></tr>
@@ -279,19 +285,19 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga89b626fd25a5b3bbd511672ff51618f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga89b626fd25a5b3bbd511672ff51618f8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga89b626fd25a5b3bbd511672ff51618f8">FSL_CTIMER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td></tr>
-<tr class="memdesc:ga89b626fd25a5b3bbd511672ff51618f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.2.1. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga89b626fd25a5b3bbd511672ff51618f8">FSL_CTIMER_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00214.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 2))</td></tr>
+<tr class="memdesc:ga89b626fd25a5b3bbd511672ff51618f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Version 2.2.2. <br/></td></tr>
 <tr class="separator:ga89b626fd25a5b3bbd511672ff51618f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gacae8e1dbb60368ab01a9564de7eda037"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gacae8e1dbb60368ab01a9564de7eda037">CTIMER_Init</a> (CTIMER_Type *base, const <a class="el" href="a00015.html#a00292">ctimer_config_t</a> *config)</td></tr>
+<tr class="memitem:gacae8e1dbb60368ab01a9564de7eda037"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gacae8e1dbb60368ab01a9564de7eda037">CTIMER_Init</a> (CTIMER_Type *base, const <a class="el" href="a00015.html#a00293">ctimer_config_t</a> *config)</td></tr>
 <tr class="memdesc:gacae8e1dbb60368ab01a9564de7eda037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the clock and configures the peripheral for basic operation.  <a href="#gacae8e1dbb60368ab01a9564de7eda037">More...</a><br/></td></tr>
 <tr class="separator:gacae8e1dbb60368ab01a9564de7eda037"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga97daa711029883d46933204381f44c9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#ga97daa711029883d46933204381f44c9f">CTIMER_Deinit</a> (CTIMER_Type *base)</td></tr>
 <tr class="memdesc:ga97daa711029883d46933204381f44c9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gates the timer clock.  <a href="#ga97daa711029883d46933204381f44c9f">More...</a><br/></td></tr>
 <tr class="separator:ga97daa711029883d46933204381f44c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac44f44c3f88125a41081ca2a7cf06223"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gac44f44c3f88125a41081ca2a7cf06223">CTIMER_GetDefaultConfig</a> (<a class="el" href="a00015.html#a00292">ctimer_config_t</a> *config)</td></tr>
+<tr class="memitem:gac44f44c3f88125a41081ca2a7cf06223"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00015.html#gac44f44c3f88125a41081ca2a7cf06223">CTIMER_GetDefaultConfig</a> (<a class="el" href="a00015.html#a00293">ctimer_config_t</a> *config)</td></tr>
 <tr class="memdesc:gac44f44c3f88125a41081ca2a7cf06223"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the timers configuration structure with the default settings.  <a href="#gac44f44c3f88125a41081ca2a7cf06223">More...</a><br/></td></tr>
 <tr class="separator:gac44f44c3f88125a41081ca2a7cf06223"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -341,7 +347,7 @@ Counter Start and Stop</h2></td></tr>
 <tr class="separator:ga3c7e8e1eb12e5f48ecca04c8128a9545"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00293" id="a00293"></a>
+<a name="a00294" id="a00294"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -381,7 +387,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a name="a00292" id="a00292"></a>
+<a name="a00293" id="a00293"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -429,6 +435,9 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga2fbf5cfa219c31ac16f3786d6897dc3fa9d6d30f6a5498d009cd87fafee3bccd5"></a>kCTIMER_Capture_2</em>&nbsp;</td><td class="fielddoc">
 <p>Timer capture channel 2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga2fbf5cfa219c31ac16f3786d6897dc3fa9d2f295d94d98bc376159ecea3ff2461"></a>kCTIMER_Capture_3</em>&nbsp;</td><td class="fielddoc">
+<p>Timer capture channel 3. </p>
 </td></tr>
 </table>
 
@@ -566,6 +575,9 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr><td class="fieldname"><em><a class="anchor" id="gga0971c614f932bcf55994bf6c92325eb2a68a56db3574cd0ea3bb783c7d13f0894"></a>kCTIMER_Capture2InterruptEnable</em>&nbsp;</td><td class="fielddoc">
 <p>Capture 2 interrupt. </p>
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga0971c614f932bcf55994bf6c92325eb2a347ceee25f668e7af7a459da9bbc9418"></a>kCTIMER_Capture3InterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Capture 3 interrupt. </p>
+</td></tr>
 </table>
 
 </div>
@@ -600,6 +612,9 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggae64285eb2e52bf5cc2b723870392ff60aaf0224295d4f330d0d61d10ab30f38ea"></a>kCTIMER_Capture2Flag</em>&nbsp;</td><td class="fielddoc">
 <p>Capture 2 interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae64285eb2e52bf5cc2b723870392ff60a2bd4b55092422d4faa550293c529dacf"></a>kCTIMER_Capture3Flag</em>&nbsp;</td><td class="fielddoc">
+<p>Capture 3 interrupt flag. </p>
 </td></tr>
 </table>
 
@@ -642,7 +657,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00015.html#a00292">ctimer_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00015.html#a00293">ctimer_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -692,7 +707,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void CTIMER_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00015.html#a00292">ctimer_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00015.html#a00293">ctimer_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -960,7 +975,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00015.html#a00293">ctimer_match_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00015.html#a00294">ctimer_match_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>

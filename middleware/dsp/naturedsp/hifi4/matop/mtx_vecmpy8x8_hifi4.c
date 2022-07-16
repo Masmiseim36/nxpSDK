@@ -93,7 +93,8 @@ void mtx_vecmpy8x8   ( int8_t* restrict z,
 	{
         ae_int64 a0,a1,a2,a3;
         a0=a1=a2=a3=AE_ZERO64();
-		for (n=0; n<(N&~1); n+=2)
+		__Pragma("no_unroll")
+		for (n=0; n<(N&~3); n+=4)
 		{
             ae_int32x2 s0,t0,t1,t2,t3;
             s0=AE_MOVDA32X2((uint8_t)y[        n+0],(uint8_t)y[        n+1]);
@@ -110,6 +111,42 @@ void mtx_vecmpy8x8   ( int8_t* restrict z,
             AE_MULAAD32_HH_LL(a1,t1,s0);
             AE_MULAAD32_HH_LL(a2,t2,s0);
             AE_MULAAD32_HH_LL(a3,t3,s0);
+
+			// UNROLL
+
+			s0 = AE_MOVDA32X2((uint8_t)y[n + 0 + 2], (uint8_t)y[n + 1 + 2]);
+			t0 = AE_MOVDA32X2((uint8_t)x[(m + 0)*N + n + 0 + 2], (uint8_t)x[(m + 0)*N + n + 1 + 2]);
+			t1 = AE_MOVDA32X2((uint8_t)x[(m + 1)*N + n + 0 + 2], (uint8_t)x[(m + 1)*N + n + 1 + 2]);
+			t2 = AE_MOVDA32X2((uint8_t)x[(m + 2)*N + n + 0 + 2], (uint8_t)x[(m + 2)*N + n + 1 + 2]);
+			t3 = AE_MOVDA32X2((uint8_t)x[(m + 3)*N + n + 0 + 2], (uint8_t)x[(m + 3)*N + n + 1 + 2]);
+			t0 = AE_SEXT32(t0, 7);
+			t1 = AE_SEXT32(t1, 7);
+			t2 = AE_SEXT32(t2, 7);
+			t3 = AE_SEXT32(t3, 7);
+			s0 = AE_SEXT32(s0, 7);
+			AE_MULAAD32_HH_LL(a0, t0, s0);
+			AE_MULAAD32_HH_LL(a1, t1, s0);
+			AE_MULAAD32_HH_LL(a2, t2, s0);
+			AE_MULAAD32_HH_LL(a3, t3, s0);
+		}
+		if (N & 2)
+		{
+			ae_int32x2 s0, t0, t1, t2, t3;
+			s0 = AE_MOVDA32X2((uint8_t)y[n + 0], (uint8_t)y[n + 1]);
+			t0 = AE_MOVDA32X2((uint8_t)x[(m + 0)*N + n + 0], (uint8_t)x[(m + 0)*N + n + 1]);
+			t1 = AE_MOVDA32X2((uint8_t)x[(m + 1)*N + n + 0], (uint8_t)x[(m + 1)*N + n + 1]);
+			t2 = AE_MOVDA32X2((uint8_t)x[(m + 2)*N + n + 0], (uint8_t)x[(m + 2)*N + n + 1]);
+			t3 = AE_MOVDA32X2((uint8_t)x[(m + 3)*N + n + 0], (uint8_t)x[(m + 3)*N + n + 1]);
+			t0 = AE_SEXT32(t0, 7);
+			t1 = AE_SEXT32(t1, 7);
+			t2 = AE_SEXT32(t2, 7);
+			t3 = AE_SEXT32(t3, 7);
+			s0 = AE_SEXT32(s0, 7);
+			AE_MULAAD32_HH_LL(a0, t0, s0);
+			AE_MULAAD32_HH_LL(a1, t1, s0);
+			AE_MULAAD32_HH_LL(a2, t2, s0);
+			AE_MULAAD32_HH_LL(a3, t3, s0);
+			n += 2;
 		}
 		if (N&1)
 		{

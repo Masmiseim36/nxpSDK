@@ -13,10 +13,10 @@ NOTE: The TF-M main() functions have a non-standard location:
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  10.2.1
-- Keil MDK  5.34
-- IAR embedded Workbench  9.10.2
-- MCUXpresso  11.5.0
+- GCC ARM Embedded  10.3.1
+- Keil MDK  5.37
+- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================
@@ -30,7 +30,7 @@ No special settings are required.
 
 Prepare the Demo
 ================
-1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port on the board
+1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port on the board.
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -46,12 +46,35 @@ Running the demo
 ================
 The log below shows the output of the TFM regression tests in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+[INF] Beginning TF-M provisioning
+[WRN] TFM_DUMMY_PROVISIONING is not suitable for production! This device is NOT SECURE
 [Sec Thread] Secure image initializing!
-Booting TFM v1.4.0
-Non-Secure system starting...
+TF-M FP mode: Hardware
+Lazy stacking enabled
+Booting TF-M 1.5.0
+Creating an empty ITS flash layout.
+Creating an empty PS flash layout.
 
 #### Execute test suites for the Secure area ####
+Running Test Suite IPC secure interface test (TFM_S_IPC_TEST_1XXX)...
+> Executing 'TFM_S_IPC_TEST_1001'
+  Description: 'Get PSA framework version'
+  TEST: TFM_S_IPC_TEST_1001 - PASSED!
+> Executing 'TFM_S_IPC_TEST_1002'
+  Description: 'Get version of an RoT Service'
+  TEST: TFM_S_IPC_TEST_1002 - PASSED!
+> Executing 'TFM_S_IPC_TEST_1004'
+  Description: 'Request connection-based RoT Service'
+  TEST: TFM_S_IPC_TEST_1004 - PASSED!
+> Executing 'TFM_S_IPC_TEST_1006'
+  Description: 'Call PSA RoT access APP RoT memory test service'
+Connect success!
+Call success!
+  TEST: TFM_S_IPC_TEST_1006 - PASSED!
+> Executing 'TFM_S_IPC_TEST_1012'
+  Description: 'Request stateless service'
+  TEST: TFM_S_IPC_TEST_1012 - PASSED!
+TESTSUITE PASSED!
 Running Test Suite PSA protected storage S interface tests (TFM_S_PS_TEST_1XXX)...
 > Executing 'TFM_S_PS_TEST_1001'
   Description: 'Set interface'
@@ -278,14 +301,9 @@ Running Test Suite Platform Service Secure interface tests(TFM_S_PLATFORM_TEST_1
   Description: 'Minimal platform service test'
   TEST: TFM_S_PLATFORM_TEST_1001 - PASSED!
 TESTSUITE PASSED!
-Running Test Suite IPC secure interface test (TFM_S_IPC_TEST_1XXX)...
-> Executing 'TFM_S_IPC_TEST_1001'
-  Description: 'Accessing stateless service from secure partition'
-[IPC_SERVICE_TEST_STATELESS_ROT] Service called! arg=ffffabcd
-  TEST: TFM_S_IPC_TEST_1001 - PASSED!
-TESTSUITE PASSED!
 
 *** Secure test suites summary ***
+Test suite 'IPC secure interface test (TFM_S_IPC_TEST_1XXX)' has PASSED
 Test suite 'PSA protected storage S interface tests (TFM_S_PS_TEST_1XXX)' has PASSED
 Test suite 'PS reliability tests (TFM_PS_TEST_3XXX)' has PASSED
 Test suite 'PSA internal trusted storage S interface tests (TFM_S_ITS_TEST_1XXX)' has PASSED
@@ -293,11 +311,58 @@ Test suite 'ITS reliability tests (TFM_ITS_TEST_2XXX)' has PASSED
 Test suite 'Crypto secure interface tests (TFM_S_CRYPTO_TEST_1XXX)' has PASSED
 Test suite 'Initial Attestation Service secure interface tests(TFM_S_ATTEST_TEST_1XXX)' has PASSED
 Test suite 'Platform Service Secure interface tests(TFM_S_PLATFORM_TEST_1XXX)' has PASSED
-Test suite 'IPC secure interface test (TFM_S_IPC_TEST_1XXX)' has PASSED
 
 *** End of Secure test suites ***
+Non-Secure system starting...
 
 #### Execute test suites for the Non-secure area ####
+Running Test Suite Core non-secure positive tests (TFM_NS_CORE_TEST_1XXX)...
+> Executing 'TFM_NS_CORE_TEST_1001'
+  Description: 'Test service request from NS thread mode'
+  TEST: TFM_NS_CORE_TEST_1001 - PASSED!
+> Executing 'TFM_NS_CORE_TEST_1003'
+  Description: 'Test the success of service init'
+  TEST: TFM_NS_CORE_TEST_1003 - PASSED!
+> Executing 'TFM_NS_CORE_TEST_1007'
+  Description: 'Test secure service buffer accesses'
+  TEST: TFM_NS_CORE_TEST_1007 - PASSED!
+> Executing 'TFM_NS_CORE_TEST_1008'
+  Description: 'Test secure service to service call'
+  TEST: TFM_NS_CORE_TEST_1008 - PASSED!
+> Executing 'TFM_NS_CORE_TEST_1010'
+  Description: 'Test secure service to service call with buffer handling'
+  TEST: TFM_NS_CORE_TEST_1010 - PASSED!
+> Executing 'TFM_NS_CORE_TEST_1014'
+  Description: 'Test service parameter sanitization'
+  TEST: TFM_NS_CORE_TEST_1014 - PASSED!
+> Executing 'TFM_NS_CORE_TEST_1015'
+  Description: 'Test outvec write'
+  TEST: TFM_NS_CORE_TEST_1015 - PASSED!
+TESTSUITE PASSED!
+Running Test Suite IPC non-secure interface test (TFM_NS_IPC_TEST_1XXX)...
+> Executing 'TFM_NS_IPC_TEST_1001'
+  Description: 'Get PSA framework version'
+  TEST: TFM_NS_IPC_TEST_1001 - PASSED!
+> Executing 'TFM_NS_IPC_TEST_1002'
+  Description: 'Get version of an RoT Service'
+  TEST: TFM_NS_IPC_TEST_1002 - PASSED!
+> Executing 'TFM_NS_IPC_TEST_1003'
+  Description: 'Connect to an RoT Service'
+Connect success!
+  TEST: TFM_NS_IPC_TEST_1003 - PASSED!
+> Executing 'TFM_NS_IPC_TEST_1004'
+  Description: 'Request connection-based RoT Service'
+  TEST: TFM_NS_IPC_TEST_1004 - PASSED!
+> Executing 'TFM_NS_IPC_TEST_1010'
+  Description: 'Test psa_call with the status of PSA_ERROR_PROGRAMMER_ERROR'
+Connect success!
+The first time call success!
+The second time call success!
+  TEST: TFM_NS_IPC_TEST_1010 - PASSED!
+> Executing 'TFM_NS_IPC_TEST_1012'
+  Description: 'Request stateless service'
+  TEST: TFM_NS_IPC_TEST_1012 - PASSED!
+TESTSUITE PASSED!
 Running Test Suite PSA protected storage NS interface tests (TFM_NS_PS_TEST_1XXX)...
 > Executing 'TFM_NS_PS_TEST_1001'
   Description: 'Set interface'
@@ -483,82 +548,21 @@ Running Test Suite Initial Attestation Service non-secure interface tests(TFM_NS
   Description: 'Negative test cases for initial attestation service'
   TEST: TFM_NS_ATTEST_TEST_1005 - PASSED!
 TESTSUITE PASSED!
-Running Test Suite Core non-secure positive tests (TFM_NS_CORE_TEST_1XXX)...
-> Executing 'TFM_NS_CORE_TEST_1001'
-  Description: 'Test service request from NS thread mode'
-  TEST: TFM_NS_CORE_TEST_1001 - PASSED!
-> Executing 'TFM_NS_CORE_TEST_1003'
-  Description: 'Test the success of service init'
-  TEST: TFM_NS_CORE_TEST_1003 - PASSED!
-> Executing 'TFM_NS_CORE_TEST_1007'
-  Description: 'Test secure service buffer accesses'
-  TEST: TFM_NS_CORE_TEST_1007 - PASSED!
-> Executing 'TFM_NS_CORE_TEST_1008'
-  Description: 'Test secure service to service call'
-  TEST: TFM_NS_CORE_TEST_1008 - PASSED!
-> Executing 'TFM_NS_CORE_TEST_1010'
-  Description: 'Test secure service to service call with buffer handling'
-  TEST: TFM_NS_CORE_TEST_1010 - PASSED!
-> Executing 'TFM_NS_CORE_TEST_1012'
-  Description: 'Test service peripheral access'
-  TEST: TFM_NS_CORE_TEST_1012 - PASSED!
-> Executing 'TFM_NS_CORE_TEST_1014'
-  Description: 'Test service parameter sanitization'
-  TEST: TFM_NS_CORE_TEST_1014 - PASSED!
-> Executing 'TFM_NS_CORE_TEST_1015'
-  Description: 'Test outvec write'
-  TEST: TFM_NS_CORE_TEST_1015 - PASSED!
-TESTSUITE PASSED!
-Running Test Suite IPC non-secure interface test (TFM_NS_IPC_TEST_1XXX)...
-> Executing 'TFM_NS_IPC_TEST_1001'
-  Description: 'Get PSA framework version'
-The version of the PSA Framework API is 257.
-  TEST: TFM_NS_IPC_TEST_1001 - PASSED!
-> Executing 'TFM_NS_IPC_TEST_1002'
-  Description: 'Get version of an RoT Service'
-The service version is 1.
-  TEST: TFM_NS_IPC_TEST_1002 - PASSED!
-> Executing 'TFM_NS_IPC_TEST_1003'
-  Description: 'Connect to an RoT Service'
-Connect success!
-  TEST: TFM_NS_IPC_TEST_1003 - PASSED!
-> Executing 'TFM_NS_IPC_TEST_1004'
-  Description: 'Call an RoT Service'
-TFM service support version is 1.
-psa_call is successful!
-outvec1 is: It is just for IPC call test.
-outvec2 is: It is just for IPC call test.
-  TEST: TFM_NS_IPC_TEST_1004 - PASSED!
-> Executing 'TFM_NS_IPC_TEST_1005'
-  Description: 'Call IPC_INIT_BASIC_TEST service'
-Connect success!
-Call success!
-  TEST: TFM_NS_IPC_TEST_1005 - PASSED!
-> Executing 'TFM_NS_IPC_TEST_1006'
-  Description: 'Call PSA RoT access APP RoT memory test service'
-Connect success!
-Call success!
-  TEST: TFM_NS_IPC_TEST_1006 - PASSED!
-> Executing 'TFM_NS_IPC_TEST_1010'
-  Description: 'Test psa_call with the status of PSA_ERROR_PROGRAMMER_ERROR'
-Connect success!
-The first time call success!
-The second time call success!
-  TEST: TFM_NS_IPC_TEST_1010 - PASSED!
-> Executing 'TFM_NS_IPC_TEST_1012'
-  Description: 'Accessing stateless service from non-secure client'
-[IPC_SERVICE_TEST_STATELESS_ROT] Service called! arg=ffffabcd
-  TEST: TFM_NS_IPC_TEST_1012 - PASSED!
+Running Test Suite QCBOR regression test(TFM_NS_QCBOR_TEST_1XXX)...
+> Executing 'TFM_NS_QCBOR_TEST_1001'
+  Description: 'Regression test of QCBOR library'
+  TEST: TFM_NS_QCBOR_TEST_1001 - PASSED!
 TESTSUITE PASSED!
 
 *** Non-secure test suites summary ***
+Test suite 'Core non-secure positive tests (TFM_NS_CORE_TEST_1XXX)' has PASSED
+Test suite 'IPC non-secure interface test (TFM_NS_IPC_TEST_1XXX)' has PASSED
 Test suite 'PSA protected storage NS interface tests (TFM_NS_PS_TEST_1XXX)' has PASSED
 Test suite 'PSA internal trusted storage NS interface tests (TFM_NS_ITS_TEST_1XXX)' has PASSED
 Test suite 'Crypto non-secure interface test (TFM_NS_CRYPTO_TEST_1XXX)' has PASSED
 Test suite 'Platform Service Non-Secure interface tests(TFM_NS_PLATFORM_TEST_1XXX)' has PASSED
 Test suite 'Initial Attestation Service non-secure interface tests(TFM_NS_ATTEST_TEST_1XXX)' has PASSED
-Test suite 'Core non-secure positive tests (TFM_NS_CORE_TEST_1XXX)' has PASSED
-Test suite 'IPC non-secure interface test (TFM_NS_IPC_TEST_1XXX)' has PASSED
+Test suite 'QCBOR regression test(TFM_NS_QCBOR_TEST_1XXX)' has PASSED
 
 *** End of Non-secure test suites ***
 

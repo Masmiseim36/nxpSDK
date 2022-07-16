@@ -26,8 +26,8 @@
  *  This file is part of mbed TLS (https://tls.mbed.org)
  */
 
-#ifndef PROFILE_S_MBEDTLS_CONFIG_H
-#define PROFILE_S_MBEDTLS_CONFIG_H
+#ifndef PROFILE_M_MBEDTLS_CONFIG_H
+#define PROFILE_M_MBEDTLS_CONFIG_H
 
 #if defined(_MSC_VER) && !defined(_CRT_SECURE_NO_DEPRECATE)
 #define _CRT_SECURE_NO_DEPRECATE 1
@@ -429,9 +429,9 @@
 //#define MBEDTLS_DES_CRYPT_ECB_ALT
 //#define MBEDTLS_DES3_CRYPT_ECB_ALT
 //#define MBEDTLS_AES_SETKEY_ENC_ALT
-#define MBEDTLS_AES_SETKEY_DEC_ALT
+//#define MBEDTLS_AES_SETKEY_DEC_ALT //NXP
 //#define MBEDTLS_AES_ENCRYPT_ALT
-#define MBEDTLS_AES_DECRYPT_ALT
+//#define MBEDTLS_AES_DECRYPT_ALT //NXP
 //#define MBEDTLS_ECDH_GEN_PUBLIC_ALT
 //#define MBEDTLS_ECDH_COMPUTE_SHARED_ALT
 //#define MBEDTLS_ECDSA_VERIFY_ALT
@@ -615,7 +615,7 @@
  *
  * Enable padding modes in the cipher layer.
  */
-#define MBEDTLS_CIPHER_PADDING_PKCS7
+//#define MBEDTLS_CIPHER_PADDING_PKCS7
 //#define MBEDTLS_CIPHER_PADDING_ONE_AND_ZEROS
 //#define MBEDTLS_CIPHER_PADDING_ZEROS_AND_LEN
 //#define MBEDTLS_CIPHER_PADDING_ZEROS
@@ -1411,7 +1411,7 @@
  * This module adds support for the Hashed Message Authentication Code
  * (HMAC)-based key derivation function (HKDF).
  */
-//#define MBEDTLS_HKDF_C
+#define MBEDTLS_HKDF_C
 
 /**
  * \def MBEDTLS_HMAC_DRBG_C
@@ -1924,7 +1924,7 @@
 /* ECP options */
 //#define MBEDTLS_ECP_MAX_BITS             521 /**< Maximum bit size of groups */
 //#define MBEDTLS_ECP_WINDOW_SIZE            6 /**< Maximum window size used */
-//#define MBEDTLS_ECP_FIXED_POINT_OPTIM      1 /**< Enable fixed-point speed-up */
+#define MBEDTLS_ECP_FIXED_POINT_OPTIM        0 /**< Disable fixed-point speed-up */
 
 /* Entropy options */
 //#define MBEDTLS_ENTROPY_MAX_SOURCES                20 /**< Maximum number of sources supported */
@@ -2006,6 +2006,10 @@
 
 /* \} name SECTION: Customisation configuration options */
 
+#ifdef CRYPTO_NV_SEED
+#include "tfm_mbedcrypto_config_extra_nv_seed.h"
+#endif /* CRYPTO_NV_SEED */
+
 #ifdef CRYPTO_HW_ACCELERATOR
 #include "mbedtls_accelerator_config.h"
 #elif defined(MBEDTLS_ENTROPY_NV_SEED)
@@ -2023,4 +2027,4 @@
 
 #include "mbedtls/check_config.h"
 
-#endif /* PROFILE_S_MBEDTLS_CONFIG_H */
+#endif /* PROFILE_M_MBEDTLS_CONFIG_H */

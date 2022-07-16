@@ -24,7 +24,7 @@
 /* ------------------------------------------------------------------------ */
 /*
   NatureDSP Signal Processing Library. FFT part
-    Complex-valued FFT stages with butterflies radix-4, radix-8
+    Complex-valued FFT stages with butterflies radix-4, radix-8, radix-11
     with dynamic data scaling: 16-bit data, 16-bit twiddle factors
     C code optimized for HiFi4
   IntegrIT, 2006-2014
@@ -33,29 +33,32 @@
 #include "common.h"
 #include "fft_16x16_stages.h"
 
+
 /* Table of 16x16 FFT stages with dynamic scaling used in processing */
 const fft_cplx16x16_stage_t fft16x16_stages_scl2_tbl[NUM_FFT_STAGE_TYPES] =
 {
-    NULL,
-    fft_16x16_stage_first_scl2_DFT3,
-    fft_16x16_stage_first_scl2_DFT4,
-    fft_16x16_stage_first_scl2_DFT5,
-    NULL,
-    ifft_16x16_stage_first_scl2_DFT3,
-    ifft_16x16_stage_first_scl2_DFT4,
-    ifft_16x16_stage_first_scl2_DFT5,
-    fft_16x16_stage_inner_scl2_DFT2,
-    fft_16x16_stage_inner_scl2_DFT3,
-    NULL,
-    fft_16x16_stage_inner_scl2_DFT4x2,
-    NULL,
-    NULL,
-    fft_16x16_stage_penultimate_scl2_DFT4x4,
-    NULL,
-    NULL,
-    fft_16x16_stage_last_scl2_DFT4,
-    NULL,
-    fft_16x16_stage_last_scl2_DFT8
+    NULL,                                        //    fft_stage_first_DFT2       = 0 
+    fft_16x16_stage_first_scl2_DFT3,             //    fft_stage_first_DFT3       = 1 
+    fft_16x16_stage_first_scl2_DFT4,             //    fft_stage_first_DFT4       = 2 
+    fft_16x16_stage_first_scl2_DFT5,             //    fft_stage_first_DFT5       = 3 
+    NULL,                                        //    fft_stage_first_inv_DFT2   = 4 
+    ifft_16x16_stage_first_scl2_DFT3,            //    fft_stage_first_inv_DFT3   = 5 
+    ifft_16x16_stage_first_scl2_DFT4,            //    fft_stage_first_inv_DFT4   = 6 
+    ifft_16x16_stage_first_scl2_DFT5,            //    fft_stage_first_inv_DFT5   = 7 
+    fft_16x16_stage_inner_scl2_DFT2,             //    fft_stage_inner_DFT2       = 8 
+    fft_16x16_stage_inner_scl2_DFT3,             //    fft_stage_inner_DFT3       = 9 
+    fft_16x16_stage_inner_scl2_DFT4,              //    fft_stage_inner_DFT4       = 10
+    fft_16x16_stage_inner_scl2_DFT4x2,           //    fft_stage_inner_DFT4x2     = 11
+    NULL,                                        //    fft_stage_inner_DFT4x4     = 12
+    NULL,                                        //    fft_stage_inner_DFT5       = 13
+    fft_16x16_stage_penultimate_scl2_DFT4x4,     //    fft_stage_penultimate_DFT4 = 14
+    NULL,                                        //    fft_stage_last_DFT2        = 15
+    NULL,                                        //    fft_stage_last_DFT3        = 16
+    fft_16x16_stage_last_scl2_DFT4,              //    fft_stage_last_DFT4        = 17
+    NULL,                                        //    fft_stage_last_DFT5        = 18
+    fft_16x16_stage_last_scl2_DFT8,              //    fft_stage_last_DFT8        = 19
+    fft_16x16_stage_last_scl2_DFT11,             //    fft_stage_last_DFT11       = 20
+    fft_16x16_stage_inner_scl2_DFT2_V2           //    fft_inner_DFT2_REF         = 21
 };
 
 /* 16-bit radix-4 butterfly with normalization */
@@ -75,6 +78,7 @@ const fft_cplx16x16_stage_t fft16x16_stages_scl2_tbl[NUM_FFT_STAGE_TYPES] =
     x0 = AE_ADD16S(s0, s1); x2 = AE_SUB16S(s0, s1); \
     x3 = AE_ADD16S(d0, d1); x1 = AE_SUB16S(d0, d1); \
 }
+
 
 /*
  *  First stage of FFT 16x16, radix-4, dynamic scaling
@@ -207,6 +211,97 @@ int fft_16x16_stage_last_scl2_DFT4(const int16_t *tw, const int16_t *x, int16_t 
   return shift;
 
 } /* fft_16x16_stage_last_scl2_DFT4() */
+
+/* radix-4 butterfly with scaling, precision 32 bits */
+#define DFT4X1RNG(x0, x1, x2, x3)\
+{   \
+    ae_int32x2 s0, s1, d0, d1;         \
+    AE_ADDANDSUBRNG32(s0, d0, x0, x2); \
+    AE_ADDANDSUBRNG32(s1, d1, x1, x3); \
+    d1 = AE_MUL32JS(d1);               \
+    AE_ADDANDSUB32S(x0, x2, s0, s1);   \
+    AE_ADDANDSUB32S(x3, x1, d0, d1);   \
+}
+
+/* 
+*   Special version of the inner stages radix-4, works for any _v[0] 
+*/
+int fft_16x16_stage_inner_scl2_DFT4(const int16_t *tw, const int16_t *x, int16_t *y, int N, int *_v, int tw_step, int *bexp)
+{
+    const int R = 4; // stage radix
+    int i, j;
+    const int stride = N / R;
+    const int v = _v[0]; 
+
+    ae_p16x2s * restrict px = (ae_p16x2s *)((3 * stride - 1)*sizeof(complex_fract16) + (uintptr_t)x);
+    ae_p16x2s * restrict py = (ae_p16x2s *)((3 * v - 1)*sizeof(complex_fract16) + (uintptr_t)y);
+    ae_int32 * restrict ptw = (ae_int32 *)tw;
+    int shift;
+    const int min_shift = 3;
+    shift = XT_MAX(min_shift - *bexp, 0);
+
+    ASSERT(shift>-32 && shift<32);
+    ASSERT(shift >= 0);
+    ASSERT(v != stride);
+    ASSERT(tw_step == 1); 
+
+    AE_CALCRNG3();
+    WUR_AE_SAR(shift);
+    __Pragma("loop_count min=1"); 
+    for (i = 0; i < N / R / v; i++)
+    {
+        ae_int16x4 _t1, _t2, _t3;
+        ae_int32x2 tmp1, tmp2, tmp3;
+
+        AE_L32_XP(tmp1, ptw, sizeof(complex_fract16));
+        AE_L32_XP(tmp2, ptw, sizeof(complex_fract16));
+        AE_L32_XP(tmp3, ptw, sizeof(complex_fract16));
+
+        _t1 = AE_SHORTSWAP(AE_MOVINT16X4_FROMF32X2(tmp1));
+        _t2 = AE_SHORTSWAP(AE_MOVINT16X4_FROMF32X2(tmp2));
+        _t3 = AE_SHORTSWAP(AE_MOVINT16X4_FROMF32X2(tmp3));
+
+        __Pragma("loop_count min=1");
+        for (j = 0; j < v; j++)
+        {
+            ae_int32x2 _x0, _x1, _x2, _x3;
+
+            AE_L16X2M_XU(_x0, px, (1 - 3 * stride)*sizeof(complex_fract16));
+            AE_L16X2M_XU(_x1, px, stride*sizeof(complex_fract16));
+            AE_L16X2M_XU(_x2, px, stride*sizeof(complex_fract16));
+            AE_L16X2M_XU(_x3, px, stride*sizeof(complex_fract16));
+
+            DFT4X1RNG(_x0, _x1, _x2, _x3); 
+
+            _x1 = AE_MULFC32X16RAS_H(_x1, _t1); 
+            _x2 = AE_MULFC32X16RAS_H(_x2, _t2);
+            _x3 = AE_MULFC32X16RAS_H(_x3, _t3);
+
+
+            AE_S16X2M_XU(_x0, py, (1 - 3 * v)*sizeof(complex_fract16));
+            AE_S16X2M_XU(_x1, py, v*sizeof(complex_fract16));
+            AE_S16X2M_XU(_x2, py, v*sizeof(complex_fract16));
+            AE_S16X2M_XU(_x3, py, v*sizeof(complex_fract16));
+
+            _x0 = AE_SLAA32(_x0, 8);
+            _x1 = AE_SLAA32(_x1, 8);
+            _x2 = AE_SLAA32(_x2, 8);
+            _x3 = AE_SLAA32(_x3, 8);
+
+            AE_RNG32X2(_x0);
+            AE_RNG32X2(_x1);
+            AE_RNG32X2(_x2);
+            AE_RNG32X2(_x3);
+        }
+        py += 3*v;
+    }
+
+    AE_CALCRNG3();
+    *bexp = 3 - RUR_AE_SAR();
+
+    *_v *= R;
+    return shift;
+}
 
 /*
  *  Intermediate stage of FFT/IFFT 16x16, radix-4, dynamic scaling
@@ -789,3 +884,429 @@ int fft_16x16_stage_last_scl2_DFT8(const int16_t *tw, const int16_t *x, int16_t 
   *v *= R;
   return (shift + 1);
 } /* fft_16x16_stage_last_scl2_DFT8() */
+
+
+/*
+DFT5 algorithm:
+x - input complex vector
+y - output complex vector
+y = fft(x)
+w1 =  exp(-1j*2*pi/5);
+w2 =  exp(-1j*2*pi*2/5);
+
+y = zeros(5,1);
+s1 = (x1+x4);
+s2 = (x2+x3);
+d1 = (x1-x4);
+d2 = (x2-x3);
+
+y(1) = x0 + s1 + s2;
+y(2) = x0 + (s1*real(w1) + s2*real(w2)) + 1j*(d1*imag(w1) + d2*imag(w2));
+y(5) = x0 + (s1*real(w1) + s2*real(w2)) - 1j*(d1*imag(w1) + d2*imag(w2));
+y(3) = x0 + (s1*real(w2) + s2*real(w1)) + 1j*(d1*imag(w2) - d2*imag(w1));
+y(4) = x0 + (s1*real(w2) + s2*real(w1)) - 1j*(d1*imag(w2) - d2*imag(w1));
+
+*/
+ALIGN(8) static const int16_t __dft5_tw[] =
+{
+    (int16_t)0x278E, (int16_t)0x278E, (int16_t)0x278E, (int16_t)0x278E,
+    (int16_t)0x8644, (int16_t)0x79BC, (int16_t)0x8644, (int16_t)0x79BC,
+    (int16_t)0x9872, (int16_t)0x9872, (int16_t)0x9872, (int16_t)0x9872,
+    (int16_t)0xB4C3, (int16_t)0x4B3D, (int16_t)0xB4C3, (int16_t)0x4B3D
+};
+
+/* twiddles should be loaded from the table above */
+#define DFT5X2(x0, x1, x2, x3, x4, w1, w2, w3, w4)\
+{ \
+    ae_int16x4 s1, s2, d1, d2;             \
+    ae_int16x4 t0, t1, t2, t3;             \
+    ae_int16x4 y0, y1, y2, y3;             \
+    s1 = AE_ADD16S(x1, x4);                \
+    s2 = AE_ADD16S(x2, x3);                \
+    d1 = AE_SUB16S(x1, x4);                \
+    d2 = AE_SUB16S(x2, x3);                \
+    \
+    t0 = AE_MULFP16X4RAS(s1, w1);         \
+    t1 = AE_MULFP16X4RAS(s2, w3);         \
+    t2 = AE_MULFP16X4RAS(s1, w3);         \
+    t3 = AE_MULFP16X4RAS(s2, w1);         \
+    y0 = AE_ADD16S(x0, AE_ADD16S(t0, t1)); \
+    y1 = AE_ADD16S(x0, AE_ADD16S(t2, t3)); \
+    \
+    t0 = AE_MULFP16X4RAS(d1, w2); \
+    t1 = AE_MULFP16X4RAS(d2, w4); \
+    t2 = AE_MULFP16X4RAS(d2, w2); \
+    t3 = AE_MULFP16X4RAS(d1, w4); \
+    y2 = AE_ADD16S(t0, t1);      \
+    y3 = AE_SUB16S(t3, t2);      \
+    y2 = AE_SEL16_2301(y2, y2);  \
+    y3 = AE_SEL16_2301(y3, y3);  \
+    \
+    x0 = AE_ADD16S(x0, AE_ADD16S(s1, s2)); \
+    x1 = AE_ADD16S(y0, y2);               \
+    x2 = AE_ADD16S(y1, y3);               \
+    x3 = AE_SUB16S(y1, y3);               \
+    x4 = AE_SUB16S(y0, y2);               \
+}
+
+#define DFT2xI2(x0, x1) \
+{                               \
+    ae_int16x4 _y0, _y1;        \
+    _y0 = AE_ADD16S(x0, x1);    \
+    _y1 = AE_SUB16S(x0, x1);    \
+    x0 = _y0;                   \
+    x1 = _y1;                   \
+    }
+/*
+    DFT10
+    Prime-factor FFT algorithm
+*/
+inline_ int DFT10xI2(int16_t *y, int16_t *x)
+{
+    ae_int16x4 *px = (ae_int16x4 *)x;
+    ae_int16x4 *py = (ae_int16x4 *)y;
+    ae_int16x4 w1, w2, w3, w4;
+    ae_int16x4 X[10];
+    const ae_int16x4 * restrict ptwd_dft = (const ae_int16x4 *)__dft5_tw;
+    AE_L16X4_IP(w1, ptwd_dft, sizeof(ae_int16x4));
+    AE_L16X4_IP(w2, ptwd_dft, sizeof(ae_int16x4));
+    AE_L16X4_IP(w3, ptwd_dft, sizeof(ae_int16x4));
+    AE_L16X4_IP(w4, ptwd_dft, sizeof(ae_int16x4));
+
+    X[0] = px[0];
+    X[1] = px[2];
+    X[2] = px[4];
+    X[3] = px[6];
+    X[4] = px[8];
+    X[5] = px[5];
+    X[6] = px[7];
+    X[7] = px[9];
+    X[8] = px[1];
+    X[9] = px[3];
+
+    DFT5X2(X[0], X[1], X[2], X[3], X[4], w1, w2, w3, w4);
+    DFT5X2(X[5], X[6], X[7], X[8], X[9], w1, w2, w3, w4);
+
+    DFT2xI2(X[0], X[5]);
+    DFT2xI2(X[1], X[6]);
+    DFT2xI2(X[2], X[7]);
+    DFT2xI2(X[3], X[8]);
+    DFT2xI2(X[4], X[9]);
+
+    py[0] = X[0];
+    py[6] = X[1];
+    py[2] = X[2];
+    py[8] = X[3];
+    py[4] = X[4];
+    py[5] = X[5];
+    py[1] = X[6];
+    py[7] = X[7];
+    py[3] = X[8];
+    py[9] = X[9];
+    return 0;
+}
+
+/*
+    IDFT10
+    Prime-factor FFT algorithm
+*/
+inline_ int IDFT10xI2(int16_t *y, int16_t *x)
+{
+    ae_int16x4 *px = (ae_int16x4 *)x;
+    ae_int16x4 *py = (ae_int16x4 *)y;
+    ae_int16x4 w1, w2, w3, w4;
+    ae_int16x4 X[10];
+    const ae_int16x4 * restrict ptwd_dft = (const ae_int16x4 *)__dft5_tw;
+    AE_L16X4_IP(w1, ptwd_dft, sizeof(ae_int16x4));
+    AE_L16X4_IP(w2, ptwd_dft, sizeof(ae_int16x4));
+    AE_L16X4_IP(w3, ptwd_dft, sizeof(ae_int16x4));
+    AE_L16X4_IP(w4, ptwd_dft, sizeof(ae_int16x4));
+
+    X[0] = px[0];
+    X[1] = px[8];
+    X[2] = px[6];
+    X[3] = px[4];
+    X[4] = px[2];
+    X[5] = px[5];
+    X[6] = px[3];
+    X[7] = px[1];
+    X[8] = px[9];
+    X[9] = px[7];
+
+    DFT5X2(X[0], X[1], X[2], X[3], X[4], w1, w2, w3, w4);
+    DFT5X2(X[5], X[6], X[7], X[8], X[9], w1, w2, w3, w4);
+
+    DFT2xI2(X[0], X[5]);
+    DFT2xI2(X[1], X[6]);
+    DFT2xI2(X[2], X[7]);
+    DFT2xI2(X[3], X[8]);
+    DFT2xI2(X[4], X[9]);
+
+    py[0] = X[0];
+    py[6] = X[1];
+    py[2] = X[2];
+    py[8] = X[3];
+    py[4] = X[4];
+    py[5] = X[5];
+    py[1] = X[6];
+    py[7] = X[7];
+    py[3] = X[8];
+    py[9] = X[9];
+    return 0;
+}
+
+inline_ void _mpy_Q16_15(ae_int16x4 *z, ae_int32x2 *x, ae_int16x4 *y)
+{
+    ae_int32x2 tw = x[0];
+
+    ae_int32x2 y01 = AE_MULFC32X16RAS_H(tw, *y);
+    ae_int32x2 y11 = AE_MULFC32X16RAS_L(tw, *y);
+    ae_int16x4 y1 = AE_SAT16X4(y01, y11);
+    *z = y1;
+}
+
+/*
+    Rader's FFT algorithm
+    Matlab demo:
+
+    Inv = zeros(1,10);
+    for i=1:10
+        for j=1:10
+            if mod(i*j, 11)==1
+                Inv(i) = j; 
+            end
+        end
+    end
+    Pin = mod(2.^(1:10).', 11); 
+    Pout = Inv(mod(2.^(1:10).', 11)); 
+    a = exp(-1j*2*pi/11*Inv(mod(2.^(1:10), 11)).'); 
+
+    %x = round(1000*(randn(11,1) + 1j*randn(11, 1)));
+    yref = fft(x);
+    y = zeros(10,1);
+    temp = x(2:end);
+    xp = temp( Pin );
+    c = conv([xp;xp(1:end-1)], a, 'valid'); 
+    A = fft(a).*exp(-1j*2*pi/10*(0:9).');
+    X = fft(xp); 
+    C = X.*A; 
+    c10 = ifft(C);
+
+    y(Pout) = c + x(1);
+    y = [sum(x); y];
+    %[yref, y]
+    diff = max(abs(yref-y))
+
+*/
+/* Coefs 'A' Q16.15, see matlab code above */
+ALIGN(8) static const int32_t A_Q16_15[20] =
+{
+    - 3277, 0,
+    3130, -10407,
+    8638, 6595,
+    8327, 6983,
+    6784, 8491,
+    0, -10868,
+    6784, -8491,
+    -8327, 6983,
+    8638, -6595,
+    -3130, -10407,
+
+};
+inline_ int DFT11x2(int16_t *y, int16_t *x, int stride /*x, y stride */,  int shift)
+{
+    int i;
+    ae_int16x4 *px = (ae_int16x4 *)x;
+    ae_int16x4 *py = (ae_int16x4 *)y;
+    ae_int32x2 *pa = (ae_int32x2 *)A_Q16_15;
+    ae_int16x4 X[11], dft10_X[10], C[10];
+    ae_int16x4 y0;
+
+    X[0] = AE_SRAA16RS(px[stride * 0], shift);
+    X[1] = AE_SRAA16RS(px[stride * 2], shift);
+    X[2] = AE_SRAA16RS(px[stride * 4], shift);
+    X[3] = AE_SRAA16RS(px[stride * 8], shift);
+    X[4] = AE_SRAA16RS(px[stride * 5], shift);
+    X[5] = AE_SRAA16RS(px[stride * 10], shift);
+    X[6] = AE_SRAA16RS(px[stride * 9], shift);
+    X[7] = AE_SRAA16RS(px[stride * 7], shift);
+    X[8] = AE_SRAA16RS(px[stride * 3], shift);
+    X[9] = AE_SRAA16RS(px[stride * 6], shift);
+    X[10] = AE_SRAA16RS(px[stride * 1], shift);
+
+    DFT10xI2((int16_t*)dft10_X, (int16_t*)&X[1]);
+
+    y0 = X[0];
+    for (i = 0; i < 10; i++)
+    {
+        y0 = AE_ADD16S(y0, X[i + 1]);
+        _mpy_Q16_15(&C[i], &pa[i], &dft10_X[i]);
+    }
+
+    IDFT10xI2((int16_t*)C, (int16_t*)C);
+
+    py[0] = y0;
+    py[stride * 6] = AE_ADD16S(X[0], C[0]);
+    py[stride * 3] = AE_ADD16S(X[0], C[1]);
+    py[stride * 7] = AE_ADD16S(X[0], C[2]);
+    py[stride * 9] = AE_ADD16S(X[0], C[3]);
+    py[stride * 10] = AE_ADD16S(X[0], C[4]);
+    py[stride * 5] = AE_ADD16S(X[0], C[5]);
+    py[stride * 8] = AE_ADD16S(X[0], C[6]);
+    py[stride * 4] = AE_ADD16S(X[0], C[7]);
+    py[stride * 2] = AE_ADD16S(X[0], C[8]);
+    py[stride * 1] = AE_ADD16S(X[0], C[9]);
+
+    return 0;
+}
+
+/*
+*  Last stage of FFT/IFFT 16x16, radix-11, dynamic scaling
+*/
+int fft_16x16_stage_last_scl2_DFT11(const int16_t *tw, const int16_t *x, int16_t *y, int N, int *v, int tw_step, int *bexp)
+{
+    const int stride = (N / 11);
+    int j, shift;
+    NASSERT_ALIGN8(x);
+    NASSERT_ALIGN8(y);
+
+    shift = 4 - *bexp;
+
+    __Pragma("loop_count min=1");
+    for (j = 0; j < (stride >> 1); j++)
+    {
+        DFT11x2(y + j * 4, (int16_t*)(x + j * 4), stride/2, shift);
+    }
+
+    return shift;
+
+} /* fft_16x16_stage_last_scl2_DFT4() */
+
+/*
+*  Intermediate stage of FFT/IFFT 16x16, radix-2, dynamic scaling, no restrictions for v[0]
+*/
+#if 1
+int fft_16x16_stage_inner_scl2_DFT2_V2(const int16_t *tw, const int16_t *x, int16_t *y, int N, int *v, int tw_step, int *bexp)
+{
+    const int R = 2; // stage radix
+    const int min_shift = 2;
+    int i;
+    const int stride = N / R;
+
+    ae_p16x2s * restrict px = (ae_p16x2s *)x;
+    ae_p16x2s * restrict py = (ae_p16x2s *)y;
+    ae_int32 * restrict ptw = (ae_int32 *)tw;
+    int shift;
+
+
+    shift = XT_MAX(min_shift - *bexp, 0);
+
+    ASSERT(shift>-32 && shift<32);
+    ASSERT(v[0] == 4); 
+    ASSERT(stride != v[0]); 
+    ASSERT(tw_step == 1);
+
+    /* Reset RRANGE register */
+    AE_CALCRNG3();
+    /* Set scaling */
+    WUR_AE_SAR(shift);
+
+    px = (ae_p16x2s *)(((stride - 1)) *sizeof(complex_fract16) +(uintptr_t)x);
+    py = (ae_p16x2s *)( (- 1)*(int32_t)sizeof(complex_fract16)+(uintptr_t)y);
+
+    __Pragma("loop_count min=1"); 
+    for (i = 0; i < (stride>>2); i++)
+    {
+        ae_int32x2 _x0, _x1;
+        ae_int32x2 tmp;
+        ae_int16x4 _t1;
+
+        AE_L32_IP( tmp, ptw, sizeof(complex_fract16) ); 
+        _t1 = AE_SHORTSWAP( AE_MOVINT16X4_FROMF32X2(tmp));
+#if 0
+        int j;
+        // Generic code works for any v[0]
+        for (j = 0; j < v[0]; j++)
+        {
+            _x0 = AE_L16X2M_X((const ae_p16x2s *)x, (j + v[0] * i + 0 * stride)*sizeof(complex_fract16));
+            _x1 = AE_L16X2M_X((const ae_p16x2s *)x, (j + v[0] * i + 1 * stride)*sizeof(complex_fract16));
+
+            AE_ADDANDSUBRNG32(_x0, _x1, _x0, _x1); 
+            _x1 = AE_MULFC32X16RAS_H(_x1, _t1);
+
+            AE_S16X2M_X(_x0, (ae_p16x2s *)y, (j + R * v[0] * i + 0 * v[0])*sizeof(complex_fract16));
+            AE_S16X2M_X(_x1, (ae_p16x2s *)y, (j + R * v[0] * i + 1 * v[0])*sizeof(complex_fract16));
+
+            _x0 = AE_SLAA32(_x0, 8);
+            _x1 = AE_SLAA32(_x1, 8);
+
+            AE_RNG32X2(_x0);
+            AE_RNG32X2(_x1);
+        }
+#else
+        /* 
+            Optimized code for v[0] = 4
+            Inner loop unrolled 4 times
+        */
+        {
+            AE_L16X2M_XU(_x0, px,   (1-stride)*sizeof(complex_fract16) );
+            AE_L16X2M_XU(_x1, px,       stride*sizeof(complex_fract16) );
+
+            AE_ADDANDSUBRNG32(_x0, _x1, _x0, _x1);
+            _x1 = AE_MULFC32X16RAS_H(_x1, _t1);
+
+            AE_S16X2M_XU(_x0, py, (1)*sizeof(complex_fract16));
+            AE_S16X2M_XU(_x1, py, v[0]*sizeof(complex_fract16));
+
+            _x0 = AE_SLAA32(_x0, 8);    _x1 = AE_SLAA32(_x1, 8);
+            AE_RNG32X2(_x0);  AE_RNG32X2(_x1);
+        }
+        {
+            AE_L16X2M_XU(_x0, px, (1 - stride)*sizeof(complex_fract16));
+            AE_L16X2M_XU(_x1, px, stride*sizeof(complex_fract16));
+
+            AE_ADDANDSUBRNG32(_x0, _x1, _x0, _x1);
+            _x1 = AE_MULFC32X16RAS_H(_x1, _t1);
+
+            AE_S16X2M_XU(_x0, py, (1 - v[0])*sizeof(complex_fract16));
+            AE_S16X2M_XU(_x1, py, v[0] * sizeof(complex_fract16));
+
+            _x0 = AE_SLAA32(_x0, 8);    _x1 = AE_SLAA32(_x1, 8);
+            AE_RNG32X2(_x0);  AE_RNG32X2(_x1);
+        }
+        {
+            AE_L16X2M_XU(_x0, px, (1 - stride)*sizeof(complex_fract16));
+            AE_L16X2M_XU(_x1, px, stride*sizeof(complex_fract16));
+
+            AE_ADDANDSUBRNG32(_x0, _x1, _x0, _x1);
+            _x1 = AE_MULFC32X16RAS_H(_x1, _t1);
+
+            AE_S16X2M_XU(_x0, py, (1 - v[0])*sizeof(complex_fract16));
+            AE_S16X2M_XU(_x1, py, v[0] * sizeof(complex_fract16));
+
+            _x0 = AE_SLAA32(_x0, 8);    _x1 = AE_SLAA32(_x1, 8);
+            AE_RNG32X2(_x0);  AE_RNG32X2(_x1);
+        }
+        {
+            AE_L16X2M_XU(_x0, px, (1 - stride)*sizeof(complex_fract16));
+            AE_L16X2M_XU(_x1, px, stride*sizeof(complex_fract16));
+
+            AE_ADDANDSUBRNG32(_x0, _x1, _x0, _x1);
+            _x1 = AE_MULFC32X16RAS_H(_x1, _t1);
+
+            AE_S16X2M_XU(_x0, py, (1 - v[0])*sizeof(complex_fract16));
+            AE_S16X2M_XU(_x1, py, v[0] * sizeof(complex_fract16));
+
+            _x0 = AE_SLAA32(_x0, 8);    _x1 = AE_SLAA32(_x1, 8);
+            AE_RNG32X2(_x0);  AE_RNG32X2(_x1);
+        }
+#endif
+    }
+
+    AE_CALCRNG3();
+    *bexp = 3 - RUR_AE_SAR();
+
+    *v *= R;
+    return shift;
+}
+#endif

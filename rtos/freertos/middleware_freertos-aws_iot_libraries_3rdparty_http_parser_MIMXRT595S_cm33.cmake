@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_freertos-aws_iot_libraries_3rdparty_http_parser component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE

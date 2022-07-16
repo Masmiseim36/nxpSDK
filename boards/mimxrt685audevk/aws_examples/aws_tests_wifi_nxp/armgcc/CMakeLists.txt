@@ -35,7 +35,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../application_code/main.c"
 "${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
@@ -57,6 +56,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../config_files/shadow_config.h"
 "${ProjDirPath}/../config_files/unity_config.h"
 "${ProjDirPath}/../config_files/lwipopts.h"
+"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -86,11 +86,12 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt685audevk
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
+    ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
+    ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
-    ${ProjDirPath}/../../../../../middleware/wifi
-    ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../components/uart
@@ -124,6 +125,26 @@ include(driver_flexcomm_i2c_MIMXRT685S_cm33)
 
 include(driver_pca9420_MIMXRT685S_cm33)
 
+include(middleware_wifi_wifidriver_MIMXRT685S_cm33)
+
+include(middleware_freertos-kernel_MIMXRT685S_cm33)
+
+include(utility_debug_console_MIMXRT685S_cm33)
+
+include(middleware_wifi_sdio_MIMXRT685S_cm33)
+
+include(middleware_wifi_fwdnld_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_sdio_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_common_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_host_usdhc_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_host_usdhc_freertos_MIMXRT685S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT685S_cm33)
+
 include(middleware_freertos-aws_iot_demos_dev_mode_key_provisioning_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_vendor_nxp_wifi_MIMXRT685S_cm33)
@@ -136,21 +157,9 @@ include(middleware_freertos-aws_iot_libraries_freertos_plus_aws_greengrass_MIMXR
 
 include(middleware_lwip_MIMXRT685S_cm33)
 
-include(utility_debug_console_MIMXRT685S_cm33)
-
 include(middleware_wifi_MIMXRT685S_cm33)
 
-include(middleware_sdmmc_sdio_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_common_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_host_usdhc_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT685S_cm33)
-
 include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT685S_cm33)
-
-include(middleware_freertos-kernel_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT685S_cm33)
 
@@ -214,21 +223,19 @@ include(component_mflash_common_MIMXRT685S_cm33)
 
 include(middleware_freertos-kernel_extension_MIMXRT685S_cm33)
 
-include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT685S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT685S_cm33)
-
-include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT685S_cm33)
-
-include(middleware_wifi_wifidriver_MIMXRT685S_cm33)
-
-include(middleware_wifi_fwdnld_MIMXRT685S_cm33)
+include(middleware_wifi_sdio-2_MIMXRT685S_cm33)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT685S_cm33)
 
 include(component_osa_free_rtos_MIMXRT685S_cm33)
 
 include(driver_usdhc_MIMXRT685S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_c_sdk_standard_common_MIMXRT685S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT685S_cm33)
+
+include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT685S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT685S_cm33)
 

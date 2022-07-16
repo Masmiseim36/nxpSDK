@@ -237,7 +237,7 @@ int  cmtx_inv3x3_32x32  (void* pScr, complex_fract32 *x, int qX)
                     pC[n]=AE_MULP32X2(pC[n],expC_coef);
                 }
             }
-            NASSERT(e>0);
+           // NASSERT(e>0);
             pB=(B+k*N);
             pC=(ae_int32x2*)(((uintptr_t)pB)+(int)((uintptr_t)C-(uintptr_t)B));
             pT=(T+k);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -12,9 +12,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void test_failed(const struct test_t *p_test)
+static void test_failed(const struct test_result_t *ret, const char *name)
 {
-    const struct test_result_t *ret = &p_test->ret;
     printf_set_color(RED);
     if (ret->info_msg != 0) {
         TEST_LOG("  %s", ret->info_msg);
@@ -27,7 +26,7 @@ static void test_failed(const struct test_t *p_test)
         }
     }
 
-    TEST_LOG("  TEST: %s - FAILED!\r\n", p_test->name);
+    TEST_LOG("  TEST: %s - FAILED!\r\n", name);
 }
 
 static void print_error(const char *err_msg)
@@ -87,8 +86,10 @@ void set_test_failed(const char *info_msg, const char *filename, uint32_t line,
 enum test_suite_err_t run_testsuite(struct test_suite_t *test_suite)
 {
     uint32_t failed_tests = 0;
+    uint32_t skipped_tests = 0;
     uint32_t i;
     struct test_t *p_test;
+    struct test_result_t ret = {TEST_PASSED}; //NXP was 0, for IAR
 
     if (test_suite == 0 || test_suite->freg == 0) {
         print_error("TEST_SUITE_ERR_INVALID_DATA!");
@@ -120,13 +121,17 @@ enum test_suite_err_t run_testsuite(struct test_suite_t *test_suite)
                  p_test->name, p_test->desc);
 
         /* Sets the default value before the test */
-        p_test->ret.val = TEST_PASSED;
+        ret.val = TEST_PASSED;
 
         /* Executes the test */
-        p_test->test(&p_test->ret);
-        if (p_test->ret.val == TEST_FAILED) {
-            test_failed(p_test);
+        p_test->test(&ret);
+        if (ret.val == TEST_FAILED) {
+            test_failed(&ret, p_test->name);
             failed_tests++;
+        } else if (ret.val == TEST_SKIPPED) {
+            printf_set_color(DEFAULT);
+            TEST_LOG("  TEST: %s - SKIPPED!\r\n", p_test->name);
+            skipped_tests++;
         } else {
             printf_set_color(GREEN);
             TEST_LOG("  TEST: %s - PASSED!\r\n", p_test->name);
@@ -136,6 +141,16 @@ enum test_suite_err_t run_testsuite(struct test_suite_t *test_suite)
         p_test++;
     }
 
+    if (failed_tests != 0) {
+        printf_set_color(DEFAULT);
+        TEST_LOG("Number of failed tests: %d of %d\r\n",
+                 failed_tests, test_suite->list_size);
+    }
+    if (skipped_tests != 0) {
+        printf_set_color(DEFAULT);
+        TEST_LOG("Number of skipped tests: %d of %d\r\n",
+                 skipped_tests, test_suite->list_size);
+    }
 
     if (failed_tests == 0) {
         printf_set_color(GREEN);
@@ -144,9 +159,6 @@ enum test_suite_err_t run_testsuite(struct test_suite_t *test_suite)
     } else {
         printf_set_color(RED);
         TEST_LOG("TESTSUITE FAILED!\r\n");
-        printf_set_color(YELLOW);
-        TEST_LOG("Number of failed tests: %d of %d\r\n",
-                 failed_tests, test_suite->list_size);
         test_suite->val = TEST_FAILED;
     }
 

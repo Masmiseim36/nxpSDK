@@ -333,7 +333,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, LV_DEMO_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../..;..;../generated;../custom;../generated/guider_customer_fonts;../generated/guider_fonts;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
             </VariousControls>
@@ -885,11 +885,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.c</FilePath>
             </File>
             <File>
-              <FileName>lv_obj.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_obj_class.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_class.c</FilePath>
@@ -908,6 +903,11 @@
               <FileName>lv_obj_draw.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_draw.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_obj.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj_pos.c</FileName>
@@ -935,11 +935,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.c</FilePath>
             </File>
             <File>
-              <FileName>lv_obj_style.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_obj_style_gen.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.c</FilePath>
@@ -948,6 +943,11 @@
               <FileName>lv_obj_style_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_obj_style.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj_tree.c</FileName>
@@ -985,9 +985,9 @@
           <GroupName>lvgl/lvgl/src/draw</GroupName>
           <Files>
             <File>
-              <FileName>lv_draw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</FilePath>
+              <FileName>lv_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_arc.c</FileName>
@@ -1000,14 +1000,9 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.h</FilePath>
             </File>
             <File>
-              <FileName>lv_draw_blend.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_draw_blend.h</FileName>
+              <FileName>lv_draw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.h</FilePath>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_img.c</FileName>
@@ -1102,17 +1097,307 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_pxp_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_vglite_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_rect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_arc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/sdl</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_sdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_bg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_bg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_composite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_composite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_img.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_label.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_label.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_mask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_mask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_polygon.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_polygon.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_rect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_stack_blur.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_stack_blur.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_texture_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_texture_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/stm32_dma2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_stm32_dma2d.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_stm32_dma2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/sw</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_sw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_dither.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_dither.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_gradient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_gradient.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_letter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_letter.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_polygon.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_polygon.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/font</GroupName>
           <Files>
             <File>
               <FileName>lv_font.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</FilePath>
             </File>
             <File>
               <FileName>lv_font_dejavu_16_persian_hebrew.c</FileName>
@@ -1130,6 +1415,11 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_fmt_txt.h</FilePath>
             </File>
             <File>
+              <FileName>lv_font.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_loader.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.c</FilePath>
@@ -1138,11 +1428,6 @@
               <FileName>lv_font_loader.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_montserrat_10.c</FileName>
@@ -1255,19 +1540,24 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_48.c</FilePath>
             </File>
             <File>
+              <FileName>lv_font_montserrat_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_simsun_16_cjk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_simsun_16_cjk.c</FilePath>
             </File>
             <File>
-              <FileName>lv_font_unscii_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_font_unscii_16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
@@ -1277,58 +1567,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/gpu</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp_pxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_stm32_dma2d.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_stm32_dma2d.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/hal</GroupName>
           <Files>
-            <File>
-              <FileName>lv_hal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</FilePath>
-            </File>
             <File>
               <FileName>lv_hal_disp.c</FileName>
               <FileType>1</FileType>
@@ -1338,6 +1578,11 @@
               <FileName>lv_hal_disp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal_disp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</FilePath>
             </File>
             <File>
               <FileName>lv_hal_indev.c</FileName>
@@ -1373,6 +1618,16 @@
               <FileName>lv_anim.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_timeline.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_timeline.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.h</FilePath>
             </File>
             <File>
               <FileName>lv_area.c</FileName>
@@ -1495,11 +1750,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.c</FilePath>
             </File>
             <File>
-              <FileName>lv_style.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_style_gen.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.c</FilePath>
@@ -1508,6 +1758,11 @@
               <FileName>lv_style_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_style.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</FilePath>
             </File>
             <File>
               <FileName>lv_templ.c</FileName>
@@ -1540,16 +1795,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_tlsf.h</FilePath>
             </File>
             <File>
-              <FileName>lv_txt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_txt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_txt_ap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.c</FilePath>
@@ -1558,6 +1803,16 @@
               <FileName>lv_txt_ap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_txt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_txt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</FilePath>
             </File>
             <File>
               <FileName>lv_types.h</FileName>
@@ -1573,6 +1828,16 @@
               <FileName>lv_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_lru.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_lru.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1742,31 +2007,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/extra</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_extra.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_extra.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/src/extra/layouts</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_layouts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/extra/layouts/flex</GroupName>
           <Files>
             <File>
@@ -1797,12 +2037,287 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/extra/themes</GroupName>
+          <GroupName>lvgl/lvgl/src/extra/layouts</GroupName>
           <Files>
             <File>
-              <FileName>lv_themes.h</FileName>
+              <FileName>lv_layouts.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</FilePath>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/bmp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_bmp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_bmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/freetype</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_freetype.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_freetype.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/fsdrv</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_fsdrv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fsdrv.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_fatfs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_fatfs.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_posix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_posix.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_win32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_win32.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/gif</GroupName>
+          <Files>
+            <File>
+              <FileName>gifdec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.c</FilePath>
+            </File>
+            <File>
+              <FileName>gifdec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_libs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/lv_libs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/png</GroupName>
+          <Files>
+            <File>
+              <FileName>lodepng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.c</FilePath>
+            </File>
+            <File>
+              <FileName>lodepng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_png.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_png.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/qrcode</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_qrcode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_qrcode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/rlottie</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_rlottie.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_rlottie.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/sjpg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_sjpg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_sjpg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.h</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.c</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgdcnf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgdcnf.h</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/ffmpeg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_ffmpeg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ffmpeg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_extra.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_others.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/lv_others.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/snapshot</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_snapshot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_snapshot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/gridnav</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gridnav.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gridnav.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/monkey</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_monkey.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_monkey.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1837,6 +2352,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/extra/themes</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_themes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/extra/themes/mono</GroupName>
           <Files>
             <File>
@@ -1848,16 +2373,6 @@
               <FileName>lv_theme_mono.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/mono/lv_theme_mono.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/src/extra/widgets</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_widgets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2002,6 +2517,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/extra/widgets</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_widgets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/extra/widgets/meter</GroupName>
           <Files>
             <File>
@@ -2118,6 +2643,21 @@
               <FileName>lv_win.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/win/lv_win.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/widgets/menu</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2838,7 +3378,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, LV_DEMO_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../..;..;../generated;../custom;../generated/guider_customer_fonts;../generated/guider_fonts;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
             </VariousControls>
@@ -3390,11 +3930,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.c</FilePath>
             </File>
             <File>
-              <FileName>lv_obj.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_obj_class.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_class.c</FilePath>
@@ -3413,6 +3948,11 @@
               <FileName>lv_obj_draw.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_draw.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_obj.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj_pos.c</FileName>
@@ -3440,11 +3980,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.c</FilePath>
             </File>
             <File>
-              <FileName>lv_obj_style.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_obj_style_gen.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.c</FilePath>
@@ -3453,6 +3988,11 @@
               <FileName>lv_obj_style_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_obj_style.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj_tree.c</FileName>
@@ -3490,9 +4030,9 @@
           <GroupName>lvgl/lvgl/src/draw</GroupName>
           <Files>
             <File>
-              <FileName>lv_draw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</FilePath>
+              <FileName>lv_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_arc.c</FileName>
@@ -3505,14 +4045,9 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.h</FilePath>
             </File>
             <File>
-              <FileName>lv_draw_blend.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_draw_blend.h</FileName>
+              <FileName>lv_draw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.h</FilePath>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_img.c</FileName>
@@ -3607,17 +4142,307 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_pxp_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_vglite_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_rect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_arc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/sdl</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_sdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_bg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_bg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_composite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_composite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_img.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_label.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_label.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_mask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_mask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_polygon.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_polygon.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_rect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_stack_blur.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_stack_blur.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_texture_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_texture_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/stm32_dma2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_stm32_dma2d.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_stm32_dma2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/sw</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_sw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_dither.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_dither.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_gradient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_gradient.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_letter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_letter.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_polygon.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_polygon.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/font</GroupName>
           <Files>
             <File>
               <FileName>lv_font.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</FilePath>
             </File>
             <File>
               <FileName>lv_font_dejavu_16_persian_hebrew.c</FileName>
@@ -3635,6 +4460,11 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_fmt_txt.h</FilePath>
             </File>
             <File>
+              <FileName>lv_font.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_loader.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.c</FilePath>
@@ -3643,11 +4473,6 @@
               <FileName>lv_font_loader.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_montserrat_10.c</FileName>
@@ -3760,19 +4585,24 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_48.c</FilePath>
             </File>
             <File>
+              <FileName>lv_font_montserrat_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_simsun_16_cjk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_simsun_16_cjk.c</FilePath>
             </File>
             <File>
-              <FileName>lv_font_unscii_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_font_unscii_16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
@@ -3782,58 +4612,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/gpu</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp_pxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_stm32_dma2d.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_stm32_dma2d.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/hal</GroupName>
           <Files>
-            <File>
-              <FileName>lv_hal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</FilePath>
-            </File>
             <File>
               <FileName>lv_hal_disp.c</FileName>
               <FileType>1</FileType>
@@ -3843,6 +4623,11 @@
               <FileName>lv_hal_disp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal_disp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</FilePath>
             </File>
             <File>
               <FileName>lv_hal_indev.c</FileName>
@@ -3878,6 +4663,16 @@
               <FileName>lv_anim.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_timeline.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_timeline.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.h</FilePath>
             </File>
             <File>
               <FileName>lv_area.c</FileName>
@@ -4000,11 +4795,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.c</FilePath>
             </File>
             <File>
-              <FileName>lv_style.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_style_gen.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.c</FilePath>
@@ -4013,6 +4803,11 @@
               <FileName>lv_style_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_style.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</FilePath>
             </File>
             <File>
               <FileName>lv_templ.c</FileName>
@@ -4045,16 +4840,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_tlsf.h</FilePath>
             </File>
             <File>
-              <FileName>lv_txt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_txt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_txt_ap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.c</FilePath>
@@ -4063,6 +4848,16 @@
               <FileName>lv_txt_ap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_txt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_txt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</FilePath>
             </File>
             <File>
               <FileName>lv_types.h</FileName>
@@ -4078,6 +4873,16 @@
               <FileName>lv_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_lru.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_lru.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4247,31 +5052,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/extra</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_extra.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_extra.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/src/extra/layouts</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_layouts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/extra/layouts/flex</GroupName>
           <Files>
             <File>
@@ -4302,12 +5082,287 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/extra/themes</GroupName>
+          <GroupName>lvgl/lvgl/src/extra/layouts</GroupName>
           <Files>
             <File>
-              <FileName>lv_themes.h</FileName>
+              <FileName>lv_layouts.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</FilePath>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/bmp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_bmp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_bmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/freetype</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_freetype.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_freetype.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/fsdrv</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_fsdrv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fsdrv.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_fatfs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_fatfs.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_posix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_posix.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_win32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_win32.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/gif</GroupName>
+          <Files>
+            <File>
+              <FileName>gifdec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.c</FilePath>
+            </File>
+            <File>
+              <FileName>gifdec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_libs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/lv_libs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/png</GroupName>
+          <Files>
+            <File>
+              <FileName>lodepng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.c</FilePath>
+            </File>
+            <File>
+              <FileName>lodepng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_png.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_png.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/qrcode</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_qrcode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_qrcode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/rlottie</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_rlottie.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_rlottie.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/sjpg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_sjpg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_sjpg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.h</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.c</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgdcnf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgdcnf.h</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/ffmpeg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_ffmpeg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ffmpeg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_extra.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_others.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/lv_others.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/snapshot</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_snapshot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_snapshot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/gridnav</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gridnav.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gridnav.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/monkey</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_monkey.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_monkey.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4342,6 +5397,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/extra/themes</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_themes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/extra/themes/mono</GroupName>
           <Files>
             <File>
@@ -4353,16 +5418,6 @@
               <FileName>lv_theme_mono.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/mono/lv_theme_mono.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/src/extra/widgets</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_widgets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4507,6 +5562,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/extra/widgets</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_widgets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/extra/widgets/meter</GroupName>
           <Files>
             <File>
@@ -4623,6 +5688,21 @@
               <FileName>lv_win.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/win/lv_win.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/widgets/menu</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5343,7 +6423,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, LV_DEMO_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../..;..;../generated;../custom;../generated/guider_customer_fonts;../generated/guider_fonts;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
             </VariousControls>
@@ -5895,11 +6975,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.c</FilePath>
             </File>
             <File>
-              <FileName>lv_obj.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_obj_class.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_class.c</FilePath>
@@ -5918,6 +6993,11 @@
               <FileName>lv_obj_draw.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_draw.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_obj.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj_pos.c</FileName>
@@ -5945,11 +7025,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.c</FilePath>
             </File>
             <File>
-              <FileName>lv_obj_style.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_obj_style_gen.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.c</FilePath>
@@ -5958,6 +7033,11 @@
               <FileName>lv_obj_style_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_obj_style.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj_tree.c</FileName>
@@ -5995,9 +7075,9 @@
           <GroupName>lvgl/lvgl/src/draw</GroupName>
           <Files>
             <File>
-              <FileName>lv_draw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</FilePath>
+              <FileName>lv_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_arc.c</FileName>
@@ -6010,14 +7090,9 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.h</FilePath>
             </File>
             <File>
-              <FileName>lv_draw_blend.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_draw_blend.h</FileName>
+              <FileName>lv_draw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.h</FilePath>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_img.c</FileName>
@@ -6112,17 +7187,307 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_pxp_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_vglite_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_rect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_arc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/sdl</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_sdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_bg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_bg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_composite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_composite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_img.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_label.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_label.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_mask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_mask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_polygon.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_polygon.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_rect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_stack_blur.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_stack_blur.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_texture_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_texture_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/stm32_dma2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_stm32_dma2d.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_stm32_dma2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/sw</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_sw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_dither.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_dither.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_gradient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_gradient.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_letter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_letter.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_polygon.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_polygon.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/font</GroupName>
           <Files>
             <File>
               <FileName>lv_font.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</FilePath>
             </File>
             <File>
               <FileName>lv_font_dejavu_16_persian_hebrew.c</FileName>
@@ -6140,6 +7505,11 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_fmt_txt.h</FilePath>
             </File>
             <File>
+              <FileName>lv_font.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_loader.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.c</FilePath>
@@ -6148,11 +7518,6 @@
               <FileName>lv_font_loader.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_montserrat_10.c</FileName>
@@ -6265,19 +7630,24 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_48.c</FilePath>
             </File>
             <File>
+              <FileName>lv_font_montserrat_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_simsun_16_cjk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_simsun_16_cjk.c</FilePath>
             </File>
             <File>
-              <FileName>lv_font_unscii_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_font_unscii_16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
@@ -6287,58 +7657,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/gpu</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp_pxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_stm32_dma2d.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_stm32_dma2d.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/hal</GroupName>
           <Files>
-            <File>
-              <FileName>lv_hal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</FilePath>
-            </File>
             <File>
               <FileName>lv_hal_disp.c</FileName>
               <FileType>1</FileType>
@@ -6348,6 +7668,11 @@
               <FileName>lv_hal_disp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal_disp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</FilePath>
             </File>
             <File>
               <FileName>lv_hal_indev.c</FileName>
@@ -6383,6 +7708,16 @@
               <FileName>lv_anim.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_timeline.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_timeline.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.h</FilePath>
             </File>
             <File>
               <FileName>lv_area.c</FileName>
@@ -6505,11 +7840,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.c</FilePath>
             </File>
             <File>
-              <FileName>lv_style.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_style_gen.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.c</FilePath>
@@ -6518,6 +7848,11 @@
               <FileName>lv_style_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_style.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</FilePath>
             </File>
             <File>
               <FileName>lv_templ.c</FileName>
@@ -6550,16 +7885,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_tlsf.h</FilePath>
             </File>
             <File>
-              <FileName>lv_txt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_txt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_txt_ap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.c</FilePath>
@@ -6568,6 +7893,16 @@
               <FileName>lv_txt_ap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_txt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_txt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</FilePath>
             </File>
             <File>
               <FileName>lv_types.h</FileName>
@@ -6583,6 +7918,16 @@
               <FileName>lv_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_lru.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_lru.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6752,31 +8097,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/extra</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_extra.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_extra.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/src/extra/layouts</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_layouts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/extra/layouts/flex</GroupName>
           <Files>
             <File>
@@ -6807,12 +8127,287 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/extra/themes</GroupName>
+          <GroupName>lvgl/lvgl/src/extra/layouts</GroupName>
           <Files>
             <File>
-              <FileName>lv_themes.h</FileName>
+              <FileName>lv_layouts.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</FilePath>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/bmp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_bmp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_bmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/freetype</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_freetype.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_freetype.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/fsdrv</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_fsdrv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fsdrv.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_fatfs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_fatfs.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_posix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_posix.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_win32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_win32.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/gif</GroupName>
+          <Files>
+            <File>
+              <FileName>gifdec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.c</FilePath>
+            </File>
+            <File>
+              <FileName>gifdec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_libs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/lv_libs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/png</GroupName>
+          <Files>
+            <File>
+              <FileName>lodepng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.c</FilePath>
+            </File>
+            <File>
+              <FileName>lodepng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_png.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_png.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/qrcode</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_qrcode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_qrcode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/rlottie</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_rlottie.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_rlottie.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/sjpg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_sjpg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_sjpg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.h</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.c</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgdcnf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgdcnf.h</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/ffmpeg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_ffmpeg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ffmpeg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_extra.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_others.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/lv_others.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/snapshot</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_snapshot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_snapshot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/gridnav</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gridnav.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gridnav.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/monkey</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_monkey.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_monkey.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6847,6 +8442,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/extra/themes</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_themes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/extra/themes/mono</GroupName>
           <Files>
             <File>
@@ -6858,16 +8463,6 @@
               <FileName>lv_theme_mono.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/mono/lv_theme_mono.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/src/extra/widgets</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_widgets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7012,6 +8607,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/extra/widgets</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_widgets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/extra/widgets/meter</GroupName>
           <Files>
             <File>
@@ -7128,6 +8733,21 @@
               <FileName>lv_win.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/win/lv_win.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/widgets/menu</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7848,7 +9468,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, LV_DEMO_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, LV_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, SDK_OS_FREE_RTOS, MCUXPRESSO_SDK</Define>
               <Undefine/>
               <IncludePath>../..;..;../generated;../custom;../generated/guider_customer_fonts;../generated/guider_fonts;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT685S/drivers;../../../../../devices/MIMXRT685S/cmsis_drivers;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../middleware/lvgl/lvgl;../../../../../middleware/lvgl/lvgl/src;../../../../../middleware/lvgl;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/utilities/str;../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../components/uart;../../../flash_config;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Core/Include;../../../../../CMSIS/Driver/Include;../../../../../rtos/freertos/freertos_kernel/include</IncludePath>
             </VariousControls>
@@ -8400,11 +10020,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.c</FilePath>
             </File>
             <File>
-              <FileName>lv_obj.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_obj_class.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_class.c</FilePath>
@@ -8423,6 +10038,11 @@
               <FileName>lv_obj_draw.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_draw.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_obj.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj_pos.c</FileName>
@@ -8450,11 +10070,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.c</FilePath>
             </File>
             <File>
-              <FileName>lv_obj_style.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_obj_style_gen.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.c</FilePath>
@@ -8463,6 +10078,11 @@
               <FileName>lv_obj_style_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_obj_style.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</FilePath>
             </File>
             <File>
               <FileName>lv_obj_tree.c</FileName>
@@ -8500,9 +10120,9 @@
           <GroupName>lvgl/lvgl/src/draw</GroupName>
           <Files>
             <File>
-              <FileName>lv_draw.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</FilePath>
+              <FileName>lv_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</FilePath>
             </File>
             <File>
               <FileName>lv_draw_arc.c</FileName>
@@ -8515,14 +10135,9 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.h</FilePath>
             </File>
             <File>
-              <FileName>lv_draw_blend.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_draw_blend.h</FileName>
+              <FileName>lv_draw.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.h</FilePath>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</FilePath>
             </File>
             <File>
               <FileName>lv_draw_img.c</FileName>
@@ -8617,17 +10232,307 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_nxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp/pxp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_pxp_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_pxp_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_pxp_osa.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/nxp/vglite</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_vglite_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_rect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_vglite_arc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/sdl</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_sdl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_bg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_bg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_composite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_composite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_img.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_label.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_label.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_mask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_mask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_polygon.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_polygon.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_priv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_priv.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_rect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_stack_blur.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_stack_blur.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_texture_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_texture_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sdl_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/stm32_dma2d</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gpu_stm32_dma2d.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_stm32_dma2d.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/draw/sw</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_draw_sw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_arc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_arc.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_blend.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_blend.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_dither.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_dither.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_gradient.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_gradient.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_letter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_letter.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_line.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_line.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_polygon.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_polygon.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_draw_sw_rect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/font</GroupName>
           <Files>
             <File>
               <FileName>lv_font.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</FilePath>
             </File>
             <File>
               <FileName>lv_font_dejavu_16_persian_hebrew.c</FileName>
@@ -8645,6 +10550,11 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_fmt_txt.h</FilePath>
             </File>
             <File>
+              <FileName>lv_font.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_loader.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.c</FilePath>
@@ -8653,11 +10563,6 @@
               <FileName>lv_font_loader.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_font_montserrat_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_font_montserrat_10.c</FileName>
@@ -8770,19 +10675,24 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_48.c</FilePath>
             </File>
             <File>
+              <FileName>lv_font_montserrat_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</FilePath>
+            </File>
+            <File>
               <FileName>lv_font_simsun_16_cjk.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_simsun_16_cjk.c</FilePath>
             </File>
             <File>
-              <FileName>lv_font_unscii_8.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</FilePath>
-            </File>
-            <File>
               <FileName>lv_font_unscii_16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_16.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_unscii_8.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</FilePath>
             </File>
             <File>
               <FileName>lv_symbol_def.h</FileName>
@@ -8792,58 +10702,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/gpu</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_gpu_nxp_pxp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp_osa.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_nxp_vglite.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_stm32_dma2d.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.h</FilePath>
-            </File>
-            <File>
-              <FileName>lv_gpu_stm32_dma2d.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/hal</GroupName>
           <Files>
-            <File>
-              <FileName>lv_hal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</FilePath>
-            </File>
             <File>
               <FileName>lv_hal_disp.c</FileName>
               <FileType>1</FileType>
@@ -8853,6 +10713,11 @@
               <FileName>lv_hal_disp.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal_disp.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_hal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</FilePath>
             </File>
             <File>
               <FileName>lv_hal_indev.c</FileName>
@@ -8888,6 +10753,16 @@
               <FileName>lv_anim.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_timeline.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_timeline.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.h</FilePath>
             </File>
             <File>
               <FileName>lv_area.c</FileName>
@@ -9010,11 +10885,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.c</FilePath>
             </File>
             <File>
-              <FileName>lv_style.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_style_gen.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.c</FilePath>
@@ -9023,6 +10893,11 @@
               <FileName>lv_style_gen.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_style.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</FilePath>
             </File>
             <File>
               <FileName>lv_templ.c</FileName>
@@ -9055,16 +10930,6 @@
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_tlsf.h</FilePath>
             </File>
             <File>
-              <FileName>lv_txt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_txt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</FilePath>
-            </File>
-            <File>
               <FileName>lv_txt_ap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.c</FilePath>
@@ -9073,6 +10938,16 @@
               <FileName>lv_txt_ap.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_txt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_txt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</FilePath>
             </File>
             <File>
               <FileName>lv_types.h</FileName>
@@ -9088,6 +10963,16 @@
               <FileName>lv_utils.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_lru.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_lru.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9257,31 +11142,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/extra</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_extra.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_extra.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/src/extra/layouts</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_layouts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>lvgl/lvgl/src/extra/layouts/flex</GroupName>
           <Files>
             <File>
@@ -9312,12 +11172,287 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>lvgl/lvgl/src/extra/themes</GroupName>
+          <GroupName>lvgl/lvgl/src/extra/layouts</GroupName>
           <Files>
             <File>
-              <FileName>lv_themes.h</FileName>
+              <FileName>lv_layouts.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</FilePath>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/bmp</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_bmp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_bmp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/freetype</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_freetype.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_freetype.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/fsdrv</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_fsdrv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fsdrv.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_fatfs.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_fatfs.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_posix.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_posix.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_stdio.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_fs_win32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_win32.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/gif</GroupName>
+          <Files>
+            <File>
+              <FileName>gifdec.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.c</FilePath>
+            </File>
+            <File>
+              <FileName>gifdec.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gif.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_libs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/lv_libs.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/png</GroupName>
+          <Files>
+            <File>
+              <FileName>lodepng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.c</FilePath>
+            </File>
+            <File>
+              <FileName>lodepng.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_png.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_png.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/qrcode</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_qrcode.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_qrcode.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</FilePath>
+            </File>
+            <File>
+              <FileName>qrcodegen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/rlottie</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_rlottie.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_rlottie.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/sjpg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_sjpg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_sjpg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.h</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.c</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgdcnf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgdcnf.h</FilePath>
+            </File>
+            <File>
+              <FileName>tjpgd.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/libs/ffmpeg</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_ffmpeg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_ffmpeg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_extra.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_extra.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_others.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/lv_others.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/snapshot</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_snapshot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_snapshot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/gridnav</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_gridnav.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gridnav.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/others/monkey</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_monkey.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_monkey.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9352,6 +11487,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/extra/themes</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_themes.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/extra/themes/mono</GroupName>
           <Files>
             <File>
@@ -9363,16 +11508,6 @@
               <FileName>lv_theme_mono.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/themes/mono/lv_theme_mono.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>lvgl/lvgl/src/extra/widgets</GroupName>
-          <Files>
-            <File>
-              <FileName>lv_widgets.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -9517,6 +11652,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>lvgl/lvgl/src/extra/widgets</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_widgets.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>lvgl/lvgl/src/extra/widgets/meter</GroupName>
           <Files>
             <File>
@@ -9633,6 +11778,21 @@
               <FileName>lv_win.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/win/lv_win.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>lvgl/lvgl/src/extra/widgets/menu</GroupName>
+          <Files>
+            <File>
+              <FileName>lv_menu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_menu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.h</FilePath>
             </File>
           </Files>
         </Group>

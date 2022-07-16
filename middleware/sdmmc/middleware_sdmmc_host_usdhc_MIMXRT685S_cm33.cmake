@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_sdmmc_host_usdhc component is included.")
 
 

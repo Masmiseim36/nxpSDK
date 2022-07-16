@@ -49,7 +49,13 @@
   parameter gain of each filter initialization function.
   2. 16x16 filters may suffer more from accumulation of the roundoff errors,
   so filters should be properly designed to match noise requirements
-
+  3. Due to the performance reasons, IIR biquad filters may introduce 
+  additional algorithmic delay of several sampless. Amount of that delay
+  might be requested by the  xxx_groupDelay API. For sensitive applications
+  all the filters have delayless implementations (with  _nd  suffix in the name).
+  Formally, the xxx_groupDelay APIs is also implemented for that kind of filters,
+  but return zero.
+  
   Precision: 
   16x16         16-bit data, 16-bit coefficients, 16-bit intermediate 
                 stage outputs (DF1, DF1 stereo, DF II form)
@@ -119,6 +125,7 @@
 
 #if (HAVE_VFPU==0 && HAVE_FPU==0)
 DISCARD_FUN(size_t,stereo_bqriirf_df1_alloc,( int M ))
+DISCARD_FUN(size_t, stereo_bqriirf_df1_groupDelay, (stereo_bqriirf_df1_handle_t  _bqriir))
 DISCARD_FUN(stereo_bqriirf_df1_handle_t,stereo_bqriirf_df1_init,( void * objmem, int M,
                                                             const float32_t * coef_sosl,
                                                             int16_t           gainl,
@@ -173,6 +180,14 @@ stereo_bqriirf_df1_handle_t stereo_bqriirf_df1_init( void * objmem, int M,
 	}
 	return iir;
 } /* stereo_bqriirf_df1_init() */
+
+//Returns algorithmic delay
+size_t stereo_bqriirf_df1_groupDelay(stereo_bqriirf_df1_handle_t _bqriir)
+{
+    int M = ((stereo_bqriirf_df1_ptr_t)_bqriir)->M;
+    return M / 2;
+}/* stereo_bqriirf_df1_groupDelay() */
+
 #else
 size_t stereo_bqriirf_df1_alloc( int M )
 {
@@ -209,4 +224,11 @@ stereo_bqriirf_df1_handle_t stereo_bqriirf_df1_init( void * objmem, int M,
 	for(m=0; m<5*M; m++) { cf[2*m+0]=coef_sosl[m]; cf[2*m+1]=coef_sosr[m]; }
     return iir;
 } /* stereo_bqriirf_df1_init() */
+
+size_t stereo_bqriirf_df1_groupDelay(stereo_bqriirf_df1_handle_t _bqriir)
+{
+    int M = ((stereo_bqriirf_df1_ptr_t)_bqriir)->M;
+    return M / 2;
+} /* stereo_bqriirf_df1_groupDelay() */
+
 #endif

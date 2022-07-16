@@ -1,5 +1,5 @@
 ;/*
-; * Copyright (c) 2009-2021 Arm Limited
+; * Copyright (c) 2009-2022 Arm Limited
 ; *
 ; * Licensed under the Apache License, Version 2.0 (the "License");
 ; * you may not use this file except in compliance with the License.
@@ -33,9 +33,6 @@ MEMORY
 #if defined(S_CODE_SRAM_ALIAS_BASE)
   CODE_RAM (rwx) : ORIGIN = S_CODE_SRAM_ALIAS_BASE, LENGTH = TOTAL_CODE_SRAM_SIZE
 #endif
-#ifndef TFM_MULTI_CORE_TOPOLOGY
-  VENEERS  (rx)  : ORIGIN = CMSE_VENEER_REGION_START, LENGTH = CMSE_VENEER_REGION_SIZE
-#endif
 
 #if defined(PSA_PROXY_SHARED_MEMORY_BASE)
   PSA_PROXY_SHARED_MEMORY_RAM (rw) : ORIGIN = PSA_PROXY_SHARED_MEMORY_BASE, LENGTH = PSA_PROXY_SHARED_MEMORY_SIZE
@@ -44,7 +41,9 @@ MEMORY
 }
 
 __heap_size__  = S_HEAP_SIZE;
+#if !defined(TFM_PSA_API)
 __psp_stack_size__ = S_PSP_STACK_SIZE;
+#endif
 __msp_init_stack_size__ = S_MSP_STACK_SIZE; //NXP S_MSP_STACK_SIZE_INIT
 
 /* Library configurations */
@@ -71,9 +70,24 @@ SECTIONS
         __vectors_start__ = .;
         KEEP(*(.vectors))
         __vectors_end__ = .;
-        *startup*(.text*)
-        . = ALIGN(4);
     } > FLASH
+
+#ifndef TFM_MULTI_CORE_TOPOLOGY
+    ASSERT(. <= ADDR(.TFM_VECTORS) + S_CODE_VECTOR_TABLE_SIZE, ".TFM_VECTORS section size overflow.")
+    . = ADDR(.TFM_VECTORS) + S_CODE_VECTOR_TABLE_SIZE;
+    /*
+     * Place the CMSE Veneers (containing the SG instruction) after the code, in
+     * a separate 32 bytes aligned region so that the SAU can programmed to just
+     * set this region as Non-Secure Callable.
+     */
+    .gnu.sgstubs ALIGN(32) : ALIGN(32)
+    {
+        *(.gnu.sgstubs*)
+        . = ALIGN(32);
+    } > FLASH
+    Image$$ER_VENEER$$Base = ADDR(.gnu.sgstubs);
+    Image$$VENEER_ALIGN$$Limit = ADDR(.gnu.sgstubs) + SIZEOF(.gnu.sgstubs);
+#endif
 
     .copy.table : ALIGN(4)
     {
@@ -127,8 +141,7 @@ SECTIONS
         LONG (PSA_PROXY_SHARED_MEMORY_BASE)
         LONG (PSA_PROXY_SHARED_MEMORY_SIZE)
 #endif
-#if defined(TFM_SP_META_PTR_ENABLE)
-        LONG (LOADADDR(.TFM_SP_META_PTR))
+#if defined(CONFIG_TFM_PARTITION_META)
         LONG (ADDR(.TFM_SP_META_PTR))
         LONG (SIZEOF(.TFM_SP_META_PTR))
 #endif
@@ -196,7 +209,7 @@ SECTIONS
         *tfm_ps_secure_api.*(.rodata*)
         *(TFM_SP_PS_ATTR_FN)
 
-// #ifdef TFM_PARTITION_TEST_CORE
+// #ifdef TEST_NS_CORE
         *tfm_ss_core_test_2.*(.text*)
         *tfm_ss_core_test_2.*(.rodata*)
         *intermedia_tfm_ss_core_test_2.*(.text*)
@@ -205,7 +218,7 @@ SECTIONS
         *load_info_tfm_ss_core_test_2.*(.rodata*)
         *(TFM_SP_CORE_TEST_2_ATTR_FN)
 
-// #ifdef TFM_PARTITION_TEST_CORE_IPC
+// #ifdef TFM_PARTITION_IPC_TEST
         *tfm_ipc_client_test.*(.text*)
         *tfm_ipc_client_test.*(.rodata*)
         *intermedia_tfm_ipc_client_test.*(.text*)
@@ -214,7 +227,7 @@ SECTIONS
         *load_info_tfm_ipc_client_test.*(.rodata*)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_FN)
 
-// #ifdef TFM_PARTITION_TEST_SECURE_SERVICES
+// #ifdef TEST_FRAMEWORK_S
         *tfm_secure_client_2.*(.text*)
         *tfm_secure_client_2.*(.rodata*)
         *intermedia_tfm_secure_client_2.*(.text*)
@@ -230,6 +243,8 @@ SECTIONS
 // #ifdef TEST_NS_SLIH_IRQ
         *tfm_slih_test_service.*(.text*)
         *tfm_slih_test_service.*(.rodata*)
+        *tfm_irq_test_service.*(.text*)
+        *tfm_irq_test_service.*(.rodata*)
         *intermedia_tfm_slih_test_service.*(.text*)
         *intermedia_tfm_slih_test_service.*(.rodata*)
         *load_info_tfm_slih_test_service.*(.text*)
@@ -239,13 +254,25 @@ SECTIONS
 // #ifdef TEST_NS_FLIH_IRQ
         *tfm_flih_test_service.*(.text*)
         *tfm_flih_test_service.*(.rodata*)
+        *tfm_irq_test_service.*(.text*)
+        *tfm_irq_test_service.*(.rodata*)
         *intermedia_tfm_flih_test_service.*(.text*)
         *intermedia_tfm_flih_test_service.*(.rodata*)
         *load_info_tfm_flih_test_service.*(.text*)
         *load_info_tfm_flih_test_service.*(.rodata*)
         *(TFM_SP_FLIH_TEST_ATTR_FN)
 
+// #ifdef TEST_PARTITION_FPU_TEST
+        *tfm_fpu_service_test.*(.text*)
+        *tfm_fpu_service_test.*(.rodata*)
+        *intermedia_tfm_fpu_service_test.*(.text*)
+        *intermedia_tfm_fpu_service_test.*(.rodata*)
+        *load_info_tfm_fpu_service_test.*(.text*)
+        *load_info_tfm_fpu_service_test.*(.rodata*)
+        *(TFM_SP_FPU_SERVICE_TEST_ATTR_FN)
+
 // --------- NXP end --------------
+        *(TFM_*_APP-ROT_ATTR_FN)
         . = ALIGN(32);
     } > FLASH
 
@@ -291,6 +318,7 @@ SECTIONS
 
     .ER_TFM_CODE : ALIGN(4)
     {
+        *startup*(.text*)
         *libplatform_s*:*(.text*)
         *libtfm_spm*:*(.text*)
 
@@ -339,28 +367,24 @@ SECTIONS
     {
         . += __msp_init_stack_size__;
     } > RAM
-    Image$$ARM_LIB_STACK_MSP$$ZI$$Base = ADDR(.msp_stack);
-    Image$$ARM_LIB_STACK_MSP$$ZI$$Limit = ADDR(.msp_stack) + SIZEOF(.msp_stack);
+    Image$$ARM_LIB_STACK$$ZI$$Base = ADDR(.msp_stack);
+    Image$$ARM_LIB_STACK$$ZI$$Limit = ADDR(.msp_stack) + SIZEOF(.msp_stack);
 
+# if !defined(TFM_PSA_API)
     /* PSP is unprivileged in single-core topology */
     .psp_stack : ALIGN(32)
     {
-# if !defined(TFM_PSA_API)
         . += (__psp_stack_size__ - 0x8); // reserve space for stack seal (8 bytes)
-# else
-        . += (__psp_stack_size__);
-# endif
     } > RAM
-    Image$$ARM_LIB_STACK$$ZI$$Base = ADDR(.psp_stack);
-    Image$$ARM_LIB_STACK$$ZI$$Limit = ADDR(.psp_stack) + SIZEOF(.psp_stack);
+    Image$$ER_INITIAL_PSP$$ZI$$Base = ADDR(.psp_stack);
+    Image$$ER_INITIAL_PSP$$ZI$$Limit = ADDR(.psp_stack) + SIZEOF(.psp_stack);
 
-# if !defined(TFM_PSA_API)
     .psp_stack_seal_res :
     {
         . += 0x8;
     } > RAM
-    Image$$ARM_LIB_STACK_SEAL$$ZI$$Base = ADDR(.psp_stack_seal_res);
-    Image$$ARM_LIB_STACK_SEAL$$ZI$$Limit = ADDR(.psp_stack_seal_res) + SIZEOF(.psp_stack_seal_res);
+    Image$$ER_INITIAL_PSP_SEAL$$ZI$$Base = ADDR(.psp_stack_seal_res);
+    Image$$ER_INITIAL_PSP_SEAL$$ZI$$Limit = ADDR(.psp_stack_seal_res) + SIZEOF(.psp_stack_seal_res);
 # endif
 #endif
 
@@ -385,16 +409,17 @@ SECTIONS
     } > RAM
 #endif /* TFM_LVL == 1 */
 
-#if defined(TFM_SP_META_PTR_ENABLE)
+#if defined(CONFIG_TFM_PARTITION_META)
     .TFM_SP_META_PTR : ALIGN(32)
     {
-        *(SP_META_PTR_SPRTL_INST)
+        *(.bss.SP_META_PTR_SPRTL_INST)
     } > RAM
-    Image$$TFM_SP_META_PTR$$RW$$Base = ADDR(.TFM_SP_META_PTR);
-    Image$$TFM_SP_META_PTR$$RW$$Limit = ADDR(.TFM_SP_META_PTR) + SIZEOF(.TFM_SP_META_PTR);
+    Image$$TFM_SP_META_PTR$$ZI$$Base = ADDR(.TFM_SP_META_PTR);
+    Image$$TFM_SP_META_PTR$$ZI$$Limit = ADDR(.TFM_SP_META_PTR) + SIZEOF(.TFM_SP_META_PTR);
 #endif
 
     /**** APPLICATION RoT DATA start here */
+    . = ALIGN(32);
     Image$$TFM_APP_RW_STACK_START$$Base = .;
 
     .TFM_APP_ROT_LINKER_DATA : ALIGN(32)
@@ -415,19 +440,19 @@ SECTIONS
         *tfm_ps_secure_api.*(.data*)
         *(TFM_SP_PS_ATTR_RW)
 
-// #ifdef TFM_PARTITION_TEST_CORE
+// #ifdef TEST_NS_CORE
         *tfm_ss_core_test_2.*(.data*)
         *intermedia_tfm_ss_core_test_2.*(.data*)
         *load_info_tfm_ss_core_test_2.*(.data*)
         *(TFM_SP_CORE_TEST_2_ATTR_RW)
 
-// #ifdef TFM_PARTITION_TEST_CORE_IPC
+// #ifdef TFM_PARTITION_IPC_TEST
         *tfm_ipc_client_test.*(.data*)
         *intermedia_tfm_ipc_client_test.*(.data*)
         *load_info_tfm_ipc_client_test.*(.data*)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_RW)
 
-// #ifdef TFM_PARTITION_TEST_SECURE_SERVICES
+// #ifdef TEST_FRAMEWORK_S
         *tfm_secure_client_2.*(.data*)
         *intermedia_tfm_secure_client_2.*(.data*)
         *load_info_tfm_secure_client_2.*(.data*)
@@ -437,17 +462,26 @@ SECTIONS
 
 // #ifdef TEST_NS_SLIH_IRQ
         *tfm_slih_test_service.*(.data*)
+        *tfm_irq_test_service.*(.data*)
         *intermedia_tfm_slih_test_service.*(.data*)
         *load_info_tfm_slih_test_service.*(.data*)
         *(TFM_SP_SLIH_TEST_ATTR_RW)
 
 // #ifdef TEST_NS_FLIH_IRQ
         *tfm_flih_test_service.*(.data*)
+        *tfm_irq_test_service.*(.data*)
         *intermedia_tfm_flih_test_service.*(.data*)
         *load_info_tfm_flih_test_service.*(.data*)
         *(TFM_SP_FLIH_TEST_ATTR_RW)
 
+// #ifdef TEST_PARTITION_FPU_TEST
+        *tfm_fpu_service_test.*(.data*)
+        *intermedia_tfm_fpu_service_test.*(.data*)
+        *load_info_tfm_fpu_service_test.*(.data*)
+        *(TFM_SP_FPU_SERVICE_TEST_ATTR_RW)
+
 // --------- NXP end --------------
+        *(TFM_*_APP-ROT_ATTR_RW)
         . = ALIGN(32);
     } > RAM AT> FLASH
     Image$$TFM_APP_ROT_LINKER_DATA$$RW$$Base = ADDR(.TFM_APP_ROT_LINKER_DATA);
@@ -484,7 +518,7 @@ SECTIONS
         *tfm_ps_secure_api.*(COMMON)
         *(TFM_SP_PS_ATTR_ZI)
 
-// #ifdef TFM_PARTITION_TEST_CORE
+// #ifdef TEST_NS_CORE
         *tfm_ss_core_test_2.*(.bss .bss.invert_buffer.0)
         *tfm_ss_core_test_2.*(COMMON)
         *intermedia_tfm_ss_core_test_2.*(.bss*)
@@ -493,7 +527,7 @@ SECTIONS
         *load_info_tfm_ss_core_test_2.*(COMMON)
         *(TFM_SP_CORE_TEST_2_ATTR_ZI)
 
-// #ifdef TFM_PARTITION_TEST_CORE_IPC
+// #ifdef TFM_PARTITION_IPC_TEST
         *tfm_ipc_client_test.*(.bss .bss.service_in_use)
         *tfm_ipc_client_test.*(COMMON)
         *intermedia_tfm_ipc_client_test.*(.bss*)
@@ -502,7 +536,7 @@ SECTIONS
         *load_info_tfm_ipc_client_test.*(COMMON)
         *(TFM_SP_IPC_CLIENT_TEST_ATTR_ZI)
 
-// #ifdef TFM_PARTITION_TEST_SECURE_SERVICES
+// #ifdef TEST_FRAMEWORK_S
         *tfm_secure_client_2.*(.bss)
         *tfm_secure_client_2.*(COMMON)
         *intermedia_tfm_secure_client_2.*(.bss*)
@@ -518,6 +552,8 @@ SECTIONS
 // #ifdef TEST_NS_SLIH_IRQ
         *tfm_slih_test_service.*(.bss)
         *tfm_slih_test_service.*(COMMON)
+        *tfm_irq_test_service.*(.bss*)
+        *tfm_irq_test_service.*(COMMON)
         *intermedia_tfm_slih_test_service.*(.bss*)
         *intermedia_tfm_slih_test_service.*(COMMON)
         *load_info_tfm_slih_test_service.*(.bss)
@@ -527,13 +563,25 @@ SECTIONS
 // #ifdef TEST_NS_FLIH_IRQ
         *tfm_flih_test_service.*(.bss)
         *tfm_flih_test_service.*(COMMON)
+        *tfm_irq_test_service.*(.bss*)
+        *tfm_irq_test_service.*(COMMON)
         *intermedia_tfm_flih_test_service.*(.bss*)
         *intermedia_tfm_flih_test_service.*(COMMON)
         *load_info_tfm_flih_test_service.*(.bss)
         *load_info_tfm_flih_test_service.*(COMMON)
         *(TFM_SP_FLIH_TEST_ATTR_ZI)
 
+// #ifdef TEST_PARTITION_FPU_TEST
+        *tfm_fpu_service_test.*(.bss)
+        *tfm_fpu_service_test.*(COMMON)
+        *intermedia_tfm_fpu_service_test.*(.bss*)
+        *intermedia_tfm_fpu_service_test.*(COMMON)
+        *load_info_tfm_fpu_service_test.*(.bss)
+        *load_info_tfm_fpu_service_test.*(COMMON)
+        *(TFM_SP_FPU_SERVICE_TEST_ATTR_ZI)
+
 // --------- NXP end --------------
+        *(TFM_*_APP-ROT_ATTR_ZI)
         . += (. - start_of_TFM_APP_ROT_LINKER) ? 0 : 4;
         . = ALIGN(32);
     } > RAM AT> RAM
@@ -613,16 +661,8 @@ SECTIONS
     {
         . += __msp_init_stack_size__;
     } > RAM
-    Image$$ARM_LIB_STACK_MSP$$ZI$$Base = ADDR(.msp_stack);
-    Image$$ARM_LIB_STACK_MSP$$ZI$$Limit = ADDR(.msp_stack) + SIZEOF(.msp_stack);
-
-    /* PSP is privileged in multi-core topology */
-    .psp_stack : ALIGN(32)
-    {
-        . += __psp_stack_size__;
-    } > RAM
-    Image$$ARM_LIB_STACK$$ZI$$Base = ADDR(.psp_stack);
-    Image$$ARM_LIB_STACK$$ZI$$Limit = ADDR(.psp_stack) + SIZEOF(.psp_stack);
+    Image$$ARM_LIB_STACK$$ZI$$Base = ADDR(.msp_stack);
+    Image$$ARM_LIB_STACK$$ZI$$Limit = ADDR(.msp_stack) + SIZEOF(.msp_stack);
 #endif
 
     /**** PSA RoT DATA start here */
@@ -770,21 +810,6 @@ SECTIONS
     {
         KEEP(*(.ramfunc))
     } > RAM AT> FLASH
-#endif
-
-#ifndef TFM_MULTI_CORE_TOPOLOGY
-    /*
-     * Place the CMSE Veneers (containing the SG instruction) after the code, in a
-     * separate 32 bytes aligned region so that the SAU can programmed to just set
-     * this region as Non-Secure Callable.
-     */
-    .gnu.sgstubs : ALIGN(32)
-    {
-        *(.gnu.sgstubs*)
-        . = ALIGN(32);
-    } > VENEERS AT> VENEERS
-    Load$$LR$$LR_VENEER$$Base = ADDR(.gnu.sgstubs);
-    Load$$LR$$LR_VENEER$$Limit = ADDR(.gnu.sgstubs) + SIZEOF(.gnu.sgstubs);
 #endif
 
     Load$$LR$$LR_NS_PARTITION$$Base = NS_PARTITION_START;

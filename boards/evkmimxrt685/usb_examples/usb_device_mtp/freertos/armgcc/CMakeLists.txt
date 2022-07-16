@@ -73,6 +73,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
@@ -106,6 +107,8 @@ include(middleware_fatfs_sd_MIMXRT685S_cm33)
 include(driver_flexcomm_i2c_MIMXRT685S_cm33)
 
 include(driver_pca9420_MIMXRT685S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT685S_cm33)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT685S_cm33)
 

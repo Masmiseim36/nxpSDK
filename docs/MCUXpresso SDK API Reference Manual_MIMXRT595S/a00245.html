@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -115,8 +115,8 @@ Typical use case</h1>
 SPI master transfer using an interrupt method</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#define BUFFER_LEN (64)</span></div>
 <div class="line"><span class="preprocessor"></span>spi_master_handle_t spiHandle;</div>
-<div class="line"><a class="code" href="a00067.html#a00445">spi_master_config_t</a> masterConfig;</div>
-<div class="line"><a class="code" href="a00067.html#a00448">spi_transfer_t</a> xfer;</div>
+<div class="line"><a class="code" href="a00067.html#a00446">spi_master_config_t</a> masterConfig;</div>
+<div class="line"><a class="code" href="a00067.html#a00449">spi_transfer_t</a> xfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> isFinished = <span class="keyword">false</span>;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">const</span> uint8_t sendData[BUFFER_LEN] = [......];</div>
@@ -155,10 +155,10 @@ SPI master transfer using an interrupt method</h2>
 SPI Send/receive using a DMA method</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#define BUFFER_LEN (64)</span></div>
 <div class="line"><span class="preprocessor"></span>spi_dma_handle_t spiHandle;</div>
-<div class="line"><a class="code" href="a00016.html#a00330">dma_handle_t</a> g_spiTxDmaHandle;</div>
-<div class="line"><a class="code" href="a00016.html#a00330">dma_handle_t</a> g_spiRxDmaHandle;</div>
-<div class="line"><a class="code" href="a00067.html#a00442">spi_config_t</a> masterConfig;</div>
-<div class="line"><a class="code" href="a00067.html#a00448">spi_transfer_t</a> xfer;</div>
+<div class="line"><a class="code" href="a00016.html#a00331">dma_handle_t</a> g_spiTxDmaHandle;</div>
+<div class="line"><a class="code" href="a00016.html#a00331">dma_handle_t</a> g_spiRxDmaHandle;</div>
+<div class="line"><a class="code" href="a00067.html#a00443">spi_config_t</a> masterConfig;</div>
+<div class="line"><a class="code" href="a00067.html#a00449">spi_transfer_t</a> xfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> isFinished;</div>
 <div class="line"></div>
 <div class="line">uint8_t sendData[BUFFER_LEN] = ...;</div>

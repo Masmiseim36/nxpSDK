@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -63,7 +63,7 @@
 			defined(MBEDTLS_ECP_DP_BP512R1_ENABLED) || \
 			defined(MBEDTLS_ECP_DP_CURVE25519_ENABLED) || \
 			defined(MBEDTLS_ECP_DP_CURVE448_ENABLED) ) ) /* Check driver support */
-		
+
         #ifndef MBEDTLS_MCUX_CASPER_ECC         
             #define MBEDTLS_MCUX_CASPER_ECC     (1)         /* Enable use of CASPER ECC */
         #endif
@@ -72,12 +72,46 @@
 
 #endif /* FSL_FEATURE_SOC_CASPER_COUNT */
 
+/* Enable CSS */
+#ifdef CSS
+    #ifndef MBEDTLS_MCUX_CSS_AES
+        #define MBEDTLS_MCUX_CSS_AES    (1)     /* Enable use of CSS AES.*/
+    #endif
+
+    #ifndef MBEDTLS_MCUX_CSS_SHA256
+        #define MBEDTLS_MCUX_CSS_SHA256 (1)     /* Enable use of CSS SHA256.*/
+    #endif
+
+    #ifndef MBEDTLS_MCUX_CSS_SHA512
+        #define MBEDTLS_MCUX_CSS_SHA512 (1)     /* Enable use of CSS SHA512.*/
+    #endif
+#endif /* CSS */
+
+/* Enable PKC */
+#ifdef PKC     
+    #ifndef MBEDTLS_MCUX_PKC
+        #define MBEDTLS_MCUX_PKC        (1)     /* Enable use of PKC. */
+    #endif
+    
+    #ifndef MBEDTLS_MCUX_PKC_ECDH
+        #define MBEDTLS_MCUX_PKC_ECDH   (1)     /* Enable use of PKC ECDH.*/
+    #endif
+    
+    #ifndef MBEDTLS_MCUX_PKC_ECDSA
+        #define MBEDTLS_MCUX_PKC_ECDSA  (1)     /* Enable use of PKC ECDSA.*/
+    #endif
+    
+    #ifndef MBEDTLS_MCUX_PKC_RSA
+        #define MBEDTLS_MCUX_PKC_RSA    (1)     /* Enable use of PKC RSA.*/
+    #endif
+#endif /* PKC */
 
 /* Entropy */
 #if (defined(FSL_FEATURE_SOC_TRNG_COUNT) && (FSL_FEATURE_SOC_TRNG_COUNT > 0)) || \
     (defined(FSL_FEATURE_SOC_RNG_COUNT) && (FSL_FEATURE_SOC_RNG_COUNT > 0)) || \
     (defined(FSL_FEATURE_SOC_LPC_RNG_COUNT) && (FSL_FEATURE_SOC_LPC_RNG_COUNT > 0)) || \
-    (defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0))
+    (defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)) || \
+    (defined(CSS))
 
     #ifndef MBEDTLS_MCUX_ENTROPY  
         #define MBEDTLS_MCUX_ENTROPY    (1)
@@ -123,6 +157,39 @@
 #if defined(MBEDTLS_MCUX_CASPER_ECC) && (MBEDTLS_MCUX_CASPER_ECC == 1)
     #define MBEDTLS_ECP_MUL_COMB_ALT    /* Alternate implementation of ecp_mul_comb() */
     #define MBEDTLS_ECP_MULADD_ALT      /* Alternate implementation of mbedtls_ecp_muladd() */
+#endif
+
+#if defined(MBEDTLS_MCUX_CSS_AES) && MBEDTLS_MCUX_CSS_AES
+    #define MBEDTLS_AES_ALT
+    #define MBEDTLS_AES_SETKEY_ENC_ALT
+    #define MBEDTLS_AES_SETKEY_DEC_ALT
+    #define MBEDTLS_AES_ENCRYPT_ALT
+    #define MBEDTLS_AES_DECRYPT_ALT
+#endif
+
+#if defined(MBEDTLS_MCUX_CSS_SHA256) && MBEDTLS_MCUX_CSS_SHA256
+    #define MBEDTLS_SHA256_ALT
+#endif
+
+#if defined(MBEDTLS_MCUX_CSS_SHA512) && MBEDTLS_MCUX_CSS_SHA512
+    #define MBEDTLS_SHA512_ALT
+#endif
+
+#if defined(MBEDTLS_MCUX_PKC) && MBEDTLS_MCUX_PKC && defined(MBEDTLS_MCUX_PKC_ECDH) && MBEDTLS_MCUX_PKC_ECDH
+    #define MBEDTLS_ECDH_GEN_PUBLIC_ALT
+    #define MBEDTLS_ECDH_COMPUTE_SHARED_ALT
+    #define MBEDTLS_ECDH_CANDO_ALT
+#endif
+
+#if defined(MBEDTLS_MCUX_PKC) && MBEDTLS_MCUX_PKC && defined(MBEDTLS_MCUX_PKC_ECDSA) && MBEDTLS_MCUX_PKC_ECDSA
+    #define MBEDTLS_ECDSA_SIGN_ALT
+    #define MBEDTLS_ECDSA_VERIFY_ALT
+    #define MBEDTLS_ECDSA_GENKEY_ALT
+#endif
+
+#if defined(MBEDTLS_MCUX_PKC) && MBEDTLS_MCUX_PKC && defined(MBEDTLS_MCUX_PKC_RSA) && MBEDTLS_MCUX_PKC_RSA
+    #define MBEDTLS_RSA_PUBLIC_ALT
+    #define MBEDTLS_RSA_PRIVATE_ALT
 #endif
 
 #if defined(MBEDTLS_MCUX_ENTROPY) && (MBEDTLS_MCUX_ENTROPY == 1)

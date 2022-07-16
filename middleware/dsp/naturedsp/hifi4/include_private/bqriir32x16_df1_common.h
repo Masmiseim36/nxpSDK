@@ -40,6 +40,9 @@
 /* Instance pointer validation number. */
 #define MAGIC     0x914c4a88
 
+/* Calling delayless implementations, when delay = 0  */
+#define ALG32X16_DF1_ND 1
+
 /* Filter instance structure. */
 typedef struct tag_bqriir32x16_df1_t
 {

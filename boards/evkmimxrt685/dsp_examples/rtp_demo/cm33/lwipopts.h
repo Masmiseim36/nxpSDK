@@ -369,7 +369,8 @@
 /**
  * LWIP_DHCP==1: Enable DHCP module.
  */
-#define LWIP_DHCP 1
+#define LWIP_DHCP                      1
+#define LWIP_NETIF_EXT_STATUS_CALLBACK 1
 
 /**
  * LWIP_DHCP_DOES_ACD_CHECK==1: Perform address conflict detection on the dhcp address.

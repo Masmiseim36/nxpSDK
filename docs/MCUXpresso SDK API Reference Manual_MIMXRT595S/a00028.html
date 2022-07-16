@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('a00028.html','');});
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <p>The MCUXpresso SDK provides a peripheral driver for an SPI function using the Flexible I/O module of MCUXpresso SDK devices.</p>
 <p>FlexIO SPI driver includes functional APIs and transactional APIs.</p>
-<p>Functional APIs target low-level APIs. Functional APIs can be used for FlexIO SPI initialization/configuration/operation for optimization/customization purpose. Using the functional API requires the knowledge of the FlexIO SPI peripheral and how to organize functional APIs to meet the application requirements. All functional API use the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> *base as the first parameter. FlexIO SPI functional operation groups provide the functional API set.</p>
+<p>Functional APIs target low-level APIs. Functional APIs can be used for FlexIO SPI initialization/configuration/operation for optimization/customization purpose. Using the functional API requires the knowledge of the FlexIO SPI peripheral and how to organize functional APIs to meet the application requirements. All functional API use the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> *base as the first parameter. FlexIO SPI functional operation groups provide the functional API set.</p>
 <p>Transactional APIs target high-level APIs. Transactional APIs can be used to enable the peripheral and also in the application if the code size and performance of transactional APIs can satisfy requirements. If the code size and performance are critical requirements, see the transactional API implementation and write custom code. All transactional APIs use the flexio_spi_master_handle_t/flexio_spi_slave_handle_t as the second parameter. Initialize the handle by calling the <a class="el" href="a00028.html#ga0123f1825a83093ad07377d86f4e2bf1" title="Initializes the FlexIO SPI Master handle, which is used in transactional functions. ">FLEXIO_SPI_MasterTransferCreateHandle()</a> or <a class="el" href="a00028.html#ga76d12767d4023268a3aa9cde5e072b29" title="Initializes the FlexIO SPI Slave handle, which is used in transactional functions. ">FLEXIO_SPI_SlaveTransferCreateHandle()</a> API.</p>
 <p>Transactional APIs support asynchronous transfer. This means that the functions <a class="el" href="a00028.html#gabcfcbee985cb49bdbd02ab1698d2c041" title="Master transfer data using IRQ. ">FLEXIO_SPI_MasterTransferNonBlocking()</a>/FLEXIO_SPI_SlaveTransferNonBlocking() set up an interrupt for data transfer. When the transfer is complete, the upper layer is notified through a callback function with the kStatus_FLEXIO_SPI_Idle status.</p>
 <p>Note that the FlexIO SPI slave driver only supports discontinuous PCS access, which is a limitation. The FlexIO SPI slave driver can support continuous PCS, but the slave cannot adapt discontinuous and continuous PCS automatically. Users can change the timer disable mode in FLEXIO_SPI_SlaveInit manually, from kFLEXIO_TimerDisableOnTimerCompare to kFLEXIO_TimerDisableNever to enable a discontinuous PCS access. Only CPHA = 0 is supported.</p>
@@ -119,12 +119,12 @@ Typical use case</h1>
 <h2><a class="anchor" id="FlexIO_SPICaseInterrupt"></a>
 FlexIO SPI send/receive using an interrupt method</h2>
 <div class="fragment"><div class="line">flexio_spi_master_handle_t g_spiHandle;</div>
-<div class="line"><a class="code" href="a00028.html#a00354">FLEXIO_SPI_Type</a> spiDev;</div>
+<div class="line"><a class="code" href="a00028.html#a00355">FLEXIO_SPI_Type</a> spiDev;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
 <div class="line"><span class="keyword">static</span> uint8_t srcBuff[BUFFER_SIZE];</div>
 <div class="line"><span class="keyword">static</span> uint8_t destBuff[BUFFER_SIZE];</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> FLEXIO_SPI_MasterUserCallback(<a class="code" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, <a class="code" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line"><span class="keywordtype">void</span> FLEXIO_SPI_MasterUserCallback(<a class="code" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, <a class="code" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">{</div>
 <div class="line">    userData = userData;</div>
 <div class="line"></div>
@@ -137,8 +137,8 @@ FlexIO SPI send/receive using an interrupt method</h2>
 <div class="line"><span class="keywordtype">void</span> main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">    <span class="comment">//...</span></div>
-<div class="line">    <a class="code" href="a00028.html#a00353">flexio_spi_transfer_t</a> xfer = {0};</div>
-<div class="line">    <a class="code" href="a00028.html#a00351">flexio_spi_master_config_t</a> userConfig;</div>
+<div class="line">    <a class="code" href="a00028.html#a00354">flexio_spi_transfer_t</a> xfer = {0};</div>
+<div class="line">    <a class="code" href="a00028.html#a00352">flexio_spi_master_config_t</a> userConfig;</div>
 <div class="line"></div>
 <div class="line">    <a class="code" href="a00028.html#ga2d99f8a94f95262fc821b42e3812ee7e">FLEXIO_SPI_MasterGetDefaultConfig</a>(&amp;userConfig);</div>
 <div class="line">    userConfig.<a class="code" href="a00028.html#a6f95fac4a0afc21630b3837787bbb353">baudRate_Bps</a> = 500000U;</div>
@@ -171,14 +171,14 @@ FlexIO SPI send/receive using an interrupt method</h2>
 <div class="line">}</div>
 </div><!-- fragment --><h2><a class="anchor" id="FlexIO_SPICaseDma"></a>
 FlexIO_SPI Send/Receive in DMA way</h2>
-<div class="fragment"><div class="line">    <a class="code" href="a00016.html#a00330">dma_handle_t</a> g_spiTxDmaHandle;</div>
-<div class="line">    <a class="code" href="a00016.html#a00330">dma_handle_t</a> g_spiRxDmaHandle;</div>
+<div class="fragment"><div class="line">    <a class="code" href="a00016.html#a00331">dma_handle_t</a> g_spiTxDmaHandle;</div>
+<div class="line">    <a class="code" href="a00016.html#a00331">dma_handle_t</a> g_spiRxDmaHandle;</div>
 <div class="line">    flexio_spi_master_handle_t g_spiHandle;</div>
-<div class="line">    <a class="code" href="a00028.html#a00354">FLEXIO_SPI_Type</a> spiDev;</div>
+<div class="line">    <a class="code" href="a00028.html#a00355">FLEXIO_SPI_Type</a> spiDev;</div>
 <div class="line">    <span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
 <div class="line">    <span class="keyword">static</span> uint8_t srcBuff[BUFFER_SIZE];</div>
 <div class="line">    <span class="keyword">static</span> uint8_t destBuff[BUFFER_SIZE];</div>
-<div class="line">    <span class="keywordtype">void</span> FLEXIO_SPI_MasterUserCallback(<a class="code" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, flexio_spi_master_dma_handle_t *handle, <a class="code" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
+<div class="line">    <span class="keywordtype">void</span> FLEXIO_SPI_MasterUserCallback(<a class="code" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, flexio_spi_master_dma_handle_t *handle, <a class="code" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, <span class="keywordtype">void</span> *userData)</div>
 <div class="line">    {</div>
 <div class="line">        userData = userData;</div>
 <div class="line"></div>
@@ -190,8 +190,8 @@ FlexIO_SPI Send/Receive in DMA way</h2>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">void</span> main(<span class="keywordtype">void</span>)</div>
 <div class="line">    {</div>
-<div class="line">        <a class="code" href="a00028.html#a00353">flexio_spi_transfer_t</a> xfer = {0};</div>
-<div class="line">        <a class="code" href="a00028.html#a00351">flexio_spi_master_config_t</a> userConfig;</div>
+<div class="line">        <a class="code" href="a00028.html#a00354">flexio_spi_transfer_t</a> xfer = {0};</div>
+<div class="line">        <a class="code" href="a00028.html#a00352">flexio_spi_master_config_t</a> userConfig;</div>
 <div class="line"></div>
 <div class="line">        <a class="code" href="a00028.html#ga2d99f8a94f95262fc821b42e3812ee7e">FLEXIO_SPI_MasterGetDefaultConfig</a>(&amp;userConfig);</div>
 <div class="line">        userConfig.<a class="code" href="a00028.html#a6f95fac4a0afc21630b3837787bbb353">baudRate_Bps</a> = 500000U;</div>
@@ -260,30 +260,33 @@ FlexIO_SPI Send/Receive in DMA way</h2>
 </div><!-- fragment --> <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00354"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a></td></tr>
-<tr class="memdesc:a00354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI access structure typedef.  <a href="a00028.html#a00354">More...</a><br/></td></tr>
-<tr class="separator:a00354"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00351"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00351">flexio_spi_master_config_t</a></td></tr>
-<tr class="memdesc:a00351"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI master configuration structure.  <a href="a00028.html#a00351">More...</a><br/></td></tr>
-<tr class="separator:a00351"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00352"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00352">flexio_spi_slave_config_t</a></td></tr>
-<tr class="memdesc:a00352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI slave configuration structure.  <a href="a00028.html#a00352">More...</a><br/></td></tr>
+<tr class="memitem:a00355"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a></td></tr>
+<tr class="memdesc:a00355"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI access structure typedef.  <a href="a00028.html#a00355">More...</a><br/></td></tr>
+<tr class="separator:a00355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00352"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00352">flexio_spi_master_config_t</a></td></tr>
+<tr class="memdesc:a00352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI master configuration structure.  <a href="a00028.html#a00352">More...</a><br/></td></tr>
 <tr class="separator:a00352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00353"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00353">flexio_spi_transfer_t</a></td></tr>
-<tr class="memdesc:a00353"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI transfer structure.  <a href="a00028.html#a00353">More...</a><br/></td></tr>
+<tr class="memitem:a00353"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00353">flexio_spi_slave_config_t</a></td></tr>
+<tr class="memdesc:a00353"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI slave configuration structure.  <a href="a00028.html#a00353">More...</a><br/></td></tr>
 <tr class="separator:a00353"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00288"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00288">flexio_spi_master_handle_t</a></td></tr>
-<tr class="memdesc:a00288"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI handle structure.  <a href="a00028.html#a00288">More...</a><br/></td></tr>
-<tr class="separator:a00288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00354"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00354">flexio_spi_transfer_t</a></td></tr>
+<tr class="memdesc:a00354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI transfer structure.  <a href="a00028.html#a00354">More...</a><br/></td></tr>
+<tr class="separator:a00354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00289"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#a00289">flexio_spi_master_handle_t</a></td></tr>
+<tr class="memdesc:a00289"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI handle structure.  <a href="a00028.html#a00289">More...</a><br/></td></tr>
+<tr class="separator:a00289"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gad411a43e379e70215b462831b24c5c5b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gad411a43e379e70215b462831b24c5c5b">FLEXIO_SPI_DUMMYDATA</a>&#160;&#160;&#160;(0xFFFFU)</td></tr>
+<tr class="memitem:gad411a43e379e70215b462831b24c5c5b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gad411a43e379e70215b462831b24c5c5b">FLEXIO_SPI_DUMMYDATA</a>&#160;&#160;&#160;(0xFFFFFFFFU)</td></tr>
 <tr class="memdesc:gad411a43e379e70215b462831b24c5c5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO SPI dummy transfer data, the data is sent while txData is NULL.  <a href="#gad411a43e379e70215b462831b24c5c5b">More...</a><br/></td></tr>
 <tr class="separator:gad411a43e379e70215b462831b24c5c5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa4717c15ca9604c505a5e5c60df29ebe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa4717c15ca9604c505a5e5c60df29ebe">SPI_RETRY_TIMES</a>&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td></tr>
 <tr class="memdesc:gaa4717c15ca9604c505a5e5c60df29ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retry times for waiting flag.  <a href="#gaa4717c15ca9604c505a5e5c60df29ebe">More...</a><br/></td></tr>
 <tr class="separator:gaa4717c15ca9604c505a5e5c60df29ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7b59f53366b1e5bb10a0491a20543382"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga7b59f53366b1e5bb10a0491a20543382">FLEXIO_SPI_XFER_DATA_FORMAT</a>(flag)&#160;&#160;&#160;((flag) &amp; (0x7U))</td></tr>
+<tr class="memdesc:ga7b59f53366b1e5bb10a0491a20543382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the transfer data format of width and bit order.  <a href="#ga7b59f53366b1e5bb10a0491a20543382">More...</a><br/></td></tr>
+<tr class="separator:ga7b59f53366b1e5bb10a0491a20543382"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -291,11 +294,11 @@ Typedefs</h2></td></tr>
 <tr class="memdesc:ga1950678efd37cb3665e303e094cec428"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave handle is the same with master handle.  <a href="#ga1950678efd37cb3665e303e094cec428">More...</a><br/></td></tr>
 <tr class="separator:ga1950678efd37cb3665e303e094cec428"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9c8b509b90588dea1921de0bdb3cfec8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9c8b509b90588dea1921de0bdb3cfec8"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga9c8b509b90588dea1921de0bdb3cfec8">flexio_spi_master_transfer_callback_t</a> )(<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga9c8b509b90588dea1921de0bdb3cfec8">flexio_spi_master_transfer_callback_t</a> )(<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:ga9c8b509b90588dea1921de0bdb3cfec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO SPI master callback for finished transmit. <br/></td></tr>
 <tr class="separator:ga9c8b509b90588dea1921de0bdb3cfec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad2accadc980b51b0d65e41d122abe261"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad2accadc980b51b0d65e41d122abe261"></a>
-typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gad2accadc980b51b0d65e41d122abe261">flexio_spi_slave_transfer_callback_t</a> )(<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
+typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gad2accadc980b51b0d65e41d122abe261">flexio_spi_slave_transfer_callback_t</a> )(<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle, <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> status, void *userData)</td></tr>
 <tr class="memdesc:gad2accadc980b51b0d65e41d122abe261"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO SPI slave callback for finished transmit. <br/></td></tr>
 <tr class="separator:gad2accadc980b51b0d65e41d122abe261"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -332,7 +335,9 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gae4e518a5b077982fca7b6bf1025c7aaf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae4e518a5b077982fca7b6bf1025c7aaf">flexio_spi_data_bitcount_mode_t</a> { <br/>
 &#160;&#160;<a class="el" href="a00028.html#ggae4e518a5b077982fca7b6bf1025c7aafaef0c633539e44547b47ad7b754234752">kFLEXIO_SPI_8BitMode</a> = 0x08U, 
 <br/>
-&#160;&#160;<a class="el" href="a00028.html#ggae4e518a5b077982fca7b6bf1025c7aafa343c7a9db539019f0c99fb82b4adab35">kFLEXIO_SPI_16BitMode</a> = 0x10U
+&#160;&#160;<a class="el" href="a00028.html#ggae4e518a5b077982fca7b6bf1025c7aafa343c7a9db539019f0c99fb82b4adab35">kFLEXIO_SPI_16BitMode</a> = 0x10U, 
+<br/>
+&#160;&#160;<a class="el" href="a00028.html#ggae4e518a5b077982fca7b6bf1025c7aafa7f4a057b24ac43b60fa4795d2a79b25a">kFLEXIO_SPI_32BitMode</a> = 0x20U
 <br/>
  }</td></tr>
 <tr class="memdesc:gae4e518a5b077982fca7b6bf1025c7aaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO SPI data length mode options.  <a href="a00028.html#gae4e518a5b077982fca7b6bf1025c7aaf">More...</a><br/></td></tr>
@@ -364,13 +369,19 @@ Enumerations</h2></td></tr>
 <tr class="memdesc:ga713aa7c7a59e84b9fdafb2923de177ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI DMA mask.  <a href="a00028.html#ga713aa7c7a59e84b9fdafb2923de177ef">More...</a><br/></td></tr>
 <tr class="separator:ga713aa7c7a59e84b9fdafb2923de177ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabf4ebfbc0d68b969e1b7dd838c45512d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gabf4ebfbc0d68b969e1b7dd838c45512d">_flexio_spi_transfer_flags</a> { <br/>
-&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512da7979c2a48d6662af1777827c1afa5537">kFLEXIO_SPI_8bitMsb</a> = 0x1U, 
+&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512da7979c2a48d6662af1777827c1afa5537">kFLEXIO_SPI_8bitMsb</a> = 0x0U, 
 <br/>
-&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512da1d31a5996c45efebdc7aeb1a894647f8">kFLEXIO_SPI_8bitLsb</a> = 0x2U, 
+&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512da1d31a5996c45efebdc7aeb1a894647f8">kFLEXIO_SPI_8bitLsb</a> = 0x1U, 
 <br/>
-&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512dabeb4baa55114987385ab398ceda142f9">kFLEXIO_SPI_16bitMsb</a> = 0x9U, 
+&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512dabeb4baa55114987385ab398ceda142f9">kFLEXIO_SPI_16bitMsb</a> = 0x2U, 
 <br/>
-&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512dad6774d8673e5aa247be136e38c8fad91">kFLEXIO_SPI_16bitLsb</a> = 0xaU
+&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512dad6774d8673e5aa247be136e38c8fad91">kFLEXIO_SPI_16bitLsb</a> = 0x3U, 
+<br/>
+&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512da79f81ba5984c5821bf9c42b0f3a3a4c1">kFLEXIO_SPI_32bitMsb</a> = 0x4U, 
+<br/>
+&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512daca30199b74b090f722c32b03b2762ac9">kFLEXIO_SPI_32bitLsb</a> = 0x5U, 
+<br/>
+&#160;&#160;<a class="el" href="a00028.html#ggabf4ebfbc0d68b969e1b7dd838c45512da9ee2a3142a3bc89e1ff4d645d9118287">kFLEXIO_SPI_csContinuous</a> = 0x8U
 <br/>
  }</td></tr>
 <tr class="memdesc:gabf4ebfbc0d68b969e1b7dd838c45512d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define FlexIO SPI transfer flags.  <a href="a00028.html#gabf4ebfbc0d68b969e1b7dd838c45512d">More...</a><br/></td></tr>
@@ -378,112 +389,115 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gadd4392d8b86be4236270866fa214dcbe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gadd4392d8b86be4236270866fa214dcbe">FSL_FLEXIO_SPI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td></tr>
-<tr class="memdesc:gadd4392d8b86be4236270866fa214dcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO SPI driver version 2.2.1.  <a href="#gadd4392d8b86be4236270866fa214dcbe">More...</a><br/></td></tr>
+<tr class="memitem:gadd4392d8b86be4236270866fa214dcbe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gadd4392d8b86be4236270866fa214dcbe">FSL_FLEXIO_SPI_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 0))</td></tr>
+<tr class="memdesc:gadd4392d8b86be4236270866fa214dcbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO SPI driver version.  <a href="#gadd4392d8b86be4236270866fa214dcbe">More...</a><br/></td></tr>
 <tr class="separator:gadd4392d8b86be4236270866fa214dcbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 FlexIO SPI Configuration</h2></td></tr>
-<tr class="memitem:gacc68d67c46d897e6e9b2268c0fe999d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gacc68d67c46d897e6e9b2268c0fe999d2">FLEXIO_SPI_MasterInit</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#a00351">flexio_spi_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:gacc68d67c46d897e6e9b2268c0fe999d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gacc68d67c46d897e6e9b2268c0fe999d2">FLEXIO_SPI_MasterInit</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#a00352">flexio_spi_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:gacc68d67c46d897e6e9b2268c0fe999d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the FlexIO clock, resets the FlexIO module, configures the FlexIO SPI master hardware, and configures the FlexIO SPI with FlexIO SPI master configuration.  <a href="#gacc68d67c46d897e6e9b2268c0fe999d2">More...</a><br/></td></tr>
 <tr class="separator:gacc68d67c46d897e6e9b2268c0fe999d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae403f64c6c1268e5dfb62e0b20bd267c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae403f64c6c1268e5dfb62e0b20bd267c">FLEXIO_SPI_MasterDeinit</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base)</td></tr>
+<tr class="memitem:gae403f64c6c1268e5dfb62e0b20bd267c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae403f64c6c1268e5dfb62e0b20bd267c">FLEXIO_SPI_MasterDeinit</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base)</td></tr>
 <tr class="memdesc:gae403f64c6c1268e5dfb62e0b20bd267c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the FlexIO SPI timer and shifter config.  <a href="#gae403f64c6c1268e5dfb62e0b20bd267c">More...</a><br/></td></tr>
 <tr class="separator:gae403f64c6c1268e5dfb62e0b20bd267c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2d99f8a94f95262fc821b42e3812ee7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga2d99f8a94f95262fc821b42e3812ee7e">FLEXIO_SPI_MasterGetDefaultConfig</a> (<a class="el" href="a00028.html#a00351">flexio_spi_master_config_t</a> *masterConfig)</td></tr>
+<tr class="memitem:ga2d99f8a94f95262fc821b42e3812ee7e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga2d99f8a94f95262fc821b42e3812ee7e">FLEXIO_SPI_MasterGetDefaultConfig</a> (<a class="el" href="a00028.html#a00352">flexio_spi_master_config_t</a> *masterConfig)</td></tr>
 <tr class="memdesc:ga2d99f8a94f95262fc821b42e3812ee7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration to configure the FlexIO SPI master.  <a href="#ga2d99f8a94f95262fc821b42e3812ee7e">More...</a><br/></td></tr>
 <tr class="separator:ga2d99f8a94f95262fc821b42e3812ee7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae14521e2d88c63c34a51a31c726bac48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae14521e2d88c63c34a51a31c726bac48">FLEXIO_SPI_SlaveInit</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#a00352">flexio_spi_slave_config_t</a> *slaveConfig)</td></tr>
+<tr class="memitem:gae14521e2d88c63c34a51a31c726bac48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae14521e2d88c63c34a51a31c726bac48">FLEXIO_SPI_SlaveInit</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#a00353">flexio_spi_slave_config_t</a> *slaveConfig)</td></tr>
 <tr class="memdesc:gae14521e2d88c63c34a51a31c726bac48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the FlexIO clock, resets the FlexIO module, configures the FlexIO SPI slave hardware configuration, and configures the FlexIO SPI with FlexIO SPI slave configuration.  <a href="#gae14521e2d88c63c34a51a31c726bac48">More...</a><br/></td></tr>
 <tr class="separator:gae14521e2d88c63c34a51a31c726bac48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab02c0d21cfe44e81a2668facccdc587c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gab02c0d21cfe44e81a2668facccdc587c">FLEXIO_SPI_SlaveDeinit</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base)</td></tr>
+<tr class="memitem:gab02c0d21cfe44e81a2668facccdc587c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gab02c0d21cfe44e81a2668facccdc587c">FLEXIO_SPI_SlaveDeinit</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base)</td></tr>
 <tr class="memdesc:gab02c0d21cfe44e81a2668facccdc587c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gates the FlexIO clock.  <a href="#gab02c0d21cfe44e81a2668facccdc587c">More...</a><br/></td></tr>
 <tr class="separator:gab02c0d21cfe44e81a2668facccdc587c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa6979876d2c0b4f65deabd6f5ce16d41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa6979876d2c0b4f65deabd6f5ce16d41">FLEXIO_SPI_SlaveGetDefaultConfig</a> (<a class="el" href="a00028.html#a00352">flexio_spi_slave_config_t</a> *slaveConfig)</td></tr>
+<tr class="memitem:gaa6979876d2c0b4f65deabd6f5ce16d41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa6979876d2c0b4f65deabd6f5ce16d41">FLEXIO_SPI_SlaveGetDefaultConfig</a> (<a class="el" href="a00028.html#a00353">flexio_spi_slave_config_t</a> *slaveConfig)</td></tr>
 <tr class="memdesc:gaa6979876d2c0b4f65deabd6f5ce16d41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration to configure the FlexIO SPI slave.  <a href="#gaa6979876d2c0b4f65deabd6f5ce16d41">More...</a><br/></td></tr>
 <tr class="separator:gaa6979876d2c0b4f65deabd6f5ce16d41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Status</h2></td></tr>
-<tr class="memitem:ga1b709c34a5861a755ef2365eca4aef6d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga1b709c34a5861a755ef2365eca4aef6d">FLEXIO_SPI_GetStatusFlags</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base)</td></tr>
+<tr class="memitem:ga1b709c34a5861a755ef2365eca4aef6d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga1b709c34a5861a755ef2365eca4aef6d">FLEXIO_SPI_GetStatusFlags</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base)</td></tr>
 <tr class="memdesc:ga1b709c34a5861a755ef2365eca4aef6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets FlexIO SPI status flags.  <a href="#ga1b709c34a5861a755ef2365eca4aef6d">More...</a><br/></td></tr>
 <tr class="separator:ga1b709c34a5861a755ef2365eca4aef6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53311c201694351c61d5d56f2924d73e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga53311c201694351c61d5d56f2924d73e">FLEXIO_SPI_ClearStatusFlags</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, uint32_t mask)</td></tr>
+<tr class="memitem:ga53311c201694351c61d5d56f2924d73e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga53311c201694351c61d5d56f2924d73e">FLEXIO_SPI_ClearStatusFlags</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, uint32_t mask)</td></tr>
 <tr class="memdesc:ga53311c201694351c61d5d56f2924d73e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears FlexIO SPI status flags.  <a href="#ga53311c201694351c61d5d56f2924d73e">More...</a><br/></td></tr>
 <tr class="separator:ga53311c201694351c61d5d56f2924d73e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Interrupts</h2></td></tr>
-<tr class="memitem:ga877ffb51ccf9f5a2ecd5bd5a23f208c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga877ffb51ccf9f5a2ecd5bd5a23f208c3">FLEXIO_SPI_EnableInterrupts</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, uint32_t mask)</td></tr>
+<tr class="memitem:ga877ffb51ccf9f5a2ecd5bd5a23f208c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga877ffb51ccf9f5a2ecd5bd5a23f208c3">FLEXIO_SPI_EnableInterrupts</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, uint32_t mask)</td></tr>
 <tr class="memdesc:ga877ffb51ccf9f5a2ecd5bd5a23f208c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the FlexIO SPI interrupt.  <a href="#ga877ffb51ccf9f5a2ecd5bd5a23f208c3">More...</a><br/></td></tr>
 <tr class="separator:ga877ffb51ccf9f5a2ecd5bd5a23f208c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac765a8199e5d7c7546d2b31c06563638"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gac765a8199e5d7c7546d2b31c06563638">FLEXIO_SPI_DisableInterrupts</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, uint32_t mask)</td></tr>
+<tr class="memitem:gac765a8199e5d7c7546d2b31c06563638"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gac765a8199e5d7c7546d2b31c06563638">FLEXIO_SPI_DisableInterrupts</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, uint32_t mask)</td></tr>
 <tr class="memdesc:gac765a8199e5d7c7546d2b31c06563638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the FlexIO SPI interrupt.  <a href="#gac765a8199e5d7c7546d2b31c06563638">More...</a><br/></td></tr>
 <tr class="separator:gac765a8199e5d7c7546d2b31c06563638"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 DMA Control</h2></td></tr>
-<tr class="memitem:ga584eae5056ceeee0aea9ba9d5e2302ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga584eae5056ceeee0aea9ba9d5e2302ff">FLEXIO_SPI_EnableDMA</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, uint32_t mask, bool enable)</td></tr>
+<tr class="memitem:ga584eae5056ceeee0aea9ba9d5e2302ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga584eae5056ceeee0aea9ba9d5e2302ff">FLEXIO_SPI_EnableDMA</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, uint32_t mask, bool enable)</td></tr>
 <tr class="memdesc:ga584eae5056ceeee0aea9ba9d5e2302ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the FlexIO SPI transmit DMA.  <a href="#ga584eae5056ceeee0aea9ba9d5e2302ff">More...</a><br/></td></tr>
 <tr class="separator:ga584eae5056ceeee0aea9ba9d5e2302ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac2629d5c8821fe5a2a3496b51dbc99f5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gac2629d5c8821fe5a2a3496b51dbc99f5">FLEXIO_SPI_GetTxDataRegisterAddress</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction)</td></tr>
+<tr class="memitem:gac2629d5c8821fe5a2a3496b51dbc99f5"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gac2629d5c8821fe5a2a3496b51dbc99f5">FLEXIO_SPI_GetTxDataRegisterAddress</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction)</td></tr>
 <tr class="memdesc:gac2629d5c8821fe5a2a3496b51dbc99f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the FlexIO SPI transmit data register address for MSB first transfer.  <a href="#gac2629d5c8821fe5a2a3496b51dbc99f5">More...</a><br/></td></tr>
 <tr class="separator:gac2629d5c8821fe5a2a3496b51dbc99f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga061dcced42575767baf53f6b6e5da609"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga061dcced42575767baf53f6b6e5da609">FLEXIO_SPI_GetRxDataRegisterAddress</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction)</td></tr>
+<tr class="memitem:ga061dcced42575767baf53f6b6e5da609"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga061dcced42575767baf53f6b6e5da609">FLEXIO_SPI_GetRxDataRegisterAddress</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction)</td></tr>
 <tr class="memdesc:ga061dcced42575767baf53f6b6e5da609"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the FlexIO SPI receive data register address for the MSB first transfer.  <a href="#ga061dcced42575767baf53f6b6e5da609">More...</a><br/></td></tr>
 <tr class="separator:ga061dcced42575767baf53f6b6e5da609"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Bus Operations</h2></td></tr>
-<tr class="memitem:ga68656f6d77e46b59e311e1a97f3b5878"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga68656f6d77e46b59e311e1a97f3b5878">FLEXIO_SPI_Enable</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, bool enable)</td></tr>
+<tr class="memitem:ga68656f6d77e46b59e311e1a97f3b5878"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga68656f6d77e46b59e311e1a97f3b5878">FLEXIO_SPI_Enable</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, bool enable)</td></tr>
 <tr class="memdesc:ga68656f6d77e46b59e311e1a97f3b5878"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables/disables the FlexIO SPI module operation.  <a href="#ga68656f6d77e46b59e311e1a97f3b5878">More...</a><br/></td></tr>
 <tr class="separator:ga68656f6d77e46b59e311e1a97f3b5878"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9287322d22895ac0352db5fe0dd909e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa9287322d22895ac0352db5fe0dd909e">FLEXIO_SPI_MasterSetBaudRate</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, uint32_t baudRate_Bps, uint32_t srcClockHz)</td></tr>
+<tr class="memitem:gaa9287322d22895ac0352db5fe0dd909e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa9287322d22895ac0352db5fe0dd909e">FLEXIO_SPI_MasterSetBaudRate</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, uint32_t baudRate_Bps, uint32_t srcClockHz)</td></tr>
 <tr class="memdesc:gaa9287322d22895ac0352db5fe0dd909e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets baud rate for the FlexIO SPI transfer, which is only used for the master.  <a href="#gaa9287322d22895ac0352db5fe0dd909e">More...</a><br/></td></tr>
 <tr class="separator:gaa9287322d22895ac0352db5fe0dd909e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1eb1063ea3e7b0af749f899d86e85c42"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga1eb1063ea3e7b0af749f899d86e85c42">FLEXIO_SPI_WriteData</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction, uint16_t data)</td></tr>
-<tr class="memdesc:ga1eb1063ea3e7b0af749f899d86e85c42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes one byte of data, which is sent using the MSB method.  <a href="#ga1eb1063ea3e7b0af749f899d86e85c42">More...</a><br/></td></tr>
-<tr class="separator:ga1eb1063ea3e7b0af749f899d86e85c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa36e294b6b74373a5466a3c69ecdbf18"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaa36e294b6b74373a5466a3c69ecdbf18">FLEXIO_SPI_ReadData</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction)</td></tr>
-<tr class="memdesc:gaa36e294b6b74373a5466a3c69ecdbf18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads 8 bit/16 bit data.  <a href="#gaa36e294b6b74373a5466a3c69ecdbf18">More...</a><br/></td></tr>
-<tr class="separator:gaa36e294b6b74373a5466a3c69ecdbf18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ddf107d6d5a9d4b6b33a7a07a7679b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga0ddf107d6d5a9d4b6b33a7a07a7679b2">FLEXIO_SPI_WriteBlocking</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction, const uint8_t *buffer, size_t size)</td></tr>
+<tr class="memitem:gab8d90deb9e0a4ae7ee4564125218ed29"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gab8d90deb9e0a4ae7ee4564125218ed29">FLEXIO_SPI_WriteData</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction, uint32_t data)</td></tr>
+<tr class="memdesc:gab8d90deb9e0a4ae7ee4564125218ed29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes one byte of data, which is sent using the MSB method.  <a href="#gab8d90deb9e0a4ae7ee4564125218ed29">More...</a><br/></td></tr>
+<tr class="separator:gab8d90deb9e0a4ae7ee4564125218ed29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga14411234ecd9a094371d27405ad990cd"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga14411234ecd9a094371d27405ad990cd">FLEXIO_SPI_ReadData</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction)</td></tr>
+<tr class="memdesc:ga14411234ecd9a094371d27405ad990cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads 8 bit/16 bit data.  <a href="#ga14411234ecd9a094371d27405ad990cd">More...</a><br/></td></tr>
+<tr class="separator:ga14411234ecd9a094371d27405ad990cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0ddf107d6d5a9d4b6b33a7a07a7679b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga0ddf107d6d5a9d4b6b33a7a07a7679b2">FLEXIO_SPI_WriteBlocking</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction, const uint8_t *buffer, size_t size)</td></tr>
 <tr class="memdesc:ga0ddf107d6d5a9d4b6b33a7a07a7679b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends a buffer of data bytes.  <a href="#ga0ddf107d6d5a9d4b6b33a7a07a7679b2">More...</a><br/></td></tr>
 <tr class="separator:ga0ddf107d6d5a9d4b6b33a7a07a7679b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeead8252ae85745aa02f56baffb4df12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaeead8252ae85745aa02f56baffb4df12">FLEXIO_SPI_ReadBlocking</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction, uint8_t *buffer, size_t size)</td></tr>
+<tr class="memitem:gaeead8252ae85745aa02f56baffb4df12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaeead8252ae85745aa02f56baffb4df12">FLEXIO_SPI_ReadBlocking</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga25594db149526d67b23d92724487e87f">flexio_spi_shift_direction_t</a> direction, uint8_t *buffer, size_t size)</td></tr>
 <tr class="memdesc:gaeead8252ae85745aa02f56baffb4df12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a buffer of bytes.  <a href="#gaeead8252ae85745aa02f56baffb4df12">More...</a><br/></td></tr>
 <tr class="separator:gaeead8252ae85745aa02f56baffb4df12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae02f160899c2ccb93651e4bac473b65e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae02f160899c2ccb93651e4bac473b65e">FLEXIO_SPI_MasterTransferBlocking</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#a00353">flexio_spi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gae02f160899c2ccb93651e4bac473b65e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae02f160899c2ccb93651e4bac473b65e">FLEXIO_SPI_MasterTransferBlocking</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#a00354">flexio_spi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gae02f160899c2ccb93651e4bac473b65e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a buffer of bytes.  <a href="#gae02f160899c2ccb93651e4bac473b65e">More...</a><br/></td></tr>
 <tr class="separator:gae02f160899c2ccb93651e4bac473b65e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4de03d39977efdcd5292cfb8f0da2189"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga4de03d39977efdcd5292cfb8f0da2189">FLEXIO_SPI_FlushShifters</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base)</td></tr>
+<tr class="memdesc:ga4de03d39977efdcd5292cfb8f0da2189"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush tx/rx shifters.  <a href="#ga4de03d39977efdcd5292cfb8f0da2189">More...</a><br/></td></tr>
+<tr class="separator:ga4de03d39977efdcd5292cfb8f0da2189"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Transactional</h2></td></tr>
-<tr class="memitem:ga0123f1825a83093ad07377d86f4e2bf1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga0123f1825a83093ad07377d86f4e2bf1">FLEXIO_SPI_MasterTransferCreateHandle</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, <a class="el" href="a00028.html#ga9c8b509b90588dea1921de0bdb3cfec8">flexio_spi_master_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:ga0123f1825a83093ad07377d86f4e2bf1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga0123f1825a83093ad07377d86f4e2bf1">FLEXIO_SPI_MasterTransferCreateHandle</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, <a class="el" href="a00028.html#ga9c8b509b90588dea1921de0bdb3cfec8">flexio_spi_master_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga0123f1825a83093ad07377d86f4e2bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the FlexIO SPI Master handle, which is used in transactional functions.  <a href="#ga0123f1825a83093ad07377d86f4e2bf1">More...</a><br/></td></tr>
 <tr class="separator:ga0123f1825a83093ad07377d86f4e2bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabcfcbee985cb49bdbd02ab1698d2c041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gabcfcbee985cb49bdbd02ab1698d2c041">FLEXIO_SPI_MasterTransferNonBlocking</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, <a class="el" href="a00028.html#a00353">flexio_spi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:gabcfcbee985cb49bdbd02ab1698d2c041"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gabcfcbee985cb49bdbd02ab1698d2c041">FLEXIO_SPI_MasterTransferNonBlocking</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, <a class="el" href="a00028.html#a00354">flexio_spi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:gabcfcbee985cb49bdbd02ab1698d2c041"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master transfer data using IRQ.  <a href="#gabcfcbee985cb49bdbd02ab1698d2c041">More...</a><br/></td></tr>
 <tr class="separator:gabcfcbee985cb49bdbd02ab1698d2c041"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7ee4149cd9c0bab50f91eaf6322ccd45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga7ee4149cd9c0bab50f91eaf6322ccd45">FLEXIO_SPI_MasterTransferAbort</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle)</td></tr>
+<tr class="memitem:ga7ee4149cd9c0bab50f91eaf6322ccd45"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga7ee4149cd9c0bab50f91eaf6322ccd45">FLEXIO_SPI_MasterTransferAbort</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle)</td></tr>
 <tr class="memdesc:ga7ee4149cd9c0bab50f91eaf6322ccd45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the master data transfer, which used IRQ.  <a href="#ga7ee4149cd9c0bab50f91eaf6322ccd45">More...</a><br/></td></tr>
 <tr class="separator:ga7ee4149cd9c0bab50f91eaf6322ccd45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f8d610d6492109468d6a225ef01043d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga5f8d610d6492109468d6a225ef01043d">FLEXIO_SPI_MasterTransferGetCount</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, size_t *count)</td></tr>
+<tr class="memitem:ga5f8d610d6492109468d6a225ef01043d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga5f8d610d6492109468d6a225ef01043d">FLEXIO_SPI_MasterTransferGetCount</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, flexio_spi_master_handle_t *handle, size_t *count)</td></tr>
 <tr class="memdesc:ga5f8d610d6492109468d6a225ef01043d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the data transfer status which used IRQ.  <a href="#ga5f8d610d6492109468d6a225ef01043d">More...</a><br/></td></tr>
 <tr class="separator:ga5f8d610d6492109468d6a225ef01043d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga39784af602890dbc1aff6d23b29b7e19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga39784af602890dbc1aff6d23b29b7e19">FLEXIO_SPI_MasterTransferHandleIRQ</a> (void *spiType, void *spiHandle)</td></tr>
 <tr class="memdesc:ga39784af602890dbc1aff6d23b29b7e19"><td class="mdescLeft">&#160;</td><td class="mdescRight">FlexIO SPI master IRQ handler function.  <a href="#ga39784af602890dbc1aff6d23b29b7e19">More...</a><br/></td></tr>
 <tr class="separator:ga39784af602890dbc1aff6d23b29b7e19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga76d12767d4023268a3aa9cde5e072b29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga76d12767d4023268a3aa9cde5e072b29">FLEXIO_SPI_SlaveTransferCreateHandle</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle, <a class="el" href="a00028.html#gad2accadc980b51b0d65e41d122abe261">flexio_spi_slave_transfer_callback_t</a> callback, void *userData)</td></tr>
+<tr class="memitem:ga76d12767d4023268a3aa9cde5e072b29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga76d12767d4023268a3aa9cde5e072b29">FLEXIO_SPI_SlaveTransferCreateHandle</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle, <a class="el" href="a00028.html#gad2accadc980b51b0d65e41d122abe261">flexio_spi_slave_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga76d12767d4023268a3aa9cde5e072b29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the FlexIO SPI Slave handle, which is used in transactional functions.  <a href="#ga76d12767d4023268a3aa9cde5e072b29">More...</a><br/></td></tr>
 <tr class="separator:ga76d12767d4023268a3aa9cde5e072b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9d1ef8b373c56f48d98612f5c3047f8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga9d1ef8b373c56f48d98612f5c3047f8c">FLEXIO_SPI_SlaveTransferNonBlocking</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle, <a class="el" href="a00028.html#a00353">flexio_spi_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga9d1ef8b373c56f48d98612f5c3047f8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga9d1ef8b373c56f48d98612f5c3047f8c">FLEXIO_SPI_SlaveTransferNonBlocking</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle, <a class="el" href="a00028.html#a00354">flexio_spi_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga9d1ef8b373c56f48d98612f5c3047f8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave transfer data using IRQ.  <a href="#ga9d1ef8b373c56f48d98612f5c3047f8c">More...</a><br/></td></tr>
 <tr class="separator:ga9d1ef8b373c56f48d98612f5c3047f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34dea4bdd2c52597711068bed5c45958"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga34dea4bdd2c52597711068bed5c45958">FLEXIO_SPI_SlaveTransferAbort</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle)</td></tr>
+<tr class="memitem:ga34dea4bdd2c52597711068bed5c45958"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#ga34dea4bdd2c52597711068bed5c45958">FLEXIO_SPI_SlaveTransferAbort</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle)</td></tr>
 <tr class="memdesc:ga34dea4bdd2c52597711068bed5c45958"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aborts the slave data transfer which used IRQ, share same API with master.  <a href="#ga34dea4bdd2c52597711068bed5c45958">More...</a><br/></td></tr>
 <tr class="separator:ga34dea4bdd2c52597711068bed5c45958"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae3354dda8f6fdce0f6a58b1933d56ee9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae3354dda8f6fdce0f6a58b1933d56ee9">FLEXIO_SPI_SlaveTransferGetCount</a> (<a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle, size_t *count)</td></tr>
+<tr class="memitem:gae3354dda8f6fdce0f6a58b1933d56ee9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gae3354dda8f6fdce0f6a58b1933d56ee9">FLEXIO_SPI_SlaveTransferGetCount</a> (<a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *base, <a class="el" href="a00028.html#ga1950678efd37cb3665e303e094cec428">flexio_spi_slave_handle_t</a> *handle, size_t *count)</td></tr>
 <tr class="memdesc:gae3354dda8f6fdce0f6a58b1933d56ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the data transfer status which used IRQ, share same API with master.  <a href="#gae3354dda8f6fdce0f6a58b1933d56ee9">More...</a><br/></td></tr>
 <tr class="separator:gae3354dda8f6fdce0f6a58b1933d56ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf620bb7c2bf87c781f93f8a5f23c49d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00028.html#gaf620bb7c2bf87c781f93f8a5f23c49d4">FLEXIO_SPI_SlaveTransferHandleIRQ</a> (void *spiType, void *spiHandle)</td></tr>
@@ -491,7 +505,7 @@ Transactional</h2></td></tr>
 <tr class="separator:gaf620bb7c2bf87c781f93f8a5f23c49d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00354" id="a00354"></a>
+<a name="a00355" id="a00355"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -546,6 +560,7 @@ Transactional</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>To set SDO pin in Hi-Z state, user needs to mux the pin as GPIO input and disable all pull up/down in application. </p>
 
 </div>
 </div>
@@ -612,7 +627,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00351" id="a00351"></a>
+<a name="a00352" id="a00352"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -734,7 +749,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00352" id="a00352"></a>
+<a name="a00353" id="a00353"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -841,7 +856,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00353" id="a00353"></a>
+<a name="a00354" id="a00354"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -917,7 +932,7 @@ Transactional</h2></td></tr>
 
 </div>
 </div>
-<a name="a00288" id="a00288"></a>
+<a name="a00289" id="a00289"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1079,7 +1094,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_FLEXIO_SPI_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 2, 1))</td>
+          <td class="memname">#define FSL_FLEXIO_SPI_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1091,7 +1106,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FLEXIO_SPI_DUMMYDATA&#160;&#160;&#160;(0xFFFFU)</td>
+          <td class="memname">#define FLEXIO_SPI_DUMMYDATA&#160;&#160;&#160;(0xFFFFFFFFU)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1104,6 +1119,22 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
       <table class="memname">
         <tr>
           <td class="memname">#define SPI_RETRY_TIMES&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ga7b59f53366b1e5bb10a0491a20543382"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FLEXIO_SPI_XFER_DATA_FORMAT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">flag</td><td>)</td>
+          <td>&#160;&#160;&#160;((flag) &amp; (0x7U))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1206,6 +1237,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <tr><td class="fieldname"><em><a class="anchor" id="ggae4e518a5b077982fca7b6bf1025c7aafa343c7a9db539019f0c99fb82b4adab35"></a>kFLEXIO_SPI_16BitMode</em>&nbsp;</td><td class="fielddoc">
 <p>16-bit data transmission mode. </p>
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggae4e518a5b077982fca7b6bf1025c7aafa7f4a057b24ac43b60fa4795d2a79b25a"></a>kFLEXIO_SPI_32BitMode</em>&nbsp;</td><td class="fielddoc">
+<p>32-bit data transmission mode. </p>
+</td></tr>
 </table>
 
 </div>
@@ -1282,6 +1316,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>Use kFLEXIO_SPI_csContinuous and one of the other flags to OR together to form the transfer flag. </dd></dl>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabf4ebfbc0d68b969e1b7dd838c45512da7979c2a48d6662af1777827c1afa5537"></a>kFLEXIO_SPI_8bitMsb</em>&nbsp;</td><td class="fielddoc">
 <p>FlexIO SPI 8-bit MSB first. </p>
@@ -1295,6 +1330,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <tr><td class="fieldname"><em><a class="anchor" id="ggabf4ebfbc0d68b969e1b7dd838c45512dad6774d8673e5aa247be136e38c8fad91"></a>kFLEXIO_SPI_16bitLsb</em>&nbsp;</td><td class="fielddoc">
 <p>FlexIO SPI 16-bit LSB first. </p>
 </td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabf4ebfbc0d68b969e1b7dd838c45512da79f81ba5984c5821bf9c42b0f3a3a4c1"></a>kFLEXIO_SPI_32bitMsb</em>&nbsp;</td><td class="fielddoc">
+<p>FlexIO SPI 32-bit MSB first. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabf4ebfbc0d68b969e1b7dd838c45512daca30199b74b090f722c32b03b2762ac9"></a>kFLEXIO_SPI_32bitLsb</em>&nbsp;</td><td class="fielddoc">
+<p>FlexIO SPI 32-bit LSB first. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggabf4ebfbc0d68b969e1b7dd838c45512da9ee2a3142a3bc89e1ff4d645d9118287"></a>kFLEXIO_SPI_csContinuous</em>&nbsp;</td><td class="fielddoc">
+<p>Enable the CS signal continuous mode. </p>
+</td></tr>
 </table>
 
 </div>
@@ -1307,13 +1351,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_MasterInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00351">flexio_spi_master_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00352">flexio_spi_master_config_t</a> *&#160;</td>
           <td class="paramname"><em>masterConfig</em>, </td>
         </tr>
         <tr>
@@ -1332,7 +1376,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <p>The configuration structure can be filled by the user, or be set with default values by the <a class="el" href="a00028.html#ga2d99f8a94f95262fc821b42e3812ee7e" title="Gets the default configuration to configure the FlexIO SPI master. ">FLEXIO_SPI_MasterGetDefaultConfig()</a>.</p>
 <dl class="section note"><dt>Note</dt><dd>1.FlexIO SPI master only support CPOL = 0, which means clock inactive low. 2.For FlexIO SPI master, the input valid time is 1.5 clock cycles, for slave the output valid time is 2.5 clock cycles. So if FlexIO SPI master communicates with other spi IPs, the maximum baud rate is FlexIO clock frequency divided by 2*2=4. If FlexIO SPI master communicates with FlexIO SPI slave, the maximum baud rate is FlexIO clock frequency divided by (1.5+2.5)*2=8.</dd></dl>
 <p>Example </p>
-<div class="fragment"><div class="line"><a class="code" href="a00028.html#a00354">FLEXIO_SPI_Type</a> spiDev = {</div>
+<div class="fragment"><div class="line"><a class="code" href="a00028.html#a00355">FLEXIO_SPI_Type</a> spiDev = {</div>
 <div class="line">.<a class="code" href="a00028.html#a6f884e3d820db0fa2c2974d9e8feaca1">flexioBase</a> = FLEXIO,</div>
 <div class="line">.SDOPinIndex = 0,</div>
 <div class="line">.SDIPinIndex = 1,</div>
@@ -1341,7 +1385,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line">.shifterIndex = {0,1},</div>
 <div class="line">.timerIndex = {0,1}</div>
 <div class="line">};</div>
-<div class="line"><a class="code" href="a00028.html#a00351">flexio_spi_master_config_t</a> config = {</div>
+<div class="line"><a class="code" href="a00028.html#a00352">flexio_spi_master_config_t</a> config = {</div>
 <div class="line">.<a class="code" href="a00028.html#abfa7b62cfa5ecc303b203c9206e8511b">enableMaster</a> = <span class="keyword">true</span>,</div>
 <div class="line">.enableInDoze = <span class="keyword">false</span>,</div>
 <div class="line">.enableInDebug = <span class="keyword">true</span>,</div>
@@ -1354,8 +1398,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line"><a class="code" href="a00028.html#gacc68d67c46d897e6e9b2268c0fe999d2">FLEXIO_SPI_MasterInit</a>(&amp;spiDev, &amp;config, srcClock_Hz);</div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
-    <tr><td class="paramname">masterConfig</td><td>Pointer to the <a class="el" href="a00028.html#a00351" title="Define FlexIO SPI master configuration structure. ">flexio_spi_master_config_t</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">masterConfig</td><td>Pointer to the <a class="el" href="a00028.html#a00352" title="Define FlexIO SPI master configuration structure. ">flexio_spi_master_config_t</a> structure. </td></tr>
     <tr><td class="paramname">srcClock_Hz</td><td>FlexIO source clock in Hz. </td></tr>
   </table>
   </dd>
@@ -1370,7 +1414,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_MasterDeinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1378,7 +1422,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1392,18 +1436,18 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_MasterGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00351">flexio_spi_master_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00352">flexio_spi_master_config_t</a> *&#160;</td>
           <td class="paramname"><em>masterConfig</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The configuration can be used directly by calling the FLEXIO_SPI_MasterConfigure(). Example: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00028.html#a00351">flexio_spi_master_config_t</a> masterConfig;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00028.html#a00352">flexio_spi_master_config_t</a> masterConfig;</div>
 <div class="line"><a class="code" href="a00028.html#ga2d99f8a94f95262fc821b42e3812ee7e">FLEXIO_SPI_MasterGetDefaultConfig</a>(&amp;masterConfig);</div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">masterConfig</td><td>Pointer to the <a class="el" href="a00028.html#a00351" title="Define FlexIO SPI master configuration structure. ">flexio_spi_master_config_t</a> structure. </td></tr>
+    <tr><td class="paramname">masterConfig</td><td>Pointer to the <a class="el" href="a00028.html#a00352" title="Define FlexIO SPI master configuration structure. ">flexio_spi_master_config_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1417,13 +1461,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_SlaveInit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00352">flexio_spi_slave_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00353">flexio_spi_slave_config_t</a> *&#160;</td>
           <td class="paramname"><em>slaveConfig</em>&#160;</td>
         </tr>
         <tr>
@@ -1434,7 +1478,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
       </table>
 </div><div class="memdoc">
 <p>The configuration structure can be filled by the user, or be set with default values by the <a class="el" href="a00028.html#gaa6979876d2c0b4f65deabd6f5ce16d41" title="Gets the default configuration to configure the FlexIO SPI slave. ">FLEXIO_SPI_SlaveGetDefaultConfig()</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>1.Only one timer is needed in the FlexIO SPI slave. As a result, the second timer index is ignored. 2.FlexIO SPI slave only support CPOL = 0, which means clock inactive low. 3.For FlexIO SPI master, the input valid time is 1.5 clock cycles, for slave the output valid time is 2.5 clock cycles. So if FlexIO SPI slave communicates with other spi IPs, the maximum baud rate is FlexIO clock frequency divided by 3*2=6. If FlexIO SPI slave communicates with FlexIO SPI master, the maximum baud rate is FlexIO clock frequency divided by (1.5+2.5)*2=8. Example <div class="fragment"><div class="line"><a class="code" href="a00028.html#a00354">FLEXIO_SPI_Type</a> spiDev = {</div>
+<dl class="section note"><dt>Note</dt><dd>1.Only one timer is needed in the FlexIO SPI slave. As a result, the second timer index is ignored. 2.FlexIO SPI slave only support CPOL = 0, which means clock inactive low. 3.For FlexIO SPI master, the input valid time is 1.5 clock cycles, for slave the output valid time is 2.5 clock cycles. So if FlexIO SPI slave communicates with other spi IPs, the maximum baud rate is FlexIO clock frequency divided by 3*2=6. If FlexIO SPI slave communicates with FlexIO SPI master, the maximum baud rate is FlexIO clock frequency divided by (1.5+2.5)*2=8. Example <div class="fragment"><div class="line"><a class="code" href="a00028.html#a00355">FLEXIO_SPI_Type</a> spiDev = {</div>
 <div class="line">.<a class="code" href="a00028.html#a6f884e3d820db0fa2c2974d9e8feaca1">flexioBase</a> = FLEXIO,</div>
 <div class="line">.SDOPinIndex = 0,</div>
 <div class="line">.SDIPinIndex = 1,</div>
@@ -1443,7 +1487,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line">.shifterIndex = {0,1},</div>
 <div class="line">.timerIndex = {0}</div>
 <div class="line">};</div>
-<div class="line"><a class="code" href="a00028.html#a00352">flexio_spi_slave_config_t</a> config = {</div>
+<div class="line"><a class="code" href="a00028.html#a00353">flexio_spi_slave_config_t</a> config = {</div>
 <div class="line">.enableSlave = <span class="keyword">true</span>,</div>
 <div class="line">.<a class="code" href="a00028.html#ace1bcfad14f01d682d72126fe8977379">enableInDoze</a> = <span class="keyword">false</span>,</div>
 <div class="line">.enableInDebug = <span class="keyword">true</span>,</div>
@@ -1456,8 +1500,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><!-- fragment --> </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
-    <tr><td class="paramname">slaveConfig</td><td>Pointer to the <a class="el" href="a00028.html#a00352" title="Define FlexIO SPI slave configuration structure. ">flexio_spi_slave_config_t</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">slaveConfig</td><td>Pointer to the <a class="el" href="a00028.html#a00353" title="Define FlexIO SPI slave configuration structure. ">flexio_spi_slave_config_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1471,7 +1515,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_SlaveDeinit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1479,7 +1523,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1493,18 +1537,18 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_SlaveGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00352">flexio_spi_slave_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00353">flexio_spi_slave_config_t</a> *&#160;</td>
           <td class="paramname"><em>slaveConfig</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The configuration can be used directly for calling the FLEXIO_SPI_SlaveConfigure(). Example: </p>
-<div class="fragment"><div class="line"><a class="code" href="a00028.html#a00352">flexio_spi_slave_config_t</a> slaveConfig;</div>
+<div class="fragment"><div class="line"><a class="code" href="a00028.html#a00353">flexio_spi_slave_config_t</a> slaveConfig;</div>
 <div class="line"><a class="code" href="a00028.html#gaa6979876d2c0b4f65deabd6f5ce16d41">FLEXIO_SPI_SlaveGetDefaultConfig</a>(&amp;slaveConfig);</div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">slaveConfig</td><td>Pointer to the <a class="el" href="a00028.html#a00352" title="Define FlexIO SPI slave configuration structure. ">flexio_spi_slave_config_t</a> structure. </td></tr>
+    <tr><td class="paramname">slaveConfig</td><td>Pointer to the <a class="el" href="a00028.html#a00353" title="Define FlexIO SPI slave configuration structure. ">flexio_spi_slave_config_t</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1518,7 +1562,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">uint32_t FLEXIO_SPI_GetStatusFlags </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1526,7 +1570,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1545,7 +1589,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_ClearStatusFlags </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1563,7 +1607,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">mask</td><td>status flag The parameter can be any combination of the following values: <ul>
 <li>kFLEXIO_SPI_TxEmptyFlag </li>
 <li>kFLEXIO_SPI_RxEmptyFlag </li>
@@ -1582,7 +1626,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_EnableInterrupts </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1601,7 +1645,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <p>This function enables the FlexIO SPI interrupt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">mask</td><td>interrupt source. The parameter can be any combination of the following values: <ul>
 <li>kFLEXIO_SPI_RxFullInterruptEnable </li>
 <li>kFLEXIO_SPI_TxEmptyInterruptEnable </li>
@@ -1620,7 +1664,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_DisableInterrupts </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1639,7 +1683,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <p>This function disables the FlexIO SPI interrupt.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">mask</td><td>interrupt source The parameter can be any combination of the following values: <ul>
 <li>kFLEXIO_SPI_RxFullInterruptEnable </li>
 <li>kFLEXIO_SPI_TxEmptyInterruptEnable </li>
@@ -1658,7 +1702,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_EnableDMA </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1683,7 +1727,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <p>This function enables/disables the FlexIO SPI Tx DMA, which means that asserting the kFLEXIO_SPI_TxEmptyFlag does/doesn't trigger the DMA request.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">mask</td><td>SPI DMA source. </td></tr>
     <tr><td class="paramname">enable</td><td>True means enable DMA, false means disable DMA. </td></tr>
   </table>
@@ -1702,7 +1746,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">static uint32_t FLEXIO_SPI_GetTxDataRegisterAddress </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1726,7 +1770,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <p>This function returns the SPI data register address, which is mainly used by DMA/eDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">direction</td><td>Shift direction of MSB first or LSB first. </td></tr>
   </table>
   </dd>
@@ -1745,7 +1789,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">static uint32_t FLEXIO_SPI_GetRxDataRegisterAddress </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1769,7 +1813,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <p>This function returns the SPI data register address, which is mainly used by DMA/eDMA.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">direction</td><td>Shift direction of MSB first or LSB first. </td></tr>
   </table>
   </dd>
@@ -1788,7 +1832,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">static void FLEXIO_SPI_Enable </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1811,7 +1855,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a>. </td></tr>
     <tr><td class="paramname">enable</td><td>True to enable, false does not have any effect. </td></tr>
   </table>
   </dd>
@@ -1826,7 +1870,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_MasterSetBaudRate </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1850,7 +1894,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">baudRate_Bps</td><td>Baud Rate needed in Hz. </td></tr>
     <tr><td class="paramname">srcClockHz</td><td>SPI source clock frequency in Hz. </td></tr>
   </table>
@@ -1859,7 +1903,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a class="anchor" id="ga1eb1063ea3e7b0af749f899d86e85c42"></a>
+<a class="anchor" id="gab8d90deb9e0a4ae7ee4564125218ed29"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1869,7 +1913,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">static void FLEXIO_SPI_WriteData </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1881,7 +1925,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -1899,16 +1943,16 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <dl class="section note"><dt>Note</dt><dd>This is a non-blocking API, which returns directly after the data is put into the data register but the data transfer is not finished on the bus. Ensure that the TxEmptyFlag is asserted before calling this API.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">direction</td><td>Shift direction of MSB first or LSB first. </td></tr>
-    <tr><td class="paramname">data</td><td>8 bit/16 bit data. </td></tr>
+    <tr><td class="paramname">data</td><td>8/16/32 bit data. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="gaa36e294b6b74373a5466a3c69ecdbf18"></a>
+<a class="anchor" id="ga14411234ecd9a094371d27405ad990cd"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1916,9 +1960,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static uint16_t FLEXIO_SPI_ReadData </td>
+          <td class="memname">static uint32_t FLEXIO_SPI_ReadData </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1942,7 +1986,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <dl class="section note"><dt>Note</dt><dd>This is a non-blocking API, which returns directly after the data is read from the data register. Ensure that the RxFullFlag is asserted before calling this API.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">direction</td><td>Shift direction of MSB first or LSB first. </td></tr>
   </table>
   </dd>
@@ -1958,7 +2002,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_SPI_WriteBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -1989,7 +2033,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <dl class="section note"><dt>Note</dt><dd>This function blocks using the polling method until all bytes have been sent.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">direction</td><td>Shift direction of MSB first or LSB first. </td></tr>
     <tr><td class="paramname">buffer</td><td>The data bytes to send. </td></tr>
     <tr><td class="paramname">size</td><td>The number of data bytes to send. </td></tr>
@@ -2013,7 +2057,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_SPI_ReadBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2044,7 +2088,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <dl class="section note"><dt>Note</dt><dd>This function blocks using the polling method until all bytes have been received.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">direction</td><td>Shift direction of MSB first or LSB first. </td></tr>
     <tr><td class="paramname">buffer</td><td>The buffer to store the received bytes. </td></tr>
     <tr><td class="paramname">size</td><td>The number of data bytes to be received. </td></tr>
@@ -2069,13 +2113,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_SPI_MasterTransferBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00353">flexio_spi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00354">flexio_spi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -2088,8 +2132,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <dl class="section note"><dt>Note</dt><dd>This function blocks via polling until all bytes have been received.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure </td></tr>
-    <tr><td class="paramname">xfer</td><td>FlexIO SPI transfer structure, see <a class="el" href="a00028.html#a00353" title="Define FlexIO SPI transfer structure. ">flexio_spi_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>pointer to <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure </td></tr>
+    <tr><td class="paramname">xfer</td><td>FlexIO SPI transfer structure, see <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI transfer structure. ">flexio_spi_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2103,6 +2147,28 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
+<a class="anchor" id="ga4de03d39977efdcd5292cfb8f0da2189"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FLEXIO_SPI_FlushShifters </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramname"><em>base</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ga0123f1825a83093ad07377d86f4e2bf1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -2110,7 +2176,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_SPI_MasterTransferCreateHandle </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2140,7 +2206,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to the flexio_spi_master_handle_t structure to store the transfer state. </td></tr>
     <tr><td class="paramname">callback</td><td>The callback function. </td></tr>
     <tr><td class="paramname">userData</td><td>The parameter of the callback function. </td></tr>
@@ -2164,7 +2230,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_SPI_MasterTransferNonBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2176,7 +2242,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00353">flexio_spi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00354">flexio_spi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -2189,9 +2255,9 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <p>This function sends data using IRQ. This is a non-blocking function, which returns right away. When all data is sent out/received, the callback function is called.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to the flexio_spi_master_handle_t structure to store the transfer state. </td></tr>
-    <tr><td class="paramname">xfer</td><td>FlexIO SPI transfer structure. See <a class="el" href="a00028.html#a00353" title="Define FlexIO SPI transfer structure. ">flexio_spi_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>FlexIO SPI transfer structure. See <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI transfer structure. ">flexio_spi_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2213,7 +2279,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void FLEXIO_SPI_MasterTransferAbort </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2231,7 +2297,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to the flexio_spi_master_handle_t structure to store the transfer state. </td></tr>
   </table>
   </dd>
@@ -2246,7 +2312,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_SPI_MasterTransferGetCount </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2270,7 +2336,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to the flexio_spi_master_handle_t structure to store the transfer state. </td></tr>
     <tr><td class="paramname">count</td><td>Number of bytes transferred so far by the non-blocking transaction. </td></tr>
   </table>
@@ -2311,7 +2377,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">spiType</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">spiType</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">spiHandle</td><td>Pointer to the flexio_spi_master_handle_t structure to store the transfer state. </td></tr>
   </table>
   </dd>
@@ -2326,7 +2392,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_SPI_SlaveTransferCreateHandle </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2356,7 +2422,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to the flexio_spi_slave_handle_t structure to store the transfer state. </td></tr>
     <tr><td class="paramname">callback</td><td>The callback function. </td></tr>
     <tr><td class="paramname">userData</td><td>The parameter of the callback function. </td></tr>
@@ -2380,7 +2446,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_SPI_SlaveTransferNonBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2392,7 +2458,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00353">flexio_spi_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00354">flexio_spi_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -2406,8 +2472,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handle</td><td>Pointer to the flexio_spi_slave_handle_t structure to store the transfer state.</td></tr>
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
-    <tr><td class="paramname">xfer</td><td>FlexIO SPI transfer structure. See <a class="el" href="a00028.html#a00353" title="Define FlexIO SPI transfer structure. ">flexio_spi_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">xfer</td><td>FlexIO SPI transfer structure. See <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI transfer structure. ">flexio_spi_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2432,7 +2498,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">static void FLEXIO_SPI_SlaveTransferAbort </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2455,7 +2521,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to the flexio_spi_slave_handle_t structure to store the transfer state. </td></tr>
   </table>
   </dd>
@@ -2473,7 +2539,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">static <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> FLEXIO_SPI_SlaveTransferGetCount </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00028.html#a00354">FLEXIO_SPI_Type</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00028.html#a00355">FLEXIO_SPI_Type</a> *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
         </tr>
         <tr>
@@ -2502,7 +2568,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">base</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to the flexio_spi_slave_handle_t structure to store the transfer state. </td></tr>
     <tr><td class="paramname">count</td><td>Number of bytes transferred so far by the non-blocking transaction. </td></tr>
   </table>
@@ -2543,7 +2609,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">spiType</td><td>Pointer to the <a class="el" href="a00028.html#a00354" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
+    <tr><td class="paramname">spiType</td><td>Pointer to the <a class="el" href="a00028.html#a00355" title="Define FlexIO SPI access structure typedef. ">FLEXIO_SPI_Type</a> structure. </td></tr>
     <tr><td class="paramname">spiHandle</td><td>Pointer to the flexio_spi_slave_handle_t structure to store the transfer state. </td></tr>
   </table>
   </dd>

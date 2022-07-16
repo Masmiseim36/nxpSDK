@@ -47,7 +47,7 @@ Return value:
 int NatureDSP_Signal_get_isa_opt( int isa_opt )
 {
     switch (isa_opt) {
-    case NATUREDSP_ISA_OPT_INT16_SIMD_WIDTH: return ((XCHAL_DATA_WIDTH)/sizeof(int16_t)); break;
+    case NATUREDSP_ISA_OPT_INT16_SIMD_WIDTH: return ((HIFI_SIMD_WIDTH) / sizeof(int16_t)); break;
     case NATUREDSP_ISA_OPT_HAVE_FP:          return (XCHAL_HAVE_FP                     ); break;
     case NATUREDSP_ISA_OPT_HAVE_DFP:         return (XCHAL_HAVE_DFP                    ); break;
     default: return (-1);

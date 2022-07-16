@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("driver_soc_mipi_dsi component is included.")
 
 

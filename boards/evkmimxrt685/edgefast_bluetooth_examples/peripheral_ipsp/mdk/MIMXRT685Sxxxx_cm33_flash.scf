@@ -106,10 +106,10 @@
 /*** NVM Configuration End ***/
 
 /*** littleFS configuration Start ***/
-#define LITTLEFS_STORAGE_START_ADDRESS  (_ROM_END_ + 1)
-#define LITTLEFS_STORAGE_END_ADDRESS    (0x08FFFFFF + 1)
-#define LITTLEFS_STORAGE_SECTOR_SIZE    (0x1000)
-#define LITTLEFS_STORAGE_MAX_SECTORS    ((LITTLEFS_STORAGE_END_ADDRESS - LITTLEFS_STORAGE_START_ADDRESS) / LITTLEFS_STORAGE_SECTOR_SIZE)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS  (_ROM_END_ + 1)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS    (0x08FFFFFF + 1)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE    (0x1000)
+#define EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS    ((EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE)
 /*** littleFS configuration End ***/
 
 LR_m_flash_conf m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start {
@@ -126,6 +126,10 @@ LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
   ER_m_text m_text_start FIXED m_text_size { ; load address = execution address
     * (InRoot$$Sections)
     .ANY (+RO)
+  }
+
+  ER_bt_conn_cb +0 { ;
+    * (._bt_conn_cb*)
   }
 
   ER_bt_gatt_service_static +0 { ;
@@ -151,7 +155,7 @@ LR_m_interrupts m_interrupts_start m_text_start+m_text_size-m_interrupts_start {
   NVM_region NV_STORAGE_START_ADDRESS EMPTY NVM_AREA_SIZE { ; load address = execution address
   }
 
-  LittleFS_region LITTLEFS_STORAGE_START_ADDRESS EMPTY (LITTLEFS_STORAGE_END_ADDRESS - LITTLEFS_STORAGE_START_ADDRESS) { ; load address = execution address
+  EDGEFAST_BT_LittleFS_region EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS EMPTY (EDGEFAST_BT_LITTLEFS_STORAGE_END_ADDRESS - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) { ; load address = execution address
   }
 
 #if (defined(__ram_vector_table__))

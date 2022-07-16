@@ -1,5 +1,3 @@
-INCLUDE(CMakeForceCompiler)
-
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
@@ -21,6 +19,11 @@ SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 # CURRENT DIRECTORY
 SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
+SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+
+
+project(dsp_xaf_playback_fusionf1)
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
 
@@ -102,7 +105,7 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2020_5_newlib")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -128,14 +131,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fmessage-length=0")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_OPUS_ENCODER=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_OPUS_DECODER=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_SBC_ENCODER=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_SBC_DECODER=0")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=1")
@@ -145,6 +140,14 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXOS_CLOCK_FREQ=198000000")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_MP3_DECODER=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_AAC_DECODER=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_OPUS_ENCODER=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_OPUS_DECODER=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_SBC_ENCODER=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_SBC_DECODER=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_CLIENT_PROXY=1")
 
@@ -200,7 +203,7 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2020_5_newlib")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -242,21 +245,17 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mlsp=${ProjDi
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
 
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2020_5_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mlsp=${ProjDirPath}/../../../../../../devices/MIMXRT595S/xtensa/min-rt")
 
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2020_5_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
 
 include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include_private)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers)
 
@@ -283,6 +282,8 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/opus/
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/include/sbc_dec)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/include/sbc_enc)
+
+include_directories(${ProjDirPath}/../../../../../../components/gpio)
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
 
@@ -345,9 +346,6 @@ add_executable(dsp_xaf_playback_fusionf1.elf
 "${ProjDirPath}/../xaf_main_dsp.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/vec_add32x32_fusion.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/scl_logn_32x32_fusion.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/vec_log_table.c"
 "${ProjDirPath}/../board_fusionf1.c"
 "${ProjDirPath}/../board_fusionf1.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h"
@@ -398,6 +396,8 @@ add_executable(dsp_xaf_playback_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h"
+"${ProjDirPath}/../../../../../../components/gpio/fsl_adapter_gpio.h"
+"${ProjDirPath}/../../../../../../components/gpio/fsl_adapter_rt_gpio.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_pint.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_pint.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_dmic.c"
@@ -588,9 +588,6 @@ add_executable(dsp_xaf_playback_fusionf1.elf
 "${ProjDirPath}/../xaf_main_dsp.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/vec_add32x32_fusion.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/scl_logn_32x32_fusion.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/vec_log_table.c"
 "${ProjDirPath}/../board_fusionf1.c"
 "${ProjDirPath}/../board_fusionf1.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h"
@@ -641,6 +638,8 @@ add_executable(dsp_xaf_playback_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_bm.c"
 "${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/environment/bm/rpmsg_env_specific.h"
+"${ProjDirPath}/../../../../../../components/gpio/fsl_adapter_gpio.h"
+"${ProjDirPath}/../../../../../../components/gpio/fsl_adapter_rt_gpio.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_pint.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_pint.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_dmic.c"
@@ -851,7 +850,7 @@ target_link_libraries(dsp_xaf_playback_fusionf1.elf debug ${ProjDirPath}/../../.
 target_link_libraries(dsp_xaf_playback_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a)
 
 
-target_link_libraries(dsp_xaf_playback_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_12_FP1_RT500.a)
+target_link_libraries(dsp_xaf_playback_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT500.a)
 
 
 target_link_libraries(dsp_xaf_playback_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/aacplus_dec/fusionf1/lib/xa_aacplus_v2_loas_dec.a)
@@ -872,25 +871,28 @@ target_link_libraries(dsp_xaf_playback_fusionf1.elf optimized ${ProjDirPath}/../
 target_link_libraries(dsp_xaf_playback_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a)
 
 
-target_link_libraries(dsp_xaf_playback_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_12_FP1_RT500.a)
+target_link_libraries(dsp_xaf_playback_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT500.a)
 
 TARGET_LINK_LIBRARIES(dsp_xaf_playback_fusionf1.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET dsp_xaf_playback_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_playback_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_reset_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2020_5_newlib
+--xtensa-core=nxp_rt500_RI2021_8_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.ResetVector.text
 )
 
 ADD_CUSTOM_COMMAND(TARGET dsp_xaf_playback_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_playback_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2020_5_newlib
+--xtensa-core=nxp_rt500_RI2021_8_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.WindowVectors.text
 --only-section=.Level2InterruptVector.text
+--only-section=.Level3InterruptVector.literal
 --only-section=.Level3InterruptVector.text
+--only-section=.DebugExceptionVector.literal
 --only-section=.DebugExceptionVector.text
+--only-section=.NMIExceptionVector.literal
 --only-section=.NMIExceptionVector.text
 --only-section=.KernelExceptionVector.text
 --only-section=.UserExceptionVector.text
@@ -900,10 +902,12 @@ ADD_CUSTOM_COMMAND(TARGET dsp_xaf_playback_fusionf1.elf POST_BUILD COMMAND ${CMA
 
 ADD_CUSTOM_COMMAND(TARGET dsp_xaf_playback_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_playback_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_data_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2020_5_newlib
+--xtensa-core=nxp_rt500_RI2021_8_newlib
 --xtensa-system=${XTENSA_SYSTEM}
+--only-section=.clib.rodata
 --only-section=.rtos.rodata
 --only-section=.rodata
+--only-section=.clib.data
 --only-section=.rtos.percpu.data
 --only-section=.data
 --only-section=.bss

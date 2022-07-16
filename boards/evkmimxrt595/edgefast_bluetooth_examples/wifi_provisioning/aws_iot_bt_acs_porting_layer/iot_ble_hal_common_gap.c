@@ -142,7 +142,8 @@ const UCHAR s_smpIoCapMatrix[] =
     SMP_IO_CAPABILITY_KEYBOARD_ONLY,      /* eBTIOKeyboardOnly */
     SMP_IO_CAPABILITY_KEYBOARD_DISPLAY    /* eBTIOKeyboardDisplay */
 };
-
+uint8_t bondable;
+uint8_t SecureConnectionOnly;
 /*-----------------------------------------------------------*/
 BTStatus_t prvBTManagerInit( const BTCallbacks_t * pxCallbacks )
 {
@@ -399,7 +400,8 @@ BTStatus_t prvBTSetDeviceProperty( const BTProperty_t * pxProperty )
         case eBTpropertyBdname:
 
             prvSetDeviceName(pxProperty->pvVal, pxProperty->xLen);
-            //xESPStatus = ble_svc_gap_device_name_set(pcName);
+            /* xESPStatus = ble_svc_gap_device_name_set(pcName); */
+#ifdef BR_EDR_HCI
             retval = BT_hci_change_local_name ((UCHAR *) prvGetDeviceName(), strlen(prvGetDeviceName()));
             if (API_SUCCESS == retval)
             {
@@ -410,6 +412,7 @@ BTStatus_t prvBTSetDeviceProperty( const BTProperty_t * pxProperty )
             {
                 xStatus = eBTStatusFail;
             }
+#endif
 
             if( ( xBTCallbacks.pxAdapterPropertiesCb != NULL ) && ( xStatus == eBTStatusSuccess ) )
             {
@@ -446,17 +449,19 @@ BTStatus_t prvBTSetDeviceProperty( const BTProperty_t * pxProperty )
         case eBTpropertyBondable:
 
             xProperties.bBondable = *( ( bool * ) pxProperty->pvVal ); /* update flag */
-
+            bondable = (xProperties.bBondable > 0) ? SM_PAIRABLE_AND_BONDABLE : SM_NON_PAIRABLE;
             //xStatus = prvToggleBondableFlag( xProperties.bBondable );
-            retval = BT_sm_set_pairable( (xProperties.bBondable > 0) ? SM_PAIRABLE_AND_BONDABLE : SM_NON_PAIRABLE);
-            if (API_SUCCESS == retval)
+            /*retval = BT_sm_set_pairable( (xProperties.bBondable > 0) ? SM_PAIRABLE_AND_BONDABLE : SM_NON_PAIRABLE);*/
+#if 0
+            if (xProperties.bBondable == 0)
             {
                 xStatus = eBTStatusSuccess;
             }
             else
             {
-                xStatus = eBTStatusFail;
+                xStatus = eBTStatusSuccess;
             }
+#endif
             if( ( xBTCallbacks.pxAdapterPropertiesCb != NULL ) && ( xStatus == eBTStatusSuccess ) )
             {
                 xBTCallbacks.pxAdapterPropertiesCb( xStatus, 1, ( BTProperty_t * ) pxProperty );
@@ -487,20 +492,23 @@ BTStatus_t prvBTSetDeviceProperty( const BTProperty_t * pxProperty )
 
         case eBTpropertySecureConnectionOnly:
             xProperties.bSecureConnectionOnly = *( ( bool * ) pxProperty->pvVal ); /* update flag */
+            SecureConnectionOnly = ((xProperties.bSecureConnectionOnly > 0)? 1U: 0U);
+#if 0
             //xStatus = prvToggleSecureConnectionOnlyMode( xProperties.bSecureConnectionOnly );
             retval = BT_sm_set_secure_connections_only_mode
                      (
                       (UCHAR)((xProperties.bSecureConnectionOnly > 0)? 1: 0)
                      );
 
-            if (API_SUCCESS == retval)
+            if ((UCHAR)(xProperties.bSecureConnectionOnly > 0))
             {
                 xStatus = eBTStatusSuccess;
             }
             else
             {
-                xStatus = eBTStatusFail;
+                xStatus = eBTStatusSuccess;
             }
+#endif
 
             if( ( xBTCallbacks.pxAdapterPropertiesCb != NULL ) && ( xStatus == eBTStatusSuccess ) )
             {

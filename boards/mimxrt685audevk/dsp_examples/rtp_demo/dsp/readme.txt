@@ -2,6 +2,11 @@ Overview
 ========
 The dsp_rtp_demo application demonstrates playback of G.711 encoded RTP streams received via WiFi.
 
+The application can play the following types of RTP streams:
+- G.711 μ-law encoding, 1 channel, 8 bits per sample, 8 kHz sample rate (RTP payload type 0 - PCMU)
+- G.711 A-law encoding, 1 channel, 8 bits per sample, 8 kHz sample rate (RTP payload type 8 - PCMA)
+Data from streams in other formats, including stereo streams, are discarded.
+
 This demo contains two applications:
 - cm33/ is the ARM application for Cortex-M33 core
 - dsp/ is the DSP application for HiFi4 core
@@ -66,7 +71,8 @@ In order to stream audio, follow the steps below:
 
 1. Open VLC media player on a supported device/PC connected to the same WiFi network as the target.
 2. To broadcast a stream over the network, click on 'Media' -> 'Stream'.
-3. In the Open Media dialog, File tab, click on 'Add' button to select the media to stream. It can be WAV file with G.711 μ-law or A-law encoding.
+3. In the Open Media dialog, File tab, click on 'Add' button to select the media to stream.
+   It can be WAV file, the format must be G.711 μ-law or A-law encoding, 1 channel, 8 bits per sample, 8 kHz sample rate, otherwise the board will not play it.
    Click on 'Stream' after selection.
 4. In the Stream Output dialog, select 'Next'.
 5. In the Destination Setup window, select 'New destination' -> 'RTP Audio/Video Profile', then select 'Add'.
@@ -80,7 +86,7 @@ Multiple instances of VLC media player could be opened to test mixed playback of
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  8.0.10
+- Xtensa Xplorer  9.0.18
 - Xtensa C Compiler  14.01
 
 Hardware requirements

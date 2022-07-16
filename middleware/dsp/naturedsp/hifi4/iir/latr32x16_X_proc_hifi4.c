@@ -185,8 +185,9 @@ void latr32x16_X_proc( int32_t * restrict r,     // r[N]     [out   ] Q31
       // Q17.46 <- Q17.46 + [ Q15*Q1.30 + 1 ]
       AE_MULSF32X16_H3( q1, dl_32, cf_3232 );
 
-      __Pragma("loop_count min=4")
-      for ( m=M-3; m>=0; m-=2 )
+	  __Pragma("loop_count min=2");
+	  __Pragma("no_unroll");
+      for ( m=M-5; m>=0; m-=4 )
       {
         // Load d[m], d[m-1]; Q1.30
         AE_L32X2_IP( t0, D_rd, +8 );
@@ -233,7 +234,103 @@ void latr32x16_X_proc( int32_t * restrict r,     // r[N]     [out   ] Q31
 
         dl_32   = dl_10;
         cf_3232 = cf_1010;
-      }
+
+		// UNROLL
+
+		// Load d[m], d[m-1]; Q1.30
+		AE_L32X2_IP(t0, D_rd, +8);
+
+		dl_10 = (t0);
+
+		// d[m+1] d[m]
+		select_f32x2_lh(dl_21, dl_32, dl_10, 0);
+
+		// Load k[m], k[m-1]; Q15
+		AE_L32_IP(t1, C, +4);
+
+		cf_1010 = AE_MOVF16X4_FROMINT32X2(t1);
+
+		s0 = (cf_3232);
+		s1 = (cf_1010);
+
+		// Make skew coefficients quadruple: k[m+1] k[m] k[m-1] k[m].
+		s0 = AE_SEL16_4321(s0, s1);
+
+		cf_2101 = (s0);
+
+		// q0 -= k[m+2]*d[m+2] + k[m+1]*d[m+1]
+		// Q17.46 <- Q17.46 + [ Q15*Q1.30 + 1 ] + [ Q15*Q1.30 + 1 ]
+		AE_MULSSFD32X16_H1_L0(q0, dl_32, cf_3232);
+
+		// q1 -= k[m+1]*d[m+1] + k[m]*d[m]
+		// Q17.46 <- Q17.46 + [ Q15*Q1.30 + 1 ] + [ Q15*Q1.30 + 1 ]
+		AE_MULSSFD32X16_H3_L2(q1, dl_21, cf_2101);
+
+		// q0 q1
+		// Q1.30 <- Q17.46 - 16 w/ rounding and saturation
+		AE_PKSR32(p0, q0, 0);
+		AE_PKSR32(p0, q1, 0);
+
+		// d[m+2] = d[m+1] + k[m+1]*q0; d[m+1] = d[m] + k[m]*q1
+		// Q1.30 <- Q1.30 + [ Q15*Q1.30 - 15 ] w/ rounding and saturation
+		AE_MULAFP32X16X2RAS_H(dl_21, p0, cf_2101);
+
+		t2 = (dl_21);
+
+		// Save updated d[m+2], d[m+1]
+		AE_S32X2_IP(t2, D_wr, +8);
+
+		dl_32 = dl_10;
+		cf_3232 = cf_1010;
+	  }
+	  if (m + 2 >= 0)
+	  {
+		  // Load d[m], d[m-1]; Q1.30
+		  AE_L32X2_IP(t0, D_rd, +8);
+
+		  dl_10 = (t0);
+
+		  // d[m+1] d[m]
+		  select_f32x2_lh(dl_21, dl_32, dl_10, 0);
+
+		  // Load k[m], k[m-1]; Q15
+		  AE_L32_IP(t1, C, +4);
+
+		  cf_1010 = AE_MOVF16X4_FROMINT32X2(t1);
+
+		  s0 = (cf_3232);
+		  s1 = (cf_1010);
+
+		  // Make skew coefficients quadruple: k[m+1] k[m] k[m-1] k[m].
+		  s0 = AE_SEL16_4321(s0, s1);
+
+		  cf_2101 = (s0);
+
+		  // q0 -= k[m+2]*d[m+2] + k[m+1]*d[m+1]
+		  // Q17.46 <- Q17.46 + [ Q15*Q1.30 + 1 ] + [ Q15*Q1.30 + 1 ]
+		  AE_MULSSFD32X16_H1_L0(q0, dl_32, cf_3232);
+
+		  // q1 -= k[m+1]*d[m+1] + k[m]*d[m]
+		  // Q17.46 <- Q17.46 + [ Q15*Q1.30 + 1 ] + [ Q15*Q1.30 + 1 ]
+		  AE_MULSSFD32X16_H3_L2(q1, dl_21, cf_2101);
+
+		  // q0 q1
+		  // Q1.30 <- Q17.46 - 16 w/ rounding and saturation
+		  AE_PKSR32(p0, q0, 0);
+		  AE_PKSR32(p0, q1, 0);
+
+		  // d[m+2] = d[m+1] + k[m+1]*q0; d[m+1] = d[m] + k[m]*q1
+		  // Q1.30 <- Q1.30 + [ Q15*Q1.30 - 15 ] w/ rounding and saturation
+		  AE_MULAFP32X16X2RAS_H(dl_21, p0, cf_2101);
+
+		  t2 = (dl_21);
+
+		  // Save updated d[m+2], d[m+1]
+		  AE_S32X2_IP(t2, D_wr, +8);
+
+		  dl_32 = dl_10;
+		  cf_3232 = cf_1010;
+	  }
 
       t0 = ( p0 );
 

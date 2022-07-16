@@ -33,11 +33,11 @@ include(${ProjDirPath}/config.cmake)
 add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware/sduartIW416_wlan_bt.h"
 "${ProjDirPath}/../sdmmc_config.c"
 "${ProjDirPath}/../sdmmc_config.h"
 "${ProjDirPath}/../wifi_bt_config.c"
 "${ProjDirPath}/../wifi_bt_config.h"
+"${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/mbedtls_config_client.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../edgefast_spp.c"
 "${ProjDirPath}/../edgefast_spp.h"
@@ -57,6 +57,8 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../bt_module_config.h"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.c"
+"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/lwipopts.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/lwippools.h"
 "${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs/wifi_config.h"
@@ -193,8 +195,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/ctn_pl.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/ftp_pl.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/ftp_pl.h"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.c"
-"${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/hci_uart_internal.h"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/ht_read_task_pl.c"
 "${ProjDirPath}/../../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/map_pl.c"
@@ -365,7 +365,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller/configs
-    ${ProjDirPath}/../../../../../middleware/wifi/wifi_bt_firmware
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/controller
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform
     ${ProjDirPath}/../../../../../middleware/edgefast_bluetooth/source/impl/ethermind/platform/configs
@@ -431,19 +430,16 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/usb
     ${ProjDirPath}/../../../../../components/osa
     ${ProjDirPath}/../../../../../middleware/fatfs
-    ${ProjDirPath}/../../../../../middleware/wireless/framework
-    ${ProjDirPath}/../../../../../components/mem_manager
-    ${ProjDirPath}/../../../../../components/messaging
-    ${ProjDirPath}/../../../../../components/rng
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/common_task
-    ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../flash_config
     ${ProjDirPath}/../../../../../components/internal_flash
     ${ProjDirPath}/../../../../../components/internal_flash/octal_flash/RT595
-    ${ProjDirPath}/../../../../../middleware/wireless
     ${ProjDirPath}/../../../../../components/pca9420
     ${ProjDirPath}/../../../../../middleware/littlefs
+    ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../components/log
@@ -498,13 +494,7 @@ include(middleware_fatfs_MIMXRT595S_cm33)
 
 include(middleware_fatfs_usb_MIMXRT595S_cm33)
 
-include(middleware_wireless_framework_sec_lib_MIMXRT595S_cm33)
-
-include(component_mem_manager_MIMXRT595S_cm33)
-
-include(component_messaging_MIMXRT595S_cm33)
-
-include(component_software_rng_adapter_MIMXRT595S_cm33)
+include(component_rt_gpio_adapter_MIMXRT595S_cm33)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
 
@@ -532,10 +522,6 @@ include(component_flexspi_nor_flash_adapter_MIMXRT595S_cm33)
 
 include(component_flexspi_nor_flash_adapter_rt595evk_MIMXRT595S_cm33)
 
-include(middleware_wireless_framework_function_lib_MIMXRT595S_cm33)
-
-include(middleware_wireless_framework_Common_MIMXRT595S_cm33)
-
 include(middleware_freertos-kernel_cm33_nonsecure_port_MIMXRT595S_cm33)
 
 include(driver_pca9420_MIMXRT595S_cm33)
@@ -545,6 +531,12 @@ include(driver_flexcomm_i2c_MIMXRT595S_cm33)
 include(middleware_littlefs_MIMXRT595S_cm33)
 
 include(driver_inputmux_MIMXRT595S_cm33)
+
+include(middleware_mbedtls_MIMXRT595S_cm33)
+
+include(middleware_mbedtls_port_ksdk_MIMXRT595S_cm33)
+
+include(middleware_mbedtls_rt1_MIMXRT595S_cm33)
 
 include(utilities_misc_utilities_MIMXRT595S_cm33)
 
@@ -566,6 +558,8 @@ include(middleware_usb_host_msd_MIMXRT595S_cm33)
 
 include(component_wifi_bt_module_tx_pwr_limits_MIMXRT595S_cm33)
 
+include(middleware_wifi_sdio-2_MIMXRT595S_cm33)
+
 include(component_log_backend_debugconsole_MIMXRT595S_cm33)
 
 include(component_log_MIMXRT595S_cm33)
@@ -573,6 +567,10 @@ include(component_log_MIMXRT595S_cm33)
 include(driver_iap_MIMXRT595S_cm33)
 
 include(driver_inputmux_connections_MIMXRT595S_cm33)
+
+include(driver_casper_MIMXRT595S_cm33)
+
+include(driver_hashcrypt_MIMXRT595S_cm33)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
@@ -584,10 +582,6 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
-if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/framework/SecLib/lib_crypto_m33.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm33/gcc/libethermind_bt_a2dp.a)
@@ -672,10 +666,6 @@ endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
 if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm33/gcc/libethermind_sbc_encoder.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
-
-if(CMAKE_BUILD_TYPE STREQUAL flash_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/framework/SecLib/lib_crypto_m33.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flash_release)
     target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/btdm/cm33/gcc/libethermind_bt_a2dp.a)

@@ -10,6 +10,7 @@
 
 #if defined(FSL_FEATURE_SOC_HASHCRYPT_COUNT) && (FSL_FEATURE_SOC_HASHCRYPT_COUNT > 0)
 #include "fsl_hashcrypt.h"
+#include "mbedtls/platform_util.h"
 
 /* Initialize HASHCRYPT */
 static volatile bool hashcrypt_init_is_done = false;
@@ -29,7 +30,6 @@ static void mbedtls_hashcrypt_init(void)
 #if defined(MBEDTLS_MCUX_HASHCRYPT_AES) && defined(MBEDTLS_AES_ALT) && defined(MBEDTLS_AES_C) && MBEDTLS_MCUX_HASHCRYPT_AES
 
 #include "mbedtls/aes.h"
-#include "mbedtls/platform_util.h"
 
 void mbedtls_aes_init( mbedtls_aes_context *ctx )
 {
@@ -240,7 +240,6 @@ int mbedtls_aes_crypt_xts( mbedtls_aes_xts_context *ctx,
 /*
  * AES-CFB128 buffer encryption/decryption
  */
-#if !defined(MBEDTLS_AES_CRYPT_CFB_ALT)
 int mbedtls_aes_crypt_cfb128( mbedtls_aes_context *ctx,
                        int mode,
                        size_t length,
@@ -315,7 +314,6 @@ int mbedtls_aes_crypt_cfb8( mbedtls_aes_context *ctx,
 
     return( 0 );
 }
-#endif /* !MBEDTLS_AES_CRYPT_CFB_ALT */
 #endif /* MBEDTLS_CIPHER_MODE_CFB */
 
 #if defined(MBEDTLS_CIPHER_MODE_OFB)
@@ -681,11 +679,17 @@ int mbedtls_sha256_finish(mbedtls_sha256_context *ctx, unsigned char output[32])
 {
     status_t ret = kStatus_Fail;
     size_t outputSize = 32;
-    ret = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output, &outputSize);
+
+    unsigned char output_tmp[32]; //NXP cause of HashCrypt module //DM Remove when it is fixed by the driver
+    memcpy(output_tmp, output, 32); //DM
+    
+    ret = HASHCRYPT_SHA_Finish(HASHCRYPT, ctx, output_tmp, &outputSize);
     if (ret != kStatus_Success)
     {
         return MBEDTLS_ERR_PLATFORM_HW_ACCEL_FAILED;
     }
+    
+    memcpy(output, output_tmp, 32); //DM
     return 0;
 }
 

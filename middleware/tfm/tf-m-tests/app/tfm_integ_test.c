@@ -11,7 +11,9 @@
 #include "test_framework_integ_test.h"
 #endif
 
-#ifdef TEST_FRAMEWORK_S
+#if defined(TEST_FRAMEWORK_S) && defined(TFM_LIB_MODEL)
+/* Function tfm_secure_client_run_tests() which is declared in
+ * tfm_secure_client_service_api.h is only required in NS for Library mode. */
 #include "tfm_secure_client_service_api.h"
 #endif
 
@@ -25,7 +27,7 @@ void test_app(void *argument)
 {
     UNUSED_VARIABLE(argument);
 
-#ifdef TEST_FRAMEWORK_S
+#if defined(TEST_FRAMEWORK_S) && defined(TFM_LIB_MODEL)
     /* FIXME: The non-secure audit log test currently relies on the fact that
      * the audit log secure test is run first. However the Non-secure tests
      * represent simpler and more common test cases which would make more sense

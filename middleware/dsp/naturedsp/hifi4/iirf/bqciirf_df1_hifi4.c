@@ -49,7 +49,13 @@
   parameter gain of each filter initialization function.
   2. 16x16 filters may suffer more from accumulation of the roundoff errors,
   so filters should be properly designed to match noise requirements
-
+  3. Due to the performance reasons, IIR biquad filters may introduce 
+  additional algorithmic delay of several sampless. Amount of that delay
+  might be requested by the  xxx_groupDelay API. For sensitive applications
+  all the filters have delayless implementations (with  _nd  suffix in the name).
+  Formally, the xxx_groupDelay APIs is also implemented for that kind of filters,
+  but return zero.
+  
   Precision: 
   16x16         16-bit data, 16-bit coefficients, 16-bit intermediate 
                 stage outputs (DF1, DF1 stereo, DF II form)
@@ -118,6 +124,7 @@
 
 #if (HAVE_VFPU==0 && HAVE_FPU==0)
 DISCARD_FUN(size_t,bqciirf_df1_alloc,( int M ))
+DISCARD_FUN(size_t, bqciirf_df1_groupDelay, (bqciirf_df1_handle_t  _bqriir))
 DISCARD_FUN(bqciirf_df1_handle_t,bqciirf_df1_init,( void * objmem, int M,
                                                const float32_t     * coef_sos,
                                                int16_t         gain ))
@@ -160,6 +167,13 @@ bqciirf_df1_handle_t bqciirf_df1_init( void * objmem, int M,
     }
     return iir;
 } // bqciirf_df1_init()
+
+size_t bqciirf_df1_groupDelay(bqciirf_df1_handle_t  _bqciir)
+{
+    int M = ((bqciirf_df1_ptr_t)_bqciir)->M;
+    return M / 2;
+} // bqciirf_df1_grpupDelay()
+
 #else
 // use another layout for scalar FPU
 size_t bqciirf_df1_alloc( int M )
@@ -195,4 +209,11 @@ bqciirf_df1_handle_t bqciirf_df1_init( void * objmem, int M,
     for(m=0; m<5*M; m++) cf[m]=coef_sos[m];
     return iir;
 } 
+
+size_t bqciirf_df1_groupDelay(bqciirf_df1_handle_t  _bqciir)
+{
+    int M = ((bqciirf_df1_ptr_t)_bqciir)->M;
+    return M / 2;
+} // bqciirf_df1_grpupDelay()
+
 #endif

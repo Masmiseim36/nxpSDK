@@ -1,6 +1,6 @@
 var a00073 =
 [
-    [ "usart_dma_handle_t", "a00073.html#a00305", [
+    [ "usart_dma_handle_t", "a00073.html#a00306", [
       [ "base", "a00073.html#ae9aae3e4298a725621990e5dcf91dc17", null ],
       [ "callback", "a00073.html#abcd58fdcb247711f816f281da46e95e2", null ],
       [ "userData", "a00073.html#a488190d1dcc91ef5878192e2fb3d4c4c", null ],

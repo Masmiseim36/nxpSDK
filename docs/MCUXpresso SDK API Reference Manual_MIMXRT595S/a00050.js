@@ -1,11 +1,11 @@
 var a00050 =
 [
-    [ "mmc_usr_param_t", "a00050.html#a00401", [
+    [ "mmc_usr_param_t", "a00050.html#a00402", [
       [ "ioStrength", "a00050.html#a8f74c9dd9fd1f4d4982010c9c8f81d1a", null ],
       [ "maxFreq", "a00050.html#a4329e1d007e30129bb4544a58bd84f13", null ],
       [ "capability", "a00050.html#ae3d0401fb63d202b3d1d1cbb7c741468", null ]
     ] ],
-    [ "mmc_card_t", "a00050.html#a00396", [
+    [ "mmc_card_t", "a00050.html#a00397", [
       [ "host", "a00050.html#a12ab48f6985e78ef81d34ab22b8fc878", null ],
       [ "usrParam", "a00050.html#ad1054b9eecc0633e8ca70ba164918b2a", null ],
       [ "isHostReady", "a00050.html#ab14a00fcc66890836622884227bd1873", null ],

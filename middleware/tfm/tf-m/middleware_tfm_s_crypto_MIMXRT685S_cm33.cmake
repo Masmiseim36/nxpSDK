@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_tfm_s_crypto component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -12,6 +12,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/crypto/crypto_init.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/crypto/crypto_key.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/crypto/crypto_key_derivation.c
+    ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/crypto/crypto_key_management.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/crypto/crypto_mac.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/crypto/crypto_rng.c
     ${CMAKE_CURRENT_LIST_DIR}/secure_fw/partitions/crypto/tfm_crypto_secure_api.c

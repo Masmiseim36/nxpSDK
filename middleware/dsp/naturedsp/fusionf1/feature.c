@@ -1,7 +1,7 @@
 /* ------------------------------------------------------------------------ */
 /* Copyright (c) 2016 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
-/* These coded instructions, statements, and computer programs (“Cadence    */
-/* Libraries”) are the copyrighted works of Cadence Design Systems Inc.	    */
+/* These coded instructions, statements, and computer programs (ï¿½Cadence    */
+/* Librariesï¿½) are the copyrighted works of Cadence Design Systems Inc.	    */
 /* Cadence IP is licensed for use with Cadence processor cores only and     */
 /* must not be used for any other processors and platforms. Your use of the */
 /* Cadence Libraries is subject to the terms of the license agreement you   */
@@ -92,6 +92,10 @@ int __NatureDSP_Signal_isPresent(NatureDSP_Signal_funptr fun)
 /*  ------------------------- XCC code ------------------------- */
 int __NatureDSP_Signal_isPresent(NatureDSP_Signal_funptr fun)
 {
-    return fun!=NULL;
+    int* ptr=(int*)fun;  
+    if (ptr==NULL) return 0;
+    if (ptr[0]!=0x49438B96) return 1;
+    if (ptr[1]!=0x4D73F192) return 1;
+    return 0;
 }
 #endif

@@ -72,6 +72,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/usb
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
@@ -97,6 +98,8 @@ include(middleware_sdmmc_common_MIMXRT595S_cm33)
 include(middleware_sdmmc_host_usdhc_MIMXRT595S_cm33)
 
 include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT595S_cm33)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
 

@@ -56,12 +56,12 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
-    ${ProjDirPath}/../../../../../../components/codec/wm8904
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
+    ${ProjDirPath}/../../../../../../components/pca9420
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../../components/codec/wm8904
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../flash_config
@@ -75,23 +75,11 @@ include(driver_clock_MIMXRT685S_cm33)
 
 include(driver_flexcomm_i2c_MIMXRT685S_cm33)
 
-include(driver_i3c_MIMXRT685S_cm33)
-
-include(driver_wm8904_MIMXRT685S_cm33)
-
 include(utility_shell_MIMXRT685S_cm33)
 
-include(driver_codec_MIMXRT685S_cm33)
+include(driver_lpc_gpio_MIMXRT685S_cm33)
 
 include(driver_common_MIMXRT685S_cm33)
-
-include(component_wm8904_adapter_MIMXRT685S_cm33)
-
-include(component_codec_i2c_MIMXRT685S_cm33)
-
-include(component_i3c_adapter_MIMXRT685S_cm33)
-
-include(driver_lpc_gpio_MIMXRT685S_cm33)
 
 include(driver_power_MIMXRT685S_cm33)
 
@@ -102,6 +90,18 @@ include(driver_dsp_MIMXRT685S_cm33)
 include(driver_inputmux_MIMXRT685S_cm33)
 
 include(driver_pca9420_MIMXRT685S_cm33)
+
+include(driver_codec_MIMXRT685S_cm33)
+
+include(component_wm8904_adapter_MIMXRT685S_cm33)
+
+include(component_codec_i2c_MIMXRT685S_cm33)
+
+include(component_i3c_adapter_MIMXRT685S_cm33)
+
+include(driver_i3c_MIMXRT685S_cm33)
+
+include(driver_wm8904_MIMXRT685S_cm33)
 
 include(device_MIMXRT685S_CMSIS_MIMXRT685S_cm33)
 

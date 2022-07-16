@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("CMSIS_Device_API_RTOS2 component is included.")
 
 

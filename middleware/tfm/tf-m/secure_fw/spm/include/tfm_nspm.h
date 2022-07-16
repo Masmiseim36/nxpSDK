@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -9,6 +9,8 @@
 #define __TFM_NSPM_H__
 
 #include <stdint.h>
+
+#define TFM_NS_CLIENT_INVALID_ID            ((int32_t)0)
 
 #if !defined(TFM_MULTI_CORE_TOPOLOGY)
 /*
@@ -38,12 +40,10 @@
 #endif /* !__ARMCC_VERSION */
 #endif /* __GNUC__ && !TFM_MULTI_CORE_TOPOLOGY */
 
-#ifndef TFM_PSA_API
 /**
  * \brief initialise the NS context database
  */
-void tfm_nspm_configure_clients(void);
-#endif
+void tfm_nspm_ctx_init(void);
 
 /**
  * \brief Get the client ID of the current NS client
@@ -52,24 +52,5 @@ void tfm_nspm_configure_clients(void);
  *         returned in case of error.
  */
 int32_t tfm_nspm_get_current_client_id(void);
-
-#ifdef TFM_PSA_API
-/**
- * \brief NSPM thread main entry function
- *
- * Note: This function should not return back.
- */
-void tfm_nspm_thread_entry(void);
-#endif
-
-#ifdef TFM_MULTI_CORE_TOPOLOGY
-/* Unnecessary to configure Non-secure side code */
-#define configure_ns_code()               do {} while (0)
-#else
-/*
- * \brief Configure Non-secure code, such as vector table, MSP and entry point.
- */
-void configure_ns_code(void);
-#endif
 
 #endif /* __TFM_NSPM_H__ */

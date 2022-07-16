@@ -79,9 +79,9 @@ void mtx_vecmpy8x16_fast( int16_t* restrict z,
                  int M, int N, int lsh)
 {
     int m,n,p,P=1;
-    NASSERT_ALIGN(z,XCHAL_DATA_WIDTH);
-    NASSERT_ALIGN(x,XCHAL_DATA_WIDTH);
-    NASSERT_ALIGN(y,XCHAL_DATA_WIDTH);
+    NASSERT_ALIGN(z,HIFI_SIMD_WIDTH);
+    NASSERT_ALIGN(x,HIFI_SIMD_WIDTH);
+    NASSERT_ALIGN(y,HIFI_SIMD_WIDTH);
     NASSERT(M%4==0);
     NASSERT(N%4==0);
     NASSERT(lsh >= -15 && lsh <= 15);
@@ -101,10 +101,10 @@ void mtx_vecmpy8x16_fast( int16_t* restrict z,
     const int8_t     * restrict pX3_;
     const ae_int16x4 * restrict pY;
           ae_int16x4 * restrict pZ;
-    ae_int64 rnd;
+  //  ae_int64 rnd;
     int rsh=7-lsh;
 
-    rnd=AE_SLAA64S(1,rsh+7);
+  //  rnd=AE_SLAA64S(1,rsh+7);
     pZ=(ae_int16x4 *)z;
 
 	pX0=(const int8_t *)(x);
@@ -130,8 +130,9 @@ void mtx_vecmpy8x16_fast( int16_t* restrict z,
 		{
 			ae_int64 A0,A1,A2,A3;
 			ae_int16x4 y0,y1,x0,x1,x2,x3;
-			A0=A1=A2=A3=rnd;
-			pY =(const ae_int16x4 *)y;
+			//A0=A1=A2=A3=rnd;
+      A0 = A1 = A2 = A3 = AE_ZERO64();
+      pY =(const ae_int16x4 *)y;
 
 			AE_L16X4_IP(y0,pY,4*sizeof(int16_t));
 
@@ -206,8 +207,10 @@ void mtx_vecmpy8x16_fast( int16_t* restrict z,
 		{
 			ae_int64 A0,A1,A2,A3;
 			ae_int16x4 y0,y1,x0,x1,x2,x3;
-			A0=A1=A2=A3=rnd;
-			pY =(const ae_int16x4 *)y;
+			//A0=A1=A2=A3=rnd;
+      A0 = A1 = A2 = A3 = AE_ZERO64();
+
+      pY =(const ae_int16x4 *)y;
 
 			AE_L16X4_IP(y0,pY,4*sizeof(int16_t));
 
@@ -278,8 +281,10 @@ void mtx_vecmpy8x16_fast( int16_t* restrict z,
 		{
 			ae_int64 A0,A1,A2,A3;
 			ae_int16x4 y0,y1,x0,x1,x2,x3;
-			A0=A1=A2=A3=rnd;
-			pY =(const ae_int16x4 *)y;
+			//A0=A1=A2=A3=rnd;
+      A0 = A1 = A2 = A3 = AE_ZERO64();
+
+      pY =(const ae_int16x4 *)y;
 
 			__Pragma("loop_count min=1")
 			for (n=0; n<(N>>3); n++)
@@ -335,8 +340,10 @@ void mtx_vecmpy8x16_fast( int16_t* restrict z,
 		{
 			ae_int64 A0,A1,A2,A3;
 			ae_int16x4 y0,y1,x0,x1,x2,x3;
-			A0=A1=A2=A3=rnd;
-			pY =(const ae_int16x4 *)y;
+			//A0=A1=A2=A3=rnd;
+      A0 = A1 = A2 = A3 = AE_ZERO64();
+
+      pY =(const ae_int16x4 *)y;
 
 			__Pragma("loop_count min=2")
 			for (n=0; n<(N>>3); n++)

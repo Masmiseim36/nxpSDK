@@ -8,9 +8,14 @@
 #include "os_wrapper/thread.h"
 #include "os_wrapper/mutex.h"
 #include "os_wrapper/semaphore.h"
+#include "os_wrapper/delay.h"
 
-#include <string.h>
 #include "cmsis_os2.h"
+
+#include "tfm_nsid_manager.h"
+#ifdef TFM_NS_MANAGE_NSID
+#include "tfm_nsid_map_table.h"
+#endif
 
 /* This is an example OS abstraction layer for CMSIS-RTOSv2 */
 
@@ -18,7 +23,9 @@ void *os_wrapper_thread_new(const char *name, int32_t stack_size,
                             os_wrapper_thread_func func, void *arg,
                             uint32_t priority)
 {
-    osThreadAttr_t task_attribs = {.tz_module = 1};
+    osThreadAttr_t task_attribs = {
+        .tz_module = ((TZ_ModuleId_t)TFM_DEFAULT_NSID)
+    };
 
     /* By default, the thread starts as osThreadDetached */
     if (stack_size != OS_WRAPPER_DEFAULT_STACK_SIZE) {
@@ -26,6 +33,10 @@ void *os_wrapper_thread_new(const char *name, int32_t stack_size,
     }
     task_attribs.name = name;
     task_attribs.priority = (osPriority_t) priority;
+
+#ifdef TFM_NS_MANAGE_NSID
+    task_attribs.tz_module = (TZ_ModuleId_t)nsid_mgr_get_thread_nsid(name);
+#endif
 
     return (void *)osThreadNew(func, arg, &task_attribs);
 }
@@ -244,6 +255,18 @@ int32_t os_wrapper_msg_queue_receive(void *mq_handle,
     osStatus_t status;
 
     status = osMessageQueueGet(mq_handle, msg_ptr, NULL, osWaitForever);
+    if (status == osOK) {
+        return OS_WRAPPER_SUCCESS;
+    }
+
+    return OS_WRAPPER_ERROR;
+}
+
+int32_t os_wrapper_delay_until(uint32_t ticks)
+{
+    osStatus_t status;
+
+    status = osDelayUntil(ticks);
     if (status == osOK) {
         return OS_WRAPPER_SUCCESS;
     }

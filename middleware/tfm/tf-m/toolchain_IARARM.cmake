@@ -6,7 +6,8 @@
 #
 #-------------------------------------------------------------------------------
 
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.22)
+cmake_policy(SET CMP0115 NEW)
 
 # Don't load this file if it is specified as a cmake toolchain file
 if(NOT TFM_TOOLCHAIN_FILE)
@@ -16,7 +17,6 @@ endif()
 
 SET(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR       ${TFM_SYSTEM_PROCESSOR})
-set(CMAKE_SYSTEM_ARCHITECTURE    ${TFM_SYSTEM_ARCHITECTURE})
 
 if(CROSS_COMPILE)
     set(CMAKE_C_COMPILER_TARGET      arm-${CROSS_COMPILE})
@@ -49,6 +49,8 @@ macro(tfm_toolchain_reset_compiler_flags)
         $<$<COMPILE_LANGUAGE:C,CXX>:-DNO_TYPEOF>
         $<$<COMPILE_LANGUAGE:C,CXX>:-D_NO_DEFINITIONS_IN_HEADER_FILES>
         $<$<COMPILE_LANGUAGE:C,CXX>:--diag_suppress=Pe546,Pe940,Pa082,Pa084>
+        $<$<AND:$<COMPILE_LANGUAGE:C,CXX,ASM>,$<NOT:$<BOOL:${TFM_SYSTEM_FP}>>>:--fpu=none>
+        $<$<AND:$<COMPILE_LANGUAGE:C,CXX,ASM>,$<BOOL:${TFM_DEBUG_SYMBOLS}>,$<CONFIG:Release,MinSizeRel>>:-r>
     )
 endmacro()
 
@@ -59,6 +61,7 @@ macro(tfm_toolchain_reset_linker_flags)
       --silent
       --semihosting
       --redirect __write=__write_buffered
+      $<$<NOT:$<BOOL:${TFM_SYSTEM_FP}>>:--fpu=none>
     )
 endmacro()
 
@@ -68,7 +71,6 @@ macro(tfm_toolchain_set_processor_arch)
     else()
       set(CMAKE_SYSTEM_PROCESSOR ${TFM_SYSTEM_PROCESSOR})
     endif()
-    set(CMAKE_SYSTEM_ARCHITECTURE ${TFM_SYSTEM_ARCHITECTURE})
 
     if (DEFINED TFM_SYSTEM_DSP)
         if(NOT TFM_SYSTEM_DSP)
@@ -108,9 +110,6 @@ macro(target_add_scatter_file target)
         PRIVATE
         --config $<TARGET_OBJECTS:${target}_scatter>
     )
-    add_dependencies(${target}
-        ${target}_scatter
-    )
 
     add_library(${target}_scatter OBJECT)
     foreach(scatter_file ${ARGN})
@@ -128,6 +127,12 @@ macro(target_add_scatter_file target)
             LANGUAGE C
         )
     endforeach()
+
+    add_dependencies(${target}
+        ${target}_scatter
+    )
+
+    set_target_properties(${target} PROPERTIES LINK_DEPENDS $<TARGET_OBJECTS:${target}_scatter>)
 
     target_link_libraries(${target}_scatter
         platform_region_defs

@@ -55,12 +55,12 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../application_code/main.c"
+"${ProjDirPath}/../wifi_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../app_config.h"
-"${ProjDirPath}/../wifi_config.h"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -82,9 +82,7 @@ endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../middleware/lwip
-    ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
-    ${ProjDirPath}/../../../../../middleware/wifi
-    ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
     ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../middleware/mbedtls
@@ -92,6 +90,9 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt595
     ${ProjDirPath}/../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
+    ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
@@ -114,17 +115,7 @@ include(middleware_freertos-aws_iot_libraries_freertos_plus_aws_greengrass_MIMXR
 
 include(middleware_lwip_MIMXRT595S_cm33)
 
-include(utility_debug_console_MIMXRT595S_cm33)
-
 include(middleware_wifi_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_sdio_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_common_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_host_usdhc_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_transport_MIMXRT595S_cm33)
 
@@ -172,6 +163,24 @@ include(driver_flexcomm_i2c_MIMXRT595S_cm33)
 
 include(driver_pca9420_MIMXRT595S_cm33)
 
+include(middleware_wifi_wifidriver_MIMXRT595S_cm33)
+
+include(utility_debug_console_MIMXRT595S_cm33)
+
+include(middleware_wifi_sdio_MIMXRT595S_cm33)
+
+include(middleware_wifi_fwdnld_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_sdio_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_common_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_host_usdhc_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_host_usdhc_freertos_MIMXRT595S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT595S_cm33)
+
 include(driver_clock_MIMXRT595S_cm33)
 
 include(driver_common_MIMXRT595S_cm33)
@@ -218,16 +227,6 @@ include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_wifi_MIMXRT595S_cm33)
 
-include(middleware_wifi_wifidriver_MIMXRT595S_cm33)
-
-include(middleware_wifi_fwdnld_MIMXRT595S_cm33)
-
-include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
-
-include(component_osa_free_rtos_MIMXRT595S_cm33)
-
-include(driver_usdhc_MIMXRT595S_cm33)
-
 include(middleware_freertos-aws_iot_libraries_abstractions_backoff_algorithm_MIMXRT595S_cm33)
 
 include(middleware_freertos-aws_iot_libraries_device_shadow_for_aws_MIMXRT595S_cm33)
@@ -247,6 +246,14 @@ include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_crypto_MIMX
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_utils_MIMXRT595S_cm33)
 
 include(component_mflash_common_MIMXRT595S_cm33)
+
+include(middleware_wifi_sdio-2_MIMXRT595S_cm33)
+
+include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
+
+include(component_osa_free_rtos_MIMXRT595S_cm33)
+
+include(driver_usdhc_MIMXRT595S_cm33)
 
 include(utilities_misc_utilities_MIMXRT595S_cm33)
 

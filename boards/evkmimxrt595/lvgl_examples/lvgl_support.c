@@ -52,12 +52,32 @@
 #define DEMO_DISPLAY_USE_PARTIAL_REFRESH 1
 #endif
 
+#ifndef DEMO_USE_ROTATE
+/* Use rotate for portrait panel. */
+#if ((DEMO_PANEL_RK055AHD091 == DEMO_PANEL) || (DEMO_PANEL_RK055IQH091 == DEMO_PANEL) || \
+     (DEMO_PANEL_RK055MHD091 == DEMO_PANEL))
+#define DEMO_USE_ROTATE 0
+#else
+#define DEMO_USE_ROTATE 0
+#endif
+#endif
+
+#if DEMO_USE_ROTATE
+#define LVGL_BUFFER_WIDTH  DEMO_BUFFER_HEIGHT
+#define LVGL_BUFFER_HEIGHT DEMO_BUFFER_WIDTH
+#else
+#define LVGL_BUFFER_WIDTH  DEMO_BUFFER_WIDTH
+#define LVGL_BUFFER_HEIGHT DEMO_BUFFER_HEIGHT
+#endif
+
+#if DEMO_USE_ROTATE
+#define LVGL_BUFFER_ADDR 0x28800000U
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p);
-
-static void DEMO_WaitFlush(lv_disp_drv_t *disp_drv);
 
 static void DEMO_InitTouch(void);
 
@@ -81,6 +101,8 @@ static status_t BOARD_PrepareVGLiteController(void);
 static status_t BOARD_InitVGliteClock(void);
 #endif /* LV_USE_GPU_NXP_VG_LITE */
 
+static void DEMO_WaitBufferSwitchOff(void);
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -88,6 +110,14 @@ static status_t BOARD_InitVGliteClock(void);
 static SemaphoreHandle_t s_transferDone;
 #else
 static volatile bool s_transferDone;
+#endif
+
+#if DEMO_USE_ROTATE
+/*
+ * When rotate is used, LVGL stack draws in one buffer (s_lvglBuffer), and LCD
+ * driver uses two buffers (s_frameBuffer) to remove tearing effect.
+ */
+static void *volatile s_inactiveFrameBuffer;
 #endif
 
 #if (DEMO_PANEL == DEMO_PANEL_RM67162)
@@ -169,10 +199,17 @@ void lv_port_disp_init(void)
      * full screen buffer. LVGL updated areas will first be merge and updated in buffer 1,
      * then the dirty region in buffer 1 will be sent to LCD controller at the right time.
      */
-    lv_disp_draw_buf_init(&disp_buf, (void *)DEMO_BUFFER0_ADDR, NULL, LCD_WIDTH * LCD_HEIGHT);
+    lv_disp_draw_buf_init(&disp_buf, (void *)DEMO_BUFFER0_ADDR, NULL, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT);
+#else /* DEMO_DISPLAY_USE_PARTIAL_REFRESH */
+
+#if DEMO_USE_ROTATE
+    lv_disp_draw_buf_init(&disp_buf, (void *)LVGL_BUFFER_ADDR, NULL, DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT);
 #else
-    lv_disp_draw_buf_init(&disp_buf, (void *)DEMO_BUFFER0_ADDR, (void *)DEMO_BUFFER1_ADDR, LCD_WIDTH * LCD_HEIGHT);
+    lv_disp_draw_buf_init(&disp_buf, (void *)DEMO_BUFFER0_ADDR, (void *)DEMO_BUFFER1_ADDR,
+                          DEMO_BUFFER_WIDTH * DEMO_BUFFER_HEIGHT);
 #endif
+
+#endif /* DEMO_DISPLAY_USE_PARTIAL_REFRESH */
 
     status_t status;
 
@@ -211,27 +248,23 @@ void lv_port_disp_init(void)
         assert(0);
     }
 #else
-    s_transferDone = false;
+    s_transferDone        = false;
+#endif
+
+#if DEMO_USE_ROTATE
+    /* s_frameBuffer[1] is first shown in the panel, s_frameBuffer[0] is inactive. */
+    s_inactiveFrameBuffer = (void *)DEMO_BUFFER0_ADDR;
 #endif
 
     /* Clear initial frame. */
+    /* lvgl starts render in frame buffer 0, so show frame buffer 1 first. */
     memset((void *)DEMO_BUFFER1_ADDR, 0, DEMO_BUFFER_STRIDE_BYTE * DEMO_BUFFER_HEIGHT);
     g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)DEMO_BUFFER1_ADDR);
 
     /* Wait for frame buffer sent to display controller video memory. */
     if ((g_dc.ops->getProperty(&g_dc) & kDC_FB_ReserveFrameBuffer) == 0)
     {
-#if defined(SDK_OS_FREE_RTOS)
-        if (xSemaphoreTake(s_transferDone, portMAX_DELAY) != pdTRUE)
-        {
-            PRINTF("Wait semaphore error: s_transferDone\r\n");
-            assert(0);
-        }
-#else
-        while (false == s_transferDone)
-        {
-        }
-#endif
+        DEMO_WaitBufferSwitchOff();
     }
 
     g_dc.ops->enableLayer(&g_dc, 0);
@@ -245,13 +278,11 @@ void lv_port_disp_init(void)
     /*Set up the functions to access to your display*/
 
     /*Set the resolution of the display*/
-    disp_drv.hor_res = LCD_WIDTH;
-    disp_drv.ver_res = LCD_HEIGHT;
+    disp_drv.hor_res = LVGL_BUFFER_WIDTH;
+    disp_drv.ver_res = LVGL_BUFFER_HEIGHT;
 
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = DEMO_FlushDisplay;
-
-    disp_drv.wait_cb = DEMO_WaitFlush;
 
     /*Set a display buffer*/
     disp_drv.draw_buf = &disp_buf;
@@ -278,11 +309,13 @@ void lv_port_disp_init(void)
 
 static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
 {
+#if DEMO_DISPLAY_USE_PARTIAL_REFRESH
     lv_disp_drv_t *disp_drv = (lv_disp_drv_t *)param;
 
     /* IMPORTANT!!!
      * Inform the graphics library that you are ready with the flushing*/
     lv_disp_flush_ready(disp_drv);
+#endif
 
 #if defined(SDK_OS_FREE_RTOS)
     BaseType_t taskAwake = pdFALSE;
@@ -292,9 +325,13 @@ static void DEMO_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
 #else
     s_transferDone        = true;
 #endif
+
+#if DEMO_USE_ROTATE
+    s_inactiveFrameBuffer = switchOffBuffer;
+#endif
 }
 
-static void DEMO_WaitFlush(lv_disp_drv_t *disp_drv)
+static void DEMO_WaitBufferSwitchOff(void)
 {
 #if defined(SDK_OS_FREE_RTOS)
     if (xSemaphoreTake(s_transferDone, portMAX_DELAY) != pdTRUE)
@@ -306,6 +343,7 @@ static void DEMO_WaitFlush(lv_disp_drv_t *disp_drv)
     while (false == s_transferDone)
     {
     }
+    s_transferDone = false;
 #endif
 }
 
@@ -381,16 +419,58 @@ static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv
 #else
 static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
+#if DEMO_USE_ROTATE
+
     /*
-     * Before new frame flushing, clear previous frame flush done status.
+     * Work flow:
+     *
+     * 1. Wait for the available inactive frame buffer to draw.
+     * 2. Draw the ratated frame to inactive buffer.
+     * 3. Pass inactive to LCD controller to show.
      */
-#if !defined(SDK_OS_FREE_RTOS)
-    s_transferDone = false;
-#else
-    (void)xSemaphoreTake(s_transferDone, 0);
-#endif
+
+    static bool firstFlush = true;
+
+    /* Only wait for the first time. */
+    if (firstFlush)
+    {
+        firstFlush = false;
+    }
+    else
+    {
+        /* Wait frame buffer. */
+        DEMO_WaitBufferSwitchOff();
+    }
+
+    /* Copy buffer. */
+    void *inactiveFrameBuffer = s_inactiveFrameBuffer;
+
+    /* Use CPU to rotate the panel. */
+    for (uint32_t y = 0; y < LVGL_BUFFER_HEIGHT; y++)
+    {
+        for (uint32_t x = 0; x < LVGL_BUFFER_WIDTH; x++)
+        {
+            ((lv_color_t *)inactiveFrameBuffer)[(DEMO_BUFFER_HEIGHT - x) * DEMO_BUFFER_WIDTH + y] =
+                color_p[y * LVGL_BUFFER_WIDTH + x];
+        }
+    }
+
+    g_dc.ops->setFrameBuffer(&g_dc, 0, inactiveFrameBuffer);
+
+    /* IMPORTANT!!!
+     * Inform the graphics library that you are ready with the flushing*/
+    lv_disp_flush_ready(disp_drv);
+
+#else  /* DEMO_USE_ROTATE */
 
     g_dc.ops->setFrameBuffer(&g_dc, 0, (void *)color_p);
+
+    DEMO_WaitBufferSwitchOff();
+
+    /* IMPORTANT!!!
+     * Inform the graphics library that you are ready with the flushing*/
+    lv_disp_flush_ready(disp_drv);
+#endif /* DEMO_USE_ROTATE */
 }
 #endif
 
@@ -547,8 +627,13 @@ static void DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data)
     }
 
     /*Set the last pressed coordinates*/
+#if DEMO_USE_ROTATE
+    data->point.x = DEMO_PANEL_HEIGHT - (touch_y * DEMO_PANEL_HEIGHT / s_touchResolutionY);
+    data->point.y = touch_x * DEMO_PANEL_WIDTH / s_touchResolutionX;
+#else
     data->point.x = touch_x * DEMO_PANEL_WIDTH / s_touchResolutionX;
     data->point.y = touch_y * DEMO_PANEL_HEIGHT / s_touchResolutionY;
+#endif
 }
 
 #else

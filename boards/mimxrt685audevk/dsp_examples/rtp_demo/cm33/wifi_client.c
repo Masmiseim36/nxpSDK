@@ -179,43 +179,52 @@ static void wifi_client_wlan_start(app_handle_t *app)
 static void wifi_client_wlan_connect(app_handle_t *app)
 {
     int result;
-    int pwd_len;
+    size_t len;
 
     xJoinTaskNotify = xTaskGetCurrentTaskHandle();
 
-    memset(&network, 0, sizeof(struct wlan_network));
+    (void)memset(&network, 0, sizeof(struct wlan_network));
 
-    strcpy(network.name, (const char *)WIFI_SSID);
+    len = strlen(WIFI_SSID);
+    if (len < sizeof(network.name))
+    {
+        (void)strcpy(network.name, (const char *)WIFI_SSID);
+    }
+    else
+    {
+        (void)strncpy(network.name, (const char *)WIFI_SSID, sizeof(network.name) - 1U);
+        network.name[sizeof(network.name) - 1U] = '\0';
+    }
 
-    memcpy(network.ssid, (const char *)WIFI_SSID, strlen(WIFI_SSID));
+    (void)strcpy(network.ssid, (const char *)WIFI_SSID);
     network.ip.ipv4.addr_type = ADDR_TYPE_DHCP;
     network.ssid_specific     = 1;
 
     network.security.type = WLAN_SECURITY_NONE;
 
-    pwd_len = strlen(WIFI_PASSWORD);
-    if (pwd_len > 0)
+    len = strlen(WIFI_PASSWORD);
+    if (len > 0U)
     {
         network.security.type = WLAN_SECURITY_WILDCARD;
-        strncpy(network.security.psk, WIFI_PASSWORD, pwd_len);
-        network.security.psk_len = pwd_len;
+        (void)strncpy(network.security.psk, WIFI_PASSWORD, len);
+        network.security.psk_len = (char)len;
     }
 
     result = wlan_add_network(&network);
     if (result != WM_SUCCESS)
     {
-        PRINTF("Failed to add network \"%s\"\r\n", network.name);
+        (void)PRINTF("Failed to add network \"%s\"\r\n", network.name);
         while (true)
         {
         }
     }
 
-    PRINTF("Connecting to \"%s\"\r\n", network.name);
+    (void)PRINTF("Connecting to \"%s\"\r\n", network.name);
     result = wlan_connect(network.name);
 
     if (result != WM_SUCCESS)
     {
-        PRINTF("Failed to connect %d\r\n", result);
+        (void)PRINTF("Failed to connect %d\r\n", result);
         while (true)
         {
         }
@@ -224,7 +233,7 @@ static void wifi_client_wlan_connect(app_handle_t *app)
     // Wait for response
     if (pdPASS != ulTaskNotifyTake(pdTRUE, portMAX_DELAY))
     {
-        PRINTF("ulTaskNotifyTake failed\r\n");
+        (void)PRINTF("ulTaskNotifyTake failed\r\n");
         while (true)
         {
         }

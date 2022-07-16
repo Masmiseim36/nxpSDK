@@ -162,7 +162,8 @@
     // Reset the coefficients pointer. Now it looks at the tap corresponding
     // to the oldest sample in the delay line.
 
-    __Pragma("loop_count min=2")
+	__Pragma("loop_count min=2");
+	__Pragma("no_unroll");
     for ( m=0; m<(M>>2)+1; m++ )
     {
       // Load the next 4 tap coefficients.

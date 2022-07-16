@@ -50,6 +50,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/lists
@@ -75,6 +76,8 @@ include(middleware_sdmmc_host_usdhc_interrupt_MIMXRT595S_cm33)
 include(utility_debug_console_lite_MIMXRT595S_cm33)
 
 include(utility_assert_lite_MIMXRT595S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT595S_cm33)
 
 include(driver_clock_MIMXRT595S_cm33)
 

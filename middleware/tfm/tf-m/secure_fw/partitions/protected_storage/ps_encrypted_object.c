@@ -134,9 +134,11 @@ static psa_status_t ps_object_auth_encrypt(uint32_t fid,
         return err;
     }
 
-    /* FIXME: should have an IV per object with key diversification */
     /* Get a new IV for each encryption */
-    ps_crypto_get_iv(&obj->header.crypto);
+    err = ps_crypto_get_iv(&obj->header.crypto);
+    if (err != PSA_SUCCESS) {
+        return err;
+    }
 
     /* Use File ID as a part of the associated data to authenticate
      * the object in the FS. The tag will be stored in the object table and
@@ -167,9 +169,17 @@ psa_status_t ps_encrypted_object_read(uint32_t fid, struct ps_object_t *obj)
     uint32_t decrypt_size;
     size_t data_length;
 
-    /* Read the encrypted object from the the persistent area */
+    /* Read the encrypted object from the persistent area. The data stored via
+     * ITS interface of this `fid` is the encrypted object together with the
+     * `IV`.
+     * In the psa_its_get, the buffer size is not checked. Check the buffer size
+     * here.
+     */
+    if (sizeof(ps_crypto_buf) < PS_MAX_ENCRYPTED_OBJ_SIZE + PS_IV_LEN_BYTES) {
+        return PSA_ERROR_GENERIC_ERROR;
+    }
     err = psa_its_get(fid, PS_OBJECT_START_POSITION,
-                      PS_MAX_OBJECT_SIZE,
+                      PS_MAX_ENCRYPTED_OBJ_SIZE + PS_IV_LEN_BYTES,
                       (void *)ps_crypto_buf,
                       &data_length);
     if (err != PSA_SUCCESS) {

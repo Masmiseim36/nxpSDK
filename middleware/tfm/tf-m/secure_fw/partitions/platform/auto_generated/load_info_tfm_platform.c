@@ -1,17 +1,19 @@
 /*
- * Copyright (c) 2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2021, Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/*********** WARNING: This is an auto-generated file. Do not edit! ***********/
+/***********  WARNING: This is an auto-generated file. Do not edit!  ***********/
 
 #include <stdint.h>
 #include <stddef.h>
 #include "region.h"
+#include "region_defs.h"
 #include "spm_ipc.h"
-#include "load/irq_defs.h"
+#include "load/interrupt_defs.h"
 #include "load/partition_defs.h"
 #include "load/service_defs.h"
 #include "load/asset_defs.h"
@@ -39,6 +41,8 @@ extern uint8_t tfm_sp_platform_stack[];
 /* Entrypoint function declaration */
 extern void platform_sp_init(void);
 
+/* Interrupt init functions */
+
 /* partition load info type definition */
 struct partition_tfm_sp_platform_load_info_t {
     /* common length load data */
@@ -64,8 +68,8 @@ const struct partition_tfm_sp_platform_load_info_t tfm_sp_platform_load
         .psa_ff_ver                 = 0x0100 | PARTITION_INFO_MAGIC,
         .pid                        = TFM_SP_PLATFORM,
         .flags                      = 0
-                                    | SPM_PART_FLAG_IPC
-                                    | SPM_PART_FLAG_PSA_ROT
+                                    | PARTITION_MODEL_IPC
+                                    | PARTITION_MODEL_PSA_ROT
                                     | PARTITION_PRI_NORMAL,
         .entry                      = ENTRY_TO_POSITION(platform_sp_init),
         .stack_size                 = 0x0500,
@@ -80,7 +84,10 @@ const struct partition_tfm_sp_platform_load_info_t tfm_sp_platform_load
     .services = {
         {
             .name_strid             = STRING_PTR_TO_STRID("TFM_SP_PLATFORM_SYSTEM_RESET"),
+            .sfn                    = 0,
+#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = TFM_SP_PLATFORM_SYSTEM_RESET_SIGNAL,
+#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
             .sid                    = 0x00000040,
             .flags                  = 0
                                     | SERVICE_FLAG_NS_ACCESSIBLE
@@ -89,7 +96,10 @@ const struct partition_tfm_sp_platform_load_info_t tfm_sp_platform_load
         },
         {
             .name_strid             = STRING_PTR_TO_STRID("TFM_SP_PLATFORM_IOCTL"),
+            .sfn                    = 0,
+#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = TFM_SP_PLATFORM_IOCTL_SIGNAL,
+#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
             .sid                    = 0x00000041,
             .flags                  = 0
                                     | SERVICE_FLAG_NS_ACCESSIBLE
@@ -98,7 +108,10 @@ const struct partition_tfm_sp_platform_load_info_t tfm_sp_platform_load
         },
         {
             .name_strid             = STRING_PTR_TO_STRID("TFM_SP_PLATFORM_NV_COUNTER"),
+            .sfn                    = 0,
+#if CONFIG_TFM_SPM_BACKEND_IPC == 1
             .signal                 = TFM_SP_PLATFORM_NV_COUNTER_SIGNAL,
+#endif /* CONFIG_TFM_SPM_BACKEND_IPC == 1 */
             .sid                    = 0x00000042,
             .flags                  = 0
                                     | SERVICE_VERSION_POLICY_STRICT,
@@ -108,9 +121,9 @@ const struct partition_tfm_sp_platform_load_info_t tfm_sp_platform_load
 #if TFM_LVL == 3
     .assets                         = {
         {
-            .mem.addr_x             = PART_REGION_ADDR(PT_TFM_SP_PLATFORM_PRIVATE, _DATA_START$$Base),
-            .mem.addr_y             = PART_REGION_ADDR(PT_TFM_SP_PLATFORM_PRIVATE, _DATA_END$$Base),
-            .attr                   = ASSET_MEM_RD_BIT | ASSET_MEM_WR_BIT,
+            .mem.start              = PART_REGION_ADDR(PT_TFM_SP_PLATFORM_PRIVATE, _DATA_START$$Base),
+            .mem.limit              = PART_REGION_ADDR(PT_TFM_SP_PLATFORM_PRIVATE, _DATA_END$$Base),
+            .attr                   = ASSET_ATTR_READ_WRITE,
         },
     },
 #else

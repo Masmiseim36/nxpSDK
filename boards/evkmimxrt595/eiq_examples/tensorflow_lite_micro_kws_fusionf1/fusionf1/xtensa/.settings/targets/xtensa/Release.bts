@@ -19,6 +19,8 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/eiq/common/audio/rtxxx</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/eiq/tensorflow-lite/third_party/fft2d</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/DSP/Include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/DSP/PrivateInclude</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/DSP/Source/DistanceFunctions</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/eiq/tensorflow-lite</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
@@ -37,10 +39,12 @@
             <value flag="-D">
               <ListEntry key="NDEBUG" value=""/>
               <ListEntry key="SDK_DEBUGCONSOLE_UART" value=""/>
+              <ListEntry key="XOS_CLOCK_FREQ" value="198000000"/>
+              <ListEntry key="DISABLEFLOAT16" value=""/>
               <ListEntry key="TF_LITE_STATIC_MEMORY" value=""/>
               <ListEntry key="CPU_MIMXRT595SFFOC_dsp" value=""/>
               <ListEntry key="XTENSA" value=""/>
-              <ListEntry key="FUSION_F1" value=""/>
+              <ListEntry key="HIFI4" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
               <ListEntry key="NNLIB_V2" value=""/>
               <ListEntry key="MODEL_INT16" value=""/>
@@ -59,8 +63,8 @@
 -mno-div32&#13;
 -fno-exceptions&#13;
 -INLINE:requested&#13;
--fno-zero-initialized-in-bss&#13;
 -fno-unsafe-math-optimizations&#13;
+-fdata-sections&#13;
 -Wno-unused&#13;
 -Wno-missing-braces&#13;
 -fmessage-length=0</ListEntry></value>
@@ -84,16 +88,16 @@
             <value use="true" flag="-mlongcalls"/>
           </SingleFlagMapEntry>
           <SingleFlagMapEntry>
+            <key>FunctionSections</key>
+            <value use="true" flag="-ffunction-sections"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
             <key>WarningSetting</key>
             <value use="true" flag="-Wall"/>
           </SingleFlagMapEntry>
           <SingleFlagMapEntry>
             <key>SignCharType</key>
             <value use="true" flag="-fsigned-char"/>
-          </SingleFlagMapEntry>
-          <SingleFlagMapEntry>
-            <key>ISOStandard</key>
-            <value use="true" flag="-std=c99"/>
           </SingleFlagMapEntry>
         </SingleFlagMapOptions>
         <FlagValueMapOptions>
@@ -110,6 +114,9 @@
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
               <ListEntry>${xt_project_loc}/../../../../../../middleware/eiq/tensorflow-lite/third_party/xa_nnlib_hifi4/lib/mimxrt595s/libxa_nnlib_hifi4.a&#13;
+--entry&#13;
+_ResetVector&#13;
+--gc-sections&#13;
 </ListEntry>
             </value>
           </StringListMapEntry>
@@ -386,6 +393,23 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/all_ops_resolver.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/all_ops_resolver.cpp">
           <CompilerOptions>
@@ -420,6 +444,40 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/fake_micro_context.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/fake_micro_context.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/flatbuffer_utils.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.cpp">
           <CompilerOptions>
@@ -439,6 +497,23 @@
       <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/micro_context.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/micro_context.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -507,6 +582,23 @@
       <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/micro_resource_variable.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/micro_resource_variable.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -624,6 +716,40 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations_common.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add_common.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add_n.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add_n.cpp">
           <CompilerOptions>
@@ -658,8 +784,42 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/assign_variable.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/assign_variable.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/batch_to_space_nd.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/call_once.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/call_once.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -711,6 +871,23 @@
       <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/circular_buffer_common.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -830,6 +1007,23 @@
       <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/dequantize_common.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1066,6 +1260,23 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/hard_swish_common.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/if.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/if.cpp">
           <CompilerOptions>
@@ -1134,8 +1345,8 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
-        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.cpp</key>
-        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu.cpp">
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/leaky_relu_common.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1185,8 +1396,76 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logical_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logical_common.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic_common.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/maximum_minimum.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mirror_pad.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mirror_pad.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul_common.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1253,6 +1532,23 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling_common.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu.cpp">
           <CompilerOptions>
@@ -1270,8 +1566,42 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/prelu_common.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize_common.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/quantize_common.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/read_variable.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/read_variable.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1389,6 +1719,23 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/slice.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/slice.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax_common.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/softmax_common.cpp">
           <CompilerOptions>
@@ -1408,6 +1755,23 @@
       <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_batch_nd.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_batch_nd.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_depth.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/space_to_depth.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1508,6 +1872,23 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub_common.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/sub_common.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf_common.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/svdf_common.cpp">
           <CompilerOptions>
@@ -1559,8 +1940,8 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
-        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.cpp</key>
-        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/transpose_conv.cpp">
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1576,8 +1957,8 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
-        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp</key>
-        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/unpack.cpp">
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/var_handle.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/var_handle.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1644,8 +2025,42 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/non_persistent_buffer_planner_shim.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/schema/schema_utils.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/schema/schema_utils.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/add.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/add.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1695,8 +2110,25 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
-        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_hifimini.cpp</key>
-        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_hifimini.cpp">
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int16_reference.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int16_reference.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int8_reference.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/conv_int8_reference.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1729,8 +2161,110 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/depthwise_conv_hifi.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/depthwise_conv_hifi.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fully_connected.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/fully_connected.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/leaky_relu.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/leaky_relu.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/logistic.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/logistic.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval_hifi.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/lstm_eval_hifi.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/pooling.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/pooling.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1814,8 +2348,8 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
-        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.cpp</key>
-        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.cpp">
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/transpose_conv.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/transpose_conv.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1831,8 +2365,25 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
-        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.cpp</key>
-        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/add.cpp">
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/unidirectional_sequence_lstm.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/xtensa/unidirectional_sequence_lstm.cpp">
+          <CompilerOptions>
+            <SingleFlagMapOptions>
+              <SingleFlagMapEntry>
+                <key>ISOStandard</key>
+                <value use="true" flag="-std=c++11"/>
+              </SingleFlagMapEntry>
+              <SingleFlagMapEntry>
+                <key>UseNewCPlusPlusLib</key>
+                <value use="true" flag="--stdlib=libc++"/>
+              </SingleFlagMapEntry>
+            </SingleFlagMapOptions>
+          </CompilerOptions>
+        </value>
+      </OverriddenSettingsEntry>
+      <OverriddenSettingsEntry>
+        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.cpp</key>
+        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/activations.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>
@@ -1865,42 +2416,8 @@
         </value>
       </OverriddenSettingsEntry>
       <OverriddenSettingsEntry>
-        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.cpp</key>
-        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/logistic.cpp">
-          <CompilerOptions>
-            <SingleFlagMapOptions>
-              <SingleFlagMapEntry>
-                <key>ISOStandard</key>
-                <value use="true" flag="-std=c++11"/>
-              </SingleFlagMapEntry>
-              <SingleFlagMapEntry>
-                <key>UseNewCPlusPlusLib</key>
-                <value use="true" flag="--stdlib=libc++"/>
-              </SingleFlagMapEntry>
-            </SingleFlagMapOptions>
-          </CompilerOptions>
-        </value>
-      </OverriddenSettingsEntry>
-      <OverriddenSettingsEntry>
         <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul.cpp</key>
         <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/mul.cpp">
-          <CompilerOptions>
-            <SingleFlagMapOptions>
-              <SingleFlagMapEntry>
-                <key>ISOStandard</key>
-                <value use="true" flag="-std=c++11"/>
-              </SingleFlagMapEntry>
-              <SingleFlagMapEntry>
-                <key>UseNewCPlusPlusLib</key>
-                <value use="true" flag="--stdlib=libc++"/>
-              </SingleFlagMapEntry>
-            </SingleFlagMapOptions>
-          </CompilerOptions>
-        </value>
-      </OverriddenSettingsEntry>
-      <OverriddenSettingsEntry>
-        <key>eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling.cpp</key>
-        <value path="eiq/tensorflow-lite/tensorflow/lite/micro/kernels/pooling.cpp">
           <CompilerOptions>
             <SingleFlagMapOptions>
               <SingleFlagMapEntry>

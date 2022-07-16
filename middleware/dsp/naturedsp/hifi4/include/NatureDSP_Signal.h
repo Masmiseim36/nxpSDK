@@ -45,6 +45,10 @@
 #include "NatureDSP_Signal_complex.h"
 /* Fitting and Interpolation Routines */
 #include "NatureDSP_Signal_fit.h"
+/* audio processing */
+#include "NatureDSP_Signal_audio.h"
+/* image processing */
+#include "NatureDSP_Signal_img.h"
 /* library identification */
 #include "NatureDSP_Signal_id.h"
 

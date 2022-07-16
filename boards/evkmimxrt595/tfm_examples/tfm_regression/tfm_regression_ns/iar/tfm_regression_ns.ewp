@@ -11,9 +11,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>31</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Debug\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/debug</state>
@@ -32,11 +36,11 @@
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -66,15 +70,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>8.30.2.18207</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
+          <state>9.30.1.48832</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -97,26 +93,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
           <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -133,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -156,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -173,7 +155,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -182,7 +164,7 @@
         <option>
           <name>OGScanfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGScanfMultibyteSupport</name>
@@ -209,13 +191,33 @@
           <version>0</version>
           <state>1</state>
         </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Debug</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>34</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -227,28 +229,28 @@
           <state>TFM_LVL=2</state>
           <state>ITS_MAX_ASSET_SIZE=512</state>
           <state>PS_MAX_ASSET_SIZE=512</state>
-          <state>__DOMAIN_NS=1</state>
-          <state>DOMAIN_NS=1</state>
+          <state>OS_DYNAMIC_MEM_SIZE=7168</state>
           <state>TFM_CRYPTO_TEST_ALG_CCM</state>
           <state>TFM_CRYPTO_TEST_ALG_GCM</state>
           <state>TFM_CRYPTO_TEST_HKDF</state>
-          <state>OS_DYNAMIC_MEM_SIZE=8192</state>
           <state>TEST_FRAMEWORK_NS</state>
           <state>TEST_FRAMEWORK_S</state>
-          <state>TFM_PARTITION_TEST_SECURE_SERVICES</state>
           <state>TEST_NS_ITS</state>
           <state>TEST_NS_PS</state>
           <state>TEST_NS_PLATFORM</state>
           <state>T_COSE_USE_PSA_CRYPTO</state>
           <state>TEST_NS_CRYPTO</state>
           <state>TEST_NS_QCBOR</state>
-          <state>TFM_PARTITION_TEST_CORE_IPC</state>
+          <state>TFM_PARTITION_IPC_TEST</state>
           <state>TEST_NS_IPC</state>
           <state>TFM_PSA_API</state>
           <state>TEST_NS_CORE</state>
           <state>TFM_ENABLE_PERIPH_ACCESS_TEST</state>
-          <state>TFM_PARTITION_TEST_CORE</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>CONFIG_TFM_FP=2</state>
+          <state>CONFIG_TFM_LAZY_STACKING</state>
+          <state>__DOMAIN_NS=1</state>
+          <state>DOMAIN_NS=1</state>
           <state>TEST_NS_ATTESTATION</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -370,47 +372,43 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/framework</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/core/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ipc/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/audit/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/t_cose/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/multi_core/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ps/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/qcbor/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/platform/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/audit/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/t_cose/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/multi_core/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/qcbor/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/test_services/tfm_secure_client_service</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/its</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/its/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/platform</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/test</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/bl2/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/crypto</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/crypto/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/test_services/tfm_core_test</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/service/tfm_core_test</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -422,18 +420,21 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/app</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/log</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Config</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -459,16 +460,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>0</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -545,11 +536,19 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -557,7 +556,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>10</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -712,6 +711,10 @@
           <name>AsmNoLiteralPool</name>
           <state>0</state>
         </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
+        </option>
       </data>
     </settings>
     <settings>
@@ -751,12 +754,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -770,16 +769,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>21</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -795,18 +790,23 @@
         </option>
         <option>
           <name>IlinkKeepSymbols</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
+          <state/>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -893,7 +893,6 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../tfm_regression_s/iar/debug/tfm_regression_s_import_lib.o</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/os/rtx/IAR/RTX_V8MMFN.a</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a</state>
         </option>
         <option>
@@ -1081,6 +1080,62 @@
           <name>IlinkTrustzoneImportLibraryOut</name>
           <state>###Unitialized###</state>
         </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1104,11 +1159,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>release</name>
@@ -1120,9 +1170,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>31</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Release\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/release</state>
@@ -1141,11 +1195,11 @@
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1178,14 +1232,6 @@
           <state>8.30.2.18207</state>
         </option>
         <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>OGChipSelectEditMenu</name>
           <state>MIMXRT595S_M33	NXP MIMXRT595S_M33</state>
         </option>
@@ -1206,26 +1252,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
           <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -1242,7 +1274,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -1265,7 +1297,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -1282,7 +1314,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -1291,7 +1323,7 @@
         <option>
           <name>OGScanfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGScanfMultibyteSupport</name>
@@ -1318,13 +1350,33 @@
           <version>0</version>
           <state>1</state>
         </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Release</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>34</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1336,28 +1388,28 @@
           <state>TFM_LVL=2</state>
           <state>ITS_MAX_ASSET_SIZE=512</state>
           <state>PS_MAX_ASSET_SIZE=512</state>
-          <state>__DOMAIN_NS=1</state>
-          <state>DOMAIN_NS=1</state>
+          <state>OS_DYNAMIC_MEM_SIZE=7168</state>
           <state>TFM_CRYPTO_TEST_ALG_CCM</state>
           <state>TFM_CRYPTO_TEST_ALG_GCM</state>
           <state>TFM_CRYPTO_TEST_HKDF</state>
-          <state>OS_DYNAMIC_MEM_SIZE=8192</state>
           <state>TEST_FRAMEWORK_NS</state>
           <state>TEST_FRAMEWORK_S</state>
-          <state>TFM_PARTITION_TEST_SECURE_SERVICES</state>
           <state>TEST_NS_ITS</state>
           <state>TEST_NS_PS</state>
           <state>TEST_NS_PLATFORM</state>
           <state>T_COSE_USE_PSA_CRYPTO</state>
           <state>TEST_NS_CRYPTO</state>
           <state>TEST_NS_QCBOR</state>
-          <state>TFM_PARTITION_TEST_CORE_IPC</state>
+          <state>TFM_PARTITION_IPC_TEST</state>
           <state>TEST_NS_IPC</state>
           <state>TFM_PSA_API</state>
           <state>TEST_NS_CORE</state>
           <state>TFM_ENABLE_PERIPH_ACCESS_TEST</state>
-          <state>TFM_PARTITION_TEST_CORE</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>CONFIG_TFM_FP=2</state>
+          <state>CONFIG_TFM_LAZY_STACKING</state>
+          <state>__DOMAIN_NS=1</state>
+          <state>DOMAIN_NS=1</state>
           <state>TEST_NS_ATTESTATION</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
@@ -1479,47 +1531,43 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/partition</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/framework</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/core/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ipc/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/audit/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/t_cose/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/multi_core/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ps/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/qcbor/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/platform/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/audit/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/t_cose/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/multi_core/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/qcbor/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/non_secure</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/test_services/tfm_secure_client_service</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/its</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/its/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/platform</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/spm/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/test</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/src</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/t_cose/inc</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/bl2/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/crypto</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/crypto/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa_manifest</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/test_services/tfm_core_test</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/service/tfm_core_test</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT595S/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
@@ -1531,18 +1579,21 @@
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/common</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/driver</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/include/tfm</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/app</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/log</state>
           <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Source</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Include</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Config</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/non_secure</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/non_secure</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1568,16 +1619,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1654,11 +1695,19 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -1666,7 +1715,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>10</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1821,6 +1870,10 @@
           <name>AsmNoLiteralPool</name>
           <state>0</state>
         </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1860,12 +1913,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -1879,16 +1928,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>21</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -1904,18 +1949,23 @@
         </option>
         <option>
           <name>IlinkKeepSymbols</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
+          <state/>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -2002,7 +2052,6 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../tfm_regression_s/iar/release/tfm_regression_s_import_lib.o</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/os/rtx/IAR/RTX_V8MMFN.a</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Library/IAR/RTX_V8MMFN.a</state>
         </option>
         <option>
@@ -2190,6 +2239,62 @@
           <name>IlinkTrustzoneImportLibraryOut</name>
           <state>###Unitialized###</state>
         </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2212,11 +2317,6 @@
           <state/>
         </option>
       </data>
-    </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
   </configuration>
   <group>
@@ -2372,39 +2472,21 @@
             <name>nxp</name>
             <group>
               <name>evkmimxrt595</name>
-              <group>
-                <name>Device</name>
-                <group>
-                  <name>Include</name>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/cmsis.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/device_definition.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/platform_irq.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/platform_regs.h</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/platform_base_address.h</name>
-                  </file>
-                </group>
-                <group>
-                  <name>Config</name>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Config/device_cfg.h</name>
-                  </file>
-                </group>
-              </group>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/target_cfg.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/tfm_peripherals_def.h</name>
               </file>
+              <group>
+                <name>Device</name>
+                <group>
+                  <name>Include</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Include/platform_base_address.h</name>
+                  </file>
+                </group>
+              </group>
               <group>
                 <name>partition</name>
                 <file>
@@ -2417,14 +2499,35 @@
             </group>
             <group>
               <name>common</name>
-              <file>
-                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/plat_attestation_key.c</name>
-              </file>
               <group>
                 <name>CMSIS_Driver</name>
                 <file>
                   <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/CMSIS_Driver/Driver_USART.c</name>
                 </file>
+              </group>
+              <group>
+                <name>Device</name>
+                <group>
+                  <name>Include</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/cmsis.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/device_definition.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_irq.h</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Include/platform_regs.h</name>
+                  </file>
+                </group>
+                <group>
+                  <name>Config</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/Device/Config/device_cfg.h</name>
+                  </file>
+                </group>
               </group>
               <file>
                 <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/plat_test.c</name>
@@ -2498,9 +2601,6 @@
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/attest_token.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/attest_asymmetric_key.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/secure_fw/partitions/initial_attestation/attest_key.h</name>
           </file>
           <file>
@@ -2564,15 +2664,6 @@
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/src/UsefulBuf.c</name>
-            </file>
-          </group>
-          <group>
-            <name>util</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util/qcbor_util.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/lib/ext/qcbor/util/qcbor_util.h</name>
             </file>
           </group>
           <group>
@@ -2685,7 +2776,7 @@
           </file>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_param.h</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/config_impl.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_veneers.h</name>
@@ -2704,6 +2795,15 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_interface.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa_config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_psa_call_pack.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_ns_client_ext.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/tfm_platform_api.h</name>
@@ -2736,6 +2836,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa/error.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa/framework_feature.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m/interface/include/psa/initial_attestation.h</name>
@@ -2815,10 +2918,262 @@
     <group>
       <name>test</name>
       <group>
-        <name>framework</name>
+        <name>secure_fw</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/framework/non_secure_suites.c</name>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/non_secure_suites.c</name>
         </file>
+        <group>
+          <name>suites</name>
+          <group>
+            <name>core</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure/core_ns_tests.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure/core_ns_positive_testsuite.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure/core_test_api.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/non_secure/core_test_api.h</name>
+              </file>
+            </group>
+            <group>
+              <name>service</name>
+              <group>
+                <name>tfm_core_test</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/core/service/tfm_core_test/core_test_defs.h</name>
+                </file>
+              </group>
+            </group>
+          </group>
+          <group>
+            <name>spm</name>
+            <group>
+              <name>ipc</name>
+              <group>
+                <name>non_secure</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/non_secure/ipc_ns_tests.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/non_secure/ipc_ns_interface_testsuite.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/ipc/non_secure/ipc_ns_tests.h</name>
+                </file>
+              </group>
+            </group>
+            <group>
+              <name>common</name>
+              <group>
+                <name>service</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/service/client_api_test_defs.h</name>
+                </file>
+              </group>
+              <group>
+                <name>suites</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites/client_api_tests.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/spm/common/suites/client_api_tests.h</name>
+                </file>
+              </group>
+            </group>
+          </group>
+          <group>
+            <name>audit</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/audit/non_secure/audit_ns_tests.h</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>t_cose</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/t_cose/non_secure/t_cose_ns_tests.h</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>multi_core</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/multi_core/non_secure/multi_core_ns_test.h</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>ps</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure/ps_ns_tests.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure/ns_test_helpers.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure/ns_test_helpers.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure/psa_ps_ns_interface_testsuite.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/ps/non_secure/ps_ns_tests.h</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>qcbor</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/qcbor/non_secure/qcbor_ns_tests.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/qcbor/non_secure/qcbor_ns_testsuite.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/qcbor/non_secure/qcbor_ns_tests.h</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>platform</name>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/non_secure/platform_ns_tests.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/non_secure/platform_ns_tests.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/non_secure/platform_ns_interface_testsuite.c</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/platform_tests_common.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/platform/platform_tests_common.h</name>
+            </file>
+          </group>
+          <group>
+            <name>its</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/its_tests_common.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/its_tests_common.h</name>
+            </file>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/non_secure/psa_its_ns_interface_testsuite.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/its/non_secure/its_ns_tests.h</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>crypto</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/crypto_tests_common.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/crypto_tests_common.h</name>
+            </file>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/non_secure/crypto_ns_interface_testsuite.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/crypto/non_secure/crypto_ns_tests.h</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>attestation</name>
+            <group>
+              <name>ext</name>
+              <group>
+                <name>qcbor_util</name>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util/qcbor_util.c</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/ext/qcbor_util/qcbor_util.h</name>
+                </file>
+              </group>
+            </group>
+            <group>
+              <name>non_secure</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/non_secure/attest_asymmetric_ns_interface_testsuite.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/non_secure/attest_ns_tests.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_public_key.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_public_key.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_token_decode_asymmetric.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_token_decode.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_token_decode_common.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_token_test.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_token_test.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_token_test_values.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/suites/attestation/attest_tests_common.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>common_test_services</name>
+          <group>
+            <name>tfm_secure_client_service</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service/tfm_secure_client_service_api.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/secure_fw/common_test_services/tfm_secure_client_service/tfm_secure_client_service_api.h</name>
+            </file>
+          </group>
+        </group>
+      </group>
+      <group>
+        <name>framework</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/framework/test_framework.c</name>
         </file>
@@ -2843,219 +3198,9 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/framework/test_framework_helpers.h</name>
         </file>
-      </group>
-      <group>
-        <name>suites</name>
-        <group>
-          <name>core</name>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/core/non_secure/core_ns_tests.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/core/non_secure/core_ns_positive_testsuite.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/core/non_secure/core_test_api.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/core/non_secure/core_test_api.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>ipc</name>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ipc/non_secure/ipc_ns_tests.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ipc/non_secure/ipc_ns_interface_testsuite.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ipc/non_secure/ipc_ns_tests.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>audit</name>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/audit/non_secure/audit_ns_tests.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>t_cose</name>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/t_cose/non_secure/t_cose_ns_tests.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>multi_core</name>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/multi_core/non_secure/multi_core_ns_test.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>ps</name>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ps/non_secure/ps_ns_tests.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ps/non_secure/ns_test_helpers.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ps/non_secure/ns_test_helpers.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ps/non_secure/psa_ps_ns_interface_testsuite.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/ps/non_secure/ps_ns_tests.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>qcbor</name>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/qcbor/non_secure/qcbor_ns_tests.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/qcbor/non_secure/qcbor_ns_testsuite.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/qcbor/non_secure/qcbor_ns_tests.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>platform</name>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/platform/non_secure/platform_ns_tests.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/platform/non_secure/platform_ns_tests.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/platform/non_secure/platform_ns_interface_testsuite.c</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/platform/platform_tests_common.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/platform/platform_tests_common.h</name>
-          </file>
-        </group>
-        <group>
-          <name>its</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/its/its_tests_common.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/its/its_tests_common.h</name>
-          </file>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/its/non_secure/psa_its_ns_interface_testsuite.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/its/non_secure/its_ns_tests.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>crypto</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/crypto/crypto_tests_common.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/crypto/crypto_tests_common.h</name>
-          </file>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/crypto/non_secure/crypto_ns_interface_testsuite.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/crypto/non_secure/crypto_ns_tests.h</name>
-            </file>
-          </group>
-        </group>
-        <group>
-          <name>attestation</name>
-          <group>
-            <name>non_secure</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/non_secure/attest_asymmetric_ns_interface_testsuite.c</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/non_secure/attest_ns_tests.h</name>
-            </file>
-          </group>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/attest_public_key.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/attest_public_key.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/attest_token_decode_asymmetric.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/attest_token_decode.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/attest_token_decode_common.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/attest_token_test.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/attest_token_test.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/attest_token_test_values.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/suites/attestation/attest_tests_common.h</name>
-          </file>
-        </group>
-      </group>
-      <group>
-        <name>test_services</name>
-        <group>
-          <name>tfm_secure_client_service</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/test_services/tfm_secure_client_service/tfm_secure_client_service_api.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/test_services/tfm_secure_client_service/tfm_secure_client_service_api.h</name>
-          </file>
-        </group>
-        <group>
-          <name>tfm_core_test</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/test_services/tfm_core_test/core_test_defs.h</name>
-          </file>
-        </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/test/framework/test_log.h</name>
+        </file>
       </group>
     </group>
     <group>
@@ -3070,21 +3215,12 @@
     <group>
       <name>ns_interface</name>
       <group>
-        <name>ns_client_id</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_ns_svc.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_nspm_api.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_id/tfm_nspm_svc_handler.h</name>
-        </file>
-      </group>
-      <group>
         <name>os_wrapper</name>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/common.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/delay.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/msg_queue.h</name>
@@ -3097,6 +3233,15 @@
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/os_wrapper/thread.h</name>
+        </file>
+      </group>
+      <group>
+        <name>ns_client_ext</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext/tfm_nsid_manager.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/tfm/tf-m-tests/ns_interface/ns_client_ext/tz_shim_layer.c</name>
         </file>
       </group>
     </group>
@@ -3231,6 +3376,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Include/rtx_os.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../../CMSIS/RTOS2/RTX/Include/rtx_def.h</name>
           </file>
         </group>
         <group>

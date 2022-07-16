@@ -170,7 +170,7 @@ static const eFft_stage_type ifft_cplx16x16_stg_tab[] =
     fft_stage_last_DFT8
 };
 
-static const fft_cplx_x16_descr_t __cfft_descr = 
+const fft_cplx_x16_descr_t __cfft_x16_descr320 =
 {
     N, 
     NULL, 
@@ -180,7 +180,7 @@ static const fft_cplx_x16_descr_t __cfft_descr =
     tw_step_tab,
     tw_tab
 };     
-static const fft_cplx_x16_descr_t __cifft_descr =
+const fft_cplx_x16_descr_t __cifft_x16_descr320 =
 {
     N, 
     NULL, 
@@ -190,5 +190,5 @@ static const fft_cplx_x16_descr_t __cifft_descr =
     tw_step_tab,
     tw_tab
 };     
-const fft_handle_t cnfft16_320 = (const fft_handle_t)&__cfft_descr;
-const fft_handle_t cinfft16_320 = (const fft_handle_t)&__cifft_descr;
+const fft_handle_t cnfft16_320 = (const fft_handle_t)&__cfft_x16_descr320;
+const fft_handle_t cinfft16_320 = (const fft_handle_t)&__cifft_x16_descr320;

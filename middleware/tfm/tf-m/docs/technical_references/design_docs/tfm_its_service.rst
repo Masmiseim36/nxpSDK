@@ -5,7 +5,6 @@ Internal Trusted Storage (ITS) Service
 :Author: Jamie Fox
 :Organization: Arm Limited
 :Contact: Jamie Fox <jamie.fox@arm.com>
-:Status: Accepted
 
 PSA Internal Trusted Storage
 ============================
@@ -85,7 +84,7 @@ manifest)
 
 tf-m-tests repo:
 
-``test/suites/its/``
+``test/secure_fw/suites/its/``
 
 - ``non_secure/psa_its_ns_interface_testsuite.c`` - Non-secure interface tests
 - ``secure/psa_its_s_interface_testsuite.c`` - Secure interface tests
@@ -278,4 +277,4 @@ has not been considered further at this time.
 
 --------------
 
-*Copyright (c) 2019, Arm Limited. All rights reserved.*
+*Copyright (c) 2019-2022, Arm Limited. All rights reserved.*

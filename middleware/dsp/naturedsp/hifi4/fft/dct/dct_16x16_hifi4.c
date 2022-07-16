@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------ */
-/* Copyright (c) 2018 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
+/* Copyright (c) 2017 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
 /* These coded instructions, statements, and computer programs ("Cadence    */
 /* Libraries") are the copyrighted works of Cadence Design Systems Inc.	    */
 /* Cadence IP is licensed for use with Cadence processor cores only and     */
@@ -130,8 +130,8 @@ int dct_16x16(int16_t* y, int16_t* x, dct_handle_t h, int scalingOpt)
 
     /* fft of half-size with reordering */
     cfftIx = 25-NSA(N);
+    cfftIx&=1;
     cfftTbl[cfftIx](x, y, (const int16_t *)descr->fft_twd);
-
     dct_split_16x16(y,x,descr);
 
     return 30-NSA(N);

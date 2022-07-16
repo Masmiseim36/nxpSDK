@@ -401,6 +401,16 @@ typedef union tag_complex_fract32
 }
 complex_fract32;
 
+typedef union tag_complex_fract64
+{
+    struct
+    {
+        int64_t re, im;
+    }s;
+    uint64_t a;/* just for 64-bit alignment */
+}
+complex_fract64;
+
 #if defined(COMPILER_MSVC)
 /* Note: Visual Studio does not support C99 compatible complex types yet */
 typedef union tag_complex_float
@@ -685,6 +695,7 @@ float32_t STDLIB_MATH(conjf) (complex_float x);
 /*    union data type for writing float32_t/float64_t constants in a bitexact form */
 union ufloat32uint32 {  uint32_t  u;  float32_t f; };
 union ufloat64uint64 {  uint64_t  u;  float64_t f; };
+union ufloat16uint16 {  uint16_t  u;  float16_t f; };
 
 #if defined(__RENAMING__)
 #include "__renaming__.h"

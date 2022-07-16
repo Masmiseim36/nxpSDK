@@ -9,10 +9,10 @@ NOTE: The TF-M main() functions have a non-standard location:
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  10.2.1
-- Keil MDK  5.34
-- IAR embedded Workbench  9.10.2
-- MCUXpresso  11.5.0
+- GCC ARM Embedded  10.3.1
+- Keil MDK  5.37
+- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================
@@ -42,12 +42,17 @@ Running the demo
 ================
 The log below shows the output of the TFM PSA API tests in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+[INF] Beginning TF-M provisioning
+[WRN] TFM_DUMMY_PROVISIONING is not suitable for production! This device is NOT SECURE
 [Sec Thread] Secure image initializing!
-Booting TFM v1.4.0
+TF-M FP mode: Hardware
+Lazy stacking enabled
+Booting TF-M 1.5.0
+Creating an empty ITS flash layout.
+Creating an empty PS flash layout.
 Non-Secure system starting...
 
-***** PSA Architecture Test Suite - Version 1.2 *****
+***** PSA Architecture Test Suite - Version 1.3 *****
 
 Running.. Crypto Suite
 ******************************************
@@ -472,18 +477,18 @@ TEST: 403 | DESCRIPTION: Insufficient space check | UT: ITS
 
 [Info] Executing ITS tests
 [Check 1] Overload storage space
-UID 8 set failed due to insufficient space
+UID 7 set failed due to insufficient space
 Remove all registered UIDs
 [Check 2] Overload storage again to verify all previous UID removed
-UID 8 set failed due to insufficient space
+UID 7 set failed due to insufficient space
 Remove all registered UIDs
 
 [Info] Executing PS tests
 [Check 1] Overload storage space
-UID 8 set failed due to insufficient space
+UID 6 set failed due to insufficient space
 Remove all registered UIDs
 [Check 2] Overload storage again to verify all previous UID removed
-UID 8 set failed due to insufficient space
+UID 6 set failed due to insufficient space
 Remove all registered UIDs
 
 TEST RESULT: PASSED
@@ -705,7 +710,6 @@ TOTAL SKIPPED   : 6
 
 Entering standby..
 
-                             
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 

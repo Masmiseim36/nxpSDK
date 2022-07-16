@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -110,19 +110,19 @@ $(document).ready(function(){initNavTree('a00044.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00383"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00383">i3c_slave_config_t</a></td></tr>
-<tr class="memdesc:a00383"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I3C slave module.  <a href="a00044.html#a00383">More...</a><br/></td></tr>
-<tr class="separator:a00383"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00384"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00384">i3c_slave_transfer_t</a></td></tr>
-<tr class="memdesc:a00384"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave transfer structure.  <a href="a00044.html#a00384">More...</a><br/></td></tr>
+<tr class="memitem:a00384"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00384">i3c_slave_config_t</a></td></tr>
+<tr class="memdesc:a00384"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I3C slave module.  <a href="a00044.html#a00384">More...</a><br/></td></tr>
 <tr class="separator:a00384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00301"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00301">i3c_slave_handle_t</a></td></tr>
-<tr class="memdesc:a00301"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave handle structure.  <a href="a00044.html#a00301">More...</a><br/></td></tr>
-<tr class="separator:a00301"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00385"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00385">i3c_slave_transfer_t</a></td></tr>
+<tr class="memdesc:a00385"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave transfer structure.  <a href="a00044.html#a00385">More...</a><br/></td></tr>
+<tr class="separator:a00385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00302"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00302">i3c_slave_handle_t</a></td></tr>
+<tr class="memdesc:a00302"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave handle structure.  <a href="a00044.html#a00302">More...</a><br/></td></tr>
+<tr class="separator:a00302"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gada633855ef6083061ce6205185f29187"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#gada633855ef6083061ce6205185f29187">i3c_slave_transfer_callback_t</a> )(I3C_Type *base, <a class="el" href="a00044.html#a00384">i3c_slave_transfer_t</a> *transfer, void *userData)</td></tr>
+<tr class="memitem:gada633855ef6083061ce6205185f29187"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#gada633855ef6083061ce6205185f29187">i3c_slave_transfer_callback_t</a> )(I3C_Type *base, <a class="el" href="a00044.html#a00385">i3c_slave_transfer_t</a> *transfer, void *userData)</td></tr>
 <tr class="memdesc:gada633855ef6083061ce6205185f29187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slave event callback function pointer type.  <a href="#gada633855ef6083061ce6205185f29187">More...</a><br/></td></tr>
 <tr class="separator:gada633855ef6083061ce6205185f29187"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -251,10 +251,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gada6de6140ea7a8fd8f9b188f6ca8d561">I3C_SlaveGetDefaultConfig</a> (<a class="el" href="a00044.html#a00383">i3c_slave_config_t</a> *slaveConfig)</td></tr>
+<tr class="memitem:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gada6de6140ea7a8fd8f9b188f6ca8d561">I3C_SlaveGetDefaultConfig</a> (<a class="el" href="a00044.html#a00384">i3c_slave_config_t</a> *slaveConfig)</td></tr>
 <tr class="memdesc:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the I3C slave peripheral.  <a href="#gada6de6140ea7a8fd8f9b188f6ca8d561">More...</a><br/></td></tr>
 <tr class="separator:gada6de6140ea7a8fd8f9b188f6ca8d561"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga6cbdffff9439d0b1ee27682a5c592c34">I3C_SlaveInit</a> (I3C_Type *base, const <a class="el" href="a00044.html#a00383">i3c_slave_config_t</a> *slaveConfig, uint32_t slowClock_Hz)</td></tr>
+<tr class="memitem:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#ga6cbdffff9439d0b1ee27682a5c592c34">I3C_SlaveInit</a> (I3C_Type *base, const <a class="el" href="a00044.html#a00384">i3c_slave_config_t</a> *slaveConfig, uint32_t slowClock_Hz)</td></tr>
 <tr class="memdesc:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the I3C slave peripheral.  <a href="#ga6cbdffff9439d0b1ee27682a5c592c34">More...</a><br/></td></tr>
 <tr class="separator:ga6cbdffff9439d0b1ee27682a5c592c34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaaf8b8a5e1974d969dfb4769ece3f2d0c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00041.html#gaaf8b8a5e1974d969dfb4769ece3f2d0c">I3C_SlaveDeinit</a> (I3C_Type *base)</td></tr>
@@ -355,7 +355,7 @@ Slave IRQ handler</h2></td></tr>
 <tr class="separator:ga5a70275328fb396b8adedef7f8de3199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00383" id="a00383"></a>
+<a name="a00384" id="a00384"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -587,7 +587,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 
 </div>
 </div>
-<a name="a00384" id="a00384"></a>
+<a name="a00385" id="a00385"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -665,7 +665,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 
 </div>
 </div>
-<a name="a00301" id="a00301"></a>
+<a name="a00302" id="a00302"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -677,7 +677,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="textblock"><dl class="section note"><dt>Note</dt><dd>The contents of this structure are private and subject to change. </dd></dl>
 </div><table class="memberdecls">
 <tr><td colspan="2"><h3>Data Fields</h3></td></tr>
-<tr class="memitem:a50a74a027294db6b95d2436342644d32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00044.html#a00384">i3c_slave_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a50a74a027294db6b95d2436342644d32">transfer</a></td></tr>
+<tr class="memitem:a50a74a027294db6b95d2436342644d32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00044.html#a00385">i3c_slave_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a50a74a027294db6b95d2436342644d32">transfer</a></td></tr>
 <tr class="memdesc:a50a74a027294db6b95d2436342644d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">I3C slave transfer copy.  <a href="#a50a74a027294db6b95d2436342644d32">More...</a><br/></td></tr>
 <tr class="separator:a50a74a027294db6b95d2436342644d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a623b52328752ec251c7235b560b359b3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a623b52328752ec251c7235b560b359b3">isBusy</a></td></tr>
@@ -713,7 +713,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00044.html#a00384">i3c_slave_transfer_t</a> i3c_slave_handle_t::transfer</td>
+          <td class="memname"><a class="el" href="a00044.html#a00385">i3c_slave_transfer_t</a> i3c_slave_handle_t::transfer</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -801,7 +801,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef void(* i3c_slave_transfer_callback_t)(I3C_Type *base, <a class="el" href="a00044.html#a00384">i3c_slave_transfer_t</a> *transfer, void *userData)</td>
+          <td class="memname">typedef void(* i3c_slave_transfer_callback_t)(I3C_Type *base, <a class="el" href="a00044.html#a00385">i3c_slave_transfer_t</a> *transfer, void *userData)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1070,7 +1070,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="memname">void I3C_SlaveGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00044.html#a00383">i3c_slave_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00044.html#a00384">i3c_slave_config_t</a> *&#160;</td>
           <td class="paramname"><em>slaveConfig</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1082,7 +1082,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 </div><!-- fragment --><p>After calling this function, you can override any settings in order to customize the configuration, prior to initializing the slave driver with <a class="el" href="a00041.html#ga6cbdffff9439d0b1ee27682a5c592c34" title="Initializes the I3C slave peripheral. ">I3C_SlaveInit()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00044.html#a00383" title="Structure with settings to initialize the I3C slave module. ">i3c_slave_config_t</a>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">slaveConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00044.html#a00384" title="Structure with settings to initialize the I3C slave module. ">i3c_slave_config_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1102,7 +1102,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00044.html#a00383">i3c_slave_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00044.html#a00384">i3c_slave_config_t</a> *&#160;</td>
           <td class="paramname"><em>slaveConfig</em>, </td>
         </tr>
         <tr>
@@ -2001,7 +2001,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00044.html#a00301" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00044.html#a00302" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
     <tr><td class="paramname">eventMask</td><td>Bit mask formed by OR'ing together <a class="el" href="a00044.html#ga2c7de75eda1c22aa63ab2bbdc0f0d989" title="Set of events sent to the callback for non blocking slave transfers. ">i3c_slave_transfer_event_t</a> enumerators to specify which events to send to the callback. Other accepted values are 0 to get a default set of only the transmit and receive events, and <a class="el" href="a00044.html#gga2c7de75eda1c22aa63ab2bbdc0f0d989ac872741fd80ab9d76f9ec145a674f53c" title="Bit mask of all available events. ">kI3C_SlaveAllEvents</a> to enable all events.</td></tr>
   </table>
   </dd>
@@ -2090,7 +2090,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00044.html#a00301" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00044.html#a00302" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2131,7 +2131,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00044.html#a00301" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00044.html#a00302" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2176,7 +2176,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The I3C peripheral base address. </td></tr>
-    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00044.html#a00301" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
+    <tr><td class="paramname">handle</td><td>Pointer to struct: <a class="el" href="a00044.html#a00302" title="I3C slave handle structure. ">_i3c_slave_handle</a> structure which stores the transfer state. </td></tr>
     <tr><td class="paramname">data</td><td>Pointer to IBI data to be sent in the request. </td></tr>
     <tr><td class="paramname">dataSize</td><td>IBI data size. </td></tr>
   </table>

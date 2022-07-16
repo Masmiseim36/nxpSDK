@@ -20,6 +20,9 @@
 #include "usb_host_config.h"
 #include "usb_phy.h"
 #include "usb_host.h"
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+#include "ksdk_mbedtls.h"
+#endif /* CONFIG_BT_SMP */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -204,6 +207,10 @@ int main(void)
     /* Set FlexSPI clock: source AUX0_PLL, divide by 4 */
     BOARD_SetFlexspiClock(FLEXSPI0, 2U, 4U);
 
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+    CRYPTO_InitHardware();
+#endif /* CONFIG_BT_SMP */
+
     if (xTaskCreate(edgefast_bt_pal_shell_task, "edgefast_bt_pal_shell_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
         PRINTF("Edgefast Bluetooth PAL shell task creation failed!\r\n");
@@ -214,4 +221,17 @@ int main(void)
     vTaskStartScheduler();
     for (;;)
         ;
+}
+
+void *pvPortCalloc(size_t xNum, size_t xSize)
+{
+    void *pvReturn;
+
+    pvReturn = pvPortMalloc(xNum * xSize);
+    if (pvReturn != NULL)
+    {
+        memset(pvReturn, 0x00, xNum * xSize);
+    }
+
+    return pvReturn;
 }

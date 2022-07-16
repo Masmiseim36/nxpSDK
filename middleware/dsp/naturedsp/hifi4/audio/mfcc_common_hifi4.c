@@ -1,3 +1,51 @@
+/*-------------------------------------------------------------------------
+  Compute Mel-Frequency Cepstrum Coefficients (MFCC) from speech signal.
+  MFCC features extraction procedure comprises the following steps:
+  - input speech signal is optionally passed through a pre-emphasis filter;
+  - filtered signal is subject to short-time Fourier transform (STFT) followed by
+    magnitude spectrum computation;
+  - a set of filters is applied to the magnitude spectrum, with triangular weight
+    functions constructed in such a way that the prescribed frequency range 
+    is divided into overlapping bands of equal mel-frequency width;
+  - log-scaled filterbank energies are decorrelated via a Discrete Cosine Transform 
+    Type II (DCT-II) to form cepstrum coefficients;
+  - in the last step a sine lifter is optionally applied to cepstra to align 
+    coefficient magnitudes.
+  In general, the computation procedure follows the MFCC features extraction 
+  algorithm adopted in the Hidden Markov Models Toolkit (HTK), as descibed in:
+  [1] S. Young, G. Evermann, M. Gales, T. Hain, D. Kershaw, X. Liu, G. Moore,
+      J. Odell, D. Ollason, D. Povey, V. Valtchev, P. Woodland,
+      The HTK Book (for HTK version 3.4), 
+      Cambridge University Engineering Department, 2009. 
+      http:                                   
+  In addition, a number of options provide an ability to emulate the operation of
+  another popular package for speech analysis:
+  [2] The Auditory Toolbox for MATLAB by Malcolm Slaney, Version 2
+      Interval Research Corporation
+      https:                                                    
+  Precision: 
+  32x32                       32-bit fixed-point input/output data
+  f                           Single precision floating-point input/output data
+  Input:
+  objmem                      Memory block allocated for the instance object:
+  params                      MFCC features extraction parameters
+  callback                    User-supplied callback functions
+  speech[stftHopLen]          Speech samples; Q31 for 32x32
+  Temporary:
+  pScr                        Scratch memory area for the processing function. To 
+                              determine the scratch area size, use the respective
+                              helper function: mfcc<32x32|f>_getScratchSize()
+  Output:
+  cepstra[cepstraNum]         Cepstral coefficients, the number of fractional bits
+                              for 32x32 is defined by MFCC_CEPSTRA_FRACT_BITS.
+  Restrictions:
+  cepstra[],speech[]          Must not overlap, and must be aligned by 8-bytes
+  Fs                          8000 <= Fs <= 48000
+  fftSize                     256, 512, 1024 or 2048
+  stftWinLen, stftHopLen      Must be multiples of 2, 0 < stftHopLen <= stftWinLen <= fftSize
+  mfbLowFreqQ8, mfbUppFreqQ8  0 <= mfbLowFreqQ8 < mfbUppFreqQ8 <= 16000*256
+  mfbBandNum, cepstraNum      0 < cepstraNum <= mfbBandNum <= 40
+-------------------------------------------------------------------------*/
 /* ------------------------------------------------------------------------ */
 /* Copyright (c) 2018 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
 /* These coded instructions, statements, and computer programs ("Cadence    */

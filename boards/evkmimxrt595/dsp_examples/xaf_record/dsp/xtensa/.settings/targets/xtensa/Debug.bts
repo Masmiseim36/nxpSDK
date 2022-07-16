@@ -8,8 +8,6 @@
             <key>Includes</key>
             <value flag="-I" inheritance="donotinherit">
               <ListEntry>${xt_project_loc}/..</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include_private</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
@@ -46,6 +44,8 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/vit_pre_proc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/test_inp</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/inc</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
             </value>
@@ -72,6 +72,7 @@
               <ListEntry key="HIFI_ONLY_XAF" value=""/>
               <ListEntry key="FIO_LOCAL_FS" value=""/>
               <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
+              <ListEntry key="NNLIB_V2" value=""/>
               <ListEntry key="CPU_MIMXRT595SFFOC_dsp" value=""/>
               <ListEntry key="MCUXPRESSO_SDK" value=""/>
             </value>
@@ -130,7 +131,9 @@ ${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/fusionf1/lib/x
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/lib/xa_opus_codec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_FusionF1_v4_4_0.a&#13;
+${xt_project_loc}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_06_00.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/fusionf1/libxa_nnlib.a&#13;
 -g&#13;
 </ListEntry>
             </value>
@@ -140,6 +143,7 @@ ${xt_project_loc}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_FusionF1_
             <value inheritance="prepend" flag="-l">
               <ListEntry>m</ListEntry>
               <ListEntry>xos</ListEntry>
+              <ListEntry>xtutil</ListEntry>
             </value>
           </StringListMapEntry>
         </StringListMapOptions>

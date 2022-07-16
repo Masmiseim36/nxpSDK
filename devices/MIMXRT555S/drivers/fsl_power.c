@@ -846,6 +846,13 @@ AT_QUICKACCESS_SECTION_CODE(void POWER_EnterDeepSleep(const uint32_t exclude_fro
     SYSCTL0->PDSLEEPCFG0 = (PCFG0_DEEP_SLEEP & ~exclude_from_pd[0]) |
                            (SYSCTL0->PDRUNCFG0 & ~exclude_from_pd[0] &
                             ~(SYSCTL0_PDSLEEPCFG0_PMIC_MODE0_MASK | SYSCTL0_PDSLEEPCFG0_PMIC_MODE1_MASK));
+    /* When either PLL or FRO is enabled, the PMCREF_LP should be cleared. */
+    if ((exclude_from_pd[0] & (SYSCTL0_PDSLEEPCFG0_FFRO_PD_MASK | SYSCTL0_PDSLEEPCFG0_SYSPLLLDO_PD_MASK |
+                               SYSCTL0_PDSLEEPCFG0_SYSPLLANA_PD_MASK | SYSCTL0_PDSLEEPCFG0_AUDPLLLDO_PD_MASK |
+                               SYSCTL0_PDSLEEPCFG0_AUDPLLANA_PD_MASK)) != 0U)
+    {
+        SYSCTL0->PDSLEEPCFG0 &= ~SYSCTL0_PDSLEEPCFG0_PMCREF_LP_MASK;
+    }
     SYSCTL0->PDSLEEPCFG1 = (PCFG1_DEEP_SLEEP & ~exclude_from_pd[1]) | (SYSCTL0->PDRUNCFG1 & ~exclude_from_pd[1]);
     SYSCTL0->PDSLEEPCFG2 = (PCFG2_DEEP_SLEEP & ~exclude_from_pd[2]) | (SYSCTL0->PDRUNCFG2 & ~exclude_from_pd[2]);
     SYSCTL0->PDSLEEPCFG3 = (PCFG3_DEEP_SLEEP & ~exclude_from_pd[3]) | (SYSCTL0->PDRUNCFG3 & ~exclude_from_pd[3]);
@@ -883,6 +890,17 @@ AT_QUICKACCESS_SECTION_CODE(void POWER_EnterDeepSleep(const uint32_t exclude_fro
         /* Enable RBB for OTP switch */
         PMC->CTRL |= PMC_CTRL_OTPSWREN_MASK;
     }
+
+    /* Set PMC_CTRL[APPLYCFG]. */
+    PMC->CTRL &= ~PMC_CTRL_CLKDIVEN_MASK; /* Disable internal clock divider to decrease the PMC register access delay.*/
+    while ((PMC->STATUS & PMC_STATUS_ACTIVEFSM_MASK) != 0U) /* Cannot set APPLYCFG when ACTIVEFSM is 1 */
+    {
+    }
+    PMC->CTRL |= PMC_CTRL_APPLYCFG_MASK;
+    while ((PMC->STATUS & PMC_STATUS_ACTIVEFSM_MASK) != 0U) /* Wait all PMC finite state machines finished. */
+    {
+    }
+    PMC->CTRL |= PMC_CTRL_CLKDIVEN_MASK; /* Enable internal clock divider for power saving.*/
 
     if (deepSleepClk == kDeepSleepClk_LpOsc)
     {
@@ -1053,7 +1071,22 @@ AT_QUICKACCESS_SECTION_CODE(void POWER_EnterDeepSleep(const uint32_t exclude_fro
     /* Restore PMC LVD core reset and OTP switch setting */
     PMC->CTRL = pmc_ctrl;
     /* Recover OTP power */
-    SYSCTL0->PDRUNCFG1_CLR = otp_cfg;
+    if (otp_cfg != 0U)
+    {
+        SYSCTL0->PDRUNCFG1_CLR = otp_cfg;
+
+        /* Set PMC_CTRL[APPLYCFG]. */
+        PMC->CTRL &=
+            ~PMC_CTRL_CLKDIVEN_MASK; /* Disable internal clock divider to decrease the PMC register access delay.*/
+        while ((PMC->STATUS & PMC_STATUS_ACTIVEFSM_MASK) != 0U) /* Cannot set APPLYCFG when ACTIVEFSM is 1 */
+        {
+        }
+        PMC->CTRL |= PMC_CTRL_APPLYCFG_MASK;
+        while ((PMC->STATUS & PMC_STATUS_ACTIVEFSM_MASK) != 0U) /* Wait all PMC finite state machines finished. */
+        {
+        }
+        PMC->CTRL |= PMC_CTRL_CLKDIVEN_MASK; /* Enable internal clock divider for power saving.*/
+    }
 
     /* Restore DSP stall status */
     if (dsp_state)
@@ -1222,5 +1255,5 @@ void DisableDeepSleepIRQ(IRQn_Type interrupt)
 /* Get power lib version */
 uint32_t POWER_GetLibVersion(void)
 {
-    return FSL_POWER_DRIVER_VERSION;
+    return (uint32_t)FSL_POWER_DRIVER_VERSION;
 }

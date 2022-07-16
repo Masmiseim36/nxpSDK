@@ -53,6 +53,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/pca9420
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../flash_config
@@ -86,6 +87,8 @@ include(middleware_sdmmc_host_usdhc_interrupt_MIMXRT685S_cm33)
 include(utility_debug_console_lite_MIMXRT685S_cm33)
 
 include(utility_assert_lite_MIMXRT685S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT685S_cm33)
 
 include(driver_clock_MIMXRT685S_cm33)
 

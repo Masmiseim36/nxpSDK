@@ -1,6 +1,6 @@
 var a00020 =
 [
-    [ "serial_nor_config_option_t", "a00020.html#a00373", [
+    [ "serial_nor_config_option_t", "a00020.html#a00374", [
       [ "max_freq", "a00020.html#ab4a57d8d940d2087b5b08f65a975ccc9", null ],
       [ "misc_mode", "a00020.html#ab593fc2c81c4662c4ec2cff4a275f5fc", null ],
       [ "quad_mode_setting", "a00020.html#a7977532540c18274ae2a57e5e26db431", null ],
@@ -16,13 +16,13 @@ var a00020 =
       [ "drive_strength", "a00020.html#a6cc829e3d9e583348145d9d6e2d941b0", null ],
       [ "flash_connection", "a00020.html#a728346cea7f4a888b9dc7c3d9236929b", null ]
     ] ],
-    [ "flash_run_context_t", "a00020.html#a00303", null ],
-    [ "flexspi_lut_seq_t", "a00020.html#a00307", [
+    [ "flash_run_context_t", "a00020.html#a00304", null ],
+    [ "flexspi_lut_seq_t", "a00020.html#a00308", [
       [ "seqNum", "a00020.html#aff1517c9311e2e44312c6dd8f06cbdb0", null ],
       [ "seqId", "a00020.html#ab372af7ca830c7dde741839c8c3216d4", null ]
     ] ],
-    [ "flexspi_dll_time_t", "a00020.html#a00306", null ],
-    [ "flexspi_mem_config_block_t", "a00020.html#a00308", [
+    [ "flexspi_dll_time_t", "a00020.html#a00307", null ],
+    [ "flexspi_mem_config_block_t", "a00020.html#a00309", [
       [ "tag", "a00020.html#a622f1dd63095d52db8d61c6d5fff1ead", null ],
       [ "version", "a00020.html#a084e71b4aa9fc1672bcafd9ec1b6eba9", null ],
       [ "reserved0", "a00020.html#ad2225057c8e462d515d069ee73a0a1ea", null ],
@@ -64,7 +64,7 @@ var a00020 =
       [ "lutCustomSeq", "a00020.html#a428421c880e07300d8ac435b4eecf428", null ],
       [ "reserved4", "a00020.html#a7ded8e39c2d74f9af2dc10f664b1097b", null ]
     ] ],
-    [ "flexspi_xfer_t", "a00020.html#a00311", [
+    [ "flexspi_xfer_t", "a00020.html#a00312", [
       [ "operation", "a00020.html#a96151c62f0647e5a512c8877d71283c2", null ],
       [ "baseAddress", "a00020.html#a4de700520c744c3cf8e800e9043ee225", null ],
       [ "seqId", "a00020.html#a02b7b0481bb77341a8fbc33ae1469cd3", null ],
@@ -75,7 +75,7 @@ var a00020 =
       [ "rxBuffer", "a00020.html#ac94d954c85d949b9e03b680046054e2e", null ],
       [ "rxSize", "a00020.html#a5f3def06f7afea1b88dc8362c4206c94", null ]
     ] ],
-    [ "flexspi_nor_config_t", "a00020.html#a00309", [
+    [ "flexspi_nor_config_t", "a00020.html#a00310", [
       [ "memConfig", "a00020.html#a7430142ae8b9270b2ebaa63f3d1ef899", null ],
       [ "pageSize", "a00020.html#a778ff87c62d497a46f5eba64a4319a37", null ],
       [ "sectorSize", "a00020.html#a6f924e5e21868b8371553a03f1c85e23", null ],

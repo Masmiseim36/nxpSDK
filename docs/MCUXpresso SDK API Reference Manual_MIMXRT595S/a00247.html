@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -135,9 +135,9 @@ USART Send/receive using a polling method</h2>
 </div><!-- fragment --><h2><a class="anchor" id="USARTCaseInterrupt"></a>
 USART Send/receive using an interrupt method</h2>
 <div class="fragment"><div class="line">usart_handle_t g_usartHandle;</div>
-<div class="line"><a class="code" href="a00072.html#a00458">usart_config_t</a> user_config;</div>
-<div class="line"><a class="code" href="a00072.html#a00460">usart_transfer_t</a> sendXfer;</div>
-<div class="line"><a class="code" href="a00072.html#a00460">usart_transfer_t</a> receiveXfer;</div>
+<div class="line"><a class="code" href="a00072.html#a00459">usart_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00072.html#a00461">usart_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00072.html#a00461">usart_transfer_t</a> receiveXfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> rxFinished;</div>
 <div class="line">uint8_t sendData[] = [<span class="charliteral">&#39;H&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;o&#39;</span>];</div>
@@ -204,9 +204,9 @@ USART Receive using the ringbuffer feature</h2>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define RX_DATA_SIZE     32</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line">usart_handle_t g_usartHandle;</div>
-<div class="line"><a class="code" href="a00072.html#a00458">usart_config_t</a> user_config;</div>
-<div class="line"><a class="code" href="a00072.html#a00460">usart_transfer_t</a> sendXfer;</div>
-<div class="line"><a class="code" href="a00072.html#a00460">usart_transfer_t</a> receiveXfer;</div>
+<div class="line"><a class="code" href="a00072.html#a00459">usart_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00072.html#a00461">usart_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00072.html#a00461">usart_transfer_t</a> receiveXfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> rxFinished;</div>
 <div class="line">uint8_t receiveData[RX_DATA_SIZE];</div>
@@ -267,11 +267,11 @@ USART Receive using the ringbuffer feature</h2>
 </div><!-- fragment --><h2><a class="anchor" id="USARTCaseDma"></a>
 USART Send/Receive using the DMA method</h2>
 <div class="fragment"><div class="line">usart_handle_t g_usartHandle;</div>
-<div class="line"><a class="code" href="a00016.html#a00330">dma_handle_t</a> g_usartTxDmaHandle;</div>
-<div class="line"><a class="code" href="a00016.html#a00330">dma_handle_t</a> g_usartRxDmaHandle;</div>
-<div class="line"><a class="code" href="a00072.html#a00458">usart_config_t</a> user_config;</div>
-<div class="line"><a class="code" href="a00072.html#a00460">usart_transfer_t</a> sendXfer;</div>
-<div class="line"><a class="code" href="a00072.html#a00460">usart_transfer_t</a> receiveXfer;</div>
+<div class="line"><a class="code" href="a00016.html#a00331">dma_handle_t</a> g_usartTxDmaHandle;</div>
+<div class="line"><a class="code" href="a00016.html#a00331">dma_handle_t</a> g_usartRxDmaHandle;</div>
+<div class="line"><a class="code" href="a00072.html#a00459">usart_config_t</a> user_config;</div>
+<div class="line"><a class="code" href="a00072.html#a00461">usart_transfer_t</a> sendXfer;</div>
+<div class="line"><a class="code" href="a00072.html#a00461">usart_transfer_t</a> receiveXfer;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> txFinished;</div>
 <div class="line"><span class="keyword">volatile</span> <span class="keywordtype">bool</span> rxFinished;</div>
 <div class="line">uint8_t sendData[] = [<span class="charliteral">&#39;H&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;o&#39;</span>];</div>

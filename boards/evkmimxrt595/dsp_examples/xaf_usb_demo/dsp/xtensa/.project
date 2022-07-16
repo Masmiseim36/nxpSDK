@@ -168,36 +168,6 @@
       <locationURI>PARENT-1-PROJECT_LOC/pin_mux.h</locationURI>
     </link>
     <link>
-      <name>dsp/naturedsp/fusionf1</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/fusionf1/vec_add32x32_fusion.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/fusionf1/vec_add32x32_fusion.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/fusionf1</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/fusionf1/scl_logn_32x32_fusion.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/fusionf1/scl_logn_32x32_fusion.c</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/fusionf1</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/fusionf1/vec_log_table.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/fusionf1/vec_log_table.c</locationURI>
-    </link>
-    <link>
       <name>evkmimxrt595</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>

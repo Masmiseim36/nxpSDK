@@ -51,7 +51,7 @@ DISCARD_FUN(size_t        , mfccf_alloc, (const mfcc_params_t * params));
 DISCARD_FUN(mfccf_handle_t, mfccf_init , (void * objmem, const mfcc_params_t * params, const mfccf_callback_t * callback));
 #else
 
-#define ALIGN_SIZE     (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE     (HIFI_SIMD_WIDTH)
 #define ALIGN_PAD      (ALIGN_SIZE-1)
 #define ALIGN_PTR(p)   (void*)(((uintptr_t)(p)+ALIGN_PAD)&~ALIGN_PAD)
 #define sz_f32         sizeof(float32_t)

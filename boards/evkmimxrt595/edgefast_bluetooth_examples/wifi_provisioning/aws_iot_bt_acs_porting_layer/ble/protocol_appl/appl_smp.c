@@ -135,6 +135,9 @@ UCHAR appl_smp_lesc_test_f5_state = 0xFF;
 UCHAR appl_smp_lesc_test_f5_T[16];
 #endif /* SMP_TBX_TEST_LESC_FUNCTIONS */
 
+extern uint8_t bondable;
+extern uint8_t SecureConnectionOnly;
+
 #if 0
 /*fix build warning: declared but never used.*/
 #ifdef SMP_TBX_TEST_LESC_FUNCTIONS
@@ -352,8 +355,8 @@ void appl_smp_lesc_xtxp_lk_complete(SMP_LESC_LK_LTK_GEN_PL * xtxp)
 
     /* Update the LTK. TODO: Check the key strength */
     IotLogDebug("Adding Device to Device DB .. ");
-    BT_sm_add_device(appl_smp_bd_addr.addr);
-    BT_sm_set_device_link_key(appl_smp_bd_addr.addr, xtxp->lk);
+    /*BT_sm_add_device(appl_smp_bd_addr.addr);*/
+    /*BT_sm_set_device_link_key(appl_smp_bd_addr.addr, xtxp->lk);*/
 }
 
 void appl_smp_lesc_txp_key_gen_complete (SMP_LESC_LK_LTK_GEN_PL * appl_txp_key)
@@ -1851,6 +1854,7 @@ API_RESULT appl_smp_cb
 
                 if (SMP_XTX_KEYGEN_MASK & auth->xtx_info)
                 {
+#if 0
                     /* Save the BD Address */
                     BT_COPY_BD_ADDR_AND_TYPE(&appl_smp_bd_addr, &bdaddr);
 
@@ -1898,6 +1902,7 @@ API_RESULT appl_smp_cb
                             );
                         }
                     }
+#endif
                 }
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
@@ -2043,13 +2048,20 @@ API_RESULT appl_smp_cb
 
         auth = (SMP_AUTH_INFO *)event_data;
 
+        if(1U == SecureConnectionOnly)
+        {
+            auth->pair_mode = SMP_LESC_MODE;
+            auth->ekey_size = SMP_MAX_ENCRYPTION_KEY_SIZE;
+            auth->security  = SMP_SEC_LEVEL_3;
+        }
+        
         IotLogDebug("Authentication type : %s\n",
         (SMP_SEC_LEVEL_2 == (auth->security & 0x0F))?  "With MITM":
         "Encryption Only (without MITM)");
-
+        auth->bonding = bondable;
         IotLogDebug("Bonding type : %s\n",
         (auth->bonding)? "Bonding": "Non-Bonding");
-
+         
 #ifdef SMP_LESC
         IotLogDebug("Pairing Mode : %s\n",
         (SMP_LESC_MODE == (auth->pair_mode))? "LE SEC Pairing Mode":

@@ -8,8 +8,6 @@
             <key>Includes</key>
             <value flag="-I" inheritance="donotinherit">
               <ListEntry>${xt_project_loc}/..</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include_private</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
@@ -23,6 +21,7 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/include/ogg_lib</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/include/sbc_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/include/sbc_enc</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/gpio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console</ListEntry>
@@ -147,7 +146,7 @@ ${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/fusionf1/lib/x
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/lib/xa_opus_codec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_12_FP1_RT500.a&#13;
+${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT500.a&#13;
 -g&#13;
 </ListEntry>
             </value>

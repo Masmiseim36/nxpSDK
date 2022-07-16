@@ -16,7 +16,13 @@
 #if (INIT_DEBUG_CONSOLE == 1)
 #define DSP_PRINTF PRINTF
 #else
+#if (MULTICHANNEL_EXAMPLE == 1)
+/* DSP_PRINTF is omitted in multi-channel examples because printf causes output audio distortion due to the relatively
+ * long print time. */
+#define DSP_PRINTF(s, ...)
+#else
 #define DSP_PRINTF printf
+#endif
 #endif
 
 /*******************************************************************************

@@ -102,7 +102,7 @@ void vec_log2_32x32 (int32_t * restrict y, const int32_t * restrict x, int N)
   x_align = AE_LA64_PP(px);
   y_align = AE_ZALIGN64();
 
-  for (n=0; n<(N>>1); n++)
+  for (n=0; n<(N>>2); n++)
   {
     AE_LA32X2_IP(vxw, x_align, px);/*x,Q16.15*/
     inf = AE_LE32(vxw, vzw);
@@ -132,6 +132,69 @@ void vec_log2_32x32 (int32_t * restrict y, const int32_t * restrict x, int N)
     vyw = AE_ADD32(vyw, vnw);/*(log2(x0)+(1/x0)*log2(e)*(x1-x0))+nsa, Q.25*/
     AE_MOVT32X2(vyw, viw, inf);
     AE_SA32X2_IP(vyw, y_align, py);
+
+	// UNROLL
+
+	AE_LA32X2_IP(vxw, x_align, px);/*x,Q16.15*/
+	inf = AE_LE32(vxw, vzw);
+	/* Normalize x*/
+	nsal = AE_NSAZ32_L(vxw);
+	nsah = AE_NSAZ32_L(AE_SEL32_HH(vxw, vxw));
+	vnw = AE_MOVDA32X2(nsah, nsal);/*Q.0*/
+	AE_MOVSARA7X2(nsah, nsal);
+	vxw = AE_SLAS32S(vxw);/*x, Q.31*/
+	vxw = AE_SUB32(vxw, vhw);
+	vdw = AE_AND32(vxw, vmw);
+	vdw = AE_SUB32(vdw, vsw);
+	vdw = AE_SLAI32(vdw, 2);       /*x1-x0, Q.33 */
+	vxw = AE_SRAI32(vxw, 23);
+	vxw = AE_SLAI32(vxw, 3);
+	offh = AE_MOVAD32_H(vxw);
+	offl = AE_MOVAD32_L(vxw);
+	vxw = AE_L32X2_X((const ae_int32x2 *)log2_table, offh);
+	vyh = AE_CVT64F32_H(vxw);     /* Q.63 */
+	AE_MULAF32S_LH(vyh, vxw, vdw);   /* log2(x0)+(1/x0)*log2(e)*(x1-x0), Q.29 * Q.33 -> Q.63 */
+	vxw = AE_L32X2_X((const ae_int32x2 *)log2_table, offl);
+	vyl = AE_CVT64F32_H(vxw);     /* Q.63 */
+	AE_MULAF32S_LL(vyl, vxw, vdw);   /* log2(x0)+(1/x0)*log2(e)*(x1-x0), Q.29 * Q.33 -> Q.63 */
+	vyw = AE_TRUNCA32X2F64S(vyh, vyl, -6);
+	vnw = AE_SUB32(16, vnw);
+	vnw = AE_SLAI32(vnw, 25);/*Q.25*/
+	vyw = AE_ADD32(vyw, vnw);/*(log2(x0)+(1/x0)*log2(e)*(x1-x0))+nsa, Q.25*/
+	AE_MOVT32X2(vyw, viw, inf);
+	AE_SA32X2_IP(vyw, y_align, py);
+  }
+
+  if (N & 2)
+  {
+	  AE_LA32X2_IP(vxw, x_align, px);/*x,Q16.15*/
+	  inf = AE_LE32(vxw, vzw);
+	  /* Normalize x*/
+	  nsal = AE_NSAZ32_L(vxw);
+	  nsah = AE_NSAZ32_L(AE_SEL32_HH(vxw, vxw));
+	  vnw = AE_MOVDA32X2(nsah, nsal);/*Q.0*/
+	  AE_MOVSARA7X2(nsah, nsal);
+	  vxw = AE_SLAS32S(vxw);/*x, Q.31*/
+	  vxw = AE_SUB32(vxw, vhw);
+	  vdw = AE_AND32(vxw, vmw);
+	  vdw = AE_SUB32(vdw, vsw);
+	  vdw = AE_SLAI32(vdw, 2);       /*x1-x0, Q.33 */
+	  vxw = AE_SRAI32(vxw, 23);
+	  vxw = AE_SLAI32(vxw, 3);
+	  offh = AE_MOVAD32_H(vxw);
+	  offl = AE_MOVAD32_L(vxw);
+	  vxw = AE_L32X2_X((const ae_int32x2 *)log2_table, offh);
+	  vyh = AE_CVT64F32_H(vxw);     /* Q.63 */
+	  AE_MULAF32S_LH(vyh, vxw, vdw);   /* log2(x0)+(1/x0)*log2(e)*(x1-x0), Q.29 * Q.33 -> Q.63 */
+	  vxw = AE_L32X2_X((const ae_int32x2 *)log2_table, offl);
+	  vyl = AE_CVT64F32_H(vxw);     /* Q.63 */
+	  AE_MULAF32S_LL(vyl, vxw, vdw);   /* log2(x0)+(1/x0)*log2(e)*(x1-x0), Q.29 * Q.33 -> Q.63 */
+	  vyw = AE_TRUNCA32X2F64S(vyh, vyl, -6);
+	  vnw = AE_SUB32(16, vnw);
+	  vnw = AE_SLAI32(vnw, 25);/*Q.25*/
+	  vyw = AE_ADD32(vyw, vnw);/*(log2(x0)+(1/x0)*log2(e)*(x1-x0))+nsa, Q.25*/
+	  AE_MOVT32X2(vyw, viw, inf);
+	  AE_SA32X2_IP(vyw, y_align, py);
   }
   AE_SA64POS_FP(y_align, py);
 

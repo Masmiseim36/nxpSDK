@@ -39,7 +39,7 @@
 
 #if HAVE_VFPU || HAVE_FPU
 
-#define ALIGN_SIZE            (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE            (HIFI_SIMD_WIDTH)
 #define USE_REFERENCE_CODE    0
 
 /*

@@ -1,25 +1,25 @@
 /*
- * Copyright (c) 2018-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-{{utilities.donotedit_warning}}
+/***********{{utilities.donotedit_warning}}***********/
 
 #include "tfm_secure_api.h"
 #include "spm_partition_defs.h"
 
 {% for partition in partitions %}
     {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
     {% endif %}
 /******** {{partition.manifest.name}} ********/
     {% for sec_func in partition.manifest.secure_functions %}
 psa_status_t {{sec_func.signal.lower()}}(psa_invec *, size_t, psa_outvec *, size_t);
     {% endfor %}
     {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 
 {% endfor %}
@@ -41,7 +41,7 @@ psa_status_t {{sec_func.signal.lower()}}(psa_invec *, size_t, psa_outvec *, size
 
 {% for partition in partitions %}
     {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
     {% endif %}
 /******** {{partition.manifest.name}} ********/
     {% for sec_func in partition.manifest.secure_functions %}
@@ -55,7 +55,7 @@ TFM_VENEER_FUNCTION({{partition.manifest.name}}, tfm_{{sec_func.signal.lower()}}
         {% endif %}
     {% endfor %}
     {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 
 {% endfor %}

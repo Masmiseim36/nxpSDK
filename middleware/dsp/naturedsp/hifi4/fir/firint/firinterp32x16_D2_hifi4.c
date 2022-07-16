@@ -276,7 +276,8 @@
         // perform M+4 MACs for each accumulator, 4 of which fall on zero taps
         // inserted into the impulse response during initialization.
         //
-        __Pragma("loop_count min=2")
+		__Pragma("loop_count min=2");
+		__Pragma("no_unroll");
         for ( m=0; m<(M>>2)+1; m++ )
         {
           // Load next two samples for even accumulators. Altogether we have

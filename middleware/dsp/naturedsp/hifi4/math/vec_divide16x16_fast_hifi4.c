@@ -442,15 +442,19 @@ void vec_divide16x16_fast
     {
         ae_int16x4 X0,X1,X2,X3,Y0,Y1,Y2,Y3;
         xtbool4 sy;
-        ae_int16x4 _0x4000=AE_MOVDA16(16384);
-        int expx,expy;
+		ae_int16x4 _0x4000 = AE_MOVDA16(16384);
+		int expx, expy;
         AE_L16X4_IP(X,px,sizeof(X));
         AE_L16X4_IP(Y,py,sizeof(Y));
         expx = AE_NSAZ16_0(X);
         expy = AE_NSAZ16_0(Y);
         X0=AE_SLAA16S(X,expx);
         Y0=AE_SLAA16S(Y,expy);
-        exp[3]=(int16_t)(expy-expx+1);
+		
+		expx = XT_SUB(expy, expx);
+		expx = XT_ADDI(expx, 1);
+		XT_S16I(expx, exp, 6);
+
         X=AE_SEL16_4321(X,X);
         Y=AE_SEL16_4321(Y,Y);
 
@@ -458,7 +462,11 @@ void vec_divide16x16_fast
         expy = AE_NSAZ16_0(Y);
         X1=AE_SLAA16S(X,expx);
         Y1=AE_SLAA16S(Y,expy);
-        exp[2]=(int16_t)(expy-expx+1);
+
+		expx = XT_SUB(expy, expx);
+		expx = XT_ADDI(expx, 1);
+		XT_S16I(expx, exp, 4);
+
         X=AE_SEL16_4321(X,X);
         Y=AE_SEL16_4321(Y,Y);
 
@@ -466,7 +474,11 @@ void vec_divide16x16_fast
         expy = AE_NSAZ16_0(Y);
         X2=AE_SLAA16S(X,expx);
         Y2=AE_SLAA16S(Y,expy);
-        exp[1]=(int16_t)(expy-expx+1);
+
+		expx = XT_SUB(expy, expx);
+		expx = XT_ADDI(expx, 1);
+		XT_S16I(expx, exp, 2);
+
         X=AE_SEL16_4321(X,X);
         Y=AE_SEL16_4321(Y,Y);
 
@@ -474,16 +486,20 @@ void vec_divide16x16_fast
         expy = AE_NSAZ16_0(Y);
         X3=AE_SLAA16S(X,expx);
         Y3=AE_SLAA16S(Y,expy);
-        exp[0]=(int16_t)(expy-expx+1);
+
+		expx = XT_SUB(expy, expx);
+		expx = XT_ADDI(expx, 1);
+		XT_S16I(expx, exp, 0);
         exp+=4;
 
         X =AE_SEL16_6420(X2,X0);
         X1=AE_SEL16_6420(X3,X1);
         X1=AE_SEL16_6543(X1,X1);
-        AE_MOVT16X4(X ,X1,mask5);
         Y =AE_SEL16_6420(Y2,Y0);
         Y1=AE_SEL16_6420(Y3,Y1);
         Y1=AE_SEL16_6543(Y1,Y1);
+
+		AE_MOVT16X4(X, X1, mask5);
         AE_MOVT16X4(Y ,Y1,mask5);
 
         sy=AE_LT16(Y,AE_ZERO16());
@@ -505,6 +521,7 @@ void vec_divide16x16_fast
         AE_MOVT16X4(Z,Y,sy);
         /* multiply by X */
         Z=AE_MULFP16X4RAS(X,Z);
+
         AE_S16X4_IP(Z,pf,sizeof(Z));
     }
 }

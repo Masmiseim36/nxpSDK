@@ -1,15 +1,15 @@
 /*
- * Copyright (c) 2019-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <stdbool.h>
 
-#include "tfm_spm_hal.h"
 #include "region_defs.h"
 #include "spm_ipc.h"
 #include "tfm_hal_isolation.h"
+#include "tfm_hal_multi_core.h"
 #include "tfm_multi_core.h"
 #include "tfm_secure_api.h"
 #include "utilities.h"
@@ -97,10 +97,10 @@ void tfm_get_mem_region_security_attr(const void *p, size_t s,
 #if TFM_LVL == 2
 REGION_DECLARE(Image$$, TFM_UNPRIV_CODE, $$RO$$Base);
 REGION_DECLARE(Image$$, TFM_UNPRIV_CODE, $$RO$$Limit);
-#ifdef TFM_SP_META_PTR_ENABLE
-REGION_DECLARE(Image$$, TFM_SP_META_PTR, $$RW$$Base);
-REGION_DECLARE(Image$$, TFM_SP_META_PTR, $$RW$$Limit);
-#endif /* TFM_SP_META_PTR_ENABLE */
+#ifdef CONFIG_TFM_PARTITION_META
+REGION_DECLARE(Image$$, TFM_SP_META_PTR, $$ZI$$Base);
+REGION_DECLARE(Image$$, TFM_SP_META_PTR, $$ZI$$Limit);
+#endif /* CONFIG_TFM_PARTITION_META */
 REGION_DECLARE(Image$$, TFM_APP_CODE_START, $$Base);
 REGION_DECLARE(Image$$, TFM_APP_CODE_END, $$Base);
 REGION_DECLARE(Image$$, TFM_APP_RW_STACK_START, $$Base);
@@ -151,10 +151,10 @@ void tfm_get_secure_mem_region_attr(const void *p, size_t s,
         return;
     }
 
-#ifdef TFM_SP_META_PTR_ENABLE
+#ifdef CONFIG_TFM_PARTITION_META
     /* TFM partition metadata pointer region */
-    base = (uintptr_t)&REGION_NAME(Image$$, TFM_SP_META_PTR, $$RW$$Base);
-    limit = (uintptr_t)&REGION_NAME(Image$$, TFM_SP_META_PTR, $$RW$$Limit) - 1;
+    base = (uintptr_t)&REGION_NAME(Image$$, TFM_SP_META_PTR, $$ZI$$Base);
+    limit = (uintptr_t)&REGION_NAME(Image$$, TFM_SP_META_PTR, $$ZI$$Limit) - 1;
     if (check_address_range(p, s, base, limit) == TFM_SUCCESS) {
         p_attr->is_priv_rd_allow = true;
         p_attr->is_priv_wr_allow = true;
@@ -461,7 +461,7 @@ int32_t tfm_has_access_to_region(const void *p, size_t s, uint32_t attr)
     security_attr_init(&security_attr);
 
     /* Retrieve security attributes of target memory region */
-    tfm_spm_hal_get_mem_security_attr(p, s, &security_attr);
+    tfm_hal_get_mem_security_attr(p, s, &security_attr);
 
     if (security_attr_check(security_attr, flags) != TFM_SUCCESS) {
         return (int32_t)TFM_ERROR_GENERIC;
@@ -471,7 +471,7 @@ int32_t tfm_has_access_to_region(const void *p, size_t s, uint32_t attr)
 
     if (security_attr.is_secure) {
         /* Retrieve access attributes of secure memory region */
-        tfm_spm_hal_get_secure_access_attr(p, s, &mem_attr);
+        tfm_hal_get_secure_access_attr(p, s, &mem_attr);
 
 #if TFM_LVL != 1
         /* Secure MPU must be enabled in Isolation Level 2 and 3 */
@@ -481,7 +481,7 @@ int32_t tfm_has_access_to_region(const void *p, size_t s, uint32_t attr)
 #endif
     } else {
         /* Retrieve access attributes of non-secure memory region. */
-        tfm_spm_hal_get_ns_access_attr(p, s, &mem_attr);
+        tfm_hal_get_ns_access_attr(p, s, &mem_attr);
     }
 
     return (int32_t)mem_attr_check(mem_attr, flags);

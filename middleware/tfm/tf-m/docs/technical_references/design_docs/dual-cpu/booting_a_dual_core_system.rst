@@ -2,10 +2,9 @@
 Booting a Dual-Core System
 ##########################
 
-:Authors: Chris Brand
+:Author: Chris Brand
 :Organization: Cypress Semiconductor Corporation
 :Contact: chris.brand@cypress.com
-:Status: Accepted
 
 *******************
 System Architecture
@@ -69,6 +68,10 @@ core systems, the following design decisions have been made:
       Any additional work that is only required in the dual core case will be
       interrupt-driven.
 
+    - All work related to the non-secure core will take place from a
+      ``ns_agent_mailbox`` partition, which will establish communication with
+      the non-secure core and then act on its behalf
+
 - Because both cores may be booting in parallel, executing different
   initialization code, at different speeds, the design must be resilient if
   either core attempts to communicate with the other before the latter is ready.
@@ -94,20 +97,20 @@ Three new HAL functions are required:
 
 .. code-block:: c
 
-    void tfm_spm_hal_boot_ns_cpu(uintptr_t start_addr);
+    void tfm_hal_boot_ns_cpu(uintptr_t start_addr);
 
-- Called on the secure core from ``tfm_core_init()`` after hardware protections
-  have been configured.
+- Called on the secure core from ``ns_agent_mailbox`` partition when it first
+  runs (after protections have been configured).
 
 - Performs the necessary actions to start the non-secure core running the code
   at the specified address.
 
 .. code-block:: c
 
-    void tfm_spm_hal_wait_for_ns_cpu_ready(void);
+    void tfm_hal_wait_for_ns_cpu_ready(void);
 
-- Called on the secure core from the end of ``tfm_core_init()`` where on a
-  single core system the secure code calls into the non-secure code.
+- Called on the secure core from ``ns_agent_mailbox`` partition after making the
+  above call.
 
 - Flags that the secure core has completed its initialization, including setting
   up the IPC mechanism.
@@ -133,4 +136,6 @@ that platforms only have to provide the new functions if they are required.
 
 ---------------
 
-Copyright (c) 2019 Cypress Semiconductor Corporation
+Copyright (c) 2019-2022 Cypress Semiconductor Corporation. All rights reserved.
+Copyright (c) 2021, Arm Limited. All rights reserved.
+

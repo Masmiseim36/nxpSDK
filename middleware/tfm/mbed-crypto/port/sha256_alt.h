@@ -1,79 +1,40 @@
-/**
- * \file mbedtls_sha256.h
+/*
+ * Copyright 2019 - 2021 NXP
+ * All rights reserved.
  *
- * \brief SHA-224 and SHA-256 cryptographic hash function
  *
- *  Copyright (C) 2006-2015, ARM Limited, All Rights Reserved
- *  SPDX-License-Identifier: Apache-2.0
- *  Copyright 2017 NXP. Not a Contribution
- *
- *  Licensed under the Apache License, Version 2.0 (the "License"); you may
- *  not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- *  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *  This file is part of mbed TLS (https://tls.mbed.org)
+ * SPDX-License-Identifier: BSD-3-Clause
  */
+
 #ifndef MBEDTLS_SHA256_ALT_H
 #define MBEDTLS_SHA256_ALT_H
-
-// Regular implementation
-//
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if defined(MBEDTLS_FREESCALE_LTC_SHA256)
-
 /**
- * \brief          SHA-256 context structure
+ * \brief          The SHA-256 context structure.
+ *
+ *                 The structure is used both for SHA-256 and for SHA-224
+ *                 checksum calculations. The choice between these two is
+ *                 made in the call to mbedtls_sha256_starts_ret().
  */
-#define mbedtls_sha256_context ltc_hash_ctx_t
+#if defined(MBEDTLS_MCUX_HASHCRYPT_SHA256) /* Hashcrypt */
 
-#elif defined(MBEDTLS_FREESCALE_LPC_SHA256)
-
-/**
- * \brief          SHA-256 context structure
- */
-#define mbedtls_sha256_context sha_ctx_t
-
-#elif defined(MBEDTLS_FREESCALE_CAAM_SHA256)
-
-/**
- * \brief          SHA-256 context structure
- */
-#define mbedtls_sha256_context caam_hash_ctx_t
-
-#elif defined(MBEDTLS_FREESCALE_CAU3_SHA256)
-
-/**
- * \brief          SHA-256 context structure
- */
-#define mbedtls_sha256_context cau3_hash_ctx_t  
-
-#elif defined(MBEDTLS_FREESCALE_DCP_SHA256)
-
-/**
- * \brief          SHA-256 context structure
- */
-#define mbedtls_sha256_context dcp_hash_ctx_t
-
-#elif defined(MBEDTLS_MCUX_HASHCRYPT_SHA256)
-
-/**
- * \brief          SHA-256 context structure
- */
 #define mbedtls_sha256_context hashcrypt_hash_ctx_t
 
-#endif /* MBEDTLS_FREESCALE_LTC_SHA256 */
+#elif defined(MBEDTLS_MCUX_CSS_SHA256) && MBEDTLS_MCUX_CSS_SHA256 /* CSS */
+
+#include <mcuxClHash.h>
+
+typedef struct mbedtls_sha256_context
+{
+    mcuxClHash_Context_t context;
+}
+mbedtls_sha256_context;
+
+#endif 
 
 #ifdef __cplusplus
 }

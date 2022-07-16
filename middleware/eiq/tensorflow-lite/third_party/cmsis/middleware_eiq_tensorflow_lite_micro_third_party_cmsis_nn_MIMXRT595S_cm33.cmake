@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -24,7 +24,10 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_fast_s16.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s8.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_3x3_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c
@@ -45,6 +48,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_accumulate_q7_to_q15.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_add_q7.c
@@ -52,9 +56,11 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_1x_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_4x_s8.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_kernel_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mult_nt_t_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q15.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c
+    ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s16.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_svdf_s8.c
     ${CMAKE_CURRENT_LIST_DIR}/CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c

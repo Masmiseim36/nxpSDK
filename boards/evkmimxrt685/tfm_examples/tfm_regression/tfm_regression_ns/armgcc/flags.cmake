@@ -2,36 +2,19 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
-    -g \
     -mcpu=cortex-m33 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
@@ -42,28 +25,28 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DTFM_LVL=2 \
     -DITS_MAX_ASSET_SIZE=512 \
     -DPS_MAX_ASSET_SIZE=512 \
-    -D__DOMAIN_NS=1 \
-    -DDOMAIN_NS=1 \
+    -DOS_DYNAMIC_MEM_SIZE=7168 \
     -DTFM_CRYPTO_TEST_ALG_CCM \
     -DTFM_CRYPTO_TEST_ALG_GCM \
     -DTFM_CRYPTO_TEST_HKDF \
-    -DOS_DYNAMIC_MEM_SIZE=8192 \
     -DTEST_FRAMEWORK_NS \
     -DTEST_FRAMEWORK_S \
-    -DTFM_PARTITION_TEST_SECURE_SERVICES \
     -DTEST_NS_ITS \
     -DTEST_NS_PS \
     -DTEST_NS_PLATFORM \
     -DT_COSE_USE_PSA_CRYPTO \
     -DTEST_NS_CRYPTO \
     -DTEST_NS_QCBOR \
-    -DTFM_PARTITION_TEST_CORE_IPC \
+    -DTFM_PARTITION_IPC_TEST \
     -DTEST_NS_IPC \
     -DTFM_PSA_API \
     -DTEST_NS_CORE \
     -DTFM_ENABLE_PERIPH_ACCESS_TEST \
-    -DTFM_PARTITION_TEST_CORE \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DCONFIG_TFM_FP=2 \
+    -DCONFIG_TFM_LAZY_STACKING \
+    -D__DOMAIN_NS=1 \
+    -DDOMAIN_NS=1 \
     -DTEST_NS_ATTESTATION \
     -DMCUXPRESSO_SDK \
     -O1 \
@@ -96,28 +79,28 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DTFM_LVL=2 \
     -DITS_MAX_ASSET_SIZE=512 \
     -DPS_MAX_ASSET_SIZE=512 \
-    -D__DOMAIN_NS=1 \
-    -DDOMAIN_NS=1 \
+    -DOS_DYNAMIC_MEM_SIZE=7168 \
     -DTFM_CRYPTO_TEST_ALG_CCM \
     -DTFM_CRYPTO_TEST_ALG_GCM \
     -DTFM_CRYPTO_TEST_HKDF \
-    -DOS_DYNAMIC_MEM_SIZE=8192 \
     -DTEST_FRAMEWORK_NS \
     -DTEST_FRAMEWORK_S \
-    -DTFM_PARTITION_TEST_SECURE_SERVICES \
     -DTEST_NS_ITS \
     -DTEST_NS_PS \
     -DTEST_NS_PLATFORM \
     -DT_COSE_USE_PSA_CRYPTO \
     -DTEST_NS_CRYPTO \
     -DTEST_NS_QCBOR \
-    -DTFM_PARTITION_TEST_CORE_IPC \
+    -DTFM_PARTITION_IPC_TEST \
     -DTEST_NS_IPC \
     -DTFM_PSA_API \
     -DTEST_NS_CORE \
     -DTFM_ENABLE_PERIPH_ACCESS_TEST \
-    -DTFM_PARTITION_TEST_CORE \
     -DSERIAL_PORT_TYPE_UART=1 \
+    -DCONFIG_TFM_FP=2 \
+    -DCONFIG_TFM_LAZY_STACKING \
+    -D__DOMAIN_NS=1 \
+    -DDOMAIN_NS=1 \
     -DTEST_NS_ATTESTATION \
     -DMCUXPRESSO_SDK \
     -Os \

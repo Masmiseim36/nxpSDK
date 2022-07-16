@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_tfm_ns component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -12,6 +12,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/platform/ext
     ${CMAKE_CURRENT_LIST_DIR}/platform/ext/common
     ${CMAKE_CURRENT_LIST_DIR}/platform/ext/driver
+    ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/Device/Config
+    ${CMAKE_CURRENT_LIST_DIR}/platform/ext/target/nxp/common/Device/Include
     ${CMAKE_CURRENT_LIST_DIR}/interface/include
     ${CMAKE_CURRENT_LIST_DIR}/interface/include/psa
     ${CMAKE_CURRENT_LIST_DIR}/bl2/include
@@ -21,4 +23,6 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 
 include(middleware_tfmtests_ns_MIMXRT595S_cm33)
+
+include(CMSIS_RTOS2_NonSecure_MIMXRT595S_cm33)
 

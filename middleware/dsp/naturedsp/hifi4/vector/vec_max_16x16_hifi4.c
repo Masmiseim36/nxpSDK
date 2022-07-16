@@ -69,11 +69,22 @@ int16_t vec_max16x16 (const int16_t* restrict x, int N)
   vzh = vmh = AE_MOVDA16(0x8000);
   x_align = AE_LA64_PP(px);
 
-  for (n=0;n<N-3;n+=4)
+  for (n=0;n<N-7;n+=8)
   {
     AE_LA16X4_IP(vxh, x_align, px);
     cprt = AE_LT16(vmh, vxh);
     AE_MOVT16X4(vmh, vxh, cprt);
+
+	// UNROLL
+
+	AE_LA16X4_IP(vxh, x_align, px);
+	cprt = AE_LT16(vmh, vxh);
+	AE_MOVT16X4(vmh, vxh, cprt);
+  }
+  if (N & 4) {
+	  AE_LA16X4_IP(vxh, x_align, px);
+	  cprt = AE_LT16(vmh, vxh);
+	  AE_MOVT16X4(vmh, vxh, cprt);
   }
 
   AE_LA16X4_IP(vxh, x_align, px);

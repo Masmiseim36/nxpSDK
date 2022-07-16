@@ -38,7 +38,7 @@
 #include "mfcc_internal.h"
 
 #define USE_REFERENCE_CODE  0
-#define ALIGN_SIZE          (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE          (HIFI_SIMD_WIDTH)
 
 #if USE_REFERENCE_CODE
 /* Q(x+y-31) <- Qx*Qy - 31 w/ asym. rounding */

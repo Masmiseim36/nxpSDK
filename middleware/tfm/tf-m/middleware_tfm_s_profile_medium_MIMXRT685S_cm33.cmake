@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_tfm_s_profile_medium component is included.")
 
 

@@ -168,16 +168,6 @@
       <locationURI>PARENT-1-PROJECT_LOC/pin_mux.h</locationURI>
     </link>
     <link>
-      <name>dsp/naturedsp/hifi4/vector</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/hifi4/vector/vec_add32x32_hifi4.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/hifi4/vector/vec_add32x32_hifi4.c</locationURI>
-    </link>
-    <link>
       <name>mimxrt685audevk</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>

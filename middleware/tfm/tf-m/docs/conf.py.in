@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 #-------------------------------------------------------------------------------
-# Copyright (c) 2019-2021, Arm Limited. All rights reserved.
+# Copyright (c) 2019-2022, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -26,14 +26,15 @@ sys.path.insert(0, os.path.abspath('../docs'))
 # -- Project information -----------------------------------------------------
 
 project = 'Trusted Firmware-M'
-copyright = '2017-2019, ARM CE-OSS'
+copyright = '2017-2022, ARM CE-OSS'
 author = 'ARM CE-OSS'
 title = 'User Guide'
 
-# The short X.Y version
+# The project version in the form: "vX.Y.Z" in case of clear release 
+# or "vX.Y.Z+ (latest SHA)" if an update was posted.
 version = '@SPHINXCFG_TFM_VERSION@'
-# The full version, including alpha/beta/rc tags
-release = '@SPHINXCFG_TFM_VERSION_FULL@'
+# Do not distinguish between release and version in Shpinx
+release = version
 
 
 # -- General configuration ---------------------------------------------------
@@ -47,7 +48,7 @@ release = '@SPHINXCFG_TFM_VERSION_FULL@'
 # ones.
 extensions = [
     'sphinx.ext.imgmath',
-    'm2r', #Support markdown files. Needed for external code.
+    'm2r2', #Support markdown files. Needed for external code.
     'sphinx.ext.autosectionlabel', #Make sphinx generate a label for each section
     'sphinxcontrib.plantuml', #Add support for PlantUML drawings
     'sphinxcontrib.rsvgconverter', #Add support for SVG to PDF
@@ -127,7 +128,7 @@ html_show_copyright = False
 
 #Add custom css for HTML. Used to allow full page width rendering
 def setup(app):
-    app.add_stylesheet('css/tfm_custom.css')
+    app.add_css_file('css/tfm_custom.css')
 
 # -- Options for HTMLHelp output ---------------------------------------------
 
@@ -137,6 +138,16 @@ htmlhelp_basename = 'TF-M doc'
 rst_prolog = """
 .. |TFM_VERSION| replace:: @SPHINXCFG_TFM_VERSION@
 """
+
+# Enable figures and tables auto numbering
+numfig = True
+numfig_secnum_depth = 0
+numfig_format = {
+    'figure': 'Figure %s:',
+    'table': 'Table %s:',
+    'code-block': 'Listing %s:',
+    'section': '%s'
+}
 
 # -- Options for LaTeX output ------------------------------------------------
 

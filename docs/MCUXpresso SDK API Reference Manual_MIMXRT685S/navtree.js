@@ -5,7 +5,7 @@ var NAVTREE =
     [ "Trademarks", "a00002.html", null ],
     [ "Architectural Overview", "a00004.html", null ],
     [ "Driver errors status", "a00006.html", null ],
-    [ "Deprecated List", "a00254.html", null ],
+    [ "Deprecated List", "a00255.html", null ],
     [ "API Reference", "modules.html", "modules" ]
   ] ]
 ];
@@ -13,29 +13,29 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "a00002.html",
-"a00010.html#gga0d1dd0e8928d43ed583597eaf5888dd1acf78811ee3dd65611f16fc5e871b4879",
-"a00010.html#ggaedce3fefa6cf36bc7d2612aee61aecc0a8580c33bfb068ae7f9f96ed237ac11a5",
-"a00011.html#ggac34c4c978f4130a92a5068f9e21ea9fcaac0b5faccea3602fe60a066eae4d2f94",
-"a00016.html#ad49be57eb231061b32b021a8854fe425",
-"a00020.html#a00311",
-"a00021.html#gaf305b6202c5df2ce9ffc2bc86a02d31c",
-"a00028.html#a7bea8caaad98edc94b9d6bb5161bda77",
-"a00032.html#ga62d1c8f4eab5009b4a6ab4605efde92c",
-"a00035.html#gga2c7de75eda1c22aa63ab2bbdc0f0d989afd02679de07ec01bbda9eddff9d51142",
-"a00039.html#a392ff8d6848b9bb3cabb7c4544ea483f",
-"a00039.html#gab0a9dbf9054ad4db1392e4dd626506c7",
-"a00039.html#gga68c01102755fc7d1c810bb0b0635fa90a8bad5218ed03a1c8c6ee2b6369901775",
-"a00040.html#a31922f2befc3b24acfae2fb948a1398b",
-"a00044.html#ga4c0c347f4419963f4e6b0ab40af23e8b",
-"a00047.html#gga64666471cadaed6ad2e72ce19026aed8a53aa676af8b05ec58f3d723ea6b85611",
-"a00051.html#gga950bf8e3371138ceb9649d45e9a96340a0459aebad28418d7a3bfc7d901a450ad",
-"a00056.html#gga88b3958a041355f297213b5c407dded2a3892d0ae82fadd910932410fb86b0415",
-"a00062.html#gga7ecd603d2579abbe714d58eb582821b8a71df5907ecd16c5f08fe1e6673064958",
-"a00064.html#gga394b3903fbf00ba2b6243f60689a5a5facdcf582837fecc630ba542fa7c7c3c96",
-"a00065.html#gga29d44341ce767c5dfc737d622fc97ba1a8682d8f1ef1926c75c63b3f36b34180b",
-"a00214.html#gga7ff0b98bb1341c07acefb1473b6eda29a858563b1d87d6fa57a8f442025655201",
-"a00235.html#ga31eb0176e79686beb6084fb432eb18d0",
-"a00251.html#ga02f8a8a22a0ac96e7ac823da4cacd585"
+"a00010.html#gga05df2e4d8d6bd23a3054cc93c8e0aedaaf8711ae5934dfe5adc134be5aa538637",
+"a00010.html#ggaedce3fefa6cf36bc7d2612aee61aecc0a7f6b1af877d3148800d5a2549ad5f512",
+"a00011.html#ggac34c4c978f4130a92a5068f9e21ea9fca9e9ded8c1292f5dc89de2668714d55da",
+"a00016.html#a93c1b2f32e5e046cf10ba7e8b1c215ce",
+"a00020.html",
+"a00021.html#gac8c57dd8e797af1040fd9fcc21b10917",
+"a00027.html#gadab16a94d6fd8c8d5030d0b2a8a78f9f",
+"a00032.html#ga5598ac74ca66fa9c73998d43a3b48f5c",
+"a00035.html#gga2c7de75eda1c22aa63ab2bbdc0f0d989ac1ddc4bae9e31c516d468c44c644438b",
+"a00039.html#a325f07d6b48a1f3eae5bf2332ad24c4a",
+"a00039.html#gaa28de26c002ffef8dc53e27e84aabba7",
+"a00039.html#gga634f9f55e799f3052a34590f08100017a40cc64f6d5fbdaac5e65e3a7f324a593",
+"a00040.html#a0b3899f0be098f696fd5bc212d4b597e",
+"a00044.html#ga4042b95864f233cfb16fd3f6b2ae2cae",
+"a00047.html#gga3d2e093dbbecb8a0afc56bda69b8fa7ea3ec92530953ea9991a65511e64654d50",
+"a00051.html#gaef36d9fe71e7dd482af0b405d83a8512",
+"a00056.html#gga420a3d3f841957068648585b89fa66d1a6a919364d43781f9da7c826c53008863",
+"a00062.html#gga28e46a3538cf5f5140523132a963283ca9562d6cdd240e9808a9a1d1946f400b7",
+"a00064.html#gafc6d6d7d692e9ec504bbbe1578135cb0",
+"a00065.html#gacc2471cbdc3834bb3ba2aa5121b83204",
+"a00214.html#gga7ff0b98bb1341c07acefb1473b6eda29a4603f8fedc8ad994788e17baae895013",
+"a00234.html#gae4e41714bd6cf6e3de866e1aaf5b85a2",
+"a00248.html#ga10228c6005d118872915a0412c466a7d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

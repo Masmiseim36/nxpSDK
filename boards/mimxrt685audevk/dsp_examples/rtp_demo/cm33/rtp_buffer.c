@@ -5,13 +5,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "rtp.h"
 #include "rtp_buffer.h"
 
 #include "FreeRTOS.h"
 #include "dsp_config.h"
 #include "fsl_debug_console.h"
 #include "queue.h"
-#include "rtp.h"
 #include "user_config.h"
 
 /*******************************************************************************

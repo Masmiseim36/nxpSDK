@@ -43,7 +43,7 @@
 
 #if HAVE_VFPU || HAVE_FPU
 
-#define ALIGN_SIZE     (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE     (HIFI_SIMD_WIDTH)
 
 /* 
  * Calculate the DCT matrix, as defined in The HTK Book, see [1] p.77 Eq.(5.14).

@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2021, Arm Limited. All rights reserved.
+# Copyright (c) 2021-2022, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -57,6 +57,7 @@ target_compile_definitions(tfm_psa_rot_partition_fwu
     PRIVATE
         $<$<BOOL:${TFM_PSA_API}>:TFM_PSA_API>
         $<$<BOOL:${DEFAULT_MCUBOOT_FLASH_MAP}>:DEFAULT_MCUBOOT_FLASH_MAP>
+        $<$<BOOL:${TFM_FWU_BUF_SIZE}>:TFM_FWU_BUF_SIZE=${TFM_FWU_BUF_SIZE}>
 )
 
 ############################ Secure API ########################################
@@ -70,7 +71,10 @@ target_sources(tfm_secure_api
 # to not overshadow _real_ warnings.
 set_source_files_properties(tfm_fwu_secure_api.c
     PROPERTIES
-        COMPILE_FLAGS -Wno-implicit-function-declaration
+        COMPILE_FLAGS
+            $<$<C_COMPILER_ID:ARMClang>:-Wno-implicit-function-declaration>
+            $<$<C_COMPILER_ID:GNU>:-Wno-implicit-function-declaration>
+            $<$<C_COMPILER_ID:IAR>:>
 )
 
 ############################ Partition Defs ####################################
@@ -84,3 +88,7 @@ target_compile_definitions(tfm_partition_defs
     INTERFACE
     TFM_PARTITION_FIRMWARE_UPDATE
 )
+# Generate firmware update feature
+configure_file(${CMAKE_SOURCE_DIR}/interface/include/psa/fwu_config.h.in
+               ${CMAKE_BINARY_DIR}/generated/interface/include/psa/fwu_config.h
+               @ONLY)

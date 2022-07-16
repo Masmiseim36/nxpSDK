@@ -198,16 +198,6 @@
       <locationURI>PARENT-1-PROJECT_LOC/pin_mux.h</locationURI>
     </link>
     <link>
-      <name>dsp/naturedsp/hifi4/vector</name>
-      <type>2</type>
-      <locationURI>virtual:/virtual</locationURI>
-    </link>
-    <link>
-      <name>dsp/naturedsp/hifi4/vector/vec_add32x32_hifi4.c</name>
-      <type>1</type>
-      <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/naturedsp/hifi4/vector/vec_add32x32_hifi4.c</locationURI>
-    </link>
-    <link>
       <name>mimxrt685audevk</name>
       <type>2</type>
       <locationURI>virtual:/virtual</locationURI>
@@ -636,6 +626,26 @@
       <name>hifi4_nn/xa_type_def.h</name>
       <type>1</type>
       <locationURI>PARENT-6-PROJECT_LOC/middleware/dsp/nn/nnlib/inc/xa_type_def.h</locationURI>
+    </link>
+    <link>
+      <name>component/gpio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/gpio/fsl_adapter_gpio.h</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/gpio/fsl_adapter_gpio.h</locationURI>
+    </link>
+    <link>
+      <name>component/gpio</name>
+      <type>2</type>
+      <locationURI>virtual:/virtual</locationURI>
+    </link>
+    <link>
+      <name>component/gpio/fsl_adapter_rt_gpio.c</name>
+      <type>1</type>
+      <locationURI>PARENT-6-PROJECT_LOC/components/gpio/fsl_adapter_rt_gpio.c</locationURI>
     </link>
     <link>
       <name>drivers</name>

@@ -47,17 +47,19 @@
   8x8      8-bit coefficients, 8-bit data, 8-bit output, Q7
   8x16     8-bit coefficients Q7, 16-bit data, 16-bit output, Q15
   16x16    16-bit coefficients, 16-bit data, 16-bit output, Q15
+  f        floating point data
 
   Input:
-  x[M][N]   input data Q15, Q7
-  y[P][Q]   input data Q15, Q7
+  x[M][N]   input data Q15, Q7, floating point
+  y[P][Q]   input data Q15, Q7, floating point
   M         number of rows in the matrix x
   N         number of columns in the matrix x
   P         number of rows in the matrix y
   Q         number of columns in the matrix y
+  rsh       additional right shift (for fixed point API only)
 
   Output:
-  z	[M+P-1][N+Q-1] output data, Q(7-rsh), Q(15-rsh)
+  z	[M+P-1][N+Q-1] output data, Q(7-rsh), Q(15-rsh), floating point
 
   Temporary:
   pScr     scratch data. Should have size at least as requested by 

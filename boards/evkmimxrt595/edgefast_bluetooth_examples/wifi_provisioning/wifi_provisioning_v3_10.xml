@@ -1,0 +1,1006 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="cm33_MIMXRT595S"/>
+    <definition extID="platform.drivers.clock.MIMXRT595S"/>
+    <definition extID="platform.drivers.common.MIMXRT595S"/>
+    <definition extID="device.MIMXRT595S_CMSIS.MIMXRT595S"/>
+    <definition extID="device.MIMXRT595S_startup.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_usart.MIMXRT595S"/>
+    <definition extID="component.usart_adapter.MIMXRT595S"/>
+    <definition extID="platform.drivers.power.MIMXRT595S"/>
+    <definition extID="platform.utilities.assert.MIMXRT595S"/>
+    <definition extID="utility.debug_console.MIMXRT595S"/>
+    <definition extID="component.serial_manager.MIMXRT595S"/>
+    <definition extID="component.lists.MIMXRT595S"/>
+    <definition extID="component.serial_manager_uart.MIMXRT595S"/>
+    <definition extID="middleware.sdmmc.sdio.MIMXRT595S"/>
+    <definition extID="middleware.sdmmc.common.MIMXRT595S"/>
+    <definition extID="middleware.sdmmc.host.usdhc.MIMXRT595S"/>
+    <definition extID="middleware.sdmmc.host.usdhc.freertos.MIMXRT595S"/>
+    <definition extID="platform.drivers.trng.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexspi.MIMXRT595S"/>
+    <definition extID="middleware.usb.host.stack.MIMXRT595S"/>
+    <definition extID="component.osa.MIMXRT595S"/>
+    <definition extID="middleware.usb.host_controller_ip3516hs.MIMXRT595S"/>
+    <definition extID="middleware.usb.phy.MIMXRT595S"/>
+    <definition extID="middleware.fatfs.MIMXRT595S"/>
+    <definition extID="middleware.fatfs.usb.MIMXRT595S"/>
+    <definition extID="component.mflash_file.MIMXRT595S"/>
+    <definition extID="component.mflash.rt595.MIMXRT595S"/>
+    <definition extID="middleware.wifi.wifidriver.MIMXRT595S"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT595S"/>
+    <definition extID="middleware.wifi.sdio.MIMXRT595S"/>
+    <definition extID="middleware.wifi.fwdnld.MIMXRT595S"/>
+    <definition extID="component.rt_gpio_adapter.MIMXRT595S"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.demos.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT595S"/>
+    <definition extID="middleware.lwip.MIMXRT595S"/>
+    <definition extID="middleware.wifi.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.demos.wifi_provisioning.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.ble_hal.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.tinycbor.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.logging.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.device_shadow_for_aws.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.corejason.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.mqtt_demo_helpers.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.transport.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT595S"/>
+    <definition extID="component.wifi_bt_module.tx_pwr_limits.MIMXRT595S"/>
+    <definition extID="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S"/>
+    <definition extID="platform.drivers.cache_cache64.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_iopctl.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_gpio.MIMXRT595S"/>
+    <definition extID="platform.drivers.reset.MIMXRT595S"/>
+    <definition extID="component.flexspi_nor_flash_adapter.MIMXRT595S"/>
+    <definition extID="component.flexspi_nor_flash_adapter_rt595evk.MIMXRT595S"/>
+    <definition extID="middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT595S"/>
+    <definition extID="driver.pca9420.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_i2c.MIMXRT595S"/>
+    <definition extID="middleware.littlefs.MIMXRT595S"/>
+    <definition extID="platform.drivers.inputmux.MIMXRT595S"/>
+    <definition extID="middleware.mbedtls.MIMXRT595S"/>
+    <definition extID="middleware.mbedtls.port.ksdk.MIMXRT595S"/>
+    <definition extID="middleware.mbedtls.rt1.MIMXRT595S"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT595S"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
+    <definition extID="middleware.sdmmc.osa.freertos.MIMXRT595S"/>
+    <definition extID="component.osa_free_rtos.MIMXRT595S"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT595S"/>
+    <definition extID="platform.drivers.usdhc.MIMXRT595S"/>
+    <definition extID="middleware.usb.common_header.MIMXRT595S"/>
+    <definition extID="middleware.usb.host.common_header.MIMXRT595S"/>
+    <definition extID="middleware.usb.host_msd.MIMXRT595S"/>
+    <definition extID="component.mflash.common.MIMXRT595S"/>
+    <definition extID="middleware.wifi.sdio-2.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT595S"/>
+    <definition extID="platform.drivers.casper.MIMXRT595S"/>
+    <definition extID="platform.drivers.hashcrypt.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.network_manager.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.demos.ble.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.ble.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.backoff_algorithm.MIMXRT595S"/>
+    <definition extID="middleware.freertos-aws_iot.pkcs11_helpers.MIMXRT595S"/>
+    <definition extID="platform.drivers.iap.MIMXRT595S"/>
+    <definition extID="platform.drivers.inputmux_connections.MIMXRT595S"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkmimxrt595_wifi_provisioning" name="wifi_provisioning" device_core="cm33_MIMXRT595S" dependency="platform.drivers.clock.MIMXRT595S platform.drivers.common.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S device.MIMXRT595S_startup.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.power.MIMXRT595S platform.utilities.assert.MIMXRT595S utility.debug_console.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S middleware.sdmmc.sdio.MIMXRT595S middleware.sdmmc.common.MIMXRT595S middleware.sdmmc.host.usdhc.MIMXRT595S middleware.sdmmc.host.usdhc.freertos.MIMXRT595S platform.drivers.trng.MIMXRT595S platform.drivers.flexspi.MIMXRT595S middleware.usb.host.stack.MIMXRT595S component.osa.MIMXRT595S middleware.usb.host_controller_ip3516hs.MIMXRT595S middleware.usb.phy.MIMXRT595S middleware.fatfs.MIMXRT595S middleware.fatfs.usb.MIMXRT595S component.mflash_file.MIMXRT595S component.mflash.rt595.MIMXRT595S middleware.wifi.wifidriver.MIMXRT595S middleware.freertos-kernel.MIMXRT595S middleware.wifi.sdio.MIMXRT595S middleware.wifi.fwdnld.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S middleware.freertos-kernel.heap_4.MIMXRT595S middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT595S middleware.freertos-aws_iot.demos.MIMXRT595S middleware.freertos-aws_iot.demos.dev_mode_key_provisioning.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT595S middleware.lwip.MIMXRT595S middleware.wifi.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT595S middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.pkcs11_mbedtls.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT595S middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT595S middleware.freertos-aws_iot.demos.wifi_provisioning.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.ble_hal.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.tinycbor.MIMXRT595S middleware.freertos-aws_iot.libraries.logging.MIMXRT595S middleware.freertos-aws_iot.libraries.device_shadow_for_aws.MIMXRT595S middleware.freertos-aws_iot.libraries.corejason.MIMXRT595S middleware.freertos-aws_iot.mqtt_demo_helpers.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.transport.MIMXRT595S middleware.freertos-aws_iot.libraries.coremqtt.MIMXRT595S component.wifi_bt_module.tx_pwr_limits.MIMXRT595S platform.drivers.flash_config.evkmimxrt595.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.reset.MIMXRT595S component.flexspi_nor_flash_adapter.MIMXRT595S component.flexspi_nor_flash_adapter_rt595evk.MIMXRT595S middleware.freertos-kernel.cm33_nonsecure_port.MIMXRT595S driver.pca9420.MIMXRT595S platform.drivers.flexcomm_i2c.MIMXRT595S middleware.littlefs.MIMXRT595S platform.drivers.inputmux.MIMXRT595S middleware.mbedtls.MIMXRT595S middleware.mbedtls.port.ksdk.MIMXRT595S middleware.mbedtls.rt1.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S middleware.sdmmc.osa.freertos.MIMXRT595S component.osa_free_rtos.MIMXRT595S middleware.freertos-kernel.extension.MIMXRT595S platform.drivers.usdhc.MIMXRT595S middleware.usb.common_header.MIMXRT595S middleware.usb.host.common_header.MIMXRT595S middleware.usb.host_msd.MIMXRT595S component.mflash.common.MIMXRT595S middleware.wifi.sdio-2.MIMXRT595S middleware.freertos-aws_iot.libraries.c_sdk.standard.common.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT595S platform.drivers.casper.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_config.MIMXRT595S middleware.freertos-aws_iot.network_manager.MIMXRT595S middleware.freertos-aws_iot.demos.ble.MIMXRT595S middleware.freertos-aws_iot.libraries.ble.MIMXRT595S middleware.freertos-aws_iot.libraries.abstractions.backoff_algorithm.MIMXRT595S middleware.freertos-aws_iot.pkcs11_helpers.MIMXRT595S platform.drivers.iap.MIMXRT595S platform.drivers.inputmux_connections.MIMXRT595S" category="edgefast_bluetooth_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock id="BOARD_FLASH_MIMXRT595S" name="BOARD_FLASH" addr="08000000" size="037f0000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="NVM_region_MIMXRT595S" name="NVM_region" addr="0B7F0000" size="00010000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="LITTLEFS_FLASH_region_MIMXRT595S" name="LITTLEFS_FLASH_region" addr="0B800000" size="800000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="SRAM_MIMXRT595S" name="SRAM" addr="20080000" size="00280000" type="RAM" access="RW"/>
+      <memoryBlock id="USB_RAM_MIMXRT595S" name="USB_RAM" addr="40140000" size="00004000" type="RAM" access="RW"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT595SFFOC_cm33</value>
+          <value>BOOT_HEADER_ENABLE=1</value>
+          <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>APPL_USE_STANDARD_IO</value>
+          <value>GATT_CLIENT</value>
+          <value>GATT_DB</value>
+          <value>FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0</value>
+          <value>SDK_COMPONENT_INTEGRATION=1</value>
+          <value>gNvStorageIncluded_d=1</value>
+          <value>gNvTableKeptInRam_d=1</value>
+          <value>IOT_WIFI_ENABLE_SAVE_NETWORK=1</value>
+          <value>FSL_OSA_MAIN_FUNC_ENABLE=0</value>
+          <value>HAL_UART_ADAPTER_FIFO=1</value>
+          <value>FSL_FEATURE_FLASH_PAGE_SIZE_BYTES=4096</value>
+          <value>gMemManagerLight=0</value>
+          <value>USE_RTOS=1</value>
+          <value>PRINTF_ADVANCED_ENABLE=1</value>
+          <value>SDK_OS_FREE_RTOS</value>
+          <value>FSL_OSA_TASK_ENABLE=1</value>
+          <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
+          <value>CONFIG_DEVICE_SHADOW_DEMO_ENABLED</value>
+          <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
+          <value>IOT_MQTT_ENABLE_SERIALIZER_OVERRIDES=1</value>
+          <value>SDK_DEBUGCONSOLE_UART=1</value>
+          <value>CONTROLLER_INIT_ESCAPE=1</value>
+          <value>CFG_BLE</value>
+          <value>NVM_NO_COMPONNET=1</value>
+          <value>SDIO_ENABLED=1</value>
+          <value>CPU_MIMXRT595SFVKB</value>
+          <value>LFS_NO_INTRINSICS=1</value>
+          <value>LFS_NO_ERROR=1</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>MFLASH_FILE_BASEADDR=7340032</value>
+          <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
+          <value>MCUXPRESSO_SDK</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.nohost</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x1000&amp;Stack:Default;Default;0x1000</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-mcpu=cortex-m33 -fomit-frame-pointer -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_MIMXRT595S">
+            <driverBinary path="../../../../devices/MIMXRT595S/mcuxpresso" project_relative_path="binary" type="binary">
+              <files mask="MIMXRT500_SFDP_MXIC_OSPI.cfx"/>
+            </driverBinary>
+          </driver>
+          <driver id_refs="NVM_region_MIMXRT595S">
+            <driverBinary path="../../../../devices/MIMXRT595S/mcuxpresso" project_relative_path="binary" type="binary">
+              <files mask="MIMXRT500_SFDP_MXIC_OSPI.cfx"/>
+            </driverBinary>
+          </driver>
+          <driver id_refs="LITTLEFS_FLASH_region_MIMXRT595S">
+            <driverBinary path="../../../../devices/MIMXRT595S/mcuxpresso" project_relative_path="binary" type="binary">
+              <files mask="MIMXRT500_SFDP_MXIC_OSPI.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <include_paths>
+      <include_path path="." project_relative_path="source" type="c_include"/>
+      <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="config_files" project_relative_path="freertos/config_files" type="c_include"/>
+      <include_path path="config_files" project_relative_path="source" type="c_include"/>
+      <include_path path="." project_relative_path="freertos/config_files" type="c_include"/>
+      <include_path path="aws_iot_wifi_acs_porting_layer" project_relative_path="source" type="c_include"/>
+      <include_path path="aws_iot_bt_acs_porting_layer" project_relative_path="source" type="c_include"/>
+      <include_path path="aws_iot_bt_acs_porting_layer/ble" project_relative_path="source" type="c_include"/>
+      <include_path path="aws_iot_bt_acs_porting_layer/ble/profile_appl" project_relative_path="source" type="c_include"/>
+      <include_path path="aws_iot_bt_acs_porting_layer/ble/protocol_appl" project_relative_path="source" type="c_include"/>
+      <include_path path="aws_iot_bt_acs_porting_layer/br/protocol_appl" project_relative_path="source" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL" project_relative_path="ethermind/bluetooth/export/eOSAL" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/export/include" project_relative_path="ethermind/bluetooth/export/include" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/export/vendor" project_relative_path="ethermind/bluetooth/export/vendor" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att" project_relative_path="ethermind/bluetooth/private/protocols/att" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp" project_relative_path="ethermind/bluetooth/private/protocols/avctp" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp" project_relative_path="ethermind/bluetooth/private/protocols/avdtp" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep" project_relative_path="ethermind/bluetooth/private/protocols/bnep" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/common" project_relative_path="ethermind/bluetooth/private/protocols/common" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase" project_relative_path="ethermind/bluetooth/private/protocols/dbase" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2" project_relative_path="ethermind/bluetooth/private/protocols/hci_1.2" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap" project_relative_path="ethermind/bluetooth/private/protocols/mcap" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex" project_relative_path="ethermind/bluetooth/private/protocols/obex" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm" project_relative_path="ethermind/bluetooth/private/protocols/rfcomm" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp" project_relative_path="ethermind/bluetooth/private/protocols/sdp" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm" project_relative_path="ethermind/bluetooth/private/protocols/sm" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp" project_relative_path="ethermind/bluetooth/private/protocols/smp" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/write_task" project_relative_path="ethermind/bluetooth/private/protocols/write_task" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac" project_relative_path="ethermind/bluetooth/private/utils/aes_cmac" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser" project_relative_path="ethermind/bluetooth/private/utils/at_parser" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/btsnoop" project_relative_path="ethermind/bluetooth/private/utils/btsnoop" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser" project_relative_path="ethermind/bluetooth/private/utils/object_parser" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp" project_relative_path="ethermind/bluetooth/private/utils/racp" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/security" project_relative_path="ethermind/bluetooth/private/utils/security" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/status" project_relative_path="ethermind/bluetooth/private/utils/status" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage" project_relative_path="ethermind/bluetooth/private/utils/storage" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser" project_relative_path="ethermind/bluetooth/private/utils/xml_parser" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth" project_relative_path="ethermind/port/pal/mcux/bluetooth" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller" project_relative_path="ethermind/port/pal/mcux/bluetooth/controller" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/port/pal/mcux/ethal" project_relative_path="ethermind/port/pal/mcux/ethal" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/port/pal/mcux/toolspec/mcuxpresso" project_relative_path="ethermind/port/pal/mcux/toolspec/mcuxpresso" toolchain="mcuxpresso" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/port/pal/mcux/sbc" project_relative_path="ethermind/port/pal/mcux/sbc" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/port/osal/src/freertos" project_relative_path="ethermind/port/osal/src/freertos" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/port/pal/mcux" project_relative_path="ethermind/port/pal/mcux" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc" project_relative_path="ethermind/bluetooth/private/utils/sbc" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config" project_relative_path="ethermind/bluetooth/private/lib/config" type="c_include"/>
+      <include_path path="../../../../middleware/wireless/ethermind/bluetooth/export/extension" project_relative_path="ethermind/bluetooth/export/extension" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="asm_include"/>
+      <include_path path="config_files" project_relative_path="freertos/config_files" type="asm_include"/>
+      <include_path path="config_files" project_relative_path="source" type="asm_include"/>
+      <include_path path="." project_relative_path="freertos/config_files" type="asm_include"/>
+    </include_paths>
+    <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="wifi_provisioning.ewd"/>
+      <files mask="wifi_provisioning.ewp"/>
+      <files mask="wifi_provisioning.eww"/>
+    </source>
+    <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="wifi_provisioning.uvoptx"/>
+      <files mask="wifi_provisioning.uvprojx"/>
+      <files mask="JLinkSettings.ini"/>
+      <files mask="wifi_provisioning.uvmpw"/>
+    </source>
+    <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="config.cmake"/>
+      <files mask="build_flash_debug.bat"/>
+      <files mask="build_flash_debug.sh"/>
+      <files mask="build_flash_release.bat"/>
+      <files mask="build_flash_release.sh"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_preinclude">
+      <files mask="app_config.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="sdmmc_config.c"/>
+      <files mask="wifi_bt_config.c"/>
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="sdmmc_config.h"/>
+      <files mask="wifi_bt_config.h"/>
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="linker/mcux" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
+      <files mask="end_text.ldt"/>
+      <files mask="main_data.ldt"/>
+      <files mask="main_text.ldt"/>
+      <files mask="symbols.ldt"/>
+    </source>
+    <source path="iar" project_relative_path="MIMXRT595S/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT595Sxxxx_cm33_flash.icf"/>
+    </source>
+    <source path="mdk" project_relative_path="MIMXRT595S/arm" type="linker" toolchain="mdk">
+      <files mask="MIMXRT595Sxxxx_cm33_flash.scf"/>
+    </source>
+    <source path="armgcc" project_relative_path="MIMXRT595S/gcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT595Sxxxx_cm33_flash.ld"/>
+    </source>
+    <source path="config_files" project_relative_path="freertos/config_files" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="aws_iot_network_config.h"/>
+      <files mask="iot_ble_config.h"/>
+    </source>
+    <source path="config_files" project_relative_path="source" type="c_include">
+      <files mask="aws_mbedtls_config.h"/>
+    </source>
+    <source path="config_files" project_relative_path="freertos/config_files" type="c_include">
+      <files mask="aws_demo_config.h"/>
+      <files mask="iot_secure_sockets_config.h"/>
+      <files mask="aws_shadow_config.h"/>
+      <files mask="FreeRTOSIPConfig.h"/>
+      <files mask="iot_config.h"/>
+      <files mask="core_mqtt_config.h"/>
+      <files mask="core_pkcs11_config.h"/>
+      <files mask="aws_wifi_config.h"/>
+      <files mask="shadow_config.h"/>
+      <files mask="shadow_demo_config.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="ffconf.h"/>
+      <files mask="host_msd_fatfs.h"/>
+      <files mask="usb_host_config.h"/>
+      <files mask="wifi_config.h"/>
+      <files mask="lwipopts.h"/>
+      <files mask="lwippools.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="src">
+      <files mask="host_msd_fatfs.c"/>
+      <files mask="main.c"/>
+      <files mask="aws_iot_demo_shadow.c"/>
+      <files mask="db_gen.c"/>
+    </source>
+    <source path="aws_iot_wifi_acs_porting_layer" project_relative_path="source" type="src">
+      <files mask="iot_wifi.c"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer" project_relative_path="source" type="src">
+      <files mask="appl_utils.c"/>
+      <files mask="gatt_db_pl.c"/>
+      <files mask="iot_ble_hal_common_gap.c"/>
+      <files mask="iot_ble_hal_gap.c"/>
+      <files mask="iot_ble_hal_gatt_server.c"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer" project_relative_path="source" type="c_include">
+      <files mask="appl_utils.h"/>
+      <files mask="gatt_db_pl.h"/>
+      <files mask="iot_ble_hal_internals.h"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer/ble" project_relative_path="source" type="src">
+      <files mask="appl_le.c"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer/ble" project_relative_path="source" type="c_include">
+      <files mask="appl_le.h"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer/ble/profile_appl" project_relative_path="source" type="src">
+      <files mask="appl_gatt_client.c"/>
+      <files mask="appl_gatt_server.c"/>
+      <files mask="appl_service.c"/>
+      <files mask="appl_service_mops.c"/>
+      <files mask="gatt.c"/>
+      <files mask="gatt_db.c"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer/ble/profile_appl" project_relative_path="source" type="c_include">
+      <files mask="appl_gatt_client.h"/>
+      <files mask="appl_gatt_server.h"/>
+      <files mask="appl_service.h"/>
+      <files mask="appl_service_mops.h"/>
+      <files mask="gatt.h"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer/ble/protocol_appl" project_relative_path="source" type="c_include">
+      <files mask="gatt_db.h"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer/ble/protocol_appl" project_relative_path="source" type="src">
+      <files mask="appl_att_client.c"/>
+      <files mask="appl_gap_le.c"/>
+      <files mask="appl_hci_le.c"/>
+      <files mask="appl_hci_le_api.c"/>
+      <files mask="appl_l2cap_le.c"/>
+      <files mask="appl_smp.c"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer/ble/protocol_appl" project_relative_path="source" type="c_include">
+      <files mask="appl_att_client.h"/>
+      <files mask="appl_gap_le.h"/>
+      <files mask="appl_hci_le.h"/>
+      <files mask="appl_l2cap_le.h"/>
+      <files mask="appl_smp.h"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer/br/protocol_appl" project_relative_path="source" type="src">
+      <files mask="appl_hci.c"/>
+      <files mask="appl_hci_api.c"/>
+    </source>
+    <source path="aws_iot_bt_acs_porting_layer/br/protocol_appl" project_relative_path="source" type="c_include">
+      <files mask="appl_hci.h"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/.github/ISSUE_TEMPLATE" project_relative_path="source" type="other">
+      <files mask="bug_report.md" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/.github" project_relative_path="source" type="other">
+      <files mask="PULL_REQUEST_TEMPLATE.md" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/amazonfreertossdk" project_relative_path="source" type="other">
+      <files mask="build.gradle" hidden="true"/>
+      <files mask="gradle.properties" hidden="true"/>
+      <files mask="proguard-rules.pro" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/amazonfreertossdk/src/androidTest/java/software/amazon/freertos/amazonfreertossdk" project_relative_path="source" type="other">
+      <files mask="ExampleInstrumentedTest.java" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/amazonfreertossdk/src/main" project_relative_path="source" type="xml">
+      <files mask="AndroidManifest.xml" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/amazonfreertossdk/src/main/java/software/amazon/freertos/amazonfreertossdk" project_relative_path="source" type="other">
+      <files mask="AmazonFreeRTOSConstants.java" hidden="true"/>
+      <files mask="AmazonFreeRTOSDevice.java" hidden="true"/>
+      <files mask="AmazonFreeRTOSManager.java" hidden="true"/>
+      <files mask="BleCommand.java" hidden="true"/>
+      <files mask="BleConnectionStatusCallback.java" hidden="true"/>
+      <files mask="BleScanResultCallback.java" hidden="true"/>
+      <files mask="DeviceInfoCallback.java" hidden="true"/>
+      <files mask="MessageType.java" hidden="true"/>
+      <files mask="NetworkConfigCallback.java" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/amazonfreertossdk/src/main/java/software/amazon/freertos/amazonfreertossdk/deviceinfo" project_relative_path="source" type="other">
+      <files mask="BrokerEndpoint.java" hidden="true"/>
+      <files mask="Mtu.java" hidden="true"/>
+      <files mask="Version.java" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/amazonfreertossdk/src/main/java/software/amazon/freertos/amazonfreertossdk/mqttproxy" project_relative_path="source" type="other">
+      <files mask="Connack.java" hidden="true"/>
+      <files mask="Connect.java" hidden="true"/>
+      <files mask="MqttProxyControl.java" hidden="true"/>
+      <files mask="PingReq.java" hidden="true"/>
+      <files mask="PingResp.java" hidden="true"/>
+      <files mask="Puback.java" hidden="true"/>
+      <files mask="Publish.java" hidden="true"/>
+      <files mask="Suback.java" hidden="true"/>
+      <files mask="Subscribe.java" hidden="true"/>
+      <files mask="Unsuback.java" hidden="true"/>
+      <files mask="Unsubscribe.java" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/amazonfreertossdk/src/main/java/software/amazon/freertos/amazonfreertossdk/networkconfig" project_relative_path="source" type="other">
+      <files mask="DeleteNetworkReq.java" hidden="true"/>
+      <files mask="DeleteNetworkResp.java" hidden="true"/>
+      <files mask="EditNetworkReq.java" hidden="true"/>
+      <files mask="EditNetworkResp.java" hidden="true"/>
+      <files mask="ListNetworkReq.java" hidden="true"/>
+      <files mask="ListNetworkResp.java" hidden="true"/>
+      <files mask="SaveNetworkReq.java" hidden="true"/>
+      <files mask="SaveNetworkResp.java" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/amazonfreertossdk/src/main/res/values" project_relative_path="source" type="xml">
+      <files mask="strings.xml" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/amazonfreertossdk/src/test/java/software/amazon/freertos/amazonfreertossdk" project_relative_path="source" type="other">
+      <files mask="ExampleUnitTest.java" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app" project_relative_path="source" type="other">
+      <files mask="build.gradle" hidden="true"/>
+      <files mask="proguard-rules.pro" hidden="true"/>
+      <files mask="README.md" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main" project_relative_path="source" type="xml">
+      <files mask="AndroidManifest.xml" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/java/com/nxp/awsremotecontrol/iot" project_relative_path="source" type="other">
+      <files mask="AwsConstants.java" hidden="true"/>
+      <files mask="AwsShadow.java" hidden="true"/>
+      <files mask="IPreferencesListener.java" hidden="true"/>
+      <files mask="RgbLed.java" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/java/com/nxp/awsremotecontrol/mqtt" project_relative_path="source" type="other">
+      <files mask="Connection.java" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/java/software/amazon/freertos/demo" project_relative_path="source" type="other">
+      <files mask="AmazonFreeRTOSAgent.java" hidden="true"/>
+      <files mask="AuthenticatorActivity.java" hidden="true"/>
+      <files mask="BleDevice.java" hidden="true"/>
+      <files mask="DemoConstants.java" hidden="true"/>
+      <files mask="DeviceScanActivity.java" hidden="true"/>
+      <files mask="DeviceScanFragment.java" hidden="true"/>
+      <files mask="SingleFragmentActivity.java" hidden="true"/>
+      <files mask="ViewAwsShadowActivity.java" hidden="true"/>
+      <files mask="ViewAwsShadowFragment.java" hidden="true"/>
+      <files mask="WifiAwsActivity.java" hidden="true"/>
+      <files mask="WifiAwsFragment.java" hidden="true"/>
+      <files mask="WifiCredentialFragment.java" hidden="true"/>
+      <files mask="WifiInfo.java" hidden="true"/>
+      <files mask="WifiProvisionActivity.java" hidden="true"/>
+      <files mask="WifiProvisionFragment.java" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/drawable-hdpi" project_relative_path="source" type="image">
+      <files mask="ic_delete.png" hidden="true"/>
+      <files mask="ic_menu_logout.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/drawable-mdpi" project_relative_path="source" type="image">
+      <files mask="ic_delete.png" hidden="true"/>
+      <files mask="ic_menu_logout.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/drawable-xhdpi" project_relative_path="source" type="image">
+      <files mask="ic_delete.png" hidden="true"/>
+      <files mask="ic_menu_logout.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/drawable-xxhdpi" project_relative_path="source" type="image">
+      <files mask="ic_delete.png" hidden="true"/>
+      <files mask="ic_menu_logout.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/drawable-xxxhdpi" project_relative_path="source" type="image">
+      <files mask="ic_delete.png" hidden="true"/>
+      <files mask="ic_menu_logout.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/layout" project_relative_path="source" type="xml">
+      <files mask="activity_fragment.xml" hidden="true"/>
+      <files mask="fragment_device_scan.xml" hidden="true"/>
+      <files mask="fragment_main.xml" hidden="true"/>
+      <files mask="fragment_mqtt_proxy.xml" hidden="true"/>
+      <files mask="fragment_view_aws_device.xml" hidden="true"/>
+      <files mask="fragment_wifi_provision.xml" hidden="true"/>
+      <files mask="list_aws_wifi_info.xml" hidden="true"/>
+      <files mask="list_device.xml" hidden="true"/>
+      <files mask="list_wifi_config_log.xml" hidden="true"/>
+      <files mask="list_wifi_info.xml" hidden="true"/>
+      <files mask="wifi_credential_dialog.xml" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/menu" project_relative_path="source" type="xml">
+      <files mask="fragment_device_scan.xml" hidden="true"/>
+      <files mask="options_menu.xml" hidden="true"/>
+      <files mask="wifi_provision_option.xml" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/mipmap-hdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/mipmap-mdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/mipmap-xhdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/mipmap-xxhdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/mipmap-xxxhdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/raw" project_relative_path="source" type="other">
+      <files mask="awsconfiguration.json" hidden="true"/>
+      <files mask="replace_with_keystore.bks" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/values" project_relative_path="source" type="xml">
+      <files mask="colors.xml" hidden="true"/>
+      <files mask="dimens.xml" hidden="true"/>
+      <files mask="strings.xml" hidden="true"/>
+      <files mask="styles.xml" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/app/src/main/res/values-w820dp" project_relative_path="source" type="xml">
+      <files mask="dimens.xml" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk" project_relative_path="source" type="other">
+      <files mask="build.gradle" hidden="true"/>
+      <files mask="CHANGELOG.md" hidden="true"/>
+      <files mask="CODE_OF_CONDUCT.md" hidden="true"/>
+      <files mask="CONTRIBUTING.md" hidden="true"/>
+      <files mask="gradle.properties" hidden="true"/>
+      <files mask="gradlew" hidden="true"/>
+      <files mask="LICENSE" hidden="true"/>
+      <files mask="NOTICE" hidden="true"/>
+      <files mask="Preferences.properties" hidden="true"/>
+      <files mask="README.md" hidden="true"/>
+      <files mask="settings.gradle" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/documentation" project_relative_path="source" type="doc">
+      <files mask="allclasses-frame.html" hidden="true"/>
+      <files mask="allclasses-noframe.html" hidden="true"/>
+      <files mask="constant-values.html" hidden="true"/>
+      <files mask="deprecated-list.html" hidden="true"/>
+      <files mask="help-doc.html" hidden="true"/>
+      <files mask="index-all.html" hidden="true"/>
+      <files mask="index.html" hidden="true"/>
+      <files mask="overview-frame.html" hidden="true"/>
+      <files mask="overview-summary.html" hidden="true"/>
+      <files mask="overview-tree.html" hidden="true"/>
+      <files mask="stylesheet.css" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/documentation" project_relative_path="source" type="script">
+      <files mask="script.js" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/documentation" project_relative_path="source" type="other">
+      <files mask="package-list" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/documentation/software/amazon/freertos/amazonfreertossdk" project_relative_path="source" type="doc">
+      <files mask="AmazonFreeRTOSConstants.AmazonFreeRTOSError.html" hidden="true"/>
+      <files mask="AmazonFreeRTOSConstants.BleConnectionState.html" hidden="true"/>
+      <files mask="AmazonFreeRTOSConstants.html" hidden="true"/>
+      <files mask="AmazonFreeRTOSConstants.MqttConnectionState.html" hidden="true"/>
+      <files mask="AmazonFreeRTOSDevice.html" hidden="true"/>
+      <files mask="AmazonFreeRTOSManager.html" hidden="true"/>
+      <files mask="BleCommand.html" hidden="true"/>
+      <files mask="BleConnectionStatusCallback.html" hidden="true"/>
+      <files mask="BleScanResultCallback.html" hidden="true"/>
+      <files mask="DeviceInfoCallback.html" hidden="true"/>
+      <files mask="MessageType.html" hidden="true"/>
+      <files mask="NetworkConfigCallback.html" hidden="true"/>
+      <files mask="package-frame.html" hidden="true"/>
+      <files mask="package-summary.html" hidden="true"/>
+      <files mask="package-tree.html" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/documentation/software/amazon/freertos/amazonfreertossdk/deviceinfo" project_relative_path="source" type="doc">
+      <files mask="BrokerEndpoint.html" hidden="true"/>
+      <files mask="Mtu.html" hidden="true"/>
+      <files mask="package-frame.html" hidden="true"/>
+      <files mask="package-summary.html" hidden="true"/>
+      <files mask="package-tree.html" hidden="true"/>
+      <files mask="Version.html" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/documentation/software/amazon/freertos/amazonfreertossdk/mqttproxy" project_relative_path="source" type="doc">
+      <files mask="Connack.html" hidden="true"/>
+      <files mask="Connect.html" hidden="true"/>
+      <files mask="MqttProxyControl.html" hidden="true"/>
+      <files mask="package-frame.html" hidden="true"/>
+      <files mask="package-summary.html" hidden="true"/>
+      <files mask="package-tree.html" hidden="true"/>
+      <files mask="PingReq.html" hidden="true"/>
+      <files mask="PingResp.html" hidden="true"/>
+      <files mask="Puback.html" hidden="true"/>
+      <files mask="Publish.html" hidden="true"/>
+      <files mask="Suback.html" hidden="true"/>
+      <files mask="Subscribe.html" hidden="true"/>
+      <files mask="Unsuback.html" hidden="true"/>
+      <files mask="Unsubscribe.html" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/documentation/software/amazon/freertos/amazonfreertossdk/networkconfig" project_relative_path="source" type="doc">
+      <files mask="DeleteNetworkReq.html" hidden="true"/>
+      <files mask="DeleteNetworkResp.html" hidden="true"/>
+      <files mask="EditNetworkReq.html" hidden="true"/>
+      <files mask="EditNetworkResp.html" hidden="true"/>
+      <files mask="ListNetworkReq.html" hidden="true"/>
+      <files mask="ListNetworkResp.html" hidden="true"/>
+      <files mask="package-frame.html" hidden="true"/>
+      <files mask="package-summary.html" hidden="true"/>
+      <files mask="package-tree.html" hidden="true"/>
+      <files mask="SaveNetworkReq.html" hidden="true"/>
+      <files mask="SaveNetworkResp.html" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk/gradle/wrapper" project_relative_path="source" type="other">
+      <files mask="gradle-wrapper.jar" hidden="true"/>
+      <files mask="gradle-wrapper.properties" hidden="true"/>
+    </source>
+    <source path="amazon-freertos-ble-android-sdk" project_relative_path="source" type="script">
+      <files mask="gradlew.bat" hidden="true"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="bt_module_config.h"/>
+    </source>
+    <source path="mdk" project_relative_path="generator/templates/mdk/app_evkmimxrt595" type="configuration" toolchain="mdk">
+      <files mask="flashdebug.ini"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/export/eOSAL" project_relative_path="ethermind/bluetooth/export/eOSAL" type="c_include">
+      <files mask="eBT_assert.h"/>
+      <files mask="eBT_config.h"/>
+      <files mask="eBT_debug_api.h"/>
+      <files mask="eBT_fops.h"/>
+      <files mask="eBT_os.h"/>
+      <files mask="eBT_serial.h"/>
+      <files mask="eBT_timer.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/export/include" project_relative_path="ethermind/bluetooth/export/include" type="c_include">
+      <files mask="BT_a2dp_api.h"/>
+      <files mask="BT_api.h"/>
+      <files mask="BT_assigned_numbers.h"/>
+      <files mask="BT_at_parser_api.h"/>
+      <files mask="BT_att_api.h"/>
+      <files mask="BT_avctp_api.h"/>
+      <files mask="BT_avdtp_api.h"/>
+      <files mask="BT_avrcp_api.h"/>
+      <files mask="BT_avrcp_ca_api.h"/>
+      <files mask="BT_bip_api.h"/>
+      <files mask="BT_bnep_api.h"/>
+      <files mask="BT_bottom_half.h"/>
+      <files mask="BT_bpp_api.h"/>
+      <files mask="BT_common.h"/>
+      <files mask="BT_ctn_api.h"/>
+      <files mask="BT_dbase_api.h"/>
+      <files mask="BT_device_queue.h"/>
+      <files mask="BT_error.h"/>
+      <files mask="BT_ftp_api.h"/>
+      <files mask="BT_gap_api.h"/>
+      <files mask="BT_gatt_db_api.h"/>
+      <files mask="BT_hci_api.h"/>
+      <files mask="BT_hdp_api.h"/>
+      <files mask="BT_hfp_ag_api.h"/>
+      <files mask="BT_hfp_unit_api.h"/>
+      <files mask="BT_hid_device_api.h"/>
+      <files mask="BT_hid_host_api.h"/>
+      <files mask="BT_irobex_api.h"/>
+      <files mask="BT_jpl_api.h"/>
+      <files mask="BT_map_api.h"/>
+      <files mask="BT_mcap_api.h"/>
+      <files mask="BT_obex_api.h"/>
+      <files mask="BT_opp_api.h"/>
+      <files mask="BT_pan_api.h"/>
+      <files mask="BT_pbap_api.h"/>
+      <files mask="BT_racp.h"/>
+      <files mask="BT_rfcomm_api.h"/>
+      <files mask="BT_sap_api.h"/>
+      <files mask="BT_sdp_api.h"/>
+      <files mask="BT_security.h"/>
+      <files mask="BT_sm_api.h"/>
+      <files mask="BT_smp_api.h"/>
+      <files mask="BT_snoop.h"/>
+      <files mask="BT_spp_api.h"/>
+      <files mask="BT_status.h"/>
+      <files mask="BT_storage.h"/>
+      <files mask="BT_version.h"/>
+      <files mask="fsm_defines.h"/>
+      <files mask="fsm_engine.h"/>
+      <files mask="gatt_defines.h"/>
+      <files mask="hci_transport.h"/>
+      <files mask="l2cap.h"/>
+      <files mask="write_task.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/export/vendor" project_relative_path="ethermind/bluetooth/export/vendor" type="c_include">
+      <files mask="vendor_specific_commands.h"/>
+      <files mask="vendor_specific_init.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/export/vendor" project_relative_path="ethermind/bluetooth/export/vendor" type="src">
+      <files mask="vendor_specific_init.c"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/att" project_relative_path="ethermind/bluetooth/private/protocols/att" type="c_include">
+      <files mask="att.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avctp" project_relative_path="ethermind/bluetooth/private/protocols/avctp" type="c_include">
+      <files mask="avctp.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/avdtp" project_relative_path="ethermind/bluetooth/private/protocols/avdtp" type="c_include">
+      <files mask="avdtp.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/bnep" project_relative_path="ethermind/bluetooth/private/protocols/bnep" type="c_include">
+      <files mask="bnep.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/dbase" project_relative_path="ethermind/bluetooth/private/protocols/dbase" type="c_include">
+      <files mask="database.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/hci_1.2" project_relative_path="ethermind/bluetooth/private/protocols/hci_1.2" type="c_include">
+      <files mask="hci_h.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/mcap" project_relative_path="ethermind/bluetooth/private/protocols/mcap" type="c_include">
+      <files mask="mcap.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/obex" project_relative_path="ethermind/bluetooth/private/protocols/obex" type="c_include">
+      <files mask="obex.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/rfcomm" project_relative_path="ethermind/bluetooth/private/protocols/rfcomm" type="c_include">
+      <files mask="rfcomm.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sdp" project_relative_path="ethermind/bluetooth/private/protocols/sdp" type="c_include">
+      <files mask="sdp.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/sm" project_relative_path="ethermind/bluetooth/private/protocols/sm" type="c_include">
+      <files mask="sm.h"/>
+      <files mask="sm_extern.h"/>
+      <files mask="sm_internal.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/protocols/smp" project_relative_path="ethermind/bluetooth/private/protocols/smp" type="c_include">
+      <files mask="smp.h"/>
+      <files mask="smp_extern.h"/>
+      <files mask="smp_fsm.h"/>
+      <files mask="smp_fsm_engine.h"/>
+      <files mask="smp_internal.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/aes_cmac" project_relative_path="ethermind/bluetooth/private/utils/aes_cmac" type="c_include">
+      <files mask="aes_cmac.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/at_parser" project_relative_path="ethermind/bluetooth/private/utils/at_parser" type="c_include">
+      <files mask="at_parser_hsp_hfp.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/object_parser" project_relative_path="ethermind/bluetooth/private/utils/object_parser" type="c_include">
+      <files mask="object_parser_api.h"/>
+      <files mask="tokenizer.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/racp" project_relative_path="ethermind/bluetooth/private/utils/racp" type="c_include">
+      <files mask="racp.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/storage" project_relative_path="ethermind/bluetooth/private/utils/storage" type="c_include">
+      <files mask="storage.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/xml_parser" project_relative_path="ethermind/bluetooth/private/utils/xml_parser" type="c_include">
+      <files mask="xml_common_defines.h"/>
+      <files mask="xml_encoder.h"/>
+      <files mask="xml_parser.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/osal/src/freertos" project_relative_path="ethermind/port/osal/src/freertos" type="c_include">
+      <files mask="EM_assert.h"/>
+      <files mask="EM_config.h"/>
+      <files mask="EM_debug.h"/>
+      <files mask="EM_debug_api.h"/>
+      <files mask="EM_debug_internal.h"/>
+      <files mask="EM_fops.h"/>
+      <files mask="EM_os.h"/>
+      <files mask="EM_serial.h"/>
+      <files mask="EM_timer.h"/>
+      <files mask="EM_timer_internal.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/osal/src/freertos" project_relative_path="ethermind/port/osal/src/freertos" type="src">
+      <files mask="EM_config.c"/>
+      <files mask="EM_debug.c"/>
+      <files mask="EM_fops.c"/>
+      <files mask="EM_os.c"/>
+      <files mask="EM_serial.c"/>
+      <files mask="EM_timer.c"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth" project_relative_path="ethermind/port/pal/mcux/bluetooth" type="c_include">
+      <files mask="BT_assert.h"/>
+      <files mask="BT_config.h"/>
+      <files mask="BT_debug.h"/>
+      <files mask="BT_debug_api.h"/>
+      <files mask="BT_fops.h"/>
+      <files mask="BT_os.h"/>
+      <files mask="BT_storage_pl.h"/>
+      <files mask="BT_timer.h"/>
+      <files mask="btsnoop_pl.h"/>
+      <files mask="ctn_pl.h"/>
+      <files mask="ftp_pl.h"/>
+      <files mask="map_pl.h"/>
+      <files mask="obex_pl.h"/>
+      <files mask="pbap_pl.h"/>
+      <files mask="write_task_extern_pl.h"/>
+      <files mask="write_task_pl.h"/>
+      <files mask="littlefs_pl.h"/>
+      <files mask="controller.h"/>
+      <files mask="hci_uart.h"/>
+      <files mask="hci_uart_internal.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth" project_relative_path="ethermind/port/pal/mcux/bluetooth" type="src">
+      <files mask="BT_status_pl.c"/>
+      <files mask="BT_storage_pl.c"/>
+      <files mask="btsnoop_pl.c"/>
+      <files mask="ctn_pl.c"/>
+      <files mask="ftp_pl.c"/>
+      <files mask="ht_read_task_pl.c"/>
+      <files mask="map_pl.c"/>
+      <files mask="obex_pl.c"/>
+      <files mask="pbap_pl.c"/>
+      <files mask="write_task_pl.c"/>
+      <files mask="littlefs_pl.c"/>
+      <files mask="controller.c"/>
+      <files mask="hci_uart.c"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller" project_relative_path="ethermind/port/pal/mcux/bluetooth" type="src">
+      <files mask="controller_wifi_nxp.c"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux/bluetooth/controller" project_relative_path="ethermind/port/pal/mcux/bluetooth" type="c_include">
+      <files mask="controller_wifi_nxp.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux/ethal" project_relative_path="ethermind/port/pal/mcux/ethal" type="c_include">
+      <files mask="ethal_assert.h"/>
+      <files mask="ethal_config.h"/>
+      <files mask="ethal_debug.h"/>
+      <files mask="ethal_debug_api.h"/>
+      <files mask="ethal_debug_internal.h"/>
+      <files mask="ethal_fops.h"/>
+      <files mask="ethal_os.h"/>
+      <files mask="ethal_serial.h"/>
+      <files mask="ethal_timer.h"/>
+      <files mask="ethal_timer_internal.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux/ethal" project_relative_path="ethermind/port/pal/mcux/ethal" type="src">
+      <files mask="ethal_config.c"/>
+      <files mask="ethal_debug.c"/>
+      <files mask="ethal_fops.c"/>
+      <files mask="ethal_os.c"/>
+      <files mask="ethal_serial.c"/>
+      <files mask="ethal_timer.c"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux/sbc" project_relative_path="ethermind/port/pal/mcux/sbc" type="c_include">
+      <files mask="sbc_os.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux/toolspec/mcuxpresso" project_relative_path="ethermind/port/pal/mcux/toolspec/mcuxpresso" type="src" toolchain="mcuxpresso">
+      <files mask="toolspec.c"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux/toolspec/mcuxpresso" project_relative_path="ethermind/port/pal/mcux/toolspec/mcuxpresso" type="c_include" toolchain="mcuxpresso">
+      <files mask="toolspec.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux" project_relative_path="ethermind/port/pal/mcux" type="src">
+      <files mask="EM_platform.c"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/port/pal/mcux" project_relative_path="ethermind/port/pal/mcux" type="c_include">
+      <files mask="EM_platform.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/utils/sbc" project_relative_path="ethermind/bluetooth/private/utils/sbc" type="c_include">
+      <files mask="sbc_api.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/config" project_relative_path="ethermind/bluetooth/private/lib/config" type="c_include">
+      <files mask="BT_features.h"/>
+      <files mask="BT_limits.h"/>
+      <files mask="db_gen.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/export/extension" project_relative_path="ethermind/bluetooth/export/extension" type="src">
+      <files mask="aes_cmac_pl.c"/>
+      <files mask="BT_common_pl.c"/>
+      <files mask="device_queue_pl.c"/>
+      <files mask="sm_pl.c"/>
+      <files mask="sm_ssp_pl.c"/>
+      <files mask="smp_pl.c"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/export/extension" project_relative_path="ethermind/bluetooth/export/extension" type="c_include">
+      <files mask="aes_cmac_pl.h"/>
+      <files mask="BT_common_pl.h"/>
+      <files mask="device_queue_pl.h"/>
+      <files mask="sm_pl.h"/>
+      <files mask="sm_ssp_pl.h"/>
+      <files mask="smp_pl.h"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
+      <files mask="libethermind_ble_core.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
+      <files mask="libethermind_ble_gatt.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
+      <files mask="libethermind_ble_protocol.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/gcc" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="armgcc">
+      <files mask="libethermind_ble_util.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
+      <files mask="libethermind_ble_core.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
+      <files mask="libethermind_ble_gatt.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
+      <files mask="libethermind_ble_protocol.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/iar" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="iar">
+      <files mask="libethermind_ble_util.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
+      <files mask="libethermind_ble_core.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
+      <files mask="libethermind_ble_gatt.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
+      <files mask="libethermind_ble_protocol.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/mcuxpresso" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mcuxpresso">
+      <files mask="libethermind_ble_util.a"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
+      <files mask="libethermind_ble_core.lib"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
+      <files mask="libethermind_ble_gatt.lib"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
+      <files mask="libethermind_ble_protocol.lib"/>
+    </source>
+    <source path="../../../../middleware/wireless/ethermind/bluetooth/private/lib/mcux/default/ble/cm33/mdk" project_relative_path="ethermind/bluetooth/private/lib" method="copy" type="lib" toolchain="mdk">
+      <files mask="libethermind_ble_util.lib"/>
+    </source>
+  </example>
+</ksdk:examples>

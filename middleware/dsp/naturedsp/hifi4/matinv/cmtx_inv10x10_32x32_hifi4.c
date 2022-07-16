@@ -221,6 +221,7 @@ int  cmtx_inv10x10_32x32(void* pScr, complex_fract32 *x, int qX)
         qC=qC+expC-e;
         // Gauss-Jordan elimination: might be made using curcular addressing on B/C
 #if 0
+    {
         ae_int32x2 Ti;
         pB=(ae_int32x2 *)B;
         pC=(ae_int32x2 *)C;
@@ -285,7 +286,7 @@ int  cmtx_inv10x10_32x32(void* pScr, complex_fract32 *x, int qX)
         pT=(T+k);
         AE_ADDCIRC32X2_XC (pB,sizeof(ae_int32x2)*N);
         AE_ADDCIRC32X2_XC1(pT,sizeof(ae_int32x2));
-        NASSERT(e>0);
+        //NASSERT(e>0);
         {
             int off;
             ae_int32x2 esh_coef=AE_SLAA32S(0x40000000,-e+1);

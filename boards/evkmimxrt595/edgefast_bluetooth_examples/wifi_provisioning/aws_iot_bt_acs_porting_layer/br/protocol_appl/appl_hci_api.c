@@ -53,6 +53,7 @@ void appl_hci_inquiry ( void )
 {
 #ifndef HCI_LITE
 
+#if 0
     UINT32 lap;
     UCHAR  inq_length;
     UCHAR  inq_resp;
@@ -89,7 +90,7 @@ void appl_hci_inquiry ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Inquiry Results & Inquiry Complete.\n");
     }
-
+#endif
 #else  /* HCI_LITE */
 
     IotLogDebug("HCI_LITE flag is defined\n");
@@ -100,6 +101,7 @@ void appl_hci_inquiry ( void )
 
 void appl_hci_create_connection ( void )
 {
+#if 0
     unsigned int read;
     UINT16 clock_offset;
     API_RESULT retval;
@@ -137,6 +139,7 @@ void appl_hci_create_connection ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Connect Complete.\n");
     }
+#endif
 }
 
 
@@ -174,6 +177,7 @@ void appl_hci_disconnect ( void )
 
 void appl_hci_add_sco_connection ( void )
 {
+#if 0
     API_RESULT retval;
     UCHAR      bd_addr[BT_BD_ADDR_SIZE];
 
@@ -196,11 +200,13 @@ void appl_hci_add_sco_connection ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Connect Complete.\n");
     }
+#endif
 }
 
 
 void appl_hci_setup_synchronous_connection ( void )
 {
+#if 0
     int choice;
     API_RESULT retval;
     UINT16 handle;
@@ -265,10 +271,12 @@ void appl_hci_setup_synchronous_connection ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Connect Complete.\n");
     }
+#endif
 }
 
 void appl_hci_setup_synchronous_connection_with_codec_type (UINT8 type)
 {
+#if 0
     int read;
     API_RESULT retval;
     UINT16 handle;
@@ -312,6 +320,7 @@ void appl_hci_setup_synchronous_connection_with_codec_type (UINT8 type)
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Connect Complete.\n");
     }
+#endif
 }
 
 void appl_hci_setup_synchronous_connection_response ( void )
@@ -481,6 +490,7 @@ void appl_hci_remote_name_request ( void )
 {
 #ifndef HCI_LITE
 
+#if 0
     API_RESULT retval;
     UCHAR      bd_addr[BT_BD_ADDR_SIZE];
     UCHAR      name[249];
@@ -507,6 +517,7 @@ void appl_hci_remote_name_request ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 
 #else  /* HCI_LITE */
 
@@ -520,6 +531,7 @@ void appl_hci_role_discovery ( void )
 {
 #ifndef HCI_LITE
 
+#if 0
     unsigned int read;
     API_RESULT retval;
     UINT16     handle;
@@ -540,6 +552,7 @@ void appl_hci_role_discovery ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 
 #else  /* HCI_LITE */
 
@@ -551,6 +564,7 @@ void appl_hci_role_discovery ( void )
 
 void appl_hci_switch_role ( void )
 {
+#if 0
     unsigned int read;
     API_RESULT retval;
     UCHAR      bd_addr[BT_BD_ADDR_SIZE], role;
@@ -574,10 +588,12 @@ void appl_hci_switch_role ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 }
 
 void appl_hci_sniff_mode(void)
 {
+#if 0
     unsigned int read;
     API_RESULT retval;
 
@@ -627,10 +643,12 @@ void appl_hci_sniff_mode(void)
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 }
 
 void appl_hci_park_mode(void)
 {
+#if 0
     unsigned int read;
     API_RESULT retval;
 
@@ -668,10 +686,12 @@ void appl_hci_park_mode(void)
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 }
 
 void appl_hci_hold_mode(void)
 {
+#if 0
     unsigned int read;
     API_RESULT retval;
 
@@ -709,6 +729,7 @@ void appl_hci_hold_mode(void)
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 }
 
 void appl_hci_exit_sniff_mode(void)
@@ -742,6 +763,7 @@ void appl_hci_exit_sniff_mode(void)
 
 void appl_hci_exit_park_mode(void)
 {
+#if 0
     unsigned int read;
     API_RESULT retval;
 
@@ -767,6 +789,7 @@ void appl_hci_exit_park_mode(void)
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 }
 
 void appl_hci_write_link_policy(void)
@@ -835,7 +858,7 @@ void appl_hci_read_connection_accept_timeout ( void )
 void appl_hci_write_connection_accept_timeout ( void )
 {
 #ifndef HCI_LITE
-
+#if 0
     unsigned int read;
     UINT16 timeout;
     API_RESULT retval;
@@ -858,6 +881,7 @@ void appl_hci_write_connection_accept_timeout ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 
 #else  /* HCI_LITE */
 
@@ -1072,6 +1096,7 @@ void appl_hci_read_class_of_device ( void )
 
 void appl_hci_write_class_of_device ( void )
 {
+#if 0
     unsigned int read;
     API_RESULT retval;
     UINT32      class_of_device;
@@ -1092,6 +1117,7 @@ void appl_hci_write_class_of_device ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 }
 
 
@@ -1185,6 +1211,7 @@ void appl_hci_change_local_name ( void )
 
     IotLogDebug("\n");
     IotLogDebug("Initiating HCI Change Local Name ... "); fflush(stdout);
+#ifdef BR_EDR_HCI
     retval = BT_hci_change_local_name ( (UCHAR *)name, (UINT16)BT_str_len((CHAR *)name) );
     if (API_SUCCESS != retval)
     {
@@ -1195,6 +1222,7 @@ void appl_hci_change_local_name ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 }
 
 
@@ -1267,7 +1295,7 @@ void appl_hci_read_inquiry_mode ( void )
 void appl_hci_write_inquiry_mode ( void )
 {
 #ifndef HCI_LITE
-
+#if 0
     unsigned int read;
     API_RESULT retval;
     UCHAR mode;
@@ -1288,7 +1316,7 @@ void appl_hci_write_inquiry_mode ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
-
+#endif
 #else  /* HCI_LITE */
 
     IotLogDebug("HCI_LITE flag is defined\n");
@@ -1428,6 +1456,7 @@ void appl_hci_read_current_iaclap ( void )
 
 void appl_hci_write_current_iaclap ( void )
 {
+#if 0
     unsigned int read;
     API_RESULT retval;
     UINT32 iac_lap;
@@ -1448,6 +1477,7 @@ void appl_hci_write_current_iaclap ( void )
         IotLogDebug("Successfully started.\n");
         IotLogDebug("Please wait for Command Complete.\n");
     }
+#endif
 }
 
 #endif /* BT_HCI_1_2 */

@@ -41,13 +41,13 @@ enum tfm_hal_status_t tfm_hal_memory_has_access(uintptr_t base,
         return TFM_HAL_ERROR_INVALID_INPUT;
     }
 
-#if 0 //NXP WORKAROUND for  arm-gcc 10-2020-q4-major https://stackoverflow.com/questions/66240436/cmse-check-address-range-changes-behaviour-with-compiler-upgrade
+#ifdef __GNUC__ //NXP WORKAROUND for  arm-gcc 10-2020-q4-major https://stackoverflow.com/questions/66240436/cmse-check-address-range-changes-behaviour-with-compiler-upgrade
+    return TFM_HAL_SUCCESS;
+#else     
     if (cmse_check_address_range((void *)base, size, flags) != NULL) {
         return TFM_HAL_SUCCESS;
     } else {
         return TFM_HAL_ERROR_MEM_FAULT;
     }
-#else
-    return TFM_HAL_SUCCESS;
-#endif    
+#endif
 }

@@ -73,8 +73,6 @@ set(CMAKE_MODULE_PATH
 # include modules
 include(middleware_tfm_ns_evkmimxrt595_MIMXRT595S_cm33)
 
-include(middleware_tfm_ns_rtx_MIMXRT595S_cm33)
-
 include(middleware_tfm_ns_ipc_api_MIMXRT595S_cm33)
 
 include(middleware_psatest_ns_MIMXRT595S_cm33)

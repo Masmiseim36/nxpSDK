@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------ */
-/* Copyright (c) 2018 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
+/* Copyright (c) 2016 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
 /* These coded instructions, statements, and computer programs (“Cadence    */
 /* Libraries”) are the copyrighted works of Cadence Design Systems Inc.	    */
 /* Cadence IP is licensed for use with Cadence processor cores only and     */
@@ -31,9 +31,10 @@
 #ifndef __FFT_X16_COMMON_H__
 #define __FFT_X16_COMMON_H__
 #include "NatureDSP_types.h"
+#include "NatureDSP_Signal_fft.h"
 
 /* Types of FFT stages that can be used in FFT processing */
-#define NUM_FFT_STAGE_TYPES 20
+#define NUM_FFT_STAGE_TYPES 22
 typedef enum {
     fft_stage_first_DFT2       = 0 ,/* first stage for forward FFT, radix-2 */
     fft_stage_first_DFT3       = 1 ,/* first stage for forward FFT, radix-3 */
@@ -54,8 +55,10 @@ typedef enum {
     fft_stage_last_DFT3        = 16,/* last stage for forward/inverse FFT, radix-3 */
     fft_stage_last_DFT4        = 17,/* last stage for forward/inverse FFT, radix-4 */
     fft_stage_last_DFT5        = 18,/* last stage for forward/inverse FFT, radix-5 */
-    fft_stage_last_DFT8        = 19 /* last stage for forward/inverse FFT, radix-8 */
-/* Types of FFT stages that can be used in FFT processing */
+    fft_stage_last_DFT8        = 19, /* last stage for forward/inverse FFT, radix-8 */
+    fft_stage_last_DFT11       = 20, /* last stage for forward/inverse FFT, radix-11 */
+    fft_inner_DFT2_V2          = 21  /* inner stage radix-2, special case for FFT based on radix = 3,5,11  */
+    /* Types of FFT stages that can be used in FFT processing */
 } eFft_stage_type;
 
 typedef const int16_t* cint16ptr_t;
@@ -115,6 +118,11 @@ extern const fft_cplx_x16_descr_t __cfft_x16_descr240;
 extern const fft_cplx_x16_descr_t __cfft_x16_descr160;
 extern const fft_cplx_x16_descr_t __cfft_x16_descr192;
 extern const fft_cplx_x16_descr_t __cfft_x16_descr240;
+extern const fft_cplx_x16_descr_t __cfft_x16_descr320;
+extern const fft_cplx_x16_descr_t __cifft_x16_descr144;
+extern const fft_cplx_x16_descr_t __cfft_x16_descr144;
+
+
 extern const fft_cplx_x16_descr_t __cfft_32x16_descr160;
 extern const fft_cplx_x16_descr_t __cfft_32x16_descr192;
 extern const fft_cplx_x16_descr_t __cfft_32x16_descr240;
@@ -128,11 +136,50 @@ extern const fft_cplx_x16_descr_t __cifft_x16_descr240;
 extern const fft_cplx_x16_descr_t __cifft_x16_descr160;
 extern const fft_cplx_x16_descr_t __cifft_x16_descr192;
 extern const fft_cplx_x16_descr_t __cifft_x16_descr240;
+extern const fft_cplx_x16_descr_t __cifft_x16_descr320;
+extern const fft_cplx_x16_descr_t __cfft_x16_descr176;
+extern const fft_cplx_x16_descr_t __cifft_x16_descr176;
+
 extern const fft_cplx_x16_descr_t __cifft_32x16_descr160;
 extern const fft_cplx_x16_descr_t __cifft_32x16_descr192;
 extern const fft_cplx_x16_descr_t __cifft_32x16_descr240;
 extern const fft_cplx_x16_descr_t __cifft_32x16_descr160;
 extern const fft_cplx_x16_descr_t __cifft_32x16_descr192;
 extern const fft_cplx_x16_descr_t __cifft_32x16_descr240;
+
+extern const fft_cplx_x16_descr_t __cfft_x16_descr288;
+extern const fft_cplx_x16_descr_t __cfft_x16_descr48;
+extern const fft_cplx_x16_descr_t __cifft_x16_descr48;
+extern const fft_cplx_x16_descr_t __cifft_x16_descr288;
+
+extern const  fft_handle_t cnfft16_640; 
+extern const  fft_handle_t cnfft16_576;
+extern const  fft_handle_t cnfft16_176;
+extern const  fft_handle_t cnfft16_352;
+extern const  fft_handle_t cnfft16_144;
+extern const  fft_handle_t cnfft16_288;
+extern const  fft_handle_t cinfft16_144;
+extern const  fft_handle_t cnfft16_96;
+extern const  fft_handle_t cinfft16_96;
+extern const  fft_handle_t rnfft16_576;
+extern const  fft_handle_t rinfft16_576;
+extern const  fft_handle_t rnfft16_144;
+extern const  fft_handle_t rnfft16_352; 
+extern const  fft_handle_t rinfft16_144;
+extern const  fft_handle_t rnfft16_96;
+extern const  fft_handle_t rinfft16_96;
+extern const  fft_handle_t rnfft16_176;
+extern const  fft_handle_t rinfft16_176;
+extern const  fft_handle_t cinfft16_288;
+extern const  fft_handle_t cinfft16_176;
+extern const  fft_handle_t cinfft16_352;
+extern const  fft_handle_t cinfft16_576;
+extern const  fft_handle_t cinfft16_640;
+extern const  fft_handle_t rinfft16_288;
+extern const  fft_handle_t rinfft16_352;
+extern const  fft_handle_t rnfft16_288;
+extern const  fft_handle_t rnfft16_640;
+extern const  fft_handle_t rinfft16_640;
+
 
 #endif // __FFT_X16_COMMON_H__

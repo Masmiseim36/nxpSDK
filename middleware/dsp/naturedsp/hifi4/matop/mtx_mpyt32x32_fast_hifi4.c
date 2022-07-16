@@ -139,8 +139,8 @@ void mtx_mpyt32x32_fast ( void* pScr,
             B0 = B1 = B2 = B3 = B4 = B5 = B6 = B7 = AE_ZERO64();
 
             /* Innermost loop: compute 2 values for 4 rows */
-            __Pragma("loop_count min=2, factor=2");
-            for (n = 0; n < (N >> 1); n++)
+            __Pragma("loop_count min=1");
+            for (n = 0; n < (N >> 2); n++)
             {
                 /* load data from 'x' */
                 AE_L32X2_IP(X0, px0, sizeof(ae_int32x2));
@@ -159,6 +159,26 @@ void mtx_mpyt32x32_fast ( void* pScr,
                 AE_MULAAFD32RA_HH_LL(B5, X2, Y1);
                 AE_MULAAFD32RA_HH_LL(B6, X3, Y0);
                 AE_MULAAFD32RA_HH_LL(B7, X3, Y1);
+
+				// UNROLL
+
+				/* load data from 'x' */
+				AE_L32X2_IP(X0, px0, sizeof(ae_int32x2));
+				AE_L32X2_IP(X1, px1, sizeof(ae_int32x2));
+				AE_L32X2_IP(X2, px2, sizeof(ae_int32x2));
+				AE_L32X2_IP(X3, px3, sizeof(ae_int32x2));
+				/* load data from 'y' */
+				AE_L32X2_IP(Y0, py0, sizeof(ae_int32x2));
+				AE_L32X2_IP(Y1, py1, sizeof(ae_int32x2));
+				/* perform multiplications */
+				AE_MULAAFD32RA_HH_LL(B0, X0, Y0);
+				AE_MULAAFD32RA_HH_LL(B1, X0, Y1);
+				AE_MULAAFD32RA_HH_LL(B2, X1, Y0);
+				AE_MULAAFD32RA_HH_LL(B3, X1, Y1);
+				AE_MULAAFD32RA_HH_LL(B4, X2, Y0);
+				AE_MULAAFD32RA_HH_LL(B5, X2, Y1);
+				AE_MULAAFD32RA_HH_LL(B6, X3, Y0);
+				AE_MULAAFD32RA_HH_LL(B7, X3, Y1);
             }
             /* format values */
             X0 = AE_TRUNCA32X2F64S(B0, B1, 16 + lsh);

@@ -38,7 +38,7 @@
 #include "mfcc_internal.h"
 
 #define USE_REFERENCE_CODE    0
-#define ALIGN_SIZE            (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE            (HIFI_SIMD_WIDTH)
 
 #if USE_REFERENCE_CODE
 /* NON OPTIMIZED REFERENCE CODE: to be use it for educational purposes only */

@@ -58,7 +58,13 @@
   parameter gain of each filter initialization function.
   2. 16x16 filters may suffer more from accumulation of the roundoff errors,
   so filters should be properly designed to match noise requirements
-
+  3. Due to the performance reasons, IIR biquad filters may introduce 
+  additional algorithmic delay of several sampless. Amount of that delay
+  might be requested by the  xxx_groupDelay API. For sensitive applications
+  all the filters have delayless implementations (with  _nd  suffix in the name).
+  Formally, the xxx_groupDelay APIs is also implemented for that kind of filters,
+  but return zero.
+  
   Precision: 
   16x16         16-bit data, 16-bit coefficients, 16-bit intermediate 
                 stage outputs (DF1, DF1 stereo, DF II form)
@@ -115,7 +121,7 @@
   N   - must be a multiple of 2
   s[] - whenever supplied must be aligned on an 8-bytes boundary
 -------------------------------------------------------------------------*/
-
+#if (ALG_STEREO_32X32_DF1_ND==0)
 /* Reserve memory for alignment. */
 #define ALIGNED_SIZE( size, align ) ( (size_t)(size) + (align) - 1 )
 
@@ -133,16 +139,21 @@ static int32_t mpy32x16r( int32_t a, int16_t b )
   res = AE_MOVAD32_L(vres);
   return res;
 }
+#endif
 
 /* Allocation routine for iir filters. Returns: size of memory in bytes to be allocated */
 size_t stereo_bqriir32x32_df1_alloc( int M )
 {
+#if (ALG_STEREO_32X32_DF1_ND==1)
+  return stereo_bqriir32x32_df1_nd_alloc(M);
+#else
   NASSERT( M > 0 );
   return ( ALIGNED_SIZE( sizeof(stereo_bqriir32x32_df1_t), 4 )
            + // 6 state elements for each pair of M DFI sections.
            ALIGNED_SIZE( 2*6*(M+1)/2*sizeof(int32_t), 8 )
            + // 6 SOS coefficients for each of M sections
            ALIGNED_SIZE( 2*6*M*sizeof(int32_t), 8 ));
+#endif
 } /* stereo_bqriir32x32_df1_alloc() */
 
 /* Initialization routine for iir filters. Returns: handle to the object */
@@ -154,6 +165,9 @@ stereo_bqriir32x32_df1_handle_t stereo_bqriir32x32_df1_init( void * objmem, int 
                                                              const int16_t * restrict coef_gr,
                                                              int16_t         gainr )
 {
+#if (ALG_STEREO_32X32_DF1_ND==1)
+  return stereo_bqriir32x32_df1_nd_init(objmem, M, coef_sosl, coef_gl, gainl, coef_sosr, coef_gr, gainr);
+#else
   stereo_bqriir32x32_df1_ptr_t stereo_bqriir;
   ae_int32x2 * restrict sectStatel;
   ae_int32x2 * restrict sectStater;
@@ -227,4 +241,10 @@ stereo_bqriir32x32_df1_handle_t stereo_bqriir32x32_df1_init( void * objmem, int 
   }
 
   return (stereo_bqriir); 
+#endif
 } /* stereo_bqriir32x32_df1_init() */
+
+size_t stereo_bqriir32x32_df1_groupDelay(stereo_bqriir32x32_df1_handle_t _bqriir)
+{
+    return 0;
+} /* stereo_bqriir32x32_df1_groupDelay() */

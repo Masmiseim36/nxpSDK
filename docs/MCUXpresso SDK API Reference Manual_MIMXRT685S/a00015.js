@@ -1,6 +1,6 @@
 var a00015 =
 [
-    [ "ctimer_match_config_t", "a00015.html#a00293", [
+    [ "ctimer_match_config_t", "a00015.html#a00294", [
       [ "matchValue", "a00015.html#afa3614f09e787565b3514ddd4d9545a0", null ],
       [ "enableCounterReset", "a00015.html#aaa00b16aba273e3f11f9480154acc1e5", null ],
       [ "enableCounterStop", "a00015.html#a94fe2c63ce7fcb5cf68f9ce73974a3e8", null ],
@@ -8,7 +8,7 @@ var a00015 =
       [ "outPinInitState", "a00015.html#a31ca8ee3406b7a17c793d94469e1e68d", null ],
       [ "enableInterrupt", "a00015.html#ae09fd69820c9285d7f146260d2c51584", null ]
     ] ],
-    [ "ctimer_config_t", "a00015.html#a00292", [
+    [ "ctimer_config_t", "a00015.html#a00293", [
       [ "mode", "a00015.html#ab72ef3a10cab9754d3cecb44ef7ad6ac", null ],
       [ "input", "a00015.html#ac07c23c0bbadea74c24c03e401321fbc", null ],
       [ "prescale", "a00015.html#aa8baec2c586854dc58ff4cdb82b7996b", null ]
@@ -17,7 +17,8 @@ var a00015 =
     [ "ctimer_capture_channel_t", "a00015.html#ga2fbf5cfa219c31ac16f3786d6897dc3f", [
       [ "kCTIMER_Capture_0", "a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3faa13dee3bb29b8962385da2ac6d8dc938", null ],
       [ "kCTIMER_Capture_1", "a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fac4fcf23f15faa447489ef7ccc4d6cb25", null ],
-      [ "kCTIMER_Capture_2", "a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d6d30f6a5498d009cd87fafee3bccd5", null ]
+      [ "kCTIMER_Capture_2", "a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d6d30f6a5498d009cd87fafee3bccd5", null ],
+      [ "kCTIMER_Capture_3", "a00015.html#gga2fbf5cfa219c31ac16f3786d6897dc3fa9d2f295d94d98bc376159ecea3ff2461", null ]
     ] ],
     [ "ctimer_capture_edge_t", "a00015.html#gac37706bc06bc7590ce1e3d1b4bf73638", [
       [ "kCTIMER_Capture_RiseEdge", "a00015.html#ggac37706bc06bc7590ce1e3d1b4bf73638ac8297b7a4be687e63200fc22be1d2f02", null ],
@@ -50,7 +51,8 @@ var a00015 =
       [ "kCTIMER_Match3InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a1f67c8c1e8039ca326e9f25fabffdd0d", null ],
       [ "kCTIMER_Capture0InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a5fe0ea705babd6351564e59c8db8e928", null ],
       [ "kCTIMER_Capture1InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a5d70800d3cc33733d42f525242edbbf4", null ],
-      [ "kCTIMER_Capture2InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a68a56db3574cd0ea3bb783c7d13f0894", null ]
+      [ "kCTIMER_Capture2InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a68a56db3574cd0ea3bb783c7d13f0894", null ],
+      [ "kCTIMER_Capture3InterruptEnable", "a00015.html#gga0971c614f932bcf55994bf6c92325eb2a347ceee25f668e7af7a459da9bbc9418", null ]
     ] ],
     [ "ctimer_status_flags_t", "a00015.html#gae64285eb2e52bf5cc2b723870392ff60", [
       [ "kCTIMER_Match0Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60ad76fd4735e0604307b50d2fd12cba3c0", null ],
@@ -59,7 +61,8 @@ var a00015 =
       [ "kCTIMER_Match3Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60a02e58518795f05162313b509a600a3d3", null ],
       [ "kCTIMER_Capture0Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60a5504b0ec94b832a46824ec297a106df1", null ],
       [ "kCTIMER_Capture1Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60af3a0db73d48116ea419af737c706b30b", null ],
-      [ "kCTIMER_Capture2Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60aaf0224295d4f330d0d61d10ab30f38ea", null ]
+      [ "kCTIMER_Capture2Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60aaf0224295d4f330d0d61d10ab30f38ea", null ],
+      [ "kCTIMER_Capture3Flag", "a00015.html#ggae64285eb2e52bf5cc2b723870392ff60a2bd4b55092422d4faa550293c529dacf", null ]
     ] ],
     [ "ctimer_callback_type_t", "a00015.html#ga740677adee6ada817bb45ed62607c3c4", [
       [ "kCTIMER_SingleCallback", "a00015.html#gga740677adee6ada817bb45ed62607c3c4af805d881e4dc37e339a8434c1816f930", null ],

@@ -1,11 +1,12 @@
 /*
- * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2021, Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/*********** WARNING: This is an auto-generated file. Do not edit! ***********/
+/***********  WARNING: This is an auto-generated file. Do not edit!  ***********/
 
 #ifndef __PSA_MANIFEST_PID_H__
 #define __PSA_MANIFEST_PID_H__
@@ -14,25 +15,26 @@
 extern "C" {
 #endif
 
+#define TFM_NS_MAILBOX_AGENT                                           (0)
 #define TFM_SP_PS                                                      (256)
 #define TFM_SP_ITS                                                     (257)
-#define TFM_SP_AUDIT_LOG                                               (258)
+#define TFM_SP_AUDIT_LOG                                               (255)
 #define TFM_SP_CRYPTO                                                  (259)
 #define TFM_SP_PLATFORM                                                (260)
 #define TFM_SP_INITIAL_ATTESTATION                                     (261)
 #define TFM_SP_FWU                                                     (271)
-#define TFM_SP_CORE_TEST                                               (262)
-#define TFM_SP_CORE_TEST_2                                             (263)
-#define TFM_SP_SECURE_TEST_PARTITION                                   (264)
-#define TFM_SP_IPC_SERVICE_TEST                                        (265)
-#define TFM_SP_IPC_CLIENT_TEST                                         (266)
-#define TFM_SP_PS_TEST                                                 (268)
-#define TFM_SP_SECURE_CLIENT_2                                         (269)
-#define TFM_SP_ATTEST_TEST                                             (272)
-#define TFM_SP_SLIH_TEST                                               (267)
-#define TFM_SP_FLIH_TEST                                               (270)
+#define TFM_SP_CORE_TEST                                               (3000)
+#define TFM_SP_CORE_TEST_2                                             (3001)
+#define TFM_SP_SECURE_TEST_PARTITION                                   (3002)
+#define TFM_SP_IPC_SERVICE_TEST                                        (3003)
+#define TFM_SP_IPC_CLIENT_TEST                                         (3004)
+#define TFM_SP_PS_TEST                                                 (3005)
+#define TFM_SP_SECURE_CLIENT_2                                         (3006)
+#define TFM_SP_SLIH_TEST                                               (3008)
+#define TFM_SP_FLIH_TEST                                               (3009)
+#define TFM_SP_FPU_SERVICE_TEST                                        (3010)
 
-#define TFM_MAX_USER_PARTITIONS                                        (17)
+#define TFM_MAX_USER_PARTITIONS                                        (18)
 
 #ifdef __cplusplus
 }

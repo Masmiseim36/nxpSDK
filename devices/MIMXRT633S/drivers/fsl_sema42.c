@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2020, 2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -148,19 +148,8 @@ status_t SEMA42_TryLock(SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)
  */
 void SEMA42_Lock(SEMA42_Type *base, uint8_t gateNum, uint8_t procNum)
 {
-    assert(gateNum < (uint8_t)FSL_FEATURE_SEMA42_GATE_COUNT);
-
-    ++procNum;
-
-    while (procNum != SEMA42_GATEn(base, gateNum))
+    while (kStatus_Success != SEMA42_TryLock(base, gateNum, procNum))
     {
-        /* Wait for unlocked status. */
-        while (0U != SEMA42_GATEn(base, gateNum))
-        {
-        }
-
-        /* Lock the gate. */
-        SEMA42_GATEn(base, gateNum) = procNum;
     }
 }
 

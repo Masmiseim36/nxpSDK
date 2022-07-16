@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2020, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -28,7 +28,6 @@ set(CMAKE_USER_MAKE_RULES_OVERRIDE ${CMAKE_CURRENT_LIST_DIR}/cmake/set_extension
 
 macro(tfm_toolchain_reset_compiler_flags)
     set_property(DIRECTORY PROPERTY COMPILE_OPTIONS "")
-    string(REGEX REPLACE "\\+nodsp" ".no_dsp" CMAKE_ASM_CPU_FLAG "${CMAKE_SYSTEM_PROCESSOR}")
 
     add_compile_options(
         $<$<COMPILE_LANGUAGE:C>:-Wno-ignored-optimization-argument>
@@ -49,14 +48,21 @@ macro(tfm_toolchain_reset_compiler_flags)
         $<$<AND:$<COMPILE_LANGUAGE:C>,$<NOT:$<BOOL:${TFM_SYSTEM_FP}>>>:-mfpu=none>
         $<$<AND:$<COMPILE_LANGUAGE:ASM>,$<NOT:$<BOOL:${TFM_SYSTEM_FP}>>>:--fpu=none>
         $<$<COMPILE_LANGUAGE:ASM>:--cpu=${CMAKE_ASM_CPU_FLAG}>
+        $<$<AND:$<COMPILE_LANGUAGE:C>,$<BOOL:${TFM_DEBUG_SYMBOLS}>>:-g>
     )
 endmacro()
+
+if(CONFIG_TFM_MEMORY_USAGE_QUIET)
+    set(MEMORY_USAGE_FLAG "")
+else()
+    set(MEMORY_USAGE_FLAG --info=summarysizes,sizes,totals,unused,veneers)
+endif()
 
 macro(tfm_toolchain_reset_linker_flags)
     set_property(DIRECTORY PROPERTY LINK_OPTIONS "")
 
     add_link_options(
-        --info=summarysizes,sizes,totals,unused,veneers
+        ${MEMORY_USAGE_FLAG}
         --strict
         --symbols
         --xref
@@ -77,27 +83,77 @@ macro(tfm_toolchain_reset_linker_flags)
 endmacro()
 
 macro(tfm_toolchain_set_processor_arch)
-    set(CMAKE_SYSTEM_PROCESSOR       ${TFM_SYSTEM_PROCESSOR})
-    set(CMAKE_SYSTEM_ARCHITECTURE    ${TFM_SYSTEM_ARCHITECTURE})
+    if (DEFINED TFM_SYSTEM_PROCESSOR)
+        set(CMAKE_SYSTEM_PROCESSOR       ${TFM_SYSTEM_PROCESSOR})
+
+        if (DEFINED TFM_SYSTEM_MVE)
+            if(NOT TFM_SYSTEM_MVE)
+                string(APPEND CMAKE_SYSTEM_PROCESSOR "+nomve")
+            endif()
+        endif()
+
+        if (DEFINED TFM_SYSTEM_FP)
+            if(NOT TFM_SYSTEM_FP)
+                string(APPEND CMAKE_SYSTEM_PROCESSOR "+nofp")
+            endif()
+        endif()
+
+        if (DEFINED TFM_SYSTEM_DSP)
+            if(NOT TFM_SYSTEM_DSP)
+                string(APPEND CMAKE_SYSTEM_PROCESSOR "+nodsp")
+            endif()
+        endif()
+
+        string(REGEX REPLACE "\\+nodsp" ".no_dsp" CMAKE_ASM_CPU_FLAG "${CMAKE_SYSTEM_PROCESSOR}")
+    else()
+        set(CMAKE_ASM_CPU_FLAG  ${TFM_SYSTEM_ARCHITECTURE})
+
+        # Armasm uses different syntax than armclang for architecture targets
+        string(REGEX REPLACE "\\armv" "" CMAKE_ASM_CPU_FLAG "${CMAKE_ASM_CPU_FLAG}")
+        string(REGEX REPLACE "\\armv" "" CMAKE_ASM_CPU_FLAG "${CMAKE_ASM_CPU_FLAG}")
+
+        # Modifiers are additive instead of subtractive (.fp Vs .no_fp)
+        if (TFM_SYSTEM_DSP)
+            string(APPEND CMAKE_ASM_CPU_FLAG ".dsp")
+        else()
+            if (TFM_SYSTEM_MVE)
+                string(APPEND CMAKE_ASM_CPU_FLAG ".mve")
+            endif()
+
+            if (TFM_SYSTEM_FP)
+                string(APPEND CMAKE_ASM_CPU_FLAG ".fp")
+            endif()
+        endif()
+    endif()
+
+    # CMAKE_SYSTEM_ARCH is an ARMCLANG CMAKE internal variable, used to set
+    # compile and linker flags up until CMake 3.21 where CMP0123 was introduced:
+    # https://cmake.org/cmake/help/latest/policy/CMP0123.html
+    # This behavior is overwritten by setting CMAKE_C_FLAGS in
+    # tfm_toolchain_reload_compiler.
+    # Another use of this variable is to statisfy a requirement for ARMCLANG to
+    # set either the target CPU or the Architecture. This variable needs to be
+    # set to allow targeting architectures without a specific CPU.
+    set(CMAKE_SYSTEM_ARCH            ${TFM_SYSTEM_ARCHITECTURE})
 
     set(CMAKE_C_COMPILER_TARGET      arm-${CROSS_COMPILE})
     set(CMAKE_ASM_COMPILER_TARGET    arm-${CROSS_COMPILE})
 
     if (DEFINED TFM_SYSTEM_MVE)
         if(NOT TFM_SYSTEM_MVE)
-            string(APPEND CMAKE_SYSTEM_PROCESSOR "+nomve")
+            string(APPEND CMAKE_SYSTEM_ARCH "+nomve")
         endif()
     endif()
 
     if (DEFINED TFM_SYSTEM_FP)
         if(NOT TFM_SYSTEM_FP)
-            string(APPEND CMAKE_SYSTEM_PROCESSOR "+nofp")
+            string(APPEND CMAKE_SYSTEM_ARCH "+nofp")
         endif()
     endif()
 
     if (DEFINED TFM_SYSTEM_DSP)
         if(NOT TFM_SYSTEM_DSP)
-            string(APPEND CMAKE_SYSTEM_PROCESSOR "+nodsp")
+            string(APPEND CMAKE_SYSTEM_ARCH "+nodsp")
         endif()
     endif()
 
@@ -106,9 +162,9 @@ macro(tfm_toolchain_set_processor_arch)
     # the ones we intend to use so that the validation will never fail.
     include(Compiler/ARMClang)
     set(CMAKE_C_COMPILER_PROCESSOR_LIST ${CMAKE_SYSTEM_PROCESSOR})
-    set(CMAKE_C_COMPILER_ARCH_LIST ${CMAKE_SYSTEM_PROCESSOR})
+    set(CMAKE_C_COMPILER_ARCH_LIST ${CMAKE_SYSTEM_ARCH})
     set(CMAKE_ASM_COMPILER_PROCESSOR_LIST ${CMAKE_SYSTEM_PROCESSOR})
-    set(CMAKE_ASM_COMPILER_ARCH_LIST ${CMAKE_SYSTEM_PROCESSOR})
+    set(CMAKE_ASM_COMPILER_ARCH_LIST ${CMAKE_SYSTEM_ARCH})
 endmacro()
 
 macro(tfm_toolchain_reload_compiler)
@@ -125,25 +181,37 @@ macro(tfm_toolchain_reload_compiler)
 
     include(Compiler/ARMClang)
     __compiler_armclang(C)
-    include(Compiler/ARMCC)
+    include(Compiler/ARMCC-ASM)
     __compiler_armcc(ASM)
+
+    if (CMAKE_C_COMPILER_VERSION VERSION_LESS 6.10.1)
+        message(FATAL_ERROR "Please select newer Arm compiler version starting from 6.10.1.")
+    endif()
+
+    if (CMAKE_C_COMPILER_VERSION VERSION_GREATER_EQUAL 6.15)
+        message(WARNING "Armclang starting from v6.15 may cause MemManage fault."
+                            " The root cause is still under analysis by Armclang."
+                            " Please use lower Armclang versions instead.")
+    endif()
 
     # Cmake's armclang support will set either mcpu or march, but march gives
     # better code size so we manually set it.
-    set(CMAKE_C_FLAGS   "-march=${CMAKE_SYSTEM_ARCHITECTURE}")
+    set(CMAKE_C_FLAGS   "-march=${CMAKE_SYSTEM_ARCH}")
     set(CMAKE_ASM_FLAGS ${CMAKE_ASM_FLAGS_INIT})
 
-    set(CMAKE_C_LINK_FLAGS   "--cpu=${CMAKE_SYSTEM_PROCESSOR}")
-    set(CMAKE_ASM_LINK_FLAGS "--cpu=${CMAKE_SYSTEM_PROCESSOR}")
-    # But armlink doesn't support this +dsp syntax
-    string(REGEX REPLACE "\\+nodsp" "" CMAKE_C_LINK_FLAGS   "${CMAKE_C_LINK_FLAGS}")
-    string(REGEX REPLACE "\\+nodsp" "" CMAKE_ASM_LINK_FLAGS "${CMAKE_ASM_LINK_FLAGS}")
-    # And uses different syntax for +nofp
-    string(REGEX REPLACE "\\+nofp" ".no_fp" CMAKE_C_LINK_FLAGS   "${CMAKE_C_LINK_FLAGS}")
-    string(REGEX REPLACE "\\+nofp" ".no_fp" CMAKE_ASM_LINK_FLAGS "${CMAKE_ASM_LINK_FLAGS}")
+    if (DEFINED TFM_SYSTEM_PROCESSOR)
+        set(CMAKE_C_LINK_FLAGS   "--cpu=${CMAKE_SYSTEM_PROCESSOR}")
+        set(CMAKE_ASM_LINK_FLAGS "--cpu=${CMAKE_SYSTEM_PROCESSOR}")
+        # But armlink doesn't support this +dsp syntax
+        string(REGEX REPLACE "\\+nodsp" "" CMAKE_C_LINK_FLAGS   "${CMAKE_C_LINK_FLAGS}")
+        string(REGEX REPLACE "\\+nodsp" "" CMAKE_ASM_LINK_FLAGS "${CMAKE_ASM_LINK_FLAGS}")
+        # And uses different syntax for +nofp
+        string(REGEX REPLACE "\\+nofp" ".no_fp" CMAKE_C_LINK_FLAGS   "${CMAKE_C_LINK_FLAGS}")
+        string(REGEX REPLACE "\\+nofp" ".no_fp" CMAKE_ASM_LINK_FLAGS "${CMAKE_ASM_LINK_FLAGS}")
 
-    string(REGEX REPLACE "\\+nomve" ".no_mve" CMAKE_C_LINK_FLAGS   "${CMAKE_C_LINK_FLAGS}")
-    string(REGEX REPLACE "\\+nomve" ".no_mve" CMAKE_ASM_LINK_FLAGS "${CMAKE_ASM_LINK_FLAGS}")
+        string(REGEX REPLACE "\\+nomve" ".no_mve" CMAKE_C_LINK_FLAGS   "${CMAKE_C_LINK_FLAGS}")
+        string(REGEX REPLACE "\\+nomve" ".no_mve" CMAKE_ASM_LINK_FLAGS "${CMAKE_ASM_LINK_FLAGS}")
+    endif()
 
     # Workaround for issues with --depend-single-line with armasm and Ninja
     if (CMAKE_GENERATOR STREQUAL "Ninja")
@@ -168,10 +236,6 @@ macro(target_add_scatter_file target)
         --scatter=$<TARGET_OBJECTS:${target}_scatter>
     )
 
-    add_dependencies(${target}
-        ${target}_scatter
-    )
-
     add_library(${target}_scatter OBJECT)
     foreach(scatter_file ${ARGN})
         target_sources(${target}_scatter
@@ -188,6 +252,12 @@ macro(target_add_scatter_file target)
             LANGUAGE C
         )
     endforeach()
+
+    add_dependencies(${target}
+        ${target}_scatter
+    )
+
+    set_target_properties(${target} PROPERTIES LINK_DEPENDS $<TARGET_OBJECTS:${target}_scatter>)
 
     target_link_libraries(${target}_scatter
         platform_region_defs
@@ -243,74 +313,127 @@ macro(add_convert_to_bin_target target)
     )
 endmacro()
 
-# Macro for sharing code among independent binaries. This function extracts
-# some parts of the code based on a symbol template file and creates a text
-# file, which contains the symbols with their absolute addresses, which can be
-# picked up by the linker when linking the other target.
-# INPUTS:
-#     TARGET -                -  Target to extract the symbols/objects from
-#     SHARED_SYMBOL_TEMPLATE  -  Template with names of symbols to share
-macro(compiler_create_shared_code TARGET SHARED_SYMBOL_TEMPLATE)
-    # Create a temporary file, which contains all extracted symbols from 'TARGET'
-    set(ALL_SYMBOLS ${CMAKE_CURRENT_BINARY_DIR}/all_symbols.txt)
+macro(target_share_symbols target symbol_name_file)
+    get_target_property(TARGET_TYPE ${target} TYPE)
+    if (NOT TARGET_TYPE STREQUAL "EXECUTABLE")
+        message(FATAL_ERROR "${target} is not an executable. Symbols cannot be shared from libraries.")
+    endif()
 
-    set_property(TARGET ${TARGET} APPEND_STRING PROPERTY LINK_FLAGS " --symdefs=${ALL_SYMBOLS}")
+    FILE(STRINGS ${symbol_name_file} KEEP_SYMBOL_LIST
+        LENGTH_MINIMUM 1
+    )
 
-    # Find the CMake script doing the symbol filtering.
-    find_file(FILTER_SYMBOLS_SCRIPT "FilterSharedSymbols.cmake" PATHS ${CMAKE_MODULE_PATH} PATH_SUFFIXES Common NO_DEFAULT_PATH)
+    # strip all the symbols except those proveded as arguments. Long inline
+    # python scripts aren't ideal, but this is both portable and possibly easier
+    # to maintain than trying to filter files at build time in cmake.
+    add_custom_command(TARGET ${target}
+        POST_BUILD
+        VERBATIM
+        COMMAND python3 -c "from sys import argv; import re; f = open(argv[1], 'rt'); p = [x.replace('*', '.*') for x in argv[2:]]; l = [x for x in f.readlines() if re.search(r'(?=('+'$|'.join(p + ['SYMDEFS']) + r'))', x)]; f.close(); f = open(argv[1], 'wt'); f.writelines(l); f.close();" $<TARGET_FILE_DIR:${target}>/${target}_shared_symbols.txt ${KEEP_SYMBOL_LIST})
 
-    # Single step, just filter the unwanted symbols from symdefs file
-    add_custom_command(TARGET ${TARGET}
-                        POST_BUILD
+    # Force the target to not remove the symbols if they're unused. Not
+    # currently possible on GNU, has to be part of the linker script.
+    list(TRANSFORM KEEP_SYMBOL_LIST PREPEND --keep=)
+    target_link_options(${target}
+        PRIVATE
+            ${KEEP_SYMBOL_LIST}
+    )
 
-                        COMMAND ${CMAKE_COMMAND}
-                            -DSHARED_SYMBOL_TEMPLATE=${SHARED_SYMBOL_TEMPLATE}
-                            -DALL_SYMBOLS=${ALL_SYMBOLS}
-                            -P ${FILTER_SYMBOLS_SCRIPT}
-                        BYPRODUCTS
-                            ${CMAKE_CURRENT_BINARY_DIR}/shared_symbols_name.txt
-                            ${CMAKE_CURRENT_BINARY_DIR}/shared_symbols_addr.txt
-                        COMMENT "Filtering shared symbols"
+    # Ask armclang to produce a symdefs file that will
+    target_link_options(${target}
+        PRIVATE
+            --symdefs=$<TARGET_FILE_DIR:${target}>/${target}_shared_symbols.txt
     )
 endmacro()
 
-macro(compiler_weaken_symbols TARGET SHARED_CODE_PATH ORIG_TARGET LIB_LIST)
-    # Find the CMake scripts
-    find_file(WEAKEN_SYMBOLS_SCRIPT "WeakenSymbols.cmake" PATHS ${CMAKE_MODULE_PATH} PATH_SUFFIXES Common NO_DEFAULT_PATH)
+macro(target_link_shared_code target)
+    get_target_property(TARGET_SOURCE_DIR ${target} SOURCE_DIR)
 
-    add_custom_command(TARGET ${TARGET}
-                        PRE_LINK
+    foreach(symbol_provider ${ARGN})
+        if (TARGET ${symbol_provider})
+            get_target_property(SYMBOL_PROVIDER_TYPE ${symbol_provider} TYPE)
+            if (NOT SYMBOL_PROVIDER_TYPE STREQUAL "EXECUTABLE")
+                message(FATAL_ERROR "${symbol_provider} is not an executable. Symbols cannot be shared from libraries.")
+            endif()
+        endif()
 
-                        COMMAND ${CMAKE_COMMAND}
-                            -DLIB_LIST='${LIB_LIST}'
-                            -DSHARED_CODE_PATH=${SHARED_CODE_PATH}
-                            -P ${WEAKEN_SYMBOLS_SCRIPT}
-                        COMMENT "Set conflicting symbols to be weak in the original libraries to avoid collision")
-
-    # If sharing target is defined by TF-M build then setup dependency
-    if(NOT ${ORIG_TARGET} STREQUAL "EXTERNAL_TARGET")
-        add_dependencies(${TARGET} ${ORIG_TARGET})
-    endif()
+        add_dependencies(${target} ${symbol_provider})
+        # Some cmake functions don't allow generator expressions, so get the
+        # property as a backup. If the symbol provider hasn't been created yet,
+        # then use the output dir of the target.
+        if (TARGET ${symbol_provider})
+            get_target_property(SYMBOL_PROVIDER_OUTPUT_DIR ${symbol_provider} RUNTIME_OUTPUT_DIRECTORY)
+        else()
+            get_target_property(SYMBOL_PROVIDER_OUTPUT_DIR ${target} RUNTIME_OUTPUT_DIRECTORY)
+        endif()
+        # Set these properties so that cmake will allow us to use a source file
+        # that doesn't exist at cmake-time, but we guarantee will exist at
+        # compile-time.
+        set_source_files_properties(${SYMBOL_PROVIDER_OUTPUT_DIR}/${symbol_provider}_shared_symbols.txt
+            DIRECTORY ${TARGET_SOURCE_DIR}
+            PROPERTIES
+                EXTERNAL_OBJECT true
+                GENERATED true
+        )
+        target_sources(${target}
+            PRIVATE
+                $<TARGET_FILE_DIR:${symbol_provider}>/${symbol_provider}_shared_symbols.txt
+        )
+    endforeach()
 endmacro()
 
-# Macro for linking shared code to given target. Location of shared code could
-# be outside of the TF-M project. Its location can be defined with the CMake
-# command line argument "SHARED_CODE_PATH". The file containing the shared objects
-# must be named "shared_symbols_addr.txt".
-# INPUTS:
-#     TARGET            Target to link the shared code to
-#     SHARED_CODE_PATH  Shared code located in this folder
-#     ORIG_TARGET       Target that shared code was extraced from <TARGET | "EXTERNAL_TARGET">
-#     LIB_LIST          List of libraries which are linked to top level target
-macro(compiler_link_shared_code TARGET SHARED_CODE_PATH ORIG_TARGET LIB_LIST)
-    # ARMCLANG requires adding a symbol definition file to the source file list.
-    # This is the output of the -symdefs compiler switch.
-    set_source_files_properties(${SHARED_CODE_PATH}/shared_symbols_addr.txt PROPERTIES EXTERNAL_OBJECT true GENERATED true)
-    target_sources(${TARGET} PRIVATE ${SHARED_CODE_PATH}/shared_symbols_addr.txt)
+macro(target_strip_symbols target)
+    set(SYMBOL_LIST "${ARGN}")
+    list(TRANSFORM SYMBOL_LIST PREPEND  --strip-symbol=)
 
-    compiler_weaken_symbols(${TARGET}
-                            ${SHARED_CODE_PATH}
-                            ${ORIG_TARGET}
-                            "${LIB_LIST}"
+    # TODO we assume that arm-none-eabi-objcopy is available - since we're using
+    # armclang this isn't necessarily true.
+    add_custom_command(
+        TARGET ${target}
+        POST_BUILD
+        COMMAND ${CROSS_COMPILE}-objcopy
+        ARGS $<TARGET_FILE:${target}> --wildcard ${SYMBOL_LIST} $<TARGET_FILE:${target}>
+    )
+endmacro()
+
+macro(target_strip_symbols_from_dependency target dependency)
+    set(SYMBOL_LIST "${ARGN}")
+    list(TRANSFORM SYMBOL_LIST PREPEND  --strip-symbol=)
+
+    # TODO we assume that arm-none-eabi-objcopy is available - since we're using
+    # armclang this isn't necessarily true.
+    add_custom_command(
+        TARGET ${target}
+        PRE_LINK
+        COMMAND ${CROSS_COMPILE}-objcopy
+        ARGS $<TARGET_FILE:${dependency}> --wildcard ${SYMBOL_LIST} $<TARGET_FILE:${dependency}>
+    )
+endmacro()
+
+macro(target_weaken_symbols target)
+    set(SYMBOL_LIST "${ARGN}")
+    list(TRANSFORM SYMBOL_LIST PREPEND  --weaken-symbol=)
+
+    # TODO we assume that arm-none-eabi-objcopy is available - since we're using
+    # armclang this isn't necessarily true.
+    add_custom_command(
+        TARGET ${target}
+        POST_BUILD
+        COMMAND ${CROSS_COMPILE}-objcopy
+        ARGS $<TARGET_FILE:${target}> --wildcard ${SYMBOL_LIST} $<TARGET_FILE:${target}>
+    )
+endmacro()
+
+macro(target_weaken_symbols_from_dependency target dependency)
+    set(SYMBOL_LIST "${ARGN}")
+    list(TRANSFORM SYMBOL_LIST PREPEND  --weaken-symbol=)
+
+    # TODO we assume that arm-none-eabi-objcopy is available - since we're using
+    # armclang this isn't necessarily true.
+    add_custom_command(
+        TARGET ${target}
+        PRE_LINK
+        COMMAND ${CROSS_COMPILE}-objcopy
+        ARGS $<TARGET_FILE:${dependency}> --wildcard ${SYMBOL_LIST} $<TARGET_FILE:${dependency}>
     )
 endmacro()

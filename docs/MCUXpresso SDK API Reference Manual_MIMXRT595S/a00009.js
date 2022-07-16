@@ -1,6 +1,6 @@
 var a00009 =
 [
-    [ "cache64_config_t", "a00009.html#a00314", [
+    [ "cache64_config_t", "a00009.html#a00315", [
       [ "boundaryAddr", "a00009.html#a7fa55b07325cc990e26d4fed2afd6ca9", null ]
     ] ],
     [ "FSL_CACHE_DRIVER_VERSION", "a00009.html#gac954b8be2bb59a983a9594c59e4b4fa5", null ],

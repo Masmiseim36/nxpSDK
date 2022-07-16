@@ -36,13 +36,8 @@
 #include "NatureDSP_Signal_matinv.h"
 #include "common_fpu.h"
 
-#if (HAVE_VFPU==0 && HAVE_FPU==0)
-DISCARD_FUN(void,mtx_inv4x4f,(void* pScr,float32_t* x))
-size_t mtx_inv4x4f_getScratchSize        () 
-{
-    return 0;
-}
-#elif (HAVE_VFPU)
+
+#if (HAVE_VFPU)
 #define SZ_F32 (sizeof(float32_t))
 #define SZ_2F32 (2*SZ_F32)
 
@@ -276,7 +271,7 @@ size_t mtx_inv4x4f_getScratchSize        ()
 {
     return 32*sizeof(float32_t);
 }
-#else
+#elif HAVE_FPU
 // for scalar FPU
 void mtx_inv4x4f(void* pScr,float32_t* x)
 {
@@ -439,5 +434,11 @@ void mtx_inv4x4f(void* pScr,float32_t* x)
 size_t mtx_inv4x4f_getScratchSize        () 
 {
     return 32*sizeof(float32_t);
+}
+#else// (HAVE_VFPU==0 && HAVE_FPU==0)
+DISCARD_FUN(void,mtx_inv4x4f,(void* pScr,float32_t* x))
+size_t mtx_inv4x4f_getScratchSize        () 
+{
+    return 0;
 }
 #endif

@@ -74,8 +74,6 @@ include(middleware_tfm_ns_evkmimxrt595_MIMXRT595S_cm33)
 
 include(middleware_tfm_ns_ipc_api_MIMXRT595S_cm33)
 
-include(middleware_tfm_ns_rtx_MIMXRT595S_cm33)
-
 include(driver_common_MIMXRT595S_cm33)
 
 include(driver_clock_MIMXRT595S_cm33)

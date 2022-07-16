@@ -46,8 +46,6 @@
 
 #define LPI2C_MASTER_IRQ        LPI2C1_IRQn
 #define LPI2C_MASTER_IRQHandler LPI2C1_IRQHandler
-#define BOARD_TOUCH_INT_PORT    PORTA
-#define BOARD_TOUCH_INT_PIN     2
 
 #define BOARD_LCD_READABLE 1
 

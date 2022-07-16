@@ -26,8 +26,6 @@
 #include "cli.h"
 #include "iperf.h"
 
-#include "fsl_sdmmc_host.h"
-
 
 /*******************************************************************************
  * Definitions

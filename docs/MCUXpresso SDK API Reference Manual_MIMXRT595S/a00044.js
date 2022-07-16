@@ -1,6 +1,6 @@
 var a00044 =
 [
-    [ "i3c_slave_config_t", "a00044.html#a00383", [
+    [ "i3c_slave_config_t", "a00044.html#a00384", [
       [ "enableSlave", "a00044.html#ae2c684a0c8d014cc95005a69a9098234", null ],
       [ "isHotJoin", "a00044.html#a4b8cf9213963e3b1a9bb09542016abf2", null ],
       [ "staticAddr", "a00044.html#a72ff7b8ddcfcd192d3f725e5c031d0cd", null ],
@@ -17,7 +17,7 @@ var a00044 =
       [ "maxWriteLength", "a00044.html#a6da25cf7b73330353129a87dfa969013", null ],
       [ "maxReadLength", "a00044.html#ae90c094ef89f248db0069e4953b6b193", null ]
     ] ],
-    [ "i3c_slave_transfer_t", "a00044.html#a00384", [
+    [ "i3c_slave_transfer_t", "a00044.html#a00385", [
       [ "event", "a00044.html#a66d37b6a457d38cf3436d5ec7920b908", null ],
       [ "txData", "a00044.html#a99c768011290e47a97b298b665b6bc74", null ],
       [ "txDataSize", "a00044.html#a83c9312424beab3c34239ece1865b507", null ],
@@ -26,7 +26,7 @@ var a00044 =
       [ "completionStatus", "a00044.html#a66ea82168521a0843a4619ea4933c0da", null ],
       [ "transferredCount", "a00044.html#a0b66066e2be94f4eaa371adf37da32a8", null ]
     ] ],
-    [ "i3c_slave_handle_t", "a00044.html#a00301", [
+    [ "i3c_slave_handle_t", "a00044.html#a00302", [
       [ "transfer", "a00044.html#a50a74a027294db6b95d2436342644d32", null ],
       [ "isBusy", "a00044.html#a623b52328752ec251c7235b560b359b3", null ],
       [ "wasTransmit", "a00044.html#a726c4eb7a4a7dbcb6bff19892b52fb92", null ],

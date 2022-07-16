@@ -21,7 +21,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief I3C driver version */
-#define FSL_I3C_DRIVER_VERSION (MAKE_VERSION(2, 5, 1))
+#define FSL_I3C_DRIVER_VERSION (MAKE_VERSION(2, 5, 4))
 /*@}*/
 
 /*! @brief Timeout times for waiting flag. */
@@ -133,18 +133,23 @@ enum _i3c_master_flags
  */
 enum _i3c_master_error_flags
 {
-    kI3C_MasterErrorNackFlag       = I3C_MERRWARN_NACK_MASK,    /*!< Slave NACKed the last address */
-    kI3C_MasterErrorWriteAbortFlag = I3C_MERRWARN_WRABT_MASK,   /*!< Slave NACKed the write data */
-    kI3C_MasterErrorTermFlag       = I3C_MERRWARN_TERM_MASK,    /*!< Master terminates slave read */
-    kI3C_MasterErrorParityFlag     = I3C_MERRWARN_HPAR_MASK,    /*!< Parity error from DDR read */
-    kI3C_MasterErrorCrcFlag        = I3C_MERRWARN_HCRC_MASK,    /*!< CRC error from DDR read */
-    kI3C_MasterErrorReadFlag       = I3C_MERRWARN_OREAD_MASK,   /*!< Read from MRDATAB register when FIFO empty */
-    kI3C_MasterErrorWriteFlag      = I3C_MERRWARN_OWRITE_MASK,  /*!< Write to MWDATAB register when FIFO full */
-    kI3C_MasterErrorMsgFlag        = I3C_MERRWARN_MSGERR_MASK,  /*!< Message SDR/DDR mismatch or
+    kI3C_MasterErrorNackFlag       = I3C_MERRWARN_NACK_MASK,  /*!< Slave NACKed the last address */
+    kI3C_MasterErrorWriteAbortFlag = I3C_MERRWARN_WRABT_MASK, /*!< Slave NACKed the write data */
+#if !defined(FSL_FEATURE_I3C_HAS_NO_MERRWARN_TERM) || (!FSL_FEATURE_I3C_HAS_NO_MERRWARN_TERM)
+    kI3C_MasterErrorTermFlag = I3C_MERRWARN_TERM_MASK, /*!< Master terminates slave read */
+#endif
+    kI3C_MasterErrorParityFlag = I3C_MERRWARN_HPAR_MASK,        /*!< Parity error from DDR read */
+    kI3C_MasterErrorCrcFlag    = I3C_MERRWARN_HCRC_MASK,        /*!< CRC error from DDR read */
+    kI3C_MasterErrorReadFlag   = I3C_MERRWARN_OREAD_MASK,       /*!< Read from MRDATAB register when FIFO empty */
+    kI3C_MasterErrorWriteFlag  = I3C_MERRWARN_OWRITE_MASK,      /*!< Write to MWDATAB register when FIFO full */
+    kI3C_MasterErrorMsgFlag    = I3C_MERRWARN_MSGERR_MASK,      /*!< Message SDR/DDR mismatch or
             read/write message in wrong state */
     kI3C_MasterErrorInvalidReqFlag = I3C_MERRWARN_INVREQ_MASK,  /*!< Invalid use of request */
     kI3C_MasterErrorTimeoutFlag    = I3C_MERRWARN_TIMEOUT_MASK, /*!< The module has stalled too long in a frame */
-    kI3C_MasterAllErrorFlags = kI3C_MasterErrorNackFlag | kI3C_MasterErrorWriteAbortFlag | kI3C_MasterErrorTermFlag |
+    kI3C_MasterAllErrorFlags       = kI3C_MasterErrorNackFlag | kI3C_MasterErrorWriteAbortFlag |
+#if !defined(FSL_FEATURE_I3C_HAS_NO_MERRWARN_TERM) || (!FSL_FEATURE_I3C_HAS_NO_MERRWARN_TERM)
+                               kI3C_MasterErrorTermFlag |
+#endif
                                kI3C_MasterErrorParityFlag | kI3C_MasterErrorCrcFlag | kI3C_MasterErrorReadFlag |
                                kI3C_MasterErrorWriteFlag | kI3C_MasterErrorMsgFlag | kI3C_MasterErrorInvalidReqFlag |
                                kI3C_MasterErrorTimeoutFlag, /*!< All error flags */
@@ -473,18 +478,20 @@ typedef enum _i3c_slave_activity_state
  */
 typedef struct _i3c_slave_config
 {
-    bool enableSlave;      /*!< Whether to enable slave. */
-    bool isHotJoin;        /*!< Whether to enable slave hotjoin before enable slave. */
-    uint8_t staticAddr;    /*!< Static address. */
-    uint16_t vendorID;     /*!< Device vendor ID(manufacture ID). */
+    bool enableSlave;   /*!< Whether to enable slave. */
+    bool isHotJoin;     /*!< Whether to enable slave hotjoin before enable slave. */
+    uint8_t staticAddr; /*!< Static address. */
+    uint16_t vendorID;  /*!< Device vendor ID(manufacture ID). */
+#if !(defined(FSL_FEATURE_I3C_HAS_NO_SCONFIG_IDRAND) && FSL_FEATURE_I3C_HAS_NO_SCONFIG_IDRAND)
     bool enableRandomPart; /*!< Whether to generate random part number, if using random part number,
                                 the partNumber variable setting is meaningless. */
-    uint32_t partNumber;   /*!< Device part number info */
-    uint8_t dcr;           /*!< Device characteristics register information. */
-    uint8_t bcr;           /*!< Bus characteristics register information. */
-    uint8_t hdrMode;       /*!< Support hdr mode, could be OR logic in enumeration:i3c_hdr_mode_t. */
-    bool nakAllRequest;    /*!< Whether to reply NAK to all requests except broadcast CCC. */
-    bool ignoreS0S1Error;  /*!< Whether to ignore S0/S1 error in SDR mode. */
+#endif
+    uint32_t partNumber;  /*!< Device part number info */
+    uint8_t dcr;          /*!< Device characteristics register information. */
+    uint8_t bcr;          /*!< Bus characteristics register information. */
+    uint8_t hdrMode;      /*!< Support hdr mode, could be OR logic in enumeration:i3c_hdr_mode_t. */
+    bool nakAllRequest;   /*!< Whether to reply NAK to all requests except broadcast CCC. */
+    bool ignoreS0S1Error; /*!< Whether to ignore S0/S1 error in SDR mode. */
     bool offline; /*!< Whether to wait 60 us of bus quiet or HDR request to ensure slave track SDR mode safely. */
     bool matchSlaveStartStop; /*!< Whether to assert start/stop status only the time slave is addressed. */
     uint32_t maxWriteLength;  /*!< Maximum write length. */

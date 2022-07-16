@@ -37,13 +37,15 @@ There are limited features in release SRAM target because of memory limitations.
 set appropriate preprocessor define in project settings to 0/1 (e.g. XA_VIT_PRE_PROC etc.).
 Debug and flash targets have full functionality enabled.
 
+For custom VIT model generation (defining own wake words and voice commands) please use https://vit.nxp.com/
+
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
-- MCUXpresso  11.5.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- GCC ARM Embedded  10.3.1
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================

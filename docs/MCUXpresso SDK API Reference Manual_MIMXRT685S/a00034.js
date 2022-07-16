@@ -4,7 +4,7 @@ var a00034 =
     [ "I3C Master DMA Driver", "a00229.html", null ],
     [ "I3C Master Driver", "a00032.html", "a00032" ],
     [ "I3C Slave Driver", "a00035.html", "a00035" ],
-    [ "i3c_device_info_t", "a00034.html#a00324", [
+    [ "i3c_device_info_t", "a00034.html#a00325", [
       [ "dynamicAddr", "a00034.html#a8d2a160d24239705091dd376479ed1f0", null ],
       [ "staticAddr", "a00034.html#a09e37502a282097247f768f72bac40cc", null ],
       [ "dcr", "a00034.html#a496110aa4a2316bd53e0e776e4a632b3", null ],

@@ -19,7 +19,7 @@
 /* Cadence, Inc. under Terms and Condition of a Software License Agreement  */
 /* between Cadence, Inc. and IntegrIT, Ltd.                                 */
 /* ------------------------------------------------------------------------ */
-/*          Copyright (C) 2015-2018 IntegrIT, Limited.                      */
+/*          Copyright (C) 2015-2019 IntegrIT, Limited.                      */
 /*                      All Rights Reserved.                                */
 /* ------------------------------------------------------------------------ */
 #ifndef __NATUREDSP_SIGNAL_IIR_H__
@@ -56,7 +56,13 @@ extern "C" {
   parameter gain of each filter initialization function.
   2. 16x16 filters may suffer more from accumulation of the roundoff errors,
   so filters should be properly designed to match noise requirements
-
+  3. Due to the performance reasons, IIR biquad filters may introduce 
+  additional algorithmic delay of several sampless. Amount of that delay
+  might be requested by the  xxx_groupDelay API. For sensitive applications
+  all the filters have delayless implementations (with  _nd  suffix in the name).
+  Formally, the xxx_groupDelay APIs is also implemented for that kind of filters,
+  but return zero.
+  
   Precision: 
   16x16         16-bit data, 16-bit coefficients, 16-bit intermediate 
                 stage outputs (DF1, DF1 stereo, DF II form)
@@ -221,6 +227,153 @@ void stereo_bqriir16x16_df1(stereo_bqriir16x16_df1_handle_t _bqriir, void * s, i
 void stereo_bqriir32x16_df1(stereo_bqriir32x16_df1_handle_t _bqriir, void * s, int32_t * r, const int32_t *x, int N);
 void stereo_bqriir32x32_df1(stereo_bqriir32x32_df1_handle_t _bqriir, void * s, int32_t * r, const int32_t *x, int N);
 void stereo_bqriirf_df1    (stereo_bqriirf_df1_handle_t  _bqriir, float32_t     * r, const float32_t     * x, int N);
+
+
+/* Returns algorithmic delay delay introduced by the filter in samples */
+size_t bqriir16x16_df1_groupDelay(bqriir16x16_df1_handle_t _bqriir);
+size_t bqriir16x16_df2_groupDelay(bqriir16x16_df2_handle_t _bqriir);
+size_t bqriir32x16_df1_groupDelay(bqriir32x16_df1_handle_t _bqriir);
+size_t bqriir32x16_df2_groupDelay(bqriir32x16_df2_handle_t _bqriir);
+size_t bqriir32x32_df1_groupDelay(bqriir32x32_df1_handle_t _bqriir);
+size_t bqriir32x32_df2_groupDelay(bqriir32x32_df2_handle_t _bqriir);
+size_t bqriirf_df1_groupDelay    (bqriirf_df1_handle_t  _bqriir);
+size_t bqriirf_df2_groupDelay    (bqriirf_df2_handle_t  _bqriir);
+size_t bqriirf_df2t_groupDelay   (bqriirf_df2t_handle_t _bqriir);
+size_t bqciirf_df1_groupDelay    (bqciirf_df1_handle_t  _bqriir);
+size_t stereo_bqriir16x16_df1_groupDelay(stereo_bqriir16x16_df1_handle_t _bqriir);
+size_t stereo_bqriir32x16_df1_groupDelay(stereo_bqriir32x16_df1_handle_t _bqriir);
+size_t stereo_bqriir32x32_df1_groupDelay(stereo_bqriir32x32_df1_handle_t _bqriir);
+size_t stereo_bqriirf_df1_groupDelay    (stereo_bqriirf_df1_handle_t     _bqriir);
+
+/* No delay versions of the above functions */
+
+
+#define BQRIIR16X16_DF1_ND_SCRATCH_SIZE( N, M )    ( 0 )
+#define BQRIIR16X16_DF2_ND_SCRATCH_SIZE( N, M )    ( 0 )
+#define BQRIIR32X16_DF1_ND_SCRATCH_SIZE( N, M )    ( 4*(N) )
+#define BQRIIR32X16_DF2_ND_SCRATCH_SIZE( N, M )    ( 4*(N) )
+#define BQRIIR32X32_DF1_ND_SCRATCH_SIZE( N, M )    ( 0 )
+#define BQRIIR32X32_DF2_ND_SCRATCH_SIZE( N, M )    ( 4*(N) )
+#define STEREO_BQRIIR16X16_DF1_ND_SCRATCH_SIZE( N, M )    ( 0 )
+#define STEREO_BQRIIR32X16_DF1_ND_SCRATCH_SIZE( N, M )    ( 0 )
+#define STEREO_BQRIIR32X32_DF1_ND_SCRATCH_SIZE( N, M )    ( 0 )
+#define STEREO_BQRIIRF_DF1_ND_SCRATCH_SIZE    ( N, M )    ( 0 )
+
+typedef void* bqriir16x16_df1_nd_handle_t;
+typedef void* bqriir16x16_df2_nd_handle_t;
+typedef void* bqriir32x16_df1_nd_handle_t;
+typedef void* bqriir32x16_df2_nd_handle_t;
+typedef void* bqriir32x32_df1_nd_handle_t;
+typedef void* bqriir32x32_df2_nd_handle_t;
+typedef void* bqriirf_df1_nd_handle_t;
+typedef void* bqriirf_df2_nd_handle_t;
+typedef void* bqriirf_df2t_nd_handle_t;
+typedef void* bqciirf_df1_nd_handle_t;
+typedef void* stereo_bqriir16x16_df1_nd_handle_t;
+typedef void* stereo_bqriir32x16_df1_nd_handle_t;
+typedef void* stereo_bqriir32x32_df1_nd_handle_t;
+typedef void* stereo_bqriirf_df1_nd_handle_t;
+
+/* Returns: size of memory in bytes to be allocated */
+size_t bqriir16x16_df1_nd_alloc(int M);
+size_t bqriir16x16_df2_nd_alloc(int M);
+size_t bqriir32x16_df1_nd_alloc(int M);
+size_t bqriir32x16_df2_nd_alloc(int M);
+size_t bqriir32x32_df1_nd_alloc(int M);
+size_t bqriir32x32_df2_nd_alloc(int M);
+size_t bqriirf_df1_nd_alloc(int M);
+size_t bqriirf_df2_nd_alloc(int M);
+size_t bqriirf_df2t_nd_alloc(int M);
+size_t bqciirf_df1_nd_alloc(int M);
+size_t stereo_bqriir16x16_df1_nd_alloc(int M);
+size_t stereo_bqriir32x16_df1_nd_alloc(int M);
+size_t stereo_bqriir32x32_df1_nd_alloc(int M);
+size_t stereo_bqriirf_df1_nd_alloc(int M);
+
+/* Returns: handle to the object */
+bqriir16x16_df1_nd_handle_t bqriir16x16_df1_nd_init(void * objmem, int M,
+    const int16_t * coef_sos,
+    const int16_t * coef_g,
+    int16_t         gain);
+bqriir16x16_df2_nd_handle_t bqriir16x16_df2_nd_init(void * objmem, int M,
+    const int16_t * coef_sos,
+    const int16_t * coef_g,
+    int16_t         gain);
+bqriir32x16_df1_nd_handle_t bqriir32x16_df1_nd_init(void * objmem, int M,
+    const int16_t * coef_sos,
+    const int16_t * coef_g,
+    int16_t         gain);
+bqriir32x16_df2_nd_handle_t bqriir32x16_df2_nd_init(void * objmem, int M,
+    const int16_t * coef_sos,
+    const int16_t * coef_g,
+    int16_t         gain);
+bqriir32x32_df1_nd_handle_t bqriir32x32_df1_nd_init(void * objmem, int M,
+    const int32_t * coef_sos,
+    const int16_t * coef_g,
+    int16_t         gain);
+bqriir32x32_df2_nd_handle_t bqriir32x32_df2_nd_init(void * objmem, int M,
+    const int32_t * coef_sos,
+    const int16_t * coef_g,
+    int16_t         gain);
+bqriirf_df1_nd_handle_t bqriirf_df1_nd_init(void * objmem, int M,
+    const float32_t * coef_sos, int16_t gain);
+bqriirf_df2_nd_handle_t bqriirf_df2_nd_init(void * objmem, int M,
+    const float32_t * coef_sos, int16_t gain);
+bqriirf_df2t_nd_handle_t bqriirf_df2t_nd_init(void * objmem, int M,
+    const float32_t * coef_sos, int16_t gain);
+bqciirf_df1_nd_handle_t bqciirf_df1_nd_init(void * objmem, int M,
+    const float32_t * coef_sos, int16_t gain);
+stereo_bqriir16x16_df1_nd_handle_t stereo_bqriir16x16_df1_nd_init
+(void * objmem, int M,
+const int16_t * coef_sosl, const int16_t * coef_gl, int16_t gainl,
+const int16_t * coef_sosr, const int16_t * coef_gr, int16_t gainr);
+stereo_bqriir32x16_df1_nd_handle_t stereo_bqriir32x16_df1_nd_init
+(void * objmem, int M,
+const int16_t * coef_sosl, const int16_t * coef_gl, int16_t gainl,
+const int16_t * coef_sosr, const int16_t * coef_gr, int16_t gainr);
+stereo_bqriir32x32_df1_nd_handle_t stereo_bqriir32x32_df1_nd_init
+(void * objmem, int M,
+const int32_t * coef_sosl, const int16_t * coef_gl, int16_t gainl,
+const int32_t * coef_sosr, const int16_t * coef_gr, int16_t gainr);
+stereo_bqriirf_df1_nd_handle_t stereo_bqriirf_df1_nd_init
+(void * objmem, int M,
+const float32_t* coef_sosl, int16_t gainl,
+const float32_t* coef_sosr, int16_t gainr);
+
+
+/* Update the delay line and compute filter output */
+void bqriir16x16_df1_nd(bqriir16x16_df1_nd_handle_t _bqriir, void * s, int16_t * r, const int16_t *x, int N);
+void bqriir16x16_df2_nd(bqriir16x16_df2_nd_handle_t _bqriir, void * s, int16_t * r, const int16_t *x, int N);
+void bqriir32x16_df1_nd(bqriir32x16_df1_nd_handle_t _bqriir, void * s, int32_t * r, const int32_t *x, int N);
+void bqriir32x16_df2_nd(bqriir32x16_df2_nd_handle_t _bqriir, void * s, int32_t * r, const int32_t *x, int N);
+void bqriir32x32_df1_nd(bqriir32x32_df1_nd_handle_t _bqriir, void * s, int32_t * r, const int32_t *x, int N);
+void bqriir32x32_df2_nd(bqriir32x32_df2_nd_handle_t _bqriir, void * s, int32_t * r, const int32_t *x, int N);
+void bqriirf_df1_nd(bqriirf_df1_nd_handle_t  _bqriir, float32_t     * r, const float32_t     * x, int N);
+void bqriirf_df2_nd(bqriirf_df2_nd_handle_t  _bqriir, float32_t     * r, const float32_t     * x, int N);
+void bqriirf_df2t_nd(bqriirf_df2t_nd_handle_t _bqriir, float32_t     * r, const float32_t     * x, int N);
+void bqciirf_df1_nd(bqciirf_df1_nd_handle_t  _bqriir, complex_float * r, const complex_float * x, int N);
+void stereo_bqriir16x16_df1_nd(stereo_bqriir16x16_df1_nd_handle_t _bqriir, void * s, int16_t * r, const int16_t *x, int N);
+void stereo_bqriir32x16_df1_nd(stereo_bqriir32x16_df1_nd_handle_t _bqriir, void * s, int32_t * r, const int32_t *x, int N);
+void stereo_bqriir32x32_df1_nd(stereo_bqriir32x32_df1_nd_handle_t _bqriir, void * s, int32_t * r, const int32_t *x, int N);
+void stereo_bqriirf_df1_nd(stereo_bqriirf_df1_nd_handle_t  _bqriir, float32_t     * r, const float32_t     * x, int N);
+
+
+/* For delayless filters these functions return zero */
+size_t bqriir16x16_df1_nd_groupDelay(bqriir16x16_df1_nd_handle_t _bqriir);
+size_t bqriir16x16_df2_nd_groupDelay(bqriir16x16_df2_nd_handle_t _bqriir);
+size_t bqriir32x16_df1_nd_groupDelay(bqriir32x16_df1_nd_handle_t _bqriir);
+size_t bqriir32x16_df2_nd_groupDelay(bqriir32x16_df2_nd_handle_t _bqriir);
+size_t bqriir32x32_df1_nd_groupDelay(bqriir32x32_df1_nd_handle_t _bqriir);
+size_t bqriir32x32_df2_nd_groupDelay(bqriir32x32_df2_nd_handle_t _bqriir);
+size_t bqriirf_df1_nd_groupDelay(bqriirf_df1_nd_handle_t  _bqriir);
+size_t bqriirf_df2_nd_groupDelay(bqriirf_df2_nd_handle_t  _bqriir);
+size_t bqriirf_df2t_nd_groupDelay(bqriirf_df2t_nd_handle_t _bqriir);
+size_t bqciirf_df1_nd_groupDelay(bqciirf_df1_nd_handle_t  _bqriir);
+size_t stereo_bqriir16x16_df1_nd_groupDelay(stereo_bqriir16x16_df1_nd_handle_t _bqriir);
+size_t stereo_bqriir32x16_df1_nd_groupDelay(stereo_bqriir32x16_df1_nd_handle_t _bqriir);
+size_t stereo_bqriir32x32_df1_nd_groupDelay(stereo_bqriir32x32_df1_nd_handle_t _bqriir);
+size_t stereo_bqriirf_df1_nd_groupDelay(stereo_bqriirf_df1_nd_handle_t     _bqriir);
+
 
 /*-------------------------------------------------------------------------
   Lattice Block Real IIR

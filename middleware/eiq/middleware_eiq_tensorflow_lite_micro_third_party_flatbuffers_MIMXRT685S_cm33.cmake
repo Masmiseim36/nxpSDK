@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_eiq_tensorflow_lite_micro_third_party_flatbuffers component is included.")
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -9,7 +9,6 @@
 #define __TEST_FRAMEWORK_HELPERS_H__
 
 #include <stdint.h>
-#include "psa/protected_storage.h"
 #include "test_framework.h"
 
 #ifdef __cplusplus
@@ -23,19 +22,10 @@ enum serial_color_t {
     GREEN   = 32,
     YELLOW  = 33,
     BLUE    = 34,
-    MAGENDA = 35,
+    MAGENTA = 35,
     CYAN    = 36,
     WHITE   = 37,
 };
-
-/**
- * \brief Translates asset permissions into a string.
- *
- * \param[in] permissions  Asset permissions value.
- *
- * \return asset permissions as string.
- */
-const char *asset_perms_to_str(uint8_t permissions);
 
 /**
  * \brief Sets the the text color in the serial port.

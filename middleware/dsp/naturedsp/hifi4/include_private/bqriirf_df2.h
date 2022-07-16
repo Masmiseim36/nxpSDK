@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------ */
-/* Copyright (c) 2018 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
+/* Copyright (c) 2016 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
 /* These coded instructions, statements, and computer programs (“Cadence    */
 /* Libraries”) are the copyrighted works of Cadence Design Systems Inc.	    */
 /* Cadence IP is licensed for use with Cadence processor cores only and     */
@@ -32,6 +32,6 @@ typedef struct
   float32_t      * cf; /* 5*M filter coefficients   */
   int16_t        gain; /* total gain                */
   float32_t      * st; /* 3*M   delay elements      */
-} bqriirf_df2_t;
+} bqriirf_df2_t, *bqriirf_df2_ptr_t;
 
 #endif /* BQRIIR_DF2_H__ */

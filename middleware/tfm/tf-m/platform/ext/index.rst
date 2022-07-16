@@ -9,14 +9,14 @@ Supported Platforms
     readme
     /platform/ext/platform_introduction.rst
     /platform/ext/platform_deprecation.rst
+    /platform/ext/platform_provisioning.rst
 
 .. toctree::
     :maxdepth: 1
     :caption: arm
     :glob:
 
-    target/arm/**
-    otp_provisioning.rst
+    target/arm/index
 
 .. toctree::
     :maxdepth: 1
@@ -30,7 +30,7 @@ Supported Platforms
     :caption: Cypress
     :glob:
 
-    target/cypress/**
+    target/cypress/psoc64/index
 
 .. toctree::
     :maxdepth: 1

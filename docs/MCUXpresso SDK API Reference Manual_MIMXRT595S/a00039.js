@@ -1,6 +1,6 @@
 var a00039 =
 [
-    [ "i2s_config_t", "a00039.html#a00375", [
+    [ "i2s_config_t", "a00039.html#a00376", [
       [ "masterSlave", "a00039.html#aafc62e3f728b969836765543c64e51cc", null ],
       [ "mode", "a00039.html#a0cad4b688fbf5a86c693ecdf38fae82d", null ],
       [ "rightLow", "a00039.html#af91414d28248e4e84925e32ebb21be1f", null ],
@@ -17,11 +17,11 @@ var a00039 =
       [ "txEmptyZero", "a00039.html#a4af539301a365a0fd0870aa2f10f8a8b", null ],
       [ "pack48", "a00039.html#a05e651099ce845bcba1144d2f3e8b6ca", null ]
     ] ],
-    [ "i2s_transfer_t", "a00039.html#a00376", [
+    [ "i2s_transfer_t", "a00039.html#a00377", [
       [ "data", "a00039.html#aaf5f1c23ca46a1e0d8eff1ae7264f94c", null ],
       [ "dataSize", "a00039.html#a62b40fb1c17cac3cb35ab66564e75f9c", null ]
     ] ],
-    [ "i2s_handle_t", "a00039.html#a00298", [
+    [ "i2s_handle_t", "a00039.html#a00299", [
       [ "state", "a00039.html#a384e361c28bbc396ee461d0d0a5e6628", null ],
       [ "completionCallback", "a00039.html#a95bd70e36257e8fe9406d759d0ceb433", null ],
       [ "userData", "a00039.html#a06376f0e14c8243247b13ee278933182", null ],

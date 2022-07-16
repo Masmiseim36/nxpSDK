@@ -239,7 +239,7 @@ int  mtx_inv10x10_32x32(void* pScr, int32_t *x, int qX)
             pT=(ae_int32x2*)(T+k);
             AE_ADDCIRC32X2_XC1(pT,sizeof(int32_t));
             pBwr=pB;
-            NASSERT(e>0);
+//            NASSERT(e>0);
             esh_coef=AE_SLAA32S(0x40000000,-e+1);
             for (i=0; i<N-1; i++)
             {

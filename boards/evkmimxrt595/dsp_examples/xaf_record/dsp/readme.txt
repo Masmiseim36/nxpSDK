@@ -37,10 +37,12 @@ There are limited features in release SRAM target because of memory limitations.
 set appropriate preprocessor define in project settings to 0/1 (e.g. XA_VIT_PRE_PROC etc.).
 Debug and flash targets have full functionality enabled.
 
+For custom VIT model generation (defining own wake words and voice commands) please use https://vit.nxp.com/
+
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  8.0.10
+- Xtensa Xplorer  9.0.18
 - Xtensa C Compiler  14.01
 
 Hardware requirements

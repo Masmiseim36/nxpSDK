@@ -80,6 +80,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../flash_config
@@ -143,6 +144,8 @@ include(component_cs42448_adapter_MIMXRT685S_cm33)
 include(component_codec_i2c_MIMXRT685S_cm33)
 
 include(component_flexcomm_i2c_adapter_MIMXRT685S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT685S_cm33)
 
 include(device_MIMXRT685S_CMSIS_MIMXRT685S_cm33)
 

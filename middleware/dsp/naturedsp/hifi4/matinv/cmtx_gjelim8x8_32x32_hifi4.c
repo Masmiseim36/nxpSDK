@@ -351,6 +351,7 @@ int  cmtx_gjelim8x8_32x32  (void* pScr, complex_fract32 *y, const complex_fract3
                 pB[n*N+7]=AE_MULP32X2(pB[n*N+7],expB_coef);
                 pC[n]    =AE_MULP32X2(pC[n]    ,expC_coef);
             }
+            __Pragma("no_reorder");
             pC=(ae_int32x2 *)C;
             Ckn=pC[k];
             pB=(B+k*N+4);

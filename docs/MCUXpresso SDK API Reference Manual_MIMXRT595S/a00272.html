@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: TFA9896 Adapter</title>
+<title>MCUXpresso SDK API Reference Manual: CS42888 Adapter</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -102,51 +102,51 @@ $(document).ready(function(){initNavTree('a00272.html','');});
 <a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">TFA9896 Adapter<div class="ingroups"><a class="el" href="a00011.html">CODEC Common Driver</a></div></div>  </div>
+<div class="title">CS42888 Adapter<div class="ingroups"><a class="el" href="a00011.html">CODEC Common Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
-<p>The tfa9896 adapter provides a codec unify control interface. </p>
+<p>The cs42888 adapter provides a codec unify control interface. </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga302f7b3eaa24db644a109c4998749b54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga302f7b3eaa24db644a109c4998749b54"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga302f7b3eaa24db644a109c4998749b54">HAL_CODEC_TFA9896_HANDLER_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a00070.html#ga1874852878d8c2578f0fb1cf42c8633c">TFA9896_I2C_HANDLER_SIZE</a> + 4)</td></tr>
-<tr class="memdesc:ga302f7b3eaa24db644a109c4998749b54"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec handler size <br/></td></tr>
-<tr class="separator:ga302f7b3eaa24db644a109c4998749b54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6e1a98c1da1cf3d4e216e0cd88275e42"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6e1a98c1da1cf3d4e216e0cd88275e42"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga6e1a98c1da1cf3d4e216e0cd88275e42">HAL_CODEC_CS42888_HANDLER_SIZE</a>&#160;&#160;&#160;(<a class="el" href="a00014.html#ga953230c47c19e6eb63913ae2b64e1ae5">CS42888_I2C_HANDLER_SIZE</a> + 4)</td></tr>
+<tr class="memdesc:ga6e1a98c1da1cf3d4e216e0cd88275e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec handler size <br/></td></tr>
+<tr class="separator:ga6e1a98c1da1cf3d4e216e0cd88275e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga31beb120441d7bf88befd4a8c9087f80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga31beb120441d7bf88befd4a8c9087f80">HAL_CODEC_TFA9896_Init</a> (void *handle, void *config)</td></tr>
-<tr class="memdesc:ga31beb120441d7bf88befd4a8c9087f80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec initilization.  <a href="#ga31beb120441d7bf88befd4a8c9087f80">More...</a><br/></td></tr>
-<tr class="separator:ga31beb120441d7bf88befd4a8c9087f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f39ef72a08d40880c1a7d9fd8902410"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga0f39ef72a08d40880c1a7d9fd8902410">HAL_CODEC_TFA9896_Deinit</a> (void *handle)</td></tr>
-<tr class="memdesc:ga0f39ef72a08d40880c1a7d9fd8902410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec de-initilization.  <a href="#ga0f39ef72a08d40880c1a7d9fd8902410">More...</a><br/></td></tr>
-<tr class="separator:ga0f39ef72a08d40880c1a7d9fd8902410"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaba2364738d824f23253cd584821c7bcb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#gaba2364738d824f23253cd584821c7bcb">HAL_CODEC_TFA9896_SetFormat</a> (void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)</td></tr>
-<tr class="memdesc:gaba2364738d824f23253cd584821c7bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio data format.  <a href="#gaba2364738d824f23253cd584821c7bcb">More...</a><br/></td></tr>
-<tr class="separator:gaba2364738d824f23253cd584821c7bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56a63916fa5d50fd268060a458b73c56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga56a63916fa5d50fd268060a458b73c56">HAL_CODEC_TFA9896_SetVolume</a> (void *handle, uint32_t playChannel, uint32_t volume)</td></tr>
-<tr class="memdesc:ga56a63916fa5d50fd268060a458b73c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module volume.  <a href="#ga56a63916fa5d50fd268060a458b73c56">More...</a><br/></td></tr>
-<tr class="separator:ga56a63916fa5d50fd268060a458b73c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf31d5be17240a476e32381091745785c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#gaf31d5be17240a476e32381091745785c">HAL_CODEC_TFA9896_SetMute</a> (void *handle, uint32_t playChannel, bool isMute)</td></tr>
-<tr class="memdesc:gaf31d5be17240a476e32381091745785c"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module mute.  <a href="#gaf31d5be17240a476e32381091745785c">More...</a><br/></td></tr>
-<tr class="separator:gaf31d5be17240a476e32381091745785c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa473fe703f6be751ca5ef811154fe45b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#gaa473fe703f6be751ca5ef811154fe45b">HAL_CODEC_TFA9896_SetPower</a> (void *handle, uint32_t module, bool powerOn)</td></tr>
-<tr class="memdesc:gaa473fe703f6be751ca5ef811154fe45b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module power.  <a href="#gaa473fe703f6be751ca5ef811154fe45b">More...</a><br/></td></tr>
-<tr class="separator:gaa473fe703f6be751ca5ef811154fe45b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga91298435f1fe74b0827d24926e159590"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga91298435f1fe74b0827d24926e159590">HAL_CODEC_TFA9896_SetRecord</a> (void *handle, uint32_t recordSource)</td></tr>
-<tr class="memdesc:ga91298435f1fe74b0827d24926e159590"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set record source.  <a href="#ga91298435f1fe74b0827d24926e159590">More...</a><br/></td></tr>
-<tr class="separator:ga91298435f1fe74b0827d24926e159590"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e2709f39f7a30fe6a31206415e87314"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga2e2709f39f7a30fe6a31206415e87314">HAL_CODEC_TFA9896_SetRecordChannel</a> (void *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)</td></tr>
-<tr class="memdesc:ga2e2709f39f7a30fe6a31206415e87314"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set record channel.  <a href="#ga2e2709f39f7a30fe6a31206415e87314">More...</a><br/></td></tr>
-<tr class="separator:ga2e2709f39f7a30fe6a31206415e87314"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad25d633e891fcfe5d33f916128e4d036"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#gad25d633e891fcfe5d33f916128e4d036">HAL_CODEC_TFA9896_SetPlay</a> (void *handle, uint32_t playSource)</td></tr>
-<tr class="memdesc:gad25d633e891fcfe5d33f916128e4d036"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set play source.  <a href="#gad25d633e891fcfe5d33f916128e4d036">More...</a><br/></td></tr>
-<tr class="separator:gad25d633e891fcfe5d33f916128e4d036"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4d7ce3ef23170771efe1e5bc8d49bb15"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga4d7ce3ef23170771efe1e5bc8d49bb15">HAL_CODEC_TFA9896_ModuleControl</a> (void *handle, uint32_t cmd, uint32_t data)</td></tr>
-<tr class="memdesc:ga4d7ce3ef23170771efe1e5bc8d49bb15"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec module control.  <a href="#ga4d7ce3ef23170771efe1e5bc8d49bb15">More...</a><br/></td></tr>
-<tr class="separator:ga4d7ce3ef23170771efe1e5bc8d49bb15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6322a862a0ec9af4c568967bab1050ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga6322a862a0ec9af4c568967bab1050ae">HAL_CODEC_CS42888_Init</a> (void *handle, void *config)</td></tr>
+<tr class="memdesc:ga6322a862a0ec9af4c568967bab1050ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec initilization.  <a href="#ga6322a862a0ec9af4c568967bab1050ae">More...</a><br/></td></tr>
+<tr class="separator:ga6322a862a0ec9af4c568967bab1050ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b695d26d408770842cc1db1a890de08"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga8b695d26d408770842cc1db1a890de08">HAL_CODEC_CS42888_Deinit</a> (void *handle)</td></tr>
+<tr class="memdesc:ga8b695d26d408770842cc1db1a890de08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec de-initilization.  <a href="#ga8b695d26d408770842cc1db1a890de08">More...</a><br/></td></tr>
+<tr class="separator:ga8b695d26d408770842cc1db1a890de08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55278264c196bcf67adaec5c4e887c01"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga55278264c196bcf67adaec5c4e887c01">HAL_CODEC_CS42888_SetFormat</a> (void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)</td></tr>
+<tr class="memdesc:ga55278264c196bcf67adaec5c4e887c01"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio data format.  <a href="#ga55278264c196bcf67adaec5c4e887c01">More...</a><br/></td></tr>
+<tr class="separator:ga55278264c196bcf67adaec5c4e887c01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45e63cee64d7102825364b48e2a17178"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga45e63cee64d7102825364b48e2a17178">HAL_CODEC_CS42888_SetVolume</a> (void *handle, uint32_t playChannel, uint32_t volume)</td></tr>
+<tr class="memdesc:ga45e63cee64d7102825364b48e2a17178"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module volume.  <a href="#ga45e63cee64d7102825364b48e2a17178">More...</a><br/></td></tr>
+<tr class="separator:ga45e63cee64d7102825364b48e2a17178"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4696410df0b0cd8c88b50882bfbb546b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga4696410df0b0cd8c88b50882bfbb546b">HAL_CODEC_CS42888_SetMute</a> (void *handle, uint32_t playChannel, bool isMute)</td></tr>
+<tr class="memdesc:ga4696410df0b0cd8c88b50882bfbb546b"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module mute.  <a href="#ga4696410df0b0cd8c88b50882bfbb546b">More...</a><br/></td></tr>
+<tr class="separator:ga4696410df0b0cd8c88b50882bfbb546b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa2fc2e8795723a17bd1411adcd389736"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#gaa2fc2e8795723a17bd1411adcd389736">HAL_CODEC_CS42888_SetPower</a> (void *handle, uint32_t module, bool powerOn)</td></tr>
+<tr class="memdesc:gaa2fc2e8795723a17bd1411adcd389736"><td class="mdescLeft">&#160;</td><td class="mdescRight">set audio codec module power.  <a href="#gaa2fc2e8795723a17bd1411adcd389736">More...</a><br/></td></tr>
+<tr class="separator:gaa2fc2e8795723a17bd1411adcd389736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac4169264637d0977800168f8328a1d2e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#gac4169264637d0977800168f8328a1d2e">HAL_CODEC_CS42888_SetRecord</a> (void *handle, uint32_t recordSource)</td></tr>
+<tr class="memdesc:gac4169264637d0977800168f8328a1d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set record source.  <a href="#gac4169264637d0977800168f8328a1d2e">More...</a><br/></td></tr>
+<tr class="separator:gac4169264637d0977800168f8328a1d2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga047461f10f6439bbaab7a3d1b32c7d89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga047461f10f6439bbaab7a3d1b32c7d89">HAL_CODEC_CS42888_SetRecordChannel</a> (void *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)</td></tr>
+<tr class="memdesc:ga047461f10f6439bbaab7a3d1b32c7d89"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set record channel.  <a href="#ga047461f10f6439bbaab7a3d1b32c7d89">More...</a><br/></td></tr>
+<tr class="separator:ga047461f10f6439bbaab7a3d1b32c7d89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga786ee3e35b7aaace2bc0223579c43d1d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga786ee3e35b7aaace2bc0223579c43d1d">HAL_CODEC_CS42888_SetPlay</a> (void *handle, uint32_t playSource)</td></tr>
+<tr class="memdesc:ga786ee3e35b7aaace2bc0223579c43d1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec set play source.  <a href="#ga786ee3e35b7aaace2bc0223579c43d1d">More...</a><br/></td></tr>
+<tr class="separator:ga786ee3e35b7aaace2bc0223579c43d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga942a8ccfeaa7e26824def528a9564a29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#ga942a8ccfeaa7e26824def528a9564a29">HAL_CODEC_CS42888_ModuleControl</a> (void *handle, uint32_t cmd, uint32_t data)</td></tr>
+<tr class="memdesc:ga942a8ccfeaa7e26824def528a9564a29"><td class="mdescLeft">&#160;</td><td class="mdescRight">codec module control.  <a href="#ga942a8ccfeaa7e26824def528a9564a29">More...</a><br/></td></tr>
+<tr class="separator:ga942a8ccfeaa7e26824def528a9564a29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafe47075da9b829e30e618a86ac2cc9c6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00272.html#gafe47075da9b829e30e618a86ac2cc9c6">HAL_CODEC_Init</a> (void *handle, void *config)</td></tr>
 <tr class="memdesc:gafe47075da9b829e30e618a86ac2cc9c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Codec initilization.  <a href="#gafe47075da9b829e30e618a86ac2cc9c6">More...</a><br/></td></tr>
 <tr class="separator:gafe47075da9b829e30e618a86ac2cc9c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -179,12 +179,12 @@ Functions</h2></td></tr>
 <tr class="separator:gab2e790a1ed09bc9a6b910d94180e5bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga31beb120441d7bf88befd4a8c9087f80"></a>
+<a class="anchor" id="ga6322a862a0ec9af4c568967bab1050ae"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_Init </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_Init </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -213,12 +213,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga0f39ef72a08d40880c1a7d9fd8902410"></a>
+<a class="anchor" id="ga8b695d26d408770842cc1db1a890de08"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_Deinit </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_Deinit </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em></td><td>)</td>
@@ -236,12 +236,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaba2364738d824f23253cd584821c7bcb"></a>
+<a class="anchor" id="ga55278264c196bcf67adaec5c4e887c01"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_SetFormat </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_SetFormat </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -284,12 +284,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga56a63916fa5d50fd268060a458b73c56"></a>
+<a class="anchor" id="ga45e63cee64d7102825364b48e2a17178"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_SetVolume </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_SetVolume </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -325,12 +325,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaf31d5be17240a476e32381091745785c"></a>
+<a class="anchor" id="ga4696410df0b0cd8c88b50882bfbb546b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_SetMute </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_SetMute </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -366,12 +366,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gaa473fe703f6be751ca5ef811154fe45b"></a>
+<a class="anchor" id="gaa2fc2e8795723a17bd1411adcd389736"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_SetPower </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_SetPower </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -407,12 +407,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga91298435f1fe74b0827d24926e159590"></a>
+<a class="anchor" id="gac4169264637d0977800168f8328a1d2e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_SetRecord </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_SetRecord </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -441,12 +441,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga2e2709f39f7a30fe6a31206415e87314"></a>
+<a class="anchor" id="ga047461f10f6439bbaab7a3d1b32c7d89"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_SetRecordChannel </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_SetRecordChannel </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -482,12 +482,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="gad25d633e891fcfe5d33f916128e4d036"></a>
+<a class="anchor" id="ga786ee3e35b7aaace2bc0223579c43d1d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_SetPlay </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_SetPlay </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -516,12 +516,12 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga4d7ce3ef23170771efe1e5bc8d49bb15"></a>
+<a class="anchor" id="ga942a8ccfeaa7e26824def528a9564a29"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_TFA9896_ModuleControl </td>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> HAL_CODEC_CS42888_ModuleControl </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
@@ -545,6 +545,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function is used for codec module control, support switch digital interface cmd, can be expand to support codec module specific feature</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handle</td><td>codec handle. </td></tr>

@@ -47,7 +47,6 @@
 -mno-div32&#13;
 -mno-mul16&#13;
 -mno-mul32&#13;
--fpermissive&#13;
 -Wno-missing-braces&#13;
 -fmessage-length=0&#13;
 -std=gnu99</ListEntry></value>
@@ -78,7 +77,7 @@
           <StringListMapEntry>
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/libxa_nnlib.a&#13;
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a&#13;
 </ListEntry>
             </value>
           </StringListMapEntry>

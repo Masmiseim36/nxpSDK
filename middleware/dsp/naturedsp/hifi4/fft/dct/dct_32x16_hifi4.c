@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------ */
-/* Copyright (c) 2018 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
+/* Copyright (c) 2016 by Cadence Design Systems, Inc. ALL RIGHTS RESERVED.  */
 /* These coded instructions, statements, and computer programs ("Cadence    */
 /* Libraries") are the copyrighted works of Cadence Design Systems Inc.	    */
 /* Cadence IP is licensed for use with Cadence processor cores only and     */
@@ -142,8 +142,8 @@ int dct_32x16( int32_t * restrict y, int32_t * restrict x, dct_handle_t h, int s
     NASSERT_ALIGN8( x );
     NASSERT(scalingOpt==3);
     NASSERT(descr->magic==MAGIC_DCT2_16);
-    N = descr->N;
-    NASSERT( N==32 || N==64 );
+    N = descr->N; 
+    NASSERT( N==32 || N==64 ); 
 
     /* fft of half-size with reordering */
     cfftIx = 25-NSA(N);

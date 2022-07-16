@@ -1,6 +1,6 @@
 var a00046 =
 [
-    [ "iopctl_group_t", "a00046.html#a00386", null ],
+    [ "iopctl_group_t", "a00046.html#a00387", null ],
     [ "LPC_IOPCTL_DRIVER_VERSION", "a00046.html#ga3556ca07cddb19994b6b9f9092e54010", null ],
     [ "IOPCTL_FUNC0", "a00046.html#ga3a81cdc1540e69d75b90b36c6f4e8be6", null ],
     [ "IOPCTL_FUNC1", "a00046.html#ga3be0abac4aacc603912f7679ad9da005", null ],

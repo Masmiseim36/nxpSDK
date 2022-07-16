@@ -76,8 +76,8 @@ void mtx_transpose8x8_fast   (int8_t   *  y, const int8_t *     x, int M, int N)
     NASSERT( y );
     NASSERT(x != y);
     NASSERT(N%4==0 && M%4==0);
-    NASSERT_ALIGN(x,XCHAL_DATA_WIDTH);
-    NASSERT_ALIGN(y,XCHAL_DATA_WIDTH);
+    NASSERT_ALIGN(x,HIFI_SIMD_WIDTH);
+    NASSERT_ALIGN(y,HIFI_SIMD_WIDTH);
     if (N<=0 || M<=0) return;
     pX0=x+0*N;
     pX1=x+1*N;

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -326,225 +326,6 @@ Typical use case</h1>
 <div class="line">}</div>
 </div><!-- fragment --> <h2>Note:</h2>
 <p>To use 'printf' and 'scanf' for GNUC Base, add file <b>'fsl_sbrk.c'</b> in path: <b>..\{package}\devices\{subset}\utilities\fsl_sbrk.c </b> to your project.</p>
-<p>This chapter describes the programming interface of the debug console driver.</p>
-<p>The debug console enables debug log messages to be output via the specified peripheral with frequency of the peripheral source clock and base address at the specified baud rate. Additionally, it provides input and output functions to scan and print formatted data.</p>
-<h1><a class="anchor" id="DbgConsoleFunGrps"></a>
-Function groups</h1>
-<h2><a class="anchor" id="DbgConsoleInit"></a>
-Initialization</h2>
-<p>To initialize the debug console, call the <span style="color:red"><a class="el" href="a00265.html#ga12e50ee0450679fd8ca950a89338d366" title="Initializes the peripheral used for debug messages. ">DbgConsole_Init()</a></span> function with these parameters. This function automatically enables the module and the clock.</p>
-<div class="fragment"><div class="line"></div>
-<div class="line"><a class="code" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> <a class="code" href="a00265.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(uint8_t instance, uint32_t baudRate, serial_port_type_t device, uint32_t clkSrcFreq);</div>
-</div><!-- fragment --><p>Selects the supported debug console hardware device type, such as</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> _serial_port_type</div>
-<div class="line">{</div>
-<div class="line">    <a class="code" href="a00062.html#gga103db7d7f3fc8234978efadef0fdaf80a8c0a9f0a39981fc49bddc88b23e170fb">kSerialPort_None</a> = 0U,                </div>
-<div class="line">    <a class="code" href="a00062.html#gga103db7d7f3fc8234978efadef0fdaf80a5b4d039d8c91cb19fca7c5dc196f8d77">kSerialPort_Uart</a> = 1U,                </div>
-<div class="line">} <a class="code" href="a00062.html#ga103db7d7f3fc8234978efadef0fdaf80">serial_port_type_t</a>;</div>
-</div><!-- fragment --><p>After the initialization is successful, stdout and stdin are connected to the selected peripheral. The debug console state is stored in the debug_console_state_t structure, such as shown here.</p>
-<div class="fragment"><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>DebugConsoleState</div>
-<div class="line">{</div>
-<div class="line">    uint8_t uartHandleBuffer[HAL_UART_HANDLE_SIZE];</div>
-<div class="line">    hal_uart_status_t (*putChar)(hal_uart_handle_t handle, <span class="keyword">const</span> uint8_t *data, <span class="keywordtype">size_t</span> length); </div>
-<div class="line">    hal_uart_status_t (*getChar)(hal_uart_handle_t handle, uint8_t *data, <span class="keywordtype">size_t</span> length);   </div>
-<div class="line">    serial_port_type_t type; </div>
-<div class="line">} debug_console_state_t;</div>
-</div><!-- fragment --><p>This example shows how to call the <a class="el" href="a00265.html#ga12e50ee0450679fd8ca950a89338d366" title="Initializes the peripheral used for debug messages. ">DbgConsole_Init()</a> given the user configuration structure.</p>
-<div class="fragment"><div class="line"><a class="code" href="a00265.html#ga12e50ee0450679fd8ca950a89338d366">DbgConsole_Init</a>(BOARD_DEBUG_USART_INSTANCE, BOARD_DEBUG_USART_BAUDRATE, BOARD_DEBUG_USART_TYPE,</div>
-<div class="line">                             BOARD_DEBUG_USART_CLK_FREQ);</div>
-</div><!-- fragment --><h2><a class="anchor" id="DbgConsoleAdvFeature"></a>
-Advanced Feature</h2>
-<p>The debug console provides input and output functions to scan and print formatted data.</p>
-<ul>
-<li>Support a format specifier for PRINTF following this prototype <span>" %[flags][width][.precision][length]specifier"</span>, which is explained below</li>
-</ul>
-<div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>flags </th><th>Description  </th></tr>
-<tr>
-<td>- </td><td>Left-justified within the given field width. Right-justified is the default.  </td></tr>
-<tr>
-<td>+ </td><td>Forces to precede the result with a plus or minus sign (+ or -) even for positive numbers. By default, only negative numbers are preceded with a - sign.   </td></tr>
-<tr>
-<td>(space) </td><td>If no sign is written, a blank space is inserted before the value.  </td></tr>
-<tr>
-<td># </td><td>Used with o, x, or X specifiers the value is preceded with 0, 0x, or 0X respectively for values other than zero. Used with e, E and f, it forces the written output to contain a decimal point even if no digits would follow. By default, if no digits follow, no decimal point is written. Used with g or G the result is the same as with e or E but trailing zeros are not removed.   </td></tr>
-<tr>
-<td>0 </td><td>Left-pads the number with zeroes (0) instead of spaces, where padding is specified (see width sub-specifier).   </td></tr>
-</table>
-</div><div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>Width </th><th>Description  </th></tr>
-<tr>
-<td>(number) </td><td>A minimum number of characters to be printed. If the value to be printed is shorter than this number, the result is padded with blank spaces. The value is not truncated even if the result is larger.   </td></tr>
-<tr>
-<td>* </td><td>The width is not specified in the format string, but as an additional integer value argument preceding the argument that has to be formatted.   </td></tr>
-</table>
-</div><div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>.precision </th><th>Description  </th></tr>
-<tr>
-<td>.number </td><td>For integer specifiers (d, i, o, u, x, X) − precision specifies the minimum number of digits to be written. If the value to be written is shorter than this number, the result is padded with leading zeros. The value is not truncated even if the result is longer. A precision of 0 means that no character is written for the value 0. For e, E, and f specifiers − this is the number of digits to be printed after the decimal point. For g and G specifiers − This is the maximum number of significant digits to be printed. For s − this is the maximum number of characters to be printed. By default, all characters are printed until the ending null character is encountered. For c type − it has no effect. When no precision is specified, the default is 1. If the period is specified without an explicit value for precision, 0 is assumed.   </td></tr>
-<tr>
-<td>.* </td><td>The precision is not specified in the format string, but as an additional integer value argument preceding the argument that has to be formatted.   </td></tr>
-</table>
-</div><table class="doxtable">
-<tr>
-<th>length </th><th>Description  </th></tr>
-<tr>
-<td colspan="2">Do not support  </td></tr>
-</table>
-<table class="doxtable">
-<tr>
-<th>specifier </th><th>Description  </th></tr>
-<tr>
-<td>d or i </td><td>Signed decimal integer  </td></tr>
-<tr>
-<td>f </td><td>Decimal floating point  </td></tr>
-<tr>
-<td>F </td><td>Decimal floating point capital letters  </td></tr>
-<tr>
-<td>x </td><td>Unsigned hexadecimal integer  </td></tr>
-<tr>
-<td>X </td><td>Unsigned hexadecimal integer capital letters  </td></tr>
-<tr>
-<td>o </td><td>Signed octal  </td></tr>
-<tr>
-<td>b </td><td>Binary value  </td></tr>
-<tr>
-<td>p </td><td>Pointer address  </td></tr>
-<tr>
-<td>u </td><td>Unsigned decimal integer  </td></tr>
-<tr>
-<td>c </td><td>Character  </td></tr>
-<tr>
-<td>s </td><td>String of characters  </td></tr>
-<tr>
-<td>n </td><td>Nothing printed  </td></tr>
-</table>
-<ul>
-<li>Support a format specifier for SCANF following this prototype <span style="color:red">" %[*][width][length]specifier"</span>, which is explained below</li>
-</ul>
-<div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>* </th><th>Description  </th></tr>
-<tr>
-<td colspan="2">An optional starting asterisk indicates that the data is to be read from the stream but ignored. In other words, it is not stored in the corresponding argument.   </td></tr>
-</table>
-</div><div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>width </th><th>Description  </th></tr>
-<tr>
-<td colspan="2">This specifies the maximum number of characters to be read in the current reading operation.   </td></tr>
-</table>
-</div><div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>length </th><th>Description  </th></tr>
-<tr>
-<td>hh </td><td>The argument is interpreted as a signed character or unsigned character (only applies to integer specifiers: i, d, o, u, x, and X).   </td></tr>
-<tr>
-<td>h </td><td>The argument is interpreted as a short integer or unsigned short integer (only applies to integer specifiers: i, d, o, u, x, and X).   </td></tr>
-<tr>
-<td>l </td><td>The argument is interpreted as a long integer or unsigned long integer for integer specifiers (i, d, o, u, x, and X) and as a wide character or wide character string for specifiers c and s.   </td></tr>
-<tr>
-<td>ll </td><td>The argument is interpreted as a long long integer or unsigned long long integer for integer specifiers (i, d, o, u, x, and X) and as a wide character or wide character string for specifiers c and s.   </td></tr>
-<tr>
-<td>L </td><td>The argument is interpreted as a long double (only applies to floating point specifiers: e, E, f, g, and G).   </td></tr>
-<tr>
-<td>j or z or t </td><td>Not supported  </td></tr>
-</table>
-</div><div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>specifier </th><th>Qualifying Input </th><th>Type of argument  </th></tr>
-<tr>
-<td>c </td><td>Single character: Reads the next character. If a width different from 1 is specified, the function reads width characters and stores them in the successive locations of the array passed as argument. No null character is appended at the end.  </td><td>char *  </td></tr>
-<tr>
-<td>i </td><td>Integer: : Number optionally preceded with a + or - sign </td><td>int *  </td></tr>
-<tr>
-<td>d </td><td>Decimal integer: Number optionally preceded with a + or - sign </td><td>int *  </td></tr>
-<tr>
-<td>a, A, e, E, f, F, g, G </td><td>Floating point: Decimal number containing a decimal point, optionally preceded by a + or - sign and optionally followed by the e or E character and a decimal number. Two examples of valid entries are -732.103 and 7.12e4  </td><td>float *  </td></tr>
-<tr>
-<td>o </td><td>Octal Integer: </td><td>int *  </td></tr>
-<tr>
-<td>s </td><td>String of characters. This reads subsequent characters until a white space is found (white space characters are considered to be blank, newline, and tab).  </td><td>char *  </td></tr>
-<tr>
-<td>u </td><td>Unsigned decimal integer. </td><td>unsigned int *  </td></tr>
-</table>
-</div><p>The debug console has its own printf/scanf/putchar/getchar functions which are defined in the header file.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">int</span> <a class="code" href="a00265.html#ga7f9e0678f4c708ed5640b0823c07dc35">DbgConsole_Printf</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fmt_s, ...);  </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00265.html#gada572d86a06f028b5b1a5d0440f683e3">DbgConsole_Putchar</a>(<span class="keywordtype">int</span> ch);                 </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00265.html#ga53b115907016172dcf58fcffab144a6d">DbgConsole_Scanf</a>(<span class="keywordtype">char</span> *fmt_ptr, ...);       </div>
-<div class="line"><span class="keywordtype">int</span> <a class="code" href="a00265.html#ga11898c5015274863741c4f3f4d9edc08">DbgConsole_Getchar</a>(<span class="keywordtype">void</span>);                   </div>
-</div><!-- fragment --><p>This utility supports selecting toolchain's printf/scanf or the MCUXpresso SDK printf/scanf.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#if SDK_DEBUGCONSOLE == DEBUGCONSOLE_DISABLE </span><span class="comment">/* Disable debug console */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define PRINTF</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define SCANF</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define PUTCHAR</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define GETCHAR</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK </span><span class="comment">/* Select printf, scanf, putchar, getchar of SDK version. */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define PRINTF DbgConsole_Printf</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define SCANF DbgConsole_Scanf</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define PUTCHAR DbgConsole_Putchar</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define GETCHAR DbgConsole_Getchar</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#elif SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN </span><span class="comment">/* Select printf, scanf, putchar, getchar of toolchain. */</span><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define PRINTF printf</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define SCANF scanf</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define PUTCHAR putchar</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define GETCHAR getchar</span></div>
-<div class="line"><span class="preprocessor">#endif </span><span class="comment">/* SDK_DEBUGCONSOLE */</span><span class="preprocessor"></span></div>
-</div><!-- fragment --><h2><a class="anchor" id="DbgConsoleFrontendAndBackend"></a>
-SDK_DEBUGCONSOLE and SDK_DEBUGCONSOLE_UART</h2>
-<p>There are two macros SDK_DEBUGCONSOLE and SDK_DEBUGCONSOLE_UART added to configure PRINTF and low level output perihperal.</p>
-<ul>
-<li>The macro SDK_DEBUGCONSOLE is used for forntend. Whether debug console redirect to toolchain or SDK or disabled, it decides which is the frontend of the debug console, Tool chain or SDK. The fucntion can be set by the macro SDK_DEBUGCONSOLE.</li>
-<li>The macro SDK_DEBUGCONSOLE_UART is used for backend. It is use to decide whether provide low level IO implementation to toolchain printf and scanf. For example, within MCUXpresso, if the macro SDK_DEBUGCONSOLE_UART is defined, __sys_write and __sys_readc will be used when __REDLIB__ is defined; _write and _read will be used in other cases.The macro does not specifically refer to the perihpheral "UART". It refers to the external perihperal UART. So if the macro SDK_DEBUGCONSOLE_UART is not defined when tool-chain printf is calling, the semihosting will be used.</li>
-</ul>
-<p>The following the matrix show the effects of SDK_DEBUGCONSOLE and SDK_DEBUGCONSOLE_UART on PRINTF and printf. The green mark is the default setting of the debug console. </p>
-<div style="width:800px;"> <table class="doxtable">
-<tr>
-<th>SDK_DEBUGCONSOLE </th><th>SDK_DEBUGCONSOLE_UART </th><th>PRINTF </th><th>printf  </th></tr>
-<tr>
-<td>DEBUGCONSOLE_REDIRECT_TO_SDK </td><td>defined </td><td>UART </td><td>UART  </td></tr>
-<tr>
-<td style="color:green">DEBUGCONSOLE_REDIRECT_TO_SDK </td><td style="color:green">undefined </td><td style="color:green">UART </td><td style="color:green">semihost  </td></tr>
-<tr>
-<td>DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN </td><td>defined </td><td>UART </td><td>UART  </td></tr>
-<tr>
-<td>DEBUGCONSOLE_REDIRECT_TO_TOOLCHAIN </td><td>undefined </td><td>semihost </td><td>semihost  </td></tr>
-<tr>
-<td>DEBUGCONSOLE_DISABLE </td><td>defined </td><td>No ouput </td><td>UART  </td></tr>
-<tr>
-<td>DEBUGCONSOLE_DISABLE </td><td>undefined </td><td>No ouput </td><td>semihost  </td></tr>
-</table>
-</div><h1><a class="anchor" id="DbgConsoleTpyUC"></a>
-Typical use case</h1>
-<h2>Some examples use the PUTCHAR &amp; GETCHAR function</h2>
-<div class="fragment"><div class="line">ch = GETCHAR();</div>
-<div class="line">PUTCHAR(ch);</div>
-</div><!-- fragment --><h2>Some examples use the PRINTF function</h2>
-<p>Statement prints the string format.</p>
-<div class="fragment"><div class="line"><a class="code" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;%s %s\r\n&quot;</span>, <span class="stringliteral">&quot;Hello&quot;</span>, <span class="stringliteral">&quot;world!&quot;</span>);</div>
-</div><!-- fragment --><p>Statement prints the hexadecimal format/</p>
-<div class="fragment"><div class="line"><a class="code" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;0x%02X hexadecimal number equivalents 255&quot;</span>, 255);</div>
-</div><!-- fragment --><p>Statement prints the decimal floating point and unsigned decimal.</p>
-<div class="fragment"><div class="line"><a class="code" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;Execution timer: %s\n\rTime: %u ticks %2.5f milliseconds\n\rDONE\n\r&quot;</span>, <span class="stringliteral">&quot;1 day&quot;</span>, 86400, 86.4);</div>
-</div><!-- fragment --><h2>Some examples use the SCANF function</h2>
-<div class="fragment"><div class="line"><a class="code" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;Enter a decimal number: &quot;</span>);</div>
-<div class="line">SCANF(<span class="stringliteral">&quot;%d&quot;</span>, &amp;i);</div>
-<div class="line"><a class="code" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;\r\nYou have entered %d.\r\n&quot;</span>, i, i);</div>
-<div class="line"><a class="code" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;Enter a hexadecimal number: &quot;</span>);</div>
-<div class="line">SCANF(<span class="stringliteral">&quot;%x&quot;</span>, &amp;i);</div>
-<div class="line"><a class="code" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;\r\nYou have entered 0x%X (%d).\r\n&quot;</span>, i, i);</div>
-</div><!-- fragment --><h2>Print out failure messages using MCUXpresso SDK __assert_func:</h2>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> __assert_func(<span class="keyword">const</span> <span class="keywordtype">char</span> *file, <span class="keywordtype">int</span> line, <span class="keyword">const</span> <span class="keywordtype">char</span> *func, <span class="keyword">const</span> <span class="keywordtype">char</span> *failedExpr)</div>
-<div class="line">{</div>
-<div class="line">    <a class="code" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>(<span class="stringliteral">&quot;ASSERT ERROR \&quot; %s \&quot;: file \&quot;%s\&quot; Line \&quot;%d\&quot; function name \&quot;%s\&quot; \n&quot;</span>, failedExpr, file , line, func);</div>
-<div class="line">    <span class="keywordflow">for</span> (;;)</div>
-<div class="line">    {}</div>
-<div class="line">}</div>
-</div><!-- fragment --> <h2>Note:</h2>
-<p>To use 'printf' and 'scanf' for GNUC Base, add file <b>'fsl_sbrk.c'</b> in path: <b>..\{package}\devices\{subset}\utilities\fsl_sbrk.c </b> to your project.</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
 Modules</h2></td></tr>
@@ -564,10 +345,10 @@ Macros</h2></td></tr>
 <tr class="memitem:gaf8f85fd102e4aedcee3d061dc2d3e0c2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gaf8f85fd102e4aedcee3d061dc2d3e0c2">DEBUGCONSOLE_DISABLE</a>&#160;&#160;&#160;2U</td></tr>
 <tr class="memdesc:gaf8f85fd102e4aedcee3d061dc2d3e0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable debugconsole function.  <a href="#gaf8f85fd102e4aedcee3d061dc2d3e0c2">More...</a><br/></td></tr>
 <tr class="separator:gaf8f85fd102e4aedcee3d061dc2d3e0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7fdd594efdc8374ecd8684ed758d6cec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga7fdd594efdc8374ecd8684ed758d6cec">SDK_DEBUGCONSOLE</a>&#160;&#160;&#160;<a class="el" href="a00265.html#gac33031f28afa29dc8fe1718bbc86ee23">DEBUGCONSOLE_REDIRECT_TO_SDK</a></td></tr>
+<tr class="memitem:ga7fdd594efdc8374ecd8684ed758d6cec"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#ga7fdd594efdc8374ecd8684ed758d6cec">SDK_DEBUGCONSOLE</a>&#160;&#160;&#160;<a class="el" href="a00268.html#gac33031f28afa29dc8fe1718bbc86ee23">DEBUGCONSOLE_REDIRECT_TO_SDK</a></td></tr>
 <tr class="memdesc:ga7fdd594efdc8374ecd8684ed758d6cec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition to select sdk or toolchain printf, scanf.  <a href="#ga7fdd594efdc8374ecd8684ed758d6cec">More...</a><br/></td></tr>
 <tr class="separator:ga7fdd594efdc8374ecd8684ed758d6cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae1649fc947ca37a86917a08354f48d1a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>&#160;&#160;&#160;<a class="el" href="a00265.html#ga7f9e0678f4c708ed5640b0823c07dc35">DbgConsole_Printf</a></td></tr>
+<tr class="memitem:gae1649fc947ca37a86917a08354f48d1a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00265.html#gae1649fc947ca37a86917a08354f48d1a">PRINTF</a>&#160;&#160;&#160;<a class="el" href="a00268.html#ga7f9e0678f4c708ed5640b0823c07dc35">DbgConsole_Printf</a></td></tr>
 <tr class="memdesc:gae1649fc947ca37a86917a08354f48d1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition to select redirect toolchain printf, scanf to uart or not.  <a href="#gae1649fc947ca37a86917a08354f48d1a">More...</a><br/></td></tr>
 <tr class="separator:gae1649fc947ca37a86917a08354f48d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -676,7 +457,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SDK_DEBUGCONSOLE&#160;&#160;&#160;<a class="el" href="a00265.html#gac33031f28afa29dc8fe1718bbc86ee23">DEBUGCONSOLE_REDIRECT_TO_SDK</a></td>
+          <td class="memname">#define SDK_DEBUGCONSOLE&#160;&#160;&#160;<a class="el" href="a00268.html#gac33031f28afa29dc8fe1718bbc86ee23">DEBUGCONSOLE_REDIRECT_TO_SDK</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -689,7 +470,7 @@ Initialization</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PRINTF&#160;&#160;&#160;<a class="el" href="a00265.html#ga7f9e0678f4c708ed5640b0823c07dc35">DbgConsole_Printf</a></td>
+          <td class="memname">#define PRINTF&#160;&#160;&#160;<a class="el" href="a00268.html#ga7f9e0678f4c708ed5640b0823c07dc35">DbgConsole_Printf</a></td>
         </tr>
       </table>
 </div><div class="memdoc">

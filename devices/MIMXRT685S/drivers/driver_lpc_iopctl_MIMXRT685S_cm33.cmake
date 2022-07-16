@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("driver_lpc_iopctl component is included.")
 
 

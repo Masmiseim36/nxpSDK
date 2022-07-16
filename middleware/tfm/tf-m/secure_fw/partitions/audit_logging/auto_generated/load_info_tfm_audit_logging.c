@@ -1,17 +1,19 @@
 /*
- * Copyright (c) 2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
+ * Copyright (c) 2021, Cypress Semiconductor Corporation. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-/*********** WARNING: This is an auto-generated file. Do not edit! ***********/
+/***********  WARNING: This is an auto-generated file. Do not edit!  ***********/
 
 #include <stdint.h>
 #include <stddef.h>
 #include "region.h"
+#include "region_defs.h"
 #include "spm_ipc.h"
-#include "load/irq_defs.h"
+#include "load/interrupt_defs.h"
 #include "load/partition_defs.h"
 #include "load/service_defs.h"
 #include "load/asset_defs.h"
@@ -39,6 +41,8 @@ extern uint8_t tfm_sp_audit_log_stack[];
 /* Entrypoint function declaration */
 extern void audit_core_init(void);
 
+/* Interrupt init functions */
+
 /* partition load info type definition */
 struct partition_tfm_sp_audit_log_load_info_t {
     /* common length load data */
@@ -64,8 +68,8 @@ const struct partition_tfm_sp_audit_log_load_info_t tfm_sp_audit_log_load
         .psa_ff_ver                 = 0x0100 | PARTITION_INFO_MAGIC,
         .pid                        = TFM_SP_AUDIT_LOG,
         .flags                      = 0
-                                    | SPM_PART_FLAG_IPC
-                                    | SPM_PART_FLAG_PSA_ROT
+                                    | PARTITION_MODEL_IPC
+                                    | PARTITION_MODEL_PSA_ROT
                                     | PARTITION_PRI_NORMAL,
         .entry                      = ENTRY_TO_POSITION(audit_core_init),
         .stack_size                 = 0x0200,
@@ -80,14 +84,15 @@ const struct partition_tfm_sp_audit_log_load_info_t tfm_sp_audit_log_load
 #if TFM_LVL == 3
     .assets                         = {
         {
-            .mem.addr_x             = PART_REGION_ADDR(PT_TFM_SP_AUDIT_LOG_PRIVATE, _DATA_START$$Base),
-            .mem.addr_y             = PART_REGION_ADDR(PT_TFM_SP_AUDIT_LOG_PRIVATE, _DATA_END$$Base),
-            .attr                   = ASSET_MEM_RD_BIT | ASSET_MEM_WR_BIT,
+            .mem.start              = PART_REGION_ADDR(PT_TFM_SP_AUDIT_LOG_PRIVATE, _DATA_START$$Base),
+            .mem.limit              = PART_REGION_ADDR(PT_TFM_SP_AUDIT_LOG_PRIVATE, _DATA_END$$Base),
+            .attr                   = ASSET_ATTR_READ_WRITE,
         },
 #ifdef AUDIT_UART_REDIRECTION
         {
-            .dev.addr_ref           = PTR_TO_REFERENCE(TFM_PERIPHERAL_UART1),
-            .attr                   = ASSET_DEV_REF_BIT,
+            .dev.dev_ref            = PTR_TO_REFERENCE(TFM_PERIPHERAL_UART1),
+            .attr                   = ASSET_ATTR_NAMED_MMIO
+                                    | ASSET_ATTR_READ_WRITE,
         },
 #endif
     },
@@ -95,8 +100,9 @@ const struct partition_tfm_sp_audit_log_load_info_t tfm_sp_audit_log_load
     .assets                         = {
 #ifdef AUDIT_UART_REDIRECTION
         {
-            .dev.addr_ref           = PTR_TO_REFERENCE(TFM_PERIPHERAL_UART1),
-            .attr                   = ASSET_DEV_REF_BIT,
+            .dev.dev_ref            = PTR_TO_REFERENCE(TFM_PERIPHERAL_UART1),
+            .attr                   = ASSET_ATTR_NAMED_MMIO
+                                    | ASSET_ATTR_READ_WRITE,
         },
 #endif
     },

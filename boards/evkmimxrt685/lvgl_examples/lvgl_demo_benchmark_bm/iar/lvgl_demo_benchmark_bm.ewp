@@ -11,9 +11,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>31</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Debug\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/debug</state>
@@ -32,11 +36,11 @@
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -66,15 +70,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>8.30.2.18207</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
+          <state>9.30.1.48832</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -97,26 +93,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
           <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -133,7 +115,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -156,7 +138,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -173,7 +155,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -182,7 +164,7 @@
         <option>
           <name>OGScanfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGScanfMultibyteSupport</name>
@@ -209,13 +191,33 @@
           <version>0</version>
           <state>1</state>
         </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Debug</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>34</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -224,7 +226,6 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
-          <state>LV_DEMO_CONF_INCLUDE_SIMPLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -345,17 +346,13 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/examples/assets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/stress/assets</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
@@ -395,16 +392,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>0</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -481,11 +468,19 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -493,7 +488,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>10</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -648,6 +643,10 @@
           <name>AsmNoLiteralPool</name>
           <state>0</state>
         </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
+        </option>
       </data>
     </settings>
     <settings>
@@ -687,12 +686,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -706,16 +701,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>21</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -731,18 +722,23 @@
         </option>
         <option>
           <name>IlinkKeepSymbols</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
+          <state/>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -1015,6 +1011,62 @@
           <name>IlinkTrustzoneImportLibraryOut</name>
           <state>###Unitialized###</state>
         </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1038,11 +1090,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>flash_debug</name>
@@ -1054,9 +1101,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>31</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Debug\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/flash_debug</state>
@@ -1075,11 +1126,11 @@
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -1109,15 +1160,7 @@
         </option>
         <option>
           <name>OGLastSavedByProductVersion</name>
-          <state>8.30.2.18207</state>
-        </option>
-        <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
+          <state>9.30.1.48832</state>
         </option>
         <option>
           <name>OGChipSelectEditMenu</name>
@@ -1140,26 +1183,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
           <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -1176,7 +1205,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -1199,7 +1228,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -1216,7 +1245,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -1225,7 +1254,7 @@
         <option>
           <name>OGScanfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGScanfMultibyteSupport</name>
@@ -1252,13 +1281,33 @@
           <version>0</version>
           <state>1</state>
         </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Debug</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>34</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1268,7 +1317,6 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
-          <state>LV_DEMO_CONF_INCLUDE_SIMPLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1389,17 +1437,13 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/examples/assets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/stress/assets</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
@@ -1439,16 +1483,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>0</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -1525,11 +1559,19 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -1537,7 +1579,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>10</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -1692,6 +1734,10 @@
           <name>AsmNoLiteralPool</name>
           <state>0</state>
         </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
+        </option>
       </data>
     </settings>
     <settings>
@@ -1731,12 +1777,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -1750,16 +1792,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>21</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -1775,18 +1813,23 @@
         </option>
         <option>
           <name>IlinkKeepSymbols</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
+          <state/>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -2059,6 +2102,62 @@
           <name>IlinkTrustzoneImportLibraryOut</name>
           <state>###Unitialized###</state>
         </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2082,11 +2181,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>release</name>
@@ -2098,9 +2192,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>31</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Release\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/release</state>
@@ -2119,11 +2217,11 @@
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -2156,14 +2254,6 @@
           <state>8.30.2.18207</state>
         </option>
         <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>OGChipSelectEditMenu</name>
           <state>MIMXRT685S_M33	NXP MIMXRT685S_M33</state>
         </option>
@@ -2184,26 +2274,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
           <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -2220,7 +2296,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -2243,7 +2319,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -2260,7 +2336,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -2269,7 +2345,7 @@
         <option>
           <name>OGScanfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGScanfMultibyteSupport</name>
@@ -2296,13 +2372,33 @@
           <version>0</version>
           <state>1</state>
         </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Release</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>34</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2311,7 +2407,6 @@
           <state>CPU_MIMXRT685SFVKB_cm33</state>
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
-          <state>LV_DEMO_CONF_INCLUDE_SIMPLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -2432,17 +2527,13 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/examples/assets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/stress/assets</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
@@ -2482,16 +2573,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -2568,11 +2649,19 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -2580,7 +2669,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>10</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -2735,6 +2824,10 @@
           <name>AsmNoLiteralPool</name>
           <state>0</state>
         </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
+        </option>
       </data>
     </settings>
     <settings>
@@ -2774,12 +2867,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -2793,16 +2882,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>21</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -2818,18 +2903,23 @@
         </option>
         <option>
           <name>IlinkKeepSymbols</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
+          <state/>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -3102,6 +3192,62 @@
           <name>IlinkTrustzoneImportLibraryOut</name>
           <state>###Unitialized###</state>
         </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -3125,11 +3271,6 @@
         </option>
       </data>
     </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
-    </settings>
   </configuration>
   <configuration>
     <name>flash_release</name>
@@ -3141,9 +3282,13 @@
       <name>General</name>
       <archiveVersion>3</archiveVersion>
       <data>
-        <version>31</version>
+        <version>35</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
+        <option>
+          <name>BrowseInfoPath</name>
+          <state>Release\BrowseInfo</state>
+        </option>
         <option>
           <name>ExePath</name>
           <state>$PROJ_DIR$/flash_release</state>
@@ -3162,11 +3307,11 @@
         </option>
         <option>
           <name>Input description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier n, no float nor long long, no scan set, no assignment suppressing, without multibyte support.</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>Automatic choice of formatter, without multibyte support.</state>
+          <state>No specifier a, A, no specifier n, no float nor long long, without multibyte support.</state>
         </option>
         <option>
           <name>GOutputBinary</name>
@@ -3199,14 +3344,6 @@
           <state>8.30.2.18207</state>
         </option>
         <option>
-          <name>GeneralEnableMisra</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraVerbose</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>OGChipSelectEditMenu</name>
           <state>MIMXRT685S_M33	NXP MIMXRT685S_M33</state>
         </option>
@@ -3227,26 +3364,12 @@
           <state>0</state>
         </option>
         <option>
-          <name>GeneralMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>GeneralMisraVer</name>
-          <state>0</state>
-        </option>
-        <option>
-          <name>GeneralMisraRules04</name>
-          <version>0</version>
-          <state>011111110111111110111111110011011101111010111010111110001010101111110111111111010101111111101111111111110111110011111111011111111110111101111</state>
-        </option>
-        <option>
           <name>RTConfigPath2</name>
           <state>$TOOLKIT_DIR$\inc\c\DLib_Config_Normal.h</state>
         </option>
         <option>
           <name>GBECoreSlave</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -3263,7 +3386,7 @@
         </option>
         <option>
           <name>CoreVariant</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -3286,7 +3409,7 @@
         </option>
         <option>
           <name>GFPUCoreSlave2</name>
-          <version>26</version>
+          <version>32</version>
           <state>58</state>
         </option>
         <option>
@@ -3303,7 +3426,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -3312,7 +3435,7 @@
         <option>
           <name>OGScanfVariant</name>
           <version>0</version>
-          <state>0</state>
+          <state>3</state>
         </option>
         <option>
           <name>OGScanfMultibyteSupport</name>
@@ -3339,13 +3462,33 @@
           <version>0</version>
           <state>1</state>
         </option>
+        <option>
+          <name>OGAarch64Abi</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OG_32_64Device</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>BuildFilesPath</name>
+          <state>Release</state>
+        </option>
+        <option>
+          <name>PointerAuthentication</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>FPU64</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
       <name>ICCARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>34</version>
+        <version>37</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3355,7 +3498,6 @@
           <state>BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
-          <state>LV_DEMO_CONF_INCLUDE_SIMPLE=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -3476,17 +3618,13 @@
           <state/>
         </option>
         <option>
-          <name>CompilerMisraOverride</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos</state>
           <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/examples/assets</state>
-          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets</state>
+          <state>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/stress/assets</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
@@ -3526,16 +3664,6 @@
         <option>
           <name>CCOptLevelSlave</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules98</name>
-          <version>0</version>
-          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
-        </option>
-        <option>
-          <name>CompilerMisraRules04</name>
-          <version>0</version>
-          <state>111101110010111111111000110111111111111111111111111110010111101111010101111111111111111111111111101111111011111001111011111011111111111111111</state>
         </option>
         <option>
           <name>CCPosIndRopi</name>
@@ -3612,11 +3740,19 @@
         </option>
         <option>
           <name>IccExceptions2</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IccRTTI2</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>OICompilerExtraOption</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>CCStackProtection</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -3624,7 +3760,7 @@
       <name>AARM</name>
       <archiveVersion>2</archiveVersion>
       <data>
-        <version>10</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -3778,6 +3914,10 @@
           <name>AsmNoLiteralPool</name>
           <state>0</state>
         </option>
+        <option>
+          <name>PreInclude</name>
+          <state/>
+        </option>
       </data>
     </settings>
     <settings>
@@ -3817,12 +3957,8 @@
         <extensions/>
         <cmdline/>
         <hasPrio>0</hasPrio>
+        <buildSequence>inputOutputBased</buildSequence>
       </data>
-    </settings>
-    <settings>
-      <name>BICOMP</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
     <settings>
       <name>BUILDACTION</name>
@@ -3836,16 +3972,12 @@
       <name>ILINK</name>
       <archiveVersion>0</archiveVersion>
       <data>
-        <version>21</version>
+        <version>27</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
           <name>IlinkLibIOConfig</name>
           <state>1</state>
-        </option>
-        <option>
-          <name>XLinkMisraHandler</name>
-          <state>0</state>
         </option>
         <option>
           <name>IlinkInputFileSlave</name>
@@ -3861,18 +3993,23 @@
         </option>
         <option>
           <name>IlinkKeepSymbols</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryFile</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySymbol</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinarySegment</name>
+          <state/>
         </option>
         <option>
           <name>IlinkRawBinaryAlign</name>
+          <state/>
         </option>
         <option>
           <name>IlinkDefines</name>
@@ -4145,6 +4282,62 @@
           <name>IlinkTrustzoneImportLibraryOut</name>
           <state>###Unitialized###</state>
         </option>
+        <option>
+          <name>OILinkExtraOption</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkRawBinaryFile2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySymbol2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinarySegment2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkRawBinaryAlign2</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkLogCrtRoutineSelection</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogFragmentInfo</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogInlining</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkLogMerging</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkDemangle</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFileEnable</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IlinkWrapperFile</name>
+          <state/>
+        </option>
+        <option>
+          <name>IlinkProcessor</name>
+          <state>1</state>
+        </option>
+        <option>
+          <name>IlinkFpuProcessor</name>
+          <state>1</state>
+        </option>
       </data>
     </settings>
     <settings>
@@ -4167,11 +4360,6 @@
           <state/>
         </option>
       </data>
-    </settings>
-    <settings>
-      <name>BILINK</name>
-      <archiveVersion>0</archiveVersion>
-      <data/>
     </settings>
   </configuration>
   <group>
@@ -4212,64 +4400,52 @@
     <file>
       <name>$PROJ_DIR$/../lv_conf.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../lv_demo_conf.h</name>
-    </file>
   </group>
   <group>
     <name>lvgl</name>
     <group>
-      <name>lv_examples</name>
-      <group>
-        <name>src</name>
-        <group>
-          <name>lv_demo_benchmark</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark/lv_demo_benchmark.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_benchmark/lv_demo_benchmark.h</name>
-          </file>
-        </group>
-      </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/lv_demo.h</name>
-      </file>
-      <group>
-        <name>assets</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets/lv_font_montserrat_28_compr_az.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets/lv_font_montserrat_16_compr_az.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/lvgl/lv_examples/src/lv_demo_stress/assets/lv_font_montserrat_12_compr_az.c</name>
-        </file>
-      </group>
-    </group>
-    <group>
       <name>lvgl</name>
       <group>
-        <name>examples</name>
+        <name>demos</name>
         <group>
-          <name>assets</name>
+          <name>benchmark</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_alpha16.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_rgb.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/lv_demo_benchmark.h</name>
           </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_argb.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_indexed16.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/examples/assets/img_cogwheel_chroma_keyed.c</name>
-          </file>
+          <group>
+            <name>assets</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_alpha16.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_argb.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_chroma_keyed.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_indexed16.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/img_benchmark_cogwheel_rgb.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_16_compr_az.c.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_12_compr_az.c.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/benchmark/assets/lv_font_bechmark_montserrat_28_compr_az.c.c</name>
+            </file>
+          </group>
         </group>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/demos/lv_demos.h</name>
+        </file>
       </group>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/lvgl.h</name>
@@ -4324,9 +4500,6 @@
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj_class.c</name>
           </file>
           <file>
@@ -4337,6 +4510,9 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj_draw.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj_pos.c</name>
@@ -4354,13 +4530,13 @@
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style_gen.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj_style.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/core/lv_obj_tree.c</name>
@@ -4384,7 +4560,7 @@
         <group>
           <name>draw</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.c</name>
@@ -4393,10 +4569,7 @@
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_arc.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_blend.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/lv_draw.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/lv_draw_img.c</name>
@@ -4452,14 +4625,188 @@
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/lv_img_decoder.h</name>
           </file>
+          <group>
+            <name>nxp</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/lv_gpu_nxp.h</name>
+            </file>
+            <group>
+              <name>pxp</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_draw_pxp_blend.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.h</name>
+              </file>
+            </group>
+            <group>
+              <name>vglite</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.h</name>
+              </file>
+            </group>
+          </group>
+          <group>
+            <name>sdl</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_arc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_bg.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_composite.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_img.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_label.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_mask.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_polygon.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_priv.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_rect.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_stack_blur.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_texture_cache.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sdl/lv_draw_sdl_utils.h</name>
+            </file>
+          </group>
+          <group>
+            <name>stm32_dma2d</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/stm32_dma2d/lv_gpu_stm32_dma2d.h</name>
+            </file>
+          </group>
+          <group>
+            <name>sw</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_arc.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_blend.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_dither.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_gradient.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_img.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_letter.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_line.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_polygon.c</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/draw/sw/lv_draw_sw_rect.c</name>
+            </file>
+          </group>
         </group>
         <group>
           <name>font</name>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_dejavu_16_persian_hebrew.c</name>
@@ -4471,13 +4818,13 @@
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_fmt_txt.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_loader.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_10.c</name>
@@ -4546,55 +4893,31 @@
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_48.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_montserrat_8.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_simsun_16_cjk.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_16.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_16.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_font_unscii_8.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/font/lv_symbol_def.h</name>
           </file>
         </group>
         <group>
-          <name>gpu</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_pxp_osa.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_nxp_vglite.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/gpu/lv_gpu_stm32_dma2d.c</name>
-          </file>
-        </group>
-        <group>
           <name>hal</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</name>
-          </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/hal/lv_hal_disp.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/hal/lv_hal_disp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/hal/lv_hal.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/hal/lv_hal_indev.c</name>
@@ -4616,6 +4939,12 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_anim.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_anim_timeline.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_area.c</name>
@@ -4690,13 +5019,13 @@
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_style.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_style_gen.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_style.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_templ.c</name>
@@ -4717,16 +5046,16 @@
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_tlsf.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_txt_ap.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_txt.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_types.h</name>
@@ -4736,6 +5065,12 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_utils.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/misc/lv_lru.h</name>
           </file>
         </group>
         <group>
@@ -4839,17 +5174,8 @@
         </group>
         <group>
           <name>extra</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</name>
-          </file>
           <group>
             <name>layouts</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</name>
-            </file>
             <group>
               <name>flex</name>
               <file>
@@ -4868,12 +5194,174 @@
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/layouts/grid/lv_grid.h</name>
               </file>
             </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/layouts/lv_layouts.h</name>
+            </file>
+          </group>
+          <group>
+            <name>libs</name>
+            <group>
+              <name>bmp</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/bmp/lv_bmp.h</name>
+              </file>
+            </group>
+            <group>
+              <name>freetype</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/freetype/lv_freetype.h</name>
+              </file>
+            </group>
+            <group>
+              <name>fsdrv</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fsdrv.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_fatfs.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_posix.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_stdio.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/fsdrv/lv_fs_win32.c</name>
+              </file>
+            </group>
+            <group>
+              <name>gif</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/gifdec.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/gif/lv_gif.h</name>
+              </file>
+            </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/lv_libs.h</name>
+            </file>
+            <group>
+              <name>png</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lodepng.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/png/lv_png.h</name>
+              </file>
+            </group>
+            <group>
+              <name>qrcode</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/lv_qrcode.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/qrcode/qrcodegen.h</name>
+              </file>
+            </group>
+            <group>
+              <name>rlottie</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/rlottie/lv_rlottie.h</name>
+              </file>
+            </group>
+            <group>
+              <name>sjpg</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/lv_sjpg.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgdcnf.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/sjpg/tjpgd.h</name>
+              </file>
+            </group>
+            <group>
+              <name>ffmpeg</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/libs/ffmpeg/lv_ffmpeg.h</name>
+              </file>
+            </group>
+          </group>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/lv_extra.h</name>
+          </file>
+          <group>
+            <name>others</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/others/lv_others.h</name>
+            </file>
+            <group>
+              <name>snapshot</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/others/snapshot/lv_snapshot.h</name>
+              </file>
+            </group>
+            <group>
+              <name>gridnav</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/others/gridnav/lv_gridnav.h</name>
+              </file>
+            </group>
+            <group>
+              <name>monkey</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/others/monkey/lv_monkey.h</name>
+              </file>
+            </group>
           </group>
           <group>
             <name>themes</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</name>
-            </file>
             <group>
               <name>basic</name>
               <file>
@@ -4892,6 +5380,9 @@
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/themes/default/lv_theme_default.h</name>
               </file>
             </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/themes/lv_themes.h</name>
+            </file>
             <group>
               <name>mono</name>
               <file>
@@ -4904,9 +5395,6 @@
           </group>
           <group>
             <name>widgets</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</name>
-            </file>
             <group>
               <name>animimg</name>
               <file>
@@ -4991,6 +5479,9 @@
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/widgets/list/lv_list.h</name>
               </file>
             </group>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/widgets/lv_widgets.h</name>
+            </file>
             <group>
               <name>meter</name>
               <file>
@@ -5061,6 +5552,15 @@
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/widgets/win/lv_win.h</name>
+              </file>
+            </group>
+            <group>
+              <name>menu</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.c</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/lvgl/lvgl/src/extra/widgets/menu/lv_menu.h</name>
               </file>
             </group>
           </group>

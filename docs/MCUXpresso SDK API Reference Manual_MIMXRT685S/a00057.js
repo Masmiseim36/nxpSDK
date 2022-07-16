@@ -1,6 +1,6 @@
 var a00057 =
 [
-    [ "spi_dma_handle_t", "a00057.html#a00270", [
+    [ "spi_dma_handle_t", "a00057.html#a00271", [
       [ "kStatus_OTP_InvalidAddress", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181faa81f9e50700f61e4fc0a97f94d23eb00", null ],
       [ "kStatus_OTP_ProgramFail", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fad55f5025b32a412b893af5afd8e5de93", null ],
       [ "kStatus_OTP_CrcFail", "a00232.html#gga5d76b81b0ad4c19007a781d4edb8181fa96c4495f952291da00f2d8249488d8e4", null ],

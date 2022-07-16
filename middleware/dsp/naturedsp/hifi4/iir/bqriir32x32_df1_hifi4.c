@@ -59,7 +59,13 @@
   parameter gain of each filter initialization function.
   2. 16x16 filters may suffer more from accumulation of the roundoff errors,
   so filters should be properly designed to match noise requirements
-
+  3. Due to the performance reasons, IIR biquad filters may introduce 
+  additional algorithmic delay of several sampless. Amount of that delay
+  might be requested by the  xxx_groupDelay API. For sensitive applications
+  all the filters have delayless implementations (with  _nd  suffix in the name).
+  Formally, the xxx_groupDelay APIs is also implemented for that kind of filters,
+  but return zero.
+  
   Precision: 
   16x16         16-bit data, 16-bit coefficients, 16-bit intermediate 
                 stage outputs (DF1, DF1 stereo, DF II form)
@@ -116,7 +122,7 @@
   N   - must be a multiple of 2
   s[] - whenever supplied must be aligned on an 8-bytes boundary
 -------------------------------------------------------------------------*/
-
+#if (ALG32X32_DF1_ND==0)
 /* Reserve memory for alignment. */
 #define ALIGNED_SIZE( size, align ) ( (size_t)(size) + (align) - 1 )
 
@@ -137,17 +143,20 @@ static int32_t mpy32x16r( int32_t a, int16_t b )
   res = AE_MOVAD32_L(vres);
   return res;
 }
-
+#endif
 /* Allocation routine for iir filters. Returns: size of memory in bytes to be allocated */
 size_t bqriir32x32_df1_alloc( int M )
 {
+#if (ALG32X32_DF1_ND==1)
+  return bqriir32x32_df1_nd_alloc(M);
+#else
   NASSERT( M > 0 );
   return ( ALIGNED_SIZE( sizeof(bqriir32x32_df1_t), 4 )
            + // 6 state elements for each pair of M DFI sections.
            ALIGNED_SIZE( 6*(M+1)/2*sz_i32, 8 )
            + // 6 SOS coefficients for each of M sections
            ALIGNED_SIZE( 6*M*sz_i32, 8 ));
-
+#endif
 } // bqriir32x32_df1_alloc()
 
 /* Initialization routine for iir filters. Returns: handle to the object */
@@ -156,6 +165,9 @@ bqriir32x32_df1_handle_t bqriir32x32_df1_init( void * objmem, int M,
                                                const int16_t * restrict coef_g,
                                                int16_t         gain )
 {  
+#if (ALG32X32_DF1_ND==1)
+  return bqriir32x32_df1_nd_init(objmem, M, coef_sos, coef_g, gain);
+#else
   bqriir32x32_df1_ptr_t bqriir;
   ae_int32x2    * restrict sectState;
   int32_t    * restrict sectCoef_gsos;
@@ -206,5 +218,10 @@ bqriir32x32_df1_handle_t bqriir32x32_df1_init( void * objmem, int M,
   }
 
   return (bqriir); 
-
+#endif
 } // bqriir32x32_df1_init()
+
+size_t bqriir32x32_df1_groupDelay(bqriir32x32_df1_handle_t _bqriir)
+{
+    return 0;
+} // bqriir32x32_df1_groupDelay()

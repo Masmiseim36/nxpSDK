@@ -36,11 +36,7 @@
 #include "NatureDSP_Signal_matinv.h"
 #include "common_fpu.h"
 
-#if (HAVE_FPU==0 && HAVE_VFPU==0)
-DISCARD_FUN(void,mtx_inv3x3f,(void* pScr,float32_t* x))
-size_t mtx_inv3x3f_getScratchSize        () { return 0; }
-
-#elif (HAVE_VFPU)
+#if (HAVE_VFPU)
 /*-------------------------------------------------------------------------
   These functions implement in-place matrix inversion by Gauss elimination 
   with full pivoting
@@ -144,6 +140,7 @@ void mtx_inv3x3f(void* pScr, float32_t* x)
       amax=0.0f;
       max=0.0f;
       /* find absolute max value in the k-th column */
+      __Pragma("no_reorder")
       for(n=k; n<3; n++)
       {
         xtbool cond;
@@ -212,6 +209,7 @@ void mtx_inv3x3f(void* pScr, float32_t* x)
       }
     }
     /* copy 4-6 columns to x */
+    __Pragma("no_reorder")
     {
       /* extract matrix from columns */
       A00 = XT_SEL32_LH_SX2(A01, A02);
@@ -235,7 +233,7 @@ size_t mtx_inv3x3f_getScratchSize        ()
     return 18*sizeof(float32_t);
 }
 
-#else
+#elif (HAVE_FPU)
 // for scalar FPU
 #define SZ_F32 (sizeof(float32_t))
 #define SZ_2F32 (2*SZ_F32)
@@ -389,5 +387,7 @@ size_t mtx_inv3x3f_getScratchSize        ()
     return 18*sizeof(float32_t);
 }
 
+#else
+DISCARD_FUN(void,mtx_inv3x3f,(void* pScr,float32_t* x))
+size_t mtx_inv3x3f_getScratchSize        () { return 0; }
 #endif
-

@@ -36,13 +36,7 @@
 #include "NatureDSP_Signal_matinv.h"
 #include <math.h>
 
-#if (HAVE_FPU==0 && HAVE_VFPU==0)
-DISCARD_FUN(void,mtx_inv10x10f,(void* pScr,float32_t* x))
-size_t mtx_inv10x10f_getScratchSize        () 
-{
-    return 0;
-}
-#elif (HAVE_VFPU)
+#if (HAVE_VFPU)
 /*-------------------------------------------------------------------------
   These functions implement in-place matrix inversion by Gauss elimination 
   with full pivoting
@@ -253,7 +247,7 @@ void mtx_inv10x10f(void * pScr,float32_t* x)
 }
 
 size_t mtx_inv10x10f_getScratchSize() { return 2*10*10*sizeof(float32_t); }
-#else // code for scalar FPU
+#elif HAVE_FPU // code for scalar FPU
 void mtx_inv10x10f(void * pScr,float32_t* x) 
 {
     const int N=10;
@@ -421,4 +415,10 @@ void mtx_inv10x10f(void * pScr,float32_t* x)
 }
 size_t mtx_inv10x10f_getScratchSize() { return 2*10*10*sizeof(float32_t); }
 
+#else// (HAVE_FPU==0 && HAVE_VFPU==0)
+DISCARD_FUN(void,mtx_inv10x10f,(void* pScr,float32_t* x))
+size_t mtx_inv10x10f_getScratchSize        () 
+{
+    return 0;
+}
 #endif

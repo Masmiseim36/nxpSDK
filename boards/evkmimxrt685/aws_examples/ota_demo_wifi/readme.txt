@@ -12,10 +12,10 @@ For more information about Wi-Fi module connection see:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- MCUXpresso  11.5.0
-- GCC ARM Embedded  10.2.1
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- MCUXpresso  11.6.0
+- GCC ARM Embedded  10.3.1
 
 Hardware requirements
 =====================
@@ -29,7 +29,7 @@ Board settings
 
 Prepare the Demo
 ================
-The demo requires MCUBoot booloader to be present in the FLASH memory to function properly.
+The demo requires MCUBoot bootloader to be present in the FLASH memory to function properly.
 It is recommended to build and program the bootloader first, then go on with the application.
 Please refer to respective readme of the mcuboot_opensource example and follow the steps there before you continue.
 

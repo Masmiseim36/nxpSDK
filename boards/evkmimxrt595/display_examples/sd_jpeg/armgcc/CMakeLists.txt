@@ -84,6 +84,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities/debug_console_lite
     ${ProjDirPath}/../../../../../components/video/display/hx8394
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../middleware/libjpeg
     ${ProjDirPath}/../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../components/video/display/dc
@@ -160,6 +161,8 @@ include(utility_debug_console_lite_MIMXRT595S_cm33)
 include(utility_assert_lite_MIMXRT595S_cm33)
 
 include(driver_display-hx8394_MIMXRT595S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT595S_cm33)
 
 include(driver_usdhc_MIMXRT595S_cm33)
 

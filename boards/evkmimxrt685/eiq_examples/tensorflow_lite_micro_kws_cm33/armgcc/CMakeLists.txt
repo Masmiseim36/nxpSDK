@@ -128,9 +128,9 @@ include(driver_lpc_dma_MIMXRT685S_cm33)
 
 include(driver_wm8904_MIMXRT685S_cm33)
 
-include(middleware_eiq_audio_MIMXRT685S_cm33)
+include(middleware_eiq_audio_evkmimxrt685_MIMXRT685S_cm33)
 
-include(CMSIS_DSP_Library_MIMXRT685S_cm33)
+include(CMSIS_DSP_Source_MIMXRT685S_cm33)
 
 include(middleware_eiq_tensorflow_lite_micro_MIMXRT685S_cm33)
 
@@ -184,14 +184,6 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
-
-if(CMAKE_BUILD_TYPE STREQUAL flash_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flash_release)
-
-if(CMAKE_BUILD_TYPE STREQUAL flash_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../CMSIS/DSP/Lib/GCC/libarm_ARMv8MMLldfsp_math.a)
-endif(CMAKE_BUILD_TYPE STREQUAL flash_debug)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 

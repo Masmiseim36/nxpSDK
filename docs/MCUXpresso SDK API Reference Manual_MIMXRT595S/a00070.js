@@ -1,16 +1,16 @@
 var a00070 =
 [
-    [ "tfa9896BiquadM_t", "a00070.html#a00453", null ],
-    [ "tfa9896FilterM_t", "a00070.html#a00454", [
+    [ "tfa9896BiquadM_t", "a00070.html#a00454", null ],
+    [ "tfa9896FilterM_t", "a00070.html#a00455", [
       [ "type", "a00070.html#a4fab783b859fb7d34b6784d1ac767132", null ]
     ] ],
-    [ "tfa9896_StateInfoLive_t", "a00070.html#a00452", null ],
-    [ "tfa9896SPKRBST_SpkrModel_t", "a00070.html#a00455", null ],
-    [ "tfa9896_audio_format_t", "a00070.html#a00449", [
+    [ "tfa9896_StateInfoLive_t", "a00070.html#a00453", null ],
+    [ "tfa9896SPKRBST_SpkrModel_t", "a00070.html#a00456", null ],
+    [ "tfa9896_audio_format_t", "a00070.html#a00450", [
       [ "sampleRate", "a00070.html#a2b730e7bab077dbb17a924a63e3f0834", null ],
       [ "bitWidth", "a00070.html#a6e264facd0de6875bde7a85082801302", null ]
     ] ],
-    [ "tfa9896_config_t", "a00070.html#a00450", [
+    [ "tfa9896_config_t", "a00070.html#a00451", [
       [ "protocol", "a00070.html#add039bc65768f5d2889cb4e5b94dd32b", null ],
       [ "format", "a00070.html#a46af04b19ffb0e7e58afa81c5127518e", null ],
       [ "master", "a00070.html#ad21dc0af0f99f5013447ffe11c1499d1", null ],
@@ -18,7 +18,7 @@ var a00070 =
       [ "i2cConfig", "a00070.html#a833e17ebf7d8fb21a0bbf7ff2bea0a7f", null ],
       [ "calibrate", "a00070.html#a451c29de38b29e1945035e70a49e3dc9", null ]
     ] ],
-    [ "tfa9896_handle_t", "a00070.html#a00451", [
+    [ "tfa9896_handle_t", "a00070.html#a00452", [
       [ "config", "a00070.html#a0560e6935f186de518c92492b285a227", null ]
     ] ],
     [ "TFA_I2C_BITRATE", "a00070.html#ga54b74827a76190d676e518c9a8c375b5", null ],

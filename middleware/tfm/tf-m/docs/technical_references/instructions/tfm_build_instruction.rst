@@ -77,34 +77,36 @@ config that has already been set at any of the prior stages.
 Required cmake parameters for building TF-M
 -------------------------------------------
 
-+----------------------+-------------------------------------------------------+
-| Parameter            | Description                                           |
-+======================+=======================================================+
-| TFM_PLATFORM         | The target platform as a path from the base directory |
-|                      | ``/platform/ext/target``, or as an absolute path.     |
-+----------------------+-------------------------------------------------------+
-
-By default release configuration builds. Alternate build types can be controlled
-by the CMAKE_BUILD_TYPE variable.
+``TFM_PLATFORM`` is required to select the target platform, it can be:
+ - A relative path under ``<TF-M_root>/platform/ext/target``,
+   for example ``arm/mps2/an521``.
+ - An absolute path of target platform, mainly used for out-of-tree platform
+   build.
+ - A target platform name that is supported under
+   <TF-M_root>/platform/ext/target, for example ``an521``.
 
 Build type
 ----------
 
-Build type is controlled by the ``CMAKE_BUILD_TYPE`` variable. The possible
+By default, a release configuration is built. Alternate build types can be
+specified with the ``CMAKE_BUILD_TYPE`` variable. The possible
 types are:
 
  - ``Debug``
- - ``Relwithdebinfo``
+ - ``RelWithDebInfo``
  - ``Release``
- - ``Minsizerel``
+ - ``MinSizeRel``
 
 ``Release`` is default.
 
-Both ``Debug`` and ``Relwithdebinfo`` will include debug symbols in the output
-files. ``Relwithdebinfo``, ``Release`` and ``Minsizerel`` have optimization
-turned on and hence will produce smaller, faster code. ``Minsizerel`` will
-produce the smallest code, and hence is often a good idea on RAM or flash
-constrained systems.
+Debug symbols are added by default to all builds, but can be removed
+from ``Release`` and ``MinSizeRel`` builds by setting
+``TFM_DEBUG_SYMBOLS`` to ``OFF``.
+
+``RelWithDebInfo``, ``Release`` and ``MinSizeRel`` all have different
+optimizations turned on and hence will produce smaller, faster code
+than ``Debug``. ``MinSizeRel`` will produce the smallest code, and
+hence is often a good idea on RAM or flash constrained systems.
 
 Other cmake parameters
 ----------------------
@@ -120,8 +122,8 @@ important options are listed below.
 +---------------------+----------------------------------------+---------------+
 | NS                  | Build NS app. Required for test code.  | ON            |
 +---------------------+----------------------------------------+---------------+
-| TFM_PSA_API         | Use PSA api (IPC mode) instead of      | OFF           |
-|                     | secure library mode.                   |               |
+| TFM_LIB_MODEL       | Use secure library model instead of    | OFF           |
+|                     | PSA api (IPC model).                   |               |
 +---------------------+----------------------------------------+---------------+
 | TFM_ISOLATION_LEVEL | Set TFM isolation level.               | 1             |
 +---------------------+----------------------------------------+---------------+
@@ -192,16 +194,15 @@ them are disabled by default.
 | TEST_S_IPC          | Build secure regression IPC tests.                                 |
 +---------------------+--------------------------------------------------------------------+
 
-The single test suite can be opened when their dependencies like partitions or
+Individual test suites can be enabled when their dependencies like partitions or
 other specific configurations are set. On the one hand, some test suites depend
-on other test suites. On the other hand, some test suites have confict with
+on other test suites. On the other hand, some test suites conflict with
 other test suites. Test configurations and dependencies will be
 checked in ``${TFM_TEST_REPO_PATH}/test/config/check_config.cmake``.
 
-If regression testing is enabled, it will then enable all tests for the enabled
-secure partitions. If IPC mode is enabled via ``TFM_PSA_API`` the IPC tests will
-be enabled. Multicore tests will be enabled if ``TFM_MULTI_CORE_TOPOLOGY`` is
-enabled.
+If regression testing is enabled by ``TEST_NS`` or ``TEST_S``, individual
+test suites will be enabled or disabled as appropriate for the TF-M
+configuration (i.e. all enabled secure partitions will be tested).
 
 Some cryptographic tests can be enabled and disabled. This is done to prevent
 false failures from being reported when a smaller Mbed Crypto config is being
@@ -216,7 +217,11 @@ used which does not support all features.
 +-----------------------------+-------------------------------------+---------------+
 | TFM_CRYPTO_TEST_ALG_CFB     | Test CFB cryptography mode          | ON            |
 +-----------------------------+-------------------------------------+---------------+
+| TFM_CRYPTO_TEST_ALG_ECB     | Test ECB cryptography mode          | ON            |
++-----------------------------+-------------------------------------+---------------+
 | TFM_CRYPTO_TEST_ALG_CTR     | Test CTR cryptography mode          | ON            |
++-----------------------------+-------------------------------------+---------------+
+| TFM_CRYPTO_TEST_ALG_OFB     | Test OFB cryptography mode          | ON            |
 +-----------------------------+-------------------------------------+---------------+
 | TFM_CRYPTO_TEST_ALG_GCM     | Test GCM cryptography mode          | ON            |
 +-----------------------------+-------------------------------------+---------------+
@@ -269,12 +274,11 @@ variables, in the format of cmake command line parameters.
 +------------------------------------------+---------------------------------------+
 | File                                     | Cmake command line                    |
 +==========================================+=======================================+
-| ConfigDefault.cmake                      | <No options>                          |
+| ConfigDefault.cmake                      | -DTFM_LIB_MODEL=ON                    |
 +------------------------------------------+---------------------------------------+
-| ConfigCoreIPC.cmake                      | -DTFM_PSA_API=ON                      |
+| ConfigCoreIPC.cmake                      | <no options>                          |
 +------------------------------------------+---------------------------------------+
-| ConfigCoreIPCTfmLevel2.cmake             | -DTFM_PSA_API=ON                      |
-|                                          | -DTFM_ISOLATION_LEVEL=2               |
+| ConfigCoreIPCTfmLevel2.cmake             | -DTFM_ISOLATION_LEVEL=2               |
 +------------------------------------------+---------------------------------------+
 | ConfigDefaultProfileS.cmake              | -DTFM_PROFILE=profile_small           |
 +------------------------------------------+---------------------------------------+
@@ -283,10 +287,8 @@ variables, in the format of cmake command line parameters.
 | ConfigRegression.cmake                   | -DTEST_NS=ON -DTEST_S=ON              |
 +------------------------------------------+---------------------------------------+
 | ConfigRegressionIPC.cmake                | -DTEST_NS=ON -DTEST_S=ON              |
-|                                          | -DTFM_PSA_API=ON                      |
 +------------------------------------------+---------------------------------------+
 | ConfigRegressionIPCTfmLevel2.cmake       | -DTEST_NS=ON -DTEST_S=ON              |
-|                                          | -DTFM_PSA_API=ON                      |
 |                                          | -DTFM_ISOLATION_LEVEL=2               |
 +------------------------------------------+---------------------------------------+
 | ConfigRegressionProfileS.cmake           | -DTFM_PROFILE=profile_small           |
@@ -298,10 +300,8 @@ variables, in the format of cmake command line parameters.
 | ConfigPsaApiTest.cmake                   | -DTEST_PSA_API=<test_suite>           |
 +------------------------------------------+---------------------------------------+
 | ConfigPsaApiTestIPC.cmake                | -DTEST_PSA_API=<test_suite>           |
-|                                          | -DTFM_PSA_API=ON                      |
 +------------------------------------------+---------------------------------------+
 | ConfigPsaApiTestIPCTfmLevel2.cmake       | -DTEST_PSA_API=<test_suite>           |
-|                                          | -DTFM_PSA_API=ON                      |
 |                                          | -DTFM_ISOLATION_LEVEL=2               |
 +------------------------------------------+---------------------------------------+
 | ConfigDefaultProfileM.cmake              | -DTFM_PROFILE=profile_medium          |
@@ -309,11 +309,11 @@ variables, in the format of cmake command line parameters.
 +------------------------------------------+---------------------------------------+
 
 There has also been some changes to the PSA manifest file generation. The files
-are now generated into a seperate tree in the ``<tfm build dir>/generated``
+are now generated into a separate tree in the ``<tfm build dir>/generated``
 directory. Therefore they have been removed from the source tree. Any changes
 should be made only to the template files.
 
-The api for the ``tools/tfm_parse_manifest_list.py`` script has also changed
+The API for the ``tools/tfm_parse_manifest_list.py`` script has also changed
 slightly. It is no longer required to be run manually as it is run as part of
 cmake.
 
@@ -321,16 +321,12 @@ cmake.
 TF-M build examples
 *******************
 
-.. Note::
-   By default, CMAKE_BUILD_TYPE is set to Release, for debug support change
-   this to Debug. See below for an example.
-
 Example: building TF-M for AN521 platform using GCC:
 ====================================================
 .. code-block:: bash
 
     cd <TF-M base folder>
-    cmake -S . -B cmake_build -DTFM_PLATFORM=arm/mps2/an521 -DTFM_TOOLCHAIN_FILE=toolchain_GNUARM.cmake -DCMAKE_BUILD_TYPE=Debug
+    cmake -S . -B cmake_build -DTFM_PLATFORM=arm/mps2/an521
     cmake --build cmake_build -- install
 
 Alternately using traditional cmake syntax
@@ -340,27 +336,23 @@ Alternately using traditional cmake syntax
     cd <TF-M base folder>
     mkdir cmake_build
     cd cmake_build
-    cmake .. -DTFM_PLATFORM=arm/mps2/an521 -DTFM_TOOLCHAIN_FILE=../toolchain_GNUARM.cmake
+    cmake .. -DTFM_PLATFORM=arm/mps2/an521
     make install
-
-.. Note::
-   Unix Makefiles is the default generator. Ninja is also supported by setting
-   -GNinja
 
 .. Note::
 
     It is recommended to build each different build configuration in a separate
     build directory.
 
-As seen above, the toolchain can be set using the -DTFM_TOOLCHAIN_FILE parameter. Without
-it, the build command takes the GNU ARM toolchain as default, so there is no need
-to explicitly include it. In case other toolchain is required, i.e. ARM Clang, simply
-specify in the command line
+The default build uses Unix Makefiles. The ``-G`` option can be used to change
+this. The default build uses the GNU ARM toolchain and creates a Release build.
+These options can be overridden using the ``TFM_TOOLCHAIN_FILE`` and
+``CMAKE_BUILD_TYPE`` parameters, as shown below
 
 .. code-block:: bash
 
     cd <TF-M base folder>
-    cmake -S . -B cmake_build -DTFM_PLATFORM=arm/mps2/an521 -DTFM_TOOLCHAIN_FILE=toolchain_ARMCLANG.cmake -DTEST_S=ON -DTEST_NS=ON
+    cmake -S . -B cmake_build -DTFM_PLATFORM=arm/mps2/an521 -GNinja -DTFM_TOOLCHAIN_FILE=toolchain_ARMCLANG.cmake -DCMAKE_BUILD_TYPE=Debug
     cmake --build cmake_build -- install
 
 Regression Tests for the AN521 target platform
@@ -387,8 +379,8 @@ Alternately using traditional cmake syntax
     cmake .. -DTFM_PLATFORM=arm/mps2/an521 -DTEST_S=ON -DTEST_NS=ON
     make install
 
-Build for PSA Functional API compliance tests
-=============================================
+Build for PSA API tests
+=======================
 The build system provides support for building and integrating the PSA API tests
 from https://github.com/ARM-software/psa-arch-tests. PSA API tests are
 controlled using the TEST_PSA_API variable. Enabling both regression tests and
@@ -421,32 +413,6 @@ Alternately using traditional cmake syntax
     mkdir cmake_build
     cd cmake_build
     cmake .. -DTFM_PLATFORM=arm/mps2/an521 -DTEST_PSA_API=CRYPTO
-    make install
-
-Build for PSA FF (IPC) compliance tests
-=======================================
-
-The build system provides support for building and integrating the PSA FF
-compliance test. This support is controlled by the TEST_PSA_API variable:
-
-.. code-block:: bash
-
-    -DTEST_PSA_API=IPC
-
-.. code-block:: bash
-
-    cd <TF-M base folder>
-    cmake -S . -B cmake_build -DTFM_PLATFORM=arm/mps2/an521 -DTEST_PSA_API=IPC -DTFM_PSA_API=ON
-    cmake --build cmake_build -- install
-
-Alternately using traditional cmake syntax
-
-.. code-block:: bash
-
-    cd <TF-M base folder>
-    mkdir cmake_build
-    cd cmake_build
-    cmake .. -DTFM_PLATFORM=arm/mps2/an521 -DTEST_PSA_API=IPC -DTFM_PSA_API=ON
     make install
 
 Location of build artifacts
@@ -504,14 +470,15 @@ TF-M Tests
 
 Dependency auto downloading is used by default.
 The TF-M build system downloads the tf-m-tests repo with a fixed version
-specified by ``TFM_TEST_REPO_VERSION`` in ``config/config_default.cmake``.
+specified by ``TFM_TEST_REPO_VERSION`` in
+:file:`lib/ext/tf-m-tests/repo_config_default.cmake`.
 The version can be a release tag or a commit hash.
 
 Developers who want a different version of tf-m-tests can override
 ``TFM_TEST_REPO_PATH`` to a local copy with the desired version.
 
-As the test repo is part of the TF-M project and coupled with TF-M repo a lot,
-The version should be updated when there are dependency changes between the TF-M
+As the test repo is part of the TF-M project and coupled with TF-M repo,
+the version should be updated when there are dependency changes between the TF-M
 repo and the test repo and when there is a complete change merged in test repo.
 
 A complete change is one or more patches that are for the same purpose, for
@@ -565,4 +532,5 @@ Alternately using traditional cmake syntax
 
 --------------
 
-*Copyright (c) 2017-2021, Arm Limited. All rights reserved.*
+*Copyright (c) 2017-2022, Arm Limited. All rights reserved.*
+*Copyright (c) 2022, Cypress Semiconductor Corporation. All rights reserved.*

@@ -1059,6 +1059,11 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_NoOpt_1_8.h</FilePath>
             </File>
             <File>
+              <FileName>GUIDRV_Null.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_Null.h</FilePath>
+            </File>
+            <File>
               <FileName>GUIDRV_S1D13748.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_S1D13748.h</FilePath>
@@ -2746,6 +2751,11 @@
               <FileName>GUIDRV_NoOpt_1_8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_NoOpt_1_8.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_Null.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_Null.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_S1D13748.h</FileName>
@@ -4437,6 +4447,11 @@
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_NoOpt_1_8.h</FilePath>
             </File>
             <File>
+              <FileName>GUIDRV_Null.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_Null.h</FilePath>
+            </File>
+            <File>
               <FileName>GUIDRV_S1D13748.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_S1D13748.h</FilePath>
@@ -6124,6 +6139,11 @@
               <FileName>GUIDRV_NoOpt_1_8.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_NoOpt_1_8.h</FilePath>
+            </File>
+            <File>
+              <FileName>GUIDRV_Null.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/emwin/emWin_header/GUIDRV_Null.h</FilePath>
             </File>
             <File>
               <FileName>GUIDRV_S1D13748.h</FileName>

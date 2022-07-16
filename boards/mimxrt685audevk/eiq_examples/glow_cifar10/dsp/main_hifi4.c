@@ -191,7 +191,8 @@ int SCHEDULER_MULTICORE(void)
     /* Initialize standard SDK demo application pins */
     my_rpmsg = rpmsg_lite_remote_init((void *)RPMSG_LITE_SHMEM_BASE, RPMSG_LITE_LINK_ID, RL_NO_FLAGS, &rpmsg_ctxt);
 
-    while (!rpmsg_lite_is_link_up(my_rpmsg));
+    while (RL_TRUE != rpmsg_lite_is_link_up(my_rpmsg))
+        ;
 
     rpmsg_user_data.has_received = 0;
     rpmsg_user_data.notif_evt    = &notif_evt;

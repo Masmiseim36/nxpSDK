@@ -1,7 +1,7 @@
 var a00030 =
 [
     [ "FLEXSPI DMA Driver", "a00031.html", "a00031" ],
-    [ "flexspi_config_t", "a00030.html#a00359", [
+    [ "flexspi_config_t", "a00030.html#a00360", [
       [ "rxSampleClock", "a00030.html#a9a6d5f8a07fb46097107c9eb286b274f", null ],
       [ "enableSckFreeRunning", "a00030.html#aff3b7741db982d0de6b123e449173fea", null ],
       [ "enableDoze", "a00030.html#a874d2c8764b144c7cb1e490721b92c79", null ],
@@ -22,7 +22,7 @@ var a00030 =
       [ "enableAHBBufferable", "a00030.html#aa85616f967cd9582bf3212e25d8aaee9", null ],
       [ "enableAHBCachable", "a00030.html#a201560e33a07598c65cb1ccb7d510446", null ]
     ] ],
-    [ "flexspi_device_config_t", "a00030.html#a00360", [
+    [ "flexspi_device_config_t", "a00030.html#a00361", [
       [ "flexspiRootClk", "a00030.html#a809837315f7851315f2eb83bfee03b9d", null ],
       [ "isSck2Enabled", "a00030.html#a4dc1ab693f5c62858f216eeafc8dcdaa", null ],
       [ "flashSize", "a00030.html#a341c39425de7eb023afb4245b8953377", null ],
@@ -41,7 +41,7 @@ var a00030 =
       [ "AHBWriteWaitInterval", "a00030.html#ac257c0df9ebe1e95af1b2eccd9bac6da", null ],
       [ "enableWriteMask", "a00030.html#a537cacf6f847b62d33ef849149984ee3", null ]
     ] ],
-    [ "flexspi_transfer_t", "a00030.html#a00365", [
+    [ "flexspi_transfer_t", "a00030.html#a00366", [
       [ "deviceAddress", "a00030.html#ad60ddfe61616ffc2b1c289b398249687", null ],
       [ "port", "a00030.html#a494f8e3695226d89469edfacf040c779", null ],
       [ "cmdType", "a00030.html#a2d9a15603f7c60495351d6e784efa21f", null ],
@@ -50,7 +50,7 @@ var a00030 =
       [ "data", "a00030.html#a9f868d6eaf921590653512ce58480f6b", null ],
       [ "dataSize", "a00030.html#a80b74d7879a7359ad5f79980ca5f3e53", null ]
     ] ],
-    [ "flexspi_handle_t", "a00030.html#a00291", [
+    [ "flexspi_handle_t", "a00030.html#a00292", [
       [ "state", "a00030.html#a933e9a2e61686adbe8e85cc6e996c707", null ],
       [ "data", "a00030.html#abce3dc34abdfbdcbdafe2c6745940e5a", null ],
       [ "dataSize", "a00030.html#af398d4e2e49ebb106f29a2afe50e0f97", null ],

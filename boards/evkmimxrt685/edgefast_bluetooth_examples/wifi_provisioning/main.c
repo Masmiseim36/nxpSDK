@@ -68,6 +68,8 @@
 #include "controller.h"
 #include "fsl_adapter_flash.h"
 #include "fsl_power.h"
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+#endif /* CONFIG_BT_SMP */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -93,7 +95,9 @@ extern int RunDeviceShadowDemo(bool awsIotMqttMode,
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
 extern usb_host_handle g_HostHandle;
+#endif /* CONFIG_BT_SNOOP > 0 */
 
 /*******************************************************************************
  * Code
@@ -132,6 +136,7 @@ int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
 #else
 #endif
 
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
 void USB_IRQHandler(void)
 {
     USB_HostIp3516HsIsrFunction(g_HostHandle);
@@ -196,6 +201,7 @@ void USB_HostIsrEnable(void)
 
     EnableIRQ((IRQn_Type)irqNumber);
 }
+#endif /* CONFIG_BT_SNOOP > 0 */
 
 void print_string(const char *string)
 {
@@ -204,7 +210,9 @@ void print_string(const char *string)
 
 void main_task(void *pvParameters)
 {
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0))
     USB_HostMsdFatfsInit();
+#endif
     /* A simple example to demonstrate key and certificate provisioning in
      * microcontroller flash using PKCS#11 interface. This should be replaced
      * by production ready key provisioning mechanism. */
@@ -247,6 +255,10 @@ int main(void)
     /* Make sure casper ram buffer has power up */
     POWER_DisablePD(kPDRUNCFG_APD_CASPER_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_CASPER_SRAM);
+
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+    CRYPTO_InitHardware();
+#endif /* CONFIG_BT_SMP */
     CRYPTO_InitHardware();
 
     if (xTaskCreate(main_task, "main_task", configMINIMAL_STACK_SIZE * 8, NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)

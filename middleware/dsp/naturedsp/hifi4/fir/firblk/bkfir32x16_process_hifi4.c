@@ -252,7 +252,7 @@ void bkfir32x16_processSmall( bkfir32x16_ptr_t bkfir,
     ae_f64    q0, q1, q2, q3;
     ae_int16x4  c;
     ae_f64    q4, q5, q6, q7; 
-    ae_int32x2 t12, t34, t56, t67, t89, t9a, t78;
+	ae_int32x2 t12, t34, t56 , t67, t89, t78, t9a;
     ae_f64     z; 
     int M;
     int m, n;
@@ -326,35 +326,31 @@ void bkfir32x16_processSmall( bkfir32x16_ptr_t bkfir,
         // perform M+4 MACs for each accumulator, 4 of which fall on zero taps
         // inserted into the impulse response during initialization.
         //
-        __Pragma("loop_count min=3")
-        for ( m=0; m<(M>>2)+1; m++ )             
-        {
-        AE_L32X2_XC( t67, D_rd0, +8 );
-        AE_L32X2_XC( t89, D_rd0, +8 );
-
-        // Load next two samples for odd accumulators. 
-        // Q31
-        AE_LA32X2_IC( t78, D_va, D_rd1 );
-        AE_LA32X2_IC( t9a, D_va, D_rd1 );
-
-        // Load the next 4 tap coefficients.
-        // Q31
-        AE_L16X4_XC1(c, C, +8);
-
-        //Q16.47
-        AE_MULAAAAFQ32X16(q0,t01,t23,c);
-        AE_MULAAAAFQ32X16(q1,t12,t34,c);
-        AE_MULAAAAFQ32X16(q2,t23,t45,c);
-        AE_MULAAAAFQ32X16(q3,t34,t56,c);
-
-        AE_MULAAAAFQ32X16(q4,t45,t67,c);
-        AE_MULAAAAFQ32X16(q5,t56,t78,c);
-        AE_MULAAAAFQ32X16(q6,t67,t89,c);
-        AE_MULAAAAFQ32X16(q7,t78,t9a,c);
-
-        t01 = t45; t23 = t67; t45 = t89; 
-        t12 = t56; t34 = t78; t56 = t9a;
-        }
+		__Pragma("loop_count min=3")
+		__Pragma("no_unroll")
+        for ( m=0; m<(M>>2)+1; m++ )         
+		{       
+			// Load the next 4 tap coefficients.
+			// Q31
+			AE_L16X4_XC1(c, C, +8);
+			// Load next two samples for odd accumulators. 
+			// Q31
+			AE_L32X2_XC(t67, D_rd0, +8);
+			AE_L32X2_XC(t89, D_rd0, +8);
+			AE_LA32X2_IC(t78, D_va, D_rd1);
+			AE_LA32X2_IC(t9a, D_va, D_rd1);
+			//Q16.47
+			AE_MULAAAAFQ32X16(q0, t01, t23, c);
+			AE_MULAAAAFQ32X16(q1, t12, t34, c);
+			AE_MULAAAAFQ32X16(q2, t23, t45, c);
+			AE_MULAAAAFQ32X16(q3, t34, t56, c);
+			AE_MULAAAAFQ32X16(q4, t45, t67, c);
+			AE_MULAAAAFQ32X16(q5, t56, t78, c);
+			AE_MULAAAAFQ32X16(q6, t67, t89, c);
+			AE_MULAAAAFQ32X16(q7, t78, t9a, c);
+			t01 = t45; t23 = t67; t45 = t89;
+			t12 = t56; t34 = t78; t56 = t9a;
+		}
 
         // Convert and save 8 outputs.
         // 2xQ31 <- 2xQ16.47 - 16 w/ rounding and saturation.
@@ -469,6 +465,7 @@ void bkfir32x16_process4( bkfir32x16_ptr_t bkfir,
     M = bkfir->M;
     NASSERT(N%4==0);
     NASSERT(M==4);
+    (void)M;
     //
     // Setup pointers and circular delay line buffer.    
     //

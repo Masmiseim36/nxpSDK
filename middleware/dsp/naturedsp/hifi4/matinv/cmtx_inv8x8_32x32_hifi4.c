@@ -237,7 +237,7 @@ int  cmtx_inv8x8_32x32  (void* pScr, complex_fract32 *x, int qX)
         pT=(T+k);
         AE_ADDCIRC32X2_XC (pB,sizeof(ae_int32x2)*N);
         AE_ADDCIRC32X2_XC1(pT,sizeof(ae_int32x2));
-        NASSERT(e>0);
+        //NASSERT(e>0);
         {
             int off;
             ae_int32x2 esh_coef=AE_SLAA32S(0x40000000,-e+1);

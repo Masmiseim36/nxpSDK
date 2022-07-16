@@ -56,12 +56,12 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers
-    ${ProjDirPath}/../../../../../../components/codec/wm8904
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities
+    ${ProjDirPath}/../../../../../../components/pca9420
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../components/codec/i2c
     ${ProjDirPath}/../../../../../../components/i2c
-    ${ProjDirPath}/../../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../../components/codec/wm8904
     ${ProjDirPath}/../../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../../components/uart
     ${ProjDirPath}/../../../../../../components/serial_manager
@@ -75,23 +75,11 @@ include(driver_clock_MIMXRT595S_cm33)
 
 include(driver_flexcomm_i2c_MIMXRT595S_cm33)
 
-include(driver_i3c_MIMXRT595S_cm33)
-
-include(driver_wm8904_MIMXRT595S_cm33)
-
 include(utility_shell_MIMXRT595S_cm33)
 
-include(driver_codec_MIMXRT595S_cm33)
+include(driver_lpc_gpio_MIMXRT595S_cm33)
 
 include(driver_common_MIMXRT595S_cm33)
-
-include(component_wm8904_adapter_MIMXRT595S_cm33)
-
-include(component_codec_i2c_MIMXRT595S_cm33)
-
-include(component_i3c_adapter_MIMXRT595S_cm33)
-
-include(driver_lpc_gpio_MIMXRT595S_cm33)
 
 include(driver_power_MIMXRT595S_cm33)
 
@@ -102,6 +90,18 @@ include(driver_dsp_MIMXRT595S_cm33)
 include(driver_inputmux_MIMXRT595S_cm33)
 
 include(driver_pca9420_MIMXRT595S_cm33)
+
+include(driver_codec_MIMXRT595S_cm33)
+
+include(component_wm8904_adapter_MIMXRT595S_cm33)
+
+include(component_codec_i2c_MIMXRT595S_cm33)
+
+include(component_i3c_adapter_MIMXRT595S_cm33)
+
+include(driver_i3c_MIMXRT595S_cm33)
+
+include(driver_wm8904_MIMXRT595S_cm33)
 
 include(device_MIMXRT595S_CMSIS_MIMXRT595S_cm33)
 

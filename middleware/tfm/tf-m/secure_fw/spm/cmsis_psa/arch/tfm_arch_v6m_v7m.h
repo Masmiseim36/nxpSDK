@@ -20,8 +20,8 @@
 #define EXC_RETURN_FPU_FRAME_BASIC              (1 << 4)
 #endif
 
-/* Initial EXC_RETURN value in LR when a thread is loaded at the first time */
 #define EXC_RETURN_THREAD_S_PSP                 0xFFFFFFFD
+#define EXC_RETURN_HANDLER_S_MSP                0xFFFFFFF1
 
 /* Exception return behavior */
 
@@ -35,18 +35,8 @@
 #define EXC_NUM_SVCALL                          (11)
 #define EXC_NUM_PENDSV                          (14)
 
-struct tfm_arch_ctx_t {
-    uint32_t    r8;
-    uint32_t    r9;
-    uint32_t    r10;
-    uint32_t    r11;
-    uint32_t    r4;
-    uint32_t    r5;
-    uint32_t    r6;
-    uint32_t    r7;
-    uint32_t    sp;
-    uint32_t    lr;
-};
+#define SCB_ICSR_ADDR                   (0xE000ED04)
+#define SCB_ICSR_PENDSVSET_BIT          (0x10000000)
 
 /**
  * \brief Check whether Secure or Non-secure stack is used to restore stack
@@ -110,36 +100,30 @@ __STATIC_INLINE void tfm_arch_set_psplim(uint32_t psplim)
 }
 
 /**
+ * \brief Set MSP limit value.
+ *
+ * \param[in] msplim        MSP limit value to be written.
+ */
+__STATIC_INLINE void tfm_arch_set_msplim(uint32_t msplim)
+{
+    /*
+     * Defined as an empty function now.
+     * The MSP limit value can be used in more strict memory check.
+     */
+    (void)msplim;
+}
+
+/**
  * \brief Seal the thread stack.
  *
  * \param[in] stk        Thread stack address.
  *
  * \retval stack         Updated thread stack address.
  */
-__STATIC_INLINE uintptr_t tfm_arch_seal_thread_stack(uintptr_t stk)
+__STATIC_INLINE uintptr_t arch_seal_thread_stack(uintptr_t stk)
 {
     TFM_CORE_ASSERT((stk & 0x7) == 0);
     return stk;
-}
-
-/**
- * \brief Get architecture context value into context struct
- *
- * \param[in] p_actx        Pointer of context data
- */
-__STATIC_INLINE void tfm_arch_get_ctx(struct tfm_arch_ctx_t *p_actx)
-{
-    p_actx->sp = __get_PSP();
-}
-
-/**
- * \brief Update architecture context value into hardware
- *
- * \param[in] p_actx        Pointer of context data
- */
-__STATIC_INLINE void tfm_arch_set_ctx(struct tfm_arch_ctx_t *p_actx)
-{
-    __set_PSP(p_actx->sp);
 }
 
 /**

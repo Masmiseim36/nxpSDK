@@ -1,23 +1,15 @@
 /*
- * Copyright (c) 2017-2020, Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2021, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
-
-#include <stdio.h>
-#include "cmsis_compiler.h"
 
 #ifndef __TFM_INTEG_TEST_H__
 #define __TFM_INTEG_TEST_H__
 
 #ifdef __cplusplus
 extern "C" {
-#endif
-
-/* Avoids the semihosting issue */
-#if defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
-__asm("  .global __ARM_use_no_argv\n");
 #endif
 
 /**

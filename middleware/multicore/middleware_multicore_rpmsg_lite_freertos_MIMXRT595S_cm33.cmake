@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_multicore_rpmsg_lite_freertos component is included.")
 
 if(CONFIG_USE_middleware_freertos-kernel_MIMXRT595S_cm33)

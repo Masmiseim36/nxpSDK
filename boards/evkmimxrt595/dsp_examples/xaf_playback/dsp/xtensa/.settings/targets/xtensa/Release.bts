@@ -8,8 +8,6 @@
             <key>Includes</key>
             <value flag="-I" inheritance="donotinherit">
               <ListEntry>${xt_project_loc}/..</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include_private</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
@@ -23,6 +21,7 @@
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/include/ogg_lib</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/include/sbc_dec</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/include/sbc_enc</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/gpio</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console</ListEntry>
@@ -55,15 +54,15 @@
           <KeyValueListMapEntry>
             <key>Defines</key>
             <value flag="-D">
-              <ListEntry key="XA_OPUS_ENCODER" value="0"/>
-              <ListEntry key="XA_OPUS_DECODER" value="0"/>
-              <ListEntry key="XA_SBC_ENCODER" value="0"/>
-              <ListEntry key="XA_SBC_DECODER" value="0"/>
               <ListEntry key="NDEBUG" value=""/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
               <ListEntry key="XOS_CLOCK_FREQ" value="198000000"/>
               <ListEntry key="XA_MP3_DECODER" value="1"/>
               <ListEntry key="XA_AAC_DECODER" value="1"/>
+              <ListEntry key="XA_OPUS_ENCODER" value="1"/>
+              <ListEntry key="XA_OPUS_DECODER" value="1"/>
+              <ListEntry key="XA_SBC_ENCODER" value="1"/>
+              <ListEntry key="XA_SBC_DECODER" value="1"/>
               <ListEntry key="XA_CLIENT_PROXY" value="1"/>
               <ListEntry key="XA_PCM_GAIN" value="1"/>
               <ListEntry key="XA_SRC_PP_FX" value="1"/>
@@ -140,7 +139,7 @@ ${xt_project_loc}/../../../../../../middleware/dsp/codecs/mp3_dec/fusionf1/lib/x
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/fusionf1/lib/xa_opus_codec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/fusionf1/lib/xa_sbc_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a&#13;
-${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_12_FP1_RT500.a&#13;
+${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT500.a&#13;
 </ListEntry>
             </value>
           </StringListMapEntry>

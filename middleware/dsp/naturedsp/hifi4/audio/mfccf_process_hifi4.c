@@ -46,7 +46,7 @@ DISCARD_FUN(void  , mfccf_process       , (mfccf_handle_t handle, void * restric
 #else
 
 #define PROFILE_ENABLE  0 /* If non-zero, measure cycles and print a report to stdout. */
-#define ALIGN_SIZE      (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE      (HIFI_SIMD_WIDTH)
 #define ALIGN_PAD       (ALIGN_SIZE-1)
 #define ALIGN_PTR(p)    (void*)(((uintptr_t)(p)+ALIGN_PAD)&~ALIGN_PAD)
 #define sz_f32          sizeof(float32_t)

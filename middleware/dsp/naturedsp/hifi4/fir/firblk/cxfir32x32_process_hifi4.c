@@ -109,7 +109,7 @@ void cxfir32x32_process( cxfir32x32_handle_t handle,
         ae_int32     * restrict Y;
   ae_valign D_va;
 
-  ae_int32x2 t0, t1, t2, t3;
+  ae_int32x2 t0, t1;
   ae_f32x2   d0, d1;
   ae_int32x2   c0, c1, c2, c3, c2n, c3n;
   ae_f64     q0r, q1r, q2r, q3r;
@@ -189,15 +189,10 @@ void cxfir32x32_process( cxfir32x32_handle_t handle,
     // perform M+4 MACs for each accumulator, 4 of which fall on zero taps
     // inserted into the impulse response during initialization.
     //
-    __Pragma("loop_count min=2")
+	__Pragma("loop_count min=2");
+	__Pragma("no_unroll");
     for ( m=0; m<(M>>1); m++ )
     {
-      // Load next two samples for even accumulators. Altogether we have
-      // 4 samples residing in 8 AE registers.
-      // Q31
-      AE_L32X2_XC( t2, D_rd0, +8 );
-      AE_L32X2_XC( t3, D_rd0, +8 );
-
       // Load the next 2 tap coefficients.
       // Q31
       AE_L32X2_XC1(c0, C, +8);
@@ -205,28 +200,29 @@ void cxfir32x32_process( cxfir32x32_handle_t handle,
 
       c2n = AE_NEG32(c0);
       c3n = AE_NEG32(c1);
+	  
+      c2 = AE_SEL32_LH(c2n,c0);		//c2 = AE_SEL32_LH(c0,c0);
+      c3 = AE_SEL32_LH(c3n,c1);		//c3 = AE_SEL32_LH(c1,c1);
 
-      //c2 = AE_SEL32_LH(c0,c0);
-      //c3 = AE_SEL32_LH(c1,c1);
-
-      c2 = AE_SEL32_LH(c2n,c0);
-      c3 = AE_SEL32_LH(c3n,c1);
       // Q17.47 <- QQ17.47 + [ Q31*Q31 ] - 15 with asymmetric rounding
       AE_MULAAFD32RA_HH_LL (q0r,t0,c0);
       AE_MULAAFD32RA_HH_LL (q0r,t1,c1);
-
       AE_MULAAFD32RA_HH_LL (q1r,t1,c0);
-      AE_MULAAFD32RA_HH_LL (q1r,t2,c1);
-
-      
+	  // moved ->
       AE_MULAAFD32RA_HH_LL (q0i,t0,c2);
       AE_MULAAFD32RA_HH_LL (q0i,t1,c3);
-
       AE_MULAAFD32RA_HH_LL (q1i,t1,c2);
-      AE_MULAAFD32RA_HH_LL (q1i,t2,c3);
-      
-      t0 = t2;
-      t1 = t3;
+	  // moved ->
+
+	  // Optimisation of { t0 = t2; t1 = t3; }
+	  // Load next two samples for even accumulators. Altogether we have
+	  // 4 samples residing in 8 AE registers.
+	  // Q31
+	  AE_L32X2_XC(t0, D_rd0, +8); // t2
+	  AE_L32X2_XC(t1, D_rd0, +8); // t3
+
+	  AE_MULAAFD32RA_HH_LL(q1r, t0, c1); // -> q1r += t2 * c1
+	  AE_MULAAFD32RA_HH_LL(q1i, t0, c3); // -> q1i += t2 * c3
     }
     // Convert and save 4 outputs.
  

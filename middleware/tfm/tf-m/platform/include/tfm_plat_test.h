@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -9,42 +9,6 @@
 #define __TFM_PLAT_TEST_H__
 
 #include "tfm_plat_defs.h"
-
-/**
- * \brief Busy wait until the user presses a specific button
- */
-TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_CORE_TEST", "PSA-ROT")
-void tfm_plat_test_wait_user_button_pressed(void);
-
-/**
- * \brief Busy wait until the user releases a specific button
- */
-TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_CORE_TEST", "PSA-ROT")
-void tfm_plat_test_wait_user_button_released(void);
-
-/**
- * \brief Get the status of the LEDs used by tests
- *
- * \return Returns the current status of LEDs
- */
-TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_CORE_TEST", "PSA-ROT")
-uint32_t tfm_plat_test_get_led_status(void);
-
-/**
- * \brief Sets the status of the LEDs used by tests
- *
- * \param[in]  status  The status to be set
- */
-TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_CORE_TEST", "PSA-ROT")
-void tfm_plat_test_set_led_status(uint32_t status);
-
-/**
- * \brief Get the mask of the LEDs used for testing
- *
- * \return Returns the mask of the LEDs used for testing
- */
-TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_CORE_TEST", "PSA-ROT")
-uint32_t tfm_plat_test_get_userled_mask(void);
 
 /**
  * \brief starts Secure timer
@@ -58,6 +22,8 @@ uint32_t tfm_plat_test_get_userled_mask(void);
 TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_SLIH_TEST", "APP-ROT")
 #elif defined(TEST_NS_FLIH_IRQ)
 TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_FLIH_TEST", "APP-ROT")
+#elif defined(TEST_NS_FPU)
+TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_FPU_SERVICE_TEST", "APP-ROT")
 #endif
 void tfm_plat_test_secure_timer_start(void);
 
@@ -83,6 +49,24 @@ TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_FLIH_TEST", "APP-ROT")
 void tfm_plat_test_secure_timer_stop(void);
 
 /**
+ * \brief Set secure timer reload value.
+ */
+void tfm_plat_test_secure_timer_set_reload_value(uint32_t value);
+
+/**
+ * \brief Get secure timer reload value.
+ */
+#if defined(TEST_NS_FPU)
+TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_FPU_SERVICE_TEST", "APP-ROT")
+#endif
+uint32_t tfm_plat_test_secure_timer_get_reload_value(void);
+
+/**
+ * \brief Set NVIC interrupt priority and enablement for the Secure timer.
+ */
+void tfm_plat_test_secure_timer_nvic_configure(void);
+
+/**
  * \brief starts Non-secure timer
  *
  * Configures a timer to start counting, and generate a timer interrupt after a
@@ -90,12 +74,30 @@ void tfm_plat_test_secure_timer_stop(void);
  * the timer should be long enough so that the test service can go to the state
  * where it starts waiting for the interrupt.
  */
+#if defined(TEST_NS_FPU)
+TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_FPU_SERVICE_TEST", "APP-ROT")
+#endif
 void tfm_plat_test_non_secure_timer_start(void);
 
 /**
  * \brief Stops the non-Secure timer and clears the timer interrupt.
  */
+#if defined(TEST_NS_FPU)
+TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_FPU_SERVICE_TEST", "APP-ROT")
+#endif
 void tfm_plat_test_non_secure_timer_stop(void);
 
+/**
+ * \brief Get non-secure timer reload value.
+ */
+#if defined(TEST_NS_FPU)
+TFM_LINK_SET_RO_IN_PARTITION_SECTION("TFM_SP_FPU_SERVICE_TEST", "APP-ROT")
+#endif
+uint32_t tfm_plat_test_non_secure_timer_get_reload_value(void);
+
+/**
+ * \brief Set NVIC interrupt priority and enablement for the non-Secure timer.
+ */
+void tfm_plat_test_non_secure_timer_nvic_configure(void);
 
 #endif /* __TFM_PLAT_TEST_H__ */

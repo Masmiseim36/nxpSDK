@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2020 Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2021 Arm Limited. All rights reserved.
  * Copyright (c) 2019-2020 NXP. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,12 +24,12 @@
 #include "tfm_plat_defs.h"
 #include "region.h"
 #include "tfm_assert.h"
-#include "log/tfm_log.h"
+#include "tfm_spm_log.h"
 
 /* The section names come from the scatter file */
 REGION_DECLARE(Load$$LR$$, LR_NS_PARTITION, $$Base);
-REGION_DECLARE(Load$$LR$$, LR_VENEER, $$Base);
-REGION_DECLARE(Load$$LR$$, LR_VENEER, $$Limit);
+REGION_DECLARE(Image$$, ER_VENEER, $$Base);
+REGION_DECLARE(Image$$, VENEER_ALIGN, $$Limit);
 #ifdef BL2
 REGION_DECLARE(Load$$LR$$, LR_SECONDARY_PARTITION, $$Base);
 #endif /* BL2 */
@@ -47,10 +47,10 @@ const struct memory_region_limits memory_regions = {
         NS_PARTITION_SIZE - 1,
 
     .veneer_base =
-        (uint32_t)&REGION_NAME(Load$$LR$$, LR_VENEER, $$Base),
+        (uint32_t)&REGION_NAME(Image$$, ER_VENEER, $$Base),
 
     .veneer_limit =
-        (uint32_t)&REGION_NAME(Load$$LR$$, LR_VENEER, $$Limit),
+        (uint32_t)&REGION_NAME(Image$$, VENEER_ALIGN, $$Limit),
 
 #ifdef BL2
     .secondary_partition_base =
@@ -194,12 +194,20 @@ void sau_and_idau_cfg(void)
 #endif /* BL2 */
 
 #if TARGET_DEBUG_LOG
-    LOG_MSG("=== [SAU NS] =======\r\n");
-    LOG_MSG("NS ROM [0x%x, 0x%x]\r\n", memory_regions.non_secure_partition_base, memory_regions.non_secure_partition_limit);
-    LOG_MSG("NS DATA [0x%x, 0x%x]\r\n", NS_DATA_START, NS_DATA_LIMIT);
-    LOG_MSG("NSC [0x%x, 0x%x]\r\n", memory_regions.veneer_base, memory_regions.veneer_limit);
-    LOG_MSG("PERIPHERALS [0x%x, 0x%x]\r\n", PERIPHERALS_BASE_NS_START, PERIPHERALS_BASE_NS_END);
-#endif    
+    SPMLOG_DBGMSG("=== [SAU NS] =======\r\n");
+    SPMLOG_DBGMSGVAL("NS ROM starts from : ",
+                                      memory_regions.non_secure_partition_base);
+    SPMLOG_DBGMSGVAL("NS ROM ends at : ",
+                                      memory_regions.non_secure_partition_base +
+                                     memory_regions.non_secure_partition_limit);
+    SPMLOG_DBGMSGVAL("NS DATA start from : ", NS_DATA_START);
+    SPMLOG_DBGMSGVAL("NS DATA ends at : ", NS_DATA_START + NS_DATA_LIMIT);
+    SPMLOG_DBGMSGVAL("NSC starts with : ", memory_regions.veneer_base);
+    SPMLOG_DBGMSGVAL("NSC ends at : ", memory_regions.veneer_base +
+                                       memory_regions.veneer_limit);
+    SPMLOG_DBGMSGVAL("PERIPHERALS starts with : ", PERIPHERALS_BASE_NS_START);
+    SPMLOG_DBGMSGVAL("PERIPHERALS ends at : ", PERIPHERALS_BASE_NS_END);
+#endif
 }
 
 /*------------------- Memory configuration functions -------------------------*/
@@ -935,13 +943,17 @@ int32_t mpc_init_cfg(void)
         AHB_SECURE_CTRL->FLEXSPI1_REGIONN_RULE0[i].FLEXSPI1_REGION_RULE0 = 0x0U;
     }
 
-	
 #if TARGET_DEBUG_LOG
-    LOG_MSG("=== [AHB MPC NS] =======\r\n");
-    LOG_MSG("NS ROM [0x%x, 0x%x]\r\n", memory_regions.non_secure_partition_base, memory_regions.non_secure_partition_limit);
-    LOG_MSG("NS DATA [0x%x, 0x%x]\r\n", NS_DATA_START, NS_DATA_LIMIT);
+    SPMLOG_DBGMSG("=== [AHB MPC NS] =======\r\n");
+    SPMLOG_DBGMSGVAL("NS ROM starts from : ",
+                                      memory_regions.non_secure_partition_base);
+    SPMLOG_DBGMSGVAL("NS ROM ends at : ",
+                                      memory_regions.non_secure_partition_base +
+                                     memory_regions.non_secure_partition_limit);
+    SPMLOG_DBGMSGVAL("NS DATA start from : ", NS_DATA_START);
+    SPMLOG_DBGMSGVAL("NS DATA ends at : ", NS_DATA_START + NS_DATA_LIMIT);
 #endif
-    
+
     /* Add barriers to assure the MPC configuration is done before continue
      * the execution.
      */

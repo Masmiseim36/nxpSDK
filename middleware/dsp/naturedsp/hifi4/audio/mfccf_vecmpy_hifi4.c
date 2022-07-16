@@ -39,7 +39,7 @@
 
 #if HAVE_VFPU || HAVE_FPU
 
-#define ALIGN_SIZE     (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE     (HIFI_SIMD_WIDTH)
 
 /*
  * Pairwise multiplication of input vector arguments x[n] and y[n], with 

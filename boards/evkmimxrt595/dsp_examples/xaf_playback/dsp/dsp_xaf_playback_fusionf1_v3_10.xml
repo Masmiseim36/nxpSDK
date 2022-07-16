@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="fusionf1_MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_i2c.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_i2c_dma.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_i2s.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_i2s_dma.MIMXRT595S"/>
+    <definition extID="platform.drivers.inputmux.MIMXRT595S"/>
+    <definition extID="platform.drivers.mu.MIMXRT595S"/>
+    <definition extID="platform.drivers.sema42.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_spi.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_spi_dma.MIMXRT595S"/>
+    <definition extID="component.usart_adapter.MIMXRT595S"/>
+    <definition extID="component.serial_manager_uart.MIMXRT595S"/>
+    <definition extID="component.serial_manager.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_usart.MIMXRT595S"/>
+    <definition extID="platform.drivers.ctimer.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_dma.MIMXRT595S"/>
+    <definition extID="platform.drivers.memory.MIMXRT595S"/>
+    <definition extID="middleware.multicore.rpmsg_lite.evkmimxrt595_fusionf1_bm.MIMXRT595S"/>
+    <definition extID="middleware.multicore.rpmsg_lite.MIMXRT595S"/>
+    <definition extID="middleware.multicore.rpmsg_lite.bm.MIMXRT595S"/>
+    <definition extID="middleware.dsp_audio_streamer.fusionf1_dec.MIMXRT595S"/>
+    <definition extID="middleware.eap.fusionf1.lib.MIMXRT595S"/>
+    <definition extID="component.rt_gpio_adapter.MIMXRT595S"/>
+    <definition extID="platform.drivers.pint.MIMXRT595S"/>
+    <definition extID="platform.drivers.dmic.MIMXRT595S"/>
+    <definition extID="platform.drivers.dmic_dma.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_gpio.MIMXRT595S"/>
+    <definition extID="platform.drivers.common.MIMXRT595S"/>
+    <definition extID="component.lists.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_usart_dma.MIMXRT595S"/>
+    <definition extID="utility.debug_console.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_iopctl.MIMXRT595S"/>
+    <definition extID="middleware.baremetal.MIMXRT595S"/>
+    <definition extID="middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT595S"/>
+    <definition extID="middleware.dsp_audio_streamer.testxa_af_hostless.MIMXRT595S"/>
+    <definition extID="utility.shell.MIMXRT595S"/>
+    <definition extID="middleware.eap.MIMXRT595S"/>
+    <definition extID="platform.drivers.clock.MIMXRT595S"/>
+    <definition extID="platform.drivers.reset.MIMXRT595S"/>
+    <definition extID="device.MIMXRT595S_DSP.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm.MIMXRT595S"/>
+    <definition extID="device.MIMXRT595S_CMSIS.MIMXRT595S"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
+    <definition extID="middleware.eap16.header.MIMXRT595S"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT595S"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="evkmimxrt595_dsp_xaf_playback_fusionf1" name="dsp_xaf_playback_fusionf1" device_core="fusionf1_MIMXRT595S" dependency="platform.drivers.flexcomm_i2c.MIMXRT595S platform.drivers.flexcomm_i2c_dma.MIMXRT595S platform.drivers.flexcomm_i2s.MIMXRT595S platform.drivers.flexcomm_i2s_dma.MIMXRT595S platform.drivers.inputmux.MIMXRT595S platform.drivers.mu.MIMXRT595S platform.drivers.sema42.MIMXRT595S platform.drivers.flexcomm_spi.MIMXRT595S platform.drivers.flexcomm_spi_dma.MIMXRT595S component.usart_adapter.MIMXRT595S component.serial_manager_uart.MIMXRT595S component.serial_manager.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.ctimer.MIMXRT595S platform.drivers.lpc_dma.MIMXRT595S platform.drivers.memory.MIMXRT595S middleware.multicore.rpmsg_lite.evkmimxrt595_fusionf1_bm.MIMXRT595S middleware.multicore.rpmsg_lite.MIMXRT595S middleware.multicore.rpmsg_lite.bm.MIMXRT595S middleware.dsp_audio_streamer.fusionf1_dec.MIMXRT595S middleware.eap.fusionf1.lib.MIMXRT595S component.rt_gpio_adapter.MIMXRT595S platform.drivers.pint.MIMXRT595S platform.drivers.dmic.MIMXRT595S platform.drivers.dmic_dma.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S platform.drivers.common.MIMXRT595S component.lists.MIMXRT595S platform.drivers.flexcomm_usart_dma.MIMXRT595S utility.debug_console.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S middleware.baremetal.MIMXRT595S middleware.dsp_audio_streamer.libxa_af_hostless.MIMXRT595S middleware.dsp_audio_streamer.testxa_af_hostless.MIMXRT595S utility.shell.MIMXRT595S middleware.eap.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.reset.MIMXRT595S device.MIMXRT595S_DSP.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S middleware.eap16.header.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S" category="dsp_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>XF_DEBUG=1</value>
+          <value>ALGORITHM_VC=1</value>
+          <value>ALGORITHM_DBE=1</value>
+          <value>ALGORITHM_EQNB=1</value>
+          <value>ALGORITHM_LM=1</value>
+          <value>ALGORITHM_TE=1</value>
+          <value>ALGORITHM_TG=1</value>
+          <value>ALGORITHM_AVL=1</value>
+          <value>ALGORITHM_PSA=1</value>
+          <value>ALGORITHM_PR_EQNB=1</value>
+          <value>ALGORITHM_LIMP=1</value>
+          <value>ALGORITHM_LIMR=1</value>
+          <value>EAP_PROC</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XOS_CLOCK_FREQ=198000000</value>
+          <value>XA_MP3_DECODER=1</value>
+          <value>XA_AAC_DECODER=1</value>
+          <value>XA_OPUS_ENCODER=1</value>
+          <value>XA_OPUS_DECODER=1</value>
+          <value>XA_SBC_ENCODER=1</value>
+          <value>XA_SBC_DECODER=1</value>
+          <value>XA_CLIENT_PROXY=1</value>
+          <value>XA_PCM_GAIN=1</value>
+          <value>XA_SRC_PP_FX=1</value>
+          <value>XA_RENDERER=1</value>
+          <value>ALGORITHM_CS=1</value>
+          <value>ALGORITHM_XO=1</value>
+          <value>PLATFORM_ID=LVM_IMXRT500</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>HAVE_XOS</value>
+          <value>HIFI_ONLY_XAF</value>
+          <value>FIO_LOCAL_FS</value>
+          <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
+          <value>CPU_MIMXRT595SFFOC_dsp</value>
+          <value>MCUXPRESSO_SDK</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.none</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-mno-mul16 -mno-mul32 -mno-div32 -fsigned-char -mlongcalls -INLINE:requested -Wno-unused -Wno-missing-braces -fmessage-length=0</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>false</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="." project_relative_path="source" type="c_include"/>
+      <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="evkmimxrt595" type="c_include"/>
+    </include_paths>
+    <source path="." project_relative_path="source" type="src">
+      <files mask="srtm_src.c"/>
+      <files mask="xaf_main_dsp.c"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="dsp_config.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="srtm_config.h"/>
+      <files mask="srtm_config_audio.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="srtm_config_nn.h"/>
+    </source>
+    <source path="." project_relative_path="source" type="c_include">
+      <files mask="rpmsg_config.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="." project_relative_path="evkmimxrt595" type="src">
+      <files mask="board_fusionf1.c"/>
+    </source>
+    <source path="." project_relative_path="evkmimxrt595" type="c_include">
+      <files mask="board_fusionf1.h"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+  </example>
+</ksdk:examples>

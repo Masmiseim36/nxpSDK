@@ -72,8 +72,8 @@ void mtx_transpose32x32_fast (int32_t  *  y, const int32_t*     x, int M, int N)
     NASSERT(x != y);
     NASSERT(N%4==0 && M%4==0);
     if (M<=0 || N<=0) return;
-    NASSERT_ALIGN(x,XCHAL_DATA_WIDTH);
-    NASSERT_ALIGN(y,XCHAL_DATA_WIDTH);
+    NASSERT_ALIGN(x,HIFI_SIMD_WIDTH);
+    NASSERT_ALIGN(y,HIFI_SIMD_WIDTH);
     pX=(const ae_int32x2*)(x);
     for ( m=0; m<M; m+=2)  
     {

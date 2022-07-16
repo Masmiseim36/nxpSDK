@@ -33,6 +33,9 @@
 /* Instance pointer validation number. */
 #define STEREO_BQRIIR32X16_DF1_MAGIC 0xd936b63a
 
+/* Calling delayless implementations, when delay = 0  */
+#define ALG_STEREO_32X16_DF1_ND 1
+
 /* Filter instance structure. */
 typedef struct tag_stereo_bqriir32x16_df1_t
 {

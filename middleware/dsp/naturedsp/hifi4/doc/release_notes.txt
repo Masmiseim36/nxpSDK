@@ -1,4 +1,44 @@
----------------- Library Release 4.0.0 ----------------
+---------------- Library Release 4.1.0, August 2020-----
+
+This release contains new functions (imaging) and performance improvements.
+The performance measurements are obtained by using RI-2020.4 Xtensa Xplorer, tools, and HiFi4 core configurations with big memories. 
+
+
+API:
+- added 8-bit signed image processing part
+- renamed Cholesky decomposition functions
+- added Cholesky for floating point and 32-bit fixed point
+- added batch dot product
+- added image processing part
+- IIR biquad filters with no end-to-end delay. Also added function requesting 
+  actual algorithmic delay for faster IIR functions
+
+  
+New features:
+- added optimized code for Cholesky decomposition
+- added optimized code for 8-bit signed image processing part
+- added optimized code for image rotation by any angle
+- added optimized code for 2D Convolution, floating-point data
+- added optimized code for Image 2D-FFT
+- added optimized code for Batch Computation of Vector Dot products
+- added SFPU support for APIs 4.20
+- support of LLVM compilation
+
+
+Others:
+- fixed problems with old LX hardware cores 
+- added new global define HIFI_SIMD_WIDTH=8 instead of XCHAL_DATA_WIDTH
+- added convergence tests for BLMS
+- Documented more explanation of emulated float data format
+- removed direct use of XT_NSA and number of intrisics for internal use (i.e. ar_f32x2_loadi)
+
+
+
+
+
+
+
+---------------- Library Release 4.0.0, October 2018 ----------------
 This release includes several API changes and new functionalities, performance improvements
 and documentation updates
 The performance measurements are obtained using RG-2018.9 Xtensa Xplorer, tools, and HiFi4 core configurations with big memories. 

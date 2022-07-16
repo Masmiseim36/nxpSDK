@@ -5,10 +5,10 @@ Application demonstrating how to use the SPP feature.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.5.0
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
+- MCUXpresso  11.6.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- GCC ARM Embedded  10.3.1
 
 Hardware requirements
 =====================
@@ -55,8 +55,8 @@ PIN NAME         | uSD-M.2 Adapter |   I.MXRT685    |  PIN NAME OF RT685 | GPIO 
 ------------------------------------------------------------------------------------------------
 BT_UART_TXD_HOST |  J9(pin 1)  	   |   J27(pin 1)   |    USART4_RXD      | FC4_RXD_SDA_MOSI_DATA
 BT_UART_RXD_HOST |  J9(pin 2)  	   |   J27(pin 2)   |    USART4_TXD      | FC4_TXD_SCL_MISO_WS
-BT_UART_RTS_HOST |  J8(pin 3)  	   |   J47(pin 3)   |    USART4_CTS      | FC4_CTS_SDA_SSEL0
-BT_UART_CTS_HOST |  J8(pin 4)  	   |   J27(pin 4)   |    USART4_RTS      | FC4_RTS_SCL_SSEL1
+BT_UART_RTS_HOST |  J8(pin 3)  	   |   J47(pin 9)   |    USART4_CTS      | FC4_CTS_SDA_SSEL0
+BT_UART_CTS_HOST |  J8(pin 4)  	   |   J27(pin 5)   |    USART4_RTS      | FC4_RTS_SCL_SSEL1
 ------------------------------------------------------------------------------------------------
 
 AzureWave Solution Board settings

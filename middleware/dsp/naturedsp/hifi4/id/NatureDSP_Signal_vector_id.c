@@ -45,6 +45,15 @@ ANNOTATE_FUN(vec_dot16x16_fast,   "Fast Vector Dot product (16x16-bit data, 32-b
 ANNOTATE_FUN(vec_dot64x32_fast,   "Fast Vector Dot product (64x32-bit data, 64-bit output)");
 ANNOTATE_FUN(vec_dot64x64_fast,   "Fast Vector Dot product (64x64-bit data, 64-bit output)");
 ANNOTATE_FUN(vec_dot64x64i_fast,  "Fast Vector Dot product (64x64-bit data, 64-bit output (low 64 bit of integer multiply))");
+ANNOTATE_FUN(vec_dot_batch8x8,    "Vector Dot product, batch mode (8x8-bit data, 16-bit output)");
+ANNOTATE_FUN(vec_dot_batch8x16,   "Vector Dot product, batch mode (8x16-bit data, 16-bit output)");
+ANNOTATE_FUN(vec_dot_batch16x16,  "Vector Dot product, batch mode (16x16-bit data, 32-bit output)");
+ANNOTATE_FUN(vec_dot_batchf,      "Vector Dot product, batch mode (floating point data)");
+ANNOTATE_FUN(vec_dot_batch8x8_fast,    "Vector Dot product, batch mode (8x8-bit data, 16-bit output), fast");
+ANNOTATE_FUN(vec_dot_batch8x16_fast,   "Vector Dot product, batch mode (8x16-bit data, 16-bit output), fast");
+ANNOTATE_FUN(vec_dot_batch16x16_fast,  "Vector Dot product, batch mode (16x16-bit data, 32-bit output), fast");
+ANNOTATE_FUN(vec_dot_batchf_fast,      "Vector Dot product, batch mode (floating point data), fast");
+
 ANNOTATE_FUN(vec_add32x32,        "Vector Sum (32-bit data)");
 ANNOTATE_FUN(vec_add32x32_fast,   "Fast Vector Sum (32-bit data)");
 ANNOTATE_FUN(vec_addf,            "Vector Sum (floating point data)");

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -134,12 +134,12 @@ Files</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00313"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a00313">gpio_pin_config_t</a></td></tr>
-<tr class="memdesc:a00313"><td class="mdescLeft">&#160;</td><td class="mdescRight">The GPIO pin configuration structure.  <a href="a00023.html#a00313">More...</a><br/></td></tr>
+<tr class="memitem:a00314"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a00314">gpio_pin_config_t</a></td></tr>
+<tr class="memdesc:a00314"><td class="mdescLeft">&#160;</td><td class="mdescRight">The GPIO pin configuration structure.  <a href="a00023.html#a00314">More...</a><br/></td></tr>
+<tr class="separator:a00314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00313"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a00313">gpio_interrupt_config_t</a></td></tr>
+<tr class="memdesc:a00313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the interrupt generation condition.  <a href="a00023.html#a00313">More...</a><br/></td></tr>
 <tr class="separator:a00313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00312"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#a00312">gpio_interrupt_config_t</a></td></tr>
-<tr class="memdesc:a00312"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the interrupt generation condition.  <a href="a00023.html#a00312">More...</a><br/></td></tr>
-<tr class="separator:a00312"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -199,7 +199,7 @@ GPIO Configuration</h2></td></tr>
 <tr class="memitem:ga6fabd21856d350fc0b60ffea3bbca200"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#ga6fabd21856d350fc0b60ffea3bbca200">GPIO_PortInit</a> (GPIO_Type *base, uint32_t port)</td></tr>
 <tr class="memdesc:ga6fabd21856d350fc0b60ffea3bbca200"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the GPIO peripheral.  <a href="#ga6fabd21856d350fc0b60ffea3bbca200">More...</a><br/></td></tr>
 <tr class="separator:ga6fabd21856d350fc0b60ffea3bbca200"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga9b8fa194d8fa5a1bf933a709d4dde014"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#ga9b8fa194d8fa5a1bf933a709d4dde014">GPIO_PinInit</a> (GPIO_Type *base, uint32_t port, uint32_t pin, const <a class="el" href="a00023.html#a00313">gpio_pin_config_t</a> *config)</td></tr>
+<tr class="memitem:ga9b8fa194d8fa5a1bf933a709d4dde014"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00023.html#ga9b8fa194d8fa5a1bf933a709d4dde014">GPIO_PinInit</a> (GPIO_Type *base, uint32_t port, uint32_t pin, const <a class="el" href="a00023.html#a00314">gpio_pin_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga9b8fa194d8fa5a1bf933a709d4dde014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a GPIO pin used by the board.  <a href="#ga9b8fa194d8fa5a1bf933a709d4dde014">More...</a><br/></td></tr>
 <tr class="separator:ga9b8fa194d8fa5a1bf933a709d4dde014"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -216,7 +216,7 @@ GPIO Input Operations</h2></td></tr>
 <tr class="separator:gabad8dfa62a3e414cc23ff8b32eea81d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00313" id="a00313"></a>
+<a name="a00314" id="a00314"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -240,7 +240,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
-<a name="a00312" id="a00312"></a>
+<a name="a00313" id="a00313"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -406,7 +406,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00023.html#a00313">gpio_pin_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00023.html#a00314">gpio_pin_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -419,13 +419,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <p>To initialize the GPIO, define a pin configuration, either input or output, in the user file. Then, call the <a class="el" href="a00023.html#ga9b8fa194d8fa5a1bf933a709d4dde014" title="Initializes a GPIO pin used by the board. ">GPIO_PinInit()</a> function.</p>
 <p>This is an example to define an input pin or output pin configuration: </p>
 <div class="fragment"><div class="line">* Define a digital input pin configuration,</div>
-<div class="line">* <a class="code" href="a00023.html#a00313">gpio_pin_config_t</a> config =</div>
+<div class="line">* <a class="code" href="a00023.html#a00314">gpio_pin_config_t</a> config =</div>
 <div class="line">* {</div>
 <div class="line">*   <a class="code" href="a00023.html#ggada41ca0a2ce239fe125ee96833e715c0abacf19933be1940ab40c83535e6a46d4">kGPIO_DigitalInput</a>,</div>
 <div class="line">*   0,</div>
 <div class="line">* }</div>
 <div class="line">* Define a digital output pin configuration,</div>
-<div class="line">* <a class="code" href="a00023.html#a00313">gpio_pin_config_t</a> config =</div>
+<div class="line">* <a class="code" href="a00023.html#a00314">gpio_pin_config_t</a> config =</div>
 <div class="line">* {</div>
 <div class="line">*   <a class="code" href="a00023.html#ggada41ca0a2ce239fe125ee96833e715c0a509ebcd228fc813cf4afcacd258680f9">kGPIO_DigitalOutput</a>,</div>
 <div class="line">*   0,</div>

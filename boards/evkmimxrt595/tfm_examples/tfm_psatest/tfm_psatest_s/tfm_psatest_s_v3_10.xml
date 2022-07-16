@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="cm33_MIMXRT595S"/>
+    <definition extID="evkmimxrt595_tfm_psatest_ns"/>
+    <definition extID="platform.drivers.casper.MIMXRT595S"/>
+    <definition extID="platform.drivers.hashcrypt.MIMXRT595S"/>
+    <definition extID="platform.drivers.trng.MIMXRT595S"/>
+    <definition extID="platform.drivers.ctimer.MIMXRT595S"/>
+    <definition extID="middleware.tfm.flash_iap.MIMXRT595S"/>
+    <definition extID="middleware.mbedcrypto.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.evkmimxrt595.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.ipc_api.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.crypto.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.initial_attestation.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.its.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.ps.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.platform.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.profile_medium.MIMXRT595S"/>
+    <definition extID="platform.drivers.common.MIMXRT595S"/>
+    <definition extID="platform.drivers.clock.MIMXRT595S"/>
+    <definition extID="platform.drivers.power.MIMXRT595S"/>
+    <definition extID="platform.drivers.reset.MIMXRT595S"/>
+    <definition extID="device.MIMXRT595S_CMSIS.MIMXRT595S"/>
+    <definition extID="utility.debug_console.MIMXRT595S"/>
+    <definition extID="platform.utilities.assert.MIMXRT595S"/>
+    <definition extID="component.usart_adapter.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexspi.MIMXRT595S"/>
+    <definition extID="platform.drivers.cache_cache64.MIMXRT595S"/>
+    <definition extID="component.serial_manager.MIMXRT595S"/>
+    <definition extID="component.lists.MIMXRT595S"/>
+    <definition extID="component.serial_manager_uart.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm_usart.MIMXRT595S"/>
+    <definition extID="platform.drivers.flash_config.evkmimxrt595.MIMXRT595S"/>
+    <definition extID="platform.drivers.flexcomm.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_iopctl.MIMXRT595S"/>
+    <definition extID="platform.drivers.lpc_gpio.MIMXRT595S"/>
+    <definition extID="CMSIS_Include_core_cm.MIMXRT595S"/>
+    <definition extID="platform.drivers.iap.MIMXRT595S"/>
+    <definition extID="middleware.tfm.s.MIMXRT595S"/>
+    <definition extID="middleware.tfm.memory_utils.MIMXRT595S"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT595S"/>
+    <definition extID="armgcc"/>
+    <definition extID="mdk"/>
+    <definition extID="iar"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkmimxrt595_tfm_psatest_s" name="tfm_psatest_s" device_core="cm33_MIMXRT595S" dependency="platform.drivers.casper.MIMXRT595S platform.drivers.hashcrypt.MIMXRT595S platform.drivers.trng.MIMXRT595S platform.drivers.ctimer.MIMXRT595S middleware.tfm.flash_iap.MIMXRT595S middleware.mbedcrypto.MIMXRT595S middleware.tfm.s.evkmimxrt595.MIMXRT595S middleware.tfm.s.ipc_api.MIMXRT595S middleware.tfm.s.crypto.MIMXRT595S middleware.tfm.s.initial_attestation.MIMXRT595S middleware.tfm.s.its.MIMXRT595S middleware.tfm.s.ps.MIMXRT595S middleware.tfm.s.platform.MIMXRT595S middleware.tfm.s.profile_medium.MIMXRT595S platform.drivers.common.MIMXRT595S platform.drivers.clock.MIMXRT595S platform.drivers.power.MIMXRT595S platform.drivers.reset.MIMXRT595S device.MIMXRT595S_CMSIS.MIMXRT595S utility.debug_console.MIMXRT595S platform.utilities.assert.MIMXRT595S component.usart_adapter.MIMXRT595S platform.drivers.flexspi.MIMXRT595S platform.drivers.cache_cache64.MIMXRT595S component.serial_manager.MIMXRT595S component.lists.MIMXRT595S component.serial_manager_uart.MIMXRT595S platform.drivers.flexcomm_usart.MIMXRT595S platform.drivers.flash_config.evkmimxrt595.MIMXRT595S platform.drivers.flexcomm.MIMXRT595S platform.drivers.lpc_iopctl.MIMXRT595S platform.drivers.lpc_gpio.MIMXRT595S CMSIS_Include_core_cm.MIMXRT595S platform.drivers.iap.MIMXRT595S middleware.tfm.s.MIMXRT595S middleware.tfm.memory_utils.MIMXRT595S platform.utilities.misc_utilities.MIMXRT595S" linked_projects="evkmimxrt595_tfm_psatest_ns" category="tfm_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock id="QSPI_FLASH_MIMXRT595S" name="QSPI_FLASH" addr="18000000" size="04000000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="SRAM_MIMXRT595S" name="SRAM" addr="10000000" size="00500000" type="RAM" access="RW"/>
+      <memoryBlock id="USB_RAM_MIMXRT595S" name="USB_RAM" addr="40140000" size="00004000" type="RAM" access="RW"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <buildSteps>
+          <preBuildStep>arm-none-eabi-gcc -DTFM_LVL=2 -DTFM_PSA_API -DCONFIG_TFM_PARTITION_META -E -P -xc -I../tf-m/platform/ext/target/nxp/evkmimxrt595/partition ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s.ld -o ../tf-m/platform/ext/target/nxp/common/armgcc/tfm_common_s_pre.ld</preBuildStep>
+        </buildSteps>
+        <option id="com.crt.advproject.debugger.security.nonsecureimage" type="string">
+          <value>${linked:evkmimxrt595_tfm_psatest_ns}</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.optimize</value>
+        </option>
+        <option id="com.crt.advproject.gcc.securestate" type="enum">
+          <value>com.crt.advproject.gcc.securestate.secure</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-Wno-unused-variable -Wno-unused-but-set-variable -Wno-return-type -mcpu=cortex-m33 -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT595SFFOC_cm33</value>
+          <value>BOOT_HEADER_ENABLE=1</value>
+          <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
+          <value>TFM_LVL=2</value>
+          <value>TFM_SPM_LOG_LEVEL=TFM_SPM_LOG_LEVEL_INFO</value>
+          <value>TFM_SP_LOG_RAW_ENABLED</value>
+          <value>TFM_PARTITION_LOG_LEVEL=TFM_PARTITION_LOG_LEVEL_INFO</value>
+          <value>TFM_CRYPTO_IOVEC_BUFFER_SIZE=5120</value>
+          <value>TFM_CRYPTO_ENGINE_BUF_SIZE=9600</value>
+          <value>ITS_MAX_ASSET_SIZE=512</value>
+          <value>ITS_NUM_ASSETS=5</value>
+          <value>PS_MAX_ASSET_SIZE=512</value>
+          <value>PS_NUM_ASSETS=5</value>
+          <value>PS_RAM_FS</value>
+          <value>PS_CREATE_FLASH_LAYOUT</value>
+          <value>PS_WIPE_ALL</value>
+          <value>ITS_RAM_FS</value>
+          <value>ITS_CREATE_FLASH_LAYOUT</value>
+          <value>ITS_WIPE_ALL</value>
+          <value>OTP_NV_COUNTERS_RAM_EMULATION</value>
+          <value>CONFIG_TFM_CONN_HANDLE_MAX_NUM=8</value>
+          <value>DAUTH_CHIP_DEFAULT</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE</value>
+          <value>CRYPTO_HW_ACCELERATOR</value>
+          <value>TFM_PSA_API</value>
+          <value>CONFIG_TFM_ENABLE_MEMORY_PROTECT</value>
+          <value>TFM_PARTITION_CRYPTO</value>
+          <value>TFM_PARTITION_INITIAL_ATTESTATION</value>
+          <value>T_COSE_USE_PSA_CRYPTO</value>
+          <value>TFM_PARTITION_INTERNAL_TRUSTED_STORAGE</value>
+          <value>TFM_PARTITION_PROTECTED_STORAGE</value>
+          <value>PS_ENCRYPTION</value>
+          <value>PS_ROLLBACK_PROTECTION</value>
+          <value>TFM_PARTITION_PLATFORM</value>
+          <value>MBEDTLS_CONFIG_FILE='"tfm_mbedcrypto_config_profile_medium.h"'</value>
+          <value>MBEDTLS_USER_CONFIG_FILE='"mbedcrypto_user_config.h"'</value>
+          <value>TFM_CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+          <value>CONFIG_TFM_BUILDING_SPE=1</value>
+          <value>PLATFORM_DEFAULT_NV_COUNTERS</value>
+          <value>PLATFORM_DEFAULT_OTP</value>
+          <value>PLATFORM_DEFAULT_PROVISIONING</value>
+          <value>OTP_WRITEABLE</value>
+          <value>TFM_DUMMY_PROVISIONING</value>
+          <value>CONFIG_TFM_PSA_API_SUPERVISOR_CALL</value>
+          <value>CONFIG_TFM_PARTITION_META</value>
+          <value>CONFIG_TFM_FP=2</value>
+          <value>CONFIG_TFM_LAZY_STACKING</value>
+          <value>MCUXPRESSO_SDK</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.semihost</value>
+        </option>
+        <option id="com.crt.advproject.link.securestate" type="enum">
+          <value>com.crt.advproject.link.securestate.secure</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--cmse-implib</value>
+          <value>--out-implib=tfm_psatest_s_CMSE_lib.o</value>
+        </option>
+        <option id="gnu.c.link.option.ldflags" type="string">
+          <value>--specs=nano.specs</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="QSPI_FLASH_MIMXRT595S">
+            <driverBinary path="../../../../../devices/RT595/mcuxpresso" project_relative_path="binary" type="binary">
+              <files mask="MIMXRT500_SFDP_MXIC_OSPI_S.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <include_paths>
+      <include_path path="../../../../../devices/MIMXRT595S" project_relative_path="device" type="c_include"/>
+      <include_path path="." project_relative_path="board" type="c_include"/>
+    </include_paths>
+    <source path="armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="config.cmake"/>
+      <files mask="build_debug.bat"/>
+      <files mask="build_debug.sh"/>
+      <files mask="build_release.bat"/>
+      <files mask="build_release.sh"/>
+    </source>
+    <source path="mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="tfm_psatest_s.uvoptx"/>
+      <files mask="tfm_psatest_s.uvprojx"/>
+      <files mask="JLinkSettings.ini"/>
+      <files mask="tfm_psatest_s.uvmpw"/>
+      <files mask="tfm_psatest.uvmpw"/>
+    </source>
+    <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="tfm_psatest_s.ewd"/>
+      <files mask="tfm_psatest_s.ewp"/>
+      <files mask="tfm_psatest_s.eww"/>
+      <files mask="tfm_psatest.eww"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Source/iar" project_relative_path="startup" type="asm_include" toolchain="iar">
+      <files mask="startup_MIMXRT595S_cm33_s.s"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Source/armclang" project_relative_path="startup" type="asm_include" toolchain="mdk">
+      <files mask="startup_MIMXRT595S_cm33_s.S"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/evkmimxrt595/Device/Source/armgcc" project_relative_path="startup" type="asm_include" toolchain="armgcc mcuxpresso">
+      <files mask="startup_MIMXRT595S_cm33_s.S"/>
+    </source>
+    <source path="../../../../../devices/MIMXRT595S" project_relative_path="device" type="src">
+      <files mask="system_MIMXRT595S_cm33.c"/>
+    </source>
+    <source path="../../../../../devices/MIMXRT595S" project_relative_path="device" type="c_include">
+      <files mask="system_MIMXRT595S_cm33.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+      <files mask="hardware_init.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+      <files mask="app.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+    </source>
+    <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="mdk" project_relative_path="evkmimxrt595/tfm_examples/tfm_psatest/tfm_psatest_s" type="configuration" toolchain="mdk">
+      <files mask="tfm_psatest_flashdebug_d.ini"/>
+      <files mask="tfm_psatest_flashdownload_d.ini"/>
+      <files mask="tfm_psatest_flashdebug_r.ini"/>
+      <files mask="tfm_psatest_flashdownload_r.ini"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/iar" project_relative_path="tf-m/platform/ext/target/nxp/common/iar" type="linker" toolchain="iar" generated_during_build="true">
+      <files mask="tfm_common_s_pre.icf"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/iar" project_relative_path="tf-m/platform/ext/target/nxp/common/iar" method="copy" type="other" toolchain="iar">
+      <files mask="tfm_common_s.icf"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang" project_relative_path="tf-m/platform/ext/target/nxp/common/armclang" type="linker" toolchain="mdk" generated_during_build="true">
+      <files mask="tfm_common_s_pre.sct"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armclang" project_relative_path="tf-m/platform/ext/target/nxp/common/armclang" method="copy" type="other" toolchain="mdk">
+      <files mask="tfm_common_s.sct"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc" project_relative_path="tf-m/platform/ext/target/nxp/common/armgcc" type="linker" toolchain="armgcc" generated_during_build="true">
+      <files mask="tfm_common_s_pre.ld"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc" project_relative_path="tf-m/platform/ext/target/nxp/common/armgcc" method="copy" type="other" toolchain="armgcc">
+      <files mask="tfm_common_s.ld"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc" project_relative_path="tf-m/platform/ext/target/nxp/common/armgcc" type="linker" toolchain="mcuxpresso" generated_during_build="true">
+      <files mask="tfm_common_s_pre.ld"/>
+    </source>
+    <source path="../../../../../middleware/tfm/tf-m/platform/ext/target/nxp/common/armgcc" project_relative_path="tf-m/platform/ext/target/nxp/common/armgcc" method="copy" type="other" toolchain="mcuxpresso">
+      <files mask="tfm_common_s.ld"/>
+    </source>
+  </example>
+</ksdk:examples>

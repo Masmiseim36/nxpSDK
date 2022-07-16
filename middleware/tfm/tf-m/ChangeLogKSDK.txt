@@ -2,7 +2,10 @@
 @page middleware_log Middleware Change Log
  
 @section tfm Trusted Firmware M (TF-M) for MCUXpresso SDK
-  The current version is based on TF-M v1.4.0, released 2021-08-30 (00c1106624d733aade448659258bfd1088575b76) on https://git.trustedfirmware.org/TF-M/trusted-firmware-m.git
+  The current version is based on TF-M v1.5.0, released 2022-03-11 (47c26ecd0dec177fe2ddf82e0f416739af20823e) on https://git.trustedfirmware.org/TF-M/trusted-firmware-m.git
+
+  - 1.5.0
+    - Ported TF-M v1.5.0 to MCUXpresso SDK. Based on the 2022-03-11 snapshot(47c26ecd0dec177fe2ddf82e0f416739af20823e).
 
   - 1.4.0
     - Ported TF-M v1.4.0 to MCUXpresso SDK. Based on the 2021-08-30 snapshot(00c1106624d733aade448659258bfd1088575b76).

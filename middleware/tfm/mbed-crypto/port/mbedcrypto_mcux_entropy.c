@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019 - 2021 NXP
  * All rights reserved.
  *
  *
@@ -20,6 +20,9 @@
 #include "fsl_rng.h"
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
 #include "fsl_rng.h"
+#elif defined(CSS)
+#include "mcuxClCss.h"               /* Interface to the entire nxpClCss component */
+extern status_t  mbecrypto_mcux_css_init(void);
 #endif
 
 static void mbedtls_mcux_rng_init(void)
@@ -39,6 +42,15 @@ static void mbedtls_mcux_rng_init(void)
     RNGA_Seed(RNG, SIM->UIDL);
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
     RNG_Init(RNG);
+#elif defined(CSS)
+#if 0 /* Simple initialization */
+    if( MCUX_CSSL_FP_RESULT(mcuxClCss_Enable_Async()) == MCUXCLCSS_STATUS_OK_WAIT) /* Enable the CSSv2. */
+    {
+        mcuxClCss_WaitForOperation(MCUXCLCSS_ERROR_FLAGS_CLEAR); /* Wait for the nxpClCss_Enable_Async operation to complete.*/
+    }
+#else
+    mbecrypto_mcux_css_init();
+#endif
 #endif
 }
 
@@ -89,7 +101,7 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
         {
             memcpy(output, &rn, length);
             output += length;
-            len = 0U;
+            length = 0U;
         }
 
         /* Discard next 32 random words for better entropy */
@@ -102,6 +114,51 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
     result = kStatus_Success;
 #elif defined(FSL_FEATURE_SOC_LPC_RNG1_COUNT) && (FSL_FEATURE_SOC_LPC_RNG1_COUNT > 0)
     result = RNG_GetRandomData(RNG, output, len);
+#elif defined(CSS)
+
+    uint8_t rn[MCUXCLCSS_RNG_DRBG_TEST_EXTRACT_OUTPUT_MIN_SIZE];
+    size_t  length = len;
+
+    while (length > 0)
+    {
+        /* Get random word. */
+        MCUX_CSSL_FP_FUNCTION_CALL_BEGIN(result, token, mcuxClCss_Rng_DrbgRequest_Async(rn, sizeof(rn))); 
+        if((MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClCss_Rng_DrbgRequest_Async) != token) || (MCUXCLCSS_STATUS_OK_WAIT != result))
+        {
+            break;
+        }
+        MCUX_CSSL_FP_FUNCTION_CALL_END();
+        
+        /* Wait for operation to finish */
+        MCUX_CSSL_FP_FUNCTION_CALL_BEGIN(result, token, mcuxClCss_WaitForOperation(MCUXCLCSS_ERROR_FLAGS_CLEAR));
+        if ((MCUX_CSSL_FP_FUNCTION_CALLED(mcuxClCss_WaitForOperation) != token) || (MCUXCLCSS_STATUS_OK != result))
+        {
+            break;
+        }
+        MCUX_CSSL_FP_FUNCTION_CALL_END();
+
+        if (length >= sizeof(rn))
+        {
+            memcpy(output, rn, sizeof(rn));
+            length -= sizeof(rn);
+            output += sizeof(rn);
+        }
+        else
+        {
+            memcpy(output, rn, length);
+            output += length;
+            length = 0U;
+        }
+    }
+
+    if(length == 0)
+    {
+        result = kStatus_Success;
+    }
+    else
+    {
+        result = kStatus_Fail;
+    }
 #endif
 
     if (result == kStatus_Success)
@@ -113,6 +170,7 @@ int mbedtls_hardware_poll(void *data, unsigned char *output, size_t len, size_t 
     {
         return result;
     }
+
 #endif /* TRNG_IGNORE */
 }
 

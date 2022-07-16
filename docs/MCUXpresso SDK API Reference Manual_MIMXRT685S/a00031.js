@@ -1,6 +1,6 @@
 var a00031 =
 [
-    [ "i2s_dma_handle_t", "a00031.html#a00264", [
+    [ "i2s_dma_handle_t", "a00031.html#a00265", [
       [ "state", "a00031.html#ab2b85aedd6baee88f0759b563a5f524d", null ],
       [ "bytesPerFrame", "a00031.html#ae33c9a178fa94256aa73f3392a47820d", null ],
       [ "completionCallback", "a00031.html#a212f23416605bf198ace3bd5b6159768", null ],

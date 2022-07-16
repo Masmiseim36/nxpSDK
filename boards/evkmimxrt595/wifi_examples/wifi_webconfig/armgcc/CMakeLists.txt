@@ -64,14 +64,15 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/lwip
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/drivers
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
-    ${ProjDirPath}/../../../../../middleware/wifi
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../middleware/edgefast_wifi
     ${ProjDirPath}/../../../../../components/pca9420
     ${ProjDirPath}/../../../../../components/flash/mflash
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt595
+    ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
@@ -89,8 +90,6 @@ include(driver_clock_MIMXRT595S_cm33)
 include(middleware_freertos-kernel_heap_3_MIMXRT595S_cm33)
 
 include(middleware_lwip_MIMXRT595S_cm33)
-
-include(utility_debug_console_MIMXRT595S_cm33)
 
 include(middleware_wifi_MIMXRT595S_cm33)
 
@@ -117,6 +116,18 @@ include(driver_pca9420_MIMXRT595S_cm33)
 include(component_mflash_file_MIMXRT595S_cm33)
 
 include(component_mflash_rt595_MIMXRT595S_cm33)
+
+include(middleware_wifi_wifidriver_MIMXRT595S_cm33)
+
+include(middleware_freertos-kernel_MIMXRT595S_cm33)
+
+include(utility_debug_console_MIMXRT595S_cm33)
+
+include(middleware_wifi_sdio_MIMXRT595S_cm33)
+
+include(middleware_wifi_fwdnld_MIMXRT595S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT595S_cm33)
 
 include(driver_common_MIMXRT595S_cm33)
 
@@ -152,15 +163,9 @@ include(driver_lpc_gpio_MIMXRT595S_cm33)
 
 include(driver_reset_MIMXRT595S_cm33)
 
-include(middleware_freertos-kernel_MIMXRT595S_cm33)
-
 include(middleware_freertos-kernel_extension_MIMXRT595S_cm33)
 
 include(CMSIS_Include_core_cm_MIMXRT595S_cm33)
-
-include(middleware_wifi_wifidriver_MIMXRT595S_cm33)
-
-include(middleware_wifi_fwdnld_MIMXRT595S_cm33)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT595S_cm33)
 
@@ -169,6 +174,8 @@ include(component_osa_free_rtos_MIMXRT595S_cm33)
 include(middleware_edgefast_wifi_MIMXRT595S_cm33)
 
 include(component_mflash_common_MIMXRT595S_cm33)
+
+include(middleware_wifi_sdio-2_MIMXRT595S_cm33)
 
 include(utilities_misc_utilities_MIMXRT595S_cm33)
 

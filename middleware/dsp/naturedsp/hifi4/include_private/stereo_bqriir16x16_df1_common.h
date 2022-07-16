@@ -42,6 +42,7 @@ typedef struct tag_stereo_bqriir16x16_df1_t
 	bqriir16x16_df1_handle_t bqriir_right;
 	void * bqriir_left_mem;
 	void * bqriir_right_mem;
+    int M;
 } stereo_bqriir16x16_df1_t, *stereo_bqriir16x16_df1_ptr_t;
 
 #endif /* STEREO_BQRIIR16X16_DF1_COMMON_H__ */

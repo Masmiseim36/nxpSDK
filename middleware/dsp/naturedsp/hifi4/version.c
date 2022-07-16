@@ -37,8 +37,8 @@
 /* Note: these strings must not exceed 30 chars including the
          terminating NUL character
 */
-static const char NatureDSP_Library_version[]     = "4.0.0";
-static const char NatureDSP_Library_API_version[] = "4.10";
+static const char NatureDSP_Library_version[]     = "4.1.0";
+static const char NatureDSP_Library_API_version[] = "4.30";
 
 /*-------------------------------------------------------------------------
    Library Version Request

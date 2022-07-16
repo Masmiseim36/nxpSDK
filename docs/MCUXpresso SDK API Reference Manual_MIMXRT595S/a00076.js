@@ -1,6 +1,6 @@
 var a00076 =
 [
-    [ "wwdt_config_t", "a00076.html#a00478", [
+    [ "wwdt_config_t", "a00076.html#a00479", [
       [ "enableWwdt", "a00076.html#a405b63e15703dc92b3179b5089319e38", null ],
       [ "enableWatchdogReset", "a00076.html#a78ce1ec4de049becaae7e3be51772313", null ],
       [ "enableWatchdogProtect", "a00076.html#adc32c01dcffb7f140c8e1fd049862928", null ],

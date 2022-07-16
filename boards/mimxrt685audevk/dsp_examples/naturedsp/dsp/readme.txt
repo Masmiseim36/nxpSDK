@@ -17,7 +17,7 @@ it must be loaded prior to loading the DSP application.
 
 Toolchain supported
 ===================
-- Xtensa Xplorer  8.0.10
+- Xtensa Xplorer  9.0.18
 - Xtensa C Compiler  14.01
 
 Hardware requirements

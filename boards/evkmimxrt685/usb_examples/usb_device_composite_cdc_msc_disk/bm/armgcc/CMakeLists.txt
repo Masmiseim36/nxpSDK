@@ -73,6 +73,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../components/pca9420
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../middleware
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../components/uart
@@ -105,6 +106,8 @@ include(driver_pca9420_MIMXRT685S_cm33)
 include(utility_debug_console_lite_MIMXRT685S_cm33)
 
 include(utility_assert_lite_MIMXRT685S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT685S_cm33)
 
 include(middleware_baremetal_MIMXRT685S_cm33)
 

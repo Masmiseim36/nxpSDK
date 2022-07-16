@@ -5,11 +5,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "rpmsg_lite.h"
 #include "dsp_ipc.h"
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "queue.h"
-#include "rpmsg_lite.h"
 #include "rpmsg_ns.h"
 #include "rpmsg_queue.h"
 #include "message.h"

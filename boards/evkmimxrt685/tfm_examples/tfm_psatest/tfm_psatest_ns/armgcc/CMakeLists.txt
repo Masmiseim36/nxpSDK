@@ -73,8 +73,6 @@ set(CMAKE_MODULE_PATH
 # include modules
 include(middleware_tfm_ns_evkmimxrt685_MIMXRT685S_cm33)
 
-include(middleware_tfm_ns_rtx_MIMXRT685S_cm33)
-
 include(middleware_tfm_ns_ipc_api_MIMXRT685S_cm33)
 
 include(middleware_psatest_ns_MIMXRT685S_cm33)

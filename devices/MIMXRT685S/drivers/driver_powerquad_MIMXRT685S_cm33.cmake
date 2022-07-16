@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("driver_powerquad component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -8,7 +8,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/fsl_powerquad_matrix.c
     ${CMAKE_CURRENT_LIST_DIR}/fsl_powerquad_filter.c
     ${CMAKE_CURRENT_LIST_DIR}/fsl_powerquad_transform.c
-    ${CMAKE_CURRENT_LIST_DIR}/fsl_powerquad_cmsis.c
 )
 
 
@@ -18,6 +17,4 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 
 include(driver_common_MIMXRT685S_cm33)
-
-include(CMSIS_DSP_Library_MIMXRT685S_cm33)
 

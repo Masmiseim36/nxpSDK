@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2019-2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2019-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
-{{utilities.donotedit_warning}}
+/***********{{utilities.donotedit_warning}}***********/
 
 #ifndef __TFM_SPM_DB_FUNC_INC__
 #define __TFM_SPM_DB_FUNC_INC__
@@ -24,7 +24,7 @@
 /**************************************************************************/
 {% for partition in partitions %}
     {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
     {% endif %}
     {% if partition.manifest.irqs %}
 #define TFM_PARTITION_{{partition.manifest.name}}_IRQ_COUNT {{partition.manifest.irqs | length() }}
@@ -32,7 +32,7 @@
 #define TFM_PARTITION_{{partition.manifest.name}}_IRQ_COUNT 0
     {% endif %}
     {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 
 {% endfor %}
@@ -41,11 +41,15 @@
 /**************************************************************************/
 {% for partition in partitions %}
     {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
     {% endif %}
+    {% if partition.manifest.entry_point %}
 extern void {{partition.manifest.entry_point}}(void);
+    {% elif partition.manifest.entry_init %}
+extern void {{partition.manifest.entry_init}}(void);
+    {% endif %}
     {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 
 {% endfor %}
@@ -69,7 +73,7 @@ static uint32_t tfm_core_interrupt_ctx_stack[
 
 {% for partition in partitions %}
     {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
     {% endif %}
 static uint32_t ctx_stack_{{partition.manifest.name}}[
         (sizeof(struct interrupted_ctx_stack_frame_t) +
@@ -78,7 +82,7 @@ static uint32_t ctx_stack_{{partition.manifest.name}}[
                 sizeof(struct handler_ctx_stack_frame_t)
         )) / sizeof(uint32_t)];
     {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 
 {% endfor %}
@@ -88,11 +92,11 @@ uint32_t *ctx_stack_list[] =
     tfm_core_interrupt_ctx_stack,
 {% for partition in partitions %}
     {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
     {% endif %}
     ctx_stack_{{partition.manifest.name}},
     {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 {% endfor %}
 };
@@ -103,7 +107,7 @@ uint32_t *ctx_stack_list[] =
 {% for partition in partitions %}
     {% if partition.manifest.dependencies %}
         {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
         {% endif %}
 static int32_t dependencies_{{partition.manifest.name}}[] =
 {
@@ -117,7 +121,7 @@ static int32_t dependencies_{{partition.manifest.name}}[] =
         {% endfor %}
 };
         {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
         {% endif %}
 
     {% endif %}
@@ -139,7 +143,7 @@ const struct spm_partition_static_data_t static_data_list[] =
 
 {% for partition in partitions %}
     {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
     {% endif %}
     {{'{'}}
         .partition_id         = {{partition.manifest.name}},
@@ -153,7 +157,13 @@ const struct spm_partition_static_data_t static_data_list[] =
     {% endif %}
                               ,
         .partition_priority   = TFM_PRIORITY({{partition.manifest.priority}}),
+    {% if partition.manifest.entry_point %}
         .partition_init       = {{partition.manifest.entry_point}},
+    {% elif partition.manifest.entry_init %}
+        .partition_init       = {{partition.manifest.entry_init}},
+    {% else %}
+        .partition_init       = NULL,
+    {% endif %}
         .dependencies_num     = {{partition.manifest.dependencies | length()}},
     {% if partition.manifest.dependencies %}
         .p_dependencies       = dependencies_{{partition.manifest.name}},
@@ -162,7 +172,7 @@ const struct spm_partition_static_data_t static_data_list[] =
     {% endif %}
     {{'},'}}
     {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 
 {% endfor %}
@@ -174,7 +184,7 @@ const struct spm_partition_static_data_t static_data_list[] =
 {% for partition in partitions %}
     {% if partition.manifest.mmio_regions %}
         {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
         {% endif %}
 const struct platform_data_t *
     platform_data_list_{{partition.manifest.name}}[] =
@@ -191,7 +201,7 @@ const struct platform_data_t *
     NULL
 };
         {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
         {% endif %}
 
     {% endif %}
@@ -203,7 +213,7 @@ const struct platform_data_t **platform_data_list_list[] =
 
 {% for partition in partitions %}
     {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
     {% endif %}
     {% if partition.manifest.mmio_regions %}
     platform_data_list_{{partition.manifest.name}},
@@ -211,7 +221,7 @@ const struct platform_data_t **platform_data_list_list[] =
     NULL,
     {% endif %}{# if partition.manifest.mmio_regions #}
     {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 
 {% endfor %}
@@ -230,7 +240,7 @@ static struct spm_partition_desc_t partition_list [] =
     /* - Partition DB record for {{partition.manifest.name}} */
     /* -----------------------------------------------------------------------*/
     {% if partition.attr.conditional %}
-#ifdef {{partition.attr.conditional}}
+#ifdef {{partition.attr.conditional}} //NXP
     {% endif %}
     {{'{'}}
     /* Runtime data */
@@ -239,7 +249,7 @@ static struct spm_partition_desc_t partition_list [] =
         .platform_data_list       = NULL,
     {{'},'}}
     {% if partition.attr.conditional %}
-#endif /* {{partition.attr.conditional}} */
+#endif /* {{partition.attr.conditional}} */ //NXP
     {% endif %}
 
 {% endfor %}

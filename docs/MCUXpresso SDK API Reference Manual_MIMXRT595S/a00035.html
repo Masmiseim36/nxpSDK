@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -110,15 +110,15 @@ $(document).ready(function(){initNavTree('a00035.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00370"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00370">i2c_master_config_t</a></td></tr>
-<tr class="memdesc:a00370"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I2C master module.  <a href="a00035.html#a00370">More...</a><br/></td></tr>
-<tr class="separator:a00370"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00295"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00295">i2c_master_transfer_t</a></td></tr>
-<tr class="memdesc:a00295"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-blocking transfer descriptor structure.  <a href="a00035.html#a00295">More...</a><br/></td></tr>
+<tr class="memitem:a00371"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00371">i2c_master_config_t</a></td></tr>
+<tr class="memdesc:a00371"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the I2C master module.  <a href="a00035.html#a00371">More...</a><br/></td></tr>
+<tr class="separator:a00371"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00296"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00296">i2c_master_transfer_t</a></td></tr>
+<tr class="memdesc:a00296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-blocking transfer descriptor structure.  <a href="a00035.html#a00296">More...</a><br/></td></tr>
+<tr class="separator:a00296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00295"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00295">i2c_master_handle_t</a></td></tr>
+<tr class="memdesc:a00295"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver handle for master non-blocking APIs.  <a href="a00035.html#a00295">More...</a><br/></td></tr>
 <tr class="separator:a00295"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00294"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#a00294">i2c_master_handle_t</a></td></tr>
-<tr class="memdesc:a00294"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver handle for master non-blocking APIs.  <a href="a00035.html#a00294">More...</a><br/></td></tr>
-<tr class="separator:a00294"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -154,10 +154,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gad69f2d63ea756dda60749ff6b09f587d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a> (<a class="el" href="a00035.html#a00370">i2c_master_config_t</a> *masterConfig)</td></tr>
+<tr class="memitem:gad69f2d63ea756dda60749ff6b09f587d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gad69f2d63ea756dda60749ff6b09f587d">I2C_MasterGetDefaultConfig</a> (<a class="el" href="a00035.html#a00371">i2c_master_config_t</a> *masterConfig)</td></tr>
 <tr class="memdesc:gad69f2d63ea756dda60749ff6b09f587d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the I2C master peripheral.  <a href="#gad69f2d63ea756dda60749ff6b09f587d">More...</a><br/></td></tr>
 <tr class="separator:gad69f2d63ea756dda60749ff6b09f587d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga29f967b3ae8487a36ba2a58deb01ccae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a> (I2C_Type *base, const <a class="el" href="a00035.html#a00370">i2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:ga29f967b3ae8487a36ba2a58deb01ccae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#ga29f967b3ae8487a36ba2a58deb01ccae">I2C_MasterInit</a> (I2C_Type *base, const <a class="el" href="a00035.html#a00371">i2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:ga29f967b3ae8487a36ba2a58deb01ccae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the I2C master peripheral.  <a href="#ga29f967b3ae8487a36ba2a58deb01ccae">More...</a><br/></td></tr>
 <tr class="separator:ga29f967b3ae8487a36ba2a58deb01ccae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadcf7122f0a38d4d9da0f052fcb167957"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00035.html#gadcf7122f0a38d4d9da0f052fcb167957">I2C_MasterDeinit</a> (I2C_Type *base)</td></tr>
@@ -249,7 +249,7 @@ IRQ handler</h2></td></tr>
 <tr class="separator:gafbf792484d11820561fa22bb27f73284"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00370" id="a00370"></a>
+<a name="a00371" id="a00371"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -327,7 +327,7 @@ IRQ handler</h2></td></tr>
 
 </div>
 </div>
-<a name="a00295" id="a00295"></a>
+<a name="a00296" id="a00296"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -453,7 +453,7 @@ IRQ handler</h2></td></tr>
 
 </div>
 </div>
-<a name="a00294" id="a00294"></a>
+<a name="a00295" id="a00295"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -670,7 +670,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="memname">void I2C_MasterGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00035.html#a00370">i2c_master_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00035.html#a00371">i2c_master_config_t</a> *&#160;</td>
           <td class="paramname"><em>masterConfig</em></td><td>)</td>
           <td></td>
         </tr>
@@ -684,7 +684,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 </div><!-- fragment --><p>After calling this function, you can override any settings in order to customize the configuration, prior to initializing the master driver with <a class="el" href="a00035.html#ga29f967b3ae8487a36ba2a58deb01ccae" title="Initializes the I2C master peripheral. ">I2C_MasterInit()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">masterConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00035.html#a00370" title="Structure with settings to initialize the I2C master module. ">i2c_master_config_t</a>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">masterConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00035.html#a00371" title="Structure with settings to initialize the I2C master module. ">i2c_master_config_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -704,7 +704,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00035.html#a00370">i2c_master_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00035.html#a00371">i2c_master_config_t</a> *&#160;</td>
           <td class="paramname"><em>masterConfig</em>, </td>
         </tr>
         <tr>
@@ -954,7 +954,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="deprecated"><dt><b><a class="el" href="a00278.html#_deprecated000002">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00035.html#ga92a916f2d297de52d3a54f8bd0befb07">I2C_ClearStatusFlags</a> The following status register flags can be cleared:<ul>
+<dl class="deprecated"><dt><b><a class="el" href="a00279.html#_deprecated000002">Deprecated:</a></b></dt><dd>Do not use this function. It has been superceded by <a class="el" href="a00035.html#ga92a916f2d297de52d3a54f8bd0befb07">I2C_ClearStatusFlags</a> The following status register flags can be cleared:<ul>
 <li><a class="el" href="a00242.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cda7b487779b58af99a7a8c179545f78ccd" title="The arbitration of the bus was lost. ">kI2C_MasterArbitrationLostFlag</a></li>
 <li><a class="el" href="a00242.html#ggaee8495a8bc52a9a7df6e97d1d7ead2cdab5cec1d9be7dc5fb2c106e2b87889517" title="There was an error during start or stop phase of the transaction. ">kI2C_MasterStartStopErrorFlag</a></li>
 </ul>

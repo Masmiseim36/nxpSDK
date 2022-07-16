@@ -9,16 +9,17 @@ NOTE: The TF-M main() functions have a non-standard location:
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  10.2.1
-- Keil MDK  5.34
-- IAR embedded Workbench  9.10.2
-- MCUXpresso  11.5.0
+- GCC ARM Embedded  10.3.1
+- Keil MDK  5.37
+- IAR embedded Workbench  9.30.1
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - EVK-MIMXRT685 board
 - Personal Computer
+
 Board settings
 ==============
 No special settings are required.
@@ -41,8 +42,14 @@ Running the demo
 ================
 The log below shows the output of the TFM demo in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[INF] Beginning TF-M provisioning
+[WRN] TFM_DUMMY_PROVISIONING is not suitable for production! This device is NOT SECURE
 [Sec Thread] Secure image initializing!
-Booting TFM v1.4.0
+TF-M FP mode: Hardware
+Lazy stacking enabled
+Booting TF-M 1.5.0
+Creating an empty ITS flash layout.
+Creating an empty PS flash layout.
 Non-Secure system starting...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

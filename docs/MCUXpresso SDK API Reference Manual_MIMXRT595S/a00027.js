@@ -1,6 +1,6 @@
 var a00027 =
 [
-    [ "flexio_mculcd_smartdma_handle_t", "a00027.html#a00287", [
+    [ "flexio_mculcd_smartdma_handle_t", "a00027.html#a00288", [
       [ "base", "a00027.html#a039d0c9351a621fe91e3c3508ac7d754", null ],
       [ "dataCount", "a00027.html#a1736662d0239eddcec3cba199d59a9c6", null ],
       [ "dataAddrOrSameValue", "a00027.html#ab9bcb4d0e52544f4e65fa96563e423a8", null ],
@@ -15,7 +15,7 @@ var a00027 =
       [ "smartdmaParam", "a00027.html#abeddc544e4d720fa0da6744d13e5d500", null ],
       [ "smartdmaStack", "a00027.html#abdd80443a537d877aa163b53e3ef62f5", null ]
     ] ],
-    [ "flexio_mculcd_smartdma_config_t", "a00027.html#a00347", [
+    [ "flexio_mculcd_smartdma_config_t", "a00027.html#a00348", [
       [ "inputPixelFormat", "a00027.html#a4ef3a44aae3fc40a82cc1554858810e1", null ],
       [ "outputPixelFormat", "a00027.html#ad7acd614ee746ee528407b08d6da0087", null ]
     ] ],

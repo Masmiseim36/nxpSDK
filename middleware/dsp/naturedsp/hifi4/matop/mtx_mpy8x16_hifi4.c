@@ -98,7 +98,7 @@ void mtx_mpy8x16(  void* pScr,
 {
     int m,n,p;
     NASSERT(lsh >= -15 && lsh <= 15);
-    NASSERT_ALIGN(pScr,XCHAL_DATA_WIDTH);
+    NASSERT_ALIGN(pScr,HIFI_SIMD_WIDTH);
     (void)pScr;
     if (P<=0 || M<=0) return;
     if (N<=0)    /* exceptional situation */

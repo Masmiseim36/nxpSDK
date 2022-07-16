@@ -40,7 +40,6 @@ extern "C" {
 #define FLASH_NEED_RESET        1
 #define CACHE_BASE              CACHE64
 
-
 #define SEC_VIO_IRQn            SECUREVIOLATION_IRQn /* Security Violation Interrupt number synonim */
 
 /**

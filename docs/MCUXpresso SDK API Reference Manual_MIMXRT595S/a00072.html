@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -112,15 +112,15 @@ $(document).ready(function(){initNavTree('a00072.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00458"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00458">usart_config_t</a></td></tr>
-<tr class="memdesc:a00458"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART configuration structure.  <a href="a00072.html#a00458">More...</a><br/></td></tr>
-<tr class="separator:a00458"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00460"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00460">usart_transfer_t</a></td></tr>
-<tr class="memdesc:a00460"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART transfer structure.  <a href="a00072.html#a00460">More...</a><br/></td></tr>
-<tr class="separator:a00460"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00306"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00306">usart_handle_t</a></td></tr>
-<tr class="memdesc:a00306"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART handle structure.  <a href="a00072.html#a00306">More...</a><br/></td></tr>
-<tr class="separator:a00306"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00459"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00459">usart_config_t</a></td></tr>
+<tr class="memdesc:a00459"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART configuration structure.  <a href="a00072.html#a00459">More...</a><br/></td></tr>
+<tr class="separator:a00459"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00461"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00461">usart_transfer_t</a></td></tr>
+<tr class="memdesc:a00461"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART transfer structure.  <a href="a00072.html#a00461">More...</a><br/></td></tr>
+<tr class="separator:a00461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00307"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#a00307">usart_handle_t</a></td></tr>
+<tr class="memdesc:a00307"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART handle structure.  <a href="a00072.html#a00307">More...</a><br/></td></tr>
+<tr class="separator:a00307"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -160,9 +160,7 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00072.html#ggab04a0655cd1e3bcac5e8f48c18df1a57a579872694419f8708e38935593105868">kStatus_USART_ParityError</a> = MAKE_STATUS(kStatusGroup_LPC_USART, 12), 
 <br/>
-&#160;&#160;<a class="el" href="a00072.html#ggab04a0655cd1e3bcac5e8f48c18df1a57ae427c8491ce7294dfeaa3b87e506bd81">kStatus_USART_BaudrateNotSupport</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00072.html#ggab04a0655cd1e3bcac5e8f48c18df1a57ad434a2fb3d728550dd2e784ce0a3e14c">kStatus_USART_Timeout</a> = MAKE_STATUS(kStatusGroup_LPC_USART, 14)
+&#160;&#160;<a class="el" href="a00072.html#ggab04a0655cd1e3bcac5e8f48c18df1a57ae427c8491ce7294dfeaa3b87e506bd81">kStatus_USART_BaudrateNotSupport</a>
 <br/>
  }</td></tr>
 <tr class="memdesc:gab04a0655cd1e3bcac5e8f48c18df1a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error codes for the USART driver.  <a href="a00072.html#gab04a0655cd1e3bcac5e8f48c18df1a57">More...</a><br/></td></tr>
@@ -251,8 +249,25 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gadc4d91bd718e2b3748ec626875703f15"><td class="mdescLeft">&#160;</td><td class="mdescRight">rxFIFO watermark values  <a href="a00072.html#gadc4d91bd718e2b3748ec626875703f15">More...</a><br/></td></tr>
 <tr class="separator:gadc4d91bd718e2b3748ec626875703f15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga78b340bf3b25bfae957d0c5532b9b853"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga78b340bf3b25bfae957d0c5532b9b853">_usart_interrupt_enable</a> </td></tr>
-<tr class="memdesc:ga78b340bf3b25bfae957d0c5532b9b853"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART interrupt configuration structure, default settings all disabled. <br/></td></tr>
+<tr class="memitem:ga78b340bf3b25bfae957d0c5532b9b853"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga78b340bf3b25bfae957d0c5532b9b853">_usart_interrupt_enable</a> { , <br/>
+&#160;&#160;<a class="el" href="a00072.html#gga78b340bf3b25bfae957d0c5532b9b853ac5611ab6b973e6777a7d7db8321f62f2">kUSART_TxIdleInterruptEnable</a> = (USART_INTENSET_TXIDLEEN_MASK &lt;&lt; 16U), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#gga78b340bf3b25bfae957d0c5532b9b853a3d02580815ae2cc516b2eceaa5af7cb1">kUSART_CtsChangeInterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#gga78b340bf3b25bfae957d0c5532b9b853a8025155917fdba2167f615ac1f6fd0e8">kUSART_RxBreakChangeInterruptEnable</a>, 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#gga78b340bf3b25bfae957d0c5532b9b853ae642012aae33bd8954699572e4adb475">kUSART_RxStartInterruptEnable</a> = (USART_INTENSET_STARTEN_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#gga78b340bf3b25bfae957d0c5532b9b853a5cd5bf36e32a46d994643a712fd08ea9">kUSART_FramingErrorInterruptEnable</a> = (USART_INTENSET_FRAMERREN_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#gga78b340bf3b25bfae957d0c5532b9b853a3dc275bab22f77a1182bbab5fd5cea3b">kUSART_ParityErrorInterruptEnable</a> = (USART_INTENSET_PARITYERREN_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#gga78b340bf3b25bfae957d0c5532b9b853ac8d3050ed3df9d9278f74c9ab27b2ddc">kUSART_NoiseErrorInterruptEnable</a> = (USART_INTENSET_RXNOISEEN_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#gga78b340bf3b25bfae957d0c5532b9b853a7154c6ede60243bf5f9e727a5cb18ce5">kUSART_AutoBaudErrorInterruptEnable</a> = (USART_INTENSET_ABERREN_MASK)
+<br/>
+ }</td></tr>
+<tr class="memdesc:ga78b340bf3b25bfae957d0c5532b9b853"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART interrupt configuration structure, default settings all disabled.  <a href="a00072.html#ga78b340bf3b25bfae957d0c5532b9b853">More...</a><br/></td></tr>
 <tr class="separator:ga78b340bf3b25bfae957d0c5532b9b853"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa6a81e7e82e236bb1c3c5ba306466610"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gaa6a81e7e82e236bb1c3c5ba306466610">_usart_flags</a> { <br/>
 &#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a88f35fb71e2d5a7bea4f8eed7b6a050c">kUSART_TxError</a> = (USART_FIFOSTAT_TXERR_MASK), 
@@ -265,7 +280,29 @@ Enumerations</h2></td></tr>
 <br/>
 &#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a39952b4f24141f895bab7822dc330330">kUSART_RxFifoNotEmptyFlag</a> = (USART_FIFOSTAT_RXNOTEMPTY_MASK), 
 <br/>
-&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a519cf0825b102a001c88bfba6506824c">kUSART_RxFifoFullFlag</a> = (USART_FIFOSTAT_RXFULL_MASK)
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a519cf0825b102a001c88bfba6506824c">kUSART_RxFifoFullFlag</a> = (USART_FIFOSTAT_RXFULL_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610abc766d479d00f480e78d05f21f8e1d59">kUSART_RxIdleFlag</a> = (USART_STAT_RXIDLE_MASK &lt;&lt; 16U), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a8106fa188ea138f48c7740dcf5c2b294">kUSART_TxIdleFlag</a> = (USART_STAT_TXIDLE_MASK &lt;&lt; 16U), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a43d6b4aef70a978f4794efabd5457f51">kUSART_CtsAssertFlag</a> = (USART_STAT_CTS_MASK &lt;&lt; 16U), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a7119fd7ce16b8aa8a98b1d82271698dd">kUSART_CtsChangeFlag</a> = (USART_STAT_DELTACTS_MASK &lt;&lt; 16U), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610aca92bd8dc74c45b62e3f9b4c707b8638">kUSART_BreakDetectFlag</a> = (USART_STAT_RXBRK_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610aa73bdb740d60558f33c28c7bc4cffab3">kUSART_BreakDetectChangeFlag</a> = (USART_STAT_DELTARXBRK_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a2fab8368a6a3246714c83405202626b3">kUSART_RxStartFlag</a> = (USART_STAT_START_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a44b58335a118179dd7b3f5d760a314fa">kUSART_FramingErrorFlag</a> = (USART_STAT_FRAMERRINT_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a46d487d50d8392d25c5c4e76cdfb6674">kUSART_ParityErrorFlag</a> = (USART_STAT_PARITYERRINT_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610a989650ce4c9a8f57ad771a33a2cb0335">kUSART_NoiseErrorFlag</a> = (USART_STAT_RXNOISEINT_MASK), 
+<br/>
+&#160;&#160;<a class="el" href="a00072.html#ggaa6a81e7e82e236bb1c3c5ba306466610ae1cf980779fba1c617584d5ebc8ac3f8">kUSART_AutobaudErrorFlag</a> = (USART_STAT_ABERR_MASK)
 <br/>
  }</td></tr>
 <tr class="memdesc:gaa6a81e7e82e236bb1c3c5ba306466610"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART status flags.  <a href="a00072.html#gaa6a81e7e82e236bb1c3c5ba306466610">More...</a><br/></td></tr>
@@ -279,19 +316,19 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gad737c0eee502276b7615e83ec3a79be4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gad737c0eee502276b7615e83ec3a79be4">FSL_USART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
+<tr class="memitem:gad737c0eee502276b7615e83ec3a79be4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gad737c0eee502276b7615e83ec3a79be4">FSL_USART_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 0))</td></tr>
 <tr class="memdesc:gad737c0eee502276b7615e83ec3a79be4"><td class="mdescLeft">&#160;</td><td class="mdescRight">USART driver version.  <a href="#gad737c0eee502276b7615e83ec3a79be4">More...</a><br/></td></tr>
 <tr class="separator:gad737c0eee502276b7615e83ec3a79be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga2aeb4e11fdf0eb515d090865ffcf2ba2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga2aeb4e11fdf0eb515d090865ffcf2ba2">USART_Init</a> (USART_Type *base, const <a class="el" href="a00072.html#a00458">usart_config_t</a> *config, uint32_t srcClock_Hz)</td></tr>
+<tr class="memitem:ga2aeb4e11fdf0eb515d090865ffcf2ba2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga2aeb4e11fdf0eb515d090865ffcf2ba2">USART_Init</a> (USART_Type *base, const <a class="el" href="a00072.html#a00459">usart_config_t</a> *config, uint32_t srcClock_Hz)</td></tr>
 <tr class="memdesc:ga2aeb4e11fdf0eb515d090865ffcf2ba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a USART instance with user configuration structure and peripheral clock.  <a href="#ga2aeb4e11fdf0eb515d090865ffcf2ba2">More...</a><br/></td></tr>
 <tr class="separator:ga2aeb4e11fdf0eb515d090865ffcf2ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga80892980b702b0b7614691014a5aaaca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga80892980b702b0b7614691014a5aaaca">USART_Deinit</a> (USART_Type *base)</td></tr>
 <tr class="memdesc:ga80892980b702b0b7614691014a5aaaca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes a USART instance.  <a href="#ga80892980b702b0b7614691014a5aaaca">More...</a><br/></td></tr>
 <tr class="separator:ga80892980b702b0b7614691014a5aaaca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74464f9357e585e42e5f3c909eb6e9b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga74464f9357e585e42e5f3c909eb6e9b3">USART_GetDefaultConfig</a> (<a class="el" href="a00072.html#a00458">usart_config_t</a> *config)</td></tr>
+<tr class="memitem:ga74464f9357e585e42e5f3c909eb6e9b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga74464f9357e585e42e5f3c909eb6e9b3">USART_GetDefaultConfig</a> (<a class="el" href="a00072.html#a00459">usart_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga74464f9357e585e42e5f3c909eb6e9b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the default configuration structure.  <a href="#ga74464f9357e585e42e5f3c909eb6e9b3">More...</a><br/></td></tr>
 <tr class="separator:ga74464f9357e585e42e5f3c909eb6e9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabdcaf539e6c95903c779f4538b1f422b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#gabdcaf539e6c95903c779f4538b1f422b">USART_SetBaudRate</a> (USART_Type *base, uint32_t baudrate_Bps, uint32_t srcClock_Hz)</td></tr>
@@ -383,7 +420,7 @@ Transactional</h2></td></tr>
 <tr class="memitem:ga9aed876794d5c2ab2e37196242602b89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga9aed876794d5c2ab2e37196242602b89">USART_TransferCreateHandle</a> (USART_Type *base, usart_handle_t *handle, <a class="el" href="a00072.html#ga9688f27725349ed0dd7a37c9a75eccc0">usart_transfer_callback_t</a> callback, void *userData)</td></tr>
 <tr class="memdesc:ga9aed876794d5c2ab2e37196242602b89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the USART handle.  <a href="#ga9aed876794d5c2ab2e37196242602b89">More...</a><br/></td></tr>
 <tr class="separator:ga9aed876794d5c2ab2e37196242602b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f5a4e7e831ab0dc869637494a57362e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga7f5a4e7e831ab0dc869637494a57362e">USART_TransferSendNonBlocking</a> (USART_Type *base, usart_handle_t *handle, <a class="el" href="a00072.html#a00460">usart_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga7f5a4e7e831ab0dc869637494a57362e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga7f5a4e7e831ab0dc869637494a57362e">USART_TransferSendNonBlocking</a> (USART_Type *base, usart_handle_t *handle, <a class="el" href="a00072.html#a00461">usart_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga7f5a4e7e831ab0dc869637494a57362e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transmits a buffer of data using the interrupt method.  <a href="#ga7f5a4e7e831ab0dc869637494a57362e">More...</a><br/></td></tr>
 <tr class="separator:ga7f5a4e7e831ab0dc869637494a57362e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8500107ace3179c85e66d73fa1f41d16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga8500107ace3179c85e66d73fa1f41d16">USART_TransferStartRingBuffer</a> (USART_Type *base, usart_handle_t *handle, uint8_t *ringBuffer, size_t ringBufferSize)</td></tr>
@@ -401,7 +438,7 @@ Transactional</h2></td></tr>
 <tr class="memitem:ga56acdf4c0046516f59c04d89e8e988e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga56acdf4c0046516f59c04d89e8e988e6">USART_TransferGetSendCount</a> (USART_Type *base, usart_handle_t *handle, uint32_t *count)</td></tr>
 <tr class="memdesc:ga56acdf4c0046516f59c04d89e8e988e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of bytes that have been sent out to bus.  <a href="#ga56acdf4c0046516f59c04d89e8e988e6">More...</a><br/></td></tr>
 <tr class="separator:ga56acdf4c0046516f59c04d89e8e988e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga34c6c819c9e2d8608a6d7e63103fa542"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga34c6c819c9e2d8608a6d7e63103fa542">USART_TransferReceiveNonBlocking</a> (USART_Type *base, usart_handle_t *handle, <a class="el" href="a00072.html#a00460">usart_transfer_t</a> *xfer, size_t *receivedBytes)</td></tr>
+<tr class="memitem:ga34c6c819c9e2d8608a6d7e63103fa542"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga34c6c819c9e2d8608a6d7e63103fa542">USART_TransferReceiveNonBlocking</a> (USART_Type *base, usart_handle_t *handle, <a class="el" href="a00072.html#a00461">usart_transfer_t</a> *xfer, size_t *receivedBytes)</td></tr>
 <tr class="memdesc:ga34c6c819c9e2d8608a6d7e63103fa542"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a buffer of data using an interrupt method.  <a href="#ga34c6c819c9e2d8608a6d7e63103fa542">More...</a><br/></td></tr>
 <tr class="separator:ga34c6c819c9e2d8608a6d7e63103fa542"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2de9bf9557d2f7bc6fe0236608cb958e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00072.html#ga2de9bf9557d2f7bc6fe0236608cb958e">USART_TransferAbortReceive</a> (USART_Type *base, usart_handle_t *handle)</td></tr>
@@ -415,7 +452,7 @@ Transactional</h2></td></tr>
 <tr class="separator:gae955a5e336b3cb3276d5cdd6f1f6feda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00458" id="a00458"></a>
+<a name="a00459" id="a00459"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -531,7 +568,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a name="a00460" id="a00460"></a>
+<a name="a00461" id="a00461"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -607,7 +644,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 
 </div>
 </div>
-<a name="a00306" id="a00306"></a>
+<a name="a00307" id="a00307"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -836,7 +873,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_USART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
+          <td class="memname">#define FSL_USART_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -923,9 +960,6 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggab04a0655cd1e3bcac5e8f48c18df1a57ae427c8491ce7294dfeaa3b87e506bd81"></a>kStatus_USART_BaudrateNotSupport</em>&nbsp;</td><td class="fielddoc">
 <p>Baudrate is not support in current clock source. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggab04a0655cd1e3bcac5e8f48c18df1a57ad434a2fb3d728550dd2e784ce0a3e14c"></a>kStatus_USART_Timeout</em>&nbsp;</td><td class="fielddoc">
-<p>USART time out. </p>
 </td></tr>
 </table>
 
@@ -1113,6 +1147,44 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
+<a class="anchor" id="ga78b340bf3b25bfae957d0c5532b9b853"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="a00072.html#ga78b340bf3b25bfae957d0c5532b9b853">_usart_interrupt_enable</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga78b340bf3b25bfae957d0c5532b9b853ac5611ab6b973e6777a7d7db8321f62f2"></a>kUSART_TxIdleInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Transmitter idle. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78b340bf3b25bfae957d0c5532b9b853a3d02580815ae2cc516b2eceaa5af7cb1"></a>kUSART_CtsChangeInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Change in the state of the CTS input. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78b340bf3b25bfae957d0c5532b9b853a8025155917fdba2167f615ac1f6fd0e8"></a>kUSART_RxBreakChangeInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Break condition asserted or deasserted. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78b340bf3b25bfae957d0c5532b9b853ae642012aae33bd8954699572e4adb475"></a>kUSART_RxStartInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Rx start bit detected. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78b340bf3b25bfae957d0c5532b9b853a5cd5bf36e32a46d994643a712fd08ea9"></a>kUSART_FramingErrorInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Framing error detected. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78b340bf3b25bfae957d0c5532b9b853a3dc275bab22f77a1182bbab5fd5cea3b"></a>kUSART_ParityErrorInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Parity error detected. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78b340bf3b25bfae957d0c5532b9b853ac8d3050ed3df9d9278f74c9ab27b2ddc"></a>kUSART_NoiseErrorInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Noise error detected. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga78b340bf3b25bfae957d0c5532b9b853a7154c6ede60243bf5f9e727a5cb18ce5"></a>kUSART_AutoBaudErrorInterruptEnable</em>&nbsp;</td><td class="fielddoc">
+<p>Auto baudrate error detected. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a class="anchor" id="gaa6a81e7e82e236bb1c3c5ba306466610"></a>
 <div class="memitem">
 <div class="memproto">
@@ -1141,6 +1213,41 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610a519cf0825b102a001c88bfba6506824c"></a>kUSART_RxFifoFullFlag</em>&nbsp;</td><td class="fielddoc">
 <p>RXFULL bit, sets if RX buffer is full. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610abc766d479d00f480e78d05f21f8e1d59"></a>kUSART_RxIdleFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Receiver idle. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610a8106fa188ea138f48c7740dcf5c2b294"></a>kUSART_TxIdleFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Transmitter idle. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610a43d6b4aef70a978f4794efabd5457f51"></a>kUSART_CtsAssertFlag</em>&nbsp;</td><td class="fielddoc">
+<p>CTS signal high. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610a7119fd7ce16b8aa8a98b1d82271698dd"></a>kUSART_CtsChangeFlag</em>&nbsp;</td><td class="fielddoc">
+<p>CTS signal changed interrupt status. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610aca92bd8dc74c45b62e3f9b4c707b8638"></a>kUSART_BreakDetectFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Break detected. </p>
+<p>Self cleared when rx pin goes high again. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610aa73bdb740d60558f33c28c7bc4cffab3"></a>kUSART_BreakDetectChangeFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Break detect change interrupt flag. </p>
+<p>A change in the state of receiver break detection. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610a2fab8368a6a3246714c83405202626b3"></a>kUSART_RxStartFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Rx start bit detected interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610a44b58335a118179dd7b3f5d760a314fa"></a>kUSART_FramingErrorFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Framing error interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610a46d487d50d8392d25c5c4e76cdfb6674"></a>kUSART_ParityErrorFlag</em>&nbsp;</td><td class="fielddoc">
+<p>parity error interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610a989650ce4c9a8f57ad771a33a2cb0335"></a>kUSART_NoiseErrorFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Noise error interrupt flag. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="ggaa6a81e7e82e236bb1c3c5ba306466610ae1cf980779fba1c617584d5ebc8ac3f8"></a>kUSART_AutobaudErrorFlag</em>&nbsp;</td><td class="fielddoc">
+<p>Auto baudrate error interrupt flag, caused by the baudrate counter timeout before the end of start bit. </p>
 </td></tr>
 </table>
 
@@ -1176,7 +1283,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00072.html#a00458">usart_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00072.html#a00459">usart_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>, </td>
         </tr>
         <tr>
@@ -1193,7 +1300,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
       </table>
 </div><div class="memdoc">
 <p>This function configures the USART module with the user-defined settings. The user can configure the configuration structure and also get the default configuration by using the <a class="el" href="a00072.html#ga74464f9357e585e42e5f3c909eb6e9b3" title="Gets the default configuration structure. ">USART_GetDefaultConfig()</a> function. Example below shows how to use this API to configure USART. </p>
-<div class="fragment"><div class="line">*  <a class="code" href="a00072.html#a00458">usart_config_t</a> usartConfig;</div>
+<div class="fragment"><div class="line">*  <a class="code" href="a00072.html#a00459">usart_config_t</a> usartConfig;</div>
 <div class="line">*  usartConfig.<a class="code" href="a00072.html#a5d2631bc772901b4114b01770f9bb337">baudRate_Bps</a> = 115200U;</div>
 <div class="line">*  usartConfig.<a class="code" href="a00072.html#aff1d7e368b35ae89db8aa393207e7ccc">parityMode</a> = <a class="code" href="a00072.html#gga9b5ca9521874092ccb637a02d7b26ba2a46309b174047a84a78c77b7648bdf21b">kUSART_ParityDisabled</a>;</div>
 <div class="line">*  usartConfig.<a class="code" href="a00072.html#aeb0b8a38f5d7e0def2aa1b079643682f">stopBitCount</a> = <a class="code" href="a00072.html#gga58ab07609b094f719f903475de6e57b4aa637b8f5f0edd262181a20c1fbed7c12">kUSART_OneStopBit</a>;</div>
@@ -1248,7 +1355,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="memname">void USART_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00072.html#a00458">usart_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00072.html#a00459">usart_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -2234,7 +2341,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00072.html#a00460">usart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00072.html#a00461">usart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -2249,7 +2356,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <table class="params">
     <tr><td class="paramname">base</td><td>USART peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>USART handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>USART transfer structure. See <a class="el" href="a00072.html#a00460" title="USART transfer structure. ">usart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>USART transfer structure. See <a class="el" href="a00072.html#a00461" title="USART transfer structure. ">usart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2473,7 +2580,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00072.html#a00460">usart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00072.html#a00461">usart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>, </td>
         </tr>
         <tr>
@@ -2494,7 +2601,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
   <table class="params">
     <tr><td class="paramname">base</td><td>USART peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>USART handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>USART transfer structure, see <a class="el" href="a00072.html#a00460" title="USART transfer structure. ">usart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>USART transfer structure, see <a class="el" href="a00072.html#a00461" title="USART transfer structure. ">usart_transfer_t</a>. </td></tr>
     <tr><td class="paramname">receivedBytes</td><td>Bytes received from the ring buffer directly. </td></tr>
   </table>
   </dd>

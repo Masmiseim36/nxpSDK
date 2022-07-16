@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.11.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -110,9 +110,9 @@ $(document).ready(function(){initNavTree('a00027.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00260"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00260">i2c_master_dma_handle_t</a></td></tr>
-<tr class="memdesc:a00260"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C master dma transfer structure.  <a href="a00027.html#a00260">More...</a><br/></td></tr>
-<tr class="separator:a00260"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00261"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a00261">i2c_master_dma_handle_t</a></td></tr>
+<tr class="memdesc:a00261"><td class="mdescLeft">&#160;</td><td class="mdescRight">I2C master dma transfer structure.  <a href="a00027.html#a00261">More...</a><br/></td></tr>
+<tr class="separator:a00261"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -138,7 +138,7 @@ Driver version</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 I2C Block DMA Transfer Operation</h2></td></tr>
-<tr class="memitem:ga83d8463e42b12e7b797a3f928f51b3cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga83d8463e42b12e7b797a3f928f51b3cb">I2C_MasterTransferCreateHandleDMA</a> (I2C_Type *base, i2c_master_dma_handle_t *handle, <a class="el" href="a00027.html#gac464cb9c433f4447f0e3f0f47722793a">i2c_master_dma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#a00297">dma_handle_t</a> *dmaHandle)</td></tr>
+<tr class="memitem:ga83d8463e42b12e7b797a3f928f51b3cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga83d8463e42b12e7b797a3f928f51b3cb">I2C_MasterTransferCreateHandleDMA</a> (I2C_Type *base, i2c_master_dma_handle_t *handle, <a class="el" href="a00027.html#gac464cb9c433f4447f0e3f0f47722793a">i2c_master_dma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00016.html#a00298">dma_handle_t</a> *dmaHandle)</td></tr>
 <tr class="memdesc:ga83d8463e42b12e7b797a3f928f51b3cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Init the I2C handle which is used in transactional functions.  <a href="#ga83d8463e42b12e7b797a3f928f51b3cb">More...</a><br/></td></tr>
 <tr class="separator:ga83d8463e42b12e7b797a3f928f51b3cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8643ea43510b8d97b94db05766444cd2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00214.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#ga8643ea43510b8d97b94db05766444cd2">I2C_MasterTransferDMA</a> (I2C_Type *base, i2c_master_dma_handle_t *handle, i2c_master_transfer_t *xfer)</td></tr>
@@ -152,7 +152,7 @@ I2C Block DMA Transfer Operation</h2></td></tr>
 <tr class="separator:ga209877e924b049c835adc6bfb8690f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00260" id="a00260"></a>
+<a name="a00261" id="a00261"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -180,7 +180,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <tr class="memitem:af4f25f7926826f7ee346aaf4131181ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#af4f25f7926826f7ee346aaf4131181ae">checkAddrNack</a></td></tr>
 <tr class="memdesc:af4f25f7926826f7ee346aaf4131181ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to check the nack signal is detected during addressing.  <a href="#af4f25f7926826f7ee346aaf4131181ae">More...</a><br/></td></tr>
 <tr class="separator:af4f25f7926826f7ee346aaf4131181ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3165a424be14bb2066675341559a538b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00016.html#a00297">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a3165a424be14bb2066675341559a538b">dmaHandle</a></td></tr>
+<tr class="memitem:a3165a424be14bb2066675341559a538b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00016.html#a00298">dma_handle_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a3165a424be14bb2066675341559a538b">dmaHandle</a></td></tr>
 <tr class="memdesc:a3165a424be14bb2066675341559a538b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The DMA handler used.  <a href="#a3165a424be14bb2066675341559a538b">More...</a><br/></td></tr>
 <tr class="separator:a3165a424be14bb2066675341559a538b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a42954d3ed3c3138a2e0470d10d4485"><td class="memItemLeft" align="right" valign="top">i2c_master_transfer_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00027.html#a2a42954d3ed3c3138a2e0470d10d4485">transfer</a></td></tr>
@@ -247,7 +247,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00016.html#a00297">dma_handle_t</a>* i2c_master_dma_handle_t::dmaHandle</td>
+          <td class="memname"><a class="el" href="a00016.html#a00298">dma_handle_t</a>* i2c_master_dma_handle_t::dmaHandle</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -363,7 +363,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00016.html#a00297">dma_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00016.html#a00298">dma_handle_t</a> *&#160;</td>
           <td class="paramname"><em>dmaHandle</em>&#160;</td>
         </tr>
         <tr>

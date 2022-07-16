@@ -81,6 +81,8 @@ ANNOTATE_FUN(vec_antilog2f,       "Vector Base-2  Antilogarithm, (floating point
 ANNOTATE_FUN(vec_antilognf,       "Vector Natural Antilogarithm, (floating point data)");
 ANNOTATE_FUN(vec_antilog10f,      "Vector Base-10 Antilogarithm, (floating point data)");
 ANNOTATE_FUN(vec_pow_32x32,       "Vector Power Function, (32-bit data)");
+ANNOTATE_FUN(vec_powf,            "Vector Power Function, (floating point data)");
+ANNOTATE_FUN(scl_powf,            "Scalar Power Function, (floating point data)");
 ANNOTATE_FUN(scl_antilog2_32x32,  "Scalar Base-2  Antilogarithm, (32-bit data)");
 ANNOTATE_FUN(scl_antilogn_32x32,  "Scalar Natural Antilogarithm, (32-bit data)");
 ANNOTATE_FUN(scl_antilog10_32x32, "Scalar Base-10 Antilogarithm, (32-bit data)");

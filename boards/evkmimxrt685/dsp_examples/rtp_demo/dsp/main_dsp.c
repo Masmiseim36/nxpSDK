@@ -148,7 +148,7 @@ static void rpmsg_lite_init(dsp_handle_t *dsp)
 
     dsp->rpmsg = rpmsg_lite_remote_init(rpmsg_shmem_base, RPMSG_LITE_LINK_ID, RL_NO_FLAGS, &rpmsg_ctx);
 
-    while (!rpmsg_lite_is_link_up(dsp->rpmsg))
+    while (RL_TRUE != rpmsg_lite_is_link_up(dsp->rpmsg))
     {
     }
 

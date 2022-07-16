@@ -40,7 +40,7 @@
 #if HAVE_VFPU || HAVE_FPU
 
 #define USE_REFERENCE_CODE    0
-#define ALIGN_SIZE            (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE            (HIFI_SIMD_WIDTH)
 #define sz_f32                sizeof(float32_t)
 
 /*

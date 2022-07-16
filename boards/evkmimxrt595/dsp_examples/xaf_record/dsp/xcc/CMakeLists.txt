@@ -1,5 +1,3 @@
-INCLUDE(CMakeForceCompiler)
-
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
 CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
@@ -21,6 +19,11 @@ SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 # CURRENT DIRECTORY
 SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
+SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+
+
+project(dsp_xaf_record_fusionf1)
 
 SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
 
@@ -60,6 +63,8 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFIO_LOCAL_FS")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_RX_ENABLE=0")
 
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DNNLIB_V2")
+
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT595SFFOC_dsp")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
@@ -68,7 +73,7 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2020_5_newlib")
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -126,13 +131,15 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFIO_LOCAL_FS")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_RX_ENABLE=0")
 
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNNLIB_V2")
+
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT595SFFOC_dsp")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2020_5_newlib")
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
 
@@ -162,11 +169,15 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DNNLIB_V2")
+
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNNLIB_V2")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
 
@@ -174,21 +185,17 @@ SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mlsp=${ProjDi
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
 
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2020_5_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mlsp=${ProjDirPath}/../../../../../../devices/MIMXRT595S/xtensa/min-rt")
 
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2020_5_newlib")
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
 
 include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include_private)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers)
 
@@ -262,6 +269,10 @@ include_directories(${ProjDirPath}/../../../../../../middleware/dsp/audio_framew
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities)
 
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc)
+
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
 
 include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
@@ -276,13 +287,6 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../xaf_main_dsp.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/inff_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/lognf_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/nanf_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/scl_logn_32x32_fusion.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/sqrt2f_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/vec_add32x32_fusion.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/vec_log_table.c"
 "${ProjDirPath}/../board_fusionf1.c"
 "${ProjDirPath}/../board_fusionf1.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h"
@@ -474,6 +478,16 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_types.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/LICENSE"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_cnn_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_gru_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_kernels_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_lstm_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_standards.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_type_def.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.h"
@@ -507,13 +521,6 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../xaf_main_dsp.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/inff_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/lognf_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/nanf_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/scl_logn_32x32_fusion.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/sqrt2f_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/vec_add32x32_fusion.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/vec_log_table.c"
 "${ProjDirPath}/../board_fusionf1.c"
 "${ProjDirPath}/../board_fusionf1.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h"
@@ -705,6 +712,16 @@ add_executable(dsp_xaf_record_fusionf1.elf
 "${ProjDirPath}/../../../../../../middleware/dsp/audio_framework/testxa_af_hostless/test/plugins/nxp/renderer/xa-renderer.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_types.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/LICENSE"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_cnn_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_gru_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_kernels_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_lstm_api.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_nnlib_standards.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/inc/xa_type_def.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.h"
@@ -740,6 +757,8 @@ target_link_libraries(dsp_xaf_record_fusionf1.elf optimized m)
 
 target_link_libraries(dsp_xaf_record_fusionf1.elf optimized xos)
 
+target_link_libraries(dsp_xaf_record_fusionf1.elf optimized xtutil)
+
 
 target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/aacplus_dec/fusionf1/lib/xa_aacplus_v2_loas_dec.a)
 
@@ -759,7 +778,13 @@ target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../
 target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a)
 
 
-target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_FusionF1_v4_4_0.a)
+target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_06_00.a)
+
+
+target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a)
+
+
+target_link_libraries(dsp_xaf_record_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/lib/fusionf1/libxa_nnlib.a)
 
 
 target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/aacplus_dec/fusionf1/lib/xa_aacplus_v2_loas_dec.a)
@@ -780,25 +805,34 @@ target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../..
 target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/codecs/sbc_enc/fusionf1/lib/xa_sbc_enc.a)
 
 
-target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_FusionF1_v4_4_0.a)
+target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/vit/FusionF1/Lib/libVIT_Fusion_F1_v04_06_00.a)
+
+
+target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a)
+
+
+target_link_libraries(dsp_xaf_record_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/nn/nnlib/lib/fusionf1/libxa_nnlib.a)
 
 TARGET_LINK_LIBRARIES(dsp_xaf_record_fusionf1.elf -Wl,--end-group)
 
 ADD_CUSTOM_COMMAND(TARGET dsp_xaf_record_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_record_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_reset_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2020_5_newlib
+--xtensa-core=nxp_rt500_RI2021_8_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.ResetVector.text
 )
 
 ADD_CUSTOM_COMMAND(TARGET dsp_xaf_record_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_record_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2020_5_newlib
+--xtensa-core=nxp_rt500_RI2021_8_newlib
 --xtensa-system=${XTENSA_SYSTEM}
 --only-section=.WindowVectors.text
 --only-section=.Level2InterruptVector.text
+--only-section=.Level3InterruptVector.literal
 --only-section=.Level3InterruptVector.text
+--only-section=.DebugExceptionVector.literal
 --only-section=.DebugExceptionVector.text
+--only-section=.NMIExceptionVector.literal
 --only-section=.NMIExceptionVector.text
 --only-section=.KernelExceptionVector.text
 --only-section=.UserExceptionVector.text
@@ -808,10 +842,12 @@ ADD_CUSTOM_COMMAND(TARGET dsp_xaf_record_fusionf1.elf POST_BUILD COMMAND ${CMAKE
 
 ADD_CUSTOM_COMMAND(TARGET dsp_xaf_record_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
 --xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_record_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_data_${CMAKE_BUILD_TYPE}.bin
---xtensa-core=nxp_rt500_RI2020_5_newlib
+--xtensa-core=nxp_rt500_RI2021_8_newlib
 --xtensa-system=${XTENSA_SYSTEM}
+--only-section=.clib.rodata
 --only-section=.rtos.rodata
 --only-section=.rodata
+--only-section=.clib.data
 --only-section=.rtos.percpu.data
 --only-section=.data
 --only-section=.bss

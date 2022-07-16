@@ -44,7 +44,7 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/demo_info.cpp"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/image_data.h"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/labels.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/model_mobilenet_ops_micro.cpp"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/model_all_ops_micro.cpp"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/model.cpp"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/main.cpp"
 "${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/label_image/pcq/model_data.h"

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021, Arm Limited. All rights reserved.
+ * Copyright (c) 2021-2022, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -21,10 +21,6 @@
 #define PARTITION_INFO_MAGIC_MASK               (0xFFFF0000)
 #define PARTITION_INFO_MAGIC                    (0x5F5F0000)
 
-/* Privileged definitions for partition thread mode */
-#define TFM_PARTITION_UNPRIVILEGED_MODE         (0U)
-#define TFM_PARTITION_PRIVILEGED_MODE           (1U)
-
 /*
  * Partition load data - flags
  * bit 7-0: priority
@@ -38,14 +34,23 @@
 #define PARTITION_PRI_LOWEST                    (0xFF)
 #define PARTITION_PRI_MASK                      (0xFF)
 
-#define SPM_PART_FLAG_PSA_ROT                   (1U << 8)
-#define SPM_PART_FLAG_IPC                       (1U << 9)
+#define PARTITION_MODEL_PSA_ROT                 (1U << 8)
+#define PARTITION_MODEL_IPC                     (1U << 9)
 
 #define PARTITION_PRIORITY(flag)                ((flag) & PARTITION_PRI_MASK)
 #define TO_THREAD_PRIORITY(x)                   (x)
 
 #define ENTRY_TO_POSITION(x)                    (uintptr_t)(x)
 #define POSITION_TO_ENTRY(x, t)                 (t)(x)
+
+#define PTR_TO_REFERENCE(x)                     (uintptr_t)(x)
+#define REFERENCE_TO_PTR(x, t)                  (t)(x)
+
+#define IS_PARTITION_PSA_ROT(pldi)              (!!((pldi)->flags \
+                                                     & PARTITION_MODEL_PSA_ROT))
+#define IS_PARTITION_IPC_MODEL(pldi)            (!!((pldi)->flags \
+                                                         & PARTITION_MODEL_IPC))
+
 /*
  * Common partition structure type, the extendable data is right after it.
  * Extendable data has different size for each partition, and must be 4-byte

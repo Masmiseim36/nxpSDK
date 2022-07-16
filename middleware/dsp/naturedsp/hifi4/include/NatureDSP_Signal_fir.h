@@ -926,6 +926,14 @@ NOTES:
   4. 16x16 routine may converge slower on small errors due to roundoff 
      errors. In that cases, 16x32 routine will give better results although
      convergence rate on bigger errors is the same.
+  5. Terms near-end and far-end come from echo cancellation theory where the 
+     LMS is used widely. For echo cancellation them term far-end means the 
+     output of speakerphone (far end designates that the origin of it is 
+     somewhere outside say came from the remote speaker). The near-end is 
+     a signal from the local microphone representing a sum of the echo, 
+     speech of local speaker and the noise. The LMS is used to estimate the 
+     equivalent impulse response of the echopath further compensation and 
+     removal the echo from the near-end signal.
 
   Precision: 
   16x16    16-bit coefficients, 16-bit data, 16-bit output
@@ -1003,17 +1011,19 @@ void cxfir_blmsf    ( complex_float * e, complex_float * h,
   8x8      8-bit coefficients, 8-bit data, 8-bit output, Q7
   8x16     8-bit coefficients Q7, 16-bit data, 16-bit output, Q15
   16x16    16-bit coefficients, 16-bit data, 16-bit output, Q15
+  f        floating point data
 
   Input:
-  x[M][N]   input data Q15, Q7
-  y[P][Q]   input data Q15, Q7
+  x[M][N]   input data Q15, Q7, floating point
+  y[P][Q]   input data Q15, Q7, floating point
   M         number of rows in the matrix x
   N         number of columns in the matrix x
   P         number of rows in the matrix y
   Q         number of columns in the matrix y
+  rsh       additional right shift (for fixed point API only)
 
   Output:
-  z	[M+P-1][N+Q-1] output data, Q(7-rsh), Q(15-rsh)
+  z	[M+P-1][N+Q-1] output data, Q(7-rsh), Q(15-rsh), floating point
 
   Temporary:
   pScr     scratch data. Should have size at least as requested by 
@@ -1033,6 +1043,9 @@ void conv2d_11x7_8x16 (void* pScr, int16_t *z, const int8_t  * x, const int16_t 
 void conv2d_3x3_16x16 (void* pScr, int16_t *z, const int16_t * x, const int16_t * y, int rsh, int P, int Q); // MxN=3x3
 void conv2d_5x5_16x16 (void* pScr, int16_t *z, const int16_t * x, const int16_t * y, int rsh, int P, int Q); // MxN=5x5
 void conv2d_11x7_16x16(void* pScr, int16_t *z, const int16_t * x, const int16_t * y, int rsh, int P, int Q); // MxN=11x7
+void conv2d_3x3f      (void* pScr, float32_t *z, const float32_t * x, const float32_t * y, int P, int Q); // MxN=3x3
+void conv2d_5x5f      (void* pScr, float32_t *z, const float32_t * x, const float32_t * y, int P, int Q); // MxN=5x5
+void conv2d_11x7f     (void* pScr, float32_t *z, const float32_t * x, const float32_t * y, int P, int Q); // MxN=11x7
 
 // scratch allocatation functions. return required scratch size in bytes
 size_t conv2d_3x3_8x8_getScratchSize   (int P, int Q); // MxN=3x3
@@ -1044,6 +1057,9 @@ size_t conv2d_11x7_8x16_getScratchSize (int P, int Q); // MxN=11x7
 size_t conv2d_3x3_16x16_getScratchSize (int P, int Q); // MxN=3x3
 size_t conv2d_5x5_16x16_getScratchSize (int P, int Q); // MxN=5x5
 size_t conv2d_11x7_16x16_getScratchSize(int P, int Q); // MxN=11x7
+size_t conv2d_3x3f_getScratchSize (int P, int Q); // MxN=3x3
+size_t conv2d_5x5f_getScratchSize (int P, int Q); // MxN=5x5
+size_t conv2d_11x7f_getScratchSize(int P, int Q); // MxN=11x7
 
 #ifdef __cplusplus
 }

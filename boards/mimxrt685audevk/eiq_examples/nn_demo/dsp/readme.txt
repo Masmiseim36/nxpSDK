@@ -14,7 +14,7 @@ All the layer examples are executed in 2 flavours: synchronous and asynchronous.
 Toolchain supported
 ===================
 - Xtensa C Compiler  14.01
-- Xtensa Xplorer  8.0.10
+- Xtensa Xplorer  9.0.18
 
 Hardware requirements
 =====================

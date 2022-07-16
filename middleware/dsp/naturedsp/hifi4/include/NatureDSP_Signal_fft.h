@@ -48,6 +48,8 @@ extern "C" {
   imdct                Inverse Modified Discrete Cosine Transform
   dct2d                2-D Discrete Cosine Transform
   idct2d               Inverse 2-D Discrete Cosine Transform
+  fft2d                2-D fft 
+  ifft2d               2-D ifft 
 
   There are limited combinations of precision and scaling options available:
   ----------------+---------------------------------------------------------------
@@ -94,6 +96,10 @@ extern "C" {
   ----------------+---------------------------------------------------------------
   dct2d_8x16      | 0 - no scaling                         |        none
   idct2d_16x8     | 0 - no scaling                         |        none
+  fft2d_8x16      | 3 - fixed scaling before each stage    |        none
+  fft2d_16x16     | 3 - fixed scaling before each stage    |        none
+  ifft2d_16x8     | 3 - fixed scaling before each stage    |        none
+  ifft2d_16x16    | 3 - fixed scaling before each stage    |        none
   ----------------+---------------------------------------------------------------
 ===========================================================================*/
 
@@ -1098,6 +1104,104 @@ int idct2d_16x8(uint8_t * y, int16_t * x, dct_handle_t h, int L, int scalingOpt)
 // 2D-IDCT handles
 extern const dct_handle_t idct2d_16_8 ;   // N=8 , idct2d_16x8
 
+/*-------------------------------------------------------------------------
+  2-D FFT for image data
+  These functions apply complex 2-dimensional FFT to 8-bit or 16-bit 
+  integer data (NxN pixels). 
+  N is power of 2 in range 8...128
+
+  Scaling:
+      +-----------------------+--------------------------------------+
+      |      Function         |           Scaling options            |
+      +-----------------------+--------------------------------------+
+      |       fft2d_8x16      |           0 - no scaling             |
+      |       fft2d_16x16     |           0 - no scaling             |
+      +-----------------------+--------------------------------------+
+  Notes:
+  Algorithm uses additional bias 128 for unsigned 8-bit data or 
+  32768 for unsigned 16-bit data, which is equivalent that we simply treat 
+  them as signed inputs with no bias.
+
+  Precision: 
+  8x16   8-bit unsigned input, 16-bit signed output
+  16x16  16-bit unsigned input, 16-bit signed output
+
+  Input:
+  x[N*N]    input pixels
+  h         DCT handle, for N=8...128
+  scalingOpt  scaling option (see table above), should be 3
+
+  Output:
+  y[N*N]    output of transform
+
+  Temporary:
+  temp[N*N] intermediate array
+
+  Returned value: total number of right shifts occurred during scaling 
+                  procedure.
+  Restriction:
+  x,y         should not overlap
+  x,y         aligned on 8-bytes boundary
+
+-------------------------------------------------------------------------*/
+typedef const void * fft2d_handle_t;
+int fft2d_8x16 (complex_fract16 * y, complex_fract16 * temp, const uint8_t  * x, fft2d_handle_t h, int scalingOpt);
+int fft2d_16x16(complex_fract16 * y, complex_fract16 * temp, const uint16_t * x, fft2d_handle_t h, int scalingOpt);
+// 2D-FFT handles
+extern const fft2d_handle_t fft2d_16_8  ;   // N=8   , fft2d_8x16, fft2d_16x16
+extern const fft2d_handle_t fft2d_16_16 ;   // N=16  , fft2d_8x16, fft2d_16x16
+extern const fft2d_handle_t fft2d_16_32 ;   // N=32  , fft2d_8x16, fft2d_16x16
+extern const fft2d_handle_t fft2d_16_64 ;   // N=64  , fft2d_8x16, fft2d_16x16
+extern const fft2d_handle_t fft2d_16_128;   // N=128 , fft2d_8x16, fft2d_16x16
+
+/*-------------------------------------------------------------------------
+  2-D inverse FFT for image data
+  These functions apply inverse complex 2-dimensional FFT converting 
+  input 2d-spectrum to 8-bit or 16-bit integer data  (NxN pixels). 
+  N is power of 2 in range 8...128
+
+  Scaling:
+      +-----------------------+--------------------------------------+
+      |      Function         |           Scaling options            |
+      +-----------------------+--------------------------------------+
+      |      ifft2d_16x8      |           0 - no scaling             |
+      |      ifft2d_16x16     |           0 - no scaling             |
+      +-----------------------+--------------------------------------+
+  Notes:
+  Algorithm uses additional bias 128 for unsigned 8-bit data or 
+  32768 for unsigned 16-bit data, which is equivalent that we simply treat 
+  them as signed outputs with no bias.
+
+  Precision: 
+  16x8   16-bit signed input, 8-bit unsigned output
+  16x16  16-bit signed input, 16-bit unsigned output
+
+  Input:
+  x[N*N]    input 2d-spectrum
+  h         2d-fft handle, for N=8...128
+  scalingOpt  scaling option (see table above), should be 3
+
+  Output:
+  y[N*N]    output pixels
+
+  Temporary:
+  temp[N*N] intermediate array
+
+  Returned value: total number of right shifts occurred during scaling 
+                  procedure.
+  Restriction:
+  x,y         should not overlap
+  x,y         aligned on 8-bytes boundary
+-------------------------------------------------------------------------*/
+int ifft2d_16x8 (uint8_t  * y, complex_fract16 * temp, const complex_fract16 * x, fft2d_handle_t h, int scalingOpt);
+int ifft2d_16x16(uint16_t * y, complex_fract16 * temp, const complex_fract16 * x, fft2d_handle_t h, int scalingOpt);
+// 2D-FFT handles
+typedef const void * ifft2d_handle_t;
+extern const ifft2d_handle_t ifft2d_16_8  ;   // N=8   , ifft2d_16x8, ifft2d_16x16
+extern const ifft2d_handle_t ifft2d_16_16 ;   // N=16  , ifft2d_16x8, ifft2d_16x16
+extern const ifft2d_handle_t ifft2d_16_32 ;   // N=32  , ifft2d_16x8, ifft2d_16x16
+extern const ifft2d_handle_t ifft2d_16_64 ;   // N=64  , ifft2d_16x8, ifft2d_16x16
+extern const ifft2d_handle_t ifft2d_16_128;   // N=128 , ifft2d_16x8, ifft2d_16x16
 
 #ifdef __cplusplus
 }

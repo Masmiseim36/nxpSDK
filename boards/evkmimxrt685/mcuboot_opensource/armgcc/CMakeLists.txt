@@ -47,8 +47,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../include/sysflash/sysflash.h"
 "${ProjDirPath}/../flashiap/flash_api.c"
 "${ProjDirPath}/../flashiap/flash_info.h"
-"${ProjDirPath}/../flashiap/flexspi_flash.c"
-"${ProjDirPath}/../flashiap/flexspi_flash.h"
 "${ProjDirPath}/../main.c"
 "${ProjDirPath}/../sblconfig.h"
 "${ProjDirPath}/../pin_mux.c"
@@ -58,8 +56,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../flexspi_flash_config.h"
-"${ProjDirPath}/../flexspi_octal_flash_ops.c"
 )
 
 target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -83,6 +79,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../devices/MIMXRT685S/drivers
     ${ProjDirPath}/../../../../middleware/mcuboot_opensource/boot/bootutil
     ${ProjDirPath}/../../../../middleware/mbedtls
+    ${ProjDirPath}/../../../../components/flash/mflash/mimxrt685
     ${ProjDirPath}/../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../devices/MIMXRT685S/utilities
     ${ProjDirPath}/../../../../components/uart
@@ -90,6 +87,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../components/serial_manager
     ${ProjDirPath}/../../../../components/lists
     ${ProjDirPath}/../../../../CMSIS/Core/Include
+    ${ProjDirPath}/../../../../components/flash/mflash
 )
 
 # include modules
@@ -102,6 +100,8 @@ include(middleware_mbedtls_MIMXRT685S_cm33)
 include(middleware_mbedtls_port_ksdk_MIMXRT685S_cm33)
 
 include(middleware_mbedtls_rt1_MIMXRT685S_cm33)
+
+include(component_mflash_rt685_MIMXRT685S_cm33)
 
 include(driver_clock_MIMXRT685S_cm33)
 
@@ -146,6 +146,8 @@ include(driver_casper_MIMXRT685S_cm33)
 include(driver_hashcrypt_MIMXRT685S_cm33)
 
 include(driver_trng_MIMXRT685S_cm33)
+
+include(component_mflash_common_MIMXRT685S_cm33)
 
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 

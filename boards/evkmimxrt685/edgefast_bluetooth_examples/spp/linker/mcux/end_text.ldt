@@ -18,6 +18,15 @@
     . = ALIGN(4);
   } > BOARD_FLASH
 
+  ._bt_conn_cb :
+  {
+    . = ALIGN(4);
+    _bt_conn_cb_list_start = .;
+    KEEP(*(SORT(._bt_conn_cb.static.*)))
+    _bt_conn_cb_list_end = .;
+    . = ALIGN(4);
+  } > BOARD_FLASH
+
   ._bt_gatt_service_static :
   {
     . = ALIGN(4);

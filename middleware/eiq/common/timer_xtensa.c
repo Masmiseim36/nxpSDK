@@ -1,15 +1,13 @@
 /*
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "fsl_clock.h"
 #include "timer.h"
 
-#include <stdint.h>
-#include <time.h>
+#include <xtensa/xos.h>
 
 /*******************************************************************************
  * Code
@@ -17,10 +15,11 @@
 
 void TIMER_Init()
 {
-	CLOCK_SetXtalFreq(24000000);
+    xos_set_clock_freq(XOS_CLOCK_FREQ);
+    xos_start_system_timer(-1, 0);
 }
 
 int TIMER_GetTimeInUS()
 {
-    return clock() / (CLOCK_GetFreq(kCLOCK_DspCpuClk) / 1000000);
+    return xos_get_system_cycles() / (xos_get_clock_freq() / 1000000);
 }

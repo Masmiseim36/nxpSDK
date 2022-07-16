@@ -62,6 +62,14 @@ NOTES:
   4. 16x16 routine may converge slower on small errors due to roundoff 
      errors. In that cases, 16x32 routine will give better results although
      convergence rate on bigger errors is the same.
+  5. Terms near-end and far-end come from echo cancellation theory where the 
+     LMS is used widely. For echo cancellation them term far-end means the 
+     output of speakerphone (far end designates that the origin of it is 
+     somewhere outside say came from the remote speaker). The near-end is 
+     a signal from the local microphone representing a sum of the echo, 
+     speech of local speaker and the noise. The LMS is used to estimate the 
+     equivalent impulse response of the echopath further compensation and 
+     removal the echo from the near-end signal.
 
   Precision: 
   16x16    16-bit coefficients, 16-bit data, 16-bit output
@@ -144,7 +152,8 @@ void fir_blms16x32( int32_t * restrict e,
             AE_LA16X4_RIC( x3, ax, px1);
             AE_L32X2_IP(h2,H,8);
             h1=AE_ZERO32();
-            __Pragma("loop_count min=1")
+			__Pragma("loop_count min=1");
+			__Pragma("no_unroll");
             for (m=0; m<(M>>3); m++ )
             {
                 AE_L16X4_RIP ( x0, px0,-8);
@@ -209,26 +218,27 @@ void fir_blms16x32( int32_t * restrict e,
             AE_LA16X4_RIC( x3, ax, px1);
             AE_MULAAAAFQ32X16(q2,h1,h0,x0);
             AE_MULAAAAFQ32X16(q3,h1,h0,x1);
-            __Pragma("loop_count min=2")
+			__Pragma("loop_count min=2");
+			__Pragma("no_unroll");
             for (m=0; m<(M>>3)-1; m++ )
-            {
-                AE_L32X2_IP(h1,H,8);
-                AE_L32X2_IP(h2,H,8);
-                AE_MULAAAAFQ32X16(q0,h0,h1,x2);
-                AE_MULAAAAFQ32X16(q1,h0,h1,x3);
-                AE_L16X4_RIP ( x0, px0,-8);
-                AE_LA16X4_RIC( x1, ax, px1);
-                AE_MULAAAAFQ32X16(q2,h1,h2,x2);
-                AE_MULAAAAFQ32X16(q3,h1,h2,x3);
+			{
+				AE_L32X2_IP(h1, H, 8);
+				AE_L32X2_IP(h2, H, 8);
+				AE_MULAAAAFQ32X16(q0, h0, h1, x2);
+				AE_MULAAAAFQ32X16(q1, h0, h1, x3);
+				AE_L16X4_RIP(x0, px0, -8);
+				AE_LA16X4_RIC(x1, ax, px1);
+				AE_MULAAAAFQ32X16(q2, h1, h2, x2);
+				AE_MULAAAAFQ32X16(q3, h1, h2, x3);
 
-                AE_L32X2_IP(h1,H,8);
-                AE_L32X2_IP(h0,H,8);
-                AE_MULAAAAFQ32X16(q0,h2,h1,x0);
-                AE_MULAAAAFQ32X16(q1,h2,h1,x1);
-                AE_L16X4_RIP ( x2, px0,-8);
-                AE_LA16X4_RIC( x3, ax, px1);
-                AE_MULAAAAFQ32X16(q2,h1,h0,x0);
-                AE_MULAAAAFQ32X16(q3,h1,h0,x1);
+				AE_L32X2_IP(h1, H, 8);
+				AE_L32X2_IP(h0, H, 8);
+				AE_MULAAAAFQ32X16(q0, h2, h1, x0);
+				AE_MULAAAAFQ32X16(q1, h2, h1, x1);
+				AE_L16X4_RIP(x2, px0, -8);
+				AE_LA16X4_RIC(x3, ax, px1);
+				AE_MULAAAAFQ32X16(q2, h1, h0, x0);
+				AE_MULAAAAFQ32X16(q3, h1, h0, x1);
             }
             AE_L32X2_IP(h1,H,8);
             AE_MULAAAAFQ32X16(q0,h0,h1,x2);

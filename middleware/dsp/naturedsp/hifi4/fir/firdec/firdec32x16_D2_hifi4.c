@@ -168,38 +168,45 @@
         t2 = t4;
         t3 = t5;
     }
-    __Pragma("loop_count min=1")
+	t4 = t0; // Optimisation for reduction of all moves 
+	t5 = t1; // in inner loop
+	__Pragma("loop_count min=1");
+	__Pragma("no_unroll");
     for ( m=0; m<((M>>2)+1)>>1; m++ )
-    {
+	{
+		// Move optimisation 1:
+		// t0 --> t4; t1 --> t5;
+
         // Load the next 4 tap coefficients.
-        AE_L16X4_XC1(c0, C0, 16);
+		AE_L16X4_XC1(c0, C0, 16);
+
+		AE_MULAAAAFQ32X16(q0, t4, t5, c0); // q0 += t0 * t1
+		AE_MULAAAAFQ32X16(q1, t5, t2, c0); // q1 += t1 * t2
+
         // Load 2 samples for each even-numbered accumulator.
         AE_L32X2_XC( t4, D_rd0, +16);
         AE_L32X2_XC( t5, D_rd1, +16);
-        AE_MULAAAAFQ32X16(q0,t0,t1,c0);
-        AE_MULAAAAFQ32X16(q1,t1,t2,c0);
-        AE_MULAAAAFQ32X16(q2,t2,t3,c0);
-        AE_MULAAAAFQ32X16(q3,t3,t4,c0);
 
-        t0 = t2;
-        t1 = t3;
-        t2 = t4;
-        t3 = t5;
+		AE_MULAAAAFQ32X16(q2, t2, t3, c0);
+		AE_MULAAAAFQ32X16(q3, t3, t4, c0);
+
+		// Move optimisation 2:
+		// t0 --> t2; t1 --> t3; t4 --> t2; t5 --> t3;
 
         // Load the next 4 tap coefficients.
         AE_L16X4_XC1(c0, C1, 16);
-        // Load 2 samples for each even-numbered accumulator.
-        AE_L32X2_XC( t4, D_rd0, +16);
-        AE_L32X2_XC( t5, D_rd1, +16);
-        AE_MULAAAAFQ32X16(q0,t0,t1,c0);
-        AE_MULAAAAFQ32X16(q1,t1,t2,c0);
-        AE_MULAAAAFQ32X16(q2,t2,t3,c0);
-        AE_MULAAAAFQ32X16(q3,t3,t4,c0);
 
-        t0 = t2;
-        t1 = t3;
-        t2 = t4;
-        t3 = t5;
+		AE_MULAAAAFQ32X16(q0, t2, t3, c0); // q0 += t0 * t1
+		AE_MULAAAAFQ32X16(q1, t3, t4, c0); // q1 += t1 * t2
+		AE_MULAAAAFQ32X16(q2, t4, t5, c0); // q2 += t2 * t3
+
+		// Move optimisation 3:
+		// t4 --> t2; t3 --> t5; t4 --> t2; t5 --> t3
+
+        // Load 2 samples for each even-numbered accumulator.
+		AE_L32X2_XC(t2, D_rd0, +16); // t4
+		AE_MULAAAAFQ32X16(q3, t5, t2, c0); // q3 += t3 * t4
+		AE_L32X2_XC(t3, D_rd1, +16); // t5
     }
     // Convert and save 8 outputs.
     // 2xQ31 <- 2xQ16.47 - 16 w/ rounding and saturation.

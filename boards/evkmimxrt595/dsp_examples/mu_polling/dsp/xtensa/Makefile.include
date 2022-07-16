@@ -5,24 +5,29 @@ build_target := $(subst D,d,$(build_target))
 
 post-all:
 	@echo post all rule
-	@echo ${xt_sysargs}
-	@echo ${xt_project}
-	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_reset_$(build_target).bin \
+	@echo ${xt_build_sysargs}
+	@echo ${xt_build_project}
+	xt-objcopy ${xt_build_sysargs} -O binary ${xt_build_project} ../../../../binary/dsp_reset_$(build_target).bin \
 	--only-section=.ResetVector.text
-	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_text_$(build_target).bin \
+	xt-objcopy ${xt_build_sysargs} -O binary ${xt_build_project} ../../../../binary/dsp_text_$(build_target).bin \
 	--only-section=.WindowVectors.text \
 	--only-section=.Level2InterruptVector.text \
+	--only-section=.Level3InterruptVector.literal \
 	--only-section=.Level3InterruptVector.text \
+	--only-section=.DebugExceptionVector.literal \
 	--only-section=.DebugExceptionVector.text \
+	--only-section=.NMIExceptionVector.literal \
 	--only-section=.NMIExceptionVector.text \
 	--only-section=.KernelExceptionVector.text \
 	--only-section=.UserExceptionVector.text \
 	--only-section=.DoubleExceptionVector.text \
 	--only-section=.text
-	xt-objcopy ${xt_sysargs} -O binary ${xt_project} ../../../../binary/dsp_data_$(build_target).bin \
+	xt-objcopy ${xt_build_sysargs} -O binary ${xt_build_project} ../../../../binary/dsp_data_$(build_target).bin \
+	--only-section=.clib.rodata \
 	--only-section=.rtos.rodata \
 	--only-section=.rodata \
-	--only-section=.rtos.percpu \
+	--only-section=.clib.data \
+	--only-section=.rtos.percpu.data \
 	--only-section=.data \
 	--only-section=.bss
 

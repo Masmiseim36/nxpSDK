@@ -75,19 +75,20 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../middleware/mbedtls
     ${ProjDirPath}/../../../../../devices/MIMXRT685S/drivers
     ${ProjDirPath}/../../../../../rtos/freertos/freertos_kernel
-    ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
-    ${ProjDirPath}/../../../../../middleware/wifi
-    ${ProjDirPath}/../../../../../components/wifi_bt_module
-    ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../middleware/wifi_nxp
     ${ProjDirPath}/../../../../../components/flash/mflash/mimxrt685
     ${ProjDirPath}/../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../devices/MIMXRT685S/utilities
+    ${ProjDirPath}/../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../components/gpio
     ${ProjDirPath}/../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
-    ${ProjDirPath}/../../../../../components/osa
+    ${ProjDirPath}/../../../../../components/wifi_bt_module
     ${ProjDirPath}/../../../../../components/flash/mflash
+    ${ProjDirPath}/../../../../../components/osa
 )
 
 # include modules
@@ -103,21 +104,13 @@ include(middleware_freertos-kernel_heap_3_MIMXRT685S_cm33)
 
 include(middleware_lwip_MIMXRT685S_cm33)
 
-include(utility_debug_console_MIMXRT685S_cm33)
-
 include(middleware_wifi_MIMXRT685S_cm33)
 
-include(component_wifi_bt_module_tx_pwr_limits_MIMXRT685S_cm33)
+include(driver_casper_MIMXRT685S_cm33)
 
-include(driver_usdhc_MIMXRT685S_cm33)
+include(driver_hashcrypt_MIMXRT685S_cm33)
 
-include(middleware_sdmmc_sdio_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_common_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_host_usdhc_MIMXRT685S_cm33)
-
-include(middleware_sdmmc_host_usdhc_freertos_MIMXRT685S_cm33)
+include(driver_trng_MIMXRT685S_cm33)
 
 include(component_mflash_rt685_MIMXRT685S_cm33)
 
@@ -130,6 +123,24 @@ include(driver_pca9420_MIMXRT685S_cm33)
 include(middleware_mbedtls_port_ksdk_MIMXRT685S_cm33)
 
 include(middleware_mbedtls_rt1_MIMXRT685S_cm33)
+
+include(middleware_wifi_wifidriver_MIMXRT685S_cm33)
+
+include(utility_debug_console_MIMXRT685S_cm33)
+
+include(middleware_wifi_sdio_MIMXRT685S_cm33)
+
+include(middleware_wifi_fwdnld_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_sdio_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_common_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_host_usdhc_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_host_usdhc_freertos_MIMXRT685S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT685S_cm33)
 
 include(driver_common_MIMXRT685S_cm33)
 
@@ -167,23 +178,19 @@ include(middleware_lwip_apps_httpsrv_MIMXRT685S_cm33)
 
 include(middleware_freertos-kernel_extension_MIMXRT685S_cm33)
 
-include(driver_casper_MIMXRT685S_cm33)
-
 include(CMSIS_Include_core_cm_MIMXRT685S_cm33)
 
-include(driver_hashcrypt_MIMXRT685S_cm33)
+include(component_wifi_bt_module_tx_pwr_limits_MIMXRT685S_cm33)
 
-include(driver_trng_MIMXRT685S_cm33)
+include(component_mflash_common_MIMXRT685S_cm33)
 
-include(middleware_wifi_wifidriver_MIMXRT685S_cm33)
-
-include(middleware_wifi_fwdnld_MIMXRT685S_cm33)
+include(middleware_wifi_sdio-2_MIMXRT685S_cm33)
 
 include(middleware_sdmmc_osa_freertos_MIMXRT685S_cm33)
 
 include(component_osa_free_rtos_MIMXRT685S_cm33)
 
-include(component_mflash_common_MIMXRT685S_cm33)
+include(driver_usdhc_MIMXRT685S_cm33)
 
 include(utilities_misc_utilities_MIMXRT685S_cm33)
 

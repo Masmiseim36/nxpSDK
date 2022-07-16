@@ -192,7 +192,8 @@
 
     AE_L32X2_XC( t0, D_rd0, +8 );
     AE_L32X2_XC( t2, D_rd2, +8 );
-    __Pragma("loop_count min=2")
+	__Pragma("loop_count min=2");
+	__Pragma("no_unroll");
     for ( m=0; m<(M>>2)+1; m++ )
     {
       // Load the next 4 tap coefficients.
@@ -202,26 +203,30 @@
 
       // Load 2 samples for each even-numbered accumulator.
       // Q31
-
       AE_L32X2_XC( t4, D_rd0, +16 );
       AE_L32X2_XC( t6, D_rd2, +16 );
-
-      AE_LA32X2_IC( t1, D_va1, D_rd1 );
-      AE_LA32X2_IC( t3, D_va3, D_rd3 );
-      AE_LA32X2_IC( t5, D_va1, D_rd1 );
-      AE_LA32X2_IC( t7, D_va3, D_rd3 );
       
       // Q9.62 <- Q9.62 + [ Q31*Q31 ] without symmetric rounding
       AE_MULAAD32EP_HH_LL (ep0,q0,t0,c0);
       AE_MULAAD32EP_HH_LL (ep0,q0,t4,c1);
-      AE_MULAAD32EP_HH_LL (ep1,q1,t1,c0);
-      AE_MULAAD32EP_HH_LL (ep1,q1,t5,c1);
       AE_MULAAD32EP_HH_LL (ep2,q2,t2,c0);
       AE_MULAAD32EP_HH_LL (ep2,q2,t6,c1);
-      AE_MULAAD32EP_HH_LL (ep3,q3,t3,c0);
-      AE_MULAAD32EP_HH_LL (ep3,q3,t7,c1);
 
-      t0 = t1; t2 = t3;
+	  // Optimisation of { t0 = t1; t2 = t3; }
+      // Load 2 samples for each odd-numbered accumulator.
+      // Q31
+	  AE_LA32X2_IC(t0, D_va1, D_rd1); // t1
+	  AE_LA32X2_IC(t2, D_va3, D_rd3); // t3
+
+	  AE_MULAAD32EP_HH_LL(ep1, q1, t0, c0); // ep1 += q1 * t1
+	  AE_MULAAD32EP_HH_LL(ep3, q3, t2, c0); // ep3 += q3 * t3
+
+	  AE_LA32X2_IC(t5, D_va1, D_rd1);
+	  AE_LA32X2_IC(t7, D_va3, D_rd3);
+
+	  AE_MULAAD32EP_HH_LL(ep1, q1, t5, c1);
+	  AE_MULAAD32EP_HH_LL(ep3, q3, t7, c1);
+
     }
     //Q17.47 <- Q9.62
     q0 = AE_SRAI72(ep0,q0,15);

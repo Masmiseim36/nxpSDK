@@ -2,71 +2,37 @@ SET(CMAKE_ASM_FLAGS_DEBUG " \
     ${CMAKE_ASM_FLAGS_DEBUG} \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
-    -g \
     -mcpu=cortex-m33 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_RELEASE " \
     ${CMAKE_ASM_FLAGS_RELEASE} \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_DEBUG " \
     ${CMAKE_ASM_FLAGS_FLASH_DEBUG} \
     -DDEBUG \
     -D__STARTUP_CLEAR_BSS \
-    -g \
     -mcpu=cortex-m33 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_ASM_FLAGS_FLASH_RELEASE " \
     ${CMAKE_ASM_FLAGS_FLASH_RELEASE} \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -mcpu=cortex-m33 \
-    -Wall \
     -mfloat-abi=hard \
     -mfpu=fpv5-sp-d16 \
     -mthumb \
-    -fno-common \
-    -ffunction-sections \
-    -fdata-sections \
-    -ffreestanding \
-    -fno-builtin \
-    -mapcs \
-    -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS_DEBUG} \
@@ -80,8 +46,8 @@ SET(CMAKE_C_FLAGS_DEBUG " \
     -DUSE_RTOS=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMFLASH_FILE_BASEADDR=7340032 \
-    -DSDIO_ENABLED \
     -DSDK_OS_FREE_RTOS \
+    -DSDIO_ENABLED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -g \
@@ -115,8 +81,8 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -DUSE_RTOS=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMFLASH_FILE_BASEADDR=7340032 \
-    -DSDIO_ENABLED \
     -DSDK_OS_FREE_RTOS \
+    -DSDIO_ENABLED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -Os \
@@ -150,8 +116,8 @@ SET(CMAKE_C_FLAGS_FLASH_DEBUG " \
     -DUSE_RTOS=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMFLASH_FILE_BASEADDR=7340032 \
-    -DSDIO_ENABLED \
     -DSDK_OS_FREE_RTOS \
+    -DSDIO_ENABLED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -g \
@@ -186,8 +152,8 @@ SET(CMAKE_C_FLAGS_FLASH_RELEASE " \
     -DUSE_RTOS=1 \
     -DSDK_I2C_BASED_COMPONENT_USED=1 \
     -DMFLASH_FILE_BASEADDR=7340032 \
-    -DSDIO_ENABLED \
     -DSDK_OS_FREE_RTOS \
+    -DSDIO_ENABLED \
     -DSERIAL_PORT_TYPE_UART=1 \
     -DMCUXPRESSO_SDK \
     -Os \

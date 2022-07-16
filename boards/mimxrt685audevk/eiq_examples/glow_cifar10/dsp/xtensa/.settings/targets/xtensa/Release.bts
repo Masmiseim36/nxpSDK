@@ -48,7 +48,6 @@
 -mno-div32&#13;
 -mno-mul16&#13;
 -mno-mul32&#13;
--fpermissive&#13;
 -Wno-missing-braces&#13;
 -fmessage-length=0&#13;
 -std=gnu99</ListEntry></value>
@@ -80,7 +79,7 @@
             <key>LinkerAdditionalOptions</key>
             <value inheritance="append">
               <ListEntry>${xt_project_loc}/../glow_bundle/model.o&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/libxa_nnlib.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a&#13;
 </ListEntry>
             </value>
           </StringListMapEntry>

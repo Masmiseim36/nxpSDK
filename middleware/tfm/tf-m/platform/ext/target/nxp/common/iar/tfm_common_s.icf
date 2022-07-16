@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017-2021 Arm Limited. All rights reserved.
+ * Copyright (c) 2017-2022 Arm Limited. All rights reserved.
  * Copyright (c) 2020-2021 IAR Systems AB
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,41 +26,31 @@ keep{section .flash_conf };
 place at address mem: M_BOOT_FLASH_CONF_START    { readonly section .flash_conf };
 #endif
 // --------- NXP end --------------
+define block ER_VECTORS with size = S_CODE_VECTOR_TABLE_SIZE {
+       readonly section .intvec
+};
+
+#ifndef TFM_MULTI_CORE_TOPOLOGY
+    /*
+     * Place the CMSE Veneers (containing the SG instruction) in a separate
+     * 32 bytes aligned region so that the SAU can be programmed to
+     * just set this region as Non-Secure Callable.
+     */
+define block ER_VENEER with alignment = 0x20 {section Veneer$$CMSE};
+
+define block VENEER_ALIGN with alignment = 0x20, size = 0 { };
+#endif
 
 define block ER_TFM_CODE with fixed order, alignment = 8, maximum size = S_CODE_SIZE {
-       readonly section .intvec,
-#ifndef S_RAM_CODE_START
-       rw section .textrw object *.o,           /* place __ramfunc in ROM if no TFM_RAM_CODE block */
-#endif
-       readonly
+       ro section .text  object *startup*,
+       ro section .text  object *libplatform_s*,
+       ro section .rodata object *libplatform_s*,
+       ro object *libtfm_spm*,
 };
 
 define block TFM_UNPRIV_CODE with alignment = 32 {
        section SFN,
-       ro section .rodata object tfm_*_secure_api.o,
-       ro object *6M_tl*.a,
-       ro object *7M_tl*.a,
-       ro object *libtfm_sprt.a,
-// --------- NXP --------------
-       ro object tfm_sprt.*,                   //NXP
-       ro object service_api.*,                //NXP
-       ro object tfm_crypto_secure_api.*,      //NXP
-       ro object tfm_audit_secure_api.*,       //NXP
-       ro object tfm_its_secure_api.*,         //NXP
-       ro object tfm_platform_secure_api.*,    //NXP
-       ro object tfm_ps_secure_api.*,          //NXP
-       ro object tfm_ps_test_service_api.*,    //NXP
-       ro object tfm_secure_client_2_api.*,    //NXP
-       ro object tfm_attest_secure_api.*,      //NXP
-       ro object sprt_partition_metadata_indicator.*,      //NXP
-       
-       ro object *psa_client.*,                //NXP
-       ro object *psa_service.*,               //NXP
-       ro object *psa_lifecycle.*,             //NXP
-       ro object *tfm_log_raw.*,               //NXP
-       ro object *tfm_sp_log_raw.*,            //NXP
-       ro object *tfm_hal_sp_logdev_periph.*,  //NXP
-// --------- NXP end --------------
+       readonly
        };
 
     /**** Section for holding partition RO load data */
@@ -75,8 +65,10 @@ define block TFM_SP_LOAD_LIST with alignment = 4 {
      */
 define block TFM_PSA_CODE_START with alignment = 32, size = 0 { };
 
-    define block TFM_PSA_ROT_LINKER with alignment = 32 {
-        ro object *tfm_psa_rot_partition*,
+define block TFM_PSA_ROT_LINKER with alignment = 32 {
+       ro object *tfm_psa_rot_partition*,
+       section TFM_*_PSA-ROT_ATTR_FN object *libplatform_s*,
+       section TFM_*_PSA-ROT_ATTR_FN object *.o,
     };
 
     /*
@@ -108,15 +100,15 @@ define block TFM_APP_CODE_START with alignment = 32, size = 0 { };
         ro object *load_info_tfm_protected_storage.*,
         ro object *tfm_ps_secure_api.*,
         ro object *tfm_ps_secure_api.*,
-// #ifdef TFM_PARTITION_TEST_CORE
+// #ifdef TEST_NS_CORE
         ro object *tfm_ss_core_test_2.*,
         ro object *intermedia_tfm_ss_core_test_2.*,
         ro object *load_info_tfm_ss_core_test_2.*,
-// #ifdef TFM_PARTITION_TEST_CORE_IPC
+// #ifdef TFM_PARTITION_IPC_TEST
         ro object *tfm_ipc_client_test.*,
         ro object *intermedia_tfm_ipc_client_test.*,
         ro object *load_info_tfm_ipc_client_test.*,
-// #ifdef TFM_PARTITION_TEST_SECURE_SERVICES
+// #ifdef TEST_FRAMEWORK_S
         ro object *tfm_secure_client_2.*,
         ro object *intermedia_tfm_secure_client_2.*,
         ro object *load_info_tfm_secure_client_2.*,
@@ -124,12 +116,18 @@ define block TFM_APP_CODE_START with alignment = 32, size = 0 { };
         ro object *tfm_secure_client_2_api.*,
 // #ifdef TEST_NS_SLIH_IRQ
         ro object *tfm_slih_test_service.*,
+        ro object *tfm_irq_test_service.*,
         ro object *intermedia_tfm_slih_test_service.*,
         ro object *load_info_tfm_slih_test_service.*,
 // #ifdef TEST_NS_FLIH_IRQ
         ro object *tfm_flih_test_service.*,
+        ro object *tfm_irq_test_service.*,
         ro object *intermedia_tfm_flih_test_service.*,
         ro object *load_info_tfm_flih_test_service.*,
+// #ifdef TEST_PARTITION_FPU_TEST
+        ro object *tfm_fpu_service_test.*,
+        ro object *intermedia_tfm_fpu_service_test.*,
+        ro object *load_info_tfm_fpu_service_test.*,
 // --------- NXP end --------------
     };
 
@@ -141,11 +139,17 @@ define block TFM_APP_CODE_END with alignment = 32, size = 0 { };
 
 #if defined(S_CODE_SRAM_ALIAS_BASE)
     /* eFlash driver code that gets copied from Flash to SRAM */
-define block ER_CODE_SRAM with alignment = 4 {
+initialize by copy {
        ro object Driver_GFC100_EFlash.o,
        ro object gfc100_eflash_drv.o,
        ro object musca_b1_eflash_drv.o
-    };
+       };
+
+define block ER_CODE_SRAM  with fixed order, alignment = 8 {
+       rw section .text,
+       rw section .rodata
+       };
+
 place at address S_CODE_SRAM_ALIAS_BASE { block ER_CODE_SRAM };
 #endif
 
@@ -155,18 +159,16 @@ define block TFM_SECURE_DATA_START with size = 0 { };
 #ifndef TFM_MULTI_CORE_TOPOLOGY
     /* Shared area between BL2 and runtime to exchange data */
 define block TFM_SHARED_DATA with alignment = 32, size = BOOT_TFM_SHARED_DATA_SIZE { };
-define block ARM_LIB_STACK_MSP with alignment = 32, size = S_MSP_STACK_SIZE { };
+define block ARM_LIB_STACK with alignment = 32, size = S_MSP_STACK_SIZE { };
 define overlay STACK_DATA {block TFM_SHARED_DATA};
-define overlay STACK_DATA {block ARM_LIB_STACK_MSP};
+define overlay STACK_DATA {block ARM_LIB_STACK};
 
 # if !defined(TFM_PSA_API)
     /* Reserve space for stack seal (8 bytes) */
-define block ARM_LIB_STACK with alignment = 32, size = S_PSP_STACK_SIZE - 0x8 { };
-define block ARM_LIB_STACK_SEAL with size = 0x8 { };
-# else
-define block ARM_LIB_STACK with alignment = 32, size = S_PSP_STACK_SIZE { };
+define block ER_INITIAL_PSP with alignment = 32, size = S_PSP_STACK_SIZE - 0x8 { };
+define block ER_INITIAL_PSP_SEAL with size = 0x8 { };
 # endif
-keep {block TFM_SHARED_DATA, block ARM_LIB_STACK_MSP};
+keep {block TFM_SHARED_DATA, block ARM_LIB_STACK};
 #endif
 
 #if !defined(TFM_PSA_API)
@@ -174,17 +176,16 @@ define block TFM_SECURE_STACK   with size = 0x2000, alignment = 128 {};
 keep {block TFM_SECURE_STACK};
 #endif /* !defined(TFM_PSA_API) */
 
-#if defined(TFM_SP_META_PTR_ENABLE)
-define block TFM_SP_META_PTR_ENABLE with alignment = 32 {
-       section SP_META_PTR_SPRTL_INST
+#if defined(CONFIG_TFM_PARTITION_META)
+define block TFM_SP_META_PTR with alignment = 32 {
+    zi section .bss.SP_META_PTR_SPRTL_INST
        };
 #endif
 
 define block TFM_APP_RW_STACK_START with alignment = 32, size = 0 { };
 
-    define block TFM_APP_ROT_LINKER_DATA with alignment = 32 {
-        rw object *tfm_app_rot_partition*,
-	
+define block TFM_APP_ROT_LINKER_DATA with alignment = 32 {
+       rw object *tfm_app_rot_partition*,
 // --------- NXP --------------
 // #ifdef TFM_PARTITION_PROTECTED_STORAGE
         rw object *tfm_ps_req_mngr.*,
@@ -199,15 +200,15 @@ define block TFM_APP_RW_STACK_START with alignment = 32, size = 0 { };
         rw object *load_info_tfm_protected_storage.*,
         rw object *tfm_ps_secure_api.*,
         rw object *tfm_ps_secure_api.*,
-// #ifdef TFM_PARTITION_TEST_CORE
+// #ifdef TEST_NS_CORE
         rw object *tfm_ss_core_test_2.*,
         rw object *intermedia_tfm_ss_core_test_2.*,
         rw object *load_info_tfm_ss_core_test_2.*,
-// #ifdef TFM_PARTITION_TEST_CORE_IPC
+// #ifdef TFM_PARTITION_IPC_TEST
         rw object *tfm_ipc_client_test.*,
         rw object *intermedia_tfm_ipc_client_test.*,
         rw object *load_info_tfm_ipc_client_test.*,
-// #ifdef TFM_PARTITION_TEST_SECURE_SERVICES
+// #ifdef TEST_FRAMEWORK_S
         rw object *tfm_secure_client_2.*,
         rw object *intermedia_tfm_secure_client_2.*,
         rw object *load_info_tfm_secure_client_2.*,
@@ -215,13 +216,21 @@ define block TFM_APP_RW_STACK_START with alignment = 32, size = 0 { };
         rw object *tfm_secure_client_2_api.*,
 // #ifdef TEST_NS_SLIH_IRQ
         rw object *tfm_slih_test_service.*,
+        rw object *tfm_irq_test_service.*,
         rw object *intermedia_tfm_slih_test_service.*,
         rw object *load_info_tfm_slih_test_service.*,
 // #ifdef TEST_NS_FLIH_IRQ
         rw object *tfm_flih_test_service.*,
+        rw object *tfm_irq_test_service.*,
         rw object *intermedia_tfm_flih_test_service.*,
         rw object *load_info_tfm_flih_test_service.*,
+// #ifdef TEST_PARTITION_FPU_TEST
+        rw object *tfm_fpu_service_test.*,
+        rw object *intermedia_tfm_fpu_service_test.*,
+        rw object *load_info_tfm_fpu_service_test.*,
 // --------- NXP end --------------
+       section TFM_*_APP-ROT_ATTR_RW object *.o,
+       section TFM_*_APP-ROT_ATTR_ZI object *.o,
     };
 
 
@@ -245,20 +254,16 @@ define block TFM_SECURE_PRIV_DATA_BOUNDARY with size = 0 { };
 define block TFM_SHARED_DATA with alignment = 32, size = BOOT_TFM_SHARED_DATA_SIZE { };
 
     /* MSP */
-define block ARM_LIB_STACK_MSP with alignment = 32, size = S_MSP_STACK_SIZE { };
+define block ARM_LIB_STACK with alignment = 32, size = S_MSP_STACK_SIZE { };
 
 define overlay STACK_DATA {block TFM_SHARED_DATA};
-define overlay STACK_DATA {block ARM_LIB_STACK_MSP};
+define overlay STACK_DATA {block ARM_LIB_STACK};
 
-    /* PSP is privileged in multi-core topology */
-define block ARM_LIB_STACK with alignment = 32, size = S_PSP_STACK_SIZE { };
-keep {block TFM_SHARED_DATA, block ARM_LIB_STACK_MSP};
+keep {block TFM_SHARED_DATA, block ARM_LIB_STACK};
 #endif
 
 define block HEAP         with alignment = 8, size = S_HEAP_SIZE { };
-define block ARM_LIB_HEAP with alignment = 8, size = S_HEAP_SIZE { };
-define overlay HEAP_OVL {block HEAP};
-define overlay HEAP_OVL {block ARM_LIB_HEAP};
+define block ARM_LIB_HEAP {block HEAP};
 keep {block HEAP, block ARM_LIB_HEAP};
 
 define block ER_TFM_DATA          with alignment = 8 {readwrite};
@@ -280,9 +285,11 @@ keep {block ER_PART_RT_POOL, block ER_SERV_RT_POOL};
      */
 define block TFM_PSA_RW_STACK_START with alignment = 32, size = 0 { };
 
-    define block TFM_PSA_ROT_LINKER_DATA with alignment = 32 {
-        rw object *tfm_psa_rot_partition*,
-    };
+define block TFM_PSA_ROT_LINKER_DATA with alignment = 32 {
+       rw object *tfm_psa_rot_partition*,
+       section TFM_*_PSA-ROT_ATTR_RW object *.o,
+       section TFM_*_PSA-ROT_ATTR_ZI object *.o,
+};
 
 
     /*
@@ -307,7 +314,12 @@ place at address S_RAM_CODE_START      { block TFM_RAM_CODE };
      */
 define block SRAM_WATERMARK with size = 0 { };
 
-define block LR_CODE with fixed order {
+define block LR_CODE with fixed order, maximum size = S_CODE_SIZE {
+       block ER_VECTORS,
+#ifndef TFM_MULTI_CORE_TOPOLOGY
+       block ER_VENEER,
+       block VENEER_ALIGN,
+#endif
        block ER_TFM_CODE,
        block TFM_UNPRIV_CODE,
 
@@ -370,11 +382,11 @@ define block DATA with fixed order {
 #ifndef TFM_MULTI_CORE_TOPOLOGY
     /* Shared area between BL2 and runtime to exchange data */
     overlay STACK_DATA,
-    /* PSP is unprivileged in single-core topology */
-    block ARM_LIB_STACK,
 # if !defined(TFM_PSA_API)
+    /* PSP is unprivileged in single-core topology */
+    block ER_INITIAL_PSP,
     /* Define stack seal block for Library mode */
-    block ARM_LIB_STACK_SEAL,
+    block ER_INITIAL_PSP_SEAL,
 # endif
 #endif
 
@@ -382,7 +394,7 @@ define block DATA with fixed order {
     block TFM_SECURE_STACK,
 #endif /* !defined(TFM_PSA_API) */
 
-#if defined(TFM_SP_META_PTR_ENABLE)
+#if defined(CONFIG_TFM_PARTITION_META)
     block TFM_SP_META_PTR,
 #endif
 
@@ -415,11 +427,9 @@ define block PRIV_DATA with fixed order {
      */
     /* Shared area between BL2 and runtime to exchange data */
     overlay STACK_DATA,
-    /* PSP is privileged in multi-core topology */
-    block ARM_LIB_STACK,
 #endif
 
-    overlay HEAP_OVL,
+    block ARM_LIB_HEAP,
 
     section CodeQuickAccess, section DataQuickAccess, //NXP
 
@@ -460,16 +470,6 @@ define block PRIV_DATA with fixed order {
 place at address S_DATA_START          { block DATA };
 #if defined(TFM_MULTI_CORE_TOPOLOGY) && defined(S_DATA_PRIV_START)
 place at address S_DATA_PRIV_START     { block PRIV_DATA };
-#endif
-
-#ifndef TFM_MULTI_CORE_TOPOLOGY
-    /*
-     * Place the CMSE Veneers (containing the SG instruction) in a separate
-     * 32 bytes aligned region so that the SAU can be programmed to
-     * just set this region as Non-Secure Callable.
-     */
-define block LR_VENEER with alignment = 0x20, size = CMSE_VENEER_REGION_SIZE {section Veneer$$CMSE};
-place at address CMSE_VENEER_REGION_START {block LR_VENEER};
 #endif
 
     /* Reserved place for NS application.

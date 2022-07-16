@@ -26,6 +26,9 @@
 #include "fsl_component_button.h"
 #endif
 #include "fsl_component_timer_manager.h"
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+#include "ksdk_mbedtls.h"
+#endif /* CONFIG_BT_SMP */
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -227,6 +230,10 @@ int main(void)
     /* Set FlexSPI clock: source AUX0_PLL, divide by 4 */
     BOARD_SetFlexspiClock(FLEXSPI0, 2U, 4U);
 
+#if (((defined(CONFIG_BT_SMP)) && (CONFIG_BT_SMP)))
+    CRYPTO_InitHardware();
+#endif /* CONFIG_BT_SMP */
+
     timerConfig.instance    = 0;
     timerConfig.srcClock_Hz = CLOCK_GetFreq(kCLOCK_BusClk);
     status                  = (osa_status_t)TM_Init(&timerConfig);
@@ -243,4 +250,17 @@ int main(void)
     vTaskStartScheduler();
     for (;;)
         ;
+}
+
+void *pvPortCalloc(size_t xNum, size_t xSize)
+{
+    void *pvReturn;
+
+    pvReturn = pvPortMalloc(xNum * xSize);
+    if (pvReturn != NULL)
+    {
+        memset(pvReturn, 0x00, xNum * xSize);
+    }
+
+    return pvReturn;
 }

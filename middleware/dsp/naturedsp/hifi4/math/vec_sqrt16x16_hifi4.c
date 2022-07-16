@@ -85,10 +85,11 @@ void vec_sqrt16x16(int16_t * restrict y, const int16_t * restrict x, int N)
 
   px = (const ae_p16s *)(x - 1);
   pz = (ae_p16s *)(y - 1);
-  __Pragma("concurrent");
+  //__Pragma("concurrent");
   _0x80000 = AE_MOVF32X2_FROMINT32X2(AE_MOVDA32(0x80000));
   zero = AE_ZERO32();
-  for (n = 0; n<(N&~1); n += 2)
+
+  for (n = 0; n<(N>>2); n += 1)
   {
     /* load, take exponent */
     X0 = AE_L16M_I(px, sizeof(int16_t));
@@ -123,6 +124,78 @@ void vec_sqrt16x16(int16_t * restrict y, const int16_t * restrict x, int N)
 
     AE_S16M_L_I(X, pz, sizeof(int16_t));
     AE_S16M_L_IU(X1, pz, 2 * sizeof(int16_t));
+
+	// UNROLL
+
+	/* load, take exponent */
+	X0 = AE_L16M_I(px, sizeof(int16_t));
+	AE_L16M_IU(X1, px, 2 * sizeof(int16_t));
+	sh0 = AE_NSAZ32_L(X0)&~1;
+	sh1 = AE_NSAZ32_L(X1)&~1;
+	X0 = AE_SLAA32(X0, sh0);
+	X1 = AE_SLAA32(X1, sh1);
+	X = AE_SEL32_HH(X0, X1);
+	X = AE_SRAI32(X, 8);
+	lezero = AE_LE32(X, zero);
+	/* compute rsqrt */
+	R = polyrsqrtq23[0];
+	f = polyrsqrtq23[1]; AE_MULAFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R)); R = f;
+	f = polyrsqrtq23[2]; AE_MULAFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R)); R = f;
+	f = polyrsqrtq23[3]; AE_MULAFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R)); R = f;
+	f = polyrsqrtq23[4]; AE_MULAFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R)); R = f;
+	/* reiterate rsqrt */
+	AE_MOVT32X2(R, zero, lezero);
+	R = AE_SLAI24S(AE_MOVF24X2_FROMINT32X2(R), 3);
+	D = AE_MULFP24X2RA(AE_MOVF24X2_FROMINT32X2(R), AE_MOVF24X2_FROMINT32X2(R));
+	f = _0x80000; AE_MULSFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(D), AE_MOVF24X2_FROMINT32X2(X)); D = f;
+	D = AE_MULFP24X2RA(AE_MOVF24X2_FROMINT32X2(D), AE_MOVF24X2_FROMINT32X2(R));
+	D = AE_SLAI24S(AE_MOVF24X2_FROMINT32X2(D), 3);
+	R = AE_ADD24S(R, D);
+	/* compute sqrt and rescale back */
+	Y = AE_MULFP24X2RA(AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R));
+
+	X0 = AE_SLAA32S(Y, 14 - (sh0 >> 1) - 8);
+	X1 = AE_SLAA32S(Y, 14 - (sh1 >> 1) - 8);
+	X = AE_SEL32_LH(X1, X0);
+
+	AE_S16M_L_I(X, pz, sizeof(int16_t));
+	AE_S16M_L_IU(X1, pz, 2 * sizeof(int16_t));
+  }
+  if (N & 2)
+  {
+	  /* load, take exponent */
+	  X0 = AE_L16M_I(px, sizeof(int16_t));
+	  AE_L16M_IU(X1, px, 2 * sizeof(int16_t));
+	  sh0 = AE_NSAZ32_L(X0)&~1;
+	  sh1 = AE_NSAZ32_L(X1)&~1;
+	  X0 = AE_SLAA32(X0, sh0);
+	  X1 = AE_SLAA32(X1, sh1);
+	  X = AE_SEL32_HH(X0, X1);
+	  X = AE_SRAI32(X, 8);
+	  lezero = AE_LE32(X, zero);
+	  /* compute rsqrt */
+	  R = polyrsqrtq23[0];
+	  f = polyrsqrtq23[1]; AE_MULAFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R)); R = f;
+	  f = polyrsqrtq23[2]; AE_MULAFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R)); R = f;
+	  f = polyrsqrtq23[3]; AE_MULAFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R)); R = f;
+	  f = polyrsqrtq23[4]; AE_MULAFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R)); R = f;
+	  /* reiterate rsqrt */
+	  AE_MOVT32X2(R, zero, lezero);
+	  R = AE_SLAI24S(AE_MOVF24X2_FROMINT32X2(R), 3);
+	  D = AE_MULFP24X2RA(AE_MOVF24X2_FROMINT32X2(R), AE_MOVF24X2_FROMINT32X2(R));
+	  f = _0x80000; AE_MULSFP24X2RA(f, AE_MOVF24X2_FROMINT32X2(D), AE_MOVF24X2_FROMINT32X2(X)); D = f;
+	  D = AE_MULFP24X2RA(AE_MOVF24X2_FROMINT32X2(D), AE_MOVF24X2_FROMINT32X2(R));
+	  D = AE_SLAI24S(AE_MOVF24X2_FROMINT32X2(D), 3);
+	  R = AE_ADD24S(R, D);
+	  /* compute sqrt and rescale back */
+	  Y = AE_MULFP24X2RA(AE_MOVF24X2_FROMINT32X2(X), AE_MOVF24X2_FROMINT32X2(R));
+
+	  X0 = AE_SLAA32S(Y, 14 - (sh0 >> 1) - 8);
+	  X1 = AE_SLAA32S(Y, 14 - (sh1 >> 1) - 8);
+	  X = AE_SEL32_LH(X1, X0);
+
+	  AE_S16M_L_I(X, pz, sizeof(int16_t));
+	  AE_S16M_L_IU(X1, pz, 2 * sizeof(int16_t));
   }
 
   if (N & 1)

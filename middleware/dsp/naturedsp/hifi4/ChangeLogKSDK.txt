@@ -2,8 +2,10 @@
 @page middleware_log Middleware Change Log
 
 @section NatureDSP
-  The current version of NatureDSP is 4.0.0.
+  The current version of NatureDSP is 4.1.0.
 
+  - 4.1.0
+    - Updated to 4.1.0 version of NatureDSP from Cadence for HiFi4 DSP. Library built with nxp_rt600_RI2021_8_newlib build configuration.
   - 4.0.0
     - Initial version of NatureDSP from Cadence for HiFi4 DSP.
 

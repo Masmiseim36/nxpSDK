@@ -1,6 +1,6 @@
 var a00052 =
 [
-    [ "otfad_encryption_config_t", "a00052.html#a00404", [
+    [ "otfad_encryption_config_t", "a00052.html#a00405", [
       [ "valid", "a00052.html#ac3b63de8b750379ea5624f7d74531be5", null ],
       [ "AESdecryption", "a00052.html#af3b269b47f488c714d5eb1ad437d7256", null ],
       [ "readOnly", "a00052.html#a1d3e2eb36d914a36177a9da94b8e2d58", null ],
@@ -10,7 +10,7 @@ var a00052 =
       [ "key", "a00052.html#a97f159aa4d63c763126f1622446d2dd9", null ],
       [ "counter", "a00052.html#a0fcc7e04b556eeefa09a33c64886fc88", null ]
     ] ],
-    [ "otfad_config_t", "a00052.html#a00403", [
+    [ "otfad_config_t", "a00052.html#a00404", [
       [ "forceSVM", "a00052.html#a16643b191f1894c6fc34ed9962901cda", null ],
       [ "forceLDM", "a00052.html#ac3387ca22cc5f1bae397650f2f19255a", null ],
       [ "restrictedRegAccess", "a00052.html#a6b97e383ed84409188ed2bd96217b735", null ],

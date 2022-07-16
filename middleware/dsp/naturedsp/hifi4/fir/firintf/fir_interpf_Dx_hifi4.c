@@ -168,14 +168,12 @@ float32_t * fir_interpf_Dx(float32_t * restrict z, float32_t * restrict delay, f
   ae_valign ax, az, ad;
   NASSERT(x);
   NASSERT(z);
-  M = M;
   NASSERT(N>0);
   NASSERT(M>0);
   NASSERT(D>1);
   NASSERT(M % 4 == 0);
   NASSERT(N % 8 == 0);
   _N = N&(~3);
-  p = p;
   ax = AE_LA64_PP(pX);
   az = AE_ZALIGN64();
   WUR_AE_CBEGIN0((uintptr_t)(delay));

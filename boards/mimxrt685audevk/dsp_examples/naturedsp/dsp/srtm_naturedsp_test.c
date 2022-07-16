@@ -90,7 +90,7 @@ int TEST_VEC_DOT()
     tic         = get_ccount();
     vec_dot_out = vec_dotf(vec_dot_x, vec_dot_y, 16);
     toc         = get_ccount();
-    if (abs(vec_dot_out - vec_dot_out_ref) > 0.001)
+    if (fabsf(vec_dot_out - vec_dot_out_ref) > 0.001)
     {
         PRINTF("MISMATCH @ expected %f result %f\r\n", vec_dot_out_ref, vec_dot_out);
         ret = -1;

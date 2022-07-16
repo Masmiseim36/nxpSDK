@@ -335,7 +335,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/DSP/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/DSP/Include;../../../../../../CMSIS/DSP/PrivateInclude</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -369,7 +369,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -503,6 +503,11 @@
               <FileName>fsl_powerquad_transform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_powerquad_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_powerquad.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_powerquad.h</FilePath>
             </File>
             <File>
               <FileName>fsl_powerquad_cmsis.c</FileName>
@@ -783,6 +788,236 @@
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_helium_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_types_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_mve_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_mve_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_vec_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_vec_math_f16.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/Include/dsp</GroupName>
+          <Files>
+            <File>
+              <FileName>basic_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>basic_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/bayes_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/bayes_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>complex_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>complex_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/controller_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>distance_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>distance_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/distance_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>filtering_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/filtering_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>filtering_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/filtering_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/matrix_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>none.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/none.h</FilePath>
+            </File>
+            <File>
+              <FileName>quaternion_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/quaternion_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>statistics_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/statistics_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>statistics_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/statistics_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/support_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/support_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/transform_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/transform_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/PrivateInclude</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_sorting.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_sorting.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_fft.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_fft.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_filtering.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_filtering.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1120,7 +1355,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/DSP/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/DSP/Include;../../../../../../CMSIS/DSP/PrivateInclude</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1154,7 +1389,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1288,6 +1523,11 @@
               <FileName>fsl_powerquad_transform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_powerquad_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_powerquad.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_powerquad.h</FilePath>
             </File>
             <File>
               <FileName>fsl_powerquad_cmsis.c</FileName>
@@ -1568,6 +1808,236 @@
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_helium_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_types_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_mve_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_mve_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_vec_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_vec_math_f16.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/Include/dsp</GroupName>
+          <Files>
+            <File>
+              <FileName>basic_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>basic_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/bayes_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/bayes_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>complex_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>complex_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/controller_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>distance_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>distance_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/distance_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>filtering_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/filtering_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>filtering_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/filtering_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/matrix_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>none.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/none.h</FilePath>
+            </File>
+            <File>
+              <FileName>quaternion_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/quaternion_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>statistics_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/statistics_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>statistics_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/statistics_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/support_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/support_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/transform_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/transform_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/PrivateInclude</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_sorting.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_sorting.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_fft.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_fft.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_filtering.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_filtering.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1905,7 +2375,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/DSP/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/DSP/Include;../../../../../../CMSIS/DSP/PrivateInclude</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1939,7 +2409,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib --remove --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
+            <Misc>--remove --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2073,6 +2543,11 @@
               <FileName>fsl_powerquad_transform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_powerquad_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_powerquad.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_powerquad.h</FilePath>
             </File>
             <File>
               <FileName>fsl_powerquad_cmsis.c</FileName>
@@ -2353,6 +2828,236 @@
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_helium_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_types_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_mve_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_mve_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_vec_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_vec_math_f16.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/Include/dsp</GroupName>
+          <Files>
+            <File>
+              <FileName>basic_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>basic_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/bayes_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/bayes_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>complex_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>complex_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/controller_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>distance_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>distance_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/distance_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>filtering_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/filtering_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>filtering_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/filtering_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/matrix_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>none.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/none.h</FilePath>
+            </File>
+            <File>
+              <FileName>quaternion_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/quaternion_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>statistics_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/statistics_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>statistics_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/statistics_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/support_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/support_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/transform_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/transform_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/PrivateInclude</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_sorting.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_sorting.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_fft.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_fft.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_filtering.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_filtering.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2690,7 +3395,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/DSP/Include</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT685S/utilities/debug_console_lite;../../../../../../devices/MIMXRT685S/drivers;../../../../../../devices/MIMXRT685S;../../../../../../components/uart;../../../../flash_config;../../../../../../components/lists;../../../../../../CMSIS/Core/Include;../../../../../../CMSIS/DSP/Include;../../../../../../CMSIS/DSP/PrivateInclude</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2724,7 +3429,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../../CMSIS/DSP/Lib/ARM/arm_ARMv8MMLldfsp_math.lib --remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --entry=Reset_Handler --predefine="-D__stack_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2858,6 +3563,11 @@
               <FileName>fsl_powerquad_transform.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_powerquad_transform.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_powerquad.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_powerquad.h</FilePath>
             </File>
             <File>
               <FileName>fsl_powerquad_cmsis.c</FileName>
@@ -3138,6 +3848,236 @@
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/DSP/Include/arm_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_common_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_common_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_const_structs_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_const_structs_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_helium_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_helium_utils.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_memory.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_memory.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_types.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_math_types_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_math_types_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_mve_tables.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_mve_tables_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_mve_tables_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_vec_math.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_math_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/arm_vec_math_f16.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/Include/dsp</GroupName>
+          <Files>
+            <File>
+              <FileName>basic_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>basic_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/basic_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/bayes_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>bayes_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/bayes_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>complex_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>complex_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/complex_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/controller_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>controller_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/controller_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>distance_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/distance_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>distance_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/distance_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>fast_math_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/fast_math_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>filtering_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/filtering_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>filtering_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/filtering_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>interpolation_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/interpolation_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/matrix_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>matrix_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/matrix_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>none.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/none.h</FilePath>
+            </File>
+            <File>
+              <FileName>quaternion_math_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/quaternion_math_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>statistics_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/statistics_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>statistics_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/statistics_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/support_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>support_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/support_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_defines.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_defines.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>svm_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/svm_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/transform_functions.h</FilePath>
+            </File>
+            <File>
+              <FileName>transform_functions_f16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/transform_functions_f16.h</FilePath>
+            </File>
+            <File>
+              <FileName>utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/Include/dsp/utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>CMSIS/DSP/PrivateInclude</GroupName>
+          <Files>
+            <File>
+              <FileName>arm_sorting.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_sorting.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_fft.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_fft.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_vec_filtering.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/DSP/PrivateInclude/arm_vec_filtering.h</FilePath>
             </File>
           </Files>
         </Group>

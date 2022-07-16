@@ -87,7 +87,7 @@ void fir_xcorr32x32ep( int32_t * restrict r,
   //
   int n, m;
 
-  ae_int32x2 x01,x12,x23,x34,x45,x56,x67,y01,y23,r01,r23;
+  ae_int32x2 x01,x12,x23,x34,x56,y01,y23,r01,r23; //x45, x67
   ae_int64 q0,q1,q2,q3;
   ae_ep    e0,e1,e2,e3;
   volatile int _0=0;
@@ -115,30 +115,34 @@ void fir_xcorr32x32ep( int32_t * restrict r,
     //XT_MOVEQZ(_0,_0,_0);
     e0=e1=e2=e3=AE_MOVEA(_0);
     q0=q1=q2=q3=AE_ZERO64();
-    __Pragma("loop_count min=1")
+	__Pragma("loop_count min=1");
+	__Pragma("no_unroll");
     for (m=0; m<(M>>2); m++ )
     {
-        AE_L32X2_XC( x45, X, 8);
-        AE_L32X2_XC( x67, X, 8);
         AE_L32X2_IP( y01, Y, 8);
         AE_L32X2_IP( y23, Y, 8);
-        x12=AE_SEL32_LH(x01,x23);
-        x34=AE_SEL32_LH(x23,x45);
-        x56=AE_SEL32_LH(x45,x67);
+		x12 = AE_SEL32_LH(x01, x23);
 
-        AE_MULAAD32EP_HH_LL(e0,q0,x01,y01);
-        AE_MULAAD32EP_HH_LL(e0,q0,x23,y23);
+		AE_MULAAD32EP_HH_LL(e0, q0, x01, y01);
+		AE_MULAAD32EP_HH_LL(e0, q0, x23, y23);
 
         AE_MULAAD32EP_HH_LL(e1,q1,x12,y01);
-        AE_MULAAD32EP_HH_LL(e1,q1,x34,y23);
+		AE_MULAAD32EP_HH_LL(e2, q2, x23, y01);
 
-        AE_MULAAD32EP_HH_LL(e2,q2,x23,y01);
-        AE_MULAAD32EP_HH_LL(e2,q2,x45,y23);
+		AE_L32X2_XC(x01, X, 8); // x45
+		x34 = AE_SEL32_LH(x23, x01);
 
+		AE_MULAAD32EP_HH_LL(e1, q1, x34, y23);
         AE_MULAAD32EP_HH_LL(e3,q3,x34,y01);
-        AE_MULAAD32EP_HH_LL(e3,q3,x56,y23);
-        x01=x45;
-        x23=x67;
+
+		AE_L32X2_XC(x23, X, 8); // x67
+		x56 = AE_SEL32_LH(x01, x23);
+
+		AE_MULAAD32EP_HH_LL(e3, q3, x56, y23);
+		AE_MULAAD32EP_HH_LL(e2, q2, x01, y23);
+
+        // x01=x45;
+        // x23=x67;
     }
     X=Z;
     Y-=M/2;

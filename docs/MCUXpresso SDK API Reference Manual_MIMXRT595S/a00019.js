@@ -1,6 +1,6 @@
 var a00019 =
 [
-    [ "dsi_config_t", "a00019.html#a00335", [
+    [ "dsi_config_t", "a00019.html#a00336", [
       [ "kStatus_OTP_InvalidAddress", "a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556eaa81f9e50700f61e4fc0a97f94d23eb00", null ],
       [ "kStatus_OTP_ProgramFail", "a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556ead55f5025b32a412b893af5afd8e5de93", null ],
       [ "kStatus_OTP_CrcFail", "a00256.html#gga96a58e29e8dbf2b5bdeb775cba46556ea96c4495f952291da00f2d8249488d8e4", null ],
@@ -17,7 +17,7 @@ var a00019 =
       [ "lrxHostTo_ByteClk", "a00019.html#a744b8626011d213ff2acd5e773fc46eb", null ],
       [ "btaTo_ByteClk", "a00019.html#a5f2195d5a02a3bac25ef78f90edc7ce9", null ]
     ] ],
-    [ "dsi_dpi_config_t", "a00019.html#a00337", [
+    [ "dsi_dpi_config_t", "a00019.html#a00338", [
       [ "pixelPayloadSize", "a00019.html#a01eeef91185848199699ff1c965856df", null ],
       [ "dpiColorCoding", "a00019.html#aba938947efcb184cbaea7a98191023cc", null ],
       [ "pixelPacket", "a00019.html#aec9718a40680ea0a2fefab3169468112", null ],
@@ -32,7 +32,7 @@ var a00019 =
       [ "panelHeight", "a00019.html#a83b740e37a68bf285ff087e5cf859b25", null ],
       [ "virtualChannel", "a00019.html#aed7f73cea1dd587c4f4bcd47d8e1d988", null ]
     ] ],
-    [ "dsi_dphy_config_t", "a00019.html#a00336", [
+    [ "dsi_dphy_config_t", "a00019.html#a00337", [
       [ "txHsBitClk_Hz", "a00019.html#a18f482bfa12f9174c0739a8ddf6c7d28", null ],
       [ "tClkPre_ByteClk", "a00019.html#a053f6da2559a19124df504003f217ac0", null ],
       [ "tClkPost_ByteClk", "a00019.html#ad20167fa63a0075827030ed4c2453ad3", null ],
@@ -44,7 +44,7 @@ var a00019 =
       [ "tHsTrail_ByteClk", "a00019.html#a34a82100c6ae89ab1a0b7ca82e9d7316", null ],
       [ "tClkTrail_ByteClk", "a00019.html#ac0264aae75bcfa335b45b7fcdf8bd25d", null ]
     ] ],
-    [ "dsi_transfer_t", "a00019.html#a00339", [
+    [ "dsi_transfer_t", "a00019.html#a00340", [
       [ "virtualChannel", "a00019.html#a93aa7b6fa356becffcf5112514d47cf4", null ],
       [ "txDataType", "a00019.html#aaea78d2dcb0fda839c54b9989c8a20b7", null ],
       [ "flags", "a00019.html#a13c558f6312920bee75d6c6cd1da5e8f", null ],
@@ -55,7 +55,7 @@ var a00019 =
       [ "sendDscCmd", "a00019.html#a7f50ba570de872fd9cdab070cff0ac59", null ],
       [ "dscCmd", "a00019.html#a85b91d7639b1a4b8bccbfacc43b8fcfa", null ]
     ] ],
-    [ "dsi_handle_t", "a00019.html#a00282", [
+    [ "dsi_handle_t", "a00019.html#a00283", [
       [ "isBusy", "a00019.html#aefcf841ee14e7b6eb1ede7c2936a9bb9", null ],
       [ "xfer", "a00019.html#a4765b97f201d6886e992236d2fdc6bc7", null ],
       [ "callback", "a00019.html#ab6c862a94cace7c6b66df2246852446e", null ],

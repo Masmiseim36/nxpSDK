@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Copyright (c) 2020-2021, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -25,6 +25,7 @@ target_sources(tfm_psa_rot_partition_crypto
         crypto_aead.c
         crypto_asymmetric.c
         crypto_key_derivation.c
+        crypto_key_management.c
         crypto_rng.c
 )
 
@@ -78,24 +79,25 @@ target_compile_definitions(tfm_psa_rot_partition_crypto
 )
 
 ################ Display the configuration being applied #######################
+if (NOT CONFIG_TFM_PARTITION_QUIET)
+    message(STATUS "---------- Display crypto configuration - start --------------")
 
-message(STATUS "---------- Display crypto configuration - start --------------")
-
-message(STATUS "CRYPTO_RNG_MODULE_DISABLED is set to ${CRYPTO_RNG_MODULE_DISABLED}")
-message(STATUS "CRYPTO_KEY_MODULE_DISABLED is set to ${CRYPTO_KEY_MODULE_DISABLED}")
-message(STATUS "CRYPTO_AEAD_MODULE_DISABLED is set to ${CRYPTO_AEAD_MODULE_DISABLED}")
-message(STATUS "CRYPTO_MAC_MODULE_DISABLED is set to ${CRYPTO_MAC_MODULE_DISABLED}")
-message(STATUS "CRYPTO_CIPHER_MODULE_DISABLED is set to ${CRYPTO_CIPHER_MODULE_DISABLED}")
-message(STATUS "CRYPTO_HASH_MODULE_DISABLED is set to ${CRYPTO_HASH_MODULE_DISABLED}")
-message(STATUS "CRYPTO_KEY_DERIVATION_MODULE_DISABLED is set to ${CRYPTO_KEY_DERIVATION_MODULE_DISABLED}")
-message(STATUS "CRYPTO_ASYM_SIGN_MODULE_DISABLED is set to ${CRYPTO_ASYM_SIGN_MODULE_DISABLED}")
-message(STATUS "CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED is set to ${CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED}")
-message(STATUS "CRYPTO_ENGINE_BUF_SIZE is set to ${CRYPTO_ENGINE_BUF_SIZE}")
-message(STATUS "CRYPTO_CONC_OPER_NUM is set to ${CRYPTO_CONC_OPER_NUM}")
-if (${TFM_PSA_API})
-    message(STATUS "CRYPTO_IOVEC_BUFFER_SIZE is set to ${CRYPTO_IOVEC_BUFFER_SIZE}")
+    message(STATUS "CRYPTO_RNG_MODULE_DISABLED is set to ${CRYPTO_RNG_MODULE_DISABLED}")
+    message(STATUS "CRYPTO_KEY_MODULE_DISABLED is set to ${CRYPTO_KEY_MODULE_DISABLED}")
+    message(STATUS "CRYPTO_AEAD_MODULE_DISABLED is set to ${CRYPTO_AEAD_MODULE_DISABLED}")
+    message(STATUS "CRYPTO_MAC_MODULE_DISABLED is set to ${CRYPTO_MAC_MODULE_DISABLED}")
+    message(STATUS "CRYPTO_CIPHER_MODULE_DISABLED is set to ${CRYPTO_CIPHER_MODULE_DISABLED}")
+    message(STATUS "CRYPTO_HASH_MODULE_DISABLED is set to ${CRYPTO_HASH_MODULE_DISABLED}")
+    message(STATUS "CRYPTO_KEY_DERIVATION_MODULE_DISABLED is set to ${CRYPTO_KEY_DERIVATION_MODULE_DISABLED}")
+    message(STATUS "CRYPTO_ASYM_SIGN_MODULE_DISABLED is set to ${CRYPTO_ASYM_SIGN_MODULE_DISABLED}")
+    message(STATUS "CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED is set to ${CRYPTO_ASYM_ENCRYPT_MODULE_DISABLED}")
+    message(STATUS "CRYPTO_ENGINE_BUF_SIZE is set to ${CRYPTO_ENGINE_BUF_SIZE}")
+    message(STATUS "CRYPTO_CONC_OPER_NUM is set to ${CRYPTO_CONC_OPER_NUM}")
+    if (${TFM_PSA_API})
+        message(STATUS "CRYPTO_IOVEC_BUFFER_SIZE is set to ${CRYPTO_IOVEC_BUFFER_SIZE}")
+    endif()
+    message(STATUS "---------- Display crypto configuration - stop ---------------")
 endif()
-message(STATUS "---------- Display crypto configuration - stop ---------------")
 
 ############################ Secure API ########################################
 
@@ -108,7 +110,10 @@ target_sources(tfm_sprt
 # to not overshadow _real_ warnings.
 set_source_files_properties(tfm_crypto_secure_api.c
     PROPERTIES
-        COMPILE_FLAGS -Wno-implicit-function-declaration
+        COMPILE_FLAGS
+            $<$<C_COMPILER_ID:ARMClang>:-Wno-implicit-function-declaration>
+            $<$<C_COMPILER_ID:GNU>:-Wno-implicit-function-declaration>
+            $<$<C_COMPILER_ID:IAR>:>
 )
 
 # Pick up configuration definitions
@@ -139,8 +144,9 @@ target_compile_definitions(crypto_service_mbedcrypto_config
         $<$<BOOL:${TFM_MBEDCRYPTO_PLATFORM_EXTRA_CONFIG_PATH}>:MBEDTLS_USER_CONFIG_FILE="${TFM_MBEDCRYPTO_PLATFORM_EXTRA_CONFIG_PATH}">
         PSA_CRYPTO_SECURE
         # Workaround for https://github.com/ARMmbed/mbedtls/issues/1077
-        $<$<OR:$<STREQUAL:${CMAKE_SYSTEM_ARCHITECTURE},armv8-m.base>,$<STREQUAL:${CMAKE_SYSTEM_ARCHITECTURE},armv6-m>>:MULADDC_CANNOT_USE_R7>
-        $<$<BOOL:${PLATFORM_DUMMY_NV_SEED}>:PLATFORM_DUMMY_NV_SEED>
+        $<$<OR:$<STREQUAL:${TFM_SYSTEM_ARCHITECTURE},armv8-m.base>,$<STREQUAL:${TFM_SYSTEM_ARCHITECTURE},armv6-m>>:MULADDC_CANNOT_USE_R7>
+        $<$<BOOL:${CRYPTO_NV_SEED}>:CRYPTO_NV_SEED>
+        $<$<BOOL:${PLATFORM_DEFAULT_NV_SEED}>:PLATFORM_DEFAULT_NV_SEED>
 )
 cmake_policy(SET CMP0079 NEW)
 
@@ -153,10 +159,7 @@ set(ENABLE_DOCS OFF)
 set(INSTALL_MBEDTLS_HEADERS OFF)
 set(LIB_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/mbedcrypto/install)
 
-set(lib_target crypto_service_mbedcrypto_libs)
-set(mbedcrypto_target crypto_service_mbedcrypto)
-set(mbedtls_target crypto_service_mbedtls)
-set(mbedx509_target crypto_service_mbedx509)
+# Set the prefix to be used by mbedTLS targets
 set(MBEDTLS_TARGET_PREFIX crypto_service_)
 
 # Mbedcrypto is quite a large lib, and it uses too much memory for it to be
@@ -165,35 +168,39 @@ set(MBEDTLS_TARGET_PREFIX crypto_service_)
 # symbols whild optimizing space.
 set(SAVED_BUILD_TYPE ${CMAKE_BUILD_TYPE})
 set(CMAKE_BUILD_TYPE ${MBEDCRYPTO_BUILD_TYPE})
-add_subdirectory(${MBEDCRYPTO_PATH} ${CMAKE_CURRENT_BINARY_DIR}/mbedcrypto)
+add_subdirectory(${MBEDCRYPTO_PATH} ${CMAKE_CURRENT_BINARY_DIR}/mbedcrypto EXCLUDE_FROM_ALL)
 set(CMAKE_BUILD_TYPE ${SAVED_BUILD_TYPE} CACHE STRING "Build type: [Debug, Release, RelWithDebInfo, MinSizeRel]" FORCE)
 
-if(NOT TARGET crypto_service_mbedcrypto)
-    message(FATAL_ERROR "Target crypto_service_mbedcrypto does not exist. Have the patches in ${CMAKE_SOURCE_DIR}/lib/ext/mbedcrypto been applied to the mbedcrypto repo at ${MBEDCRYPTO_PATH} ?
+if(NOT TARGET ${MBEDTLS_TARGET_PREFIX}mbedcrypto)
+    message(FATAL_ERROR "Target ${MBEDTLS_TARGET_PREFIX}mbedcrypto does not exist. Have the patches in ${CMAKE_SOURCE_DIR}/lib/ext/mbedcrypto been applied to the mbedcrypto repo at ${MBEDCRYPTO_PATH} ?
     Hint: The command might be `cd ${MBEDCRYPTO_PATH} && git apply ${CMAKE_SOURCE_DIR}/lib/ext/mbedcrypto/*.patch`")
 endif()
 
-target_include_directories(crypto_service_mbedcrypto
+target_include_directories(${MBEDTLS_TARGET_PREFIX}mbedcrypto
     PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_sources(crypto_service_mbedcrypto
+# Fix platform_s and crypto_service_mbedcrypto libraries cyclic linking
+set_target_properties(${MBEDTLS_TARGET_PREFIX}mbedcrypto PROPERTIES LINK_INTERFACE_MULTIPLICITY 3)
+
+target_sources(${MBEDTLS_TARGET_PREFIX}mbedcrypto
     PRIVATE
         $<$<NOT:$<BOOL:${CRYPTO_HW_ACCELERATOR}>>:${CMAKE_CURRENT_SOURCE_DIR}/tfm_mbedcrypto_alt.c>
 )
 
-target_compile_options(crypto_service_mbedcrypto
+target_compile_options(${MBEDTLS_TARGET_PREFIX}mbedcrypto
     PRIVATE
         $<$<C_COMPILER_ID:GNU>:-Wno-unused-parameter>
         $<$<C_COMPILER_ID:ARMClang>:-Wno-unused-parameter>
 )
 
-target_link_libraries(crypto_service_mbedcrypto
+target_link_libraries(${MBEDTLS_TARGET_PREFIX}mbedcrypto
     PRIVATE
         psa_interface
-        tfm_secure_api
         platform_s
     PUBLIC
         crypto_service_mbedcrypto_config
+    INTERFACE
+        platform_common_interface
 )

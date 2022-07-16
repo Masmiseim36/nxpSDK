@@ -44,7 +44,7 @@
 #include "scl_sqrt_table.h"
 
 #define PROFILE_ENABLE  0 /* If non-zero, measure cycles and print a report to stdout. */
-#define ALIGN_SIZE      (XCHAL_DATA_WIDTH)
+#define ALIGN_SIZE      (HIFI_SIMD_WIDTH)
 #define ALIGN_PAD       (ALIGN_SIZE-1)
 #define ALIGN_PTR(p)    (void*)(((uintptr_t)(p)+ALIGN_PAD)&~ALIGN_PAD)
 #define sz_i16          sizeof(int16_t)
@@ -160,8 +160,8 @@ void logmel32x32_process( logmel32x32_handle_t handle, void * restrict pScr, fra
     int m, n, N, fbNormOpt, fbeSclInc, base10;
     int binNum, bandNum, nsa;
     NASSERT(logmel && logmel->magic==LOGMEL32X32_MAGIC);
-    NASSERT_ALIGN(logFbe, XCHAL_DATA_WIDTH);
-    NASSERT_ALIGN(spectra, XCHAL_DATA_WIDTH);
+    NASSERT_ALIGN(logFbe, HIFI_SIMD_WIDTH);
+    NASSERT_ALIGN(spectra, HIFI_SIMD_WIDTH);
     /* Profiler scores should be explicitly reset because this module does not invoke 
      * PROFILE_REPORT macro for them. */
     PROFILE_RESET(logmel32x32_normalizeSpectra);

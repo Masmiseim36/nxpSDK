@@ -79,9 +79,9 @@ void mtx_vecmpy8x8_fast( int8_t* restrict z,
                  int M, int N, int lsh)
 {
     int m,n;
-    NASSERT_ALIGN(z,XCHAL_DATA_WIDTH);
-    NASSERT_ALIGN(x,XCHAL_DATA_WIDTH);
-    NASSERT_ALIGN(y,XCHAL_DATA_WIDTH);
+    NASSERT_ALIGN(z,HIFI_SIMD_WIDTH);
+    NASSERT_ALIGN(x,HIFI_SIMD_WIDTH);
+    NASSERT_ALIGN(y,HIFI_SIMD_WIDTH);
     NASSERT(M%4==0);
     NASSERT(N%4==0);
     NASSERT(lsh >= -15 && lsh <= 15);

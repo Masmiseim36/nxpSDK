@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("middleware_mbedcrypto component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
@@ -15,6 +15,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/library/cipher.c
     ${CMAKE_CURRENT_LIST_DIR}/library/cipher_wrap.c
     ${CMAKE_CURRENT_LIST_DIR}/library/cmac.c
+    ${CMAKE_CURRENT_LIST_DIR}/library/constant_time.c
     ${CMAKE_CURRENT_LIST_DIR}/library/ctr_drbg.c
     ${CMAKE_CURRENT_LIST_DIR}/library/debug.c
     ${CMAKE_CURRENT_LIST_DIR}/library/des.c
@@ -70,8 +71,10 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/library/version.c
     ${CMAKE_CURRENT_LIST_DIR}/library/version_features.c
     ${CMAKE_CURRENT_LIST_DIR}/port/mbedcrypto_mcux_casper.c
+    ${CMAKE_CURRENT_LIST_DIR}/port/mbedcrypto_mcux_css.c
     ${CMAKE_CURRENT_LIST_DIR}/port/mbedcrypto_mcux_hashcrypt.c
     ${CMAKE_CURRENT_LIST_DIR}/port/mbedcrypto_mcux_entropy.c
+    ${CMAKE_CURRENT_LIST_DIR}/port/mbedcrypto_mcux_pkc.c
 )
 
 

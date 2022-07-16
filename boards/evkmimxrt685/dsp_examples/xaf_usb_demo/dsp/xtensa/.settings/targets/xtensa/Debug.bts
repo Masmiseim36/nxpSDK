@@ -8,8 +8,6 @@
             <key>Includes</key>
             <value flag="-I" inheritance="donotinherit">
               <ListEntry>${xt_project_loc}/..</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
@@ -98,8 +96,7 @@
           <StringListMapEntry>
             <key>CompilerAdditionalOptions</key>
             <value flag="" inheritance="append">
-                        <ListEntry>-fpermissive&#13;
--mno-mul16&#13;
+                        <ListEntry>-mno-mul16&#13;
 -mno-mul32&#13;
 -mno-div32&#13;
 -INLINE:requested&#13;
@@ -147,8 +144,8 @@ ${xt_project_loc}/../../../../../../middleware/dsp/codecs/opus/hifi4/lib/xa_opus
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_dec/hifi4/lib/xa_sbc_dec.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/sbc_enc/hifi4/lib/xa_sbc_enc.a&#13;
 ${xt_project_loc}/../../../../../../middleware/dsp/codecs/vorbis_dec/hifi4/lib/xa_vorbis_dec.a&#13;
-${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/libxa_nnlib.a&#13;
-${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_12_FP1_RT600.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/nn/nnlib/lib/hifi4/libxa_nnlib.a&#13;
+${xt_project_loc}/../../../../../../middleware/EAP/EAP_Library/libEAP16_3_0_13_FP1_RT600.a&#13;
 -g&#13;
 </ListEntry>
             </value>

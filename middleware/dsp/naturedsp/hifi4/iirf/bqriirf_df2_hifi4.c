@@ -49,7 +49,13 @@
   parameter gain of each filter initialization function.
   2. 16x16 filters may suffer more from accumulation of the roundoff errors,
   so filters should be properly designed to match noise requirements
-
+  3. Due to the performance reasons, IIR biquad filters may introduce 
+  additional algorithmic delay of several sampless. Amount of that delay
+  might be requested by the  xxx_groupDelay API. For sensitive applications
+  all the filters have delayless implementations (with  _nd  suffix in the name).
+  Formally, the xxx_groupDelay APIs is also implemented for that kind of filters,
+  but return zero.
+  
   Precision: 
   16x16         16-bit data, 16-bit coefficients, 16-bit intermediate 
                 stage outputs (DF1, DF1 stereo, DF II form)
@@ -118,6 +124,7 @@
 
 #if (HAVE_VFPU==0 && HAVE_FPU==0)
 DISCARD_FUN(size_t,bqriirf_df2_alloc,( int M ))
+DISCARD_FUN(size_t, bqriirf_df2_groupDelay, (bqriirf_df2_handle_t  _bqriir))
 DISCARD_FUN(bqriirf_df2_handle_t,bqriirf_df2_init,( void * objmem, int M,
                                                const float32_t     * coef_sos,
                                                int16_t         gain ))
@@ -164,4 +171,11 @@ bqriirf_df2_handle_t bqriirf_df2_init( void * objmem, int M,
     return iir;
 #undef VLEN
 } // bqriirf_df2_init()
+
+size_t bqriirf_df2_groupDelay(bqriirf_df2_handle_t  _bqriir)
+{
+    int M = ((bqriirf_df2_ptr_t)_bqriir)->M;
+    return 3 * (M / 4);
+} // bqriirf_df2_groupDelay()
+
 #endif

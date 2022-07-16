@@ -82,4 +82,25 @@ extern const short ifft_twd1024[];
 extern const short ifft_twd2048[];
 extern const short ifft_twd4096[];
 
+extern  const int16_t _fft_twiddle_table_8_[];
+extern  const int16_t _fft_twiddle_table_16_[];
+extern  const int16_t _fft_twiddle_table_32_[];
+extern  const int16_t _fft_twiddle_table_64_[];
+extern  const int16_t _fft_twiddle_table_128_[];
+extern  const int16_t _fft_twiddle_table_256_[];
+extern  const int16_t _fft_twiddle_table_512_[];
+extern  const int16_t _fft_twiddle_table_1024_[];
+extern  const int16_t _fft_twiddle_table_2048_[];
+extern  const int16_t _fft_twiddle_table_4096_[];
+
+extern  const int16_t _ifft_twiddle_table_8_[];
+extern  const int16_t _ifft_twiddle_table_16_[];
+extern  const int16_t _ifft_twiddle_table_32_[];
+extern  const int16_t _ifft_twiddle_table_64_[];
+extern  const int16_t _ifft_twiddle_table_128_[];
+extern  const int16_t _ifft_twiddle_table_256_[];
+extern  const int16_t _ifft_twiddle_table_512_[];
+extern  const int16_t _ifft_twiddle_table_1024_[];
+extern  const int16_t _ifft_twiddle_table_2048_[];
+extern  const int16_t _ifft_twiddle_table_4096_[];
 #endif

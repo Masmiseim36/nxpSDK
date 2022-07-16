@@ -56,6 +56,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/codec
     ${ProjDirPath}/../../../../../../middleware/sdmmc
     ${ProjDirPath}/../../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../../components/gpio
     ${ProjDirPath}/../../../../../../middleware/fatfs
     ${ProjDirPath}/../../../../../../devices/MIMXRT685S
     ${ProjDirPath}/../../../../../../components/uart
@@ -92,6 +93,8 @@ include(middleware_sdmmc_host_usdhc_MIMXRT685S_cm33)
 include(driver_pca9420_MIMXRT685S_cm33)
 
 include(middleware_sdmmc_host_usdhc_interrupt_MIMXRT685S_cm33)
+
+include(component_rt_gpio_adapter_MIMXRT685S_cm33)
 
 include(driver_flexcomm_i2c_MIMXRT685S_cm33)
 

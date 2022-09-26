@@ -2629,11 +2629,6 @@
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
             </File>
             <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
-            </File>
-            <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
@@ -5671,11 +5666,6 @@
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
             </File>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>
@@ -8717,11 +8707,6 @@
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
             </File>
             <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
-            </File>
-            <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</FilePath>
@@ -11759,11 +11744,6 @@
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
             </File>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>

@@ -144,13 +144,22 @@ do not initialize  { section .noinit, section m_usb_bdt, section m_usb_global  }
 keep{section .flash_conf, section NVM_ADAPTER_TABLE };
 place at address mem: m_boot_flash_conf_start    { readonly section .flash_conf };
 place at address mem: m_interrupts_start    { readonly section .intvec };
-place in TEXT_region                        { block RO,readonly section ._bt* };
+define block ._bt_gatt_service_static with fixed order { readonly section ._bt_gatt_service_static*};
+define block ._bt_settings_static with fixed order { readonly section ._bt_settings*};
+define block ._bt_conn_cb with fixed order { readonly section ._bt_conn_cb*};
+define block ._bt_l2cap_fixed_chan with fixed order { readonly section ._bt_l2cap_fixed_chan*};
+define block ._bt_l2cap_br_fixed_chan with fixed order { readonly section ._bt_l2cap_br_fixed_chan*};
+define block ._settings_handler_static with fixed order { readonly section ._settings_handler_static*};
+define block ._k_mem_slab with fixed order { readwrite section ._k_mem_slab*};
+define block ._net_buf_pool with fixed order { readwrite section ._net_buf_pool*};
+
+place in TEXT_region                        { block RO,block ._bt_gatt_service_static, block ._bt_settings_static, block ._bt_conn_cb, block ._bt_l2cap_fixed_chan, block ._bt_l2cap_br_fixed_chan, block ._settings_handler_static };
 place in m_interrupts_ram_region            { section m_interrupts_ram };
 place in DATA_region                        { section CodeQuickAccess, section DataQuickAccess };
-place in DATA_region                        { block RW, section ._net_buf_pool, section ._k_mem_slab };
+place in DATA_region                        { block RW, block ._net_buf_pool, block ._k_mem_slab };
 place in DATA_region                        { block ZI };
 place in DATA_region                        { last block HEAP };
 place in CSTACK_region                      { block CSTACK };
 place in USB_BDT_region                     { section m_usb_bdt };
 place in USB_SRAM_region                    { section m_usb_global };
-keep { section .flash_area_list, section ._net_buf_pool, section ._k_mem_slab, section ._bt*, section ._settings*};
+keep { section .flash_area_list, section ._net_buf_pool*, section ._k_mem_slab*, section ._bt*, section ._settings*};

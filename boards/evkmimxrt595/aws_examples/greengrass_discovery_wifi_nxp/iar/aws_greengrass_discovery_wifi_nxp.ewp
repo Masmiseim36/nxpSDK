@@ -155,7 +155,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -1309,7 +1309,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -4093,9 +4093,6 @@
       <name>wifi_bt_firmware</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>

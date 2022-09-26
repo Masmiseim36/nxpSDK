@@ -55,7 +55,7 @@
     </cconfiguration>
   </storageModule>
   <storageModule moduleId="cdtBuildSystem" version="4.0.0">
-    <project id="tensorflow_lite_micro_kws_fusionf1.null.88494823" name="tensorflow_lite_micro_kws_fusionf1"/>
+    <project id="tensorflow_lite_micro_kws_fusionf1.null.70998493" name="tensorflow_lite_micro_kws_fusionf1"/>
   </storageModule>
   <storageModule moduleId="scannerConfiguration">
     <autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>

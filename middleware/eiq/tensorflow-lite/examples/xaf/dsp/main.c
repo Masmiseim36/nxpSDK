@@ -5,7 +5,6 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <xtensa/xos.h>
@@ -18,6 +17,7 @@
 #include "board_init.h"
 #include "dsp_config.h"
 #include "dsp_xaf.h"
+#include "fsl_debug_console.h"
 #include "message.h"
 #include "rpmsg_lite.h"
 
@@ -113,7 +113,7 @@ static void rpmsg_lite_init(dsp_handle_t *dsp)
     {
     }
 
-    printf("[main_dsp] Established RPMsg link\r\n");
+    PRINTF("[main_dsp] Established RPMsg link\r\n");
 
     dsp->ept = rpmsg_lite_create_ept(dsp->rpmsg, DSP_EPT_ADDR, (rl_ept_rx_cb_t)rpmsg_callback, (void *)dsp->rpmsg_queue,
                                      &ept_ctx);
@@ -142,7 +142,7 @@ static int dsp_main_thread(void *arg, int wake_value)
     message_t msg;
     int status;
 
-    printf("[main_dsp] Start\r\n");
+    PRINTF("[main_dsp] Start\r\n");
 
     /* XAF related initializations */
     dsp_xaf_init(dsp);
@@ -177,7 +177,7 @@ static int dsp_main_thread(void *arg, int wake_value)
         status = rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char*)&msg, sizeof(message_t), RL_BLOCK);
         if (status != RL_SUCCESS)
         {
-            printf("rpmsg_lite_send failed: %d\r\n", status);
+            PRINTF("rpmsg_lite_send failed: %d\r\n", status);
         }
     }
 

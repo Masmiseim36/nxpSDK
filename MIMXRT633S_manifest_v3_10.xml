@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT633S" name="MIMXRT633S" brief="This is SDK version 2.12.0 manifest file. It describes the content of the MIMXRT633S and additional settings for tools that support SDK version 2.12.0" format_version="3.10" api_version="2.0.0" configuration="39097cfd425fd709ef96c7f413468e64" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
-  <!--Timestamp (UTC): 2022-07-16 18:36:46.994078-->
-  <!--This manifest is generated based on sdk repo commit: 45d71c921a1dd3e0403549aa377535344ed9bc97-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT633S" name="MIMXRT633S" brief="This is SDK version 2.12.1 manifest file. It describes the content of the MIMXRT633S and additional settings for tools that support SDK version 2.12.1" format_version="3.10" api_version="2.0.0" configuration="a39ce18216c5dfefe3f10abbfe4f6061" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
+  <!--Timestamp (UTC): 2022-09-26 16:09:52.857419-->
+  <!--This manifest is generated based on sdk repo commit: 1d365316a284b27ce39c372d5a46d49869664ba1-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
@@ -9,7 +9,7 @@
   <externalDefinitions>
     <definition extID="hifi4_MIMXRT685S"/>
   </externalDefinitions>
-  <ksdk id="MCUXpresso2120" name="MCUXpresso2120" version="2.12.0" revision="611 2022-07-14"/>
+  <ksdk id="MCUXpresso2121" name="MCUXpresso2121" version="2.12.1" revision="632 2022-09-26"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -3070,150 +3070,6 @@ ${load}</script>
         <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
           <drivers>
             <driver id_refs="QSPI_FLASH_mimxrt685audevk">
-              <driverBinary path="devices/RT685/mcuxpresso" type="binary">
-                <files mask="MIMXRT600_FlexSPI_B_SFDP_QSPI.cfx"/>
-              </driverBinary>
-            </driver>
-          </drivers>
-        </debug_configuration>
-      </debug_configurations>
-    </board>
-    <board id="evkmimxrt685_om13790host" name="EVK-MIMXRT685-OM13790HOST" href="https://www.nxp.com/pip/OM13790" version="1.0.0" package="MIMXRT685SFVKB" type="kit">
-      <description>i.MX RT600 Evaluation Kit with USB Type-C Host Shield Board Gen 2 with Display Port Alt Mode</description>
-      <image path="boards/evkmimxrt685_om13790host" type="image">
-        <files mask="evkmimxrt685_om13790host.png"/>
-      </image>
-      <memory>
-        <memoryBlock id="QSPI_FLASH_evkmimxrt685_om13790host" name="QSPI_FLASH" addr="08000000" size="00800000" type="ExtFlash" access="RO"/>
-      </memory>
-      <examples>
-        <example id="evkmimxrt685_om13790host_usb_pd_alt_mode_dp_host_bm" name="usb_pd_alt_mode_dp_host_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt685_om13790host_usb_pd_alt_mode_dp_host_freertos" name="usb_pd_alt_mode_dp_host_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt685_om13790host_usb_pd_bm" name="usb_pd_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd/bm">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd/bm" type="xml">
-            <files mask="usb_pd_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt685_om13790host_usb_pd_charger_battery_bm" name="usb_pd_charger_battery_bm" brief="the application simulate battery product , it prints the battery percent continually. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_charger_battery/bm">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_charger_battery/bm" type="xml">
-            <files mask="usb_pd_charger_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt685_om13790host_usb_pd_charger_battery_freertos" name="usb_pd_charger_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_charger_battery/freertos">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_charger_battery/freertos" type="xml">
-            <files mask="usb_pd_charger_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt685_om13790host_usb_pd_freertos" name="usb_pd_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd/freertos">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd/freertos" type="xml">
-            <files mask="usb_pd_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt685_om13790host_usb_pd_sink_battery_bm" name="usb_pd_sink_battery_bm" brief="The application simulate battery product , it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_sink_battery/bm">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_sink_battery/bm" type="xml">
-            <files mask="usb_pd_sink_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt685_om13790host_usb_pd_sink_battery_freertos" name="usb_pd_sink_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_sink_battery/freertos">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_sink_battery/freertos" type="xml">
-            <files mask="usb_pd_sink_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt685_om13790host_usb_pd_source_charger_bm" name="usb_pd_source_charger_bm" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_source_charger/bm">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_source_charger/bm" type="xml">
-            <files mask="usb_pd_source_charger_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt685_om13790host_usb_pd_source_charger_freertos" name="usb_pd_source_charger_freertos" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_source_charger/freertos">
-          <external path="boards/evkmimxrt685_om13790host/usb_examples/usb_pd_source_charger/freertos" type="xml">
-            <files mask="usb_pd_source_charger_freertos_v3_10.xml"/>
-          </external>
-        </example>
-      </examples>
-      <debug_configurations>
-        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-          <drivers>
-            <driver id_refs="QSPI_FLASH_evkmimxrt685_om13790host">
-              <driverBinary path="devices/RT685/mcuxpresso" type="binary">
-                <files mask="MIMXRT600_FlexSPI_B_MXIC_OPI.cfx"/>
-              </driverBinary>
-            </driver>
-          </drivers>
-        </debug_configuration>
-      </debug_configurations>
-    </board>
-    <board id="mimxrt685audevk_om13790host" name="MIMXRT685-AUD-EVK-OM13790HOST" href="https://www.nxp.com/pip/OM13790" version="1.0.0" package="MIMXRT685SFVKB" type="kit">
-      <description>i.MX RT600 Audio Evaluation Kit with USB Type-C Host Shield Board Gen 2 with Display Port Alt Mode</description>
-      <image path="boards/mimxrt685audevk_om13790host" type="image">
-        <files mask="mimxrt685audevk_om13790host.png"/>
-      </image>
-      <memory>
-        <memoryBlock id="QSPI_FLASH_mimxrt685audevk_om13790host" name="QSPI_FLASH" addr="08000000" size="00800000" type="ExtFlash" access="RO"/>
-      </memory>
-      <examples>
-        <example id="mimxrt685audevk_om13790host_usb_pd_alt_mode_dp_host_bm" name="usb_pd_alt_mode_dp_host_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="mimxrt685audevk_om13790host_usb_pd_alt_mode_dp_host_freertos" name="usb_pd_alt_mode_dp_host_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="mimxrt685audevk_om13790host_usb_pd_bm" name="usb_pd_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd/bm">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd/bm" type="xml">
-            <files mask="usb_pd_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="mimxrt685audevk_om13790host_usb_pd_charger_battery_bm" name="usb_pd_charger_battery_bm" brief="the application simulate battery product , it prints the battery percent continually. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_charger_battery/bm">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_charger_battery/bm" type="xml">
-            <files mask="usb_pd_charger_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="mimxrt685audevk_om13790host_usb_pd_charger_battery_freertos" name="usb_pd_charger_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_charger_battery/freertos">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_charger_battery/freertos" type="xml">
-            <files mask="usb_pd_charger_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="mimxrt685audevk_om13790host_usb_pd_freertos" name="usb_pd_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd/freertos">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd/freertos" type="xml">
-            <files mask="usb_pd_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="mimxrt685audevk_om13790host_usb_pd_sink_battery_bm" name="usb_pd_sink_battery_bm" brief="The application simulate battery product , it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_sink_battery/bm">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_sink_battery/bm" type="xml">
-            <files mask="usb_pd_sink_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="mimxrt685audevk_om13790host_usb_pd_sink_battery_freertos" name="usb_pd_sink_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_sink_battery/freertos">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_sink_battery/freertos" type="xml">
-            <files mask="usb_pd_sink_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="mimxrt685audevk_om13790host_usb_pd_source_charger_bm" name="usb_pd_source_charger_bm" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_source_charger/bm">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_source_charger/bm" type="xml">
-            <files mask="usb_pd_source_charger_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="mimxrt685audevk_om13790host_usb_pd_source_charger_freertos" name="usb_pd_source_charger_freertos" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_source_charger/freertos">
-          <external path="boards/mimxrt685audevk_om13790host/usb_examples/usb_pd_source_charger/freertos" type="xml">
-            <files mask="usb_pd_source_charger_freertos_v3_10.xml"/>
-          </external>
-        </example>
-      </examples>
-      <debug_configurations>
-        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-          <drivers>
-            <driver id_refs="QSPI_FLASH_mimxrt685audevk_om13790host">
               <driverBinary path="devices/RT685/mcuxpresso" type="binary">
                 <files mask="MIMXRT600_FlexSPI_B_SFDP_QSPI.cfx"/>
               </driverBinary>
@@ -6384,8 +6240,6 @@ ${load}</script>
         <files mask="MCUXpresso SDK USB Stack Device Reference Manual.pdf"/>
         <files mask="MCUXpresso SDK USB Stack Composite Device User's Guide.pdf"/>
         <files mask="MCUXpresso SDK USB Stack Composite Host User's Guide.pdf"/>
-        <files mask="MCUXpresso SDK USB Type-C PD Stack Reference Manual.pdf"/>
-        <files mask="MCUXpresso SDK USB Type-C Power Delivery Stack User's Guide.pdf"/>
       </source>
     </component>
     <component id="docs.eiq.MIMXRT685S" name="eiq" brief="Docs eiq" version="1.0.0" full_name="Docs eiq" devices="MIMXRT685S" user_visible="true" type="documentation" package_base_path="docs/EIQ" project_base_path="EIQ">
@@ -6445,6 +6299,9 @@ ${load}</script>
         <files mask="UM11441-Getting-Started-with-NXP-based-Wireless-Modules-and-i.MX-RT-Platform-Running-on-RTOS.pdf"/>
         <files mask="UM11442-NXP-Wi-Fi-and-Bluetooth-Demo-Applications-for-i.MX-RT-platforms-User-Guide.pdf"/>
         <files mask="UM11443-NXP-Wi-Fi-and-Bluetooth-Debug-Feature-Configuration-Guide-for-i.MX-RT-Platforms.pdf"/>
+      </source>
+      <source relative_path="Release Notes" type="doc">
+        <files mask="NXP-Wireless-Features-and-Release-Notes-for-i.MX-RT.pdf"/>
       </source>
     </component>
     <component id="docs_external.MIMXRT685S.MIMXRT685S" name="docs_external.MIMXRT685S" brief="External documentation for MIMXRT685S." version="1.0.0" full_name="External documentation" devices="MIMXRT685S" user_visible="true" type="documentation" package_base_path="docs" project_base_path="docs">
@@ -7842,7 +7699,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.lpadc.MIMXRT685S" name="lpadc" brief="LPADC Driver" version="2.5.1" full_name="LPADC Driver" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" user_visible="true" type="driver" package_base_path="devices/MIMXRT685S/drivers" project_base_path="drivers">
+    <component id="platform.drivers.lpadc.MIMXRT685S" name="lpadc" brief="LPADC Driver" version="2.6.0" full_name="LPADC Driver" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" user_visible="true" type="driver" package_base_path="devices/MIMXRT685S/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT685S"/>
       </dependencies>
@@ -30475,127 +30332,6 @@ ${load}</script>
         <include_path relative_path="phy" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.usb.pd.MIMXRT685S" name="PD Stack" brief="Middleware usb_pd" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <component_dependency value="middleware.usb.pd.phy.ptn5110.MIMXRT685S"/>
-      </dependencies>
-      <source relative_path="pd" type="c_include">
-        <files mask="usb_pd.h"/>
-        <files mask="usb_pd_interface.h"/>
-        <files mask="usb_pd_phy.h"/>
-        <files mask="usb_pd_spec.h"/>
-        <files mask="usb_pd_timer.h"/>
-        <files mask="usb_pd_auto_policy.h"/>
-      </source>
-      <source relative_path="pd" type="src">
-        <files mask="usb_pd_connect.c"/>
-        <files mask="usb_pd_interface.c"/>
-        <files mask="usb_pd_msg.c"/>
-        <files mask="usb_pd_policy.c"/>
-        <files mask="usb_pd_timer.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_usb_pd_MIMXRT685S_cm33.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.altmode.MIMXRT685S" name="PD Alternate Mode" brief="Middleware usb_pd altmode" version="2.8.2" full_name="USB Type-C PD Alternate Mode" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <component_dependency value="middleware.usb.pd.MIMXRT685S"/>
-      </dependencies>
-      <source relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="src">
-        <files mask="usb_pd_alt_mode.c"/>
-        <files mask="usb_pd_alt_mode_dp.c"/>
-      </source>
-      <source relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="c_include">
-        <files mask="usb_pd_alt_mode.h"/>
-        <files mask="usb_pd_alt_mode_dp.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_usb_pd_altmode_MIMXRT685S_cm33.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.compliance_test_report.MIMXRT685S" name="PD Compliance Test Report" brief="Middleware usb_pd compliance_test_report" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT685S" user_visible="false" type="middleware" package_base_path="middleware/usb" project_base_path="./">
-      <source relative_path="pd/compliance_test_report/ellisys/consumer_provider" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp_try_snk" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp_try_src" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/provider_consumer" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/displayport_dock" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/displayport_host" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-    </component>
-    <component id="middleware.usb_pd.config_header.MIMXRT685S" name="PD Config Header" brief="USB Type-C PD Stack" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT685S" user_visible="true" type="project_template" package_base_path="middleware/usb" project_base_path="source">
-      <source relative_path="output/npw/pd_config" project_relative_path="generated" type="c_include">
-        <files mask="usb_pd_config.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="output/npw/pd_config" project_relative_path="generated" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.phy.ptn5110.MIMXRT685S" name="PD PTN5110 Driver" brief="Middleware usb_pd phy ptn5110" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <all>
-          <component_dependency value="component.lpc_gpio_adapter.MIMXRT685S"/>
-          <component_dependency value="component.flexcomm_i2c_adapter.MIMXRT685S"/>
-          <component_dependency value="component.osa.MIMXRT685S"/>
-          <component_dependency value="middleware.usb_pd.config_header.MIMXRT685S"/>
-          <component_dependency value="middleware.usb.common_header.MIMXRT685S"/>
-        </all>
-      </dependencies>
-      <source relative_path="pd/ptn5110" project_relative_path="ptn5110" type="c_include">
-        <files mask="usb_pd_ptn5110.h"/>
-        <files mask="usb_pd_ptn5110_register.h"/>
-      </source>
-      <source relative_path="pd/ptn5110" project_relative_path="ptn5110" type="src">
-        <files mask="usb_pd_ptn5110_connect.c"/>
-        <files mask="usb_pd_ptn5110_hal.c"/>
-        <files mask="usb_pd_ptn5110_interface.c"/>
-        <files mask="usb_pd_ptn5110_msg.c"/>
-      </source>
-      <source relative_path="pd" type="c_include">
-        <files mask="usb_pd.h"/>
-        <files mask="usb_pd_interface.h"/>
-        <files mask="usb_pd_phy.h"/>
-        <files mask="usb_pd_spec.h"/>
-        <files mask="usb_pd_timer.h"/>
-      </source>
-      <source relative_path="pd" type="src">
-        <files mask="usb_pd_timer.c"/>
-      </source>
-      <source relative_path="pd/phy_interface" project_relative_path="phy_interface" type="c_include">
-        <files mask="usb_pd_i2c.h"/>
-      </source>
-      <source relative_path="pd/phy_interface" project_relative_path="phy_interface" type="src">
-        <files mask="usb_pd_i2c.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace" device_cores="cm33_MIMXRT685S">
-        <files mask="middleware_usb_pd_phy_ptn5110_MIMXRT685S_cm33.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd/ptn5110" project_relative_path="ptn5110" type="c_include"/>
-        <include_path relative_path="pd" type="c_include"/>
-        <include_path relative_path="pd/phy_interface" project_relative_path="phy_interface" type="c_include"/>
-      </include_paths>
-    </component>
     <component id="middleware.vit.hifi4.MIMXRT685S" name="vit" brief="Voice intelligent technology library" version="5.6.0" full_name="middleware vit" devices="MIMXRT685S" category="Audio/Voice intelligent technology library" user_visible="true" type="middleware" package_base_path="middleware/vit" project_base_path="vit">
       <source relative_path="HIFI4/Lib" type="c_include">
         <files mask="VIT.h"/>
@@ -30625,6 +30361,58 @@ ${load}</script>
       <include_paths>
         <include_path relative_path="RT1060_CortexM7/Lib" type="c_include"/>
         <include_path relative_path="RT1060_CortexM7/Lib/Inc" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.voice_spot.hifi4.MIMXRT685S" name="voice_spot" brief="Voice Spot library" version="0.23.2" full_name="middleware voice_spot" devices="MIMXRT685S" category="Voice/VoiceSpot library" user_visible="true" type="middleware" package_base_path="middleware/voice_spot" project_base_path="voice_spot">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.voice_spot.model.MIMXRT685S"/>
+          <component_dependency value="middleware.naturedsp.naturedsp_hifi4.MIMXRT685S"/>
+        </all>
+      </dependencies>
+      <source relative_path="rdsp_memory_utils_public" type="src">
+        <files mask="RdspMemoryUtilsPublic.c"/>
+        <files mask="memcheck.c"/>
+      </source>
+      <source relative_path="rdsp_memory_utils_public" type="c_include">
+        <files mask="RdspMemoryUtilsPublic.h"/>
+        <files mask="memcheck.h"/>
+      </source>
+      <source relative_path="RT685_HiFi4/Lib/include/public" type="c_include">
+        <files mask="rdsp_model.h"/>
+        <files mask="rdsp_model_defines.h"/>
+        <files mask="rdsp_voicespot.h"/>
+        <files mask="rdsp_voicespot_defines.h"/>
+        <files mask="rdsp_voicespot_sleep_cbuffer.h"/>
+        <files mask="rdsp_voicespot_utils.h"/>
+      </source>
+      <source exclude="true" relative_path="Doc" type="doc">
+        <files mask="VoiceSpot API Documentation v0.9.pdf" hidden="true"/>
+      </source>
+      <source exclude="true" relative_path="./" type="doc">
+        <files mask="license.txt" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="RT685_HiFi4/Lib/include" type="c_include"/>
+        <include_path relative_path="rdsp_memory_utils_public" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.voice_spot.model.MIMXRT685S" name="voice_spot model" brief="Voice Spot Hey NXP model" version="0.23.2" full_name="middleware voice_spot model" devices="MIMXRT685S" category="Voice/VoiceSpot library" user_visible="true" type="middleware" package_base_path="middleware/voice_spot" project_base_path="voice_spot">
+      <source relative_path="models/NXP/version_1" type="c_include">
+        <files mask="HeyNXP_en-US_1.h"/>
+        <files mask="HeyNXP_en-US_1_params.h"/>
+      </source>
+      <source relative_path="models/NXP/version_1" type="binary">
+        <files mask="HeyNXP_en-US_1.bin"/>
+        <files mask="HeyNXP_en-US_1_params.bin"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="models/NXP/version_1" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.voice_spot.template.MIMXRT685S" name="voice_spot_template" brief="voice_spot template" version="0.23.2" full_name="voice_spot template configuration" devices="MIMXRT685S" user_visible="false" type="project_template" package_base_path="middleware/voice_spot" project_base_path="voice_spot">
+      <include_paths>
+        <include_path relative_path="RT1060_CortexM7/Lib/include" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.wifi.MIMXRT685S" name="wifi_nxp" brief="NXP Wi-Fi functionality enables customers to quickly develop applications of interest to add connectivity to different sensors and appliances" version="1.3.38" full_name="NXP Wi-Fi" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi_nxp" project_base_path="wifi">
@@ -30755,7 +30543,6 @@ ${load}</script>
       </source>
       <source relative_path="wifi_bt_firmware" type="c_include">
         <files mask="sd8801_wlan.h"/>
-        <files mask="sduart8977_wlan_bt.h"/>
         <files mask="sduartIW416_wlan_bt.h"/>
         <files mask="sduart8987_wlan_bt.h"/>
         <files mask="wlan_bt_fw.h"/>
@@ -31179,42 +30966,6 @@ ${load}</script>
         <include_path relative_path="platform/ext/target/nxp/evkmimxrt685/partition" type="c_include"/>
       </include_paths>
     </component>
-    <component id="project_template.mimxrt685audevk_om13790host.MIMXRT685S" name="mimxrt685audevk_om13790host" brief="BOARD_Project_Template mimxrt685audevk_om13790host" version="1.0.0" full_name="BOARD_Project_Template mimxrt685audevk_om13790host" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" category="Board Support/SDK Project Template" user_visible="true" type="project_template" package_base_path="boards/mimxrt685audevk_om13790host/project_template" project_base_path="mimxrt685audevk_om13790host/project_template">
-      <dependencies>
-        <all>
-          <component_dependency value="device.MIMXRT685S_startup.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.flexcomm_usart.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.common.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.lpc_iopctl.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.lpc_gpio.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.reset.MIMXRT685S"/>
-          <component_dependency value="utility.debug_console.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.clock.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.flash_config.mimxrt685audevk.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.cache_cache64.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.flexspi.MIMXRT685S"/>
-          <component_dependency value="component.usart_adapter.MIMXRT685S"/>
-          <component_dependency value="component.serial_manager_uart.MIMXRT685S"/>
-          <component_dependency value="component.serial_manager.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.power.MIMXRT685S"/>
-        </all>
-      </dependencies>
-      <source relative_path="./" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="pin_mux.c"/>
-        <files mask="peripherals.c"/>
-      </source>
-      <source relative_path="./" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="peripherals.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
     <component id="docs.fmstr.MIMXRT685S" name="FreeMASTER" brief="Driver code enabling communication between FreeMASTER or FreeMASTER Lite tools and MCU application. Supports Serial, CAN and BDM/JTAG physical interface." version="3.0.2" full_name="FreeMASTER communication driver" devices="MIMXRT685S" user_visible="true" type="documentation" package_base_path="middleware/freemaster" project_base_path="freemaster">
       <dependencies>
         <component_dependency value="middleware.fmstr.MIMXRT685S"/>
@@ -31528,42 +31279,6 @@ ${load}</script>
         <include_path relative_path="src/platforms/gen32le" project_relative_path="platforms" type="c_include"/>
         <include_path relative_path="src/drivers/mcuxsdk/can" project_relative_path="drivers" type="c_include"/>
         <include_path relative_path="src/drivers/mcuxsdk/serial" project_relative_path="drivers" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="project_template.evkmimxrt685_om13790host.MIMXRT685S" name="evkmimxrt685_om13790host" brief="BOARD_Project_Template evkmimxrt685_om13790host" version="1.0.0" full_name="BOARD_Project_Template evkmimxrt685_om13790host" devices="MIMXRT685S" device_cores="cm33_MIMXRT685S" category="Board Support/SDK Project Template" user_visible="true" type="project_template" package_base_path="boards/evkmimxrt685_om13790host/project_template" project_base_path="evkmimxrt685_om13790host/project_template">
-      <dependencies>
-        <all>
-          <component_dependency value="device.MIMXRT685S_startup.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.flexcomm_usart.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.common.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.lpc_iopctl.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.lpc_gpio.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.reset.MIMXRT685S"/>
-          <component_dependency value="utility.debug_console.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.clock.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.flash_config.evkmimxrt685.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.cache_cache64.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.flexspi.MIMXRT685S"/>
-          <component_dependency value="component.usart_adapter.MIMXRT685S"/>
-          <component_dependency value="component.serial_manager_uart.MIMXRT685S"/>
-          <component_dependency value="component.serial_manager.MIMXRT685S"/>
-          <component_dependency value="platform.drivers.power.MIMXRT685S"/>
-        </all>
-      </dependencies>
-      <source relative_path="./" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="pin_mux.c"/>
-        <files mask="peripherals.c"/>
-      </source>
-      <source relative_path="./" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="peripherals.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
     <component id="docs.Edgefast.MIMXRT685S" name="Edgefast" brief="Docs edgefast bluetooth" version="1.0.0" full_name="Docs edgefast bluetooth" devices="MIMXRT685S" user_visible="true" type="documentation" package_base_path="docs/wireless/Bluetooth/Edgefast_bluetooth" project_base_path="wireless/Edgefast">
@@ -54845,7 +54560,7 @@ ${load}</script>
         <files mask="CloudBridgeNXPDemo.py"/>
       </source>
     </component>
-    <component id="middleware.maestro_framework.MIMXRT685S" name="maestro_framework" brief="MCU Maestro Audio Framework" version="1.3.0" full_name="Maestro Audio Framework Middleware" devices="MIMXRT685S" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
+    <component id="middleware.maestro_framework.MIMXRT685S" name="maestro_framework" brief="MCU Maestro Audio Framework" version="1.4.0" full_name="Maestro Audio Framework Middleware" devices="MIMXRT685S" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
       <dependencies>
         <all>
           <component_dependency value="middleware.maestro_framework.doc.MIMXRT685S"/>
@@ -54892,7 +54607,7 @@ ${load}</script>
         <include_path relative_path="inc" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.maestro_framework.doc.MIMXRT685S" name="maestro_framework" brief="MCU Maestro Audio Framework Doc" version="1.3.0" full_name="Maestro Audio Framework Middleware Doc" devices="MIMXRT685S" category="Audio/Maestro Audio Framework" user_visible="false" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
+    <component id="middleware.maestro_framework.doc.MIMXRT685S" name="maestro_framework" brief="MCU Maestro Audio Framework Doc" version="1.4.0" full_name="Maestro Audio Framework Middleware Doc" devices="MIMXRT685S" category="Audio/Maestro Audio Framework" user_visible="false" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
       <source exclude="true" relative_path="docs" type="doc">
         <files mask="index.html"/>
       </source>
@@ -55899,7 +55614,7 @@ ${load}</script>
         <include_path relative_path="src" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.maestro_framework.streamer.MIMXRT685S" name="maestro_framework_streamer_core" brief="MCU Maestro Audio Framework Streamer Core" version="1.3.0" full_name="Maestro Audio Framework Streamer Core" devices="MIMXRT685S" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro/streamer" project_base_path="maestro/streamer">
+    <component id="middleware.maestro_framework.streamer.MIMXRT685S" name="maestro_framework_streamer_core" brief="MCU Maestro Audio Framework Streamer Core" version="1.4.0" full_name="Maestro Audio Framework Streamer Core" devices="MIMXRT685S" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro/streamer" project_base_path="maestro/streamer">
       <source relative_path="cci/include" type="c_include">
         <files mask="cci_metadata.h"/>
         <files mask="codec_interface.h"/>
@@ -58978,7 +58693,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.lpadc.MIMXRT633S" name="lpadc" brief="LPADC Driver" version="2.5.1" full_name="LPADC Driver" devices="MIMXRT633S" device_cores="cm33_MIMXRT633S" user_visible="true" type="driver" package_base_path="devices/MIMXRT633S/drivers" project_base_path="drivers">
+    <component id="platform.drivers.lpadc.MIMXRT633S" name="lpadc" brief="LPADC Driver" version="2.6.0" full_name="LPADC Driver" devices="MIMXRT633S" device_cores="cm33_MIMXRT633S" user_visible="true" type="driver" package_base_path="devices/MIMXRT633S/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT633S"/>
       </dependencies>

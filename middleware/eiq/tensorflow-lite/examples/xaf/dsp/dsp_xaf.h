@@ -9,13 +9,13 @@
 #define __DSP_XAF_H__
 
 #include <stdint.h>
-#include <stdio.h>
 #include <xtensa/xos.h>
 
 #include "xaf-api.h"
 #include "xa-mixer-api.h"
 #include "dsp_config.h"
 #include "message.h"
+#include "fsl_debug_console.h"
 
 typedef struct _dsp_handle dsp_handle_t;
 
@@ -23,11 +23,7 @@ typedef struct _dsp_handle dsp_handle_t;
  * Definitions
  ******************************************************************************/
 
-#if (INIT_DEBUG_CONSOLE == 1)
 #define DSP_PRINTF PRINTF
-#else
-#define DSP_PRINTF printf
-#endif
 
 /**
  * @brief Processing state

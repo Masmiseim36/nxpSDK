@@ -26,9 +26,6 @@
  * TCP-shunt target configuration parameters
  *******************************************************************************/
 
-/* ...number of DSP cores */
-#define XF_CFG_CORES_NUM                4
-
 /* ...maximal number of clients supported by proxy */
 #define XF_CFG_PROXY_MAX_CLIENTS        256
 

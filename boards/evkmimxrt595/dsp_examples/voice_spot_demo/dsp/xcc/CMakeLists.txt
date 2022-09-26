@@ -1,0 +1,304 @@
+# CROSS COMPILER SETTING
+SET(CMAKE_SYSTEM_NAME Generic)
+CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+
+# THE VERSION NUMBER
+SET (Tutorial_VERSION_MAJOR 1)
+SET (Tutorial_VERSION_MINOR 0)
+
+# ENABLE ASM
+ENABLE_LANGUAGE(ASM)
+
+SET(CMAKE_STATIC_LIBRARY_PREFIX)
+SET(CMAKE_STATIC_LIBRARY_SUFFIX)
+
+SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+
+ 
+# CURRENT DIRECTORY
+SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+
+SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+
+
+project(dsp_voice_spot_demo_fusionf1)
+
+SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
+
+SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DVOICE_SPOT")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFUSIONF1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_DEBUGCONSOLE=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG_CONSOLE_RX_ENABLE=0")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT595SFFOC_dsp")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fsigned-char")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wno-unused")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wno-missing-braces")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fmessage-length=0")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
+
+SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mlongcalls")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DVOICE_SPOT")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFUSIONF1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_RX_ENABLE=0")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT595SFFOC_dsp")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fsigned-char")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wno-unused")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wno-missing-braces")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fmessage-length=0")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
+
+SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mlongcalls")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
+
+SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMCUXPRESSO_SDK")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mlsp=${ProjDirPath}/../../../../../../devices/MIMXRT595S/xtensa/gdbio")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+
+SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --xtensa-system=${XTENSA_SYSTEM}")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mlsp=${ProjDirPath}/../../../../../../devices/MIMXRT595S/xtensa/min-rt")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-core=nxp_rt500_RI2021_8_newlib")
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
+
+include_directories(${ProjDirPath}/..)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers)
+
+include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
+
+include_directories(${ProjDirPath}/../../../../../../components/uart)
+
+include_directories(${ProjDirPath}/../../../../../../components/lists)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/include)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/voice_spot/rdsp_memory_utils_public)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT595S)
+
+include_directories(${ProjDirPath}/../../../../../../CMSIS/Core/Include)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/voice_spot/models/NXP/version_1)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include)
+
+add_executable(dsp_voice_spot_demo_fusionf1.elf 
+"${ProjDirPath}/../main_dsp.c"
+"${ProjDirPath}/../dsp_config.h"
+"${ProjDirPath}/../pin_mux.c"
+"${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../board_fusionf1.c"
+"${ProjDirPath}/../board_fusionf1.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2c.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2c_dma.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2c_dma.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2s.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2s.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2s_dma.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_i2s_dma.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_inputmux.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_dma.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_dma.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c"
+"${ProjDirPath}/../../../../../../components/uart/fsl_adapter_uart.h"
+"${ProjDirPath}/../../../../../../components/uart/fsl_adapter_usart.c"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h"
+"${ProjDirPath}/../../../../../../components/serial_manager/fsl_component_serial_manager.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_pint.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_pint.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_dmic.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_dmic.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_dmic_dma.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_dmic_dma.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_common_dsp.h"
+"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.h"
+"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_usart_dma.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_iopctl.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/utilities/fsl_shell.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/rdsp_memory_utils_public/RdspMemoryUtilsPublic.c"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/rdsp_memory_utils_public/memcheck.c"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/rdsp_memory_utils_public/RdspMemoryUtilsPublic.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/rdsp_memory_utils_public/memcheck.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/include/public/rdsp_model.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/include/public/rdsp_model_defines.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/include/public/rdsp_voicespot.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/include/public/rdsp_voicespot_defines.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/include/public/rdsp_voicespot_sleep_cbuffer.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/include/public/rdsp_voicespot_utils.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_clock.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_reset.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/MIMXRT595S_dsp.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/MIMXRT595S_dsp_features.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/system_MIMXRT595S_dsp.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/system_MIMXRT595S_dsp.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT595S/drivers/fsl_flexcomm.c"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_armclang_ltm.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_compiler.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_gcc.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_iccarm.h"
+"${ProjDirPath}/../../../../../../CMSIS/Core/Include/cmsis_version.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/models/NXP/version_1/HeyNXP_en-US_1.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/models/NXP/version_1/HeyNXP_en-US_1_params.h"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/models/NXP/version_1/HeyNXP_en-US_1.bin"
+"${ProjDirPath}/../../../../../../middleware/voice_spot/models/NXP/version_1/HeyNXP_en-US_1_params.bin"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_Signal.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/include/NatureDSP_types.h"
+)
+
+
+TARGET_LINK_LIBRARIES(dsp_voice_spot_demo_fusionf1.elf -Wl,--start-group)
+target_link_libraries(dsp_voice_spot_demo_fusionf1.elf debug xos)
+
+target_link_libraries(dsp_voice_spot_demo_fusionf1.elf optimized xos)
+
+
+target_link_libraries(dsp_voice_spot_demo_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/librdsp_libvoicespot.a)
+
+
+target_link_libraries(dsp_voice_spot_demo_fusionf1.elf debug ${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a)
+
+
+target_link_libraries(dsp_voice_spot_demo_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/librdsp_libvoicespot.a)
+
+
+target_link_libraries(dsp_voice_spot_demo_fusionf1.elf optimized ${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a)
+
+TARGET_LINK_LIBRARIES(dsp_voice_spot_demo_fusionf1.elf -Wl,--end-group)
+
+ADD_CUSTOM_COMMAND(TARGET dsp_voice_spot_demo_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+--xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_voice_spot_demo_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_reset_${CMAKE_BUILD_TYPE}.bin
+--xtensa-core=nxp_rt500_RI2021_8_newlib
+--xtensa-system=${XTENSA_SYSTEM}
+--only-section=.ResetVector.text
+)
+
+ADD_CUSTOM_COMMAND(TARGET dsp_voice_spot_demo_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+--xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_voice_spot_demo_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_text_${CMAKE_BUILD_TYPE}.bin
+--xtensa-core=nxp_rt500_RI2021_8_newlib
+--xtensa-system=${XTENSA_SYSTEM}
+--only-section=.WindowVectors.text
+--only-section=.Level2InterruptVector.text
+--only-section=.Level3InterruptVector.literal
+--only-section=.Level3InterruptVector.text
+--only-section=.DebugExceptionVector.literal
+--only-section=.DebugExceptionVector.text
+--only-section=.NMIExceptionVector.literal
+--only-section=.NMIExceptionVector.text
+--only-section=.KernelExceptionVector.text
+--only-section=.UserExceptionVector.text
+--only-section=.DoubleExceptionVector.text
+--only-section=.text
+)
+
+ADD_CUSTOM_COMMAND(TARGET dsp_voice_spot_demo_fusionf1.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+--xtensa-params= -Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_voice_spot_demo_fusionf1.elf ${EXECUTABLE_OUTPUT_PATH}/../../binary/dsp_data_${CMAKE_BUILD_TYPE}.bin
+--xtensa-core=nxp_rt500_RI2021_8_newlib
+--xtensa-system=${XTENSA_SYSTEM}
+--only-section=.clib.rodata
+--only-section=.rtos.rodata
+--only-section=.rodata
+--only-section=.clib.data
+--only-section=.rtos.percpu.data
+--only-section=.data
+--only-section=.bss
+)
+

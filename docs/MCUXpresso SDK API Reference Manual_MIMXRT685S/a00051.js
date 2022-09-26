@@ -12,6 +12,7 @@ var a00051 =
       [ "kCODEC_AK4458", "a00253.html#gga10e74d65d7876276a8f6061c71dcf469a67f0293553ad8cc4bbb432b6b09f6900", null ],
       [ "kCODEC_TFA9XXX", "a00253.html#gga10e74d65d7876276a8f6061c71dcf469a448b697ab0cc0c28740e77484faad04f", null ],
       [ "kCODEC_TFA9896", "a00253.html#gga10e74d65d7876276a8f6061c71dcf469a899f42fede26bf5fd37ea863fb4e5624", null ],
+      [ "kCODEC_WM8962", "a00253.html#gga10e74d65d7876276a8f6061c71dcf469a018d6b6d07eab64fe414983199950dc8", null ],
       [ "hostController", "a00051.html#a71c2bc521cd1b46bb9702a438694fd0f", null ],
       [ "dmaDesBuffer", "a00051.html#afdbf757e35a244a36abd144ef6a221c7", null ],
       [ "dmaDesBufferWordsNum", "a00051.html#a4b1c5755001081eb0846e05bc7ae220d", null ],

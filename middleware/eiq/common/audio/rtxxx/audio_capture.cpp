@@ -1,16 +1,15 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
-
 #include "audio.h"
 #include "audio_data.h"
 #include "audio_stream.h"
 #include "demo_config.h"
+#include "fsl_debug_console.h"
 #include "kws_mfcc.hpp"
 
 /* Recording window is one frame */
@@ -30,11 +29,11 @@ status_t AUDIO_GetSpectralSample(uint8_t* dstData, size_t size)
     {
         if (s_sampleCount == 1)
         {
-            printf(EOL "Static data processing:" EOL);
+            PRINTF(EOL "Static data processing:" EOL);
         }
         /* Select a static sample */
         const int16_t *staticData = (s_sampleCount == 1) ? off_sample_data : right_sample_data;
-        printf("Expected category: %s" EOL, AUDIO_GetSampleName());
+        PRINTF("Expected category: %s" EOL, AUDIO_GetSampleName());
 
         AUDIO_PreprocessSample(staticData, NUM_FRAMES);
         s_kws.store_features(dstData);
@@ -48,7 +47,7 @@ status_t AUDIO_GetSpectralSample(uint8_t* dstData, size_t size)
     {
         if (s_sampleCount == 3)
         {
-            printf(EOL "Microphone data processing:" EOL);
+            PRINTF(EOL "Microphone data processing:" EOL);
         }
         int16_t* sampleData;
         while (AUDIO_GetNextFrame(&sampleData))

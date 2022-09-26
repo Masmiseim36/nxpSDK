@@ -1,5 +1,6 @@
 /*
 * Copyright (c) 2015-2021 Cadence Design Systems Inc.
+* Copyright 2022 NXP
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -28,6 +29,7 @@
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "tensorflow/lite/c/common.h"
 
+#include "fsl_debug_console.h"
 #include "tflm-inference-api.h"
 
 namespace {}  // namespace
@@ -64,7 +66,7 @@ int inference_init(void *pPersist, void * pModel, int kTensorArenaSize, void *p_
     TfLiteStatus allocate_status = interpreter->AllocateTensors();
     if (allocate_status != kTfLiteOk) 
     {
-        printf("AllocateTensors() failed\n");
+        PRINTF("AllocateTensors() failed\n");
         return -1;
     }
     return 0;
@@ -94,7 +96,7 @@ int  inference_exec_process(void *pIn, int inp_bytes, void *pOut, int *out_bytes
     TfLiteStatus invoke_status = interpreter->Invoke();
     if (invoke_status != kTfLiteOk) 
     {
-        printf("Invoke failed\n");
+        PRINTF("Invoke failed\n");
         return invoke_status;
     }
 

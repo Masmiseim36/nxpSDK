@@ -1,11 +1,9 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-#include <stdio.h>
 
 #include "board_init.h"
 #include "dsp_support.h"
@@ -13,6 +11,7 @@
 #include "rpmsg_lite.h"
 #include "rpmsg_ns.h"
 #include "rpmsg_env_specific.h"
+#include "fsl_debug_console.h"
 
 /**
  * @brief dsp structure used for inter-processor communication
@@ -87,7 +86,7 @@ int main(void)
     BOARD_Init();
 
     /* Print the initial banner */
-    printf("\r\nStarting Xtensa example from Cortex-M33 core\r\n");
+    PRINTF("\r\nStarting Xtensa example from Cortex-M33 core\r\n");
 
     dsp_ipc_init();
 
@@ -106,7 +105,7 @@ int main(void)
 
             if (is_new_command)
             {
-                printf("Detected: %s (%d%%)\r\n", kCategoryLabels[category], (score * 100) / 256);
+                PRINTF("Detected: %s (%d%%)\r\n", kCategoryLabels[category], (score * 100) / 256);
             }
         }
     }

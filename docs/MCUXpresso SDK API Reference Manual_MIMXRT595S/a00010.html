@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -1362,6 +1362,9 @@ Functions</h2></td></tr>
 <tr class="memitem:gaf8212bf518ca441276e6192f0e88f609"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gaf8212bf518ca441276e6192f0e88f609">CLOCK_EnableFroClk</a> (uint32_t divOutEnable)</td></tr>
 <tr class="memdesc:gaf8212bf518ca441276e6192f0e88f609"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable FRO clock output.  <a href="#gaf8212bf518ca441276e6192f0e88f609">More...</a><br/></td></tr>
 <tr class="separator:gaf8212bf518ca441276e6192f0e88f609"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaced8029a1c4f455f1d1e3defbe78d64c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gaced8029a1c4f455f1d1e3defbe78d64c">CLOCK_EnableFroClkFreq</a> (uint32_t targetFreq, uint32_t divOutEnable)</td></tr>
+<tr class="memdesc:gaced8029a1c4f455f1d1e3defbe78d64c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable FRO clock output with specified frequency using the FRO Tuner.  <a href="#gaced8029a1c4f455f1d1e3defbe78d64c">More...</a><br/></td></tr>
+<tr class="separator:gaced8029a1c4f455f1d1e3defbe78d64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5dc3c4d96424417117744a29c584c846"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga5dc3c4d96424417117744a29c584c846">CLOCK_EnableFroClkRange</a> (<a class="el" href="a00010.html#ga2ce16d0799ab55d003be95ba2e730723">clock_fro_freq_t</a> froFreq, uint32_t divOutEnable)</td></tr>
 <tr class="memdesc:ga5dc3c4d96424417117744a29c584c846"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable FRO192M or FRO96M clock output.  <a href="#ga5dc3c4d96424417117744a29c584c846">More...</a><br/></td></tr>
 <tr class="separator:ga5dc3c4d96424417117744a29c584c846"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1453,6 +1456,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
 <tr class="memitem:ga63cb8fa085a85864fe4fc102139dbfd6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga63cb8fa085a85864fe4fc102139dbfd6">CLOCK_DeinitAudioPfd</a> (uint32_t pfd)</td></tr>
 <tr class="memdesc:ga63cb8fa085a85864fe4fc102139dbfd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">brief Disable the audio PLL PFD.  <a href="#ga63cb8fa085a85864fe4fc102139dbfd6">More...</a><br/></td></tr>
 <tr class="separator:ga63cb8fa085a85864fe4fc102139dbfd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaea1443a2bc18366330694e470eaf8506"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gaea1443a2bc18366330694e470eaf8506">CLOCK_FroTuneToFreq</a> (uint32_t targetFreq)</td></tr>
+<tr class="memdesc:gaea1443a2bc18366330694e470eaf8506"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tune the FRO to the specified frequency.  <a href="#gaea1443a2bc18366330694e470eaf8506">More...</a><br/></td></tr>
+<tr class="separator:gaea1443a2bc18366330694e470eaf8506"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeb98df6298ad1f2bc2035d894bdeb45a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#gaeb98df6298ad1f2bc2035d894bdeb45a">CLOCK_EnableFroTuning</a> (bool enable)</td></tr>
 <tr class="memdesc:gaeb98df6298ad1f2bc2035d894bdeb45a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable/Disable FRO tuning.  <a href="#gaeb98df6298ad1f2bc2035d894bdeb45a">More...</a><br/></td></tr>
 <tr class="separator:gaeb98df6298ad1f2bc2035d894bdeb45a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1490,8 +1496,8 @@ Variables</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga0c0cf401613f31feb4a9eb723ad51154"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0c0cf401613f31feb4a9eb723ad51154"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga0c0cf401613f31feb4a9eb723ad51154">FSL_CLOCK_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 1))</td></tr>
-<tr class="memdesc:ga0c0cf401613f31feb4a9eb723ad51154"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLOCK driver version 2.6.1. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00010.html#ga0c0cf401613f31feb4a9eb723ad51154">FSL_CLOCK_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00237.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 7, 0))</td></tr>
+<tr class="memdesc:ga0c0cf401613f31feb4a9eb723ad51154"><td class="mdescLeft">&#160;</td><td class="mdescRight">CLOCK driver version 2.7.0. <br/></td></tr>
 <tr class="separator:ga0c0cf401613f31feb4a9eb723ad51154"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
@@ -4270,6 +4276,39 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 
 </div>
 </div>
+<a class="anchor" id="gaced8029a1c4f455f1d1e3defbe78d64c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CLOCK_EnableFroClkFreq </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>targetFreq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>divOutEnable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetFreq</td><td>target fro frequency. </td></tr>
+    <tr><td class="paramname">divOutEnable</td><td>Or'ed value of clock_fro_output_en_t to enable certain clock freq output. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ga5dc3c4d96424417117744a29c584c846"></a>
 <div class="memitem">
 <div class="memproto">
@@ -4962,6 +5001,36 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </table>
 </div><div class="memdoc">
 <p>param pfd : Which PFD clock to disable. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaea1443a2bc18366330694e470eaf8506"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00237.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CLOCK_FroTuneToFreq </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>targetFreq</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">targetFreq</td><td>The target frequency. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>The FRO is tuned successfully. </td></tr>
+    <tr><td class="paramname">false</td><td>The FRO is not tuned to the target frequency. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This API can be used to tune the FRO to an accurate frequency periodicly using the reference clock(crystal oscillator). Make sure the reference clock is enabled before calling this API and the reference clock can be disabled after this API call. </dd></dl>
 
 </div>
 </div>

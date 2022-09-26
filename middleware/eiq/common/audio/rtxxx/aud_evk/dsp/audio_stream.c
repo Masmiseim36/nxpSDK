@@ -1,16 +1,16 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
 #include <stdbool.h>
 #include <xtensa/config/core.h>
 #include <xtensa/xos.h>
 
 #include "audio_stream.h"
+#include "fsl_debug_console.h"
 #include "fsl_dmic.h"
 #include "fsl_dmic_dma.h"
 #include "fsl_i2s.h"
@@ -89,7 +89,7 @@ static void DMIC_Callback(DMIC_Type *base, dmic_dma_handle_t *handle, status_t s
 
     if (I2S_TxTransferSendDMA(DEMO_I2S_TX, &s_i2sTxHandle, s_i2sTxTransfer) != kStatus_Success)
     {
-        printf("I2S_TxTransferSendDMA failed!\r\n");
+        PRINTF("I2S_TxTransferSendDMA failed!\r\n");
     }
 
     if (s_queue.head == 0)

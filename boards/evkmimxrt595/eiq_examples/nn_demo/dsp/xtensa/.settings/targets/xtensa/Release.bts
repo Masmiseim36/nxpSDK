@@ -26,7 +26,7 @@
             <key>Defines</key>
             <value flag="-D">
               <ListEntry key="XOS_DEBUG_ALL" value="0"/>
-              <ListEntry key="SDK_DEBUGCONSOLE" value="2"/>
+              <ListEntry key="SDK_DEBUGCONSOLE" value="0"/>
               <ListEntry key="NDEBUG" value=""/>
               <ListEntry key="XOS_CLOCK_FREQ" value="198000000"/>
               <ListEntry key="CPU_MIMXRT595SFFOC_dsp" value=""/>

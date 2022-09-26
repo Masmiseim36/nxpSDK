@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<BuildTarget tool="xtensa" version="1.0">
+  <BuildSettings>
+    <BaseSettings path="project">
+      <PreprocessorOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>Includes</key>
+            <value flag="-I" inheritance="donotinherit">
+              <ListEntry>${xt_project_loc}/..</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/drivers</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/str</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities/debug_console</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S/utilities</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_spot/rdsp_memory_utils_public</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT595S</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Core/Include</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_spot/models/NXP/version_1</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/include</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+        <KeyValueListMapOptions>
+          <KeyValueListMapEntry>
+            <key>Defines</key>
+            <value flag="-D">
+              <ListEntry key="NDEBUG" value=""/>
+              <ListEntry key="VOICE_SPOT" value=""/>
+              <ListEntry key="FUSIONF1" value=""/>
+              <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
+              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
+              <ListEntry key="DEBUG_CONSOLE_RX_ENABLE" value="0"/>
+              <ListEntry key="CPU_MIMXRT595SFFOC_dsp" value=""/>
+              <ListEntry key="MCUXPRESSO_SDK" value=""/>
+            </value>
+          </KeyValueListMapEntry>
+        </KeyValueListMapOptions>
+      </PreprocessorOptions>
+      <CompilerOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>CompilerAdditionalOptions</key>
+            <value flag="" inheritance="append">
+                        <ListEntry>-Wno-unused&#13;
+-Wno-missing-braces&#13;
+-fmessage-length=0&#13;
+-std=gnu99</ListEntry></value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+        <SingleFlagMapOptions>
+          <SingleFlagMapEntry>
+            <key>OptimizeSpace</key>
+            <value use="true" flag="-Os"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>CompilerEnableLongCall</key>
+            <value use="true" flag="-mlongcalls"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>WarningSetting</key>
+            <value use="true" flag="-Wall"/>
+          </SingleFlagMapEntry>
+          <SingleFlagMapEntry>
+            <key>SignCharType</key>
+            <value use="true" flag="-fsigned-char"/>
+          </SingleFlagMapEntry>
+        </SingleFlagMapOptions>
+      </CompilerOptions>
+      <AssemblerOptions/>
+      <LinkerOptions>
+        <StringListMapOptions>
+          <StringListMapEntry>
+            <key>LinkerAdditionalOptions</key>
+            <value inheritance="append">
+              <ListEntry>${xt_project_loc}/../../../../../../middleware/voice_spot/RT595_FusionF1/Lib/librdsp_libvoicespot.a&#13;
+${xt_project_loc}/../../../../../../middleware/dsp/naturedsp/fusionf1/libnaturedsp.a&#13;
+</ListEntry>
+            </value>
+          </StringListMapEntry>
+          <StringListMapEntry>
+            <key>Libraries</key>
+            <value inheritance="prepend" flag="-l">
+              <ListEntry>xos</ListEntry>
+            </value>
+          </StringListMapEntry>
+        </StringListMapOptions>
+        <BooleanMapOptions>
+          <BooleanMapEntry>
+            <key>CreateMinsize</key>
+            <value selected="true"/>
+          </BooleanMapEntry>
+        </BooleanMapOptions>
+        <LinkerSupport custom="true" key="-mlsp" value="${xt_project_loc}/../../../../../../devices/MIMXRT595S/xtensa/min-rt"/>
+      </LinkerOptions>
+    </BaseSettings>
+    <OverriddenSettings/>
+  </BuildSettings>
+</BuildTarget>

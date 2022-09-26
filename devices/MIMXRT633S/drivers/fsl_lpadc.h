@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,8 +23,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPADC driver version 2.5.1. */
-#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 5, 1))
+/*! @brief LPADC driver version 2.6.0. */
+#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 6, 0))
 /*@}*/
 
 /*!
@@ -823,6 +823,30 @@ static inline void LPADC_DoSoftwareTrigger(ADC_Type *base, uint32_t triggerIdMas
     /* Writes to ADCx_SWTRIG register are ignored while ADCx_CTRL[ADCEN] is clear. */
     base->SWTRIG = triggerIdMask;
 }
+
+#if defined(FSL_FEATURE_LPADC_HAS_TCTRL_CMD_SEL) && FSL_FEATURE_LPADC_HAS_TCTRL_CMD_SEL
+/*!
+ * @brief Enable hardware trigger command selection.
+ *
+ * This function will use the hardware trigger command from ADC_ETC.The trigger command is then defined
+ * by ADC hardware trigger command selection field in ADC_ETC- >TRIGx_CHAINy_z_n[CSEL].
+ *
+ * @param base LPADC peripheral base address.
+ * @param triggerId ID for each trigger. Typically, the available value range is from 0.
+ * @param enable  True to enable or flase to disable.
+ */
+static inline void LPADC_EnableHardwareTriggerCommandSelection(ADC_Type *base, uint32_t triggerId, bool enable)
+{
+    if (enable)
+    {
+        base->TCTRL[triggerId] |= ADC_TCTRL_CMD_SEL_MASK;
+    }
+    else
+    {
+        base->TCTRL[triggerId] &= ~ADC_TCTRL_CMD_SEL_MASK;
+    }
+}
+#endif /* FSL_FEATURE_LPADC_HAS_TCTRL_CMD_SEL*/
 
 /*!
  * @brief Configure conversion command.

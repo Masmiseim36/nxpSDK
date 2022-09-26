@@ -523,6 +523,7 @@ var searchData=
   ['kcodec_5fwm8524',['kCODEC_WM8524',['../a00278.html#gga15b3bbe041870ee299f7e042b0305e3ca57b2941cff245c37272e1ea4598c3ab0',1,'fsl_codec_adapter.h']]],
   ['kcodec_5fwm8904',['kCODEC_WM8904',['../a00278.html#gga15b3bbe041870ee299f7e042b0305e3cacb2ee31cd4ee06712e3cf445e12cb389',1,'fsl_codec_adapter.h']]],
   ['kcodec_5fwm8960',['kCODEC_WM8960',['../a00278.html#gga15b3bbe041870ee299f7e042b0305e3caa15237d33f0b971a6596458ef7aa8d99',1,'fsl_codec_adapter.h']]],
+  ['kcodec_5fwm8962',['kCODEC_WM8962',['../a00278.html#gga15b3bbe041870ee299f7e042b0305e3ca018d6b6d07eab64fe414983199950dc8',1,'fsl_codec_adapter.h']]],
   ['kcrc_5fpolynomial_5fcrc_5f16',['kCRC_Polynomial_CRC_16',['../a00013.html#gga7daa8fa0df9f42a98afcf766a63d931da4a13840f3031b3aed89f60ba37a34c8b',1,'fsl_crc.h']]],
   ['kcrc_5fpolynomial_5fcrc_5f32',['kCRC_Polynomial_CRC_32',['../a00013.html#gga7daa8fa0df9f42a98afcf766a63d931da12ca2ee766202eb962135c76c00b10aa',1,'fsl_crc.h']]],
   ['kcrc_5fpolynomial_5fcrc_5fccitt',['kCRC_Polynomial_CRC_CCITT',['../a00013.html#gga7daa8fa0df9f42a98afcf766a63d931da9ef1c3d85d4f13199e7df63d170bf6f6',1,'fsl_crc.h']]],

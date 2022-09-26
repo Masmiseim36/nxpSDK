@@ -1,11 +1,9 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-#include <stdio.h>
 
 #include "board_init.h"
 #include "pin_mux.h"
@@ -76,7 +74,7 @@ void BOARD_Init()
 
     if (CODEC_Init(&s_codecHandle, &s_boardCodecConfig) != kStatus_Success)
     {
-        printf("Error: Could not initialize audio codec! Please, reconnect the board power supply.\r\n");
+        PRINTF("Error: Could not initialize audio codec! Please, reconnect the board power supply.\r\n");
         for (;;)
             ;
     }
@@ -87,6 +85,6 @@ void BOARD_Init()
     if (CODEC_SetVolume(&s_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 50U) !=
         kStatus_Success)
     {
-        printf("Warning: Could not set volume!\r\n");
+        PRINTF("Warning: Could not set volume!\r\n");
     }
 }

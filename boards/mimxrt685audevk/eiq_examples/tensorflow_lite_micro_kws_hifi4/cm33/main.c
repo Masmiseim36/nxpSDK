@@ -1,14 +1,13 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
-
 #include "board_init.h"
 #include "dsp_support.h"
+#include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
 #include "fsl_cs42448.h"
 #include "fsl_codec_common.h"
@@ -68,7 +67,7 @@ int main(void)
 
     if (CODEC_Init(&s_codecHandle, &s_boardCodecConfig) != kStatus_Success)
     {
-        printf("Error: Could not initialize audio codec! Please, reconnect the board power supply.\r\n");
+        PRINTF("Error: Could not initialize audio codec! Please, reconnect the board power supply.\r\n");
         for (;;)
             ;
     }
@@ -79,11 +78,11 @@ int main(void)
     if (CODEC_SetVolume(&s_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 100U) !=
         kStatus_Success)
     {
-        printf("Warning: Could not set volume!\r\n");
+        PRINTF("Warning: Could not set volume!\r\n");
     }
 
     /* Print the initial banner */
-    printf("\r\nStarting Xtensa example from Cortex-M33 core\r\n");
+    PRINTF("\r\nStarting Xtensa example from Cortex-M33 core\r\n");
 
     /* Copy DSP image to RAM and start DSP core. */
     BOARD_DSP_Init();

@@ -332,7 +332,7 @@
               <MiscControls>-fno-exceptions  -Wno-c++17-extensions  -ffp-mode=full  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CMSIS_NN, SERIAL_PORT_TYPE_UART=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/phy/mdio/enet;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/silicon_id;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/phy/mdio/enet;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/silicon_id;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3019,41 +3019,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -3115,6 +3080,41 @@
               <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -5334,7 +5334,7 @@
               <MiscControls>-fno-exceptions  -Wno-c++17-extensions  -ffp-mode=full  -fno-common  -fdata-sections  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, __STDC_CONSTANT_MACROS, __CLK_TCK=1000000, CPU_MIMXRT1052DVL6B, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_DEBUGCONSOLE_UART, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SDK_DEBUGCONSOLE=1, USE_RTOS=1, SDK_OS_FREE_RTOS, LWIP_DISABLE_PBUF_POOL_SIZE_SANITY_CHECKS=1, CMSIS_NN, SERIAL_PORT_TYPE_UART=1, TF_LITE_STATIC_MEMORY, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/phy/mdio/enet;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/silicon_id;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../rtos/freertos/libraries/abstractions/posix/include;../../../../../middleware/lwip/src/apps/httpsrv;../../../../../middleware/lwip/port;../../../../../middleware/lwip/src;../../../../../middleware/lwip/src/include;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../components/phy;../../../../../devices/MIMXRT1052/drivers;../../../../../components/phy/device/phyksz8081;../../../../../components/phy/mdio/enet;../../../../../middleware/eiq/deepviewrt/deps/json/include;../../../../../middleware/eiq/deepviewrt/deps/stb/include;../../../../../middleware/eiq/deepviewrt/deps/flatcc/include;../../../../../middleware/eiq/tensorflow-lite;../../../../../components/silicon_id;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1052;../../../../../devices/MIMXRT1052/xip;../../../xip;../../../../../devices/MIMXRT1052/utilities/str;../../../../../devices/MIMXRT1052/utilities/debug_console;../../../../../CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include;../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp;../../../../../middleware/eiq/tensorflow-lite/third_party/ruy;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include;../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -8021,41 +8021,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>device</GroupName>
           <Files>
             <File>
@@ -8117,6 +8082,41 @@
               <FileName>evkbimxrt1050_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xip/evkbimxrt1050_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
           </Files>
         </Group>

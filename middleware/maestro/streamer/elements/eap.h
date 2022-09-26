@@ -108,10 +108,10 @@ int32_t eap_init_element(StreamElement *element_ptr);
  * @param proc_func_ptr processing function pointer
  * @param deinit_func_ptr deinit function pointer
  * @param arg_ptr arguments pointer
- * @return true
- * @return false
+ * @return STREAM_OK
+ * @return STREAM_ERR_INVALID_ARGS
  */
-bool eap_register_ext_processing(ElementHandle element,
+int32_t eap_register_ext_processing(ElementHandle element,
                                  EapInitFunc init_func_ptr,
                                  EapPostProcFunc proc_func_ptr,
                                  EapDeinitFunc deinit_func_ptr,

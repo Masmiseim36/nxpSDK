@@ -21,9 +21,7 @@
 #include "sdio.h"
 #include "firmware_dnld.h"
 
-extern t_u32 ioport_g;
-
-const uint8_t *wlanfw;
+static const uint8_t *wlanfw;
 
 /* remove this after mlan integration complete */
 enum
@@ -43,17 +41,17 @@ static void wlan_card_fw_status(t_u16 *dat)
     uint32_t resp = 0;
 
     (void)sdio_drv_creg_read(CARD_FW_STATUS0_REG, 1, &resp);
-    *dat = (t_u16)(resp & 0xff);
+    *dat = (t_u16)(resp & 0xffU);
     (void)sdio_drv_creg_read(CARD_FW_STATUS1_REG, 1, &resp);
-    *dat |= (t_u16)((resp & 0xff) << 8);
+    *dat |= (t_u16)((resp & 0xffU) << 8);
 }
 
-static bool wlan_card_ready_wait(t_u32 poll)
+static bool wlan_card_ready_wait(t_u32 card_poll)
 {
-    t_u16 dat;
-    int i;
+    t_u16 dat = 0U;
+    t_u32 i   = 0U;
 
-    for (i = 0; i < poll; i++)
+    for (i = 0; i < card_poll; i++)
     {
         (void)wlan_card_fw_status(&dat);
         if (dat == FIRMWARE_READY)
@@ -66,7 +64,7 @@ static bool wlan_card_ready_wait(t_u32 poll)
     return false;
 }
 
-int32_t wlan_download_normal_fw(enum wlan_fw_storage_type st, const t_u8 *wlanfw, t_u32 firmwarelen, t_u32 ioport)
+static int32_t wlan_download_normal_fw(const t_u8 *wlanfw_dl, t_u32 firmwarelen, t_u32 ioport)
 {
     t_u32 tx_blocks = 0, txlen = 0, buflen = 0;
     t_u16 len    = 0;
@@ -105,7 +103,7 @@ int32_t wlan_download_normal_fw(enum wlan_fw_storage_type st, const t_u8 *wlanfw
             }
         }
 
-        if (!len)
+        if (len == 0U)
         {
             fwdnld_io_e("Card timeout %s:%d", __func__, __LINE__);
             return FWDNLD_STATUS_FAILURE;
@@ -122,22 +120,13 @@ int32_t wlan_download_normal_fw(enum wlan_fw_storage_type st, const t_u8 *wlanfw
         txlen = len;
 
         /* Set blocksize to transfer - checking for last block */
-        if (firmwarelen && (firmwarelen - offset) < txlen)
+        if ((firmwarelen - offset) < txlen)
         {
             txlen = firmwarelen - offset;
         }
 
         calculate_sdio_write_params(txlen, &tx_blocks, &buflen);
-#if 0
-		if (st == WLAN_FW_IN_FLASH)
-			flash_drv_read(fl_dev, outbuf, txlen,
-				       (t_u32) (wlanfw + offset));
-		else
-#endif
-        if (st == WLAN_FW_IN_RAM)
-        {
-            (void)memcpy((void *)outbuf, (const void *)(wlanfw + offset), txlen);
-        }
+        (void)memcpy((void *)outbuf, (const void *)(wlanfw_dl + offset), txlen);
 
         (void)sdio_drv_write(ioport, 1, tx_blocks, buflen, (t_u8 *)outbuf, &resp);
         offset += txlen;
@@ -178,10 +167,9 @@ static int32_t wlan_set_fw_dnld_size(void)
  * Download firmware to the card through SDIO.
  * The firmware is stored in Flash.
  */
-int32_t firmware_download(enum wlan_fw_storage_type st, const uint8_t *fw_ram_start_addr, const size_t size)
+int32_t firmware_download(const uint8_t *fw_start_addr, const size_t size)
 {
     t_u32 firmwarelen;
-    wlanfw_hdr_type wlanfwhdr;
     int32_t ret;
 
     /* set fw download block size */
@@ -190,47 +178,11 @@ int32_t firmware_download(enum wlan_fw_storage_type st, const uint8_t *fw_ram_st
     {
         return ret;
     }
-#if 0
-	if (st == WLAN_FW_IN_FLASH) {
-		fl_dev = flash_drv_open(fl->fl_dev);
-		if (fl_dev == NULL) {
-			fwdnld_io_e("Flash drv init is required before open");
-			return FWDNLD_STATUS_FW_NOT_DETECTED;
-		}
-	}
 
-	if (st == WLAN_FW_IN_FLASH)
-		wlanfw = (t_u8 *)fl->fl_start;
-	else
-#endif
-    if (st == WLAN_FW_IN_RAM)
-    {
-        wlanfw = fw_ram_start_addr;
-    }
+    wlanfw = fw_start_addr;
 
     fwdnld_io_d("Start copying wlan firmware over sdio from 0x%x", (t_u32)wlanfw);
 
-#if 0
-	if (st == WLAN_FW_IN_FLASH)
-		flash_drv_read(fl_dev, (t_u8 *) &wlanfwhdr, sizeof(wlanfwhdr),
-			       (t_u32) wlanfw);
-	else
-#endif
-    if (st == WLAN_FW_IN_RAM)
-    {
-        (void)memcpy((void *)&wlanfwhdr, (const void *)wlanfw, sizeof(wlanfwhdr));
-    }
-
-    //	if (wlanfwhdr.magic_number != WLAN_MAGIC_NUM) {
-    //		fwdnld_io_e("WLAN FW not detected in Flash.");
-    //		return MLAN_STATUS_FW_NOT_DETECTED;
-    //	}
-
-    //	fwdnld_io_d("Valid WLAN FW found in %s flash",
-    //			fl->fl_dev ? "external" : "internal");
-
-    /* skip the wlanhdr and move wlanfw to beginning of the firmware */
-    //	wlanfw += sizeof(wlanfwhdr);
     firmwarelen = size;
 
     {
@@ -238,12 +190,9 @@ int32_t firmware_download(enum wlan_fw_storage_type st, const uint8_t *fw_ram_st
             "Un-compressed image found, start download,"
             " len: %d",
             firmwarelen);
-        ret = wlan_download_normal_fw(st, wlanfw, firmwarelen, ioport_g);
+        ret = wlan_download_normal_fw(wlanfw, firmwarelen, ioport_g);
     }
-#if 0
-	if (st == WLAN_FW_IN_FLASH)
-		flash_drv_close(fl_dev);
-#endif
+
     if (ret != FWDNLD_STATUS_SUCCESS)
     {
         return ret;

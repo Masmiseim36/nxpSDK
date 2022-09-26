@@ -128,8 +128,7 @@ struct bt_att {
 	osa_msgq_handle_t tx_queue;
     OSA_MSGQ_HANDLE_DEFINE(tx_queue_handle, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(void *));
 #if CONFIG_BT_ATT_PREPARE_COUNT > 0
-	osa_msgq_handle_t prep_queue;
-    OSA_MSGQ_HANDLE_DEFINE(prep_queue_handle, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(void *));
+	sys_slist_t		prep_queue;
 #endif
 	/* Contains bt_att_chan instance(s) */
 	sys_slist_t		chans;
@@ -592,6 +591,9 @@ static void send_err_rsp(struct bt_att_chan *chan, uint8_t req, uint16_t handle,
     err_param.error_code = err;
 
     (void)BT_att_send_error_rsp(&chan->handle, &err_param);
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+    chan_rsp_sent(chan);
+#endif
 }
 
 static uint8_t att_mtu_req(struct bt_att_chan *chan, struct net_buf *buf)
@@ -633,6 +635,9 @@ static uint8_t att_mtu_req(struct bt_att_chan *chan, struct net_buf *buf)
     {
         ret = BT_ATT_ERR_UNLIKELY;
     }
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+    chan_rsp_sent(chan);
+#endif
 
 	if (0 == ret)
 	{
@@ -1377,6 +1382,9 @@ static uint8_t att_find_info_rsp(struct bt_att_chan *chan, uint16_t start_handle
 		{
 			ret = BT_ATT_ERR_UNLIKELY;
 		}
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+		chan_rsp_sent(chan);
+#endif
 	}
 	else
 	{
@@ -1538,6 +1546,9 @@ static uint8_t att_find_type_rsp(struct bt_att_chan *chan, uint16_t start_handle
 		{
 			ret = BT_ATT_ERR_UNLIKELY;
 		}
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+		chan_rsp_sent(chan);
+#endif
 	}
 
 	return ret;
@@ -1795,6 +1806,9 @@ static uint8_t att_read_type_rsp(struct bt_att_chan *chan, struct bt_uuid *uuid,
 		{
 			ret = BT_ATT_ERR_UNLIKELY;
 		}
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+		chan_rsp_sent(chan);
+#endif
 	}
 
 	return ret;
@@ -1856,7 +1870,7 @@ static uint8_t read_cb(const struct bt_gatt_attr *attr, uint16_t handle,
 
 	BT_DBG("handle 0x%04x", handle);
 
-	data->rspParam.val = data->buffer;
+	data->rspParam.val = &data->buffer[data->sofar];
 
 	/*
 	 * If any attribute is founded in handle range it means that error
@@ -1874,7 +1888,7 @@ static uint8_t read_cb(const struct bt_gatt_attr *attr, uint16_t handle,
 #if 0
 	ret = att_chan_read(chan, attr, data->buf, data->offset, NULL, NULL);
 #else
-	ret = attr->read(conn, attr, &data->buffer[data->offset],
+	ret = attr->read(conn, attr, &data->buffer[data->sofar],
               data->len - data->sofar, data->offset);
 #endif
 	if (ret < 0) {
@@ -1924,6 +1938,9 @@ static uint8_t att_read_rsp(struct bt_att_chan *chan, uint8_t op, uint8_t rsp,
 		{
 			ret = BT_ATT_ERR_UNLIKELY;
 		}
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+		chan_rsp_sent(chan);
+#endif
 	}
 	return ret;
 }
@@ -1962,21 +1979,21 @@ static uint8_t att_read_blob_req(struct bt_att_chan *chan, struct net_buf *buf)
 #if (defined(CONFIG_BT_GATT_READ_MULTIPLE) && ((CONFIG_BT_GATT_READ_MULTIPLE) > 0U))
 static uint8_t att_read_mult_req(struct bt_att_chan *chan, struct net_buf *buf)
 {
-	struct bt_conn *conn = chan->chan.chan.conn;
-	struct read_data data;
+    struct bt_conn *conn = chan->chan.chan.conn;
+    struct read_data data;
     ATT_READ_MULTIPLE_RSP_PARAM    rsp_param;
     ATT_VALUE                      value[BT_ATT_MAX_MULTIPLE_READ_COUNT];
-	uint16_t handle;
+    uint16_t handle;
     uint8_t ret = 0;
+    size_t last_len = 0;
 
-	if (!bt_gatt_change_aware(conn, true)) {
-		return BT_ATT_ERR_DB_OUT_OF_SYNC;
-	}
+    if (!bt_gatt_change_aware(conn, true)) {
+        return BT_ATT_ERR_DB_OUT_OF_SYNC;
+    }
 
-	(void)memset(&data, 0, sizeof(data));
-
+    (void)memset(&data, 0, sizeof(data));
     data.len = MIN(chan->chan.tx.mtu, sizeof(data.buffer));
-	data.chan = chan;
+    data.chan = chan;
 
     rsp_param.actual_count = 0;
     rsp_param.count = 0;
@@ -2005,6 +2022,8 @@ static uint8_t att_read_mult_req(struct bt_att_chan *chan, struct net_buf *buf)
 				     data.err);
 			return 0;
 		}
+        data.rspParam.len = data.sofar - last_len;
+        last_len = data.sofar;
         value[rsp_param.count] = data.rspParam;
         rsp_param.count++;
 
@@ -2018,6 +2037,9 @@ static uint8_t att_read_mult_req(struct bt_att_chan *chan, struct net_buf *buf)
     {
         ret = BT_ATT_ERR_UNLIKELY;
     }
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+    chan_rsp_sent(chan);
+#endif
 
 	return ret;
 }
@@ -2266,6 +2288,9 @@ static uint8_t att_read_group_rsp(struct bt_att_chan *chan, struct bt_uuid *uuid
 		{
 			ret = BT_ATT_ERR_UNLIKELY;
 		}
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+		chan_rsp_sent(chan);
+#endif
 	}
 
 	return ret;
@@ -2409,6 +2434,9 @@ static uint8_t att_write_rsp(struct bt_att_chan *chan, uint8_t req, uint8_t rsp,
 			{
 				ret = BT_ATT_ERR_UNLIKELY;
 			}
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+			chan_rsp_sent(chan);
+#endif
 		}
 	}
 
@@ -2523,20 +2551,23 @@ static uint8_t att_prep_write_rsp(struct bt_att_chan *chan, uint16_t handle,
 	BT_DBG("buf %p handle 0x%04x offset %u", data.buf, handle, offset);
 
 	/* Store buffer in the outstanding queue */
-	net_buf_put(chan->att->prep_queue, data.buf);
+	net_buf_slist_put(&chan->att->prep_queue, data.buf);
 
 	/* Generate response */
-	prepare_write_rsp.offset = sys_cpu_to_le16(offset);;
-	prepare_write_rsp.handle_value.handle = sys_cpu_to_le16(handle);;
-	prepare_write_rsp.handle_value.value.val = value;
+	prepare_write_rsp.offset = offset;
+	prepare_write_rsp.handle_value.handle = handle;
+	prepare_write_rsp.handle_value.value.val = (uint8_t*)value;
 	prepare_write_rsp.handle_value.value.len = len;
 
 	retval = BT_att_send_prepare_write_rsp
 				(
-					handle,
+					&chan->handle,
 					&prepare_write_rsp
 				);
-	if (API_SUCCESS != retVal)
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+	chan_rsp_sent(chan);
+#endif
+	if (API_SUCCESS != retval)
 	{
 		ret = BT_ATT_ERR_UNLIKELY;
 	}
@@ -2680,9 +2711,12 @@ static uint8_t att_exec_write_rsp(struct bt_att_chan *chan, uint8_t flags)
 	/* Generate response */
 	retval = BT_att_send_execute_write_rsp
 			(
-				handle
+				&chan->handle
 			);
-	if (API_SUCCESS != retVal)
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+	chan_rsp_sent(chan);
+#endif
+	if (API_SUCCESS != retval)
 	{
 		ret = BT_ATT_ERR_UNLIKELY;
 	}
@@ -2967,6 +3001,9 @@ static uint8_t att_indicate(struct bt_att_chan *chan, struct net_buf *buf)
     retval = BT_att_send_hndl_val_cnf(&chan->handle);
     assert(API_SUCCESS == retval);
     (void)retval;
+#if (defined (CONFIG_BT_ATT_ENFORCE_FLOW) && (CONFIG_BT_ATT_ENFORCE_FLOW))
+    chan_cfm_sent(chan);
+#endif
 
 	return 0;
 }
@@ -3343,10 +3380,9 @@ static void att_reset(struct bt_att *att)
 
 #if CONFIG_BT_ATT_PREPARE_COUNT > 0
 	/* Discard queued buffers */
-	while ((buf = net_buf_get(att->prep_queue, osaWaitNone_c))) {
+	while ((buf = net_buf_slist_get(&att->prep_queue))) {
 		net_buf_unref(buf);
 	}
-	(void)OSA_MsgQDestroy(att->prep_queue);
 #endif /* CONFIG_BT_ATT_PREPARE_COUNT > 0 */
 
 	while ((buf = net_buf_get(att->tx_queue, osaWaitNone_c))) {
@@ -3478,15 +3514,7 @@ static void att_chan_attach(struct bt_att *att, struct bt_att_chan *chan)
 			}
 		}
 #if CONFIG_BT_ATT_PREPARE_COUNT > 0
-		if (NULL == att->prep_queue)
-		{
-			ret = OSA_MsgQCreate((osa_msgq_handle_t)att->prep_queue, CONFIG_BT_MSG_QUEUE_COUNT, sizeof(void*));
-			assert(KOSA_StatusSuccess == ret);
-			if (KOSA_StatusSuccess == ret)
-			{
-				att->prep_queue = (osa_msgq_handle_t)att->prep_queue_handle;
-			}
-		}
+		sys_slist_init(&att->prep_queue);
 #endif
 	}
 
@@ -3880,7 +3908,7 @@ static void bt_eatt_init(void)
 	static struct bt_l2cap_server eatt_l2cap = {
 		.psm = BT_EATT_PSM,
 #if (defined(CONFIG_BT_EATT_SEC_LEVEL) && ((CONFIG_BT_EATT_SEC_LEVEL) > 0U))
-		.sec_level = CONFIG_BT_EATT_SEC_LEVEL,
+		.sec_level = (bt_security_t)CONFIG_BT_EATT_SEC_LEVEL,
 #endif
 		.accept = bt_eatt_accept,
 	};
@@ -4003,8 +4031,15 @@ static API_RESULT ethermind_bt_att_cb
             {
                 struct bt_att_hdr hdr;
 
-                hdr.code = att_event;
-                (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
+                if (ATT_UNKNOWN_PDU_IND != att_event)
+                {
+                    hdr.code = att_event;
+                    (void)net_buf_add_mem(buf, &hdr, sizeof(hdr));
+                }
+                else
+                {
+                    /* the hdr->code is in the eventdata */
+                }
                 (void)net_buf_add_mem(buf, eventdata, event_datalen);
                 BT_DBG("RX queue put buf %p", buf);
                 ret = OSA_MsgQPut(attChan->rx_queue, &buf);

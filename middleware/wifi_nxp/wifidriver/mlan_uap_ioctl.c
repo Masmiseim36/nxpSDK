@@ -26,46 +26,6 @@ Change log:
 
 
 /**
- *  @brief Set/Get deauth control.
- *
- *  @param pmadapter	A pointer to mlan_adapter structure
- *  @param pioctl_req	A pointer to ioctl request buffer
- *
- *  @return		MLAN_STATUS_PENDING --success, otherwise fail
- */
-mlan_status wlan_uap_snmp_mib_ctrl_deauth(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req)
-{
-    mlan_private *pmpriv  = pmadapter->priv[pioctl_req->bss_index];
-    mlan_status ret       = MLAN_STATUS_SUCCESS;
-    mlan_ds_snmp_mib *mib = (mlan_ds_snmp_mib *)(void *)pioctl_req->pbuf;
-    t_u16 cmd_action      = 0;
-
-    ENTER();
-
-    mib = (mlan_ds_snmp_mib *)(void *)pioctl_req->pbuf;
-    if (pioctl_req->action == MLAN_ACT_SET)
-    {
-        cmd_action = HostCmd_ACT_GEN_SET;
-    }
-    else
-    {
-        cmd_action = HostCmd_ACT_GEN_GET;
-    }
-
-    /* Send command to firmware */
-    ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_802_11_SNMP_MIB, cmd_action, StopDeauth_i, (t_void *)pioctl_req,
-                           &mib->param.deauthctrl);
-
-    if (ret == MLAN_STATUS_SUCCESS)
-    {
-        ret = MLAN_STATUS_PENDING;
-    }
-
-    LEAVE();
-    return ret;
-}
-
-/**
  *  @brief MLAN uap ioctl handler
  *
  *  @param adapter	A pointer to mlan_adapter structure

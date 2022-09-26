@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -111,19 +111,15 @@ int streamer_pcm_write(pcm_rtos_t *pcm, uint8_t *data, uint32_t size)
 
     DCACHE_CleanByRange((uint32_t)pcm->saiTx.data, pcm->saiTx.dataSize);
 
-    if (pcm->isFirstTx)
-    {
-        pcm->isFirstTx = 0;
-    }
-    else
-    {
-        /* Wait for the previous transfer to finish */
-        if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
-            return -1;
-    }
-
     /* Start the consecutive transfer */
-    SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx);
+    while (SAI_TransferSendEDMA(DEMO_SAI, &pcm->saiTxHandle, &pcm->saiTx) == kStatus_SAI_QueueFull)
+    {
+        /* Wait for transfer to finish */
+        if (xSemaphoreTake(pcm->semaphoreTX, portMAX_DELAY) != pdTRUE)
+        {
+            return -1;
+        }
+    }
 
     return 0;
 }
@@ -202,7 +198,6 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
     sai_transceiver_t saiConfig;
     uint32_t masterClockHz = 0U;
 
-    pcm->isFirstTx       = transfer ? 1U : pcm->isFirstTx;
     pcm->sample_rate     = sample_rate;
     pcm->bit_width       = bit_width;
     pcm->num_channels    = num_channels;
@@ -231,6 +226,7 @@ int streamer_pcm_setparams(pcm_rtos_t *pcm,
         saiConfig.masterSlave = kSAI_Master;
     }
 
+    SAI_TransferTerminateSendEDMA(DEMO_SAI, &pcm->saiTxHandle);
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &pcmHandle.saiTxHandle, &saiConfig);
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, masterClockHz, _pcm_map_sample_rate(sample_rate), _pcm_map_word_width(bit_width),

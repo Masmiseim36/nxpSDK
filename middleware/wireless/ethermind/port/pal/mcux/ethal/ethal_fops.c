@@ -1657,6 +1657,7 @@ static void fops_list_directory (CHAR *path)
 static void fops_display_file_info(FILINFO *fileInfo)
 {
     char *fileName;
+    (void)fileName;
     fileName = fileInfo->fname;
     /* note: if this file/directory don't have one attribute, '_' replace the attribute letter ('R' - readonly, 'H' - hide, 'S' - system) */
     fops_echo("    %s - %c%c%c - %s - %dBytes - %d-%d-%d %d:%d:%d\r\n", (fileInfo->fattrib & AM_DIR) ? "dir" : "fil",

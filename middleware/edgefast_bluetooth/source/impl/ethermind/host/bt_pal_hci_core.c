@@ -2780,6 +2780,9 @@ static void read_le_features_complete(struct net_buf *buf)
 
 	BT_DBG("status 0x%02x", rp->status);
 
+#if (defined CONFIG_BT_CTLR_CONN_PARAM_REQ) && (CONFIG_BT_CTLR_CONN_PARAM_REQ == 0U)
+	rp->features[(BT_LE_FEAT_BIT_CONN_PARAM_REQ) >> 3] = (rp->features[(BT_LE_FEAT_BIT_CONN_PARAM_REQ) >> 3] & (~BIT((BT_LE_FEAT_BIT_CONN_PARAM_REQ) & 7)));
+#endif
 	memcpy(bt_dev.le.features, rp->features, sizeof(bt_dev.le.features));
 }
 

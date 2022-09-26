@@ -1,10 +1,9 @@
 /*
- * Copyright  2019 NXP
+ * Copyright 2019-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include <stdio.h>
 
 #include "eiq_display_conf.h"
 #include "fsl_gpio.h"
@@ -85,7 +84,7 @@ static void BOARD_InitLcdifPixelClock(void)
 
     if (videoPllFreq != 93000000)
     {
-        printf("Error: Invalid LCDIF pixel clock source.\r\n");
+        PRINTF("Error: Invalid LCDIF pixel clock source.\r\n");
         while (1)
             ;
     }

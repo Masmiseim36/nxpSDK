@@ -1,0 +1,346 @@
+BIP sample attachement data:
+      --directx-audio-float32, --no-directx-audio-float32
+                                 Use float32 output (default disabled)
+          The option allows you to enable or disable the high-quality float32
+          audio output mode (which is not well supported by some soundcards).
+          (default disabled)
+      --directx-audio-speaker={Windows default,Mono,Stereo,Quad,5.1,7.1}
+                                 Speaker configuration
+          Select speaker configuration you want to use. This option doesn't
+          upmix! So NO e.g. Stereo -> 5.1 conversion.
+
+ Audio memory output
+      --amem-format=<string>     Sample format
+          Sample format
+      --amem-rate=<integer [1 .. 192000]>
+                                 Sample rate
+          Sample rate
+      --amem-channels=<integer [1 .. 9]>
+                                 Channels count
+          Channels count
+
+ Speex resampler
+      --speex-resampler-quality=<integer [0 .. 10]>
+                                 Resampling quality
+          Resampling quality (0 = worst and fastest, 10 = best and slowest).
+
+ Audio Spatializer
+      --spatializer-roomsize=<float [0.000000 .. 1.100000]>
+                                 Room size
+          Defines the virtual surface of the room emulated by the filter.
+      --spatializer-width=<float [0.000000 .. 1.000000]>
+                                 Room width
+          Width of the virtual room
+      --spatializer-wet=<float [0.000000 .. 1.000000]>
+                                 Wet
+      --spatializer-dry=<float [0.000000 .. 1.000000]>
+                                 Dry
+      --spatializer-damp=<float [0.000000 .. 1.000000]>
+                                 Damp
+
+ Audio tempo scaler synched with rate
+      --scaletempo-stride=<integer [1 .. 2000]>
+                                 Stride Length
+          Length in milliseconds to output each stride
+      --scaletempo-overlap=<float [0.000000 .. 1.000000]>
+                                 Overlap Length
+          Percentage of stride to overlap
+      --scaletempo-search=<integer [0 .. 200]>
+                                 Search Length
+          Length in milliseconds to search for best overlap position
+
+ Secret Rabbit Code (libsamplerate) resampler
+      --src-converter-type={0 (Sinc function (best quality)), 1 (Sinc function (
+medium quality)), 2 (Sinc function (fast)), 3 (Zero Order Hold (fastest)), 4 (Li
+near (fastest))}
+                                 Sample rate converter type
+          Different resampling algorithms are supported. The best one is
+          Move OSD menu highlight to the widget on the right
+      --key-menu-right=<string>  Highlight widget on the right
+          Move OSD menu highlight to the widget on the right
+      --global-key-menu-left=<string>
+                                 Highlight widget on the left
+          Move OSD menu highlight to the widget on the left
+      --key-menu-left=<string>   Highlight widget on the left
+          Move OSD menu highlight to the widget on the left
+      --global-key-menu-up=<string>
+                                 Highlight widget on top
+          Move OSD menu highlight to the widget on top
+      --key-menu-up=<string>     Highlight widget on top
+          Move OSD menu highlight to the widget on top
+      --global-key-menu-down=<string>
+                                 Highlight widget below
+          Move OSD menu highlight to the widget below
+      --key-menu-down=<string>   Highlight widget below
+          Move OSD menu highlight to the widget below
+      --global-key-menu-select=<string>
+                                 Select current widget
+          Selecting current widget performs the associated action.
+      --key-menu-select=<string> Select current widget
+          Selecting current widget performs the associated action.
+      --global-key-crop-top=<string>
+                                 Crop one pixel from the top of the video
+          Crop one pixel from the top of the video
+      --key-crop-top=<string>    Crop one pixel from the top of the video
+          Crop one pixel from the top of the video
+      --global-key-uncrop-top=<string>
+                                 Uncrop one pixel from the top of the video
+          Uncrop one pixel from the top of the video
+      --key-uncrop-top=<string>  Uncrop one pixel from the top of the video
+          Uncrop one pixel from the top of the video
+      --global-key-crop-left=<string>
+                                 Crop one pixel from the left of the video
+          Crop one pixel from the left of the video
+      --key-crop-left=<string>   Crop one pixel from the left of the video
+          Crop one pixel from the left of the video
+      --global-key-uncrop-left=<string>
+                                 Uncrop one pixel from the left of the video
+          Uncrop one pixel from the left of the video
+      --key-uncrop-left=<string> Uncrop one pixel from the left of the video
+          Uncrop one pixel from the left of the video
+      --global-key-crop-bottom=<string>
+                                 Crop one pixel from the bottom of the video
+          Crop one pixel from the bottom of the video
+      --key-crop-bottom=<string> Crop one pixel from the bottom of the video
+          Crop one pixel from the bottom of the video
+      --global-key-uncrop-bottom=<string>
+                                 Uncrop one pixel from the bottom of the video
+          Uncrop one pixel from the bottom of the video
+      --key-uncrop-bottom=<string>
+                                 Uncrop one pixel from the bottom of the video
+          Uncrop one pixel from the bottom of the video
+      --global-key-crop-right=<string>
+                                 Crop one pixel from the right of the video
+          Crop one pixel from the right of the video
+      --key-crop-right=<string>  Crop one pixel from the right of the video
+          Crop one pixel from the right of the video
+      --global-key-uncrop-right=<string>
+                                 Uncrop one pixel from the right of the video
+          Uncrop one pixel from the right of the video
+      --key-uncrop-right=<string>
+                                 Uncrop one pixel from the right of the video
+          Uncrop one pixel from the right of the video
+      --global-key-random=<string>
+                                 Random
+          Toggle random playlist playback
+      --key-random=<string>      Random
+          Toggle random playlist playback
+      --global-key-loop=<string> Normal/Repeat/Loop
+          Toggle Normal/Repeat/Loop playlist modes
+      --key-loop=<string>        Normal/Repeat/Loop
+          Toggle Normal/Repeat/Loop playlist modes
+   Zoom:
+      --global-key-zoom-quarter=<string>
+                                 1:4 Quarter
+      --key-zoom-quarter=<string>
+                                 1:4 Quarter
+      --global-key-zoom-half=<string>
+                                 1:2 Half
+      --key-zoom-half=<string>   1:2 Half
+      --global-key-zoom-original=<string>
+                                 1:1 Original
+      --key-zoom-original=<string>
+                                 1:1 Original
+      --global-key-zoom-double=<string>
+                                 2:1 Double
+      --key-zoom-double=<string> 2:1 Double
+   Jump sizes:
+      --extrashort-jump-size=<integer [-2147483648 .. 2147483647]>
+                                 Very short jump length
+          Very short jump length, in seconds.
+      --short-jump-size=<integer [-2147483648 .. 2147483647]>
+                                 Short jump length
+          Short jump length, in seconds.
+      --medium-jump-size=<integer [-2147483648 .. 2147483647]>
+                                 Medium jump length
+          Medium jump length, in seconds.
+      --long-jump-size=<integer [-2147483648 .. 2147483647]>
+                                 Long jump length
+          Long jump length, in seconds.
+      --global-key-set-bookmark1=<string>
+                                 Set playlist bookmark 1
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark1=<string>
+                                 Set playlist bookmark 1
+          Select the key to set this playlist bookmark.
+      --global-key-set-bookmark2=<string>
+                                 Set playlist bookmark 2
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark2=<string>
+                                 Set playlist bookmark 2
+          Select the key to set this playlist bookmark.
+      --global-key-set-bookmark3=<string>
+                                 Set playlist bookmark 3
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark3=<string>
+                                 Set playlist bookmark 3
+          Select the key to set this playlist bookmark.
+      --global-key-set-bookmark4=<string>
+                                 Set playlist bookmark 4
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark4=<string>
+                                 Set playlist bookmark 4
+          Select the key to set this playlist bookmark.
+      --global-key-set-bookmark5=<string>
+                                 Set playlist bookmark 5
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark5=<string>
+                                 Set playlist bookmark 5
+          Select the key to set this playlist bookmark.
+      --global-key-set-bookmark6=<string>
+                                 Set playlist bookmark 6
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark6=<string>
+                                 Set playlist bookmark 6
+          Select the key to set this playlist bookmark.
+      --global-key-set-bookmark7=<string>
+                                 Set playlist bookmark 7
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark7=<string>
+                                 Set playlist bookmark 7
+          Select the key to set this playlist bookmark.
+      --global-key-set-bookmark8=<string>
+                                 Set playlist bookmark 8
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark8=<string>
+                                 Set playlist bookmark 8
+          Select the key to set this playlist bookmark.
+      --global-key-set-bookmark9=<string>
+                                 Set playlist bookmark 9
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark9=<string>
+                                 Set playlist bookmark 9
+          Select the key to set this playlist bookmark.
+      --global-key-set-bookmark10=<string>
+                                 Set playlist bookmark 10
+          Select the key to set this playlist bookmark.
+      --key-set-bookmark10=<string>
+                                 Set playlist bookmark 10
+          Select the key to set this playlist bookmark.
+      --global-key-play-bookmark1=<string>
+                                 Play playlist bookmark 1
+          Select the key to play this bookmark.
+      --key-play-bookmark1=<string>
+                                 Play playlist bookmark 1
+          Select the key to play this bookmark.
+      --global-key-play-bookmark2=<string>
+                                 Play playlist bookmark 2
+          Select the key to play this bookmark.
+      --key-play-bookmark2=<string>
+                                 Play playlist bookmark 2
+          Select the key to play this bookmark.
+      --global-key-play-bookmark3=<string>
+                                 Play playlist bookmark 3
+          Select the key to play this bookmark.
+      --key-play-bookmark3=<string>
+                                 Play playlist bookmark 3
+          Select the key to play this bookmark.
+      --global-key-play-bookmark4=<string>
+                                 Play playlist bookmark 4
+          Select the key to play this bookmark.
+      --key-play-bookmark4=<string>
+                                 Play playlist bookmark 4
+          Select the key to play this bookmark.
+      --global-key-play-bookmark5=<string>
+                                 Play playlist bookmark 5
+          Select the key to play this bookmark.
+      --key-play-bookmark5=<string>
+                                 Play playlist bookmark 5
+          Select the key to play this bookmark.
+      --global-key-play-bookmark6=<string>
+                                 Play playlist bookmark 6
+          Select the key to play this bookmark.
+      --key-play-bookmark6=<string>
+                                 Play playlist bookmark 6
+          Select the key to play this bookmark.
+      --global-key-play-bookmark7=<string>
+                                 Play playlist bookmark 7
+          Select the key to play this bookmark.
+      --key-play-bookmark7=<string>
+                                 Play playlist bookmark 7
+          Select the key to play this bookmark.
+      --global-key-play-bookmark8=<string>
+                                 Play playlist bookmark 8
+          Select the key to play this bookmark.
+      --key-play-bookmark8=<string>
+                                 Play playlist bookmark 8
+          Select the key to play this bookmark.
+      --global-key-play-bookmark9=<string>
+                                 Play playlist bookmark 9
+          Select the key to play this bookmark.
+      --key-play-bookmark9=<string>
+                                 Play playlist bookmark 9
+          Select the key to play this bookmark.
+      --global-key-play-bookmark10=<string>
+                                 Play playlist bookmark 10
+          Select the key to play this bookmark.
+      --key-play-bookmark10=<string>
+                                 Play playlist bookmark 10
+          Select the key to play this bookmark.
+      --bookmark1=<string>       Playlist bookmark 1
+          This allows you to define playlist bookmarks.
+      --bookmark2=<string>       Playlist bookmark 2
+          This allows you to define playlist bookmarks.
+      --bookmark3=<string>       Playlist bookmark 3
+          This allows you to define playlist bookmarks.
+      --bookmark4=<string>       Playlist bookmark 4
+          This allows you to define playlist bookmarks.
+      --bookmark5=<string>       Playlist bookmark 5
+          This allows you to define playlist bookmarks.
+      --bookmark6=<string>       Playlist bookmark 6
+          This allows you to define playlist bookmarks.
+      --bookmark7=<string>       Playlist bookmark 7
+          This allows you to define playlist bookmarks.
+      --bookmark8=<string>       Playlist bookmark 8
+          This allows you to define playlist bookmarks.
+      --bookmark9=<string>       Playlist bookmark 9
+          This allows you to define playlist bookmarks.
+      --bookmark10=<string>      Playlist bookmark 10
+          This allows you to define playlist bookmarks.
+  -h, --help, --no-help          print help for VLC (can be combined with
+                                 --advanced and --help-verbose) (default
+                                 disabled)
+           (default disabled)
+  -H, --full-help, --no-full-help
+                                 Exhaustive help for VLC and its modules
+                                 (default disabled)
+           (default disabled)
+      --longhelp, --no-longhelp  print help for VLC and all its modules (can
+                                 be combined with --advanced and
+                                 --help-verbose) (default disabled)
+           (default disabled)
+      --help-verbose, --no-help-verbose
+                                 ask for extra verbosity when displaying help
+                                 (default disabled)
+           (default disabled)
+  -l, --list, --no-list          print a list of available modules (default
+                                 disabled)
+           (default disabled)
+      --list-verbose, --no-list-verbose
+                                 print a list of available modules with extra
+                                 detail (default disabled)
+           (default disabled)
+  -p, --module=<string>          print help on a specific module (can be
+                                 combined with --advanced and --help-verbose).
+                                 Prefix the module name with = for strict
+                                 matches.
+
+      --ignore-config, --no-ignore-config
+                                 no configuration option will be loaded nor
+                                 saved to config file (default enabled)
+           (default enabled)
+      --reset-config, --no-reset-config
+                                 reset the current config to the default
+                                 values (default disabled)
+           (default disabled)
+      --reset-plugins-cache, --no-reset-plugins-cache
+                                 resets the current plugins cache (default
+                                 disabled)
+           (default disabled)
+      --version, --no-version    print version information (default disabled)
+           (default disabled)
+      --config=<string>          use alternate config file
+
+
+Press the RETURN key to continue...
+

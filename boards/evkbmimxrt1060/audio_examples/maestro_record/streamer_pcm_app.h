@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -39,7 +39,6 @@ struct _pcm_rtos_t
     SemaphoreHandle_t semaphoreTX;
 
     uint8_t isFirstRx;
-    uint8_t isFirstTx;
 
     bool dummy_tx_enable;
 };

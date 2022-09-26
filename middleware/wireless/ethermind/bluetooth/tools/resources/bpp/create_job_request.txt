@@ -1,0 +1,23 @@
+CONTENT-LENGTH: bytes in body
+CONTENT-LANGUAGE: en-US
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-bluetooth-org:service:Printer:1#CreateJob"
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:CreateJob xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<JobName> MyJob</JobName>
+<JobOriginatingUserName>mailto:MyEmail</JobOriginatingUserName>
+<DocumentFormat>application/PostScript:3</DocumentFormat>
+<Copies>1</Copies>
+<Sides>one-sided</Sides>
+<NumberUp>1</NumberUp>
+<OrientationRequested>portrait</OrientationRequested>
+<MediaSize> iso_a4_210x297mm</MediaSize>
+<MediaType>cardstock</MediaType>
+<PrintQuality>normal</PrintQuality>
+<CancelOnLostLink>true</CancelOnLostLink>
+</u:CreateJob>
+</s:Body>
+</s:Envelope>

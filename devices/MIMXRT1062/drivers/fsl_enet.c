@@ -3919,14 +3919,14 @@ void ENET_1G_1588_Timer_DriverIRQHandler(void)
 #endif /* ENET_1G */
 
 #if defined(ENET1)
-void ENET1_MAC0_Rx_Tx_Done0_DriverIRQHandler(void);
-void ENET1_MAC0_Rx_Tx_Done0_DriverIRQHandler(void)
+void ENET1_MAC0_Rx_Tx_Done1_DriverIRQHandler(void);
+void ENET1_MAC0_Rx_Tx_Done1_DriverIRQHandler(void)
 {
     ENET_CommonFrame1IRQHandler(ENET1);
     SDK_ISR_EXIT_BARRIER;
 }
-void ENET1_MAC0_Rx_Tx_Done1_DriverIRQHandler(void);
-void ENET1_MAC0_Rx_Tx_Done1_DriverIRQHandler(void)
+void ENET1_MAC0_Rx_Tx_Done2_DriverIRQHandler(void);
+void ENET1_MAC0_Rx_Tx_Done2_DriverIRQHandler(void)
 {
     ENET_CommonFrame2IRQHandler(ENET1);
     SDK_ISR_EXIT_BARRIER;

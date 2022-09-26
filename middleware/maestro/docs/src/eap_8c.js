@@ -12,5 +12,5 @@ var eap_8c =
     [ "eap_get_property", "eap_8c.html#af911805b8028528fe103e27e1ee63439", null ],
     [ "eap_init_element", "eap_8c.html#a227b28856a36bcb639eaba3f80ffa14b", null ],
     [ "eap_set_buffer", "eap_8c.html#a83d5a2c7138b9ae43625c641a85479cc", null ],
-    [ "eap_register_ext_processing", "eap_8c.html#a4297b14ee2063434f91ee26a5f9729b2", null ]
+    [ "eap_register_ext_processing", "eap_8c.html#a4a1375d88cb1adea62b0f53bbfde74bd", null ]
 ];

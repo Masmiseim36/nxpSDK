@@ -1,0 +1,23 @@
+$version 10.00
+
+// This is the root component of the entire GUI application.
+$rect <20,20,220,60>
+$output false
+class Application : Core::Root
+{
+  $rect <500,0,700,40>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <20,20,160,60>
+  object Oximeter::Oximeter Oximeter
+  {
+    preset Bounds = <0,0,480,272>;
+  }
+}
+
+// The Application class launches the pulse oximeter demo. All ingredients for the \
+// pulse oximeter are implemented within the unit 'Oximeter'.
+note legend Note
+{
+  attr Bounds = <20,70,500,160>;
+}

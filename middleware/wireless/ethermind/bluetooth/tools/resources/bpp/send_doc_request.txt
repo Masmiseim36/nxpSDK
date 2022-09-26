@@ -1,0 +1,6 @@
+<imaging-capabilities version="1.0">
+<preferred-format encoding="JPEG" pixel="640*480"/>
+<image-formats encoding="JPEG" pixel="160*120"/>
+<attachment-formats content-type="text/plain"/>
+<filtering-parameters encoding="1" pixel="1" created="1" modified="1"/>
+</imaging-capabilities>

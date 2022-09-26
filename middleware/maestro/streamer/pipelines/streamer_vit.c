@@ -47,6 +47,8 @@ int streamer_build_vit_pipeline(int8_t pipeline_index,
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
+    task_data->pipeline_type = pipeline_type;
+
     /* Create the pipeline */
     ret = create_pipeline(&task_data->pipes[pipeline_index], pipeline_index, pipeline_type, &task_data->mq_out);
     if (STREAM_OK != ret)
@@ -62,6 +64,7 @@ int streamer_build_vit_pipeline(int8_t pipeline_index,
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed:%d\n", ELEMENT_AUDIO_SRC_INDEX, ret);
         goto err_catch;
     }
+
     ret = create_element(&task_data->elems[ELEMENT_VIT_INDEX], TYPE_ELEMENT_VIT_SINK, 0);
     if (STREAM_OK != ret)
     {
@@ -80,6 +83,7 @@ int streamer_build_vit_pipeline(int8_t pipeline_index,
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "add element(%d) failed:%d\n", ELEMENT_AUDIO_SRC_INDEX, ret);
         goto err_catch;
     }
+
     ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_VIT_INDEX], level++);
     if (STREAM_OK != ret)
     {
@@ -157,6 +161,7 @@ int streamer_build_vit_pipeline(int8_t pipeline_index,
                          ELEMENT_AUDIO_SRC_INDEX, PROP_AUDIOSRC_SET_DEVICE_TYPE, ret);
         goto err_catch;
     }
+
 
     /* Set the audio sink output device
      * MQX default PCMMGR

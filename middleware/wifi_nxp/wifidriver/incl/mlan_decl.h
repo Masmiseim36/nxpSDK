@@ -171,6 +171,12 @@ Change log:
 
 /** MU beamformer */
 #define DEFALUT_11AC_CAP_BEAMFORMING_RESET_MASK (MBIT(19))
+#ifdef RW610
+/** Short GI for 80MHz/TVHT_MODE_4C */
+#define DEFALUT_11AC_CAP_SHORTGI_80MHZ_RESET_MASK (MBIT(5))
+/** HE Phy Cap Info(40MHz in 2.4GHz band) */
+#define DEFAULT_11AX_CAP_40MHZIH2_4GHZBAND_RESET_MASK (MBIT(1))
+#endif
 
 /** Size of rx data buffer */
 #define MLAN_RX_DATA_BUF_SIZE (4 * 1024)
@@ -784,7 +790,7 @@ typedef struct _mlan_callbacks
     /** moal_free_timer */
     mlan_status (*moal_free_timer)(IN t_void *pmoal_handle, IN t_void **pptimer);
     /** moal_start_timer*/
-    mlan_status (*moal_start_timer)(IN t_void *pmoal_handle, IN t_void *ptimer, IN t_u8 periodic, IN t_u32 msec);
+    mlan_status (*moal_start_timer)(IN t_void *pmoal_handle, IN t_void *ptimer, IN bool periodic, IN t_u32 msec);
     /** moal_stop_timer*/
     mlan_status (*moal_stop_timer)(IN t_void *pmoal_handle, IN t_void *ptimer);
     /** moal_init_lock */

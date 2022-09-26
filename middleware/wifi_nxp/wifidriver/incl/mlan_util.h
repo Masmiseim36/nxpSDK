@@ -530,7 +530,7 @@ static INLINE t_u8 util_scalar_conditional_write(t_void *pmoal_handle,
             update = MFALSE;
             break;
     }
-    if (update)
+    if (update != 0U)
     {
         pscalar->value = val_to_set;
     }

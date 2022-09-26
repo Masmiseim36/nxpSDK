@@ -1100,7 +1100,7 @@ int bt_hfp_ag_connect(struct bt_conn *conn,
     s_actived_bt_hfp_ag->bt_cind_setting.roam             = 0U;
     s_actived_bt_hfp_ag->bt_cind_setting.batt_lev         = 2U;
 
-    BT_str_n_copy(hfp_ag->ag_features, BT_HFP_AG_SUPPORTED_FEATURES, HFP_UNIT_MAX_SUPP_FEATURE_LEN);
+    hfp_ag->ag_features = 0U;
     *phfp_ag = hfp_ag;
     return 0;
 }

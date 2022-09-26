@@ -13,8 +13,126 @@
 #include <wmlog.h>
 
 #define mainTEST_TASK_PRIORITY (tskIDLE_PRIORITY)
-#define mainTEST_DELAY         (400 / portTICK_RATE_MS)
+#define mainTEST_DELAY         (400 / portTICK_PERIOD_MS)
 
+void vApplicationIdleHook(void);
+void os_thread_stackmark(char *name);
+int os_event_flags_delete(event_group_handle_t *hnd);
+
+/** Get current OS tick counter value
+ *
+ * \return 32 bit value of ticks since boot-up
+ */
+unsigned os_ticks_get(void)
+{
+    if (is_isr_context())
+    {
+        return xTaskGetTickCountFromISR();
+    }
+    else
+    {
+        return xTaskGetTickCount();
+    }
+}
+
+uint32_t os_msec_to_ticks(uint32_t msecs)
+{
+    return (msecs) / (portTICK_PERIOD_MS);
+}
+
+unsigned long os_ticks_to_msec(unsigned long ticks)
+{
+    return (ticks) * (portTICK_PERIOD_MS);
+}
+
+/*** Thread Management ***/
+const char *get_current_taskname(void)
+{
+    os_thread_t handle = xTaskGetCurrentTaskHandle();
+    if (handle != NULL)
+    {
+        return pcTaskGetName(handle);
+    }
+    else
+    {
+        return "Unknown";
+    }
+}
+
+int os_thread_create(os_thread_t *thandle,
+                     const char *name,
+                     void (*main_func)(os_thread_arg_t arg),
+                     void *arg,
+                     os_thread_stack_t *stack,
+                     int prio)
+{
+    int ret;
+
+    ret = xTaskCreate(main_func, name, (uint16_t)stack->size, arg, (uint32_t)prio, thandle);
+
+    os_dprintf(
+        " Thread Create: ret %d thandle %p"
+        " stacksize = %d\r\n",
+        ret, thandle ? *thandle : NULL, stack->size);
+    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
+}
+
+os_thread_t os_get_current_task_handle(void)
+{
+    return xTaskGetCurrentTaskHandle();
+}
+
+int os_thread_delete(os_thread_t *thandle)
+{
+    if (thandle == NULL)
+    {
+        os_dprintf("OS: Thread Self Delete\r\n");
+        vTaskDelete(NULL);
+    }
+    else
+    {
+        os_dprintf("OS: Thread Delete: %p\r\n", *thandle);
+        vTaskDelete(*thandle);
+    }
+
+    *thandle = NULL;
+
+    return WM_SUCCESS;
+}
+
+void os_thread_sleep(uint32_t ticks)
+{
+    os_dprintf("OS: Thread Sleep: %d\r\n", ticks);
+    vTaskDelay(ticks);
+    return;
+}
+
+void os_thread_self_complete(os_thread_t *thandle)
+{
+    /* Suspend self until someone calls delete. This is required because in
+     * freeRTOS, main functions of a thread cannot return.
+     */
+    if (thandle != NULL)
+    {
+        os_dprintf("OS: Thread Complete: %p\r\n", *thandle);
+        vTaskSuspend(*thandle);
+    }
+    else
+    {
+        os_dprintf("OS: Thread Complete: SELF\r\n");
+        vTaskSuspend(NULL);
+    }
+
+    /*
+     * We do not want this function to return ever.
+     */
+    while (true)
+    {
+        os_thread_sleep(os_msec_to_ticks(60000));
+    }
+}
+
+/*** Timer Management ***/
 int os_timer_activate(os_timer_t *timer_t)
 {
     int ret;
@@ -70,6 +188,139 @@ int os_timer_create(os_timer_t *timer_t,
     return WM_SUCCESS;
 }
 
+int os_timer_change(os_timer_t *timer_t, os_timer_tick ntime, os_timer_tick block_time)
+{
+    int ret;
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+
+    if (timer_t == NULL || (*timer_t) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+    if (is_isr_context())
+    {
+        /* This call is from Cortex-M3 handler mode, i.e. exception
+         * context, hence use FromISR FreeRTOS APIs.
+         */
+        ret = xTimerChangePeriodFromISR(*timer_t, ntime, &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+    }
+    else
+    {
+        /* Fixme: What should be value of xBlockTime? */
+        ret = xTimerChangePeriod(*timer_t, ntime, 100);
+    }
+    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
+}
+
+bool os_timer_is_running(os_timer_t *timer_t)
+{
+    int ret;
+
+    if (timer_t == NULL || (*timer_t) == NULL)
+    {
+        return false;
+    }
+
+    ret = xTimerIsTimerActive(*timer_t);
+    return ret == pdPASS ? true : false;
+}
+
+void *os_timer_get_context(os_timer_t *timer_t)
+{
+    if (timer_t == NULL || (*timer_t) == NULL)
+    {
+        os_dprintf("OS: Failed to get timer context\r\n");
+        return NULL;
+    }
+
+    return pvTimerGetTimerID(*timer_t);
+}
+
+int os_timer_reset(os_timer_t *timer_t)
+{
+    int ret;
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+
+    if (timer_t == NULL || (*timer_t) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+    /* Note:
+     * XTimerStop, seconds argument is xBlockTime which means, the time,
+     * in ticks, that the calling task should be held in the Blocked
+     * state, until timer command succeeds.
+     * We are giving as 0, to be consistent with threadx logic.
+     */
+    if (is_isr_context())
+    {
+        /* This call is from Cortex-M3 handler mode, i.e. exception
+         * context, hence use FromISR FreeRTOS APIs.
+         */
+        ret = xTimerResetFromISR(*timer_t, &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+    }
+    else
+    {
+        ret = xTimerReset(*timer_t, 0);
+    }
+    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_timer_deactivate(os_timer_t *timer_t)
+{
+    int ret;
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+
+    if (timer_t == NULL || (*timer_t) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+    /* Note:
+     * XTimerStop, seconds argument is xBlockTime which means, the time,
+     * in ticks, that the calling task should be held in the Blocked
+     * state, until timer command succeeds.
+     * We are giving as 0, to be consistent with threadx logic.
+     */
+    if (is_isr_context())
+    {
+        /* This call is from Cortex-M3 handler mode, i.e. exception
+         * context, hence use FromISR FreeRTOS APIs.
+         */
+        ret = xTimerStopFromISR(*timer_t, &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+    }
+    else
+    {
+        ret = xTimerStop(*timer_t, 0);
+    }
+    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_timer_delete(os_timer_t *timer_t)
+{
+    int ret;
+
+    if (timer_t == NULL || (*timer_t) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+
+    /* Below timer handle invalidation needs to be protected as a context
+     * switch may create issues if same handle is used before
+     * invalidation.
+     */
+    unsigned long sta = os_enter_critical_section();
+    /* Note: Block time is set as 0, thus signifying non-blocking
+       API. Can be changed later if required. */
+    ret      = xTimerDelete(*timer_t, 0);
+    *timer_t = NULL;
+    os_exit_critical_section(sta);
+
+    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
+}
+
+/*** Os Queue Functions ***/
 int os_queue_create(os_queue_t *qhandle, const char *name, int msgsize, os_queue_pool_t *poolname)
 {
     /** The size of the pool divided by the max. message size gives the
@@ -82,6 +333,71 @@ int os_queue_create(os_queue_t *qhandle, const char *name, int msgsize, os_queue
         return WM_SUCCESS;
     }
     return -WM_FAIL;
+}
+
+int os_queue_send(os_queue_t *qhandle, const void *msg, unsigned long wait)
+{
+    int ret;
+    signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    if (qhandle == NULL || (*qhandle) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+
+    os_dprintf("OS: Queue Send: handle %p, msg %p, wait %d\r\n", *qhandle, msg, wait);
+
+    if (is_isr_context())
+    {
+        /* This call is from Cortex-M3 handler mode, i.e. exception
+         * context, hence use FromISR FreeRTOS APIs.
+         */
+        ret = xQueueSendToBackFromISR(*qhandle, msg, &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+    }
+    else
+    {
+        ret = xQueueSendToBack(*qhandle, msg, wait);
+    }
+    os_dprintf("OS: Queue Send: done\r\n");
+
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_queue_recv(os_queue_t *qhandle, void *msg, unsigned long wait)
+{
+    int ret;
+    if (qhandle == NULL || (*qhandle) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+
+    os_dprintf("OS: Queue Receive: handle %p, msg %p, wait %d\r\n", *qhandle, msg, wait);
+    ret = xQueueReceive(*qhandle, msg, wait);
+    os_dprintf("OS: Queue Receive: done\r\n");
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_queue_delete(os_queue_t *qhandle)
+{
+    os_dprintf("OS: Queue Delete: handle %p\r\n", *qhandle);
+
+    vQueueDelete(*qhandle);
+    // sem_debug_delete((const xSemaphoreHandle)*qhandle);
+    *qhandle = NULL;
+
+    return WM_SUCCESS;
+}
+
+int os_queue_get_msgs_waiting(os_queue_t *qhandle)
+{
+    int nmsg = 0;
+    if (qhandle == NULL || (*qhandle) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+    nmsg = (int)uxQueueMessagesWaiting(*qhandle);
+    os_dprintf("OS: Queue Msg Count: handle %p, count %d\r\n", *qhandle, nmsg);
+    return nmsg;
 }
 
 void (*g_os_tick_hooks[MAX_CUSTOM_HOOKS])(void) = {NULL};
@@ -119,6 +435,199 @@ void os_thread_stackmark(char *name)
     /* Nothing to-do */
 }
 
+int os_setup_idle_function(void (*func)(void))
+{
+    unsigned int i;
+
+    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
+    {
+        if (g_os_idle_hooks[i] != NULL && g_os_idle_hooks[i] == func)
+        {
+            return WM_SUCCESS;
+        }
+    }
+
+    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
+    {
+        if (g_os_idle_hooks[i] == NULL)
+        {
+            g_os_idle_hooks[i] = func;
+            break;
+        }
+    }
+
+    if (i == MAX_CUSTOM_HOOKS)
+    {
+        return -WM_FAIL;
+    }
+
+    return WM_SUCCESS;
+}
+
+int os_setup_tick_function(void (*func)(void))
+{
+    unsigned int i;
+
+    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
+    {
+        if (g_os_tick_hooks[i] != NULL && g_os_tick_hooks[i] == func)
+        {
+            return WM_SUCCESS;
+        }
+    }
+
+    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
+    {
+        if (g_os_tick_hooks[i] == NULL)
+        {
+            g_os_tick_hooks[i] = func;
+            break;
+        }
+    }
+
+    if (i == MAX_CUSTOM_HOOKS)
+    {
+        return -WM_FAIL;
+    }
+
+    return WM_SUCCESS;
+}
+
+int os_remove_idle_function(void (*func)(void))
+{
+    unsigned int i;
+
+    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
+    {
+        if (g_os_idle_hooks[i] == func)
+        {
+            g_os_idle_hooks[i] = NULL;
+            break;
+        }
+    }
+
+    if (i == MAX_CUSTOM_HOOKS)
+    {
+        return -WM_FAIL;
+    }
+
+    return WM_SUCCESS;
+}
+
+int os_remove_tick_function(void (*func)(void))
+{
+    unsigned int i;
+
+    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
+    {
+        if (g_os_tick_hooks[i] == func)
+        {
+            g_os_tick_hooks[i] = NULL;
+            break;
+        }
+    }
+
+    if (i == MAX_CUSTOM_HOOKS)
+    {
+        return -WM_FAIL;
+    }
+
+    return WM_SUCCESS;
+}
+
+/*** Mutex ***/
+int os_mutex_create(os_mutex_t *mhandle, const char *name, int flags)
+{
+    if (flags == OS_MUTEX_NO_INHERIT)
+    {
+        *mhandle = NULL;
+        os_dprintf("Cannot create mutex for non-inheritance yet \r\n");
+        return -WM_FAIL;
+    }
+    os_dprintf("OS: Mutex Create: name = %s \r\n", name);
+    *mhandle = xSemaphoreCreateMutex();
+    os_dprintf("OS: Mutex Create: handle = %p\r\n", *mhandle);
+    if (*mhandle != NULL)
+    {
+        // sem_debug_add((const xQueueHandle)*mhandle,
+        //	      name, 1);
+        return WM_SUCCESS;
+    }
+    else
+    {
+        return -WM_FAIL;
+    }
+}
+
+int os_mutex_get(os_mutex_t *mhandle, unsigned long wait)
+{
+    int ret;
+    if (mhandle == NULL || (*mhandle) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+    os_dprintf("OS: Mutex Get: handle %p\r\n", *mhandle);
+    ret = xSemaphoreTake(*mhandle, wait);
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_mutex_put(os_mutex_t *mhandle)
+{
+    int ret;
+
+    if (mhandle == NULL || (*mhandle) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+
+    os_dprintf("OS: Mutex Put: %p\r\n", *mhandle);
+
+    ret = xSemaphoreGive(*mhandle);
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_recursive_mutex_create(os_mutex_t *mhandle, const char *name)
+{
+    if (mhandle == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+
+    os_dprintf("OS: Recursive Mutex Create: name = %s \r\n", name);
+    *mhandle = xSemaphoreCreateRecursiveMutex();
+    os_dprintf("OS: Recursive Mutex Create: handle = %p\r\n", *mhandle);
+    if (*mhandle == NULL)
+    {
+        return -WM_FAIL;
+    }
+
+    // sem_debug_add(*mhandle, name, 1);
+    return WM_SUCCESS;
+}
+
+int os_recursive_mutex_get(os_mutex_t *mhandle, unsigned long wait)
+{
+    os_dprintf("OS: Recursive Mutex Get: handle %p\r\n", *mhandle);
+    int ret = xSemaphoreTakeRecursive(*mhandle, wait);
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_recursive_mutex_put(os_mutex_t *mhandle)
+{
+    os_dprintf("OS: Recursive Mutex Put: %p\r\n", *mhandle);
+    int ret = xSemaphoreGiveRecursive(*mhandle);
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_mutex_delete(os_mutex_t *mhandle)
+{
+    vSemaphoreDelete(*mhandle);
+    // sem_debug_delete((const xSemaphoreHandle)*mhandle);
+    *mhandle = NULL;
+    return WM_SUCCESS;
+}
+
+/*** Event ***/
 typedef struct event_wait_t
 {
     /* parameter passed in the event get call */
@@ -190,6 +699,7 @@ int os_event_flags_get(event_group_handle_t hnd,
     int ret;
     *actual_flags_ptr = 0;
     event_wait_t *tmp = NULL, *node = NULL;
+
     if (hnd == 0U)
     {
         os_dprintf("ERROR:Invalid event flag handle\r\n");
@@ -207,147 +717,149 @@ int os_event_flags_get(event_group_handle_t hnd,
     }
     event_group_t *eG = (event_group_t *)hnd;
 
-check_again:
-    (void)os_mutex_get(&eG->mutex, OS_WAIT_FOREVER);
-
-    if ((option == EF_AND) || (option == EF_AND_CLEAR))
+    while (true)
     {
-        if ((eG->flags & requested_flags) == requested_flags)
+        (void)os_mutex_get(&eG->mutex, OS_WAIT_FOREVER);
+
+        if ((option == EF_AND) || (option == EF_AND_CLEAR))
         {
-            status = eG->flags;
+            if ((eG->flags & requested_flags) == requested_flags)
+            {
+                status = eG->flags;
+            }
+            else
+            {
+                status = 0;
+            }
+        }
+        else if ((option == EF_OR) || (option == EF_OR_CLEAR))
+        {
+            status = (requested_flags & eG->flags);
         }
         else
         {
-            status = 0;
+            os_dprintf("ERROR:Invalid event flag get option\r\n");
+            (void)os_mutex_put(&eG->mutex);
+            return -WM_FAIL;
         }
-    }
-    else if ((option == EF_OR) || (option == EF_OR_CLEAR))
-    {
-        status = (requested_flags & eG->flags);
-    }
-    else
-    {
-        os_dprintf("ERROR:Invalid event flag get option\r\n");
-        (void)os_mutex_put(&eG->mutex);
-        return -WM_FAIL;
-    }
-    /* Check flags */
-    if (status != 0U)
-    {
-        *actual_flags_ptr = status;
+        /* Check flags */
+        if (status != 0U)
+        {
+            *actual_flags_ptr = status;
 
-        /* Clear the requested flags from main flag */
-        if ((option == EF_AND_CLEAR) || (option == EF_OR_CLEAR))
-        {
-            eG->flags &= ~status;
-        }
-
-        if (wait_done)
-        {
-            /*Delete the created semaphore */
-            (void)os_semaphore_delete(&tmp->sem);
-            /* Remove ourselves from the list */
-            os_event_flags_remove_node(tmp, eG);
-        }
-        (void)os_mutex_put(&eG->mutex);
-        return WM_SUCCESS;
-    }
-    else
-    {
-        if (wait_option != 0U)
-        {
-            if (wait_done == false)
+            /* Clear the requested flags from main flag */
+            if ((option == EF_AND_CLEAR) || (option == EF_OR_CLEAR))
             {
-                /* Add to link list */
-                /* Prepare a node to add in the link list */
-                node = os_mem_alloc(sizeof(event_wait_t));
-                if (node == NULL)
+                eG->flags &= ~status;
+            }
+
+            if (wait_done)
+            {
+                /*Delete the created semaphore */
+                (void)os_semaphore_delete(&tmp->sem);
+                /* Remove ourselves from the list */
+                os_event_flags_remove_node(tmp, eG);
+            }
+            (void)os_mutex_put(&eG->mutex);
+            return WM_SUCCESS;
+        }
+        else
+        {
+            if (wait_option != 0U)
+            {
+                if (wait_done == false)
                 {
-                    os_dprintf("ERROR:memory alloc\r\n");
-                    (void)os_mutex_put(&eG->mutex);
-                    return -WM_FAIL;
-                }
-                (void)memset(node, 0x00, sizeof(event_wait_t));
-                /* Set the requested flag in the node */
-                node->thread_mask = requested_flags;
-                /* Create a semaophore */
-                ret = os_semaphore_create(&node->sem, "wait_thread");
-                if (ret != 0)
-                {
-                    os_dprintf("ERROR:In creating semaphore\r\n");
-                    os_mem_free(node);
-                    (void)os_mutex_put(&eG->mutex);
-                    return -WM_FAIL;
-                }
-                /* If there is no node present */
-                if (eG->list == NULL)
-                {
-                    eG->list = node;
-                    tmp      = eG->list;
-                }
-                else
-                {
-                    tmp = eG->list;
-                    /* Move to last node */
-                    while (tmp->next != NULL)
+                    /* Add to link list */
+                    /* Prepare a node to add in the link list */
+                    node = os_mem_alloc(sizeof(event_wait_t));
+                    if (node == NULL)
                     {
-                        os_dprintf("waiting \r\n");
-                        tmp = tmp->next;
+                        os_dprintf("ERROR:memory alloc\r\n");
+                        (void)os_mutex_put(&eG->mutex);
+                        return -WM_FAIL;
                     }
-                    tmp->next  = node;
-                    node->prev = tmp;
-                    tmp        = tmp->next;
+                    (void)memset(node, 0x00, sizeof(event_wait_t));
+                    /* Set the requested flag in the node */
+                    node->thread_mask = requested_flags;
+                    /* Create a semaophore */
+                    ret = os_semaphore_create(&node->sem, "wait_thread");
+                    if (ret != 0)
+                    {
+                        os_dprintf("ERROR:In creating semaphore\r\n");
+                        os_mem_free(node);
+                        (void)os_mutex_put(&eG->mutex);
+                        return -WM_FAIL;
+                    }
+                    /* If there is no node present */
+                    if (eG->list == NULL)
+                    {
+                        eG->list = node;
+                        tmp      = eG->list;
+                    }
+                    else
+                    {
+                        tmp = eG->list;
+                        /* Move to last node */
+                        while (tmp->next != NULL)
+                        {
+                            os_dprintf("waiting \r\n");
+                            tmp = tmp->next;
+                        }
+                        tmp->next  = node;
+                        node->prev = tmp;
+                        tmp        = tmp->next;
+                    }
+                    /* Take semaphore first time */
+                    ret = os_semaphore_get(&tmp->sem, OS_WAIT_FOREVER);
+                    if (ret != WM_SUCCESS)
+                    {
+                        os_dprintf("ERROR:1st sem get error\r\n");
+                        (void)os_mutex_put(&eG->mutex);
+                        /*Delete the created semaphore */
+                        (void)os_semaphore_delete(&tmp->sem);
+                        /* Remove ourselves from the list */
+                        os_event_flags_remove_node(tmp, eG);
+                        return -WM_FAIL;
+                    }
                 }
-                /* Take semaphore first time */
-                ret = os_semaphore_get(&tmp->sem, OS_WAIT_FOREVER);
+                (void)os_mutex_put(&eG->mutex);
+                /* Second time get is performed for work-around purpose
+                as in current implementation of semaphore 1st request
+                is always satisfied */
+                ret = os_semaphore_get(&tmp->sem, os_msec_to_ticks(wait_option));
                 if (ret != WM_SUCCESS)
                 {
-                    os_dprintf("ERROR:1st sem get error\r\n");
-                    (void)os_mutex_put(&eG->mutex);
+                    (void)os_mutex_get(&eG->mutex, OS_WAIT_FOREVER);
                     /*Delete the created semaphore */
                     (void)os_semaphore_delete(&tmp->sem);
                     /* Remove ourselves from the list */
                     os_event_flags_remove_node(tmp, eG);
+                    (void)os_mutex_put(&eG->mutex);
+                    return EF_NO_EVENTS;
+                }
+
+                /* We have woken up */
+                /* If the event group deletion has been requested */
+                if (eG->delete_group)
+                {
+                    (void)os_mutex_get(&eG->mutex, OS_WAIT_FOREVER);
+                    /*Delete the created semaphore */
+                    (void)os_semaphore_delete(&tmp->sem);
+                    /* Remove ourselves from the list */
+                    os_event_flags_remove_node(tmp, eG);
+                    (void)os_mutex_put(&eG->mutex);
                     return -WM_FAIL;
                 }
+                wait_done = true;
+                continue;
             }
-            (void)os_mutex_put(&eG->mutex);
-            /* Second time get is performed for work-around purpose
-            as in current implementation of semaphore 1st request
-            is always satisfied */
-            ret = os_semaphore_get(&tmp->sem, os_msec_to_ticks(wait_option));
-            if (ret != WM_SUCCESS)
+            else
             {
-                (void)os_mutex_get(&eG->mutex, OS_WAIT_FOREVER);
-                /*Delete the created semaphore */
-                (void)os_semaphore_delete(&tmp->sem);
-                /* Remove ourselves from the list */
-                os_event_flags_remove_node(tmp, eG);
                 (void)os_mutex_put(&eG->mutex);
                 return EF_NO_EVENTS;
             }
-
-            /* We have woken up */
-            /* If the event group deletion has been requested */
-            if (eG->delete_group)
-            {
-                (void)os_mutex_get(&eG->mutex, OS_WAIT_FOREVER);
-                /*Delete the created semaphore */
-                (void)os_semaphore_delete(&tmp->sem);
-                /* Remove ourselves from the list */
-                os_event_flags_remove_node(tmp, eG);
-                (void)os_mutex_put(&eG->mutex);
-                return -WM_FAIL;
-            }
-            wait_done = true;
-            goto check_again;
         }
-        else
-        {
-            (void)os_mutex_put(&eG->mutex);
-            return EF_NO_EVENTS;
-        }
-    }
+    } /* while(true) */
 }
 
 int os_event_flags_set(event_group_handle_t hnd, unsigned flags_to_set, flag_rtrv_option_t option)
@@ -479,6 +991,138 @@ int os_event_flags_delete(event_group_handle_t *hnd)
     return WM_SUCCESS;
 }
 
+/*** Event Notification ***/
+
+int os_event_notify_get(unsigned long wait_time)
+{
+    int ret = (int)ulTaskNotifyTake(pdTRUE, wait_time);
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_event_notify_put(os_thread_t task)
+{
+    int ret                                       = pdTRUE;
+    signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+
+    if (task == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+    if (is_isr_context())
+    {
+        /* This call is from Cortex-M3/4 handler mode, i.e. exception
+         * context, hence use FromISR FreeRTOS APIs.
+         */
+        vTaskNotifyGiveFromISR(task, &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+    }
+    else
+    {
+        ret = xTaskNotifyGive(task);
+    }
+
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+/*** Semaphore ***/
+
+int os_semaphore_create(os_semaphore_t *mhandle, const char *name)
+{
+    vSemaphoreCreateBinary(*mhandle);
+    if (*mhandle != NULL)
+    {
+        // sem_debug_add((const xSemaphoreHandle)*mhandle,
+        //	      name, 1);
+        return WM_SUCCESS;
+    }
+    else
+    {
+        return -WM_FAIL;
+    }
+}
+
+int os_semaphore_create_counting(os_semaphore_t *mhandle,
+                                 const char *name,
+                                 unsigned long maxcount,
+                                 unsigned long initcount)
+{
+    *mhandle = xSemaphoreCreateCounting(maxcount, initcount);
+    if (*mhandle != NULL)
+    {
+        ////sem_debug_add((const xQueueHandle)*mhandle,
+        //	      name, 1);
+        return WM_SUCCESS;
+    }
+    else
+    {
+        return -WM_FAIL;
+    }
+}
+
+int os_semaphore_get(os_semaphore_t *mhandle, unsigned long wait)
+{
+    int ret;
+    signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    if (mhandle == NULL || (*mhandle) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+    os_dprintf("OS: Semaphore Get: handle %p\r\n", *mhandle);
+    if (is_isr_context())
+    {
+        /* This call is from Cortex-M3 handler mode, i.e. exception
+         * context, hence use FromISR FreeRTOS APIs.
+         */
+        ret = xSemaphoreTakeFromISR(*mhandle, &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+    }
+    else
+    {
+        ret = xSemaphoreTake(*mhandle, wait);
+    }
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_semaphore_put(os_semaphore_t *mhandle)
+{
+    int ret;
+    signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+    if (mhandle == NULL || (*mhandle) == NULL)
+    {
+        return -WM_E_INVAL;
+    }
+
+    os_dprintf("OS: Semaphore Put: handle %p\r\n", *mhandle);
+    if (is_isr_context())
+    {
+        /* This call is from Cortex-M3 handler mode, i.e. exception
+         * context, hence use FromISR FreeRTOS APIs.
+         */
+        ret = xSemaphoreGiveFromISR(*mhandle, &xHigherPriorityTaskWoken);
+        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
+    }
+    else
+    {
+        ret = xSemaphoreGive(*mhandle);
+    }
+    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
+}
+
+int os_semaphore_getcount(os_semaphore_t *mhandle)
+{
+    os_dprintf("OS: Semaphore Get Count: handle %p\r\n", *mhandle);
+    return (int)uxQueueMessagesWaiting(*mhandle);
+}
+
+int os_semaphore_delete(os_semaphore_t *mhandle)
+{
+    vSemaphoreDelete(*mhandle);
+    // sem_debug_delete((const xSemaphoreHandle)*mhandle);
+    *mhandle = NULL;
+    return WM_SUCCESS;
+}
+
+/*** OS Reader Writer Locks ***/
 int os_rwlock_create(os_rw_lock_t *plock, const char *mutex_name, const char *lock_name)
 {
     return os_rwlock_create_with_cb(plock, mutex_name, lock_name, NULL);
@@ -603,4 +1247,138 @@ unsigned int os_get_timestamp(void)
 
     vPortExitCritical();
     return ((CNTMAX - counter) / CPU_CLOCK_TICKSPERUSEC) + (nticks * USECSPERTICK);
+}
+
+/* OS Memory allocation API's */
+#ifndef CONFIG_HEAP_DEBUG
+void *os_mem_alloc(size_t size)
+{
+    void *ptr = pvPortMalloc(size);
+    return ptr;
+}
+
+void *os_mem_calloc(size_t size)
+{
+    void *ptr = pvPortMalloc(size);
+    if (ptr != NULL)
+    {
+        (void)memset(ptr, 0x00, size);
+    }
+    else
+    {
+        /* Do Nothing */
+    }
+
+    return ptr;
+}
+
+void os_mem_free(void *ptr)
+{
+    vPortFree(ptr);
+}
+#else  /* ! CONFIG_HEAP_DEBUG */
+extern int os_mem_alloc_cnt;
+extern void record_os_mem_alloc(unsigned int size, char const *func, unsigned int line_num);
+
+static void *os_mem_alloc_priv(unsigned int size, char const *func, unsigned int line_num)
+{
+    void *ptr = pvPortMalloc(size);
+
+    os_mem_alloc_cnt++;
+    record_os_mem_alloc(size, func, line_num);
+
+    return ptr;
+}
+
+void *os_mem_alloc(size_t size)
+{
+    void *ptr = os_mem_alloc_priv((size), __func__, __LINE__);
+    if (ptr != NULL)
+    {
+        (void)PRINTF("MDC:A:%x:%d\r\n", ptr, size);
+    }
+    else
+    {
+        /* Do Nothing */
+    }
+
+    return ptr;
+}
+
+void *os_mem_calloc(size_t size)
+{
+    void *ptr = pvPortMalloc(size);
+    if (ptr != NULL)
+    {
+        (void)memset(ptr, 0x00, size);
+        (void)PRINTF("MDC:A:%x:%d\r\n", ptr, size);
+    }
+    else
+    {
+        /* Do Nothing */
+    }
+
+    return ptr;
+}
+
+extern int os_mem_free_cnt;
+extern void record_os_mem_free(char const *func, unsigned int line_num);
+
+static void os_mem_free_priv(void *ptr, char const *func, unsigned int line_num)
+{
+    vPortFree(ptr);
+
+    os_mem_free_cnt++;
+    record_os_mem_free(func, line_num);
+}
+
+void os_mem_free(void *ptr)
+{
+    os_mem_free_priv((ptr), __func__, __LINE__);
+    (void)PRINTF("MDC:F:%x\r\n", ptr);
+}
+#endif /* CONFIG_HEAP_DEBUG */
+
+#ifdef CONFIG_HEAP_STAT
+/** This function dumps complete statistics
+ *  of the heap memory.
+ */
+void os_dump_mem_stats(void)
+{
+    unsigned sta = os_enter_critical_section();
+    HeapStats_t HS;
+
+    HS.xAvailableHeapSpaceInBytes      = 0;
+    HS.xSizeOfLargestFreeBlockInBytes  = 0;
+    HS.xSizeOfSmallestFreeBlockInBytes = 0;
+    HS.xNumberOfFreeBlocks             = 0;
+    HS.xNumberOfSuccessfulAllocations  = 0;
+    HS.xNumberOfSuccessfulFrees        = 0;
+    HS.xMinimumEverFreeBytesRemaining  = 0;
+
+    vPortGetHeapStats(&HS);
+
+    (void)PRINTF("\n\r");
+    (void)PRINTF("Heap size ---------------------- : %d\n\r", HS.xAvailableHeapSpaceInBytes);
+    (void)PRINTF("Largest Free Block size -------- : %d\n\r", HS.xSizeOfLargestFreeBlockInBytes);
+    (void)PRINTF("Smallest Free Block size ------- : %d\n\r", HS.xSizeOfSmallestFreeBlockInBytes);
+    (void)PRINTF("Number of Free Blocks ---------- : %d\n\r", HS.xNumberOfFreeBlocks);
+    (void)PRINTF("Total successful allocations --- : %d\n\r", HS.xNumberOfSuccessfulAllocations);
+    (void)PRINTF("Total successful frees --------- : %d\n\r", HS.xNumberOfSuccessfulFrees);
+    (void)PRINTF("Min Free since system boot ----- : %d\n\r", HS.xMinimumEverFreeBytesRemaining);
+
+    os_exit_critical_section(sta);
+}
+#endif
+
+/** Disables all interrupts at NVIC level */
+void os_disable_all_interrupts(void)
+{
+    taskDISABLE_INTERRUPTS();
+}
+
+/** Enable all interrupts at NVIC lebel */
+void os_enable_all_interrupts(void)
+{
+    taskENABLE_INTERRUPTS();
 }

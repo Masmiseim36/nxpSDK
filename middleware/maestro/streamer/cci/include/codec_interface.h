@@ -116,8 +116,8 @@ extern int32_t OPUSDecoderGetIOFrameSize(int32_t *in_size, int32_t *out_size);
 #ifdef OGG_OPUS_DEC
 /* OGG OPUS */
 extern int32_t OggOPUSGetMemorySize();
-extern int32_t OggOPUSInit(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
-extern int32_t OggOPUSDecode(int32_t *memory[], int32_t *sample_produced, int32_t *buf_out);
+extern int32_t OggOPUSInit(int32_t *memory[], int32_t *pCallbackFn[], int32_t *pUserData);
+extern int32_t OggOPUSDecode(int32_t *memory[], int32_t *sampleProudced, int32_t *bufOut);
 extern int32_t OggOPUSReset(int32_t *memory[]);
 extern int32_t OggOPUSSeek(int32_t *memory[], int32_t seek_offset);
 extern int32_t OggOPUSGetIOFrameSize(int32_t *in_size, int32_t *out_size);

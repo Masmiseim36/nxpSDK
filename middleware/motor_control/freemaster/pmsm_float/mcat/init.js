@@ -108,8 +108,8 @@ export class PcmObject {
                     console.error(err);
                 });
             }).catch(err => {
-                alert(err);
-                console.error(err);
+                console.log(err);
+                // console.error(err);
             });
         });
     }

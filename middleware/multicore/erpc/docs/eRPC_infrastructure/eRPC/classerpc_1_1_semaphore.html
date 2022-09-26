@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.0</span>
+   &#160;<span id="projectnumber">Rev. 1.9.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -136,9 +136,9 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#a0e5a7ea7ccad9e7424c1b23eda77baab">put</a> (void)</td></tr>
 <tr class="memdesc:a0e5a7ea7ccad9e7424c1b23eda77baab"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function puts semaphore. <br /></td></tr>
 <tr class="separator:a0e5a7ea7ccad9e7424c1b23eda77baab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a616d55bf3880b4135745ef3c47f6a886"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#a616d55bf3880b4135745ef3c47f6a886">get</a> (uint32_t timeout=<a class="el" href="classerpc_1_1_semaphore.html#a2f8418d5b20e94a577caa0d0e428c441">kWaitForever</a>)</td></tr>
-<tr class="memdesc:a616d55bf3880b4135745ef3c47f6a886"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function get semaphore.  <a href="#a616d55bf3880b4135745ef3c47f6a886">More...</a><br /></td></tr>
-<tr class="separator:a616d55bf3880b4135745ef3c47f6a886"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22d7b30599b8df73b7786e362e353f0d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#a22d7b30599b8df73b7786e362e353f0d">get</a> (uint32_t timeoutUsecs=<a class="el" href="classerpc_1_1_semaphore.html#a2f8418d5b20e94a577caa0d0e428c441">kWaitForever</a>)</td></tr>
+<tr class="memdesc:a22d7b30599b8df73b7786e362e353f0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function get semaphore.  <a href="#a22d7b30599b8df73b7786e362e353f0d">More...</a><br /></td></tr>
+<tr class="separator:a22d7b30599b8df73b7786e362e353f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19fa4fe7ab2e2adf7387ba8eddac998a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_semaphore.html#a19fa4fe7ab2e2adf7387ba8eddac998a">getCount</a> (void) const </td></tr>
 <tr class="memdesc:a19fa4fe7ab2e2adf7387ba8eddac998a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns semaphore count number.  <a href="#a19fa4fe7ab2e2adf7387ba8eddac998a">More...</a><br /></td></tr>
 <tr class="separator:a19fa4fe7ab2e2adf7387ba8eddac998a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,7 +178,7 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a clas
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a616d55bf3880b4135745ef3c47f6a886"></a>
+<a class="anchor" id="a22d7b30599b8df73b7786e362e353f0d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -186,7 +186,7 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a clas
           <td class="memname">bool Semaphore::get </td>
           <td>(</td>
           <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>timeout</em> = <code><a class="el" href="classerpc_1_1_semaphore.html#a2f8418d5b20e94a577caa0d0e428c441">kWaitForever</a></code></td><td>)</td>
+          <td class="paramname"><em>timeoutUsecs</em> = <code><a class="el" href="classerpc_1_1_semaphore.html#a2f8418d5b20e94a577caa0d0e428c441">kWaitForever</a></code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -195,7 +195,7 @@ static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a clas
 <p>This function get semaphore. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>Time how long can wait for getting semaphore.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeoutUsecs</td><td>Time how long can wait for getting semaphore in [us].</td></tr>
   </table>
   </dd>
 </dl>

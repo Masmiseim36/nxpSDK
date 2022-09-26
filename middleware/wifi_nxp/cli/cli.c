@@ -34,7 +34,7 @@
 
 #define CONFIG_CLI_STACK_SIZE 4096
 
-os_mutex_t cli_mutex;
+static os_mutex_t cli_mutex;
 static os_queue_pool_define(queue_data, IN_QUEUE_SIZE);
 static struct
 {
@@ -42,7 +42,7 @@ static struct
     bool initialized;
 
     unsigned int bp; /* buffer pointer */
-    char *inbuf;
+    char *cli_inbuf;
 
     const struct cli_command *commands[MAX_COMMANDS];
     unsigned int num_commands;
@@ -76,14 +76,14 @@ static const struct cli_command *lookup_command(char *name, int len)
         /* See if partial or full match is expected */
         if (len != 0)
         {
-            if (!strncmp(cli.commands[i]->name, name, (size_t)len))
+            if (strncmp(cli.commands[i]->name, name, (size_t)len) == 0)
             {
                 return cli.commands[i];
             }
         }
         else
         {
-            if (!strcmp(cli.commands[i]->name, name))
+            if (strcmp(cli.commands[i]->name, name) == 0)
             {
                 return cli.commands[i];
             }
@@ -106,7 +106,7 @@ static const struct cli_command *lookup_command(char *name, int len)
  *          input line.
  *          2 on invalid syntax: the arguments list couldn't be parsed
  */
-static int handle_input(char *inbuf)
+static int handle_input(char *handle_inbuf)
 {
     struct
     {
@@ -117,7 +117,7 @@ static int handle_input(char *inbuf)
     static char *argv[32];
     int argc                          = 0;
     int i                             = 0;
-    int j                             = 0;
+    unsigned int j                    = 0;
     const struct cli_command *command = NULL;
     const char *p;
 
@@ -132,19 +132,19 @@ static int handle_input(char *inbuf)
      */
     for (j = 0; j < INBUF_SIZE; j++)
     {
-        if (inbuf[j] == 0x0D || inbuf[j] == 0x0A)
+        if (handle_inbuf[j] == (char)0x0D || handle_inbuf[j] == (char)0x0A)
         {
-            if (j < (INBUF_SIZE - 1))
+            if (j < (INBUF_SIZE - 1U))
             {
-                (void)memmove((inbuf + j), inbuf + j + 1, (INBUF_SIZE - i));
+                (void)memmove((handle_inbuf + j), handle_inbuf + j + 1, (INBUF_SIZE - (unsigned int)i));
             }
-            inbuf[INBUF_SIZE] = (char)(0x00);
+            handle_inbuf[INBUF_SIZE] = (char)(0x00);
         }
     }
 
     do
     {
-        switch (inbuf[i])
+        switch (handle_inbuf[i])
         {
             case '\0':
                 if (stat.inQuote != 0U)
@@ -155,33 +155,33 @@ static int handle_input(char *inbuf)
                 break;
 
             case '"':
-                if (i > 0 && inbuf[i - 1] == '\\' && stat.inArg)
+                if (i > 0 && handle_inbuf[i - 1] == '\\' && (stat.inArg != 0U))
                 {
-                    (void)memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1U);
+                    (void)memcpy(&handle_inbuf[i - 1], &handle_inbuf[i], strlen(&handle_inbuf[i]) + 1U);
                     --i;
                     break;
                 }
-                if (!stat.inQuote && stat.inArg)
+                if ((stat.inQuote == 0U) && (stat.inArg != 0U))
                 {
                     break;
                 }
-                if (stat.inQuote && !stat.inArg)
+                if ((stat.inQuote != 0U) && (stat.inArg == 0U))
                 {
                     return 2;
                 }
 
-                if (!stat.inQuote && !stat.inArg)
+                if ((stat.inQuote == 0U) && (stat.inArg == 0U))
                 {
                     stat.inArg   = 1;
                     stat.inQuote = 1;
                     argc++;
-                    argv[argc - 1] = &inbuf[i + 1];
+                    argv[argc - 1] = &handle_inbuf[i + 1];
                 }
-                else if (stat.inQuote && stat.inArg)
+                else if ((stat.inQuote != 0U) && (stat.inArg != 0U))
                 {
-                    stat.inArg   = 0;
-                    stat.inQuote = 0;
-                    inbuf[i]     = '\0';
+                    stat.inArg      = 0;
+                    stat.inQuote    = 0;
+                    handle_inbuf[i] = '\0';
                 }
                 else
                 { /* Do Nothing */
@@ -189,30 +189,30 @@ static int handle_input(char *inbuf)
                 break;
 
             case ' ':
-                if (i > 0 && inbuf[i - 1] == '\\' && stat.inArg)
+                if (i > 0 && handle_inbuf[i - 1] == '\\' && (stat.inArg != 0U))
                 {
-                    (void)memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1U);
+                    (void)memcpy(&handle_inbuf[i - 1], &handle_inbuf[i], strlen(&handle_inbuf[i]) + 1U);
                     --i;
                     break;
                 }
-                if (!stat.inQuote && stat.inArg)
+                if ((stat.inQuote == 0U) && (stat.inArg != 0U))
                 {
-                    stat.inArg = 0;
-                    inbuf[i]   = '\0';
+                    stat.inArg      = 0;
+                    handle_inbuf[i] = '\0';
                 }
                 break;
 
             default:
-                if (!stat.inArg)
+                if (stat.inArg == 0U)
                 {
                     stat.inArg = 1;
                     argc++;
-                    argv[argc - 1] = &inbuf[i];
+                    argv[argc - 1] = &handle_inbuf[i];
                 }
                 break;
         }
         i++;
-    } while (!stat.done && i < INBUF_SIZE);
+    } while ((stat.done == 0U) && (unsigned int)i < INBUF_SIZE);
 
     if (stat.inQuote != 0U)
     {
@@ -248,26 +248,26 @@ static int handle_input(char *inbuf)
 /* Perform basic tab-completion on the input buffer by string-matching the
  * current input line against the cli functions table.  The current input line
  * is assumed to be NULL-terminated. */
-static void tab_complete(char *inbuf, unsigned int *bp)
+static void tab_complete(char *tab_inbuf, unsigned int *bp)
 {
-    unsigned int i, n, m;
+    unsigned int i = 0, n = 0, m = 0;
     const char *fm = NULL;
 
     (void)PRINTF("\r\n");
 
     /* show matching commands */
-    for (i = 0, n = 0, m = 0; i < MAX_COMMANDS && n < cli.num_commands; i++)
+    while (i < MAX_COMMANDS && n < cli.num_commands)
     {
         if (cli.commands[i]->name != NULL)
         {
-            if (strncmp(inbuf, cli.commands[i]->name, *bp) == 0)
+            if (strncmp(tab_inbuf, cli.commands[i]->name, *bp) == 0)
             {
                 m++;
-                if (m == 1)
+                if (m == 1U)
                 {
                     fm = cli.commands[i]->name;
                 }
-                else if (m == 2)
+                else if (m == 2U)
                 {
                     (void)PRINTF("%s %s ", fm, cli.commands[i]->name);
                 }
@@ -278,23 +278,24 @@ static void tab_complete(char *inbuf, unsigned int *bp)
             }
             n++;
         }
+        i++;
     }
 
     /* there's only one match, so complete the line */
-    if (m == 1 && fm != NULL)
+    if (m == 1U && fm != NULL)
     {
         n = strlen(fm) - *bp;
         if (*bp + n < INBUF_SIZE)
         {
-            (void)memcpy(inbuf + *bp, fm + *bp, n);
+            (void)memcpy(tab_inbuf + *bp, fm + *bp, n);
             *bp += n;
-            inbuf[(*bp)++] = ' ';
-            inbuf[*bp]     = '\0';
+            tab_inbuf[(*bp)++] = ' ';
+            tab_inbuf[*bp]     = '\0';
         }
     }
 
     /* just redraw input line */
-    (void)PRINTF("%s%s", PROMPT, inbuf);
+    (void)PRINTF("%s%s", PROMPT, tab_inbuf);
 }
 
 enum
@@ -308,12 +309,12 @@ enum
 /* Get an input line.
  *
  * Returns: 1 if there is input, 0 if the line should be ignored. */
-static int get_input(char *inbuf, unsigned int *bp)
+static int get_input(char *get_inbuf, unsigned int *bp)
 {
     static int state = BASIC_KEY;
     static char second_char;
 
-    if (inbuf == NULL)
+    if (get_inbuf == NULL)
     {
         return 0;
     }
@@ -322,17 +323,17 @@ static int get_input(char *inbuf, unsigned int *bp)
 
     while (true)
     {
-        inbuf[*bp] = (char)GETCHAR();
+        get_inbuf[*bp] = (char)GETCHAR();
         if (state == EXT_KEY_SECOND_SYMBOL)
         {
             if (second_char == (char)(0x4F))
             {
-                if (inbuf[*bp] == (char)(0x4D))
+                if (get_inbuf[*bp] == (char)(0x4D))
                 {
                     /* Num. keypad ENTER */
-                    inbuf[*bp] = '\0';
-                    *bp        = 0;
-                    state      = BASIC_KEY;
+                    get_inbuf[*bp] = '\0';
+                    *bp            = 0;
+                    state          = BASIC_KEY;
                     return 1;
                 }
             }
@@ -340,19 +341,19 @@ static int get_input(char *inbuf, unsigned int *bp)
 
         if (state == EXT_KEY_FIRST_SYMBOL)
         {
-            second_char = inbuf[*bp];
-            if (inbuf[*bp] == (char)(0x4F))
+            second_char = get_inbuf[*bp];
+            if (get_inbuf[*bp] == (char)(0x4F))
             {
                 state = EXT_KEY_SECOND_SYMBOL;
                 continue;
             }
-            if (inbuf[*bp] == (char)(0x5B))
+            if (get_inbuf[*bp] == (char)(0x5B))
             {
                 state = EXT_KEY_SECOND_SYMBOL;
                 continue;
             }
         }
-        if (inbuf[*bp] == (char)(0x1B))
+        if (get_inbuf[*bp] == (char)(0x1B))
         {
             /* We may be seeing a first character from a
                extended key */
@@ -361,15 +362,15 @@ static int get_input(char *inbuf, unsigned int *bp)
         }
         state = BASIC_KEY;
 
-        if (inbuf[*bp] == END_CHAR)
+        if (get_inbuf[*bp] == END_CHAR)
         { /* end of input line */
-            inbuf[*bp] = '\0';
-            *bp        = 0;
+            get_inbuf[*bp] = '\0';
+            *bp            = 0;
             return 1;
         }
 
-        if ((inbuf[*bp] == (char)(0x08)) || /* backspace */
-            (inbuf[*bp] == (char)(0x7f)))
+        if ((get_inbuf[*bp] == (char)(0x08)) || /* backspace */
+            (get_inbuf[*bp] == (char)(0x7f)))
         { /* DEL */
             if (*bp > (unsigned int)(0))
             {
@@ -382,16 +383,16 @@ static int get_input(char *inbuf, unsigned int *bp)
             continue;
         }
 
-        if (inbuf[*bp] == '\t')
+        if (get_inbuf[*bp] == '\t')
         {
-            inbuf[*bp] = '\0';
-            tab_complete(inbuf, bp);
+            get_inbuf[*bp] = '\0';
+            tab_complete(get_inbuf, bp);
             continue;
         }
 
         if (!cli.echo_disabled)
         {
-            (void)PRINTF("%c", inbuf[*bp]);
+            (void)PRINTF("%c", get_inbuf[*bp]);
         }
 
         (*bp)++;
@@ -415,7 +416,7 @@ static void print_bad_command(char *cmd_string)
     {
         unsigned char *c = (unsigned char *)cmd_string;
         (void)PRINTF("command '");
-        while (*c != '\0')
+        while (*c != (unsigned char)'\0')
         {
             if (isprint(*c) != 0)
             {
@@ -436,9 +437,9 @@ static void console_tick(void)
 {
     int ret;
 
-    if (cli.inbuf == NULL)
+    if (cli.cli_inbuf == NULL)
     {
-        ret = cli_get_cmd_buffer(&cli.inbuf);
+        ret = cli_get_cmd_buffer(&cli.cli_inbuf);
         if (ret != WM_SUCCESS)
         {
             return;
@@ -448,12 +449,12 @@ static void console_tick(void)
 
     if (cli.input_enabled == 1)
     {
-        ret = get_input(cli.inbuf, &cli.bp);
+        ret = get_input(cli.cli_inbuf, &cli.bp);
         if (ret == 1)
         {
             cli.input_enabled = 0;
-            ret               = cli_submit_cmd_buffer(&cli.inbuf);
-            cli.inbuf         = NULL;
+            ret               = cli_submit_cmd_buffer(&cli.cli_inbuf);
+            cli.cli_inbuf     = NULL;
             if (ret != WM_SUCCESS)
             {
                 (void)PRINTF(
@@ -534,12 +535,12 @@ static void cli_main(os_thread_arg_t data)
     os_thread_self_complete(NULL);
 }
 /* Automatically bind an input processor to the console */
-int cli_install_UART_Tick(void)
+static int cli_install_UART_Tick(void)
 {
     return os_setup_idle_function(console_tick);
 }
 
-int cli_remove_UART_Tick(void)
+static int cli_remove_UART_Tick(void)
 {
     return os_remove_idle_function(console_tick);
 }
@@ -573,9 +574,9 @@ static int __cli_cleanup(void)
         final = -WM_FAIL;
     }
 
-    if (cli.inbuf != NULL)
+    if (cli.cli_inbuf != NULL)
     {
-        (void)cli_mem_free(&cli.inbuf);
+        (void)cli_mem_free(&cli.cli_inbuf);
     }
 
     ret = cli_mem_cleanup();
@@ -597,7 +598,7 @@ static int __cli_cleanup(void)
 }
 
 /* Initialize and start the main thread */
-int cli_start(void)
+static int cli_start(void)
 {
     int ret;
 
@@ -609,6 +610,13 @@ int cli_start(void)
     ret = os_mutex_create(&cli_mutex, "cli", OS_MUTEX_INHERIT);
     if (ret != WM_SUCCESS)
     {
+        return -WM_FAIL;
+    }
+
+    ret = os_queue_create(&cli.input_queue, "cli_queue", (int)sizeof(void *), &cli.in_queue_data);
+    if (ret != WM_SUCCESS)
+    {
+        (void)PRINTF("Error: Failed to create cli queue: %d\r\n", ret);
         return -WM_FAIL;
     }
 
@@ -626,12 +634,6 @@ int cli_start(void)
         return -WM_FAIL;
     }
 
-    ret = os_queue_create(&cli.input_queue, "cli_queue", (int)sizeof(void *), &cli.in_queue_data);
-    if (ret != WM_SUCCESS)
-    {
-        (void)PRINTF("Error: Failed to create cli queue: %d\r\n", ret);
-        return -WM_FAIL;
-    }
     cli.initialized = true;
 
     return WM_SUCCESS;
@@ -692,10 +694,10 @@ int cli_submit_cmd_buffer(char **buff)
  * text string, if any. */
 void help_command(int argc, char **argv)
 {
-    unsigned int i, n;
+    unsigned int i = 0, n = 0;
 
     (void)PRINTF("\r\n");
-    for (i = 0, n = 0; i < MAX_COMMANDS && n < cli.num_commands; i++)
+    while (i < MAX_COMMANDS && n < cli.num_commands)
     {
         if (cli.commands[i]->name != NULL)
         {
@@ -703,6 +705,7 @@ void help_command(int argc, char **argv)
                          cli.commands[i]->help != NULL ? cli.commands[i]->help : "");
             n++;
         }
+        i++;
     }
 }
 
@@ -766,13 +769,13 @@ int cli_register_command(const struct cli_command *command)
 
 int cli_unregister_command(const struct cli_command *command)
 {
-    unsigned int i;
+    unsigned int i = 0;
     if (command->name == NULL || command->function == NULL)
     {
         return 1;
     }
 
-    for (i = 0; i < cli.num_commands; i++)
+    while (i < cli.num_commands)
     {
         if (cli.commands[i] == command)
         {
@@ -780,11 +783,12 @@ int cli_unregister_command(const struct cli_command *command)
             unsigned int remaining_cmds = cli.num_commands - i;
             if (remaining_cmds > 0U)
             {
-                (void)memmove(&cli.commands[i], &cli.commands[i + 1], (remaining_cmds * sizeof(struct cli_command *)));
+                (void)memmove(&cli.commands[i], &cli.commands[i + 1U], (remaining_cmds * sizeof(struct cli_command *)));
             }
             cli.commands[cli.num_commands] = NULL;
             return 0;
         }
+        i++;
     }
 
     return 1;

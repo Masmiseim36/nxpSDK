@@ -42,7 +42,7 @@
 #else
 /* In 802.11ac sizeof(HostCmd_CMD_CHANNEL_TRPC_CONFIG) is 1572 bytes.
  */
-#define WIFI_FW_CMDBUF_SIZE 1580
+#define WIFI_FW_CMDBUF_SIZE 1580U
 #endif /* CONFIG_11AC */
 
 #define WIFI_RESP_WAIT_TIME 10
@@ -83,10 +83,7 @@ extern bool low_power_mode;
 extern bool cal_data_valid;
 extern bool mac_addr_valid;
 
-mlan_status sd_wifi_init(enum wlan_type type,
-                         enum wlan_fw_storage_type st,
-                         const uint8_t *fw_ram_start_addr,
-                         const size_t size);
+mlan_status sd_wifi_init(enum wlan_type type, const uint8_t *fw_start_addr, const size_t size);
 
 void sd_wifi_deinit(void);
 
@@ -111,6 +108,7 @@ int wifi_send_cmdbuffer(t_u32 tx_blocks, t_u32 len);
  */
 HostCmd_DS_COMMAND *wifi_get_command_buffer(void);
 
+mlan_status wlan_process_int_status(mlan_adapter *pmadapter);
 mlan_status wlan_xmit_pkt(t_u32 txlen, t_u8 interface);
 int raw_process_pkt_hdrs(void *pbuf, t_u32 payloadlen, t_u8 interface);
 uint32_t wifi_get_device_value1(void);

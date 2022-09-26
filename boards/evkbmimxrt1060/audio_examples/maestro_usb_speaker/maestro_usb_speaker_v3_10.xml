@@ -91,11 +91,15 @@
           <value>STREAMER_ENABLE_VIT_SINK</value>
           <value>USB_STACK_FREERTOS</value>
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</value>
+          <value>OSA_USED</value>
+          <value>SHELL_TASK_STACK_SIZE=4000</value>
           <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
           <value>BOARD_USE_CODEC=1</value>
           <value>CODEC_WM8960_ENABLE</value>
           <value>CODEC_MULTI_ADAPTERS=1</value>
           <value>SD_ENABLED</value>
+          <value>SAI_XFER_QUEUE_SIZE=2</value>
           <value>DEBUG_CONSOLE_RX_ENABLE=0</value>
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>CODEC_CS42448_ENABLE</value>

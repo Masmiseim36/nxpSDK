@@ -42,6 +42,39 @@ void bt_list_append(bt_list_t *list, bt_list_node_t *node)
     EnableGlobalIRQ(reg);
 }
 
+void bt_list_append_list(bt_list_t *list, bt_list_node_t *head, bt_list_node_t *tail)
+{
+    bt_list_node_t *p;
+    unsigned int reg;
+
+    reg = DisableGlobalIRQ();
+    p = list->head;
+
+    if (NULL != p)
+    {
+        while (NULL != p->next)
+        {
+            if (p == head)
+            {
+                EnableGlobalIRQ(reg);
+                return;
+            }
+            p = p->next;
+        }
+        p->next = head;
+    }
+    else
+    {
+        list->head = head;
+    }
+
+    if (NULL != tail)
+    {
+        tail->next = NULL;
+    }
+    EnableGlobalIRQ(reg);
+}
+
 bt_list_node_t *bt_list_get(bt_list_t *list)
 {
     bt_list_node_t *p;

@@ -158,35 +158,46 @@ static uint8_t filesink_sink_pad_activation_handler(StreamPad *pad, uint8_t acti
 
     if (true == ret)
     {
-        /* In case of activation, activate the peer source pad to push mode. */
-        if (true == active)
+        if (pad->scheduling == SCHEDULING_PUSH)
         {
-            if (pad->scheduling == SCHEDULING_PUSH)
+            // Activate/Deactivate the pad peer
+            ret = pad_activate_push(pad->peer, active);
+        }
+        else if (pad->scheduling == SCHEDULING_PULL)
+        {
+            // A pad with pull scheduling "manually" pulls data from a peer pad.
+            // Pull scheduling is implemented by invoking the chain handler (used for push mode),
+            // that needs a buffer however, so we need to acquire it.
+            if (true == active)
             {
-                ret = pad_activate_push(pad->peer, active);
-            }
-            else if (pad->scheduling == SCHEDULING_PULL)
-            {
-                // A pad with pull scheduling "manually" pulls data from a peer pad.
-                // Pull scheduling is implemented by invoking the chain handler (used for push mode),
-                // that needs a buffer however, so we need to acquire it.
-
                 element->pullbuf = OSA_MemoryAllocate(FILESINK_PULL_SIZE + sizeof(AudioPacketHeader));
                 if (element->pullbuf == NULL)
                 {
                     return false;
                 }
-
-                // Activate the pad
-                ret = pad_activate_pull(pad->peer, active);
             }
+            else
+            {
+                // Release the pull buffer, if it was allocated
+                if (element->pullbuf != NULL)
+                {
+                    OSA_MemoryFree(element->pullbuf);
+                    element->pullbuf = NULL;
+                }
+            }
+
+            // Activate/Deactivate the pad peer
+            ret = pad_activate_pull(pad->peer, active);
         }
     }
     else
     {
         // Release the pull buffer, if it was allocated
-        OSA_MemoryFree(element->pullbuf);
-        element->pullbuf = NULL;
+        if (element->pullbuf != NULL)
+        {
+            OSA_MemoryFree(element->pullbuf);
+            element->pullbuf = NULL;
+        }
     }
 
     STREAMER_FUNC_EXIT(DBG_FILE_SINK);
@@ -266,37 +277,30 @@ static FlowReturn filesink_sink_pad_chain_handler(StreamPad *pad, StreamBuffer *
         OSA_MutexLock(&(file_dump.fileDataMutex), osaWaitForever_c);
     }
 
-    /* At the begining, the input buffer is always empty and the data is not valid - do not copy the data to the global
-     * data buffer */
-    if (file_dump.first_run)
-        file_dump.first_run = false;
+    /* write only data to file
+     * Note: writing with header may be useful as a debug feature which is
+     * generally not ON.
+     */
+
+    /* Copy the data to the global data buffer */
+    if (!file_dump.file_sink_element->raw_write)
+    {
+        if (data_size > 0)
+        {
+            memcpy(file_dump.data_ptr + file_dump.size, buf->buffer, data_size);
+        }
+    }
     else
     {
-        /* write only data to file
-         * Note: writing with header may be useful as a debug feature which is
-         * generally not ON.
-         */
-
-        /* Copy the data to the global data buffer */
-        if (!file_dump.file_sink_element->raw_write)
+        if (data_size > 0)
         {
-            if (data_size > 0)
-            {
-                memcpy(file_dump.data_ptr + file_dump.size, buf->buffer, data_size);
-            }
+            memcpy(file_dump.data_ptr + file_dump.size, buf->buffer + pkt_hdr_size, data_size);
         }
-        else
-        {
-            if (data_size > 0)
-            {
-                memcpy(file_dump.data_ptr + file_dump.size, buf->buffer + pkt_hdr_size, data_size);
-            }
-        }
-
-        /* Update data size */
-        file_dump.size += data_size;
-        OSA_SemaphorePost(file_dump.sem_Read);
     }
+
+    /* Update data size */
+    file_dump.size += data_size;
+    OSA_SemaphorePost(file_dump.sem_Read);
 
     ret = file_dump.ret;
     OSA_MutexUnlock(&(file_dump.fileDataMutex));
@@ -437,7 +441,7 @@ static int32_t filesink_change_state(StreamElement *element, PipelineState new_s
         case STATE_CHANGE_NULL_TO_READY:
             STREAMER_LOG_DEBUG(DBG_FILE_SINK, "[File SINK]STATE_CHANGE_NULL_TO_READY\n");
             /* Open file for writing */
-            file_sink_element->fd = file_open(file_sink_element->location, FILE_WRONLY | FILE_CREAT);
+            file_sink_element->fd = file_open(file_sink_element->location, FILE_WRONLY | FILE_TRUNC);
             if (file_sink_element->fd < 0)
             {
                 STREAMER_LOG_ERR(DBG_FILE_SINK, ERRCODE_GENERAL_ERROR, " file open error file sink\n");

@@ -20,20 +20,18 @@
 
 int streamer_build_eapfile2file_pipeline(int8_t pipeline_index, StreamPipelineType pipeline_type, STREAMER_T *task_data)
 {
-    /*
-     * Resulting pipeline is:
-     *
-     * [filesrc |sink] => [src| EAP |sink] => [src| filesink]
-     */
-
+    int ret               = 0;
+    uint32_t level        = 0;
     ElementFileSink *sink = NULL;
-    ElementEap *eap       = NULL;
-
-    int ret;
-    uint32_t level = 0;
 
     if (pipeline_type != STREAM_PIPELINE_TEST_EAPFILE2FILE)
         return STREAM_ERR_GENERAL;
+
+    // Resulting pipeline:
+    //
+    // [filesrc] => [eap] => [filesink]
+    //
+    task_data->pipeline_type = pipeline_type;
 
     // Create pipeline
     ret = create_pipeline(&task_data->pipes[pipeline_index], pipeline_index, pipeline_type, &task_data->mq_out);
@@ -69,10 +67,7 @@ int streamer_build_eapfile2file_pipeline(int8_t pipeline_index, StreamPipelineTy
 
     // Set push scheduling
     sink                         = (ElementFileSink *)task_data->elems[ELEMENT_FILE_SINK_INDEX];
-    sink->sink_pad[0].scheduling = SCHEDULING_PULL;
-
-    eap                         = (ElementEap *)task_data->elems[ELEMENT_EAP_INDEX];
-    eap->sink_pad[0].scheduling = SCHEDULING_PULL;
+    sink->sink_pad[0].scheduling = SCHEDULING_PUSH;
 
     // ADD ELEMENTS TO PIPELINE
 
@@ -117,6 +112,22 @@ int streamer_build_eapfile2file_pipeline(int8_t pipeline_index, StreamPipelineTy
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element(%d -> %d) failed: %d\n", ELEMENT_EAP_INDEX,
                          ELEMENT_FILE_SINK_INDEX, ret);
+        goto err_catch;
+    }
+
+    // Configure filesrc
+    ELEMENT_PROPERTY_T prop;
+
+    /* Set file type */
+    prop.prop = PROP_FILESRC_SET_FILE_TYPE;
+    prop.val  = AUDIO_DATA;
+
+    ret = element_set_property(task_data->elems[ELEMENT_FILE_SRC_INDEX], prop.prop, prop.val);
+
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "set element(%d) property(%d) failed:%d\n", ELEMENT_FILE_SRC_INDEX,
+                         PROP_FILESRC_SET_FILE_TYPE, ret);
         goto err_catch;
     }
 
@@ -189,22 +200,37 @@ int streamer_destroy_eapfile2file_pipeline(int8_t pipeline_index, STREAMER_T *ta
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "destroy element(%d) failed: %d\n", ELEMENT_FILE_SINK_INDEX, ret);
         return ret;
     }
+    task_data->elems[ELEMENT_FILE_SINK_INDEX] = (uintptr_t)NULL;
 
-    // EAP
-    ret = destroy_element(task_data->elems[ELEMENT_EAP_INDEX]);
+    // EAP also needs to deinit external lib
+    ElementEap *eap_ptr = (ElementEap *)task_data->elems[ELEMENT_EAP_INDEX];
+    if (eap_ptr->deinit_func == NULL)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "External EAP deinit function is not registered");
+        return STREAM_ERR_GENERAL;
+    }
+    ret = eap_ptr->deinit_func();
     if (ret != STREAM_OK)
     {
-        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "destroy element(%d) failed: %d\n", ELEMENT_EAP_INDEX, ret);
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to deinit EAP with error: %d\n", ret);
+        return STREAM_ERR_GENERAL;
+    }
+    ret = destroy_element(task_data->elems[ELEMENT_EAP_INDEX]);
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to destroy decoder\n");
         return ret;
     }
+    task_data->elems[ELEMENT_EAP_INDEX] = (uintptr_t)NULL;
 
-    // Filesink
+    // Filesrc
     ret = destroy_element(task_data->elems[ELEMENT_FILE_SRC_INDEX]);
     if (ret != STREAM_OK)
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "destroy element(%d) failed: %d\n", ELEMENT_FILE_SRC_INDEX, ret);
         return ret;
     }
+    task_data->elems[ELEMENT_FILE_SRC_INDEX] = (uintptr_t)NULL;
 
     // DESTROY PIPELINE
     ret = destroy_pipeline(task_data->pipes[pipeline_index]);
@@ -215,5 +241,6 @@ int streamer_destroy_eapfile2file_pipeline(int8_t pipeline_index, STREAMER_T *ta
     }
 
     task_data->pipes[pipeline_index] = (uintptr_t)NULL;
+
     return ret;
 }

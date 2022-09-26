@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.0</span>
+   &#160;<span id="projectnumber">Rev. 1.9.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -298,8 +298,8 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:aaaa8e68e3d7ce5f2b370125c7bea24ce"><td class="memItemLeft" align="right" valign="top">static const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#aaaa8e68e3d7ce5f2b370125c7bea24ce">kBasicCodecVersion</a></td></tr>
-<tr class="separator:aaaa8e68e3d7ce5f2b370125c7bea24ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a548211f98d9af26e1776e2193cf58d6e"><td class="memItemLeft" align="right" valign="top">static const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a548211f98d9af26e1776e2193cf58d6e">kBasicCodecVersion</a></td></tr>
+<tr class="separator:a548211f98d9af26e1776e2193cf58d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -1703,8 +1703,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Prototype for read binary value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">length</td><td>of binary. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Binary value to read. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">length</td><td>of binary. 0 can be valid value or in case of error. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">value</td><td>Binary value to read. Null in case of error. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1858,7 +1858,7 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">callbacks</td><td>Pointer to array of callbacks. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">callbacksCount</td><td>Size of array of callbacks. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">callback</td><td>Callback which is deserialized. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">callback</td><td>Callback which is deserialized. Null in case of error. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1913,7 +1913,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="aaaa8e68e3d7ce5f2b370125c7bea24ce"></a>
+<a class="anchor" id="a548211f98d9af26e1776e2193cf58d6e"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -1921,7 +1921,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t BasicCodec::kBasicCodecVersion</td>
+          <td class="memname">const uint32_t BasicCodec::kBasicCodecVersion</td>
         </tr>
       </table>
   </td>

@@ -124,10 +124,10 @@ int32_t vitsink_init_element(StreamElement *element_ptr);
  * @param proc_func_ptr Process function pointer
  * @param deinit_func_ptr Deinit function pointer
  * @param arg_ptr Arguments pointer
- * @return true
- * @return false
+ * @return STREAM_OK
+ * @return STREAM_ERR_INVALID_ARGS
  */
-bool vit_register_ext_processing(ElementHandle element,
+int32_t vit_register_ext_processing(ElementHandle element,
                                  VitSinkInitFunc init_func_ptr,
                                  VitSinkPostProcFunc proc_func_ptr,
                                  VitSinkDeinitFunc deinit_func_ptr,

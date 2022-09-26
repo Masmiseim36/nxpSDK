@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -50,6 +50,7 @@
 #elif defined EAP32_PROC
 #include <EAP32.h>
 #endif
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -91,7 +92,8 @@ typedef enum _eap_att_command
     kAttCmdGetConfig = 5, /*!< load actual EAP parameters from LVM library */
     kAttCmdReset     = 6, /*!< stops application and starts again with last values
          (also critical properties like sampling frequency could be changed by this)*/
-    kAttCmdVolume = 7     /*!< apply current volume */
+    kAttCmdVolume = 7,    /*!< apply current volume */
+    kAttCmdSeek   = 8     /*!< seek current paused track */
 } eap_att_command_t;
 
 /* EAP ATT state machine statuses */
@@ -125,24 +127,26 @@ typedef struct _eap_att_control
     // preset definition, '0' is reserved for default, used as optional storage or by tests
     char eapPreset;
 
-    int volume; // volume in range 0-100%, 0 is muted
+    int volume;        // Volume in range 0-100%, 0 is muted
+    int32_t seek_time; // Seek time
 
     // control handlers
-    eap_att_code_t (*play)();    /* Register playback start function. */
-    eap_att_code_t (*pause)();   /* Pause audio stream and save current position. */
-    eap_att_code_t (*resume)();  /* Continue playback of audio stream which was previously paused. */
-    eap_att_code_t (*reset)();   /* Optional handler for master reset. (currently used only in tests) */
-    eap_att_code_t (*stop)();    /* Stop audio stream. This is called i.e. before play() for new audio input. */
-    eap_att_code_t (*destroy)(); /* Destroy audio stream. Return kEapAttCodeOk if this behavior is not needed. */
+    eap_att_code_t (*play)(void);   /* Register playback start function. */
+    eap_att_code_t (*pause)(void);  /* Pause audio stream and save current position. */
+    eap_att_code_t (*resume)(void); /* Continue playback of audio stream which was previously paused. */
+    eap_att_code_t (*reset)(void);  /* Optional handler for master reset. (currently used only in tests) */
+    eap_att_code_t (*stop)(void);   /* Stop audio stream. This is called i.e. before play() for new audio input. */
+    eap_att_code_t (*seek)(int32_t seek_time); /* Seek current paused track. */
+    eap_att_code_t (*destroy)(void); /* Destroy audio stream. Return kEapAttCodeOk if this behavior is not needed. */
     void (*progress)(int current, int total); /* Call periodically on audio stream progress changed. */
     eap_att_code_t (*set_volume)(int value);  /* Handler for volume control */
 
     // advanced overrides
-    eap_att_code_t (*update)();           /* This is called when EAP config structures were changed by the tool. */
+    eap_att_code_t (*update)(void);       /* This is called when EAP config structures were changed by the tool. */
     int (*logme)(const char *fmt_s, ...); /* This function is mapped to stdio::printf() by default. */
 
 #if (defined EAP_PROC || defined EAP32_PROC)
-    eap_att_code_t (*normalize_params)(); /* Normalizes params definition structures i.e. bands elements count. */
+    eap_att_code_t (*normalize_params)(void); /* Normalizes params definition structures i.e. bands elements count. */
 
     // EAP references
     LVM_Handle_t handle;
@@ -156,14 +160,14 @@ typedef struct _eap_att_control
  * This function is main accessor to internal control structure singleton. Please use this where needed.
  * @return Returns pointer to ATT control structure singleton.
  */
-eap_att_control_t *get_eap_att_control();
+eap_att_control_t *get_eap_att_control(void);
 
 /*
  * Main EAP ATT state machine process method. Should be called periodically.
  * Selected period defines how fast will be reaction on commands from Audio Tuning Tool.
  * Recommended period is between 1-100ms (higher values can leeds into too slow reaction).
  */
-void eap_att_process();
+void eap_att_process(void);
 
 #if (defined EAP_PROC || defined EAP32_PROC)
 /*

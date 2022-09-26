@@ -410,7 +410,7 @@ uint8_t get_cci_metadata(ElementDecoder *element)
     ctx.cci_dec_seek = _seek_file_data;
     ctx.cci_dec_tell = _get_file_position;
 
-    if (STREAM_OK != query_info_pipeline((PipelineHandle)element->parent, INFO_FILE_SIZE, &data))
+    if (STREAM_OK != query_info_pipeline((PipelineHandle)element->parent, INFO_SIZE, &data))
     {
         STREAMER_LOG_DEBUG(DBG_CCID, "[CCID] Get File Size error ");
     }
@@ -657,21 +657,26 @@ Error:
         if (cci_dec->ccidec_memory)
         {
             OSA_MemoryFree(cci_dec->ccidec_memory);
+            cci_dec->ccidec_memory = NULL;
         }
         if (cci_dec->metadata)
         {
             OSA_MemoryFree(cci_dec->metadata);
+            cci_dec->metadata = NULL;
         }
         if (cci_dec->unaligned_filesrc_buffer[0])
         {
             OSA_MemoryFree(cci_dec->unaligned_filesrc_buffer[0]);
+            cci_dec->unaligned_filesrc_buffer[0] = NULL;
         }
         if (cci_dec->unaligned_packed_buffer)
         {
             OSA_MemoryFree(cci_dec->unaligned_packed_buffer);
+            cci_dec->unaligned_packed_buffer = NULL;
         }
         /* deallocate cci decoder structure */
         OSA_MemoryFree(cci_dec);
+        cci_dec = NULL;
     }
     element->dec_info = NULL;
     STREAMER_FUNC_EXIT(DBG_CCID);
@@ -792,26 +797,31 @@ uint8_t ccidec_src_pad_event_handler(StreamPad *pad, StreamEvent *event)
             if (EVENT_FORMAT(event) == DATA_FORMAT_TIME)
             {
                 StreamEvent data_event;
-                int32_t stream_size = decoder_get_duration(element, DATA_FORMAT_BYTES);
-
+                int32_t stream_size   = decoder_get_duration(element, DATA_FORMAT_BYTES);
                 uint32_t time_in_msec = EVENT_DATA(event);
-
-                uint32_t time_in_sec = time_in_msec / 1000;
 
                 STREAMER_LOG_DEBUG(DBG_CCID, "[CCID]Time: %d\n", time_in_msec);
                 STREAMER_LOG_DEBUG(DBG_CCID, "[CCID]Average bit rate: %d\n", cci_dec->metadata->avg_bit_rate);
 
-                /* get fractional seconds */
-                time_in_msec = time_in_msec - (time_in_sec * 1000);
-                /* use avg bit rate to estimate offset in bytes for whole seconds */
-                offset_temp = (uint64_t)((uint64_t)time_in_sec * cci_dec->metadata->avg_bit_rate);
-                offset      = (uint32_t)((uint64_t)(offset_temp) / 8);
-                /* and account for fractional seconds */
-                offset_temp = ((uint64_t)time_in_msec * cci_dec->metadata->avg_bit_rate);
-                offset += (uint32_t)((uint64_t)(offset_temp) / (8 * 1000));
+                if (cci_dec->stream_type != STREAM_TYPE_OGG_OPUS)
+                {
+                    uint32_t time_in_sec = time_in_msec / 1000;
+                    /* get fractional seconds */
+                    time_in_msec = time_in_msec - (time_in_sec * 1000);
+                    /* use avg bit rate to estimate offset in bytes for whole seconds */
+                    offset_temp = (uint64_t)((uint64_t)time_in_sec * cci_dec->metadata->avg_bit_rate);
+                    offset      = (uint32_t)((uint64_t)(offset_temp) / 8);
+                    /* and account for fractional seconds */
+                    offset_temp = ((uint64_t)time_in_msec * cci_dec->metadata->avg_bit_rate);
+                    offset += (uint32_t)((uint64_t)(offset_temp) / (8 * 1000));
 
-                if (offset > stream_size)
-                    offset = stream_size;
+                    if (offset > stream_size)
+                        offset = stream_size;
+                }
+                else
+                {
+                    offset = time_in_msec;
+                }
 
                 STREAMER_LOG_DEBUG(DBG_CCID, "[CCID]Offset from event: %d\n", offset);
 
@@ -821,7 +831,8 @@ uint8_t ccidec_src_pad_event_handler(StreamPad *pad, StreamEvent *event)
                     // Seek 0 is possible only...
                     if (0 == offset)
                     {
-                        offset = codec_seek((audio_stream_type_t)cci_dec->stream_type, &cci_dec->ccidec_memory, offset);
+                        offset = (uint32_t)codec_seek((audio_stream_type_t)cci_dec->stream_type,
+                                                      &cci_dec->ccidec_memory, (int32_t)offset);
 
                         STREAMER_LOG_DEBUG(DBG_CCID, "[CCID]Offset after alignment: %d\n", offset);
                         event_create_seek(&data_event, DATA_FORMAT_BYTES, offset);
@@ -840,12 +851,18 @@ uint8_t ccidec_src_pad_event_handler(StreamPad *pad, StreamEvent *event)
                 else
                 {
                     /* Use CCI to get offset aligned to a frame */
-                    offset = codec_seek((audio_stream_type_t)cci_dec->stream_type, &cci_dec->ccidec_memory, offset);
+                    offset = (uint32_t)codec_seek((audio_stream_type_t)cci_dec->stream_type, &cci_dec->ccidec_memory,
+                                                  (int32_t)offset);
 
                     if (cci_dec->stream_type == STREAM_TYPE_MP3)
-                        _seek_file_data(0, offset + cci_dec->metadata->start_pos, SEEK_SET, cci_dec);
-                    else
-                        _seek_file_data(0, offset, SEEK_SET, cci_dec);
+                    {
+                        _seek_file_data(0, (int32_t)offset + (int32_t)cci_dec->metadata->start_pos, SEEK_SET,
+                                        (void *)cci_dec);
+                    }
+                    else if (cci_dec->stream_type != STREAM_TYPE_OGG_OPUS)
+                    {
+                        _seek_file_data(0, (int32_t)offset, SEEK_SET, (void *)cci_dec);
+                    }
 
                     STREAMER_LOG_DEBUG(DBG_CCID, "[CCID]Offset after alignment: %d\n", offset);
                     event_create_seek(&data_event, DATA_FORMAT_BYTES, offset);
@@ -858,8 +875,19 @@ uint8_t ccidec_src_pad_event_handler(StreamPad *pad, StreamEvent *event)
             {
                 /* already in bytes */
                 /* Use CCI to get offset aligned to a frame */
-                offset =
-                    codec_seek((audio_stream_type_t)cci_dec->stream_type, &cci_dec->ccidec_memory, EVENT_DATA(event));
+                if (cci_dec->stream_type == STREAM_TYPE_OGG_OPUS)
+                {
+                    /* A negative EVENT_DATA(event) means the number of bytes (raw seek) and a positive number the
+                     * number of pcm samples (pcm seek) */
+                    offset = (uint32_t)codec_seek((audio_stream_type_t)cci_dec->stream_type, &cci_dec->ccidec_memory,
+                                                  -(int32_t)EVENT_DATA(event));
+                }
+                else
+                {
+                    offset = (uint32_t)codec_seek((audio_stream_type_t)cci_dec->stream_type, &cci_dec->ccidec_memory,
+                                                  (int32_t)EVENT_DATA(event));
+                }
+
                 if (cci_dec->stream_type == STREAM_TYPE_MP3)
                     _seek_file_data(0, offset + cci_dec->metadata->start_pos, SEEK_SET, cci_dec);
                 else

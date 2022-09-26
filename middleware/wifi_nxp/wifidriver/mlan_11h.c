@@ -87,7 +87,7 @@ typedef struct
  *
  *  @return      N/A
  */
-t_void wlan_11h_init(mlan_adapter *adapter)
+void wlan_11h_init(mlan_adapter *adapter)
 {
     wlan_11h_device_state_t *pstate_11h      = &adapter->state_11h;
     IEEEtypes_Quiet_t *pquiet                = &adapter->state_11h.quiet_ie;
@@ -140,7 +140,7 @@ t_void wlan_11h_init(mlan_adapter *adapter)
  *
  *  @return      N/A
  */
-t_void wlan_11h_priv_init(mlan_private *pmpriv)
+void wlan_11h_priv_init(mlan_private *pmpriv)
 {
     wlan_11h_interface_state_t *pistate_11h = &pmpriv->intf_state_11h;
 
@@ -187,10 +187,12 @@ t_bool wlan_11h_radar_detect_required(mlan_private *priv, t_u8 channel)
     required = wlan_get_cfp_radar_detect(priv, channel);
 
     if (!priv->adapter->region_code)
+    {
         PRINTM(MINFO,
                "11h: Radar detection in CFP code[BG:%#x, A:%#x] "
                "is %srequired for channel %d\n",
                priv->adapter->cfp_code_bg, priv->adapter->cfp_code_a, (required ? "" : "not "), channel);
+    }
     else
     {
         PRINTM(MINFO,

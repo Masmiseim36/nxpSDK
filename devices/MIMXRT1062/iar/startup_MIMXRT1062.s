@@ -4,7 +4,7 @@
 ;            MIMXRT1062
 ;  @version: 1.4
 ;  @date:    2022-3-25
-;  @build:   b220401
+;  @build:   b220425
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.

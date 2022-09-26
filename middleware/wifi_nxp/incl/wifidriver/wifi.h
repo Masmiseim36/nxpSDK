@@ -23,6 +23,12 @@
 
 #define BANDWIDTH_20MHZ 1U
 #define BANDWIDTH_40MHZ 2U
+#ifdef CONFIG_11AC
+#define BANDWIDTH_80MHZ 3U
+#endif
+
+#define MAX_NUM_CHANS_IN_NBOR_RPT 6U
+
 extern int16_t g_bcn_nf_last;
 extern uint8_t g_rssi;
 extern uint16_t g_data_nf_last;
@@ -52,6 +58,7 @@ typedef enum
 
 /** 802.11d country codes */
 typedef PACK_START enum {
+    COUNTRY_NONE = 0,
     /** World Wide Safe Mode */
     COUNTRY_WW = 1,
     /** US FCC */
@@ -82,13 +89,13 @@ typedef PACK_START enum {
  *
  * Also creates mutex, and semaphores used in command and data synchronizations.
  *
- * \param[in] fw_ram_start_addr address of stored Wi-Fi Firmware.
+ * \param[in] fw_start_addr address of stored Wi-Fi Firmware.
  * \param[in] size Size of Wi-Fi Firmware.
  *
  * \return WM_SUCCESS on success or -WM_FAIL on error.
  *
  */
-int wifi_init(const uint8_t *fw_ram_start_addr, const size_t size);
+int wifi_init(const uint8_t *fw_start_addr, const size_t size);
 
 /**
  * Initialize Wi-Fi driver module for FCC Certification.
@@ -98,13 +105,13 @@ int wifi_init(const uint8_t *fw_ram_start_addr, const size_t size);
  *
  * Also creates mutex, and semaphores used in command and data synchronizations.
  *
- * \param[in] fw_ram_start_addr address of stored Manufacturing Wi-Fi Firmware.
+ * \param[in] fw_start_addr address of stored Manufacturing Wi-Fi Firmware.
  * \param[in] size Size of Manufacturing Wi-Fi Firmware.
  *
  * \return WM_SUCCESS on success or -WM_FAIL on error.
  *
  */
-int wifi_init_fcc(const uint8_t *fw_ram_start_addr, const size_t size);
+int wifi_init_fcc(const uint8_t *fw_start_addr, const size_t size);
 
 /**
  * Deinitialize Wi-Fi driver module.
@@ -255,6 +262,7 @@ unsigned wifi_get_last_cmd_sent_ms(void);
 uint32_t wifi_get_value1(void);
 
 uint8_t *wifi_get_outbuf(uint32_t *outbuf_len);
+
 
 
 /**
@@ -449,7 +457,7 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
 
 int wifi_uap_rates_getset(uint8_t action, char *rates, uint8_t num_rates);
 int wifi_uap_sta_ageout_timer_getset(uint8_t action, uint32_t *sta_ageout_timer);
-int wifi_uap_ps_sta_ageout_timer_getset(uint8_t action, uint32_t *sta_ageout_timer);
+int wifi_uap_ps_sta_ageout_timer_getset(uint8_t action, uint32_t *ps_sta_ageout_timer);
 typedef enum
 {
     REG_MAC = 1,
@@ -551,16 +559,16 @@ int wifi_get_uap_channel(int *channel);
  */
 int wifi_enable_11d_support(void);
 int wifi_set_domain_params(wifi_domain_param_t *dp);
-int wifi_set_country(int country);
-int wifi_uap_set_country(int country);
-int wifi_get_country(void);
+int wifi_set_country(country_code_t country);
+int wifi_uap_set_country(country_code_t country);
+country_code_t wifi_get_country(void);
 #ifdef OTP_CHANINFO
 int wifi_get_fw_region_and_cfp_tables(void);
 void wifi_free_fw_region_and_cfp_tables(void);
 #endif
 int wifi_set_htcapinfo(unsigned int htcapinfo);
 int wifi_set_httxcfg(unsigned short httxcfg);
-void wifi_uap_set_httxcfg(unsigned short httxcfg);
+void wifi_uap_set_httxcfg(const t_u16 ht_tx_cfg);
 int wifi_uap_set_httxcfg_int(unsigned short httxcfg);
 int wifi_get_tx_power(t_u32 *power_level);
 int wifi_set_tx_power(t_u32 power_level);
@@ -573,6 +581,13 @@ bool wrapper_wlan_11d_support_is_enabled(void);
 void wrapper_wlan_11d_clear_parsedtable(void);
 void wrapper_clear_media_connected_event(void);
 int wifi_uap_ps_inactivity_sleep_exit(mlan_bss_type type);
+int wifi_uap_ps_inactivity_sleep_enter(mlan_bss_type type,
+                                       unsigned int ctrl_bitmap,
+                                       unsigned int min_sleep,
+                                       unsigned int max_sleep,
+                                       unsigned int inactivity_to,
+                                       unsigned int min_awake,
+                                       unsigned int max_awake);
 int wifi_enter_ieee_power_save(void);
 int wifi_exit_ieee_power_save(void);
 int wifi_enter_deepsleep_power_save(void);
@@ -580,7 +595,8 @@ int wifi_exit_deepsleep_power_save(void);
 void send_sleep_confirm_command(mlan_bss_type interface);
 void wifi_configure_listen_interval(int listen_interval);
 void wifi_configure_null_pkt_interval(unsigned int null_pkt_interval);
-int wrapper_wifi_assoc(const unsigned char *bssid, int wlan_security, bool is_wpa_tkip, unsigned int owe_trans_mode);
+int wrapper_wifi_assoc(
+    const unsigned char *bssid, int wlan_security, bool is_wpa_tkip, unsigned int owe_trans_mode, bool is_ft);
 #ifdef CONFIG_WIFI_UAP_WORKAROUND_STICKY_TIM
 void wifi_uap_enable_sticky_bit(const uint8_t *mac_addr);
 #endif /* CONFIG_WIFI_UAP_WORKAROUND_STICKY_TIM */
@@ -615,12 +631,12 @@ int wifi_uap_start(mlan_bss_type type,
 );
 
 #ifdef CONFIG_WMM
-int wrapper_wlan_sta_ampdu_enable(t_u8 tid);
+mlan_status wrapper_wlan_sta_ampdu_enable(t_u8 tid);
 #else
-int wrapper_wlan_sta_ampdu_enable(void);
+mlan_status wrapper_wlan_sta_ampdu_enable(void);
 #endif
 
-int wrapper_wlan_upa_ampdu_enable(uint8_t *addr);
+mlan_status wrapper_wlan_upa_ampdu_enable(const uint8_t *addr);
 
 
 
@@ -628,7 +644,7 @@ void handle_cdint(int error);
 
 int wifi_set_packet_filters(wifi_flt_cfg_t *flt_cfg);
 
-int wifi_uap_stop(int type);
+int wifi_uap_stop(enum wlan_bss_type type);
 int wifi_uap_set_bandwidth(const t_u8 bandwidth);
 
 
@@ -727,5 +743,17 @@ int wifi_wmm_get_pkt_prio(t_u8 *buf, t_u8 *tid, bool *is_udp_frame);
 
 uint8_t *wifi_wmm_get_outbuf(uint32_t *outbuf_len, mlan_wmm_ac_e queue);
 #endif
-wifi_domain_param_t *get_11d_domain_params(int country, wifi_sub_band_set_t *sub_band, t_u8 nr_sb);
+wifi_domain_param_t *get_11d_domain_params(country_code_t country, wifi_sub_band_set_t *sub_band, t_u8 nr_sb);
+
+
+#ifdef CONFIG_HEAP_DEBUG
+/**
+ * Show os mem alloc and free info.
+ *
+ * \return void.
+ */
+void wifi_show_os_mem_stat();
+#endif
+
+
 #endif

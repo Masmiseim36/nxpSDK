@@ -14,9 +14,9 @@
 //-----------------------------------------------------------------------
 // SDK Includes
 //-----------------------------------------------------------------------
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_debug_console.h"
 #include "math.h"
 #include "fsl_uart.h"
@@ -419,6 +419,7 @@ void FRM_Recorder_Init()
 int main(void)
 {
     int32_t status;
+    uint8_t whoami = 0;
     uint8_t regdata;
     float sensitivity = ACCEL_4G_SENS;
 
@@ -464,7 +465,7 @@ int main(void)
 
     /*! Initialize FXLS8962 sensor driver. */
     status = FXLS8962_I2C_Initialize(&fxls8962Driver, &I2C_S_DRIVER, I2C_S_DEVICE_INDEX, FXLS8962_I2C_ADDR,
-                                     FXLS8962_WHOAMI_VALUE);
+                                     &whoami);
     if (SENSOR_ERROR_NONE != status)
     {
         return status;
@@ -599,7 +600,7 @@ int main(void)
         {
             sensitivity = ACCEL_8G_SENS;
         }
-        else if ((regdata & FXLS8962_SENS_CONFIG1_FSR_MASK) == 8)
+        else if ((regdata & FXLS8962_SENS_CONFIG1_FSR_MASK) == 6)
         {
             sensitivity = ACCEL_16G_SENS;
         }

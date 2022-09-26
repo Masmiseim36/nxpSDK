@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -175,22 +175,24 @@ LVM_ControlParams_t ControlParamSet_internal = {
 };
 // @formatter:on
 
-static eap_att_code_t normalize_params();
-static eap_att_code_t set_control_params();
+static eap_att_code_t normalize_params(void);
+static eap_att_code_t set_control_params(void);
 static eap_att_code_t get_control_params(LVM_HeadroomParams_t *headroom, LVM_ControlParams_t *control);
-static eap_att_code_t update_wrapper();
+static eap_att_code_t update_wrapper(void);
 
 #endif /* EAP_PROC */
 
-static eap_att_code_t play_wrapper();
-static eap_att_code_t pause_wrapper();
-static eap_att_code_t resume_wrapper();
-static eap_att_code_t reset_wrapper();
-static eap_att_code_t stop_wrapper();
+static eap_att_code_t play_wrapper(void);
+static eap_att_code_t pause_wrapper(void);
+static eap_att_code_t resume_wrapper(void);
+static eap_att_code_t reset_wrapper(void);
+static eap_att_code_t stop_wrapper(void);
 static eap_att_code_t set_volume_wrapper(int value);
+static eap_att_code_t seek_wrapper(int32_t seek_time);
 
-static eap_att_code_t update();
-static eap_att_code_t set_volume();
+static eap_att_code_t update(void);
+static eap_att_code_t set_volume(int value);
+static eap_att_code_t seek(int32_t seek_time);
 
 static void progress(int current, int total);
 
@@ -210,8 +212,10 @@ eap_att_control_t att_control = {.attVersion      = 4,
                                  .progress        = &progress,
                                  .update          = &update,
                                  .set_volume      = &set_volume,
+                                 .seek            = &seek,
                                  .logme           = printf,
                                  .volume          = 75,
+                                 .seek_time       = 0,
 
 #if (defined EAP_PROC || defined EAP32_PROC)
                                  .controlParam     = &ControlParamSet_internal,
@@ -221,12 +225,12 @@ eap_att_control_t att_control = {.attVersion      = 4,
 #endif
 };
 
-eap_att_control_t *get_eap_att_control()
+eap_att_control_t *get_eap_att_control(void)
 {
     return &att_control;
 }
 
-void eap_att_process()
+void eap_att_process(void)
 {
 #if (defined EAP_PROC || defined EAP32_PROC)
     if (attProcessIterator++ == 0)
@@ -262,7 +266,7 @@ void eap_att_process()
                 }
                 if (att_control.lastError == kEapAttCodeOk)
                 {
-                    att_control.lastError = play_wrapper(att_control.input);
+                    att_control.lastError = play_wrapper();
                 }
             }
 
@@ -301,6 +305,16 @@ void eap_att_process()
             }
             break;
         }
+        case kAttCmdSeek:
+            if (att_control.status != kAttPaused)
+            {
+                att_control.logme("[EAP_ATT] First pause the track\r\n");
+            }
+            else
+            {
+                att_control.lastError = seek_wrapper(att_control.seek_time);
+            }
+            break;
 #if (defined EAP_PROC || defined EAP32_PROC)
         case kAttCmdSetConfig:
         {
@@ -326,7 +340,14 @@ void eap_att_process()
         }
         case kAttCmdVolume:
         {
-            att_control.lastError = set_volume_wrapper(att_control.volume);
+            if (att_control.status == kAttRunning || att_control.status == kAttPaused)
+            {
+                att_control.lastError = set_volume_wrapper(att_control.volume);
+            }
+            else
+            {
+                att_control.logme("[EAP_ATT] First, play an audio file.\r\n");
+            }
             break;
         }
         default:
@@ -357,59 +378,73 @@ static void progress(int current, int total)
 }
 
 /* wrap functions by safe invoker */
-static eap_att_code_t play_wrapper()
+static eap_att_code_t play_wrapper(void)
 {
-    if (att_control.play != 0)
+    if (att_control.play != NULL)
     {
         return (*att_control.play)();
     }
     return kEapAttCodeMissingHandler;
 }
 
-static eap_att_code_t pause_wrapper()
+static eap_att_code_t pause_wrapper(void)
 {
-    if (att_control.pause != 0)
+    if (att_control.pause != NULL)
     {
         return (*att_control.pause)();
     }
     return kEapAttCodeMissingHandler;
 }
 
-static eap_att_code_t resume_wrapper()
+static eap_att_code_t resume_wrapper(void)
 {
-    if (att_control.resume != 0)
+    if (att_control.resume != NULL)
     {
         return (*att_control.resume)();
     }
     return kEapAttCodeMissingHandler;
 }
 
-static eap_att_code_t reset_wrapper()
+static eap_att_code_t reset_wrapper(void)
 {
-    if (att_control.reset != 0)
+    if (att_control.reset != NULL)
     {
         return (*att_control.reset)();
     }
     return kEapAttCodeMissingHandler;
 }
 
-static eap_att_code_t stop_wrapper()
+static eap_att_code_t stop_wrapper(void)
 {
-    if (att_control.stop != 0)
+    if (att_control.stop != NULL)
     {
         return (*att_control.stop)();
     }
     return kEapAttCodeMissingHandler;
 }
 
-static eap_att_code_t update()
+static eap_att_code_t seek_wrapper(int32_t seek_time)
+{
+    if (att_control.seek != NULL)
+    {
+        return (*att_control.seek)(seek_time);
+    }
+    return kEapAttCodeMissingHandler;
+}
+
+eap_att_code_t seek(int32_t seek_time)
+{
+    return kEapAttCodeOk; // let implementation on user if needed
+}
+
+static eap_att_code_t update(void)
 {
     return kEapAttCodeOk; // let implementation on user if needed
 }
 
 static eap_att_code_t set_volume_wrapper(int volume)
 {
-    if (att_control.set_volume != 0)
+    if (att_control.set_volume != NULL)
     {
         return (*att_control.set_volume)(volume);
     }
@@ -423,9 +458,9 @@ eap_att_code_t set_volume(int value)
 
 #if (defined EAP_PROC || defined EAP32_PROC)
 
-static eap_att_code_t update_wrapper()
+static eap_att_code_t update_wrapper(void)
 {
-    if (att_control.update != 0)
+    if (att_control.update != NULL)
     {
         return (*att_control.update)();
     }
@@ -445,7 +480,7 @@ void eap_att_register_handle(LVM_Handle_t *handle)
     att_control.handle = handle;
 }
 
-static eap_att_code_t normalize_params()
+static eap_att_code_t normalize_params(void)
 {
     LVM_ControlParams_t *cp = att_control.controlParam;
 #ifdef ALGORITHM_EQNB
@@ -477,9 +512,9 @@ static eap_att_code_t normalize_params()
     return kEapAttCodeOk;
 }
 
-static eap_att_code_t normalize_params_wrapper()
+static eap_att_code_t normalize_params_wrapper(void)
 {
-    if (att_control.normalize_params != 0)
+    if (att_control.normalize_params != NULL)
     {
         return (*att_control.normalize_params)();
     }
@@ -487,7 +522,7 @@ static eap_att_code_t normalize_params_wrapper()
 }
 
 /* internal */
-static eap_att_code_t set_control_params()
+static eap_att_code_t set_control_params(void)
 {
     int status = LVM_SUCCESS;
 

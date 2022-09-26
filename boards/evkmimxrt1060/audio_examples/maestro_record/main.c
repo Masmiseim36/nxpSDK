@@ -29,8 +29,8 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SHELL_TASK_STACK_SIZE  (1024)
-#define SDCARD_TASK_STACK_SIZE (512)
+#define APP_SHELL_TASK_STACK_SIZE (1024)
+#define SDCARD_TASK_STACK_SIZE    (512)
 
 /*******************************************************************************
  * Prototypes
@@ -175,10 +175,9 @@ void APP_Shell_Task(void *param)
 
     /* Handle shell commands. */
     shellCmd();
-
+    vTaskSuspend(NULL);
     while (1)
         ;
-    ;
 }
 
 int main(void)
@@ -234,7 +233,7 @@ int main(void)
     }
 
     /* Set shell command task priority = 1 */
-    if (xTaskCreate(APP_Shell_Task, "Shell Task", SHELL_TASK_STACK_SIZE, &app, configMAX_PRIORITIES - 5,
+    if (xTaskCreate(APP_Shell_Task, "Shell Task", APP_SHELL_TASK_STACK_SIZE, &app, configMAX_PRIORITIES - 5,
                     &app.shell_task_handle) != pdPASS)
     {
         PRINTF("\r\nFailed to create application task\r\n");

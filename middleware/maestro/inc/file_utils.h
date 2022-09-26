@@ -95,6 +95,12 @@
  */
 #define FILE_CREAT 0x10u
 
+/**
+ * @brief File access mode create and truncates it to 0.
+ *
+ */
+#define FILE_TRUNC 0x20u
+
 /*!
  * @ingroup utils
  * @brief file_open

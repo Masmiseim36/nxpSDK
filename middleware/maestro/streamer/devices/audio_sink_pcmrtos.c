@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2021 NXP.
+ * Copyright 2018-2022 NXP.
  * This software is owned or controlled by NXP and may only be used strictly in accordance with the
  * license terms that accompany it. By expressly accepting such terms or by downloading, installing,
  * activating and/or otherwise using the software, you are agreeing that you have read, and that you
@@ -129,7 +129,6 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
     int8_t *buffer_ptr   = NULL;
     uint32_t buffer_size = 0;
     int ret;
-    int alloc_size;
 
     STREAMER_FUNC_ENTER(DBG_AUDIO_SINK);
 
@@ -162,7 +161,7 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
 
     if (audio_sink_ptr->last_time_sample_rate != AUDIO_SAMPLE_RATE(data_packet) ||
         audio_sink_ptr->last_num_channels != AUDIO_NUM_CHANNELS(data_packet) ||
-        audio_sink_ptr->last_chunk_size != AUDIO_CHUNK_SIZE(data_packet))
+        dev_info->alloc_size < AUDIO_CHUNK_SIZE(data_packet))
     {
         dev_info->init_params_done = false;
 
@@ -180,11 +179,6 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
             return FLOW_UNEXPECTED;
         }
 
-        alloc_size = audio_sink_ptr->chunk_size;
-        if (alloc_size < MIN_AUDIO_BUFFER_SIZE)
-        {
-            alloc_size = MIN_AUDIO_BUFFER_SIZE;
-        }
         /* Allocate audio data buffers. */
         for (int i = 0; i < AUDIO_SINK_BUFFER_NUM; i++)
         {
@@ -192,11 +186,15 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
             {
                 OSA_MemoryFree(dev_info->unaligned_buf[i]);
                 dev_info->unaligned_buf[i] = NULL;
+                dev_info->alloc_size       = 0;
             }
 
-            dev_info->unaligned_buf[i] = OSA_MemoryAllocate(alloc_size + SIZE_ALIGNMENT);
+            dev_info->alloc_size = (audio_sink_ptr->chunk_size < MIN_AUDIO_BUFFER_SIZE) ? MIN_AUDIO_BUFFER_SIZE :
+                                                                                          audio_sink_ptr->chunk_size;
+
+            dev_info->unaligned_buf[i] = (char *)OSA_MemoryAllocate((uint32_t)(dev_info->alloc_size + SIZE_ALIGNMENT));
             dev_info->audbuf[i]        = (char *)MEM_ALIGN(dev_info->unaligned_buf[i], SIZE_ALIGNMENT);
-            if (!dev_info->audbuf[i])
+            if (dev_info->audbuf[i] == NULL)
             {
                 STREAMER_LOG_ERR(DBG_AUDIO_SINK, ERRCODE_OUT_OF_MEMORY, "[PCMRTOS Sink] Audio buffer malloc failed \n");
                 return FLOW_NO_MEMORY;
@@ -213,23 +211,26 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
         dev_info->input_index = 0;
     }
 
-    /* Copy data directly into the audio buffer. */
-    memcpy(dev_info->audbuf[dev_info->input_index], buffer_ptr, buffer_size);
-    dev_info->input_size = buffer_size;
-
-    /* Write to PCM output driver. */
-    ret = streamer_pcm_write(dev_info->pcm_handle, (uint8_t *)dev_info->audbuf[dev_info->input_index],
-                             dev_info->input_size);
-    if (ret != 0)
+    if (buffer_size > 0U)
     {
-        STREAMER_LOG_ERR(DBG_AUDIO_SINK, ERRCODE_BUSY, "[PCMRTOS Sink] failed to write PCM data\n");
-        STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
-        return FLOW_ERROR;
-    }
+        /* Copy data directly into the audio buffer. */
+        memcpy(dev_info->audbuf[dev_info->input_index], buffer_ptr, buffer_size);
+        dev_info->input_size = buffer_size;
 
-    /* Move to the next PCM storage buffer for the next chunk. */
-    dev_info->input_size  = 0;
-    dev_info->input_index = (dev_info->input_index + 1) % AUDIO_SINK_BUFFER_NUM;
+        /* Write to PCM output driver. */
+        ret = streamer_pcm_write(dev_info->pcm_handle, (uint8_t *)dev_info->audbuf[dev_info->input_index],
+                                 dev_info->input_size);
+        if (ret != 0)
+        {
+            STREAMER_LOG_ERR(DBG_AUDIO_SINK, ERRCODE_BUSY, "[PCMRTOS Sink] failed to write PCM data\n");
+            STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
+            return FLOW_ERROR;
+        }
+
+        /* Move to the next PCM storage buffer for the next chunk. */
+        dev_info->input_size  = 0;
+        dev_info->input_index = (dev_info->input_index + 1) % AUDIO_SINK_BUFFER_NUM;
+    }
 
     audio_sink_ptr->last_time_sample_rate = AUDIO_SAMPLE_RATE(data_packet);
     audio_sink_ptr->last_num_channels     = AUDIO_NUM_CHANNELS(data_packet);
@@ -299,6 +300,7 @@ AudioSinkStreamErrorType audiosink_pcmrtos_start_device(ElementAudioSink *audio_
     }
 
     /* fopen() device */
+    dev_info->alloc_size = 0;
     dev_info->pcm_handle = streamer_pcm_open(AUDIO_SINK_BUFFER_NUM);
     if (!dev_info->pcm_handle)
     {
@@ -335,6 +337,7 @@ AudioSinkStreamErrorType audiosink_pcmrtos_stop_device(ElementAudioSink *audio_s
         {
             OSA_MemoryFree(dev_info->unaligned_buf[i]);
             dev_info->unaligned_buf[i] = NULL;
+            dev_info->alloc_size       = 0;
         }
     }
 
@@ -395,6 +398,13 @@ AudioSinkStreamErrorType audiosink_pcmrtos_set_volume(ElementAudioSink *audio_si
     PCMSinkDeviceInfo *dev_info;
 
     STREAMER_FUNC_ENTER(DBG_AUDIO_SINK);
+
+    if (volume < 0)
+    {
+        audio_sink_ptr->error_element = AUDIO_SINK_FAILED;
+        STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
+        return AUDIO_SINK_ERROR_INVALID_ARGS;
+    }
 
     audio_sink_ptr->volume = volume;
 

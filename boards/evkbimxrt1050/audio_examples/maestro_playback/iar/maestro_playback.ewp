@@ -230,10 +230,14 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>OGG_OPUS_DEC=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>OSA_USED</state>
+          <state>SHELL_TASK_STACK_SIZE=4000</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
+          <state>SAI_XFER_QUEUE_SIZE=2</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>HAVE_CONFIG_H</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -798,7 +802,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
-          <state>__heap_size__=0x2500</state>
+          <state>__heap_size__=0x3000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>
@@ -1374,10 +1378,14 @@
           <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>PRINTF_FLOAT_ENABLE=1</state>
           <state>OGG_OPUS_DEC=1</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>OSA_USED</state>
+          <state>SHELL_TASK_STACK_SIZE=4000</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
+          <state>SAI_XFER_QUEUE_SIZE=2</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>HAVE_CONFIG_H</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -1942,7 +1950,7 @@
         <option>
           <name>IlinkConfigDefines</name>
           <state>__stack_size__=0x1000</state>
-          <state>__heap_size__=0x2500</state>
+          <state>__heap_size__=0x3000</state>
         </option>
         <option>
           <name>IlinkMapFile</name>

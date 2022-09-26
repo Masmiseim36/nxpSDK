@@ -214,6 +214,13 @@ int32_t file_open(const char *pathname, uint32_t mode)
         get_fd(fd)->dirty = 1;
 #endif
     }
+    if (mode & FILE_TRUNC)
+    {
+        fatfs_mode |= FA_CREATE_ALWAYS;
+#ifdef FILE_UTILS_SEMI_CACHE
+        get_fd(fd)->dirty = 1;
+#endif
+    }
     FRESULT ret = f_open(&get_fd(fd)->file_struct.fatfs_file, pathname, fatfs_mode);
     if (ret != FR_OK)
     {

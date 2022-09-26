@@ -209,7 +209,6 @@ error:
 #ifdef OPUS_ENCODE
 static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
-    void *inBuf                   = NULL;
     void *outBuf                  = NULL;
     MEMSRC_SET_BUFFER_T inBufInfo = {0};
     SET_BUFFER_DESC_T outBufInfo  = {0};
@@ -224,14 +223,6 @@ static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, 
 
     PRINTF("Allocating buffers...\r\n");
 
-    inBuf = OSA_MemoryAllocate(OPUSMEM2MEM_INBUF_SIZE);
-    if (inBuf == NULL)
-    {
-        PRINTF("Inbuf allocation failed\r\n");
-        goto error;
-    }
-    memcpy(inBuf, &OPUSMEM2MEM_INBUF_CONTENT, OPUSMEM2MEM_INBUF_SIZE);
-
     outBuf = OSA_MemoryAllocate(OPUSMEM2MEM_OUTBUF_SIZE);
     if (outBuf == NULL)
     {
@@ -240,7 +231,7 @@ static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, 
     }
     memset(outBuf, 0, OPUSMEM2MEM_OUTBUF_SIZE);
 
-    inBufInfo  = (MEMSRC_SET_BUFFER_T){.location = (int8_t *)inBuf, .size = OPUSMEM2MEM_INBUF_SIZE};
+    inBufInfo = (MEMSRC_SET_BUFFER_T){.location = (int8_t *)&OPUSMEM2MEM_INBUF_CONTENT, .size = OPUSMEM2MEM_INBUF_SIZE};
     outBufInfo = (SET_BUFFER_DESC_T){.ptr = (int8_t *)outBuf, .size = OPUSMEM2MEM_OUTBUF_SIZE};
 
     PRINTF("Initializing streamer...\r\n");
@@ -294,8 +285,11 @@ static shell_status_t shellOpusEncode(shell_handle_t shellHandle, int32_t argc, 
 
 error:
     PRINTF("Cleanup\r\n");
-    OSA_MemoryFree(inBuf);
-    OSA_MemoryFree(outBuf);
+    if (outBuf != NULL)
+    {
+        OSA_MemoryFree(outBuf);
+        outBuf = NULL;
+    }
 
     if (streamerInitialized)
     {

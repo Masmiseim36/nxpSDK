@@ -4,7 +4,7 @@
 /*            MIMXRT1061                                                     */
 /*  @version: 1.4                                                            */
 /*  @date:    2022-3-25                                                      */
-/*  @build:   b220401                                                        */
+/*  @build:   b220425                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
@@ -281,7 +281,7 @@ __isr_vector:
     .long   DefaultISR                                      /* 254*/
     .long   0xFFFFFFFF                                      /*  Reserved for user TRIM value*/
 
-    .size    __isr_vector, . - __isr_vector
+    .size   __isr_vector, . - __isr_vector
 
     .text
     .thumb
@@ -960,7 +960,6 @@ FLEXIO3_IRQHandler:
     .weak \handler_name
     .set  \handler_name, DefaultISR
     .endm
-
 /* Exception Handlers */
     def_irq_handler    MemManage_Handler
     def_irq_handler    BusFault_Handler

@@ -1,0 +1,920 @@
+$version 10.00
+
+// This is the root component of the entire GUI application.
+$rect <20,20,220,60>
+$output false
+class Accelerator : Core::Group
+{
+  $rect <700,240,900,280>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <700,200,900,240>
+  inherited method UpdateLayout()
+  {
+    aSize;
+
+    signal NextScene;
+
+  }
+
+  $rect <500,200,700,240>
+  inherited method Init()
+  {
+    /* switch for graphics accelerator is only shown if hardware provides acceleration */
+    AccelDescr.Visible = GraphicsSystem::IsAcceleratorAvailable;
+    ToggleButton.Visible = GraphicsSystem::IsAcceleratorAvailable;
+
+    /* value for CPU usage is only shown if system provides CPU usage measurement */
+    CpuDescr.Visible = GraphicsSystem::IsCpuUsageAvailable;
+    CpuText.Visible = GraphicsSystem::IsCpuUsageAvailable;
+
+    Focus = PushButton;
+
+  }
+
+  // This is the Application class of the GraphicsAccelerator example.
+  //
+  // The intention of this example is to demonstrate the graphics performance. For \
+  // this purpose, a set of basic drawing operations are executed permanently and \
+  // continuously: As a result, an endless stream of drawing instructions is produced...
+  // In case that the graphics hardware provides a graphics accelerator, it can be \
+  // switched on/off to demonstrate the advantage of a graphics accelerator.
+  //
+  // The entire processing of this drawing operations is implemented within the class \
+  // @GraphicsFactory.
+  //
+  // The Accelerator class, just uses and configures this @GraphicsFactory. On the \
+  // right and bottom area, a couple of control elements and text items are placed \
+  // in order to receive user inputs and to display the current measurements and \
+  // states.
+  // The user can choose the current graphics operation and switch on/off the usage \
+  // of the graphics acclerator (if available).
+  //
+  // To run the application within the Prototyper, press 'F5'.
+  note legend Note1
+  {
+    attr Bounds = <10,350,900,590>;
+  }
+
+  // This is a filled rectangle view.
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,480,272>;
+    preset Color = #080820FF;
+  }
+
+  $rect <20,20,160,60>
+  object Accelerator::GraphicsFactory GraphicsFactory
+  {
+    preset Bounds = <0,40,360,272>;
+  }
+
+  // This is a timer object.
+  $rect <500,10,700,50>
+  object Core::Timer PerformanceTimer
+  {
+    preset OnTrigger = PerformanceSlot;
+    preset Enabled = true;
+  }
+
+  $rect <700,10,900,50>
+  slot PerformanceSlot
+  {
+    var int32 cpu = GraphicsSystem.GetCpuLoad();
+
+    if ( GetRoot() != null )
+      FpsText.String = string(GetRoot().GetFPS()) + " fps";
+
+    if (( cpu >= 0 ) && ( cpu <= 100 ))
+    {
+      CpuText.String = string( cpu ) + " %%";
+
+      var color c = color( (uint8)( cpu * 255 / 100 ), (uint8)( (100 - cpu ) * 255 / 100 ), 0x00, 0xFF );
+      CpuText.Color = c;
+
+    }
+    else
+    {
+      CpuText.String = "-";
+      CpuText.Color = #FFFFFFFF;
+    }
+
+
+  }
+
+  $rect <500,140,700,180>
+  slot NextScene
+  {
+    sender; /* the method is called from the sender object */
+
+    var int32 scene = currentScene + 1;
+
+    /* try to change to the next scene */
+    while( scene != currentScene )
+    {
+      if ( ChangeScene( scene ))
+        currentScene = scene;
+      else
+        scene = scene + 1;
+      if ( scene > 6 )
+        scene = 0;
+    }
+
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text FpsDescr
+  {
+    preset Bounds = <375,5,475,25>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Framerate";
+    preset Font = Accelerator::FontSmall;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text FpsText
+  {
+    preset Bounds = <370,25,470,65>;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "0 fps";
+    preset Font = Accelerator::FontLarge;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text CpuDescr
+  {
+    preset Bounds = <375,65,475,85>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "CPU Load";
+    preset Font = Accelerator::FontSmall;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text CpuText
+  {
+    preset Bounds = <370,85,470,125>;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "0 %%";
+    preset Font = Accelerator::FontLarge;
+    preset Color = #FFFFFFFF;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text ScenDescr
+  {
+    preset Bounds = <375,200,475,220>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Scenario";
+    preset Font = Accelerator::FontSmall;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text AccelDescr
+  {
+    preset Bounds = <375,120,470,160>;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Graphics Accelerator";
+    preset Font = Accelerator::FontSmall;
+  }
+
+  // This is an ordinary text view.
+  $rect <20,20,160,60>
+  object Views::Text ScenarioText
+  {
+    preset Bounds = <10,0,310,36>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Alpha8 Blend";
+    preset Font = Accelerator::FontMedium;
+  }
+
+  // Method to select given test case. It the test case is not supported, the method \
+  // returns false - otherwise true.
+  $rect <700,140,900,180>
+  method bool ChangeScene( arg int32 aIndex )
+  {
+    var Accelerator::GraphicsType type = Accelerator::GraphicsType.Alpha8Bmp;
+    var int32 count = 0;
+
+    /* check the limits */
+    if (( aIndex < 0 ) || ( aIndex > 6 ))
+      return false;
+
+    switch ( aIndex )
+    {
+      case 0:
+      {
+        count = NoOfRectFill;
+        if ( count <= 0 )
+          return false;
+        type = Accelerator::GraphicsType.RectFill;
+        ScenarioText.String = "Rectangle Fill";
+      }
+      case 1:
+      {
+        count = NoOfRectBlend;
+        if ( count <= 0 )
+          return false;
+        type = Accelerator::GraphicsType.RectBlend;
+        ScenarioText.String = "Rectangle Blend";
+      }
+      case 2:
+      {
+        count = NoOfRGB565Bmp;
+        if ( count <= 0 )
+          return false;
+        type = Accelerator::GraphicsType.RGB565Bmp;
+        ScenarioText.String = "RGB565 Bitmap";
+      }
+      case 3:
+      {
+        count = NoOfNativeBmp;
+        if ( count <= 0 )
+          return false;
+        type = Accelerator::GraphicsType.NativeBmp;
+        ScenarioText.String = "Native Bitmap";
+      }
+      case 4:
+      {
+        count = NoOfRGB565BmpOpacity;
+        if ( count <= 0 )
+          return false;
+        type = Accelerator::GraphicsType.RGB565BmpOpacity;
+        ScenarioText.String = "RGB565 Bitmap + Opacity";
+      }
+      case 5:
+      {
+        count = NoOfNativeBmpOpacity;
+        if ( count <= 0 )
+          return false;
+        type = Accelerator::GraphicsType.NativeBmpOpacity;
+        ScenarioText.String = "Native Bitmap + Opacity";
+      }
+      default:
+      {
+        count = NoOfAlpha8Bmp;
+        if ( count <= 0 )
+          return false;
+        type = Accelerator::GraphicsType.Alpha8Bmp;
+        ScenarioText.String = "Alpha8 Bitmap";
+      }
+    }
+
+    /* change the type of the graphics widget and the requested number of items */
+    GraphicsFactory.TypeOfItems = type;
+    GraphicsFactory.NoOfItems = count;
+
+    return true;
+
+
+  }
+
+  $rect <20,20,160,60>
+  object WidgetSet::PushButton PushButton
+  {
+    preset Bounds = <370,225,470,265>;
+    preset OnActivate = NextScene;
+    preset Label = "Next";
+    preset Appearance = WidgetSet::PushButton_Medium;
+  }
+
+  // Timer object to drive the auto demo mode.
+  $rect <500,290,700,330>
+  object Core::Timer AutoDemoTimer
+  {
+    preset OnTrigger = NextScene;
+    preset Period = 5000;
+    preset Begin = 0;
+  }
+
+  // Property to define the number of objects for this drawing operation.
+  $rect <900,10,1100,50>
+  property int32 NoOfRectFill = 16;
+
+  // Property to define the number of objects for this drawing operation.
+  $rect <900,50,1100,90>
+  property int32 NoOfRectBlend = 8;
+
+  // Property to define the number of objects for this drawing operation.
+  $rect <900,90,1100,130>
+  property int32 NoOfRGB565Bmp = 8;
+
+  // Property to define the number of objects for this drawing operation.
+  $rect <900,130,1100,170>
+  property int32 NoOfNativeBmp = 8;
+
+  // Property to define the number of objects for this drawing operation.
+  $rect <900,170,1100,210>
+  property int32 NoOfRGB565BmpOpacity = 8;
+
+  // Property to define the number of objects for this drawing operation.
+  $rect <900,210,1100,250>
+  property int32 NoOfNativeBmpOpacity = 8;
+
+  // Property to define the number of objects for this drawing operation.
+  $rect <900,250,1100,290>
+  property int32 NoOfAlpha8Bmp = 8;
+
+  $rect <500,240,700,280>
+  var GraphicsSystem::DeviceClass GraphicsSystem = GraphicsSystem::Device;
+
+  $rect <20,20,160,60>
+  object WidgetSet::ToggleButton ToggleButton
+  {
+    preset Bounds = <385,150,455,210>;
+    preset Outlet = ^GraphicsSystem::Device.AcceleratorActive;
+    preset Label = "";
+    preset Appearance = WidgetSet::Switch_Medium;
+  }
+
+  $rect <500,100,700,140>
+  var int32 currentScene = 5;
+}
+
+// Font resource for large font - used for the caption text items.
+$rect <230,20,430,60>
+$output false
+resource Resources::Font FontLarge
+{
+  attr fontname FontName = Roboto;
+  attr fontheight Height = 36;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// Bitmap resource for the Embedded Wizard logo.
+$rect <450,20,650,60>
+$output false
+resource Resources::Bitmap Logo
+{
+  attr bitmapfile FileName = .\Res\EmWiLogo.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Alpha8;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Font resource for small font - used for the description text items.
+$rect <230,100,430,140>
+$output false
+resource Resources::Font FontSmall
+{
+  attr fontname FontName = Roboto;
+  attr fontheight Height = 16;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
+
+// This is the unit 'Accelerator' of the GraphicsAccelerator example.
+//
+// The unit contains the class 'Accelerator' that implements the appearance and the \
+// behavior of the entire UI application.
+// The class 'GraphicsFactory' is used by the application in order to generate drawing \
+// instructions / animations in an endless manner.
+//
+// Furthermore, the unit contains all the necessary resources for the sample: Three \
+// different font resources and a couple of bitmap resource.
+note legend Note1
+{
+  attr Bounds = <10,320,860,440>;
+}
+
+// The class 'GraphicsFactory' implements a component that draws a couple of graphics \
+// objects.
+$rect <20,110,220,150>
+$output false
+class GraphicsFactory : Core::Group
+{
+  $rect <10,260,210,300>
+  inherited method Draw()
+  {
+    var int32 inx = 0;
+
+    /* draw embedded components, like background rectangle (if any) */
+    super( aCanvas, aClip, aOffset, aOpacity, aBlend );
+
+    aOffset = aOffset + Bounds.origin;
+
+    while ( inx < 64 )
+    {
+      var Resources::Bitmap bmp;
+      var point pos = Position[ inx ] + aOffset;
+      var point size = Size[ inx ];
+      var color col = Color[ inx ];
+
+      if ( Position[ inx ].y <= Bounds.h )
+      {
+        switch( Type[ inx ])
+        {
+          case Accelerator::GraphicsType.RectFill:
+          {
+            aCanvas.FillRectangle( aClip, rect( pos, pos + size ), col, col, col, col, aBlend );
+          }
+          case Accelerator::GraphicsType.RectBlend:
+          {
+            aCanvas.FillRectangle( aClip, rect( pos, pos + size ), col, col, col, col, aBlend );
+          }
+          case Accelerator::GraphicsType.RGB565Bmp:
+          {
+            bmp = RGB565Images[ inx % RGB565Images.size ];
+            aCanvas.CopyBitmap( aClip, bmp, 0, rect( pos, pos + size ), <0,0>, col, col, col, col, aBlend );
+          }
+          case Accelerator::GraphicsType.NativeBmp:
+          {
+            bmp = NativeImages[ inx % NativeImages.size ];
+            aCanvas.CopyBitmap( aClip, bmp, 0, rect( pos, pos + size ), <0,0>, col, col, col, col, aBlend );
+          }
+          case Accelerator::GraphicsType.RGB565BmpOpacity:
+          {
+            bmp = RGB565Images[ inx % RGB565Images.size ];
+            aCanvas.CopyBitmap( aClip, bmp, 0, rect( pos, pos + size ), <0,0>, col, col, col, col, aBlend );
+          }
+          case Accelerator::GraphicsType.NativeBmpOpacity:
+          {
+            bmp = NativeImages[ inx % NativeImages.size ];
+            aCanvas.CopyBitmap( aClip, bmp, 0, rect( pos, pos + size ), <0,0>, col, col, col, col, aBlend );
+          }
+          case Accelerator::GraphicsType.Alpha8Bmp:
+          {
+            bmp = EmWiLogo;
+            aCanvas.CopyBitmap( aClip, bmp, 0, rect( pos, pos + size ), <0,0>, col, col, col, col, aBlend );
+          }
+          default:
+            ;
+        }
+      }
+
+      /* next item */
+      inx = inx + 1;
+    }
+
+    idlesignal TriggerNextRedraw;
+  }
+
+  $rect <430,200,630,240>
+  inherited property Bounds = <0,0,400,240>;
+
+  $rect <10,310,210,350>
+  inherited method UpdateLayout()
+  {
+    aSize;
+    var int32 inx;
+
+    /* initialize the necessary number of members */
+    for ( inx = 0; inx < NoOfItems; inx = inx + 1 )
+    {
+      RandomizeItem( inx );
+
+      /* modify positions to get a good start apperance */
+      Position[ inx ].y = math_rand( 0, Bounds.h - Size[ inx ].y );
+
+    }
+
+    idlesignal TriggerNextRedraw;
+  }
+
+  // Array to store the position of the graphics objects.
+  $rect <430,260,630,300>
+  array point Position[ 64 ];
+
+  // The property 'NoOfItems' determines the number of graphical objects drawn within \
+  // this component.
+  $rect <430,10,630,50>
+  property int32 NoOfItems = 1;
+
+  $rect <430,50,630,90>
+  onset NoOfItems
+  {
+    var int32 inx;
+
+    /* check limits */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 64 )
+      value = 64;
+
+    /* check for update */
+    if ( pure NoOfItems == value )
+      return;
+
+    /* create random values if the number of items increases */
+    for( inx = pure NoOfItems; inx < value; inx = inx + 1 )
+      RandomizeItem( inx );
+
+    /* finally, store the new value */
+    pure NoOfItems = value;
+
+  }
+
+  // Slot method to invalidate the entire component. This slot method should be triggered \
+  // only by using 'idelsignal' in order to ensure that the invalidation happens \
+  // after the next screen update.
+  $rect <10,410,210,450>
+  slot TriggerNextRedraw
+  {
+    InvalidateArea( Bounds.orect );
+
+    var int32 inx = 0;
+
+    while ( inx < 64 )
+    {
+      var point size = Size[ inx ];
+
+      if ( Position[ inx ].y <= Bounds.h )
+      {
+        /* modify position and attributes */
+        Position[ inx ] = Position[ inx ] + DeltaPos[ inx ];
+
+        /* check if item is out of bounds on left or right side */
+        if (( Position[ inx ].x + size.x < 0 ) || ( Position[ inx ].x > Bounds.w ))
+          Position[ inx ].y = Bounds.h + 1;
+      }
+
+      /* if object has moved outside, calculate a new set of values */
+      if (( Position[ inx ].y > Bounds.h ) && ( inx < pure NoOfItems ))
+        RandomizeItem( inx );
+
+      /* adjust opacity */
+      if (( TypeOfItems == Accelerator::GraphicsType.RGB565BmpOpacity ) || ( TypeOfItems == Accelerator::GraphicsType.NativeBmpOpacity ))
+      {
+        var int32 alpha = Color[ inx ].alpha + DeltaAlpha[ inx ];
+        /* check limits and change direction from fade in to fade out */
+        if ( alpha > 0xFF )
+        {
+          alpha = 0xFF;
+          DeltaAlpha[ inx ] = -DeltaAlpha[ inx ];
+        }
+        if ( alpha < 0x00 )
+        {
+          alpha = 0x00;
+          DeltaAlpha[ inx ] = -DeltaAlpha[ inx ];
+        }
+        Color[ inx ].alpha = (uint8)alpha;
+      }
+
+      /* next item */
+      inx = inx + 1;
+    }
+
+  }
+
+  // Array to store the movement of the graphics objects.
+  $rect <430,300,630,340>
+  array point DeltaPos[ 64 ];
+
+  // Array to store the color of the graphics objects.
+  $rect <430,380,630,420>
+  array color Color[ 64 ];
+
+  // The method 'RandomizeItem' calculates random values for the graphics object \
+  // with the given index.
+  $rect <10,360,210,400>
+  method void RandomizeItem( arg int32 aIndex )
+  {
+    var point size;
+
+    switch ( TypeOfItems )
+    {
+      case Accelerator::GraphicsType.RectFill:
+      {
+        /* calculate a random size for the rectangle */
+        size = point( math_rand( Bounds.w / 3, 2 * Bounds.w / 3), math_rand( Bounds.h / 3, 2 * Bounds.h / 3 ));
+
+        Position[ aIndex ] = point( math_rand( 0, Bounds.w - size.x ), -size.y );
+        Size[ aIndex ]     = size;
+        Color[ aIndex ]    = color( (uint8)math_rand( 0, 255), (uint8)math_rand( 0, 255), (uint8)math_rand( 0, 255), 0xFF );
+      }
+      case Accelerator::GraphicsType.RectBlend:
+      {
+        /* calculate a random size for the rectangle */
+        size = point( math_rand( Bounds.w / 3, 2 * Bounds.w / 3), math_rand( Bounds.h / 3, 2 * Bounds.h / 3 ));
+
+        Position[ aIndex ] = point( math_rand( 0, Bounds.w - size.x ), -size.y );
+        Size[ aIndex ]     = size;
+        Color[ aIndex ]    = color( (uint8)math_rand( 0, 255), (uint8)math_rand( 0, 255), (uint8)math_rand( 0, 255), 0xAA );
+      }
+      case Accelerator::GraphicsType.RGB565Bmp:
+      {
+        /* take the size of the first image (it is assumed that all images have the same size) */
+        size = RGB565Images[ 0 ].FrameSize;
+
+        Position[ aIndex ] = point( math_rand( 0, Bounds.w - size.x ), -size.y );
+        Size[ aIndex ]     = size;
+        Color[ aIndex ]    = #FFFFFFFF;
+      }
+      case Accelerator::GraphicsType.NativeBmp:
+      {
+        /* take the size of the first image (it is assumed that all images have the same size) */
+        size = NativeImages[ 0 ].FrameSize;
+
+        Position[ aIndex ] = point( math_rand( 0, Bounds.w - size.x ), -size.y );
+        Size[ aIndex ]     = size;
+        Color[ aIndex ]    = #FFFFFFFF;
+      }
+      case Accelerator::GraphicsType.RGB565BmpOpacity:
+      {
+        /* take the size of the first image (it is assumed that all images have the same size) */
+        size = RGB565Images[ 0 ].FrameSize;
+
+        Position[ aIndex ]   = point( math_rand( 0, Bounds.w - size.x ), -size.y );
+        Size[ aIndex ]       = size;
+        Color[ aIndex ]      = color( 0xFF, 0xFF, 0xFF, (uint8)math_rand( 0, 255 ));
+        DeltaAlpha[ aIndex ] = (int8)math_rand( -5, 5 );  
+      }
+      case Accelerator::GraphicsType.NativeBmpOpacity:
+      {
+        /* take the size of the first image (it is assumed that all images have the same size) */
+        size = NativeImages[ 0 ].FrameSize;
+
+        Position[ aIndex ]   = point( math_rand( 0, Bounds.w - size.x ), -size.y );
+        Size[ aIndex ]       = size;
+        Color[ aIndex ]      = color( 0xFF, 0xFF, 0xFF, (uint8)math_rand( 0, 255 ));
+        DeltaAlpha[ aIndex ] = (int8)math_rand( -5, 5 );  
+      }
+      case Accelerator::GraphicsType.Alpha8Bmp:
+      {
+        /* take the size of the logo image */
+        size = EmWiLogo.FrameSize;
+
+        Position[ aIndex ] = point( math_rand( 0, Bounds.w - size.x ), -size.y );
+        Size[ aIndex ]     = size;
+        Color[ aIndex ]    = color( (uint8)math_rand( 0, 255 ), (uint8)math_rand( 0, 255 ), (uint8)math_rand( 0, 255 ), 0xAA );
+      }
+      default:
+        ;
+    }
+
+    /* calculate the movement of the object */
+    DeltaPos[ aIndex ] = point( math_rand( -2, 2 ), math_rand( 1 , Bounds.h / 40 ));
+
+    /* store the type of object */
+    Type[ aIndex ] = TypeOfItems;
+
+
+  }
+
+  // The property 'TypeOfItems' determines the kind of all new graphical objects \
+  // drawn within this component.
+  $rect <430,110,630,150>
+  property Accelerator::GraphicsType TypeOfItems = Accelerator::GraphicsType.Alpha8Bmp;
+
+  // Array to store the size of the graphics objects.
+  $rect <430,340,630,380>
+  array point Size[ 64 ];
+
+  // Array to store all bitmap resources used for the bitmap blending operation.
+  $rect <220,260,420,300>
+  array Resources::Bitmap NativeImages[ 7 ] =
+  (
+    Default[0] = Accelerator::ImgBlend1;
+    Default[1] = Accelerator::ImgBlend2;
+    Default[2] = Accelerator::ImgBlend3;
+    Default[3] = Accelerator::ImgBlend4;
+    Default[4] = Accelerator::ImgBlend5;
+    Default[5] = Accelerator::ImgBlend6;
+    Default[6] = Accelerator::ImgBlend7;
+  );
+
+  // Array to store all bitmap resources used for the bitmap copy operation.
+  $rect <220,300,420,340>
+  array Resources::Bitmap RGB565Images[ 5 ] =
+  (
+    Default[0] = Accelerator::ImgCopy1;
+    Default[1] = Accelerator::ImgCopy2;
+    Default[2] = Accelerator::ImgCopy3;
+    Default[3] = Accelerator::ImgCopy4;
+    Default[4] = Accelerator::ImgCopy5;
+  );
+
+  // Array to store the type of the graphics objects.
+  $rect <430,420,630,460>
+  array Accelerator::GraphicsType Type[ 64 ];
+
+  $rect <220,340,420,380>
+  var Resources::Bitmap EmWiLogo = Accelerator::Logo;
+
+  // The class 'GraphicsFactory' implements a component that draws a couple of graphics \
+  // objects.
+  // The parameters of the graphics objects are stored within a set of arrays for \
+  // position, size, movement, color and size.
+  // Each time, the component has to be drawn, the method Draw() is called from the \
+  // Mosaic framework. Within this overridden method, all graphics objects are painted \
+  // by using their individual settings.
+  // This approach makes it very easy to implement such a graphics factory, instead \
+  // of using many different Views objects.
+  //
+  // As soon as the component is drawn, a signal is sent to TriggerNextRedraw() which \
+  // forces an update of the entire component. This slot method is triggered by using \
+  // 'idelsignal' in order to ensure that the invalidation happens after the next \
+  // screen update.
+  //
+  // The class 'GraphicsFactory' does not depend on a certain size - all graphics \
+  // objects are arranged depending on the current size of the component. The 'GraphicsFactory' \
+  // can be configured by using the properties 'NoOfItems' and 'TypeOfItems'.
+  note legend Note
+  {
+    attr Bounds = <660,10,1070,440>;
+  }
+
+  // Array to store the opacity change of the graphics objects.
+  $rect <430,460,630,500>
+  array int8 DeltaAlpha[ 64 ];
+}
+
+// Enumeration of all graphics objects supported by @GraphicsFactory.
+$rect <20,160,220,200>
+$output false
+enum GraphicsType
+{
+  $rect <10,10,210,50>
+  item RectFill;
+
+  $rect <220,10,420,50>
+  item RectBlend;
+
+  $rect <10,60,210,100>
+  item RGB565Bmp;
+
+  $rect <220,60,420,100>
+  item RGB565BmpOpacity;
+
+  $rect <10,110,210,150>
+  item NativeBmp;
+
+  $rect <220,110,420,150>
+  item NativeBmpOpacity;
+
+  $rect <10,160,210,200>
+  item Alpha8Bmp;
+}
+
+// Bitmap resource for small photo images.
+$rect <670,20,870,60>
+$output false
+resource Resources::Bitmap ImgBlend1
+{
+  attr bitmapfile FileName = .\Res\Tomato.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <670,60,870,100>
+$output false
+resource Resources::Bitmap ImgBlend2
+{
+  attr bitmapfile FileName = .\Res\Pretzel.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <670,100,870,140>
+$output false
+resource Resources::Bitmap ImgBlend3
+{
+  attr bitmapfile FileName = .\Res\Trefoil.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <670,140,870,180>
+$output false
+resource Resources::Bitmap ImgBlend4
+{
+  attr bitmapfile FileName = .\Res\Orange.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <670,180,870,220>
+$output false
+resource Resources::Bitmap ImgBlend5
+{
+  attr bitmapfile FileName = .\Res\Kiwi.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <670,220,870,260>
+$output false
+resource Resources::Bitmap ImgBlend6
+{
+  attr bitmapfile FileName = .\Res\Flower.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <670,260,870,300>
+$output false
+resource Resources::Bitmap ImgBlend7
+{
+  attr bitmapfile FileName = .\Res\Citron.png;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = Native;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <450,60,650,100>
+$output false
+resource Resources::Bitmap ImgCopy1
+{
+  attr bitmapfile FileName = .\Res\Img_01.jpg;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <450,100,650,140>
+$output false
+resource Resources::Bitmap ImgCopy2
+{
+  attr bitmapfile FileName = .\Res\Img_02.jpg;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <450,140,650,180>
+$output false
+resource Resources::Bitmap ImgCopy3
+{
+  attr bitmapfile FileName = .\Res\Img_03.jpg;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <450,180,650,220>
+$output false
+resource Resources::Bitmap ImgCopy4
+{
+  attr bitmapfile FileName = .\Res\Img_04.jpg;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Bitmap resource for small photo images.
+$rect <450,220,650,260>
+$output false
+resource Resources::Bitmap ImgCopy5
+{
+  attr bitmapfile FileName = .\Res\Img_05.jpg;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+  attr bitmapformat Format = RGB565;
+  attr bitmapdithering Dithering = Auto;
+}
+
+// Font resource for large font - used for the caption text items.
+$rect <230,60,430,100>
+$output false
+resource Resources::Font FontMedium
+{
+  attr fontname FontName = Roboto;
+  attr fontheight Height = 24;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0x7F;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}

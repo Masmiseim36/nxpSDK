@@ -736,10 +736,15 @@ typedef __packed struct gatt_read_uuid_cmd {
     uint8_t uuid_length;
     uint8_t uuid[];
 } gatt_read_uuid_cmd_t;
+typedef __packed struct gatt_char_value {
+	uint16_t handle;
+	uint8_t data_len;
+	uint8_t data[SERVER_MAX_UUID_LEN];
+} gatt_char_value_t;
 typedef __packed struct gatt_read_uuid_rp {
     uint8_t att_response;
-    uint16_t data_length;
-    uint8_t data[];
+    uint8_t values_count;
+    gatt_char_value_t values[SERVER_MAX_ATTRIBUTES];
 } gatt_read_uuid_rp_t;
 
 #define GATT_READ_LONG          0x13

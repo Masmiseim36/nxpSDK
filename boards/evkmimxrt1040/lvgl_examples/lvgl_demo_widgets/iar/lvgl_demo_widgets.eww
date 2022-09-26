@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>lvgl_demo_widgets</project>
+        <configuration>flexspi_nor_sdram_debug</configuration>
+      </member>
+      <member>
+        <project>lvgl_demo_widgets</project>
+        <configuration>flexspi_nor_sdram_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_sdram_debug</name>
+      <member>
+        <project>lvgl_demo_widgets</project>
+        <configuration>flexspi_nor_sdram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_sdram_release</name>
+      <member>
+        <project>lvgl_demo_widgets</project>
+        <configuration>flexspi_nor_sdram_release</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/lvgl_demo_widgets.ewp</path>
+  </project>
+</workspace>

@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.0</span>
+   &#160;<span id="projectnumber">Rev. 1.9.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -137,14 +137,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a50621cf1d1676983bbf95c7dbf178229"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_static_queue.html#a50621cf1d1676983bbf95c7dbf178229">get</a> (T *element)</td></tr>
 <tr class="memdesc:a50621cf1d1676983bbf95c7dbf178229"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns element from queue.  <a href="#a50621cf1d1676983bbf95c7dbf178229">More...</a><br /></td></tr>
 <tr class="separator:a50621cf1d1676983bbf95c7dbf178229"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90d03fc6a09db2f2e9ad4f722ba81547"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_static_queue.html#a90d03fc6a09db2f2e9ad4f722ba81547">size</a> (void)</td></tr>
-<tr class="memdesc:a90d03fc6a09db2f2e9ad4f722ba81547"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns number of elements in queue.  <a href="#a90d03fc6a09db2f2e9ad4f722ba81547">More...</a><br /></td></tr>
-<tr class="separator:a90d03fc6a09db2f2e9ad4f722ba81547"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6aa550f3bbbaacfa92e2a91215c899ed"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_static_queue.html#a6aa550f3bbbaacfa92e2a91215c899ed">size</a> (void)</td></tr>
+<tr class="memdesc:a6aa550f3bbbaacfa92e2a91215c899ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns number of elements in queue.  <a href="#a6aa550f3bbbaacfa92e2a91215c899ed">More...</a><br /></td></tr>
+<tr class="separator:a6aa550f3bbbaacfa92e2a91215c899ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a7aca1b45a4496c7a6f3ecc0796b926d8"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_static_queue.html#a7aca1b45a4496c7a6f3ecc0796b926d8">m_storage</a> [elementCount][(sizeof(T)+sizeof(uint64_t)-1)/sizeof(uint64_t)]</td></tr>
-<tr class="separator:a7aca1b45a4496c7a6f3ecc0796b926d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ba71c1a990bbffb6cf20ed170a02169"><td class="memItemLeft" align="right" valign="top">uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_static_queue.html#a2ba71c1a990bbffb6cf20ed170a02169">m_storage</a> [elementCount][(sizeof(T)+sizeof(uint64_t)-1U)/sizeof(uint64_t)]</td></tr>
+<tr class="separator:a2ba71c1a990bbffb6cf20ed170a02169"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c43f1fba589c88fbb22a0e8b237d58c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_static_queue.html#a0c43f1fba589c88fbb22a0e8b237d58c">m_capacity</a></td></tr>
 <tr class="separator:a0c43f1fba589c88fbb22a0e8b237d58c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5b8df6fb776578ca3d8ddf5b4187af2"><td class="memItemLeft" align="right" valign="top">uint32_t volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_static_queue.html#aa5b8df6fb776578ca3d8ddf5b4187af2">m_head</a></td></tr>
@@ -299,7 +299,7 @@ template&lt;class T, uint32_t elementCount&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a90d03fc6a09db2f2e9ad4f722ba81547"></a>
+<a class="anchor" id="a6aa550f3bbbaacfa92e2a91215c899ed"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -309,7 +309,7 @@ template&lt;class T, uint32_t elementCount&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classerpc_1_1_static_queue.html">erpc::StaticQueue</a>&lt; T, elementCount &gt;::size </td>
+          <td class="memname">uint32_t <a class="el" href="classerpc_1_1_static_queue.html">erpc::StaticQueue</a>&lt; T, elementCount &gt;::size </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -329,7 +329,7 @@ template&lt;class T, uint32_t elementCount&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a7aca1b45a4496c7a6f3ecc0796b926d8"></a>
+<a class="anchor" id="a2ba71c1a990bbffb6cf20ed170a02169"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -339,7 +339,7 @@ template&lt;class T, uint32_t elementCount&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t <a class="el" href="classerpc_1_1_static_queue.html">erpc::StaticQueue</a>&lt; T, elementCount &gt;::m_storage[elementCount][(sizeof(T)+sizeof(uint64_t)-1)/sizeof(uint64_t)]</td>
+          <td class="memname">uint64_t <a class="el" href="classerpc_1_1_static_queue.html">erpc::StaticQueue</a>&lt; T, elementCount &gt;::m_storage[elementCount][(sizeof(T)+sizeof(uint64_t)-1U)/sizeof(uint64_t)]</td>
         </tr>
       </table>
   </td>

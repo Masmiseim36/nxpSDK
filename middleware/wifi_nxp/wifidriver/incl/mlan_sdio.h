@@ -29,7 +29,7 @@ Change log:
 
 
 /** Read interrupt status */
-t_void wlan_interrupt(pmlan_adapter pmadapter);
+t_void wlan_interrupt(mlan_adapter *pmadapter);
 /** Process Interrupt Status */
 /* wmsdk */
 /* mlan_status wlan_process_int_status(mlan_adapter * pmadapter); */

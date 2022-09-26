@@ -32,7 +32,7 @@ ringbuf_t *ringbuf_create(uint32_t size)
     if (!rb->buf)
     {
         OSA_MemoryFree(rb);
-        return NULL;
+        rb = NULL;
     }
 
     return rb;
@@ -41,7 +41,9 @@ ringbuf_t *ringbuf_create(uint32_t size)
 void ringbuf_destroy(ringbuf_t *rb)
 {
     OSA_MemoryFree(rb->buf);
+    rb->buf = NULL;
     OSA_MemoryFree(rb);
+    rb = NULL;
 }
 
 void ringbuf_clear(ringbuf_t *rb)

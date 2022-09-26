@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing CSS Constructs for Enhanced Layout - Part 5</title>
+	<style type="text/css">
+	
+	.block{display: block;border-style:solid;}
+	.inline{display: inline;border-style:solid;}
+	 li {display:inline;}
+
+	</style>
+</head>
+
+<body>
+<h1> BPP TSS Section 5.5.1.5 TP/OF/BV-05-I-E [Printer - XHTML: CSS Constructs for Enhanced Layout - Part 5]</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<p><br /></p>
+<h2> Testing display
+</h2>
+<p><br /></p>
+<div>There should not be a line break here, <p class = "inline">because, though this is a new
+paragraph, its display has been set to "inline". </p> This text should display as one continuous
+paragraph until here.</div>
+<p><br /><br /></p>
+<p>In this paragraph there is a span element and <span class = "block">all of this text 
+with a border around it has its display property set to "block", so it should be on its own line
+or lines</span>separate from the rest of the paragraph.</p>
+<p><br /><br /></p>
+<ul>
+	<li>This</li>
+	<li>text</li>
+	<li>should display as a</li>
+	<li>sentence, not as </li>
+	<li>a list</li>
+</ul>
+
+
+
+<p><br /><br /></p>
+<h3>end of test</h3>
+
+
+</body>
+</html>

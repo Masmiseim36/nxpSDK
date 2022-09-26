@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title> Testing CSS Constructs for XHTML Print - Part 2</title>
+	<style type="text/css">
+	@media screen
+	{
+	.test {font-family: sans-serif; color:red}
+	}
+
+	@media print
+	{
+	.test {font-family:times,serif; color:blue}
+	}
+
+	@media screen,print
+	{
+	.test {font-weight:bold}
+	}
+
+
+
+
+	</style>
+</head>
+
+<body>
+<h1> Printing XHTML Test Page</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<h2> Testing @media print </h2>
+<p class = "test"> This text should be red and in a sans-serif font when displayed on a screen. It must be blue and in a serif font
+when printed.</p>
+
+
+<p><br /><br /></p>
+
+<h3>end of test</h3>
+
+
+
+</body>
+</html>

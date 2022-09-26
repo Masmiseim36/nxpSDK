@@ -1,0 +1,62 @@
+CONTENT-LENGTH:bytes in body
+CONTENT-TYPE:text/xml; charset="utf-8"
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:GetPrinterAttributesResponse xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<PrinterName>MyPrinter</PrinterName>
+<PrinterLocation>MyLocation</PrinterLocation>
+<PrinterState>idle</PrinterState>
+<PrinterStateReasons>none</PrinterStateReasons>
+<PrinterGeneralCurrentOperator></PrinterGeneralCurrentOperator >
+<DocumentFormatsSupported>
+< DocumentFormat > application/vnd.pwg-xhtml-print+xml:0.95 </ DocumentFormat >
+<DocumentFormat> application/vnd.hp-PCL:5E</DocumentFormat>
+<DocumentFormat> text/plain</DocumentFormat>
+<DocumentFormat> application/PostScript:3</DocumentFormat>
+</DocumentFormatsSupported>
+<ImageFormatsSupported>
+<ImageFormat>image/jpeg</ImageFormat>
+<ImageFormat>image/gif</ImageFormat>
+</ImageFormatsSupported>
+<ColorSupported>true</ColorSupported>
+<MaxCopiesSupported>1</MaxCopiesSupported>
+<SidesSupported>
+<Sides> one-sided</Sides>
+<Sides> two-sided-long-edge</Sides>
+<Sides> two-sided-short-edge</Sides>
+</SidesSupported>
+<NumberUpSupported>4</NumberUpSupported>
+<OrientationsSupported>
+<Orientation>portrait</Orientation>
+<Orientation>landscape</Orientation>
+</OrientationsSupported>
+<MediaSizesSupported>
+<MediaSize>iso_a4_210x297mm</MediaSize>
+<MediaSize>iso_a3_297x420mm</MediaSize>
+</MediaSizesSupported>
+<MediaTypesSupported>
+<MediaType>stationery</MediaType>
+<MediaType>photographic</MediaType>
+<MediaType>cardstock</MediaType>
+</MediaTypesSupported>
+<MediaLoaded>
+<LoadedMediumDetails>
+<LoadedMediumSize> iso_a4_210x297mm</LoadedMediumSize>
+<LoadedMediumType>stationery</LoadedMediumType>
+</LoadedMediumDetails>
+<LoadedMediumDetails>
+<LoadedMediumSize> iso_a4_210x297mm</LoadedMediumSize>
+<LoadedMediumType>photographic</LoadedMediumType>
+</LoadedMediumDetails>
+</MediaLoaded>
+<PrintQualitySupported>
+<PrintQuality>draft</PrintQuality>
+<PrintQuality>normal</PrintQuality>
+</PrintQualitySupported>
+<QueuedJobCount>1</QueuedJobCount>
+<OperationStatus>0x0000</OperationStatus>
+</u:GetPrinterAttributesResponse>
+</s:Body>
+</s:Envelope>

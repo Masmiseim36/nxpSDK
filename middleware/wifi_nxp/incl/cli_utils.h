@@ -11,9 +11,9 @@
 #ifndef __MTF_UTILS_H__
 #define __MTF_UTILS_H__
 
-int string_equal(const char *s1, const char *s2);
-int get_uint(const char *arg, unsigned int *dest, unsigned int len);
-int get_mac(const char *arg, char *dest, char sep);
+bool string_equal(const char *s1, const char *s2);
+bool get_uint(const char *arg, unsigned int *dest, unsigned int len);
+bool get_mac(const char *arg, char *dest, char sep);
 
 /* Simplified non-re-entrant cli_getopt function.  Call this in a while loop to
  * parse argv.  Here are some caveats:
@@ -27,7 +27,6 @@ extern char *cli_optarg;
 int cli_getopt(int argc, char **argv, const char *fmt);
 unsigned int a2hex_or_atoi(char *value);
 unsigned int a2hex(const char *s);
-int ISDIGIT(char *x);
-int ishexstring(void *hex);
+unsigned char hexc2bin(char chr);
 
 #endif

@@ -68,21 +68,33 @@
  * NETCONN_RAW. The queue size value itself is platform-dependent, but is passed
  * to sys_mbox_new() when the recvmbox is created.
  */
+#ifdef CONFIG_NETWORK_HIGH_PERF
+#define DEFAULT_RAW_RECVMBOX_SIZE 32
+#else
 #define DEFAULT_RAW_RECVMBOX_SIZE 12
+#endif
 
 /**
  * DEFAULT_UDP_RECVMBOX_SIZE: The mailbox size for the incoming packets on a
  * NETCONN_UDP. The queue size value itself is platform-dependent, but is passed
  * to sys_mbox_new() when the recvmbox is created.
  */
+#ifdef CONFIG_NETWORK_HIGH_PERF
+#define DEFAULT_UDP_RECVMBOX_SIZE 32
+#else
 #define DEFAULT_UDP_RECVMBOX_SIZE 12
+#endif
 
 /**
  * DEFAULT_TCP_RECVMBOX_SIZE: The mailbox size for the incoming packets on a
  * NETCONN_TCP. The queue size value itself is platform-dependent, but is passed
  * to sys_mbox_new() when the recvmbox is created.
  */
+#ifdef CONFIG_NETWORK_HIGH_PERF
+#define DEFAULT_TCP_RECVMBOX_SIZE 32
+#else
 #define DEFAULT_TCP_RECVMBOX_SIZE 12
+#endif
 
 /**
  * DEFAULT_ACCEPTMBOX_SIZE: The mailbox size for the incoming connections.
@@ -177,7 +189,7 @@
 
 #ifdef CONFIG_NETWORK_HIGH_PERF
 #undef MEM_SIZE
-#define MEM_SIZE (20 * 1024)
+#define MEM_SIZE (40 * 1024)
 #endif
 
 /*
@@ -369,7 +381,7 @@
  * (2 * TCP_MSS) for things to work well
  **/
 #ifdef CONFIG_NETWORK_HIGH_PERF
-#define TCP_WND (15 * TCP_MSS)
+#define TCP_WND (32 * TCP_MSS)
 #else
 #define TCP_WND (10 * TCP_MSS)
 #endif
@@ -387,12 +399,12 @@
 /**
  * LWIP_STATS==1: Enable statistics collection in lwip_stats.
  */
-#define LWIP_STATS 1
+#define LWIP_STATS 0
 
 /**
  * LWIP_STATS_DISPLAY==1: Compile in the statistics output functions.
  */
-#define LWIP_STATS_DISPLAY 1
+#define LWIP_STATS_DISPLAY 0
 
 /*
    ----------------------------------
@@ -476,4 +488,22 @@
 #define TCP_RESOURCE_FAIL_RETRY_LIMIT 50
 
 #define LWIP_COMPAT_MUTEX_ALLOWED 1
+
+/**
+ * LWIP_CHECKSUM_ON_COPY==1: Calculate checksum when copying data from
+ * application buffers to pbufs.
+ */
+#define LWIP_CHECKSUM_ON_COPY 1
+
+/**
+ * LWIP_CHKSUM_ALGORITHM==3: Use the optimised checksum algorithm.
+ */
+#define LWIP_CHKSUM_ALGORITHM 3
+
+#if (LWIP_DNS || LWIP_IGMP || LWIP_IPV6) && !defined(LWIP_RAND)
+/* When using IGMP or IPv6, LWIP_RAND() needs to be defined to a random-function returning an u32_t random value*/
+#include "lwip/arch.h"
+u32_t lwip_rand(void);
+#define LWIP_RAND() lwip_rand()
+#endif
 #endif /* __LWIPOPTS_H__ */

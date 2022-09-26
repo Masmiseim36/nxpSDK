@@ -56,7 +56,7 @@ t_u32 ioport_g = 0;
  * This funciton is defined in wifi-sdio.c as of this writing
  * for wifi files.
  */
-__attribute__((weak)) void set_ioport_inmlan(t_u32 port)
+WEAK void set_ioport_inmlan(t_u32 port)
 {
     return;
 }
@@ -137,8 +137,7 @@ static void wlan_sdio_init_ioport(void)
     uint32_t resp = 0;
     t_u8 data;
 
-#if defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || \
-    defined(IW61x)
+#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(IW61x)
     ioport_g = MEM_PORT;
 
     sdio_io_d("IOPORT : (0x%x)", ioport_g);
@@ -273,7 +272,7 @@ mlan_status sdio_ioport_init(void)
  * This funciton is defined in wifi-sdio.c as of this writing
  * for wifi files.
  */
-__attribute__((weak)) void handle_cdint(int error)
+WEAK void handle_cdint(int error)
 {
     return;
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing CSS Constructs for Enhanced Layout - Part 8</title>
+	<style type="text/css">
+	
+	 table td { border: solid;}
+	.auto {table-layout: auto;}
+	.fixed {table-layout: fixed;}
+	
+	</style>
+</head>
+
+<body>
+<h1> BPP TSS Section 5.5.1.5 TP/OF/BV-05-I-H [Printer - XHTML: CSS Constructs for Enhanced Layout - Part 8]</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<p><br /></p>
+<h2> Testing table-layout</h2>
+<p><br /></p>
+<p>The following table has table layout set to "auto" and should only be as wide as the content of the cells requires.</p>
+<table class = "auto">
+<tr>
+<td>Table Cell 1</td>
+<td>Table Cell 2</td>
+<td>Table Cell 3</td>
+</tr>
+
+<tr>
+<td>Table Cell 4</td>
+<td>Table Cell 5</td>
+<td>Table Cell 6</td>
+</tr>
+
+<tr>
+<td>Table Cell 7</td>
+<td>Table Cell 8</td>
+<td>Table Cell 9</td>
+</tr>
+</table>
+
+
+<p><br /><br /></p>
+<p>The following table has table layout set to "fixed" and should span the width of the printable area.</p>
+<table class = "fixed">
+<tr>
+<td>Table Cell 1</td>
+<td>Table Cell 2</td>
+<td>Table Cell 3</td>
+</tr>
+
+<tr>
+<td>Table Cell 4</td>
+<td>Table Cell 5</td>
+<td>Table Cell 6</td>
+</tr>
+
+<tr>
+<td>Table Cell 7</td>
+<td>Table Cell 8</td>
+<td>Table Cell 9</td>
+</tr>
+</table>
+
+<p><br /><br /></p>
+<h3>end of test</h3>
+
+</body>
+</html>

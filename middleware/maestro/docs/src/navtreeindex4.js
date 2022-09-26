@@ -1,5 +1,6 @@
 var NAVTREEINDEX4 =
 {
+"streamer_8h.html#a15d4a6007cae295b59e1cee647f51e72":[6,0,18,47],
 "streamer_8h.html#a164bcaf52240cea1483b942aaecd8fad":[6,0,18,60],
 "streamer_8h.html#a1776e624c54e5be0751e97e22b189115":[6,0,18,37],
 "streamer_8h.html#a1b4fae1852ff4aab9c6e8365bd822f3a":[6,0,18,61],
@@ -90,7 +91,6 @@ var NAVTREEINDEX4 =
 "streamer__api_8h.html#a22f6b18e781e3c412e7d243f7de6aa5ca885c683710d4979c31247a001c0e7f07":[6,0,5,49,1],
 "streamer__api_8h.html#a22f6b18e781e3c412e7d243f7de6aa5cade2d0780c18fb4409b83dbb6843f7ed0":[6,0,5,49,2],
 "streamer__api_8h.html#a22f6b18e781e3c412e7d243f7de6aa5caf31e54514cf9fc4002f3d6a4101d2397":[6,0,5,49,3],
-"streamer__api_8h.html#a28c590c4d9a4d7f163b21a63cd14abbf":[6,0,5,51],
 "streamer__api_8h.html#a2a7c8aa8d26c37be2117ffb9fbc1cc4f":[6,0,5,15],
 "streamer__api_8h.html#a304cec254bfec02fe7e137f03acc136d":[6,0,5,46],
 "streamer__api_8h.html#a304cec254bfec02fe7e137f03acc136da458e78fcec6dda71c00414c10f850279":[6,0,5,46,0],
@@ -181,7 +181,6 @@ var NAVTREEINDEX4 =
 "streamer__api_8h.html#a8bf89acf3cfd2506e7a76eb6905ac83f":[6,0,5,14],
 "streamer__api_8h.html#a8e5c5812d2b8cf5d099cf6474e157178":[6,0,5,50],
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5":[6,0,5,44],
-"streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a0064513e933c36a90719ed06c1b9932f":[6,0,5,44,10],
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a158054c33f4a5ba0b8e97641d203c98b":[6,0,5,44,14],
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a178529ec1c83bbbf320dff57eca06bd5":[6,0,5,44,15],
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a234877893d9e1e4cb8c3161cebd6b827":[6,0,5,44,8],
@@ -194,6 +193,7 @@ var NAVTREEINDEX4 =
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a6503cb86d013875c76badc2ddae835d2":[6,0,5,44,20],
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a67358ea927f5edd984c000e65470a099":[6,0,5,44,0],
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a860608f28cdf0174880d9987ef93d525":[6,0,5,44,19],
+"streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a8ab6b5a36169658d8e4ffb57aa022bd5":[6,0,5,44,10],
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a8e100ee997f3fb5ac5a0161f4dfd4cfb":[6,0,5,44,7],
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a99c94ce3183b1aa9618073fd09fca4c3":[6,0,5,44,16],
 "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5aa1251796437cd7f6b792146a02ff85b0":[6,0,5,44,11],

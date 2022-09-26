@@ -16,7 +16,11 @@
 
 #include <wifi.h>
 
+#if defined(RW610)
+#include "wifi-imu.h"
+#else
 #include "wifi-sdio.h"
+#endif
 #include "wifi-internal.h"
 
 /*
@@ -49,13 +53,12 @@ static const char driver_version_format[] = "SD878x-%s-%s-WM";
 static const char driver_version[]        = "702.1.0";
 
 static unsigned int mgmt_ie_index_bitmap = 0x00;
-int wifi_11d_country                     = 0x00;
+country_code_t wifi_11d_country          = COUNTRY_NONE;
 
 /* This were static functions in mlan file */
 mlan_status wlan_cmd_802_11_deauthenticate(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND *cmd, IN t_void *pdata_buf);
 mlan_status wlan_cmd_reg_access(IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_action, IN t_void *pdata_buf);
 mlan_status wlan_cmd_mem_access(IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_action, IN t_void *pdata_buf);
-mlan_status wlan_cmd_recfg_tx_buf(mlan_private *priv, HostCmd_DS_COMMAND *cmd, int cmd_action, void *pdata_buf);
 mlan_status wlan_cmd_auto_reconnect(IN HostCmd_DS_COMMAND *cmd, IN t_u16 cmd_action, IN t_void *pdata_buf);
 #if 0
 mlan_status wlan_cmd_rx_mgmt_indication(IN pmlan_private pmpriv,
@@ -64,6 +67,11 @@ mlan_status wlan_cmd_rx_mgmt_indication(IN pmlan_private pmpriv,
                                         IN t_void *pdata_buf);
 #endif
 mlan_status wlan_misc_ioctl_region(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req);
+
+int wifi_set_mac_multicast_addr(const char *mlist, t_u32 num_of_addr);
+int wifi_send_disable_supplicant(int mode);
+int wifi_send_rf_channel_cmd(wifi_rf_channel_t *rf_channel);
+int wifi_get_set_rf_tx_power(t_u16 cmd_action, wifi_tx_power_t *tx_power);
 
 int wifi_deauthenticate(uint8_t *bssid)
 {
@@ -104,6 +112,7 @@ int wifi_reg_access(wifi_reg_t reg_type, uint16_t action, uint32_t offset, uint3
     reg_rw.offset = offset;
     reg_rw.value  = *value;
     uint16_t hostcmd;
+    int ret = WM_SUCCESS;
     switch (reg_type)
     {
         case REG_MAC:
@@ -117,8 +126,13 @@ int wifi_reg_access(wifi_reg_t reg_type, uint16_t action, uint32_t offset, uint3
             break;
         default:
             wifi_e("Incorrect register type");
-            return -WM_FAIL;
+            ret = -WM_FAIL;
             break;
+    }
+
+    if (ret != WM_SUCCESS)
+    {
+        return ret;
     }
 
     (void)wifi_get_command_lock();
@@ -333,13 +347,13 @@ int wifi_set_packet_filters(wifi_flt_cfg_t *flt_cfg)
     buf_len      = S_DS_GEN;
 
     /** Fill HostCmd_DS_MEF_CFG*/
-    mef_hdr           = (HostCmd_DS_MEF_CFG *)(buf + buf_len);
+    mef_hdr           = (HostCmd_DS_MEF_CFG *)(void *)(buf + buf_len);
     mef_hdr->criteria = wlan_cpu_to_le32(flt_cfg->criteria);
     mef_hdr->nentries = wlan_cpu_to_le16(flt_cfg->nentries);
     buf_len += sizeof(HostCmd_DS_MEF_CFG);
 
     /** Fill entry header data*/
-    entry_hdr         = (mef_entry_header *)(buf + buf_len);
+    entry_hdr         = (mef_entry_header *)(void *)(buf + buf_len);
     entry_hdr->mode   = flt_cfg->mef_entry.mode;
     entry_hdr->action = flt_cfg->mef_entry.action;
     buf_len += sizeof(mef_entry_header);
@@ -485,7 +499,9 @@ int wifi_set_packet_filters(wifi_flt_cfg_t *flt_cfg)
             filter_buf = (t_u8 *)(buf + buf_len);
         }
         else
+        {
             goto done;
+        }
 
         if (i != 0)
         {
@@ -1229,8 +1245,6 @@ static int wifi_send_key_material_cmd(int bss_index, mlan_ds_sec_cfg *sec)
     return WM_SUCCESS;
 }
 
-uint8_t broadcast_mac_addr[] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-
 int wifi_set_key(int bss_index,
                  bool is_pairwise,
                  const uint8_t key_index,
@@ -1277,8 +1291,6 @@ int wifi_set_igtk_key(int bss_index, const uint8_t *pn, const uint16_t key_index
 
     (void)memset(&sec, 0x00, sizeof(mlan_ds_sec_cfg));
     sec.sub_command = MLAN_OID_SEC_CFG_ENCRYPT_KEY;
-
-    sec.param.encrypt_key.key_flags = KEY_FLAG_TX_SEQ_VALID | KEY_FLAG_RX_SEQ_VALID;
 
     sec.param.encrypt_key.key_flags = KEY_FLAG_AES_MCAST_IGTK;
     sec.param.encrypt_key.key_index = key_index;
@@ -1721,54 +1733,54 @@ int wifi_get_firmware_version(wifi_fw_version_t *ver)
 }
 
 /* Region: US(US) or Canada(CA) or Singapore(SG) 2.4 GHz */
-wifi_sub_band_set_t subband_US_CA_SG_2_4_GHz[] = {{1, 11, 20}};
+static wifi_sub_band_set_t subband_US_CA_SG_2_4_GHz[] = {{1, 11, 20}};
 
 /* Region: Europe(EU), Australia(AU), Republic of Korea(KR),
 China(CN) 2.4 GHz */
-wifi_sub_band_set_t subband_EU_AU_KR_CN_2_4GHz[] = {{1, 13, 20}};
+static wifi_sub_band_set_t subband_EU_AU_KR_CN_2_4GHz[] = {{1, 13, 20}};
 
 /* Region: Japan(JP) 2.4 GHz */
-wifi_sub_band_set_t subband_JP_2_4GHz[] = {
+static wifi_sub_band_set_t subband_JP_2_4GHz[] = {
     {1, 14, 20},
 };
 
 /* Region: World Wide Safe Mode(WWSM) 2.4 GHz */
-wifi_sub_band_set_t subband_WWSM_2_4GHz[] = {
+static wifi_sub_band_set_t subband_WWSM_2_4GHz[] = {
     {1, 14, 8},
 };
 
 /* Region: Constrained 2.4 Ghz */
-wifi_sub_band_set_t subband_CS_2_4GHz[] = {{1, 9, 20}, {10, 2, 10}};
+static wifi_sub_band_set_t subband_CS_2_4GHz[] = {{1, 9, 20}, {10, 2, 10}};
 
 #ifdef CONFIG_5GHz_SUPPORT
 
 /* Region: US(US) or France(FR) or Singapore(SG) 5 GHz */
-wifi_sub_band_set_t subband_US_SG_FR_5_GHz[] = {{36, 8, 20}, {100, 11, 20}, {149, 5, 20}};
+static wifi_sub_band_set_t subband_US_SG_FR_5_GHz[] = {{36, 8, 20}, {100, 11, 20}, {149, 5, 20}};
 
 /* Region: Canada(CA) 5 GHz */
-wifi_sub_band_set_t subband_CA_5_GHz[] = {{36, 8, 20}, {100, 5, 20}, {132, 3, 20}, {149, 5, 20}};
+static wifi_sub_band_set_t subband_CA_5_GHz[] = {{36, 8, 20}, {100, 5, 20}, {132, 3, 20}, {149, 5, 20}};
 
 /* Region: Region: Europe(EU), Australia(AU), Republic of Korea(KR)
  * 5 GHz */
-wifi_sub_band_set_t subband_EU_AU_KR_5_GHz[] = {
+static wifi_sub_band_set_t subband_EU_AU_KR_5_GHz[] = {
     {36, 8, 20},
     {100, 11, 20},
 };
 
 /* Region: Japan(JP) 5 GHz */
-wifi_sub_band_set_t subband_JP_5_GHz[] = {
+static wifi_sub_band_set_t subband_JP_5_GHz[] = {
     {8, 3, 23},
     {36, 8, 23},
     {100, 11, 23},
 };
 
 /* Region: China(CN) 5 Ghz */
-wifi_sub_band_set_t subband_CN_5_GHz[] = {
+static wifi_sub_band_set_t subband_CN_5_GHz[] = {
     {149, 5, 33},
 };
 
 /* Region: World Wide Safe Mode(WWSM) 5 GHz */
-wifi_sub_band_set_t subband_WWSM_5_GHz[] = {{36, 8, 8}, {100, 12, 8}, {149, 6, 8}};
+static wifi_sub_band_set_t subband_WWSM_5_GHz[] = {{36, 8, 8}, {100, 12, 8}, {149, 6, 8}};
 
 #endif /* CONFIG_5GHz_SUPPORT */
 
@@ -1850,7 +1862,7 @@ int wifi_set_domain_params(wifi_domain_param_t *dp)
 
     (void)memcpy((void *)&d_cfg.param.domain_info.country_code, (const void *)dp->country_code, COUNTRY_CODE_LEN);
 
-    d_cfg.param.domain_info.band = (mlan_band_def)(BAND_B | BAND_G);
+    d_cfg.param.domain_info.band = (BAND_B | BAND_G);
 
     d_cfg.param.domain_info.band |= BAND_GN;
 #ifdef CONFIG_5GHz_SUPPORT
@@ -1891,115 +1903,147 @@ int wifi_enable_11d_support_APIs(void)
     return wlan_11d_support_APIs(pmpriv);
 }
 
-wifi_sub_band_set_t *get_sub_band_from_country(int country, t_u8 *nr_sb)
+wifi_sub_band_set_t *get_sub_band_from_country(country_code_t country, t_u8 *nr_sb)
 {
-    *nr_sb = 1;
+    *nr_sb                        = 1;
+    wifi_sub_band_set_t *ret_band = NULL;
 
     switch (country)
     {
-        case 1:
-            return subband_WWSM_2_4GHz;
-        case 2:
-        case 3:
-        case 4:
-            return subband_US_CA_SG_2_4_GHz;
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 10:
-            return subband_EU_AU_KR_CN_2_4GHz;
-        case 9:
-            return subband_JP_2_4GHz;
+        case COUNTRY_WW:
+            ret_band = subband_WWSM_2_4GHz;
+            break;
+        case COUNTRY_US:
+        case COUNTRY_CA:
+        case COUNTRY_SG:
+            ret_band = subband_US_CA_SG_2_4_GHz;
+            break;
+        case COUNTRY_EU:
+        case COUNTRY_AU:
+        case COUNTRY_KR:
+        case COUNTRY_FR:
+        case COUNTRY_CN:
+            ret_band = subband_EU_AU_KR_CN_2_4GHz;
+            break;
+        case COUNTRY_JP:
+            ret_band = subband_JP_2_4GHz;
+            break;
         default:
-            *nr_sb = 2;
-            return subband_CS_2_4GHz;
+            *nr_sb   = 2;
+            ret_band = subband_CS_2_4GHz;
+            break;
     }
+    return ret_band;
 }
 
 static wifi_sub_band_set_t *get_sub_band_from_region_code(int region_code, t_u8 *nr_sb)
 {
-    *nr_sb = 1;
+    *nr_sb                        = 1;
+    wifi_sub_band_set_t *ret_band = NULL;
 
     switch (region_code)
     {
         case 0x10:
-            return subband_US_CA_SG_2_4_GHz;
+            ret_band = subband_US_CA_SG_2_4_GHz;
+            break;
         case 0x30:
         case 0x32:
-            return subband_EU_AU_KR_CN_2_4GHz;
+            ret_band = subband_EU_AU_KR_CN_2_4GHz;
+            break;
         case 0xFF:
             return subband_JP_2_4GHz;
+            break;
         case 0xAA:
-            return subband_WWSM_2_4GHz;
+            ret_band = subband_WWSM_2_4GHz;
+            break;
         default:
-            *nr_sb = 2;
-            return subband_CS_2_4GHz;
+            *nr_sb   = 2;
+            ret_band = subband_CS_2_4GHz;
+            break;
     }
+    return ret_band;
 }
 
 #ifdef CONFIG_5GHz_SUPPORT
-static wifi_sub_band_set_t *get_sub_band_from_country_5ghz(int country, t_u8 *nr_sb)
+static wifi_sub_band_set_t *get_sub_band_from_country_5ghz(country_code_t country, t_u8 *nr_sb)
 {
-    *nr_sb = 1;
+    *nr_sb                        = 1;
+    wifi_sub_band_set_t *ret_band = NULL;
 
     switch (country)
     {
-        case 1:
-            *nr_sb = 3;
-            return subband_WWSM_5_GHz;
-        case 2:
-        case 4:
-        case 8:
-            *nr_sb = 3;
-            return subband_US_SG_FR_5_GHz;
-        case 3:
-            *nr_sb = 4;
-            return subband_CA_5_GHz;
-        case 5:
-        case 6:
-        case 7:
-            *nr_sb = 2;
-            return subband_EU_AU_KR_5_GHz;
-        case 9:
-            *nr_sb = 3;
-            return subband_JP_5_GHz;
-        case 10:
-            return subband_CN_5_GHz;
+        case COUNTRY_WW:
+            *nr_sb   = 3;
+            ret_band = subband_WWSM_5_GHz;
+            break;
+        case COUNTRY_US:
+        case COUNTRY_SG:
+        case COUNTRY_FR:
+            *nr_sb   = 3;
+            ret_band = subband_US_SG_FR_5_GHz;
+            break;
+        case COUNTRY_CA:
+            *nr_sb   = 4;
+            ret_band = subband_CA_5_GHz;
+            break;
+        case COUNTRY_EU:
+        case COUNTRY_AU:
+        case COUNTRY_KR:
+            *nr_sb   = 2;
+            ret_band = subband_EU_AU_KR_5_GHz;
+            break;
+        case COUNTRY_JP:
+            *nr_sb   = 3;
+            ret_band = subband_JP_5_GHz;
+            break;
+        case COUNTRY_CN:
+            ret_band = subband_CN_5_GHz;
+            break;
         default:
-            *nr_sb = 3;
-            return subband_US_SG_FR_5_GHz;
+            *nr_sb   = 3;
+            ret_band = subband_US_SG_FR_5_GHz;
+            break;
     }
+    return ret_band;
 }
 
 static wifi_sub_band_set_t *get_sub_band_from_region_code_5ghz(int region_code, t_u8 *nr_sb)
 {
-    *nr_sb = 1;
+    *nr_sb                        = 1;
+    wifi_sub_band_set_t *ret_band = NULL;
 
     switch (region_code)
     {
         case 0x10:
         case 0x32:
-            *nr_sb = 3;
-            return subband_US_SG_FR_5_GHz;
+            *nr_sb   = 3;
+            ret_band = subband_US_SG_FR_5_GHz;
+            break;
         case 0x20:
-            *nr_sb = 4;
-            return subband_CA_5_GHz;
+            *nr_sb   = 4;
+            ret_band = subband_CA_5_GHz;
+            break;
         case 0x30:
-            *nr_sb = 2;
-            return subband_EU_AU_KR_5_GHz;
+            *nr_sb   = 2;
+            ret_band = subband_EU_AU_KR_5_GHz;
+            break;
         case 0x40:
-            *nr_sb = 3;
-            return subband_JP_5_GHz;
+            *nr_sb   = 3;
+            ret_band = subband_JP_5_GHz;
+            break;
         case 0x50:
-            return subband_CN_5_GHz;
+            ret_band = subband_CN_5_GHz;
+            break;
         case 0xAA:
-            *nr_sb = 3;
-            return subband_WWSM_5_GHz;
+            *nr_sb   = 3;
+            ret_band = subband_WWSM_5_GHz;
+            break;
         default:
-            *nr_sb = 3;
-            return subband_US_SG_FR_5_GHz;
+            *nr_sb   = 3;
+            ret_band = subband_US_SG_FR_5_GHz;
+            break;
     }
+    return ret_band;
 }
 #endif /* CONFIG_5GHz_SUPPORT */
 
@@ -2016,7 +2060,7 @@ bool wifi_11d_is_channel_allowed(int channel)
     if (channel > 14)
     {
 #ifdef CONFIG_5GHz_SUPPORT
-        if (wifi_11d_country == 0x00)
+        if (wifi_11d_country == COUNTRY_NONE)
         {
             sub_band = get_sub_band_from_region_code_5ghz(pmpriv->adapter->region_code, &nr_sb);
         }
@@ -2031,7 +2075,7 @@ bool wifi_11d_is_channel_allowed(int channel)
     }
     else
     {
-        if (wifi_11d_country == 0x00)
+        if (wifi_11d_country == COUNTRY_NONE)
         {
             sub_band = get_sub_band_from_region_code(pmpriv->adapter->region_code, &nr_sb);
         }
@@ -2066,36 +2110,55 @@ bool wifi_11d_is_channel_allowed(int channel)
     return false;
 }
 
-char *wifi_get_country_str(int country)
+const char *wifi_get_country_str(country_code_t country)
 {
-    switch (country)
+    if (country == COUNTRY_WW)
     {
-        case COUNTRY_WW:
-            return "WW ";
-        case COUNTRY_US:
-            return "US ";
-        case COUNTRY_CA:
-            return "CA ";
-        case COUNTRY_SG:
-            return "SG ";
-        case COUNTRY_EU:
-            return "EU ";
-        case COUNTRY_AU:
-            return "AU ";
-        case COUNTRY_KR:
-            return "KR ";
-        case COUNTRY_FR:
-            return "FR ";
-        case COUNTRY_JP:
-            return "JP ";
-        case COUNTRY_CN:
-            return "CN ";
-        default:
-            return "WW ";
+        return "WW ";
+    }
+    else if (country == COUNTRY_US)
+    {
+        return "US ";
+    }
+    else if (country == COUNTRY_CA)
+    {
+        return "CA ";
+    }
+    else if (country == COUNTRY_SG)
+    {
+        return "SG ";
+    }
+    else if (country == COUNTRY_EU)
+    {
+        return "EU ";
+    }
+    else if (country == COUNTRY_AU)
+    {
+        return "AU ";
+    }
+    else if (country == COUNTRY_KR)
+    {
+        return "KR ";
+    }
+    else if (country == COUNTRY_FR)
+    {
+        return "FR ";
+    }
+    else if (country == COUNTRY_JP)
+    {
+        return "JP ";
+    }
+    else if (country == COUNTRY_CN)
+    {
+        return "CN ";
+    }
+    else
+    {
+        return "WW ";
     }
 }
 
-wifi_domain_param_t *get_11d_domain_params(int country, wifi_sub_band_set_t *sub_band, t_u8 nr_sb)
+wifi_domain_param_t *get_11d_domain_params(country_code_t country, wifi_sub_band_set_t *sub_band, t_u8 nr_sb)
 {
     wifi_domain_param_t *dp = os_mem_alloc(sizeof(wifi_domain_param_t) + (sizeof(wifi_sub_band_set_t) * (nr_sb - 1U)));
 
@@ -2107,12 +2170,12 @@ wifi_domain_param_t *get_11d_domain_params(int country, wifi_sub_band_set_t *sub
     return dp;
 }
 
-int wifi_get_country(void)
+country_code_t wifi_get_country(void)
 {
     return wifi_11d_country;
 }
 
-int wifi_set_country(int country)
+int wifi_set_country(country_code_t country)
 {
     int ret;
     t_u8 nr_sb;
@@ -2133,7 +2196,7 @@ int wifi_set_country(int country)
 
     if (ret != WM_SUCCESS)
     {
-        wifi_11d_country = 0x00;
+        wifi_11d_country = COUNTRY_NONE;
         os_mem_free(dp);
         return ret;
     }
@@ -2187,33 +2250,41 @@ static void clear_ie_index(int index)
 }
 
 #ifdef SD8801
-static int wifi_config_ext_coex(int action, const wifi_ext_coex_config_t *ext_coex_config, wifi_ext_coex_stats_t *ext_coex_stats)
+static int wifi_config_ext_coex(int action,
+                                const wifi_ext_coex_config_t *ext_coex_config,
+                                wifi_ext_coex_stats_t *ext_coex_stats)
 {
     int ret;
     HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
 
     (void)wifi_get_command_lock();
 
-    cmd->command = HostCmd_CMD_ROBUST_COEX;
-    cmd->size = sizeof(HostCmd_DS_ExtBLECoex_Config_t) + S_DS_GEN;
-    cmd->seq_num = 0;
-    cmd->result = 0;
-    cmd->params.ext_ble_coex_cfg.action = action;
-    cmd->params.ext_ble_coex_cfg.reserved = 0;
+    cmd->command                                           = HostCmd_CMD_ROBUST_COEX;
+    cmd->size                                              = sizeof(HostCmd_DS_ExtBLECoex_Config_t) + S_DS_GEN;
+    cmd->seq_num                                           = 0;
+    cmd->result                                            = 0;
+    cmd->params.ext_ble_coex_cfg.action                    = action;
+    cmd->params.ext_ble_coex_cfg.reserved                  = 0;
     cmd->params.ext_ble_coex_cfg.coex_cfg_data.header.type = TLV_TYPE_EXT_BLE_COEX_CFG;
-    cmd->params.ext_ble_coex_cfg.coex_cfg_data.header.len = sizeof(MrvlIETypes_ExtBLECoex_Config_t) - sizeof(MrvlIEtypesHeader_t);
+    cmd->params.ext_ble_coex_cfg.coex_cfg_data.header.len =
+        sizeof(MrvlIETypes_ExtBLECoex_Config_t) - sizeof(MrvlIEtypesHeader_t);
 
     if (action == HostCmd_ACT_GEN_SET)
     {
-        cmd->params.ext_ble_coex_cfg.coex_cfg_data.Enabled = ext_coex_config->Enabled;
-        cmd->params.ext_ble_coex_cfg.coex_cfg_data.IgnorePriority = ext_coex_config->IgnorePriority;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.Enabled         = ext_coex_config->Enabled;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.IgnorePriority  = ext_coex_config->IgnorePriority;
         cmd->params.ext_ble_coex_cfg.coex_cfg_data.DefaultPriority = ext_coex_config->DefaultPriority;
-        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_REQ_ip_gpio_num = ext_coex_config->EXT_RADIO_REQ_ip_gpio_num;
-        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_REQ_ip_gpio_polarity = ext_coex_config->EXT_RADIO_REQ_ip_gpio_polarity;
-        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_PRI_ip_gpio_num = ext_coex_config->EXT_RADIO_PRI_ip_gpio_num;
-        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_PRI_ip_gpio_polarity = ext_coex_config->EXT_RADIO_PRI_ip_gpio_polarity;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_REQ_ip_gpio_num =
+            ext_coex_config->EXT_RADIO_REQ_ip_gpio_num;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_REQ_ip_gpio_polarity =
+            ext_coex_config->EXT_RADIO_REQ_ip_gpio_polarity;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_PRI_ip_gpio_num =
+            ext_coex_config->EXT_RADIO_PRI_ip_gpio_num;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.EXT_RADIO_PRI_ip_gpio_polarity =
+            ext_coex_config->EXT_RADIO_PRI_ip_gpio_polarity;
         cmd->params.ext_ble_coex_cfg.coex_cfg_data.WLAN_GRANT_op_gpio_num = ext_coex_config->WLAN_GRANT_op_gpio_num;
-        cmd->params.ext_ble_coex_cfg.coex_cfg_data.WLAN_GRANT_op_gpio_polarity = ext_coex_config->WLAN_GRANT_op_gpio_polarity;
+        cmd->params.ext_ble_coex_cfg.coex_cfg_data.WLAN_GRANT_op_gpio_polarity =
+            ext_coex_config->WLAN_GRANT_op_gpio_polarity;
         cmd->params.ext_ble_coex_cfg.coex_cfg_data.reserved_1 = ext_coex_config->reserved_1;
         cmd->params.ext_ble_coex_cfg.coex_cfg_data.reserved_2 = ext_coex_config->reserved_2;
     }
@@ -2222,8 +2293,8 @@ static int wifi_config_ext_coex(int action, const wifi_ext_coex_config_t *ext_co
 }
 #endif
 
-int wifi_config_mgmt_ie(
-    mlan_bss_type bss_type, int action, IEEEtypes_ElementId_t index, void *buffer, unsigned int *ie_len)
+static int wifi_config_mgmt_ie(
+    mlan_bss_type bss_type, t_u16 action, IEEEtypes_ElementId_t index, void *buffer, unsigned int *ie_len)
 {
     uint8_t *buf, *pos;
     IEEEtypes_Header_t *ptlv_header = NULL;
@@ -2255,13 +2326,14 @@ int wifi_config_mgmt_ie(
     {
         if (*ie_len == 0U)
         {
-            if (index != MGMT_RSN_IE || index != MGMT_VENDOR_SPECIFIC_221 || index != MGMT_WPA_IE ||
-                index != MGMT_WPS_IE)
+            /*
+               MGMT_WPA_IE = MGMT_VENDOR_SPECIFIC_221
+               MGMT_WPS_IE = MGMT_VENDOR_SPECIFIC_221
+               */
+
+            if (index != MGMT_RSN_IE && index != MGMT_VENDOR_SPECIFIC_221)
             {
-                if (buf != NULL)
-                {
-                    os_mem_free(buf);
-                }
+                os_mem_free(buf);
                 return -WM_FAIL;
             }
 
@@ -2285,10 +2357,7 @@ int wifi_config_mgmt_ie(
 
             if (mgmt_ie_index < 0)
             {
-                if (buf != NULL)
-                {
-                    os_mem_free(buf);
-                }
+                os_mem_free(buf);
                 return -WM_FAIL;
             }
 
@@ -2350,10 +2419,7 @@ int wifi_config_mgmt_ie(
         *ie_len = ie_ptr->ie_length;
     }
 
-    if (buf != NULL)
-    {
-        os_mem_free(buf);
-    }
+    os_mem_free(buf);
 
     if ((action == HostCmd_ACT_GEN_SET) && *ie_len)
     {
@@ -2398,7 +2464,7 @@ int wifi_get_ext_coex_stats(wifi_ext_coex_stats_t *ext_coex_stats)
 
 int wifi_set_ext_coex_config(const wifi_ext_coex_config_t *ext_coex_config)
 {
-    if ( ext_coex_config == NULL)
+    if (ext_coex_config == NULL)
     {
         wifi_e("Invalid structure passed");
         return -WM_FAIL;
@@ -2419,7 +2485,7 @@ int wifi_set_chanlist(wifi_chanlist_t *chanlist)
 
 #ifdef OTP_CHANINFO
     mlan_adapter *pmadapter = mlan_adap->priv[0]->adapter;
-    if (!(pmadapter->otp_region && pmadapter->otp_region->force_reg))
+    if ((pmadapter->otp_region == MNULL) || (pmadapter->otp_region->force_reg == 0U))
     {
 #endif
         /*
@@ -2462,12 +2528,12 @@ int wifi_set_chanlist(wifi_chanlist_t *chanlist)
 
 int wifi_get_chanlist(wifi_chanlist_t *chanlist)
 {
-    mlan_adapter *pmadapter     = mlan_adap->priv[0]->adapter;
-    region_chan_t *pchan_region = MNULL;
-    chan_freq_power_t *cfp      = MNULL;
-    t_u32 region_idx            = 0;
-    t_u32 next_chan             = 0;
-    chanlist->num_chans         = 0;
+    mlan_adapter *pmadapter      = mlan_adap->priv[0]->adapter;
+    region_chan_t *pchan_region  = MNULL;
+    const chan_freq_power_t *cfp = MNULL;
+    t_u32 region_idx             = 0;
+    t_u32 next_chan              = 0;
+    chanlist->num_chans          = 0;
 
     for (region_idx = 0; region_idx < NELEMENTS(pmadapter->region_channel); region_idx++)
     {
@@ -2602,7 +2668,7 @@ int wifi_get_fw_region_and_cfp_tables(void)
     cmd->result  = 0x0;
     cmd->size    = S_DS_GEN + sizeof(HostCmd_DS_CHAN_REGION_CFG);
 
-    HostCmd_DS_CHAN_REGION_CFG *chan_region_cfg = (HostCmd_DS_CHAN_REGION_CFG *)((uint8_t *)cmd + S_DS_GEN);
+    HostCmd_DS_CHAN_REGION_CFG *chan_region_cfg = (HostCmd_DS_CHAN_REGION_CFG *)(void *)((uint8_t *)cmd + S_DS_GEN);
 
     chan_region_cfg->action = HostCmd_ACT_GEN_GET;
 
@@ -2849,6 +2915,7 @@ int wifi_stop_smart_mode(void)
     return WM_SUCCESS;
 }
 
+
 int wifi_send_hostcmd(
     void *cmd_buf, uint32_t cmd_buf_len, void *resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len)
 {
@@ -2890,4 +2957,61 @@ int wifi_send_hostcmd(
     }
     /*Response fail check not checked here, as thats caller's responsibility */
     return ret;
+}
+
+int wifi_set_eu_crypto(EU_Crypto *Crypto_Data, enum _crypto_algorithm Algorithm, t_u16 EncDec)
+{
+    HostCmd_DS_COMMAND *cmd = wifi_get_command_buffer();
+    t_u16 cmd_size;
+    t_u16 *DataLength = Crypto_Data->DataLength;
+
+    wifi_get_command_lock();
+
+    (void)memset(cmd, 0x00, WIFI_FW_CMDBUF_SIZE);
+    cmd->command = HostCmd_CMD_EU_CRYPTO;
+    cmd->seq_num = HostCmd_SET_SEQ_NO_BSS_INFO(0 /* seq_num */, 0 /* bss_num */, MLAN_BSS_ROLE_STA);
+
+    switch (Algorithm)
+    {
+        case CRYPTO_RC4:
+        case CRYPTO_AES_ECB:
+        case CRYPTO_AES_WRAP:
+        {
+            cmd_size                        = sizeof(HostCmd_DS_EU_CRYPTO) - 1 + 8 /*cmd header */;
+            cmd->params.eu_crypto.Algorithm = Algorithm;
+            cmd->params.eu_crypto.KeyLength = Crypto_Data->KeyLength;
+            memcpy(cmd->params.eu_crypto.Key, Crypto_Data->Key, Crypto_Data->KeyLength);
+            cmd->params.eu_crypto.KeyIVLength = Crypto_Data->KeyIVLength;
+            memcpy(cmd->params.eu_crypto.KeyIV, Crypto_Data->KeyIV, Crypto_Data->KeyIVLength);
+            cmd->params.eu_crypto.DataLength = *DataLength;
+            memcpy(cmd->params.eu_crypto.Data, Crypto_Data->Data, *DataLength);
+            cmd_size += cmd->params.eu_crypto.DataLength;
+            cmd->params.eu_crypto.EncDec   = EncDec;
+            cmd->params.eu_crypto.DataType = 0x0111;
+            break;
+        }
+        case CRYPTO_AES_CCMP:
+        case CRYPTO_AES_GCMP:
+        {
+            cmd_size                            = sizeof(HostCmd_DS_EU_AES_CRYPTO) - 1 + 8 /* cmd header */;
+            cmd->params.eu_aes_crypto.Algorithm = Algorithm;
+            cmd->params.eu_aes_crypto.KeyLength = Crypto_Data->KeyLength;
+            memcpy(cmd->params.eu_aes_crypto.Key, Crypto_Data->Key, Crypto_Data->KeyLength);
+            cmd->params.eu_aes_crypto.NonceLength = Crypto_Data->NonceLength;
+            memcpy(cmd->params.eu_aes_crypto.Nonce, Crypto_Data->Nonce, Crypto_Data->NonceLength);
+            cmd->params.eu_aes_crypto.AADLength = Crypto_Data->AADLength;
+            memcpy(cmd->params.eu_aes_crypto.AAD, Crypto_Data->AAD, Crypto_Data->AADLength);
+            cmd->params.eu_aes_crypto.DataLength = *DataLength;
+            memcpy(cmd->params.eu_aes_crypto.Data, Crypto_Data->Data, *DataLength);
+            cmd_size += cmd->params.eu_aes_crypto.DataLength;
+            cmd->params.eu_aes_crypto.EncDec   = EncDec;
+            cmd->params.eu_aes_crypto.DataType = 0x0111;
+            break;
+        }
+        default:
+            return -WM_FAIL;
+    }
+    cmd->size = cmd_size;
+
+    return wifi_wait_for_cmdresp(Crypto_Data);
 }

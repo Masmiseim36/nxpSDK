@@ -1,15 +1,14 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
-
 #include "board_init.h"
 #include "demo_config.h"
 #include "demo_info.h"
+#include "fsl_debug_console.h"
 #include "image.h"
 #include "image_utils.h"
 #include "model.h"
@@ -25,7 +24,7 @@ int main(void)
 
     if (MODEL_Init() != kStatus_Success)
     {
-        printf("Failed initializing model" EOL);
+        PRINTF("Failed initializing model" EOL);
         for (;;) {}
     }
 
@@ -42,7 +41,7 @@ int main(void)
         /* Expected tensor dimensions: [batches, height, width, channels] */
         if (IMAGE_GetImage(inputData, inputDims.data[2], inputDims.data[1], inputDims.data[3]) != kStatus_Success)
         {
-            printf("Failed retrieving input image" EOL);
+            PRINTF("Failed retrieving input image" EOL);
             for (;;) {}
         }
 

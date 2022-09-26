@@ -2564,7 +2564,13 @@ static void l2cap_chan_le_recv(struct bt_l2cap_le_chan *chan,
 #endif
 
 	/* Store received segments in user_data */
-	credit = ceiling_fraction(buf->len, CONFIG_BT_BUF_ACL_RX_SIZE);
+    /**
+     * Calculate possible number of LE L2CAP Frames.
+     *
+     * Maximum size of each frame shall not exceed local MPS.
+     * Account for the 2 octet of SDU length.
+     */
+	credit = ceiling_fraction((buf->len + 2), chan->rx.mps);
 	memcpy(net_buf_user_data(buf), &credit, sizeof(credit));
 
 	err = chan->chan.ops->recv(&chan->chan, buf);
@@ -2671,6 +2677,7 @@ void bt_l2cap_recv(struct bt_conn *conn, struct net_buf *buf, bool complete)
 int bt_l2cap_update_conn_param(struct bt_conn *conn,
 			       const struct bt_le_conn_param *param)
 {
+#if 0
 	struct bt_l2cap_conn_param_req *req;
 	struct net_buf *buf;
 	int err;
@@ -2694,6 +2701,23 @@ int bt_l2cap_update_conn_param(struct bt_conn *conn,
 	}
 
 	return 0;
+#endif
+    API_RESULT retval;
+
+    retval = BT_l2cap_le_connection_param_update_request
+                     (
+                         &conn->deviceId,
+                         param->interval_min,
+                         param->interval_max,
+                         param->latency,
+                         param->timeout
+                     );
+    if (API_SUCCESS != retval)
+    {
+        return -EIO;
+    }
+
+    return 0;
 }
 
 static void l2cap_connected(struct bt_l2cap_chan *chan)

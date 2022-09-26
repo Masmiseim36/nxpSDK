@@ -2,13 +2,13 @@
 ;  @file:    startup_MIMXRT1021.s
 ;  @purpose: CMSIS Cortex-M7 Core Device Startup File
 ;            MIMXRT1021
-;  @version: 1.1
-;  @date:    2019-4-29
-;  @build:   b201123
+;  @version: 1.2
+;  @date:    2021-8-10
+;  @build:   b220124
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2020 NXP
+; Copyright 2016-2022 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -178,7 +178,7 @@ __vector_table_0x1c
         DCD     PWM1_FAULT_IRQHandler                         ;PWM1 fault or reload error interrupt
         DCD     Reserved123_IRQHandler                        ;Reserved interrupt
         DCD     FLEXSPI_IRQHandler                            ;FlexSPI0 interrupt
-        DCD     SEMC_IRQHandler                               ;Reserved interrupt
+        DCD     SEMC_IRQHandler                               ;SEMC interrupt
         DCD     USDHC1_IRQHandler                             ;USDHC1 interrupt
         DCD     USDHC2_IRQHandler                             ;USDHC2 interrupt
         DCD     Reserved128_IRQHandler                        ;Reserved interrupt

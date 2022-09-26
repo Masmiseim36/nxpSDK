@@ -25,20 +25,26 @@
  * @brief Audio sink buffer number
  *
  */
-#ifndef AUDIO_SINK_BUFFER_NUM
-#define AUDIO_SINK_BUFFER_NUM 2
+#if !defined(AUDIO_SINK_BUFFER_NUM)
+#if defined(SAI_XFER_QUEUE_SIZE)
+#define AUDIO_SINK_BUFFER_NUM (SAI_XFER_QUEUE_SIZE + 1)
+#elif defined(I2S_NUM_BUFFERS)
+#define AUDIO_SINK_BUFFER_NUM (I2S_NUM_BUFFERS + 1)
+#else
+#define AUDIO_SINK_BUFFER_NUM (3)
+#endif
 #endif
 
 /**
  * @brief Minimum audio buffer size
  *
  */
-#define MIN_AUDIO_BUFFER_SIZE (4 * 1024)
+#define MIN_AUDIO_BUFFER_SIZE (4 * 1024U)
 /**
  * @brief Buffer size alignment
  *
  */
-#define SIZE_ALIGNMENT 32
+#define SIZE_ALIGNMENT 32U
 
 /**
  * @brief PCM Sink device information
@@ -49,6 +55,7 @@ typedef struct _PCMSinkDeviceInfo
     pcm_rtos_t *pcm_handle;                     /*!< @brief Pointer to pcm handle  */
     char *unaligned_buf[AUDIO_SINK_BUFFER_NUM]; /*!< @brief Pointers to unaligned audio buffers */
     char *audbuf[AUDIO_SINK_BUFFER_NUM];        /*!< @brief Pointers to aligned audio buffers */
+    uint32_t alloc_size;                        /*!< @brief Unaligned_buf allocated size */
     uint32_t input_size;                        /*!< @brief Input size */
     uint8_t input_index;                        /*!< @brief Input index */
     uint8_t device_state;                       /*!< @brief Device state */

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing CSS Constructs for Enhanced Layout - Part 7</title>
+	<style type="text/css">
+	p{background-color:aqua;}
+	.normal{position:relative;border-style:solid;overflow:visible;margin: 1in;}
+	.abnormal{position:relative;border-style:solid;overflow:visible;margin: 1in;height: 1.75em;width:80%;}
+	.top{position:relative; top: .5in;}
+	.abstop{position:absolute; top: .5in;width:100%}
+	.right {position:relative;right: .5in;}
+	.abright{position:absolute; right: .5in;margin-left: auto;width:100%}
+	.bottom{position:relative;bottom: .5in}
+	.abbottom{position:absolute;bottom: .5in;width:100%}
+	.left{position:relative;left:.5in}
+	.ableft{position:absolute;left: .5in;width:100%}
+	</style>
+</head>
+
+<body>
+<h1> BPP TSS Section 5.5.1.5 TP/OF/BV-05-I-G [Printer - XHTML: CSS Constructs for Enhanced Layout - Part 7]</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<div><br /><br /></div>
+<h2> Testing position relative: top, right, bottom, left</h2>
+<div class="normal">
+  <p>This paragraph is in the reference position for comparison with the rest of the tests.
+  </p>
+</div>
+
+<div class = "normal">
+  <p class = "top">This paragraph should be lower than its reference position by .5".
+ </p>
+</div>
+
+<div class = "normal">
+  <p class = "right">This paragraph should be to the left of  its reference position by .5".
+ </p>
+</div>
+
+<div class = "normal">
+  <p class = "bottom">This paragraph should be higher than its reference position by .5".
+ </p>
+</div>
+
+<div class = "normal">
+  <p class = "left">This paragraph should be to the right of its reference position by .5".
+ </p>
+</div>
+<div></div>
+<h2> Testing position absolute: top, right, bottom, left</h2>
+<div></div>
+<div class="abnormal">
+  <p>This paragraph in the reference position for comparison with the rest of the tests.
+  </p>
+</div>
+
+<div class= "abnormal">
+  <p class = "abstop">This paragraph should be lower than its reference position by .5".
+ </p>
+</div>
+
+<div class= "abnormal">
+  <p class = "abright">This paragraph should be to the left of  its reference position by .5".
+ </p>
+</div>
+
+<div class= "abnormal">
+  <p class = "abbottom">This paragraph should be higher than its reference position by .5".
+ </p>
+</div>
+
+<div class= "abnormal">
+  <p class = "ableft">This paragraph should be to the right of its reference position by .5".
+ </p>
+</div>
+<div></div>
+
+<h3>end of test</h3>
+
+</body>
+</html>

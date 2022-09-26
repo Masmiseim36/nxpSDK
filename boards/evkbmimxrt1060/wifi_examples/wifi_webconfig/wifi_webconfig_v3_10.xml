@@ -199,6 +199,9 @@
     <source path="armgcc/linker" project_relative_path="evkbmimxrt1060/wifi_examples/wifi_webconfig/linker" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_flexspi_nor.ld"/>
     </source>
+    <source path="." project_relative_path="source" type="c_preinclude">
+      <files mask="app_config.h"/>
+    </source>
     <source path="." project_relative_path="board" type="src">
       <files mask="pin_mux.c"/>
     </source>
@@ -245,9 +248,6 @@
     </source>
     <source path="webui" project_relative_path="src/wifi_common/webconfig/webui" type="image" exclude="true">
       <files mask="NXP_logo.png" hidden="true"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_preinclude">
-      <files mask="app_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="wifi_config.h"/>

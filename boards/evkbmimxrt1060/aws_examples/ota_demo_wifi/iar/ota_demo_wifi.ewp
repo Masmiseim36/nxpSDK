@@ -155,7 +155,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -1312,7 +1312,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -2316,6 +2316,30 @@
     </settings>
   </configuration>
   <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../app_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../config_files/aws_mbedtls_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../main_wifi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../lwipopts.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcuboot_app_support.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../mcuboot_app_support.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../wifi_config.h</name>
+    </file>
+  </group>
+  <group>
     <name>board</name>
     <file>
       <name>$PROJ_DIR$/../sdmmc_config.c</name>
@@ -2394,30 +2418,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../config_files/aws_iot_network_config.h</name>
-    </file>
-  </group>
-  <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../config_files/aws_mbedtls_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../main_wifi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../lwipopts.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../mcuboot_app_support.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../mcuboot_app_support.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../app_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../wifi_config.h</name>
     </file>
   </group>
   <group>
@@ -3518,9 +3518,6 @@
       <name>wifi_bt_firmware</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>

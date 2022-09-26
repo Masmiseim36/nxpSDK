@@ -79,7 +79,7 @@ static inline int wlan_enable_11d(void)
  * \return Country code. Refer to \ref country_code_t.
  *
  */
-static inline int wlan_get_country(void)
+static inline country_code_t wlan_get_country(void)
 {
     return wifi_get_country();
 }
@@ -100,7 +100,7 @@ static inline int wlan_get_country(void)
  */
 static inline int wlan_uap_set_country(country_code_t country)
 {
-    return wifi_uap_set_country((int)country);
+    return wifi_uap_set_country(country);
 }
 
 /** Set country code in WLAN Driver.
@@ -120,7 +120,7 @@ static inline int wlan_uap_set_country(country_code_t country)
  */
 static inline int wlan_set_country(country_code_t country)
 {
-    return wifi_set_country((int)country);
+    return wifi_set_country(country);
 }
 
 /**  wlan_11d_custom Custom Wi-Fi Region Configuration
@@ -391,7 +391,7 @@ static inline int wlan_set_region_code(uint32_t region_code)
 
 \return Country string
  */
-uint8_t *wlan_11d_country_index_2_string(int country);
+const uint8_t *wlan_11d_country_index_2_string(int country);
 
 /** @} */
 

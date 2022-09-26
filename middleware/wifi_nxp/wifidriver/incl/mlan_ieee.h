@@ -77,8 +77,11 @@ typedef MLAN_PACK_START enum _IEEEtypes_ElementId_e {
     QUIET              = 40,
     IBSS_DFS           = 41,
     HT_CAPABILITY      = 45,
-    HT_OPERATION       = 61,
-    BSSCO_2040         = 72,
+
+
+    REGULATORY_CLASS = 59,
+    HT_OPERATION     = 61,
+    BSSCO_2040       = 72,
     /* OVERLAPBSSSCANPARAM = 74, */
     EXT_CAPABILITY = 127,
 
@@ -154,7 +157,7 @@ typedef MLAN_PACK_START struct _IEEEtypes_Generic_t
 } MLAN_PACK_END IEEEtypes_Generic_t, *pIEEEtypes_Generic_t;
 
 /** Capability information mask */
-#define CAPINFO_MASK (~(MBIT(15) | MBIT(14) | MBIT(12) | MBIT(11) | MBIT(9)))
+#define CAPINFO_MASK (~(MBIT(15) | MBIT(14) | MBIT(11) | MBIT(9)))
 
 /** Capability Bit Map*/
 typedef MLAN_PACK_START struct _IEEEtypes_CapInfo_t
@@ -177,18 +180,20 @@ typedef MLAN_PACK_START struct _IEEEtypes_CapInfo_t
     t_u8 chan_agility : 1;
     /** Capability Bit Map : Spectrum management */
     t_u8 spectrum_mgmt : 1;
-    /** Capability Bit Map : Reserved */
-    t_u8 rsrvd3 : 1;
+    /** Capability Bit Map : Qos */
+    t_u8 qos : 1;
     /** Capability Bit Map : Short slot time */
     t_u8 short_slot_time : 1;
     /** Capability Bit Map : APSD */
     t_u8 Apsd : 1;
-    /** Capability Bit Map : Reserved */
-    t_u8 rsvrd2 : 1;
+    /** Capability Bit Map : Radio Rsrc Measurement */
+    t_u8 radio_measurement : 1;
     /** Capability Bit Map : DSS OFDM */
     t_u8 dsss_ofdm : 1;
-    /** Capability Bit Map : Reserved */
-    t_u8 rsrvd1 : 2;
+    /** Capability Bit Map : Delayed Block Ack */
+    t_u8 delayed_block_ack : 1;
+    /** Capability Bit Map : Immediate Block Ack */
+    t_u8 immediate_block_ack : 1;
 } MLAN_PACK_END IEEEtypes_CapInfo_t, *pIEEEtypes_CapInfo_t;
 
 /** IEEEtypes_CfParamSet_t */
@@ -1289,26 +1294,6 @@ typedef MLAN_PACK_START struct
     wlan_user_scan_chan chan_list[WLAN_USER_SCAN_CHAN_MAX];
 } MLAN_PACK_END wlan_user_scan_cfg;
 
-/** Default scan interval in millisecond*/
-#define DEFAULT_BGSCAN_INTERVAL 30000
-
-/** action get all, except pps/uapsd config */
-#define BG_SCAN_ACT_GET 0x0000
-/** action set all, except pps/uapsd config */
-#define BG_SCAN_ACT_SET 0x0001
-/** action get pps/uapsd config */
-#define BG_SCAN_ACT_GET_PPS_UAPSD 0x0100
-/** action set pps/uapsd config */
-#define BG_SCAN_ACT_SET_PPS_UAPSD 0x0101
-/** action set all */
-#define BG_SCAN_ACT_SET_ALL 0xff01
-/** ssid match */
-#define BG_SCAN_SSID_MATCH 0x0001
-/** ssid match and RSSI exceeded */
-#define BG_SCAN_SSID_RSSI_MATCH 0x0004
-/** Maximum number of channels that can be sent in bg scan config */
-#define WLAN_BG_SCAN_CHAN_MAX 32
-
 #ifdef CONFIG_11AX
 typedef MLAN_PACK_START struct _IEEEtypes_Extension_t
 {
@@ -1336,47 +1321,11 @@ typedef MLAN_PACK_START struct _IEEEtypes_HECap_t
 } MLAN_PACK_END IEEEtypes_HECap_t, *pIEEEtypes_HECap_t;
 #endif
 
-/**
- *  Input structure to configure bs scan cmd to firmware
- */
-typedef MLAN_PACK_START struct
-{
-    /** action */
-    t_u16 action;
-    /** enable/disable */
-    t_u8 enable;
-    /**  BSS type:
-     *   MLAN_SCAN_MODE_BSS  (infrastructure)
-     *   MLAN_SCAN_MODE_IBSS (adhoc)
-     *   MLAN_SCAN_MODE_ANY  (unrestricted, adhoc and infrastructure)
-     */
-    t_u8 bss_type;
-    /** number of channel scanned during each scan */
-    t_u8 chan_per_scan;
-    /** interval between consecutive scan */
-    t_u32 scan_interval;
-    /** bit 0: ssid match bit 1: ssid match and SNR exceeded
-     *  bit 2: ssid match and RSSI exceeded
-     *  bit 31: wait for all channel scan to complete to report scan result
-     */
-    t_u32 report_condition;
-    /* Configure the number of probe requests for active chan scans */
-    t_u8 num_probes;
-    /** RSSI threshold */
-    t_u8 rssi_threshold;
-    /** SNR threshold */
-    t_u8 snr_threshold;
-    /** repeat count */
-    t_u16 repeat_count;
-    /** SSID filter list used in the to limit the scan results */
-    wlan_user_scan_ssid ssid_list[MRVDRV_MAX_SSID_LIST_LENGTH];
-    /** Variable number (fixed maximum) of channels to scan up */
-    wlan_user_scan_chan chan_list[WLAN_BG_SCAN_CHAN_MAX];
-} MLAN_PACK_END wlan_bgscan_cfg;
 
 #ifdef PRAGMA_PACK
 #pragma pack(pop)
 #endif
+
 
 /** BSSDescriptor_t
  *    Structure used to store information for beacon/probe response
@@ -1403,7 +1352,7 @@ typedef struct _BSSDescriptor_t
     t_s32 rssi;
 
     /** Channel */
-    t_u32 channel;
+    t_u8 channel;
 
     /** Freq */
     t_u32 freq;
@@ -1445,7 +1394,7 @@ typedef struct _BSSDescriptor_t
      * BAND_G(0x02): 'g' band
      * BAND_A(0X04): 'a' band
      */
-    mlan_band_def bss_band;
+    t_u16 bss_band;
 
     /** TSF timestamp from the current firmware TSF */
     t_u64 network_tsf;

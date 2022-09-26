@@ -16,7 +16,11 @@
 #include <wifi_events.h>
 
 #include <wmlog.h>
+#if defined(RW610)
+#include "wifi-imu.h"
+#else
 #include "wifi-sdio.h"
+#endif
 #include "wifi-internal.h"
 
 #define pwr_e(...) wmlog_e("pwr", ##__VA_ARGS__)
@@ -32,12 +36,12 @@
 static bool ieeeps_enabled;
 static bool deepsleepps_enabled;
 
-void wifi_set_ps_cfg(t_u16 multiple_dtims,
-                     t_u16 bcn_miss_timeout,
-                     t_u16 local_listen_interval,
-                     t_u16 adhoc_wake_period,
-                     t_u16 mode,
-                     t_u16 delay_to_ps)
+static void wifi_set_ps_cfg(t_u16 multiple_dtims,
+                            t_u16 bcn_miss_timeout,
+                            t_u16 local_listen_interval,
+                            t_u16 adhoc_wake_period,
+                            t_u16 mode,
+                            t_u16 delay_to_ps)
 {
     pmlan_adapter pmadapter          = ((mlan_private *)mlan_adap->priv[0])->adapter;
     pmadapter->bcn_miss_time_out     = bcn_miss_timeout;
@@ -83,7 +87,11 @@ int wifi_send_hs_cfg_cmd(mlan_bss_type interface, t_u32 ipv4_addr, t_u16 action,
     {
         hs_cfg_obj.conditions = conditions;
         hs_cfg_obj.gap        = 0x2;
+#ifdef RW610
+        hs_cfg_obj.gpio = 0xff;
+#else
         hs_cfg_obj.gpio       = HOST_WAKEUP_GPIO_PIN;
+#endif
         pdata_buf             = &hs_cfg_obj;
 
         /* wake conditions for broadcast is
@@ -146,7 +154,7 @@ int wifi_send_hs_cfg_cmd(mlan_bss_type interface, t_u32 ipv4_addr, t_u16 action,
     return (int)status;
 }
 
-int wifi_send_power_save_command(ENH_PS_MODES action, int ps_bitmap, mlan_bss_type interface, void *pdata_buf)
+static int wifi_send_power_save_command(ENH_PS_MODES action, t_u16 ps_bitmap, mlan_bss_type interface, void *pdata_buf)
 {
     mlan_status status;
     mlan_ds_auto_ds ds_param;
@@ -171,23 +179,29 @@ int wifi_send_power_save_command(ENH_PS_MODES action, int ps_bitmap, mlan_bss_ty
 
 int wifi_enter_ieee_power_save(void)
 {
-    return wifi_send_power_save_command(EN_AUTO_PS, (int)BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
+        return wifi_send_power_save_command(EN_AUTO_PS, BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
 }
 
 int wifi_exit_ieee_power_save(void)
 {
-    return wifi_send_power_save_command(DIS_AUTO_PS, (int)BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
+        return wifi_send_power_save_command(DIS_AUTO_PS, BITMAP_STA_PS, MLAN_BSS_TYPE_STA, NULL);
 }
 
 int wifi_enter_deepsleep_power_save(void)
 {
     t_u16 idletime = 0;
-    return wifi_send_power_save_command(EN_AUTO_PS, (int)BITMAP_AUTO_DS, MLAN_BSS_TYPE_STA, &idletime);
+    /* Set default idle time for deep sleep mode.
+     * If not set, fw will use 10ms as default value and this will
+     * cause small time gap between ps_wakeup and ps_sleep events
+     */
+    idletime = DEEP_SLEEP_IDLE_TIME;
+    return wifi_send_power_save_command(EN_AUTO_PS, BITMAP_AUTO_DS, MLAN_BSS_TYPE_STA, &idletime);
 }
 
 int wifi_exit_deepsleep_power_save(void)
 {
-    return wifi_send_power_save_command(DIS_AUTO_PS, (int)BITMAP_AUTO_DS, MLAN_BSS_TYPE_STA, NULL);
+    t_u16 idletime = 0;
+    return wifi_send_power_save_command(DIS_AUTO_PS, BITMAP_AUTO_DS, MLAN_BSS_TYPE_STA, &idletime);
 }
 
 int wifi_uap_ps_inactivity_sleep_enter(mlan_bss_type type,
@@ -211,12 +225,12 @@ int wifi_uap_ps_inactivity_sleep_enter(mlan_bss_type type,
     data_buff.ps_mode                   = PS_MODE_INACTIVITY;
     data_buff.flags                     = PS_FLAG_INACT_SLEEP_PARAM | PS_FLAG_SLEEP_PARAM;
 
-    return wifi_send_power_save_command(EN_AUTO_PS, (int)BITMAP_UAP_INACT_PS, type, &data_buff);
+    return wifi_send_power_save_command(EN_AUTO_PS, BITMAP_UAP_INACT_PS, type, &data_buff);
 }
 
 int wifi_uap_ps_inactivity_sleep_exit(mlan_bss_type type)
 {
-    return wifi_send_power_save_command(DIS_AUTO_PS, (int)BITMAP_UAP_INACT_PS, type, NULL);
+    return wifi_send_power_save_command(DIS_AUTO_PS, BITMAP_UAP_INACT_PS, type, NULL);
 }
 
 void send_sleep_confirm_command(mlan_bss_type interface)
@@ -237,7 +251,21 @@ void send_sleep_confirm_command(mlan_bss_type interface)
     ps_cfm_sleep->action              = (t_u16)SLEEP_CONFIRM;
     ps_cfm_sleep->sleep_cfm.resp_ctrl = (t_u16)RESP_NEEDED;
 
-    (void)wifi_wait_for_cmdresp(NULL);
+    /* If driver did not send out sleep confirm in the expected time,
+       FW would switch to awake and send out PS AWAKE event.
+       After received AWAKE event when presleep, state would switch to AWAKE.
+       So here only send out sleep confirm when state is presleep,
+       and would not send out sleep confirm if state has switched to AWAKE */
+    if (mlan_adap->ps_state == PS_STATE_PRE_SLEEP)
+    {
+        mlan_adap->ps_state = PS_STATE_SLEEP_CFM;
+        wcmdr_d("+");
+        (void)wifi_wait_for_cmdresp(NULL);
+    }
+    else
+    {
+        (void)wifi_put_command_lock();
+    }
 }
 
 /* fixme: accept HostCmd_DS_COMMAND directly */
@@ -245,7 +273,7 @@ void wifi_process_hs_cfg_resp(t_u8 *cmd_res_buffer)
 {
     pmlan_adapter pmadapter              = ((mlan_private *)mlan_adap->priv[0])->adapter;
     HostCmd_DS_802_11_HS_CFG_ENH *hs_cfg = (HostCmd_DS_802_11_HS_CFG_ENH *)(void *)(cmd_res_buffer + S_DS_GEN);
-    if (hs_cfg->action == HS_ACTIVATE)
+    if (hs_cfg->action == (t_u16)HS_ACTIVATE)
     {
         pwr_d("Host sleep activated");
         wlan_update_rxreorder_tbl(pmadapter, MTRUE);
@@ -264,7 +292,7 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
 
     *ps_event = (t_u16)WIFI_EVENT_PS_INVALID;
     *action   = (t_u16)(ps_mode->action);
-    if (ps_mode->action == EN_AUTO_PS)
+    if (ps_mode->action == (t_u16)EN_AUTO_PS)
     {
         if ((ps_mode->params.auto_ps.ps_bitmap & BITMAP_AUTO_DS) != 0U)
         {
@@ -275,7 +303,6 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
                 mrvl_tlv =
                     (MrvlIEtypesHeader_t *)(void *)((uint8_t *)mrvl_tlv + mrvl_tlv->len + sizeof(MrvlIEtypesHeader_t));
             }
-            *ps_event = (t_u16)WIFI_EVENT_DEEP_SLEEP;
             pwr_d("Enabled Deep Sleep mode");
             deepsleepps_enabled = true;
         }
@@ -295,20 +322,19 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
                 "%u %u",
                 ps_tlv->param.null_pkt_interval, ps_tlv->param.multiple_dtims, ps_tlv->param.local_listen_interval,
                 ps_tlv->param.bcn_miss_timeout, ps_tlv->param.delay_to_ps, ps_tlv->param.mode);
-            *ps_event      = (t_u16)WIFI_EVENT_IEEE_PS;
             ieeeps_enabled = true;
         }
         result = WIFI_EVENT_REASON_SUCCESS;
     }
-    else if (ps_mode->action == DIS_AUTO_PS)
+    else if (ps_mode->action == (t_u16)DIS_AUTO_PS)
     {
-        if ((ps_mode->params.ps_bitmap & BITMAP_AUTO_DS) != 0)
+        if ((ps_mode->params.ps_bitmap & BITMAP_AUTO_DS) != 0U)
         {
             pwr_d("Disabled DeepSleep mode");
             *ps_event           = (t_u16)WIFI_EVENT_DEEP_SLEEP;
             deepsleepps_enabled = false;
         }
-        if ((ps_mode->params.ps_bitmap & BITMAP_STA_PS) != 0)
+        if ((ps_mode->params.ps_bitmap & BITMAP_STA_PS) != 0U)
         {
             pwr_d(
                 "Disabled IEEE power "
@@ -318,9 +344,9 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
         }
         result = WIFI_EVENT_REASON_SUCCESS;
     }
-    else if (ps_mode->action == GET_PS)
+    else if (ps_mode->action == (t_u16)GET_PS)
     {
-        if ((ps_mode->params.ps_bitmap & BITMAP_AUTO_DS) != 0)
+        if ((ps_mode->params.ps_bitmap & BITMAP_AUTO_DS) != 0U)
         {
             pwr_d("Deep sleep mode is on");
             mrvl_tlv = (MrvlIEtypesHeader_t *)(void *)((uint8_t *)ps_mode + AUTO_PS_FIX_SIZE);
@@ -330,7 +356,7 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
                     (MrvlIEtypesHeader_t *)(void *)((uint8_t *)mrvl_tlv + mrvl_tlv->len + sizeof(MrvlIEtypesHeader_t));
             }
         }
-        if ((ps_mode->params.ps_bitmap & BITMAP_STA_PS) != 0)
+        if ((ps_mode->params.ps_bitmap & BITMAP_STA_PS) != 0U)
         {
             pwr_d("IEEE power save mode is on");
             mrvl_tlv = (MrvlIEtypesHeader_t *)(void *)((uint8_t *)ps_mode + AUTO_PS_FIX_SIZE);
@@ -346,19 +372,34 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
                 ps_tlv->param.bcn_miss_timeout, ps_tlv->param.delay_to_ps, ps_tlv->param.mode);
         }
     }
-    else if (ps_mode->action == SLEEP_CONFIRM)
+    else if (ps_mode->action == (t_u16)SLEEP_CONFIRM)
     {
-        if (ieeeps_enabled)
+        wcmdr_d("#");
+        if (ieeeps_enabled || deepsleepps_enabled)
         {
-            *ps_event = (t_u16)WIFI_EVENT_IEEE_PS;
-        }
-        else if (deepsleepps_enabled)
-        {
-            *ps_event = (t_u16)WIFI_EVENT_DEEP_SLEEP;
+            mlan_adap->ps_state = PS_STATE_SLEEP;
         }
         else
         {
             return WIFI_EVENT_REASON_FAILURE;
+        }
+
+        if (ieeeps_enabled || deepsleepps_enabled
+        )
+        {
+            /* sleep confirm response needs to get the sleep_rwlock, for this lock
+             * is an indication that host needs to wakeup FW when reader (cmd/tx)
+             * could not get the sleep_rwlock */
+            int ret = os_rwlock_write_lock(&sleep_rwlock, OS_WAIT_FOREVER);
+            if (ret == WM_SUCCESS)
+            {
+                wcmdr_d("Get sleep rw lock successfully");
+            }
+            else
+            {
+                pwr_e("Failed to get sleep rw lock");
+                return WIFI_EVENT_REASON_FAILURE;
+            }
         }
 
         result = WIFI_EVENT_REASON_SUCCESS;

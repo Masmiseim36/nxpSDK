@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1015" name="EVK-MIMXRT1015" brief="This is SDK version 2.12.0 manifest file. It describes the content of the EVK-MIMXRT1015 and additional settings for tools that support SDK version 2.12.0" format_version="3.10" api_version="2.0.0" configuration="00a8832fb323935fe09f131b7f1e2749" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
-  <!--Timestamp (UTC): 2022-07-16 07:22:07.044000-->
-  <!--This manifest is generated based on sdk repo commit: 45d71c921a1dd3e0403549aa377535344ed9bc97-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1015" name="EVK-MIMXRT1015" brief="This is SDK version 2.12.1 manifest file. It describes the content of the EVK-MIMXRT1015 and additional settings for tools that support SDK version 2.12.1" format_version="3.10" api_version="2.0.0" configuration="8c55508a0692338667f1aff1a4319fed" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
+  <!--Timestamp (UTC): 2022-09-26 15:13:37.556718-->
+  <!--This manifest is generated based on sdk repo commit: 1d365316a284b27ce39c372d5a46d49869664ba1-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso2120" name="MCUXpresso2120" version="2.12.0" revision="611 2022-07-14"/>
+  <ksdk id="MCUXpresso2121" name="MCUXpresso2121" version="2.12.1" revision="632 2022-09-26"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -1239,79 +1239,6 @@ ${load}</script>
         </debug_configuration>
       </debug_configurations>
     </board>
-    <board id="evkmimxrt1015_om13790host" name="EVK-MIMXRT1015-OM13790HOST" href="https://www.nxp.com/pip/OM13790" version="1.0.0" package="MIMXRT1015DAF5A" type="kit">
-      <description>i.MX RT1015 Evaluation Kit with Sensor Toolbox Development Boards for a 9-Axis Solution using FXAS21002C and FXOS8700CQ</description>
-      <image path="boards/evkmimxrt1015_om13790host" type="image">
-        <files mask="evkmimxrt1015_om13790host.png"/>
-      </image>
-      <memory>
-        <memoryBlock id="BOARD_FLASH_evkmimxrt1015_om13790host" name="BOARD_FLASH" addr="60000000" size="01000000" type="ExtFlash" access="RO"/>
-      </memory>
-      <total_memory flash_size_kb="16384" ram_size_kb="32"/>
-      <examples>
-        <example id="evkmimxrt1015_om13790host_usb_pd_alt_mode_dp_host_bm" name="usb_pd_alt_mode_dp_host_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1015_om13790host_usb_pd_alt_mode_dp_host_freertos" name="usb_pd_alt_mode_dp_host_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1015_om13790host_usb_pd_bm" name="usb_pd_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd/bm">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd/bm" type="xml">
-            <files mask="usb_pd_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1015_om13790host_usb_pd_charger_battery_bm" name="usb_pd_charger_battery_bm" brief="the application simulate battery product , it prints the battery percent continually. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_charger_battery/bm">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_charger_battery/bm" type="xml">
-            <files mask="usb_pd_charger_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1015_om13790host_usb_pd_charger_battery_freertos" name="usb_pd_charger_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_charger_battery/freertos">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_charger_battery/freertos" type="xml">
-            <files mask="usb_pd_charger_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1015_om13790host_usb_pd_freertos" name="usb_pd_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd/freertos">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd/freertos" type="xml">
-            <files mask="usb_pd_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1015_om13790host_usb_pd_sink_battery_bm" name="usb_pd_sink_battery_bm" brief="The application simulate battery product , it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_sink_battery/bm">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_sink_battery/bm" type="xml">
-            <files mask="usb_pd_sink_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1015_om13790host_usb_pd_sink_battery_freertos" name="usb_pd_sink_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_sink_battery/freertos">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_sink_battery/freertos" type="xml">
-            <files mask="usb_pd_sink_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1015_om13790host_usb_pd_source_charger_bm" name="usb_pd_source_charger_bm" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_source_charger/bm">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_source_charger/bm" type="xml">
-            <files mask="usb_pd_source_charger_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1015_om13790host_usb_pd_source_charger_freertos" name="usb_pd_source_charger_freertos" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_source_charger/freertos">
-          <external path="boards/evkmimxrt1015_om13790host/usb_examples/usb_pd_source_charger/freertos" type="xml">
-            <files mask="usb_pd_source_charger_freertos_v3_10.xml"/>
-          </external>
-        </example>
-      </examples>
-      <debug_configurations>
-        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-          <drivers>
-            <driver id_refs="BOARD_FLASH_evkmimxrt1015_om13790host">
-              <driverBinary path="devices/MIMXRT1015/mcuxpresso" type="binary">
-                <files mask="MIMXRT1015_SFDP_QSPI.cfx"/>
-              </driverBinary>
-            </driver>
-          </drivers>
-        </debug_configuration>
-      </debug_configurations>
-    </board>
   </boards>
   <devices>
     <device id="MIMXRT1015xxxxx" name="MIMXRT1015" version="1.0.0" full_name="MIMXRT1015xxxxx" family="MIMXRT1015" platform="i.MX">
@@ -1400,39 +1327,6 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
-        <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="project_template.evkmimxrt1015_om13790host.MIMXRT1015" name="evkmimxrt1015_om13790host" brief="BOARD_Project_Template evkmimxrt1015_om13790host" version="1.0.0" full_name="BOARD_Project_Template evkmimxrt1015_om13790host" devices="MIMXRT1015xxxxx" device_cores="core0_MIMXRT1015xxxxx" category="Board Support/SDK Project Template" user_visible="true" type="project_template" package_base_path="boards/evkmimxrt1015_om13790host/project_template" project_base_path="evkmimxrt1015_om13790host/project_template">
-      <dependencies>
-        <all>
-          <component_dependency value="device.MIMXRT1015_startup.MIMXRT1015"/>
-          <component_dependency value="platform.drivers.lpuart.MIMXRT1015"/>
-          <component_dependency value="platform.drivers.common.MIMXRT1015"/>
-          <component_dependency value="platform.drivers.iomuxc.MIMXRT1015"/>
-          <component_dependency value="platform.drivers.igpio.MIMXRT1015"/>
-          <component_dependency value="platform.drivers.xip_device.MIMXRT1015"/>
-          <component_dependency value="platform.drivers.xip_board.evkmimxrt1015.MIMXRT1015"/>
-          <component_dependency value="utility.debug_console.MIMXRT1015"/>
-          <component_dependency value="platform.drivers.clock.MIMXRT1015"/>
-          <component_dependency value="component.lpuart_adapter.MIMXRT1015"/>
-          <component_dependency value="component.serial_manager_uart.MIMXRT1015"/>
-          <component_dependency value="component.serial_manager.MIMXRT1015"/>
-        </all>
-      </dependencies>
-      <source relative_path="./" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="pin_mux.c"/>
-        <files mask="peripherals.c"/>
-      </source>
-      <source relative_path="./" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="peripherals.h"/>
-      </source>
-      <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
@@ -26843,8 +26737,6 @@ ${load}</script>
         <files mask="MCUXpresso SDK USB Stack Device Reference Manual.pdf"/>
         <files mask="MCUXpresso SDK USB Stack Composite Device User's Guide.pdf"/>
         <files mask="MCUXpresso SDK USB Stack Composite Host User's Guide.pdf"/>
-        <files mask="MCUXpresso SDK USB Type-C PD Stack Reference Manual.pdf"/>
-        <files mask="MCUXpresso SDK USB Type-C Power Delivery Stack User's Guide.pdf"/>
       </source>
     </component>
     <component id="docs.fmstr.MIMXRT1015" name="FreeMASTER" brief="Driver code enabling communication between FreeMASTER or FreeMASTER Lite tools and MCU application. Supports Serial, CAN and BDM/JTAG physical interface." version="3.0.2" full_name="FreeMASTER communication driver" devices="MIMXRT1015xxxxx" user_visible="true" type="documentation" package_base_path="middleware/freemaster" project_base_path="freemaster">
@@ -41804,127 +41696,6 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="phy" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.MIMXRT1015" name="PD Stack" brief="Middleware usb_pd" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT1015xxxxx" device_cores="core0_MIMXRT1015xxxxx" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <component_dependency value="middleware.usb.pd.phy.ptn5110.MIMXRT1015"/>
-      </dependencies>
-      <source relative_path="pd" type="c_include">
-        <files mask="usb_pd.h"/>
-        <files mask="usb_pd_interface.h"/>
-        <files mask="usb_pd_phy.h"/>
-        <files mask="usb_pd_spec.h"/>
-        <files mask="usb_pd_timer.h"/>
-        <files mask="usb_pd_auto_policy.h"/>
-      </source>
-      <source relative_path="pd" type="src">
-        <files mask="usb_pd_connect.c"/>
-        <files mask="usb_pd_interface.c"/>
-        <files mask="usb_pd_msg.c"/>
-        <files mask="usb_pd_policy.c"/>
-        <files mask="usb_pd_timer.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_MIMXRT1015.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.altmode.MIMXRT1015" name="PD Alternate Mode" brief="Middleware usb_pd altmode" version="2.8.2" full_name="USB Type-C PD Alternate Mode" devices="MIMXRT1015xxxxx" device_cores="core0_MIMXRT1015xxxxx" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <component_dependency value="middleware.usb.pd.MIMXRT1015"/>
-      </dependencies>
-      <source relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="src">
-        <files mask="usb_pd_alt_mode.c"/>
-        <files mask="usb_pd_alt_mode_dp.c"/>
-      </source>
-      <source relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="c_include">
-        <files mask="usb_pd_alt_mode.h"/>
-        <files mask="usb_pd_alt_mode_dp.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_altmode_MIMXRT1015.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.compliance_test_report.MIMXRT1015" name="PD Compliance Test Report" brief="Middleware usb_pd compliance_test_report" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT1015xxxxx" user_visible="false" type="middleware" package_base_path="middleware/usb" project_base_path="./">
-      <source relative_path="pd/compliance_test_report/ellisys/consumer_provider" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp_try_snk" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp_try_src" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/provider_consumer" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/displayport_dock" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/displayport_host" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-    </component>
-    <component id="middleware.usb_pd.config_header.MIMXRT1015" name="PD Config Header" brief="USB Type-C PD Stack" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT1015xxxxx" user_visible="true" type="project_template" package_base_path="middleware/usb" project_base_path="source">
-      <source relative_path="output/npw/pd_config" project_relative_path="generated" type="c_include">
-        <files mask="usb_pd_config.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="output/npw/pd_config" project_relative_path="generated" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.phy.ptn5110.MIMXRT1015" name="PD PTN5110 Driver" brief="Middleware usb_pd phy ptn5110" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT1015xxxxx" device_cores="core0_MIMXRT1015xxxxx" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <all>
-          <component_dependency value="component.igpio_adapter.MIMXRT1015"/>
-          <component_dependency value="component.lpi2c_adapter.MIMXRT1015"/>
-          <component_dependency value="component.osa.MIMXRT1015"/>
-          <component_dependency value="middleware.usb_pd.config_header.MIMXRT1015"/>
-          <component_dependency value="middleware.usb.common_header.MIMXRT1015"/>
-        </all>
-      </dependencies>
-      <source relative_path="pd/ptn5110" project_relative_path="ptn5110" type="c_include">
-        <files mask="usb_pd_ptn5110.h"/>
-        <files mask="usb_pd_ptn5110_register.h"/>
-      </source>
-      <source relative_path="pd/ptn5110" project_relative_path="ptn5110" type="src">
-        <files mask="usb_pd_ptn5110_connect.c"/>
-        <files mask="usb_pd_ptn5110_hal.c"/>
-        <files mask="usb_pd_ptn5110_interface.c"/>
-        <files mask="usb_pd_ptn5110_msg.c"/>
-      </source>
-      <source relative_path="pd" type="c_include">
-        <files mask="usb_pd.h"/>
-        <files mask="usb_pd_interface.h"/>
-        <files mask="usb_pd_phy.h"/>
-        <files mask="usb_pd_spec.h"/>
-        <files mask="usb_pd_timer.h"/>
-      </source>
-      <source relative_path="pd" type="src">
-        <files mask="usb_pd_timer.c"/>
-      </source>
-      <source relative_path="pd/phy_interface" project_relative_path="phy_interface" type="c_include">
-        <files mask="usb_pd_i2c.h"/>
-      </source>
-      <source relative_path="pd/phy_interface" project_relative_path="phy_interface" type="src">
-        <files mask="usb_pd_i2c.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_phy_ptn5110_MIMXRT1015.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd/ptn5110" project_relative_path="ptn5110" type="c_include"/>
-        <include_path relative_path="pd" type="c_include"/>
-        <include_path relative_path="pd/phy_interface" project_relative_path="phy_interface" type="c_include"/>
       </include_paths>
     </component>
     <component id="platform.utilities.misc_utilities.MIMXRT1015" name="misc_utilities" brief="Utilities which is needed for particular toolchain like the SBRK function required to address limitation between HEAP and STACK in GCC toolchain library." version="1.1.0" full_name="Utilities miscellaneous" devices="MIMXRT1015xxxxx" user_visible="true" type="utilities" package_base_path="devices/MIMXRT1015/utilities" project_base_path="utilities">

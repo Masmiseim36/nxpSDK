@@ -52,8 +52,18 @@ static void wlan_pmfcfg_set(int argc, char *argv[])
         return;
     }
 
-    mfpc = (uint8_t)strtol(argv[1], NULL, 10);
-    mfpr = (uint8_t)strtol(argv[2], NULL, 10);
+    errno = 0;
+    mfpc  = (uint8_t)strtol(argv[1], NULL, 10);
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during wlan pmfcfg set arg_1 strtoul errno:%d", errno);
+    }
+    errno = 0;
+    mfpr  = (uint8_t)strtol(argv[2], NULL, 10);
+    if (errno != 0)
+    {
+        (void)PRINTF("Error during wlan pmfcfg set arg_2 strtoul errno:%d", errno);
+    }
 
     ret = wlan_set_pmfcfg(mfpc, mfpr);
     if (ret == WM_SUCCESS)
@@ -133,7 +143,7 @@ static void wlan_antcfg_set(int argc, char *argv[])
         (void)PRINTF("Error during strtoul errno:%d", errno);
     }
 
-    if ((argc == 3) && (ant_mode != 0xFFFF))
+    if ((argc == 3) && (ant_mode != 0xFFFFU))
     {
         dump_wlan_set_antcfg_usage();
         return;
@@ -183,7 +193,7 @@ static void wlan_antcfg_get(int argc, char *argv[])
     if (ret == WM_SUCCESS)
     {
         (void)PRINTF("Mode of Tx/Rx path is : %x\r\n", ant_mode);
-        if (ant_mode == 0XFFFF)
+        if (ant_mode == 0XFFFFU)
         {
             (void)PRINTF("Evaluate time : %x\r\n", evaluate_time);
         }
@@ -328,8 +338,8 @@ static void wlan_ed_mac_mode_get(int argc, char *argv[])
         dump_wlan_get_ed_mac_mode_usage();
     }
 }
-
-int wlan_memrdwr_getset(int argc, char *argv[])
+#if 0
+static int wlan_memrdwr_getset(int argc, char *argv[])
 {
     uint8_t action;
     uint32_t value;
@@ -371,7 +381,7 @@ int wlan_memrdwr_getset(int argc, char *argv[])
     }
     return WM_SUCCESS;
 }
-
+#endif
 static void dump_wlan_set_regioncode_usage(void)
 {
     (void)PRINTF("Usage:\r\n");
@@ -446,7 +456,7 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
         {
             (void)PRINTF("    Type:       0xFF (Auto)\r\n");
         }
-        else if (ds_rate.param.rate_cfg.rate_format <= 3U)
+        else if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) <= 3U)
         {
             (void)PRINTF("    Type:       %d (%s)\r\n", ds_rate.param.rate_cfg.rate_format,
                          rate_format[ds_rate.param.rate_cfg.rate_format]);
@@ -465,7 +475,9 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
             if ((ds_rate.param.rate_cfg.rate_format == MLAN_RATE_FORMAT_VHT) ||
                 (ds_rate.param.rate_cfg.rate_format == 3U))
+            {
                 (void)PRINTF("    NSS:        %d\r\n", (int)ds_rate.param.rate_cfg.nss);
+            }
 #endif
         }
         else
@@ -525,7 +537,7 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
         }
 #else
         (void)PRINTF("  TX: \r\n");
-        if (datarate->tx_rate_format <= 3U)
+        if ((unsigned int)(datarate->tx_rate_format) <= 3U)
         {
             (void)PRINTF("    Type: %s\r\n", rate_format[datarate->tx_rate_format]);
             if ((datarate->tx_rate_format == MLAN_RATE_FORMAT_LG) && datarate->tx_data_rate <= 11U)
@@ -549,9 +561,10 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
                     (void)PRINTF("    GI:   Short\r\n");
                 }
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
-                if ((datarate->tx_rate_format == 2U) || (datarate->tx_rate_format == 3U))
+                if (((unsigned int)(datarate->tx_rate_format) == 2U) ||
+                    ((unsigned int)(datarate->tx_rate_format) == 3U))
                 {
-                    (void)PRINTF("    NSS:  %d\r\n", datarate->tx_nss + 1);
+                    (void)PRINTF("    NSS:  %d\r\n", datarate->tx_nss + 1U);
                 }
 #endif
                 if (datarate->tx_mcs_index != 0xFFU)
@@ -562,12 +575,13 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
                 {
                     (void)PRINTF("    MCS:  Auto\r\n");
                 }
-                (void)PRINTF("    Rate: %f Mbps\r\n", (float)datarate->tx_data_rate / 2U);
+
+                (void)PRINTF("    Rate: %f Mbps\r\n", (float)datarate->tx_data_rate / (float)2);
             }
         }
 
         (void)PRINTF("  RX: \r\n");
-        if (datarate->rx_rate_format <= 3U)
+        if ((unsigned int)(datarate->rx_rate_format) <= 3U)
         {
             (void)PRINTF("    Type: %s\r\n", rate_format[datarate->rx_rate_format]);
             if ((datarate->rx_rate_format == MLAN_RATE_FORMAT_LG) && datarate->rx_data_rate <= 11U)
@@ -591,9 +605,10 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
                     (void)PRINTF("    GI:   Short\r\n");
                 }
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
-                if ((datarate->rx_rate_format == 2U) || (datarate->rx_rate_format == 3U))
+                if (((unsigned int)(datarate->rx_rate_format) == 2U) ||
+                    ((unsigned int)(datarate->rx_rate_format) == 3U))
                 {
-                    (void)PRINTF("    NSS:  %d\r\n", datarate->rx_nss + 1);
+                    (void)PRINTF("    NSS:  %d\r\n", datarate->rx_nss + 1U);
                 }
 #endif
                 if (datarate->rx_mcs_index != 0xFFU)
@@ -604,7 +619,7 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
                 {
                     (void)PRINTF("    MCS:  Auto\n");
                 }
-                (void)PRINTF("    Rate: %f Mbps\r\n", (float)datarate->rx_data_rate / 2);
+                (void)PRINTF("    Rate: %f Mbps\r\n", (float)datarate->rx_data_rate / (float)2);
             }
         }
 #endif
@@ -730,23 +745,29 @@ static void test_wlan_set_txratecfg(int argc, char **argv)
     errno                      = 0;
     ds_rate.param.rate_cfg.nss = (t_u32)strtol(argv[3], NULL, 0);
     if (errno != 0)
+    {
         (void)PRINTF("Error during strtoul errno:%d", errno);
+    }
+    else
+    {
+        /*Do Nothing*/
+    }
 #endif
 
 #ifdef CONFIG_11AX
-    if (ds_rate.param.rate_cfg.rate_format > 3U)
+    if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) > 3U)
 #elif defined(CONFIG_11AC)
-    if (ds_rate.param.rate_cfg.rate_format > 2U)
+    if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) > 2U)
 #else
-if (ds_rate.param.rate_cfg.rate_format > 1U)
+if ((unsigned int)(ds_rate.param.rate_cfg.rate_format) > 1U)
 #endif
     {
         (void)PRINTF("Invalid format selection\r\n");
         goto done;
     }
 
-    if (((ds_rate.param.rate_cfg.rate_format == 0U) && (ds_rate.param.rate_cfg.rate_index > 11U))
-        || ((ds_rate.param.rate_cfg.rate_format == 1U) && (ds_rate.param.rate_cfg.rate_index != 32U) &&
+    if ((((unsigned int)(ds_rate.param.rate_cfg.rate_format) == 0U) && (ds_rate.param.rate_cfg.rate_index > 11U))
+        || (((unsigned int)(ds_rate.param.rate_cfg.rate_format) == 1U) && (ds_rate.param.rate_cfg.rate_index != 32U) &&
             (ds_rate.param.rate_cfg.rate_index > 7U))
     )
     {
@@ -756,7 +777,7 @@ if (ds_rate.param.rate_cfg.rate_format > 1U)
 
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
     /* NSS is supported up to 2 */
-    if ((ds_rate.param.rate_cfg.nss <= 0) || (ds_rate.param.rate_cfg.nss >= 3))
+    if ((ds_rate.param.rate_cfg.nss <= 0U) || (ds_rate.param.rate_cfg.nss >= 3U))
     {
         (void)PRINTF("Invalid nss selection\r\n");
         goto done;
@@ -842,7 +863,7 @@ void print_txpwrlimit(wlan_txpwrlimit_t txpwrlimit)
     (void)PRINTF("\r\n");
 }
 
-void print_chanlist(wlan_chanlist_t chanlist)
+static void print_chanlist(wlan_chanlist_t chanlist)
 {
     unsigned char i;
 

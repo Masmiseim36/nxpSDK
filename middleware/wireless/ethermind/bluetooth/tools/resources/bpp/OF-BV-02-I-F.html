@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing CSS Constructs for XHTML Print - Part 6</title>
+	<style type="text/css">
+	div{font-weight: bold;}
+	.italic{font-style:italic;}
+	.black {color: black;}
+	.silver {color: silver;}
+	.gray {color: gray;}
+	.white {color: white;background-color: blue;}
+	.maroon {color: maroon;}
+	.red {color: red;}
+	.purple {color: purple;}
+	.fuchsia {color: fuchsia;}
+	.red1{color:#f00;}
+	.red2 {color: #ff0000;}
+	.red3 {color: rgb(255,0,0);}
+	.red4{color:rgb(100%,0%,0%);}
+	.green {color: green;}
+	.lime {color: lime;}
+	.olive {color: olive;}
+	.yellow{color: yellow;}
+	.navy {color: navy;}
+	.blue {color: blue;}
+	.teal {color: teal;}
+	.aqua {color: aqua;}
+	.serif {font-family: serif;}
+	.ss {font-family: sans-serif;}
+	.mono {font-family: monospace;}
+	.italic {font-style: italic;}
+	.normal {font-style: normal;}
+	.w100 {font-weight: 100;}
+	.w500 {font-weight: 500;}
+	.w900 {font-weight: 900;}
+	.bold {font-weight: bold;}
+	.bolder {font-weight: bolder;}
+	.normw {font-weight: normal;}
+	.light {font-weight: light;}
+	.lighter {font-weight: lighter;}
+	.xxsmall {font-size: xx-small;}
+	.xsmall {font-size: x-small;}
+	.small {font-size: small;}
+	.smaller {font-size: smaller;}
+	.medium {font-size: medium;}
+	.large {font-size: large;}
+	.xlarge {font-size: x-large;}
+	.xxlarge {font-size: xx-large;}
+	.larger {font-size: larger;}
+	.pt18 {font-size: 18pt;}
+	.percent2 {font-size: 200%;}
+	.lhinch {line-height: 0.5in;}
+	.lhmm {line-height: 13mm;}
+	.lhex {line-height: 6ex;}
+	.lhpt {line-height: 36pt;}
+	.outside {list-style-position: outside;}
+	.inside {list-style-position: inside;}
+	.disc {list-style-type: disc;}
+	.lalpha {list-style-type: lower-alpha;}
+	.ualpha {list-style-type: upper-alpha;}
+	.none {list-style-type: none;}
+	.decimal {list-style-type: decimal;}
+	.inherit {list-style-type: inherit;}
+	
+
+
+	</style>
+</head>
+
+<body>
+<h1> BPP TSS Section 5.5.1.2 TP/OF/BV-02-I-F [Printer - XHTML: CSS Constructs Part 6]</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<h2> Testing color - non-color printers must render appropriately i.e., in monchrome or grayscale, depending on the device
+capability</h2><div>
+<p class = "black"> This line should be black.</p>
+<p class = "silver"> This line should be silver.</p>
+<p class = "gray"> This line should be gray.</p>
+<p class = "maroon"> This line should be maroon.</p>
+<p class = "red"> This line should be red.</p>
+<p class = "purple"> This line should be purple.</p>
+<p class = "fuchsia"> This line should be fuchsia.</p>
+<p class = "green"> This line should be green.</p>
+<p class = "lime"> This line should be lime.</p>
+<p class = "olive"> This line should be olive.</p>
+<p class = "yellow"> This line should be yellow.</p>
+<p class = "navy"> This line should be navy.</p>
+<p class = "blue"> This line should be blue.</p>
+<p class = "teal"> This line should be teal.</p>
+<p class = "aqua"> This line should be aqua.</p>
+<p class = "white"> This line should be white on a blue background.</p>
+<p class = "red1"> This line should be red (using three digit RGB hex notation).</p>
+<p class = "red2"> This line should be red (using six digit RGB hex notation).</p>
+<p class = "red3"> This line should be red (using RGB integer value notation).</p>
+<p class = "red4"> This line should be red (using RGB percentage value notation).</p>
+</div>
+<p><br /><br /></p>
+
+<h2> Testing font-family</h2>
+<p class = "serif"> This sentence should be in a serif font.</p>
+<p class = "ss"> This sentence should be in a sans-serif font. </p>
+<p class = "mono"> This sentence must be in a mono-space font. </p>
+<p><br /><br /></p>
+
+<h2> Testing font-size</h2>
+<p class = "xxsmall" > This sentence has a font-size of xx-small. </p>
+<p class = "xsmall" > This sentence has a font-size of x-small and should be larger than the last sentence. It must not be smaller.</p>
+<p class = "small" > This sentence has a font-size of small and should be larger than the last sentence. It must not be smaller.</p>
+<p class = "medium" > This sentence has a font-size of medium and should be larger than the last sentence. It must not be smaller.</p>
+<p class = "large" > This sentence has a font-size of large and should be larger than the last sentence. It must not be smaller.</p>
+<p class = "xlarge" > This sentence has a font-size of x-large and should be larger than the last sentence. It must not be smaller.</p>
+<p class = "xxlarge" > This sentence has a font-size of xx-large and should be larger than the last sentence. It must not be smaller.</p>
+<p class = "smaller" > This sentence should be smaller than the one above it. It must not be larger.</p>
+<p class = "larger" > This sentence should be larger than the one above it. It must not be smaller.</p>
+<p class = "percent2" > This sentence should be twice as tall as normal except for the last <span class="medium">word.
+</span> </p>
+<p><br /><br /></p>
+
+<h2> Testing font-style</h2>
+<p class = "italic" > This sentence must be in italics. </p>
+<p class = "normal" > This sentence must be normal. </p>
+<p><br /><br /></p>
+
+<h2> Testing font-weight </h2>
+<p class = "w100" > This sentence should have a font weight of 100. </p>
+<p class = "w900" > This sentence should have a font weight of 900, it must be bolder than the the line above. </p>
+<p class = "lighter" > This sentence should be the same weight or lighter than the one above it. </p>
+<p class = "bold" > This sentence must be bold. </p>
+<p class = "light" > This sentence must be lighter than the one above it </p>
+<p class = "bolder" > This sentence must be bolder than the one above it, but the last word
+must be <span class = "normw"> normal </span> </p>
+<p><br /><br /></p>
+
+<h2> Testing line-height</h2>
+<p class = "italic"> For the following sentences, "line-height" refers to the amount of space above the line, and "extra spacing" means that there is more space between lines than the size of the text font.</p>
+<p class = "lhinch"> This text should have a line-height of approximately half an inch which must cause extra spacing between the lines. This text should have a line-height of approximately half an inch which must cause extra spacing between the lines.</p>
+<p class = "lhmm"> This text should have a line-height of approximately 13 millimeters which must cause extra spacing between the lines. This text should have a line-height of approximately 13 millimeters which must cause extra spacing between the lines.</p>
+<p class = "lhex"> This text should have a line-height of approximately 6 ex which must cause extra spacing between the lines. This text should have a line-height of approximately 6 ex which must cause extra spacing between the lines.</p>
+<p class = "lhpt">This text should have a line-height of approximately 36 pts which must cause extra spacing between the lines. This text should have a line-height of approximately 36 pts which must cause extra spacing between the lines.</p>
+<p><br /><br /></p>
+
+<h2> Testing list-style-position</h2>
+<ul class="outside">
+<li>The text in this list item must line up with itself at the left margin leaving blank space beneath the bullet. 
+The text in this list item must line up with itself at the left margin leaving blank space beneath the bullet.</li>
+</ul>
+<ul class="inside">
+<li>The text in this list item must line up with the bullet at the left margin leaving no blank space beneath the bullet. 
+The text in this list item must line up with the bullet at the left margin leaving no blank space beneath the bullet. </li>
+</ul>
+<p><br /><br /></p>
+
+<h2> Testing list-style-type</h2>
+<ul class="disc">
+<li>This list</li>
+<li>should have</li>
+<li>discs for each item.</li>
+</ul>
+<ol class="lalpha">
+<li>This list</li>
+<li>must have</li>
+<li>lowercase letters for each item.</li>
+</ol>
+<ol class="ualpha">
+<li>This list</li>
+<li>must have </li>
+<li>uppercase letters for each item.</li>
+</ol>
+
+<ul class="none">
+<li>This list</li>
+<li>must have </li>
+<li>no bullets or leading symbols</li>
+<li>for each item.</li>
+</ul>
+
+<ol class="decimal">
+<li>This list </li>
+<li>must have</li>
+<li>numbers for each item
+	<ol class="inherit">
+	<li>This list is nested</li>
+	<li>and must inherit</li>
+	<li>numbers for each item</li>
+	</ol>
+</li>
+<li>end of the list</li>	
+</ol>
+
+<p><br /><br /></p>
+
+<h3>end of test</h3>
+
+
+
+
+
+</body>
+</html>

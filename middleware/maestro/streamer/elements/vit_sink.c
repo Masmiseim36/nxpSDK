@@ -44,13 +44,9 @@ static uint8_t vitsink_sink_pad_activation_handler(StreamPad *pad, uint8_t activ
 
     if (true == ret)
     {
-        /* In case of activation, activate the peer source pad to push mode. */
-        if (true == active)
-        {
-            /* Activate/Deactivate peer source pads in PUSH mode */
-            vit_sink_element->current_index = 0;
-            ret                             = pad_activate_push(pad->peer, active);
-        }
+        /* Activate/Deactivate peer source pads in PUSH mode */
+        vit_sink_element->current_index = 0;
+        ret                             = pad_activate_push(pad->peer, active);
     }
 
     if (ret != true)
@@ -122,6 +118,11 @@ static FlowReturn vitsink_sink_pad_chain_handler(StreamPad *pad, StreamBuffer *b
 
     if (vit_sink_element->initialized == false)
     {
+        if (vit_sink_element->init_func == NULL)
+        {
+            STREAMER_LOG_DEBUG(DBG_VIT_SINK, "[Vit SINK]External VIT init function is not registered");
+            return false;
+        }
         vit_ret = vit_sink_element->init_func(&dummy_arg);
         if (vit_ret != 0)
         {
@@ -135,6 +136,11 @@ static FlowReturn vitsink_sink_pad_chain_handler(StreamPad *pad, StreamBuffer *b
     }
 
     /* Call the process function pointer */
+    if (vit_sink_element->proc_func == NULL)
+    {
+        STREAMER_LOG_DEBUG(DBG_VIT_SINK, "[Vit SINK]External VIT process function is not registered");
+        return FLOW_ERROR;
+    }
     vit_ret = vit_sink_element->proc_func(&dummy_arg, (short *)data_ptr, chunk_size);
     if (vit_ret != 0)
     {
@@ -500,13 +506,13 @@ int32_t vitsink_set_raw_write_mode(ElementHandle element_hdl, uint8_t raw_write_
     return ret;
 }
 
-bool vit_register_ext_processing(ElementHandle element,
-                                 VitSinkInitFunc init_func_ptr,
-                                 VitSinkPostProcFunc proc_func_ptr,
-                                 VitSinkDeinitFunc deinit_func_ptr,
-                                 void *arg_ptr)
+int32_t vit_register_ext_processing(ElementHandle element,
+                                    VitSinkInitFunc init_func_ptr,
+                                    VitSinkPostProcFunc proc_func_ptr,
+                                    VitSinkDeinitFunc deinit_func_ptr,
+                                    void *arg_ptr)
 {
-    bool ret = false;
+    int32_t ret = STREAM_OK;
 
     ElementVitSink *vit_sink_ptr = (ElementVitSink *)element;
 
@@ -515,7 +521,7 @@ bool vit_register_ext_processing(ElementHandle element,
     if ((NULL == vit_sink_ptr) || (NULL == init_func_ptr) || (NULL == proc_func_ptr) || (NULL == deinit_func_ptr))
     {
         STREAMER_FUNC_EXIT(DBG_VIT_SINK);
-        return false;
+        return STREAM_ERR_INVALID_ARGS;
     }
 
     vit_sink_ptr->init_func   = init_func_ptr;

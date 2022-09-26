@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title> Testing CSS Constructs for XHTML Print - Part 1</title>
+	<style type="text/css">
+	*.universal{font-style:italic;}   /* universal selector  */
+	p em {color: blue;}                  /* type selector and descendant selector  */
+	ol > li p {color: red;} 		/* child selector and descendant selector  */
+	*#idselect {color: green;}	/* id selector  */
+	.bold {font-weight: bold;}
+	div[class]{color: purple;}	/* attribute selector  */
+
+	.gray {color: gray; }	/* less specific, first */
+	p.green {color: green; }	/* more specific, first */
+	.red {color: red; }		/* less specific, last */
+	p.purple {color: purple; }	/* more specific, last */
+	</style>
+</head>
+
+<body>
+<h1>BPP TSS Section 5.5.1.2 TP/OF/BV-02-I-A  [Printer - XHTML: CSS Basics - Cascade and Selectors]</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<h2> Testing Selectors</h2>
+<p><br /></p>
+<p class = "universal">This line should be in italics.</p>
+<p><br /></p>
+<p> This text should be normal, but<em> this empasized text should be blue. </em></p> 
+<p><br /></p>
+<ol>
+<li>This is text in a list</li>
+<li><p>This line should be red</p></li>
+<li>This is the last line in the list.</li>
+</ol>
+<p><br /></p>
+<p id="idselect"> This line should be green. </p>
+<p><br /></p>
+
+
+<div class = "bold"> This line should be purple and bold </div>
+
+<p><br /><br /></p>
+<h2> Testing the Cascade</h2>
+
+<p class="gray">This line should be gray.</p>
+<p class="green">This line should be green.</p>
+<p class="red">This line should be red.</p>
+<p class="purple">This line should be purple.</p>
+
+
+<p class="gray green">This line should be green.</p>
+
+<p class="green gray">This line should be green.</p>
+
+<p class="red green">This line should be green.</p>
+
+<p class="green red">This line should be green.</p>
+
+<p class="gray purple">This line should be purple.</p>
+
+<p class="purple gray">This line should be purple.</p>
+
+<p class="red purple">This line should be purple.</p>
+
+<p class="purple red">This line should be purple.</p>
+
+<p class="gray red">This line should be red.</p>
+
+<p class="red gray">This line should be red.</p>
+
+<p class="green purple">This line should be purple.</p>
+
+<p class="purple green">This line should be purple.</p>
+
+
+<p><br /><br /></p>
+<h3>end of test</h3>
+
+
+
+</body>
+</html>

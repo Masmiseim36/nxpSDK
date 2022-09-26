@@ -18,7 +18,7 @@ Change log:
 #define _MLAN_11N_AGGR_H_
 
 /** Aggregate 11N packets */
-mlan_status wlan_11n_deaggregate_pkt(pmlan_private priv, pmlan_buffer pmbuf);
+mlan_status wlan_11n_deaggregate_pkt(mlan_private *priv, pmlan_buffer pmbuf);
 /** Deaggregate 11N packets */
 int wlan_11n_aggregate_pkt(mlan_private *priv, raListTbl *ptr, int headroom, int ptrindex);
 

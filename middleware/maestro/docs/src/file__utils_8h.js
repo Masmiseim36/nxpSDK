@@ -11,6 +11,7 @@ var file__utils_8h =
     [ "FILE_RDWR", "file__utils_8h.html#a361ff1a704030be31d3fb85f2828328c", null ],
     [ "FILE_APPEND", "file__utils_8h.html#abb57841952be5b0be972b4bef8fd5021", null ],
     [ "FILE_CREAT", "file__utils_8h.html#a478be9597afe3f6652506eed4cc8113c", null ],
+    [ "FILE_TRUNC", "file__utils_8h.html#a7b85205c70207e13afa50aa70078d1fc", null ],
     [ "file_open", "file__utils_8h.html#aba2634b247480a232e0587d0479e26ce", null ],
     [ "file_close", "file__utils_8h.html#a3221c0cdf262b037da1d08b55c73137c", null ],
     [ "file_read", "file__utils_8h.html#aebece41d54b9bb5df2d3274b897fb735", null ],

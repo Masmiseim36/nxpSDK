@@ -24,7 +24,6 @@
 
 #ifdef __GNUC__
 #define WARN_UNUSED_RET __attribute__((warn_unused_result))
-#define WEAK            __attribute__((weak))
 
 #ifndef PACK_START
 #define PACK_START
@@ -35,7 +34,7 @@
 #define NORETURN __attribute__((noreturn))
 
 /* alignment value should be a power of 2 */
-#define ALIGN_X(num, align) MASK(num, (typeof(num))align - 1)
+#define ALIGN_X(num, align) WM_MASK(num, (typeof(num))align - 1)
 
 #define ALIGN_2(num)  ALIGN_X(num, 2)
 #define ALIGN_4(num)  ALIGN_X(num, 4)
@@ -46,7 +45,6 @@
 #else /* __GNUC__ */
 
 #define WARN_UNUSED_RET
-#define WEAK __weak
 
 #define PACK_START __packed
 #define PACK_END
@@ -54,9 +52,18 @@
 
 #endif /* __GNUC__ */
 
+/* Weak function. */
+#if defined(__GNUC__)
+#define WEAK __attribute__((weak))
+#elif defined(__ICCARM__)
+#define WEAK __weak
+#elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
+#define WEAK __attribute__((weak))
+#endif
+
 /* alignment value should be a power of 2 */
-#define __WM_ALIGN__(num, num_type, align) MASK(num, (num_type)align - 1)
-#define MASK(num, mask)                    ((num + mask) & ~(mask))
+#define __WM_ALIGN__(num, num_type, align) WM_MASK(num, (num_type)align - 1)
+#define WM_MASK(num, mask)                    ((num + mask) & ~(mask))
 
 NORETURN void wmpanic(void);
 
@@ -84,7 +91,7 @@ static inline unsigned int hex2bin(const uint8_t *ibuf, uint8_t *obuf, unsigned 
     unsigned int j  = 0; /* current character */
     unsigned int by = 0; /* byte value for conversion */
     unsigned char ch;    /* current character */
-    unsigned int len = strlen((char *)ibuf);
+    unsigned int len = strlen((const char *)ibuf);
     /* process the list of characters */
     for (i = 0; i < len; i++)
     {
@@ -248,9 +255,9 @@ static inline void dump_hex(const void *data, unsigned len)
 {
     (void)PRINTF("**** Dump @ %p Len: %d ****\n\r", data, len);
 
-    unsigned int i;
+    unsigned int i    = 0;
     const char *data8 = (const char *)data;
-    for (i = 0; i < len;)
+    while (i < len)
     {
         (void)PRINTF("%02x ", data8[i++]);
         if (!(i % DUMP_WRAPAROUND))

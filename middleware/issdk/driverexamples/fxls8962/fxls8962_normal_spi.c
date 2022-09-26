@@ -71,6 +71,7 @@ const registerreadlist_t cFxls8962OutputNormal[] = {{.readFrom = FXLS8962_OUT_X_
 int main(void)
 {
     int32_t status;
+    uint8_t whoami;
     uint8_t gFxls8962DataReady;
     uint8_t data[FXLS8962_DATA_SIZE];
     fxls8962_acceldata_t rawData;
@@ -84,7 +85,7 @@ int main(void)
     BOARD_SystickEnable();
     BOARD_InitDebugConsole();
 
-    PRINTF("\r\n ISSDK FXLS8962 sensor driver example demonstration for SPI with Poll Mode.\r\n");
+    PRINTF("\r\n ISSDK FXLS896x sensor driver example demonstration for SPI with Poll Mode.\r\n");
 
     /*! Initialize the SPI driver. */
     status = pSPIdriver->Initialize(SPI_S_SIGNAL_EVENT);
@@ -112,13 +113,28 @@ int main(void)
 
     /*! Initialize the fxls8962 sensor driver. */
     status = FXLS8962_SPI_Initialize(&fxls8962Driver, &SPI_S_DRIVER, SPI_S_DEVICE_INDEX, &FXLS8962_CS,
-                                     FXLS8962_WHOAMI_VALUE);
+    		&whoami);
     if (SENSOR_ERROR_NONE != status)
     {
-        PRINTF("\r\n FXLS8962 Sensor Initialization Failed\r\n");
+        PRINTF("\r\n FXLS896x Sensor Initialization Failed\r\n");
         return -1;
     }
-    PRINTF("\r\n Successfully Initiliazed FXLS8962 Sensor\r\n");
+    if ((FXLS8964_WHOAMI_VALUE == whoami) || (FXLS8967_WHOAMI_VALUE == whoami))
+    {
+    	PRINTF("\r\n Successfully Initialized Gemini with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else if (FXLS8974_WHOAMI_VALUE == whoami)
+    {
+    	PRINTF("\r\n Successfully Initialized Timandra with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else if (FXLS8962_WHOAMI_VALUE == whoami)
+    {
+    	PRINTF("\r\n Successfully Initialized Newstein with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else
+    {
+    	PRINTF("\r\n Bad WHO_AM_I = 0x%X\r\n", whoami);
+    }
 
     /*!  Set the task to be executed while waiting for SPI transactions to complete. */
     FXLS8962_SPI_SetIdleTask(&fxls8962Driver, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);
@@ -127,10 +143,10 @@ int main(void)
     status = FXLS8962_SPI_Configure(&fxls8962Driver, cFxls8962ConfigNormal);
     if (SENSOR_ERROR_NONE != status)
     {
-        PRINTF("\r\n FXLS8962 Sensor Configuration Failed, Err = %d\r\n", status);
+        PRINTF("\r\n FXLS896x Sensor Configuration Failed, Err = %d\r\n", status);
         return -1;
     }
-    PRINTF("\r\n Successfully Applied FXLS8962 Sensor Configuration\r\n");
+    PRINTF("\r\n Successfully Applied FXLS896x Sensor Configuration\r\n");
 
     for (;;) /* Forever loop */
     {
@@ -155,6 +171,6 @@ int main(void)
         rawData.accel[2] = ((int16_t)data[5] << 8) | data[4];
 
         /* NOTE: PRINTF is relatively expensive in terms of CPU time, specially when used with-in execution loop. */
-        PRINTF("\r\nX=%5d Y=%5d Z=%5d\r\n", rawData.accel[0], rawData.accel[1], rawData.accel[2]);
+        PRINTF("\r\n X=%5d Y=%5d Z=%5d\r\n", rawData.accel[0], rawData.accel[1], rawData.accel[2]);
     }
 }

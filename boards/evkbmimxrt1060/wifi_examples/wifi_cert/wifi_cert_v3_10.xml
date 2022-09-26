@@ -186,6 +186,9 @@
       <files mask="data.ldt"/>
       <files mask="main_text.ldt"/>
     </source>
+    <source path="." project_relative_path="source" type="c_preinclude">
+      <files mask="app_config.h"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="main.c"/>
     </source>
@@ -216,9 +219,6 @@
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
       <files mask="dcd.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_preinclude">
-      <files mask="app_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="wifi_config.h"/>

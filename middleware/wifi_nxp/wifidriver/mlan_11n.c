@@ -202,7 +202,7 @@ static int wlan_is_txbastreamptr_valid(mlan_private *priv, TxBAStreamTbl *ptxtbl
  *
  *  @return             N/A
  */
-static void wlan_fill_cap_info(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, mlan_band_def bands)
+static void wlan_fill_cap_info(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, t_u16 bands)
 {
     mlan_adapter *pmadapter = priv->adapter;
     t_u32 usr_dot_11n_dev_cap;
@@ -324,7 +324,7 @@ static void wlan_fill_cap_info(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap,
  *
  *  @return             N/A
  */
-void wlan_fill_ht_cap_tlv(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, mlan_band_def bands)
+void wlan_fill_ht_cap_tlv(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, t_u16 bands)
 {
     mlan_adapter *pmadapter = priv->adapter;
     int rx_mcs_supp;
@@ -333,7 +333,7 @@ void wlan_fill_ht_cap_tlv(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, mlan
     ENTER();
 
 #ifdef CONFIG_5GHz_SUPPORT
-    if (bands & BAND_A)
+    if ((bands & BAND_A) != 0U)
     {
         usr_dot_11n_dev_cap = pmadapter->usr_dot_11n_dev_cap_a;
     }
@@ -358,7 +358,7 @@ void wlan_fill_ht_cap_tlv(mlan_private *priv, MrvlIETypes_HTCap_t *pht_cap, mlan
     (void)__memset(pmadapter, (t_u8 *)&pht_cap->ht_cap.supported_mcs_set[rx_mcs_supp], 0, NUM_MCS_FIELD - rx_mcs_supp);
     /* Set MCS32 with 40MHz support */
     /* if current channel only support 20MHz, we should not set 40Mz supprot*/
-    if (ISSUPP_CHANWIDTH40(usr_dot_11n_dev_cap))
+    if (ISSUPP_CHANWIDTH40(usr_dot_11n_dev_cap) != 0U)
     {
         SETHT_MCS32(pht_cap->ht_cap.supported_mcs_set);
     }
@@ -655,7 +655,7 @@ static int wlan_check_chan_width_ht40_by_region(IN mlan_private *pmpriv, IN BSSD
 #endif
     num_cfp = pmadapter->region_channel[0].num_cfp;
 
-    if ((pbss_desc->bss_band & (mlan_band_def)(BAND_B | BAND_G)) && pmadapter->region_channel[0].valid)
+    if ((pbss_desc->bss_band & (BAND_B | BAND_G)) && pmadapter->region_channel[0].valid)
     {
         for (i = 0; i < num_cfp; i++)
         {
@@ -753,6 +753,10 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
         (pbss_desc->bss_band & (BAND_B | BAND_G | BAND_GN)))
     {
         orig_usr_dot_11n_dev_cap = usr_dot_11n_dev_cap;
+#ifdef RW610
+        RESETSUPP_CHANWIDTH40(usr_dot_11n_dev_cap);
+        RESETSUPP_SHORTGI40(usr_dot_11n_dev_cap);
+#endif
         RESET_40MHZ_INTOLARENT(usr_dot_11n_dev_cap);
         pmadapter->usr_dot_11n_dev_cap_bg = usr_dot_11n_dev_cap;
         pbss_desc->curr_bandwidth         = BW_20MHZ;
@@ -766,6 +770,11 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
         pht_cap->header.len  = sizeof(HTCap_t);
         (void)__memcpy(pmadapter, (t_u8 *)pht_cap + sizeof(MrvlIEtypesHeader_t),
                        (t_u8 *)pbss_desc->pht_cap + sizeof(IEEEtypes_Header_t), pht_cap->header.len);
+
+        if (!ISSUPP_CHANWIDTH40(usr_dot_11n_dev_cap))
+        {
+            pht_cap->ht_cap.ht_cap_info &= ~(MBIT(1) | MBIT(6));
+        }
 
         pht_cap->ht_cap.ht_cap_info = wlan_le16_to_cpu(pht_cap->ht_cap.ht_cap_info);
         pht_cap->ht_cap.ht_ext_cap  = wlan_le16_to_cpu(pht_cap->ht_cap.ht_ext_cap);
@@ -807,6 +816,7 @@ t_u32 wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_
         pchan_list->chan_scan_param[0].radio_type  = wlan_band_to_radio_type((t_u8)pbss_desc->bss_band);
         /* support the VHT if the network to be join has the VHT operation */
         if (ISSUPP_11ACENABLED(pmadapter->fw_cap_info) && (usr_dot_11ac_bw == BW_FOLLOW_VHTCAP) &&
+            ISSUPP_CHANWIDTH40(pmadapter->hw_dot_11n_dev_cap) &&
             wlan_11ac_bandconfig_allowed(pmpriv, pbss_desc->bss_band) && pbss_desc->pvht_oprat != MNULL &&
             pbss_desc->pvht_oprat->chan_width == VHT_OPER_CHWD_80MHZ)
         {
@@ -1060,7 +1070,7 @@ TxBAStreamTbl *wlan_11n_get_txbastream_tbl(mlan_private *priv, int tid, t_u8 *ra
  *
  *  @return 	    MLAN_STATUS_SUCCESS or MLAN_STATUS_FAILURE
  */
-int wlan_send_addba(mlan_private *priv, int tid, t_u8 *peer_mac)
+int wlan_send_addba(mlan_private *priv, int tid, const t_u8 *peer_mac)
 {
     HostCmd_DS_11N_ADDBA_REQ add_ba_req;
     static t_u8 dialog_tok;

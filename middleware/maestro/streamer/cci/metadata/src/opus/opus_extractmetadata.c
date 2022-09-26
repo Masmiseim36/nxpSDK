@@ -68,23 +68,22 @@ int32_t codec_extract_metadata_opus(file_meta_data_t *MetaData, CCI_Ctx *ctx)
 ////////////////////////////////////////////////////////////////////////////////
 int32_t codec_extract_metadata_ogg_opus(file_meta_data_t *MetaData, CCI_Ctx *ctx)
 {
+    int ret = 0;
     uint8_t opus_buf[60];
     OpusHead head = {0};
 
-    ctx->cci_dec_read(0, (uint8_t *)&opus_buf, sizeof(opus_buf), 0, ctx->user_data);
+    ctx->cci_dec_read(0, opus_buf, sizeof(opus_buf), 0, ctx->user_data);
 
-    if (op_test(&head, (unsigned char *)&opus_buf, sizeof(opus_buf)) < 0)
+    ret = op_test(&head, opus_buf, sizeof(opus_buf));
+    if (ret < 0)
     {
         /* Cannot parse header */
         return CODEC_METADATA_NOT_FOUND;
     }
 
-    MetaData->sample_rate = head.input_sample_rate;
-    if (MetaData->sample_rate != 48000U && MetaData->sample_rate != 24000U && MetaData->sample_rate != 16000U &&
-        MetaData->sample_rate != 12000U && MetaData->sample_rate != 8000U)
-    {
-        MetaData->sample_rate = 48000U;
-    }
+    /* Set the sample rate to 48kHz because the output data from the op_read() function is always at 48kHz. */
+    MetaData->sample_rate = 48000U;
+
     MetaData->num_channels = head.channel_count;
     MetaData->stream_type  = STREAM_TYPE_OGG_OPUS;
 

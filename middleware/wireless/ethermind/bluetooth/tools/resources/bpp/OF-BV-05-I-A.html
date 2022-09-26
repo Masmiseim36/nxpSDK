@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing CSS Constructs for Enhanced Layout - Part 1</title>
+	<style type="text/css">
+	@import url(importcolor.css);
+	@import "importfont.css";
+	@import url(importclass.css) print;
+	h3{color: red};
+	</style>
+</head>
+
+<body>
+<h1> BPP TSS Section 5.5.1.5 TP/OF/BV-05-I-A [Printer - XHTML: CSS Constructs for Enhanced Layout - Part 1]</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<p><br /></p>
+<h2> Testing @import</h2>
+<p><br /></p>
+<h3>This heading should be red.</h3>
+
+<p>The text in this paragraph should be blue and in italics. This is just some text.
+This is just some text. This is just some text. This is just some text. This is just some text. This is just some text.
+This is just some text. This is just some text. This is just some text. This is just some text. This is just some text.</p>
+
+<p class = "imported">The text in this paragraph should be green and normal(not italic) when printed. This is just some text.
+This is just some text. This is just some text. This is just some text. This is just some text. This is just some text.
+This is just some text. This is just some text. This is just some text. This is just some text. This is just some text.</p>
+
+<p><br /><br /></p>
+<h2>end of test</h2>
+
+
+
+
+
+</body>
+</html>

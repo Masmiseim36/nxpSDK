@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing CSS Constructs for Enhanced Layout - Part 6</title>
+	<style type="text/css">
+	.p1 {margin: 5%; border-style: solid; } 
+	.float1{float: left;  margin:.5em;margin-bottom:0;}
+	
+	</style>
+</head>
+
+<body>
+<h1> BPP TSS Section 5.5.1.5 TP/OF/BV-05-I-F [Printer - XHTML: CSS Constructs for Enhanced Layout - Part 6]</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<p><br /><br /></p>
+<h2> Testing float
+</h2>
+
+<p class = "p1"> 
+  There should be an image floated to the left next to this paragraph.  
+  All the text should flow around and next to the image. All the text should flow around and next to the image.
+  <img class="float1" src="feynman.jpg"  alt = "Richard Feynman" />
+  All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+All the text should flow around and next to the image. All the text should flow around and next to the image.
+</p>
+
+<div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /></div><!-- force to second page -->
+
+
+<h2> Testing clear
+</h2>
+<div> There should be an image floated to the left next to this paragraph. <img class="float1" src="feynman.jpg"  alt = "Richard Feynman" /> 
+  All this text should flow around and next to the image. All this text should flow around and next to the image.
+All this text should flow around and next to the image. All this text should flow around and next to the image.
+ <h3 style = "clear: left;"> Here is some text that should be below the image, not next to it.</h3>
+
+</div>
+
+
+ 
+<div><br /><br /></div>
+<h3>end of test</h3>
+
+
+
+
+
+</body>
+</html>

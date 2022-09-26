@@ -81,10 +81,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1052
     ${ProjDirPath}/../../../../../devices/MIMXRT1052/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../devices/MIMXRT1052/utilities
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -141,8 +141,6 @@ include(component_serial_manager_uart_MIMXRT1052)
 
 include(driver_lpuart_MIMXRT1052)
 
-include(utility_debug_console_MIMXRT1052)
-
 include(device_MIMXRT1052_CMSIS_MIMXRT1052)
 
 include(device_MIMXRT1052_startup_MIMXRT1052)
@@ -151,13 +149,15 @@ include(driver_clock_MIMXRT1052)
 
 include(driver_iomuxc_MIMXRT1052)
 
+include(driver_lpi2c_MIMXRT1052)
+
 include(driver_xip_device_MIMXRT1052)
 
 include(driver_xip_board_evkbimxrt1050_MIMXRT1052)
 
-include(driver_lpi2c_MIMXRT1052)
-
 include(utility_assert_MIMXRT1052)
+
+include(utility_debug_console_MIMXRT1052)
 
 include(middleware_freertos-kernel_extension_MIMXRT1052)
 
@@ -165,9 +165,9 @@ include(driver_mdio-common_MIMXRT1052)
 
 include(CMSIS_Include_core_cm_MIMXRT1052)
 
-include(device_MIMXRT1052_system_MIMXRT1052)
-
 include(utilities_misc_utilities_MIMXRT1052)
+
+include(device_MIMXRT1052_system_MIMXRT1052)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

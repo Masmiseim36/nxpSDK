@@ -2,7 +2,7 @@
 //! \addtogroup opusdec OPUS Decoder
 //! @{
 //
-// Copyright (c) 2020 NXP
+// Copyright (c) 2020,2022 NXP
 //
 //! \file opus_cci.h
 //! \brief Contains OPUS Decoder CCI APIs definitions.
@@ -31,18 +31,24 @@
  */
 typedef struct OpusDec_CCI
 {
-    OggOpusFile opus_file; /*!< OggOpusFile structure */
-    OpusHead header;
+    OggOpusFile *opus_file;                     /*!< OggOpusFile structure */
     decoder_callback_FunctionTable_t callbacks; /*!< Streamer IO callback functions */
-    OpusDecoder *decoder;
-    CCIDecInfo cci_dec;
-    ogg_page og;
-    int packet_decode;
-    char *input_buffer;
-    int16_t output_buffer[OUTPUT_BUFFER_SIZE];
+    CCIDecInfo *cci_dec;                        /*!< CCIDecInfo structure */
+    int16_t output_buffer[OUTPUT_BUFFER_SIZE];  /*!< Buffer to store decoded data */
 } OpusDec_CCI_t;
 
 // OPUS Decoder Public API
+/////////////////////////////////////////////////////////////////////////////////
+//! \brief This function populates the minimum input/output frame size for the decoder.
+//!
+//!
+//! \param[out] inSize  Input Frame Size
+//! \param[out] outSize Output Frame Size
+//!
+//! \retval it returns the minimum input/output frame size of the decoder in bytes.
+/////////////////////////////////////////////////////////////////////////////////
+int32_t OggOPUSGetIOFrameSize(int32_t *in_size, int32_t *out_size);
+
 /////////////////////////////////////////////////////////////////////////////////
 //! \brief This function populates the required memory for the decoder and returns the required memory size in bytes.
 //!
@@ -51,7 +57,7 @@ typedef struct OpusDec_CCI
 //!
 //! \returns it returns the size of the decoder in bytes.
 /////////////////////////////////////////////////////////////////////////////////
-int OggOPUSGetMemorySize(void);
+int32_t OggOPUSGetMemorySize(void);
 
 /////////////////////////////////////////////////////////////////////////////////
 //! \brief Initializes the memory and required data structures for the decoder and assigns the required memory to the
@@ -65,7 +71,7 @@ int OggOPUSGetMemorySize(void);
 //! \retval kCodecSuccess    if codec initializes successfully.
 //! \retval kCodecInitError     if codec fails to initialize.
 /////////////////////////////////////////////////////////////////////////////////
-int OggOPUSInit(int *memory[], int *pCallbackFn[], int *pUserData);
+int32_t OggOPUSInit(int32_t *memory[], int32_t *pCallbackFn[], int32_t *pUserData);
 
 /////////////////////////////////////////////////////////////////////////////////
 //! \brief Decodes the input bit stream and generates the PCM data in output pcm buffer.
@@ -79,7 +85,7 @@ int OggOPUSInit(int *memory[], int *pCallbackFn[], int *pUserData);
 //! \retval kCodecDecodeError       if codec fails to decode frame.
 //! \retval kCodeEndOfDecode        if decoding of input file is done.
 /////////////////////////////////////////////////////////////////////////////////
-int OggOPUSDecode(int *memory[], int *sampleProudced, int *bufOut);
+int32_t OggOPUSDecode(int32_t *memory[], int32_t *sampleProudced, int32_t *bufOut);
 
 /////////////////////////////////////////////////////////////////////////////////
 //! \brief Decoder reset function to cleanup the decoder structures and free memory.
@@ -90,7 +96,7 @@ int OggOPUSDecode(int *memory[], int *sampleProudced, int *bufOut);
 //! \retval kCodecSuccess    if codec destroys successfully.
 //! \retval kCodecInitError     if codec fails to cleanup.
 /////////////////////////////////////////////////////////////////////////////////
-int OggOPUSReset(int *pMemory[]);
+int32_t OggOPUSReset(int32_t *pMemory[]);
 
 /////////////////////////////////////////////////////////////////////////////////
 //! \brief Decoder seek function to seek at specific offset.
@@ -101,13 +107,13 @@ int OggOPUSReset(int *pMemory[]);
 //!
 //! \retval It returns frame boundary align offset.
 /////////////////////////////////////////////////////////////////////////////////
-int OggOPUSSeek(int *pMemory[], int seekOffset);
+int32_t OggOPUSSeek(int32_t *pMemory[], int32_t seekOffset);
 
-#endif /* __opus_cci_h__ */
+#endif /* OGG_OPUS_DEC */
 
 ///////////////////////////////////////////////////////////////////////////////
 // End of file
 ///////////////////////////////////////////////////////////////////////////////
 //! @}
 
-#endif /* OGG_OPUS_DEC */
+#endif /* __opus_cci_h__ */

@@ -13,13 +13,13 @@
 **
 **     Reference manual:    IMXRT1050RM Rev.5, 07/2021 | IMXRT1050SRM Rev.2
 **     Version:             rev. 1.4, 2021-08-10
-**     Build:               b210811
+**     Build:               b220720
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for MIMXRT1051
 **
 **     Copyright 1997-2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
+**     Copyright 2016-2022 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -202,7 +202,7 @@ typedef enum IRQn {
   PWM1_FAULT_IRQn              = 106,              /**< PWM1 fault or reload error interrupt */
   Reserved123_IRQn             = 107,              /**< Reserved interrupt */
   FLEXSPI_IRQn                 = 108,              /**< FlexSPI0 interrupt */
-  SEMC_IRQn                    = 109,              /**< Reserved interrupt */
+  SEMC_IRQn                    = 109,              /**< SEMC interrupt */
   USDHC1_IRQn                  = 110,              /**< USDHC1 interrupt */
   USDHC2_IRQn                  = 111,              /**< USDHC2 interrupt */
   USB_OTG2_IRQn                = 112,              /**< USBO2 USB OTG2 */
@@ -1319,11 +1319,14 @@ typedef struct {
 #define ADC_HC_ADCH_MASK                         (0x1FU)
 #define ADC_HC_ADCH_SHIFT                        (0U)
 /*! ADCH - Input Channel Select
+ *  0b00000-0b01111..External channels 0 to 15 See External Signals for more information
  *  0b10000..External channel selection from ADC_ETC
+ *  0b10001-0b10111..Reserved
  *  0b11000..Reserved.
  *  0b11001..VREFSH = internal channel, for ADC self-test, hard connected to VRH internally
  *  0b11010..Reserved.
  *  0b11011..Reserved.
+ *  0b11100-0b11110..Reserved.
  *  0b11111..Conversion Disabled. Hardware Triggers will not initiate any conversion.
  */
 #define ADC_HC_ADCH(x)                           (((uint32_t)(((uint32_t)(x)) << ADC_HC_ADCH_SHIFT)) & ADC_HC_ADCH_MASK)
@@ -6116,6 +6119,7 @@ typedef struct {
  *  0b011..derive clock from PLL2 PFD0
  *  0b100..derive clock from PLL2 PFD1
  *  0b101..derive clock from PLL3 PFD1
+ *  0b110-0b111..Reserved
  */
 #define CCM_CSCDR2_LCDIF_PRE_CLK_SEL(x)          (((uint32_t)(((uint32_t)(x)) << CCM_CSCDR2_LCDIF_PRE_CLK_SEL_SHIFT)) & CCM_CSCDR2_LCDIF_PRE_CLK_SEL_MASK)
 
@@ -19570,7 +19574,7 @@ typedef struct {
 #define ENET_Receive_IRQS                        { ENET_IRQn }
 #define ENET_Error_IRQS                          { ENET_IRQn }
 #define ENET_1588_Timer_IRQS                     { ENET_1588_Timer_IRQn }
-#define ENET_Ts_IRQS                             { ENET_1588_Timer_IRQn }
+#define ENET_Ts_IRQS                             { ENET_IRQn }
 /* ENET Buffer Descriptor and Buffer Address Alignment. */
 #define ENET_BUFF_ALIGNMENT                      (64U)
 
@@ -23455,19 +23459,21 @@ typedef struct {
 #define IOMUXC_SW_MUX_CTL_PAD_MUX_MODE_SHIFT     (0U)
 /*! MUX_MODE - MUX Mode Select Field. Note: Some functions are available on multiple pins. A given
  *    function should not be selected for more than one pin.
- *  0b000..Select mux mode: ALT0 mux port: SEMC_DA00 of instance: semc
- *  0b001..Select mux mode: ALT1 mux port: FLEXPWM4_PWM0_A of instance: flexpwm4
- *  0b010..Select mux mode: ALT2 mux port: LPSPI2_SCK of instance: lpspi2
- *  0b011..Select mux mode: ALT3 mux port: XBAR1_IN02 of instance: xbar1
- *  0b100..Select mux mode: ALT4 mux port: FLEXIO1_D00 of instance: flexio1
- *  0b101..Select mux mode: ALT5 mux port: GPIO4_IO00 of instance: gpio4
+ *  0b000..Select mux mode: ALT0 mux port: USB_OTG2_PWR of instance: usb
+ *  0b001..Select mux mode: ALT1 mux port: XBAR1_IN25 of instance: xbar1
+ *  0b010..Select mux mode: ALT2 mux port: LPUART1_RTS_B of instance: lpuart1
+ *  0b011..Select mux mode: ALT3 mux port: ENET_1588_EVENT0_IN of instance: enet
+ *  0b100..Select mux mode: ALT4 mux port: CSI_HSYNC of instance: csi
+ *  0b101..Select mux mode: ALT5 mux port: GPIO1_IO15 of instance: gpio1
+ *  0b110..Select mux mode: ALT6 mux port: FLEXCAN2_RX of instance: flexcan2
+ *  0b111..Select mux mode: ALT7 mux port: WDOG1_WDOG_RST_B_DEB of instance: wdog1
  */
 #define IOMUXC_SW_MUX_CTL_PAD_MUX_MODE(x)        (((uint32_t)(((uint32_t)(x)) << IOMUXC_SW_MUX_CTL_PAD_MUX_MODE_SHIFT)) & IOMUXC_SW_MUX_CTL_PAD_MUX_MODE_MASK)
 
 #define IOMUXC_SW_MUX_CTL_PAD_SION_MASK          (0x10U)
 #define IOMUXC_SW_MUX_CTL_PAD_SION_SHIFT         (4U)
 /*! SION - Software Input On Field.
- *  0b1..Force input path of pad GPIO_EMC_00
+ *  0b1..Force input path of pad GPIO_AD_B0_00
  *  0b0..Input Path is determined by functionality
  */
 #define IOMUXC_SW_MUX_CTL_PAD_SION(x)            (((uint32_t)(((uint32_t)(x)) << IOMUXC_SW_MUX_CTL_PAD_SION_SHIFT)) & IOMUXC_SW_MUX_CTL_PAD_SION_MASK)
@@ -23563,8 +23569,11 @@ typedef struct {
 #define IOMUXC_SELECT_INPUT_DAISY_MASK           (0x7U)  /* Merged from fields with different position or width, of widths (1, 2, 3), largest definition used */
 #define IOMUXC_SELECT_INPUT_DAISY_SHIFT          (0U)
 /*! DAISY - Selecting Pads Involved in Daisy Chain.
- *  0b0..Selecting Pad: GPIO_AD_B0_01 for Mode: ALT3
- *  0b1..Selecting Pad: GPIO_AD_B1_02 for Mode: ALT0
+ *  0b000..Selecting Pad: GPIO_SD_B1_03 for Mode: ALT6
+ *  0b001..Selecting Pad: GPIO_AD_B0_12 for Mode: ALT1
+ *  0b010..Selecting Pad: GPIO_AD_B1_01 for Mode: ALT4
+ *  0b011..Selecting Pad: GPIO_AD_B1_08 for Mode: ALT3
+ *  0b100..Selecting Pad: GPIO_EMC_32 for Mode: ALT3
  */
 #define IOMUXC_SELECT_INPUT_DAISY(x)             (((uint32_t)(((uint32_t)(x)) << IOMUXC_SELECT_INPUT_DAISY_SHIFT)) & IOMUXC_SELECT_INPUT_DAISY_MASK)  /* Merged from fields with different position or width, of widths (1, 2, 3), largest definition used */
 /*! @} */
@@ -39001,6 +39010,12 @@ typedef struct {
 
 #define TEMPMON_TEMPSENSE1_MEASURE_FREQ_MASK     (0xFFFFU)
 #define TEMPMON_TEMPSENSE1_MEASURE_FREQ_SHIFT    (0U)
+/*! MEASURE_FREQ
+ *  0b0000000000000000..Defines a single measurement with no repeat.
+ *  0b0000000000000001..Updates the temperature value at a RTC clock rate.
+ *  0b0000000000000010..Updates the temperature value at a RTC/2 clock rate.
+ *  0b1111111111111111..Determines a two second sample period with a 32.768KHz RTC clock. Exact timings depend on the accuracy of the RTC clock.
+ */
 #define TEMPMON_TEMPSENSE1_MEASURE_FREQ(x)       (((uint32_t)(((uint32_t)(x)) << TEMPMON_TEMPSENSE1_MEASURE_FREQ_SHIFT)) & TEMPMON_TEMPSENSE1_MEASURE_FREQ_MASK)
 /*! @} */
 
@@ -39009,6 +39024,12 @@ typedef struct {
 
 #define TEMPMON_TEMPSENSE1_SET_MEASURE_FREQ_MASK (0xFFFFU)
 #define TEMPMON_TEMPSENSE1_SET_MEASURE_FREQ_SHIFT (0U)
+/*! MEASURE_FREQ
+ *  0b0000000000000000..Defines a single measurement with no repeat.
+ *  0b0000000000000001..Updates the temperature value at a RTC clock rate.
+ *  0b0000000000000010..Updates the temperature value at a RTC/2 clock rate.
+ *  0b1111111111111111..Determines a two second sample period with a 32.768KHz RTC clock. Exact timings depend on the accuracy of the RTC clock.
+ */
 #define TEMPMON_TEMPSENSE1_SET_MEASURE_FREQ(x)   (((uint32_t)(((uint32_t)(x)) << TEMPMON_TEMPSENSE1_SET_MEASURE_FREQ_SHIFT)) & TEMPMON_TEMPSENSE1_SET_MEASURE_FREQ_MASK)
 /*! @} */
 
@@ -39017,6 +39038,12 @@ typedef struct {
 
 #define TEMPMON_TEMPSENSE1_CLR_MEASURE_FREQ_MASK (0xFFFFU)
 #define TEMPMON_TEMPSENSE1_CLR_MEASURE_FREQ_SHIFT (0U)
+/*! MEASURE_FREQ
+ *  0b0000000000000000..Defines a single measurement with no repeat.
+ *  0b0000000000000001..Updates the temperature value at a RTC clock rate.
+ *  0b0000000000000010..Updates the temperature value at a RTC/2 clock rate.
+ *  0b1111111111111111..Determines a two second sample period with a 32.768KHz RTC clock. Exact timings depend on the accuracy of the RTC clock.
+ */
 #define TEMPMON_TEMPSENSE1_CLR_MEASURE_FREQ(x)   (((uint32_t)(((uint32_t)(x)) << TEMPMON_TEMPSENSE1_CLR_MEASURE_FREQ_SHIFT)) & TEMPMON_TEMPSENSE1_CLR_MEASURE_FREQ_MASK)
 /*! @} */
 
@@ -39025,6 +39052,12 @@ typedef struct {
 
 #define TEMPMON_TEMPSENSE1_TOG_MEASURE_FREQ_MASK (0xFFFFU)
 #define TEMPMON_TEMPSENSE1_TOG_MEASURE_FREQ_SHIFT (0U)
+/*! MEASURE_FREQ
+ *  0b0000000000000000..Defines a single measurement with no repeat.
+ *  0b0000000000000001..Updates the temperature value at a RTC clock rate.
+ *  0b0000000000000010..Updates the temperature value at a RTC/2 clock rate.
+ *  0b1111111111111111..Determines a two second sample period with a 32.768KHz RTC clock. Exact timings depend on the accuracy of the RTC clock.
+ */
 #define TEMPMON_TEMPSENSE1_TOG_MEASURE_FREQ(x)   (((uint32_t)(((uint32_t)(x)) << TEMPMON_TEMPSENSE1_TOG_MEASURE_FREQ_SHIFT)) & TEMPMON_TEMPSENSE1_TOG_MEASURE_FREQ_MASK)
 /*! @} */
 
@@ -41725,6 +41758,7 @@ typedef struct {
  *  0b0101..FORCE_ENABLE_HS
  *  0b0110..FORCE_ENABLE_FS
  *  0b0111..FORCE_ENABLE_LS
+ *  0b1000-0b1111..Reserved
  */
 #define USB_PORTSC1_PTC(x)                       (((uint32_t)(((uint32_t)(x)) << USB_PORTSC1_PTC_SHIFT)) & USB_PORTSC1_PTC_MASK)
 
@@ -42842,7 +42876,7 @@ typedef struct {
   __IO uint32_t CTRL_TOG;                          /**< USB PHY General Control Register, offset: 0x3C */
   __IO uint32_t STATUS;                            /**< USB PHY Status Register, offset: 0x40 */
        uint8_t RESERVED_0[12];
-  __IO uint32_t DEBUGr;                            /**< USB PHY Debug Register, offset: 0x50 */
+  __IO uint32_t DEBUGr;                            /**< USB PHY Debug Register, offset: 0x50, 'r' suffix has been added to avoid clash with DEBUG symbolic constant */
   __IO uint32_t DEBUG_SET;                         /**< USB PHY Debug Register, offset: 0x54 */
   __IO uint32_t DEBUG_CLR;                         /**< USB PHY Debug Register, offset: 0x58 */
   __IO uint32_t DEBUG_TOG;                         /**< USB PHY Debug Register, offset: 0x5C */

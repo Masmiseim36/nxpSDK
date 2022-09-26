@@ -43,6 +43,9 @@ extern "C"
 
     uint32_t get_ocotp_clock(void);
 
+    //!@brief Get OCOTP locked status
+    void ocotp_get_locked_status(OCOTP_Type *base, uint32_t **pStatusWords, uint32_t *lengthInBytes);
+
 #ifdef __cplusplus
 }
 #endif

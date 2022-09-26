@@ -45,13 +45,9 @@ static uint8_t memsink_sink_pad_activation_handler(StreamPad *pad, uint8_t activ
 
     if (true == ret)
     {
-        /* In case of activation, activate the peer source pad to push mode. */
-        if (true == active)
-        {
-            /* Activate/Deactivate peer source pads in PUSH mode */
-            mem_sink_element->current_index = 0;
-            ret                             = pad_activate_push(pad->peer, active);
-        }
+        /* Activate/Deactivate peer source pads in PUSH mode */
+        mem_sink_element->current_index = 0;
+        ret                             = pad_activate_push(pad->peer, active);
     }
 
     STREAMER_FUNC_EXIT(DBG_MEM_SINK);

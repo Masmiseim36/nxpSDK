@@ -1851,8 +1851,8 @@ struct bt_conn *bt_conn_create_sco(const bt_addr_t *peer)
 	cp->pkt_type = sco_conn->sco.pkt_type;
 	cp->tx_bandwidth = 0x00001f40;
 	cp->rx_bandwidth = 0x00001f40;
-	cp->max_latency = 0x0007;
-	cp->retrans_effort = 0x01;
+	cp->max_latency = LMP_ESCO_MAX_LATENCY_DEFAULT;
+	cp->retrans_effort = LMP_ESCO_RETX_EFFORT_DEFAULT;
 	cp->content_format = BT_VOICE_CVSD_16BIT;
 
 	if (bt_hci_cmd_send_sync(BT_HCI_OP_SETUP_SYNC_CONN, buf,

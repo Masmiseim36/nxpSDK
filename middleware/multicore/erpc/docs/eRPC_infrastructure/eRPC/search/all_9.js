@@ -10,6 +10,6 @@ var searchData=
   ['interthreadbuffertransport',['InterThreadBufferTransport',['../classerpc_1_1_inter_thread_buffer_transport.html',1,'erpc']]],
   ['isoneway',['isOneway',['../classerpc_1_1_request_context.html#a4b48b9fa139619990fbbd7995788372c',1,'erpc::RequestContext']]],
   ['isstatusok',['isStatusOk',['../classerpc_1_1_codec.html#a663439fd4b60421df4915f43c07051b8',1,'erpc::Codec']]],
-  ['isused',['isUsed',['../classerpc_1_1_manually_constructed.html#a92e41d0ac26472d4e8be67e6594d6f31',1,'erpc::ManuallyConstructed']]],
+  ['isused',['isUsed',['../classerpc_1_1_manually_constructed.html#abb706cd5a0d5f35f6f8fc2366b4a2fa0',1,'erpc::ManuallyConstructed']]],
   ['inter_2dthread',['Inter-thread',['../group__itbp__transport.html',1,'']]]
 ];

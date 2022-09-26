@@ -22,6 +22,7 @@ typedef struct slist
 
 void bt_list_init(bt_list_t *list);
 void bt_list_append(bt_list_t *list, bt_list_node_t *node);
+void bt_list_append_list(bt_list_t *list, bt_list_node_t *head, bt_list_node_t *tail);
 bt_list_node_t *bt_list_get(bt_list_t *list);
 void bt_list_prepend(bt_list_t *list, bt_list_node_t *node);
 bool bt_list_is_empty(bt_list_t *list);
@@ -82,6 +83,7 @@ typedef bt_list_node_t sys_snode_t;
 
 #define sys_slist_init              bt_list_init
 #define sys_slist_append            bt_list_append
+#define sys_slist_append_list       bt_list_append_list
 #define sys_slist_get               bt_list_get
 #define sys_slist_prepend           bt_list_prepend
 #define sys_slist_is_empty          bt_list_is_empty

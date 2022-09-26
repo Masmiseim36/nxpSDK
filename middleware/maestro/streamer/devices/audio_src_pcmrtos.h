@@ -41,11 +41,11 @@ typedef struct _PCMRtosDeviceInfo
     pcm_rtos_t *pcm_handle;                    /*!< @brief Pointer to pcm handle */
     char *unaligned_buf[AUDIO_SRC_BUFFER_NUM]; /*!< @brief Pointers to unaligned buffers */
     char *audbuf[AUDIO_SRC_BUFFER_NUM];        /*!< @brief Pointers to aligned audio buffers */
+    uint32_t buff_size[AUDIO_SRC_BUFFER_NUM];  /*!< @brief Size of the data in the audbuf */
+    uint8_t buff_index;                        /*!< @brief Current buffer index */
     uint8_t device_state;                      /*!< @brief Device state */
     bool init_params_done;                     /*!< @brief Initialization done flag */
     bool continuous_read;                      /*!< @brief Continuous read flag */
-    uint32_t input_size;                       /*!< @brief Input size */
-    uint8_t input_index;                       /*!< @brief Input index */
 } PCMRtosDeviceInfo;
 
 /**

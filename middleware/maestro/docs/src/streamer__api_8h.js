@@ -166,7 +166,7 @@ var streamer__api_8h =
       [ "INFO_TIME_SEEKABLE", "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a8e100ee997f3fb5ac5a0161f4dfd4cfb", null ],
       [ "INFO_BYTE_SEEKABLE", "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a234877893d9e1e4cb8c3161cebd6b827", null ],
       [ "INFO_STREAM_INFO_UPDATE", "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5ac3bdb44c511020a8f23c4b2de0ec2970", null ],
-      [ "INFO_FILE_SIZE", "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a0064513e933c36a90719ed06c1b9932f", null ],
+      [ "INFO_SIZE", "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5a8ab6b5a36169658d8e4ffb57aa022bd5", null ],
       [ "INFO_BUFF_OCC", "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5aa1251796437cd7f6b792146a02ff85b0", null ],
       [ "INFO_ALBUM", "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5ace5013c1b4facea59cd98f87f963befe", null ],
       [ "INFO_ARTIST", "streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5ae93b496a865e68a09abb814a53ea3018", null ],
@@ -209,7 +209,7 @@ var streamer__api_8h =
       [ "IMG_GRAYSCALE", "streamer__api_8h.html#a22f6b18e781e3c412e7d243f7de6aa5ca39e6c4bfc9522eeea7cc640aa2e2d62a", null ]
     ] ],
     [ "streamer_create", "streamer__api_8h.html#a8e5c5812d2b8cf5d099cf6474e157178", null ],
-    [ "streamer_destroy", "streamer__api_8h.html#a28c590c4d9a4d7f163b21a63cd14abbf", null ],
+    [ "streamer_destroy", "streamer__api_8h.html#ad3e4e6e9194c94d603c7118a159ad1a6", null ],
     [ "streamer_create_pipeline", "streamer__api_8h.html#a156ccb8aa582b294d35020e7c441f256", null ],
     [ "streamer_destroy_pipeline", "streamer__api_8h.html#aa9fd155271d1be13af4f4863426e9644", null ],
     [ "streamer_get_track_info", "streamer__api_8h.html#aa88e33f84253c92449d3727f67e77b4b", null ],

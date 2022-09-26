@@ -63,7 +63,7 @@ void controller_wifi_nxp_init(void)
     assert(WM_SUCCESS == result);
     result = sdio_ioport_init();
     assert(WM_SUCCESS == result);
-    result = firmware_download(WLAN_FW_IN_RAM, wlan_fw_bin, wlan_fw_bin_len);
+    result = firmware_download(wlan_fw_bin, wlan_fw_bin_len);
     assert(WM_SUCCESS == result);
     (void)result;
 #endif
@@ -84,12 +84,7 @@ static void controller_hci_uart_init(void)
     memset(recvBuffer, 0, sizeof(recvBuffer));
     memset(&hciUartConfig, 0, sizeof(hciUartConfig));
     memset(&config, 0, sizeof(config));
-#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM510MA) || \
-     defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
-     defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined (WIFI_88W8987_BOARD_MURATA_1ZM_M2))
-    /*delay to make sure controller is ready to receive command*/
-    OSA_TimeDelay(100);
-#endif
+
     if (0 != controller_hci_uart_get_configuration(&hciUartConfig))
     {
         return;

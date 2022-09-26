@@ -32,7 +32,6 @@
 /********************************************************
    Local Functions
 ********************************************************/
-t_u16 wlan_convert_mcsmap_to_maxrate(mlan_private *priv, t_u8 bands, t_u16 mcs_map);
 #if 0
 /**
  *  @brief determine the center frquency center index for bandwidth
@@ -189,7 +188,7 @@ static t_u8 wlan_get_nss_num_vht_mcs(t_u16 mcs_map_set)
  *
  *  @return             N/A
  */
-static void wlan_fill_cap_info(mlan_private *priv, VHT_capa_t *vht_cap, mlan_band_def bands)
+static void wlan_fill_cap_info(mlan_private *priv, VHT_capa_t *vht_cap, t_u16 bands)
 {
     mlan_adapter *pmadapter = priv->adapter;
     t_u32 usr_dot_11ac_dev_cap;
@@ -208,6 +207,10 @@ static void wlan_fill_cap_info(mlan_private *priv, VHT_capa_t *vht_cap, mlan_ban
     }
 
     vht_cap->vht_cap_info = usr_dot_11ac_dev_cap;
+#ifdef RW610
+    if (GET_VHTCAP_MAXMPDULEN(vht_cap->vht_cap_info) != 0U)
+        RESET_11ACMAXMPDULEN(vht_cap->vht_cap_info);
+#endif
 
     LEAVE();
 }
@@ -294,7 +297,7 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
         PRINTM(MINFO, "Set: vht cap info  0x%x\n", usr_vht_cap_info);
 
         /** update the RX MCS map */
-        if (vht_cfg->txrx & MLAN_RADIO_RX)
+        if ((vht_cfg->txrx & MLAN_RADIO_RX) != 0U)
         {
             /* use the previous user value */
             if (vht_cfg->vht_rx_mcs == 0xffffffffU)
@@ -353,7 +356,7 @@ mlan_status wlan_11ac_ioctl_vhtcfg(IN mlan_private *pmpriv, IN t_u8 action, IN m
 
     if (pmpriv->bss_role == MLAN_BSS_ROLE_STA)
     {
-        if (vht_cfg->txrx & MLAN_RADIO_RX)
+        if ((vht_cfg->txrx & MLAN_RADIO_RX) != 0U)
         {
             /* maximum VHT configuration used in association */
 
@@ -667,7 +670,7 @@ t_u16 wlan_convert_mcsmap_to_maxrate(mlan_private *priv, t_u8 bands, t_u16 mcs_m
     };
 
 #ifdef CONFIG_5GHz_SUPPORT
-    if ((bands & (t_u8)(BAND_AAC)) != 0U)
+    if ((bands & BAND_AAC) != 0U)
     {
         usr_vht_cap_info    = pmadapter->usr_dot_11ac_dev_cap_a;
         usr_dot_11n_dev_cap = pmadapter->usr_dot_11n_dev_cap_a;
@@ -751,7 +754,7 @@ t_u16 wlan_convert_mcsmap_to_maxrate(mlan_private *priv, t_u8 bands, t_u16 mcs_m
  *                      MFALSE -- pvht_cap is clean
  *  @return             N/A
  */
-void wlan_fill_vht_cap_tlv(mlan_private *priv, MrvlIETypes_VHTCap_t *pvht_cap, mlan_band_def bands, t_u8 flag)
+void wlan_fill_vht_cap_tlv(mlan_private *priv, MrvlIETypes_VHTCap_t *pvht_cap, t_u16 bands, t_u8 flag)
 {
     mlan_adapter *pmadapter = priv->adapter;
     t_u16 mcs_map_user      = 0;
@@ -837,7 +840,7 @@ void wlan_fill_vht_cap_tlv(mlan_private *priv, MrvlIETypes_VHTCap_t *pvht_cap, m
  *  @return             N/A
  */
 void wlan_fill_vht_cap_ie(mlan_private *priv,
-        IEEEtypes_VHTCap_t *pvht_cap, mlan_band_def bands)
+        IEEEtypes_VHTCap_t *pvht_cap, t_u16 bands)
 {
     ENTER();
 
@@ -965,6 +968,7 @@ int wlan_cmd_append_11ac_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
                 break;
             case BW_80MHZ:
             default:
+                PRINTM(MINFO, "Unexpected bandwidth.\n");
                 break;
         }
     }
@@ -1134,7 +1138,7 @@ void wlan_update_11ac_cap(mlan_private * pmpriv){
  *
  *  @return 0--not allowed, other value allowed
  */
-t_u8 wlan_11ac_bandconfig_allowed(mlan_private *pmpriv, mlan_band_def bss_band)
+t_u8 wlan_11ac_bandconfig_allowed(mlan_private *pmpriv, t_u16 bss_band)
 {
     if (pmpriv->bss_mode == MLAN_BSS_MODE_IBSS)
     {

@@ -11,7 +11,7 @@
 #include <wlan.h>
 #include <cli.h>
 
-void test_wfa_wlan_version(int argc, char **argv)
+static void test_wfa_wlan_version(int argc, char **argv)
 {
     unsigned char i;
     char version_str[MLAN_MAX_VER_STR_LEN];
@@ -19,7 +19,7 @@ void test_wfa_wlan_version(int argc, char **argv)
     (void)strcpy(version_str, ext_ver_str);
     for (i = 0; i < strlen(version_str); i++)
     {
-        if (version_str[i] == '.' && version_str[i + 1] == 'p')
+        if (version_str[i] == '.' && version_str[i + 1U] == 'p')
         {
             version_str[i] = '\0';
             break;
@@ -29,7 +29,7 @@ void test_wfa_wlan_version(int argc, char **argv)
     (void)PRINTF("WLAN Version : %s\r\n", version_str);
 }
 
-void test_wlan_version(int argc, char **argv)
+static void test_wlan_version(int argc, char **argv)
 {
 #if SDK_DEBUGCONSOLE != DEBUGCONSOLE_DISABLE
     char *version_str;

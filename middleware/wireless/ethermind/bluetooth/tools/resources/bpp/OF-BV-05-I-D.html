@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing CSS Constructs for Enhanced Layout - Part 4</title>
+	<style type="text/css">
+	div{width:2in;font-size:20pt;}
+	.noclip{position:absolute;background-color: yellow;
+	top:5in;left:1in;}
+	.clipit{position:absolute;background-color:lime;
+	top: 7in;left:1in;clip:rect(0in, 1in, 2in, 0in);}
+	.end{position: absolute;top: 8.5in; left:1in;}
+	
+	</style>
+</head>
+
+<body>
+<h1> BPP TSS Section 5.5.1.5 TP/OF/BV-05-I-D [Printer - XHTML: CSS Constructs for Enhanced Layout - Part 4]</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<p><br /><br /></p>
+<h2> Testing clip</h2>
+<h3>Below should be two rectangles with text in them. The second one should 
+be clipped in half.</h3>
+<div class = "noclip"> This is just some text that will be used to fill space in this test.</div>
+<div class = "clipit"> This is just some text that will be used to fill space in this test.</div>
+
+
+
+
+<h3 class = "end">end of test</h3>
+
+</body>
+</html>

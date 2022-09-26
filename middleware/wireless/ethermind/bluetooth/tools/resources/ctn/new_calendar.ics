@@ -1,0 +1,20 @@
+BEGIN:BCAL
+VERSION:1.0
+UPDATE:20130701T163000+02:00
+BEGIN:VCALENDAR
+PRODID:PTS
+VERSION:2.0
+BEGIN:VEVENT
+UID:19970901T130000Z-123402@example.com
+DTSTAMP:19970901T130000
+DTSTART:19970401T163000
+DTEND:19970402T010000Z
+SUMMARY:Laurel is in sensitivity awareness class.
+DESCRIPTION:Project meeting at the Chinese Tower garden. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long. Need to make text 800 long.
+CLASS:PUBLIC
+CATEGORIES:BUSINESS,HUMAN RESOURCES
+TRANSP:TRANSPARENT
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=TENTATIVE;CN=Kyle:MAILTO:kyle@gaudybird.com
+END:VEVENT
+END:VCALENDAR
+END:BCAL

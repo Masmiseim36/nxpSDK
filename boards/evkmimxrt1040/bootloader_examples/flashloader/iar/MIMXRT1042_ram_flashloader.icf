@@ -1,0 +1,72 @@
+/*
+** ###################################################################
+**     Processors:          MIMXRT1062CVJ5A
+**                          MIMXRT1062CVL5A
+**                          MIMXRT1062DVJ6A
+**                          MIMXRT1062DVL6A
+**
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright (c) 2015 Freescale Semiconductor, Inc.
+**     Copyright 2016-2018 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+define symbol m_interrupts_start       = 0x20002000;
+define symbol m_interrupts_end         = 0x200023FF;
+
+define symbol m_text_start             = 0x20002400;
+define symbol m_text_end               = 0x2001FFFF;
+
+define symbol m_data_start             = 0x20208000;
+define symbol m_data_end               = 0x2021FFFF;
+
+/* Sizes */
+if (isdefinedsymbol(__stack_size__)) {
+  define symbol __size_cstack__        = __stack_size__;
+} else {
+  define symbol __size_cstack__        = 0x2000;
+}
+
+if (isdefinedsymbol(__heap_size__)) {
+  define symbol __size_heap__          = __heap_size__;
+} else {
+  define symbol __size_heap__          = 0x0;
+}
+
+define exported symbol __VECTOR_TABLE  = m_interrupts_start;
+define exported symbol __VECTOR_RAM    = m_interrupts_start;
+define exported symbol __RAM_VECTOR_TABLE_SIZE = 0x0;
+
+define memory mem with size = 4G;
+define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
+                          | mem:[from m_text_start to m_text_end];
+define region DATA_region = mem:[from m_data_start to m_data_end-__size_cstack__];
+
+define block CSTACK    with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
+
+initialize by copy { readwrite };
+initialize by copy { section .data};
+initialize by copy { section .textrw };
+do not initialize  { section .noinit };
+
+// define block USBGlobal {section m_usb_bdt, section m_usb_global};
+define block CodeRelocate { section .textrw_init };
+define block CodeRelocateRam { section .textrw };
+define block ApplicationFlash { readonly, block CodeRelocate, readonly section .noinit };
+define block ApplicationRam { readwrite, block CodeRelocateRam, block CSTACK, block HEAP };
+place at address mem: m_interrupts_start    { readonly section .intvec };
+place in TEXT_region { block ApplicationFlash };
+place in DATA_region { block ApplicationRam };
+

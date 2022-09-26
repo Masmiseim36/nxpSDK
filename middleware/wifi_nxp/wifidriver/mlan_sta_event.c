@@ -77,7 +77,7 @@ t_void wlan_reset_connect_state(pmlan_private priv, t_u8 drv_disconnect)
 
     if (priv->bss_mode == MLAN_BSS_MODE_IBSS)
     {
-        priv->adhoc_state                        = ADHOC_IDLE;
+        priv->adhoc_state                        = (t_u8)ADHOC_IDLE;
         priv->adhoc_is_link_sensed               = MFALSE;
         priv->intf_state_11h.adhoc_auto_sel_chan = MTRUE;
     }

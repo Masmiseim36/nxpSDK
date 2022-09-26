@@ -9,11 +9,6 @@
 
 #include "fsl_common.h"
 
-/* Component ID definition, used by tools. */
-#ifndef FSL_COMPONENT_ID
-#define FSL_COMPONENT_ID "component.silicon_id"
-#endif
-
 #define SILICONID_MAX_LENGTH 16U
 
 #if defined(__cplusplus)

@@ -343,6 +343,8 @@ uint8_t encoder_src_pad_activation_handler(StreamPad *pad, uint8_t active)
         if (outBuf.ptr == NULL)
         {
             OSA_MemoryFree(inBuf.ptr);
+            inBuf.ptr  = NULL;
+            inBuf.size = 0;
             return false;
         }
 
@@ -354,17 +356,29 @@ uint8_t encoder_src_pad_activation_handler(StreamPad *pad, uint8_t active)
     {
         // Pad destroy requested, free all buffers, free the encoder state,
         // reset and unset the initialized flag
-        OSA_MemoryFree(element->inBuf.ptr);
-        element->inBuf = (BufferInfo){.ptr = NULL, .size = 0};
+        if (element->inBuf.ptr != NULL)
+        {
+            OSA_MemoryFree(element->inBuf.ptr);
+            element->inBuf = (BufferInfo){.ptr = NULL, .size = 0};
+        }
 
-        OSA_MemoryFree(element->outBuf.ptr);
-        element->outBuf = (BufferInfo){.ptr = NULL, .size = 0};
+        if (element->outBuf.ptr != NULL)
+        {
+            OSA_MemoryFree(element->outBuf.ptr);
+            element->outBuf = (BufferInfo){.ptr = NULL, .size = 0};
+        }
 
-        OSA_MemoryFree(element->enc_info);
-        element->enc_info = NULL;
+        if (element->enc_info != NULL)
+        {
+            OSA_MemoryFree(element->enc_info);
+            element->enc_info = NULL;
+        }
 
-        OSA_MemoryFree(element->initial_config_ptr);
-        element->initial_config_ptr = NULL;
+        if (element->initial_config_ptr != NULL)
+        {
+            OSA_MemoryFree(element->initial_config_ptr);
+            element->initial_config_ptr = NULL;
+        }
 
         element->initialized = false;
     }
@@ -409,7 +423,7 @@ int32_t encoder_src_pad_process_handler(StreamPad *pad)
 
         // This is supposed to trigger on PAD_STREAM_ERR_EOS, but netbuf_src and
         // mem_src return this code instead even for an EOS condition.
-        if (padRet == PAD_STREAM_ERR_UNEXPECTED)
+        if (padRet == PAD_STREAM_ERR_EOS)
         {
             // EOS condition reached on source pad read (pull) - send an event,
             // set a flag and terminate
@@ -424,7 +438,7 @@ int32_t encoder_src_pad_process_handler(StreamPad *pad)
 
             goto Error;
         }
-        else if (ret != PAD_OK)
+        else if (padRet != PAD_OK)
         {
             // Read failed
             ret = FLOW_ERROR;

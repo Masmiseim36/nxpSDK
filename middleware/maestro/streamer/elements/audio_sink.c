@@ -69,18 +69,14 @@ static uint8_t audiosink_sink_pad_activation_handler(StreamPad *pad, uint8_t act
         audio_sink_ptr->elapsed_time_usec  = 0;
         audio_sink_ptr->time_reported_msec = 0;
 
-        /* In case of activation, activate the peer source pad to push mode. */
-        if ((uint8_t) true == active)
+        /* Activate/Deactivate peer source pads according to scheduling mode */
+        if (SCHEDULING_PUSH == pad->scheduling)
         {
-            /* Activate/Deactivate peer source pads according to scheduling mode */
-            if (SCHEDULING_PUSH == pad->scheduling)
-            {
-                ret = pad_activate_push(pad->peer, active);
-            }
-            else if (SCHEDULING_PULL == pad->scheduling)
-            {
-                ret = pad_activate_pull(pad->peer, active);
-            }
+            ret = pad_activate_push(pad->peer, active);
+        }
+        else if (SCHEDULING_PULL == pad->scheduling)
+        {
+            ret = pad_activate_pull(pad->peer, active);
         }
     }
 
@@ -370,7 +366,8 @@ static int32_t audiosink_change_state(StreamElement *element, PipelineState new_
 
         case STATE_CHANGE_READY_TO_PAUSED:
             STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "[Audio sink]STATE_CHANGE_READY_TO_PAUSE\n");
-            _ret = audio_sink_ptr->device_ptr->start_device_func(audio_sink_ptr);
+            _ret                           = audio_sink_ptr->device_ptr->start_device_func(audio_sink_ptr);
+            audio_sink_ptr->device_started = true;
             if (_ret != AUDIO_SINK_SUCCESS)
                 ret = STREAM_ERR_GENERAL;
             break;
@@ -384,7 +381,11 @@ static int32_t audiosink_change_state(StreamElement *element, PipelineState new_
 
         case STATE_CHANGE_PAUSED_TO_READY:
             STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "[Audio sink]STATE_CHANGE_PAUSED_TO_READY\n");
-            _ret = audio_sink_ptr->device_ptr->stop_device_func(audio_sink_ptr);
+            if (audio_sink_ptr->device_started)
+            {
+                _ret                           = audio_sink_ptr->device_ptr->stop_device_func(audio_sink_ptr);
+                audio_sink_ptr->device_started = false;
+            }
             if (_ret != AUDIO_SINK_SUCCESS)
                 ret = STREAM_ERR_GENERAL;
             break;
@@ -610,6 +611,7 @@ int32_t audiosink_init_element(StreamElement *element)
     audio_sink_ptr->error_element      = AUDIO_SINK_SUCCESS;
     audio_sink_ptr->device_name        = AUDIO_SINK_DEVICE_DEFAULT;
     audio_sink_ptr->device_info        = NULL;
+    audio_sink_ptr->device_started     = false;
 
     /* initialize only sink pads handlers, no src pads for audio sink */
     for (i = 0; i < NUM_SINKS(TYPE_ELEMENT_AUDIO_SINK); i++)

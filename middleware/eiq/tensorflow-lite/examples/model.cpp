@@ -1,5 +1,5 @@
 /* Copyright 2019 The TensorFlow Authors. All Rights Reserved.
-   Copyright 2021 NXP
+   Copyright 2021-2022 NXP
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,14 +17,13 @@ limitations under the License.
 /* File modified by NXP. Changes are described in file
    /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
 
-#include <stdio.h>
-
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
 #include "tensorflow/lite/micro/micro_error_reporter.h"
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
 #include "tensorflow/lite/schema/schema_generated.h"
 
+#include "fsl_debug_console.h"
 #include "model.h"
 #include "model_data.h"
 
@@ -93,7 +92,7 @@ status_t MODEL_RunInference(void)
 {
     if (s_interpreter->Invoke() != kTfLiteOk)
     {
-        printf("Invoke failed!\r\n");
+        PRINTF("Invoke failed!\r\n");
         return kStatus_Fail;
     }
 

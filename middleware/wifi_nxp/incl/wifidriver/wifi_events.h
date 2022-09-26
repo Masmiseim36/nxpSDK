@@ -45,6 +45,8 @@ enum wifi_event
     WIFI_EVENT_DEAUTHENTICATION,
     /** Link Loss */
     WIFI_EVENT_LINK_LOSS,
+    /* WiFi RSSI Low Event */
+    WIFI_EVENT_RSSI_LOW,
     /** Network station address configuration */
     WIFI_EVENT_NET_STA_ADDR_CONFIG,
     /** Network interface configuration */

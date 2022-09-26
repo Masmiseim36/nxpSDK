@@ -545,15 +545,14 @@ static void pre_activate(StreamPad *pad, PadScheduling new_mode)
             PAD_CLEAR_FLUSHING(pad);
             PAD_SCHEDULING(pad) = new_mode;
             PAD_SET_ACTIVATED(pad);
-
             break;
 
         case SCHEDULING_NONE:
             PAD_SET_FLUSHING(pad);
             PAD_SCHEDULING(pad) = new_mode;
-
             break;
     }
+    STREAMER_FUNC_EXIT(DBG_CORE);
 }
 
 static void post_activate(StreamPad *pad, PadScheduling new_mode)
@@ -564,8 +563,6 @@ static void post_activate(StreamPad *pad, PadScheduling new_mode)
     {
         case SCHEDULING_PUSH:
         case SCHEDULING_PULL:
-            break;
-
         case SCHEDULING_NONE:
             /* ensures that streaming stops */
             break;

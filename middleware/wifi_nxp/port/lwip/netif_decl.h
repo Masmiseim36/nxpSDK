@@ -8,7 +8,9 @@
 #include <mlan_api.h>
 #include <wm_net.h>
 #include <wmlog.h>
+#ifndef RW610
 #include <wifi-sdio.h>
+#endif
 #include <wifi-internal.h>
 
 #include "lwip/opt.h"

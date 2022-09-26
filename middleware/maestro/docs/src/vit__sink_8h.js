@@ -8,5 +8,5 @@ var vit__sink_8h =
     [ "vitsink_set_buffer", "vit__sink_8h.html#a6f5da9143fd6da9747cdef413e1a890c", null ],
     [ "vitsink_set_raw_write_mode", "vit__sink_8h.html#aa8136a44e236a18c528a2c652f76422c", null ],
     [ "vitsink_init_element", "vit__sink_8h.html#a81cc43f502f3cfc6f3f691af64562911", null ],
-    [ "vit_register_ext_processing", "vit__sink_8h.html#a74d17188a356e96bcc9ef6fed4a08b11", null ]
+    [ "vit_register_ext_processing", "vit__sink_8h.html#a90dedce229e6bac80f086419fe01dbd4", null ]
 ];

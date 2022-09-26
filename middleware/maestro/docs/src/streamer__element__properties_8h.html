@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.3</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -190,6 +190,9 @@ Macros</h2></td></tr>
 <tr class="memitem:a836e009ad842915a7df6c7584a00b5e6"><td class="memItemLeft" align="right" valign="top"><a id="a836e009ad842915a7df6c7584a00b5e6" name="a836e009ad842915a7df6c7584a00b5e6"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_MEMSRC_GET_CHUNK_SIZE</b>&#160;&#160;&#160;0x302</td></tr>
 <tr class="separator:a836e009ad842915a7df6c7584a00b5e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa545447d7d949527e16ec1772431e74a"><td class="memItemLeft" align="right" valign="top"><a id="aa545447d7d949527e16ec1772431e74a" name="aa545447d7d949527e16ec1772431e74a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_MEMSRC_SET_MEM_TYPE</b>&#160;&#160;&#160;0x303</td></tr>
+<tr class="separator:aa545447d7d949527e16ec1772431e74a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5224cc1d82e67a51a7780a09d0f5fa2"><td class="memItemLeft" align="right" valign="top"><a id="ab5224cc1d82e67a51a7780a09d0f5fa2" name="ab5224cc1d82e67a51a7780a09d0f5fa2"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_DECODER_MASK</b>&#160;&#160;&#160;0x400</td></tr>
 <tr class="separator:ab5224cc1d82e67a51a7780a09d0f5fa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -199,47 +202,23 @@ Macros</h2></td></tr>
 <tr class="memitem:aa8ffbb56e7e4629329ca1bb4c56518dd"><td class="memItemLeft" align="right" valign="top"><a id="aa8ffbb56e7e4629329ca1bb4c56518dd" name="aa8ffbb56e7e4629329ca1bb4c56518dd"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_DECODER_PARSE_TAG</b>&#160;&#160;&#160;0x401</td></tr>
 <tr class="separator:aa8ffbb56e7e4629329ca1bb4c56518dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56b395474c219d61bea6e572f61fa4f4"><td class="memItemLeft" align="right" valign="top"><a id="a56b395474c219d61bea6e572f61fa4f4" name="a56b395474c219d61bea6e572f61fa4f4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_PARSER_MASK</b>&#160;&#160;&#160;0x500</td></tr>
-<tr class="separator:a56b395474c219d61bea6e572f61fa4f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95dfcd89a9f7ff7cce2ae5583d5429fd"><td class="memItemLeft" align="right" valign="top"><a id="a95dfcd89a9f7ff7cce2ae5583d5429fd" name="a95dfcd89a9f7ff7cce2ae5583d5429fd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_PARSER_PARSER_TYPE</b>&#160;&#160;&#160;0x500</td></tr>
-<tr class="separator:a95dfcd89a9f7ff7cce2ae5583d5429fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab37a04081fdbd5d85f0a10b6335fc742"><td class="memItemLeft" align="right" valign="top"><a id="ab37a04081fdbd5d85f0a10b6335fc742" name="ab37a04081fdbd5d85f0a10b6335fc742"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_QUEUE_MASK</b>&#160;&#160;&#160;0x600</td></tr>
-<tr class="separator:ab37a04081fdbd5d85f0a10b6335fc742"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69f40f086eb4217d4bc61f4419e77727"><td class="memItemLeft" align="right" valign="top"><a id="a69f40f086eb4217d4bc61f4419e77727" name="a69f40f086eb4217d4bc61f4419e77727"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_QUEUE_SET_BUFF</b>&#160;&#160;&#160;0x600</td></tr>
-<tr class="separator:a69f40f086eb4217d4bc61f4419e77727"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66b79aa6043ed60d7642e8c057b6cca3"><td class="memItemLeft" align="right" valign="top"><a id="a66b79aa6043ed60d7642e8c057b6cca3" name="a66b79aa6043ed60d7642e8c057b6cca3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_QUEUE_SET_READ_THRED</b>&#160;&#160;&#160;0x601</td></tr>
-<tr class="separator:a66b79aa6043ed60d7642e8c057b6cca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b3cd17dc1ad11d95a0c7ca4710133fc"><td class="memItemLeft" align="right" valign="top"><a id="a5b3cd17dc1ad11d95a0c7ca4710133fc" name="a5b3cd17dc1ad11d95a0c7ca4710133fc"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_QUEUE_SET_WRITE_THRED</b>&#160;&#160;&#160;0x602</td></tr>
-<tr class="separator:a5b3cd17dc1ad11d95a0c7ca4710133fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a402d0c133b5e8b35ea6c7a79d3bb4975"><td class="memItemLeft" align="right" valign="top"><a id="a402d0c133b5e8b35ea6c7a79d3bb4975" name="a402d0c133b5e8b35ea6c7a79d3bb4975"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_MASK</b>&#160;&#160;&#160;0x700</td></tr>
 <tr class="separator:a402d0c133b5e8b35ea6c7a79d3bb4975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20a58bc0920ae180b03e04d8c089f50d"><td class="memItemLeft" align="right" valign="top"><a id="a20a58bc0920ae180b03e04d8c089f50d" name="a20a58bc0920ae180b03e04d8c089f50d"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_DEVICE_DRIVER_TYPE</b>&#160;&#160;&#160;0x700</td></tr>
 <tr class="separator:a20a58bc0920ae180b03e04d8c089f50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45d5b1f6557304fe7224ad9345d4de76"><td class="memItemLeft" align="right" valign="top"><a id="a45d5b1f6557304fe7224ad9345d4de76" name="a45d5b1f6557304fe7224ad9345d4de76"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_ADD_POST_PROCESS</b>&#160;&#160;&#160;0x701</td></tr>
-<tr class="separator:a45d5b1f6557304fe7224ad9345d4de76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ad902e8987cfffadf8df46e0dfc8aab"><td class="memItemLeft" align="right" valign="top"><a id="a5ad902e8987cfffadf8df46e0dfc8aab" name="a5ad902e8987cfffadf8df46e0dfc8aab"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_CANCEL_POST_PROCESS</b>&#160;&#160;&#160;0x702</td></tr>
-<tr class="separator:a5ad902e8987cfffadf8df46e0dfc8aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a756415190f825812645198063cc15c6a"><td class="memItemLeft" align="right" valign="top"><a id="a756415190f825812645198063cc15c6a" name="a756415190f825812645198063cc15c6a"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_TIME_UPDATE_MS</b>&#160;&#160;&#160;0x703</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_TIME_UPDATE_MS</b>&#160;&#160;&#160;0x701</td></tr>
 <tr class="separator:a756415190f825812645198063cc15c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43c5f00bbf7dcd163f5a31e0ee6e2f27"><td class="memItemLeft" align="right" valign="top"><a id="a43c5f00bbf7dcd163f5a31e0ee6e2f27" name="a43c5f00bbf7dcd163f5a31e0ee6e2f27"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_DEVICE_DRIVER_STRING_NAME</b>&#160;&#160;&#160;0x704</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_DEVICE_DRIVER_STRING_NAME</b>&#160;&#160;&#160;0x702</td></tr>
 <tr class="separator:a43c5f00bbf7dcd163f5a31e0ee6e2f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8df73bbd6b46e4718c677badc5a8cfcd"><td class="memItemLeft" align="right" valign="top"><a id="a8df73bbd6b46e4718c677badc5a8cfcd" name="a8df73bbd6b46e4718c677badc5a8cfcd"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_BUFFER_USE_CHUNK_SIZE</b>&#160;&#160;&#160;0x705</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_BUFFER_USE_CHUNK_SIZE</b>&#160;&#160;&#160;0x703</td></tr>
 <tr class="separator:a8df73bbd6b46e4718c677badc5a8cfcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a539feb18ab4751d1bccffd3807cb8f7e"><td class="memItemLeft" align="right" valign="top"><a id="a539feb18ab4751d1bccffd3807cb8f7e" name="a539feb18ab4751d1bccffd3807cb8f7e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_SET_VOLUME</b>&#160;&#160;&#160;0x706</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_AUDIOSINK_SET_VOLUME</b>&#160;&#160;&#160;0x704</td></tr>
 <tr class="separator:a539feb18ab4751d1bccffd3807cb8f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8946cab0a6b90933ecbddf4c1c836ace"><td class="memItemLeft" align="right" valign="top"><a id="a8946cab0a6b90933ecbddf4c1c836ace" name="a8946cab0a6b90933ecbddf4c1c836ace"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_FILESINK_MASK</b>&#160;&#160;&#160;0x800</td></tr>
@@ -262,17 +241,8 @@ Macros</h2></td></tr>
 <tr class="memitem:a29c32579bab380f1f21d475c683027c8"><td class="memItemLeft" align="right" valign="top"><a id="a29c32579bab380f1f21d475c683027c8" name="a29c32579bab380f1f21d475c683027c8"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_NETBUFSRC_MASK</b>&#160;&#160;&#160;0xa00</td></tr>
 <tr class="separator:a29c32579bab380f1f21d475c683027c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ebbb6372079559c39f30b151b06017d"><td class="memItemLeft" align="right" valign="top"><a id="a1ebbb6372079559c39f30b151b06017d" name="a1ebbb6372079559c39f30b151b06017d"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_NETBUFSRC_SET_BUFF</b>&#160;&#160;&#160;0xa00</td></tr>
-<tr class="separator:a1ebbb6372079559c39f30b151b06017d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af793027a8d3bf403366fb3fb4e12c744"><td class="memItemLeft" align="right" valign="top"><a id="af793027a8d3bf403366fb3fb4e12c744" name="af793027a8d3bf403366fb3fb4e12c744"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_NETBUFSRC_SET_CHUNK_SIZE</b>&#160;&#160;&#160;0xa01</td></tr>
-<tr class="separator:af793027a8d3bf403366fb3fb4e12c744"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf323ed120d70f2581c3aef1034b9542"><td class="memItemLeft" align="right" valign="top"><a id="abf323ed120d70f2581c3aef1034b9542" name="abf323ed120d70f2581c3aef1034b9542"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_NETBUFSRC_GET_CHUNK_SIZE</b>&#160;&#160;&#160;0xa02</td></tr>
-<tr class="separator:abf323ed120d70f2581c3aef1034b9542"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e2732e9d635cb29369629b5b84aa077"><td class="memItemLeft" align="right" valign="top"><a id="a3e2732e9d635cb29369629b5b84aa077" name="a3e2732e9d635cb29369629b5b84aa077"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_NETBUFSRC_SET_CALLBACK</b>&#160;&#160;&#160;0xa03</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_NETBUFSRC_SET_CALLBACK</b>&#160;&#160;&#160;0xa00</td></tr>
 <tr class="separator:a3e2732e9d635cb29369629b5b84aa077"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00f4d53b6c54d3240f6d7dbc7d771817"><td class="memItemLeft" align="right" valign="top"><a id="a00f4d53b6c54d3240f6d7dbc7d771817" name="a00f4d53b6c54d3240f6d7dbc7d771817"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_VITSINK_MASK</b>&#160;&#160;&#160;0xb00</td></tr>
@@ -280,12 +250,6 @@ Macros</h2></td></tr>
 <tr class="memitem:ad8ef2ac2ac79636cbbf69c511717261b"><td class="memItemLeft" align="right" valign="top"><a id="ad8ef2ac2ac79636cbbf69c511717261b" name="ad8ef2ac2ac79636cbbf69c511717261b"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_VITSINK_FPOINT</b>&#160;&#160;&#160;0xb00</td></tr>
 <tr class="separator:ad8ef2ac2ac79636cbbf69c511717261b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f96113821be84bebe15407f769c2337"><td class="memItemLeft" align="right" valign="top"><a id="a6f96113821be84bebe15407f769c2337" name="a6f96113821be84bebe15407f769c2337"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_VITSINK_BUFFER_DESC</b>&#160;&#160;&#160;0xb01</td></tr>
-<tr class="separator:a6f96113821be84bebe15407f769c2337"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff3dd6ac840858b00d189fbaf5929780"><td class="memItemLeft" align="right" valign="top"><a id="aff3dd6ac840858b00d189fbaf5929780" name="aff3dd6ac840858b00d189fbaf5929780"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_VITSINK_TODO</b>&#160;&#160;&#160;0xb02</td></tr>
-<tr class="separator:aff3dd6ac840858b00d189fbaf5929780"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a542e1b8ddcafeb4cbb4061e69c52a4b5"><td class="memItemLeft" align="right" valign="top"><a id="a542e1b8ddcafeb4cbb4061e69c52a4b5" name="a542e1b8ddcafeb4cbb4061e69c52a4b5"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>PROP_EAP_MASK</b>&#160;&#160;&#160;0xc00</td></tr>
 <tr class="separator:a542e1b8ddcafeb4cbb4061e69c52a4b5"><td class="memSeparator" colspan="2">&#160;</td></tr>

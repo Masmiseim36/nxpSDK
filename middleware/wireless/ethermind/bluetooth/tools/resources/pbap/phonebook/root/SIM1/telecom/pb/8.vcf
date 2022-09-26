@@ -1,0 +1,22 @@
+BEGIN:VCARD
+VERSION:2.1
+N:Hegde;Anil
+FN:Vinayak Hegde
+ORG:MindTree Consulting Pvt. Ltd.;R & D Services
+TITLE:Senior Engineer
+NOTE;ENCODING=QUOTED-PRINTABLE: =0D=0A
+TEL;WORK;VOICE:+91 80 2626 4800
+TEL;WORK;VOICE: 
+TEL;HOME;VOICE: 
+TEL;CELL;VOICE:+91 98862 96485
+TEL;PAGER;VOICE: 
+ADR;WORK;ENCODING=QUOTED-PRINTABLE:; ;"MindTree Consulting Pvt. Ltd.,"=0D=0APhase 1, Global Village, RVCE Post,=
+ =0D=0AMysore Road,=0D=0ABangalore.;Bangalore;Karnataka;560 059;INDIA
+LABEL;WORK;ENCODING=QUOTED-PRINTABLE: =0D=0A"MindTree Consulting Pvt. Ltd.,"=0D=0APhase 1, Global Village, RVCE P=
+ ost, =0D=0AMysore Road,=0D=0ABangalore.=0D=0ABangalore, Karnataka 560 059=
+ =0D=0AINDIA
+EMAIL;PREF;INTERNET:vinayak_hegde@mindtree.com
+X-BT-UCI:skype:jean18061978
+X-BT-UID:1234567890ABCDEF1234567890000018
+REV:20060510T064932Z
+END:VCARD

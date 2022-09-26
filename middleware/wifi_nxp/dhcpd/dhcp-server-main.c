@@ -18,7 +18,7 @@
 
 #include "dhcp-priv.h"
 
-os_thread_t dhcpd_thread;
+static os_thread_t dhcpd_thread;
 static os_thread_stack_define(dhcp_stack, 2048);
 static bool dhcpd_running;
 /*

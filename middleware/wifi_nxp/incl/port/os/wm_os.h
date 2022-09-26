@@ -95,17 +95,7 @@ static inline uint32_t os_get_usec_counter()
  *
  * \return 32 bit value of ticks since boot-up
  */
-static inline unsigned os_ticks_get(void)
-{
-    if (is_isr_context())
-    {
-        return xTaskGetTickCountFromISR();
-    }
-    else
-    {
-        return xTaskGetTickCount();
-    }
-}
+unsigned os_ticks_get(void);
 
 #if 0
 /** Get (wraparound safe) current OS tick counter.
@@ -139,6 +129,32 @@ static inline unsigned long long os_total_ticks_get()
  */
 unsigned int os_get_timestamp(void);
 
+/** Convert milliseconds to OS ticks
+ *
+ * This function converts the given millisecond value to the number of OS
+ * ticks.
+ *
+ * This is useful as functions like os_thread_sleep() accept only ticks
+ * as input.
+ *
+ * @param[in] msecs Milliseconds
+ *
+ * @return Number of OS ticks corresponding to msecs
+ */
+/*! @brief Convert the milliseconds to ticks in FreeRTOS. */
+uint32_t os_msec_to_ticks(uint32_t msecs);
+
+/** Convert ticks to milliseconds
+ *
+ * This function converts the given ticks value to milliseconds. This is useful
+ * as some functions, like os_ticks_get(), return values in units of OS ticks.
+ *
+ * @param[in] ticks OS ticks
+ *
+ * @return Number of milliseconds corresponding to ticks
+ */
+unsigned long os_ticks_to_msec(unsigned long ticks);
+
 /*** Thread Management ***/
 typedef void *os_thread_arg_t;
 
@@ -160,20 +176,9 @@ typedef struct os_thread_stack
 #define os_thread_stack_define(stackname, stacksize) \
     os_thread_stack_t stackname = {(stacksize) / (sizeof(portSTACK_TYPE))}
 
-typedef xTaskHandle os_thread_t;
+typedef TaskHandle_t os_thread_t;
 
-static inline const char *get_current_taskname(void)
-{
-    os_thread_t handle = xTaskGetCurrentTaskHandle();
-    if (handle != NULL)
-    {
-        return pcTaskGetTaskName(handle);
-    }
-    else
-    {
-        return "Unknown";
-    }
-}
+const char *get_current_taskname(void);
 
 /** Create new thread
  *
@@ -207,28 +212,14 @@ static inline const char *get_current_taskname(void)
  * @return WM_SUCCESS if thread was created successfully
  * @return -WM_FAIL if thread creation failed
  */
-static inline int os_thread_create(os_thread_t *thandle,
-                                   const char *name,
-                                   void (*main_func)(os_thread_arg_t arg),
-                                   void *arg,
-                                   os_thread_stack_t *stack,
-                                   int prio)
-{
-    int ret;
+int os_thread_create(os_thread_t *thandle,
+                     const char *name,
+                     void (*main_func)(os_thread_arg_t arg),
+                     void *arg,
+                     os_thread_stack_t *stack,
+                     int prio);
 
-    ret = xTaskCreate(main_func, name, (uint16_t)stack->size, arg, (uint32_t)prio, thandle);
-
-    os_dprintf(
-        " Thread Create: ret %d thandle %p"
-        " stacksize = %d\r\n",
-        ret, thandle ? *thandle : NULL, stack->size);
-    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
-}
-
-static inline os_thread_t os_get_current_task_handle(void)
-{
-    return xTaskGetCurrentTaskHandle();
-}
+os_thread_t os_get_current_task_handle(void);
 
 /** Terminate a thread
  *
@@ -241,23 +232,7 @@ static inline os_thread_t os_get_current_task_handle(void)
  * @return WM_SUCCESS if operation success
  * @return -WM_FAIL if operation fails
  */
-static inline int os_thread_delete(os_thread_t *thandle)
-{
-    if (thandle == NULL)
-    {
-        os_dprintf("OS: Thread Self Delete\r\n");
-        vTaskDelete(NULL);
-    }
-    else
-    {
-        os_dprintf("OS: Thread Delete: %p\r\n", *thandle);
-        vTaskDelete(*thandle);
-    }
-
-    *thandle = NULL;
-
-    return WM_SUCCESS;
-}
+int os_thread_delete(os_thread_t *thandle);
 
 /** Sleep for specified number of OS ticks
  *
@@ -277,45 +252,7 @@ static inline int os_thread_delete(os_thread_t *thandle)
  * to be originally scheduled to be woken up. So if sleep was for 10 ticks
  * and the task is woken up after 8 ticks then 2 will be returned.
  */
-static inline void os_thread_sleep(uint32_t ticks)
-{
-    os_dprintf("OS: Thread Sleep: %d\r\n", ticks);
-    vTaskDelay(ticks);
-    return;
-}
-
-/** Convert milliseconds to OS ticks
- *
- * This function converts the given millisecond value to the number of OS
- * ticks.
- *
- * This is useful as functions like os_thread_sleep() accept only ticks
- * as input.
- *
- * @param[in] msecs Milliseconds
- *
- * @return Number of OS ticks corresponding to msecs
- */
-/*! @brief Convert the milliseconds to ticks in FreeRTOS. */
-
-static inline uint32_t os_msec_to_ticks(uint32_t msecs)
-{
-    return (msecs) / (portTICK_RATE_MS);
-}
-
-/** Convert ticks to milliseconds
- *
- * This function converts the given ticks value to milliseconds. This is useful
- * as some functions, like os_ticks_get(), return values in units of OS ticks.
- *
- * @param[in] ticks OS ticks
- *
- * @return Number of milliseconds corresponding to ticks
- */
-static inline unsigned long os_ticks_to_msec(unsigned long ticks)
-{
-    return (ticks) * (portTICK_RATE_MS);
-}
+void os_thread_sleep(uint32_t ticks);
 
 /** Suspend the given thread
  *
@@ -327,30 +264,7 @@ static inline unsigned long os_ticks_to_msec(unsigned long ticks)
  *
  * @param[in] thandle Pointer to thread handle
  */
-static inline void os_thread_self_complete(os_thread_t *thandle)
-{
-    /* Suspend self until someone calls delete. This is required because in
-     * freeRTOS, main functions of a thread cannot return.
-     */
-    if (thandle != NULL)
-    {
-        os_dprintf("OS: Thread Complete: %p\r\n", *thandle);
-        vTaskSuspend(*thandle);
-    }
-    else
-    {
-        os_dprintf("OS: Thread Complete: SELF\r\n");
-        vTaskSuspend(NULL);
-    }
-
-    /*
-     * We do not want this function to return ever.
-     */
-    while (true)
-    {
-        os_thread_sleep(os_msec_to_ticks(60000));
-    }
-}
+void os_thread_self_complete(os_thread_t *thandle);
 
 #ifndef CONFIG_WIFI_MAX_PRIO
 #error Define CONFIG_WIFI_MAX_PRIO in wifi_config.h
@@ -377,7 +291,7 @@ typedef struct os_queue_pool
  */
 #define os_queue_pool_define(poolname, poolsize) os_queue_pool_t poolname = {poolsize};
 
-typedef xQueueHandle os_queue_t;
+typedef QueueHandle_t os_queue_t;
 
 /** Create an OS queue
  *
@@ -425,33 +339,7 @@ int os_queue_create(os_queue_t *qhandle, const char *name, int msgsize, os_queue
  * @return -WM_E_INVAL if invalid parameters are passed
  * @return -WM_FAIL if send operation failed
  */
-static inline int os_queue_send(os_queue_t *qhandle, const void *msg, unsigned long wait)
-{
-    int ret;
-    signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-    if (qhandle == NULL || (*qhandle) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-
-    os_dprintf("OS: Queue Send: handle %p, msg %p, wait %d\r\n", *qhandle, msg, wait);
-
-    if (is_isr_context())
-    {
-        /* This call is from Cortex-M3 handler mode, i.e. exception
-         * context, hence use FromISR FreeRTOS APIs.
-         */
-        ret = xQueueSendToBackFromISR(*qhandle, msg, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
-    }
-    else
-    {
-        ret = xQueueSendToBack(*qhandle, msg, wait);
-    }
-    os_dprintf("OS: Queue Send: done\r\n");
-
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_queue_send(os_queue_t *qhandle, const void *msg, unsigned long wait);
 
 /** Receive an item from queue
  *
@@ -476,19 +364,7 @@ static inline int os_queue_send(os_queue_t *qhandle, const void *msg, unsigned l
  *
  * \note This function must not be used in an interrupt service routine.
  */
-static inline int os_queue_recv(os_queue_t *qhandle, void *msg, unsigned long wait)
-{
-    int ret;
-    if (qhandle == NULL || (*qhandle) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-
-    os_dprintf("OS: Queue Receive: handle %p, msg %p, wait %d\r\n", *qhandle, msg, wait);
-    ret = xQueueReceive(*qhandle, msg, wait);
-    os_dprintf("OS: Queue Receive: done\r\n");
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_queue_recv(os_queue_t *qhandle, void *msg, unsigned long wait);
 
 /** Delete queue
  *
@@ -499,16 +375,7 @@ static inline int os_queue_recv(os_queue_t *qhandle, void *msg, unsigned long wa
  *
  * @return Currently always returns WM_SUCCESS
  */
-static inline int os_queue_delete(os_queue_t *qhandle)
-{
-    os_dprintf("OS: Queue Delete: handle %p\r\n", *qhandle);
-
-    vQueueDelete(*qhandle);
-    // sem_debug_delete((const xSemaphoreHandle)*qhandle);
-    *qhandle = NULL;
-
-    return WM_SUCCESS;
-}
+int os_queue_delete(os_queue_t *qhandle);
 
 /** Return the number of messages stored in queue.
  *
@@ -517,17 +384,7 @@ static inline int os_queue_delete(os_queue_t *qhandle)
  * @returns Number of items in the queue
  * @return -WM_E_INVAL if invalid parameters are passed
  */
-static inline int os_queue_get_msgs_waiting(os_queue_t *qhandle)
-{
-    int nmsg = 0;
-    if (qhandle == NULL || (*qhandle) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-    nmsg = (int)uxQueueMessagesWaiting(*qhandle);
-    os_dprintf("OS: Queue Msg Count: handle %p, count %d\r\n", *qhandle, nmsg);
-    return nmsg;
-}
+int os_queue_get_msgs_waiting(os_queue_t *qhandle);
 
 /* Critical Sections */
 static inline unsigned long os_enter_critical_section(void)
@@ -557,34 +414,7 @@ extern void (*g_os_idle_hooks[MAX_CUSTOM_HOOKS])(void);
  *  @return WM_SUCCESS on success
  *  @return -WM_FAIL on error
  */
-static inline int os_setup_idle_function(void (*func)(void))
-{
-    unsigned int i;
-
-    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
-    {
-        if (g_os_idle_hooks[i] != NULL && g_os_idle_hooks[i] == func)
-        {
-            return WM_SUCCESS;
-        }
-    }
-
-    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
-    {
-        if (g_os_idle_hooks[i] == NULL)
-        {
-            g_os_idle_hooks[i] = func;
-            break;
-        }
-    }
-
-    if (i == MAX_CUSTOM_HOOKS)
-    {
-        return -WM_FAIL;
-    }
-
-    return WM_SUCCESS;
-}
+int os_setup_idle_function(void (*func)(void));
 
 /** Setup tick function
  *
@@ -596,34 +426,7 @@ static inline int os_setup_idle_function(void (*func)(void))
  *  @return WM_SUCCESS on success
  *  @return -WM_FAIL on error
  */
-static inline int os_setup_tick_function(void (*func)(void))
-{
-    unsigned int i;
-
-    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
-    {
-        if (g_os_tick_hooks[i] != NULL && g_os_tick_hooks[i] == func)
-        {
-            return WM_SUCCESS;
-        }
-    }
-
-    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
-    {
-        if (g_os_tick_hooks[i] == NULL)
-        {
-            g_os_tick_hooks[i] = func;
-            break;
-        }
-    }
-
-    if (i == MAX_CUSTOM_HOOKS)
-    {
-        return -WM_FAIL;
-    }
-
-    return WM_SUCCESS;
-}
+int os_setup_tick_function(void (*func)(void));
 
 /** Remove idle function
  *
@@ -635,26 +438,7 @@ static inline int os_setup_tick_function(void (*func)(void))
  *  @return WM_SUCCESS on success
  *  @return -WM_FAIL on error
  */
-static inline int os_remove_idle_function(void (*func)(void))
-{
-    unsigned int i;
-
-    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
-    {
-        if (g_os_idle_hooks[i] == func)
-        {
-            g_os_idle_hooks[i] = NULL;
-            break;
-        }
-    }
-
-    if (i == MAX_CUSTOM_HOOKS)
-    {
-        return -WM_FAIL;
-    }
-
-    return WM_SUCCESS;
-}
+int os_remove_idle_function(void (*func)(void));
 
 /** Remove tick function
  *
@@ -665,36 +449,16 @@ static inline int os_remove_idle_function(void (*func)(void))
  *  @return WM_SUCCESS on success
  *  @return -WM_FAIL on error
  */
-static inline int os_remove_tick_function(void (*func)(void))
-{
-    unsigned int i;
-
-    for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
-    {
-        if (g_os_tick_hooks[i] == func)
-        {
-            g_os_tick_hooks[i] = NULL;
-            break;
-        }
-    }
-
-    if (i == MAX_CUSTOM_HOOKS)
-    {
-        return -WM_FAIL;
-    }
-
-    return WM_SUCCESS;
-}
+int os_remove_tick_function(void (*func)(void));
 
 /*** Mutex ***/
-typedef xSemaphoreHandle os_mutex_t;
+typedef SemaphoreHandle_t os_mutex_t;
 
 /** Priority Inheritance Enabled */
 #define OS_MUTEX_INHERIT 1
 /** Priority Inheritance Disabled */
 #define OS_MUTEX_NO_INHERIT 0
 
-static inline int os_mutex_create(os_mutex_t *mhandle, const char *name, int flags) WARN_UNUSED_RET;
 /** Create mutex
  *
  * This function creates a mutex.
@@ -709,28 +473,7 @@ static inline int os_mutex_create(os_mutex_t *mhandle, const char *name, int fla
  * @return WM_SUCCESS on success
  * @return -WM_FAIL on error
  */
-static inline int os_mutex_create(os_mutex_t *mhandle, const char *name, int flags)
-{
-    if (flags == OS_MUTEX_NO_INHERIT)
-    {
-        *mhandle = NULL;
-        os_dprintf("Cannot create mutex for non-inheritance yet \r\n");
-        return -WM_FAIL;
-    }
-    os_dprintf("OS: Mutex Create: name = %s \r\n", name);
-    *mhandle = xSemaphoreCreateMutex();
-    os_dprintf("OS: Mutex Create: handle = %p\r\n", *mhandle);
-    if (*mhandle != NULL)
-    {
-        // sem_debug_add((const xQueueHandle)*mhandle,
-        //	      name, 1);
-        return WM_SUCCESS;
-    }
-    else
-    {
-        return -WM_FAIL;
-    }
-}
+int os_mutex_create(os_mutex_t *mhandle, const char *name, int flags) WARN_UNUSED_RET;
 
 /** Acquire mutex
  *
@@ -749,17 +492,7 @@ static inline int os_mutex_create(os_mutex_t *mhandle, const char *name, int fla
  * @return -WM_E_INVAL if invalid parameters are passed
  * @return -WM_FAIL on failure
  */
-static inline int os_mutex_get(os_mutex_t *mhandle, unsigned long wait)
-{
-    int ret;
-    if (mhandle == NULL || (*mhandle) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-    os_dprintf("OS: Mutex Get: handle %p\r\n", *mhandle);
-    ret = xSemaphoreTake(*mhandle, wait);
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_mutex_get(os_mutex_t *mhandle, unsigned long wait);
 
 /** Release mutex
  *
@@ -775,20 +508,7 @@ static inline int os_mutex_get(os_mutex_t *mhandle, unsigned long wait)
  * @return -WM_E_INVAL if invalid parameters are passed
  * @return -WM_FAIL on failure
  */
-static inline int os_mutex_put(os_mutex_t *mhandle)
-{
-    int ret;
-
-    if (mhandle == NULL || (*mhandle) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-
-    os_dprintf("OS: Mutex Put: %p\r\n", *mhandle);
-
-    ret = xSemaphoreGive(*mhandle);
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_mutex_put(os_mutex_t *mhandle);
 
 /**
  * Create recursive mutex
@@ -809,24 +529,7 @@ static inline int os_mutex_put(os_mutex_t *mhandle)
  * @return -WM_E_INVAL on invalid parameter.
  * @return -WM_FAIL on error
  */
-static inline int os_recursive_mutex_create(os_mutex_t *mhandle, const char *name)
-{
-    if (mhandle == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-
-    os_dprintf("OS: Recursive Mutex Create: name = %s \r\n", name);
-    *mhandle = xSemaphoreCreateRecursiveMutex();
-    os_dprintf("OS: Recursive Mutex Create: handle = %p\r\n", *mhandle);
-    if (*mhandle == NULL)
-    {
-        return -WM_FAIL;
-    }
-
-    // sem_debug_add(*mhandle, name, 1);
-    return WM_SUCCESS;
-}
+int os_recursive_mutex_create(os_mutex_t *mhandle, const char *name);
 
 /**
  * Get recursive mutex
@@ -845,14 +548,8 @@ static inline int os_recursive_mutex_create(os_mutex_t *mhandle, const char *nam
  *
  * @return WM_SUCCESS when recursive mutex is acquired
  * @return -WM_FAIL on failure
-
  */
-static inline int os_recursive_mutex_get(os_mutex_t *mhandle, unsigned long wait)
-{
-    os_dprintf("OS: Recursive Mutex Get: handle %p\r\n", *mhandle);
-    int ret = xSemaphoreTakeRecursive(*mhandle, wait);
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_recursive_mutex_get(os_mutex_t *mhandle, unsigned long wait);
 
 /**
  * Put recursive mutex
@@ -866,12 +563,7 @@ static inline int os_recursive_mutex_get(os_mutex_t *mhandle, unsigned long wait
  * @return WM_SUCCESS when mutex is released
  * @return -WM_FAIL on failure
  */
-static inline int os_recursive_mutex_put(os_mutex_t *mhandle)
-{
-    os_dprintf("OS: Recursive Mutex Put: %p\r\n", *mhandle);
-    int ret = xSemaphoreGiveRecursive(*mhandle);
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_recursive_mutex_put(os_mutex_t *mhandle);
 
 /** Delete mutex
  *
@@ -883,16 +575,9 @@ static inline int os_recursive_mutex_put(os_mutex_t *mhandle)
  *
  * @return WM_SUCCESS on success
  */
-static inline int os_mutex_delete(os_mutex_t *mhandle)
-{
-    vSemaphoreDelete(*mhandle);
-    // sem_debug_delete((const xSemaphoreHandle)*mhandle);
-    *mhandle = NULL;
-    return WM_SUCCESS;
-}
+int os_mutex_delete(os_mutex_t *mhandle);
 
 /*** Event Notification ***/
-
 /**
  * Wait for task notification
  *
@@ -905,11 +590,7 @@ static inline int os_mutex_delete(os_mutex_t *mhandle)
  * @return WM_SUCCESS when notification is successful
  * @return -WM_FAIL on failure or timeout
  */
-static inline int os_event_notify_get(unsigned long wait_time)
-{
-    int ret = (int)ulTaskNotifyTake(pdTRUE, wait_time);
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_event_notify_get(unsigned long wait_time);
 
 /**
  * Give task notification
@@ -923,36 +604,11 @@ static inline int os_event_notify_get(unsigned long wait_time)
  * @return WM_SUCCESS when notification is successful
  * @return -WM_FAIL on failure or timeout
  */
-static inline int os_event_notify_put(os_thread_t task)
-{
-    int ret                                       = pdTRUE;
-    signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-
-    if (task == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-    if (is_isr_context())
-    {
-        /* This call is from Cortex-M3/4 handler mode, i.e. exception
-         * context, hence use FromISR FreeRTOS APIs.
-         */
-        vTaskNotifyGiveFromISR(task, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
-    }
-    else
-    {
-        ret = xTaskNotifyGive(task);
-    }
-
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_event_notify_put(os_thread_t task);
 
 /*** Semaphore ***/
 
-typedef xSemaphoreHandle os_semaphore_t;
-
-static inline int os_semaphore_create(os_semaphore_t *mhandle, const char *name) WARN_UNUSED_RET;
+typedef SemaphoreHandle_t os_semaphore_t;
 
 /** Create binary semaphore
  *
@@ -965,20 +621,7 @@ static inline int os_semaphore_create(os_semaphore_t *mhandle, const char *name)
  * @return WM_SUCCESS on success
  * @return -WM_FAIL on error
  */
-static inline int os_semaphore_create(os_semaphore_t *mhandle, const char *name)
-{
-    vSemaphoreCreateBinary(*mhandle);
-    if (*mhandle != NULL)
-    {
-        // sem_debug_add((const xSemaphoreHandle)*mhandle,
-        //	      name, 1);
-        return WM_SUCCESS;
-    }
-    else
-    {
-        return -WM_FAIL;
-    }
-}
+int os_semaphore_create(os_semaphore_t *mhandle, const char *name) WARN_UNUSED_RET;
 
 /** Create counting semaphore
  *
@@ -996,24 +639,11 @@ static inline int os_semaphore_create(os_semaphore_t *mhandle, const char *name)
  * @return WM_SUCCESS on success
  * @return -WM_FAIL on error
  */
+int os_semaphore_create_counting(os_semaphore_t *mhandle,
+                                 const char *name,
+                                 unsigned long maxcount,
+                                 unsigned long initcount);
 
-static inline int os_semaphore_create_counting(os_semaphore_t *mhandle,
-                                               const char *name,
-                                               unsigned long maxcount,
-                                               unsigned long initcount)
-{
-    *mhandle = xSemaphoreCreateCounting(maxcount, initcount);
-    if (*mhandle != NULL)
-    {
-        ////sem_debug_add((const xQueueHandle)*mhandle,
-        //	      name, 1);
-        return WM_SUCCESS;
-    }
-    else
-    {
-        return -WM_FAIL;
-    }
-}
 /** Acquire semaphore
  *
  * This function acquires a semaphore. At a given time, a binary semaphore can
@@ -1032,29 +662,7 @@ static inline int os_semaphore_create_counting(os_semaphore_t *mhandle,
  * @return -WM_E_INVAL if invalid parameters are passed
  * @return -WM_FAIL on failure
  */
-static inline int os_semaphore_get(os_semaphore_t *mhandle, unsigned long wait)
-{
-    int ret;
-    signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-    if (mhandle == NULL || (*mhandle) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-    os_dprintf("OS: Semaphore Get: handle %p\r\n", *mhandle);
-    if (is_isr_context())
-    {
-        /* This call is from Cortex-M3 handler mode, i.e. exception
-         * context, hence use FromISR FreeRTOS APIs.
-         */
-        ret = xSemaphoreTakeFromISR(*mhandle, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
-    }
-    else
-    {
-        ret = xSemaphoreTake(*mhandle, wait);
-    }
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_semaphore_get(os_semaphore_t *mhandle, unsigned long wait);
 
 /** Release semaphore
  *
@@ -1069,30 +677,7 @@ static inline int os_semaphore_get(os_semaphore_t *mhandle, unsigned long wait)
  * @return -WM_E_INVAL if invalid parameters are passed
  * @return -WM_FAIL on failure
  */
-static inline int os_semaphore_put(os_semaphore_t *mhandle)
-{
-    int ret;
-    signed portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-    if (mhandle == NULL || (*mhandle) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-
-    os_dprintf("OS: Semaphore Put: handle %p\r\n", *mhandle);
-    if (is_isr_context())
-    {
-        /* This call is from Cortex-M3 handler mode, i.e. exception
-         * context, hence use FromISR FreeRTOS APIs.
-         */
-        ret = xSemaphoreGiveFromISR(*mhandle, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
-    }
-    else
-    {
-        ret = xSemaphoreGive(*mhandle);
-    }
-    return ret == pdTRUE ? WM_SUCCESS : -WM_FAIL;
-}
+int os_semaphore_put(os_semaphore_t *mhandle);
 
 /** Get semaphore count
  *
@@ -1102,11 +687,7 @@ static inline int os_semaphore_put(os_semaphore_t *mhandle)
  *
  * @return current value of the semaphore
  */
-static inline int os_semaphore_getcount(os_semaphore_t *mhandle)
-{
-    os_dprintf("OS: Semaphore Get Count: handle %p\r\n", *mhandle);
-    return (int)uxQueueMessagesWaiting(*mhandle);
-}
+int os_semaphore_getcount(os_semaphore_t *mhandle);
 
 /** Delete a semaphore
  *
@@ -1119,13 +700,7 @@ static inline int os_semaphore_getcount(os_semaphore_t *mhandle)
  *
  * @return WM_SUCCESS on success
  */
-static inline int os_semaphore_delete(os_semaphore_t *mhandle)
-{
-    vSemaphoreDelete(*mhandle);
-    // sem_debug_delete((const xSemaphoreHandle)*mhandle);
-    *mhandle = NULL;
-    return WM_SUCCESS;
-}
+int os_semaphore_delete(os_semaphore_t *mhandle);
 
 /*
  * Reader Writer Locks
@@ -1166,7 +741,7 @@ struct _rw_lock
     unsigned int reader_count;
 };
 
-int os_rwlock_create_with_cb(os_rw_lock_t *lock, const char *mutex_name, const char *lock_name, cb_fn r_fn);
+int os_rwlock_create_with_cb(os_rw_lock_t *plock, const char *mutex_name, const char *lock_name, cb_fn r_fn);
 
 /** Create reader-writer lock
  *
@@ -1179,7 +754,7 @@ int os_rwlock_create_with_cb(os_rw_lock_t *lock, const char *mutex_name, const c
  * @return WM_SUCCESS on success
  * @return -WM_FAIL on error
  */
-int os_rwlock_create(os_rw_lock_t *lock, const char *mutex_name, const char *lock_name);
+int os_rwlock_create(os_rw_lock_t *plock, const char *mutex_name, const char *lock_name);
 
 /** Delete a reader-write lock
  *
@@ -1249,9 +824,9 @@ int os_rwlock_read_unlock(os_rw_lock_t *lock);
 
 /*** Timer Management ***/
 
-typedef xTimerHandle os_timer_t;
+typedef TimerHandle_t os_timer_t;
 typedef os_timer_t os_timer_arg_t;
-typedef portTickType os_timer_tick;
+typedef TickType_t os_timer_tick;
 
 /** OS Timer reload Options
  *
@@ -1272,7 +847,7 @@ typedef enum os_timer_reload
 /**
  * OS Timer Activate Options
  */
-typedef enum os_timer_activate
+typedef enum os_timer_activation
 {
     /** Start the timer on creation. */
     OS_TIMER_AUTO_ACTIVATE,
@@ -1333,30 +908,7 @@ int os_timer_activate(os_timer_t *timer_t);
  * @return -WM_E_INVAL if invalid parameters are passed
  * @return -WM_FAIL on failure
  */
-static inline int os_timer_change(os_timer_t *timer_t, os_timer_tick ntime, os_timer_tick block_time)
-{
-    int ret;
-    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-
-    if (timer_t == NULL || (*timer_t) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-    if (is_isr_context())
-    {
-        /* This call is from Cortex-M3 handler mode, i.e. exception
-         * context, hence use FromISR FreeRTOS APIs.
-         */
-        ret = xTimerChangePeriodFromISR(*timer_t, ntime, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
-    }
-    else
-    {
-        /* Fixme: What should be value of xBlockTime? */
-        ret = xTimerChangePeriod(*timer_t, ntime, 100);
-    }
-    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
-}
+int os_timer_change(os_timer_t *timer_t, os_timer_tick ntime, os_timer_tick block_time);
 
 /** Check the timer active state
  *
@@ -1369,18 +921,7 @@ static inline int os_timer_change(os_timer_t *timer_t, os_timer_tick ntime, os_t
  * @return true if timer is active
  * @return false if time is not active
  */
-static inline bool os_timer_is_running(os_timer_t *timer_t)
-{
-    int ret;
-
-    if (timer_t == NULL || (*timer_t) == NULL)
-    {
-        return false;
-    }
-
-    ret = xTimerIsTimerActive(*timer_t);
-    return ret == pdPASS ? true : false;
-}
+bool os_timer_is_running(os_timer_t *timer_t);
 
 /**
  * Get the timer context
@@ -1394,15 +935,7 @@ static inline bool os_timer_is_running(os_timer_t *timer_t)
  * @return The timer context i.e. the callback argument passed to
  * os_timer_create().
  */
-static inline void *os_timer_get_context(os_timer_t *timer_t)
-{
-    if (timer_t == NULL || (*timer_t) == NULL)
-    {
-        return (void *)-1;
-    }
-
-    return pvTimerGetTimerID(*timer_t);
-}
+void *os_timer_get_context(os_timer_t *timer_t);
 
 /** Reset timer
  *
@@ -1419,35 +952,7 @@ static inline void *os_timer_get_context(os_timer_t *timer_t)
  * @return -WM_E_INVAL if invalid parameters are passed
  * @return -WM_FAIL on failure
  */
-static inline int os_timer_reset(os_timer_t *timer_t)
-{
-    int ret;
-    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-
-    if (timer_t == NULL || (*timer_t) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-    /* Note:
-     * XTimerStop, seconds argument is xBlockTime which means, the time,
-     * in ticks, that the calling task should be held in the Blocked
-     * state, until timer command succeeds.
-     * We are giving as 0, to be consistent with threadx logic.
-     */
-    if (is_isr_context())
-    {
-        /* This call is from Cortex-M3 handler mode, i.e. exception
-         * context, hence use FromISR FreeRTOS APIs.
-         */
-        ret = xTimerResetFromISR(*timer_t, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
-    }
-    else
-    {
-        ret = xTimerReset(*timer_t, 0);
-    }
-    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
-}
+int os_timer_reset(os_timer_t *timer_t);
 
 /** Deactivate timer
  *
@@ -1459,35 +964,7 @@ static inline int os_timer_reset(os_timer_t *timer_t)
  * @return -WM_E_INVAL if invalid parameters are passed
  * @return -WM_FAIL on failure
  */
-static inline int os_timer_deactivate(os_timer_t *timer_t)
-{
-    int ret;
-    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-
-    if (timer_t == NULL || (*timer_t) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-    /* Note:
-     * XTimerStop, seconds argument is xBlockTime which means, the time,
-     * in ticks, that the calling task should be held in the Blocked
-     * state, until timer command succeeds.
-     * We are giving as 0, to be consistent with threadx logic.
-     */
-    if (is_isr_context())
-    {
-        /* This call is from Cortex-M3 handler mode, i.e. exception
-         * context, hence use FromISR FreeRTOS APIs.
-         */
-        ret = xTimerStopFromISR(*timer_t, &xHigherPriorityTaskWoken);
-        portEND_SWITCHING_ISR(xHigherPriorityTaskWoken);
-    }
-    else
-    {
-        ret = xTimerStop(*timer_t, 0);
-    }
-    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
-}
+int os_timer_deactivate(os_timer_t *timer_t);
 
 /** Delete timer
  *
@@ -1499,31 +976,9 @@ static inline int os_timer_deactivate(os_timer_t *timer_t)
  * @return -WM_E_INVAL if invalid parameters are passed
  * @return -WM_FAIL on failure
  */
-static inline int os_timer_delete(os_timer_t *timer_t)
-{
-    int ret;
-
-    if (timer_t == NULL || (*timer_t) == NULL)
-    {
-        return -WM_E_INVAL;
-    }
-
-    /* Below timer handle invalidation needs to be protected as a context
-     * switch may create issues if same handle is used before
-     * invalidation.
-     */
-    unsigned long sta = os_enter_critical_section();
-    /* Note: Block time is set as 0, thus signifying non-blocking
-       API. Can be changed later if required. */
-    ret      = xTimerDelete(*timer_t, 0);
-    *timer_t = NULL;
-    os_exit_critical_section(sta);
-
-    return ret == pdPASS ? WM_SUCCESS : -WM_FAIL;
-}
+int os_timer_delete(os_timer_t *timer_t);
 
 /* OS Memory allocation API's */
-#ifndef CONFIG_HEAP_DEBUG
 
 /** Allocate memory
  *
@@ -1534,7 +989,7 @@ static inline int os_timer_delete(os_timer_t *timer_t)
  * @return Pointer to the allocated memory
  * @return NULL if allocation fails
  */
-#define os_mem_alloc(size) pvPortMalloc(size)
+void *os_mem_alloc(size_t size);
 
 /** Allocate memory and zero it
  *
@@ -1546,16 +1001,7 @@ static inline int os_timer_delete(os_timer_t *timer_t)
  * @return Pointer to the allocated memory
  * @return NULL if allocation fails
  */
-static inline void *os_mem_calloc(size_t size)
-{
-    void *ptr = pvPortMalloc(size);
-    if (ptr != NULL)
-    {
-        (void)memset(ptr, 0x00, size);
-    }
-
-    return ptr;
-}
+void *os_mem_calloc(size_t size);
 
 /** Free Memory
  *
@@ -1564,154 +1010,14 @@ static inline void *os_mem_calloc(size_t size)
  *
  * @param[in] ptr Pointer to the memory to be freed
  */
-#define os_mem_free(ptr) vPortFree(ptr)
-#else  /* ! CONFIG_HEAP_DEBUG */
-static inline void *os_mem_alloc(size_t size) WARN_UNUSED_RET;
-static inline void *os_mem_calloc(size_t size) WARN_UNUSED_RET;
-
-/** This function allocates memory dynamically
- *  @param [in] size Size of memory to be allocated
- *
- *  @return Pointer to the allocated memory
- *  @return NULL if allocation fails
- */
-static inline void *os_mem_alloc(size_t size)
-{
-    void *ptr = pvPortMalloc(size);
-    if (ptr)
-        (void)PRINTF("MDC:A:%x:%d\r\n", ptr, size);
-    return ptr;
-}
-/** This function allocates memory dynamically and
- *  sets memory content to zero
- *  @param [in] size Size of memory to be allocated
- *
- *  @return Pointer to the allocated memory
- *  @return NULL if allocation fails
- */
-static inline void *os_mem_calloc(size_t size)
-{
-    void *ptr = pvPortMalloc(size);
-    if (ptr)
-    {
-        (void)PRINTF("MDC:A:%x:%d\r\n", ptr, size);
-        (void)memset(ptr, 0x00, size);
-    }
-
-    return ptr;
-}
-
-/** This function frees dynamically allocated memory
- *  @param [in] ptr Pointer to memory to be freed
- */
-static inline void os_mem_free(void *ptr)
-{
-    vPortFree(ptr);
-    (void)PRINTF("MDC:F:%x\r\n", ptr);
-}
-#endif /* CONFIG_HEAP_DEBUG */
+void os_mem_free(void *ptr);
 
 #ifdef CONFIG_HEAP_STAT
 /** This function dumps complete statistics
  *  of the heap memory.
  */
-static inline void os_dump_mem_stats(void)
-{
-    unsigned sta = os_enter_critical_section();
-    HeapStats_t HS;
+void os_dump_mem_stats(void);
 
-    HS.xAvailableHeapSpaceInBytes      = 0;
-    HS.xSizeOfLargestFreeBlockInBytes  = 0;
-    HS.xSizeOfSmallestFreeBlockInBytes = 0;
-    HS.xNumberOfFreeBlocks             = 0;
-    HS.xNumberOfSuccessfulAllocations  = 0;
-    HS.xNumberOfSuccessfulFrees        = 0;
-    HS.xMinimumEverFreeBytesRemaining  = 0;
-
-    vPortGetHeapStats(&HS);
-
-    (void)PRINTF("\n\r");
-    (void)PRINTF("Heap size ---------------------- : %d\n\r", HS.xAvailableHeapSpaceInBytes);
-    (void)PRINTF("Largest Free Block size -------- : %d\n\r", HS.xSizeOfLargestFreeBlockInBytes);
-    (void)PRINTF("Smallest Free Block size ------- : %d\n\r", HS.xSizeOfSmallestFreeBlockInBytes);
-    (void)PRINTF("Number of Free Blocks ---------- : %d\n\r", HS.xNumberOfFreeBlocks);
-    (void)PRINTF("Total successful allocations --- : %d\n\r", HS.xNumberOfSuccessfulAllocations);
-    (void)PRINTF("Total successful frees --------- : %d\n\r", HS.xNumberOfSuccessfulFrees);
-    (void)PRINTF("Min Free since system boot ----- : %d\n\r", HS.xMinimumEverFreeBytesRemaining);
-
-    os_exit_critical_section(sta);
-}
-#endif
-
-#if 0
-/** This function returns the size of biggest free block
- *  available in heap.
- */
-static inline size_t os_mem_get_free_size(void)
-{
-	unsigned long sta = os_enter_critical_section();
-
-	const heapAllocatorInfo_t *hI = getheapAllocInfo();
-
-	os_exit_critical_section(sta);
-
-	return hI->biggestFreeBlockAvailable;
-}
-
-/*** OS thread system information ***/
-
-void os_dump_threadinfo(char *name);
-void os_thread_stackmark(char *name);
-
-/* Return -WM_FAIL is stats is not enabled */
-static inline int os_free_heap_percentage()
-{
-#ifdef FREERTOS_ENABLE_MALLOC_STATS
-	const heapAllocatorInfo_t *hI = getheapAllocInfo();
-	int temp = 0;
-	temp = (hI->heapSize - hI->freeSize);
-	temp = (temp * 100) / hI->heapSize;
-	return temp;
-#else
-	return -WM_FAIL;
-#endif /* FREERTOS_ENABLE_MALLOC_STATS */
-}
-
-/* Return -WM_FAIL if stats is not enabled */
-static inline int os_get_free_size()
-{
-#ifdef FREERTOS_ENABLE_MALLOC_STATS
-	const heapAllocatorInfo_t *hI = getheapAllocInfo();
-	return (int)hI->freeSize;
-#else
-	return -WM_FAIL;
-#endif /* FREERTOS_ENABLE_MALLOC_STATS */
-}
-
-/* Return -WM_FAIL is stats is not enabled */
-static inline int os_get_heap_size()
-{
-#ifdef FREERTOS_ENABLE_MALLOC_STATS
-	const heapAllocatorInfo_t *hI = getheapAllocInfo();
-	return (int)hI->heapSize;
-#else
-	return -WM_FAIL;
-#endif /* FREERTOS_ENABLE_MALLOC_STATS */
-}
-
-/* This function updates the global tick count
-  *  When  MC200 core enters a low power state
-  *  system tick counter stops generating interrupt.
-  *  Due to this global time count does not get updated.
-  *  This API is used to update the value by number
-  *  passed as a parameter.
-  *  @param [in] ticks : The amount by which global
-  *                     tick count needs to be updated
-  */
-static inline void os_update_tick_count(unsigned long ticks)
-{
-	xTaskUpdateTickCount(ticks);
-}
 #endif
 
 typedef unsigned int event_group_handle_t;
@@ -1752,17 +1058,9 @@ void _os_delay(int cnt);
 #define os_get_runtime_stats(__buff__) vTaskGetRunTimeStats(__buff__)
 
 /** Disables all interrupts at NVIC level */
-static inline void os_disable_all_interrupts(void)
-{
-    taskDISABLE_INTERRUPTS();
-}
+void os_disable_all_interrupts(void);
 
 /** Enable all interrupts at NVIC lebel */
-static inline void os_enable_all_interrupts(void)
-{
-    taskENABLE_INTERRUPTS();
-}
-
-unsigned int os_get_timestamp(void);
+void os_enable_all_interrupts(void);
 
 #endif /* ! _WM_OS_H_ */

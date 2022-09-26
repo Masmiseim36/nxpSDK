@@ -1,0 +1,8 @@
+<image-properties version="1.0" handle="1000001">
+<native encoding="JPEG" pixel="1280*1024" size="1048576"/>
+<variant encoding="JPEG" pixel="640*480" />
+<variant encoding="JPEG" pixel="160*120" />
+<variant encoding="GIF" pixel="80*60-640*480"/>
+<attachment content-type="text/plain" name="ABCD0001.txt" size="5120"/>
+<attachment content-type="audio/basic" name="ABCD0001.wav" size="102400"/>
+</image-properties>

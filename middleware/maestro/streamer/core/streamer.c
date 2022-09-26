@@ -66,7 +66,8 @@ const STREAMER_MSG_HANDLER_T msg_handler_table[] = {{STREAM_MSG_CREATE_PIPELINE,
  *
  * @param    [in] streamer Pointer to streamer task data structure
  */
-static void streamer_deinit(STREAMER_T *streamer);
+static int32_t streamer_deinit(STREAMER_T *streamer);
+
 /*
  * GLOBAL FUNCTIONS
  */
@@ -161,17 +162,19 @@ STREAMER_T *streamer_create(STREAMER_CREATE_PARAM *task_param)
     return streamer;
 }
 
-void streamer_destroy(STREAMER_T *streamer)
+int32_t streamer_destroy(STREAMER_T *streamer)
 {
+    int32_t ret = ERRCODE_NO_ERROR;
+
     if (NULL == streamer)
     {
         STREAMER_FUNC_EXIT(DBG_CORE);
-        return;
+        return ERRCODE_INVALID_ARGUMENT;
     }
 
     /* Send a state-changing to STATE_NULL event to close resources allocated by elements down. */
     for (size_t i = 0; i < MAX_PIPELINES; i++)
-        streamer_set_state(streamer, i, STATE_NULL, true);
+        ret |= streamer_set_state(streamer, i, STATE_NULL, true);
 
     /* send an task close event to streamer to exit streamer task */
     STREAMER_MSG_T msg;
@@ -185,7 +188,7 @@ void streamer_destroy(STREAMER_T *streamer)
     if (streamer->is_active)
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_THREAD_FAILURE, "Failed to exit streamer task!\n");
 
-    streamer_destroy_pipeline(streamer, 0, false);
+    ret |= streamer_destroy_pipeline(streamer, 0, false);
 
     if (streamer->mq_out != 0)
     {
@@ -195,10 +198,13 @@ void streamer_destroy(STREAMER_T *streamer)
             OSA_TimeDelay(1);
         }
     }
-    streamer_deinit(streamer);
+    ret |= streamer_deinit(streamer);
     OSA_MemoryFree(streamer);
+    streamer = NULL;
 
     STREAMER_FUNC_EXIT(DBG_CORE);
+
+    return ret;
 }
 
 /*! @} */
@@ -338,6 +344,12 @@ void streamer_task(void *args)
             } while (((uint8_t) false == msg_timed_out) && ((uint8_t) false == streamer->exit_thread));
 
             streamer_process_pipelines(streamer);
+
+            if (streamer->pipeline_type == STREAM_PIPELINE_TEST_EAPFILE2FILE)
+            {
+                // Due to forcing a context switch
+                OSA_TimeDelay(1);
+            }
         }
     }
 
@@ -350,9 +362,10 @@ void streamer_task(void *args)
     STREAMER_FUNC_EXIT(DBG_CORE);
 }
 
-void streamer_deinit(STREAMER_T *streamer)
+int32_t streamer_deinit(STREAMER_T *streamer)
 {
-    unsigned int x;
+    unsigned int x = 0;
+    int32_t ret    = ERRCODE_NO_ERROR;
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
@@ -360,7 +373,7 @@ void streamer_deinit(STREAMER_T *streamer)
     {
         if (streamer->pipes[x])
         {
-            set_state_pipeline(streamer->pipes[x], STATE_NULL);
+            ret |= set_state_pipeline(streamer->pipes[x], STATE_NULL);
         }
     }
 
@@ -368,7 +381,7 @@ void streamer_deinit(STREAMER_T *streamer)
     {
         if (streamer->elems[x])
         {
-            destroy_element(streamer->elems[x]);
+            ret |= destroy_element(streamer->elems[x]);
             streamer->elems[x] = (ElementHandle)NULL;
         }
     }
@@ -377,12 +390,14 @@ void streamer_deinit(STREAMER_T *streamer)
     {
         if (streamer->pipes[x])
         {
-            destroy_pipeline(streamer->pipes[x]);
+            ret |= destroy_pipeline(streamer->pipes[x]);
             streamer->pipes[x] = (PipelineHandle)NULL;
         }
     }
 
     STREAMER_FUNC_EXIT(DBG_CORE);
+
+    return ret;
 }
 
 void streamer_init(STREAMER_T *streamer)

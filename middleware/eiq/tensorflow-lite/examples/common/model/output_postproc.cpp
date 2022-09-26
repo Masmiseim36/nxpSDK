@@ -1,12 +1,11 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
-
+#include "fsl_debug_console.h"
 #include "output_postproc.h"
 #include "get_top_n.h"
 #include "demo_config.h"
@@ -38,10 +37,10 @@ status_t MODEL_ProcessOutput(const uint8_t* data, const tensor_dims_t* dims,
     }
 
     int score = (int)(confidence * 100);
-    printf("----------------------------------------" EOL);
-    printf("     Inference time: %d ms" EOL, inferenceTime / 1000);
-    printf("     Detected: %-10s (%d%%)\r\n", label, score);
-    printf("----------------------------------------" EOL);
+    PRINTF("----------------------------------------" EOL);
+    PRINTF("     Inference time: %d ms" EOL, inferenceTime / 1000);
+    PRINTF("     Detected: %s (%d%%)" EOL, label, score);
+    PRINTF("----------------------------------------" EOL);
 
 #ifdef EIQ_GUI_PRINTF
     GUI_PrintfToBuffer(GUI_X_POS, GUI_Y_POS, "Detected: %.20s (%d%%)", label, score);

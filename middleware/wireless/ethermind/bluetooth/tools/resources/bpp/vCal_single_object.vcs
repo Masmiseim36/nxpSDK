@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+PRODID:-//Microsoft Corporation//Outlook 9.0 MIMEDIR//EN
+VERSION:1.0
+BEGIN:VEVENT
+DTSTART:20030701T160000Z
+DTEND:20030701T190000Z
+LOCATION;ENCODING=QUOTED-PRINTABLE:Green Conference Room
+UID:calsrv.example.com-873970198738777a@example.com
+DESCRIPTION;ENCODING=QUOTED-PRINTABLE:This is a very long description that =
+exists on a long line. and many many many many many many many more ....
+SUMMARY;ENCODING=QUOTED-PRINTABLE:Discuss the Merits of the election result=
+s
+PRIORITY:3
+END:VEVENT
+END:VCALENDAR

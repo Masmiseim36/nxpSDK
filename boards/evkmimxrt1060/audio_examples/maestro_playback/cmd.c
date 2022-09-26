@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
+ * Copyright 2019-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -49,14 +49,16 @@ SHELL_COMMAND_DEFINE(
     file,
     "\r\n\"file\": Perform audio file decode and playback\r\n"
     "\r\n"
-    "  USAGE: file [start|stop|pause|"
+    "  USAGE: file [start|stop|pause|seek|volume|"
 #ifdef EAP_PROC
-    "update|set|get"
+    "update|set|get|"
 #endif
     "track|list|info]\r\n"
     "    start             Play default (first found) or specified audio track file.\r\n"
     "    stop              Stops actual playback.\r\n"
     "    pause             Pause actual track or resume if already paused.\r\n"
+	"    seek=<seek_time>  Seek currently paused track. Seek time is in milliseconds.\r\n"
+	"    volume=<volume>   Set volume. The volume can be set from 0 to 100.\r\n"
 
 #ifdef EAP_PROC
     "    update=<preset>   Apply current EAP parameters without attribute value\r\n"
@@ -178,6 +180,19 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
         {
             get_eap_att_control()->command = kAttCmdPause;
         }
+        else if (strcmp(argv[1], "seek") == 0)
+        {
+            if (argc >= 3)
+            {
+                get_eap_att_control()->seek_time = abs(atoi((argv[2])));
+                get_eap_att_control()->command   = kAttCmdSeek;
+            }
+            else
+            {
+                PRINTF("[CMD] Enter seek time value.\r\n");
+                retVal = kStatus_SHELL_Error;
+            }
+        }
 #if defined(EAP_PROC) && (ALGORITHM_XO == 1)
         else if (strcmp(argv[1], "xo") == 0) // this option is good for testing but could be removed for production
         {
@@ -221,7 +236,7 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
         {
             if (argc >= 3)
             {
-                int value = abs(atoi((argv[2])));
+                int value = atoi((argv[2]));
                 if (value >= 0 && value <= 100)
                 {
                     get_eap_att_control()->volume  = value;
@@ -268,7 +283,10 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
                     if (isFileOnSDcard(argv[2]))
                     {
                         dot = strrchr(argv[2], '.');
-                        if ((dot && strncmp(dot + 1, "opus", 4) == 0) || (dot && strncmp(dot + 1, "ogg", 3) == 0) ||
+                        if (
+#if (OGG_OPUS_DEC == 1)
+                            (dot && strncmp(dot + 1, "opus", 4) == 0) || (dot && strncmp(dot + 1, "ogg", 3) == 0) ||
+#endif
                             (dot && strncmp(dot + 1, "mp3", 3) == 0))
                         {
                             strcpy(get_eap_att_control()->input, argv[2]);
@@ -276,7 +294,11 @@ static shell_status_t shellFile(shell_handle_t shellHandle, int32_t argc, char *
                         }
                         else
                         {
+#if (OGG_OPUS_DEC == 1)
                             PRINTF("Input audio file name has to match one of the .opus|.ogg|.mp3 formats.\r\n");
+#else
+                            PRINTF("Input audio file name has to match the .mp3 format.\r\n");
+#endif
                             retVal = kStatus_SHELL_Error;
                         }
                     }

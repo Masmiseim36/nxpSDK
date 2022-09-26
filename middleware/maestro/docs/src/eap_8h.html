@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.3</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -142,9 +142,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a227b28856a36bcb639eaba3f80ffa14b"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eap_8h.html#a227b28856a36bcb639eaba3f80ffa14b">eap_init_element</a> (StreamElement *element_ptr)</td></tr>
 <tr class="memdesc:a227b28856a36bcb639eaba3f80ffa14b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function initializes the eap element and pads.  <a href="eap_8h.html#a227b28856a36bcb639eaba3f80ffa14b">More...</a><br /></td></tr>
 <tr class="separator:a227b28856a36bcb639eaba3f80ffa14b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4297b14ee2063434f91ee26a5f9729b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eap_8h.html#a4297b14ee2063434f91ee26a5f9729b2">eap_register_ext_processing</a> (<a class="el" href="streamer__api_8h.html#aa38d4845534a71686ee5281c5df9c6cb">ElementHandle</a> element, <a class="el" href="eap_8h.html#a3c0fa1ec0f1f7a474eef6954234ec7f5">EapInitFunc</a> init_func_ptr, <a class="el" href="eap_8h.html#ae2b9910cc4fa1657f1ffb0b5f1d50f6b">EapPostProcFunc</a> proc_func_ptr, <a class="el" href="eap_8h.html#a50471984ec0f51a6aa2fb92ac217f3f9">EapDeinitFunc</a> deinit_func_ptr, void *arg_ptr)</td></tr>
-<tr class="memdesc:a4297b14ee2063434f91ee26a5f9729b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register function pointers and arguments.  <a href="eap_8h.html#a4297b14ee2063434f91ee26a5f9729b2">More...</a><br /></td></tr>
-<tr class="separator:a4297b14ee2063434f91ee26a5f9729b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a1375d88cb1adea62b0f53bbfde74bd"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="eap_8h.html#a4a1375d88cb1adea62b0f53bbfde74bd">eap_register_ext_processing</a> (<a class="el" href="streamer__api_8h.html#aa38d4845534a71686ee5281c5df9c6cb">ElementHandle</a> element, <a class="el" href="eap_8h.html#a3c0fa1ec0f1f7a474eef6954234ec7f5">EapInitFunc</a> init_func_ptr, <a class="el" href="eap_8h.html#ae2b9910cc4fa1657f1ffb0b5f1d50f6b">EapPostProcFunc</a> proc_func_ptr, <a class="el" href="eap_8h.html#a50471984ec0f51a6aa2fb92ac217f3f9">EapDeinitFunc</a> deinit_func_ptr, void *arg_ptr)</td></tr>
+<tr class="memdesc:a4a1375d88cb1adea62b0f53bbfde74bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Register function pointers and arguments.  <a href="eap_8h.html#a4a1375d88cb1adea62b0f53bbfde74bd">More...</a><br /></td></tr>
+<tr class="separator:a4a1375d88cb1adea62b0f53bbfde74bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a83d5a2c7138b9ae43625c641a85479cc" name="a83d5a2c7138b9ae43625c641a85479cc"></a>
@@ -230,14 +230,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4297b14ee2063434f91ee26a5f9729b2" name="a4297b14ee2063434f91ee26a5f9729b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4297b14ee2063434f91ee26a5f9729b2">&#9670;&nbsp;</a></span>eap_register_ext_processing()</h2>
+<a id="a4a1375d88cb1adea62b0f53bbfde74bd" name="a4a1375d88cb1adea62b0f53bbfde74bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a1375d88cb1adea62b0f53bbfde74bd">&#9670;&nbsp;</a></span>eap_register_ext_processing()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool eap_register_ext_processing </td>
+          <td class="memname">int32_t eap_register_ext_processing </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="streamer__api_8h.html#aa38d4845534a71686ee5281c5df9c6cb">ElementHandle</a>&#160;</td>
           <td class="paramname"><em>element</em>, </td>
@@ -283,9 +283,9 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>true </dd>
+<dl class="section return"><dt>Returns</dt><dd>STREAM_OK </dd>
 <dd>
-false </dd></dl>
+STREAM_ERR_INVALID_ARGS </dd></dl>
 
 </div>
 </div>

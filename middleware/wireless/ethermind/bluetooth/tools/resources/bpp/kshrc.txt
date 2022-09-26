@@ -1,0 +1,16 @@
+export USER=mikem
+PATH=/etc 
+PATH=$PATH:. 
+PATH=$PATH:$HOME/bin 
+PATH=$PATH:$HOME/dev 
+PATH=$PATH:/bin 
+PATH=$PATH:/usr/sbin 
+PATH=$PATH:/usr/bin 
+PATH=$PATH:/sbin 
+PATH=$PATH:/opt/langtools/bin 
+PATH=$PATH:/usr/lib/vhelp 
+PATH=$PATH:/usr/vhelp 
+PATH=$PATH:/usr/bin/X11
+PATH=$PATH:/usr/contrib/bin  
+
+

@@ -220,6 +220,8 @@ struct _ElementAudioSink
                                                           size for buffer sizing */
     uint32_t last_num_channels;                      /*!< @brief last time number of audio channels */
     uint32_t last_chunk_size;                        /*!< @brief last time chunk size */
+
+    bool device_started; /*!< Indicates whether the device was started */
 };
 
 /*!

@@ -1,0 +1,19 @@
+BEGIN:VMSG
+VERSION:1.1
+BEGIN:VCARD
+VERSION:2.1
+N:Harry
+TEL:555-1234
+END:VCARD
+BEGIN:VENV
+BEGIN:VBODY
+Subject: Reminder
+
+
+
+Don't forget to buy milk!
+
+
+END:VBODY
+END:VENV
+END:VMSG  

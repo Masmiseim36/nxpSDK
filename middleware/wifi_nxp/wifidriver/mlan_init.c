@@ -19,7 +19,9 @@ Change log:
 #include <wmerrno.h>
 #include <wm_os.h>
 #include "fsl_common.h"
+#ifndef RW610
 #include "sdmmc_config.h"
+#endif
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
@@ -31,8 +33,7 @@ Change log:
 static BSSDescriptor_t BSS_List[MRVDRV_MAX_BSSID_LIST];
 
 //_IOBUFS_ALIGNED(SDIO_DMA_ALIGNMENT)
-#if defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || \
-    defined(IW61x)
+#if defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(IW61x)
 static t_u8 mp_regs_buffer[MAX_MP_REGS + DMA_ALIGNMENT];
 #elif defined(SD8801)
 SDK_ALIGN(uint8_t mp_regs_buffer[MAX_MP_REGS], BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
@@ -61,13 +62,17 @@ mlan_status wlan_allocate_adapter(pmlan_adapter pmadapter)
        /* wmsdk: Use a statically allocated DMA aligned buffer */
 #if defined(SD8801)
     pmadapter->mp_regs = mp_regs_buffer;
-#elif defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || \
-    defined(SD9098) || defined(IW61x)
+#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(IW61x)
     pmadapter->mp_regs = (t_u8 *)ALIGN_ADDR(mp_regs_buffer, DMA_ALIGNMENT);
 // mp_regs_buffer;
 #endif
 
     return MLAN_STATUS_SUCCESS;
+}
+
+void wlan_clear_scan_bss(void)
+{
+    (void)__memset(MNULL, &BSS_List, 0x00, sizeof(BSS_List));
 }
 
 /**
@@ -129,7 +134,9 @@ mlan_status wlan_init_priv(pmlan_private priv)
 
 
     for (i = 0; i < MAX_NUM_TID; i++)
+    {
         priv->addba_reject[i] = ADDBA_RSP_STATUS_ACCEPT;
+    }
     priv->max_amsdu = 0;
 
     priv->scan_block = MFALSE;
@@ -165,15 +172,16 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
      * priority.
      */
     pmadapter->mp_wr_bitmap = 0;
+#ifndef RW610
 #if defined(SD8801)
     pmadapter->curr_rd_port = 1;
     pmadapter->curr_wr_port = 1;
-#elif defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || \
-    defined(SD9098) || defined(IW61x)
+#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(IW61x)
     pmadapter->curr_rd_port = 0;
     pmadapter->curr_wr_port = 0;
 #endif
     pmadapter->mp_data_port_mask = DATA_PORT_MASK;
+#endif
 
     /* Scan type */
     pmadapter->scan_type = MLAN_SCAN_TYPE_ACTIVE;
@@ -224,9 +232,9 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
 
     wlan_wmm_init(pmadapter);
     pmadapter->null_pkt_interval = 0;
-    pmadapter->fw_bands          = BAND_0;
-    pmadapter->config_bands      = BAND_0;
-    pmadapter->adhoc_start_band  = BAND_0;
+    pmadapter->fw_bands          = 0U;
+    pmadapter->config_bands      = 0U;
+    pmadapter->adhoc_start_band  = 0U;
     /* pmadapter->pscan_channels = MNULL; */
     pmadapter->fw_release_number = 0;
     pmadapter->fw_cap_info       = 0;
@@ -235,6 +243,7 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     (void)__memcpy(pmadapter, pmadapter->country_code, MRVDRV_DEFAULT_COUNTRY_CODE, COUNTRY_CODE_LEN);
     pmadapter->bcn_miss_time_out  = DEFAULT_BCN_MISS_TIMEOUT;
     pmadapter->adhoc_awake_period = 0;
+    pmadapter->ps_state = PS_STATE_AWAKE;
     return;
 }
 

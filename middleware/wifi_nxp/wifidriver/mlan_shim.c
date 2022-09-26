@@ -36,7 +36,7 @@ Change log:
 /********************************************************
         Global Variables
 ********************************************************/
-mlan_operations mlan_sta_ops = {
+static mlan_operations mlan_sta_ops = {
     /* cmd handler */
     wlan_ops_sta_prepare_cmd,
     /* rx handler */
@@ -44,7 +44,7 @@ mlan_operations mlan_sta_ops = {
     /* BSS role: STA */
     MLAN_BSS_ROLE_STA,
 };
-mlan_operations mlan_uap_ops = {
+static mlan_operations mlan_uap_ops = {
     /* cmd handler */
     wlan_ops_uap_prepare_cmd,
        /* rx handler */
@@ -54,7 +54,7 @@ mlan_operations mlan_uap_ops = {
 };
 
 /** mlan function table */
-mlan_operations *mlan_ops[] = {
+static mlan_operations *mlan_ops[] = {
     &mlan_sta_ops,
     &mlan_uap_ops,
     MNULL,
@@ -178,9 +178,17 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
             pmadapter->priv[i]->frame_type   = (t_u8)pmdevice->bss_attr[i].frame_type;
             pmadapter->priv[i]->bss_priority = (t_u8)pmdevice->bss_attr[i].bss_priority;
             if (pmdevice->bss_attr[i].bss_type == MLAN_BSS_TYPE_STA)
+            {
                 pmadapter->priv[i]->bss_role = MLAN_BSS_ROLE_STA;
+            }
             else if (pmdevice->bss_attr[i].bss_type == MLAN_BSS_TYPE_UAP)
+            {
                 pmadapter->priv[i]->bss_role = MLAN_BSS_ROLE_UAP;
+            }
+            else
+            {
+                /*Do Nothing*/
+            }
             /* Save bss_index and bss_num */
             pmadapter->priv[i]->bss_index = i;
             pmadapter->priv[i]->bss_num   = (t_u8)pmdevice->bss_attr[i].bss_num;
@@ -233,7 +241,7 @@ exit_register:
  *  @return                MLAN_STATUS_SUCCESS
  *                             The deregistration succeeded.
  */
-mlan_status mlan_unregister(IN t_void *pmlan_adapter)
+MLAN_API mlan_status mlan_unregister(IN t_void *pmlan_adapter)
 {
     mlan_status ret         = MLAN_STATUS_SUCCESS;
     mlan_adapter *pmadapter = (mlan_adapter *)pmlan_adapter;
@@ -247,16 +255,17 @@ mlan_status mlan_unregister(IN t_void *pmlan_adapter)
     pcb = &pmadapter->callbacks;
 
     /* Free private structures */
-    for (i = 0; i < pmadapter->priv_num; i++)
+    for (i = 0; i < MIN(pmadapter->priv_num, MLAN_MAX_BSS_NUM); i++)
     {
-        if (pmadapter->priv[i])
+        if (pmadapter->priv[i] != MNULL)
         {
-            pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->priv[i]);
+            (void)pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->priv[i]);
+            pmadapter->priv[i] = MNULL;
         }
     }
 
     /* Free mlan_adapter */
-    pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter);
+    (void)pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter);
 
     LEAVE();
     return ret;

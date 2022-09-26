@@ -97,15 +97,19 @@ static void netif_ext_status_callback(struct netif *netif,
     {
 #ifdef CONFIG_IPV6
         if ((reason & (LWIP_NSC_IPV6_ADDR_STATE_CHANGED | LWIP_NSC_IPV6_SET)) != LWIP_NSC_NONE)
+        {
             wm_netif_ipv6_status_callback(netif);
+        }
         else
 #endif
+        {
             if ((reason & (LWIP_NSC_IPV4_SETTINGS_CHANGED | LWIP_NSC_IPV4_ADDRESS_CHANGED | LWIP_NSC_IPV4_ADDR_VALID |
                            LWIP_NSC_IPV4_GATEWAY_CHANGED | LWIP_NSC_IPV4_NETMASK_CHANGED)) != LWIP_NSC_NONE)
-        {
-            if (wm_netif_status_callback_ptr != NULL)
             {
-                wm_netif_status_callback_ptr(netif);
+                if (wm_netif_status_callback_ptr != NULL)
+                {
+                    wm_netif_status_callback_ptr(netif);
+                }
             }
         }
     }
@@ -114,16 +118,35 @@ static void netif_ext_status_callback(struct netif *netif,
 #ifdef CONFIG_IPV6
 char *ipv6_addr_state_to_desc(unsigned char addr_state)
 {
-    if (ip6_addr_istentative(addr_state))
+    if (ip6_addr_istentative((addr_state)) != 0U)
+    {
         return IPV6_ADDR_STATE_TENTATIVE;
-    else if (ip6_addr_ispreferred(addr_state))
+    }
+    else if (ip6_addr_ispreferred((addr_state)))
+    {
         return IPV6_ADDR_STATE_PREFERRED;
-    else if (ip6_addr_isdeprecated(addr_state))
+    }
+    else if (ip6_addr_isdeprecated((addr_state)))
+    {
         return IPV6_ADDR_STATE_DEPRECATED;
-    else if (ip6_addr_isinvalid(addr_state))
+    }
+    else if (ip6_addr_isinvalid((addr_state)))
+    {
         return IPV6_ADDR_STATE_INVALID;
+    }
     else
+    {
         return IPV6_ADDR_UNKNOWN;
+    }
+}
+
+char *ipv6_addr_addr_to_desc(struct ipv6_config *ipv6_conf)
+{
+    ip6_addr_t ip6_addr;
+
+    (void)memcpy((void *)ip6_addr.addr, (const void *)ipv6_conf->address, sizeof(ip6_addr.addr));
+
+    return inet6_ntoa(ip6_addr);
 }
 
 char *ipv6_addr_type_to_desc(struct ipv6_config *ipv6_conf)
@@ -133,15 +156,25 @@ char *ipv6_addr_type_to_desc(struct ipv6_config *ipv6_conf)
     (void)memcpy((void *)ip6_addr.addr, (const void *)ipv6_conf->address, sizeof(ip6_addr.addr));
 
     if (ip6_addr_islinklocal(&ip6_addr))
+    {
         return IPV6_ADDR_TYPE_LINKLOCAL;
+    }
     else if (ip6_addr_isglobal(&ip6_addr))
+    {
         return IPV6_ADDR_TYPE_GLOBAL;
+    }
     else if (ip6_addr_isuniquelocal(&ip6_addr))
+    {
         return IPV6_ADDR_TYPE_UNIQUELOCAL;
+    }
     else if (ip6_addr_issitelocal(&ip6_addr))
+    {
         return IPV6_ADDR_TYPE_SITELOCAL;
+    }
     else
+    {
         return IPV6_ADDR_UNKNOWN;
+    }
 }
 #endif /* CONFIG_IPV6 */
 
@@ -178,7 +211,7 @@ static void wm_netif_ipv6_status_callback(struct netif *n)
 {
     /*	TODO: Implement appropriate functionality here*/
     net_d("Received callback on IPv6 address state change");
-    wlan_wlcmgr_send_msg(WIFI_EVENT_NET_IPV6_CONFIG, WIFI_EVENT_REASON_SUCCESS, NULL);
+    (void)wlan_wlcmgr_send_msg(WIFI_EVENT_NET_IPV6_CONFIG, WIFI_EVENT_REASON_SUCCESS, NULL);
 }
 #endif /* CONFIG_IPV6 */
 
@@ -245,7 +278,7 @@ static int net_netif_deinit(struct netif *netif)
     {
         ip6_addr_t ip6_allnodes_ll;
         ip6_addr_set_allnodes_linklocal(&ip6_allnodes_ll);
-        netif->mld_mac_filter(netif, &ip6_allnodes_ll, NETIF_DEL_MAC_FILTER);
+        (void)netif->mld_mac_filter(netif, &ip6_allnodes_ll, NETIF_DEL_MAC_FILTER);
     }
 #endif
     ret = netifapi_netif_remove(netif);
@@ -344,7 +377,7 @@ static void wm_netif_status_callback(struct netif *n)
         /* If a valid non-default dhcp address is provided */
         event_flag_dhcp_connection = DHCP_SUCCESS;
     }
-    else if (is_dhcp_address && (is_default_dhcp_address))
+    else if (is_dhcp_address)
     {
         /* If the supplied dhcp address is the default address */
         event_flag_dhcp_connection = DHCP_FAILED;
@@ -370,6 +403,7 @@ static void wm_netif_status_callback(struct netif *n)
             wifi_event_reason = WIFI_EVENT_REASON_FAILURE;
             break;
         default:
+            net_d("Unexpected DHCP event");
             break;
     }
     if (event_flag_dhcp_connection != DHCP_IGNORE)
@@ -380,7 +414,7 @@ static void wm_netif_status_callback(struct netif *n)
 
 void net_stop_dhcp_timer(void)
 {
-    os_timer_deactivate((os_timer_t *)&dhcp_timer);
+    (void)os_timer_deactivate((os_timer_t *)&dhcp_timer);
 }
 
 static void stop_cb(void *ctx)
@@ -413,7 +447,7 @@ static int check_iface_mask(void *handle, uint32_t ipaddr)
     return -WM_FAIL;
 }
 
-void *net_ip_to_interface(uint32_t ipaddr)
+static void *net_ip_to_interface(uint32_t ipaddr)
 {
     int ret;
     void *handle;
@@ -504,10 +538,9 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
 
     interface_t *if_handle = (interface_t *)intrfc_handle;
 
-    net_d("configuring interface %s (with %s)",
-          (if_handle == &g_mlan) ? "mlan" :
-                                   "uap",
+    net_d("configuring interface %s (with %s)", (if_handle == &g_mlan) ? "mlan" : "uap",
           (addr->ipv4.addr_type == ADDR_TYPE_DHCP) ? "DHCP client" : "Static IP");
+
     (void)netifapi_netif_set_down(&if_handle->netif);
     wm_netif_status_callback_ptr = NULL;
 
@@ -529,7 +562,9 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
     }
 #endif
     if (if_handle == &g_mlan)
+    {
         (void)netifapi_netif_set_default(&if_handle->netif);
+    }
     switch (addr->ipv4.addr_type)
     {
         case ADDR_TYPE_STATIC:
@@ -550,7 +585,7 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
             (void)netifapi_netif_set_addr(&if_handle->netif, ip_2_ip4(&if_handle->ipaddr), ip_2_ip4(&if_handle->nmask),
                                           ip_2_ip4(&if_handle->gw));
             (void)netifapi_netif_set_up(&if_handle->netif);
-            os_timer_activate(&dhcp_timer);
+            (void)os_timer_activate(&dhcp_timer);
             wm_netif_status_callback_ptr = wm_netif_status_callback;
             (void)netifapi_dhcp_start(&if_handle->netif);
             break;
@@ -560,6 +595,7 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
             net_e("Not supported as of now...");
             break;
         default:
+            net_d("Unexpected addr type");
             break;
     }
     /* Finally this should send the following event. */
@@ -642,7 +678,7 @@ int net_get_if_name(char *pif_name, void *intrfc_handle)
 
     ptr_if_name = netif_index_to_name(if_handle->netif.num + 1, if_name);
 
-    strncpy(pif_name, ptr_if_name, NETIF_NAMESIZE);
+    (void)strncpy(pif_name, ptr_if_name, NETIF_NAMESIZE);
     return WM_SUCCESS;
 }
 
@@ -680,9 +716,9 @@ void net_configure_dns(struct wlan_ip_config *ip, enum wlan_bss_role role)
             }
         }
         tmp.addr = ip->ipv4.dns1;
-        dns_setserver(0, (ip_addr_t *)&tmp);
+        dns_setserver(0, (ip_addr_t *)(void *)&tmp);
         tmp.addr = ip->ipv4.dns2;
-        dns_setserver(1, (ip_addr_t *)&tmp);
+        dns_setserver(1, (ip_addr_t *)(void *)&tmp);
     }
 
     /* DNS MAX Retries should be configured in lwip/dns.c to 3/4 */

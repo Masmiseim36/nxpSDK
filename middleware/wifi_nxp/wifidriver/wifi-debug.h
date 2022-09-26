@@ -96,7 +96,10 @@
 
 void wifi_show_assoc_fail_reason(int status);
 
+#ifdef DUMP_PACKET_MAC
 void dump_mac_addr(const char *msg, unsigned char *addr);
-void dump_htcap_info(const MrvlIETypes_HTCap_t *htcap);
-void dump_ht_info(const MrvlIETypes_HTInfo_t *htinfo);
+#endif /* DUMP_PACKET_MAC */
+
+
+
 #endif /* __WIFI_DEBUG_H__ */

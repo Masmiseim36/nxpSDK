@@ -84,7 +84,7 @@ typedef int off_t; /* file offset */
                 "." _STRINGIFY(b)       \
                 "." _STRINGIFY(c))
 #else
-#define ___in_section(a, b, c) @ "."#a
+#define ___in_section(a, b, c) @ "."#a"."#b"."#c
 #endif
 
 #define __in_section(a, b, c) ___in_section(a, b, c)

@@ -33,6 +33,9 @@ Change log:
                 Local Functions
 ********************************************************/
 
+mlan_status wlan_misc_ioctl_region(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req);
+t_u8 wlan_get_random_charactor(pmlan_adapter pmadapter);
+
 
 /**
  *  @brief Start BSS
@@ -89,7 +92,7 @@ static mlan_status wlan_bss_ioctl_start(IN pmlan_adapter pmadapter, IN pmlan_ioc
             /* fixme: Disabled for now since handling is done in legacy
              * code. It is IMPORTANT and needs to enabled.
              */
-            i = bss->param.ssid_bssid.idx - 1U;
+            i = ((t_s32)bss->param.ssid_bssid.idx - 1);
         }
         if (i >= 0)
         {
@@ -114,7 +117,6 @@ static mlan_status wlan_bss_ioctl_start(IN pmlan_adapter pmadapter, IN pmlan_ioc
     {
     }
 
-    if (ret == MLAN_STATUS_SUCCESS)
         ret = MLAN_STATUS_PENDING;
 
 start_ssid_done:
@@ -296,7 +298,7 @@ static mlan_status wlan_power_ioctl_set_power(IN pmlan_adapter pmadapter, IN pml
         pg->first_rate_code  = 0x00;
         pg->last_rate_code   = 0x03;
         pg->modulation_class = MOD_CLASS_HR_DSSS;
-        pg->power_step       = 0;
+        pg->power_step       = (t_s8)0;
         pg->power_min        = (t_s8)dbm;
         pg->power_max        = (t_s8)dbm;
         pg++;
@@ -304,7 +306,7 @@ static mlan_status wlan_power_ioctl_set_power(IN pmlan_adapter pmadapter, IN pml
         pg->first_rate_code  = 0x00;
         pg->last_rate_code   = 0x07;
         pg->modulation_class = MOD_CLASS_OFDM;
-        pg->power_step       = 0;
+        pg->power_step       = (t_s8)0;
         pg->power_min        = (t_s8)dbm;
         pg->power_max        = (t_s8)dbm;
         pg++;
@@ -312,7 +314,7 @@ static mlan_status wlan_power_ioctl_set_power(IN pmlan_adapter pmadapter, IN pml
         pg->first_rate_code  = 0x00;
         pg->last_rate_code   = 0x20;
         pg->modulation_class = MOD_CLASS_HT;
-        pg->power_step       = 0;
+        pg->power_step       = (t_s8)0;
         pg->power_min        = (t_s8)dbm;
         pg->power_max        = (t_s8)dbm;
         pg->ht_bandwidth     = HT_BW_20;
@@ -321,7 +323,7 @@ static mlan_status wlan_power_ioctl_set_power(IN pmlan_adapter pmadapter, IN pml
         pg->first_rate_code  = 0x00;
         pg->last_rate_code   = 0x20;
         pg->modulation_class = MOD_CLASS_HT;
-        pg->power_step       = 0;
+        pg->power_step       = (t_s8)0;
         pg->power_min        = (t_s8)dbm;
         pg->power_max        = (t_s8)dbm;
         pg->ht_bandwidth     = HT_BW_40;
@@ -335,10 +337,7 @@ static mlan_status wlan_power_ioctl_set_power(IN pmlan_adapter pmadapter, IN pml
         ret = MLAN_STATUS_PENDING;
     }
 
-    if (buf != MNULL)
-    {
-        (void)pcb->moal_mfree(pmadapter->pmoal_handle, buf);
-    }
+    (void)pcb->moal_mfree(pmadapter->pmoal_handle, buf);
 
 exit:
     LEAVE();
@@ -359,17 +358,17 @@ static int wlan_get_modulation_class(pmlan_adapter pmadapter, int rate_index)
     if (rate_index >= MLAN_RATE_INDEX_HRDSSS0 && rate_index <= MLAN_RATE_INDEX_HRDSSS3)
     {
         LEAVE();
-        return MOD_CLASS_HR_DSSS;
+        return (int)MOD_CLASS_HR_DSSS;
     }
     else if (rate_index >= MLAN_RATE_INDEX_OFDM0 && rate_index <= MLAN_RATE_INDEX_OFDM7)
     {
         LEAVE();
-        return MOD_CLASS_OFDM;
+        return (int)MOD_CLASS_OFDM;
     }
     else if (rate_index >= MLAN_RATE_INDEX_MCS0 && rate_index <= MLAN_RATE_INDEX_MCS127)
     {
         LEAVE();
-        return MOD_CLASS_HT;
+        return (int)MOD_CLASS_HT;
     }
     else
     { /* Do Nothing */
@@ -434,7 +433,7 @@ static mlan_status wlan_power_ioctl_set_power_ext(IN pmlan_adapter pmadapter, IN
         case 4:
             ht_bw = (data[0] & TX_RATE_HT_BW40_BIT) ? HT_BW_40 : HT_BW_20;
             data[0] &= ~TX_RATE_HT_BW40_BIT;
-            if (!(mod_class = wlan_get_modulation_class(pmadapter, data[0])))
+            if (!(mod_class = wlan_get_modulation_class(pmadapter, (int)data[0])))
             {
                 pioctl_req->status_code = MLAN_ERROR_CMD_RESP_FAIL;
                 ret                     = MLAN_STATUS_FAILURE;
@@ -449,7 +448,7 @@ static mlan_status wlan_power_ioctl_set_power_ext(IN pmlan_adapter pmadapter, IN
             txp_cfg->mode  = 1;
             pg_tlv         = (MrvlTypes_Power_Group_t *)(void *)(buf + sizeof(HostCmd_DS_TXPWR_CFG));
             pg_tlv->type   = TLV_TYPE_POWER_GROUP;
-            pg_tlv->length = sizeof(Power_Group_t);
+            pg_tlv->length = (t_u16)sizeof(Power_Group_t);
             pg = (Power_Group_t *)(void *)(buf + sizeof(HostCmd_DS_TXPWR_CFG) + sizeof(MrvlTypes_Power_Group_t));
             pg->modulation_class = (t_u8)mod_class;
             pg->first_rate_code  = (t_u8)data[0];
@@ -484,10 +483,7 @@ static mlan_status wlan_power_ioctl_set_power_ext(IN pmlan_adapter pmadapter, IN
     }
     if (ret == MLAN_STATUS_FAILURE)
     {
-        if (buf != MNULL)
-        {
-            (void)pcb->moal_mfree(pmadapter->pmoal_handle, buf);
-        }
+        (void)pcb->moal_mfree(pmadapter->pmoal_handle, buf);
         goto exit;
     }
 
@@ -497,10 +493,7 @@ static mlan_status wlan_power_ioctl_set_power_ext(IN pmlan_adapter pmadapter, IN
     {
         ret = MLAN_STATUS_PENDING;
     }
-    if (buf != MNULL)
-    {
-        (void)pcb->moal_mfree(pmadapter->pmoal_handle, buf);
-    }
+    (void)pcb->moal_mfree(pmadapter->pmoal_handle, buf);
 
 exit:
     LEAVE();
@@ -574,16 +567,19 @@ static mlan_status wlan_power_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioctl_r
 t_u8 wlan_get_random_charactor(pmlan_adapter pmadapter)
 {
     t_u32 sec, usec;
-    t_u8 ch = 0;
+    t_u32 ch_32 = 0;
+    t_u8 ch     = 0;
 
     ENTER();
 
     sec  = 10; // wmtime_time_get_posix();
     usec = 0;
 
-    sec  = (sec & 0xFFFFU) + (sec >> 16);
-    usec = (usec & 0xFFFFU) + (usec >> 16);
-    ch   = (((sec << 16) + usec) % 26U) + 'a';
+    sec   = (sec & 0xFFFFU) + (sec >> 16);
+    usec  = (usec & 0xFFFFU) + (usec >> 16);
+    ch_32 = (((sec << 16) + usec) % 26U);
+    ch    = (t_u8)ch_32 + (t_u8)'a';
+
     LEAVE();
     return ch;
 }
@@ -700,16 +696,19 @@ static mlan_status wlan_sec_ioctl_set_wep_key(IN pmlan_adapter pmadapter, IN pml
             pwep_key = &pmpriv->wep_key[index];
             if (!pwep_key->key_length)
             {
-                if (0
-                    || pmpriv->sec_info.wpa_enabled
-#ifdef WPA2
-                    || &pmpriv->sec_info.wpa2_enabled
-#endif
-                )
+                if (pmpriv->sec_info.wpa_enabled != 0U)
                 {
                     ret = MLAN_STATUS_SUCCESS;
                     goto exit;
                 }
+#ifdef WPA2
+                if (&pmpriv->sec_info.wpa2_enabled != 0U)
+                {
+                    ret = MLAN_STATUS_SUCCESS;
+                    goto exit;
+                }
+#endif /*WPA*/
+
                 PRINTM(MERROR,
                        "Key %d not set,so "
                        "cannot enable it\n",
@@ -729,11 +728,11 @@ static mlan_status wlan_sec_ioctl_set_wep_key(IN pmlan_adapter pmadapter, IN pml
     }
     if (pmpriv->sec_info.wep_status == Wlan802_11WEPEnabled)
     {
-        pmpriv->curr_pkt_filter |= HostCmd_ACT_MAC_WEP_ENABLE;
+        pmpriv->curr_pkt_filter |= (t_u16)HostCmd_ACT_MAC_WEP_ENABLE;
     }
     else
     {
-        pmpriv->curr_pkt_filter &= ~HostCmd_ACT_MAC_WEP_ENABLE;
+        pmpriv->curr_pkt_filter &= ~((t_u16)HostCmd_ACT_MAC_WEP_ENABLE);
     }
 
     /* Send request to firmware */
@@ -819,7 +818,9 @@ static mlan_status wlan_sec_ioctl_set_wpa_key(IN pmlan_adapter pmadapter, IN pml
                            &sec->param.encrypt_key);
 
     if (ret == MLAN_STATUS_SUCCESS)
+    {
         ret = MLAN_STATUS_PENDING;
+    }
 
 exit:
     LEAVE();
@@ -1125,11 +1126,10 @@ exit:
             LEAVE();
             return MLAN_STATUS_FAILURE;
         }
-        pmadapter->cfp_code_bg = misc->param.region_code;
-        pmadapter->cfp_code_a  = misc->param.region_code;
+        pmadapter->cfp_code_bg = (t_u8)misc->param.region_code;
+        pmadapter->cfp_code_a  = (t_u8)misc->param.region_code;
         if (wlan_set_regiontable(pmpriv, (t_u8)pmadapter->region_code,
-                                 (mlan_band_def)(pmadapter->config_bands | pmadapter->adhoc_start_band)) !=
-            MLAN_STATUS_SUCCESS)
+                                 (t_u16)(pmadapter->config_bands | pmadapter->adhoc_start_band)) != MLAN_STATUS_SUCCESS)
         {
             pioctl_req->status_code = MLAN_ERROR_IOCTL_FAIL;
             ret                     = MLAN_STATUS_FAILURE;
@@ -1140,6 +1140,8 @@ exit:
     LEAVE();
     return ret;
 }
+
+
 
 
 /**
@@ -1175,16 +1177,17 @@ static mlan_status wlan_misc_cfg_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioct
     misc = (mlan_ds_misc_cfg *)(void *)pioctl_req->pbuf;
     switch (misc->sub_command)
     {
+        case MLAN_OID_MISC_REGION:
+            status = wlan_misc_ioctl_region(pmadapter, pioctl_req);
+            break;
 #ifdef WLAN_LOW_POWER_ENABLE
         case MLAN_OID_MISC_LOW_PWR_MODE:
             status = wlan_misc_ioctl_low_pwr_mode(pmadapter, pioctl_req);
             break;
 #endif // WLAN_LOW_POWER_ENABLE
         default:
-            if (pioctl_req != NULL)
-            {
-                pioctl_req->status_code = MLAN_ERROR_IOCTL_INVALID;
-            }
+            pioctl_req->status_code = MLAN_ERROR_IOCTL_INVALID;
+
             status = MLAN_STATUS_FAILURE;
             break;
     }

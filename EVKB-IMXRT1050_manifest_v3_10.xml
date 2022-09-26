@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVKB-IMXRT1050" name="EVKB-IMXRT1050" brief="This is SDK version 2.12.0 manifest file. It describes the content of the EVKB-IMXRT1050 and additional settings for tools that support SDK version 2.12.0" format_version="3.10" api_version="2.0.0" configuration="e0adfcf82166bf8ea31cc80a47d2e0d3" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
-  <!--Timestamp (UTC): 2022-07-16 17:14:19.371243-->
-  <!--This manifest is generated based on sdk repo commit: 45d71c921a1dd3e0403549aa377535344ed9bc97-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVKB-IMXRT1050" name="EVKB-IMXRT1050" brief="This is SDK version 2.12.1 manifest file. It describes the content of the EVKB-IMXRT1050 and additional settings for tools that support SDK version 2.12.1" format_version="3.10" api_version="2.0.0" configuration="54949a6647a33e8a1ed07d411dd0d08a" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
+  <!--Timestamp (UTC): 2022-09-26 14:56:11.638812-->
+  <!--This manifest is generated based on sdk repo commit: 1d365316a284b27ce39c372d5a46d49869664ba1-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso2120" name="MCUXpresso2120" version="2.12.0" revision="611 2022-07-14"/>
+  <ksdk id="MCUXpresso2121" name="MCUXpresso2121" version="2.12.1" revision="632 2022-09-26"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -1473,6 +1473,11 @@ ${load}</script>
             <files mask="maestro_playback_v3_10.xml"/>
           </external>
         </example>
+        <example id="evkbimxrt1050_maestro_record" name="maestro_record" brief="Audio maestro framework demo example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="audio_examples" path="boards/evkbimxrt1050/audio_examples/maestro_record">
+          <external path="boards/evkbimxrt1050/audio_examples/maestro_record" type="xml">
+            <files mask="maestro_record_v3_10.xml"/>
+          </external>
+        </example>
         <example id="evkbimxrt1050_maestro_usb_mic" name="maestro_usb_mic" brief="Audio maestro framework USB microphone example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="audio_examples" path="boards/evkbimxrt1050/audio_examples/maestro_usb_mic">
           <external path="boards/evkbimxrt1050/audio_examples/maestro_usb_mic" type="xml">
             <files mask="maestro_usb_mic_v3_10.xml"/>
@@ -1541,6 +1546,11 @@ ${load}</script>
         <example id="evkbimxrt1050_ota_demo_wifi" name="ota_demo_wifi" brief="Demo showing over-the-air update using AWS OTA service." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="aws_examples" path="boards/evkbimxrt1050/aws_examples/ota_demo_wifi">
           <external path="boards/evkbimxrt1050/aws_examples/ota_demo_wifi" type="xml">
             <files mask="ota_demo_wifi_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkbimxrt1050_peripheral_beacon" name="peripheral_beacon" brief="The ethermind beacon example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbimxrt1050/edgefast_bluetooth_examples/peripheral_beacon">
+          <external path="boards/evkbimxrt1050/edgefast_bluetooth_examples/peripheral_beacon" type="xml">
+            <files mask="peripheral_beacon_v3_10.xml"/>
           </external>
         </example>
         <example id="evkbimxrt1050_peripheral_hps" name="peripheral_hps" brief="The ethermind hps example with simplified application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkbimxrt1050/edgefast_bluetooth_examples/peripheral_hps">
@@ -1801,6 +1811,16 @@ ${load}</script>
         <example id="evkbimxrt1050_snvs_sw_zmk" name="snvs_sw_zmk" brief="The SNVS SW ZMK project shows how to provision the zeroizable master key (ZMK) by software based on SDK SNVS driver. In this example, ZMK key value is set and ECC is enabled. When change the ZMK key value, violation detected and ZMK key is zeroized." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/snvs" path="boards/evkbimxrt1050/driver_examples/snvs/snvs_sw_zmk">
           <external path="boards/evkbimxrt1050/driver_examples/snvs/snvs_sw_zmk" type="xml">
             <files mask="snvs_sw_zmk_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkbimxrt1050_soem_gpio_pulse_bm" name="soem_gpio_pulse_bm" brief="An EtherCAT example with baremetal using SOEM." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="soem_examples" path="boards/evkbimxrt1050/soem_examples/soem_gpio_pulse/bm">
+          <external path="boards/evkbimxrt1050/soem_examples/soem_gpio_pulse/bm" type="xml">
+            <files mask="soem_gpio_pulse_bm_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkbimxrt1050_soem_gpio_pulse_freertos" name="soem_gpio_pulse_freertos" brief="An EtherCAT example with freertos using SOEM." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="soem_examples" path="boards/evkbimxrt1050/soem_examples/soem_gpio_pulse/freertos">
+          <external path="boards/evkbimxrt1050/soem_examples/soem_gpio_pulse/freertos" type="xml">
+            <files mask="soem_gpio_pulse_freertos_v3_10.xml"/>
           </external>
         </example>
         <example id="evkbimxrt1050_spi_b2b_example_master" name="spi_b2b_example_master" brief="The example shows SPI communication between two SPI ports." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkbimxrt1050/azure_rtos_examples/spi_b2b_example/master">
@@ -4961,6 +4981,13 @@ ${load}</script>
       <source relative_path="./" type="doc">
         <files mask="Getting Started with MCUXpresso SDK for Azure RTOS.pdf"/>
         <files mask="MCUXpresso SDK Azure RTOS Release Notes.pdf"/>
+      </source>
+    </component>
+    <component id="docs.Edgefast.MIMXRT1052" name="Edgefast" brief="Docs edgefast bluetooth" version="1.0.0" full_name="Docs edgefast bluetooth" devices="MIMXRT1052xxxxB" user_visible="true" type="documentation" package_base_path="docs/wireless/Bluetooth/Edgefast_bluetooth" project_base_path="wireless/Edgefast">
+      <source relative_path="./" type="doc">
+        <files mask="MCUXpressoSDK EdgeFast Bluetooth Protocol Abstraction Layer User's Guide.pdf"/>
+        <files mask="Hardware Rework Guide for EdgeFast BT PAL.pdf"/>
+        <files mask="EFBTPALAPIRM.pdf"/>
       </source>
     </component>
     <component id="docs.FreeRTOS.MIMXRT1052" name="FreeRTOS documentation" brief="FreeRTOS documentation" version="1.0.0" full_name="FreeRTOS documentation" devices="MIMXRT1052xxxxB" user_visible="true" type="documentation" package_base_path="docs/FreeRTOS" project_base_path="FreeRTOS">
@@ -27712,6 +27739,14 @@ ${load}</script>
         <files mask="Getting Started Guide for using MCUXpresso SDK online.pdf"/>
       </source>
     </component>
+    <component id="docs.SOEM.MIMXRT1052" name="SOEM documentation" brief="SOEM documentation" version="1.0.0" full_name="SOEM documentation" devices="MIMXRT1052xxxxB" user_visible="true" type="documentation" package_base_path="docs/SOEM" project_base_path="SOEM">
+      <dependencies>
+        <component_dependency value="middleware.soem.MIMXRT1052"/>
+      </dependencies>
+      <source relative_path="./" type="doc">
+        <files mask="Getting Started with MCUXpresso SDK for SOEM.pdf"/>
+      </source>
+    </component>
     <component id="docs.USB.MIMXRT1052" name="USB" brief="Docs usb" version="1.0.0" full_name="Docs usb" devices="MIMXRT1052xxxxB" user_visible="true" type="documentation" package_base_path="docs/USB" project_base_path="USB">
       <source relative_path="./" type="doc">
         <files mask="MCUXpresso SDK USB Stack User's Guide.pdf"/>
@@ -27790,6 +27825,9 @@ ${load}</script>
         <files mask="UM11441-Getting-Started-with-NXP-based-Wireless-Modules-and-i.MX-RT-Platform-Running-on-RTOS.pdf"/>
         <files mask="UM11442-NXP-Wi-Fi-and-Bluetooth-Demo-Applications-for-i.MX-RT-platforms-User-Guide.pdf"/>
         <files mask="UM11443-NXP-Wi-Fi-and-Bluetooth-Debug-Feature-Configuration-Guide-for-i.MX-RT-Platforms.pdf"/>
+      </source>
+      <source relative_path="Release Notes" type="doc">
+        <files mask="NXP-Wireless-Features-and-Release-Notes-for-i.MX-RT.pdf"/>
       </source>
     </component>
     <component id="docs_external.MIMXRT1052.MIMXRT1052" name="docs_external.MIMXRT1052" brief="External documentation for MIMXRT1052." version="1.0.0" full_name="External documentation" devices="MIMXRT1052xxxxB" user_visible="true" type="documentation" package_base_path="docs" project_base_path="docs">
@@ -29132,7 +29170,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.enet.MIMXRT1052" name="enet" brief="ENET Driver" version="2.5.3" full_name="ENET Driver" devices="MIMXRT1052xxxxB" device_cores="core0_MIMXRT1052xxxxB" user_visible="true" type="driver" package_base_path="devices/MIMXRT1052/drivers" project_base_path="drivers">
+    <component id="platform.drivers.enet.MIMXRT1052" name="enet" brief="ENET Driver" version="2.5.4" full_name="ENET Driver" devices="MIMXRT1052xxxxB" device_cores="core0_MIMXRT1052xxxxB" user_visible="true" type="driver" package_base_path="devices/MIMXRT1052/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT1052"/>
       </dependencies>
@@ -39130,6 +39168,31 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="EAP_Includes" toolchain="armgcc mcuxpresso" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.edgefast_bluetooth.k32w061.controller.MIMXRT1052" name="middleware edgefast bluetooth k32w061 controller" brief="middleware edgefast bluetooth k32w061 controller" version="1.0.0" full_name="middleware edgefast bluetooth k32w061 controller" devices="MIMXRT1052xxxxB" user_visible="false" type="software_component" package_base_path="middleware/wireless/ethermind" project_base_path="bt_ble">
+      <source relative_path="port/pal/mcux/bluetooth/controller/k32w061" type="doc">
+        <files mask="DK6-RN-0065-Production-Flash-Programmer.pdf" hidden="true"/>
+        <files mask="JN-SW-4407+DK6+Production+Flash+Programmer+v2282.exe" hidden="true"/>
+        <files mask="readme.txt"/>
+      </source>
+      <source relative_path="port/pal/mcux/bluetooth/controller/k32w061" type="other">
+        <files mask="hci_black_box_bm.bin"/>
+        <files mask="ot-rcp.bin"/>
+        <files mask="ot_rcp_ble_hci_bb_bm_2_uart.bin"/>
+        <files mask="ot_rcp_ble_hci_bb_bm_single_uart.bin"/>
+      </source>
+      <source relative_path="port/pal/mcux/bluetooth/controller" type="src">
+        <files mask="controller_k32w.c"/>
+      </source>
+      <source relative_path="port/pal/mcux/bluetooth/controller" type="c_include">
+        <files mask="controller_k32w.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_edgefast_bluetooth_k32w061_controller_MIMXRT1052.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="port/pal/mcux/bluetooth/controller" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.edgefast_wifi.MIMXRT1052" name="edgefast_wifi" brief="Wi-Fi Edgefast Abstraction Layer" version="1.0.0" full_name="Middleware Edgefast Wi-Fi" devices="MIMXRT1052xxxxB" device_cores="core0_MIMXRT1052xxxxB" category="Wireless/Middleware Edgefast Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/edgefast_wifi" project_base_path="edgefast_wifi">
@@ -51638,7 +51701,7 @@ ${load}</script>
         <include_path relative_path="port" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.maestro_framework.MIMXRT1052" name="maestro_framework" brief="MCU Maestro Audio Framework" version="1.3.0" full_name="Maestro Audio Framework Middleware" devices="MIMXRT1052xxxxB" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
+    <component id="middleware.maestro_framework.MIMXRT1052" name="maestro_framework" brief="MCU Maestro Audio Framework" version="1.4.0" full_name="Maestro Audio Framework Middleware" devices="MIMXRT1052xxxxB" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
       <dependencies>
         <all>
           <component_dependency value="middleware.maestro_framework.doc.MIMXRT1052"/>
@@ -51688,7 +51751,7 @@ ${load}</script>
         <include_path relative_path="inc" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.maestro_framework.doc.MIMXRT1052" name="maestro_framework" brief="MCU Maestro Audio Framework Doc" version="1.3.0" full_name="Maestro Audio Framework Middleware Doc" devices="MIMXRT1052xxxxB" category="Audio/Maestro Audio Framework" user_visible="false" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
+    <component id="middleware.maestro_framework.doc.MIMXRT1052" name="maestro_framework" brief="MCU Maestro Audio Framework Doc" version="1.4.0" full_name="Maestro Audio Framework Middleware Doc" devices="MIMXRT1052xxxxB" category="Audio/Maestro Audio Framework" user_visible="false" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
       <source exclude="true" relative_path="docs" type="doc">
         <files mask="index.html"/>
       </source>
@@ -52707,7 +52770,7 @@ ${load}</script>
         <include_path relative_path="src" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.maestro_framework.streamer.MIMXRT1052" name="maestro_framework_streamer_core" brief="MCU Maestro Audio Framework Streamer Core" version="1.3.0" full_name="Maestro Audio Framework Streamer Core" devices="MIMXRT1052xxxxB" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro/streamer" project_base_path="maestro/streamer">
+    <component id="middleware.maestro_framework.streamer.MIMXRT1052" name="maestro_framework_streamer_core" brief="MCU Maestro Audio Framework Streamer Core" version="1.4.0" full_name="Maestro Audio Framework Streamer Core" devices="MIMXRT1052xxxxB" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro/streamer" project_base_path="maestro/streamer">
       <source relative_path="cci/include" type="c_include">
         <files mask="cci_metadata.h"/>
         <files mask="codec_interface.h"/>
@@ -55609,6 +55672,325 @@ ${load}</script>
         <include_path relative_path="template/usdhc" type="c_include"/>
       </include_paths>
     </component>
+    <component id="middleware.soem.MIMXRT1052" name="soem" brief="Simple Open EtherCAT Master Library" version="1.4.0" full_name="SOEM" devices="MIMXRT1052xxxxB" user_visible="true" type="middleware" package_base_path="middleware/soem" project_base_path="soem">
+      <dependencies>
+        <any_of>
+          <component_dependency value="middleware.freertos-kernel.MIMXRT1052"/>
+          <component_dependency value="middleware.baremetal.MIMXRT1052"/>
+        </any_of>
+      </dependencies>
+      <source relative_path="./" type="doc">
+        <files mask="LICENSE" hidden="true"/>
+        <files mask="README.md" hidden="true"/>
+      </source>
+      <source relative_path="soem" type="src">
+        <files mask="ethercateoe.c"/>
+        <files mask="ethercatconfig.c"/>
+        <files mask="ethercatsoe.c"/>
+        <files mask="ethercatcoe.c"/>
+        <files mask="ethercatprint.c"/>
+        <files mask="ethercatfoe.c"/>
+        <files mask="ethercatmain.c"/>
+        <files mask="ethercatdc.c"/>
+        <files mask="ethercatbase.c"/>
+      </source>
+      <source relative_path="soem" type="c_include">
+        <files mask="ethercatdc.h"/>
+        <files mask="ethercatprint.h"/>
+        <files mask="ethercatconfig.h"/>
+        <files mask="ethercatsoe.h"/>
+        <files mask="ethercatcoe.h"/>
+        <files mask="ethercatbase.h"/>
+        <files mask="ethercateoe.h"/>
+        <files mask="ethercat.h"/>
+        <files mask="ethercatconfiglist.h"/>
+        <files mask="ethercattype.h"/>
+        <files mask="ethercatmain.h"/>
+        <files mask="ethercatfoe.h"/>
+      </source>
+      <source relative_path="oshw/mcux-sdk" type="c_include">
+        <files mask="oshw.h"/>
+        <files mask="soem_port.h"/>
+        <files mask="nicdrv.h"/>
+      </source>
+      <source relative_path="oshw/mcux-sdk/enet" type="c_include">
+        <files mask="enet.h"/>
+        <files mask="soem_enet.h"/>
+      </source>
+      <source relative_path="oshw/mcux-sdk/enet" type="src">
+        <files mask="enet.c"/>
+      </source>
+      <source relative_path="oshw/mcux-sdk" type="src">
+        <files mask="oshw.c"/>
+        <files mask="soem_port.c"/>
+        <files mask="nicdrv.c"/>
+      </source>
+      <source relative_path="osal" type="c_include">
+        <files mask="osal.h"/>
+      </source>
+      <source condition="middleware.baremetal.MIMXRT1052" relative_path="osal/baremetal" type="src">
+        <files mask="osal.c"/>
+      </source>
+      <source condition="middleware.baremetal.MIMXRT1052" relative_path="osal/baremetal" type="c_include">
+        <files mask="osal_defs.h"/>
+      </source>
+      <source condition="middleware.freertos-kernel.MIMXRT1052" relative_path="osal/freertos" type="src">
+        <files mask="osal.c"/>
+      </source>
+      <source condition="middleware.freertos-kernel.MIMXRT1052" relative_path="osal/freertos" type="c_include">
+        <files mask="osal_defs.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_soem_MIMXRT1052.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="soem" type="c_include"/>
+        <include_path relative_path="oshw/mcux-sdk" type="c_include"/>
+        <include_path relative_path="oshw/mcux-sdk/enet" type="c_include"/>
+        <include_path relative_path="osal" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.soem.unused.MIMXRT1052" name="soem_unused" brief="Simple Open EtherCAT unused files" version="1.4.0" full_name="soem_unused" devices="MIMXRT1052xxxxB" user_visible="false" type="middleware" package_base_path="middleware/soem" project_base_path="soem">
+      <source relative_path="./" type="doc">
+        <files mask="Doxyfile" hidden="true"/>
+        <files mask="drvcomment.txt" hidden="true"/>
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="doc/images" type="doc">
+        <files mask="overlapping_iomap.png" hidden="true"/>
+        <files mask="legacy_iomap.png" hidden="true"/>
+        <files mask="memory_layout.png" hidden="true"/>
+      </source>
+      <source relative_path="doc" type="doc">
+        <files mask="soem.dox" hidden="true"/>
+        <files mask="tutorial.txt" hidden="true"/>
+      </source>
+      <source relative_path="oshw/erika" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/erika" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/intime" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/intime" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/linux" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/linux" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/macosx" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/macosx" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtems" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtems" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk/lw_mac" type="c_include">
+        <files mask="lw_emac.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk/lw_mac" type="src">
+        <files mask="lw_emac.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk/fec" type="src">
+        <files mask="fec_ecat.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk/fec" type="c_include">
+        <files mask="fec_ecat.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/vxworks" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/vxworks" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Lib" type="lib">
+        <files mask="Packet.lib" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Lib" type="lib">
+        <files mask="wpcap.lib" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Lib/x64" type="lib">
+        <files mask="Packet.lib" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Lib/x64" type="lib">
+        <files mask="wpcap.lib" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Include" type="c_include">
+        <files mask="pcap-stdinc.h" hidden="true"/>
+        <files mask="Packet32.h" hidden="true"/>
+        <files mask="remote-ext.h" hidden="true"/>
+        <files mask="Win32-Extensions.h" hidden="true"/>
+        <files mask="pcap.h" hidden="true"/>
+        <files mask="bittypes.h" hidden="true"/>
+        <files mask="pcap-bpf.h" hidden="true"/>
+        <files mask="pcap-namedb.h" hidden="true"/>
+        <files mask="ip6_misc.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Include/pcap" type="c_include">
+        <files mask="vlan.h" hidden="true"/>
+        <files mask="sll.h" hidden="true"/>
+        <files mask="usb.h" hidden="true"/>
+        <files mask="bluetooth.h" hidden="true"/>
+        <files mask="pcap.h" hidden="true"/>
+        <files mask="bpf.h" hidden="true"/>
+        <files mask="namedb.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/erika" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/erika" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/intime" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/intime" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/linux" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/linux" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/macosx" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/macosx" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/rtems" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/rtems" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/rtk" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/rtk" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/vxworks" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/vxworks" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/win32" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+        <files mask="inttypes.h" hidden="true"/>
+        <files mask="osal_win32.h" hidden="true"/>
+        <files mask="stdint.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/win32" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="test/intime/ec_master" type="src">
+        <files mask="ec_master.c" hidden="true"/>
+      </source>
+      <source relative_path="test/simple_ng" type="src">
+        <files mask="simple_ng.c" hidden="true"/>
+      </source>
+      <source relative_path="test/simple_ng" type="doc">
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/red_test" type="src">
+        <files mask="red_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/slaveinfo" type="src">
+        <files mask="slaveinfo.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/firm_update" type="src">
+        <files mask="firm_update.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/eepromtool" type="src">
+        <files mask="eepromtool.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/simple_test" type="src">
+        <files mask="simple_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/ebox" type="src">
+        <files mask="ebox.c" hidden="true"/>
+      </source>
+      <source relative_path="test/rtk" type="src">
+        <files mask="main.c" hidden="true"/>
+      </source>
+      <source relative_path="test/rtk" type="other">
+        <files mask="schedule.tt" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/eoe_test" type="src">
+        <files mask="eoe_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/red_test" type="src">
+        <files mask="red_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/slaveinfo" type="doc">
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/slaveinfo" type="src">
+        <files mask="slaveinfo.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux" type="src">
+        <files mask="aliastool.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/firm_update" type="src">
+        <files mask="firm_update.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/eepromtool" type="doc">
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/eepromtool" type="src">
+        <files mask="eepromtool.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/simple_test" type="src">
+        <files mask="simple_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/simple_test" type="doc">
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/ebox" type="src">
+        <files mask="ebox.c" hidden="true"/>
+      </source>
+    </component>
     <component id="middleware.usb.common_header.MIMXRT1052" name="USB Common Header" brief="Middleware usb common_header" version="2.8.2" full_name="USB Common Header" devices="MIMXRT1052xxxxB" device_cores="core0_MIMXRT1052xxxxB" category="USB/USB Common Header" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
       <dependencies>
         <component_dependency value="component.osa.MIMXRT1052"/>
@@ -56132,6 +56514,46 @@ ${load}</script>
         <include_path relative_path="phy" type="c_include"/>
       </include_paths>
     </component>
+    <component id="middleware.vit.cm7_RT105x.MIMXRT1052" name="vit" brief="Voice intelligent technology library for Cortex M7" version="5.6.0" full_name="middleware vit cm7" devices="MIMXRT1052xxxxB" category="Audio/Voice intelligent technology library" user_visible="true" type="middleware" package_base_path="middleware/vit" project_base_path="vit">
+      <dependencies>
+        <component_dependency value="middleware.vit.template.MIMXRT1052"/>
+      </dependencies>
+      <source toolchain="mcuxpresso" relative_path="RT1050_CortexM7/Lib" type="c_include">
+        <files mask="VIT.h"/>
+        <files mask="VIT_Model_cn.h"/>
+        <files mask="VIT_Model_en.h"/>
+      </source>
+      <source toolchain="mcuxpresso" relative_path="RT1050_CortexM7/Lib/Inc" type="c_include">
+        <files mask="PL_memoryRegion.h"/>
+        <files mask="PL_platformTypes_CortexM.h"/>
+      </source>
+      <source toolchain="mcuxpresso" relative_path="RT1050_CortexM7/Lib" type="lib">
+        <files mask="libVIT_CM7_v04_06_00.a"/>
+      </source>
+      <source exclude="true" relative_path="RT1050_CortexM7/Doc" type="doc">
+        <files mask="VIT_Integration_Guide.pdf" hidden="true"/>
+      </source>
+      <source exclude="true" relative_path="RT1050_CortexM7/ExApp" type="src">
+        <files mask="VIT_ExApp.c" hidden="true"/>
+      </source>
+      <source exclude="true" relative_path="RT1050_CortexM7" type="doc">
+        <files mask="LICENSE.txt" hidden="true"/>
+        <files mask="ReleaseNotes.txt" hidden="true"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_vit_cm7_RT105x_MIMXRT1052.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="RT1050_CortexM7/Lib" toolchain="mcuxpresso" type="c_include"/>
+        <include_path relative_path="RT1050_CortexM7/Lib/Inc" toolchain="mcuxpresso" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.vit.template.MIMXRT1052" name="vit_template" brief="vit template" version="5.6.0" full_name="vit template configuration" devices="MIMXRT1052xxxxB" user_visible="false" type="project_template" package_base_path="middleware/vit" project_base_path="vit">
+      <include_paths>
+        <include_path relative_path="RT1060_CortexM7/Lib" type="c_include"/>
+        <include_path relative_path="RT1060_CortexM7/Lib/Inc" type="c_include"/>
+      </include_paths>
+    </component>
     <component id="middleware.wifi.MIMXRT1052" name="wifi_nxp" brief="NXP Wi-Fi functionality enables customers to quickly develop applications of interest to add connectivity to different sensors and appliances" version="1.3.38" full_name="NXP Wi-Fi" devices="MIMXRT1052xxxxB" device_cores="core0_MIMXRT1052xxxxB" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi_nxp" project_base_path="wifi">
       <dependencies>
         <all>
@@ -56260,7 +56682,6 @@ ${load}</script>
       </source>
       <source relative_path="wifi_bt_firmware" type="c_include">
         <files mask="sd8801_wlan.h"/>
-        <files mask="sduart8977_wlan_bt.h"/>
         <files mask="sduartIW416_wlan_bt.h"/>
         <files mask="sduart8987_wlan_bt.h"/>
         <files mask="wlan_bt_fw.h"/>

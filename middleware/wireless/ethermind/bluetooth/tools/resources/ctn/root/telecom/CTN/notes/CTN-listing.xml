@@ -1,0 +1,4 @@
+<CTN-listing version = "1.0">
+	<ctn-entry handle = "20000000000000000000000000000001" update = "20130701T163000" cal_type = "note" summary = "Staff meeting minutes" starttime = "19970317" size = "883" priority = "low" pstatus = "TENTATIVE" alaramstatus = "no" sentstatus = "no" recurrent = "no"/>
+	<ctn-entry handle = "20000000000000000000000000000002" update = "20130701T163000" cal_type = "note" summary = "Staff meeting minutes" starttime = "19970317" size = "883" priority = "low" pstatus = "TENTATIVE" alaramstatus = "no" sentstatus = "no" recurrent = "no"/>
+</CTN-listing>

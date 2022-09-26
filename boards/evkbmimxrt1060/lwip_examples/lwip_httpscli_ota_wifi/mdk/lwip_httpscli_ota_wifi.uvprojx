@@ -376,6 +376,11 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
+              <FileName>app_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../app_config.h</FilePath>
+            </File>
+            <File>
               <FileName>lwip_httpscli_ota.c</FileName>
               <FileType>1</FileType>
               <FilePath>../lwip_httpscli_ota.c</FilePath>
@@ -479,11 +484,6 @@
               <FileName>wifi_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../wifi_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>app_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2524,11 +2524,6 @@
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
             </File>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>
@@ -4607,6 +4602,11 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
+              <FileName>app_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../app_config.h</FilePath>
+            </File>
+            <File>
               <FileName>lwip_httpscli_ota.c</FileName>
               <FileType>1</FileType>
               <FilePath>../lwip_httpscli_ota.c</FilePath>
@@ -4710,11 +4710,6 @@
               <FileName>wifi_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../wifi_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>app_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -6755,11 +6750,6 @@
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
             </File>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>

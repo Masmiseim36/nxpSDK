@@ -1,10 +1,9 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include <stdio.h>
 
 #include "eiq_camera.h"
 #include "fsl_debug_console.h"
@@ -151,7 +150,7 @@ static void init(void)
 
     if (kStatus_Success != CAMERA_DEVICE_Init(&cameraDevice, &cameraConfig))
     {
-        printf("Camera device initialization failed\r\n");
+        PRINTF("Camera device initialization failed\r\n");
     }
 
     CAMERA_DEVICE_Start(&cameraDevice);

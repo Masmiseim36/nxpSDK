@@ -163,6 +163,8 @@ static void SHELL_AutoComplete(shell_context_handle_t *shellContextHandle); /*!<
 static shell_status_t SHELL_GetChar(shell_context_handle_t *shellContextHandle,
                                     uint8_t *ch); /*!< get a char from communication interface */
 
+static shell_status_t SHELL_PrintCommandPath(shell_context_handle_t *shellContextHandle, shell_command_t *cmd, char *path, uint32_t pathLength);
+
 #if (defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
 static void SHELL_Task(void *param); /*!<  Shell task*/
 #endif
@@ -691,23 +693,33 @@ static shell_status_t SHELL_FindCommand(shell_context_handle_t *shellContextHand
                 {
                     uint32_t deltaBest = 0xFF;
                     uint32_t deltaTemp = 0xFF;
-                    if (strlen(cmdLine) > strlen(cmdBest->pcCommand))
+
+                    memset(s_cmdLineBuffer, 0U, sizeof(s_cmdLineBuffer));
+                    if (kStatus_SHELL_Success == SHELL_PrintCommandPath(shellContextHandle, cmdBest, s_cmdLineBuffer, sizeof(s_cmdLineBuffer)))
                     {
-                        deltaBest = strlen(cmdLine) - strlen(cmdBest->pcCommand);
-                    }
-                    else
-                    {
-                        deltaBest = strlen(cmdBest->pcCommand) - strlen(cmdLine);
+                        if (strlen(cmdLine) > strlen(s_cmdLineBuffer))
+                        {
+                            deltaBest = strlen(cmdLine) - strlen(s_cmdLineBuffer);
+                        }
+                        else
+                        {
+                            deltaBest = strlen(s_cmdLineBuffer) - strlen(cmdLine);
+                        }
                     }
 
-                    if (strlen(cmdLine) > strlen(cmdTemp->pcCommand))
+                    memset(s_cmdLineBuffer, 0U, sizeof(s_cmdLineBuffer));
+                    if (kStatus_SHELL_Success == SHELL_PrintCommandPath(shellContextHandle, cmdTemp, s_cmdLineBuffer, sizeof(s_cmdLineBuffer)))
                     {
-                        deltaTemp = strlen(cmdLine) - strlen(cmdTemp->pcCommand);
+                        if (strlen(cmdLine) > strlen(s_cmdLineBuffer))
+                        {
+                            deltaTemp = strlen(cmdLine) - strlen(s_cmdLineBuffer);
+                        }
+                        else
+                        {
+                            deltaTemp = strlen(s_cmdLineBuffer) - strlen(cmdLine);
+                        }
                     }
-                    else
-                    {
-                        deltaTemp = strlen(cmdTemp->pcCommand) - strlen(cmdLine);
-                    }
+
                     if (deltaTemp < deltaBest)
                     {
                         cmdBest = cmdTemp;
@@ -878,7 +890,14 @@ static void SHELL_ProcessCommand(shell_context_handle_t *shellContextHandle, con
 #if (defined(SHELL_ADVANCE) && (SHELL_ADVANCE > 0))
         memcpy(argv[0], tmpCommand->pcCommand, strlen(tmpCommand->pcCommand) + 1);
 #endif /* SHELL_ADVANCE */
-        ret = tmpCommand->pFuncCallBack(shellContextHandle, argc, argv);
+        if (NULL !=  tmpCommand->pFuncCallBack)
+        {
+            ret = tmpCommand->pFuncCallBack(shellContextHandle, argc, argv);
+        }
+        else
+        {
+            ret = kStatus_SHELL_PrintCmdHelp;
+        }
         if (kStatus_SHELL_Success == ret)
         {
             /* Command executed successfully */

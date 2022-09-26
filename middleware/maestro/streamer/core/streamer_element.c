@@ -257,8 +257,8 @@ int32_t destroy_element(ElementHandle handle)
                 deinit_pad(ELEMENT_SINK_PAD(element, i));
 
             OSA_MemoryFree(element);
-
-            ret = STREAM_OK;
+            element = NULL;
+            ret     = STREAM_OK;
         }
         else
         {

@@ -1,0 +1,4 @@
+<MAP-msg-listing version="1.1">
+  <msg handle="20000100001" subject="Welcome Clara Nicole” datetime="20140706T095000-04:00" sender_name="Max" sender_addressing="4924689753@s.whateverapp.net" recipient_addressing="" type="IM" size="256" attachment_size="0" priority="no" read="no" sent="no" protected="no" conversation_id=”E1E2E3E4F1F2F3F4A1A2A3A4B1B2B3B4” direction=”incomming” />
+  <msg handle = "20000100002" subject= "What’s the progress Max?" datetime="20140705T092200+01:00" sender_name="Jonas" sender_addressing="4913579864@s.whateverapp.net" recipient_addressing = "" type="IM" size="512" attachment_size="8671724" priority="no" read="yes" sent="yes" protected="no" conversation_id=”E1E2E3E4F1F2F3F4A1A2A3A4B1B2B3B4” direction=”incoming” attachment_mime_types=”video/mpeg”/>
+</MAP-msg-listing>

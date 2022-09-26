@@ -30,5 +30,6 @@ var struct__ElementAudioSink =
     [ "last_time_sample_rate", "struct__ElementAudioSink.html#ae9c217214f446146f6eaa0cf12118277", null ],
     [ "buffer_use_chunk_size", "struct__ElementAudioSink.html#ab9e6c721b1d1b789c1e72ac76810b782", null ],
     [ "last_num_channels", "struct__ElementAudioSink.html#abb904fd48c04c976b54fb47d04b4414c", null ],
-    [ "last_chunk_size", "struct__ElementAudioSink.html#ad1b1f1258be7397387077818b3cf792a", null ]
+    [ "last_chunk_size", "struct__ElementAudioSink.html#ad1b1f1258be7397387077818b3cf792a", null ],
+    [ "device_started", "struct__ElementAudioSink.html#a771e4a493bf9a4b9c306674669d32ea3", null ]
 ];

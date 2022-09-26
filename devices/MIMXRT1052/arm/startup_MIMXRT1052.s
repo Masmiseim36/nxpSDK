@@ -2,9 +2,9 @@
 /*  @file:    startup_MIMXRT1052.s                                           */
 /*  @purpose: CMSIS Cortex-M7 Core Device Startup File                       */
 /*            MIMXRT1052                                                     */
-/*  @version: 1.3                                                            */
-/*  @date:    2019-4-29                                                      */
-/*  @build:   b210419                                                        */
+/*  @version: 1.4                                                            */
+/*  @date:    2021-8-10                                                      */
+/*  @build:   b211201                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
@@ -150,7 +150,7 @@ __Vectors:
     .long   PWM1_FAULT_IRQHandler                           /* PWM1 fault or reload error interrupt*/
     .long   Reserved123_IRQHandler                          /* Reserved interrupt*/
     .long   FLEXSPI_IRQHandler                              /* FlexSPI0 interrupt*/
-    .long   SEMC_IRQHandler                                 /* Reserved interrupt*/
+    .long   SEMC_IRQHandler                                 /* SEMC interrupt*/
     .long   USDHC1_IRQHandler                               /* USDHC1 interrupt*/
     .long   USDHC2_IRQHandler                               /* USDHC2 interrupt*/
     .long   USB_OTG2_IRQHandler                             /* USBO2 USB OTG2*/

@@ -1,15 +1,15 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "sensor/sensor_raw.h"
-#include <stdio.h>
 
 #include "demo_config.h"
 #include "fsl_common.h"
+#include "fsl_debug_console.h"
 #include "model.h"
+#include "sensor/sensor_raw.h"
 #include "sensor.h"
 #include "sensor_data.h"
 
@@ -30,7 +30,7 @@ status_t SENSOR_GetData(uint8_t *dstData, tensor_type_t inputType, bool *skip)
     switch (s_staticCount)
     {
         case 1:
-            printf(EOL "Static sensor data processing:" EOL);
+            PRINTF(EOL "Static sensor data processing:" EOL);
             SENSOR_updatePtr = &SENSOR_LoadStaticData;
             *skip            = true;
             break;
@@ -43,7 +43,7 @@ status_t SENSOR_GetData(uint8_t *dstData, tensor_type_t inputType, bool *skip)
             SENSOR_Init();
             break;
         case 5:
-            printf(EOL "Sensors data processing:" EOL);
+            PRINTF(EOL "Sensors data processing:" EOL);
             SENSOR_updatePtr = &SENSOR_Run;
             *skip            = true;
             break;
@@ -59,7 +59,7 @@ status_t SENSOR_GetData(uint8_t *dstData, tensor_type_t inputType, bool *skip)
         return status;
     }
 
-    printf("Data (from %s) for inference are ready" EOL, SENSOR_GetSenzorDataName());
+    PRINTF("Data (from %s) for inference are ready" EOL, SENSOR_GetSenzorDataName());
 
     SENSOR_PreprocessSample(dstData, s_sensorDataDiff, inputType);
 
@@ -128,7 +128,7 @@ status_t SENSOR_CollectData(void)
         return status;
     }
 
-    printf("\rtime,wx,wy,wz,ax,ay,az,Bx,By,Bz\r");
+    PRINTF("\rtime,wx,wy,wz,ax,ay,az,Bx,By,Bz\r");
 
     for (int sample_num = 0; sample_num < SAMPLE_NUM; ++sample_num)
     {
@@ -138,11 +138,11 @@ status_t SENSOR_CollectData(void)
             return status;
         }
 
-        printf("%s%d, %d, %d, %d, %d, %d, %d, %d, %d, %d", EOL, sample_num, rawDataGyro.gyro[0], rawDataGyro.gyro[1],
+        PRINTF("%s%d, %d, %d, %d, %d, %d, %d, %d, %d, %d", EOL, sample_num, rawDataGyro.gyro[0], rawDataGyro.gyro[1],
                rawDataGyro.gyro[2], rawDataAccel.accel[0], rawDataAccel.accel[1], rawDataAccel.accel[2],
                rawDataAccel.mag[0], rawDataAccel.mag[1], rawDataAccel.mag[2]);
     }
-    printf("\r\nAll samples are collected.\r\n");
+    PRINTF("\r\nAll samples are collected.\r\n");
 
     return status;
 }

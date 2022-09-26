@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 NXP
+ * Copyright 2019-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -50,10 +50,15 @@ SHELL_COMMAND_DEFINE(
     file,
     "\r\n\"file\": Perform audio file decode and playback\r\n"
     "\r\n"
-    "  USAGE: file [start|stop|pause|update|track|list|info]\r\n"
+    "  USAGE: file [start|stop|pause|volume|"
+#ifdef EAP32_PROC
+    "update|set|get|"
+#endif
+    "track|list|info]\r\n"
     "    start             Play default (first found) file with default (8) channels.\r\n"
     "    stop              Stops actual playback.\r\n"
     "    pause             Pause actual track or resume if already paused.\r\n"
+	"    volume=<volume>   Set volume. The volume can be set from 0 to 100.\r\n"
 
 #ifdef EAP32_PROC
     "    update=<preset>   Apply current EAP parameters without attribute value\r\n"

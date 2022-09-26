@@ -76,10 +76,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1062
     ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis
 )
@@ -133,8 +133,6 @@ include(component_serial_manager_uart_MIMXRT1062)
 
 include(driver_lpuart_MIMXRT1062)
 
-include(utility_debug_console_MIMXRT1062)
-
 include(device_MIMXRT1062_CMSIS_MIMXRT1062)
 
 include(device_MIMXRT1062_startup_MIMXRT1062)
@@ -150,6 +148,8 @@ include(driver_xip_device_MIMXRT1062)
 include(driver_xip_board_evkmimxrt1060_MIMXRT1062)
 
 include(utility_assert_MIMXRT1062)
+
+include(utility_debug_console_MIMXRT1062)
 
 include(middleware_freertos-kernel_extension_MIMXRT1062)
 
@@ -167,9 +167,9 @@ include(middleware_eiq_tensorflow_lite_micro_third_party_ruy_MIMXRT1062)
 
 include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT1062)
 
-include(device_MIMXRT1062_system_MIMXRT1062)
-
 include(utilities_misc_utilities_MIMXRT1062)
+
+include(device_MIMXRT1062_system_MIMXRT1062)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

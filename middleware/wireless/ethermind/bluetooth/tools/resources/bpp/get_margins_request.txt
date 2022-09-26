@@ -1,0 +1,13 @@
+CONTENT-LENGTH: bytes in body
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-bluetooth-org:service:Printer:1#GetMargins"
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:GetMargins xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<MediaSize>na_letter_8.5x11in</MediaSize>
+<MediaType>photographic</MediaType>
+</u:GetMargins>
+</s:Body>
+</s:Envelope>

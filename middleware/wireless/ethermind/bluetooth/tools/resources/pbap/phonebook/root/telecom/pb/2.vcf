@@ -1,0 +1,15 @@
+BEGIN:VCARD
+N:Anand
+FN:Anand Noubade
+ORG:Mindtree Ltd.; PES Services
+TITLE:Trainee
+ADR;WORK;ENCODING=QUOTED-PRINTABLE:;;"MindTree Consulting Pvt. Ltd.,"=0D=0A# 42, 27th Cross, IInd Stage=0D=0ABa=
+    nashankari,=0D=0ABangalore.;Bangalore;Karnataka;560 070;India
+LABEL;WORK;ENCODING=QUOTED-PRINTABLE:"MindTree Consulting Pvt. Ltd.,"=0D=0A# 42, 27th Cross, IInd Stage=0D=0ABana=
+    shankari,=0D=0ABangalore.=0D=0ABangalore, Karnataka 560 070=0D=0AIndia
+EMAIL;PREF;INTERNET:aashish_kedia@mindtree.com
+X-BT-UCI;skype:PTS
+X-BT-UID:1234567890ABCDEF1234567890000002
+X-BT-SPEEDDIALKEY:2
+REV:20060503T124526Z
+END:VCARD

@@ -201,6 +201,9 @@
     <source path="mdk" project_relative_path="evkbmimxrt1060/lwip_examples/lwip_httpssrv_ota/linker" type="configuration" toolchain="mdk">
       <files mask="evkbmimxrt1060_flexspi_nor_mcubootable.ini"/>
     </source>
+    <source path="." project_relative_path="source" type="c_preinclude">
+      <files mask="app_config.h"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="lwip_httpssrv_ota.c"/>
       <files mask="httpsrv_fs_data.c"/>
@@ -264,9 +267,6 @@
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
       <files mask="dcd.h"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_preinclude">
-      <files mask="app_config.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

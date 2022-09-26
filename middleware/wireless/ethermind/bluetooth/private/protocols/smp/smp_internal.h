@@ -827,6 +827,7 @@ UCHAR smp_get_iocap_assoc_model(UCHAR auth_req, UCHAR i_iocap, UCHAR r_iocap);
 void smp_timer_start (UCHAR ci);
 void smp_timer_stop (UCHAR ci);
 void smp_procedure_timeout_cb (void *data_param, UINT16 data_len);
+void smp_auth_complete_cb(void *data_param, UINT16 data_len);
 
 #define smp_hci_start_encryption BT_hci_le_start_encryption
 

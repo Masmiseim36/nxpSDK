@@ -195,7 +195,9 @@ static unsigned int make_response(char *msg, enum dhcp_message_type type)
     offset += sizeof(struct bootp_option) + opt->length;
 
     if (type == DHCP_MESSAGE_NAK)
+    {
         return (unsigned int)(offset - msg);
+    }
 
     opt       = (struct bootp_option *)(void *)offset;
     opt->type = BOOTP_OPTION_SUBNET_MASK;
@@ -275,8 +277,10 @@ static int process_dhcp_message(char *msg, int len)
     bool got_client_ip    = 0;
     uint32_t new_ip;
 
-    if (!msg || len < sizeof(struct bootp_header) + sizeof(struct bootp_option) + 1U)
+    if ((msg == NULL) || len < sizeof(struct bootp_header) + sizeof(struct bootp_option) + 1U)
+    {
         return -WM_E_DHCPD_INVALID_INPUT;
+    }
 
     hdr = (struct bootp_header *)(void *)msg;
 
@@ -402,7 +406,9 @@ static int process_dhcp_message(char *msg, int len)
         len -= consumed;
         opt = (struct bootp_option *)(void *)((char *)opt + consumed);
         if (need_ip)
+        {
             response_type = (uint8_t)(got_ip ? DHCP_MESSAGE_ACK : DHCP_MESSAGE_NAK);
+        }
     }
 
     if (response_type != DHCP_NO_RESPONSE)
@@ -410,7 +416,9 @@ static int process_dhcp_message(char *msg, int len)
         ret = make_response(msg, (enum dhcp_message_type)response_type);
         ret = SEND_RESPONSE(dhcps.sock, (struct sockaddr *)(void *)&dhcps.baddr, msg, ret);
         if (response_type == DHCP_MESSAGE_ACK)
+        {
             (void)send_gratuitous_arp(dhcps.my_ip);
+        }
         return WM_SUCCESS;
     }
 
@@ -462,7 +470,9 @@ void dhcp_server(os_thread_arg_t data)
     {
         ret = net_get_sock_error(ctrl);
         if (ret != 0)
+        {
             dhcp_e("Failed to create control socket: %d.", ret);
+        }
 
         goto done;
     }
@@ -604,7 +614,9 @@ int dhcp_server_init(void *intrfc_handle)
 
     ret = os_mutex_create(&dhcpd_mutex, "dhcp", OS_MUTEX_INHERIT);
     if (ret != WM_SUCCESS)
+    {
         return -WM_E_DHCPD_MUTEX_CREATE;
+    }
 
     get_broadcast_addr(&dhcps.baddr);
     dhcps.baddr.sin_port = htons(DHCP_CLIENT_PORT);
@@ -664,7 +676,9 @@ static int send_ctrl_msg(const char *msg)
     {
         ret = net_get_sock_error(ctrl_tmp);
         if (ret != 0)
+        {
             dhcp_e("failed to create socket error:%d", ret);
+        }
         return ret;
     }
 
@@ -678,10 +692,14 @@ static int send_ctrl_msg(const char *msg)
     {
         ret = net_get_sock_error(ctrl_tmp);
         if (ret != 0)
+        {
             dhcp_e("failed to send ctrl_msg error:%d", ret);
+        }
     }
     else
+    {
         ret = WM_SUCCESS;
+    }
 
     (void)net_close(ctrl_tmp);
     return ret;
@@ -709,14 +727,18 @@ int dhcp_free_allocations(void)
     /* Wait for 10 seconds */
     ret = os_mutex_get(&dhcpd_mutex, os_msec_to_ticks(10000));
     if (ret != WM_SUCCESS)
+    {
         return ret;
+    }
 
     dhcp_clean_sockets();
     dns_free_allocations();
 
     ret = os_mutex_put(&dhcpd_mutex);
     if (ret != WM_SUCCESS)
+    {
         return ret;
+    }
 
     return os_mutex_delete(&dhcpd_mutex);
 }

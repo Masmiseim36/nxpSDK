@@ -1,0 +1,8 @@
+<referencelist>
+<reference url="ftp://ftp.lexmark.com/pub/standards/xhtml-print.txt"
+type="application/text" />
+<reference url="http://www.print.bluetooth.org/photo10.jpg" cookie="xyzcv1234"
+type="image/jpeg" new_sheet="false"/>
+<reference url="https://www.bluetooth.com/developer/specification/
+Bluetooth_11_specification.pdf" type="application/pdf"/>
+</referencelist>

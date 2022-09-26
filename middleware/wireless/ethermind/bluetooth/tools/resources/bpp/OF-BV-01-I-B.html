@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing Table, Image, Basic Forms  </title>
+	
+</head>
+
+<body>
+<h2> BPP TSS Section 5.5.1.1 TP/OF/BV-01-I-B [Printer - XHTML - Presentation, Table, Image, Basic Forms Modules]</h2>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<p>Test Purpose: To verify that a printer can correctly print an XHTML-Print object that makes use
+of all tags and constructs defined in the XHTML-Print specifcation under Presentation, Table, Image, and Basic
+Forms Modules.</p>
+<p><br /><br /></p>
+
+<h1> Testing the Presentation Module tags</h1>
+<p><br /><br /></p>
+
+<h2>Testing the &lt;b&gt; tag </h2>
+<p>
+<b>This text must be rendered in bold </b>
+</p>
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;big&gt; tag</h2>
+<p>
+<big>This text must be rendered larger </big> than this text
+</p>
+
+
+<p><br /><br /></p>
+
+<h2>Testing the &lt;hr&gt; tag </h2>
+
+<hr /><p>There must be a horizontal line above this text</p>
+
+
+<p><br /><br /></p>
+
+<h2>Testing the  &lt;i&gt; tag</h2>
+<p>
+<i>This text must be rendered in italics </i>
+</p>
+
+<p><br /><br /></p>
+
+<h2>Testing the &lt;small&gt; tag </h2>
+<p>
+<small>This text must be smaller </small>than this text
+</p>
+
+<p><br /><br /></p>
+
+<h2>Testing the &lt;sub&gt; tag</h2>
+<p>
+The 2 in  H<sub>2</sub>O must print as a subscript
+</p>
+
+<p><br /><br /></p>
+
+<h2>Testing the &lt;sup&gt; tag</h2>
+<p>
+The 2 in  E=MC<sup>2</sup> must print as a superscript 
+</p>
+
+<p><br /><br /></p>
+
+<h2>Testing the &lt;tt&gt; tag</h2>
+<p>
+<tt>This text must be rendered in a standard monospace font </tt>
+</p>
+
+<p><br /><br /><br /></p>
+
+<h1>Testing the Table Module Tags</h1>
+<h2>Testing the &lt;table&gt;, &lt;tr&gt;,  and  &lt;th&gt; tags</h2>
+<p>Below must be a table of 4 columns and 4 rows with a caption</p>
+<table>
+<caption>This is the table caption</caption>
+<tr>
+<th>This</th>
+<th>is</th>
+<th>a</th>
+<th>row</th>
+</tr>
+
+<tr>
+<th>is</th>
+<th>printme</th>
+<th>printme</th>
+<th>printme</th>
+</tr>
+
+<tr>
+<th>a</th>
+<th>printme</th>
+<th>printme</th>
+<th>printme</th>
+</tr>
+<tr>
+<th>column</th>
+<th>printme</th>
+<th>printme</th>
+<th>printme</th>
+</tr>
+
+</table>
+
+
+<p><br /><br /><br /><br /></p>
+
+
+
+<h1> Testing the Image Module Tag</h1>
+<h2>Testing the &lt;img&gt; tag </h2>
+<p>Below this text must be an image with the text "Richard Feynman" or just the text "Richard Feynman"</p>
+<p><img src="feynman.jpg" alt="Richard Feynman" /></p>
+<p><br /><br /><br /></p>
+
+
+
+<h1> Testing the Basic Forms Module Tags</h1>
+<h2>Testing the &lt;form&gt;, &lt;input&gt;, &lt;label&gt;, &lt;select&gt;, &lt;option&gt;, and &lt;textarea&gt; tags</h2>
+<p>Below must be a form with a textbox, a pulldown selector, and a radio button</p>
+<form action="action">
+<p>
+<textarea cols = "30" rows ="5">
+This is a textarea within a textbox</textarea>
+</p>
+<p><br /><br /></p>
+
+<p><select>
+<option>Print from Bluetooth</option>
+<option>Print from LPT1</option>
+<option>Print from USB</option>
+</select></p>
+<p><br /><br /></p>
+<p><label>
+	   <input type = "radio" />
+	   XHTML-Print
+</label></p>
+</form>
+<p><br /><br /></p>
+<h2>end of test</h2>
+
+
+
+</body>
+</html>

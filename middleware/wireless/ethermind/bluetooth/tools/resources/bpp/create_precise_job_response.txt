@@ -1,0 +1,12 @@
+CONTENT-LENGTH: bytes in body
+CONTENT-TYPE: text/xml; charset="utf-8"
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:CreatePreciseJobResponse xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<JobId>12345</JobId>
+<OperationStatus>0x0001</OperationStatus>
+</u:CreatePreciseJobResponse>
+</s:Body>
+</s:Envelope>

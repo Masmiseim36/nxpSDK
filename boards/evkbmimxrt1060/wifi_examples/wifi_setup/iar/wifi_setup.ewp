@@ -2236,6 +2236,9 @@
   <group>
     <name>source</name>
     <file>
+      <name>$PROJ_DIR$/../app_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../wifi_setup.c</name>
     </file>
     <file>
@@ -2246,9 +2249,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../app_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../wifi_config.h</name>
@@ -2635,9 +2635,6 @@
       <name>wifi_bt_firmware</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>

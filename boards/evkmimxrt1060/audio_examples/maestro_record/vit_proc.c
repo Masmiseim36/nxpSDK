@@ -168,6 +168,10 @@ VIT_ReturnStatus_en VIT_ModelInfo(void)
 int VIT_Initialize(void *arg)
 {
     VIT_ReturnStatus_en VIT_Status;
+    uint16_t i, minIdx; /* loop index */
+    int32_t temp32;     /* temporary address */
+    int16_t j;          /* loop index */
+    uint16_t order[PL_NR_MEMORY_REGIONS];
 
     switch (Vit_Language)
     {
@@ -206,19 +210,43 @@ int VIT_Initialize(void *arg)
         return VIT_Status;
     }
 
+    /* Initialize order variable */
+    for (i = 0; i < PL_NR_MEMORY_REGIONS; i++)
+    {
+        order[i] = i;
+    }
+
+    /* Sort region indexes by region size */
+    for (i = 0; i < (PL_NR_MEMORY_REGIONS - 1); i++)
+    {
+        minIdx = i;
+        for (j = i + 1; j < PL_NR_MEMORY_REGIONS; j++)
+            if (VITMemoryTable.Region[order[j]].Size < VITMemoryTable.Region[order[minIdx]].Size)
+                minIdx = j;
+
+        /* Swap indexes */
+        temp32        = order[minIdx];
+        order[minIdx] = order[i];
+        order[i]      = temp32;
+    }
+
     /*
      *   Reserve memory space: Malloc for each memory type
      */
-    for (int i = 0; i < PL_NR_MEMORY_REGIONS; i++)
+    for (j = (PL_NR_MEMORY_REGIONS - 1); j >= 0; j--)
     {
         /* Log the memory size */
-        if (VITMemoryTable.Region[i].Size != 0)
+        if (VITMemoryTable.Region[order[j]].Size != 0)
         {
             // reserve memory space
             // NB: VITMemoryTable.Region[PL_MEMREGION_PERSISTENT_FAST_DATA] should be allocated
             //      in the fastest memory of the platform (when possible) - this is not the case in this example.
-            pMemory[i] = OSA_MemoryAllocate(VITMemoryTable.Region[i].Size + MEMORY_ALIGNMENT);
-            VITMemoryTable.Region[i].pBaseAddress = (void *)pMemory[i];
+            pMemory[j] = OSA_MemoryAllocate(VITMemoryTable.Region[order[j]].Size + MEMORY_ALIGNMENT);
+            if (!pMemory[j])
+            {
+                return VIT_INVALID_NULLADDRESS;
+            }
+            VITMemoryTable.Region[order[j]].pBaseAddress = (void *)pMemory[j];
         }
     }
 
@@ -402,13 +430,12 @@ int VIT_Deinit(void)
     if (VIT_Status != VIT_SUCCESS)
     {
         PRINTF("VIT_GetMemoryTable error: %d\r\n", VIT_Status);
-        return VIT_Status;
     }
 
     // Free the MEM tables
     for (int i = 0; i < PL_NR_MEMORY_REGIONS; i++)
     {
-        if (VITMemoryTable.Region[i].Size != 0)
+        if (pMemory[i] != NULL)
         {
             OSA_MemoryFree((PL_INT8 *)pMemory[i]);
             pMemory[i] = NULL;

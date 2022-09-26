@@ -253,6 +253,9 @@
     <source path="armgcc/linker" project_relative_path="evkbmimxrt1060/aws_examples/common/linker" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1062xxxxx_flexspi_nor.ld"/>
     </source>
+    <source path="." project_relative_path="source" type="c_preinclude">
+      <files mask="app_config.h"/>
+    </source>
     <source path="." project_relative_path="board" type="src">
       <files mask="sdmmc_config.c"/>
       <files mask="wifi_bt_config.c"/>
@@ -376,9 +379,6 @@
     </source>
     <source path="../remote_control_android" project_relative_path="source" type="script">
       <files mask="gradlew.bat" hidden="true"/>
-    </source>
-    <source path="." project_relative_path="source" type="c_preinclude">
-      <files mask="app_config.h"/>
     </source>
     <source path="." project_relative_path="source" type="c_include">
       <files mask="wifi_config.h"/>

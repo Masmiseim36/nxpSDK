@@ -1,0 +1,15 @@
+CONTENT-LENGTH: bytes in body
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-bluetooth-org:service:Printer:1#GetJobAttributes"
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:GetJobAttributes xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<JobId>12345</JobId>
+<RequestedJobAttributes>
+<JobAttribute>JobState</JobAttribute>
+</RequestedJobAttributes>
+</u:GetJobAttributes>
+</s:Body>
+</s:Envelope>

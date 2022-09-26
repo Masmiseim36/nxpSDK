@@ -102,25 +102,25 @@ static OtaPalStatus_t prvPAL_CheckFileSignature(OtaFileContext_t *const C)
     PalFileContext = prvPAL_GetPALFileContext(C);
     if (PalFileContext == NULL)
     {
-        return OtaPalSignatureCheckFailed;
+        return OTA_PAL_COMBINE_ERR(OtaPalSignatureCheckFailed, 1);
     }
 
     file_data = mflash_drv_phys2log(PalFileContext->partition_phys_addr, PalFileContext->file_size);
     if (file_data == NULL)
     {
-        return OtaPalSignatureCheckFailed;
+        return OTA_PAL_COMBINE_ERR(OtaPalSignatureCheckFailed, 2);
     }
 
     cert = prvPAL_GetCertificate((const uint8_t *)C->pCertFilepath, &certsize);
     if (cert == NULL)
     {
-        return OtaPalBadSignerCert;
+        return OTA_PAL_COMBINE_ERR(OtaPalBadSignerCert, 0);
     }
 
     if (CRYPTO_SignatureVerificationStart(&VerificationContext, cryptoASYMMETRIC_ALGORITHM_ECDSA,
                                           cryptoHASH_ALGORITHM_SHA256) != pdTRUE)
     {
-        return OtaPalSignatureCheckFailed;
+        return OTA_PAL_COMBINE_ERR(OtaPalSignatureCheckFailed, 3);
     }
 
     CRYPTO_SignatureVerificationUpdate(VerificationContext, file_data, PalFileContext->file_size );
@@ -128,16 +128,16 @@ static OtaPalStatus_t prvPAL_CheckFileSignature(OtaFileContext_t *const C)
     if (CRYPTO_SignatureVerificationFinal(VerificationContext, cert, certsize, C->pSignature->data,
                                           C->pSignature->size) != pdTRUE)
     {
-        return OtaPalSignatureCheckFailed;
+        return OTA_PAL_COMBINE_ERR(OtaPalSignatureCheckFailed, 4);
     }
 
-    return OtaPalSuccess;
+    return OTA_PAL_COMBINE_ERR(OtaPalSuccess, 0);
 }
 
 
 OtaPalStatus_t otaPal_Abort(OtaFileContext_t *const C)
 {
-    OtaPalStatus_t result = OtaPalSuccess;
+    OtaPalStatus_t result = OTA_PAL_COMBINE_ERR(OtaPalSuccess, 0);
 
     LogInfo(("[OTA-NXP] Abort"));
 
@@ -156,7 +156,7 @@ OtaPalStatus_t otaPal_CreateFileForRx(OtaFileContext_t *const C)
     if (bl_get_update_partition_info(&update_partition) != kStatus_Success)
     {
         LogError(("[OTA-NXP] Could not get update partition information"));
-        return OtaPalRxFileCreateFailed;
+        return OTA_PAL_COMBINE_ERR(OtaPalRxFileCreateFailed, 1);
     }
 
     /* Keep partition info in the file context */
@@ -168,21 +168,21 @@ OtaPalStatus_t otaPal_CreateFileForRx(OtaFileContext_t *const C)
     if (PalFileContext->partition_phys_addr == MFLASH_INVALID_ADDRESS)
     {
         LogError(("[OTA-NXP] Could not get update partition FLASH address"));
-        return OtaPalRxFileCreateFailed;
+        return OTA_PAL_COMBINE_ERR(OtaPalRxFileCreateFailed, 2);
     }
 
     /* Check partition alignment */
     if (!mflash_drv_is_sector_aligned(PalFileContext->partition_phys_addr) || !mflash_drv_is_sector_aligned(PalFileContext->partition_size))
     {
         LogError(("[OTA-NXP] Invalid update partition"));
-        return OtaPalRxFileCreateFailed;
+        return OTA_PAL_COMBINE_ERR(OtaPalRxFileCreateFailed, 3);
     }
 
     /* Check whether the file fits at all */
     if (C->fileSize > update_partition.size)
     {
         LogError(("[OTA-NXP] File too large"));
-        return OtaPalRxFileTooLarge;
+        return OTA_PAL_COMBINE_ERR(OtaPalRxFileTooLarge, 0);
     }
 
     /* Actual size of the file according to data received */
@@ -197,13 +197,13 @@ OtaPalStatus_t otaPal_CreateFileForRx(OtaFileContext_t *const C)
     PalFileContext->FileXRef = C; /* pointer cross reference for integrity check */
     C->pFile = (uint8_t *)PalFileContext;
 
-    return OtaPalSuccess;
+    return OTA_PAL_COMBINE_ERR(OtaPalSuccess, 0);
 }
 
 
 OtaPalStatus_t otaPal_CloseFile(OtaFileContext_t *const C)
 {
-    OtaPalStatus_t result = OtaPalSuccess;
+    OtaPalStatus_t result = OTA_PAL_COMBINE_ERR(OtaPalSuccess, 0);
     PAL_FileContext_t *PalFileContext;
 
     LogDebug(("[OTA-NXP] CloseFile"));
@@ -211,7 +211,7 @@ OtaPalStatus_t otaPal_CloseFile(OtaFileContext_t *const C)
     PalFileContext = prvPAL_GetPALFileContext(C);
     if (PalFileContext == NULL)
     {
-        return OtaPalFileClose;
+        return OTA_PAL_COMBINE_ERR(OtaPalFileClose, 0);
     }
 
     if (PalFileContext->file_size != C->fileSize)
@@ -220,27 +220,27 @@ OtaPalStatus_t otaPal_CloseFile(OtaFileContext_t *const C)
     }
 
     result = prvPAL_CheckFileSignature(C);
-    if (result != OtaPalSuccess)
+    if (OTA_PAL_MAIN_ERR(result) != OtaPalSuccess)
     {
         LogError(("[OTA-NXP] CheckFileSignature failed"));
     }
 
     /* Sanity check of the image and its header solely from the flash as the bootloader would do */
-    if (result == OtaPalSuccess)
+    if (OTA_PAL_MAIN_ERR(result) == OtaPalSuccess)
     {
         uint8_t *file_data = mflash_drv_phys2log(PalFileContext->partition_phys_addr, PalFileContext->file_size);
         if ((file_data == NULL) || (bl_verify_image(file_data, PalFileContext->file_size) <= 0))
         {
             LogError(("[OTA-NXP] Invalid image"));
-            result = OtaPalBootInfoCreateFailed;
+            result = OTA_PAL_COMBINE_ERR(OtaPalBootInfoCreateFailed, 1);
         }
     }
 
     /* Prepare image to be booted in test mode */
-    if ((result == OtaPalSuccess) && (bl_update_image_state(kSwapType_ReadyForTest) != kStatus_Success))
+    if ((OTA_PAL_MAIN_ERR(result) == OtaPalSuccess) && (bl_update_image_state(kSwapType_ReadyForTest) != kStatus_Success))
     {
         LogError(("[OTA-NXP] Failed to set image state"));
-        result = OtaPalBootInfoCreateFailed;
+        result = OTA_PAL_COMBINE_ERR(OtaPalBootInfoCreateFailed, 2);
     }
 
     C->pFile = NULL;
@@ -353,9 +353,12 @@ int16_t otaPal_WriteBlock(OtaFileContext_t *const C, uint32_t ulOffset, uint8_t 
 
 OtaPalStatus_t otaPal_ActivateNewImage(OtaFileContext_t * const C)
 {
+    OtaPalStatus_t result = OTA_PAL_COMBINE_ERR(OtaPalUninitialized, 0);
+
     LogInfo(("[OTA-NXP] ActivateNewImage"));
-    otaPal_ResetDevice(C); /* go for reboot */
-    return OtaPalSuccess;
+    otaPal_ResetDevice(C); /* go for reboot, this should never return */
+
+    return result; /* to supress compiler warning and eventually report the unexpected state */
 }
 
 
@@ -369,7 +372,7 @@ OtaPalStatus_t otaPal_ResetDevice(OtaFileContext_t * const C)
 
 OtaPalStatus_t otaPal_SetPlatformImageState(OtaFileContext_t * const C, OtaImageState_t eState)
 {
-    OtaPalStatus_t result = OtaPalSuccess;
+    OtaPalStatus_t result = OTA_PAL_COMBINE_ERR(OtaPalSuccess, 0);
 
     LogDebug(("[OTA-NXP] SetPlatformImageState %d", eState));
 
@@ -383,7 +386,7 @@ OtaPalStatus_t otaPal_SetPlatformImageState(OtaFileContext_t * const C, OtaImage
                 if (bl_update_image_state(kSwapType_Permanent) != kStatus_Success)
                 {
                     /* Override result code by a state specific one */
-                    result = OtaPalCommitFailed;
+                    result = OTA_PAL_COMBINE_ERR(OtaPalCommitFailed, 0);
                 }
                 break;
 
@@ -392,7 +395,7 @@ OtaPalStatus_t otaPal_SetPlatformImageState(OtaFileContext_t * const C, OtaImage
                 if (bl_update_image_state(kSwapType_Fail) != kStatus_Success)
                 {
                     /* Override result code by a state specific one */
-                    result = OtaPalRejectFailed;
+                    result = OTA_PAL_COMBINE_ERR(OtaPalRejectFailed, 0);
                 }
                 break;
 
@@ -401,16 +404,16 @@ OtaPalStatus_t otaPal_SetPlatformImageState(OtaFileContext_t * const C, OtaImage
                 if (bl_update_image_state(kSwapType_Fail) != kStatus_Success)
                 {
                     /* Override result code by a state specific one */
-                    result = OtaPalAbortFailed;
+                    result = OTA_PAL_COMBINE_ERR(OtaPalAbortFailed, 0);
                 }
                 break;
 
             case OtaImageStateTesting:
-                result = OtaPalSuccess;
+                result = OTA_PAL_COMBINE_ERR(OtaPalSuccess, 0);
                 break;
 
             default:
-                result = OtaPalBadImageState;
+                result = OTA_PAL_COMBINE_ERR(OtaPalBadImageState, 0);
                 break;
         }
     }
@@ -421,23 +424,23 @@ OtaPalStatus_t otaPal_SetPlatformImageState(OtaFileContext_t * const C, OtaImage
         {
             case OtaImageStateAccepted:
                 /* No pending commit */
-                result = OtaPalCommitFailed;
+                result = OTA_PAL_COMBINE_ERR(OtaPalCommitFailed, 1);
                 break;
 
             case OtaImageStateRejected:
-                result = OtaPalRejectFailed;
+                result = OTA_PAL_COMBINE_ERR(OtaPalRejectFailed, 1);
                 break;
 
             case OtaImageStateAborted:
-                result = OtaPalAbortFailed;
+                result = OTA_PAL_COMBINE_ERR(OtaPalAbortFailed, 1);
                 break;
 
             case OtaImageStateTesting:
-                result = OtaPalBadImageState;
+                result = OTA_PAL_COMBINE_ERR(OtaPalBadImageState, 1);
                 break;
 
             default:
-                result = OtaPalBadImageState;
+                result = OTA_PAL_COMBINE_ERR(OtaPalBadImageState, 1);
                 break;
         }
     }

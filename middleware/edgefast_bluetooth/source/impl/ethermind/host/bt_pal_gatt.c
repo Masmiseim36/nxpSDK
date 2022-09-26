@@ -176,141 +176,37 @@ static ssize_t read_central_addr_res(struct bt_conn *conn,
 }
 #endif /* CONFIG_BT_CENTRAL && CONFIG_BT_PRIVACY */
 
-#if (defined(CONFIG_BT_DEVICE_NAME_GATT_WRITABLE) && ((CONFIG_BT_DEVICE_NAME_GATT_WRITABLE) > 0U))
-#if ((defined(CONFIG_BT_CENTRAL) && (CONFIG_BT_CENTRAL > 0U)) && (defined(CONFIG_BT_PRIVACY) && (CONFIG_BT_PRIVACY > 0U)))
-#if (defined(CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) && ((CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U))
-static BT_GATT_SERVICE_DEFINE(_2_gap_svc,
+BT_GATT_SERVICE_DEFINE(_2_gap_svc,
 	BT_GATT_PRIMARY_SERVICE(BT_UUID_GAP),
-
+#if (defined(CONFIG_BT_DEVICE_NAME_GATT_WRITABLE) && (CONFIG_BT_DEVICE_NAME_GATT_WRITABLE > 0U))
 	/* Require pairing for writes to device name */
 	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_DEVICE_NAME,
 			       BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE,
-			       BT_GATT_PERM_READ | BT_GATT_PERM_WRITE_ENCRYPT,
+			       BT_GATT_PERM_READ |
+#if (defined(CONFIG_DEVICE_NAME_GATT_WRITABLE_AUTHEN) && (CONFIG_DEVICE_NAME_GATT_WRITABLE_AUTHEN > 0U))
+			       BT_GATT_PERM_WRITE_AUTHEN,
+#elif (defined(CONFIG_DEVICE_NAME_GATT_WRITABLE_ENCRYPT) && (CONFIG_DEVICE_NAME_GATT_WRITABLE_ENCRYPT > 0U))
+			       BT_GATT_PERM_WRITE_ENCRYPT,
+#else
+			       BT_GATT_PERM_WRITE,
+#endif
 			       read_name, write_name, bt_dev.name),
-
+#else
+	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_DEVICE_NAME, BT_GATT_CHRC_READ,
+			       BT_GATT_PERM_READ, read_name, NULL, NULL),
+#endif /* CONFIG_BT_DEVICE_NAME_GATT_WRITABLE */
 	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_APPEARANCE, BT_GATT_CHRC_READ,
 			       BT_GATT_PERM_READ, read_appearance, NULL, NULL),
-
+#if (defined(CONFIG_BT_CENTRAL) && (CONFIG_BT_CENTRAL > 0U)) && (defined(CONFIG_BT_PRIVACY) && (CONFIG_BT_PRIVACY > 0U))
 	BT_GATT_CHARACTERISTIC(BT_UUID_CENTRAL_ADDR_RES,
 			       BT_GATT_CHRC_READ, BT_GATT_PERM_READ,
 			       read_central_addr_res, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_PPCP, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_ppcp, NULL, NULL),
-);
-#else  /* CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U */
-static BT_GATT_SERVICE_DEFINE(_2_gap_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GAP),
-
-	/* Require pairing for writes to device name */
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_DEVICE_NAME,
-			       BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE,
-			       BT_GATT_PERM_READ | BT_GATT_PERM_WRITE_ENCRYPT,
-			       read_name, write_name, bt_dev.name),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_APPEARANCE, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_appearance, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_CENTRAL_ADDR_RES,
-			       BT_GATT_CHRC_READ, BT_GATT_PERM_READ,
-			       read_central_addr_res, NULL, NULL),
-);
-#endif /* CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U */
-
-#else  /* CONFIG_BT_CENTRAL && CONFIG_BT_PRIVACY */
-#if (defined(CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) && ((CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U))
-static BT_GATT_SERVICE_DEFINE(_2_gap_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GAP),
-
-	/* Require pairing for writes to device name */
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_DEVICE_NAME,
-			       BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE,
-			       BT_GATT_PERM_READ | BT_GATT_PERM_WRITE_ENCRYPT,
-			       read_name, write_name, bt_dev.name),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_APPEARANCE, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_appearance, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_PPCP, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_ppcp, NULL, NULL),
-);
-#else  /* CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U */
-static BT_GATT_SERVICE_DEFINE(_2_gap_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GAP),
-
-	/* Require pairing for writes to device name */
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_DEVICE_NAME,
-			       BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE,
-			       BT_GATT_PERM_READ | BT_GATT_PERM_WRITE_ENCRYPT,
-			       read_name, write_name, bt_dev.name),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_APPEARANCE, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_appearance, NULL, NULL),
-);
-#endif /* CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U */
 #endif /* CONFIG_BT_CENTRAL && CONFIG_BT_PRIVACY */
-
-#else  /* CONFIG_BT_DEVICE_NAME_GATT_WRITABLE) > 0U */
-#if ((defined(CONFIG_BT_CENTRAL) && (CONFIG_BT_CENTRAL > 0U)) && (defined(CONFIG_BT_PRIVACY) && (CONFIG_BT_PRIVACY > 0U)))
-#if (defined(CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) && ((CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U))
-static BT_GATT_SERVICE_DEFINE(_2_gap_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GAP),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_DEVICE_NAME, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_name, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_APPEARANCE, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_appearance, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_CENTRAL_ADDR_RES,
-			       BT_GATT_CHRC_READ, BT_GATT_PERM_READ,
-			       read_central_addr_res, NULL, NULL),
-
+#if (defined(CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) && (CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS > 0U))
 	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_PPCP, BT_GATT_CHRC_READ,
 			       BT_GATT_PERM_READ, read_ppcp, NULL, NULL),
+#endif
 );
-#else  /* CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U */
-static BT_GATT_SERVICE_DEFINE(_2_gap_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GAP),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_DEVICE_NAME, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_name, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_APPEARANCE, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_appearance, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_CENTRAL_ADDR_RES,
-			       BT_GATT_CHRC_READ, BT_GATT_PERM_READ,
-			       read_central_addr_res, NULL, NULL),
-);
-#endif /* CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U */
-#else  /* CONFIG_BT_CENTRAL && CONFIG_BT_PRIVACY */
-#if (defined(CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) && ((CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U))
-static BT_GATT_SERVICE_DEFINE(_2_gap_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GAP),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_DEVICE_NAME, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_name, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_APPEARANCE, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_appearance, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_PPCP, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_ppcp, NULL, NULL),
-);
-#else  /* CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U */
-static BT_GATT_SERVICE_DEFINE(_2_gap_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GAP),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_DEVICE_NAME, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_name, NULL, NULL),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GAP_APPEARANCE, BT_GATT_CHRC_READ,
-			       BT_GATT_PERM_READ, read_appearance, NULL, NULL),
-);
-#endif /* CONFIG_BT_GAP_PERIPHERAL_PREF_PARAMS) > 0U */
-#endif /* CONFIG_BT_CENTRAL && CONFIG_BT_PRIVACY */
-#endif /* CONFIG_BT_DEVICE_NAME_GATT_WRITABLE) > 0U */
 
 STRUCT_PACKED_PRE
 struct sc_data {
@@ -774,6 +670,7 @@ static uint8_t gen_hash_m(const struct bt_gatt_attr *attr, uint16_t handle,
 
 static void db_hash_store(void)
 {
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 	int err;
 
 	err = settings_save_one("bt/hash", &db_hash, sizeof(db_hash));
@@ -782,6 +679,7 @@ static void db_hash_store(void)
 	}
 
 	BT_DBG("Database Hash stored");
+#endif
 }
 
 /* Once the db_hash work has started we cannot cancel it anymore, so the
@@ -894,6 +792,7 @@ static ssize_t sf_read(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 #endif /* CONFIG_BT_EATT */
 #endif /* CONFIG_BT_GATT_CACHING */
 
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 static int bt_gatt_store_cf(struct bt_conn *conn)
 {
 #if (defined(CONFIG_BT_GATT_CACHING) && ((CONFIG_BT_GATT_CACHING) > 0U))
@@ -941,6 +840,7 @@ static int bt_gatt_store_cf(struct bt_conn *conn)
 	return 0;
 
 }
+#endif
 
 #if (defined(CONFIG_BT_SETTINGS) && ((CONFIG_BT_SETTINGS) > 0U)) && \
     (defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) && \
@@ -996,10 +896,9 @@ static void bt_gatt_identity_resolved(struct bt_conn *conn, const bt_addr_le_t *
 }
 #endif /* CONFIG_BT_SETTINGS && CONFIG_BT_SMP && CONFIG_BT_GATT_CLIENT */
 
-#if ((defined(CONFIG_BT_GATT_SERVICE_CHANGED) && ((CONFIG_BT_GATT_SERVICE_CHANGED) > 0U)) && (defined(CONFIG_BT_GATT_CACHING) && ((CONFIG_BT_GATT_CACHING) > 0U)) && (defined(CONFIG_BT_EATT) && ((CONFIG_BT_EATT) > 0U)))
-static BT_GATT_SERVICE_DEFINE(_1_gatt_svc,
+BT_GATT_SERVICE_DEFINE(_1_gatt_svc,
 	BT_GATT_PRIMARY_SERVICE(BT_UUID_GATT),
-
+#if (defined(CONFIG_BT_GATT_SERVICE_CHANGED) && (CONFIG_BT_GATT_SERVICE_CHANGED > 0U))
 	/* Bluetooth 5.0, Vol3 Part G:
 	 * The Service Changed characteristic Attribute Handle on the server
 	 * shall not change if the server has a trusted relationship with any
@@ -1008,7 +907,7 @@ static BT_GATT_SERVICE_DEFINE(_1_gatt_svc,
 	BT_GATT_CHARACTERISTIC(BT_UUID_GATT_SC, BT_GATT_CHRC_INDICATE,
 			       BT_GATT_PERM_NONE, NULL, NULL, NULL),
 	BT_GATT_CCC_MANAGED(&sc_ccc, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
-
+#if (defined(CONFIG_BT_GATT_CACHING) && (CONFIG_BT_GATT_CACHING > 0U))
 	BT_GATT_CHARACTERISTIC(BT_UUID_GATT_CLIENT_FEATURES,
 			       BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE,
 			       BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
@@ -1016,50 +915,14 @@ static BT_GATT_SERVICE_DEFINE(_1_gatt_svc,
 	BT_GATT_CHARACTERISTIC(BT_UUID_GATT_DB_HASH,
 			       BT_GATT_CHRC_READ, BT_GATT_PERM_READ,
 			       db_hash_read, NULL, NULL),
-
+#if (defined(CONFIG_BT_EATT) && (CONFIG_BT_EATT > 0U))
 	BT_GATT_CHARACTERISTIC(BT_UUID_GATT_SERVER_FEATURES,
 			       BT_GATT_CHRC_READ, BT_GATT_PERM_READ,
 			       sf_read, NULL, NULL),
+#endif /* CONFIG_BT_EATT */
+#endif /* CONFIG_BT_GATT_CACHING */
+#endif /* CONFIG_BT_GATT_SERVICE_CHANGED */
 );
-#elif ((defined(CONFIG_BT_GATT_SERVICE_CHANGED) && ((CONFIG_BT_GATT_SERVICE_CHANGED) > 0U)) && (defined(CONFIG_BT_GATT_CACHING) && ((CONFIG_BT_GATT_CACHING) > 0U)))
-static BT_GATT_SERVICE_DEFINE(_1_gatt_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GATT),
-
-	/* Bluetooth 5.0, Vol3 Part G:
-	 * The Service Changed characteristic Attribute Handle on the server
-	 * shall not change if the server has a trusted relationship with any
-	 * client.
-	 */
-	BT_GATT_CHARACTERISTIC(BT_UUID_GATT_SC, BT_GATT_CHRC_INDICATE,
-			       BT_GATT_PERM_NONE, NULL, NULL, NULL),
-	BT_GATT_CCC_MANAGED(&sc_ccc, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
-
-	BT_GATT_CHARACTERISTIC(BT_UUID_GATT_CLIENT_FEATURES,
-			       BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE,
-			       BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
-			       cf_read, cf_write, NULL),
-	BT_GATT_CHARACTERISTIC(BT_UUID_GATT_DB_HASH,
-			       BT_GATT_CHRC_READ, BT_GATT_PERM_READ,
-			       db_hash_read, NULL, NULL),
-);
-#elif (defined(CONFIG_BT_GATT_SERVICE_CHANGED) && ((CONFIG_BT_GATT_SERVICE_CHANGED) > 0U))
-static BT_GATT_SERVICE_DEFINE(_1_gatt_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GATT),
-
-	/* Bluetooth 5.0, Vol3 Part G:
-	 * The Service Changed characteristic Attribute Handle on the server
-	 * shall not change if the server has a trusted relationship with any
-	 * client.
-	 */
-	BT_GATT_CHARACTERISTIC(BT_UUID_GATT_SC, BT_GATT_CHRC_INDICATE,
-			       BT_GATT_PERM_NONE, NULL, NULL, NULL),
-	BT_GATT_CCC_MANAGED(&sc_ccc, BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
-);
-#else
-static BT_GATT_SERVICE_DEFINE(_1_gatt_svc,
-	BT_GATT_PRIMARY_SERVICE(BT_UUID_GATT),
-);
-#endif
 
 #if (defined(CONFIG_BT_GATT_DYNAMIC_DB) && ((CONFIG_BT_GATT_DYNAMIC_DB) > 0U))
 static uint8_t found_attr(const struct bt_gatt_attr *attr, uint16_t handle,
@@ -5757,11 +5620,13 @@ void bt_gatt_disconnected(struct bt_conn *conn)
 	}
 #endif
 
+#if ((defined(CONFIG_BT_SETTINGS)) && (CONFIG_BT_SETTINGS))
 	if (IS_ENABLED(CONFIG_BT_SETTINGS) &&
 	    bt_addr_le_is_bonded(conn->id, &conn->le.dst)) {
 		bt_gatt_store_ccc(conn->id, &conn->le.dst);
 		bt_gatt_store_cf(conn);
 	}
+#endif
 
 	/* Make sure to clear the CCC entry when using lazy loading */
 	if (IS_ENABLED(CONFIG_BT_SETTINGS_CCC_LAZY_LOADING) &&

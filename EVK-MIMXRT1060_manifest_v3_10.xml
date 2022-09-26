@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.12.0 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.12.0" format_version="3.10" api_version="2.0.0" configuration="b69b5b771496079f227d87f1ba98734e" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
-  <!--Timestamp (UTC): 2022-07-16 03:50:13.190180-->
-  <!--This manifest is generated based on sdk repo commit: 45d71c921a1dd3e0403549aa377535344ed9bc97-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.12.1 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.12.1" format_version="3.10" api_version="2.0.0" configuration="9d3d9402a9750ea6cdfa47a53724408b" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
+  <!--Timestamp (UTC): 2022-09-26 12:43:06.351837-->
+  <!--This manifest is generated based on sdk repo commit: 1d365316a284b27ce39c372d5a46d49869664ba1-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
@@ -9,7 +9,7 @@
   <externalDefinitions>
     <definition extID="evkbmimxrt1060"/>
   </externalDefinitions>
-  <ksdk id="MCUXpresso2120" name="MCUXpresso2120" version="2.12.0" revision="611 2022-07-14"/>
+  <ksdk id="MCUXpresso2121" name="MCUXpresso2121" version="2.12.1" revision="632 2022-09-26"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -194,6 +194,11 @@ ${load}</script>
         <example id="evkmimxrt1060_bee" name="bee" brief="This driver example should demonstrate how to setup BEE driver for on the fly decryption of data stored in QSPI memory region. The BEE is configuerd to decrypt all data starting from location 0x6000_0000 to 0x6001_0000 using AES ECB mode with user specified key. If the BEE_KEY_SEL fuse is programmed, then OTPMK key will be used instead.The example itself does not perform any data decryption operation over QSPI. It is used only as a BEE setup guide." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/bee" path="boards/evkmimxrt1060/driver_examples/bee">
           <external path="boards/evkmimxrt1060/driver_examples/bee" type="xml">
             <files mask="bee_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_bt_ble_cli" name="bt_ble_cli" brief="The bt_ble_cli." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="bt_ble_examples" path="boards/evkmimxrt1060/bt_ble_examples/bt_ble_cli">
+          <external path="boards/evkmimxrt1060/bt_ble_examples/bt_ble_cli" type="xml">
+            <files mask="bt_ble_cli_v3_10.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1060_bt_tester" name="bt_tester" brief="The ethermind auto PTS testing application." toolchain="iar" compiler="compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/bt_tester">
@@ -1596,11 +1601,6 @@ ${load}</script>
             <files mask="mbedtls_selftest_v3_10.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_mc_pmsm" name="mc_pmsm" brief="This example demonstrates the control of the PMSM." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc">
-          <external path="boards/evkmimxrt1060/demo_apps/mc_pmsm/pmsm_enc" type="xml">
-            <files mask="mc_pmsm_v3_10.xml"/>
-          </external>
-        </example>
         <example id="evkmimxrt1060_mco_manager" name="mco_manager" brief="Example manager application using MicroCANopen Plus library" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="canopen_examples" path="boards/evkmimxrt1060/canopen_examples/mco_manager">
           <external path="boards/evkmimxrt1060/canopen_examples/mco_manager" type="xml">
             <files mask="mco_manager_v3_10.xml"/>
@@ -1941,6 +1941,16 @@ ${load}</script>
             <files mask="snvs_sw_zmk_v3_10.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1060_soem_gpio_pulse_bm" name="soem_gpio_pulse_bm" brief="An EtherCAT example with baremetal using SOEM." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="soem_examples" path="boards/evkmimxrt1060/soem_examples/soem_gpio_pulse/bm">
+          <external path="boards/evkmimxrt1060/soem_examples/soem_gpio_pulse/bm" type="xml">
+            <files mask="soem_gpio_pulse_bm_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_soem_gpio_pulse_freertos" name="soem_gpio_pulse_freertos" brief="An EtherCAT example with freertos using SOEM." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="soem_examples" path="boards/evkmimxrt1060/soem_examples/soem_gpio_pulse/freertos">
+          <external path="boards/evkmimxrt1060/soem_examples/soem_gpio_pulse/freertos" type="xml">
+            <files mask="soem_gpio_pulse_freertos_v3_10.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1060_spi_b2b_example_master" name="spi_b2b_example_master" brief="The example shows SPI communication between two SPI ports." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="azure_rtos_examples" path="boards/evkmimxrt1060/azure_rtos_examples/spi_b2b_example/master">
           <external path="boards/evkmimxrt1060/azure_rtos_examples/spi_b2b_example/master" type="xml">
             <files mask="spi_b2b_example_master_v3_10.xml"/>
@@ -2139,81 +2149,6 @@ ${load}</script>
         </debug_configuration>
       </debug_configurations>
     </board>
-    <board id="evkmimxrt1060_om13790host" name="EVK-MIMXRT1060-OM13790HOST" href="https://www.nxp.com/pip/OM13790" version="1.0.0" package="MIMXRT1062DVL6A" type="kit">
-      <description>i.MX RT1060 Evaluation Kit with USB Type-C Shield Board for Kinetis Freedom and LPC Boards</description>
-      <image path="boards/evkmimxrt1060_om13790host" type="image">
-        <files mask="evkmimxrt1060_om13790host.png"/>
-      </image>
-      <memory>
-        <memoryBlock id="BOARD_FLASH_evkmimxrt1060_om13790host" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
-        <memoryBlock id="BOARD_SDRAM_evkmimxrt1060_om13790host" name="BOARD_SDRAM" addr="80000000" size="01e00000" type="RAM" access="RW"/>
-        <memoryBlock id="NCACHE_REGION_evkmimxrt1060_om13790host" name="NCACHE_REGION" addr="81e00000" size="00200000" type="RAM" access="RW"/>
-      </memory>
-      <total_memory flash_size_kb="8192" ram_size_kb="32768"/>
-      <examples>
-        <example id="evkmimxrt1060_om13790host_usb_pd_alt_mode_dp_host_bm" name="usb_pd_alt_mode_dp_host_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_alt_mode_dp_host/bm" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_alt_mode_dp_host_freertos" name="usb_pd_alt_mode_dp_host_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the shield host board (om13790host) to implement the DisplayPort alternate mode.It recognize attached video adapters (like &quot;Type-C to DisplayPort&quot; or &quot;Type-C to HDMI&quot;), and drive the adapter to work." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_alt_mode_dp_host/freertos" type="xml">
-            <files mask="usb_pd_alt_mode_dp_host_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_bm" name="usb_pd_bm" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd/bm" type="xml">
-            <files mask="usb_pd_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_charger_battery_bm" name="usb_pd_charger_battery_bm" brief="the application simulate battery product , it prints the battery percent continually. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_charger_battery/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_charger_battery/bm" type="xml">
-            <files mask="usb_pd_charger_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_charger_battery_freertos" name="usb_pd_charger_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_charger_battery/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_charger_battery/freertos" type="xml">
-            <files mask="usb_pd_charger_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_freertos" name="usb_pd_freertos" brief="This PD example is a simple demonstration based on the MCUXpresso SDK PD stack. The application use the board keys and debug console to test the PD functions. The demo works as DRP. When connect, the board can be source or sink." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd/freertos" type="xml">
-            <files mask="usb_pd_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_sink_battery_bm" name="usb_pd_sink_battery_bm" brief="The application simulate battery product , it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_sink_battery/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_sink_battery/bm" type="xml">
-            <files mask="usb_pd_sink_battery_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_sink_battery_freertos" name="usb_pd_sink_battery_freertos" brief="The application simulate battery product, it prints the battery percent continually. The demo works as sink and get power from partner port" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_sink_battery/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_sink_battery/freertos" type="xml">
-            <files mask="usb_pd_sink_battery_freertos_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_source_charger_bm" name="usb_pd_source_charger_bm" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_source_charger/bm">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_source_charger/bm" type="xml">
-            <files mask="usb_pd_source_charger_bm_v3_10.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_om13790host_usb_pd_source_charger_freertos" name="usb_pd_source_charger_freertos" brief="The application simulate charger product. The demo only works as source and is external powered" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_source_charger/freertos">
-          <external path="boards/evkmimxrt1060_om13790host/usb_examples/usb_pd_source_charger/freertos" type="xml">
-            <files mask="usb_pd_source_charger_freertos_v3_10.xml"/>
-          </external>
-        </example>
-      </examples>
-      <debug_configurations>
-        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-          <drivers>
-            <driver id_refs="BOARD_FLASH_evkmimxrt1060_om13790host">
-              <driverBinary path="devices/MIMXRT1062/mcuxpresso" type="binary">
-                <files mask="MIMXRT1060_SFDP_QSPI.cfx"/>
-              </driverBinary>
-            </driver>
-          </drivers>
-        </debug_configuration>
-      </debug_configurations>
-    </board>
   </boards>
   <devices>
     <device id="MIMXRT1062xxxxA" name="MIMXRT1062" version="1.0.0" full_name="MIMXRT1062xxxxA" family="MIMXRT1060" platform="i.MX">
@@ -2308,41 +2243,6 @@ ${load}</script>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
-        <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="project_template.evkmimxrt1060_om13790host.MIMXRT1062" name="evkmimxrt1060_om13790host" brief="BOARD_Project_Template evkmimxrt1060_om13790host" version="1.0.0" full_name="BOARD_Project_Template evkmimxrt1060_om13790host" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Board Support/SDK Project Template" user_visible="true" type="project_template" package_base_path="boards/evkmimxrt1060_om13790host/project_template" project_base_path="evkmimxrt1060_om13790host/project_template">
-      <dependencies>
-        <all>
-          <component_dependency value="device.MIMXRT1062_startup.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.lpuart.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.common.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.iomuxc.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.igpio.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.xip_device.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.xip_board.evkmimxrt1060.MIMXRT1062"/>
-          <component_dependency value="utility.debug_console.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.clock.MIMXRT1062"/>
-          <component_dependency value="component.lpuart_adapter.MIMXRT1062"/>
-          <component_dependency value="component.serial_manager_uart.MIMXRT1062"/>
-          <component_dependency value="component.serial_manager.MIMXRT1062"/>
-        </all>
-      </dependencies>
-      <source relative_path="./" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="dcd.c"/>
-        <files mask="pin_mux.c"/>
-        <files mask="peripherals.c"/>
-      </source>
-      <source relative_path="./" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="dcd.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="peripherals.h"/>
-      </source>
-      <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
@@ -28013,6 +27913,14 @@ ${load}</script>
         <files mask="Getting Started Guide for using MCUXpresso SDK online.pdf"/>
       </source>
     </component>
+    <component id="docs.SOEM.MIMXRT1062" name="SOEM documentation" brief="SOEM documentation" version="1.0.0" full_name="SOEM documentation" devices="MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs/SOEM" project_base_path="SOEM">
+      <dependencies>
+        <component_dependency value="middleware.soem.MIMXRT1062"/>
+      </dependencies>
+      <source relative_path="./" type="doc">
+        <files mask="Getting Started with MCUXpresso SDK for SOEM.pdf"/>
+      </source>
+    </component>
     <component id="docs.USB.MIMXRT1062" name="USB" brief="Docs usb" version="1.0.0" full_name="Docs usb" devices="MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs/USB" project_base_path="USB">
       <source relative_path="./" type="doc">
         <files mask="MCUXpresso SDK USB Stack User's Guide.pdf"/>
@@ -28020,8 +27928,6 @@ ${load}</script>
         <files mask="MCUXpresso SDK USB Stack Device Reference Manual.pdf"/>
         <files mask="MCUXpresso SDK USB Stack Composite Device User's Guide.pdf"/>
         <files mask="MCUXpresso SDK USB Stack Composite Host User's Guide.pdf"/>
-        <files mask="MCUXpresso SDK USB Type-C PD Stack Reference Manual.pdf"/>
-        <files mask="MCUXpresso SDK USB Type-C Power Delivery Stack User's Guide.pdf"/>
       </source>
     </component>
     <component id="docs.eiq.MIMXRT1062" name="eiq" brief="Docs eiq" version="1.0.0" full_name="Docs eiq" devices="MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs/EIQ" project_base_path="EIQ">
@@ -28073,26 +27979,6 @@ ${load}</script>
         <files mask="sdphost User's Guide.pdf"/>
       </source>
     </component>
-    <component id="docs.motor_control_pmsm_rt1060.MIMXRT1062" name="motor_control_pmsm_rt1060" brief="Docs motor_control_pmsm_rt1060" version="1.0.0" full_name="Docs motor_control_pmsm_rt1060" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs/MC" project_base_path="MC">
-      <dependencies>
-        <component_dependency value="middleware.mc_pmsm_enc.float.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="./" type="doc">
-        <files mask="PMSMRT1060.pdf"/>
-      </source>
-    </component>
-    <component id="docs.motor_control_rn.MIMXRT1062" name="motor_control_rn" brief="Docs motor_control_rn" version="1.0.0" full_name="Docs motor_control_rn" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs/MC" project_base_path="MC">
-      <dependencies>
-        <any_of>
-          <component_dependency value="middleware.mc_pmsm_snsless.float.MIMXRT1062"/>
-          <component_dependency value="middleware.mc_acim.float.MIMXRT1062"/>
-          <component_dependency value="middleware.mc_pmsm_enc.float.MIMXRT1062"/>
-        </any_of>
-      </dependencies>
-      <source relative_path="./" type="doc">
-        <files mask="Release_notes.pdf"/>
-      </source>
-    </component>
     <component id="docs.multicore.MIMXRT1062" name="docs_multicore" brief="Collection of Multicore SDK documentation" version="2.12.0" full_name="Multicore SDK documentation" devices="MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs/MULTICORE" project_base_path="MULTICORE">
       <dependencies>
         <any_of>
@@ -28133,6 +28019,9 @@ ${load}</script>
         <files mask="UM11441-Getting-Started-with-NXP-based-Wireless-Modules-and-i.MX-RT-Platform-Running-on-RTOS.pdf"/>
         <files mask="UM11442-NXP-Wi-Fi-and-Bluetooth-Demo-Applications-for-i.MX-RT-platforms-User-Guide.pdf"/>
         <files mask="UM11443-NXP-Wi-Fi-and-Bluetooth-Debug-Feature-Configuration-Guide-for-i.MX-RT-Platforms.pdf"/>
+      </source>
+      <source relative_path="Release Notes" type="doc">
+        <files mask="NXP-Wireless-Features-and-Release-Notes-for-i.MX-RT.pdf"/>
       </source>
     </component>
     <component id="docs_external.MIMXRT1062.MIMXRT1062" name="docs_external.MIMXRT1062" brief="External documentation for MIMXRT1062." version="1.0.0" full_name="External documentation" devices="MIMXRT1062xxxxA" user_visible="true" type="documentation" package_base_path="docs" project_base_path="docs">
@@ -29477,7 +29366,7 @@ ${load}</script>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="platform.drivers.enet.MIMXRT1062" name="enet" brief="ENET Driver" version="2.5.3" full_name="ENET Driver" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="driver" package_base_path="devices/MIMXRT1062/drivers" project_base_path="drivers">
+    <component id="platform.drivers.enet.MIMXRT1062" name="enet" brief="ENET Driver" version="2.5.4" full_name="ENET Driver" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="driver" package_base_path="devices/MIMXRT1062/drivers" project_base_path="drivers">
       <dependencies>
         <component_dependency value="platform.drivers.common.MIMXRT1062"/>
       </dependencies>
@@ -52071,7 +51960,7 @@ ${load}</script>
         <include_path relative_path="port" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.maestro_framework.MIMXRT1062" name="maestro_framework" brief="MCU Maestro Audio Framework" version="1.3.0" full_name="Maestro Audio Framework Middleware" devices="MIMXRT1062xxxxA" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
+    <component id="middleware.maestro_framework.MIMXRT1062" name="maestro_framework" brief="MCU Maestro Audio Framework" version="1.4.0" full_name="Maestro Audio Framework Middleware" devices="MIMXRT1062xxxxA" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
       <dependencies>
         <all>
           <component_dependency value="middleware.maestro_framework.doc.MIMXRT1062"/>
@@ -52121,7 +52010,7 @@ ${load}</script>
         <include_path relative_path="inc" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.maestro_framework.doc.MIMXRT1062" name="maestro_framework" brief="MCU Maestro Audio Framework Doc" version="1.3.0" full_name="Maestro Audio Framework Middleware Doc" devices="MIMXRT1062xxxxA" category="Audio/Maestro Audio Framework" user_visible="false" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
+    <component id="middleware.maestro_framework.doc.MIMXRT1062" name="maestro_framework" brief="MCU Maestro Audio Framework Doc" version="1.4.0" full_name="Maestro Audio Framework Middleware Doc" devices="MIMXRT1062xxxxA" category="Audio/Maestro Audio Framework" user_visible="false" type="middleware" package_base_path="middleware/maestro" project_base_path="maestro">
       <source exclude="true" relative_path="docs" type="doc">
         <files mask="index.html"/>
       </source>
@@ -53140,7 +53029,7 @@ ${load}</script>
         <include_path relative_path="src" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.maestro_framework.streamer.MIMXRT1062" name="maestro_framework_streamer_core" brief="MCU Maestro Audio Framework Streamer Core" version="1.3.0" full_name="Maestro Audio Framework Streamer Core" devices="MIMXRT1062xxxxA" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro/streamer" project_base_path="maestro/streamer">
+    <component id="middleware.maestro_framework.streamer.MIMXRT1062" name="maestro_framework_streamer_core" brief="MCU Maestro Audio Framework Streamer Core" version="1.4.0" full_name="Maestro Audio Framework Streamer Core" devices="MIMXRT1062xxxxA" category="Audio/Maestro Audio Framework" user_visible="true" type="middleware" package_base_path="middleware/maestro/streamer" project_base_path="maestro/streamer">
       <source relative_path="cci/include" type="c_include">
         <files mask="cci_metadata.h"/>
         <files mask="codec_interface.h"/>
@@ -54154,215 +54043,6 @@ ${load}</script>
       <source exclude="true" relative_path="./" type="script">
         <files mask="DartConfiguration.tcl" hidden="true"/>
       </source>
-    </component>
-    <component id="middleware.mc_acim.float.MIMXRT1062" name="ACIM control floating-point version files" brief="ACIM control middleware, floating point implementation." version="2.10.0" full_name="Middleware motor_control-acim" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Motor Control/ACIM sensorless control" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <source relative_path="acim/mc_algorithms" type="src">
-        <files mask="acim_control.c"/>
-      </source>
-      <source relative_path="acim/mc_algorithms" type="c_include">
-        <files mask="acim_control.h"/>
-      </source>
-      <source relative_path="acim/mc_state_machine" type="src">
-        <files mask="m1_sm_ref_sol.c"/>
-      </source>
-      <source relative_path="acim/mc_state_machine" type="c_include">
-        <files mask="m1_sm_ref_sol.h"/>
-      </source>
-      <source relative_path="acim/state_machine" type="src">
-        <files mask="state_machine.c"/>
-      </source>
-      <source relative_path="acim/state_machine" type="c_include">
-        <files mask="state_machine.h"/>
-      </source>
-      <source relative_path="acim/mc_identification/src_common" type="c_include">
-        <files mask="mid_def.h"/>
-        <files mask="mid_sm_ctrl.h"/>
-        <files mask="mid_sm_states.h"/>
-      </source>
-      <source relative_path="acim/mc_identification/src_common" type="src">
-        <files mask="mid_sm_ctrl.c"/>
-        <files mask="mid_sm_states.c"/>
-      </source>
-      <source relative_path="acim/mc_identification/src_routines" type="c_include">
-        <files mask="blocked_test.h"/>
-        <files mask="calc_acim.h"/>
-        <files mask="calc_power.h"/>
-        <files mask="mech_measure.h"/>
-        <files mask="noload_test.h"/>
-        <files mask="pwrstg_characteristic.h"/>
-        <files mask="rs_measure.h"/>
-      </source>
-      <source relative_path="acim/mc_identification/src_routines" type="src">
-        <files mask="blocked_test.c"/>
-        <files mask="calc_acim.c"/>
-        <files mask="calc_power.c"/>
-        <files mask="mech_measure.c"/>
-        <files mask="noload_test.c"/>
-        <files mask="pwrstg_characteristic.c"/>
-        <files mask="rs_measure.c"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="acim/mc_algorithms" type="c_include"/>
-        <include_path relative_path="acim/mc_state_machine" type="c_include"/>
-        <include_path relative_path="acim/state_machine" type="c_include"/>
-        <include_path relative_path="acim/mc_identification/src_common" type="c_include"/>
-        <include_path relative_path="acim/mc_identification/src_routines" type="c_include"/>
-        <include_path relative_path="acim/mc_drivers" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.mc_pmsm_enc.float.MIMXRT1062" name="PMSM encoder control floating-point version files" brief="PMSM control with encoder middleware, floating point implementation." version="2.10.0" full_name="Middleware motor_control-pmsm enc" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Motor Control/PMSM encoder control" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <dependencies>
-        <component_dependency value="middleware.motor_control_pmsm_float.template.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="pmsm/pmsm_float/mc_identification" type="src">
-        <files mask="hall_calib.c"/>
-        <files mask="ke_measure.c"/>
-        <files mask="mech_measure.c"/>
-        <files mask="mid_auxiliary.c"/>
-        <files mask="mid_mc_api_connector.c"/>
-        <files mask="mid_sm_states.c"/>
-        <files mask="pp_measure.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_identification" type="c_include">
-        <files mask="hall_calib.h"/>
-        <files mask="ke_measure.h"/>
-        <files mask="mech_measure.h"/>
-        <files mask="mid_auxiliary.h"/>
-        <files mask="mid_def.h"/>
-        <files mask="mid_mc_api_connector.h"/>
-        <files mask="mid_sm_states.h"/>
-        <files mask="pp_measure.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_algorithms" type="src">
-        <files mask="pmsm_control.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_algorithms" type="c_include">
-        <files mask="pmsm_control.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/state_machine" type="src">
-        <files mask="state_machine.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/state_machine" type="c_include">
-        <files mask="state_machine.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_state_machine" type="src">
-        <files mask="m1_sm_snsless_enc.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_state_machine" type="c_include">
-        <files mask="m1_sm_snsless_enc.h"/>
-        <files mask="sm_common_enc.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_mc_pmsm_enc_float_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pmsm/pmsm_float/mc_identification" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_algorithms" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/state_machine" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_state_machine" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_drivers" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.mc_pmsm_enc_dual.float.MIMXRT1062" name="Dual PMSM encoder control floating-point version files" brief="Dual PMSM control with encoder middleware, floating point implementation." version="2.10.0" full_name="Middleware dual motor_control-pmsm enc" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Motor Control/PMSM encoder control" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <dependencies>
-        <component_dependency value="middleware.motor_control_pmsm_float.template.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="pmsm/pmsm_float/mc_identification" type="src">
-        <files mask="hall_calib.c"/>
-        <files mask="ke_measure.c"/>
-        <files mask="mech_measure.c"/>
-        <files mask="mid_auxiliary.c"/>
-        <files mask="mid_mc_api_connector.c"/>
-        <files mask="mid_sm_states.c"/>
-        <files mask="pp_measure.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_identification" type="c_include">
-        <files mask="hall_calib.h"/>
-        <files mask="ke_measure.h"/>
-        <files mask="mech_measure.h"/>
-        <files mask="mid_auxiliary.h"/>
-        <files mask="mid_def.h"/>
-        <files mask="mid_mc_api_connector.h"/>
-        <files mask="mid_sm_states.h"/>
-        <files mask="pp_measure.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_algorithms" type="src">
-        <files mask="pmsm_control.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_algorithms" type="c_include">
-        <files mask="pmsm_control.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/state_machine" type="src">
-        <files mask="state_machine.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/state_machine" type="c_include">
-        <files mask="state_machine.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_state_machine" type="src">
-        <files mask="m1_sm_snsless_enc.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_state_machine" type="c_include">
-        <files mask="m1_sm_snsless_enc.h"/>
-        <files mask="sm_common_enc.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pmsm/pmsm_float/mc_identification" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_algorithms" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/state_machine" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_state_machine" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_drivers" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.mc_pmsm_snsless.float.MIMXRT1062" name="PMSM sensorless control floating-point version files" brief="Common PMSM control middleware code, floating point implementation." version="2.10.0" full_name="PMSM sensorless control middleware" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Motor Control/PMSM sensorless control" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <dependencies>
-        <component_dependency value="middleware.motor_control_pmsm_float.template.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="pmsm/pmsm_float/mc_identification" type="src">
-        <files mask="hall_calib.c"/>
-        <files mask="ke_measure.c"/>
-        <files mask="mech_measure.c"/>
-        <files mask="mid_auxiliary.c"/>
-        <files mask="mid_mc_api_connector.c"/>
-        <files mask="mid_sm_states.c"/>
-        <files mask="pp_measure.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_identification" type="c_include">
-        <files mask="hall_calib.h"/>
-        <files mask="ke_measure.h"/>
-        <files mask="mech_measure.h"/>
-        <files mask="mid_auxiliary.h"/>
-        <files mask="mid_def.h"/>
-        <files mask="mid_mc_api_connector.h"/>
-        <files mask="mid_sm_states.h"/>
-        <files mask="pp_measure.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_algorithms" type="src">
-        <files mask="pmsm_control.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_algorithms" type="c_include">
-        <files mask="pmsm_control.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/state_machine" type="src">
-        <files mask="state_machine.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/state_machine" type="c_include">
-        <files mask="state_machine.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_state_machine" type="src">
-        <files mask="m1_sm_snsless.c"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_state_machine" type="c_include">
-        <files mask="m1_sm_snsless.h"/>
-        <files mask="sm_common.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pmsm/pmsm_float/mc_identification" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_algorithms" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/state_machine" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_state_machine" type="c_include"/>
-      </include_paths>
     </component>
     <component id="middleware.mcu-boot.CMSIS_cm7_headers.MIMXRT1062" name="CMSIS_cm7_headers" brief="CMSIS cm7 headers" version="2.8.0" full_name="Middleware mcu-boot cmsis_cm7_headers" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="CMSIS/Core/Include" project_base_path="CMSIS">
       <source toolchain="mcuxpresso" relative_path="./" type="c_include">
@@ -55589,329 +55269,6 @@ ${load}</script>
       <source relative_path="zephyr" type="other">
         <files mask="module.yml"/>
       </source>
-    </component>
-    <component id="middleware.motor_control.mc_drivers_adcimxrt_pwma.MIMXRT1062" name="PMSM sensorless control drivers" brief="PMSM sensorless control for adcimxrt and pwma based MCUs" version="2.10.0" full_name="PMSM sensorless control for pwma and adcimxrt based MCUs" devices="MIMXRT1062xxxxA" category="Motor Control/PMSM sensorless control" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <source relative_path="pmsm/pmsm_float/mc_drivers" type="c_include">
-        <files mask="mcdrv_adcetc_imxrt.h"/>
-        <files mask="mcdrv_pwm3ph_pwma.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_drivers" type="src">
-        <files mask="mcdrv_adcetc_imxrt.c"/>
-        <files mask="mcdrv_pwm3ph_pwma.c"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pmsm/pmsm_float/mc_drivers" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.motor_control.mc_drivers_adcimxrt_pwma_enc.MIMXRT1062" name="PMSM encoder control drivers" brief="PMSM encoder control for adcimxrt and pwma based MCUs" version="2.10.0" full_name="PMSM encoder control for pwma and adcimxrt based MCUs" devices="MIMXRT1062xxxxA" category="Motor Control/PMSM encoder control" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <source relative_path="pmsm/pmsm_float/mc_drivers" type="c_include">
-        <files mask="mcdrv_adcetc_imxrt.h"/>
-        <files mask="mcdrv_pwm3ph_pwma.h"/>
-        <files mask="mcdrv_enc_qd.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_drivers" type="src">
-        <files mask="mcdrv_adcetc_imxrt.c"/>
-        <files mask="mcdrv_pwm3ph_pwma.c"/>
-        <files mask="mcdrv_enc_qd.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_motor_control_mc_drivers_adcimxrt_pwma_enc_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pmsm/pmsm_float/mc_drivers" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.motor_control.mcaa_cm7f.MIMXRT1062" name="motor_control" brief="Motor Control Advanced Algorithm for CM7F core" version="1.1.0" full_name="Middleware motor_control cm7f" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <source toolchain="iar" relative_path="pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include" type="c_include">
-        <files mask="mcaa_estimrl.h"/>
-        <files mask="mcaa_lib.h"/>
-      </source>
-      <source toolchain="mdk" relative_path="pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include" type="c_include">
-        <files mask="mcaa_estimrl.h"/>
-        <files mask="mcaa_lib.h"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/Include" type="c_include">
-        <files mask="mcaa_estimrl.h"/>
-        <files mask="mcaa_lib.h"/>
-      </source>
-      <source toolchain="iar" relative_path="pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar" type="lib">
-        <files mask="mcaa_lib.a"/>
-      </source>
-      <source toolchain="mdk" relative_path="pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk" type="lib">
-        <files mask="mcaa_lib.lib"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux" type="lib">
-        <files mask="libmcaa_lib.a"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_motor_control_mcaa_cm7f_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_iar/Include" toolchain="iar" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mdk/Include" toolchain="mdk" type="c_include"/>
-        <include_path relative_path="pmsm/pmsm_float/mc_algorithms/mcaa_lib/cm7f_mcux/Include" toolchain="mcuxpresso armgcc" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.motor_control_acim_float.tsa.MIMXRT1062" name="ACIM control TSA floating-point" brief="FreeMASTER TSA table for ACIM control floating-point" version="2.10.0" full_name="FreeMASTER TSA table for ACIM control floating-point" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Motor Control/ACIM sensorless control" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <dependencies>
-        <component_dependency value="middleware.fmstr.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="acim" type="c_include">
-        <files mask="fm_tsa_acim.h"/>
-      </source>
-      <source relative_path="acim" type="src">
-        <files mask="fm_tsa_acim.c"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="acim" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.motor_control_pmsm_enc_float.tsa.MIMXRT1062" name="PMSM encoder control TSA floating-point" brief="FreeMASTER TSA table for PMSM encoder control floating-point" version="2.10.0" full_name="FreeMASTER TSA table for PMSM encoder control floating-point" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Motor Control/PMSM encoder control" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <dependencies>
-        <component_dependency value="middleware.fmstr.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="pmsm/pmsm_float" type="c_include">
-        <files mask="fm_tsa_pmsm.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float" type="src">
-        <files mask="fm_tsa_pmsm.c"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pmsm/pmsm_float" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.motor_control_pmsm_float.template.MIMXRT1062" name="PMSM sensorless control config files templates floating-point" brief="PMSM sensorless control configuration files" version="2.10.0" full_name="PMSM sensorless control cfg templastes" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="false" type="project_template" package_base_path="middleware/motor_control" project_base_path="source">
-      <source relative_path="pmsm/pmsm_float/mc_cfg_template" project_relative_path="./" type="c_include">
-        <files mask="m1_pmsm_appconfig.h"/>
-        <files mask="mc_periph_init.h"/>
-        <files mask="char_pwrstg.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float/mc_cfg_template" project_relative_path="./" type="src">
-        <files mask="mc_periph_init.c"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pmsm/pmsm_float/mc_cfg_template" project_relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.motor_control_pmsm_float.tsa.MIMXRT1062" name="PMSM sensorless control TSA floating-point" brief="FreeMASTER TSA table for PMSM sensorless control floating-point" version="2.10.0" full_name="FreeMASTER TSA table for PMSM sensorless control floating-point" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Motor Control/PMSM sensorless control" user_visible="true" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <dependencies>
-        <component_dependency value="middleware.fmstr.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="pmsm/pmsm_float" type="c_include">
-        <files mask="fm_tsa_pmsm.h"/>
-      </source>
-      <source relative_path="pmsm/pmsm_float" type="src">
-        <files mask="fm_tsa_pmsm.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_motor_control_pmsm_float_tsa_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pmsm/pmsm_float" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.motor_control_pmsm_float_imcat.MIMXRT1062" name="PMSM MCAT2.0" brief="MCAT2.0 pmsm files" version="2.10.0" full_name="MCAT2.0 pmsm" devices="MIMXRT1062xxxxA" category="Motor Control/PMSM sensorless control" user_visible="false" type="middleware" package_base_path="middleware/motor_control" project_base_path="motor_control">
-      <source relative_path="freemaster/pmsm_float/fm_control" type="other">
-        <files mask="control_page_config.js"/>
-        <files mask="control_page_scripts.js"/>
-        <files mask="FM_control_M1.html"/>
-        <files mask="FM_control_dual.html"/>
-        <files mask="jquery-1.11.1.min.js"/>
-        <files mask="jqxbuttons.js"/>
-        <files mask="jqxcore.js"/>
-        <files mask="jqxdraw.js"/>
-        <files mask="jqxgauge.js"/>
-        <files mask="jqxlistmenu.js"/>
-        <files mask="jqxmenu.js"/>
-        <files mask="jqxnotification.js"/>
-        <files mask="jqxpanel.js"/>
-        <files mask="jqxradiobutton.js"/>
-        <files mask="jqxscrollbar.js"/>
-        <files mask="jqxslider.js"/>
-        <files mask="jqxswitchbutton.js"/>
-        <files mask="jqxtooltip.js"/>
-        <files mask="jqxwindow.js"/>
-        <files mask="logo.png"/>
-      </source>
-      <source relative_path="freemaster/pmsm_float/fm_control/styles/images" type="other">
-        <files mask="backgroundTop.png"/>
-        <files mask="backImage.png"/>
-        <files mask="bg_black.png"/>
-        <files mask="bg_black_horizontal.png"/>
-        <files mask="bg_blackhover.png"/>
-        <files mask="bg_blackhover_horizontal.png"/>
-        <files mask="bg_blackpressed.png"/>
-        <files mask="bg_blackpressed_horizontal.png"/>
-        <files mask="bg_blueenergy.png"/>
-        <files mask="bg_darkblue.png"/>
-        <files mask="bg_darkbluehover.png"/>
-        <files mask="bg_darkbluepressed.png"/>
-        <files mask="black_gradient.png"/>
-        <files mask="blackbackground.png"/>
-        <files mask="check_black.png"/>
-        <files mask="check_blue.png"/>
-        <files mask="check_blue_indeterminate.png"/>
-        <files mask="check_disabled.png"/>
-        <files mask="check_indeterminate_black.png"/>
-        <files mask="check_indeterminate_disabled.png"/>
-        <files mask="check_indeterminate_white.png"/>
-        <files mask="check_lightblue.png"/>
-        <files mask="check_lightblue_indeterminate.png"/>
-        <files mask="check_white.png"/>
-        <files mask="close.png"/>
-        <files mask="close_black.png"/>
-        <files mask="close_blue.png"/>
-        <files mask="close_white.png"/>
-        <files mask="crosshair.png"/>
-        <files mask="crosshair-white.png"/>
-        <files mask="darkred_gradient.png"/>
-        <files mask="drag.png"/>
-        <files mask="dragcancel.png"/>
-        <files mask="error.png"/>
-        <files mask="filter.png"/>
-        <files mask="html_editor.png"/>
-        <files mask="html_editor_white.png"/>
-        <files mask="icon-calendar.png"/>
-        <files mask="icon-calendar-white.png"/>
-        <files mask="icon-cancel.png"/>
-        <files mask="icon-cancel-white.png"/>
-        <files mask="icon-delete.png"/>
-        <files mask="icon-delete-white.png"/>
-        <files mask="icon-down.png"/>
-        <files mask="icon-down-blue.png"/>
-        <files mask="icon-down-transparent.png"/>
-        <files mask="icon-down-white.png"/>
-        <files mask="icon-edit.png"/>
-        <files mask="icon-edit-white.png"/>
-        <files mask="icon-first.png"/>
-        <files mask="icon-first-blue.png"/>
-        <files mask="icon-first-transparent.png"/>
-        <files mask="icon-first-white.png"/>
-        <files mask="icon-last.png"/>
-        <files mask="icon-last-blue.png"/>
-        <files mask="icon-last-transparent.png"/>
-        <files mask="icon-last-white.png"/>
-        <files mask="icon-left.png"/>
-        <files mask="icon-left-blue.png"/>
-        <files mask="icon-left-transparent.png"/>
-        <files mask="icon-left-white.png"/>
-        <files mask="icon-menu-minimized.png"/>
-        <files mask="icon-menu-minimized-white.png"/>
-        <files mask="icon-right.png"/>
-        <files mask="icon-right-blue.png"/>
-        <files mask="icon-right-transparent.png"/>
-        <files mask="icon-right-white.png"/>
-        <files mask="icon-save.png"/>
-        <files mask="icon-save-white.png"/>
-        <files mask="icon-showpassword.png"/>
-        <files mask="icon-showpassword-white.png"/>
-        <files mask="icon-up.png"/>
-        <files mask="icon-up-blue.png"/>
-        <files mask="icon-up-transparent.png"/>
-        <files mask="icon-up-white.png"/>
-        <files mask="info.png"/>
-        <files mask="loader.gif"/>
-        <files mask="loader-small.gif"/>
-        <files mask="mail.png"/>
-        <files mask="menubutton.png"/>
-        <files mask="metro-icon-down.png"/>
-        <files mask="metro-icon-down-white.png"/>
-        <files mask="metro-icon-first.png"/>
-        <files mask="metro-icon-first-white.png"/>
-        <files mask="metro-icon-last.png"/>
-        <files mask="metro-icon-last-white.png"/>
-        <files mask="metro-icon-left.png"/>
-        <files mask="metro-icon-left-white.png"/>
-        <files mask="metro-icon-right.png"/>
-        <files mask="metro-icon-right - Copy.png"/>
-        <files mask="metro-icon-right-white.png"/>
-        <files mask="metro-icon-up.png"/>
-        <files mask="metro-icon-up-white.png"/>
-        <files mask="multi-arrow.gif"/>
-        <files mask="office-icon-down.png"/>
-        <files mask="office-icon-first.png"/>
-        <files mask="office-icon-last.png"/>
-        <files mask="office-icon-left.png"/>
-        <files mask="office-icon-right.png"/>
-        <files mask="office-icon-up.png"/>
-        <files mask="plus.png"/>
-        <files mask="plus_white.png"/>
-        <files mask="pointer.png"/>
-        <files mask="rangebar_classic.png"/>
-        <files mask="rangebar_darkblue.png"/>
-        <files mask="rangebar_shinyblack.png"/>
-        <files mask="rangebar_summer.png"/>
-        <files mask="red_arrow_down.png"/>
-        <files mask="red_arrow_up.png"/>
-        <files mask="red_gradient.png"/>
-        <files mask="roundbg_check_black.png"/>
-        <files mask="roundbg_check_disabled.png"/>
-        <files mask="roundbg_check_indeterminate.png"/>
-        <files mask="roundbg_check_white.png"/>
-        <files mask="roundbg_classic_hover.png"/>
-        <files mask="roundbg_classic_normal.png"/>
-        <files mask="roundbg_disabled.png"/>
-        <files mask="search.png"/>
-        <files mask="search_white.png"/>
-        <files mask="sortasc.png"/>
-        <files mask="sortascbutton.png"/>
-        <files mask="sortdesc.png"/>
-        <files mask="sortdescbutton.png"/>
-        <files mask="sortremove.png"/>
-        <files mask="star.png"/>
-        <files mask="star_disabled.png"/>
-        <files mask="star_hover.png"/>
-        <files mask="success.png"/>
-        <files mask="tick.png"/>
-        <files mask="time.png"/>
-        <files mask="track_classic.png"/>
-        <files mask="track_darkblue.png"/>
-        <files mask="track_shinyblack.png"/>
-        <files mask="track_summer.png"/>
-        <files mask="warning.png"/>
-        <files mask="wp_check_indeterminate_white.png"/>
-        <files mask="wp_check_white.png"/>
-      </source>
-      <source relative_path="freemaster/pmsm_float/fm_control/styles" type="other">
-        <files mask="jqx.energyblue"/>
-        <files mask="jqx.base.css"/>
-        <files mask="jqx.energyblue.css"/>
-        <files mask="jqx.energyblue.txt"/>
-        <files mask="jqx.darkblue.css"/>
-      </source>
-      <source relative_path="freemaster/pmsm_float/mcat/assets" type="other">
-        <files mask="NXP_logo_RGB_web.jpg"/>
-        <files mask="nxp-logo-small-121x52.png"/>
-        <files mask="speedfocwolswbemf.gif"/>
-      </source>
-      <source relative_path="freemaster/pmsm_float/mcat/css" type="other">
-        <files mask="app.css"/>
-      </source>
-      <source relative_path="freemaster/pmsm_float/mcat/js" type="other">
-        <files mask="chunk.js"/>
-        <files mask="chunk.js.map"/>
-        <files mask="mcat.js"/>
-        <files mask="mcat.js.map"/>
-      </source>
-      <source relative_path="freemaster/pmsm_float/mcat/license" type="other">
-        <files mask="LA_OPT_NXP_Software_License.txt"/>
-        <files mask="SW-Content-Register.txt"/>
-      </source>
-      <source relative_path="freemaster/pmsm_float/mcat" type="other">
-        <files mask="freemaster-client.js"/>
-        <files mask="index.html"/>
-        <files mask="init.js"/>
-        <files mask="simple-jsonrpc-js.js"/>
-      </source>
-      <source relative_path="freemaster/pmsm_float/mcat" type="c_include">
-        <files mask="m1_pmsm_appconfig.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_motor_control_pmsm_float_imcat_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="freemaster/pmsm_float/mcat" type="c_include"/>
-      </include_paths>
     </component>
     <component id="middleware.multicore.MIMXRT1062" name="multicore middleware" brief="Multicore SDK" version="2.12.0" full_name="Multicore Software Development Kit" devices="MIMXRT1062xxxxA" user_visible="true" type="other" package_base_path="middleware/multicore" project_base_path="multicore">
       <source relative_path="./" type="doc">
@@ -58787,767 +58144,6 @@ ${load}</script>
         <files mask="ChangeLogKSDK.txt" hidden="true"/>
       </source>
     </component>
-    <component id="middleware.rtcesl.cm7f.MIMXRT1062" name="rtcesl" brief="Real Time Control Embedded Software Library for CM7F core" version="1.1.0" full_name="Middleware rtcesl cm7f" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/rtcesl" project_base_path="rtcesl">
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/AMCLIB/Include" type="c_include">
-        <files mask="amclib.h"/>
-        <files mask="AMCLIB_ACIMCtrlMTPA_FLT.h"/>
-        <files mask="AMCLIB_ACIMRotFluxObsrv_FLT.h"/>
-        <files mask="AMCLIB_ACIMSpeedMRAS_FLT.h"/>
-        <files mask="AMCLIB_AngleTrackObsrv_F32.h"/>
-        <files mask="AMCLIB_AngleTrackObsrv_FLT.h"/>
-        <files mask="AMCLIB_CtrlFluxWkng_A32.h"/>
-        <files mask="AMCLIB_CtrlFluxWkng_FLT.h"/>
-        <files mask="amclib_FP.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvAB_A32.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvAB_FLT.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvDQ_A32.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvDQ_FLT.h"/>
-        <files mask="AMCLIB_TrackObsrv_F32.h"/>
-        <files mask="AMCLIB_TrackObsrv_FLT.h"/>
-        <files mask="amclib_types.h"/>
-      </source>
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/GDFLIB/Include" type="c_include">
-        <files mask="gdflib.h"/>
-        <files mask="GDFLIB_FilterExp_F32.h"/>
-        <files mask="GDFLIB_FilterExp_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR1_F32.h"/>
-        <files mask="GDFLIB_FilterIIR1_F32_Asmi.h"/>
-        <files mask="GDFLIB_FilterIIR1_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR2_F32.h"/>
-        <files mask="GDFLIB_FilterIIR2_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR3_F32.h"/>
-        <files mask="GDFLIB_FilterIIR3_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR4_F32.h"/>
-        <files mask="GDFLIB_FilterIIR4_FLT.h"/>
-        <files mask="GDFLIB_FilterMA_A32.h"/>
-        <files mask="GDFLIB_FilterMA_FLT.h"/>
-        <files mask="gdflib_FP.h"/>
-        <files mask="gdflib_types.h"/>
-      </source>
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/GFLIB/Include" type="c_include">
-        <files mask="gflib.h"/>
-        <files mask="GFLIB_Acos_F16.h"/>
-        <files mask="GFLIB_Acos_FLT.h"/>
-        <files mask="GFLIB_Asin_F16.h"/>
-        <files mask="GFLIB_Asin_FLT.h"/>
-        <files mask="GFLIB_Atan_F32.h"/>
-        <files mask="GFLIB_Atan_FLT.h"/>
-        <files mask="GFLIB_AtanYX_F16.h"/>
-        <files mask="GFLIB_AtanYX_FLT.h"/>
-        <files mask="GFLIB_CtrlBetaIPDp_A32.h"/>
-        <files mask="GFLIB_CtrlBetaIPDp_FLT.h"/>
-        <files mask="GFLIB_CtrlBetaIPp_A32.h"/>
-        <files mask="GFLIB_CtrlBetaIPp_FLT.h"/>
-        <files mask="GFLIB_CtrlPIDp_A32.h"/>
-        <files mask="GFLIB_CtrlPIDp_FLT.h"/>
-        <files mask="GFLIB_CtrlPIp_A32.h"/>
-        <files mask="GFLIB_CtrlPIp_FLT.h"/>
-        <files mask="GFLIB_DFlexRamp_A32.h"/>
-        <files mask="GFLIB_DFlexRamp_FLT.h"/>
-        <files mask="GFLIB_DRamp_F16.h"/>
-        <files mask="GFLIB_DRamp_F32.h"/>
-        <files mask="GFLIB_DRamp_FLT.h"/>
-        <files mask="GFLIB_FlexRamp_A32.h"/>
-        <files mask="GFLIB_FlexRamp_FLT.h"/>
-        <files mask="GFLIB_FlexSRamp_A32.h"/>
-        <files mask="GFLIB_FlexSRamp_FLT.h"/>
-        <files mask="gflib_FP.h"/>
-        <files mask="GFLIB_Hyst_F16_Asmi.h"/>
-        <files mask="GFLIB_Hyst_FLT.h"/>
-        <files mask="GFLIB_Integrator_A32.h"/>
-        <files mask="GFLIB_Integrator_FLT.h"/>
-        <files mask="GFLIB_Limit_F16.h"/>
-        <files mask="GFLIB_Limit_F32.h"/>
-        <files mask="GFLIB_Limit_FLT.h"/>
-        <files mask="GFLIB_LowerLimit_F16.h"/>
-        <files mask="GFLIB_LowerLimit_F32.h"/>
-        <files mask="GFLIB_LowerLimit_FLT.h"/>
-        <files mask="GFLIB_Lut_F16_Asmi.h"/>
-        <files mask="GFLIB_Lut_F32.h"/>
-        <files mask="GFLIB_Lut_FLT.h"/>
-        <files mask="GFLIB_LutPer_F16_Asmi.h"/>
-        <files mask="GFLIB_LutPer_F32.h"/>
-        <files mask="GFLIB_LutPer_FLT.h"/>
-        <files mask="GFLIB_Ramp_F16.h"/>
-        <files mask="GFLIB_Ramp_F32.h"/>
-        <files mask="GFLIB_Ramp_FLT.h"/>
-        <files mask="GFLIB_SinCos_F32.h"/>
-        <files mask="GFLIB_SinCos_FLT.h"/>
-        <files mask="GFLIB_Sqrt_F16.h"/>
-        <files mask="GFLIB_Sqrt_F32.h"/>
-        <files mask="GFLIB_Sqrt_FLT_Asmi.h"/>
-        <files mask="GFLIB_Tan_F32.h"/>
-        <files mask="GFLIB_Tan_FLT.h"/>
-        <files mask="gflib_types.h"/>
-        <files mask="GFLIB_UpperLimit_F16.h"/>
-        <files mask="GFLIB_UpperLimit_F32.h"/>
-        <files mask="GFLIB_UpperLimit_FLT.h"/>
-        <files mask="GFLIB_VectorLimit_F16.h"/>
-        <files mask="GFLIB_VectorLimit_FLT.h"/>
-      </source>
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include" type="c_include">
-        <files mask="gmclib.h"/>
-        <files mask="GMCLIB_Clark_F16_Asmi.h"/>
-        <files mask="GMCLIB_Clark_FLT.h"/>
-        <files mask="GMCLIB_Decoupling_A32.h"/>
-        <files mask="GMCLIB_DTCompLut1D_F16.h"/>
-        <files mask="GMCLIB_Decoupling_FLT.h"/>
-        <files mask="GMCLIB_ElimDcBusRip_A32_Asmi.h"/>
-        <files mask="GMCLIB_ElimDcBusRip_F16_Asmi.h"/>
-        <files mask="GMCLIB_ElimDcBusRip_FLT.h"/>
-        <files mask="gmclib_FP.h"/>
-        <files mask="GMCLIB_Park_F16_Asmi.h"/>
-        <files mask="GMCLIB_Park_FLT.h"/>
-        <files mask="GMCLIB_Svm_F16.h"/>
-        <files mask="gmclib_types.h"/>
-      </source>
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/MLIB/Include" type="c_include">
-        <files mask="asm_mac.h"/>
-        <files mask="mlib.h"/>
-        <files mask="MLIB_Abs_F16.h"/>
-        <files mask="MLIB_Abs_F16_Asmi.h"/>
-        <files mask="MLIB_Abs_F32.h"/>
-        <files mask="MLIB_Abs_F32_Asmi.h"/>
-        <files mask="MLIB_Abs_FLT.h"/>
-        <files mask="MLIB_Abs_FLT_Asmi.h"/>
-        <files mask="MLIB_Add_A32.h"/>
-        <files mask="MLIB_Add_F16.h"/>
-        <files mask="MLIB_Add_F16_Asmi.h"/>
-        <files mask="MLIB_Add_F32.h"/>
-        <files mask="MLIB_Add_F32_Asmi.h"/>
-        <files mask="MLIB_Add_FLT.h"/>
-        <files mask="MLIB_Add4_F16_Asmi.h"/>
-        <files mask="MLIB_Add4_F32_Asmi.h"/>
-        <files mask="MLIB_Add4_FLT.h"/>
-        <files mask="MLIB_BiShift_F16.h"/>
-        <files mask="MLIB_BiShift_F32.h"/>
-        <files mask="MLIB_Clb_F16.h"/>
-        <files mask="MLIB_Clb_F32.h"/>
-        <files mask="MLIB_Conv_F32.h"/>
-        <files mask="MLIB_Conv_FLT_Asmi.h"/>
-        <files mask="MLIB_ConvSc_FLT_Asmi.h"/>
-        <files mask="MLIB_Div_A32.h"/>
-        <files mask="MLIB_Div_F16.h"/>
-        <files mask="MLIB_Div_F32.h"/>
-        <files mask="MLIB_Div_FLT.h"/>
-        <files mask="MLIB_Div1Q_A32.h"/>
-        <files mask="MLIB_Div1Q_F16.h"/>
-        <files mask="MLIB_Div1Q_F32.h"/>
-        <files mask="mlib_FP.h"/>
-        <files mask="MLIB_Log2_U16.h"/>
-        <files mask="MLIB_Mac_A32.h"/>
-        <files mask="MLIB_Mac_F16_Asmi.h"/>
-        <files mask="MLIB_Mac_F32.h"/>
-        <files mask="MLIB_Mac_F32_Asmi.h"/>
-        <files mask="MLIB_Mac_FLT.h"/>
-        <files mask="MLIB_Mac4_F32.h"/>
-        <files mask="MLIB_Mac4_F32_Asmi.h"/>
-        <files mask="MLIB_Mac4_FLT.h"/>
-        <files mask="MLIB_Mac4Rnd_F16_Asmi.h"/>
-        <files mask="MLIB_Mac4Rnd_F32.h"/>
-        <files mask="MLIB_Mac4Rnd_F32_Asmi.h"/>
-        <files mask="MLIB_MacRnd_A32.h"/>
-        <files mask="MLIB_MacRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MacRnd_F32.h"/>
-        <files mask="MLIB_MacRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Mnac_A32.h"/>
-        <files mask="MLIB_Mnac_F16_Asmi.h"/>
-        <files mask="MLIB_Mnac_F32.h"/>
-        <files mask="MLIB_Mnac_F32_Asmi.h"/>
-        <files mask="MLIB_Mnac_FLT.h"/>
-        <files mask="MLIB_MnacRnd_A32.h"/>
-        <files mask="MLIB_MnacRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MnacRnd_F32.h"/>
-        <files mask="MLIB_MnacRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Msu_A32.h"/>
-        <files mask="MLIB_Msu_F16_Asmi.h"/>
-        <files mask="MLIB_Msu_F32_Asmi.h"/>
-        <files mask="MLIB_Msu_FLT.h"/>
-        <files mask="MLIB_Msu4_F32.h"/>
-        <files mask="MLIB_Msu4_F32_Asmi.h"/>
-        <files mask="MLIB_Msu4_FLT.h"/>
-        <files mask="MLIB_Msu4Rnd_F16.h"/>
-        <files mask="MLIB_Msu4Rnd_F16_Asmi.h"/>
-        <files mask="MLIB_Msu4Rnd_F32.h"/>
-        <files mask="MLIB_Msu4Rnd_F32_Asmi.h"/>
-        <files mask="MLIB_MsuRnd_A32.h"/>
-        <files mask="MLIB_MsuRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MsuRnd_F32.h"/>
-        <files mask="MLIB_MsuRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Mul_A32.h"/>
-        <files mask="MLIB_Mul_A32_Asmi.h"/>
-        <files mask="MLIB_Mul_F16.h"/>
-        <files mask="MLIB_Mul_F16_Asmi.h"/>
-        <files mask="MLIB_Mul_F32.h"/>
-        <files mask="MLIB_Mul_F32_Asmi.h"/>
-        <files mask="MLIB_Mul_FLT.h"/>
-        <files mask="MLIB_MulRnd_A32.h"/>
-        <files mask="MLIB_MulRnd_A32_Asmi.h"/>
-        <files mask="MLIB_MulRnd_F16.h"/>
-        <files mask="MLIB_MulRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MulRnd_F32.h"/>
-        <files mask="MLIB_MulRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Neg_F16.h"/>
-        <files mask="MLIB_Neg_F16_Asmi.h"/>
-        <files mask="MLIB_Neg_F32.h"/>
-        <files mask="MLIB_Neg_F32_Asmi.h"/>
-        <files mask="MLIB_Neg_FLT.h"/>
-        <files mask="MLIB_Rcp_A32.h"/>
-        <files mask="MLIB_Rcp1Q_A32.h"/>
-        <files mask="MLIB_Rnd_F32.h"/>
-        <files mask="MLIB_Rnd_F32_Asmi.h"/>
-        <files mask="MLIB_Sat_A32_Asmi.h"/>
-        <files mask="MLIB_Shift_F16.h"/>
-        <files mask="MLIB_Shift_F16_Asmi.h"/>
-        <files mask="MLIB_Shift_F32.h"/>
-        <files mask="MLIB_Shift_F32_Asmi.h"/>
-        <files mask="MLIB_Sign_F16_Asmi.h"/>
-        <files mask="MLIB_Sign_F32_Asmi.h"/>
-        <files mask="MLIB_Sign_FLT_Asmi.h"/>
-        <files mask="MLIB_Sub_A32.h"/>
-        <files mask="MLIB_Sub_F16.h"/>
-        <files mask="MLIB_Sub_F16_Asmi.h"/>
-        <files mask="MLIB_Sub_F32.h"/>
-        <files mask="MLIB_Sub_F32_Asmi.h"/>
-        <files mask="MLIB_Sub_F64.h"/>
-        <files mask="MLIB_Sub_FLT.h"/>
-        <files mask="MLIB_Sub4_F16_Asmi.h"/>
-        <files mask="MLIB_Sub4_F32_Asmi.h"/>
-        <files mask="MLIB_Sub4_FLT.h"/>
-        <files mask="mlib_types.h"/>
-        <files mask="RTCESL_cfg.h"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include" type="c_include">
-        <files mask="amclib.h"/>
-        <files mask="AMCLIB_ACIMCtrlMTPA_FLT.h"/>
-        <files mask="AMCLIB_ACIMRotFluxObsrv_FLT.h"/>
-        <files mask="AMCLIB_ACIMSpeedMRAS_FLT.h"/>
-        <files mask="AMCLIB_AngleTrackObsrv_F32.h"/>
-        <files mask="AMCLIB_AngleTrackObsrv_FLT.h"/>
-        <files mask="AMCLIB_CtrlFluxWkng_A32.h"/>
-        <files mask="AMCLIB_CtrlFluxWkng_FLT.h"/>
-        <files mask="amclib_FP.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvAB_A32.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvAB_FLT.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvDQ_A32.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvDQ_FLT.h"/>
-        <files mask="AMCLIB_TrackObsrv_F32.h"/>
-        <files mask="AMCLIB_TrackObsrv_FLT.h"/>
-        <files mask="amclib_types.h"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include" type="c_include">
-        <files mask="gdflib.h"/>
-        <files mask="GDFLIB_FilterExp_F32.h"/>
-        <files mask="GDFLIB_FilterExp_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR1_F32.h"/>
-        <files mask="GDFLIB_FilterIIR1_F32_Asmi.h"/>
-        <files mask="GDFLIB_FilterIIR1_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR2_F32.h"/>
-        <files mask="GDFLIB_FilterIIR2_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR3_F32.h"/>
-        <files mask="GDFLIB_FilterIIR3_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR4_F32.h"/>
-        <files mask="GDFLIB_FilterIIR4_FLT.h"/>
-        <files mask="GDFLIB_FilterMA_A32.h"/>
-        <files mask="GDFLIB_FilterMA_FLT.h"/>
-        <files mask="gdflib_FP.h"/>
-        <files mask="gdflib_types.h"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include" type="c_include">
-        <files mask="gflib.h"/>
-        <files mask="GFLIB_Acos_F16.h"/>
-        <files mask="GFLIB_Acos_FLT.h"/>
-        <files mask="GFLIB_Asin_F16.h"/>
-        <files mask="GFLIB_Asin_FLT.h"/>
-        <files mask="GFLIB_Atan_F32.h"/>
-        <files mask="GFLIB_Atan_FLT.h"/>
-        <files mask="GFLIB_AtanYX_F16.h"/>
-        <files mask="GFLIB_AtanYX_FLT.h"/>
-        <files mask="GFLIB_CtrlBetaIPDp_A32.h"/>
-        <files mask="GFLIB_CtrlBetaIPDp_FLT.h"/>
-        <files mask="GFLIB_CtrlBetaIPp_A32.h"/>
-        <files mask="GFLIB_CtrlBetaIPp_FLT.h"/>
-        <files mask="GFLIB_CtrlPIDp_A32.h"/>
-        <files mask="GFLIB_CtrlPIDp_FLT.h"/>
-        <files mask="GFLIB_CtrlPIp_A32.h"/>
-        <files mask="GFLIB_CtrlPIp_FLT.h"/>
-        <files mask="GFLIB_DFlexRamp_A32.h"/>
-        <files mask="GFLIB_DFlexRamp_FLT.h"/>
-        <files mask="GFLIB_DRamp_F16.h"/>
-        <files mask="GFLIB_DRamp_F32.h"/>
-        <files mask="GFLIB_DRamp_FLT.h"/>
-        <files mask="GFLIB_FlexRamp_A32.h"/>
-        <files mask="GFLIB_FlexRamp_FLT.h"/>
-        <files mask="GFLIB_FlexSRamp_A32.h"/>
-        <files mask="GFLIB_FlexSRamp_FLT.h"/>
-        <files mask="gflib_FP.h"/>
-        <files mask="GFLIB_Hyst_F16_Asmi.h"/>
-        <files mask="GFLIB_Hyst_FLT.h"/>
-        <files mask="GFLIB_Integrator_A32.h"/>
-        <files mask="GFLIB_Integrator_FLT.h"/>
-        <files mask="GFLIB_Limit_F16.h"/>
-        <files mask="GFLIB_Limit_F32.h"/>
-        <files mask="GFLIB_Limit_FLT.h"/>
-        <files mask="GFLIB_LowerLimit_F16.h"/>
-        <files mask="GFLIB_LowerLimit_F32.h"/>
-        <files mask="GFLIB_LowerLimit_FLT.h"/>
-        <files mask="GFLIB_Lut_F16_Asmi.h"/>
-        <files mask="GFLIB_Lut_F32.h"/>
-        <files mask="GFLIB_Lut_FLT.h"/>
-        <files mask="GFLIB_LutPer_F16_Asmi.h"/>
-        <files mask="GFLIB_LutPer_F32.h"/>
-        <files mask="GFLIB_LutPer_FLT.h"/>
-        <files mask="GFLIB_Ramp_F16.h"/>
-        <files mask="GFLIB_Ramp_F32.h"/>
-        <files mask="GFLIB_Ramp_FLT.h"/>
-        <files mask="GFLIB_SinCos_F32.h"/>
-        <files mask="GFLIB_SinCos_FLT.h"/>
-        <files mask="GFLIB_Sqrt_F16.h"/>
-        <files mask="GFLIB_Sqrt_F32.h"/>
-        <files mask="GFLIB_Sqrt_FLT_Asmi.h"/>
-        <files mask="GFLIB_Tan_F32.h"/>
-        <files mask="GFLIB_Tan_FLT.h"/>
-        <files mask="gflib_types.h"/>
-        <files mask="GFLIB_UpperLimit_F16.h"/>
-        <files mask="GFLIB_UpperLimit_F32.h"/>
-        <files mask="GFLIB_UpperLimit_FLT.h"/>
-        <files mask="GFLIB_VectorLimit_F16.h"/>
-        <files mask="GFLIB_VectorLimit_FLT.h"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include" type="c_include">
-        <files mask="gmclib.h"/>
-        <files mask="GMCLIB_Clark_F16_Asmi.h"/>
-        <files mask="GMCLIB_Clark_FLT.h"/>
-        <files mask="GMCLIB_Decoupling_A32.h"/>
-        <files mask="GMCLIB_DTCompLut1D_F16.h"/>
-        <files mask="GMCLIB_Decoupling_FLT.h"/>
-        <files mask="GMCLIB_ElimDcBusRip_A32_Asmi.h"/>
-        <files mask="GMCLIB_ElimDcBusRip_F16_Asmi.h"/>
-        <files mask="GMCLIB_ElimDcBusRip_FLT.h"/>
-        <files mask="gmclib_FP.h"/>
-        <files mask="GMCLIB_Park_F16_Asmi.h"/>
-        <files mask="GMCLIB_Park_FLT.h"/>
-        <files mask="GMCLIB_Svm_F16.h"/>
-        <files mask="gmclib_types.h"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/MLIB/Include" type="c_include">
-        <files mask="asm_mac.h"/>
-        <files mask="mlib.h"/>
-        <files mask="MLIB_Abs_F16.h"/>
-        <files mask="MLIB_Abs_F16_Asmi.h"/>
-        <files mask="MLIB_Abs_F32.h"/>
-        <files mask="MLIB_Abs_F32_Asmi.h"/>
-        <files mask="MLIB_Abs_FLT.h"/>
-        <files mask="MLIB_Abs_FLT_Asmi.h"/>
-        <files mask="MLIB_Add_A32.h"/>
-        <files mask="MLIB_Add_F16.h"/>
-        <files mask="MLIB_Add_F16_Asmi.h"/>
-        <files mask="MLIB_Add_F32.h"/>
-        <files mask="MLIB_Add_F32_Asmi.h"/>
-        <files mask="MLIB_Add_FLT.h"/>
-        <files mask="MLIB_Add4_F16_Asmi.h"/>
-        <files mask="MLIB_Add4_F32_Asmi.h"/>
-        <files mask="MLIB_Add4_FLT.h"/>
-        <files mask="MLIB_BiShift_F16.h"/>
-        <files mask="MLIB_BiShift_F32.h"/>
-        <files mask="MLIB_Clb_F16.h"/>
-        <files mask="MLIB_Clb_F32.h"/>
-        <files mask="MLIB_Conv_F32.h"/>
-        <files mask="MLIB_Conv_FLT_Asmi.h"/>
-        <files mask="MLIB_ConvSc_FLT_Asmi.h"/>
-        <files mask="MLIB_Div_A32.h"/>
-        <files mask="MLIB_Div_F16.h"/>
-        <files mask="MLIB_Div_F32.h"/>
-        <files mask="MLIB_Div_FLT.h"/>
-        <files mask="MLIB_Div1Q_A32.h"/>
-        <files mask="MLIB_Div1Q_F16.h"/>
-        <files mask="MLIB_Div1Q_F32.h"/>
-        <files mask="mlib_FP.h"/>
-        <files mask="MLIB_Log2_U16.h"/>
-        <files mask="MLIB_Mac_A32.h"/>
-        <files mask="MLIB_Mac_F16_Asmi.h"/>
-        <files mask="MLIB_Mac_F32.h"/>
-        <files mask="MLIB_Mac_F32_Asmi.h"/>
-        <files mask="MLIB_Mac_FLT.h"/>
-        <files mask="MLIB_Mac4_F32.h"/>
-        <files mask="MLIB_Mac4_F32_Asmi.h"/>
-        <files mask="MLIB_Mac4_FLT.h"/>
-        <files mask="MLIB_Mac4Rnd_F16_Asmi.h"/>
-        <files mask="MLIB_Mac4Rnd_F32.h"/>
-        <files mask="MLIB_Mac4Rnd_F32_Asmi.h"/>
-        <files mask="MLIB_MacRnd_A32.h"/>
-        <files mask="MLIB_MacRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MacRnd_F32.h"/>
-        <files mask="MLIB_MacRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Mnac_A32.h"/>
-        <files mask="MLIB_Mnac_F16_Asmi.h"/>
-        <files mask="MLIB_Mnac_F32.h"/>
-        <files mask="MLIB_Mnac_F32_Asmi.h"/>
-        <files mask="MLIB_Mnac_FLT.h"/>
-        <files mask="MLIB_MnacRnd_A32.h"/>
-        <files mask="MLIB_MnacRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MnacRnd_F32.h"/>
-        <files mask="MLIB_MnacRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Msu_A32.h"/>
-        <files mask="MLIB_Msu_F16_Asmi.h"/>
-        <files mask="MLIB_Msu_F32_Asmi.h"/>
-        <files mask="MLIB_Msu_FLT.h"/>
-        <files mask="MLIB_Msu4_F32.h"/>
-        <files mask="MLIB_Msu4_F32_Asmi.h"/>
-        <files mask="MLIB_Msu4_FLT.h"/>
-        <files mask="MLIB_Msu4Rnd_F16.h"/>
-        <files mask="MLIB_Msu4Rnd_F16_Asmi.h"/>
-        <files mask="MLIB_Msu4Rnd_F32.h"/>
-        <files mask="MLIB_Msu4Rnd_F32_Asmi.h"/>
-        <files mask="MLIB_MsuRnd_A32.h"/>
-        <files mask="MLIB_MsuRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MsuRnd_F32.h"/>
-        <files mask="MLIB_MsuRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Mul_A32.h"/>
-        <files mask="MLIB_Mul_A32_Asmi.h"/>
-        <files mask="MLIB_Mul_F16.h"/>
-        <files mask="MLIB_Mul_F16_Asmi.h"/>
-        <files mask="MLIB_Mul_F32.h"/>
-        <files mask="MLIB_Mul_F32_Asmi.h"/>
-        <files mask="MLIB_Mul_FLT.h"/>
-        <files mask="MLIB_MulRnd_A32.h"/>
-        <files mask="MLIB_MulRnd_A32_Asmi.h"/>
-        <files mask="MLIB_MulRnd_F16.h"/>
-        <files mask="MLIB_MulRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MulRnd_F32.h"/>
-        <files mask="MLIB_MulRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Neg_F16.h"/>
-        <files mask="MLIB_Neg_F16_Asmi.h"/>
-        <files mask="MLIB_Neg_F32.h"/>
-        <files mask="MLIB_Neg_F32_Asmi.h"/>
-        <files mask="MLIB_Neg_FLT.h"/>
-        <files mask="MLIB_Rcp_A32.h"/>
-        <files mask="MLIB_Rcp1Q_A32.h"/>
-        <files mask="MLIB_Rnd_F32.h"/>
-        <files mask="MLIB_Rnd_F32_Asmi.h"/>
-        <files mask="MLIB_Sat_A32_Asmi.h"/>
-        <files mask="MLIB_Shift_F16.h"/>
-        <files mask="MLIB_Shift_F16_Asmi.h"/>
-        <files mask="MLIB_Shift_F32.h"/>
-        <files mask="MLIB_Shift_F32_Asmi.h"/>
-        <files mask="MLIB_Sign_F16_Asmi.h"/>
-        <files mask="MLIB_Sign_F32_Asmi.h"/>
-        <files mask="MLIB_Sign_FLT_Asmi.h"/>
-        <files mask="MLIB_Sub_A32.h"/>
-        <files mask="MLIB_Sub_F16.h"/>
-        <files mask="MLIB_Sub_F16_Asmi.h"/>
-        <files mask="MLIB_Sub_F32.h"/>
-        <files mask="MLIB_Sub_F32_Asmi.h"/>
-        <files mask="MLIB_Sub_F64.h"/>
-        <files mask="MLIB_Sub_FLT.h"/>
-        <files mask="MLIB_Sub4_F16_Asmi.h"/>
-        <files mask="MLIB_Sub4_F32_Asmi.h"/>
-        <files mask="MLIB_Sub4_FLT.h"/>
-        <files mask="mlib_types.h"/>
-        <files mask="RTCESL_cfg.h"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/AMCLIB/Include" type="c_include">
-        <files mask="amclib.h"/>
-        <files mask="AMCLIB_ACIMCtrlMTPA_FLT.h"/>
-        <files mask="AMCLIB_ACIMRotFluxObsrv_FLT.h"/>
-        <files mask="AMCLIB_ACIMSpeedMRAS_FLT.h"/>
-        <files mask="AMCLIB_AngleTrackObsrv_F32.h"/>
-        <files mask="AMCLIB_AngleTrackObsrv_FLT.h"/>
-        <files mask="AMCLIB_CtrlFluxWkng_A32.h"/>
-        <files mask="AMCLIB_CtrlFluxWkng_FLT.h"/>
-        <files mask="amclib_FP.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvAB_A32.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvAB_FLT.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvDQ_A32.h"/>
-        <files mask="AMCLIB_PMSMBemfObsrvDQ_FLT.h"/>
-        <files mask="AMCLIB_TrackObsrv_F32.h"/>
-        <files mask="AMCLIB_TrackObsrv_FLT.h"/>
-        <files mask="amclib_types.h"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/GDFLIB/Include" type="c_include">
-        <files mask="gdflib.h"/>
-        <files mask="GDFLIB_FilterExp_F32.h"/>
-        <files mask="GDFLIB_FilterExp_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR1_F32.h"/>
-        <files mask="GDFLIB_FilterIIR1_F32_Asmi.h"/>
-        <files mask="GDFLIB_FilterIIR1_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR2_F32.h"/>
-        <files mask="GDFLIB_FilterIIR2_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR3_F32.h"/>
-        <files mask="GDFLIB_FilterIIR3_FLT.h"/>
-        <files mask="GDFLIB_FilterIIR4_F32.h"/>
-        <files mask="GDFLIB_FilterIIR4_FLT.h"/>
-        <files mask="GDFLIB_FilterMA_A32.h"/>
-        <files mask="GDFLIB_FilterMA_FLT.h"/>
-        <files mask="gdflib_FP.h"/>
-        <files mask="gdflib_types.h"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/GFLIB/Include" type="c_include">
-        <files mask="gflib.h"/>
-        <files mask="GFLIB_Acos_F16.h"/>
-        <files mask="GFLIB_Acos_FLT.h"/>
-        <files mask="GFLIB_Asin_F16.h"/>
-        <files mask="GFLIB_Asin_FLT.h"/>
-        <files mask="GFLIB_Atan_F32.h"/>
-        <files mask="GFLIB_Atan_FLT.h"/>
-        <files mask="GFLIB_AtanYX_F16.h"/>
-        <files mask="GFLIB_AtanYX_FLT.h"/>
-        <files mask="GFLIB_CtrlBetaIPDp_A32.h"/>
-        <files mask="GFLIB_CtrlBetaIPDp_FLT.h"/>
-        <files mask="GFLIB_CtrlBetaIPp_A32.h"/>
-        <files mask="GFLIB_CtrlBetaIPp_FLT.h"/>
-        <files mask="GFLIB_CtrlPIDp_A32.h"/>
-        <files mask="GFLIB_CtrlPIDp_FLT.h"/>
-        <files mask="GFLIB_CtrlPIp_A32.h"/>
-        <files mask="GFLIB_CtrlPIp_FLT.h"/>
-        <files mask="GFLIB_DFlexRamp_A32.h"/>
-        <files mask="GFLIB_DFlexRamp_FLT.h"/>
-        <files mask="GFLIB_DRamp_F16.h"/>
-        <files mask="GFLIB_DRamp_F32.h"/>
-        <files mask="GFLIB_DRamp_FLT.h"/>
-        <files mask="GFLIB_FlexRamp_A32.h"/>
-        <files mask="GFLIB_FlexRamp_FLT.h"/>
-        <files mask="GFLIB_FlexSRamp_A32.h"/>
-        <files mask="GFLIB_FlexSRamp_FLT.h"/>
-        <files mask="gflib_FP.h"/>
-        <files mask="GFLIB_Hyst_F16_Asmi.h"/>
-        <files mask="GFLIB_Hyst_FLT.h"/>
-        <files mask="GFLIB_Integrator_A32.h"/>
-        <files mask="GFLIB_Integrator_FLT.h"/>
-        <files mask="GFLIB_Limit_F16.h"/>
-        <files mask="GFLIB_Limit_F32.h"/>
-        <files mask="GFLIB_Limit_FLT.h"/>
-        <files mask="GFLIB_LowerLimit_F16.h"/>
-        <files mask="GFLIB_LowerLimit_F32.h"/>
-        <files mask="GFLIB_LowerLimit_FLT.h"/>
-        <files mask="GFLIB_Lut_F16_Asmi.h"/>
-        <files mask="GFLIB_Lut_F32.h"/>
-        <files mask="GFLIB_Lut_FLT.h"/>
-        <files mask="GFLIB_LutPer_F16_Asmi.h"/>
-        <files mask="GFLIB_LutPer_F32.h"/>
-        <files mask="GFLIB_LutPer_FLT.h"/>
-        <files mask="GFLIB_Ramp_F16.h"/>
-        <files mask="GFLIB_Ramp_F32.h"/>
-        <files mask="GFLIB_Ramp_FLT.h"/>
-        <files mask="GFLIB_SinCos_F32.h"/>
-        <files mask="GFLIB_SinCos_FLT.h"/>
-        <files mask="GFLIB_Sqrt_F16.h"/>
-        <files mask="GFLIB_Sqrt_F32.h"/>
-        <files mask="GFLIB_Sqrt_FLT_Asmi.h"/>
-        <files mask="GFLIB_Tan_F32.h"/>
-        <files mask="GFLIB_Tan_FLT.h"/>
-        <files mask="gflib_types.h"/>
-        <files mask="GFLIB_UpperLimit_F16.h"/>
-        <files mask="GFLIB_UpperLimit_F32.h"/>
-        <files mask="GFLIB_UpperLimit_FLT.h"/>
-        <files mask="GFLIB_VectorLimit_F16.h"/>
-        <files mask="GFLIB_VectorLimit_FLT.h"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/GMCLIB/Include" type="c_include">
-        <files mask="gmclib.h"/>
-        <files mask="GMCLIB_Clark_F16_Asmi.h"/>
-        <files mask="GMCLIB_Clark_FLT.h"/>
-        <files mask="GMCLIB_Decoupling_A32.h"/>
-        <files mask="GMCLIB_DTCompLut1D_F16.h"/>
-        <files mask="GMCLIB_Decoupling_FLT.h"/>
-        <files mask="GMCLIB_ElimDcBusRip_A32_Asmi.h"/>
-        <files mask="GMCLIB_ElimDcBusRip_F16_Asmi.h"/>
-        <files mask="GMCLIB_ElimDcBusRip_FLT.h"/>
-        <files mask="gmclib_FP.h"/>
-        <files mask="GMCLIB_Park_F16_Asmi.h"/>
-        <files mask="GMCLIB_Park_FLT.h"/>
-        <files mask="GMCLIB_Svm_F16.h"/>
-        <files mask="gmclib_types.h"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/MLIB/Include" type="c_include">
-        <files mask="asm_mac.h"/>
-        <files mask="mlib.h"/>
-        <files mask="MLIB_Abs_F16.h"/>
-        <files mask="MLIB_Abs_F16_Asmi.h"/>
-        <files mask="MLIB_Abs_F32.h"/>
-        <files mask="MLIB_Abs_F32_Asmi.h"/>
-        <files mask="MLIB_Abs_FLT.h"/>
-        <files mask="MLIB_Abs_FLT_Asmi.h"/>
-        <files mask="MLIB_Add_A32.h"/>
-        <files mask="MLIB_Add_F16.h"/>
-        <files mask="MLIB_Add_F16_Asmi.h"/>
-        <files mask="MLIB_Add_F32.h"/>
-        <files mask="MLIB_Add_F32_Asmi.h"/>
-        <files mask="MLIB_Add_FLT.h"/>
-        <files mask="MLIB_Add4_F16_Asmi.h"/>
-        <files mask="MLIB_Add4_F32_Asmi.h"/>
-        <files mask="MLIB_Add4_FLT.h"/>
-        <files mask="MLIB_BiShift_F16.h"/>
-        <files mask="MLIB_BiShift_F32.h"/>
-        <files mask="MLIB_Clb_F16.h"/>
-        <files mask="MLIB_Clb_F32.h"/>
-        <files mask="MLIB_Conv_F32.h"/>
-        <files mask="MLIB_Conv_FLT_Asmi.h"/>
-        <files mask="MLIB_ConvSc_FLT_Asmi.h"/>
-        <files mask="MLIB_Div_A32.h"/>
-        <files mask="MLIB_Div_F16.h"/>
-        <files mask="MLIB_Div_F32.h"/>
-        <files mask="MLIB_Div_FLT.h"/>
-        <files mask="MLIB_Div1Q_A32.h"/>
-        <files mask="MLIB_Div1Q_F16.h"/>
-        <files mask="MLIB_Div1Q_F32.h"/>
-        <files mask="mlib_FP.h"/>
-        <files mask="MLIB_Log2_U16.h"/>
-        <files mask="MLIB_Mac_A32.h"/>
-        <files mask="MLIB_Mac_F16_Asmi.h"/>
-        <files mask="MLIB_Mac_F32.h"/>
-        <files mask="MLIB_Mac_F32_Asmi.h"/>
-        <files mask="MLIB_Mac_FLT.h"/>
-        <files mask="MLIB_Mac4_F32.h"/>
-        <files mask="MLIB_Mac4_F32_Asmi.h"/>
-        <files mask="MLIB_Mac4_FLT.h"/>
-        <files mask="MLIB_Mac4Rnd_F16_Asmi.h"/>
-        <files mask="MLIB_Mac4Rnd_F32.h"/>
-        <files mask="MLIB_Mac4Rnd_F32_Asmi.h"/>
-        <files mask="MLIB_MacRnd_A32.h"/>
-        <files mask="MLIB_MacRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MacRnd_F32.h"/>
-        <files mask="MLIB_MacRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Mnac_A32.h"/>
-        <files mask="MLIB_Mnac_F16_Asmi.h"/>
-        <files mask="MLIB_Mnac_F32.h"/>
-        <files mask="MLIB_Mnac_F32_Asmi.h"/>
-        <files mask="MLIB_Mnac_FLT.h"/>
-        <files mask="MLIB_MnacRnd_A32.h"/>
-        <files mask="MLIB_MnacRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MnacRnd_F32.h"/>
-        <files mask="MLIB_MnacRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Msu_A32.h"/>
-        <files mask="MLIB_Msu_F16_Asmi.h"/>
-        <files mask="MLIB_Msu_F32_Asmi.h"/>
-        <files mask="MLIB_Msu_FLT.h"/>
-        <files mask="MLIB_Msu4_F32.h"/>
-        <files mask="MLIB_Msu4_F32_Asmi.h"/>
-        <files mask="MLIB_Msu4_FLT.h"/>
-        <files mask="MLIB_Msu4Rnd_F16.h"/>
-        <files mask="MLIB_Msu4Rnd_F16_Asmi.h"/>
-        <files mask="MLIB_Msu4Rnd_F32.h"/>
-        <files mask="MLIB_Msu4Rnd_F32_Asmi.h"/>
-        <files mask="MLIB_MsuRnd_A32.h"/>
-        <files mask="MLIB_MsuRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MsuRnd_F32.h"/>
-        <files mask="MLIB_MsuRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Mul_A32.h"/>
-        <files mask="MLIB_Mul_A32_Asmi.h"/>
-        <files mask="MLIB_Mul_F16.h"/>
-        <files mask="MLIB_Mul_F16_Asmi.h"/>
-        <files mask="MLIB_Mul_F32.h"/>
-        <files mask="MLIB_Mul_F32_Asmi.h"/>
-        <files mask="MLIB_Mul_FLT.h"/>
-        <files mask="MLIB_MulRnd_A32.h"/>
-        <files mask="MLIB_MulRnd_A32_Asmi.h"/>
-        <files mask="MLIB_MulRnd_F16.h"/>
-        <files mask="MLIB_MulRnd_F16_Asmi.h"/>
-        <files mask="MLIB_MulRnd_F32.h"/>
-        <files mask="MLIB_MulRnd_F32_Asmi.h"/>
-        <files mask="MLIB_Neg_F16.h"/>
-        <files mask="MLIB_Neg_F16_Asmi.h"/>
-        <files mask="MLIB_Neg_F32.h"/>
-        <files mask="MLIB_Neg_F32_Asmi.h"/>
-        <files mask="MLIB_Neg_FLT.h"/>
-        <files mask="MLIB_Rcp_A32.h"/>
-        <files mask="MLIB_Rcp1Q_A32.h"/>
-        <files mask="MLIB_Rnd_F32.h"/>
-        <files mask="MLIB_Rnd_F32_Asmi.h"/>
-        <files mask="MLIB_Sat_A32_Asmi.h"/>
-        <files mask="MLIB_Shift_F16.h"/>
-        <files mask="MLIB_Shift_F16_Asmi.h"/>
-        <files mask="MLIB_Shift_F32.h"/>
-        <files mask="MLIB_Shift_F32_Asmi.h"/>
-        <files mask="MLIB_Sign_F16_Asmi.h"/>
-        <files mask="MLIB_Sign_F32_Asmi.h"/>
-        <files mask="MLIB_Sign_FLT_Asmi.h"/>
-        <files mask="MLIB_Sub_A32.h"/>
-        <files mask="MLIB_Sub_F16.h"/>
-        <files mask="MLIB_Sub_F16_Asmi.h"/>
-        <files mask="MLIB_Sub_F32.h"/>
-        <files mask="MLIB_Sub_F32_Asmi.h"/>
-        <files mask="MLIB_Sub_F64.h"/>
-        <files mask="MLIB_Sub_FLT.h"/>
-        <files mask="MLIB_Sub4_F16_Asmi.h"/>
-        <files mask="MLIB_Sub4_F32_Asmi.h"/>
-        <files mask="MLIB_Sub4_FLT.h"/>
-        <files mask="mlib_types.h"/>
-        <files mask="RTCESL_cfg.h"/>
-      </source>
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/AMCLIB" type="lib">
-        <files mask="AMCLIB.a"/>
-      </source>
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/GFLIB" type="lib">
-        <files mask="GFLIB.a"/>
-      </source>
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/GDFLIB" type="lib">
-        <files mask="GDFLIB.a"/>
-      </source>
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/GMCLIB" type="lib">
-        <files mask="GMCLIB.a"/>
-      </source>
-      <source toolchain="iar" relative_path="CM7F_RTCESL_4.7.1_IAR/MLIB" type="lib">
-        <files mask="MLIB.a"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/AMCLIB" type="lib">
-        <files mask="AMCLIB.lib"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/GFLIB" type="lib">
-        <files mask="GFLIB.lib"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/GDFLIB" type="lib">
-        <files mask="GDFLIB.lib"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/GMCLIB" type="lib">
-        <files mask="GMCLIB.lib"/>
-      </source>
-      <source toolchain="mdk" relative_path="CM7F_RTCESL_4.7.1_KEIL/MLIB" type="lib">
-        <files mask="MLIB.lib"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/AMCLIB" type="lib">
-        <files mask="libAMCLIB.a"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/GFLIB" type="lib">
-        <files mask="libGFLIB.a"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/GDFLIB" type="lib">
-        <files mask="libGDFLIB.a"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/GMCLIB" type="lib">
-        <files mask="libGMCLIB.a"/>
-      </source>
-      <source toolchain="mcuxpresso armgcc" relative_path="CM7F_RTCESL_4.7.1_MCUX/MLIB" type="lib">
-        <files mask="libMLIB.a"/>
-      </source>
-      <source relative_path="CM7F_RTCESL_4.7.1_doc" type="doc">
-        <files mask="CM7FAMCLIBUG.pdf" hidden="true"/>
-        <files mask="CM7FGDFLIBUG.pdf" hidden="true"/>
-        <files mask="CM7FGFLIBUG.pdf" hidden="true"/>
-        <files mask="CM7FGMCLIBUG.pdf" hidden="true"/>
-        <files mask="CM7FMLIBUG.pdf" hidden="true"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_rtcesl_cm7f_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_IAR/AMCLIB/Include" toolchain="iar" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_IAR/GDFLIB/Include" toolchain="iar" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_IAR/GFLIB/Include" toolchain="iar" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_IAR/GMCLIB/Include" toolchain="iar" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_IAR/MLIB/Include" toolchain="iar" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_KEIL/AMCLIB/Include" toolchain="mdk" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_KEIL/GDFLIB/Include" toolchain="mdk" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_KEIL/GFLIB/Include" toolchain="mdk" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_KEIL/GMCLIB/Include" toolchain="mdk" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_KEIL/MLIB/Include" toolchain="mdk" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_MCUX/AMCLIB/Include" toolchain="mcuxpresso armgcc" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_MCUX/GDFLIB/Include" toolchain="mcuxpresso armgcc" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_MCUX/GFLIB/Include" toolchain="mcuxpresso armgcc" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_MCUX/GMCLIB/Include" toolchain="mcuxpresso armgcc" type="c_include"/>
-        <include_path relative_path="CM7F_RTCESL_4.7.1_MCUX/MLIB/Include" toolchain="mcuxpresso armgcc" type="c_include"/>
-      </include_paths>
-    </component>
     <component id="middleware.sdmmc.common.MIMXRT1062" name="sdmmc_common" brief="Middleware sdmmc common" version="2.3.0" full_name="SDMMC common stack" devices="MIMXRT1062xxxxA" category="Memories/SDMMC Stack" user_visible="false" type="middleware" package_base_path="middleware/sdmmc" project_base_path="sdmmc">
       <source relative_path="common" project_relative_path="inc" type="c_include">
         <files mask="fsl_sdmmc_spec.h"/>
@@ -60736,6 +59332,325 @@ ${load}</script>
         <include_path relative_path="hostlib/hostLib/tstUtil" type="c_include"/>
       </include_paths>
     </component>
+    <component id="middleware.soem.MIMXRT1062" name="soem" brief="Simple Open EtherCAT Master Library" version="1.4.0" full_name="SOEM" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/soem" project_base_path="soem">
+      <dependencies>
+        <any_of>
+          <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
+          <component_dependency value="middleware.baremetal.MIMXRT1062"/>
+        </any_of>
+      </dependencies>
+      <source relative_path="./" type="doc">
+        <files mask="LICENSE" hidden="true"/>
+        <files mask="README.md" hidden="true"/>
+      </source>
+      <source relative_path="soem" type="src">
+        <files mask="ethercateoe.c"/>
+        <files mask="ethercatconfig.c"/>
+        <files mask="ethercatsoe.c"/>
+        <files mask="ethercatcoe.c"/>
+        <files mask="ethercatprint.c"/>
+        <files mask="ethercatfoe.c"/>
+        <files mask="ethercatmain.c"/>
+        <files mask="ethercatdc.c"/>
+        <files mask="ethercatbase.c"/>
+      </source>
+      <source relative_path="soem" type="c_include">
+        <files mask="ethercatdc.h"/>
+        <files mask="ethercatprint.h"/>
+        <files mask="ethercatconfig.h"/>
+        <files mask="ethercatsoe.h"/>
+        <files mask="ethercatcoe.h"/>
+        <files mask="ethercatbase.h"/>
+        <files mask="ethercateoe.h"/>
+        <files mask="ethercat.h"/>
+        <files mask="ethercatconfiglist.h"/>
+        <files mask="ethercattype.h"/>
+        <files mask="ethercatmain.h"/>
+        <files mask="ethercatfoe.h"/>
+      </source>
+      <source relative_path="oshw/mcux-sdk" type="c_include">
+        <files mask="oshw.h"/>
+        <files mask="soem_port.h"/>
+        <files mask="nicdrv.h"/>
+      </source>
+      <source relative_path="oshw/mcux-sdk/enet" type="c_include">
+        <files mask="enet.h"/>
+        <files mask="soem_enet.h"/>
+      </source>
+      <source relative_path="oshw/mcux-sdk/enet" type="src">
+        <files mask="enet.c"/>
+      </source>
+      <source relative_path="oshw/mcux-sdk" type="src">
+        <files mask="oshw.c"/>
+        <files mask="soem_port.c"/>
+        <files mask="nicdrv.c"/>
+      </source>
+      <source relative_path="osal" type="c_include">
+        <files mask="osal.h"/>
+      </source>
+      <source condition="middleware.baremetal.MIMXRT1062" relative_path="osal/baremetal" type="src">
+        <files mask="osal.c"/>
+      </source>
+      <source condition="middleware.baremetal.MIMXRT1062" relative_path="osal/baremetal" type="c_include">
+        <files mask="osal_defs.h"/>
+      </source>
+      <source condition="middleware.freertos-kernel.MIMXRT1062" relative_path="osal/freertos" type="src">
+        <files mask="osal.c"/>
+      </source>
+      <source condition="middleware.freertos-kernel.MIMXRT1062" relative_path="osal/freertos" type="c_include">
+        <files mask="osal_defs.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_soem_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="soem" type="c_include"/>
+        <include_path relative_path="oshw/mcux-sdk" type="c_include"/>
+        <include_path relative_path="oshw/mcux-sdk/enet" type="c_include"/>
+        <include_path relative_path="osal" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.soem.unused.MIMXRT1062" name="soem_unused" brief="Simple Open EtherCAT unused files" version="1.4.0" full_name="soem_unused" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/soem" project_base_path="soem">
+      <source relative_path="./" type="doc">
+        <files mask="Doxyfile" hidden="true"/>
+        <files mask="drvcomment.txt" hidden="true"/>
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="doc/images" type="doc">
+        <files mask="overlapping_iomap.png" hidden="true"/>
+        <files mask="legacy_iomap.png" hidden="true"/>
+        <files mask="memory_layout.png" hidden="true"/>
+      </source>
+      <source relative_path="doc" type="doc">
+        <files mask="soem.dox" hidden="true"/>
+        <files mask="tutorial.txt" hidden="true"/>
+      </source>
+      <source relative_path="oshw/erika" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/erika" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/intime" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/intime" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/linux" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/linux" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/macosx" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/macosx" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtems" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtems" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk/lw_mac" type="c_include">
+        <files mask="lw_emac.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk/lw_mac" type="src">
+        <files mask="lw_emac.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk/fec" type="src">
+        <files mask="fec_ecat.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/rtk/fec" type="c_include">
+        <files mask="fec_ecat.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/vxworks" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/vxworks" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32" type="c_include">
+        <files mask="oshw.h" hidden="true"/>
+        <files mask="nicdrv.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Lib" type="lib">
+        <files mask="Packet.lib" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Lib" type="lib">
+        <files mask="wpcap.lib" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Lib/x64" type="lib">
+        <files mask="Packet.lib" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Lib/x64" type="lib">
+        <files mask="wpcap.lib" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Include" type="c_include">
+        <files mask="pcap-stdinc.h" hidden="true"/>
+        <files mask="Packet32.h" hidden="true"/>
+        <files mask="remote-ext.h" hidden="true"/>
+        <files mask="Win32-Extensions.h" hidden="true"/>
+        <files mask="pcap.h" hidden="true"/>
+        <files mask="bittypes.h" hidden="true"/>
+        <files mask="pcap-bpf.h" hidden="true"/>
+        <files mask="pcap-namedb.h" hidden="true"/>
+        <files mask="ip6_misc.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32/wpcap/Include/pcap" type="c_include">
+        <files mask="vlan.h" hidden="true"/>
+        <files mask="sll.h" hidden="true"/>
+        <files mask="usb.h" hidden="true"/>
+        <files mask="bluetooth.h" hidden="true"/>
+        <files mask="pcap.h" hidden="true"/>
+        <files mask="bpf.h" hidden="true"/>
+        <files mask="namedb.h" hidden="true"/>
+      </source>
+      <source relative_path="oshw/win32" type="src">
+        <files mask="oshw.c" hidden="true"/>
+        <files mask="nicdrv.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/erika" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/erika" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/intime" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/intime" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/linux" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/linux" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/macosx" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/macosx" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/rtems" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/rtems" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/rtk" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/rtk" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/vxworks" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/vxworks" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="osal/win32" type="c_include">
+        <files mask="osal_defs.h" hidden="true"/>
+        <files mask="inttypes.h" hidden="true"/>
+        <files mask="osal_win32.h" hidden="true"/>
+        <files mask="stdint.h" hidden="true"/>
+      </source>
+      <source relative_path="osal/win32" type="src">
+        <files mask="osal.c" hidden="true"/>
+      </source>
+      <source relative_path="test/intime/ec_master" type="src">
+        <files mask="ec_master.c" hidden="true"/>
+      </source>
+      <source relative_path="test/simple_ng" type="src">
+        <files mask="simple_ng.c" hidden="true"/>
+      </source>
+      <source relative_path="test/simple_ng" type="doc">
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/red_test" type="src">
+        <files mask="red_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/slaveinfo" type="src">
+        <files mask="slaveinfo.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/firm_update" type="src">
+        <files mask="firm_update.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/eepromtool" type="src">
+        <files mask="eepromtool.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/simple_test" type="src">
+        <files mask="simple_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/win32/ebox" type="src">
+        <files mask="ebox.c" hidden="true"/>
+      </source>
+      <source relative_path="test/rtk" type="src">
+        <files mask="main.c" hidden="true"/>
+      </source>
+      <source relative_path="test/rtk" type="other">
+        <files mask="schedule.tt" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/eoe_test" type="src">
+        <files mask="eoe_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/red_test" type="src">
+        <files mask="red_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/slaveinfo" type="doc">
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/slaveinfo" type="src">
+        <files mask="slaveinfo.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux" type="src">
+        <files mask="aliastool.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/firm_update" type="src">
+        <files mask="firm_update.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/eepromtool" type="doc">
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/eepromtool" type="src">
+        <files mask="eepromtool.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/simple_test" type="src">
+        <files mask="simple_test.c" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/simple_test" type="doc">
+        <files mask="CMakeLists.txt" hidden="true"/>
+      </source>
+      <source relative_path="test/linux/ebox" type="src">
+        <files mask="ebox.c" hidden="true"/>
+      </source>
+    </component>
     <component id="middleware.usb.common_header.MIMXRT1062" name="USB Common Header" brief="Middleware usb common_header" version="2.8.2" full_name="USB Common Header" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="USB/USB Common Header" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
       <dependencies>
         <component_dependency value="component.osa.MIMXRT1062"/>
@@ -61259,127 +60174,6 @@ ${load}</script>
         <include_path relative_path="phy" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.usb.pd.MIMXRT1062" name="PD Stack" brief="Middleware usb_pd" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <component_dependency value="middleware.usb.pd.phy.ptn5110.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="pd" type="c_include">
-        <files mask="usb_pd.h"/>
-        <files mask="usb_pd_interface.h"/>
-        <files mask="usb_pd_phy.h"/>
-        <files mask="usb_pd_spec.h"/>
-        <files mask="usb_pd_timer.h"/>
-        <files mask="usb_pd_auto_policy.h"/>
-      </source>
-      <source relative_path="pd" type="src">
-        <files mask="usb_pd_connect.c"/>
-        <files mask="usb_pd_interface.c"/>
-        <files mask="usb_pd_msg.c"/>
-        <files mask="usb_pd_policy.c"/>
-        <files mask="usb_pd_timer.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.altmode.MIMXRT1062" name="PD Alternate Mode" brief="Middleware usb_pd altmode" version="2.8.2" full_name="USB Type-C PD Alternate Mode" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <component_dependency value="middleware.usb.pd.MIMXRT1062"/>
-      </dependencies>
-      <source relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="src">
-        <files mask="usb_pd_alt_mode.c"/>
-        <files mask="usb_pd_alt_mode_dp.c"/>
-      </source>
-      <source relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="c_include">
-        <files mask="usb_pd_alt_mode.h"/>
-        <files mask="usb_pd_alt_mode_dp.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_altmode_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd/alt_mode" project_relative_path="pd/altmode" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.compliance_test_report.MIMXRT1062" name="PD Compliance Test Report" brief="Middleware usb_pd compliance_test_report" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/usb" project_base_path="./">
-      <source relative_path="pd/compliance_test_report/ellisys/consumer_provider" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp_try_snk" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/drp_try_src" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/provider_consumer" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/displayport_dock" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-      <source relative_path="pd/compliance_test_report/ellisys/displayport_host" project_relative_path="./" type="doc">
-        <files mask="USB Compliance Report.html"/>
-      </source>
-    </component>
-    <component id="middleware.usb_pd.config_header.MIMXRT1062" name="PD Config Header" brief="USB Type-C PD Stack" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT1062xxxxA" user_visible="true" type="project_template" package_base_path="middleware/usb" project_base_path="source">
-      <source relative_path="output/npw/pd_config" project_relative_path="generated" type="c_include">
-        <files mask="usb_pd_config.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="output/npw/pd_config" project_relative_path="generated" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="middleware.usb.pd.phy.ptn5110.MIMXRT1062" name="PD PTN5110 Driver" brief="Middleware usb_pd phy ptn5110" version="2.8.2" full_name="USB Type-C PD Stack" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="USB/USB Type-C PD Stack" user_visible="true" type="middleware" package_base_path="middleware/usb" project_base_path="usb">
-      <dependencies>
-        <all>
-          <component_dependency value="component.igpio_adapter.MIMXRT1062"/>
-          <component_dependency value="component.lpi2c_adapter.MIMXRT1062"/>
-          <component_dependency value="component.osa.MIMXRT1062"/>
-          <component_dependency value="middleware.usb_pd.config_header.MIMXRT1062"/>
-          <component_dependency value="middleware.usb.common_header.MIMXRT1062"/>
-        </all>
-      </dependencies>
-      <source relative_path="pd/ptn5110" project_relative_path="ptn5110" type="c_include">
-        <files mask="usb_pd_ptn5110.h"/>
-        <files mask="usb_pd_ptn5110_register.h"/>
-      </source>
-      <source relative_path="pd/ptn5110" project_relative_path="ptn5110" type="src">
-        <files mask="usb_pd_ptn5110_connect.c"/>
-        <files mask="usb_pd_ptn5110_hal.c"/>
-        <files mask="usb_pd_ptn5110_interface.c"/>
-        <files mask="usb_pd_ptn5110_msg.c"/>
-      </source>
-      <source relative_path="pd" type="c_include">
-        <files mask="usb_pd.h"/>
-        <files mask="usb_pd_interface.h"/>
-        <files mask="usb_pd_phy.h"/>
-        <files mask="usb_pd_spec.h"/>
-        <files mask="usb_pd_timer.h"/>
-      </source>
-      <source relative_path="pd" type="src">
-        <files mask="usb_pd_timer.c"/>
-      </source>
-      <source relative_path="pd/phy_interface" project_relative_path="phy_interface" type="c_include">
-        <files mask="usb_pd_i2c.h"/>
-      </source>
-      <source relative_path="pd/phy_interface" project_relative_path="phy_interface" type="src">
-        <files mask="usb_pd_i2c.c"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_usb_pd_phy_ptn5110_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="pd/ptn5110" project_relative_path="ptn5110" type="c_include"/>
-        <include_path relative_path="pd" type="c_include"/>
-        <include_path relative_path="pd/phy_interface" project_relative_path="phy_interface" type="c_include"/>
-      </include_paths>
-    </component>
     <component id="middleware.vit.cm7_RT106x.MIMXRT1062" name="vit" brief="Voice intelligent technology library for Cortex M7" version="5.6.0" full_name="middleware vit cm7" devices="MIMXRT1062xxxxA" category="Audio/Voice intelligent technology library" user_visible="true" type="middleware" package_base_path="middleware/vit" project_base_path="vit">
       <dependencies>
         <component_dependency value="middleware.vit.template.MIMXRT1062"/>
@@ -61418,6 +60212,58 @@ ${load}</script>
       <include_paths>
         <include_path relative_path="RT1060_CortexM7/Lib" type="c_include"/>
         <include_path relative_path="RT1060_CortexM7/Lib/Inc" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.voice_spot.cm7_RT106x.MIMXRT1062" name="voice_spot" brief="Voice Spot library for Cortex M7" version="0.23.2" full_name="middleware voice_spot cm7" devices="MIMXRT1062xxxxA" category="Voice/VoiceSpot library" user_visible="true" type="middleware" package_base_path="middleware/voice_spot" project_base_path="voice_spot">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.voice_spot.template.MIMXRT1062"/>
+          <component_dependency value="middleware.voice_spot.model.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source toolchain="mcuxpresso" relative_path="RT1060_CortexM7/Lib/include/public" type="c_include">
+        <files mask="rdsp_model.h"/>
+        <files mask="rdsp_model_defines.h"/>
+        <files mask="rdsp_voicespot.h"/>
+        <files mask="rdsp_voicespot_defines.h"/>
+        <files mask="rdsp_voicespot_sleep_cbuffer.h"/>
+        <files mask="rdsp_voicespot_utils.h"/>
+      </source>
+      <source toolchain="mcuxpresso" relative_path="RT1060_CortexM7/Lib" type="lib">
+        <files mask="librdsp_libvoicespot.a"/>
+      </source>
+      <source exclude="true" relative_path="Doc" type="doc">
+        <files mask="VoiceSpot API Documentation v0.9.pdf" hidden="true"/>
+      </source>
+      <source exclude="true" relative_path="RT1060_CortexM7/ExApp" type="src">
+        <files mask="basic_main.c" hidden="true"/>
+      </source>
+      <source exclude="true" relative_path="RT1060_CortexM7/ExApp" type="c_include">
+        <files mask="basic_main.h" hidden="true"/>
+      </source>
+      <source exclude="true" relative_path="./" type="doc">
+        <files mask="license.txt" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="RT1060_CortexM7/Lib/include" toolchain="mcuxpresso" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.voice_spot.model.MIMXRT1062" name="voice_spot model" brief="Voice Spot Hey NXP model" version="0.23.2" full_name="middleware voice_spot model" devices="MIMXRT1062xxxxA" category="Voice/VoiceSpot library" user_visible="true" type="middleware" package_base_path="middleware/voice_spot" project_base_path="voice_spot">
+      <source relative_path="models/NXP/version_1" type="c_include">
+        <files mask="HeyNXP_en-US_1.h"/>
+        <files mask="HeyNXP_en-US_1_params.h"/>
+      </source>
+      <source relative_path="models/NXP/version_1" type="binary">
+        <files mask="HeyNXP_en-US_1.bin"/>
+        <files mask="HeyNXP_en-US_1_params.bin"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="models/NXP/version_1" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.voice_spot.template.MIMXRT1062" name="voice_spot_template" brief="voice_spot template" version="0.23.2" full_name="voice_spot template configuration" devices="MIMXRT1062xxxxA" user_visible="false" type="project_template" package_base_path="middleware/voice_spot" project_base_path="voice_spot">
+      <include_paths>
+        <include_path relative_path="RT1060_CortexM7/Lib/include" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.wifi.MIMXRT1062" name="wifi_nxp" brief="NXP Wi-Fi functionality enables customers to quickly develop applications of interest to add connectivity to different sensors and appliances" version="1.3.38" full_name="NXP Wi-Fi" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Wireless/NXP Wi-Fi" user_visible="true" type="middleware" package_base_path="middleware/wifi_nxp" project_base_path="wifi">
@@ -61548,7 +60394,6 @@ ${load}</script>
       </source>
       <source relative_path="wifi_bt_firmware" type="c_include">
         <files mask="sd8801_wlan.h"/>
-        <files mask="sduart8977_wlan_bt.h"/>
         <files mask="sduartIW416_wlan_bt.h"/>
         <files mask="sduart8987_wlan_bt.h"/>
         <files mask="wlan_bt_fw.h"/>
@@ -61729,6 +60574,31 @@ ${load}</script>
         <include_path relative_path="wifi_bt_firmware" type="c_include"/>
         <include_path relative_path="wifidriver" type="c_include"/>
         <include_path relative_path="wifidriver/incl" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.wireless.framework.common.MIMXRT1062" name="wireless framework Common" brief="Middleware wireless framework_common" version="1.0.0" full_name="wireless framework Common" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/wireless" project_base_path="framework">
+      <source relative_path="framework/Common" project_relative_path="Common" type="c_include">
+        <files mask="EmbeddedTypes.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wireless_framework_Common_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="framework/Common" project_relative_path="Common" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.wireless.framework.function_lib.MIMXRT1062" name="wireless framework Function Lib" brief="Middleware wireless framework_function_lib" version="1.0.0" full_name="wireless framework Function Lib" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/wireless" project_base_path="framework">
+      <source relative_path="framework/FunctionLib" project_relative_path="FunctionLib" type="src">
+        <files mask="FunctionLib.c"/>
+      </source>
+      <source relative_path="framework/FunctionLib" project_relative_path="FunctionLib" type="c_include">
+        <files mask="FunctionLib.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wireless_framework_function_lib_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="framework/FunctionLib" project_relative_path="FunctionLib" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.wolfssl.MIMXRT1062" name="wolfssl" brief="WolfSSL library" version="4.8.1" full_name="WolfSSL open source SSL library" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/WolfSSL library" user_visible="true" type="middleware" package_base_path="middleware/wolfssl" project_base_path="wolfssl">

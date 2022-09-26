@@ -1,0 +1,16 @@
+CONTENT-LENGTH: bytes in body
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-bluetooth-org:service:Printer:1#GetPrinterAttributes"
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:GetPrinterAttributes xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<RequestedPrinterAttributes>
+<PrinterAttribute>PrinterName </PrinterAttribute>
+<PrinterAttribute>PrinterState </PrinterAttribute>
+<PrinterAttribute>PrinterStateReasons </PrinterAttribute>
+</RequestedPrinterAttributes>
+</u:GetPrinterAttributes>
+</s:Body>
+</s:Envelope>

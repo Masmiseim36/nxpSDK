@@ -1,15 +1,13 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include <stdio.h>
 
 #include "eiq_display.h"
 #include "pin_mux.h"
 #include "fsl_debug_console.h"
-
 #include "eiq_pxp.h"
 
 /*******************************************************************************
@@ -136,7 +134,7 @@ static void init(void)
     status = g_dc.ops->init(&g_dc);
     if (kStatus_Success != status)
     {
-        printf("Display initialization failed\r\n");
+        PRINTF("Display initialization failed\r\n");
         assert(0);
     }
 

@@ -1,21 +1,16 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include <stdio.h>
 
 #include "eiq_speaker.h"
+#include "fsl_codec_adapter.h"
 #include "fsl_debug_console.h"
-
 #include "fsl_sai.h"
-#include "fsl_codec_common.h"
-
-#include "fsl_wm8960.h"
 #include "pin_mux.h"
 #include "clock_config.h"
-#include "fsl_codec_adapter.h"
 
 /*******************************************************************************
  * Variables
@@ -70,12 +65,12 @@ static void notify(void)
 {
     if (xfer.data == NULL)
     {
-        printf("SAI_Tx buffer is undefined.\r\n");
+        PRINTF("SAI_Tx buffer is undefined.\r\n");
     }
 
     if (SAI_TransferSendEDMA(DEMO_SAI, &s_speakerHandle, &xfer) != kStatus_Success)
     {
-        printf("SAI_Tx failed!\r\n");
+        PRINTF("SAI_Tx failed!\r\n");
     }
 }
 
@@ -114,7 +109,7 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
 {
     if (kStatus_SAI_TxError == status)
     {
-        printf("SAI_Tx failed!\r\n");
+        PRINTF("SAI_Tx failed!\r\n");
         return;
     }
 

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+div  {font-style:italic;}
+
+</style>
+	<title>Testing Basic Modules for XHTML Print</title>
+</head>
+
+<body>
+<h2> BPP TSS Section 5.5.1.1 TP/OF/BV-01-I-A [Printer - XHTML - Core Modules]</h2>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02</h6>
+<hr />
+<p>
+Testing Purpose: To verify that a printer can correctly print and treat appropriately an  XHTML-Print object that 
+makes use of all tags and constructs defined in the XHTML-Print specification under Core Modules.  These modules
+are Structure, Text, Hypertext, List. In addition it tests the Style Attribute module. Note the following tags are not 
+printer displayable:  body, head, html, and title. But, they are necessary for the document to render at all 
+and thus are tested by this document.  The first three tags (abbr, acronym, and address) are "mouseover" tags
+and their correct diplay is not possible on a printer, but the text indicated by the master documents should print. (There
+are no special rendering rules for these tags.)
+</p>
+
+
+<h2>Testing the &lt;abbr&gt; tag</h2>
+<p>
+<abbr title="abbreviation">abbr </abbr> is an abbreviation
+</p> 
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;acronym&gt; tag</h2>
+<p>
+ <acronym xml:lang="en" title="HyperText Transfer Protocol">HTTP</acronym>
+</p>
+
+
+<p><br /><br /></p>
+
+
+
+<h2>Testing the &lt;address&gt; tag </h2>
+
+<address> <a href="MAILTO:leandrea_hall@hp.com">TestWriter</a>
+</address>
+
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;blockquote&gt; tag</h2>
+
+<blockquote><p> This entire section must be indented  from the rest of the text in the file. This is some text to 
+fill up the space. This is some text to fill up the space.  It should still be indented no matter how
+many lines long it is. This is some more text.  This is some more text.  This is some more text.</p> </blockquote>
+
+
+<p><br /><br /></p>
+
+
+
+<h2>Testing the &lt;br&gt; tag</h2>
+<p>
+There must be a line break here --><br /> this text must be on the next line
+</p>
+
+<p><br /><br /></p>
+
+
+
+<h2>Testing the &lt;cite&gt;tag</h2>
+<p>
+<cite> This line must be rendered in italics or in a way that differentiates it from the rest of the text </cite>
+</p>
+
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;code&gt; tag</h2>
+<p>
+<code> Bluetooth.print() </code>must be rendered in a monospace font
+</p>
+
+
+<p><br /><br /></p>
+
+
+
+<h2>Testing the &lt;dfn&gt;</h2>
+<p>
+The word <dfn> Definition </dfn> must be rendered in italics or in a way that differentiates it from the rest of the text
+</p>
+
+
+<p><br /><br /></p>
+
+
+
+<h2>Testing the &lt;div&gt; tag</h2>
+
+<div> <p>This line must be rendered in italics</p></div>
+
+
+<p><br /><br /></p>
+
+
+
+<h2>Testing the &lt;em&gt; tag</h2>
+<p>
+<em>This line must be rendered in bold or in a way that differentiates it from the rest of the text</em>
+</p>
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;h1&gt; tag</h2>
+
+<h1> This line of text uses the h1 size of heading and must be the largest heading size</h1>
+
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;h2&gt; tag</h2>
+
+<h2> This line of text uses the h2 size of heading and must be the same size or smaller than h1 </h2>
+
+
+<p><br /><br /></p>
+
+
+
+<h2>Testing the &lt;h3&gt; tag</h2>
+
+<h3>This line of text uses the h3 size of heading and must be the same size or smaller than h2 </h3>
+
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;h4&gt; tag</h2>
+
+<h4>This line of text uses the h4 size of heading and must be the same size or smaller than h3</h4>
+
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;h5&gt; tag</h2>
+
+<h5> This line of text uses the h5 size of heading and must be the same size or smaller than h4 </h5>
+
+
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;h6&gt; tag</h2>
+
+<h6> This line of text uses the h6 size of heading and must be the same size or smaller than h5 </h6>
+
+
+
+<p><br /><br /></p>
+
+
+
+
+<h2>Testing the &lt;kbd&gt; tag</h2>
+<p>
+<kbd>This line should be rendered in bold or a standard monospace font </kbd>
+</p>
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;p&gt; tag </h2>
+<p>This line must be separate from the one below it </p>
+<p> This line must be separate from the one above it </p>
+
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;pre&gt; tag (pre-formatted text)</h2>
+
+<pre>
+
+	The second line must be indented 8 characters
+	        from the line above it and the third line must be indented
+	            four characters from the line above it          
+
+	 </pre> 
+
+
+<p><br /><br /></p>
+
+<h2>Testing the &lt;q&gt; tags </h2>
+<p>
+ <q>This line must be surrounded by quotes</q> 
+</p>
+
+<p><br /><br /></p>
+
+<h2>Testing the &lt;samp&gt; tag</h2>
+<p>
+<samp> This line must be rendered in a standard monospace font</samp>
+</p>
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;span&gt; tag</h2>
+<p>
+<span style="font-style: italic">This text must appear in italics </span>
+</p>
+
+<p><br /><br /></p>
+
+
+
+<h2>Testing the &lt;strong&gt; tag</h2>
+<p>
+ <strong>This line must be rendered in bold or in a way that differentiates it from the rest of the text</strong> 
+</p>
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;var&gt; tag</h2>
+<p>
+The <var>x</var> and <var>y</var> variables must be rendered in italics or in a way that differentiates them from the rest of the text
+</p>
+
+<p><br /><br /></p>
+
+
+
+<h1> Testing the Hypertext tag &lt;a&gt;</h1>
+<p> Here's a link to the W3C Site 
+<a href="http://www.w3c.org">W3C</a>
+</p>
+<p>In the line above, the text "W3C" should be rendered in a way that differentiates it from the rest of the text</p>
+
+<p><br /><br /></p>
+
+
+<h1> Testing the list tags</h1>
+
+<h2>Testing the &lt;dl &gt;, &lt;dt &gt;, and  &lt; dd &gt; tags</h2>
+<p> Below must be a list of three items with their definitions next to them but on the following line</p>
+<dl>
+<dt>Item</dt><dd>definition of item</dd>
+<dt>Item</dt><dd>definition of item</dd>
+<dt>Item</dt><dd>definition of item</dd>
+</dl>
+
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;ul &gt; and  &lt; li &gt; tags</h2>
+<p>Below must be a list of 5 words with bullets before each</p>
+<ul>
+	<li>This</li>
+	<li>is</li>
+	<li>an</li>
+	<li>unordered</li>
+	<li>list</li>
+</ul>
+
+
+<p><br /><br /></p>
+
+
+<h2>Testing the &lt;ol &gt; and  &lt; li &gt; tags</h2>
+
+<p>Below must be a list of 5 words ordered by arabic numerals</p>
+<ol>
+	<li>This</li>
+	<li>is</li>
+	<li>an</li>
+	<li>ordered</li>
+	<li>list</li>
+</ol>
+
+<p><br /><br /></p>
+<h2>end of test</h2>
+
+
+
+</body>
+</html>
+
+

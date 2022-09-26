@@ -1,0 +1,10 @@
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:CancelJobResponse xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<JobId>12345</JobId>
+<OperationStatus>0x0406</OperationStatus>
+</u:CancelJobResponse>
+</s:Body>
+</s:Envelope>

@@ -155,7 +155,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -164,7 +164,7 @@
         <option>
           <name>OGScanfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGScanfMultibyteSupport</name>
@@ -1291,7 +1291,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -1300,7 +1300,7 @@
         <option>
           <name>OGScanfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGScanfMultibyteSupport</name>

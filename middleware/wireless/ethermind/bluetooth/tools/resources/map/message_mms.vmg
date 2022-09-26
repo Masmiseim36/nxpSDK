@@ -1,0 +1,36 @@
+BEGIN:BMSG
+VERSION:1.0
+STATUS:READ
+TYPE:MMS
+FOLDER:TELECOM/MSG/OUTBOX
+BEGIN:VCARD
+VERSION:2.1
+N:IUT
+TEL:1234567894
+END:VCARD
+BEGIN:BENV
+BEGIN:VCARD
+VERSION:2.1
+N:PTS
+TEL:14256913524
+END:VCARD
+BEGIN:BBODY
+CHARSET:UTF-8
+LENGTH:980
+BEGIN:MSG
+
+IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.
+IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.
+IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.
+IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.
+IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.
+IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.
+IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.
+IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.
+IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.IUT MMS message testing 4.
+
+
+END:MSG
+END:BBODY
+END:BENV
+END:BMSG

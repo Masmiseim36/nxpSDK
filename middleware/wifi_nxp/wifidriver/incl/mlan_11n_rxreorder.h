@@ -18,9 +18,9 @@ Change log:
 #define _MLAN_11N_RXREORDER_H_
 
 /** Max value a TID can take = 2^12 = 4096 */
-#define MAX_TID_VALUE (2U << 11U)
+#define MAX_TID_VALUE 4096U
 /** 2^11 = 2048 */
-#define TWOPOW11 (2 << 10)
+#define TWOPOW11 2048U
 
 /** Tid Mask used for extracting TID from BlockAckParamSet */
 #define BLOCKACKPARAM_TID_MASK 0x3CU
@@ -59,24 +59,24 @@ Change log:
 #define ADDBA_RSP_STATUS_ACCEPT 0U
 
 /** DEFAULT SEQ NUM */
-#define DEFAULT_SEQ_NUM 0xffff
+#define DEFAULT_SEQ_NUM 0xffffU
 
 /** Indicate packet has been dropped in FW */
 #define RX_PKT_DROPPED_IN_FW 0xffffffffU
 
-mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seqNum, t_u16 tid, t_u8 *ta, t_u8 pkttype, void *payload);
-void mlan_11n_delete_bastream_tbl(mlan_private *priv, int Tid, t_u8 *PeerMACAddr, t_u8 type, int initiator);
+mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *ta, t_u8 pkt_type, void *payload);
+void mlan_11n_delete_bastream_tbl(mlan_private *priv, int tid, t_u8 *peer_mac, t_u8 type, int initiator);
 void wlan_11n_ba_stream_timeout(mlan_private *priv, HostCmd_DS_11N_BATIMEOUT *event);
 mlan_status wlan_ret_11n_addba_resp(mlan_private *priv, HostCmd_DS_COMMAND *resp);
 mlan_status wlan_cmd_11n_delba(mlan_private *priv, HostCmd_DS_COMMAND *cmd, void *pdata_buf);
 mlan_status wlan_cmd_11n_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND *cmd, void *pdata_buf);
 mlan_status wlan_cmd_11n_uap_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND *cmd, void *pdata_buf);
-mlan_status wlan_cmd_11n_addba_req(mlan_private *priv, HostCmd_DS_COMMAND *cmd, void *pdata_buf);
+mlan_status wlan_cmd_11n_addba_req(mlan_private *priv, HostCmd_DS_COMMAND *cmd, t_void *pdata_buf);
 void wlan_11n_cleanup_reorder_tbl(mlan_private *priv);
 RxReorderTbl *wlan_11n_get_rxreorder_tbl(mlan_private *priv, int tid, t_u8 *ta);
 
 
-void wlan_update_rxreorder_tbl(pmlan_adapter pmadapter, t_u8 flag);
+void wlan_update_rxreorder_tbl(pmlan_adapter pmadapter, bool flag);
 
 /** clean up reorder_tbl */
 void wlan_cleanup_reorder_tbl(mlan_private *priv, t_u8 *ta);

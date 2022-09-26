@@ -81,31 +81,14 @@ uint8_t decoder_src_pad_event_handler(StreamPad *pad, StreamEvent *event)
 
     STREAMER_LOG_DEBUG(DBG_DECODER, "[Decoder]Event: %d\n", EVENT_TYPE(event) >> 4);
 
-    /* For a seek event if the format is time then check if the source element
-     * supports seek in time, if yes, then it just forwards seek event else
-     * calls the decoder specific event handler function to convert time to
-     * bytes and send it forward.
-     */
-    if (EVENT_TYPE(event) == EVENT_SEEK && EVENT_FORMAT(event) == DATA_FORMAT_TIME)
-    {
-        if (true == decoder_is_source_seekable(dec_element, DATA_FORMAT_TIME))
-        {
-            ret = pad_push_event(sink, event);
-        }
-    }
-
-    /* If time seek is not supported or if time seek event has an issue then
-     * continue handling the event.
-     */
-    if (event_func && (uint8_t) false == ret)
+    /* For a seek event, calls the decoder specific event handler function.*/
+    if ((event_func != NULL) && ((uint8_t) false == ret))
     {
         /* call the decoder specific event handler function */
         ret = event_func(pad, event);
     }
 
-    /* If event not handled till now neither by the time seek, not by specific
-     * decoders then push the event forward.
-     */
+    /* If event not handled till now then push the event forward. */
     if ((uint8_t) false == ret)
     {
         /* handle the event */
@@ -239,7 +222,7 @@ uint8_t decoder_sink_pad_activation_handler(StreamPad *pad, uint8_t active)
                 ret = handler(pad, active);
             }
             /* For activation, activate the peer source pad in push mode. */
-            if ((uint8_t) true == ret && (uint8_t) true == active)
+            if ((uint8_t) true == ret)
             {
                 /* Activate/Deactivate peer source pads in PULL mode */
                 ret = pad_activate_pull(pad->peer, active);

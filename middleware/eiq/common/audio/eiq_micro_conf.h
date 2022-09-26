@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,15 +11,20 @@
 #include "fsl_sai_edma.h"
 #include "fsl_dmamux.h"
 #include "fsl_codec_common.h"
+#ifdef DEMO_CODEC_WM8962
+#include "fsl_wm8962.h"
+#else
 #include "fsl_wm8960.h"
+#endif
 #include "fsl_codec_adapter.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
+#define DEMO_CODEC_VOLUME 100
+
 /* SAI instance and clock */
-#define DEMO_CODEC_WM8960
 #define DEMO_SAI SAI1
 #define DEMO_SAI_CHANNEL (0)
 #define DEMO_SAI_BITWIDTH (kSAI_WordWidth16bits)

@@ -44,13 +44,9 @@ static uint8_t eap_sink_pad_activation_handler(StreamPad *pad, uint8_t active)
 
     if (true == ret)
     {
-        /* In case of activation, activate the peer source pad to push mode. */
-        if (true == active)
-        {
-            /* Activate/Deactivate peer source pads in PUSH mode */
-            eap_element->current_index = 0;
-            ret                        = pad_activate_push(pad->peer, active);
-        }
+        /* Activate/Deactivate peer source pads in PUSH mode */
+        eap_element->current_index = 0;
+        ret                        = pad_activate_push(pad->peer, active);
     }
 
     if (ret != true)
@@ -136,13 +132,16 @@ static FlowReturn eap_sink_pad_chain_handler(StreamPad *pad, StreamBuffer *buf)
         }
         // check this is correctly writen
         args = eap_element->arg_ptr;
-        if (sample_rate)
+        if (args != NULL)
         {
-            args->sample_rate = sample_rate;
-        }
-        if (channels)
-        {
-            args->num_channels = channels;
+            if (sample_rate)
+            {
+                args->sample_rate = sample_rate;
+            }
+            if (channels)
+            {
+                args->num_channels = channels;
+            }
         }
 
         eap_ret = eap_element->init_func(args);
@@ -158,6 +157,11 @@ static FlowReturn eap_sink_pad_chain_handler(StreamPad *pad, StreamBuffer *buf)
     }
 
     /* Call the process function pointer */
+    if (eap_element->proc_func == NULL)
+    {
+        STREAMER_LOG_DEBUG(DBG_EAP, "[Eap]Process function pointer not initialized!");
+        return FLOW_ERROR;
+    }
     eap_ret = eap_element->proc_func(&channels, (long *)data_ptr, chunk_size);
     if (eap_ret != 0)
     {
@@ -168,13 +172,16 @@ static FlowReturn eap_sink_pad_chain_handler(StreamPad *pad, StreamBuffer *buf)
     else
     { /* Set the chunk size and num channels to align with crossover */
         args = eap_element->arg_ptr;
-        if (args->xo_enabled == true)
+        if (args != NULL)
         {
-            if (args->num_channels == 1)
+            if (args->xo_enabled == true)
             {
-                AUDIO_CHUNK_SIZE(data_packet)   = 2 * chunk_size;
-                AUDIO_NUM_CHANNELS(data_packet) = 2;
-                buf->size                       = AUDIO_CHUNK_SIZE(data_packet) + pkt_hdr_size;
+                if (args->num_channels == 1)
+                {
+                    AUDIO_CHUNK_SIZE(data_packet)   = 2 * chunk_size;
+                    AUDIO_NUM_CHANNELS(data_packet) = 2;
+                    buf->size                       = AUDIO_CHUNK_SIZE(data_packet) + pkt_hdr_size;
+                }
             }
         }
     }
@@ -211,11 +218,23 @@ ERR:
 
 static uint8_t eap_sink_pad_event_handler(StreamPad *pad, StreamEvent *event)
 {
-    uint8_t ret = true;
+    uint8_t ret         = true;
+    ElementEap *element = NULL;
+    StreamPad *peer     = NULL;
 
     STREAMER_FUNC_ENTER(DBG_EAP);
 
     CHK_ARGS(NULL == pad, false);
+
+    /* get the parent element from the pad */
+    element = PAD_PARENT(pad);
+    CHK_ARGS(NULL == element, false);
+
+    peer = ELEMENT_SRC_PAD(element, 0);
+    CHK_ARGS(NULL == peer, false);
+
+    peer = PAD_PEER(peer);
+    CHK_ARGS(NULL == peer, false);
 
     /* Device driver type */
 
@@ -241,6 +260,7 @@ static uint8_t eap_sink_pad_event_handler(StreamPad *pad, StreamEvent *event)
             case EVENT_FLUSH_STOP:
                 break;
             case EVENT_NEWSEGMENT:
+                ret = pad_send_event(peer, event);
                 break;
             default:
                 ret = pad_send_event(pad, event);
@@ -627,13 +647,13 @@ int32_t eap_set_buffer(ElementHandle element_hdl, char *location_ptr, uint32_t s
     return ret;
 }
 
-bool eap_register_ext_processing(ElementHandle element,
-                                 EapInitFunc init_func_ptr,
-                                 EapPostProcFunc proc_func_ptr,
-                                 EapDeinitFunc deinit_func_ptr,
-                                 void *arg_ptr)
+int32_t eap_register_ext_processing(ElementHandle element,
+                                    EapInitFunc init_func_ptr,
+                                    EapPostProcFunc proc_func_ptr,
+                                    EapDeinitFunc deinit_func_ptr,
+                                    void *arg_ptr)
 {
-    bool ret = false;
+    int32_t ret = STREAM_OK;
 
     ElementEap *eap_ptr = (ElementEap *)element;
 
@@ -642,7 +662,7 @@ bool eap_register_ext_processing(ElementHandle element,
     if ((NULL == eap_ptr) || (NULL == init_func_ptr) || (NULL == proc_func_ptr) || (NULL == deinit_func_ptr))
     {
         STREAMER_FUNC_EXIT(DBG_EAP);
-        return false;
+        return STREAM_ERR_INVALID_ARGS;
     }
 
     eap_ptr->init_func   = init_func_ptr;

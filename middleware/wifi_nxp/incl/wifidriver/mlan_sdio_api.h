@@ -78,7 +78,7 @@ int sdio_drv_creg_read(int addr, int fn, uint32_t *resp);
  *  \param resp Response of CMD52
  *  \return true on success, false otherwise
  */
-int sdio_drv_creg_write(int addr, int fn, uint8_t data, uint32_t *resp);
+bool sdio_drv_creg_write(int addr, int fn, uint8_t data, uint32_t *resp);
 /** Read Data from SDIO
  *
  * This is used to read data from SDIO card using CMD53.

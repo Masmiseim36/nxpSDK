@@ -12,6 +12,7 @@ var a00023 =
       [ "kCODEC_AK4458", "a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a67f0293553ad8cc4bbb432b6b09f6900", null ],
       [ "kCODEC_TFA9XXX", "a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a448b697ab0cc0c28740e77484faad04f", null ],
       [ "kCODEC_TFA9896", "a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a899f42fede26bf5fd37ea863fb4e5624", null ],
+      [ "kCODEC_WM8962", "a00248.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a018d6b6d07eab64fe414983199950dc8", null ],
       [ "callback", "a00023.html#aa6a47749cad9e09b544d2a4038b6e420", null ],
       [ "userData", "a00023.html#ad1efb23fc99dcbde281ccca7fcbe5d1f", null ],
       [ "rxSize", "a00023.html#a9560b4e1d59b1cce760c8a49616ee5a4", null ],

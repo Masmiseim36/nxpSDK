@@ -28,8 +28,14 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
     // [filesrc] => [eap] => [audiosink]
     //
     task_data->pipeline_type = pipeline_type;
+
     // Create pipeline
     ret = create_pipeline(&task_data->pipes[pipeline_index], pipeline_index, pipeline_type, &task_data->mq_out);
+    if (ret != STREAM_OK)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create_pipeline(%d) failed: %d\n", 0, ret);
+        goto err_catch;
+    }
 
     // Create filesrc
     ret = create_element(&task_data->elems[ELEMENT_FILE_SRC_INDEX], TYPE_ELEMENT_FILE_SRC, 0);
@@ -99,7 +105,7 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
         if (STREAM_OK != ret)
         {
             STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element(%d) to element(%d) failed:%d\n",
-                             ELEMENT_DECODER_INDEX, ELEMENT_EAP_INDEX, ret);
+                             ELEMENT_FILE_SRC_INDEX, ELEMENT_EAP_INDEX, ret);
             goto err_catch;
         }
 
@@ -151,6 +157,20 @@ int streamer_build_pcm_speaker_pipeline(int8_t pipeline_index, StreamPipelineTyp
     {
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "set element(%d) property(%d) failed:%d\n",
                          ELEMENT_AUDIO_SINK_INDEX, PROP_AUDIOSINK_TIME_UPDATE_MS, ret);
+        goto err_catch;
+    }
+
+    // Configure filesrc
+    /* Set file type */
+    prop.prop = PROP_FILESRC_SET_FILE_TYPE;
+    prop.val  = AUDIO_DATA;
+
+    ret = element_set_property(task_data->elems[ELEMENT_FILE_SRC_INDEX], prop.prop, prop.val);
+
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "set element(%d) property(%d) failed:%d\n", ELEMENT_FILE_SRC_INDEX,
+                         PROP_FILESRC_SET_FILE_TYPE, ret);
         goto err_catch;
     }
 
@@ -233,8 +253,13 @@ int streamer_destroy_pcm_speaker_pipeline(int8_t pipeline_index, STREAMER_T *tas
     {
         // EAP also needs to deinit external lib
         ElementEap *eap_ptr = (ElementEap *)task_data->elems[ELEMENT_EAP_INDEX];
-        ret                 = eap_ptr->deinit_func();
-        if (ret != 0)
+        if (eap_ptr->deinit_func == NULL)
+        {
+            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "External EAP deinit function is not registered");
+            return STREAM_ERR_GENERAL;
+        }
+        ret = eap_ptr->deinit_func();
+        if (ret != STREAM_OK)
         {
             STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to deinit EAP with error: %d\n", ret);
             return STREAM_ERR_GENERAL;
@@ -246,7 +271,7 @@ int streamer_destroy_pcm_speaker_pipeline(int8_t pipeline_index, STREAMER_T *tas
             STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to destroy decoder\n");
             return ret;
         }
-        task_data->elems[ELEMENT_EAP_INDEX] = 0;
+        task_data->elems[ELEMENT_EAP_INDEX] = (uintptr_t)NULL;
     }
 
     // audiosink
@@ -256,7 +281,7 @@ int streamer_destroy_pcm_speaker_pipeline(int8_t pipeline_index, STREAMER_T *tas
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Destroy element %d failed: %d\n", ELEMENT_AUDIO_SINK_INDEX, ret);
         return ret;
     }
-    task_data->elems[ELEMENT_AUDIO_SINK_INDEX] = 0;
+    task_data->elems[ELEMENT_AUDIO_SINK_INDEX] = (uintptr_t)NULL;
 
     // filesrc
     ret = destroy_element(task_data->elems[ELEMENT_FILE_SRC_INDEX]);
@@ -265,7 +290,7 @@ int streamer_destroy_pcm_speaker_pipeline(int8_t pipeline_index, STREAMER_T *tas
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Destroy element %d failed: %d\n", ELEMENT_FILE_SRC_INDEX, ret);
         return ret;
     }
-    task_data->elems[ELEMENT_FILE_SRC_INDEX] = 0;
+    task_data->elems[ELEMENT_FILE_SRC_INDEX] = (uintptr_t)NULL;
 
     /* destroy pipeline*/
     ret = destroy_pipeline(task_data->pipes[pipeline_index]);
@@ -274,7 +299,7 @@ int streamer_destroy_pcm_speaker_pipeline(int8_t pipeline_index, STREAMER_T *tas
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to destroy pipeline\n");
         return ret;
     }
-    task_data->pipes[pipeline_index] = 0;
+    task_data->pipes[pipeline_index] = (uintptr_t)NULL;
 
     return STREAM_OK;
 }

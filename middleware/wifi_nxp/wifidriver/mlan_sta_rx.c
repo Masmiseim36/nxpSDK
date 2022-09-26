@@ -143,7 +143,7 @@ mlan_status wlan_process_rx_packet(pmlan_adapter pmadapter, pmlan_buffer pmbuf)
     ret = pmadapter->callbacks.moal_recv_packet(pmadapter->pmoal_handle, pmbuf);
     if (ret == MLAN_STATUS_FAILURE)
     {
-        pmbuf->status_code = MLAN_ERROR_PKT_INVALID;
+        pmbuf->status_code = (t_u32)MLAN_ERROR_PKT_INVALID;
         PRINTM(MERROR, "STA Rx Error: moal_recv_packet returned error\n");
     }
     /* done: */
@@ -194,7 +194,7 @@ mlan_status wlan_ops_sta_process_rx_packet(IN t_void *adapter, IN pmlan_buffer p
                "Wrong rx packet: len=%d,rx_pkt_offset=%d,"
                " rx_pkt_length=%d\n",
                pmbuf->data_len, prx_pd->rx_pkt_offset, prx_pd->rx_pkt_length);
-        pmbuf->status_code = MLAN_ERROR_PKT_SIZE_INVALID;
+        pmbuf->status_code = (t_u32)MLAN_ERROR_PKT_SIZE_INVALID;
         ret                = MLAN_STATUS_FAILURE;
         wlan_free_mlan_buffer(pmadapter, pmbuf);
         goto done;

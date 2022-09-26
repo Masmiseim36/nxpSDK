@@ -17,6 +17,9 @@
 #include "memory.h"
 #include "property.h"
 #include "serial_packet.h"
+#if BL_FEATURE_OCOTP_MODULE_FUSE_LOCKED
+#include "bl_ocotp.h"
+#endif //BL_FEATURE_OCOTP_MODULE_FUSE_LOCKED
 
 ////////////////////////////////////////////////////////////////////////////////
 // Declarations
@@ -335,7 +338,13 @@ status_t bootloader_property_get(uint8_t tag, uint32_t id, const void **value, u
             returnValue = &propertyStore->reliableUpdateStatus;
             break;
 #endif // BL_FEATURE_RELIABLE_UPDATE
-
+#if BL_FEATURE_OCOTP_MODULE_FUSE_LOCKED
+        case kPropertyTag_FuseLockedStatus:
+        {
+            ocotp_get_locked_status(OCOTP, (uint32_t **)&returnValue, &returnSize);
+            break;
+        }
+#endif // BL_FEATURE_OCOTP_MODULE_FUSE_LOCKED
         default:
             return kStatus_UnknownProperty;
     }

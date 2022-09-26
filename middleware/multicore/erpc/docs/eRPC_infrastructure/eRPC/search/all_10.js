@@ -39,7 +39,7 @@ var searchData=
   ['sharedstate',['SharedState',['../classerpc_1_1_inter_thread_buffer_transport.html#structerpc_1_1_inter_thread_buffer_transport_1_1_shared_state',1,'erpc::InterThreadBufferTransport']]],
   ['simpleserver',['SimpleServer',['../classerpc_1_1_simple_server.html#a02c18785b49f6e65017f58530480183d',1,'erpc::SimpleServer']]],
   ['simpleserver',['SimpleServer',['../classerpc_1_1_simple_server.html',1,'erpc']]],
-  ['size',['size',['../classerpc_1_1_static_queue.html#a90d03fc6a09db2f2e9ad4f722ba81547',1,'erpc::StaticQueue']]],
+  ['size',['size',['../classerpc_1_1_static_queue.html#a6aa550f3bbbaacfa92e2a91215c899ed',1,'erpc::StaticQueue']]],
   ['sleep',['sleep',['../classerpc_1_1_thread.html#a22708d7df4c6ddd86564abbc7f81af08',1,'erpc::Thread']]],
   ['spi_20master',['SPI Master',['../group__spi__master__transport.html',1,'']]],
   ['spi_20slave',['SPI Slave',['../group__spi__slave__transport.html',1,'']]],

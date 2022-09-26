@@ -142,6 +142,7 @@ int32_t destroy_pipeline(PipelineHandle handle)
 
     /* De-allocate memory for the pipeline */
     OSA_MemoryFree(pipeline);
+    pipeline = NULL;
 
     STREAMER_FUNC_EXIT(DBG_CORE);
     return STREAM_OK;
@@ -444,7 +445,7 @@ int32_t query_info_pipeline(PipelineHandle handle, StreamInfoType info_type, Str
             STREAMER_FUNC_EXIT(DBG_CORE);
             return ret;
 
-        case INFO_FILE_SIZE:
+        case INFO_SIZE:
             type = DATA_TYPE_UINT32;
             break;
 
@@ -636,6 +637,8 @@ int32_t send_msg_pipeline(Pipeline *pipeline, StreamMessage *msg)
     CHK_ARGS(pipeline == NULL || msg == NULL, STREAM_ERR_INVALID_ARGS);
 
     streamer_msg.pipeline_index = pipeline->index;
+    streamer_msg.state          = pipeline->state;
+    streamer_msg.pipeline_type  = pipeline->type;
     switch (msg->message)
     {
         case MSG_EOS:

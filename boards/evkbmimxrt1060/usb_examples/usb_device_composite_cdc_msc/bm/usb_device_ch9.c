@@ -992,7 +992,12 @@ static usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
     uint8_t state       = 0U;
 
     /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
-    if ((USB_CANCELLED_TRANSFER_LENGTH == message->length) || (NULL == callbackParam))
+    if (USB_CANCELLED_TRANSFER_LENGTH == message->length)
+    {
+        return kStatus_USB_Success;
+    }
+
+    if (NULL == callbackParam)
     {
         return status;
     }

@@ -58,6 +58,7 @@ const registerreadlist_t cFxls8962OutputNormal[] = {{.readFrom = FXLS8962_OUT_X_
 int main(void)
 {
     int32_t status;
+    uint8_t whoami;
     uint8_t dataReady;
     uint8_t data[FXLS8962_DATA_SIZE];
     fxls8962_acceldata_t rawData;
@@ -71,7 +72,7 @@ int main(void)
     BOARD_SystickEnable();
     BOARD_InitDebugConsole();
 
-    PRINTF("\r\n ISSDK FXLS8962 sensor driver example demonstration with poll mode\r\n");
+    PRINTF("\r\n ISSDK FXLS896x sensor driver example demonstration with poll mode\r\n");
 
     /*! Initialize the I2C driver. */
     status = I2Cdrv->Initialize(I2C_S_SIGNAL_EVENT);
@@ -99,13 +100,28 @@ int main(void)
 
     /*! Initialize FXLS8962 sensor driver. */
     status = FXLS8962_I2C_Initialize(&fxls8962Driver, &I2C_S_DRIVER, I2C_S_DEVICE_INDEX, FXLS8962_I2C_ADDR,
-                                     FXLS8962_WHOAMI_VALUE);
+                                     &whoami);
     if (ARM_DRIVER_OK != status)
     {
         PRINTF("\r\n Sensor Initialization Failed\r\n");
         return -1;
     }
-    PRINTF("\r\n Successfully Initiliazed Sensor\r\n");
+    if ((FXLS8964_WHOAMI_VALUE == whoami) || (FXLS8967_WHOAMI_VALUE == whoami))
+    {
+    	PRINTF("\r\n Successfully Initialized Gemini with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else if (FXLS8974_WHOAMI_VALUE == whoami)
+    {
+    	PRINTF("\r\n Successfully Initialized Timandra with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else if (FXLS8962_WHOAMI_VALUE == whoami)
+    {
+    	PRINTF("\r\n Successfully Initialized Newstein with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else
+    {
+    	PRINTF("\r\n Bad WHO_AM_I = 0x%X\r\n", whoami);
+    }
 
     /*!  Set the task to be executed while waiting for I2C transactions to complete. */
     FXLS8962_I2C_SetIdleTask(&fxls8962Driver, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);
@@ -114,10 +130,10 @@ int main(void)
     status = FXLS8962_I2C_Configure(&fxls8962Driver, cFxls8962ConfigNormal);
     if (ARM_DRIVER_OK != status)
     {
-        PRINTF("\r\n FXLS8962 Sensor Configuration Failed, Err = %d\r\n", status);
+        PRINTF("\r\n FXLS896x Sensor Configuration Failed, Err = %d\r\n", status);
         return -1;
     }
-    PRINTF("\r\n Successfully Applied FXLS8962 Sensor Configuration\r\n");
+    PRINTF("\r\n Successfully Applied FXLS896x Sensor Configuration\r\n");
 
     for (;;) /* Forever loop */
     {

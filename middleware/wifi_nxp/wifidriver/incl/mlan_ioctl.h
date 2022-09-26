@@ -229,7 +229,7 @@ typedef enum _mlan_scan_type
 typedef struct _mlan_ioctl_req
 {
     /** Status code from firmware/driver */
-    t_u32 status_code;
+    mlan_error_code status_code;
     /** BSS index number for multiple BSS support */
     t_u32 bss_index;
     /** Request id */
@@ -957,45 +957,18 @@ typedef struct _mlan_ds_custom_reg_domain
 /** Radio Control Group */
 /*-----------------------------------------------------------------*/
 /** Enumeration for band */
-typedef enum _mlan_band_def
-{
-    BAND_0                   = 0,
-    BAND_B                   = 1,
-    BAND_G                   = 2,
-    BAND_G_B                 = BAND_G | BAND_B,
-    BAND_A                   = 4,
-    BAND_A_B                 = BAND_A | BAND_B,
-    BAND_A_G                 = BAND_A | BAND_G,
-    BAND_A_B_G               = BAND_A | BAND_B | BAND_G,
-    BAND_GN                  = 8,
-    BAND_G_GN                = BAND_G | BAND_GN,
-    BAND_B_G_GN              = BAND_B | BAND_G | BAND_GN,
-    BAND_AN                  = 16,
-    BAND_A_AN                = BAND_A | BAND_AN,
-    BAND_A_G_AN_GN           = BAND_A | BAND_G | BAND_AN | BAND_GN,
-    BAND_A_B_G_GN_AN         = BAND_A | BAND_B | BAND_G | BAND_GN | BAND_AN,
-    BAND_GAC                 = 32,
-    BAND_GN_GAC              = BAND_GN | BAND_GAC,
-    BAND_G_GN_GAC            = BAND_G | BAND_GN | BAND_GAC,
-    BAND_B_G_GN_GAC          = BAND_B | BAND_G | BAND_GN | BAND_GAC,
-    BAND_AAC                 = 64,
-    BAND_A_AN_AAC            = BAND_A | BAND_AN | BAND_AAC,
-    BAND_A_G_AN_GN_AAC       = BAND_A | BAND_G | BAND_AN | BAND_GN | BAND_AAC,
-    BAND_A_B_G_GN_AN_AAC     = BAND_A | BAND_B | BAND_G | BAND_GN | BAND_AN | BAND_AAC,
-    BAND_A_B_G_GN_AN_AAC_GAC = BAND_A | BAND_B | BAND_G | BAND_GN | BAND_AN | BAND_AAC | BAND_GAC,
+#define BAND_B   1U
+#define BAND_G   2U
+#define BAND_A   4U
+#define BAND_GN  8U
+#define BAND_AN  16U
+#define BAND_GAC 32U
+#define BAND_AAC 64U
 #ifdef CONFIG_11AX
-    BAND_GAX                 = 256,
-    BAND_GN_GAC_GAX          = BAND_GN | BAND_GAC | BAND_GAX,
-    BAND_G_GN_GAC_GAX        = BAND_G | BAND_GN | BAND_GAC | BAND_GAX,
-    BAND_B_G_GN_GAC_GAX      = BAND_B | BAND_G | BAND_GN | BAND_GAC | BAND_GAX,
-    BAND_AAX                 = 512,
-    BAND_A_AN_AAC_AAX        = BAND_A | BAND_AN | BAND_AAC | BAND_AAX,
-    BAND_A_G_AN_GN_AAC_AAX   = BAND_A | BAND_G | BAND_AN | BAND_GN | BAND_AAC | BAND_AAX,
-    BAND_A_B_G_GN_AN_AAC_AAX = BAND_A | BAND_B | BAND_G | BAND_GN | BAND_AN | BAND_AAC | BAND_AAX,
-    BAND_A_B_G_GN_AN_AAC_GAC_AAX_GAX =
-        BAND_A | BAND_B | BAND_G | BAND_GN | BAND_AN | BAND_AAC | BAND_GAC | BAND_AAX | BAND_GAX
+#define BAND_GAX 256U
+#define BAND_AAX 512U
 #endif
-} mlan_band_def;
+
 
 /** NO secondary channel */
 #define NO_SEC_CHANNEL 0
@@ -1003,6 +976,8 @@ typedef enum _mlan_band_def
 #define SEC_CHANNEL_ABOVE 1
 /** secondary channel is below primary channel */
 #define SEC_CHANNEL_BELOW 3
+/** secondary channel is 80Mhz bandwidth for 11ac */
+#define CHANNEL_BW_80MHZ 4
 /** Channel bandwidth */
 #define CHANNEL_BW_20MHZ       0
 #define CHANNEL_BW_40MHZ_ABOVE 1
@@ -1012,15 +987,15 @@ typedef enum _mlan_band_def
 typedef struct _mlan_ds_band_cfg
 {
     /** Infra band */
-    mlan_band_def config_bands;
+    t_u16 config_bands;
     /** Ad-hoc start band */
-    mlan_band_def adhoc_start_band;
+    t_u16 adhoc_start_band;
     /** Ad-hoc start channel */
     t_u32 adhoc_channel;
     /** Ad-hoc channel bandwidth */
     t_u32 sec_chan_offset;
     /** fw supported band */
-    mlan_band_def fw_bands;
+    t_u16 fw_bands;
 } mlan_ds_band_cfg;
 
 /** Type definition of mlan_ds_remain_chan for MLAN_OID_REMAIN_CHAN_CFG */
@@ -1264,7 +1239,7 @@ typedef struct _mlan_fw_info
     /** Device support for MIMO abstraction of MCSs */
     t_u8 hw_dev_mcs_support;
     /** fw supported band */
-    mlan_band_def fw_bands;
+    t_u16 fw_bands;
 } mlan_fw_info, *pmlan_fw_info;
 
 /** Version string buffer length */
@@ -1546,6 +1521,7 @@ typedef enum _mlan_auth_mode
 {
     MLAN_AUTH_MODE_OPEN   = 0x00,
     MLAN_AUTH_MODE_SHARED = 0x01,
+    MLAN_AUTH_MODE_FT     = 0x02,
     MLAN_AUTH_MODE_SAE    = 0x03,
     MLAN_AUTH_MODE_NETWORKEAP = 0x80,
     MLAN_AUTH_MODE_AUTO       = 0xFF,
@@ -1556,6 +1532,8 @@ typedef enum
 {
     AssocAgentAuth_Open,
     AssocAgentAuth_Shared,
+    AssocAgentAuth_FastBss,
+    AssocAgentAuth_FastBss_Skip,
     AssocAgentAuth_Wpa3Sae = 6,
     AssocAgentAuth_Auto,
 } AssocAgentAuthType_e;
@@ -1625,6 +1603,8 @@ typedef enum _mlan_psk_type
 #define KEY_FLAG_AES_MCAST_IGTK 0x00000010U
 /** key flag for remove key */
 #define KEY_FLAG_REMOVE_KEY 0x80000000U
+/* Clear all key indexes */
+#define KEY_INDEX_CLEAR_ALL 0x0000000F
 
 /** Type definition of mlan_ds_encrypt_key for MLAN_OID_SEC_CFG_ENCRYPT_KEY */
 typedef struct _mlan_ds_encrypt_key
@@ -1636,7 +1616,7 @@ typedef struct _mlan_ds_encrypt_key
     /** Key index, used as current tx key index when is_current_wep_key is set to MTRUE */
     t_u32 key_index;
     /** Current Tx key flag */
-    t_u32 is_current_wep_key;
+    bool is_current_wep_key;
     /** Key length */
     t_u32 key_len;
     /** Key */
@@ -1842,7 +1822,7 @@ typedef enum _mlan_vht_ldpc
 typedef struct _mlan_band_data_rate
 {
     /** Band configuration */
-    mlan_band_def config_bands;
+    t_u16 config_bands;
     /** BSS mode (Infra or IBSS) */
     mlan_bss_mode bss_mode;
 } mlan_band_data_rate;
@@ -2777,7 +2757,7 @@ typedef struct _mlan_ds_11d_domain_info
     /** Country Code */
     t_u8 country_code[COUNTRY_CODE_LEN];
     /** Band that channels in sub_band belong to */
-    mlan_band_def band;
+    t_u16 band;
     /** No. of subband in below */
     t_u8 no_of_sub_band;
     /** Subband data to send/last sent */
@@ -3054,94 +3034,6 @@ typedef struct _mlan_ds_misc_country_code
     t_u8 country_code[COUNTRY_CODE_LEN];
 } mlan_ds_misc_country_code;
 
-/** BITMAP for subscribe event rssi low */
-#define SUBSCRIBE_EVT_RSSI_LOW MBIT(0)
-/** BITMAP for subscribe event snr low */
-#define SUBSCRIBE_EVT_SNR_LOW MBIT(1)
-/** BITMAP for subscribe event max fail */
-#define SUBSCRIBE_EVT_MAX_FAIL MBIT(2)
-/** BITMAP for subscribe event beacon missed */
-#define SUBSCRIBE_EVT_BEACON_MISSED MBIT(3)
-/** BITMAP for subscribe event rssi high */
-#define SUBSCRIBE_EVT_RSSI_HIGH MBIT(4)
-/** BITMAP for subscribe event snr high */
-#define SUBSCRIBE_EVT_SNR_HIGH MBIT(5)
-/** BITMAP for subscribe event data rssi low */
-#define SUBSCRIBE_EVT_DATA_RSSI_LOW MBIT(6)
-/** BITMAP for subscribe event data snr low */
-#define SUBSCRIBE_EVT_DATA_SNR_LOW MBIT(7)
-/** BITMAP for subscribe event data rssi high */
-#define SUBSCRIBE_EVT_DATA_RSSI_HIGH MBIT(8)
-/** BITMAP for subscribe event data snr high */
-#define SUBSCRIBE_EVT_DATA_SNR_HIGH MBIT(9)
-/** BITMAP for subscribe event link quality */
-#define SUBSCRIBE_EVT_LINK_QUALITY MBIT(10)
-/** BITMAP for subscribe event pre_beacon_lost */
-#define SUBSCRIBE_EVT_PRE_BEACON_LOST MBIT(11)
-/** default PRE_BEACON_MISS_COUNT */
-#define DEFAULT_PRE_BEACON_MISS 30
-
-/** Type definition of mlan_ds_subscribe_evt for MLAN_OID_MISC_CFP_CODE */
-typedef struct _mlan_ds_subscribe_evt
-{
-    /** bitmap for subscribe event */
-    t_u16 evt_bitmap;
-    /** Absolute value of RSSI threshold value (dBm) */
-    t_u8 low_rssi;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 low_rssi_freq;
-    /** SNR threshold value (dB) */
-    t_u8 low_snr;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 low_snr_freq;
-    /** Failure count threshold */
-    t_u8 failure_count;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 failure_count_freq;
-    /** num of missed beacons */
-    t_u8 beacon_miss;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 beacon_miss_freq;
-    /** Absolute value of RSSI threshold value (dBm) */
-    t_u8 high_rssi;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 high_rssi_freq;
-    /** SNR threshold value (dB) */
-    t_u8 high_snr;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 high_snr_freq;
-    /** Absolute value of data RSSI threshold value (dBm) */
-    t_u8 data_low_rssi;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 data_low_rssi_freq;
-    /** Absolute value of data SNR threshold value (dBm) */
-    t_u8 data_low_snr;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 data_low_snr_freq;
-    /** Absolute value of data RSSI threshold value (dBm) */
-    t_u8 data_high_rssi;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 data_high_rssi_freq;
-    /** Absolute value of data SNR threshold value (dBm) */
-    t_u8 data_high_snr;
-    /** 0--report once, 1--report everytime happen, N -- report only happend > N consecutive times */
-    t_u8 data_high_snr_freq;
-    /* Link SNR threshold (dB) */
-    t_u16 link_snr;
-    /* Link SNR frequency */
-    t_u16 link_snr_freq;
-    /* Second minimum rate value as per the rate table below */
-    t_u16 link_rate;
-    /* Second minimum rate frequency */
-    t_u16 link_rate_freq;
-    /* Tx latency value (us) */
-    t_u16 link_tx_latency;
-    /* Tx latency frequency */
-    t_u16 link_tx_lantency_freq;
-    /* Number of pre missed beacons */
-    t_u8 pre_beacon_miss;
-} mlan_ds_subscribe_evt;
-
 /** Max OTP user data length */
 #define MAX_OTP_USER_DATA_LEN 252U
 
@@ -3281,6 +3173,7 @@ typedef PACK_START struct _mlan_ds_mfg_cmd_tx_cont
 } PACK_END mlan_ds_mfg_cmd_tx_cont;
 #endif
 
+
 /** Type definition of mlan_ds_misc_cfg for MLAN_IOCTL_MISC_CFG */
 typedef struct _mlan_ds_misc_cfg
 {
@@ -3319,8 +3212,6 @@ typedef struct _mlan_ds_misc_cfg
         t_u32 thermal;
         /** Mgmt subtype mask for MLAN_OID_MISC_RX_MGMT_IND */
         t_u32 mgmt_subtype_mask;
-        /** subscribe event for MLAN_OID_MISC_SUBSCRIBE_EVENT */
-        mlan_ds_subscribe_evt subscribe_event;
 #ifdef DEBUG_LEVEL1
         /** Driver debug bit masks */
         t_u32 drvdbg;

@@ -127,7 +127,7 @@
 #include <wifi.h>
 #include <wlan_11d.h>
 
-#define WLAN_DRV_VERSION "v1.3.r41.p2"
+#define WLAN_DRV_VERSION "v1.3.r42.p2"
 
 /* Configuration */
 
@@ -228,7 +228,7 @@ typedef enum
  *   specific, and a compile time setting depending on the system
  *   board level build!
  */
-#if defined(SD8997) || defined(SD8977) || defined(SD9098) || defined(SD9064) || defined(RW610)
+#if defined(SD8997) || defined(SD9098) || defined(SD9064) || defined(RW610)
 #define HOST_WAKEUP_GPIO_PIN 12
 #define CARD_WAKEUP_GPIO_PIN 13
 #elif defined(IW61x)
@@ -379,6 +379,7 @@ typedef enum wlan_ps_mode
     WLAN_IEEE,
     /** Deep sleep power save mode */
     WLAN_DEEP_SLEEP,
+    WLAN_IEEE_DEEP_SLEEP,
 } wlan_ps_mode;
 
 enum wlan_ps_state
@@ -393,8 +394,8 @@ typedef enum _ENH_PS_MODES
 {
     GET_PS        = 0,
     SLEEP_CONFIRM = 5,
-    DIS_AUTO_PS   = 0xfe,
-    EN_AUTO_PS    = 0xff,
+    DIS_AUTO_PS = 0xfe,
+    EN_AUTO_PS  = 0xff,
 } ENH_PS_MODES;
 
 typedef enum _Host_Sleep_Action
@@ -402,6 +403,7 @@ typedef enum _Host_Sleep_Action
     HS_CONFIGURE = 0x0001,
     HS_ACTIVATE  = 0x0002,
 } Host_Sleep_Action;
+
 
 /** Scan Result */
 struct wlan_scan_result
@@ -577,7 +579,7 @@ struct wlan_network_security
     char psk[WLAN_PSK_MAX_LENGTH];
     /** Length of the WEP key or WPA/WPA2 pass phrase, \ref WLAN_PSK_MIN_LENGTH to \ref
      * WLAN_PSK_MAX_LENGTH.  Ignored for networks with no security. */
-    char psk_len;
+    uint8_t psk_len;
     /** WPA3 SAE password, for WPA3 SAE networks this is an ASCII
      * password of length password_len.  This field is ignored for networks with no
      * security. */
@@ -681,6 +683,7 @@ typedef wifi_ext_coex_stats_t wlan_ext_coex_stats_t;
  */
 typedef wifi_ext_coex_config_t wlan_ext_coex_config_t;
 #endif
+
 
 int verify_scan_duration_value(int scan_duration);
 int verify_scan_channel_value(int channel);
@@ -871,14 +874,14 @@ struct wlan_network
 
 /** Initialize the SDIO driver and create the wifi driver thread.
  *
- * \param[in]  fw_ram_start_addr Start address of the WLAN firmware in RAM.
- * \param[in]  size Size of the WLAN firmware in RAM.
+ * \param[in]  fw_start_addr Start address of the WLAN firmware.
+ * \param[in]  size Size of the WLAN firmware.
  *
  * \return WM_SUCCESS if the WLAN Connection Manager service has
  *         initialized successfully.
  * \return Negative value if initialization failed.
  */
-int wlan_init(const uint8_t *fw_ram_start_addr, const size_t size);
+int wlan_init(const uint8_t *fw_start_addr, const size_t size);
 
 /** Start the WLAN Connection Manager service.
  *
@@ -1119,7 +1122,7 @@ int wlan_stop_network(const char *name);
  *  \return WM_SUCCESS if the MAC address was copied.
  *  \return -WM_E_INVAL if \a dest is NULL.
  */
-int wlan_get_mac_address(uint8_t *dest);
+int wlan_get_mac_address(unsigned char *dest);
 
 /** Retrieve the IP address configuration of the station interface.
  *
@@ -1386,7 +1389,7 @@ int wlan_scan(int (*cb)(unsigned int count));
  *  \return -WM_FAIL if an internal error has occurred and
  *           the system is unable to scan.
  */
-int wlan_scan_with_opt(wlan_scan_params_v2_t wlan_scan_param);
+int wlan_scan_with_opt(wlan_scan_params_v2_t t_wlan_scan_param);
 
 /** Retrieve a scan result.
  *
@@ -1499,6 +1502,7 @@ void wlan_set_cal_data(uint8_t *cal_data, unsigned int cal_data_size);
  *
  */
 void wlan_set_mac_addr(uint8_t *mac);
+
 
 
 /** Configure Listen interval of IEEE power save mode.
@@ -1664,6 +1668,8 @@ int wlan_get_tsf(uint32_t *tsf_high, uint32_t *tsf_low);
  *            \ref WAKE_ON_MULTICAST,
  *            \ref WAKE_ON_ARP_BROADCAST,
  *            \ref WAKE_ON_MGMT_FRAME
+ *            wnm_set 1: wnm is set. 0: wnm is not set.
+ *            wnm_sleep_time: wnm sleep interval.(number of dtims)
  *
  * \return WM_SUCCESS if the call was successful.
  * \return WLAN_ERROR_STATE if the call was made in a state where such an
@@ -1910,7 +1916,7 @@ int wlan_set_packet_filters(wlan_flt_cfg_t *flt_cfg);
  * \return WM_SUCCESS if operation is successful.
  * \return -WM_FAIL if command fails.
  */
-int wlan_set_auto_arp();
+int wlan_set_auto_arp(void);
 
 
 #ifdef ENABLE_OFFLOAD
@@ -2255,6 +2261,15 @@ int wlan_get_sta_tx_power(t_u32 *power_level);
  *
  */
 int wlan_set_sta_tx_power(t_u32 power_level);
+
+/**
+ * Set World Wide Safe Mode Tx Power Limits
+ *
+ * \return WM_SUCCESS if successful.
+ * \return -WM_FAIL if unsuccessful.
+ *
+ */
+int wlan_set_wwsm_txpwrlimit(void);
 
 /**
  * Get Management IE for given BSS type (interface) and index.
@@ -2881,6 +2896,214 @@ void wlan_register_fw_dump_cb(void (*wlan_usb_init_cb)(void),
 
 #endif
 
+#define EU_CRYPTO_DATA_MAX_LENGTH  1300U
+#define EU_CRYPTO_KEY_MAX_LENGTH   32U
+#define EU_CRYPTO_KEYIV_MAX_LENGTH 32U
+#define EU_CRYPTO_NONCE_MAX_LENGTH 14U
+#define EU_CRYPTO_AAD_MAX_LENGTH   32U
+
+/** Set Crypto RC4 algorithm encrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] KeyIV KeyIV
+ * \param[in] KeyIVLength The maximum keyIV length is 32.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the encrypted
+ * data. The value of DataLength is updated to the encrypted data length. The length of the encrypted data is the same
+ * as the origin DataLength.
+ */
+int wlan_set_crypto_RC4_encrypt(
+    const t_u8 *Key, const t_u16 KeyLength, const t_u8 *KeyIV, const t_u16 KeyIVLength, t_u8 *Data, t_u16 *DataLength);
+
+/** Set Crypto RC4 algorithm decrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] KeyIV KeyIV
+ * \param[in] KeyIVLength The maximum keyIV length is 32.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the decrypted
+ * data. The value of DataLength is updated to the decrypted data length. The length of the decrypted data is the same
+ * as the origin DataLength.
+ */
+int wlan_set_crypto_RC4_decrypt(
+    const t_u8 *Key, const t_u16 KeyLength, const t_u8 *KeyIV, const t_u16 KeyIVLength, t_u8 *Data, t_u16 *DataLength);
+
+/** Set Crypto AES_ECB algorithm encrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] KeyIV KeyIV
+ * \param[in] KeyIVLength The maximum keyIV length is 32.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the encrypted
+ * data. The value of DataLength is updated to the encrypted data length. The length of the encrypted data is the same
+ * as the origin DataLength.
+ */
+int wlan_set_crypto_AES_ECB_encrypt(
+    const t_u8 *Key, const t_u16 KeyLength, const t_u8 *KeyIV, const t_u16 KeyIVLength, t_u8 *Data, t_u16 *DataLength);
+
+/** Set Crypto AES_ECB algorithm decrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] KeyIV KeyIV
+ * \param[in] KeyIVLength The maximum keyIV length is 32.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the decrypted
+ * data. The value of DataLength is updated to the decrypted data length. The length of the decrypted data is the same
+ * as the origin DataLength.
+ */
+int wlan_set_crypto_AES_ECB_decrypt(
+    const t_u8 *Key, const t_u16 KeyLength, const t_u8 *KeyIV, const t_u16 KeyIVLength, t_u8 *Data, t_u16 *DataLength);
+
+/** Set Crypto AES_WRAP algorithm encrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] KeyIV KeyIV
+ * \param[in] KeyIVLength The maximum keyIV length is 32.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the encrypted
+ * data. The value of DataLength is updated to the encrypted data length. The encrypted data is 8 bytes more than the
+ * original data. Therefore, the address pointed to by Data needs to reserve enough space.
+ */
+int wlan_set_crypto_AES_WRAP_encrypt(
+    const t_u8 *Key, const t_u16 KeyLength, const t_u8 *KeyIV, const t_u16 KeyIVLength, t_u8 *Data, t_u16 *DataLength);
+
+/** Set Crypto AES_WRAP algorithm decrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] KeyIV KeyIV
+ * \param[in] KeyIVLength The maximum keyIV length is 32.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the decrypted
+ * data. The value of DataLength is updated to the decrypted data length. The decrypted data is 8 bytes less than the
+ * original data.
+ */
+int wlan_set_crypto_AES_WRAP_decrypt(
+    const t_u8 *Key, const t_u16 KeyLength, const t_u8 *KeyIV, const t_u16 KeyIVLength, t_u8 *Data, t_u16 *DataLength);
+
+/** Set Crypto AES_CCMP algorithm encrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] AAD AAD
+ * \param[in] AADLength The maximum AAD length is 32.
+ * \param[in] Nonce Nonce
+ * \param[in] NonceLength The maximum Nonce length is 14.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the encrypted
+ * data. The value of DataLength is updated to the encrypted data length. The encrypted data is 8 or 16 bytes more than
+ * the original data. Therefore, the address pointed to by Data needs to reserve enough space.
+ */
+int wlan_set_crypto_AES_CCMP_encrypt(const t_u8 *Key,
+                                     const t_u16 KeyLength,
+                                     const t_u8 *AAD,
+                                     const t_u16 AADLength,
+                                     const t_u8 *Nonce,
+                                     const t_u16 NonceLength,
+                                     t_u8 *Data,
+                                     t_u16 *DataLength);
+
+/** Set Crypto AES_CCMP algorithm decrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] AAD AAD
+ * \param[in] AADLength The maximum AAD length is 32.
+ * \param[in] Nonce Nonce
+ * \param[in] NonceLength The maximum Nonce length is 14.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the decrypted
+ * data. The value of DataLength is updated to the decrypted data length. The decrypted data is 8 or 16 bytes less than
+ * the original data.
+ */
+int wlan_set_crypto_AES_CCMP_decrypt(const t_u8 *Key,
+                                     const t_u16 KeyLength,
+                                     const t_u8 *AAD,
+                                     const t_u16 AADLength,
+                                     const t_u8 *Nonce,
+                                     const t_u16 NonceLength,
+                                     t_u8 *Data,
+                                     t_u16 *DataLength);
+
+/** Set Crypto AES_GCMP algorithm encrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] AAD AAD
+ * \param[in] AADLength The maximum AAD length is 32.
+ * \param[in] Nonce Nonce
+ * \param[in] NonceLength The maximum Nonce length is 14.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the encrypted
+ * data. The value of DataLength is updated to the encrypted data length. The encrypted data is 16 bytes more than the
+ * original data. Therefore, the address pointed to by Data needs to reserve enough space.
+ */
+int wlan_set_crypto_AES_GCMP_encrypt(const t_u8 *Key,
+                                     const t_u16 KeyLength,
+                                     const t_u8 *AAD,
+                                     const t_u16 AADLength,
+                                     const t_u8 *Nonce,
+                                     const t_u16 NonceLength,
+                                     t_u8 *Data,
+                                     t_u16 *DataLength);
+
+/** Set Crypto AES_CCMP algorithm decrypt command param.
+ *
+ * \param[in] Key key
+ * \param[in] KeyLength The maximum key length is 32.
+ * \param[in] AAD AAD
+ * \param[in] AADLength The maximum AAD length is 32.
+ * \param[in] Nonce Nonce
+ * \param[in] NonceLength The maximum Nonce length is 14.
+ * \param[in] Data Data
+ * \param[in] DataLength The maximum Data length is 1300.
+ *
+ * \return WM_SUCCESS if successful otherwise failure.
+ * \note If the function returns WM_SUCCESS, the data in the memory pointed to by Data is overwritten by the decrypted
+ * data. The value of DataLength is updated to the decrypted data length. The decrypted data is 16 bytes less than the
+ * original data.
+ */
+int wlan_set_crypto_AES_GCMP_decrypt(const t_u8 *Key,
+                                     const t_u16 KeyLength,
+                                     const t_u8 *AAD,
+                                     const t_u16 AADLength,
+                                     const t_u8 *Nonce,
+                                     const t_u16 NonceLength,
+                                     t_u8 *Data,
+                                     t_u16 *DataLength);
+
 
 /**
  * This function sends the host command to f/w and copies back response to caller provided buffer in case of
@@ -2911,7 +3134,7 @@ void wlan_register_fw_dump_cb(void (*wlan_usb_init_cb)(void),
  */
 
 int wlan_send_hostcmd(
-    void *cmd_buf, uint32_t cmd_buf_len, void *resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len);
+    void *cmd_buf, uint32_t cmd_buf_len, void *host_resp_buf, uint32_t resp_buf_len, uint32_t *reqd_resp_len);
 
 #ifdef CONFIG_11AX
 /**
@@ -2924,5 +3147,16 @@ int wlan_send_hostcmd(
  */
 int wlan_set_11ax_tx_omi(const t_u16 tx_omi);
 #endif
+
+#ifdef CONFIG_HEAP_DEBUG
+/**
+ * Show os mem alloc and free info.
+ *
+ * \return void.
+ */
+void wlan_show_os_mem_stat();
+#endif
+
+
 
 #endif /* __WLAN_H__ */

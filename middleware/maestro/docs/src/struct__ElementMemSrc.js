@@ -16,5 +16,6 @@ var struct__ElementMemSrc =
     [ "buffer", "struct__ElementMemSrc.html#a584db47b09e5067d4d1b353a764c111c", null ],
     [ "end_of_stream", "struct__ElementMemSrc.html#a596a4c59eaf25714c20d8b87505f1af2", null ],
     [ "read_position", "struct__ElementMemSrc.html#a4dba174ed42a6a081c6f9131a4ebaeb4", null ],
-    [ "size", "struct__ElementMemSrc.html#a601bfe326d552604257edc3502e49639", null ]
+    [ "size", "struct__ElementMemSrc.html#a601bfe326d552604257edc3502e49639", null ],
+    [ "mem_type", "struct__ElementMemSrc.html#ac5d7a63552bc4187a5299bfa1b770a39", null ]
 ];

@@ -171,7 +171,7 @@ int32_t codec_init(audio_stream_type_t stream_type, int32_t *memory[], int32_t *
     int32_t ret = 0;
 
     if (NULL != g_codec_function_table[stream_type].Init)
-        ret = g_codec_function_table[stream_type].Init(memory, callback_fn, (int32_t *)&user_data[0]);
+        ret = g_codec_function_table[stream_type].Init(memory, callback_fn, user_data);
     else
         ret = CODEC_UNSUPPORTED_FUNCTION;
 

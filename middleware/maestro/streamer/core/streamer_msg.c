@@ -70,9 +70,6 @@ static ElementPropertyLookup property_lookup_table[] = {{PROP_AUDIOSRC_MASK, ELE
 #endif
                                                         {PROP_NETBUFSRC_MASK, ELEMENT_NETBUF_SRC_INDEX},
                                                         {PROP_DECODER_MASK, ELEMENT_DECODER_INDEX},
-#ifdef STREAMER_ENABLE_PARSER
-                                                        {PROP_PARSER_MASK, ELEMENT_AVPARSER_INDEX},
-#endif
                                                         {PROP_AUDIOSINK_MASK, ELEMENT_AUDIO_SINK_INDEX},
 #ifdef STREAMER_ENABLE_FILE_SINK
                                                         {PROP_FILESINK_MASK, ELEMENT_FILE_SINK_INDEX},

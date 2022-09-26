@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing Link, Base, and Object Modules  </title>
+	
+	<base href="OBEX:0x1120/./data_for_01-I-C/" />
+	<!--The base URL above must be changed appropriately to specify a location accessible to the Printer
+	and containing the referenced image and stylesheet.
+	If this test is being sent over a Bluetooth link, the URI will be of the form:
+	"OBEX:0x1120/<basepath>"
+	-->
+	<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+<h2> BPP TSS Section 5.5.1.1 TP/OF/BV-01-I-C [Printer - XHTML - Link, Base and Object Modules]</h2>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<p>Test Purpose: To verify that a printer can correctly print an XHTML-Print object that makes use
+of all tags and constructs defined in the XHTML-Print specification under Link, Base and Object Modules. (Note: This file
+will not correctly display or be tested appropriately unless the the base and link tags in the source code are set for appropriate OBEX URIs.)
+</p>
+
+<h2> Testing the Link Module Tag and the Base Module Tag</h2>
+<h4> This text must be red, bold and in italics </h4>
+<p><br /><br /></p>
+
+<h2>Testing the Object Module Tag</h2>
+<p><object type ="image/jpeg" data="feynman.jpg"  width="1.76in" height="2.98in">
+<param name = "param1" />
+</object></p>
+
+
+<p> Above this line should be an image of Richard Feynman. </p>
+<p><br /><br /></p>
+<h3>end of test</h3>
+
+
+
+</body>
+</html>

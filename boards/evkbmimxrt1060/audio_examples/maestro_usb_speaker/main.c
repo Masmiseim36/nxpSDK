@@ -162,7 +162,7 @@ void APP_Shell_Task(void *param)
 
     /* Handle shell commands.  Return when 'exit' command entered. */
     shellCmd(handleShellMessage, param);
-
+    vTaskSuspend(NULL);
     while (1)
         ;
 }

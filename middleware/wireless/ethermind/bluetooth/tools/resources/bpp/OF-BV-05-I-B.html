@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//PWG//DTD XHTML-Print 1.0//EN"
+		  "http://www.pwg.org/xhtml-print/xhtml-print10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Testing CSS Constructs for Enhanced Layout - Part 2</title>
+	<style type="text/css">
+	
+	p{border-style:solid;}
+	.border{border-left-color: purple; border-right-style:plain; border-bottom-width:2mm;}
+	.style1{border-color: blue red green yellow;border-width:.25in;}
+	.style2{border-top-color: blue; border-right-color: red; border-bottom-color: green;
+	   border-left-color: yellow;border-width: .5in;}
+	.style3{border-color: green;border-width: 8mm 4mm;}
+	.style4{border-color: blue; border-bottom-style:none;}
+	</style>
+</head>
+
+<body>
+<h1> BPP TSS Section 5.5.1.5 TP/OF/BV-05-I-B [Printer - XHTML: CSS Constructs for Enhanced Layout - Part 2]</h1>
+<h6>  This test is part of a suite of qualification tests for printing in conformance with the Bluetooth Basic Printing Profile, (C) Bluetooth SIG. 
+<br /> Last Modified:  09/21/02 </h6>
+<hr />
+<p style = "border-style:none"><br /></p>
+<h2> Testing border constructs</h2>
+<p style = "border-style:none"><br /></p>
+
+<p class = "style1">This paragraph should have the following border-colors. The top 
+border must be blue, the right border must be red, the bottom border must be green, and the
+left border must be yellow.
+</p>
+<p style = "border-style:none"><br /><br /></p>
+<p class = "style2">This paragraph should have the same border-colors as the
+previous paragraph, but the border width should be approximately twice as thick. 
+</p>
+<p style = "border-style:none"><br /><br /></p>
+<p class = "style3">This paragraph should have a green border. The top and bottom
+borders should be twice as thick as the left and right borders. 
+</p>
+<p style = "border-style:none"><br /><br /></p>
+<p class = "style4">This paragraph should have a blue border, but the bottom
+border should be missing.
+This is just some text. This is just some text. This is just some text. This is just some text. This is just some text.
+This is just some text. This is just some text. This is just some text. This is just some text. This is just some text.</p>
+
+<p style = "border-style:none"><br /><br /></p>
+<h3>end of test</h3>
+
+
+
+
+
+</body>
+</html>

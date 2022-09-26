@@ -17,6 +17,7 @@
 #include <cli_utils.h>
 #include <wlan.h>
 
+#include "iperf.h"
 #include "lwiperf.h"
 #include "lwip/tcpip.h"
 
@@ -39,25 +40,25 @@ struct iperf_test_context
 };
 
 static struct iperf_test_context ctx;
-os_timer_t ptimer;
-ip_addr_t server_address;
-ip_addr_t bind_address;
-bool multicast;
+static os_timer_t ptimer;
+static ip_addr_t server_address;
+static ip_addr_t bind_address;
+static bool multicast;
 #ifdef CONFIG_IPV6
-bool ipv6;
+static bool ipv6;
 #endif
-int amount                   = IPERF_CLIENT_AMOUNT;
-unsigned int udp_rate_factor = IPERF_UDP_DEFAULT_FACTOR;
+static int amount                   = IPERF_CLIENT_AMOUNT;
+static unsigned int udp_rate_factor = IPERF_UDP_DEFAULT_FACTOR;
 #ifdef CONFIG_WMM
 uint8_t qos = 0;
 #endif
-uint8_t mcast_mac[6];
-bool mcast_mac_valid;
+static uint8_t mcast_mac[6];
+static bool mcast_mac_valid;
 
 static void timer_poll_udp_client(TimerHandle_t timer);
 
 /* Report state => string */
-const char *report_type_str[] = {
+static const char *report_type_str[] = {
     "TCP_DONE_SERVER (RX)",        /* LWIPERF_TCP_DONE_SERVER,*/
     "TCP_DONE_CLIENT (TX)",        /* LWIPERF_TCP_DONE_CLIENT,*/
     "TCP_ABORTED_LOCAL",           /* LWIPERF_TCP_ABORTED_LOCAL, */
@@ -92,19 +93,29 @@ static void lwiperf_report(void *arg,
         {
 #ifdef CONFIG_IPV6
             if (ipv6)
+            {
                 (void)PRINTF(" Local address : %s ", inet6_ntoa(local_addr->u_addr.ip6));
+            }
             else
 #endif
-                (void)PRINTF(" Local address : %u.%u.%u.%u ", ((u8_t *)local_addr)[0], ((u8_t *)local_addr)[1],
-                             ((u8_t *)local_addr)[2], ((u8_t *)local_addr)[3]);
+            {
+                (void)PRINTF(" Local address : %u.%u.%u.%u ", ((const u8_t *)local_addr)[0],
+                             ((const u8_t *)local_addr)[1], ((const u8_t *)local_addr)[2],
+                             ((const u8_t *)local_addr)[3]);
+            }
             (void)PRINTF(" Port %d \r\n", local_port);
 #ifdef CONFIG_IPV6
             if (ipv6)
+            {
                 (void)PRINTF(" Remote address : %s ", inet6_ntoa(remote_addr->u_addr.ip6));
+            }
             else
 #endif
-                (void)PRINTF(" Remote address : %u.%u.%u.%u ", ((u8_t *)remote_addr)[0], ((u8_t *)remote_addr)[1],
-                             ((u8_t *)remote_addr)[2], ((u8_t *)remote_addr)[3]);
+            {
+                (void)PRINTF(" Remote address : %u.%u.%u.%u ", ((const u8_t *)remote_addr)[0],
+                             ((const u8_t *)remote_addr)[1], ((const u8_t *)remote_addr)[2],
+                             ((const u8_t *)remote_addr)[3]);
+            }
             (void)PRINTF(" Port %d \r\n", remote_port);
             (void)PRINTF(" Bytes Transferred %llu \r\n", bytes_transferred);
             (void)PRINTF(" Duration (ms) %d \r\n", ms_duration);
@@ -136,7 +147,7 @@ static void iperf_test_start(void *arg)
     if (!(ctx->tcp) && ctx->client_type == LWIPERF_DUAL)
     {
         /* Reducing udp Tx timer interval for rx to be served */
-        rv = os_timer_change(&ptimer, os_msec_to_ticks(4), 0);
+        rv = os_timer_change(&ptimer, os_msec_to_ticks(2), 0);
         if (rv != WM_SUCCESS)
         {
             (void)PRINTF("Unable to change period in iperf timer for LWIPERF_DUAL\r\n");
@@ -160,12 +171,16 @@ static void iperf_test_start(void *arg)
         {
 #ifdef CONFIG_IPV6
             if (ipv6)
+            {
                 ctx->iperf_session =
                     lwiperf_start_tcp_server(IP6_ADDR_ANY, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, NULL);
+            }
             else
 #endif
+            {
                 ctx->iperf_session =
                     lwiperf_start_tcp_server(IP_ADDR_ANY, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, NULL);
+            }
         }
         else
         {
@@ -187,12 +202,16 @@ static void iperf_test_start(void *arg)
             }
 #ifdef CONFIG_IPV6
             if (ipv6)
+            {
                 ctx->iperf_session =
                     lwiperf_start_udp_server(IP6_ADDR_ANY, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, NULL);
+            }
             else
 #endif
+            {
                 ctx->iperf_session =
                     lwiperf_start_udp_server(&bind_address, LWIPERF_TCP_PORT_DEFAULT, lwiperf_report, NULL);
+            }
         }
     }
     else
@@ -201,7 +220,9 @@ static void iperf_test_start(void *arg)
         {
 #ifdef CONFIG_IPV6
             if (ipv6)
+            {
                 ip6_addr_assign_zone(ip_2_ip6(&server_address), IP6_UNICAST, netif_default);
+            }
 #endif
             ctx->iperf_session = lwiperf_start_tcp_client(&server_address, LWIPERF_TCP_PORT_DEFAULT, ctx->client_type,
                                                           amount, lwiperf_report, NULL);
@@ -274,6 +295,7 @@ static void iperf_test_abort(void *arg)
         test_ctx->iperf_session = NULL;
     }
 
+    (void)PRINTF("IPERF ABORT DONE\r\n");
     (void)memset(&ctx, 0, sizeof(struct iperf_test_context));
 }
 
@@ -347,6 +369,16 @@ static void UDPServer(void)
     (void)tcpip_callback(iperf_test_start, (void *)&ctx);
 }
 
+static void UDPServerDual(void)
+{
+    ctx.server_mode = true;
+    ctx.tcp         = false;
+    ctx.client_type = LWIPERF_DUAL;
+
+    (void)PRINTF("Bidirectional UDP test simultaneously as server, please add -d with external iperf client\r\n");
+    (void)tcpip_callback(iperf_test_start, (void *)&ctx);
+}
+
 static void UDPClient(void)
 {
     ctx.server_mode = false;
@@ -390,6 +422,8 @@ static void display_iperf_usage(void)
     (void)PRINTF("\t   -a             abort ongoing iperf session\r\n");
     (void)PRINTF("\tServer specific:\r\n");
     (void)PRINTF("\t   -s             run in server mode\r\n");
+    (void)PRINTF(
+        "\t   -D             Do a bidirectional UDP test simultaneously and with -d from external iperf client\r\n");
     (void)PRINTF("\tClient specific:\r\n");
     (void)PRINTF("\t   -c    <host>   run in client mode, connecting to <host>\r\n");
     (void)PRINTF("\t   -d             Do a bidirectional test simultaneously\r\n");
@@ -402,7 +436,7 @@ static void display_iperf_usage(void)
 #endif
 }
 
-void cmd_iperf(int argc, char **argv)
+static void cmd_iperf(int argc, char **argv)
 {
     int arg = 1;
     char ip_addr[128];
@@ -411,7 +445,7 @@ void cmd_iperf(int argc, char **argv)
     {
         unsigned help : 1;
         unsigned udp : 1;
-        unsigned bind : 1;
+        unsigned iperf_bind : 1;
         unsigned bhost : 1;
         unsigned abort : 1;
         unsigned server : 1;
@@ -426,6 +460,7 @@ void cmd_iperf(int argc, char **argv)
 #ifdef CONFIG_IPV6
         unsigned ipv6 : 1;
 #endif
+        unsigned dserver : 1;
     } info;
 
     amount          = IPERF_CLIENT_AMOUNT;
@@ -456,63 +491,68 @@ void cmd_iperf(int argc, char **argv)
 
     do
     {
-        if (!info.help && string_equal("-h", argv[arg]))
+        if ((info.help == 0U) && string_equal("-h", argv[arg]))
         {
             display_iperf_usage();
             return;
         }
-        else if (!info.udp && string_equal("-u", argv[arg]))
+        else if ((info.udp == 0U) && string_equal("-u", argv[arg]))
         {
             arg += 1;
             info.udp = 1;
         }
-        else if (!info.abort && string_equal("-a", argv[arg]))
+        else if ((info.abort == 0U) && string_equal("-a", argv[arg]))
         {
             arg += 1;
             info.abort = 1;
         }
-        else if (!info.server && string_equal("-s", argv[arg]))
+        else if ((info.server == 0U) && string_equal("-s", argv[arg]))
         {
             arg += 1;
             info.server = 1;
         }
-        else if (!info.client && string_equal("-c", argv[arg]))
+        else if ((info.client == 0U) && string_equal("-c", argv[arg]))
         {
             arg += 1;
             info.client = 1;
 
-            if (!info.chost && argv[arg] != NULL)
+            if ((info.chost == 0U) && argv[arg] != NULL)
             {
-                (void)strncpy(ip_addr, argv[arg], strlen(argv[arg]));
+                if (strlen(argv[arg]) < sizeof(ip_addr))
+                {
+                    (void)strncpy(ip_addr, argv[arg], strlen(argv[arg]));
 
-                arg += 1;
-                info.chost = 1;
+                    arg += 1;
+                    info.chost = 1;
+                }
             }
         }
-        else if (!info.bind && string_equal("-B", argv[arg]))
+        else if ((info.iperf_bind == 0U) && string_equal("-B", argv[arg]))
         {
             arg += 1;
-            info.bind = 1;
+            info.iperf_bind = 1;
 
-            if (!info.bhost && argv[arg] != NULL)
+            if ((info.bhost == 0U) && argv[arg] != NULL)
             {
-                (void)inet_aton(argv[arg], &bind_address);
+                (void)inet_aton(argv[arg], (void *)&bind_address);
 
-                if (IP_IS_V4(&bind_address) != 0)
-                    info.bhost = 1;
+                info.bhost = 1;
 
                 if (ip_addr_ismulticast(&bind_address))
+                {
                     multicast = true;
+                }
 
                 arg += 1;
             }
         }
-        else if (!info.time && string_equal("-t", argv[arg]))
+        else if ((info.time == 0U) && string_equal("-t", argv[arg]))
         {
             arg += 1;
             info.time = 1;
             errno     = 0;
-            amount    = (int)(-(100 * strtoul(argv[arg], NULL, 10)));
+            amount    = -(100 * strtol(argv[arg], NULL, 10));
+
             if (errno != 0)
             {
                 (void)PRINTF("Error during strtoul errno:%d", errno);
@@ -532,26 +572,26 @@ void cmd_iperf(int argc, char **argv)
         }
 #endif
 #ifdef CONFIG_IPV6
-        else if (!info.ipv6 && string_equal("-V", argv[arg]))
+        else if ((info.ipv6 == 0U) && string_equal("-V", argv[arg]))
         {
             arg += 1;
             info.ipv6 = 1;
             ipv6      = true;
         }
 #endif
-        else if (!info.dual && string_equal("-d", argv[arg]))
+        else if ((info.dual == 0U) && string_equal("-d", argv[arg]))
         {
             arg += 1;
             info.dual = 1;
         }
-        else if (!info.tradeoff && string_equal("-r", argv[arg]))
+        else if ((info.tradeoff == 0U) && string_equal("-r", argv[arg]))
         {
             arg += 1;
             info.tradeoff = 1;
         }
         else if (string_equal("-b", argv[arg]))
         {
-            if (arg + 1 >= argc || get_uint(argv[arg + 1], &udp_rate_factor, strlen(argv[arg + 1])))
+            if (arg + 1 >= argc || (get_uint(argv[arg + 1], &udp_rate_factor, strlen(argv[arg + 1])) != 0))
             {
                 (void)PRINTF(
                     "Error: invalid bandwidth"
@@ -559,6 +599,11 @@ void cmd_iperf(int argc, char **argv)
                 return;
             }
             arg += 2;
+        }
+        else if (string_equal("-D", argv[arg]))
+        {
+            arg += 1;
+            info.dserver = 1;
         }
         else
         {
@@ -572,7 +617,7 @@ void cmd_iperf(int argc, char **argv)
 #ifdef CONFIG_IPV6
     if (ipv6)
     {
-        inet6_aton(ip_addr, ip_2_ip6(&server_address));
+        (void)inet6_aton(ip_addr, ip_2_ip6(&server_address));
         server_address.type = IPADDR_TYPE_V6;
     }
     else
@@ -584,32 +629,42 @@ void cmd_iperf(int argc, char **argv)
     }
 #endif
 
-    if ((!info.abort && !info.server && !info.client) || (info.client && !info.chost) || (info.server && info.client) ||
-        (info.udp
+    if (((info.abort == 0U) && (info.server == 0U) && (info.client == 0U)) ||
+        ((info.client != 0U) && (info.chost == 0U)) || ((info.server != 0U) && (info.client != 0U)) ||
+        ((info.udp != 0U)
 #ifdef CONFIG_IPV6
-         && !info.ipv6
+         && (info.ipv6 == 0U)
 #endif
-         && (!info.bind || !info.bhost)) ||
-        ((info.dual || info.tradeoff) && !info.client) || (info.dual && info.tradeoff)
+         && ((info.iperf_bind == 0U) || (info.bhost == 0U))) ||
+        (((info.dual != 0U) || (info.tradeoff != 0U)) && (info.client == 0U)) ||
+        ((info.dual != 0U) && (info.tradeoff != 0U)) || ((info.dserver != 0U) && (info.server == 0U || info.udp == 0U))
 #ifdef CONFIG_IPV6
-        || (info.ipv6 && info.bind)
+        || ((info.ipv6 != 0U) && (info.iperf_bind != 0U))
 #endif
     )
     {
         (void)PRINTF("Incorrect usage\r\n");
 #ifdef CONFIG_IPV6
-        if (info.ipv6 && info.bind)
+        if ((info.ipv6 != 0U) && (info.iperf_bind != 0U))
+        {
             (void)PRINTF("IPv6: bind to host not allowed\r\n");
-        else if (info.ipv6 && (IP_IS_V4(&server_address)))
+        }
+        else if ((info.ipv6 != 0U) && (IP_IS_V4(&server_address)))
+        {
             (void)PRINTF("IPv6: Address family for host not supported\r\n");
+        }
         else
 #endif
-            if (info.udp
+        {
+            if ((info.udp != 0U)
 #ifdef CONFIG_IPV6
-                && !info.ipv6
+                && (info.ipv6 == 0U)
 #endif
-                && (!info.bind || !info.bhost))
-            (void)PRINTF("For UDP tests please specify local interface ip address using -B option\r\n");
+                && ((info.iperf_bind == 0U) || (info.bhost == 0U)))
+            {
+                (void)PRINTF("For UDP tests please specify local interface ip address using -B option\r\n");
+            }
+        }
         display_iperf_usage();
         return;
     }
@@ -622,7 +677,14 @@ void cmd_iperf(int argc, char **argv)
     {
         if (info.udp != 0U)
         {
-            UDPServer();
+            if (info.dserver != 0U)
+            {
+                UDPServerDual();
+            }
+            else
+            {
+                UDPServer();
+            }
         }
         else
         {

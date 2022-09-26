@@ -100,6 +100,7 @@ static AudioSrcStreamErrorType (*AudioSrcReadDevice[LAST_AUDIOSRC_DEVICE_DRIVER_
 #ifdef CASCFG_PLATFORM_FREERTOS
     audio_src_pcmrtos_read_device,
 #endif
+
 };
 
 /*
@@ -386,7 +387,7 @@ static int32_t audiosrc_set_bits_per_sample(ElementHandle element, uint32_t bits
 
     STREAMER_FUNC_ENTER(DBG_AUDIO_SRC);
 
-    CHK_ARGS(src == NULL || bits_per_sample == 0, STREAM_ERR_INVALID_ARGS);
+    CHK_ARGS(src == NULL || bits_per_sample == 0 || (bits_per_sample % 8 != 0), STREAM_ERR_INVALID_ARGS);
 
     src->pkt_hdr.bits_per_sample = bits_per_sample;
 
@@ -549,8 +550,7 @@ static uint8_t audiosrc_src_activate(StreamPad *pad, uint8_t active)
  * NOTE: Function may or may not be able to read the required
  * length of data.
  *
- * Returns PAD_STREAM_ERR_UNEXPECTED when EOF file is encountered.
- * or PAD_STREAM_ERR_GENERAL when read fails.
+ * Returns PAD_OK or PAD_STREAM_ERR_GENERAL when read fails.
  *
  */
 static PadReturn audiosrc_read(ElementAudioSrc *audiosrc, uint32_t offset, uint32_t length, StreamBuffer *buf)

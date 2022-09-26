@@ -111,6 +111,8 @@ void wlan_add_ext_capa_info_ie(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss
     {
         pext_cap->ext_cap.TDLSSupport = 1;
     }
+
+
 #ifdef CONFIG_11AX
     if (wlan_check_11ax_twt_supported(pmpriv, pbss_desc))
         SET_EXTCAP_TWT_REQ(pmpriv->ext_cap);
@@ -175,6 +177,7 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
     mlan_status ret       = MLAN_STATUS_FAILURE;
     mlan_private *pmpriv  = pmadapter->priv[pioctl_req->bss_index];
     t_u16 bitmap_rates[MAX_BITMAP_RATES_SIZE];
+    t_u16 shift_index = 1U;
 
     ENTER();
 
@@ -184,7 +187,7 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
 #if defined(CONFIG_11AC) || defined(CONFIG_11AX)
     nss = ds_rate->param.rate_cfg.nss;
 #endif
-    rate_index = ds_rate->param.rate_cfg.rate;
+    rate_index = (t_s32)ds_rate->param.rate_cfg.rate;
 
     if (ds_rate->param.rate_cfg.is_rate_auto == MTRUE)
     {
@@ -196,7 +199,9 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
         bitmap_rates[1] = 0x00FF;
         /* Support all HT-MCSs rate */
         for (i = 2; i < 9U; i++)
+        {
             bitmap_rates[i] = 0xFFFF;
+        }
         bitmap_rates[9] = 0x3FFF;
 #ifdef CONFIG_11AC
         /* [10..17] VHT */
@@ -231,14 +236,18 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
             /* Bitmap of HR/DSSS rates */
             if (rate_index <= MLAN_RATE_INDEX_HRDSSS3)
             {
-                bitmap_rates[0] = 1 << rate_index;
+                bitmap_rates[0] = (shift_index << rate_index);
                 ret             = MLAN_STATUS_SUCCESS;
                 /* Bitmap of OFDM rates */
             }
-            else if ((rate_index >= MLAN_RATE_INDEX_OFDM0) && (rate_index <= MLAN_RATE_INDEX_OFDM7))
+            else if (rate_index <= MLAN_RATE_INDEX_OFDM7)
             {
-                bitmap_rates[1] = 1 << (rate_index - MLAN_RATE_INDEX_OFDM0);
+                bitmap_rates[1] = (shift_index << (rate_index - MLAN_RATE_INDEX_OFDM0));
                 ret             = MLAN_STATUS_SUCCESS;
+            }
+            else
+            {
+                /*Do Nothing*/
             }
         }
         else if (rate_format == MLAN_RATE_FORMAT_HT)
@@ -248,9 +257,13 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
 #ifdef SD8801
                 rate_index -= MLAN_RATE_INDEX_MCS0;
 #endif
-                bitmap_rates[2 + (rate_index / 16)] = 1 << (rate_index % 16);
+                bitmap_rates[2 + (rate_index / 16)] = (shift_index << (rate_index % 16));
                 ret                                 = MLAN_STATUS_SUCCESS;
             }
+        }
+        else
+        {
+            /*DO Nothing*/
         }
 
 #ifdef CONFIG_11AC
@@ -258,7 +271,7 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
         {
             if ((rate_index <= MLAN_RATE_INDEX_MCS9) && (MLAN_RATE_NSS1 <= nss) && (nss <= MLAN_RATE_NSS2))
             {
-                bitmap_rates[10 + nss - MLAN_RATE_NSS1] = (1 << rate_index);
+                bitmap_rates[10 + nss - MLAN_RATE_NSS1] = (shift_index << rate_index);
                 ret                                     = MLAN_STATUS_SUCCESS;
             }
         }

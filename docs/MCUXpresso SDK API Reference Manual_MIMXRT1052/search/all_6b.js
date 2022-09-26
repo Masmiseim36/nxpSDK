@@ -703,6 +703,7 @@ var searchData=
   ['kcodec_5fwm8524',['kCODEC_WM8524',['../a00299.html#ggaecd12a18eeb0ee701fc7b0efd5068266a57b2941cff245c37272e1ea4598c3ab0',1,'fsl_codec_adapter.h']]],
   ['kcodec_5fwm8904',['kCODEC_WM8904',['../a00299.html#ggaecd12a18eeb0ee701fc7b0efd5068266acb2ee31cd4ee06712e3cf445e12cb389',1,'fsl_codec_adapter.h']]],
   ['kcodec_5fwm8960',['kCODEC_WM8960',['../a00299.html#ggaecd12a18eeb0ee701fc7b0efd5068266aa15237d33f0b971a6596458ef7aa8d99',1,'fsl_codec_adapter.h']]],
+  ['kcodec_5fwm8962',['kCODEC_WM8962',['../a00299.html#ggaecd12a18eeb0ee701fc7b0efd5068266a018d6b6d07eab64fe414983199950dc8',1,'fsl_codec_adapter.h']]],
   ['kcs42888_5faout1',['kCS42888_AOUT1',['../a00015.html#gga2ee507fea44084259042ff7bb45ecabfa40c873d24063247f27786a37ae99f4e5',1,'fsl_cs42888.h']]],
   ['kcs42888_5faout2',['kCS42888_AOUT2',['../a00015.html#gga2ee507fea44084259042ff7bb45ecabfa4e25320a6e1770c4782c0776bd6708e2',1,'fsl_cs42888.h']]],
   ['kcs42888_5faout3',['kCS42888_AOUT3',['../a00015.html#gga2ee507fea44084259042ff7bb45ecabfa3635f95f2c41320a933acb215a07ea1e',1,'fsl_cs42888.h']]],

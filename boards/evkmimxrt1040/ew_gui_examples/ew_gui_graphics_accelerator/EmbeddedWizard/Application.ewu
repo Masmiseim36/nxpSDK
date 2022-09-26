@@ -1,0 +1,28 @@
+$version 10.00
+
+// This is the root component of the entire GUI application.
+$rect <40,40,240,80>
+$output false
+class Application : Core::Root
+{
+  $rect <0,290,200,330>
+  inherited property Bounds = <0,0,480,272>;
+
+  $rect <20,20,160,60>
+  object Accelerator::Accelerator Accelerator
+  {
+    preset NoOfRectFill = $NoOfRectFill;
+    preset NoOfRectBlend = $NoOfRectBlend;
+    preset NoOfRGB565Bmp = $NoOfRGB565Bmp;
+    preset NoOfNativeBmp = $NoOfNativeBmp;
+    preset NoOfRGB565BmpOpacity = $NoOfRGB565BmpOpacity;
+    preset NoOfNativeBmpOpacity = $NoOfNativeBmpOpacity;
+    preset NoOfAlpha8Bmp = $NoOfAlpha8Bmp;
+  }
+}
+
+// Application class of the example
+note group Note4
+{
+  attr Bounds = <20,0,660,100>;
+}

@@ -1,10 +1,9 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include <stdio.h>
 
 #include "eiq_micro.h"
 #include "fsl_debug_console.h"
@@ -34,12 +33,64 @@ typedef struct
     uint8_t* start;
 } audio_queue_t;
 
+
+#ifdef DEMO_CODEC_WM8962
+static wm8962_config_t wm8962Config = {
+    .i2cConfig = {
+        .codecI2CInstance = BOARD_CODEC_I2C_INSTANCE,
+        .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ,
+    },
+    .route = {
+        .enableLoopBack            = false,
+        .leftInputPGASource        = kWM8962_InputPGASourceInput1,
+        .leftInputMixerSource      = kWM8962_InputMixerSourceInputPGA,
+        .rightInputPGASource       = kWM8962_InputPGASourceInput3,
+        .rightInputMixerSource     = kWM8962_InputMixerSourceInputPGA,
+        .leftHeadphoneMixerSource  = kWM8962_OutputMixerDisabled,
+        .leftHeadphonePGASource    = kWM8962_OutputPGASourceDAC,
+        .rightHeadphoneMixerSource = kWM8962_OutputMixerDisabled,
+        .rightHeadphonePGASource   = kWM8962_OutputPGASourceDAC,
+    },
+    .slaveAddress = WM8962_I2C_ADDR,
+    .bus          = kWM8962_BusI2S,
+    .format       = {
+        .mclk_HZ    = 12288750U,
+        .sampleRate = kWM8962_AudioSampleRate16KHz,
+        .bitWidth   = kWM8962_AudioBitWidth16bit
+    },
+    .masterSlave  = true,
+};
+#else
+static wm8960_config_t wm8960Config = {
+    .i2cConfig = {
+        .codecI2CInstance = BOARD_CODEC_I2C_INSTANCE,
+        .codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ,
+    },
+    .route            = kWM8960_RoutePlaybackandRecord,
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 ) ||\
+    defined( CPU_MIMXRT1166DVM6A_cm4 ) || defined( CPU_MIMXRT1176DVMAA_cm4 )
+    .leftInputSource  = kWM8960_InputDifferentialMicInput3,
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+#else
+    .rightInputSource = kWM8960_InputDifferentialMicInput2,
+#endif
+    .playSource       = kWM8960_PlaySourceDAC,
+    .slaveAddress     = WM8960_I2C_ADDR,
+    .bus              = kWM8960_BusI2S,
+    .format = {
+        .mclk_HZ      = 12288750,
+        .sampleRate   = kWM8960_AudioSampleRate16KHz,
+        .bitWidth     = kWM8960_AudioBitWidth16bit,
+    },
+    .master_slave = true,
+};
+#endif
+
 /* Currently used buffer index. */
 static audio_queue_t queue;
 /* Sai configurations. */
 AT_NONCACHEABLE_SECTION_INIT(static sai_edma_handle_t s_micHandle) = {0};
 static codec_handle_t codecHandle;
-static wm8960_config_t wm8960Config;
 static codec_config_t boardCodecConfig;
 static edma_config_t dmaConfig = {0};
 static edma_handle_t dmaRxHandle = {0};
@@ -74,7 +125,7 @@ static void start(void)
 
     if (SAI_TransferReceiveEDMA(DEMO_SAI, &s_micHandle, &xfer) != kStatus_Success)
     {
-        printf("SAI_TransferReceiveEDMA failed!\r\n");
+        PRINTF("SAI_TransferReceiveEDMA failed!\r\n");
     }
 }
 
@@ -119,7 +170,7 @@ static void notify(void)
 
     if (SAI_TransferReceiveEDMA(DEMO_SAI, &s_micHandle, &xfer) != kStatus_Success)
     {
-        printf("SAI_TransferReceiveEDMA failed!\r\n");
+        PRINTF("SAI_TransferReceiveEDMA failed!\r\n");
     }
 }
 
@@ -148,7 +199,7 @@ static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status,
 {
     if (kStatus_SAI_RxError == status)
     {
-        printf("SAI_Rx failed!\r\n");
+        PRINTF("SAI_Rx failed!\r\n");
         return;
     }
 
@@ -252,26 +303,13 @@ static void init(void)
     audioPllConfig.numerator = 77;    /* 30 bit numerator of fractional loop divider. */
     audioPllConfig.denominator = 100; /* 30 bit denominator of fractional loop divider */
 
-    wm8960Config.i2cConfig.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE;
-    wm8960Config.i2cConfig.codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ;
-    wm8960Config.route            = kWM8960_RoutePlaybackandRecord;
-#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 ) ||\
-    defined( CPU_MIMXRT1166DVM6A_cm4 ) || defined( CPU_MIMXRT1176DVMAA_cm4 )
-    wm8960Config.leftInputSource  = kWM8960_InputDifferentialMicInput3,
-    wm8960Config.rightInputSource = kWM8960_InputDifferentialMicInput2,
+#ifdef DEMO_CODEC_WM8962
+    boardCodecConfig.codecDevType = kCODEC_WM8962;
+    boardCodecConfig.codecDevConfig = &wm8962Config;
 #else
-    wm8960Config.rightInputSource = kWM8960_InputDifferentialMicInput2;
-#endif
-    wm8960Config.playSource       = kWM8960_PlaySourceDAC;
-    wm8960Config.slaveAddress     = WM8960_I2C_ADDR;
-    wm8960Config.bus              = kWM8960_BusI2S;
-    wm8960Config.format.mclk_HZ   = 12288750;
-    wm8960Config.format.sampleRate = kWM8960_AudioSampleRate16KHz;
-    wm8960Config.format.bitWidth = kWM8960_AudioBitWidth16bit;
-    wm8960Config.master_slave = true;
-
     boardCodecConfig.codecDevType = kCODEC_WM8960;
     boardCodecConfig.codecDevConfig = &wm8960Config;
+#endif
 
     /* Audio PLL clock initialization */
     CLOCK_InitAudioPll(&audioPllConfig);
@@ -325,9 +363,14 @@ static void init(void)
     /* Use default setting to init codec */
     if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
-        printf("Error: Could not initialize audio codec! Please, reconnect the board power supply.\r\n");
-        for (;;)
-            ;
+        PRINTF("Error: Could not initialize audio codec! Please, reconnect the board power supply.\r\n");
+        for (;;) {}
+    }
+    if (CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
+                        DEMO_CODEC_VOLUME) != kStatus_Success)
+    {
+        PRINTF("Error: Could not set audio volume!\r\n");
+        for (;;) {}
     }
 }
 

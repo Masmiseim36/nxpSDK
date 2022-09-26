@@ -23,7 +23,7 @@ var group__infra__utility =
       [ "construct", "classerpc_1_1_manually_constructed.html#aab05586fce056b9fa87510fe9553beb4", null ],
       [ "construct", "classerpc_1_1_manually_constructed.html#a7a93a5f83f4188c2c832963ff3ea7c8d", null ],
       [ "destroy", "classerpc_1_1_manually_constructed.html#ac898468f9a960e8be8054821d73cbc34", null ],
-      [ "isUsed", "classerpc_1_1_manually_constructed.html#a92e41d0ac26472d4e8be67e6594d6f31", null ],
+      [ "isUsed", "classerpc_1_1_manually_constructed.html#abb706cd5a0d5f35f6f8fc2366b4a2fa0", null ],
       [ "m_storage", "classerpc_1_1_manually_constructed.html#a6d220c46013cfd6f7713013c3a77e592", null ],
       [ "m_isConstructed", "classerpc_1_1_manually_constructed.html#a1411b92ba272e36fb98f9b53dce4f35e", null ]
     ] ],
@@ -58,8 +58,8 @@ var group__infra__utility =
       [ "~StaticQueue", "classerpc_1_1_static_queue.html#a24ddc2195588cee38e390652f9a6d070", null ],
       [ "add", "classerpc_1_1_static_queue.html#ab1fe280f10fdf322ae75f16d80b812cc", null ],
       [ "get", "classerpc_1_1_static_queue.html#a50621cf1d1676983bbf95c7dbf178229", null ],
-      [ "size", "classerpc_1_1_static_queue.html#a90d03fc6a09db2f2e9ad4f722ba81547", null ],
-      [ "m_storage", "classerpc_1_1_static_queue.html#a7aca1b45a4496c7a6f3ecc0796b926d8", null ],
+      [ "size", "classerpc_1_1_static_queue.html#a6aa550f3bbbaacfa92e2a91215c899ed", null ],
+      [ "m_storage", "classerpc_1_1_static_queue.html#a2ba71c1a990bbffb6cf20ed170a02169", null ],
       [ "m_capacity", "classerpc_1_1_static_queue.html#a0c43f1fba589c88fbb22a0e8b237d58c", null ],
       [ "m_head", "classerpc_1_1_static_queue.html#aa5b8df6fb776578ca3d8ddf5b4187af2", null ],
       [ "m_tail", "classerpc_1_1_static_queue.html#af18992edddaa6bfb26713fde997273b8", null ]

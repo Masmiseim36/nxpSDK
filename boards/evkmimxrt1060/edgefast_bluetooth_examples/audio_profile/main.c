@@ -247,7 +247,7 @@ void main(void)
     USB_HostApplicationInit();
 
     app_bt_init_task();
-    if (xTaskCreate(main_task, "main_task", 2000L / sizeof(portSTACK_TYPE), NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
+    if (xTaskCreate(main_task, "main_task", 2200L / sizeof(portSTACK_TYPE), NULL, tskIDLE_PRIORITY + 1, NULL) != pdPASS)
     {
         PRINTF("Main task creation failed!.\r\n");
         while (1)

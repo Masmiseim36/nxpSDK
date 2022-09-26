@@ -1,0 +1,21 @@
+CONTENT-LENGTH: bytes in body
+CONTENT-LANGUAGE: language used
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-bluetooth-org:service:Printer:1#CreatePreciseJob"
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:CreatePreciseJob xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<JobName> MyPhotoPage</JobName>
+<JobOriginatingUserName>SuesCamera</JobOriginatingUserName>
+<DocumentFormat>application/vnd.pwg-xhtml-print+xml:0.95</DocumentFormat>
+<Copies>1</Copies>
+<Sides>one-sided</Sides>
+<NumberUp>1</NumberUp>
+<OrientationRequested>landscape</OrientationRequested>
+<MediaSize>na_letter_8.5x11in</MediaSize>
+<PrintQuality>high</PrintQuality>
+</u:CreatePreciseJob>
+</s:Body>
+</s:Envelope>

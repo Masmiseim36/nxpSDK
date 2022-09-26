@@ -53,6 +53,7 @@ struct _ElementMemSrc
     uint8_t end_of_stream;  /*!< @brief End of stream flag */
     uint32_t read_position; /*!< @brief Last read offset */
     uint32_t size;          /*!< @brief Overall size */
+    uint8_t mem_type;       /*!< @brief Memory type */
 };
 typedef struct _ElementMemSrc ElementMemSrc;
 

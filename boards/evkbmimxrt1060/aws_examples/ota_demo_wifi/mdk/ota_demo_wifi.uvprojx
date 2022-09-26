@@ -373,6 +373,46 @@
       </TargetOption>
       <Groups>
         <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>app_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../app_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>main_wifi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main_wifi.c</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcuboot_app_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcuboot_app_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>board</GroupName>
           <Files>
             <File>
@@ -504,46 +544,6 @@
               <FileName>aws_iot_network_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/aws_iot_network_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>main_wifi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main_wifi.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwipopts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwipopts.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_app_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcuboot_app_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_app_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcuboot_app_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>app_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../wifi_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2534,11 +2534,6 @@
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
             </File>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>
@@ -5649,6 +5644,46 @@
       </TargetOption>
       <Groups>
         <Group>
+          <GroupName>source</GroupName>
+          <Files>
+            <File>
+              <FileName>app_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../app_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>aws_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>main_wifi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../main_wifi.c</FilePath>
+            </File>
+            <File>
+              <FileName>lwipopts.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../lwipopts.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../mcuboot_app_support.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcuboot_app_support.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../mcuboot_app_support.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../wifi_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>board</GroupName>
           <Files>
             <File>
@@ -5780,46 +5815,6 @@
               <FileName>aws_iot_network_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../config_files/aws_iot_network_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source</GroupName>
-          <Files>
-            <File>
-              <FileName>aws_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../config_files/aws_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>main_wifi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../main_wifi.c</FilePath>
-            </File>
-            <File>
-              <FileName>lwipopts.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../lwipopts.h</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_app_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../mcuboot_app_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcuboot_app_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../mcuboot_app_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>app_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../app_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../wifi_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -7810,11 +7805,6 @@
               <FileName>sd8801_wlan.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</FilePath>
-            </File>
-            <File>
-              <FileName>sduart8977_wlan_bt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</FilePath>
             </File>
             <File>
               <FileName>sduartIW416_wlan_bt.h</FileName>

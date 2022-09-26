@@ -83,10 +83,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1064
     ${ProjDirPath}/../../../../../devices/MIMXRT1064/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../devices/MIMXRT1064/utilities
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -149,8 +149,6 @@ include(component_serial_manager_uart_MIMXRT1064)
 
 include(driver_lpuart_MIMXRT1064)
 
-include(utility_debug_console_MIMXRT1064)
-
 include(device_MIMXRT1064_CMSIS_MIMXRT1064)
 
 include(device_MIMXRT1064_startup_MIMXRT1064)
@@ -167,15 +165,17 @@ include(driver_xip_board_evkmimxrt1064_MIMXRT1064)
 
 include(utility_assert_MIMXRT1064)
 
+include(utility_debug_console_MIMXRT1064)
+
 include(middleware_freertos-kernel_extension_MIMXRT1064)
 
 include(driver_mdio-common_MIMXRT1064)
 
 include(CMSIS_Include_core_cm_MIMXRT1064)
 
-include(device_MIMXRT1064_system_MIMXRT1064)
-
 include(utilities_misc_utilities_MIMXRT1064)
+
+include(device_MIMXRT1064_system_MIMXRT1064)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

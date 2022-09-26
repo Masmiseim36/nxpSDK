@@ -143,6 +143,7 @@ enum _property_tag
     kPropertyTag_ExternalMemoryAttributes = 0x19,
     kPropertyTag_ReliableUpdateStatus = 0x1a,
     kPropertyTag_FlashPageSize = 0x1b,
+    kPropertyTag_FuseLockedStatus = 0x1f,
     kPropertyTag_InvalidProperty = 0xFF,
 };
 

@@ -148,9 +148,9 @@ include(CMSIS_Include_core_cm_MIMXRT1064)
 
 include(driver_soc_flexram_allocate_MIMXRT1064)
 
-include(device_MIMXRT1064_system_MIMXRT1064)
-
 include(utilities_misc_utilities_MIMXRT1064)
+
+include(device_MIMXRT1064_system_MIMXRT1064)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

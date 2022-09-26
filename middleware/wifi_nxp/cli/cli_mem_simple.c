@@ -26,9 +26,9 @@
  * If required this can be blown into a better slab-kind of allocator.
  */
 
-char buff1[INBUF_SIZE];
-char buff2[INBUF_SIZE];
-uint8_t alloc[2] = {BUF_AVAILABLE, BUF_AVAILABLE};
+static char buff1[INBUF_SIZE];
+static char buff2[INBUF_SIZE];
+static char alloc[2] = {BUF_AVAILABLE, BUF_AVAILABLE};
 
 int cli_mem_cleanup(void)
 {

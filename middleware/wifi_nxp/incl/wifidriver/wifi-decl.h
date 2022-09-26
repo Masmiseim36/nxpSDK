@@ -205,6 +205,7 @@ typedef struct
     uint16_t wpa3_sae : 1;
     /** Reserved 10 bits */
     uint16_t rsvd : 10;
+
 } _SecurityMode_t;
 
 /* TODO: clean up the parts brought over from the Host SME BSSDescriptor_t,
@@ -244,7 +245,7 @@ struct wifi_scan_result
     bool phtinfo_ie_present; /*!< PHT INFO IE present info */
 
     bool wmm_ie_present; /*!< WMM IE present info */
-    uint8_t band;        /*!< Band info */
+    uint16_t band;       /*!< Band info */
 
     bool wps_IE_exist;                         /*!< WPS IE exist info */
     uint16_t wps_session;                      /*!< WPS session */
@@ -411,9 +412,9 @@ typedef PACK_START struct _wifi_ed_mac_ctrl_t
 typedef PACK_START struct _wifi_bandcfg_t
 {
     /** Infra band */
-    mlan_band_def config_bands;
+    t_u16 config_bands;
     /** fw supported band */
-    mlan_band_def fw_bands;
+    t_u16 fw_bands;
 } PACK_END wifi_bandcfg_t;
 
 #ifdef SD8801
@@ -1021,5 +1022,22 @@ typedef PACK_START struct _wifi_mfg_cmd_tx_cont
     t_u32 rsvd;
 } PACK_END wifi_mfg_cmd_tx_cont_t;
 #endif
+
+#ifdef CONFIG_HEAP_DEBUG
+#define MAX_FUNC_SYMBOL_LEN    64
+#define OS_MEM_STAT_TABLE_SIZE 128
+
+/** Structure of mem alloc and free info */
+typedef struct
+{
+    char name[MAX_FUNC_SYMBOL_LEN];
+    t_u32 size;
+    t_u32 line_num;
+
+    t_u32 alloc_cnt;
+    t_u32 free_cnt;
+} wifi_os_mem_info;
+#endif
+
 
 #endif /* __WIFI_DECL_H__ */

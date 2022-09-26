@@ -150,7 +150,7 @@ static uint8_t netbufsrc_src_activation_handler(StreamPad *pad, uint8_t active)
         else if (SCHEDULING_PULL == mode)
         {
             STREAMER_LOG_DEBUG(DBG_NETBUFSRC, "[NetbufSRC]Sched mode PULL\n");
-            ret = pad_activate_pull(pad, false);
+            ret = pad_activate_pull(pad, active);
         }
 
         if (ret)
@@ -173,7 +173,7 @@ static uint8_t netbufsrc_src_activation_handler(StreamPad *pad, uint8_t active)
  * @brief Reads the data from the memory array specified by the element.
  * NOTE: Function may or may not be able to read the required
  * length of data.
- * @retval PAD_STREAM_ERR_UNEXPECTED when EOF file is encountered.
+ * @retval PAD_STREAM_ERR_EOS when EOF file is encountered.
  * @retval PAD_STREAM_ERR_GENERAL when read fails.
  *
  */
@@ -220,7 +220,7 @@ static PadReturn netbufsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t s
 
     /* read chunk_size of data */
     ret = netbufsrc_read(netbufsrc, offset, size, buffer);
-    if (ret == PAD_STREAM_ERR_UNEXPECTED)
+    if (ret == PAD_STREAM_ERR_EOS)
     {
         /* Its an end of stream */
         if (netbufsrc->end_of_stream != true)
@@ -283,10 +283,37 @@ static uint8_t netbufsrc_handle_src_event(StreamPad *pad, StreamEvent *event)
 
 static uint8_t netbufsrc_handle_src_query(StreamPad *pad, StreamQuery *query)
 {
+    uint8_t ret      = false;
+    StreamData *data = NULL;
+
     STREAMER_FUNC_ENTER(DBG_NETBUFSRC);
+
+    CHK_ARGS(NULL == pad || NULL == query || NULL == QUERY_DATA(query), false);
+    data = QUERY_DATA(query);
+
+    switch (QUERY_TYPE(query))
+    {
+        case INFO_TIME_SEEKABLE:
+            data->valuebool = false;
+            ret             = true;
+            break;
+
+        case INFO_BYTE_SEEKABLE:
+            data->valuebool = false;
+            ret             = true;
+            break;
+
+        case INFO_SIZE:
+            data->value32u = 1; /* This is a size number due to decoder needs*/
+            ret            = true;
+            break;
+        default:
+            break;
+    }
+
     STREAMER_FUNC_EXIT(DBG_NETBUFSRC);
 
-    return false;
+    return ret;
 }
 
 /*!

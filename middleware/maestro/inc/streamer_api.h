@@ -351,7 +351,7 @@ typedef enum
     INFO_TIME_SEEKABLE,      /*!< @brief Input Supports Seek by Time */
     INFO_BYTE_SEEKABLE,      /*!< @brief Input Supports Seek by Byte */
     INFO_STREAM_INFO_UPDATE, /*!< @brief stream info updated */
-    INFO_FILE_SIZE,          /*!< @brief Size of audio file from file src*/
+    INFO_SIZE,               /*!< @brief Size of audio size*/
     INFO_BUFF_OCC,           /*!< @brief Buffer level/audio latency */
     INFO_ALBUM,              /*!< @brief Album Name */
     INFO_ARTIST,             /*!< @brief Artist Name */
@@ -664,7 +664,7 @@ STREAMER_T *streamer_create(STREAMER_CREATE_PARAM *task_param);
  *
  * @param streamer The streamer object to be destroyed
  */
-void streamer_destroy(STREAMER_T *streamer);
+int32_t streamer_destroy(STREAMER_T *streamer);
 
 /**
  * @brief Create a pipeline that will handle the different connected elements

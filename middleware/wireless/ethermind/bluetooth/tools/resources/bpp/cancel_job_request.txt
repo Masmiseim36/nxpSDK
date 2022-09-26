@@ -1,0 +1,12 @@
+CONTENT-LENGTH: bytes in body
+CONTENT-TYPE: text/xml; charset="utf-8"
+SOAPACTION: "urn:schemas-bluetooth-org:service:Printer:1#CancelJob"
+<s:Envelope
+xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"
+s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:CancelJob xmlns:u="urn:schemas-bluetooth-org:service:Printer:1">
+<JobId>123465</JobId>
+</u:CancelJob>
+</s:Body>
+</s:Envelope>

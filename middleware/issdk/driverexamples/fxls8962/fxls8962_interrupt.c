@@ -88,6 +88,7 @@ void fxls8962_int_data_ready_callback(void *pUserData)
 int main(void)
 {
     int32_t status;
+    uint8_t whoami;
     uint8_t data[FXLS8962_DATA_SIZE];
     fxls8962_acceldata_t rawData;
 
@@ -135,13 +136,28 @@ int main(void)
 
     /*! Initialize FXLS8962 sensor driver. */
     status = FXLS8962_I2C_Initialize(&fxls8962Driver, &I2C_S_DRIVER, I2C_S_DEVICE_INDEX, FXLS8962_I2C_ADDR,
-                                     FXLS8962_WHOAMI_VALUE);
+                                     &whoami);
     if (SENSOR_ERROR_NONE != status)
     {
         PRINTF("\r\n Sensor Initialization Failed\r\n");
         return -1;
     }
-    PRINTF("\r\n Successfully Initiliazed Sensor\r\n");
+    if ((FXLS8964_WHOAMI_VALUE == whoami) || (FXLS8967_WHOAMI_VALUE == whoami))
+    {
+    	PRINTF("\r\n Successfully Initialized Gemini with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else if (FXLS8974_WHOAMI_VALUE == whoami)
+    {
+    	PRINTF("\r\n Successfully Initialized Timandra with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else if (FXLS8962_WHOAMI_VALUE == whoami)
+    {
+    	PRINTF("\r\n Successfully Initialized Newstein with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else
+    {
+    	PRINTF("\r\n Bad WHO_AM_I = 0x%X\r\n", whoami);
+    }
 
     /*!  Set the task to be executed while waiting for I2C transactions to complete. */
     FXLS8962_I2C_SetIdleTask(&fxls8962Driver, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);
@@ -183,7 +199,7 @@ int main(void)
         rawData.accel[2] = ((int16_t)data[5] << 8) | data[4];
 
         /* NOTE: PRINTF is relatively expensive in terms of CPU time, specially when used with-in execution loop. */
-        PRINTF("\r\nX=%5d Y=%5d Z=%5d\r\n", rawData.accel[0], rawData.accel[1], rawData.accel[2]);
+        PRINTF("\r\n X=%5d Y=%5d Z=%5d\r\n", rawData.accel[0], rawData.accel[1], rawData.accel[2]);
         ASK_USER_TO_RESUME(50); /* Ask for user input after processing 50 samples. */
     }
 }

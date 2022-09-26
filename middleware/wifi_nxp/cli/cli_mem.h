@@ -10,7 +10,7 @@
 
 #ifndef _CLI_MEM_H_
 #define _CLI_MEM_H_
-#define INBUF_SIZE 256U
+#define INBUF_SIZE 256
 
 #define BUF_ALLOCATED '1'
 #define BUF_AVAILABLE '0'

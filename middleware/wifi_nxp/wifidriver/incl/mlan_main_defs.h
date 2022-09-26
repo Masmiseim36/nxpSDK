@@ -21,8 +21,7 @@ Change log:
 #define MAX_PORT 16
 /** Multi port aggregation packet limit */
 #define SDIO_MP_AGGR_DEF_PKT_LIMIT (4)
-#elif defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || \
-    defined(SD9098) || defined(IW61x)
+#elif defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098) || defined(IW61x)
 /** Maximum numbfer of registers to read for multiple port */
 #define MAX_MP_REGS                196
 /** Maximum port */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -27,19 +27,11 @@ struct _pcm_rtos_t
     sai_edma_handle_t saiTxHandle;
     edma_handle_t dmaTxHandle;
 
-    sai_transfer_t saiRx;
-    sai_edma_handle_t saiRxHandle;
-    edma_handle_t dmaRxHandle;
-
     uint32_t sample_rate;
     uint32_t bit_width;
     uint8_t num_channels;
 
-    SemaphoreHandle_t semaphoreRX;
     SemaphoreHandle_t semaphoreTX;
-
-    uint8_t isFirstRx;
-    uint8_t isFirstTx;
 
     bool dummy_tx_enable;
 };

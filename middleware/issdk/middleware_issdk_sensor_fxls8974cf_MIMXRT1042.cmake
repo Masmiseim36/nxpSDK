@@ -1,0 +1,17 @@
+include_guard()
+message("middleware_issdk_sensor_fxls8974cf component is included.")
+
+target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/sensors/fxls8974_drv.c
+)
+
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/sensors
+)
+
+
+include(CMSIS_Driver_Include_I2C_MIMXRT1042)
+
+include(CMSIS_Driver_Include_SPI_MIMXRT1042)
+

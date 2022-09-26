@@ -227,11 +227,6 @@ status_t STREAMER_PCM_Create(char *filename, int volume)
 
     streamer_set_property(streamer, prop, true);
 
-    prop.prop = PROP_FILESRC_SET_FILE_TYPE;
-    prop.val  = 1;
-
-    streamer_set_property(streamer, prop, true);
-
     prop.prop = PROP_FILESRC_SET_SAMPLE_RATE;
     prop.val  = DEMO_SAMPLE_RATE;
 

@@ -23,6 +23,7 @@
 #include "mlan_util.h"
 #include "mlan_fw.h"
 #include "mlan_main.h"
+#include "mlan_main_defs.h"
 #include "mlan_wmm.h"
 #include "mlan_11n.h"
 #include "mlan_11h.h"
@@ -31,7 +32,9 @@
 #include "mlan_11ax.h"
 #endif
 #include "mlan_11n_aggr.h"
+#ifndef RW610
 #include "mlan_sdio.h"
+#endif
 #include "mlan_11n_rxreorder.h"
 #include "mlan_meas.h"
 #include "mlan_uap.h"
@@ -96,9 +99,9 @@
 #endif /* DEBUG_MLAN */
 
 #define DOT11N_CFG_ENABLE_RIFS            0x08
-#define DOT11N_CFG_ENABLE_GREENFIELD_XMIT (1 << 4)
-#define DOT11N_CFG_ENABLE_SHORT_GI_20MHZ  (1 << 5)
-#define DOT11N_CFG_ENABLE_SHORT_GI_40MHZ  (1 << 6)
+#define DOT11N_CFG_ENABLE_GREENFIELD_XMIT (1U << 4)
+#define DOT11N_CFG_ENABLE_SHORT_GI_20MHZ  (1U << 5)
+#define DOT11N_CFG_ENABLE_SHORT_GI_40MHZ  (1U << 6)
 
 #define CLOSEST_DTIM_TO_LISTEN_INTERVAL 65534
 
@@ -106,9 +109,10 @@
 
 /* Following is allocated in mlan_register */
 extern mlan_adapter *mlan_adap;
+extern country_code_t wifi_11d_country;
 
 
-extern os_rw_lock_t ps_rwlock;
+extern os_rw_lock_t sleep_rwlock;
 
 extern bool sta_ampdu_rx_enable;
 #ifdef DUMP_PACKET_MAC
@@ -147,7 +151,8 @@ void wlan_scan_process_results(IN mlan_private *pmpriv);
 
 bool check_for_wpa2_entp_ie(bool *wpa2_entp_IE_exist, const void *element_data, unsigned element_len);
 
-static inline mlan_status wifi_check_bss_entry_wpa2_entp_only(BSSDescriptor_t *pbss_entry, t_u8 element_id)
+static inline mlan_status wifi_check_bss_entry_wpa2_entp_only(BSSDescriptor_t *pbss_entry,
+                                                              IEEEtypes_ElementId_e element_id)
 {
     if (element_id == RSN_IE)
     {
@@ -175,8 +180,8 @@ int wifi_set_smart_mode_cfg(char *ssid,
                             uint8_t *smc_frame_filter,
                             int custom_ie_len,
                             uint8_t *custom_ie);
-wifi_sub_band_set_t *get_sub_band_from_country(int country, t_u8 *nr_sb);
-int wifi_set_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index, void *buf, unsigned int buf_len);
+wifi_sub_band_set_t *get_sub_band_from_country(country_code_t country, t_u8 *nr_sb);
+int wifi_set_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t id, void *buf, unsigned int buf_len);
 int wifi_clear_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index);
 #ifdef SD8801
 int wifi_get_ext_coex_stats(wifi_ext_coex_stats_t *ext_coex_stats);
@@ -186,7 +191,7 @@ int wifi_send_enable_supplicant(int mode, const char *ssid);
 int wifi_send_clear_wpa_psk(int mode, const char *ssid);
 int wifi_send_add_wpa_psk(int mode, char *ssid, char *passphrase, unsigned int len);
 int wifi_send_add_wpa3_password(int mode, char *ssid, char *password, unsigned int len);
-int wifi_send_add_wpa_pmk(int mode, char *bssid, char *ssid, char *pmk, unsigned int len);
+int wifi_send_add_wpa_pmk(int mode, char *ssid, char *bssid, char *pmk, unsigned int len);
 bool wifi_11d_is_channel_allowed(int channel);
 /**
  * Get the string representation of the wlan firmware extended version.
@@ -250,7 +255,7 @@ int wifi_send_scan_cmd(t_u8 bss_mode,
                        const bool keep_previous_scan,
                        const bool active_scan_triggered);
 int wifi_stop_smart_mode(void);
-char *wifi_get_country_str(int country);
+const char *wifi_get_country_str(country_code_t country);
 int wifi_remove_key(int bss_index, bool is_pairwise, const uint8_t key_index, const uint8_t *mac_addr);
 int wifi_enable_ecsa_support(void);
 int wifi_set_ed_mac_mode(wifi_ed_mac_ctrl_t *wifi_ed_mac_ctrl);
@@ -266,4 +271,5 @@ int wifi_set_txpwrlimit(wifi_txpwrlimit_t *txpwrlimit);
 int wifi_send_rssi_info_cmd(wifi_rssi_info_t *rssi_info);
 void wifi_set_curr_bss_channel(uint8_t channel);
 int wifi_get_chanlist(wifi_chanlist_t *chanlist);
+int wifi_set_eu_crypto(EU_Crypto *Crypto_Data, enum _crypto_algorithm Algorithm, t_u16 EncDec);
 #endif /* __MLAN_API_H__ */

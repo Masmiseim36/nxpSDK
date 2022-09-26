@@ -20,7 +20,11 @@
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
 
+#if defined(RW610)
+#include "wifi-imu.h"
+#else
 #include "wifi-sdio.h"
+#endif
 /********************************************************
  *    Local Variables
  *    ********************************************************/
@@ -182,9 +186,6 @@ int wlan_cmd_append_11ax_tlv(mlan_private *pmpriv, BSSDescriptor_t *pbss_desc, t
     phecap->type = wlan_cpu_to_le16(phecap->type);
     phecap->len  = wlan_cpu_to_le16(phecap->len);
     phecap->he_phy_cap[0] &= ~(MBIT(3) | MBIT(4));
-    PRINTF("******* HE Cap ******\n\r");
-    PRINTF("Type: %d\n\r", phecap->type);
-    PRINTF("Len: %d\n\r", phecap->len);
     LEAVE();
     return len;
 }
@@ -387,6 +388,7 @@ mlan_status wlan_ret_11ax_cfg(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, ml
                     }
                     break;
                 default:
+                    PRINTM(MINFO, "Unexpected extentsion \n");
                     break;
             }
         }

@@ -1,5 +1,5 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.12.0
+Release Version: 2.12.1
 Package License: LA_OPT_NXP_Software_License.txt v35 May 2022- Additional Distribution License granted, license in Section 2.3 applies
 
 SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
@@ -102,8 +102,8 @@ metering_tool              Name: metering_tool
                            Origin: NXP                                       
 
 segger_systemview          Name: Segger SystemView Demo                      
-                           Version: 2.40a                                    
-                           Outgoing License: BSD-3-Clause                    
+                           Version: 3.3                                      
+                           Outgoing License: BSD-1-Clause                    
                            License File:                                     
                            boards/<board>/rtos_examples/visualization/freerto
                            s_segger_sysview/LICENSE                          
@@ -112,7 +112,7 @@ segger_systemview          Name: Segger SystemView Demo
                            Location:                                         
                            boards/<board>/rtos_examples/visualization/freerto
                            s_segger_sysview                                  
-                           Origin: Segger (BSD-3-Clause)                     
+                           Origin: Segger (BSD-1-Clause)                     
 
 wifi_qca                   Name: wifi_qca                                    
                            Version: 2.0.0                                    
@@ -443,60 +443,6 @@ lwip                       Name: lwIP TCP/IP Stack
                            Location: middleware/lwip                         
                            Origin: Swedish Institute of Computer Science     
                            Url: http://savannah.nongnu.org/projects/lwip     
-
-rtcesl                     Name: rtcesl                                      
-                           Version: 4.7 (CM0,CM4,CM7,CM33) + 4.5 (DSC)       
-                           Outgoing License: BSD-3-Clause                    
-                           License File: COPYING-BSD-3                       
-                           Format: object code & header files                
-                           Description: NXP Real Time Control Embedded       
-                           Software Library.                                 
-                           Location: middleware/rtcesl                       
-                           Origin: NXP (BSD-3-Clause)                        
-
-motor_control              Name: motor_control                               
-                           Version: 2.11.0                                   
-                           Outgoing License: BSD-3-Clause                    
-                           License File: COPYING-BSD-3                       
-                           Format: source code                               
-                           Description: Motor control examples for PMSM BLDC,
-                           ACIM motors.                                      
-                           Location: middleware/motor_control                
-                           Origin: NXP (BSD-3-Clause)                        
-
-motor_control - jQuery     Name: motor_control                               
-                           Version: v3.7.1 (2015-Feb)                        
-                           Outgoing License: Commercial                      
-                           License File: http://www.jqwidgets.com/license/   
-                           Format: library                                   
-                           Description: Advanced jQuery and HTML5 UI         
-                           framework.                                        
-                           Location: middleware/motor_control/freemaster     
-                           Origin: jQWidgets                                 
-
-motor_control - JavaScript Name: motor_control                               
-                           Version: v1.11.1                                  
-                           Outgoing License: Open Source - MIT               
-                           (jquery.org/license)                              
-                           License File: jquery.org/license                  
-                           Format: source code                               
-                           Description: Cross-platform JavaScript library.   
-                           Location: middleware/motor_control/freemaster     
-                           Origin: jQuery Foundation, Inc.                   
-
-motor_control - MCAA       Name: motor_control                               
-library                    Version: 1.0.0                                    
-                           Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           v35 May 2022 - Additional distribution license    
-                           granted - License in Section 2.3 applies          
-                           License File: LA_OPT_NXP_Software_License.txt     
-                           Format: object code & header files                
-                           Description: Motor Control Advanced Algorithms    
-                           library                                           
-                           Location:                                         
-                           middleware/motor_control/pmsm/pmsm_float/mc_algori
-                           thms/mcaa_lib                                     
-                           Origin: NXP (BSD-3-Clause)                        
 
 cmsis_drivers              Name: SDK CMSIS Peripheral Drivers                
                            Version: 2.x.x                                    
@@ -1069,7 +1015,7 @@ srecord                    Name: SRecord 1.64 For Windows
                            Url: http://srecord.sourceforge.net/index.html    
 
 maestro                    Name: Maestro Audio Framework                     
-                           Version: 1.3.0                                    
+                           Version: 1.4.0                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            v35 May 2022- Additional distribution license     
                            granted - License in Section 2.3 applies          
@@ -1282,6 +1228,18 @@ RangeHTTPServer            Name: RangeHTTPServer
                            ttps_server                                       
                            Url: https://github.com/danvk/RangeHTTPServer     
 
+soem                       Name: Simple Open EtherCAT Master Library (SOEM)  
+                           Version: 1.4.0                                    
+                           Outgoing License: GPL-2.0 with a special exception
+                           License File: middleware/soem/LICENSE             
+                           Format: source code                               
+                           Description: An opensource EtherCAT master stack  
+                           which is used to write custom EtherCAT Master     
+                           applications.                                     
+                           Location: middleware/soem                         
+                           Origin: RT-Labs                                   
+                           Url: https://github.com/OpenEtherCATsociety/soem  
+
 nghttp2                    Name: nghttp2                                     
                            Version: 1.32.90                                  
                            Outgoing License: The MIT License                 
@@ -1291,6 +1249,23 @@ nghttp2                    Name: nghttp2
                            Location: middleware/nghttp2                      
                            Origin: Tatsuhiro Tsujikawa & nghttp2 contributors
                            Url: https://github.com/nghttp2/nghttp2           
+
+VoiceSpot                  Name: VoiceSpot_v0.23.2                           
+                           Version: 0.23.2                                   
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           v35 May 2022 - Additional distribution license    
+                           granted - License in Section 2.3 applies          
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: Precompiled libraries, header files,      
+                           example application                               
+                           Description: VoiceSpot is a highly accurate, small
+                           memory and MIPS profile wake word engine          
+                           supporting custom voice trigger words and phrases 
+                           Location: middleware/voice_spot                   
+                           Origin: NXP (Proprietary)                         
+                           Url:                                              
+                           https://www.nxp.com/design/software/embedded-softw
+                           are/voicespot-wake-word-engine:VOICESPOT          
 
 wolfssl                    Name: WolfSSL                                     
                            Version: 4.0.6                                    
@@ -1303,6 +1278,60 @@ wolfssl                    Name: WolfSSL
                            Location: middleware/wolfssl                      
                            Origin: WolfSSL                                   
                            Url: https://github.com/wolfSSL/wolfssl           
+
+rtcesl                     Name: rtcesl                                      
+                           Version: 4.7 (CM0,CM4,CM7,CM33) + 4.5 (DSC)       
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: object code & header files                
+                           Description: NXP Real Time Control Embedded       
+                           Software Library.                                 
+                           Location: middleware/rtcesl                       
+                           Origin: NXP (BSD-3-Clause)                        
+
+motor_control              Name: motor_control                               
+                           Version: 2.11.0                                   
+                           Outgoing License: BSD-3-Clause                    
+                           License File: COPYING-BSD-3                       
+                           Format: source code                               
+                           Description: Motor control examples for PMSM BLDC,
+                           ACIM motors.                                      
+                           Location: middleware/motor_control                
+                           Origin: NXP (BSD-3-Clause)                        
+
+motor_control - jQuery     Name: motor_control                               
+                           Version: v3.7.1 (2015-Feb)                        
+                           Outgoing License: Commercial                      
+                           License File: http://www.jqwidgets.com/license/   
+                           Format: library                                   
+                           Description: Advanced jQuery and HTML5 UI         
+                           framework.                                        
+                           Location: middleware/motor_control/freemaster     
+                           Origin: jQWidgets                                 
+
+motor_control - JavaScript Name: motor_control                               
+                           Version: v1.11.1                                  
+                           Outgoing License: Open Source - MIT               
+                           (jquery.org/license)                              
+                           License File: jquery.org/license                  
+                           Format: source code                               
+                           Description: Cross-platform JavaScript library.   
+                           Location: middleware/motor_control/freemaster     
+                           Origin: jQuery Foundation, Inc.                   
+
+motor_control - MCAA       Name: motor_control                               
+library                    Version: 1.0.0                                    
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           v35 May 2022 - Additional distribution license    
+                           granted - License in Section 2.3 applies          
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: object code & header files                
+                           Description: Motor Control Advanced Algorithms    
+                           library                                           
+                           Location:                                         
+                           middleware/motor_control/pmsm/pmsm_float/mc_algori
+                           thms/mcaa_lib                                     
+                           Origin: NXP (BSD-3-Clause)                        
 
 mpp                        Name: Multimedia Processing Pipelines (MPP)       
                            Version: 0.9.0                                    

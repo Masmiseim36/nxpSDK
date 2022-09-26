@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2021-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,9 +8,8 @@
 #ifndef _DEMO_INFO_H_
 #define _DEMO_INFO_H_
 
-#include <stdio.h>
-
 #include "demo_config.h"
+#include "fsl_debug_console.h"
 
 /*******************************************************************************
  * Definitions
@@ -20,7 +19,7 @@
     (STATUS) = (FUNCTION);                                       \
     if ((STATUS) != 0)                                           \
     {                                                            \
-        printf(MESSAGE EOL "Error code: %d" EOL, (int)(STATUS)); \
+        PRINTF(MESSAGE EOL "Error code: %d" EOL, (int)(STATUS)); \
     }                                                            \
     do                                                           \
     {                                                            \

@@ -191,6 +191,7 @@ int32_t codec_extract_metadata_mp3(file_meta_data_t *MetaData, CCI_Ctx *Ctx)
     MP3_DFFI_t *mp3_dffi;
 
     /* Set some defaults */
+    MetaData->num_bytes        = 0;
     MetaData->start_pos        = 0;
     MetaData->total_time       = 0;
     MetaData->valid_vbr_header = 0;

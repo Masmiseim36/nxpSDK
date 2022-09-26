@@ -45,51 +45,31 @@ typedef struct _mid_to_params_t
  * Prototypes
  ******************************************************************************/
 /* (user) Motor parameters identification state machine functions */
-RAM_FUNC_LIB
 static void MID_StateStart(void);
-RAM_FUNC_LIB
 static void MID_StateRL(void);
-RAM_FUNC_LIB
 static void MID_StatePp(void);
-RAM_FUNC_LIB
 static void MID_StateKe(void);
-RAM_FUNC_LIB
 static void MID_StateMech(void);
-RAM_FUNC_LIB
 static void MID_StateHall(void);
-RAM_FUNC_LIB
 static void MID_StateStop(void);
-RAM_FUNC_LIB
 static void MID_StateFault(void);
-RAM_FUNC_LIB
 static void MID_StateCalib(void);
 
 /* (user) Motor parameters identification state-transition functions */
-RAM_FUNC_LIB
 static void MID_TransStart2RL(void);
-RAM_FUNC_LIB
 static void MID_TransStart2Ke(void);
-RAM_FUNC_LIB
 static void MID_TransStart2Pp(void);
-RAM_FUNC_LIB
 static void MID_TransStart2Mech(void);
-RAM_FUNC_LIB
 static void MID_TransStart2Hall(void);
-RAM_FUNC_LIB
 static void MID_TransAll2Stop(void);
-RAM_FUNC_LIB
 static void MID_TransAll2Fault(void);
-RAM_FUNC_LIB
 static void MID_TransStop2Calib(void);
-RAM_FUNC_LIB
 static void MID_TransCalib2Start(void);
 
 /* Bemf and Tracking observer calculation function. */
-RAM_FUNC_LIB
 static void MID_CalcBemfTrackingObsrv(mid_bemf_params_t *sBemfParams, mid_to_params_t *sTOParams);
-RAM_FUNC_LIB
+
 static void MID_ClearFOCVariables(void);
-RAM_FUNC_LIB
 static void MID_FaultDetection(void);
 
 /*******************************************************************************
@@ -169,7 +149,6 @@ const mid_pfcn_void_pms g_MID_SM_STATE_TABLE[9U] = {MID_StateStart,
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_StateStart(void)
 {
     /* Type the code to do when in the START state */
@@ -225,7 +204,6 @@ static void MID_StateStart(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_StateRL(void)
 {
     /* Type the code to do when in the RL state */
@@ -234,9 +212,9 @@ static void MID_StateRL(void)
     {
 #endif  
     GMCLIB_Clark_FLT(&g_sMidDrive.sFocPMSM.sIABC, &g_sMidDrive.sFocPMSM.sIAlBe);
-    
+
     eEstimRetVal = MCAA_EstimRL_FLT(g_sMidDrive.sFocPMSM.fltUDcBus, &g_sMidDrive.sFocPMSM.sIAlBe, &g_sEstimRLStruct, &g_sEstimRLCtrlRun, &g_sMidDrive.sFocPMSM.sUAlBeReq);
-        
+    
     /* DCBus ripple elimination */
     GMCLIB_ElimDcBusRipFOC_F16ff(g_sMidDrive.sFocPMSM.fltUDcBus, &g_sMidDrive.sFocPMSM.sUAlBeReq, &g_sMidDrive.sFocPMSM.sUAlBeCompFrac);
 
@@ -281,7 +259,6 @@ static void MID_StateRL(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_StatePp(void)
 {
     /* Type the code to do when in the PP state */
@@ -304,7 +281,6 @@ static void MID_StatePp(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_StateKe(void)
 {
     /* Type the code to do when in the KE state */
@@ -332,7 +308,6 @@ static void MID_StateKe(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_StateMech(void)
 {
     /* Type the code to do when in the MECH state */
@@ -362,7 +337,6 @@ static void MID_StateMech(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_StateHall(void)
 {
     /* Type the code to do when in the HALL state */
@@ -382,7 +356,6 @@ static void MID_StateHall(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_StateStop(void)
 {
     /* Type the code to do when in the STOP state */
@@ -411,7 +384,6 @@ static void MID_StateStop(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_StateFault(void)
 {
     /* After manual clear fault go to STOP state */
@@ -429,7 +401,6 @@ static void MID_StateFault(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_StateCalib(void)
 {
   if (--g_sMidDrive.ui16CounterState == 0U)
@@ -459,7 +430,6 @@ static void MID_StateCalib(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_TransStart2RL(void)
 {
     /* Type the code to do when going from the Start to the RL state */  
@@ -571,7 +541,6 @@ static void MID_TransStart2RL(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_TransStart2Pp(void)
 {
     /* Type the code to do when going from the Start to the Pp state */
@@ -595,7 +564,6 @@ static void MID_TransStart2Pp(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_TransStart2Mech(void)
 {
     mid_bemf_params_t sBemfParams;
@@ -647,7 +615,6 @@ static void MID_TransStart2Mech(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_TransStart2Hall(void)
 {
     /* Type the code to do when going from the LS to the STOP state */
@@ -664,7 +631,6 @@ static void MID_TransStart2Hall(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_TransStart2Ke(void)
 {
     mid_bemf_params_t sBemfParams;
@@ -706,7 +672,6 @@ static void MID_TransStart2Ke(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_TransAll2Stop(void)
 {
     /* Type the code to do when going to the STOP state */  
@@ -741,7 +706,6 @@ static void MID_TransAll2Stop(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_TransAll2Fault(void)
 { 
   /* Disable PWM output */
@@ -757,7 +721,6 @@ static void MID_TransAll2Fault(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_TransStop2Calib(void)
 {
   /* Type the code to do when going from the STOP to the RUN state */
@@ -788,7 +751,6 @@ static void MID_TransStop2Calib(void)
  *
  * @return None
  */
-RAM_FUNC_LIB
 static void MID_TransCalib2Start(void)
 {
     /* type the code to do when going to the START state */
@@ -936,10 +898,9 @@ void MID_Init_AR(void)
 RAM_FUNC_LIB
 void MID_ProcessFast_FL(void)
 {
-  
     /* Read measurements from FOC motor-control module. */
     MID_MC_ReadSignals();
-    
+
     /* Detects faults */
     MID_FaultDetection();
     
@@ -949,16 +910,8 @@ void MID_ProcessFast_FL(void)
       MID_TransAll2Fault();
     }
     
-//    /* Start CPU tick number couting */
-//    SYSTICK_START_COUNT();
-    
     /* Execute the MID state machine. */
     g_MID_SM_STATE_TABLE[g_sMID.eMIDState]();
-    
-//    /* Stop CPU tick number couting and store actual and maximum ticks */
-//    SYSTICK_STOP_COUNT(g_ui32NumberOfCycles);
-//    g_ui32MaxNumberOfCycles =
-//        g_ui32NumberOfCycles > g_ui32MaxNumberOfCycles ? g_ui32NumberOfCycles : g_ui32MaxNumberOfCycles;
 
     if(g_sMID.eMIDState != kMID_Calib && g_sMID.eMIDState != kMID_RL)
     {
@@ -974,13 +927,11 @@ void MID_ProcessFast_FL(void)
       M1_MCDRV_CURR_3PH_CHAN_ASSIGN(&g_sM1AdcSensor); 
     }
     
-    
 }
 
 /*!
  * MID start function.
  */
-RAM_FUNC_LIB
 uint32_t MID_Start_BL(mid_meas_type_t eMeasurementType)
 {
     uint32_t ui32RetVal = 0UL;
@@ -1075,7 +1026,6 @@ void MID_Stop_BL(void)
 /*!
  * Return the MID status.
  */
-RAM_FUNC_LIB
 bool_t MID_GetStatus_BL(mid_status_t *psMIDStatus)
 {
     /* Copy the statuses. */

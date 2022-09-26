@@ -50,8 +50,8 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 extern struct net_buf_pool Image$$RW_net_buf_pool$$Base[];
 static struct net_buf_pool * _net_buf_pool_list = &Image$$RW_net_buf_pool$$Base[0];
 #elif defined(__ICCARM__)
-#pragma section ="._net_buf_pool"
-extern struct net_buf_pool* _net_buf_pool_list = (struct net_buf_pool*)__section_begin("._net_buf_pool");
+STRUCT_SECTION_DEFINE(net_buf_pool);
+#define _net_buf_pool_list _net_buf_pool_list_start
 #elif defined(__GNUC__)
 extern struct net_buf_pool _net_buf_pool_list[];
 #else
@@ -481,7 +481,6 @@ void net_buf_simple_reserve(struct net_buf_simple *buf, size_t reserve)
 	buf->data = buf->__buf + reserve;
 }
 
-#if 0
 void net_buf_slist_put(sys_slist_t *list, struct net_buf *buf)
 {
 	struct net_buf *tail;
@@ -531,7 +530,6 @@ struct net_buf *net_buf_slist_get(sys_slist_t *list)
 
 	return buf;
 }
-#endif
 
 void net_buf_put(osa_msgq_handle_t fifo, struct net_buf *buf)
 {

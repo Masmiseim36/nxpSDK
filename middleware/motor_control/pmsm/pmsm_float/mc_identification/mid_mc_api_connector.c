@@ -56,7 +56,6 @@ extern mid_pmsm_t g_sMidDrive;
 /*!
  * Set External Position to FOC
  */
-RAM_FUNC_LIB
 void MID_MC_SetExternalPosEl(frac16_t f16PosExt)
 {
         g_sMidDrive.sFocPMSM.f16PosElExt = f16PosExt;
@@ -65,7 +64,6 @@ void MID_MC_SetExternalPosEl(frac16_t f16PosExt)
 /*!
  * Get Actual External Position from FOC
  */
-RAM_FUNC_LIB
 frac16_t MID_MC_GetExternalPosEl(void)
 {
     return g_sMidDrive.sFocPMSM.f16PosElExt;      
@@ -74,7 +72,6 @@ frac16_t MID_MC_GetExternalPosEl(void)
 /*!
  * Get actual Estimated Position from FOC
  */
-RAM_FUNC_LIB
 frac16_t MID_MC_GetEstimatedPosEl(void)
 {
     return g_sMidDrive.sFocPMSM.f16PosElEst;     
@@ -101,7 +98,6 @@ void MID_MC_GetUDQReq(GMCLIB_2COOR_DQ_T_FLT *sUDQReq)
 /*!
  * Get observed EDQ voltage
  */
-RAM_FUNC_LIB
 void MID_MC_GetEDQObsrv(GMCLIB_2COOR_DQ_T_FLT *sEDQObsrv)
 {
     sEDQObsrv->fltD = g_sMidDrive.sFocPMSM.sBemfObsrv.sEObsrv.fltD;
@@ -111,7 +107,6 @@ void MID_MC_GetEDQObsrv(GMCLIB_2COOR_DQ_T_FLT *sEDQObsrv)
 /*!
  * Set required IDQ current
  */
-RAM_FUNC_LIB
 void MID_MC_SetIDQReq(GMCLIB_2COOR_DQ_T_FLT sIDQReq)
 {
     g_sMidDrive.sFocPMSM.sIDQReq.fltD = sIDQReq.fltD;
@@ -121,7 +116,6 @@ void MID_MC_SetIDQReq(GMCLIB_2COOR_DQ_T_FLT sIDQReq)
 /*!
  * Get actual IDQ current
  */
-RAM_FUNC_LIB
 void MID_MC_GetIDQfbck(GMCLIB_2COOR_DQ_T_FLT *sIDQfbck)
 {
     sIDQfbck->fltD = g_sMidDrive.sFocPMSM.sIDQ.fltD;                  
@@ -139,7 +133,6 @@ float_t MID_MC_GetUDCbusFilt(void)
 /*!
  * Get actual Estimated Electrical Speed
  */
-RAM_FUNC_LIB
 float_t MID_MC_GetSpeedElEst(void)
 {
     return g_sMidDrive.sFocPMSM.sTo.fltSpeed;   
@@ -148,7 +141,6 @@ float_t MID_MC_GetSpeedElEst(void)
 /*!
  * Enable FOC Current Loop On/Off
  */
-RAM_FUNC_LIB
 void MID_MC_EnableCurrentLoop(bool_t bValue)
 {
     g_sMidDrive.sFocPMSM.bCurrentLoopOn = bValue;
@@ -157,7 +149,6 @@ void MID_MC_EnableCurrentLoop(bool_t bValue)
 /*!
  * Use Estimated position for Parks transformation
  */
-RAM_FUNC_LIB
 void MID_MC_UseEstimatedPos(bool_t bValue)
 {
     g_sMidDrive.sFocPMSM.bOpenLoop = TRUE;
@@ -167,7 +158,6 @@ void MID_MC_UseEstimatedPos(bool_t bValue)
 /*!
  * Update Bemf Observer
  */
-RAM_FUNC_LIB
 void MID_MC_UpdateBemfObsrv(float_t fltI_gain,
                         float_t fltU_gain,
                         float_t fltE_gain,
@@ -190,7 +180,6 @@ void MID_MC_UpdateBemfObsrv(float_t fltI_gain,
 /*!
  * Update Tracking Observer
  */
-RAM_FUNC_LIB
 void MID_MC_UpdateTrackingObsrv(float_t fltTO_Kpz,
                                 float_t fltTO_Kiz,
                                 float_t fltTO_Theta)
@@ -216,7 +205,6 @@ void MID_MC_UpdateTrackingObsrv(float_t fltTO_Kpz,
  * Function reads voltages, currents, etc. for MID. Called before MID state
  * machine. User defined.
  */
-RAM_FUNC_LIB
 void MID_MC_ReadSignals(void)
 {
     frac16_t f16PosElPark;
@@ -279,7 +267,6 @@ void MID_MC_ReadSignals(void)
  * Function applying results/output from MID. Called after MID state
  * machine. User defined.
  */
-RAM_FUNC_LIB
 void MID_MC_ApplySignals(void)
 {  
     /* perform current control loop if enabled */

@@ -121,17 +121,23 @@ static inline int net_socket_blocking(int sock, int state)
  */
 static inline int net_get_sock_error(int sock)
 {
+    int ret = 0;
     switch (errno)
     {
         case EWOULDBLOCK:
-            return -WM_E_AGAIN;
+            ret = -WM_E_AGAIN;
+            break;
         case EBADF:
-            return -WM_E_BADF;
+            ret = -WM_E_BADF;
+            break;
         case ENOBUFS:
-            return -WM_E_NOMEM;
+            ret = -WM_E_NOMEM;
+            break;
         default:
-            return errno;
+            ret = errno;
+            break;
     }
+    return ret;
 }
 
 /** Converts Internet host address from the IPv4 dotted-decimal notation into
@@ -197,8 +203,8 @@ static inline void net_inet_ntoa(unsigned long addr, char *cp)
  */
 static inline bool net_is_ip_or_ipv6(const uint8_t *buffer)
 {
-    if (((struct eth_hdr *)(void *)buffer)->type == PP_HTONS(ETHTYPE_IP) ||
-        ((struct eth_hdr *)(void *)buffer)->type == PP_HTONS(ETHTYPE_IPV6))
+    if (((const struct eth_hdr *)(const void *)buffer)->type == PP_HTONS(ETHTYPE_IP) ||
+        ((const struct eth_hdr *)(const void *)buffer)->type == PP_HTONS(ETHTYPE_IPV6))
     {
         return true;
     }
@@ -349,6 +355,17 @@ int net_get_if_ipv6_pref_addr(struct wlan_ip_config *addr, void *intrfc_handle);
  */
 char *ipv6_addr_state_to_desc(unsigned char addr_state);
 
+/** Get the description of IPv6 address
+ *
+ * This function will get the IPv6 address type description like -
+ * Linklocal, Global, Sitelocal, Uniquelocal
+ *
+ * \param[in] ipv6_conf Pointer to IPv6 configuration of type \ref ipv6_config
+ *
+ * \return IPv6 address description
+ */
+char *ipv6_addr_addr_to_desc(struct ipv6_config *ipv6_conf);
+
 /** Get the description of IPv6 address type
  *
  * This function will get the IPv6 address type description like -
@@ -398,7 +415,7 @@ int net_get_if_ip_addr(uint32_t *ip, void *intrfc_handle);
  *
  * \return WM_SUCCESS on success or error code.
  */
-int net_get_if_ip_mask(uint32_t *mask, void *intrfc_handle);
+int net_get_if_ip_mask(uint32_t *nm, void *intrfc_handle);
 
 /** Initialize the network stack
  *

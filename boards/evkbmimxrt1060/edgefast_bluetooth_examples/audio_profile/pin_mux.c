@@ -13,14 +13,14 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v9.0
+product: Pins v12.0
 processor: MIMXRT1062xxxxA
 package_id: MIMXRT1062DVL6A
 mcu_data: ksdk2_0
-processor_version: 0.10.10
+processor_version: 12.0.0
 board: MIMXRT1060-EVKB
 pin_labels:
-- {pin_num: M12, pin_signal: GPIO_AD_B1_03, label: 'SPDIF_IN/U15[4]/WL_RST#/J8[56]/SD_PWREN/Q5[1]/J16[8]', identifier: SPDIF_IN;WL_RST}
+- {pin_num: M12, pin_signal: GPIO_AD_B1_03, label: 'SPDIF_IN/U15[4]/WL_RST#/J8[56]/SD_PWREN/Q5[1]/J16[8]', identifier: SPDIF_IN;WL_RST;SD_PWREN}
 - {pin_num: H13, pin_signal: GPIO_AD_B1_08, label: 'AUD_INT/J34[5]/U25[15]/WIFI_RST_B/U9[3]/CSI_D9/J46[13]/J16[4]', identifier: CSI_D9;SDIO_RST}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -176,7 +176,9 @@ BOARD_InitUSDHCPins:
     pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_7, slew_rate: Fast}
   - {pin_num: J2, peripheral: USDHC1, signal: 'usdhc_data, 3', pin_signal: GPIO_SD_B0_05, hysteresis_enable: Disable, pull_up_down_config: Pull_Up_100K_Ohm, pull_keeper_select: Pull,
     pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_7, slew_rate: Fast}
-  - {pin_num: M12, peripheral: GPIO1, signal: 'gpio_io, 19', pin_signal: GPIO_AD_B1_03, identifier: SPDIF_IN, direction: OUTPUT, gpio_init_state: 'true', hysteresis_enable: Disable}
+  - {pin_num: M12, peripheral: GPIO1, signal: 'gpio_io, 19', pin_signal: GPIO_AD_B1_03, identifier: SD_PWREN, direction: OUTPUT, gpio_init_state: 'true', software_input_on: Disable,
+    hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm, pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100,
+    drive_strength: R0, slew_rate: Slow}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -188,14 +190,14 @@ BOARD_InitUSDHCPins:
  * END ****************************************************************************************************************/
 void BOARD_InitUSDHCPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
-  /* GPIO configuration of SPDIF_IN on GPIO_AD_B1_03 (pin M12) */
-  gpio_pin_config_t SPDIF_IN_config = {
+  /* GPIO configuration of SD_PWREN on GPIO_AD_B1_03 (pin M12) */
+  gpio_pin_config_t SD_PWREN_config = {
       .direction = kGPIO_DigitalOutput,
       .outputLogic = 1U,
       .interruptMode = kGPIO_NoIntmode
   };
   /* Initialize GPIO functionality on GPIO_AD_B1_03 (pin M12) */
-  GPIO_PinInit(GPIO1, 19U, &SPDIF_IN_config);           
+  GPIO_PinInit(GPIO1, 19U, &SD_PWREN_config);
 
   IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_03_GPIO1_IO19, 0U);
   IOMUXC_SetPinMux(
@@ -216,6 +218,7 @@ void BOARD_InitUSDHCPins(void) {
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_SD_B0_05_USDHC1_DATA3,      /* GPIO_SD_B0_05 is configured as USDHC1_DATA3 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_AD_B1_03_GPIO1_IO19,0x3088U);
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_SD_B0_00_USDHC1_CMD,        /* GPIO_SD_B0_00 PAD functional properties : */
       0xB0B9U);                               /* Slew Rate Field: Fast Slew Rate

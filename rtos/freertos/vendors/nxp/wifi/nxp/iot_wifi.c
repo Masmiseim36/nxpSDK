@@ -54,7 +54,7 @@ static os_semaphore_t scan_protection_sem;
 static os_semaphore_t wlan_init_sem;
 static os_mutex_t wlan_mtx;
 
-static int wlan_event_callback(enum wlan_event_reason event, void *data)
+int wlan_event_callback(enum wlan_event_reason event, void *data)
 {
     int ret;
     struct wlan_ip_config addr;

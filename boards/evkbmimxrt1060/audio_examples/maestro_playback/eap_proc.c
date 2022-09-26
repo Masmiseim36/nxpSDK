@@ -136,6 +136,9 @@ static LVM_UINT32 EAP_AudioTime = 0;
 
 // malloc memory
 static LVM_INT16 MallocAlign = 4; /* 4 byte Malloc alignment */
+#if (ALGORITHM_XO == 1)
+static uint16_t eap_xo_out_buf_size = 0U; /* Chunk size for which the xo out buffers are allocated */
+#endif
 
 int EAP_Init(void *arg)
 {
@@ -144,6 +147,15 @@ int EAP_Init(void *arg)
     LVM_INT32 temp32;               /* temporary address */
     LVM_INT16 j;
     LVM_UINT16 order[LVM_NR_MEMORY_REGIONS];
+
+#if (ALGORITHM_XO == 1)
+    /* Init variables */
+    eap_xo_out_buf_size = 0U;
+    for (int o = 0; o < 2; o++)
+    {
+        eap_xo_out_buffer[o] = NULL;
+    }
+#endif
 
     /******************************************************************************
     GET VERSION INFORMATION
@@ -321,6 +333,11 @@ int EAP_Execute(void *arg, void *inputBuffer, int size)
 #if (ALGORITHM_XO == 1)
     eap_att_control_t *control = get_eap_att_control();
     app_data_t *app_data       = get_app_data();
+    if (size > (int)eap_xo_out_buf_size)
+    {
+        first_exec = true;
+    }
+
     if (first_exec)
     {
         first_exec                    = false;
@@ -332,8 +349,16 @@ int EAP_Execute(void *arg, void *inputBuffer, int size)
             // streamer
             app_data->eap_args.xo_enabled = true;
 
+            eap_xo_out_buf_size = (uint16_t)size;
+
             for (int i = 0; i < 2; i++)
             {
+                if (eap_xo_out_buffer[i] != NULL)
+                {
+                    OSA_MemoryFree(eap_xo_out_buffer[i]);
+                    eap_xo_out_buffer[i] = NULL;
+                }
+
                 eap_xo_out_buffer[i] = OSA_MemoryAllocate(size * num_channel);
                 if (eap_xo_out_buffer[i] != NULL)
                 {
@@ -361,7 +386,7 @@ int EAP_Execute(void *arg, void *inputBuffer, int size)
                              (LVM_INT16 *)inputBuffer, /* Input buffer */
                              outBuffer,                /* Output buffer */
                              size / num_channel,       /* Number of samples to process */
-                             EAP_AudioTime);           /* Audio Time*/
+                             EAP_AudioTime);           /* Audio Time */
 
 #if (ALGORITHM_XO == 1)
     if (app_data->lastXOOperatingMode)
@@ -467,18 +492,19 @@ int EAP_Deinit(void)
     /*
      * Free memory
      */
+
     LVM_Status = LVM_GetMemoryTable(EAP_hInstance, &EAP_MemTab, LVM_NULL);
     if (LVM_Status != LVM_SUCCESS)
     {
-        return LVM_Status;
+        PRINTF("EAP GetMemoryTable error: %d\r\n", LVM_Status);
     }
-
     for (i = 0; i < LVM_NR_MEMORY_REGIONS; i++)
     {
-        if (EAP_MemTab.Region[i].Size != 0)
+        if (EAP_MemTab.Region[i].pBaseAddress != NULL)
         {
             temp32 = (LVM_INT32)EAP_MemTab.Region[i].pBaseAddress - MallocAlign;
             OSA_MemoryFree((LVM_INT8 *)temp32);
+            EAP_MemTab.Region[i].pBaseAddress = NULL;
         }
     }
 #if (ALGORITHM_XO == 1)
@@ -486,7 +512,12 @@ int EAP_Deinit(void)
     {
         for (int i = 0; i < 2; i++)
         {
-            OSA_MemoryFree(eap_xo_out_buffer[i]);
+            if (eap_xo_out_buffer[i] != NULL)
+            {
+                OSA_MemoryFree(eap_xo_out_buffer[i]);
+                eap_xo_out_buffer[i] = NULL;
+                eap_xo_out_buf_size  = 0U;
+            }
         }
     }
 #endif

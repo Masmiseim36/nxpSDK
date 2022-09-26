@@ -21,8 +21,8 @@
 #include "dns.h"
 #include "dhcp-priv.h"
 
-struct dns_server_data dnss;
-int (*dhcp_dns_server_handler)(char *msg, int len, struct sockaddr_in *fromaddr);
+static struct dns_server_data dnss;
+static int (*dhcp_dns_server_handler)(char *msg, int len, struct sockaddr_in *fromaddr);
 extern struct dhcp_server_data dhcps;
 
 /* take a domain name and convert it into a DNS QNAME format, i.e.
@@ -126,7 +126,7 @@ static char *parse_questions(unsigned int num_questions, uint8_t *pos, int *foun
 }
 
 #define ERROR_REFUSED 5
-int process_dns_message(char *msg, int len, struct sockaddr_in *fromaddr)
+static int process_dns_message(char *msg, int len, struct sockaddr_in *fromaddr)
 {
     struct dns_header *hdr;
     char *pos;

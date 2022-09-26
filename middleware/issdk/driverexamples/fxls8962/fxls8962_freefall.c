@@ -99,6 +99,7 @@ void fxls8962_int_event_ready_callback(void *pUserData)
 int main(void)
 {
     int32_t status;
+    uint8_t whoami;
     uint8_t dataReady;
     ARM_DRIVER_I2C *I2Cdrv = &I2C_S_DRIVER; // Now using the shield.h value!!!
     fxls8962_i2c_sensorhandle_t fxls8962Driver;
@@ -140,13 +141,28 @@ int main(void)
 
     /*! Initialize the FXLS8962 sensor driver. */
     status = FXLS8962_I2C_Initialize(&fxls8962Driver, &I2C_S_DRIVER, I2C_S_DEVICE_INDEX, FXLS8962_I2C_ADDR,
-                                     FXLS8962_WHOAMI_VALUE);
+                                     &whoami);
     if (SENSOR_ERROR_NONE != status)
     {
         PRINTF("\r\n Sensor Initialization Failed\r\n");
         return -1;
     }
-    PRINTF("\r\n Successfully Initiliazed Sensor\r\n");
+    if ((FXLS8964_WHOAMI_VALUE == whoami) || (FXLS8967_WHOAMI_VALUE == whoami))
+    {
+    	PRINTF("\r\n Successfully Initialized Gemini with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else if (FXLS8974_WHOAMI_VALUE == whoami)
+    {
+    	PRINTF("\r\n Successfully Initialized Timandra with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else if (FXLS8962_WHOAMI_VALUE == whoami)
+    {
+    	PRINTF("\r\n Successfully Initialized Newstein with WHO_AM_I = 0x%X\r\n", whoami);
+    }
+    else
+    {
+    	PRINTF("\r\n Bad WHO_AM_I = 0x%X\r\n", whoami);
+    }
 
     /*!  Set the task to be executed while waiting for I2C transactions to complete. */
     FXLS8962_I2C_SetIdleTask(&fxls8962Driver, (registeridlefunction_t)SMC_SetPowerModeVlpr, SMC);

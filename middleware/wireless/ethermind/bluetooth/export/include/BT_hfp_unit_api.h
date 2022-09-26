@@ -1292,7 +1292,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
  *  \brief To Query Subscriber Number.
  *
  *  \par Description:
- *       This API allows user to query AG’s subscriber number.
+ *       This API allows user to query AGâ€™s subscriber number.
  *
  *  \param [in] hdl
  *              Connection Handle to identify the connection to remote AG.
@@ -1359,7 +1359,7 @@ API_RESULT BT_hfp_unit_register_rfcomm_cb
  *  \brief HFP Unit v1.5: To Query Operator Selection
  *
  *  \par Description:
- *       This API allows user to query the network operator’s name.
+ *       This API allows user to query the network operatorâ€™s name.
  *
  *  \param [in] hdl
  *              Connection Handle to identify the connection to remote AG.
@@ -1643,7 +1643,7 @@ API_RESULT BT_hfp_unit_iia_actvn_and_req_ind_bitmask
  *              String containing list of available codecs in decimal format.
  *
  *  \param [in] avl_cdc_len
- *              Length of ‘avl_cdc_list’ as number of octets.
+ *              Length of â€˜avl_cdc_listâ€™ as number of octets.
  *
  *  \return
  *      API_SUCCESS: Successful return from API.
@@ -1671,7 +1671,7 @@ API_RESULT BT_hfp_unit_iia_actvn_and_req_ind_bitmask
  *              Numeric array of available codecs.
  *
  *  \param [in] avl_cdc_len
- *              Number of codec ids in ‘avl_cdc_list’.
+ *              Number of codec ids in â€˜avl_cdc_listâ€™.
  *
  *  \return
  *      API_SUCCESS: Successful return from API.

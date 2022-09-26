@@ -265,6 +265,7 @@ AudioSrcStreamErrorType audio_src_pcmrtos_read_device(ElementAudioSrc *audio_src
     AudioPacketHeader *pkt_hdr  = NULL;
     PCMRtosDeviceInfo *dev_info = NULL;
     char *buffer_ptr            = NULL;
+    int8_t next_index           = 0;
     int ret;
 
     STREAMER_FUNC_ENTER(DBG_AUDIO_SRC);
@@ -309,21 +310,25 @@ AudioSrcStreamErrorType audio_src_pcmrtos_read_device(ElementAudioSrc *audio_src
     pkt_hdr             = (AudioPacketHeader *)(&audio_src_element->pkt_hdr);
     pkt_hdr->chunk_size = audio_src_element->chunk_size;
 
-    buf->size = sizeof(AudioPacketHeader) + pkt_hdr->chunk_size;
-
     if (audio_src_element->first_run)
     {
-        memcpy(dev_info->audbuf[dev_info->input_index], pkt_hdr, sizeof(AudioPacketHeader));
+        memcpy(dev_info->audbuf[dev_info->buff_index], pkt_hdr, sizeof(AudioPacketHeader));
+        buf->size                    = sizeof(AudioPacketHeader);
         audio_src_element->first_run = false;
     }
+    else
+    {
+        buf->size = dev_info->buff_size[dev_info->buff_index] + sizeof(AudioPacketHeader);
+    }
 
-    buffer_ptr = dev_info->audbuf[(dev_info->input_index + 1) % AUDIO_SRC_BUFFER_NUM];
-    memset(buffer_ptr, 0, buf->size);
+    next_index                      = ((int8_t)dev_info->buff_index + 1) % AUDIO_SRC_BUFFER_NUM;
+    buffer_ptr                      = dev_info->audbuf[next_index];
+    dev_info->buff_size[next_index] = pkt_hdr->chunk_size;
+
+    memset(buffer_ptr, 0, dev_info->buff_size[next_index] + sizeof(AudioPacketHeader));
     memcpy(buffer_ptr, pkt_hdr, sizeof(AudioPacketHeader));
-
-    dev_info->input_size = buf->size - sizeof(AudioPacketHeader);
-    ret                  = streamer_pcm_read(dev_info->pcm_handle, (uint8_t *)(buffer_ptr + sizeof(AudioPacketHeader)),
-                            dev_info->input_size);
+    ret = streamer_pcm_read(dev_info->pcm_handle, (uint8_t *)(buffer_ptr + sizeof(AudioPacketHeader)),
+                            dev_info->buff_size[next_index]);
 
     if (ret != 0)
     {
@@ -333,11 +338,10 @@ AudioSrcStreamErrorType audio_src_pcmrtos_read_device(ElementAudioSrc *audio_src
     }
     else
     {
-        buf->buffer = (int8_t *)dev_info->audbuf[dev_info->input_index];
+        buf->buffer = (int8_t *)dev_info->audbuf[dev_info->buff_index];
     }
 
-    dev_info->input_size  = 0;
-    dev_info->input_index = (dev_info->input_index + 1) % AUDIO_SRC_BUFFER_NUM;
+    dev_info->buff_index = (dev_info->buff_index + 1U) % (uint8_t)AUDIO_SRC_BUFFER_NUM;
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
 

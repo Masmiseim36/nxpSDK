@@ -43,8 +43,9 @@ int32_t filesrc_init(StreamElement *element)
     ElementFileSrc *filesrc = (ElementFileSrc *)element;
 
     /* filesrc element specific init */
-    filesrc->fd   = -1;
-    filesrc->size = 0;
+    filesrc->fd     = -1;
+    filesrc->buffer = NULL;
+    filesrc->size   = 0;
     memset(&filesrc->location, 0, MAX_LOCATION_PATH_LENGTH);
     filesrc->chunk_size    = FILESRC_DEFAULT_CHUNK_SIZE;
     filesrc->end_of_stream = false;
@@ -151,7 +152,7 @@ int32_t filesrc_get_push_chunk_size(ElementHandle element, uint64_t *chunk_size)
 
     STREAMER_FUNC_ENTER(DBG_FILESRC);
 
-    CHK_ARGS(src == NULL || chunk_size == 0, STREAM_ERR_INVALID_ARGS);
+    CHK_ARGS(src == NULL || chunk_size == NULL, STREAM_ERR_INVALID_ARGS);
 
     *chunk_size = src->chunk_size;
 
@@ -228,6 +229,8 @@ static uint8_t filesrc_src_activate(StreamPad *pad, uint8_t active)
 
     STREAMER_FUNC_ENTER(DBG_FILESRC);
 
+    STREAMER_LOG_DEBUG(DBG_MEMSRC, "filesrc_src_activate(%d)\n", (uint32_t)active);
+
     if ((uint8_t) false == active)
     {
         PadScheduling mode = PAD_SCHEDULING(pad);
@@ -263,7 +266,8 @@ static uint8_t filesrc_src_activate(StreamPad *pad, uint8_t active)
         }
         else if (SCHEDULING_PULL == mode)
         {
-            ret = pad_activate_pull(pad, false);
+            STREAMER_LOG_DEBUG(DBG_FILESRC, "[FileSRC]Deactivate src pad\n");
+            ret = pad_activate_pull(pad, active);
         }
     }
 
@@ -349,12 +353,12 @@ static PadReturn filesrc_read(ElementFileSrc *filesrc, uint32_t offset, uint32_t
         if (filesrc->file_type == RAW_DATA)
         {
             /* set buffer size = header size + actual data size read */
-            buf->size = sizeof(RawPacketHeader) + readlen;
+            buf->size = sizeof(RawPacketHeader) + bytesRead;
         }
         else if (filesrc->file_type == AUDIO_DATA)
         {
             /* set buffer size = header size + actual data size read */
-            buf->size = sizeof(AudioPacketHeader) + readlen;
+            buf->size = sizeof(AudioPacketHeader) + bytesRead;
         }
 
         STREAMER_FUNC_EXIT(DBG_FILESRC);
@@ -362,6 +366,7 @@ static PadReturn filesrc_read(ElementFileSrc *filesrc, uint32_t offset, uint32_t
     }
 
 eos:
+    STREAMER_LOG_DEBUG(DBG_FILESRC, "\tEND OF STREAM (READ)\n");
     STREAMER_LOG_DEBUG(DBG_FILESRC, "[FileSRC]Read pos: %d, size: %d, offset: %d\n", filesrc->read_position,
                        filesrc->size, offset);
     STREAMER_FUNC_EXIT(DBG_FILESRC);
@@ -450,6 +455,11 @@ int32_t filesrc_src_pad_process(StreamPad *pad)
             return STREAM_ERR_GENERAL;
         }
     }
+    else
+    {
+        // Due to forcing a context switch
+        OSA_TimeDelay(1);
+    }
 
     STREAMER_FUNC_EXIT(DBG_FILESRC);
     return STREAM_OK;
@@ -499,7 +509,7 @@ static PadReturn filesrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t siz
 
     /* read chunk_size of data */
     ret = filesrc_read(filesrc, offset, size, buffer);
-    if (ret == PAD_STREAM_ERR_UNEXPECTED)
+    if (ret == PAD_STREAM_ERR_UNEXPECTED || ret == PAD_STREAM_ERR_EOS)
     {
         /* Its an end of stream */
         if (filesrc->end_of_stream != (uint8_t) true)
@@ -580,7 +590,7 @@ static uint8_t filesrc_handle_src_event(StreamPad *pad, StreamEvent *event)
                     offset = filesrc->size;
 
                     /* Return false as this offset position is not possible. */
-                    /*ret = false;*/
+                    ret = false;
                 }
             }
             else if (DATA_FORMAT_TIME == format && filesrc->time_seekable)
@@ -693,6 +703,10 @@ static uint8_t filesrc_handle_src_query(StreamPad *pad, StreamQuery *query)
                 data->value32u = filesrc->duration;
                 ret            = true;
             }
+            else
+            {
+                ret = false;
+            }
             break;
 
         case INFO_TIME_SEEKABLE:
@@ -714,7 +728,7 @@ static uint8_t filesrc_handle_src_query(StreamPad *pad, StreamQuery *query)
             if (STREAM_OK == file_query(filesrc->fd, QUERY_TYPE(query), data))
                 ret = true;
             break;
-        case INFO_FILE_SIZE:
+        case INFO_SIZE:
             data->value32u = filesrc->size;
             ret            = true;
             break;
@@ -738,7 +752,8 @@ static uint8_t filesrc_handle_src_query(StreamPad *pad, StreamQuery *query)
 static uint8_t filesrc_src_activate_push(StreamPad *pad, uint8_t active)
 {
     ElementFileSrc *filesrc = (ElementFileSrc *)pad->parent;
-    uint8_t ret;
+    uint8_t ret             = false;
+    int32_t fd;
 
     STREAMER_FUNC_ENTER(DBG_FILESRC);
 
@@ -753,6 +768,12 @@ static uint8_t filesrc_src_activate_push(StreamPad *pad, uint8_t active)
 
         /* start of stream */
         filesrc->end_of_stream = false;
+        if (filesrc->buffer)
+        {
+            OSA_MemoryFree(filesrc->buffer);
+            filesrc->buffer = NULL;
+        }
+
         /* reset to 0 */
         filesrc->read_position = 0;
 
@@ -763,8 +784,10 @@ static uint8_t filesrc_src_activate_push(StreamPad *pad, uint8_t active)
             return false;
         }
 
+        STREAMER_LOG_DEBUG(DBG_FILESRC, "[FileSRC]Activate push mode: %s\n", filesrc->location);
+
         /* Set the fd to the global. */
-        int32_t fd  = file_open(filesrc->location, FILE_RDONLY);
+        fd          = file_open(filesrc->location, FILE_RDONLY);
         filesrc->fd = fd;
         if (fd >= 0)
         {
@@ -789,12 +812,12 @@ static uint8_t filesrc_src_activate_push(StreamPad *pad, uint8_t active)
             {
                 filesrc->buffer = OSA_MemoryAllocate(sizeof(AudioPacketHeader) + filesrc->chunk_size);
             }
-
             if (NULL == filesrc->buffer)
             {
                 STREAMER_FUNC_EXIT(DBG_FILESRC);
                 return false;
             }
+
             if (filesrc->file_type == RAW_DATA)
             {
                 RawPacketHeader *pkt_hdr = NULL;
@@ -816,6 +839,7 @@ static uint8_t filesrc_src_activate_push(StreamPad *pad, uint8_t active)
                 /* Init header data */
                 pkt_hdr->id = AUDIO_DATA;
             }
+
             /* Get the seekable in bytes and size in bytes */
             filesrc->byte_seekable = true;
             filesrc->size          = file_getsize(filesrc->fd);
@@ -823,24 +847,38 @@ static uint8_t filesrc_src_activate_push(StreamPad *pad, uint8_t active)
             STREAMER_LOG_DEBUG(DBG_FILESRC, "[FileSRC]Size: %d, seekable: %d\n", filesrc->size, filesrc->byte_seekable);
 
             /* Get the duration and seekable in msec */
-            filesrc->time_seekable = false;
+            filesrc->time_seekable = true;
             /* TODO: calculate duration correctly. */
-            filesrc->duration = 0;
+            filesrc->duration = filesrc->size;
             ret               = true;
         }
         else
         {
-            STREAMER_LOG_ERR(DBG_FILESRC, ERRCODE_NOT_FOUND, "[FileSRC] Open %s failed: %d\n", filesrc->location);
+            STREAMER_LOG_ERR(DBG_FILESRC, ret, "[FileSRC]f_open failed\n");
             ret = false;
         }
     }
     else
     {
+        /* Deactivate pad in PUSH mode */
+        STREAMER_LOG_DEBUG(DBG_FILESRC, "[FileSRC]Deactivate push mode: %s\n", filesrc->location);
+
         if (filesrc->fd >= 0)
         {
-            file_close(filesrc->fd);
+            if (0 != file_close(filesrc->fd))
+            {
+                STREAMER_FUNC_EXIT(DBG_FILESRC);
+                return false;
+            }
             filesrc->fd = -1;
         }
+
+        /* reset */
+        filesrc->size          = 0;
+        filesrc->end_of_stream = false;
+        filesrc->read_position = 0;
+
+        /* Free the chunk buffer */
         if (filesrc->buffer)
         {
             OSA_MemoryFree(filesrc->buffer);
@@ -897,7 +935,11 @@ static uint8_t filesrc_src_activate_pull(StreamPad *pad, uint8_t active)
 
         /* start of stream */
         filesrc->end_of_stream = false;
-        filesrc->buffer        = NULL;
+        if (filesrc->buffer)
+        {
+            OSA_MemoryFree(filesrc->buffer);
+            filesrc->buffer = NULL;
+        }
 
         /* reset to 0 */
         filesrc->read_position             = 0;
@@ -922,7 +964,7 @@ static uint8_t filesrc_src_activate_pull(StreamPad *pad, uint8_t active)
             filesrc->byte_seekable = true;
             filesrc->size          = file_getsize(filesrc->fd);
             /* Get the duration and seekable in msec */
-            filesrc->time_seekable = false;
+            filesrc->time_seekable = true;
             /* TODO: calculate duration correctly. */
             filesrc->duration = filesrc->size;
 
@@ -1037,7 +1079,7 @@ static int32_t filesrc_set_property(StreamElement *element_ptr, uint16_t prop, u
 
         case PROP_FILESRC_SET_SAMPLE_RATE:
             STREAMER_LOG_DEBUG(DBG_FILESRC, "set sample rate:%d\n", val);
-            if (val < 0 || val > 96000)
+            if (val <= 0 || val > 96000)
             {
                 ret = STREAM_ERR_INVALID_ARGS;
             }
@@ -1050,7 +1092,7 @@ static int32_t filesrc_set_property(StreamElement *element_ptr, uint16_t prop, u
 
         case PROP_FILESRC_SET_NUM_CHANNELS:
             STREAMER_LOG_DEBUG(DBG_FILESRC, "set number of channels:%d\n", val);
-            if (val < 0 || val > 8)
+            if (val <= 0 || val > 8)
             {
                 ret = STREAM_ERR_INVALID_ARGS;
             }
@@ -1063,7 +1105,7 @@ static int32_t filesrc_set_property(StreamElement *element_ptr, uint16_t prop, u
 
         case PROP_FILESRC_SET_BIT_WIDTH:
             STREAMER_LOG_DEBUG(DBG_FILESRC, "set bit width:%d\n", val);
-            if (val < 0 || val > 32 || val % 8 != 0)
+            if (val <= 0 || val > 32 || val % 8 != 0)
             {
                 ret = STREAM_ERR_INVALID_ARGS;
             }

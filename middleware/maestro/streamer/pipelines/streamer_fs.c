@@ -60,6 +60,8 @@ int streamer_build_fs_pipeline(int8_t pipeline_index,
     int file_src_idx;
     StreamElementType file_src_type;
 
+    STREAMER_FUNC_ENTER(DBG_CORE);
+
     switch (pipeline_type)
     {
 #ifdef STREAMER_ENABLE_FILESRC
@@ -83,8 +85,6 @@ int streamer_build_fs_pipeline(int8_t pipeline_index,
     }
 
     task_data->pipeline_type = pipeline_type;
-
-    STREAMER_FUNC_ENTER(DBG_CORE);
 
     /* CREATE PIPELINE */
     ret = create_pipeline(&task_data->pipes[pipeline_index], pipeline_index, pipeline_type, &task_data->mq_out);

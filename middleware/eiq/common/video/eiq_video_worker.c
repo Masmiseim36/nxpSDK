@@ -1,17 +1,17 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
 
 #include "image_utils.h"
 #include "eiq_video_worker.h"
 #include "eiq_display.h"
 #include "eiq_camera.h"
-#include "stdbool.h"
 #include "fsl_debug_console.h"
 #include "gprintf/chgui.h"
 
@@ -54,7 +54,7 @@ static void start(void)
     /* Check if capture windows is created. */
     if (s_window.height == 0 || s_window.width == 0)
     {
-        printf("Default capture rate width = %d%%,%d%% is used.\r\n",
+        PRINTF("Default capture rate width = %d%%,%d%% is used.\r\n",
         EIQ_DEFAULT_CAPTURE_RATE, EIQ_DEFAULT_CAPTURE_RATE);
         s_worker.setCaptureWindowHeightRate(EIQ_DEFAULT_CAPTURE_RATE);
     }
@@ -209,7 +209,7 @@ static status_t setCaptureWindowHeightRate(int heightRate)
 {
     if (heightRate < 10)
     {
-        printf("Incorrect input rate. Set value between 10-100.\r\n");
+        PRINTF("Incorrect input rate. Set value between 10-100.\r\n");
         return kStatus_Fail;
     }
 
@@ -229,7 +229,7 @@ static status_t setCaptureWindowHeightRate(int heightRate)
     s_pExtract = (uint8_t*) malloc(s_window.width * s_window.height * 3);
     if (s_pExtract == NULL)
     {
-        printf("Unable to allocate internal buffer");
+        PRINTF("Unable to allocate internal buffer");
         return kStatus_Fail;
     }
 

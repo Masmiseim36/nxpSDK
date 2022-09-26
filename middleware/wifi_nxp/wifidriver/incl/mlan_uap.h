@@ -60,7 +60,7 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
 
 
 
-int wifi_uap_enable_11d_support();
+int wifi_uap_enable_11d_support(void);
 
 int wifi_uap_group_rekey_timer_getset(uint8_t action, uint32_t *group_rekey_timer);
 
@@ -76,7 +76,7 @@ void wifi_uap_set_ecsa(void);
 
 int wifi_uap_ctrl_deauth(bool enable);
 
-void wifi_uap_set_hidden_ssid(const t_u8 bcast_ssid_ctl);
+void wifi_uap_set_hidden_ssid(const bool bcast_ssid_ctl);
 
 void wifi_uap_set_htcapinfo(const t_u16 ht_cap_info);
 

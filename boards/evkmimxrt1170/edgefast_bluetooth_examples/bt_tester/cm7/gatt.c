@@ -218,6 +218,9 @@ static uint8_t disc_all_desc_cb(struct bt_conn *conn,
 static uint8_t read_cb(struct bt_conn *conn, uint8_t err,
                        struct bt_gatt_read_params *params, const void *data,
                        uint16_t length);
+static uint8_t read_uuid_cb(struct bt_conn *conn, uint8_t err,
+		       struct bt_gatt_read_params *params, const void *data,
+		       uint16_t length);
 static void write_rsp(struct bt_conn *conn, uint8_t err,
                       struct bt_gatt_write_params *params);
 static void write_long_rsp(struct bt_conn *conn, uint8_t err,
@@ -837,11 +840,6 @@ static void disc_prim_uuid(uint8_t *data, uint16_t len)
         goto fail;
     }
 
-    if (!gatt_buf_reserve(sizeof(struct gatt_disc_prim_rp)))
-    {
-        goto fail;
-    }
-
     discover_params.uuid = &uuid.uuid;
     discover_params.start_handle = BT_ATT_FIRST_ATTRIBUTE_HANDLE;
     discover_params.end_handle = BT_ATT_LAST_ATTRIBUTE_HANDLE;
@@ -880,11 +878,6 @@ static void find_included(uint8_t *data, uint16_t len)
         goto fail_conn;
     }
 
-    if (!gatt_buf_reserve(sizeof(struct gatt_find_included_rp)))
-    {
-        goto fail;
-    }
-
     discover_params.start_handle = sys_le16_to_cpu(cmd->start_handle);
     discover_params.end_handle = sys_le16_to_cpu(cmd->end_handle);
     discover_params.type = BT_GATT_DISCOVER_INCLUDE;
@@ -919,11 +912,6 @@ static void disc_all_chrc(uint8_t *data, uint16_t len)
     if (!conn)
     {
         goto fail_conn;
-    }
-
-    if (!gatt_buf_reserve(sizeof(struct gatt_disc_chrc_rp)))
-    {
-        goto fail;
     }
 
     discover_params.start_handle = sys_le16_to_cpu(cmd->start_handle);
@@ -970,11 +958,6 @@ static void disc_chrc_uuid(uint8_t *data, uint16_t len)
         goto fail;
     }
 
-    if (!gatt_buf_reserve(sizeof(struct gatt_disc_chrc_rp)))
-    {
-        goto fail;
-    }
-
     discover_params.uuid = &uuid.uuid;
     discover_params.start_handle = sys_le16_to_cpu(cmd->start_handle);
     discover_params.end_handle = sys_le16_to_cpu(cmd->end_handle);
@@ -1012,11 +995,6 @@ static void disc_all_desc(uint8_t *data, uint16_t len)
     if (!conn)
     {
         goto fail_conn;
-    }
-
-    if (!gatt_buf_reserve(sizeof(struct gatt_disc_all_desc_rp)))
-    {
-        goto fail;
     }
 
     discover_params.start_handle = sys_le16_to_cpu(cmd->start_handle);
@@ -1102,15 +1080,11 @@ static void read_uuid(uint8_t *data, uint16_t len)
         goto fail;
     }
 
-    if (!gatt_buf_reserve(sizeof(struct gatt_read_rp))) {
-        goto fail;
-    }
-
     read_uuid_params.by_uuid.uuid = &uuid.uuid;
     read_uuid_params.handle_count = 0;
     read_uuid_params.by_uuid.start_handle = sys_le16_to_cpu(cmd->start_handle);
     read_uuid_params.by_uuid.end_handle = sys_le16_to_cpu(cmd->end_handle);
-    read_uuid_params.func = read_cb;
+    read_uuid_params.func = read_uuid_cb;
 
     btp_opcode = GATT_READ_UUID;
 
@@ -2099,15 +2073,22 @@ static uint8_t find_included_cb(struct bt_conn *conn,
                                 struct bt_gatt_discover_params *params)
 {
     struct bt_gatt_include *data;
-    gatt_find_included_rp_t *rp = (void *) gatt_buf.buf;
     gatt_included_t *included;
     uint8_t uuid_length;
-
+    static uint8_t services_count = 0;
+    
     if (!attr)
     {
+        /* copy data for the response from the gatt buffer */
+        uint8_t data_len = gatt_buf.len;
+        gatt_find_included_rp_t *rp = gatt_buf_reserve(1 + data_len);
+        rp->services_count = services_count;
+        memcpy(rp->included, gatt_buf.buf, data_len);
+        
         tester_send(BTP_SERVICE_ID_GATT, GATT_FIND_INCLUDED,
-                    CONTROLLER_INDEX, gatt_buf.buf, gatt_buf.len);
+                    CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
         discover_destroy(params);
+        services_count = 0;
         return BT_GATT_ITER_STOP;
     }
 
@@ -2115,7 +2096,7 @@ static uint8_t find_included_cb(struct bt_conn *conn,
 
     uuid_length = data->uuid->type == BT_UUID_TYPE_16 ? 2 : 16;
 
-    included = gatt_buf_reserve(sizeof(*included) + uuid_length);
+    included = gatt_buf_reserve(sizeof(*included) - SERVER_MAX_UUID_LEN + uuid_length);
 
     if (!included)
     {
@@ -2142,7 +2123,8 @@ static uint8_t find_included_cb(struct bt_conn *conn,
                uuid_length);
     }
 
-    rp->services_count++;
+    /* update service count */
+    services_count++;
 
     return BT_GATT_ITER_CONTINUE;
 }
@@ -2152,23 +2134,31 @@ static uint8_t disc_chrc_cb(struct bt_conn *conn,
                             struct bt_gatt_discover_params *params)
 {
     struct bt_gatt_chrc *data;
-    gatt_disc_chrc_rp_t *rp = (void *) gatt_buf.buf;
     gatt_characteristic_t *chrc;
     uint8_t uuid_length;
+    static uint8_t characteristics_count = 0;
 
     if (!attr)
     {
+        /* copy data for the response from the gatt buffer */
+        uint16_t data_len = gatt_buf.len;
+        gatt_disc_chrc_rp_t *rp = gatt_buf_reserve(1 + data_len);
+        rp->characteristics_count = characteristics_count;
+        memcpy(rp->characteristics, gatt_buf.buf, data_len);
+      
         tester_send(BTP_SERVICE_ID_GATT, btp_opcode,
-                    CONTROLLER_INDEX, gatt_buf.buf, gatt_buf.len);
+                    CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
         discover_destroy(params);
+        characteristics_count = 0;
         return BT_GATT_ITER_STOP;
     }
 
     data = attr->user_data;
 
     uuid_length = data->uuid->type == BT_UUID_TYPE_16 ? 2 : 16;
-
-    chrc = gatt_buf_reserve(sizeof(*chrc) + uuid_length);
+    
+    /* save characteristic information for building the response */
+    chrc = gatt_buf_reserve(sizeof(*chrc) - SERVER_MAX_UUID_LEN + uuid_length);
 
     if (!chrc)
     {
@@ -2194,7 +2184,8 @@ static uint8_t disc_chrc_cb(struct bt_conn *conn,
         memcpy(chrc->uuid, BT_UUID_128(data->uuid)->val, uuid_length);
     }
 
-    rp->characteristics_count++;
+    /* update characteristics count */
+    characteristics_count++;
 
     return BT_GATT_ITER_CONTINUE;
 }
@@ -2203,21 +2194,29 @@ static uint8_t disc_all_desc_cb(struct bt_conn *conn,
                                 const struct bt_gatt_attr *attr,
                                 struct bt_gatt_discover_params *params)
 {
-    gatt_disc_all_desc_rp_t *rp = (void *) gatt_buf.buf;
     gatt_descriptor_t *descriptor;
     uint8_t uuid_length;
+    static uint8_t descriptors_count = 0;
 
     if (!attr)
     {
+        /* copy data for the response from the gatt buffer */
+        uint16_t data_len = gatt_buf.len;
+        gatt_disc_all_desc_rp_t *rp = gatt_buf_reserve(1 + data_len);
+        rp->descriptors_count = descriptors_count;
+        memcpy(rp->descriptors, gatt_buf.buf, data_len);
+      
         tester_send(BTP_SERVICE_ID_GATT, GATT_DISC_ALL_DESC,
-                    CONTROLLER_INDEX, gatt_buf.buf, gatt_buf.len);
+                    CONTROLLER_INDEX, (uint8_t*)rp, data_len + 1);
         discover_destroy(params);
+        descriptors_count = 0;
         return BT_GATT_ITER_STOP;
     }
 
     uuid_length = attr->uuid->type == BT_UUID_TYPE_16 ? 2 : 16;
 
-    descriptor = gatt_buf_reserve(sizeof(*descriptor) + uuid_length);
+     /* save descriptor information for building the response */
+    descriptor = gatt_buf_reserve(sizeof(*descriptor) - SERVER_MAX_UUID_LEN + uuid_length);
 
     if (!descriptor)
     {
@@ -2242,9 +2241,16 @@ static uint8_t disc_all_desc_cb(struct bt_conn *conn,
                uuid_length);
     }
 
-    rp->descriptors_count++;
+    /* update descriptors count */
+    descriptors_count++;
 
     return BT_GATT_ITER_CONTINUE;
+}
+
+static void read_destroy(struct bt_gatt_read_params *params)
+{
+    (void)memset(params, 0, sizeof(*params));
+    gatt_buf_clear();
 }
 
 static uint8_t read_cb(struct bt_conn *conn, uint8_t err,
@@ -2279,6 +2285,57 @@ static uint8_t read_cb(struct bt_conn *conn, uint8_t err,
     rp->data_length += length;
 
     return BT_GATT_ITER_CONTINUE;
+}
+
+static uint8_t read_uuid_cb(struct bt_conn *conn, uint8_t err,
+		       struct bt_gatt_read_params *params, const void *data,
+		       uint16_t length)
+{
+	
+	gatt_char_value_t *value;
+    static uint8_t values_count = 0;
+    static uint8_t att_response = BT_ATT_ERR_SUCCESS;
+
+	/* Respond to the Lower Tester with ATT Error received */
+	if ((err) && (err != BT_ATT_ERR_UNLIKELY)) {
+                att_response = err;
+	}
+
+	/* read complete */
+	if (!data) {
+
+        /* copy data for the response from the gatt buffer */
+        uint8_t data_len = gatt_buf.len;
+        struct gatt_read_uuid_rp *rp = gatt_buf_reserve(2 + data_len);
+        rp->values_count = values_count;
+        rp->att_response = att_response;
+        memcpy(rp->values, gatt_buf.buf, data_len);
+      
+        tester_send(BTP_SERVICE_ID_GATT, btp_opcode, CONTROLLER_INDEX,
+                    (uint8_t*)rp, data_len + 2);
+        read_destroy(params);
+        values_count = 0;
+        return BT_GATT_ITER_STOP;
+	}
+        
+        /* save value information for building the response */
+        value = gatt_buf_reserve(sizeof(*value) - SERVER_MAX_UUID_LEN + length);
+        if (!value) {
+            tester_rsp(BTP_SERVICE_ID_GATT, btp_opcode,
+                       CONTROLLER_INDEX, BTP_STATUS_FAILED);
+            read_destroy(params);
+            return BT_GATT_ITER_STOP;
+	}
+        
+	value->handle = params->by_uuid.start_handle;
+	value->data_len = length;
+
+	memcpy(value->data, data, length);
+        
+        /* update values count */
+	values_count++;
+
+	return BT_GATT_ITER_CONTINUE;
 }
 
 static void write_rsp(struct bt_conn *conn, uint8_t err,

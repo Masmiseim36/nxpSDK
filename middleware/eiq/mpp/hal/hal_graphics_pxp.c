@@ -211,6 +211,12 @@ static int set_input_buffer_format(pxp_ps_buffer_config_t *pPsBufferConfig, gfx_
     // setup input buffer configuration
     switch (pSrc->format)
     {
+        case MPP_PIXEL_ARGB:
+        {
+            pPsBufferConfig->pixelFormat = kPXP_PsPixelFormatRGB888;
+        }
+        break;
+
         case MPP_PIXEL_YUV1P444:
         {
             pPsBufferConfig->pixelFormat = kPXP_PsPixelFormatYUV1P444;
@@ -400,7 +406,10 @@ static int set_output_buffer_format(pxp_output_buffer_config_t *pOutputBufferCon
     switch (pDst->format)
     {
     /* TODO support RGB 32 bits unpacked */
+#if (IMXRT1170_PXP_WORKAROUND_OUT_RGB == 1)
         case MPP_PIXEL_BGR:
+#endif
+        case MPP_PIXEL_RGB:
         {
             pOutputBufferConfig->pixelFormat = kPXP_OutputPixelFormatRGB888P;
         }
@@ -675,6 +684,29 @@ static int HAL_GfxDev_Pxp_YUYV1P422ToYUV420P(gfx_surface_t *pSrc, gfx_surface_t 
     return 0;
 }
 
+#if (IMXRT1170_PXP_WORKAROUND_OUT_RGB == 1)
+/*
+ * software conversion from BGR24 to RGB24
+ */
+static int convertCPU_BGR2RGB(uint8_t *buffer, int pitch, int width, int height)
+{
+    int x, y;
+    uint8_t pixBlue;
+    int srcBPP = 3;
+
+    for (y = 0 ; y < height; y++) {
+        for (x = 0 ; x < width; x++) {
+            int i = (y * pitch) + (x * srcBPP);
+            pixBlue     = buffer[i];
+            buffer[i]   = buffer[i+2];
+            buffer[i+2] = pixBlue;
+        }
+    }
+
+    return 0;
+}
+#endif
+
 /*
  * @brief blit the source surface to the destination surface.
  *
@@ -693,8 +725,8 @@ int HAL_GfxDev_Pxp_Blit(
     pxp_ps_buffer_config_t *pPsBufferConfig         = &s_GfxPxpHandle.psBufferConfig;
     pxp_output_buffer_config_t *pOutputBufferConfig = &s_GfxPxpHandle.outputBufferConfig;
 
-    HAL_LOGD("Input buffer addr=0x%x\n", pSrc->buf);
-    HAL_LOGD("Output buffer addr=0x%x\n", pDst->buf);
+    HAL_LOGD("Input buffer addr=0x%x\n", (unsigned int)pSrc->buf);
+    HAL_LOGD("Output buffer addr=0x%x\n", (unsigned int)pDst->buf);
 
     if ( (pSrc->buf == NULL) || (pDst->buf == NULL) )
     {
@@ -855,6 +887,16 @@ int HAL_GfxDev_Pxp_Blit(
     xSemaphoreTake(s_GfxPxpHandle.semaphore, portMAX_DELAY);
 
     _HAL_GfxDev_Pxp_Unlock();
+
+#if (IMXRT1170_PXP_WORKAROUND_OUT_RGB == 1)
+    /* Workaround for the PXP bug (iMXRT1170) where BGR888 is output instead
+     * of RGB888 [MPP-97].
+     * For the output format kPXP_OutputPixelFormatRGB888P, a software conversion
+     * applies to invert blue and red pixels.
+     */
+    if (pDst->format == MPP_PIXEL_RGB)
+        convertCPU_BGR2RGB(pDst->buf, pDst->pitch, pDst->width, pDst->height);
+#endif
 
     return error;
 }

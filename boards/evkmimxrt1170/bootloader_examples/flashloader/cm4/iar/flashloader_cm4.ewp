@@ -1576,6 +1576,9 @@
       <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/memory_map_MIMXRT1176.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/ocotp_MIMXRT1176.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/periph_MIMXRT1176.c</name>
     </file>
     <file>

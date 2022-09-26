@@ -15,10 +15,10 @@
 #ifndef __IMAGE_DATA_H__
 #define __IMAGE_DATA_H__
 
-#define INPUT_IMAGE_WIDTH		168
-#define INPUT_IMAGE_HEIGHT		208
-#define INPUT_IMAGE_CHANNELS_NUMBER	4
-#define INPUT_IMAGE_FORMAT		MPP_PIXEL_YUV1P444
+#define SRC_IMAGE_WIDTH           168
+#define SRC_IMAGE_HEIGHT          208
+#define SRC_IMAGE_CHANNELS_NUMBER 4
+#define SRC_IMAGE_FORMAT          MPP_PIXEL_YUV1P444
 
 static uint8_t image_data[] = {
   0x7d, 0x81, 0x9e, 0xff, 0x7d, 0x81, 0x9e, 0xff, 0x7d, 0x81, 0x9e, 0xff,

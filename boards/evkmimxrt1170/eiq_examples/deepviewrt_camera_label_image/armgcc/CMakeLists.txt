@@ -189,9 +189,9 @@ include(driver_lcdifv2_MIMXRT1176_cm7)
 
 include(middleware_eiq_worker_MIMXRT1176_cm7)
 
-include(device_MIMXRT1176_system_MIMXRT1176_cm7)
-
 include(utilities_misc_utilities_MIMXRT1176_cm7)
+
+include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

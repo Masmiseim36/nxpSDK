@@ -1,0 +1,144 @@
+Overview
+========
+
+This example shows how to use the library to create two object detection use-cases:
+- Object detection using camera as source
+- Object detection using a file as source
+
+The machine learning frameworks used are TensorFlow Lite Micro or GLOW
+The object detection model used is quantized Nanodet M model that detects multiple objects in an input image.
+The model have 80 classes.
+
+
+Use-cases Description
+=====================
+
+
+1- Object detection using camera as source
+   ---------------------------------------
+
+HOW TO USE THE APPLICATION:
+To detect objects, place objects or image in front of camera so that it fits in the green "Detection zone" rectangle in the middle of the display.
+Some images will work better than others.
+
+1-a) High-level description
+     ----------------------
+
+                                                                   +------------------------------------------+
+                                                                   |                                          |
+                                                                   |                                          |
+                                                                  \ /                                         |
+                  +-------------+      +-------------+      +-------------+      +-------------+              |
+                  |             |      |             |      |             |      |             |              |
+Pipeline 0        |    camera   | -->  |  2D convert | -->  |   labeled   | -->  |    Display  |              |
+                  |             |  |   |             |      |  rectangle  |      |             |              |
+                  +-------------+  |   +-------------+      +-------------+      +-------------+              |
+                                   |                                                                          |
+                                   |     +-------------+      +--------------+      +-------------+           |
+                                   |     |             |      |              |      |             |           |
+Pipeline 1                         +---> |  2D convert | -->  | ML Inference | -->  |  NULL sink  |           |
+                                         |             |      |              |      |             |           |
+                                         +-------------+      +--------------+      +-------------+           |
+                                                                       |                                      |
+                                                                       |                                      |
+        +-----------------+                                            |                                      |
+	|  Main app:      |                                            |                                      |
+	| ML output       |   <----- ML Inference output callback -----+                                      |
+        | post processing |                                                                                   |
+	|                 |   ------ Adding detected labeled rectangles ------------------------------------------------+
+	+-----------------+
+
+
+1-b) Detailed description
+     --------------------
+
+Application creates two pipelines:
+
+- One pipeline that runs the camera preview.
+- Another pipeline that runs the ML inference on the image coming from the camera.
+- Pipeline 1 is split from pipeline 0
+- Pipeline 0 executes the processing of each element sequentially and CANNOT be preempted by another pipeline.
+- Pipeline 1 executes the processing of each element sequentially but CAN be preempted.
+
+1-c) Pipelines elements description
+     ------------------------------
+
+* Camera element is configured to output YUV444 images at 1280x720 resolution
+* Display element is configured to receive RGB565 images at 720x1280 resolution
+* 2D convert element on pipeline 0 is configured to perform:
+  - color space conversion from YUV444 to RGB565
+  - 90 degres rotation from 1280x720 to 720x1280
+
+* 2D convert element on pipeline 1 is configured to perform:
+  - color space conversion from YUV444 to RGB888
+  - cropping to 720x720 to maintain image aspect ratio
+  - scaling from 720x720 to 320x320 as mandated by the object detection model
+
+* The labeled rectangle element draws a crop window from which the camera image is sent to
+  the ML inference element. The labeled rectangle element also displays the labels and boxes of the detected objects.
+* The ML inference element runs an inference on the image pre-processed by the 2D convert element.
+* The NULL sink element closes pipeline 1 (in MPP concept, only sink elements can close a pipeline).
+
+* At every inference, the ML inference element invokes a callback containing the inference outputs.
+These outputs are post-processed by the callback client component(in this case, the main task of the application) 
+that determinates the boxes of detected objects and performs NMS to pick the best box for each detected object.
+
+2- object detection with static image as source
+   --------------------------------------------
+
+In this use-case, same pipelines are created as for use-case described in section 1).
+The only difference is a static image element that replaces the camera element.
+Image is configured to output BGRA image ar 320x320 resolution.
+* 2D convert element on pipeline 0 is configured to perform:
+  - color space conversion from ARGB to RGB565
+  - Scaling from 320x320 to 720x1280
+
+* 2D convert element on pipeline 1 is configured to perform:
+  - color space conversion from ARGB to RGB888
+
+Running the demo
+================
+
+The same application supports both pipelines. The camera preview pipeline is the default one.
+In order to build the image preview pipeline instead, please set up the following variable at the
+beginning of the camera_nanodet_m_view.c file:
+
+#define SOURCE_STATIC_IMAGE 1
+
+EXPECTED OUTPUTS:
+The expected outputs of the example are:
+- For each detected object, a labeled rectangle should be displayed on the screen
+- Logs below should be displayed on the debug console
+
+Logs for camera_nanodet_m_view example using TFLite and skigirl image as source:
+
+[MPP_VERSION_0.9.bc93070]
+Inference Engine: TensorFlow-Lite Micro
+mpp_event_listener: START!
+Generated center priors...
+Decoded output...
+Performed NMS...
+----------------------------------------
+     Inference time: 609 ms
+----------------------------------------
+Displaying box 0: label 'person' (80%)
+mpp_event_listener: START!
+Generated center priors...
+Decoded output...
+Performed NMS...
+----------------------------------------
+     Inference time: 612 ms
+----------------------------------------
+Displaying box 0: label 'person' (78%)
+mpp_event_listener: START!
+Generated center priors...
+Decoded output...
+Performed NMS...
+----------------------------------------
+     Inference time: 611 ms
+----------------------------------------
+Displaying box 0: label 'person' (81%)
+mpp_event_listener: START!
+Generated center priors...
+Decoded output...
+Performed NMS...

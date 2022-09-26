@@ -1,10 +1,9 @@
 /*
- * Copyright  2019 NXP
+ * Copyright 2019-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include <stdio.h>
 
 #include "eiq_camera_conf.h"
 #include "fsl_gpio.h"
@@ -186,7 +185,7 @@ void BOARD_InitMipiCsi(void)
 
   if (kStatus_Success != BOARD_VerifyCameraClockSource())
   {
-    printf("MIPI CSI clock source not valid\r\n");
+    PRINTF("MIPI CSI clock source not valid\r\n");
     while (1)
     {
     }
@@ -205,7 +204,7 @@ void BOARD_InitMipiCsi(void)
    */
   if (DEMO_CSI_CLK_FREQ < DEMO_MIPI_CSI2_UI_CLK_FREQ)
   {
-    printf("CSI clock should be faster than MIPI CSI2 ui clock.\r\n");
+    PRINTF("CSI clock should be faster than MIPI CSI2 ui clock.\r\n");
     while (1)
     {
     }

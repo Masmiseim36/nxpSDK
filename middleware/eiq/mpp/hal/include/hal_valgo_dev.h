@@ -18,6 +18,7 @@
 #include "hal_os.h"
 #include "mpp_api_types.h"
 #include "hal_types.h"
+#include "mpp_config.h"
 
 /**
  * @brief declare the vision algorithm dev ##name
@@ -68,6 +69,14 @@ typedef struct _model_param_t {
     int model_size;         /* model binary size */
     float model_input_mean; /* model 'mean' of input values, used for normalization */
     float model_input_std;  /* model 'standard deviation' of input values, used for normalization */
+    mpp_inference_params_t inference_params; /* inference parameters */
+    /* frame resolution */
+    int height;
+    int width;
+    /* pixel format */
+    mpp_pixel_format_t format;
+    mpp_tensor_type_t inputType;
+    mpp_tensor_order_t tensor_order;
     int (*evt_callback_f)(mpp_t mpp, mpp_evt_t evt, void *evt_data, void *user_data);    /* the callback to be called when model output is ready */
     void *cb_userdata;      /* pointer to user data, should be passed by callback */
 } model_param_t;

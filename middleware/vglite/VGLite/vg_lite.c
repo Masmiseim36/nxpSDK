@@ -35,7 +35,9 @@
 #include <math.h>
 #include "vg_lite.h"
 #include "vg_lite_kernel.h"
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 #include "vg_lite_os.h"
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 #if (VG_RENDER_TEXT==1)
 #include "vg_lite_text.h"
 #endif /* VG_RENDER_TEXT */
@@ -75,6 +77,11 @@ vg_lite_error_t vg_lite_kernel(vg_lite_kernel_command_t command, void * data);
 #endif
 #endif
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+/*** Global Context Access ***/
+#define GET_CONTEXT() &s_context
+#endif /* VG_DRIVER_SINGLE_THREAD */
+
 /*** Command buffer configurations, double buffer support ***/
 #define VG_LITE_COMMAND_BUFFER_SIZE (64 << 10)
 #define CMDBUF_BUFFER(context)  (context).command_buffer[(context).command_buffer_current]
@@ -84,6 +91,7 @@ vg_lite_error_t vg_lite_kernel(vg_lite_kernel_command_t command, void * data);
 #define CMDBUF_SWAP(context)    (context).command_buffer_current = \
                                     ((context).command_buffer_current + 1) % CMDBUF_COUNT
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 #ifndef CMDBUF_IN_QUEUE
 #define CMDBUF_IN_QUEUE(context, id) \
         (vg_lite_os_event_state(&(context)->async_event[(id)]) == VG_LITE_IN_QUEUE)
@@ -95,6 +103,7 @@ vg_lite_error_t vg_lite_kernel(vg_lite_kernel_command_t command, void * data);
         ((uint32_t *) (CMDBUF_BUFFER((context)) + CMDBUF_OFFSET((context))))[1] = 0;\
         CMDBUF_OFFSET((context)) += 8;\
     }
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 #define VG_LITE_RETURN_ERROR(func) \
 if ((error = func) != VG_LITE_SUCCESS) \
@@ -144,11 +153,13 @@ static uint32_t command_buffer_size = VG_LITE_COMMAND_BUFFER_SIZE;
     }
 
 #define DEST_ALIGNMENT_LIMITATION 64  /* To match hardware alignment requirement */
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 #define TS_STATE_COUNT         20      /* Initial state count for tessellation buffer. */
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 #define MATRIX_ROWS    3
 #define GET_MATRIX_VALUES(Pointer)    ((float *) (Pointer))
-#define MAT(Matrix, Row, Column)    (GET_MATRIX_VALUES(Matrix)[Column * MATRIX_ROWS + Row])
+#define MAT(Matrix, Row, Column)    (GET_MATRIX_VALUES(Matrix)[Row * MATRIX_ROWS + Column])
 
 #define COLOR_FROM_RAMP(ColorRamp)    (((vg_lite_float_t *) ColorRamp) + 1)
 #define CLAMP(x, min, max)    (((x) < (min)) ? (min) : \
@@ -221,6 +232,9 @@ typedef uintptr_t               UINTPTR_T;
 /* cos(PI/8) */
 #define FLOAT_COS_PI_EIGHTH         0.9238795325f
 
+#define centerX                     tangentX
+#define centerY                     tangentY
+
 #define FLOAT_DIFF_EPSILON              0.125f
 #define FLOAT_SWING_CENTER_RANGE        0.125f
 #define FLOAT_ANGLE_EPSILON             0.0045f
@@ -247,10 +261,12 @@ typedef uintptr_t               UINTPTR_T;
 
 #define ABS(x)               (((x) < 0)    ? -(x) :  (x))
 #define EPS                  2.2204460492503131e-14
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 /* VG:24 + TS:28 + IM:345 + PE:9 + RS:16 +Debug:2  */
 #define STATES_COUNT         424
 /* STATES_COUNT size + return command size */
 #define CONTEXT_BUFFER_SIZE  STATES_COUNT * 2 * 4 + 8
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 #define UPDATE_BOUNDING_BOX(bbx, point)                                 \
     do {                                                                \
@@ -270,6 +286,7 @@ typedef uintptr_t               UINTPTR_T;
 
 typedef vg_lite_float_t FLOATVECTOR4[4];
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 typedef struct vg_lite_ftable {
     uint32_t    ftable[gcFEATURE_COUNT];
     uint32_t    ftflag;
@@ -285,6 +302,7 @@ typedef struct vg_lite_hardware {
 } vg_lite_hardware_t;
 
 static vg_lite_hardware_t hw = {0};
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 typedef struct vg_lite_context {
     vg_lite_kernel_context_t    context;
@@ -293,9 +311,11 @@ typedef struct vg_lite_context {
     uint32_t                    command_buffer_size;
     uint32_t                    command_offset[CMDBUF_COUNT];
     uint32_t                    command_buffer_current;
+#if !defined(VG_DRIVER_SINGLE_THREAD)
     uint8_t                   * context_buffer[CMDBUF_COUNT];
     uint32_t                    context_buffer_size;
     uint32_t                    context_buffer_offset[CMDBUF_COUNT];
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
     vg_lite_tsbuffer_info_t     tsbuffer;
     vg_lite_buffer_t          * rtbuffer;                   /* DDRLess: this is used as composing buffer. */
 
@@ -305,17 +325,31 @@ typedef struct vg_lite_context {
 #endif
 
     uint32_t                    scissor_enabled;
+#if defined(VG_DRIVER_SINGLE_THREAD)
+    uint32_t                    scissor_dirty;              /* Indicates whether scissor states are changed or not. e.g., scissors[4] or scissor_enabled. */
+#endif /* VG_DRIVER_SINGLE_THREAD */
     int32_t                     scissor[4];                 /* Scissor area: x, y, width, height. */
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
     uint32_t                    start_offset;
     uint32_t                    end_offset;
     uint32_t                    ts_init;                    /* Indicates whether tessellation buffer states are initialized or not. */
     uint32_t                    ts_record[TS_STATE_COUNT];     /* Tessellation buffer initial states record. */
+    uint32_t                    ts_init_used;
+    uint32_t                    ts_init_use;
+    uint32_t                    ts_dirty;
+
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
     uint32_t                    chip_id;
     uint32_t                    chip_rev;
 
     uint32_t                    premultiply_enabled;
+
+#if defined(VG_DRIVER_SINGLE_THREAD)
+    uint32_t                    premultiply_dirty;
+    uint8_t                     init;
+#else
     uint32_t                    semaphore_id;
 
     uint32_t                    * colors[4];                /* index colors. */
@@ -324,12 +358,15 @@ typedef struct vg_lite_context {
     uint32_t                    clut_used[4];               /* check if used index. */
 
     vg_lite_ftable_t            s_ftable;
+#endif /* VG_DRIVER_SINGLE_THREAD */
 } vg_lite_context_t;
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 typedef struct vg_lite_tls{
     /* currently just contains struct vg_lite_context_t */
     vg_lite_context_t    t_context;
 }vg_lite_tls_t;
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 typedef struct vg_lite_feature_database{
     uint32_t                    chip_id;
@@ -468,6 +505,16 @@ static vg_lite_feature_database_t VGFeatureInfos[] = {
         0x1, /* gcFEATURE_BIT_VG_COLOR_KEY */
     }
 };
+
+#if defined(VG_DRIVER_SINGLE_THREAD)
+typedef struct vg_lite_ftable {
+    uint32_t    ftable[gcFEATURE_COUNT];
+    uint32_t    ftflag;
+} vg_lite_ftable_t;
+
+vg_lite_context_t s_context = {0};
+vg_lite_ftable_t s_ftable = {{0}, 0};
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 #if DUMP_COMMAND
 FILE * fp;
@@ -676,6 +723,7 @@ static vg_lite_error_t _add_point_to_point_list_wdelta(
 
     last_point = stroke_conversion->path_last_point;
     point = (vg_lite_path_point_ptr)vg_lite_os_malloc(sizeof(*point));
+
     if(!point)
         return VG_LITE_OUT_OF_RESOURCES;
 
@@ -1445,6 +1493,7 @@ _add_point_to_left_stroke_point_list_head(
         return VG_LITE_INVALID_ARGUMENT;
 
     point = (vg_lite_path_point_ptr)vg_lite_os_malloc(sizeof(*point));
+
     if(!point)
         return VG_LITE_OUT_OF_RESOURCES;
 
@@ -1475,6 +1524,7 @@ static vg_lite_error_t _add_stroke_sub_path(
         return VG_LITE_INVALID_ARGUMENT;
 
     *sub_path = (vg_lite_sub_path_ptr)vg_lite_os_malloc(sizeof(**sub_path));
+
     if(!*sub_path)
         return VG_LITE_OUT_OF_RESOURCES;
 
@@ -1535,6 +1585,7 @@ _add_zero_length_stroke_sub_path(
         }
 
         new_point = (vg_lite_path_point_ptr)vg_lite_os_malloc(sizeof(*new_point));
+
         if(!new_point)
             return VG_LITE_OUT_OF_RESOURCES;
         memset(new_point, 0, sizeof(*new_point));
@@ -1558,6 +1609,7 @@ _add_zero_length_stroke_sub_path(
     {
         /* Draw a circle. */
         new_point = (vg_lite_path_point_ptr)vg_lite_os_malloc(sizeof(*new_point));
+
         if(!new_point)
             return VG_LITE_OUT_OF_RESOURCES;
         memset(new_point, 0, sizeof(*new_point));
@@ -1774,6 +1826,7 @@ _convert_circle_arc(
 
         /* Add control point. */
         point = (vg_lite_path_point_ptr)vg_lite_os_malloc(sizeof(*point));
+
         if(!point)
             return VG_LITE_OUT_OF_RESOURCES;
 
@@ -1794,6 +1847,7 @@ _convert_circle_arc(
 
         /* Add anchor point. */
         point = (vg_lite_path_point_ptr)vg_lite_os_malloc(sizeof(*point));
+
         if(!point) {
             error = VG_LITE_OUT_OF_RESOURCES;
             goto ErrorHandler;
@@ -3259,7 +3313,7 @@ static vg_lite_error_t _initialize_stroke_dash_parameters(
     stroke_conversion->stroke_dash_initial_length = *pattern - length;
 
     vg_lite_os_free(temp_pattern);
-        temp_pattern = NULL;
+    temp_pattern = NULL;
 
     return error;
 }
@@ -3626,6 +3680,62 @@ vg_lite_error_t _convert_arc(
     return VG_LITE_SUCCESS;
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+vg_lite_error_t _allocate_command_buffer(uint32_t size)
+{
+    vg_lite_kernel_allocate_t allocate;
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+
+    if(size == 0)
+        return VG_LITE_SUCCESS;
+
+    allocate.bytes = size;
+    allocate.contiguous = 1;
+    VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_ALLOCATE, &allocate));
+
+    s_context.context.command_buffer[0] = allocate.memory_handle;
+    s_context.context.command_buffer_logical[0] = allocate.memory;
+    s_context.context.command_buffer_physical[0] = allocate.memory_gpu;
+
+    VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_ALLOCATE, &allocate));
+
+    s_context.context.command_buffer[1] = allocate.memory_handle;
+    s_context.context.command_buffer_logical[1] = allocate.memory;
+    s_context.context.command_buffer_physical[1] = allocate.memory_gpu;
+
+    s_context.command_buffer[0] = s_context.context.command_buffer_logical[0];
+    s_context.command_buffer[1] = s_context.context.command_buffer_logical[1];
+
+    s_context.command_buffer_size = size;
+    s_context.command_offset[0] = 0;
+    s_context.command_offset[1] = 0;
+    s_context.command_buffer_current = 0;
+
+    return error;
+}
+
+vg_lite_error_t _free_command_buffer()
+{
+    vg_lite_kernel_free_t free;
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+
+    if(s_context.context.command_buffer[0]){
+        free.memory_handle = s_context.context.command_buffer[0];
+        VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_FREE, &free));
+        s_context.context.command_buffer[0] = 0;
+        s_context.context.command_buffer_logical[0] = 0;
+    }
+
+    if(s_context.context.command_buffer[1]){
+        free.memory_handle = s_context.context.command_buffer[1];
+        VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_FREE, &free));
+        s_context.context.command_buffer[1] = 0;
+        s_context.context.command_buffer_logical[1] = 0;
+    }
+
+    return error;
+}
+#else
 vg_lite_error_t _allocate_command_buffer(uint32_t size)
 {
     vg_lite_tls_t* tls;
@@ -3693,6 +3803,7 @@ vg_lite_error_t _free_command_buffer()
 
     return error;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 static void ClampColor(FLOATVECTOR4 Source,FLOATVECTOR4 Target,uint8_t Premultiplied)
 {
@@ -3724,6 +3835,7 @@ static uint8_t PackColorComponent(vg_lite_float_t value)
     return clamped;
 }
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 static void command_buffer_copy(void *new_cmd, void *old_cmd, uint32_t start, uint32_t end, uint32_t *cmd_count)
 {
     uint32_t i = start,j;
@@ -3788,6 +3900,7 @@ static void command_buffer_copy(void *new_cmd, void *old_cmd, uint32_t start, ui
         }
     }
 }
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 static void _memset(void *p, unsigned char value, int size)
 {
@@ -3809,6 +3922,7 @@ static int has_valid_command_buffer(vg_lite_context_t *context)
     return 1;
 }
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 static int has_valid_context_buffer(vg_lite_context_t *context)
 {
     if(context == NULL)
@@ -3818,6 +3932,7 @@ static int has_valid_context_buffer(vg_lite_context_t *context)
 
     return 1;
 }
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 #if DUMP_IMAGE
 static void dump_img(void * memory, int width, int height, vg_lite_buffer_format_t format)
@@ -4388,6 +4503,47 @@ static uint32_t convert_yuv2rgb(vg_lite_yuv2rgb_t yuv)
 }
 
 /* Initialize the feature table of a chip. */
+#if defined(VG_DRIVER_SINGLE_THREAD)
+static vg_lite_error_t fill_feature_table(uint32_t * feature)
+{
+    uint16_t size = sizeof(VGFeatureInfos) / sizeof(VGFeatureInfos[0]);
+    uint16_t i;
+    uint32_t cid = 0;
+
+    /* Clear all bits. */
+    _memset(feature, 0, sizeof(uint32_t) * gcFEATURE_COUNT);
+    vg_lite_get_product_info(NULL,&s_context.chip_id,&s_context.chip_rev);
+    if(s_context.chip_id == GPU_CHIP_ID_GC355)
+        s_context.premultiply_enabled = 1;
+    vg_lite_get_register(0x30, &cid);
+
+    for(i = 0;i < size; i++){
+        if ((VGFeatureInfos[i].chip_id == s_context.chip_id)
+            && (VGFeatureInfos[i].chip_version == s_context.chip_rev)
+            && (VGFeatureInfos[i].cid == cid)
+           )
+        {
+            feature[gcFEATURE_BIT_VG_IM_INDEX_FORMAT] = VGFeatureInfos[i].vg_im_index_format;
+            feature[gcFEATURE_BIT_VG_PE_PREMULTIPLY] = VGFeatureInfos[i].vg_pe_premultiply;
+            feature[gcFEATURE_BIT_VG_BORDER_CULLING] = VGFeatureInfos[i].vg_border_culling;
+            feature[gcFEATURE_BIT_VG_RGBA2_FORMAT] = VGFeatureInfos[i].vg_rgba2_format;
+            feature[gcFEATURE_BIT_VG_QUALITY_8X] = VGFeatureInfos[i].vg_quality_8x;
+            feature[gcFEATURE_BIT_VG_RADIAL_GRADIENT] = VGFeatureInfos[i].vg_radial_gradient;
+            feature[gcFEATURE_BIT_VG_LINEAR_GRADIENT_EXT] = VGFeatureInfos[i].vg_linear_gradient_ext;
+            feature[gcFEATURE_BIT_VG_DITHER] = VGFeatureInfos[i].vg_dither;
+            feature[gcFEATURE_BIT_VG_COLOR_KEY] = VGFeatureInfos[i].vg_color_key;
+            break;
+        }
+    }
+    
+    if(i == size) {
+        return VG_LITE_INVALID_ARGUMENT;
+    }
+    s_ftable.ftflag = 1;
+
+    return VG_LITE_SUCCESS;
+}
+#else
 static vg_lite_error_t fill_feature_table(uint32_t * feature)
 {
     uint16_t size = sizeof(VGFeatureInfos) / sizeof(VGFeatureInfos[0]);
@@ -4432,11 +4588,19 @@ static vg_lite_error_t fill_feature_table(uint32_t * feature)
 
     return VG_LITE_SUCCESS;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 static vg_lite_error_t flush(vg_lite_context_t *context);
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 static vg_lite_error_t submit(vg_lite_context_t * context);
+#if defined(VG_DRIVER_SINGLE_THREAD)
+static vg_lite_error_t stall(vg_lite_context_t * context, uint32_t time_ms, uint32_t mask);
+#else
 static vg_lite_error_t stall(vg_lite_context_t * context, uint32_t time_ms);
-
+#endif /* VG_DRIVER_SINGLE_THREAD */
+ 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 /* Push a state array into context buffer. */
 static vg_lite_error_t push_states_to_context(vg_lite_context_t * context, uint32_t address, uint32_t count, uint32_t *data)
 {
@@ -4473,11 +4637,13 @@ static vg_lite_error_t update_context_buffer()
     vg_lite_error_t error = VG_LITE_SUCCESS;
     vg_lite_kernel_context_switch_t check;
     vg_lite_tls_t* tls;
+    uint32_t command_id;
 
     tls = (vg_lite_tls_t *) vg_lite_os_get_tls();
     if(tls == NULL)
         return VG_LITE_NO_CONTEXT;
 
+    command_id = CMDBUF_INDEX(tls->t_context);
     check.context =(uint32_t)&tls->t_context.context;
     VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_QUERY_CONTEXT_SWITCH, &check));
     /* if context have been switched and this task need use index. */
@@ -4485,8 +4651,7 @@ static vg_lite_error_t update_context_buffer()
     {
         uint32_t clut_addr[4]={0x0A98,0x0A9C,0x0AA0,0x0B00};
         uint32_t clut_count[4]={2,4,16,256};
-        uint32_t command_id;
-        command_id = CMDBUF_INDEX(tls->t_context);
+
         for(int i = 0; i < 4; i++)
         {
             /* check which index colors would be use in this task. */
@@ -4495,18 +4660,283 @@ static vg_lite_error_t update_context_buffer()
                 tls->t_context.clut_used[i] = 0;
                 }
         }
+        tls->t_context.index_format = 0;
+    }
+
+    /* Set tessellation buffer states */
+    if(check.isContextSwitched && tls->t_context.ts_init && !tls->t_context.ts_init_used && tls->t_context.ts_init_use){
+        /* Reserve enough space in the context buffer for flush and submit */
+        if (tls->t_context.context_buffer_offset[command_id] + 80 >= tls->t_context.context_buffer_size) {
+            return VG_LITE_OUT_OF_RESOURCES;
+        }
+        memcpy(tls->t_context.context_buffer[command_id] + tls->t_context.context_buffer_offset[command_id], tls->t_context.ts_record, 80);
+        tls->t_context.ts_init = 0;
+        tls->t_context.ts_init_used = 0;
+        tls->t_context.ts_init_use = 0;
+        tls->t_context.context_buffer_offset[command_id] += 80;
+    }
+
+    if(tls->t_context.context_buffer_offset[command_id]){
         ((uint32_t *) (tls->t_context.context_buffer[command_id] + tls->t_context.context_buffer_offset[command_id]))[0] = VG_LITE_RETURN();
         ((uint32_t *) (tls->t_context.context_buffer[command_id] + tls->t_context.context_buffer_offset[command_id]))[1] = 0;
         tls->t_context.context_buffer_offset[command_id] += 8;
         ((uint32_t *) CMDBUF_BUFFER(tls->t_context))[0] = VG_LITE_CALL((tls->t_context.context_buffer_offset[command_id] + 7) / 8);
         ((uint32_t *) CMDBUF_BUFFER(tls->t_context))[1] = tls->t_context.context.context_buffer_physical[command_id];
-        tls->t_context.index_format = 0;
         tls->t_context.context_buffer_offset[command_id] = 0;
     }
 
     return error;
 }
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+/* Push a state array into current command buffer. */
+static vg_lite_error_t push_states(vg_lite_context_t * context, uint32_t address, uint32_t count, uint32_t *data)
+{
+    uint32_t i;
+    vg_lite_error_t error;
+    if (!has_valid_command_buffer(context))
+        return VG_LITE_NO_CONTEXT;
+
+    if (CMDBUF_OFFSET(*context) + 8 + VG_LITE_ALIGN(count + 1, 2) * 4 >= CMDBUF_SIZE(*context)) {
+        VG_LITE_RETURN_ERROR(submit(context));
+        VG_LITE_RETURN_ERROR(stall(context, 0, (uint32_t)~0));
+    }
+
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[0] = VG_LITE_STATES(count, address);
+
+    for (i = 0; i < count; i++) {
+        ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[1 + i] = data[i];
+    }
+    if (i%2 == 0) {
+        ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[1 + i] = VG_LITE_NOP();
+    }
+
+    CMDBUF_OFFSET(*context) += VG_LITE_ALIGN(count + 1, 2) * 4;
+
+    return VG_LITE_SUCCESS;
+}
+
+/* Push a single state command into the current command buffer. */
+static vg_lite_error_t push_state(vg_lite_context_t * context, uint32_t address, uint32_t data)
+{
+    vg_lite_error_t error;
+    if (!has_valid_command_buffer(context))
+        return VG_LITE_NO_CONTEXT;
+
+    if (CMDBUF_OFFSET(*context) + 16 >= CMDBUF_SIZE(*context)) {
+        VG_LITE_RETURN_ERROR(submit(context));
+        VG_LITE_RETURN_ERROR(stall(context, 0, (uint32_t)~0));
+    }
+
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[0] = VG_LITE_STATE(address);
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[1] = data;
+
+    CMDBUF_OFFSET(*context) += 8;
+
+    return VG_LITE_SUCCESS;
+}
+
+/* Push a single state command with given address. */
+static vg_lite_error_t push_state_ptr(vg_lite_context_t * context, uint32_t address, void * data_ptr)
+{
+    vg_lite_error_t error;
+    uint32_t data = *(uint32_t *) data_ptr;
+    if (!has_valid_command_buffer(context))
+        return VG_LITE_NO_CONTEXT;
+
+    if (CMDBUF_OFFSET(*context) + 16 >= CMDBUF_SIZE(*context)) {
+        VG_LITE_RETURN_ERROR(submit(context));
+        VG_LITE_RETURN_ERROR(stall(context, 0, (uint32_t)~0));
+    }
+
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[0] = VG_LITE_STATE(address);
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[1] = data;
+
+    CMDBUF_OFFSET(*context) += 8;
+
+    return VG_LITE_SUCCESS;
+}
+
+/* Push a "call" command into the current command buffer. */
+static vg_lite_error_t push_call(vg_lite_context_t * context, uint32_t address, uint32_t bytes)
+{
+    vg_lite_error_t error;
+    if (!has_valid_command_buffer(context))
+        return VG_LITE_NO_CONTEXT;
+
+    if (CMDBUF_OFFSET(*context) + 16 >= CMDBUF_SIZE(*context)) {
+        VG_LITE_RETURN_ERROR(submit(context));
+        VG_LITE_RETURN_ERROR(stall(context, 0, (uint32_t)~0));
+    }
+
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[0] = VG_LITE_CALL((bytes + 7) / 8);
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[1] = address;
+
+    CMDBUF_OFFSET(*context) += 8;
+
+    return VG_LITE_SUCCESS;
+}
+
+/* Push a rectangle command into the current command buffer. */
+static vg_lite_error_t push_rectangle(vg_lite_context_t * context, int x, int y, int width, int height)
+{
+    vg_lite_error_t error;
+    if (!has_valid_command_buffer(context))
+        return VG_LITE_NO_CONTEXT;
+
+    if (CMDBUF_OFFSET(*context) + 16 >= CMDBUF_SIZE(*context)) {
+        VG_LITE_RETURN_ERROR(submit(context));
+        VG_LITE_RETURN_ERROR(stall(context, 0, (uint32_t)~0));
+    }
+
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[0] = VG_LITE_DATA(1);
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[1] = 0;
+    ((uint16_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[4] = (uint16_t)x;
+    ((uint16_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[5] = (uint16_t)y;
+    ((uint16_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[6] = (uint16_t)width;
+    ((uint16_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[7] = (uint16_t)height;
+
+    CMDBUF_OFFSET(*context) += 16;
+
+    return VG_LITE_SUCCESS;
+}
+
+/* Push a data array into the current command buffer. */
+static vg_lite_error_t push_data(vg_lite_context_t * context, int size, void * data)
+{
+    vg_lite_error_t error;
+    int bytes = VG_LITE_ALIGN(size, 8);
+
+    if (!has_valid_command_buffer(context))
+        return VG_LITE_NO_CONTEXT;
+
+    if (CMDBUF_OFFSET(*context) + 16 + bytes >= CMDBUF_SIZE(*context)) {
+        VG_LITE_RETURN_ERROR(submit(context));
+        VG_LITE_RETURN_ERROR(stall(context, 0, (uint32_t)~0));
+    }
+
+    ((uint64_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[(bytes / 8)] = 0;
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[0] = VG_LITE_DATA(bytes / 8);
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[1] = 0;
+    memcpy(CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context) + 8, data, size);
+
+    CMDBUF_OFFSET(*context) += 8 + bytes;
+
+    return VG_LITE_SUCCESS;
+}
+
+/* Push a "stall" command into the current command buffer. */
+static vg_lite_error_t push_stall(vg_lite_context_t * context, uint32_t module)
+{
+    vg_lite_error_t error;
+    if (!has_valid_command_buffer(context))
+        return VG_LITE_NO_CONTEXT;
+
+    if (CMDBUF_OFFSET(*context) + 16 >= CMDBUF_SIZE(*context)) {
+        VG_LITE_RETURN_ERROR(submit(context));
+        VG_LITE_RETURN_ERROR(stall(context, 0, (uint32_t)~0));
+    }
+
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[0] = VG_LITE_SEMAPHORE(module);
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[1] = 0;
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[2] = VG_LITE_STALL(module);
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[3] = 0;
+
+    CMDBUF_OFFSET(*context) += 16;
+
+    return VG_LITE_SUCCESS;
+}
+
+/* Submit the current command buffer to HW and reset the current command buffer offset. */
+static vg_lite_error_t submit(vg_lite_context_t *context)
+{
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+    vg_lite_kernel_submit_t submit;
+
+    /* Check if there is a valid context and an allocated command buffer. */
+    if (!has_valid_command_buffer(context))
+        return VG_LITE_NO_CONTEXT;
+
+    /* Check if there is anything to submit. */
+    if (CMDBUF_OFFSET(*context) == 0)
+        return VG_LITE_INVALID_ARGUMENT;
+
+    /* Check if there is enough space in the command buffer for the END. */
+    if (CMDBUF_OFFSET(*context) + 8 > CMDBUF_SIZE(*context)) {
+        /* Reset command buffer offset. */
+        CMDBUF_OFFSET(*context) = 0;
+        return VG_LITE_OUT_OF_RESOURCES;
+    }
+
+    /* Append END command into the command buffer. */
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[0] = VG_LITE_END(EVENT_END);
+    ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[1] = 0;
+
+#if DUMP_COMMAND
+    if (strncmp(filename, "Commandbuffer", 13)) {
+        sprintf(filename, "Commandbuffer_pid%d.txt", getpid());
+    }
+
+    fp = fopen(filename, "a");
+
+    if (fp == NULL)
+        printf("error!\n");
+
+    fprintf(fp, "Command buffer: 0x%08x, 0x%08x,\n",
+            ((uint32_t *) (CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context)))[0], 0);
+
+    fprintf(fp, "Command buffer addr is : %p,\n", CMDBUF_BUFFER(*context));
+    fprintf(fp, "Command buffer offset is : %d,\n", CMDBUF_OFFSET(*context) + 8);
+
+    fclose(fp);
+    fp = NULL;
+#endif
+
+    CMDBUF_OFFSET(*context) += 8;
+
+    /* Submit the command buffer. */
+    submit.context = &context->context;
+    submit.commands = CMDBUF_BUFFER(*context);
+    submit.command_size = CMDBUF_OFFSET(*context);
+    submit.command_id = CMDBUF_INDEX(*context);
+
+    /* Wait if GPU has not completed previous CMD buffer */
+    if (submit_flag)
+    {
+        VG_LITE_RETURN_ERROR(stall(&s_context, 0, (uint32_t)~0));
+    }
+    VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_SUBMIT, &submit));
+
+    submit_flag = 1;
+
+    vglitemDUMP_BUFFER("command", (unsigned int)CMDBUF_BUFFER(*context),
+        submit.context->command_buffer_logical[CMDBUF_INDEX(*context)], 0, submit.command_size);
+    vglitemDUMP("@[commit]");
+
+    /* Reset command buffer. */
+    CMDBUF_OFFSET(*context) = 0;
+
+    return error;
+}
+
+/* Wait for the HW to finish the current execution. */
+static vg_lite_error_t stall(vg_lite_context_t * context, uint32_t time_ms, uint32_t mask)
+{
+    vg_lite_error_t error;
+    vg_lite_kernel_wait_t wait;
+    
+    vglitemDUMP("@[stall]");
+    /* Wait until GPU is ready. */
+    wait.context = &context->context;
+    wait.timeout_ms = time_ms > 0 ? time_ms : VG_LITE_INFINITE;
+    wait.event_mask = mask;
+    VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_WAIT, &wait));
+    submit_flag = 0;
+    return VG_LITE_SUCCESS;
+}
+
+#else
 /* Push a state array into current command buffer. */
 static vg_lite_error_t push_states(vg_lite_context_t * context, uint32_t address, uint32_t count, uint32_t *data)
 {
@@ -4536,6 +4966,7 @@ static vg_lite_error_t push_states(vg_lite_context_t * context, uint32_t address
         if(context->ts_init){
             memcpy(CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context), context->ts_record, 80);
             CMDBUF_OFFSET(*context) += 80;
+            context->ts_init_used = 1;
         }
 
         /* update start offset */
@@ -4619,6 +5050,7 @@ static vg_lite_error_t push_state(vg_lite_context_t * context, uint32_t address,
         if(context->ts_init){
             memcpy(CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context), context->ts_record, 80);
             CMDBUF_OFFSET(*context) += 80;
+            context->ts_init_used = 1;
         }
 
         /* update start offset */
@@ -4686,6 +5118,7 @@ static vg_lite_error_t push_state_ptr(vg_lite_context_t * context, uint32_t addr
         if(context->ts_init){
             memcpy(CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context), context->ts_record, 80);
             CMDBUF_OFFSET(*context) += 80;
+            context->ts_init_used = 1;
         }
 
         /* update start offset */
@@ -4751,6 +5184,7 @@ static vg_lite_error_t push_call(vg_lite_context_t * context, uint32_t address, 
         if(context->ts_init){
             memcpy(CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context), context->ts_record, 80);
             CMDBUF_OFFSET(*context) += 80;
+            context->ts_init_used = 1;
         }
 
         /* update start offset */
@@ -4813,9 +5247,10 @@ static vg_lite_error_t push_rectangle(vg_lite_context_t * context, int x, int y,
 
         RESERVE_BYTES_IN_CMDBUF(*context);
 
-        if(context->ts_init){
+       if(context->ts_init){
             memcpy(CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context), context->ts_record, 80);
             CMDBUF_OFFSET(*context) += 80;
+            context->ts_init_used = 1;
         }
 
         /* update start offset */
@@ -4893,6 +5328,7 @@ static vg_lite_error_t push_data(vg_lite_context_t * context, int size, void * d
         if(context->ts_init){
             memcpy(CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context), context->ts_record, 80);
             CMDBUF_OFFSET(*context) += 80;
+            context->ts_init_used = 1;
         }
 
         /* update start offset */
@@ -4968,6 +5404,7 @@ static vg_lite_error_t push_stall(vg_lite_context_t * context, uint32_t module)
         if(context->ts_init){
             memcpy(CMDBUF_BUFFER(*context) + CMDBUF_OFFSET(*context), context->ts_record, 80);
             CMDBUF_OFFSET(*context) += 80;
+            context->ts_init_used = 1;
         }
 
         /* update start offset */
@@ -5126,9 +5563,10 @@ static vg_lite_error_t stall(vg_lite_context_t * context, uint32_t time_ms)
     wait.command_id = CMDBUF_INDEX(*context);
 
     VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_WAIT, &wait));
-
     return VG_LITE_SUCCESS;
 }
+
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 /* Get the inversion of a matrix. */
 VG_LITE_OPTIMIZE(LOW) static int inverse(vg_lite_matrix_t * result, vg_lite_matrix_t * matrix)
@@ -5219,6 +5657,20 @@ static int transform(vg_lite_point_t * result, vg_lite_float_t x, vg_lite_float_
 /*!
  Flush specific VG module.
  */
+#if defined(VG_DRIVER_SINGLE_THREAD)
+static vg_lite_error_t flush_target()
+ {
+     vg_lite_error_t error = VG_LITE_SUCCESS;
+     vg_lite_context_t *context = GET_CONTEXT();
+     
+     do {
+         VG_LITE_BREAK_ERROR(push_state(context, 0x0A1B, 0x00000001));
+         VG_LITE_BREAK_ERROR(push_stall(context, 7));
+     } while (0);
+
+     return error;
+}
+#else
 static vg_lite_error_t flush_target()
 {
     vg_lite_error_t error = VG_LITE_SUCCESS;
@@ -5235,6 +5687,7 @@ static vg_lite_error_t flush_target()
 
     return error;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 /****************** FAST_CLEAR feature implementation. ***************/
 #if VG_TARGET_FAST_CLEAR
@@ -5562,6 +6015,111 @@ static int fc_buf_dump(vg_lite_buffer_t *target, vg_lite_buffer_t *fcb)
 #endif
 
 /* Set the current render target. */
+#if defined(VG_DRIVER_SINGLE_THREAD)
+static vg_lite_error_t set_render_target(vg_lite_buffer_t *target)
+{
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+    uint32_t yuv2rgb = 0;
+    uint32_t uv_swiz = 0;
+    int32_t tiled;
+    int32_t dst_align_width;
+    uint32_t mul, div, align;
+    if(target == NULL) {
+        return VG_LITE_INVALID_ARGUMENT;
+    } else if(s_context.scissor_enabled && (s_context.scissor[2] <= 0 || s_context.scissor[3] <= 0)) {
+        /* Check scissoring rectangle dimensions
+           A scissoring rectangle with width <= 0 or height <= 0 must be
+           ignored. If scissoring is enabled and no valid scissoring rectangles
+          are present, no drawing occurs. */
+          return VG_LITE_NO_CONTEXT;   
+    }
+    /* Skip if render target and scissor are not changed. */
+    if ((s_context.rtbuffer != NULL) &&
+        !(memcmp(s_context.rtbuffer,target,sizeof(vg_lite_buffer_t))) &&
+        (s_context.scissor_dirty == 0) && (s_context.premultiply_dirty == 0))
+    {
+        return VG_LITE_SUCCESS;
+    }
+
+    if ((target != NULL) &&
+        (target->format == VG_LITE_YUY2 ||
+         target->format == VG_LITE_AYUY2 ||
+         target->format == VG_LITE_YUY2_TILED ||
+         target->format == VG_LITE_AYUY2_TILED))
+    {
+        return VG_LITE_NOT_SUPPORT;
+    }
+
+    
+#if VG_TARGET_FAST_CLEAR
+    /* Flush target if necessary when switching. */
+    if (s_context.rtbuffer&& s_context.rtbuffer->memory) {    /* If it's not the first time to set target. */
+        vg_lite_finish();
+    }
+    update_fc_buffer(target);
+#else
+    if (s_context.rtbuffer && s_context.rtbuffer->memory) {
+        /* Flush the old target. */
+        vg_lite_finish();
+    }
+#endif
+
+    tiled = (target->tiled != VG_LITE_LINEAR) ? 0x10000000 : 0;
+    
+    if (((target->format >= VG_LITE_YUY2) &&
+         (target->format <= VG_LITE_AYUY2)) ||
+        ((target->format >= VG_LITE_YUY2_TILED) &&
+         (target->format <= VG_LITE_AYUY2_TILED))) {
+            yuv2rgb = convert_yuv2rgb(target->yuv.yuv2rgb);
+            uv_swiz = convert_uv_swizzle(target->yuv.swizzle);
+        }
+
+    /* Program render target. */
+    if (s_context.premultiply_dirty || s_context.rtbuffer != target || memcmp(s_context.rtbuffer,target,sizeof(vg_lite_buffer_t)) ) {
+        if(target->tiled == VG_LITE_TILED) {
+            if((target->stride % DEST_ALIGNMENT_LIMITATION) != 0)
+                return VG_LITE_INVALID_ARGUMENT;
+        }
+        if(s_context.premultiply_enabled) {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A10,
+                convert_target_format(target->format, s_context.capabilities) | 0x00010000 | uv_swiz | yuv2rgb));
+        }else {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A10,
+                convert_target_format(target->format, s_context.capabilities) | 0x00010000 | uv_swiz | yuv2rgb | 0x100));
+        }
+        if (target->yuv.uv_planar)
+        {   /* Program uv plane address if necessary. */
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A5C, target->yuv.uv_planar));
+        }
+        if (target->yuv.alpha_planar) {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A5D, target->yuv.alpha_planar));
+        }
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A11, target->address));
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A12, target->stride | tiled));
+        s_context.premultiply_dirty = 0;
+    }
+
+    get_format_bytes(target->format, &mul, &div, &align);
+    dst_align_width = target->stride * div / mul;
+
+    if (s_context.scissor_dirty != 0) {
+        if (s_context.scissor_enabled) {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A13, (s_context.scissor[0] + s_context.scissor[2]) | ((s_context.scissor[1] + s_context.scissor[3]) << 16)));
+        }
+        else {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A13, dst_align_width | (target->height << 16)));
+        }
+        s_context.scissor_dirty = 0;
+    }
+    else {
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A13, dst_align_width | (target->height << 16)));
+    }
+
+    memcpy(s_context.rtbuffer, target, sizeof(vg_lite_buffer_t));
+
+    return error;
+}
+#else
 static vg_lite_error_t set_render_target(vg_lite_buffer_t *target)
 {
     vg_lite_error_t error = VG_LITE_SUCCESS;
@@ -5650,6 +6208,7 @@ static vg_lite_error_t set_render_target(vg_lite_buffer_t *target)
 
     return error;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 static inline vg_lite_error_t transform_bounding_box(vg_lite_rectangle_t *in_bbx,
                                                      vg_lite_matrix_t *matrix,
@@ -5781,6 +6340,87 @@ static vg_lite_error_t config_new_target(vg_lite_buffer_t *target,
 }
 #endif /* VG_BLIT_WORKAROUND */
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+static vg_lite_error_t set_interpolation_steps(vg_lite_buffer_t *target,
+                                               vg_lite_float_t s_width,
+                                               vg_lite_float_t s_height,
+                                               vg_lite_matrix_t *matrix)
+{
+    vg_lite_matrix_t    im;
+    vg_lite_rectangle_t src_bbx, bounding_box, clip;
+    vg_lite_float_t     xs[3], ys[3], cs[3];
+    vg_lite_error_t     error = VG_LITE_SUCCESS;
+    float               dx = 0.0f, dy = 0.0f;
+
+    #define ERR_LIMIT   0.0000610351562f
+
+    /* Get bounding box. */
+    memset(&src_bbx, 0, sizeof(vg_lite_rectangle_t));
+    memset(&clip, 0, sizeof(vg_lite_rectangle_t));
+    src_bbx.width       = (int32_t)s_width;
+    src_bbx.height      = (int32_t)s_height;
+
+    if (s_context.scissor_enabled) {
+        clip.x = s_context.scissor[0];
+        clip.y = s_context.scissor[1];
+        clip.width  = s_context.scissor[2];
+        clip.height = s_context.scissor[3];
+    } else {
+        clip.x = clip.y = 0;
+        clip.width  = s_context.rtbuffer->width;
+        clip.height = s_context.rtbuffer->height;
+    }
+    transform_bounding_box(&src_bbx, matrix, &clip, &bounding_box, NULL);
+
+    /* Compute inverse matrix. */
+    if (!inverse(&im, matrix))
+        return VG_LITE_INVALID_ARGUMENT;
+    /* Compute interpolation steps. */
+    /* X step */
+    xs[0] = im.m[0][0] / s_width;
+    xs[1] = im.m[1][0] / s_height;
+    xs[2] = im.m[2][0];
+    /* Y step */
+    ys[0] = im.m[0][1] / s_width;
+    ys[1] = im.m[1][1] / s_height;
+    ys[2] = im.m[2][1];
+    /* C step 2 */
+    cs[2] = 0.5f * (im.m[2][0] + im.m[2][1]) + im.m[2][2];
+    /* Keep track of the rounding errors (underflow) */
+    if (s_context.chip_id == GPU_CHIP_ID_GCNanoliteV) {
+        /* Check if matrix has rotation or perspective transformations */
+        if (matrix != NULL &&
+            (matrix->m[0][1] != 0.0f || matrix->m[1][0] != 0.0f ||
+             matrix->m[2][0] != 0.0f || matrix->m[2][1] != 0.0f ||
+             matrix->m[2][2] != 1.0f)) {
+            if (xs[0] != 0.0f && -ERR_LIMIT < xs[0] && xs[0] < ERR_LIMIT)
+                dx = 0.5f * (2 * bounding_box.x + bounding_box.width) * im.m[0][0];
+            else if (ys[0] != 0.0f && -ERR_LIMIT < ys[0] && ys[0] < ERR_LIMIT)
+                dx = 0.5f * (2 * bounding_box.y + bounding_box.height) * im.m[0][1];
+            if (xs[1] != 0.0f && -ERR_LIMIT < xs[1] && xs[1] < ERR_LIMIT)
+                dy = 0.5f * (2 * bounding_box.x + bounding_box.width) * im.m[1][0];
+            else if (ys[1] != 0.0f && -ERR_LIMIT < ys[1] && ys[1] < ERR_LIMIT)
+                dy = 0.5f * (2 * bounding_box.y + bounding_box.height) * im.m[1][1];
+        }
+    }
+    /* C step 0, 1*/
+    cs[0] = (0.5f * (im.m[0][0] + im.m[0][1]) + im.m[0][2] + dx) / s_width;
+    cs[1] = (0.5f * (im.m[1][0] + im.m[1][1]) + im.m[1][2] + dy) / s_height;
+    /* Set command buffer */
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A18, (void *)&cs[0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A19, (void *)&cs[1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A1A, (void *)&cs[2]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A1C, (void *)&xs[0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A1D, (void *)&xs[1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A1E, (void *)&xs[2]));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1F, 0x00000001));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A20, (void *)&ys[0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A21, (void *)&ys[1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A22, (void *)&ys[2]));
+
+    return VG_LITE_SUCCESS;
+}
+#else
 static vg_lite_error_t set_interpolation_steps(vg_lite_buffer_t *target,
                                                vg_lite_float_t s_width,
                                                vg_lite_float_t s_height,
@@ -5865,6 +6505,7 @@ static vg_lite_error_t set_interpolation_steps(vg_lite_buffer_t *target,
 
     return VG_LITE_SUCCESS;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 /*************** API Functions ***********************************************/
 vg_lite_error_t vg_lite_get_transform_matrix(vg_lite_point4_t src, vg_lite_point4_t dst,vg_lite_matrix_t *mat)
@@ -5946,6 +6587,401 @@ vg_lite_error_t vg_lite_get_transform_matrix(vg_lite_point4_t src, vg_lite_point
     return VG_LITE_SUCCESS;
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+vg_lite_error_t vg_lite_clear(vg_lite_buffer_t * target,
+                              vg_lite_rectangle_t * rectangle,
+                              vg_lite_color_t color)
+{
+    vg_lite_error_t error;
+    int32_t x, y, width, height;
+    uint32_t color32;
+
+    error = set_render_target(target);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    } else if (error == VG_LITE_NO_CONTEXT) {
+        /* If scissoring is enabled and no valid scissoring rectangles
+           are present, no drawing occurs */
+        return VG_LITE_SUCCESS;
+    }
+
+    /* Get rectangle. */
+    x = (rectangle != NULL) ? rectangle->x : 0;
+    y = (rectangle != NULL) ? rectangle->y : 0;
+    width  = (rectangle != NULL) ? rectangle->width : s_context.rtbuffer->width;
+    height = (rectangle != NULL) ? rectangle->height : s_context.rtbuffer->height;
+
+    /* Compute the valid rectangle. */
+    if (x < 0)
+    {
+        width += x;
+        x = 0;
+    }
+    if (y < 0)
+    {
+        height += y;
+        y = 0;
+    }
+
+    if (s_context.scissor_enabled)
+    {
+        int right, bottom;
+        right = x + width;
+        bottom = y + height;
+
+        /* Bounds check. */
+        if ((s_context.scissor[0] >= x + width) ||
+            (s_context.scissor[0] + s_context.scissor[2] <= x) ||
+            (s_context.scissor[1] >= y + height) ||
+            (s_context.scissor[1] + s_context.scissor[3] <= y))
+        {
+            /* Do nothing. */
+            return VG_LITE_SUCCESS;
+        }
+        /* Intersects the scissor and the rectangle. */
+        x = (x > s_context.scissor[0] ? x : s_context.scissor[0]);
+        y = (y > s_context.scissor[1] ? y : s_context.scissor[1]);
+        right = (right < s_context.scissor[0] + s_context.scissor[2]  ? right : s_context.scissor[0] + s_context.scissor[2]);
+        bottom = (bottom < s_context.scissor[1] + s_context.scissor[3] ? bottom : s_context.scissor[1] + s_context.scissor[3]);
+        width = right - x;
+        height = bottom - y;
+    }
+
+    /* Get converted color when target is in L8 format. */
+    color32 = (target->format == VG_LITE_L8) ? rgb_to_l(color) : color;
+
+#if VG_TARGET_FAST_CLEAR
+    if ((rectangle == NULL) ||
+        ((x == 0) && (y == 0)  &&
+         (width == s_context.rtbuffer->width) &&
+         (height  == s_context.rtbuffer->height))) {
+            s_context.clearValue = color32;
+            convert_color(s_context.rtbuffer->format, color32, &color32, NULL);
+            clear_fc((uint32_t)color32);
+    }
+    else
+#endif
+    {
+        /* Setup the command buffer. */
+        if(s_context.premultiply_enabled) {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x00000001));
+        } else {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x10000001));
+        }
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A02, color32));
+        VG_LITE_RETURN_ERROR(push_rectangle(&s_context, x, y, width, height));
+        VG_LITE_RETURN_ERROR(flush_target());
+    }
+
+    /* Success. */
+    return VG_LITE_SUCCESS;
+}
+
+vg_lite_error_t vg_lite_blit(vg_lite_buffer_t * target,
+                             vg_lite_buffer_t * source,
+                             vg_lite_matrix_t * matrix,
+                             vg_lite_blend_t blend,
+                             vg_lite_color_t color,
+                             vg_lite_filter_t filter)
+{
+    vg_lite_error_t error;
+    vg_lite_rectangle_t src_bbx, bounding_box, clip;
+    uint32_t imageMode;
+    uint32_t blend_mode;
+    uint32_t transparency_mode = 0;
+    vg_lite_blend_t forced_blending = blend;
+    uint32_t conversion = 0;
+    uint32_t tiled_source;
+    int32_t src_align_width;
+    uint32_t mul, div, align;
+#if (VG_BLIT_WORKAROUND == 1)
+    vg_lite_matrix_t new_matrix;
+    vg_lite_buffer_t new_target;
+#endif /* VG_BLIT_WORKAROUND */
+
+    /* Calculate bounding box */
+    memset(&src_bbx, 0, sizeof(vg_lite_rectangle_t));
+    memset(&clip, 0, sizeof(vg_lite_rectangle_t));
+    src_bbx.width = source->width;
+    src_bbx.height = source->height;
+    if (s_context.scissor_enabled) {
+        clip.x = s_context.scissor[0];
+        clip.y = s_context.scissor[1];
+        clip.width  = s_context.scissor[2];
+        clip.height = s_context.scissor[3];
+    } else {
+        clip.width  = target->width;
+        clip.height = target->height;
+    }
+    transform_bounding_box(&src_bbx, matrix, &clip, &bounding_box, NULL);
+
+#if (VG_BLIT_WORKAROUND==1)
+    /*
+     * The blit output quality workaround works only for afine transformations
+     * because it is based on the process of cumulating translations into the
+     * matrix. This process is not possible for non-affine transformations, such
+     * as the perspective projections.
+     */
+    if ((matrix->m[2][0] == 0) && (matrix->m[2][1] == 0)) {
+        /*
+         * Make a local copy of the transformation matrix in order not to mess
+         * up the user's matrix.
+         */
+        memcpy(&new_matrix, matrix, sizeof(vg_lite_matrix_t));
+        matrix = &new_matrix;
+
+        config_new_target(target, source, matrix, &bounding_box, &new_target);
+        target = &new_target;
+    }
+#endif /* VG_BLIT_WORKAROUND */
+    error = set_render_target(target);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    } else if (error == VG_LITE_NO_CONTEXT) {
+        /* If scissoring is enabled and no valid scissoring rectangles
+           are present, no drawing occurs */
+        return VG_LITE_SUCCESS;
+    }
+
+    transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
+    /* Check if the specified matrix has rotation or perspective. */
+    if (   (matrix != NULL)
+        && (   (matrix->m[0][1] != 0.0f)
+            || (matrix->m[1][0] != 0.0f)
+            || (matrix->m[2][0] != 0.0f)
+            || (matrix->m[2][1] != 0.0f)
+            || (matrix->m[2][2] != 1.0f)
+            )
+        && (   blend == VG_LITE_BLEND_NONE
+            || blend == VG_LITE_BLEND_SRC_IN
+            || blend == VG_LITE_BLEND_DST_IN
+            )
+        ) {
+            if(vg_lite_query_feature(gcFEATURE_BIT_VG_BORDER_CULLING)) {
+                /* Mark that we have rotation. */
+                transparency_mode = 0x8000;
+            }else
+            {
+                blend_mode = VG_LITE_BLEND_SRC_OVER;
+            }
+
+    }
+
+    /* Check whether L8 is supported or not. */
+    if ((target->format == VG_LITE_L8) && ((source->format != VG_LITE_L8) && (source->format != VG_LITE_A8))) {
+        conversion = 0x80000000;
+    }
+
+    /* determine if source specify bytes are aligned */
+    error = _check_source_aligned(source->format,source->stride);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    }
+
+    /* Determine image mode (NORMAL, NONE or MULTIPLY) depending on the color. */
+    imageMode = (source->image_mode == VG_LITE_NONE_IMAGE_MODE) ? 0 : (source->image_mode == VG_LITE_MULTIPLY_IMAGE_MODE) ? 0x00002000 : 0x00001000;
+    blend_mode = convert_blend(forced_blending);
+    tiled_source = (source->tiled != VG_LITE_LINEAR) ? 0x10000000 : 0 ;
+
+    /* Setup the command buffer. */
+    if(!s_context.premultiply_enabled && source->format != VG_LITE_A8 && source->format != VG_LITE_A4) {
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x10000001 | imageMode | blend_mode | transparency_mode));
+    } else {
+        /* enable pre-multiplied from VG to VGPE */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x00000001 | imageMode | blend_mode | transparency_mode));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A02, color));
+    get_format_bytes(source->format, &mul, &div, &align);
+    src_align_width = source->stride * div / mul;
+
+    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, src_align_width, source->height, matrix));
+
+    if(!s_context.premultiply_enabled && source->format != VG_LITE_A8 && source->format != VG_LITE_A4) {
+        if(source->transparency_mode == VG_LITE_IMAGE_OPAQUE){
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A25, convert_source_format(source->format) | filter | conversion | 0x01000100));
+        } else {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A25, convert_source_format(source->format) | filter | conversion | 0x00000100));
+        }
+    } else {
+        /* enable pre-multiplied in imager unit */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A25, convert_source_format(source->format) | filter | conversion));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A27, 0));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A29, source->address));
+
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2B, source->stride | tiled_source));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2D, 0));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2F, src_align_width | (source->height << 16)));
+    VG_LITE_RETURN_ERROR(push_rectangle(&s_context, bounding_box.x, bounding_box.y, bounding_box.width,
+                                        bounding_box.height));
+    error = flush_target();
+    vglitemDUMP_BUFFER("image", source->address, source->memory, 0, (source->stride)*(source->height));
+
+#if DUMP_IMAGE
+    dump_img(source->memory, src_align_width, source->height, source->format);
+#endif
+
+    return error;
+}
+
+vg_lite_error_t vg_lite_blit_rect(vg_lite_buffer_t * target,
+                                 vg_lite_buffer_t * source,
+                                 uint32_t         * rect,
+                                 vg_lite_matrix_t * matrix,
+                                 vg_lite_blend_t blend,
+                                 vg_lite_color_t color,
+                                 vg_lite_filter_t filter)
+{
+    vg_lite_error_t error;
+    vg_lite_rectangle_t src_bbx, bounding_box, clip;
+    uint32_t imageMode;
+    int32_t src_align_width;
+    uint32_t mul, div, align;
+    uint32_t transparency_mode = 0;
+    uint32_t blend_mode;
+    vg_lite_blend_t forced_blending = blend;
+    uint32_t conversion = 0;
+    uint32_t tiled_source;
+    uint32_t rect_x = 0, rect_y = 0, rect_w = 0, rect_h = 0;
+
+    error = set_render_target(target);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    } else if (error == VG_LITE_NO_CONTEXT) {
+        /* If scissoring is enabled and no valid scissoring rectangles
+           are present, no drawing occurs */
+        return VG_LITE_SUCCESS;
+    }
+
+    transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
+    /* Check if the specified matrix has rotation or perspective. */
+    if (   (matrix != NULL)
+        && (   (matrix->m[0][1] != 0.0f)
+            || (matrix->m[1][0] != 0.0f)
+            || (matrix->m[2][0] != 0.0f)
+            || (matrix->m[2][1] != 0.0f)
+            || (matrix->m[2][2] != 1.0f)
+            )
+        && (   blend == VG_LITE_BLEND_NONE
+            || blend == VG_LITE_BLEND_SRC_IN
+            || blend == VG_LITE_BLEND_DST_IN
+            )
+        ) {
+            if(vg_lite_query_feature(gcFEATURE_BIT_VG_BORDER_CULLING)) {
+                /* Mark that we have rotation. */
+                transparency_mode = 0x8000;
+            }else
+            {
+                blend_mode = VG_LITE_BLEND_SRC_OVER;
+            }
+
+    }
+
+    /* Check whether L8 is supported or not. */
+    if ((target->format == VG_LITE_L8) && ((source->format != VG_LITE_L8) && (source->format != VG_LITE_A8))) {
+        conversion = 0x80000000;
+    }
+
+    /* determine if source specify bytes are aligned */
+    error = _check_source_aligned(source->format,source->stride);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    }
+    get_format_bytes(source->format, &mul, &div, &align);
+    src_align_width = source->stride * div / mul;
+    memset(&src_bbx, 0, sizeof(vg_lite_rectangle_t));
+    /* Set source region. */
+    if (rect != NULL) {
+        rect_x = rect[0];
+        rect_y = rect[1];
+        rect_w = rect[2];
+        rect_h = rect[3];
+
+        if ((rect_x > (uint32_t)src_align_width) || (rect_y > (uint32_t)source->height) ||
+            (rect_w == 0) || (rect_h == 0))
+        {
+            /*No intersection*/
+            return VG_LITE_INVALID_ARGUMENT;
+        }
+
+        if (rect_x + rect_w > (uint32_t)src_align_width)
+        {
+            rect_w = src_align_width - rect_x;
+        }
+
+        if (rect_y + rect_h > (uint32_t)source->height)
+        {
+            rect_h = source->height - rect_y;
+        }
+        src_bbx.x       = rect_x;
+        src_bbx.y       = rect_y;
+        src_bbx.width   = rect_w;
+        src_bbx.height  = rect_h;
+    }
+    else {
+        rect_x = rect_y = 0;
+        rect_w = src_bbx.width  = src_align_width;
+        rect_h = src_bbx.height = source->height;
+    }
+
+    /* Calculate bounding box. */
+    memset(&clip, 0, sizeof(vg_lite_rectangle_t));
+    if (s_context.scissor_enabled) {
+        clip.x = s_context.scissor[0];
+        clip.y = s_context.scissor[1];
+        clip.width  = s_context.scissor[2];
+        clip.height = s_context.scissor[3];
+    } else {
+        clip.x = clip.y = 0;
+        clip.width  = s_context.rtbuffer->width;
+        clip.height = s_context.rtbuffer->height;
+    }
+    transform_bounding_box(&src_bbx, matrix, &clip, &bounding_box, NULL);
+
+    /* Determine image mode (NORMAL, NONE or MULTIPLY) depending on the color. */
+    imageMode = (source->image_mode == VG_LITE_NONE_IMAGE_MODE) ? 0 : (source->image_mode == VG_LITE_MULTIPLY_IMAGE_MODE) ? 0x00002000 : 0x00001000;
+    blend_mode = convert_blend(forced_blending);
+    tiled_source = (source->tiled != VG_LITE_LINEAR) ? 0x10000000 : 0 ;
+
+    /* Setup the command buffer. */
+    if(!s_context.premultiply_enabled && source->format != VG_LITE_A8 && source->format != VG_LITE_A4) {
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x10000001 | imageMode | blend_mode | transparency_mode));
+    } else {
+        /* enable pre-multiplied from VG to VGPE */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x00000001 | imageMode | blend_mode | transparency_mode));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A02, color));
+
+    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, rect_w, rect_h, matrix));
+
+    if(!s_context.premultiply_enabled && source->format != VG_LITE_A8 && source->format != VG_LITE_A4) {
+        if(source->transparency_mode == VG_LITE_IMAGE_OPAQUE){
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A25, convert_source_format(source->format) | filter | conversion | 0x01000100));
+        } else {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A25, convert_source_format(source->format) | filter | conversion | 0x00000100));
+        }
+    } else {
+        /* enable pre-multiplied in imager unit */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A25, convert_source_format(source->format) | filter | conversion));
+    }
+
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A27, 0));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A29, source->address));
+
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2B, source->stride | tiled_source));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2D, rect_x | (rect_y << 16)));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2F, rect_w | (rect_h << 16)));
+    VG_LITE_RETURN_ERROR(push_rectangle(&s_context, bounding_box.x, bounding_box.y, bounding_box.width,
+                                        bounding_box.height));
+    error = flush_target();
+    vglitemDUMP_BUFFER("image", source->address, source->memory, 0, (source->stride)*(source->height));
+#if DUMP_IMAGE
+    dump_img(source->memory, src_align_width, source->height, source->format);
+#endif
+
+    return error;
+}
+#else
 vg_lite_error_t vg_lite_clear(vg_lite_buffer_t * target,
                               vg_lite_rectangle_t * rectangle,
                               vg_lite_color_t color)
@@ -6199,7 +7235,7 @@ vg_lite_error_t vg_lite_blit(vg_lite_buffer_t * target,
             {
                 tls->t_context.clut_used[0] = 1;
             }
-        }
+       }
     }
     if(!tls->t_context.premultiply_enabled && source->format != VG_LITE_A8 && source->format != VG_LITE_A4) {
         VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A00, 0x10000001 | imageMode | blend_mode | transparency_mode));
@@ -6413,7 +7449,7 @@ vg_lite_error_t vg_lite_blit_rect(vg_lite_buffer_t * target,
             {
                 tls->t_context.clut_used[0] = 1;
             }
-        }
+       }
     }
     if(!tls->t_context.premultiply_enabled && source->format != VG_LITE_A8 && source->format != VG_LITE_A4) {
         VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A00, 0x10000001 | imageMode | blend_mode | transparency_mode));
@@ -6452,19 +7488,25 @@ vg_lite_error_t vg_lite_blit_rect(vg_lite_buffer_t * target,
 
     return error;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 /* Program initial states for tessellation buffer. */
 static vg_lite_error_t program_tessellation(vg_lite_context_t *context)
 {
     vg_lite_error_t error = VG_LITE_SUCCESS;
     uint32_t tessellation_size;
+#if !defined(VG_DRIVER_SINGLE_THREAD)
     uint32_t offset;
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD */
 
     tessellation_size = (  context->tsbuffer.tessellation_buffer_size[2]
                          ? context->tsbuffer.tessellation_buffer_size[2]
                          : context->tsbuffer.tessellation_buffer_size[1]
                          );
+#if !defined(VG_DRIVER_SINGLE_THREAD)
     offset = CMDBUF_OFFSET(*context);
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
+
     /* Since TS buffer won't change during runtime, we program it here in initialization. */
     /* Program tessellation buffer: input for VG module. */
     VG_LITE_RETURN_ERROR(push_state(context, 0x0A30, context->tsbuffer.tessellation_buffer_gpu[0]));   /* Tessellation buffer address. */
@@ -6480,13 +7522,114 @@ static vg_lite_error_t program_tessellation(vg_lite_context_t *context)
 
     VG_LITE_RETURN_ERROR(push_state(context, 0x0A3D, tessellation_size / 64));
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
     /* Backup tessellation buffer states. */
-    context->ts_init = 1;
+    context->ts_init_used = 0;
+    context->ts_init_use = 0;
+    context->ts_dirty = 1;
     memcpy(context->ts_record, (CMDBUF_BUFFER(*context) + offset), 80);
+    CMDBUF_OFFSET(*context) = 0;
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
     return error;
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+vg_lite_error_t vg_lite_init(int32_t tessellation_width,
+                             int32_t tessellation_height)
+{
+    vg_lite_error_t error;
+    vg_lite_kernel_initialize_t initialize;
+
+    s_context.rtbuffer = (vg_lite_buffer_t *)malloc(sizeof(vg_lite_buffer_t));
+    if(!s_context.rtbuffer)
+        return VG_LITE_OUT_OF_RESOURCES;
+    memset(s_context.rtbuffer, 0, sizeof(vg_lite_buffer_t));
+
+    if (tessellation_width <= 0) {
+        tessellation_width = 0;
+        tessellation_height = 0;
+    }
+    if (tessellation_height <= 0) {
+        tessellation_height = 0;
+        tessellation_width = 0;
+    }
+    tessellation_width  = VG_LITE_ALIGN(tessellation_width, 16);
+
+#if VG_TARGET_FAST_CLEAR
+    vg_lite_get_product_info(NULL,&s_context.chip_id,&s_context.chip_rev);
+    vg_lite_get_register(0x30, &cid);
+    if(s_context.chip_id == 0x255 && s_context.chip_rev == 0x1311 && cid == 0x404)
+    {
+        tessellation_width = 64;
+        tessellation_height = 64;
+    }
+#endif
+
+    /* Allocate a command buffer and a tessellation buffer. */
+    initialize.command_buffer_size = command_buffer_size;
+    initialize.tessellation_width = tessellation_width;
+    initialize.tessellation_height = tessellation_height;
+    initialize.context = &s_context.context;
+    VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_INITIALIZE, &initialize));
+
+    /* Save draw context. */
+    s_context.capabilities = initialize.capabilities;
+    s_context.command_buffer[0] = (uint8_t *)initialize.command_buffer[0];
+    s_context.command_buffer[1] = (uint8_t *)initialize.command_buffer[1];
+    s_context.command_buffer_size = initialize.command_buffer_size;
+    s_context.command_offset[0] = 0;
+    s_context.command_offset[1] = 0;
+
+    if ((tessellation_width  > 0) &&
+        (tessellation_height > 0))
+    {
+        /* Set and Program Tessellation Buffer states. */
+        s_context.tsbuffer.tessellation_buffer_gpu[0] = initialize.tessellation_buffer_gpu[0];
+        s_context.tsbuffer.tessellation_buffer_gpu[1] = initialize.tessellation_buffer_gpu[1];
+        s_context.tsbuffer.tessellation_buffer_gpu[2] = initialize.tessellation_buffer_gpu[2];
+        s_context.tsbuffer.tessellation_buffer_logic[0] = initialize.tessellation_buffer_logic[0];
+        s_context.tsbuffer.tessellation_buffer_logic[1] = initialize.tessellation_buffer_logic[1];
+        s_context.tsbuffer.tessellation_buffer_logic[2] = initialize.tessellation_buffer_logic[2];
+        s_context.tsbuffer.tessellation_stride = initialize.tessellation_stride;
+        s_context.tsbuffer.tessellation_width_height = initialize.tessellation_width_height;
+        s_context.tsbuffer.tessellation_buffer_size[0] = initialize.tessellation_buffer_size[0];
+        s_context.tsbuffer.tessellation_buffer_size[1] = initialize.tessellation_buffer_size[1];
+        s_context.tsbuffer.tessellation_buffer_size[2] = initialize.tessellation_buffer_size[2];
+        s_context.tsbuffer.tessellation_shift          = initialize.tessellation_shift;
+
+        VG_LITE_RETURN_ERROR(program_tessellation(&s_context));
+    }
+
+    /* Fill feature table. */
+    if (!s_ftable.ftflag){
+        VG_LITE_RETURN_ERROR(fill_feature_table(s_ftable.ftable));
+    }
+
+#if VG_TARGET_FAST_CLEAR
+    /* Reset the FAST_CLEAR buffer. */
+    memset(&s_context.fcBuffer, 0, sizeof(s_context.fcBuffer));
+    s_context.fcBuffer.format = VG_LITE_A8;
+    s_context.fcBuffer.height = 1;
+    s_context.clearValue = 0;
+#endif
+
+    /* Init scissor rect. */
+    s_context.scissor[0] =
+    s_context.scissor[1] =
+    s_context.scissor[2] =
+    s_context.scissor[3] = 0;
+#if DUMP_CAPTURE
+    _SetDumpFileInfo();
+#endif
+
+#if (VG_RENDER_TEXT==1)
+    vg_lite_text_init();
+#endif /* VG_RENDER_TEXT */
+
+    return VG_LITE_SUCCESS;
+}
+#else
 vg_lite_error_t vg_lite_init(int32_t tessellation_width,
                              int32_t tessellation_height)
 {
@@ -6499,6 +7642,8 @@ vg_lite_error_t vg_lite_init(int32_t tessellation_width,
         return VG_LITE_SUCCESS;
 
     task_tls = (vg_lite_tls_t *) vg_lite_os_malloc(sizeof(vg_lite_tls_t));
+    if(!task_tls)
+        return VG_LITE_OUT_OF_RESOURCES;
     memset(task_tls,0,sizeof(vg_lite_tls_t));
     error = (vg_lite_error_t)vg_lite_os_set_tls((void *) task_tls);
     if(error != VG_LITE_SUCCESS)
@@ -6593,6 +7738,7 @@ vg_lite_error_t vg_lite_init(int32_t tessellation_width,
 
     return VG_LITE_SUCCESS;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 vg_lite_error_t vg_lite_set_draw_path_type(vg_lite_path_t * path,vg_lite_draw_path_type_t path_type)
 {
@@ -6604,6 +7750,277 @@ vg_lite_error_t vg_lite_set_draw_path_type(vg_lite_path_t * path,vg_lite_draw_pa
     return VG_LITE_SUCCESS;
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+vg_lite_error_t vg_lite_draw(vg_lite_buffer_t * target,
+                             vg_lite_path_t * path,
+                             vg_lite_fill_t fill_rule,
+                             vg_lite_matrix_t * matrix,
+                             vg_lite_blend_t blend,
+                             vg_lite_color_t color)
+{
+    uint32_t blend_mode;
+    uint32_t format, quality, tiling, fill;
+    uint32_t tessellation_size;
+    vg_lite_error_t error;
+    int32_t dst_align_width;
+    uint32_t mul, div, align;
+    vg_lite_point_t point_min = {0}, point_max = {0}, temp = {0};
+    int x, y, width, height;
+    uint8_t ts_is_fullscreen = 0;
+
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_QUALITY_8X) && path->quality == VG_LITE_UPPER){
+        return VG_LITE_NOT_SUPPORT;
+    }
+
+    error = set_render_target(target);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    } else if (error == VG_LITE_NO_CONTEXT) {
+        /* If scissoring is enabled and no valid scissoring rectangles
+           are present, no drawing occurs */
+        return VG_LITE_SUCCESS;
+    }
+
+    width = s_context.tsbuffer.tessellation_width_height & 0xFFFF;
+    height = s_context.tsbuffer.tessellation_width_height >> 16;
+    get_format_bytes(target->format, &mul, &div, &align);
+    dst_align_width = target->stride * div / mul;
+    if(width == 0 || height == 0)
+        return VG_LITE_NO_CONTEXT;
+    if ((dst_align_width <= width) && (target->height <= height))
+    {
+        ts_is_fullscreen = 1;
+        point_min.x = 0;
+        point_min.y = 0;
+        point_max.x = dst_align_width;
+        point_max.y = target->height;
+    }
+
+    if (ts_is_fullscreen == 0){
+        transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[1], matrix);
+        point_min = point_max = temp;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[2], (vg_lite_float_t)path->bounding_box[1], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[2], (vg_lite_float_t)path->bounding_box[3], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[3], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        if (point_min.x < 0) point_min.x = 0;
+        if (point_min.y < 0) point_min.y = 0;
+        if (point_max.x > dst_align_width) point_max.x = dst_align_width;
+        if (point_max.y > target->height) point_max.y = target->height;
+
+        if (s_context.scissor_enabled) {
+            point_min.x = MAX(point_min.x, s_context.scissor[0]);
+            point_min.y = MAX(point_min.y, s_context.scissor[1]);
+            point_max.x = MIN(point_max.x, s_context.scissor[0] + s_context.scissor[2]);
+            point_max.y = MIN(point_max.y, s_context.scissor[1] + s_context.scissor[3]);
+        }
+    }
+
+    /* Convert states into hardware values. */
+    blend_mode = convert_blend(blend);
+    format = convert_path_format(path->format);
+    quality = convert_path_quality(path->quality);
+    tiling = (s_context.capabilities.cap.tiled == 2) ? 0x2000000 : 0;
+    fill = (fill_rule == VG_LITE_FILL_EVEN_ODD) ? 0x10 : 0;
+    tessellation_size = (  s_context.tsbuffer.tessellation_buffer_size[2]
+                         ? s_context.tsbuffer.tessellation_buffer_size[2]
+                         : s_context.tsbuffer.tessellation_buffer_size[1]
+                         );
+
+    /* Setup the command buffer. */
+    /* Program color register. */
+    if(s_context.premultiply_enabled) {
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, s_context.capabilities.cap.tiled | blend_mode));
+    } else {
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x10000000 | s_context.capabilities.cap.tiled | blend_mode));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A02, color));
+    /* Program tessellation control: for TS module. */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0x01000200 | format | quality | tiling | fill));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3B, 0x3F800000));      /* Path tessellation SCALE. */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3C, 0x00000000));      /* Path tessellation BIAS.  */
+    /* Program matrix. */
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A40, (void *) &matrix->m[0][0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A41, (void *) &matrix->m[0][1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A42, (void *) &matrix->m[0][2]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A43, (void *) &matrix->m[1][0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A44, (void *) &matrix->m[1][1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A45, (void *) &matrix->m[1][2]));
+
+    if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+        vglitemDUMP_BUFFER("path", path->uploaded.address, (uint8_t *)(path->uploaded.memory), 0, path->uploaded.bytes);
+    }
+    vglitemDUMP("@[memory 0x%08X 0x%08X]", s_context.tsbuffer.tessellation_buffer_gpu[0], s_context.tsbuffer.tessellation_buffer_size[0]);
+    /* Setup tessellation loop. */
+    if((path->path_type & 0x1) == VG_LITE_DRAW_FILL_PATH) {
+        for (y = point_min.y; y < point_max.y; y += height) {
+            for (x = point_min.x; x < point_max.x; x += width) {
+                /* Tessellate path. */
+                VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A01, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A39, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3D, tessellation_size / 64));
+
+                if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+                    VG_LITE_RETURN_ERROR(push_call(&s_context, path->uploaded.address, path->uploaded.bytes));
+#if  (DUMP_COMMAND)
+                    if (strncmp(filename, "Commandbuffer", 13)) {
+                        sprintf(filename, "Commandbuffer_pid%d.txt", getpid());
+                    }
+
+                    fp = fopen(filename, "a");
+
+                    if (fp == NULL)
+                        printf("error!\n");
+
+                    fprintf(fp, "Command buffer: 0x%08x, 0x%08x,\n",
+                            ((uint32_t *) memory.memory)[0], 0);
+
+                    unsigned char* pt = (unsigned char*) memory.memory;
+
+                    for(int i = 8; i <= return_offset * 4 - 1; i = i + 4)
+                    {
+                        if (i % 8 == 0)
+                            fprintf(fp, "Command buffer: ");
+
+                        if (i % 4 == 0)
+                            fprintf(fp, "0x");
+
+                        for (int j = 3; j >= 0; --j)
+                            fprintf(fp, "%02x", pt[i + j]);
+
+                        if ((i / 4 + 1) % 2 == 0)
+                            fprintf(fp, ",\n");
+                        else
+                            fprintf(fp, ", ");
+                    }
+
+                    fprintf(fp, "Command buffer: 0x%08x, 0x%08x,\n",
+                            ((uint32_t *) memory.memory)[return_offset], 0);
+
+                    fclose(fp);
+                    fp = NULL;
+#endif
+                } else {
+                        push_data(&s_context, path->path_length, path->path);
+                }
+            }
+        }
+    }
+    /* Setup tessellation loop. */
+    if(path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH) {
+        for (y = point_min.y; y < point_max.y; y += height) {
+            for (x = point_min.x; x < point_max.x; x += width) {
+                /* Tessellate path. */
+                VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A01, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A39, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3D, tessellation_size / 64));
+
+                if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+                    VG_LITE_RETURN_ERROR(push_call(&s_context, path->uploaded.address, path->uploaded.bytes));
+#if  (DUMP_COMMAND)
+                    if (strncmp(filename, "Commandbuffer", 13)) {
+                        sprintf(filename, "Commandbuffer_pid%d.txt", getpid());
+                    }
+
+                    fp = fopen(filename, "a");
+
+                    if (fp == NULL)
+                        printf("error!\n");
+
+                    fprintf(fp, "Command buffer: 0x%08x, 0x%08x,\n",
+                            ((uint32_t *) memory.memory)[0], 0);
+
+                    unsigned char* pt = (unsigned char*) memory.memory;
+
+                    for(int i = 8; i <= return_offset * 4 - 1; i = i + 4)
+                    {
+                        if (i % 8 == 0)
+                            fprintf(fp, "Command buffer: ");
+
+                        if (i % 4 == 0)
+                            fprintf(fp, "0x");
+
+                        for (int j = 3; j >= 0; --j)
+                            fprintf(fp, "%02x", pt[i + j]);
+
+                        if ((i / 4 + 1) % 2 == 0)
+                            fprintf(fp, ",\n");
+                        else
+                            fprintf(fp, ", ");
+                    }
+
+                    fprintf(fp, "Command buffer: 0x%08x, 0x%08x,\n",
+                            ((uint32_t *) memory.memory)[return_offset], 0);
+
+                    fclose(fp);
+                    fp = NULL;
+#endif
+                } else {
+                        format = convert_path_format(VG_LITE_FP32);
+                        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0x01000200 | format | quality | tiling | 0x0));
+                        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A02, path->stroke_color));
+                        push_data(&s_context, path->stroke_path_size, path->stroke_path_data);
+                }
+            }
+        }
+    }
+    /* Finialize command buffer. */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0));
+    return error;
+}
+
+vg_lite_error_t vg_lite_close(void)
+{
+    vg_lite_error_t error;
+    vg_lite_kernel_terminate_t terminate;
+
+#if VG_TARGET_FAST_CLEAR
+    if (s_context.fcBuffer.handle != NULL) {
+        vg_lite_free(&s_context.fcBuffer);
+    }
+#endif
+
+    /* Termnate the draw context. */
+    terminate.context = &s_context.context;
+    VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_TERMINATE, &terminate));
+
+    if(s_context.rtbuffer)
+        free(s_context.rtbuffer);
+
+    submit_flag = 0;
+
+    /* Reset the draw context. */
+    _memset(&s_context, 0, sizeof(s_context));
+
+    /* Reset the s_ftable. */
+    _memset(&s_ftable, 0, sizeof(s_ftable));
+
+    s_context.init = 0;
+#if DUMP_CAPTURE
+    _SetDumpFileInfo();
+#endif    
+    return VG_LITE_SUCCESS;
+}
+#else
 vg_lite_error_t vg_lite_draw(vg_lite_buffer_t * target,
                              vg_lite_path_t * path,
                              vg_lite_fill_t fill_rule,
@@ -6639,7 +8056,7 @@ vg_lite_error_t vg_lite_draw(vg_lite_buffer_t * target,
     } else if (error == VG_LITE_NO_CONTEXT) {
         /* If scissoring is enabled and no valid scissoring rectangles
            are present, no drawing occurs */
-        return VG_LITE_SUCCESS;
+         return VG_LITE_SUCCESS;
     }
 
     width = tls->t_context.tsbuffer.tessellation_width_height & 0xFFFF;
@@ -6702,6 +8119,17 @@ vg_lite_error_t vg_lite_draw(vg_lite_buffer_t * target,
                          ? tls->t_context.tsbuffer.tessellation_buffer_size[2]
                          : tls->t_context.tsbuffer.tessellation_buffer_size[1]
                          );
+
+    if(tls->t_context.ts_dirty){
+        memcpy(CMDBUF_BUFFER(tls->t_context) + CMDBUF_OFFSET(tls->t_context), tls->t_context.ts_record, 80);
+        CMDBUF_OFFSET(tls->t_context) += 80;
+        tls->t_context.ts_dirty = 0;
+        tls->t_context.ts_init_used = 1;
+    }
+    else
+    {
+        tls->t_context.ts_init_use = 1;
+    }
 
     /* Setup the command buffer. */
     /* Program color register. */
@@ -6848,6 +8276,7 @@ vg_lite_error_t vg_lite_draw(vg_lite_buffer_t * target,
     /* Finialize command buffer. */
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A34, 0));
     VG_LITE_RETURN_ERROR(flush_target());
+    tls->t_context.ts_init = 1;
     return error;
 }
 
@@ -6889,6 +8318,7 @@ vg_lite_error_t vg_lite_close(void)
     vg_lite_os_free((void *) tls);
     return VG_LITE_SUCCESS;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 /* Handle tiled & yuv allocation. Currently including NV12, ANV12, YV12, YV16, NV16, YV24. */
 static  vg_lite_error_t _allocate_tiled_yuv_planar(vg_lite_buffer_t *buffer)
@@ -7001,6 +8431,64 @@ static  vg_lite_error_t _allocate_tiled_yuv_planar(vg_lite_buffer_t *buffer)
     return error;
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD) 
+vg_lite_error_t vg_lite_allocate(vg_lite_buffer_t * buffer)
+{
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+    vg_lite_kernel_allocate_t allocate;
+
+    /* Reset planar. */
+    buffer->yuv.uv_planar =
+    buffer->yuv.v_planar =
+    buffer->yuv.alpha_planar = 0;
+
+    /* Align height in case format is tiled. */
+    if (buffer->format >= VG_LITE_YUY2 && buffer->format <= VG_LITE_NV16) {
+        buffer->height = VG_LITE_ALIGN(buffer->height, 4);
+        buffer->yuv.swizzle = VG_LITE_SWIZZLE_UV;
+    }
+
+    if (buffer->format >= VG_LITE_YUY2_TILED && buffer->format <= VG_LITE_AYUY2_TILED) {
+        buffer->height = VG_LITE_ALIGN(buffer->height, 4);
+        buffer->tiled = VG_LITE_TILED;
+        buffer->yuv.swizzle = VG_LITE_SWIZZLE_UV;
+    }
+
+    if ((buffer->format >= VG_LITE_NV12 && buffer->format <= VG_LITE_ANV12_TILED
+         && buffer->format != VG_LITE_AYUY2 && buffer->format != VG_LITE_YUY2_TILED)) {
+        _allocate_tiled_yuv_planar(buffer);
+    }
+    else {
+        /* Driver need compute the stride always with RT500 project. */
+        uint32_t mul, div, align;
+        get_format_bytes(buffer->format, &mul, &div, &align);
+        vg_lite_get_product_info(NULL,&s_context.chip_id,NULL);
+        buffer->stride = VG_LITE_ALIGN((buffer->width * mul / div), align);
+
+        /* Allocate the buffer. */
+        allocate.bytes = buffer->stride * buffer->height;
+#if VG_TARGET_FAST_CLEAR
+        allocate.bytes = VG_LITE_ALIGN(allocate.bytes, 64);
+#endif
+        allocate.contiguous = 1;
+        VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_ALLOCATE, &allocate));
+
+        /* Save the buffer allocation. */
+        buffer->handle  = allocate.memory_handle;
+        buffer->memory  = allocate.memory;
+        buffer->address = allocate.memory_gpu;
+
+        if ((buffer->format == VG_LITE_AYUY2) || (buffer->format == VG_LITE_AYUY2_TILED)) {
+            allocate.bytes = buffer->stride * buffer->height;
+            VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_ALLOCATE, &allocate));
+            buffer->yuv.alpha_planar = allocate.memory_gpu;
+        }
+
+    }
+
+    return VG_LITE_SUCCESS;
+}
+#else
 vg_lite_error_t vg_lite_allocate(vg_lite_buffer_t * buffer)
 {
     vg_lite_error_t error = VG_LITE_SUCCESS;
@@ -7039,6 +8527,7 @@ vg_lite_error_t vg_lite_allocate(vg_lite_buffer_t * buffer)
         get_format_bytes(buffer->format, &mul, &div, &align);
         vg_lite_get_product_info(NULL,&tls->t_context.chip_id,NULL);
         buffer->stride = VG_LITE_ALIGN((buffer->width * mul / div), align);
+
         /* Allocate the buffer. */
         allocate.bytes = buffer->stride * buffer->height;
 #if VG_TARGET_FAST_CLEAR
@@ -7062,7 +8551,69 @@ vg_lite_error_t vg_lite_allocate(vg_lite_buffer_t * buffer)
 
     return VG_LITE_SUCCESS;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+vg_lite_error_t vg_lite_free(vg_lite_buffer_t * buffer)
+{
+    vg_lite_error_t error;
+    vg_lite_kernel_free_t free, uv_free, v_free;
+
+    if(buffer == NULL)
+        return VG_LITE_INVALID_ARGUMENT;
+    if (!(memcmp(s_context.rtbuffer,buffer,sizeof(vg_lite_buffer_t))) ) {
+        if (VG_LITE_SUCCESS == submit(&s_context)) {
+            VG_LITE_RETURN_ERROR(stall(&s_context, 0, ~0));
+        }
+        vglitemDUMP("@[swap 0x%08X %dx%d +%u]",
+            s_context.rtbuffer->address,
+            s_context.rtbuffer->width, s_context.rtbuffer->height,
+            s_context.rtbuffer->stride);
+        vglitemDUMP_BUFFER(
+            "framebuffer",
+            s_context.rtbuffer->address,s_context.rtbuffer->memory,
+            0,
+            s_context.rtbuffer->stride*(s_context.rtbuffer->height));
+
+        memset(s_context.rtbuffer, 0, sizeof(vg_lite_buffer_t));
+    }
+
+    if (buffer->yuv.uv_planar) {
+        /* Free UV(U) planar buffer. */
+        uv_free.memory_handle = buffer->yuv.uv_handle;
+        VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_FREE, &uv_free));
+
+        /* Mark the buffer as freed. */
+        buffer->yuv.uv_handle = NULL;
+        buffer->yuv.uv_memory = NULL;
+    }
+
+    if (buffer->yuv.v_planar) {
+        /* Free V planar buffer. */
+        v_free.memory_handle = buffer->yuv.v_handle;
+        VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_FREE, &v_free));
+
+        /* Mark the buffer as freed. */
+        buffer->yuv.v_handle = NULL;
+        buffer->yuv.v_memory = NULL;
+    }
+
+    /* Make sure we have a valid memory handle. */
+    if (buffer->handle == NULL) {
+        return VG_LITE_INVALID_ARGUMENT;
+    }
+
+    /* Free the buffer. */
+    free.memory_handle = buffer->handle;
+    VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_FREE, &free));
+
+    /* Mark the buffer as freed. */
+    buffer->handle = NULL;
+    buffer->memory = NULL;
+
+    return VG_LITE_SUCCESS;
+}
+#else
 vg_lite_error_t vg_lite_free(vg_lite_buffer_t * buffer)
 {
     vg_lite_error_t error;
@@ -7127,6 +8678,7 @@ vg_lite_error_t vg_lite_free(vg_lite_buffer_t * buffer)
 
     return VG_LITE_SUCCESS;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 vg_lite_error_t vg_lite_map(vg_lite_buffer_t * buffer)
 {
@@ -7235,6 +8787,76 @@ uint32_t vg_lite_get_product_info(char *name, uint32_t *chip_id, uint32_t *chip_
     return name_len;
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+uint32_t vg_lite_query_feature(vg_lite_feature_t feature)
+{
+    uint32_t result;
+
+    if (feature < gcFEATURE_COUNT)
+        result = s_ftable.ftable[feature];
+    else
+        result = 0;
+
+    return result;
+}
+
+vg_lite_error_t vg_lite_finish()
+{
+    vg_lite_error_t  error;
+
+    /* Return if there is nothing to submit. */
+    if (CMDBUF_OFFSET(s_context) == 0)
+    {
+        if(submit_flag)
+            VG_LITE_RETURN_ERROR(stall(&s_context, 0, (uint32_t)~0));
+        return VG_LITE_SUCCESS;
+    }
+
+    /* Flush is moved from each draw to here. */
+    VG_LITE_RETURN_ERROR(flush_target());
+    VG_LITE_RETURN_ERROR(submit(&s_context));
+    VG_LITE_RETURN_ERROR(stall(&s_context, 0, (uint32_t)~0));
+
+#if VG_TARGET_FAST_CLEAR
+    /*Only used in cmodel/fpga. In final SOC this SW FC decoder should be removed. */
+    if (s_context.rtbuffer != NULL) {
+#if VG_TARGET_FC_DUMP
+        fc_buf_dump(s_context.rtbuffer, &s_context.fcBuffer);
+#endif /* VG_TARGET_FC_DUMP */
+    }
+#endif
+
+    CMDBUF_SWAP(s_context);
+    /* Reset command buffer. */
+    CMDBUF_OFFSET(s_context) = 0;
+
+    return VG_LITE_SUCCESS;
+}
+
+vg_lite_error_t vg_lite_flush(void)
+{
+    vg_lite_error_t error;
+
+    /* Return if there is nothing to submit. */
+    if (CMDBUF_OFFSET(s_context) == 0)
+        return VG_LITE_SUCCESS;
+
+    /* Wait if GPU has not completed previous CMD buffer */
+    if (submit_flag)
+    {
+        VG_LITE_RETURN_ERROR(stall(&s_context, 0, (uint32_t)~0));
+    }
+
+    /* Submit the current command buffer. */
+    VG_LITE_RETURN_ERROR(flush_target());
+    VG_LITE_RETURN_ERROR(submit(&s_context));
+    CMDBUF_SWAP(s_context);
+    /* Reset command buffer. */
+    CMDBUF_OFFSET(s_context) = 0;
+
+    return VG_LITE_SUCCESS;
+}
+#else
 uint32_t vg_lite_query_feature(vg_lite_feature_t feature)
 {
     uint32_t result;
@@ -7255,7 +8877,7 @@ vg_lite_error_t vg_lite_finish()
 {
     vg_lite_error_t  error;
     vg_lite_tls_t* tls;
-    uint32_t id,command_id, index;
+    uint32_t command_id, index;
 
     tls = (vg_lite_tls_t *) vg_lite_os_get_tls();
     if(tls == NULL)
@@ -7264,7 +8886,7 @@ vg_lite_error_t vg_lite_finish()
     command_id = CMDBUF_INDEX(tls->t_context);
     index = command_id ? 0 : 1;
 
-    if (CMDBUF_OFFSET(tls->t_context) == 0){
+    if (CMDBUF_OFFSET(tls->t_context) <= 8){
         /* Return if there is nothing to submit. */
         if (!CMDBUF_IN_QUEUE(&tls->t_context.context, 0) && !CMDBUF_IN_QUEUE(&tls->t_context.context, 1) )
                 return VG_LITE_SUCCESS;
@@ -7279,6 +8901,9 @@ vg_lite_error_t vg_lite_finish()
         {
             VG_LITE_RETURN_ERROR(stall(&tls->t_context, 0));
         }
+        CMDBUF_OFFSET(tls->t_context) = 0;
+        VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A00, 0x0));
+        return VG_LITE_SUCCESS;
     }
     else
     {
@@ -7302,20 +8927,11 @@ vg_lite_error_t vg_lite_finish()
 #endif
 
     CMDBUF_SWAP(tls->t_context);
+    CMDBUF_OFFSET(tls->t_context) = 0;
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A00, 0x0));
-    /* Set tessellation buffer states */
-    if(tls->t_context.ts_init){
-        id = CMDBUF_INDEX(tls->t_context);
-        if(CMDBUF_IN_QUEUE(&tls->t_context.context, id))
-            VG_LITE_RETURN_ERROR(stall(&tls->t_context, 0));
-
-        memcpy(CMDBUF_BUFFER(tls->t_context)+CMDBUF_OFFSET(tls->t_context), tls->t_context.ts_record, 80);
-        CMDBUF_OFFSET(tls->t_context) += 80;
-    }
-    else{
-        /* Reset command buffer. */
-        CMDBUF_OFFSET(tls->t_context) = 0;
-    }
+    tls->t_context.ts_init_used = 0;
+    tls->t_context.ts_init_use = 0;
+    tls->t_context.ts_init = 0;
 
     return VG_LITE_SUCCESS;
 }
@@ -7324,7 +8940,6 @@ vg_lite_error_t vg_lite_flush(void)
 {
     vg_lite_error_t error;
     vg_lite_tls_t* tls;
-    uint32_t id;
 
     tls = (vg_lite_tls_t *) vg_lite_os_get_tls();
     if(tls == NULL)
@@ -7341,25 +8956,17 @@ vg_lite_error_t vg_lite_flush(void)
     VG_LITE_RETURN_ERROR(update_context_buffer());
     VG_LITE_RETURN_ERROR(submit(&tls->t_context));
     VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_UNLOCK, NULL));
+
     CMDBUF_SWAP(tls->t_context);
-
+    CMDBUF_OFFSET(tls->t_context) = 0;
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A00, 0x0));
-    /* Set tessellation buffer states */
-    if(tls->t_context.ts_init){
-        id = CMDBUF_INDEX(tls->t_context);
-        if(CMDBUF_IN_QUEUE(&tls->t_context.context, id))
-            VG_LITE_RETURN_ERROR(stall(&tls->t_context, 0));
-
-        memcpy(CMDBUF_BUFFER(tls->t_context)+CMDBUF_OFFSET(tls->t_context), tls->t_context.ts_record, 80);
-        CMDBUF_OFFSET(tls->t_context) += 80;
-    }
-    else{
-        /* Reset command buffer. */
-        CMDBUF_OFFSET(tls->t_context) = 0;
-    }
+    tls->t_context.ts_init_used = 0;
+    tls->t_context.ts_init_use = 0;
+    tls->t_context.ts_init = 0;
 
     return VG_LITE_SUCCESS;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 vg_lite_error_t vg_lite_init_arc_path(vg_lite_path_t * path,
                        vg_lite_format_t data_format,
@@ -7377,12 +8984,10 @@ vg_lite_error_t vg_lite_init_arc_path(vg_lite_path_t * path,
     float *pfloat,*fpath;
     char *cpath,*pathdata;
     vg_lite_control_coord_t coords;
-
     if(path == NULL || path_data == NULL || data_format != VG_LITE_FP32)
         return VG_LITE_INVALID_ARGUMENT;
 
     memset(path, 0, sizeof(*path));
-
     memset(&coords, 0, sizeof(vg_lite_control_coord_t));
     pathdata = (char *)vg_lite_os_malloc(path_length);
     if (pathdata == NULL)
@@ -7778,7 +9383,11 @@ vg_lite_error_t vg_lite_clear_path(vg_lite_path_t * path)
             vg_lite_path_point_ptr temp_point;
             while(path->stroke_conversion.path_point_list) {
                 temp_point = path->stroke_conversion.path_point_list->next;
+#if defined(VG_DRIVER_SINGLE_THREAD)
+                free(path->stroke_conversion.path_point_list);
+#else
                 vg_lite_os_free(path->stroke_conversion.path_point_list);
+#endif /* VG_DRIVER_SINGLE_THREAD */
                 path->stroke_conversion.path_point_list = temp_point;
             }
             temp_point = NULL;
@@ -7807,6 +9416,1197 @@ vg_lite_error_t vg_lite_clear_path(vg_lite_path_t * path)
     return VG_LITE_SUCCESS;
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+vg_lite_error_t vg_lite_set_CLUT(uint32_t count,
+                                 uint32_t * colors)
+{
+    vg_lite_error_t error =  VG_LITE_SUCCESS;
+
+    uint32_t addr = 0x0B00;
+
+    if(!s_ftable.ftable[gcFEATURE_BIT_VG_IM_INDEX_FORMAT])
+        return VG_LITE_NOT_SUPPORT;
+
+    switch (count) {
+        case 256:
+            addr = 0x0B00;
+            break;
+
+        case 16:
+            addr = 0x0AA0;
+            break;
+            
+        case 4:
+            addr = 0x0A9C;
+            break;
+
+        case 2:
+            addr = 0x0A98;
+            break;
+
+        default:
+            error = VG_LITE_INVALID_ARGUMENT;
+            return error;
+            break;
+    }
+
+    VG_LITE_RETURN_ERROR(push_states(&s_context, addr, count, colors));
+
+    return error;
+}
+
+vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t * target,
+                                     vg_lite_path_t * path,
+                                     vg_lite_fill_t fill_rule,
+                                     vg_lite_matrix_t * matrix0,
+                                     vg_lite_buffer_t * source,
+                                     vg_lite_matrix_t * matrix1,
+                                     vg_lite_blend_t blend,
+                                     vg_lite_pattern_mode_t pattern_mode,
+                                     vg_lite_color_t  pattern_color,
+                                     vg_lite_filter_t filter)
+{
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+    uint32_t imageMode;
+    uint32_t blend_mode;
+    int32_t src_align_width,dst_align_width;
+    uint32_t mul, div, align;
+    uint32_t conversion = 0;
+    uint32_t tiled_source;
+    vg_lite_matrix_t * matrix = matrix1;
+    uint32_t pattern_tile = 0;
+    uint32_t transparency_mode = 0;
+
+    /* The following code is from "draw path" */
+    uint32_t format, quality, tiling, fill;
+    uint32_t tessellation_size;
+
+    vg_lite_point_t point_min = {0}, point_max = {0}, temp = {0};
+    int x, y, width, height;
+    uint8_t ts_is_fullscreen = 0;
+
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_QUALITY_8X) && path->quality == VG_LITE_UPPER){
+        return VG_LITE_NOT_SUPPORT;
+    }
+
+    if(source->format == VG_LITE_A4 || source->format == VG_LITE_A8) {
+        return VG_LITE_NOT_SUPPORT;
+    }
+
+    error = set_render_target(target);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    } else if (error == VG_LITE_NO_CONTEXT) {
+        /* If scissoring is enabled and no valid scissoring rectangles
+           are present, no drawing occurs */
+        return VG_LITE_SUCCESS;
+    }
+
+    transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
+    width = s_context.tsbuffer.tessellation_width_height & 0xFFFF;
+    height = s_context.tsbuffer.tessellation_width_height >> 16;
+    get_format_bytes(target->format, &mul, &div, &align);
+    dst_align_width = target->stride * div / mul;
+    if(width == 0 || height == 0)
+        return VG_LITE_NO_CONTEXT;
+    if ((dst_align_width <= width) && (target->height <= height))
+    {
+        ts_is_fullscreen = 1;
+        point_min.x = 0;
+        point_min.y = 0;
+        point_max.x = dst_align_width;
+        point_max.y = target->height;
+    }
+
+    /* If target is L8 and source is in YUV or RGB (not L8 or A8) then we have to convert RGB into L8. */
+    if ((target->format == VG_LITE_L8) && ((source->format != VG_LITE_L8) && (source->format != VG_LITE_A8))) {
+        conversion = 0x80000000;
+    }
+
+    /* Determine image mode (NORMAL or MULTIPLY) depending on the color. */
+    imageMode = (source->image_mode == VG_LITE_NONE_IMAGE_MODE) ? 0 : (source->image_mode == VG_LITE_MULTIPLY_IMAGE_MODE) ? 0x00002000 : 0x00001000;
+    tiled_source = (source->tiled != VG_LITE_LINEAR) ? 0x10000000 : 0 ;
+
+    if (pattern_mode == VG_LITE_PATTERN_COLOR)
+    {
+        uint8_t a,r,g,b;
+        pattern_tile = 0;
+        a = pattern_color >> 24;
+        r = pattern_color >> 16;
+        g = pattern_color >> 8;
+        b = pattern_color;
+        pattern_color = (a << 24) | (b << 16) | (g << 8) | r;
+    }
+    else if (pattern_mode == VG_LITE_PATTERN_PAD)
+    {
+        pattern_tile = 0x1000;
+    }
+    else
+    {
+        return VG_LITE_INVALID_ARGUMENT;
+    }
+
+    /* Setup the command buffer. */
+    get_format_bytes(source->format, &mul, &div, &align);
+    src_align_width = source->stride * div / mul;
+    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, src_align_width, source->height, matrix));
+
+    if(!s_context.premultiply_enabled && source->format != VG_LITE_A8 && source->format != VG_LITE_A4) {
+        if(source->transparency_mode == VG_LITE_IMAGE_OPAQUE){
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A25, convert_source_format(source->format) |
+                                                                filter | pattern_tile | conversion | 0x01000100));
+        } else {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A25, convert_source_format(source->format) |
+                                                                filter | pattern_tile | conversion | 0x00000100));
+        }
+    } else {
+        /* enable pre-multiplied in imager unit */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A25, convert_source_format(source->format) |
+                                                            filter | pattern_tile | conversion));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A27, pattern_color));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A29, source->address));
+
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2B, source->stride | tiled_source));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2D, 0));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2F, src_align_width | (source->height << 16)));
+
+    /* Work on path states. */
+    matrix = matrix0;
+
+    if (ts_is_fullscreen == 0){
+        transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[1], matrix);
+        point_min = point_max = temp;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[2], (vg_lite_float_t)path->bounding_box[1], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[2], (vg_lite_float_t)path->bounding_box[3], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[3], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        point_min.x = MAX(point_min.x, 0);
+        point_min.y = MAX(point_min.y, 0);
+        point_max.x = MIN(point_max.x, dst_align_width);
+        point_max.y = MIN(point_max.y, target->height);
+
+        if (s_context.scissor_enabled) {
+            point_min.x = MAX(point_min.x, s_context.scissor[0]);
+            point_min.y = MAX(point_min.y, s_context.scissor[1]);
+            point_max.x = MIN(point_max.x, s_context.scissor[0] + s_context.scissor[2]);
+            point_max.y = MIN(point_max.y, s_context.scissor[1] + s_context.scissor[3]);
+        }
+    }
+
+    /* Convert states into hardware values. */
+    blend_mode = convert_blend(blend);
+    format = convert_path_format(path->format);
+    quality = convert_path_quality(path->quality);
+    tiling = (s_context.capabilities.cap.tiled == 2) ? 0x2000000 : 0;
+    fill = (fill_rule == VG_LITE_FILL_EVEN_ODD) ? 0x10 : 0;
+    tessellation_size = (  s_context.tsbuffer.tessellation_buffer_size[2]
+                         ? s_context.tsbuffer.tessellation_buffer_size[2]
+                         : s_context.tsbuffer.tessellation_buffer_size[1]
+                         );
+
+    /* Setup the command buffer. */
+    /* Program color register. */
+    if(!s_context.premultiply_enabled && source->format != VG_LITE_A8 && source->format != VG_LITE_A4) {
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x10000000 | s_context.capabilities.cap.tiled | 0x00000002 | imageMode | blend_mode | transparency_mode));
+    } else {
+        /* enable pre-multiplied from VG to VGPE */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, s_context.capabilities.cap.tiled | 0x00000002 | imageMode | blend_mode | transparency_mode));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0x01000400 | format | quality | tiling | fill));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3B, 0x3F800000));      /* Path tessellation SCALE. */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3C, 0x00000000));      /* Path tessellation BIAS.  */
+    /* Program matrix. */
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A40, (void *) &matrix->m[0][0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A41, (void *) &matrix->m[0][1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A42, (void *) &matrix->m[0][2]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A43, (void *) &matrix->m[1][0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A44, (void *) &matrix->m[1][1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A45, (void *) &matrix->m[1][2]));
+
+    if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+
+        vglitemDUMP_BUFFER("path", path->uploaded.address, (uint8_t *)(path->uploaded.memory), 0, path->uploaded.bytes);
+    }
+
+    vglitemDUMP("@[memory 0x%08X 0x%08X]", s_context.tsbuffer.tessellation_buffer_gpu[0], s_context.tsbuffer.tessellation_buffer_size[0]);
+
+    /* Setup tessellation loop. */
+    if((path->path_type & 0x1) == VG_LITE_DRAW_FILL_PATH) {
+        for (y = point_min.y; y < point_max.y; y += height) {
+            for (x = point_min.x; x < point_max.x; x += width) {
+                /* Tessellate path. */
+                VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A01, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A39, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3D, tessellation_size / 64));
+
+                if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+                    VG_LITE_RETURN_ERROR(push_call(&s_context, path->uploaded.address, path->uploaded.bytes));
+                } else {
+                        push_data(&s_context, path->path_length, path->path);
+                }
+            }
+        }
+    }
+    /* Setup tessellation loop. */
+    if(path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH) {
+        for (y = point_min.y; y < point_max.y; y += height) {
+            for (x = point_min.x; x < point_max.x; x += width) {
+                /* Tessellate path. */
+                VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A01, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A39, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3D, tessellation_size / 64));
+
+                if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+                    VG_LITE_RETURN_ERROR(push_call(&s_context, path->uploaded.address, path->uploaded.bytes));
+                } else {
+                        format = convert_path_format(VG_LITE_FP32);
+                        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0x01000200 | format | quality | tiling | 0x0));
+                        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A02, path->stroke_color));
+                        push_data(&s_context, path->stroke_path_size, path->stroke_path_data);
+                }
+            }
+        }
+    }
+
+    /* Finialize command buffer. */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0));
+
+    vglitemDUMP_BUFFER("image", source->address, source->memory, 0, (source->stride)*(source->height));
+#if DUMP_IMAGE
+    dump_img(source->memory, source->width, source->height, source->format);
+#endif
+    return error;
+}
+
+vg_lite_error_t vg_lite_draw_linear_gradient(vg_lite_buffer_t * target,
+                                     vg_lite_path_t * path,
+                                     vg_lite_fill_t fill_rule,
+                                     vg_lite_matrix_t * path_matrix,
+                                     vg_lite_linear_gradient_ext_t *grad,
+                                     vg_lite_color_t paint_color,
+                                     vg_lite_blend_t blend,
+                                     vg_lite_filter_t filter)
+{
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+    uint32_t image_mode;
+    uint32_t blend_mode;
+    uint32_t conversion = 0;
+    uint32_t tiled_source;
+    int32_t dst_align_width;
+    uint32_t mul, div, align;
+    vg_lite_matrix_t inverse_matrix;
+    vg_lite_buffer_t * source = &grad->image;
+    vg_lite_matrix_t * matrix = &grad->matrix;
+    uint32_t linear_tile = 0;
+    uint32_t transparency_mode = 0;
+    void *data;
+
+    /* The following code is from "draw path" */
+    uint32_t format, quality, tiling, fill;
+    uint32_t tessellation_size;
+
+    vg_lite_kernel_allocate_t memory;
+    vg_lite_kernel_free_t free_memory;
+    uint32_t return_offset = 0;
+
+    vg_lite_point_t point_min = {0}, point_max = {0}, temp = {0};
+    int x, y, width, height;
+    uint8_t ts_is_fullscreen = 0;
+
+    vg_lite_float_t dx, dy, dxdx_dydy;
+    vg_lite_float_t lg_step_x_lin, lg_step_y_lin, lg_constant_lin;
+
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_LINEAR_GRADIENT_EXT))
+        return VG_LITE_NOT_SUPPORT;
+
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_QUALITY_8X) && path->quality == VG_LITE_UPPER){
+        return VG_LITE_NOT_SUPPORT;
+    }
+
+    if(source->format == VG_LITE_A4 || source->format == VG_LITE_A8) {
+        return VG_LITE_NOT_SUPPORT;
+    }
+
+    error = set_render_target(target);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    } else if (error == VG_LITE_NO_CONTEXT) {
+        /* If scissoring is enabled and no valid scissoring rectangles
+           are present, no drawing occurs */
+        return VG_LITE_SUCCESS;
+    }
+
+    transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
+    width = s_context.tsbuffer.tessellation_width_height & 0xFFFF;
+    height = s_context.tsbuffer.tessellation_width_height >> 16;
+    get_format_bytes(target->format, &mul, &div, &align);
+    dst_align_width = target->stride * div / mul;
+    if(width == 0 || height == 0)
+        return VG_LITE_NO_CONTEXT;
+    if ((dst_align_width <= width) && (target->height <= height))
+    {
+        ts_is_fullscreen = 1;
+        point_min.x = 0;
+        point_min.y = 0;
+        point_max.x = dst_align_width;
+        point_max.y = target->height;
+    }
+
+    /* If target is L8 and source is in YUV or RGB (not L8 or A8) then we have to convert RGB into L8. */
+    if ((target->format == VG_LITE_L8) && ((source->format != VG_LITE_L8) && (source->format != VG_LITE_A8))) {
+        conversion = 0x80000000;
+    }
+
+    /* Determine image mode (NORMAL or MULTIPLY) depending on the color. */
+    image_mode = (source->image_mode == VG_LITE_NONE_IMAGE_MODE) ? 0 : (source->image_mode == VG_LITE_MULTIPLY_IMAGE_MODE) ? 0x00002000 : 0x00001000;
+    tiled_source = (source->tiled != VG_LITE_LINEAR) ? 0x10000000 : 0 ;
+
+    linear_tile = (grad->spread_mode == VG_LITE_RADIAL_GRADIENT_SPREAD_FILL) ? 0 : 
+        (grad->spread_mode == VG_LITE_RADIAL_GRADIENT_SPREAD_PAD) ? 0x1000 :
+        (grad->spread_mode == VG_LITE_RADIAL_GRADIENT_SPREAD_REPEAT) ? 0x2000 : 0x3000;
+
+    /* compute radial gradient paremeters */
+
+    if (!inverse(&inverse_matrix, matrix))
+    /* Compute inverse matrix. */
+        return VG_LITE_INVALID_ARGUMENT;
+
+    dx = grad->linear_gradient.X1 - grad->linear_gradient.X0;
+    dy = grad->linear_gradient.Y1 - grad->linear_gradient.Y0;
+    dxdx_dydy = dx * dx + dy * dy;
+
+    /*
+    **      dx (T(x) - x0) + dy (T(y) - y0)
+    **  g = -------------------------------
+    **                dx^2 + dy^2
+    **
+    **  where
+    **
+    **      dx := x1 - x0
+    **      dy := y1 - y1
+    **      T(x) := (x + 0.5) m00 + (y + 0.5) m01 + m02
+    **            = x m00 + y m01 + 0.5 (m00 + m01) + m02
+    **      T(y) := (x + 0.5) m10 + (y + 0.5) m11 + m12
+    **            = x m10 + y m11 + 0.5 (m10 + m11) + m12.
+    **
+    **  We can factor the top line into:
+    **
+    **      = dx (x m00 + y m01 + 0.5 (m00 + m01) + m02 - x0)
+    **      + dy (x m10 + y m11 + 0.5 (m10 + m11) + m12 - y0)
+    **
+    **      = x (dx m00 + dy m10)
+    **      + y (dx m01 + dy m11)
+    **      + dx (0.5 (m00 + m01) + m02 - x0)
+    **      + dy (0.5 (m10 + m11) + m12 - y0).
+    */
+
+    lg_step_x_lin
+        = (dx * MAT(&inverse_matrix, 0, 0) + dy * MAT(&inverse_matrix, 1, 0))
+        / dxdx_dydy;
+
+    lg_step_y_lin
+        = (dx * MAT(&inverse_matrix, 0, 1) + dy * MAT(&inverse_matrix, 1, 1))
+        / dxdx_dydy;
+
+    lg_constant_lin =
+        (
+            (
+                0.5f * ( MAT(&inverse_matrix, 0, 0) + MAT(&inverse_matrix, 0, 1) )
+                + MAT(&inverse_matrix, 0, 2) - grad->linear_gradient.X0
+            ) * dx
+
+            +
+
+            (
+                0.5f * ( MAT(&inverse_matrix, 1, 0) + MAT(&inverse_matrix, 1, 1) )
+                + MAT(&inverse_matrix, 1, 2) - grad->linear_gradient.Y0
+            ) * dy
+        )
+        / dxdx_dydy;
+
+    /* Setup the command buffer. */
+
+    /* linear gradient parameters*/
+    data = &lg_constant_lin;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A04,*(uint32_t*) data));
+    data = &lg_step_x_lin;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A06,*(uint32_t*) data));
+    data = &lg_step_y_lin;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A08,*(uint32_t*) data));
+
+    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, source->width, source->height, matrix));
+
+    if(!s_context.premultiply_enabled) {
+        if(source->transparency_mode == VG_LITE_IMAGE_OPAQUE){
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A24, convert_source_format(source->format) |
+                                                                filter | linear_tile | conversion | 0x01000100));
+        } else {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A24, convert_source_format(source->format) |
+                                                                filter | linear_tile | conversion | 0x00000100));
+        }
+    } else {
+        /* enable pre-multiplied in imager unit */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A24, convert_source_format(source->format) |
+                                                            filter | linear_tile | conversion));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A26, paint_color));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A28, source->address));
+
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2A, tiled_source));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2C, 0));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2E, source->width));
+
+    /* Work on path states. */
+    matrix = path_matrix;
+
+    if (ts_is_fullscreen == 0){
+        transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[1], matrix);
+        point_min = point_max = temp;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[2], (vg_lite_float_t)path->bounding_box[1], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[2], (vg_lite_float_t)path->bounding_box[3], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[3], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        point_min.x = MAX(point_min.x, 0);
+        point_min.y = MAX(point_min.y, 0);
+        point_max.x = MIN(point_max.x, dst_align_width);
+        point_max.y = MIN(point_max.y, target->height);
+
+        if (s_context.scissor_enabled) {
+            point_min.x = MAX(point_min.x, s_context.scissor[0]);
+            point_min.y = MAX(point_min.y, s_context.scissor[1]);
+            point_max.x = MIN(point_max.x, s_context.scissor[0] + s_context.scissor[2]);
+            point_max.y = MIN(point_max.y, s_context.scissor[1] + s_context.scissor[3]);
+        }
+    }
+
+    /* Convert states into hardware values. */
+    blend_mode = convert_blend(blend);
+    format = convert_path_format(path->format);
+    quality = convert_path_quality(path->quality);
+    tiling = (s_context.capabilities.cap.tiled == 2) ? 0x2000000 : 0;
+    fill = (fill_rule == VG_LITE_FILL_EVEN_ODD) ? 0x10 : 0;
+    tessellation_size = (  s_context.tsbuffer.tessellation_buffer_size[2]
+                         ? s_context.tsbuffer.tessellation_buffer_size[2]
+                         : s_context.tsbuffer.tessellation_buffer_size[1]
+                         );
+
+    /* Setup the command buffer. */
+    /* Program color register. */
+    if(!s_context.premultiply_enabled) {
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x11000000 | s_context.capabilities.cap.tiled | 0x00000002 | image_mode | blend_mode | transparency_mode));
+    } else {
+        /* enable pre-multiplied from VG to VGPE */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x01000000 | s_context.capabilities.cap.tiled | 0x00000002 | image_mode | blend_mode | transparency_mode));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0x01000400 | format | quality | tiling | fill));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3B, 0x3F800000));      /* Path tessellation SCALE. */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3C, 0x00000000));      /* Path tessellation BIAS.  */
+    /* Program matrix. */
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A40, (void *) &matrix->m[0][0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A41, (void *) &matrix->m[0][1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A42, (void *) &matrix->m[0][2]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A43, (void *) &matrix->m[1][0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A44, (void *) &matrix->m[1][1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A45, (void *) &matrix->m[1][2]));
+
+    if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1)
+    {
+        if (path->path_changed != 0) {
+            if (path->uploaded.handle != NULL) {
+                free_memory.memory_handle = path->uploaded.handle;
+                vg_lite_kernel(VG_LITE_FREE, &free_memory);
+                path->uploaded.address = 0;
+                path->uploaded.memory = NULL;
+                path->uploaded.handle = NULL;
+            }
+            /* Allocate memory for the path data. */
+            memory.bytes = 16 + VG_LITE_ALIGN(path->path_length, 8);
+            return_offset = (8 + VG_LITE_ALIGN(path->path_length, 8)) / 4;
+            memory.contiguous = 1;
+            VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_ALLOCATE, &memory));
+            ((uint64_t *) memory.memory)[(path->path_length + 7) / 8] = 0;
+            ((uint32_t *) memory.memory)[0] = VG_LITE_DATA((path->path_length + 7) / 8);
+            ((uint32_t *) memory.memory)[1] = 0;
+            memcpy((uint8_t *) memory.memory + 8, path->path, path->path_length);
+            ((uint32_t *) memory.memory)[return_offset] = VG_LITE_RETURN();
+            ((uint32_t *) memory.memory)[return_offset + 1] = 0;
+
+            path->uploaded.handle = memory.memory_handle;
+            path->uploaded.memory = memory.memory;
+            path->uploaded.address = memory.memory_gpu;
+            path->uploaded.bytes  = memory.bytes;
+            path->path_changed = 0;
+        }
+    }
+
+    if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+
+        vglitemDUMP_BUFFER("path", path->uploaded.address, (uint8_t *)(path->uploaded.memory), 0, path->uploaded.bytes);
+    }
+
+    vglitemDUMP("@[memory 0x%08X 0x%08X]", s_context.tsbuffer.tessellation_buffer_gpu[0], s_context.tsbuffer.tessellation_buffer_size[0]);
+
+    /* Setup tessellation loop. */
+    if((path->path_type & 0x1) == VG_LITE_DRAW_FILL_PATH) {
+        for (y = point_min.y; y < point_max.y; y += height) {
+            for (x = point_min.x; x < point_max.x; x += width) {
+                /* Tessellate path. */
+                VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A01, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A39, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3D, tessellation_size / 64));
+
+                if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+                    VG_LITE_RETURN_ERROR(push_call(&s_context, path->uploaded.address, path->uploaded.bytes));
+                } else {
+                        push_data(&s_context, path->path_length, path->path);
+                }
+            }
+        }
+    }
+    /* Setup tessellation loop. */
+    if(path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH) {
+        for (y = point_min.y; y < point_max.y; y += height) {
+            for (x = point_min.x; x < point_max.x; x += width) {
+                /* Tessellate path. */
+                VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A01, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A39, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3D, tessellation_size / 64));
+
+                if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+                    VG_LITE_RETURN_ERROR(push_call(&s_context, path->uploaded.address, path->uploaded.bytes));
+                } else {
+                        format = convert_path_format(VG_LITE_FP32);
+                        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0x01000200 | format | quality | tiling | 0x0));
+                        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A02, path->stroke_color));
+                        push_data(&s_context, path->stroke_path_size, path->stroke_path_data);
+                }
+            }
+        }
+    }
+
+    /* Finialize command buffer. */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0));
+
+    vglitemDUMP_BUFFER("image", source->address, source->memory, 0, (source->stride)*(source->height));
+#if DUMP_IMAGE
+    dump_img(source->memory, source->width, source->height, source->format);
+#endif
+    return error;
+}
+
+vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
+                                     vg_lite_path_t * path,
+                                     vg_lite_fill_t fill_rule,
+                                     vg_lite_matrix_t * path_matrix,
+                                     vg_lite_radial_gradient_t *grad,
+                                     vg_lite_color_t paint_color,
+                                     vg_lite_blend_t blend,
+                                     vg_lite_filter_t filter)
+{
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+    uint32_t imageMode;
+    uint32_t blend_mode;
+    uint32_t conversion = 0;
+    uint32_t tiled_source;
+    int32_t dst_align_width;
+    uint32_t mul, div, align;
+    vg_lite_matrix_t inverse_matrix;
+    vg_lite_buffer_t * source = &grad->image;
+    vg_lite_matrix_t * matrix = &grad->matrix;
+    uint32_t rad_tile = 0;
+    uint32_t transparency_mode = 0;
+    void *data;
+
+    /* The following code is from "draw path" */
+    uint32_t format, quality, tiling, fill;
+    uint32_t tessellation_size;
+
+    vg_lite_kernel_allocate_t memory;
+    vg_lite_kernel_free_t free_memory;
+    uint32_t return_offset = 0;
+
+    vg_lite_point_t point_min = {0}, point_max = {0}, temp = {0};
+    int x, y, width, height;
+    uint8_t ts_is_fullscreen = 0;
+
+    vg_lite_float_t radius;
+
+    vg_lite_float_t centerX, centerY;
+    vg_lite_float_t focalX, focalY;
+    vg_lite_float_t fx, fy;
+    vg_lite_float_t fxfy_2;
+    vg_lite_float_t radius2;
+    vg_lite_float_t r2_fx2, r2_fy2;
+    vg_lite_float_t r2_fx2_2, r2_fy2_2;
+    vg_lite_float_t r2_fx2_fy2;
+    vg_lite_float_t r2_fx2_fy2sq;
+    vg_lite_float_t cx, cy;
+
+    vg_lite_float_t rgConstantLin, rgStepXLin, rgStepYLin;
+    vg_lite_float_t rgConstantRad, rgStepXRad, rgStepYRad;
+    vg_lite_float_t rgStepXXRad, rgStepYYRad, rgStepXYRad;
+
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_RADIAL_GRADIENT))
+        return VG_LITE_NOT_SUPPORT;
+
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_QUALITY_8X) && path->quality == VG_LITE_UPPER){
+        return VG_LITE_NOT_SUPPORT;
+    }
+
+    if(source->format == VG_LITE_A4 || source->format == VG_LITE_A8) {
+        return VG_LITE_NOT_SUPPORT;
+    }
+
+    radius = grad->radialGradient.r;
+    if(radius <= 0)
+        return VG_LITE_INVALID_ARGUMENT;
+
+    error = set_render_target(target);
+    if (error != VG_LITE_SUCCESS) {
+        return error;
+    } else if (error == VG_LITE_NO_CONTEXT) {
+        /* If scissoring is enabled and no valid scissoring rectangles
+           are present, no drawing occurs */
+        return VG_LITE_SUCCESS;
+    }
+
+    transparency_mode = (source->transparency_mode == VG_LITE_IMAGE_TRANSPARENT ? 0x8000:0);
+    width = s_context.tsbuffer.tessellation_width_height & 0xFFFF;
+    height = s_context.tsbuffer.tessellation_width_height >> 16;
+    get_format_bytes(target->format, &mul, &div, &align);
+    dst_align_width = target->stride * div / mul;
+    if(width == 0 || height == 0)
+        return VG_LITE_NO_CONTEXT;
+    if ((dst_align_width <= width) && (target->height <= height))
+    {
+        ts_is_fullscreen = 1;
+        point_min.x = 0;
+        point_min.y = 0;
+        point_max.x = dst_align_width;
+        point_max.y = target->height;
+    }
+
+    /* If target is L8 and source is in YUV or RGB (not L8 or A8) then we have to convert RGB into L8. */
+    if ((target->format == VG_LITE_L8) && ((source->format != VG_LITE_L8) && (source->format != VG_LITE_A8))) {
+        conversion = 0x80000000;
+    }
+
+    /* Determine image mode (NORMAL or MULTIPLY) depending on the color. */
+    imageMode = (source->image_mode == VG_LITE_NONE_IMAGE_MODE) ? 0 : (source->image_mode == VG_LITE_MULTIPLY_IMAGE_MODE) ? 0x00002000 : 0x00001000;
+    tiled_source = (source->tiled != VG_LITE_LINEAR) ? 0x10000000 : 0 ;
+
+    rad_tile = (grad->SpreadMode == VG_LITE_RADIAL_GRADIENT_SPREAD_FILL) ? 0 : 
+        (grad->SpreadMode == VG_LITE_RADIAL_GRADIENT_SPREAD_PAD) ? 0x1000 :
+        (grad->SpreadMode == VG_LITE_RADIAL_GRADIENT_SPREAD_REPEAT) ? 0x2000 : 0x3000;
+
+    /* compute radial gradient paremeters */
+
+    /* Compute inverse matrix. */
+    if (!inverse(&inverse_matrix, matrix))
+        return VG_LITE_INVALID_ARGUMENT;
+
+    /* Make shortcuts to the gradient information. */
+    centerX = grad->radialGradient.cx;
+    centerY = grad->radialGradient.cy;
+    focalX  = grad->radialGradient.fx;
+    focalY  = grad->radialGradient.fy;
+
+    /* Compute constants of the equation. */
+    fx           = focalX - centerX;
+    fy           = focalY - centerY;
+    radius2      = radius * radius;
+    if (fx*fx + fy*fy > radius2)
+    {
+        /* If the focal point is outside the circle, let's move it 
+            to inside the circle. Per vg11 spec pg125 "If (fx, fy) lies outside ... 
+            For here, we set it at 0.9 ratio to the center.
+        */
+        vg_lite_float_t fr = (vg_lite_float_t)sqrt(fx*fx + fy*fy);
+        fx = radius * fx / fr * 0.9f;
+        fy = radius * fy / fr * 0.9f;
+        focalX = grad->radialGradient.fx + fx;
+        focalY = grad->radialGradient.fy + fy;
+    }
+
+    fxfy_2       = 2.0f * fx * fy;
+    r2_fx2       = radius2 - fx * fx;
+    r2_fy2       = radius2 - fy * fy;
+    r2_fx2_2     = 2.0f * r2_fx2;
+    r2_fy2_2     = 2.0f * r2_fy2;
+    r2_fx2_fy2   = r2_fx2  - fy * fy;
+    r2_fx2_fy2sq = r2_fx2_fy2 * r2_fx2_fy2;
+
+    /*                        _____________________________________
+    **      dx fx + dy fy + \/r^2 (dx^2 + dy^2) - (dx fy - dy fx)^2
+    **  g = -------------------------------------------------------
+    **                         r^2 - fx^2 - fy^2
+    **
+    **  Where
+    **
+    **      dx := F(x) - focalX
+    **      dy := F(y) - focalY
+    **      fx := focalX - centerX
+    **      fy := focalX - centerY
+    **
+    **  and
+    **
+    **      F(x) := (x + 0.5) m00 + (y + 0.5) m01 + m02
+    **      F(y) := (x + 0.5) m10 + (y + 0.5) m11 + m12
+    **
+    **  So, dx can be factored into
+    **
+    **      dx = (x + 0.5) m00 + (y + 0.5) m01 + m02 - focalX
+    **         = x m00 + y m01 + 0.5 m00 + 0.5 m01 + m02 - focalX
+    **
+    **         = x m00 + y m01 + cx
+    **
+    **  where
+    **
+    **      cx := 0.5 m00 + 0.5 m01 + m02 - focalX
+    **
+    **  The same way we can factor dy into
+    **
+    **      dy = x m10 + y m11 + cy
+    **
+    **  where
+    **
+    **      cy := 0.5 m10 + 0.5 m11 + m12 - focalY.
+    **
+    **  Now we can rewrite g as
+    **                               ______________________________________
+    **        dx fx + dy fy         / r^2 (dx^2 + dy^2) - (dx fy - dy fx)^2
+    **  g = ----------------- + \  /  -------------------------------------
+    **      r^2 - fx^2 - fy^2    \/           (r^2 - fx^2 - fy^2)^2
+    **               ____
+    **    = gLin + \/gRad
+    **
+    **  where
+    **
+    **                dx fx + dy fy
+    **      gLin := -----------------
+    **              r^2 - fx^2 - fy^2
+    **
+    **              r^2 (dx^2 + dy^2) - (dx fy - dy fx)^2
+    **      gRad := -------------------------------------
+    **                      (r^2 - fx^2 - fy^2)^2
+    */
+
+    cx
+        = 0.5f * ( MAT(&inverse_matrix, 0, 0) + MAT(&inverse_matrix, 0, 1) )
+        + MAT(&inverse_matrix, 0, 2)
+        - focalX;
+
+    cy
+        = 0.5f * ( MAT(&inverse_matrix, 1, 0) + MAT(&inverse_matrix, 1, 1) )
+        + MAT(&inverse_matrix, 1, 2)
+        - focalY;
+
+    /*
+    **            dx fx + dy fy
+    **  gLin := -----------------
+    **          r^2 - fx^2 - fy^2
+    **
+    **  We can factor the top half into
+    **
+    **      = (x m00 + y m01 + cx) fx + (x m10 + y m11 + cy) fy
+    **
+    **      = x (m00 fx + m10 fy)
+    **      + y (m01 fx + m11 fy)
+    **      + cx fx + cy fy.
+    */
+
+    rgStepXLin
+        = ( MAT(&inverse_matrix, 0, 0) * fx + MAT(&inverse_matrix, 1, 0) * fy )
+        / r2_fx2_fy2;
+
+    rgStepYLin
+        = ( MAT(&inverse_matrix, 0, 1) * fx + MAT(&inverse_matrix, 1, 1) * fy )
+        / r2_fx2_fy2;
+
+    rgConstantLin = ( cx * fx  + cy * fy ) / r2_fx2_fy2;
+
+    /*
+    **          r^2 (dx^2 + dy^2) - (dx fy - dy fx)^2
+    **  gRad := -------------------------------------
+    **                  (r^2 - fx^2 - fy^2)^2
+    **
+    **          r^2 (dx^2 + dy^2) - dx^2 fy^2 - dy^2 fx^2 + 2 dx dy fx fy
+    **       := ---------------------------------------------------------
+    **                            (r^2 - fx^2 - fy^2)^2
+    **
+    **          dx^2 (r^2 - fy^2) + dy^2 (r^2 - fx^2) + 2 dx dy fx fy
+    **       := -----------------------------------------------------
+    **                          (r^2 - fx^2 - fy^2)^2
+    **
+    **  First, lets factor dx^2 into
+    **
+    **      dx^2 = (x m00 + y m01 + cx)^2
+    **           = x^2 m00^2 + y^2 m01^2 + 2 x y m00 m01
+    **           + 2 x m00 cx + 2 y m01 cx + cx^2
+    **
+    **           = x^2 (m00^2)
+    **           + y^2 (m01^2)
+    **           + x y (2 m00 m01)
+    **           + x (2 m00 cx)
+    **           + y (2 m01 cx)
+    **           + cx^2.
+    **
+    **  The same can be done for dy^2:
+    **
+    **      dy^2 = x^2 (m10^2)
+    **           + y^2 (m11^2)
+    **           + x y (2 m10 m11)
+    **           + x (2 m10 cy)
+    **           + y (2 m11 cy)
+    **           + cy^2.
+    **
+    **  Let's also factor dx dy into
+    **
+    **      dx dy = (x m00 + y m01 + cx) (x m10 + y m11 + cy)
+    **            = x^2 m00 m10 + y^2 m01 m11 + x y m00 m11 + x y m01 m10
+    **            + x m00 cy + x m10 cx + y m01 cy + y m11 cx + cx cy
+    **
+    **            = x^2 (m00 m10)
+    **            + y^2 (m01 m11)
+    **            + x y (m00 m11 + m01 m10)
+    **            + x (m00 cy + m10 cx)
+    **            + y (m01 cy + m11 cx)
+    **            + cx cy.
+    **
+    **  Now that we have all this, lets look at the top of gRad.
+    **
+    **      = dx^2 (r^2 - fy^2) + dy^2 (r^2 - fx^2) + 2 dx dy fx fy
+    **      = x^2 m00^2 (r^2 - fy^2) + y^2 m01^2 (r^2 - fy^2)
+    **      + x y 2 m00 m01 (r^2 - fy^2) + x 2 m00 cx (r^2 - fy^2)
+    **      + y 2 m01 cx (r^2 - fy^2) + cx^2 (r^2 - fy^2)
+    **      + x^2 m10^2 (r^2 - fx^2) + y^2 m11^2 (r^2 - fx^2)
+    **      + x y 2 m10 m11 (r^2 - fx^2) + x 2 m10 cy (r^2 - fx^2)
+    **      + y 2 m11 cy (r^2 - fx^2) + cy^2 (r^2 - fx^2)
+    **      + x^2 m00 m10 2 fx fy + y^2 m01 m11 2 fx fy
+    **      + x y (m00 m11 + m01 m10) 2 fx fy
+    **      + x (m00 cy + m10 cx) 2 fx fy + y (m01 cy + m11 cx) 2 fx fy
+    **      + cx cy 2 fx fy
+    **
+    **      = x^2 ( m00^2 (r^2 - fy^2)
+    **            + m10^2 (r^2 - fx^2)
+    **            + m00 m10 2 fx fy
+    **            )
+    **      + y^2 ( m01^2 (r^2 - fy^2)
+    **            + m11^2 (r^2 - fx^2)
+    **            + m01 m11 2 fx fy
+    **            )
+    **      + x y ( 2 m00 m01 (r^2 - fy^2)
+    **            + 2 m10 m11 (r^2 - fx^2)
+    **            + (m00 m11 + m01 m10) 2 fx fy
+    **            )
+    **      + x ( 2 m00 cx (r^2 - fy^2)
+    **          + 2 m10 cy (r^2 - fx^2)
+    **          + (m00 cy + m10 cx) 2 fx fy
+    **          )
+    **      + y ( 2 m01 cx (r^2 - fy^2)
+    **          + 2 m11 cy (r^2 - fx^2)
+    **          + (m01 cy + m11 cx) 2 fx fy
+    **          )
+    **      + cx^2 (r^2 - fy^2) + cy^2 (r^2 - fx^2) + cx cy 2 fx fy.
+    */
+ 
+    rgStepXXRad =
+        (
+                MAT(&inverse_matrix, 0, 0) * MAT(&inverse_matrix, 0, 0) * r2_fy2
+            + MAT(&inverse_matrix, 1, 0) * MAT(&inverse_matrix, 1, 0) * r2_fx2
+            + MAT(&inverse_matrix, 0, 0) * MAT(&inverse_matrix, 1, 0) * fxfy_2
+        )
+        / r2_fx2_fy2sq;
+
+    rgStepYYRad =
+        (
+                MAT(&inverse_matrix, 0, 1) * MAT(&inverse_matrix, 0, 1) * r2_fy2
+            + MAT(&inverse_matrix, 1, 1) * MAT(&inverse_matrix, 1, 1) * r2_fx2
+            + MAT(&inverse_matrix, 0, 1) * MAT(&inverse_matrix, 1, 1) * fxfy_2
+        )
+        / r2_fx2_fy2sq;
+
+    rgStepXYRad =
+        (
+                MAT(&inverse_matrix, 0, 0) * MAT(&inverse_matrix, 0, 1) * r2_fy2_2
+            + MAT(&inverse_matrix, 1, 0) * MAT(&inverse_matrix, 1, 1) * r2_fx2_2
+            + (
+                    MAT(&inverse_matrix, 0, 0) * MAT(&inverse_matrix, 1, 1)
+                + MAT(&inverse_matrix, 0, 1) * MAT(&inverse_matrix, 1, 0)
+                )
+                * fxfy_2
+        )
+        / r2_fx2_fy2sq;
+
+    rgStepXRad =
+        (
+                MAT(&inverse_matrix, 0, 0) * cx * r2_fy2_2
+            + MAT(&inverse_matrix, 1, 0) * cy * r2_fx2_2
+            + (
+                    MAT(&inverse_matrix, 0, 0) * cy
+                + MAT(&inverse_matrix, 1, 0) * cx
+                )
+                * fxfy_2
+        )
+        / r2_fx2_fy2sq;
+
+    rgStepYRad =
+        (
+                MAT(&inverse_matrix, 0, 1) * cx * r2_fy2_2
+            + MAT(&inverse_matrix, 1, 1) * cy * r2_fx2_2
+            + (
+                    MAT(&inverse_matrix, 0, 1) * cy
+                + MAT(&inverse_matrix, 1, 1) * cx
+                )
+                * fxfy_2
+        )
+        / r2_fx2_fy2sq;
+
+    rgConstantRad =
+        (
+                cx * cx * r2_fy2
+            + cy * cy * r2_fx2
+            + cx * cy * fxfy_2
+        )
+        / r2_fx2_fy2sq;
+
+    /* Setup the command buffer. */
+    data = &rgConstantLin;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A04,*(uint32_t*) data));
+    data = &rgStepXLin;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A06,*(uint32_t*) data));
+    data = &rgStepYLin;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A08,*(uint32_t*) data));
+    data = &rgConstantRad;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A05,*(uint32_t*) data));
+    data = &rgStepXRad;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A07,*(uint32_t*) data));
+    data = &rgStepYRad;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A09,*(uint32_t*) data));
+    data = &rgStepXXRad;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A03,*(uint32_t*) data));
+    data = &rgStepYYRad;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A0A,*(uint32_t*) data));
+    data = &rgStepXYRad;
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A0B,*(uint32_t*) data));
+    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, source->width, source->height, matrix));
+
+    if(!s_context.premultiply_enabled) {
+        if(source->transparency_mode == VG_LITE_IMAGE_OPAQUE){
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A24, convert_source_format(source->format) |
+                                                                filter | rad_tile | conversion | 0x01000100));
+        } else {
+            VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A24, convert_source_format(source->format) |
+                                                                filter | rad_tile | conversion | 0x00000100));
+        }
+    } else {
+        /* enable pre-multiplied in imager unit */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A24, convert_source_format(source->format) |
+                                                            filter | rad_tile | conversion));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A26, paint_color));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A28, source->address));
+
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2A, tiled_source));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2C, 0));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A2E, source->width));
+
+    /* Work on path states. */
+    matrix = path_matrix;
+
+    if (ts_is_fullscreen == 0){
+        transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[1], matrix);
+        point_min = point_max = temp;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[2], (vg_lite_float_t)path->bounding_box[1], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[2], (vg_lite_float_t)path->bounding_box[3], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        transform(&temp, (vg_lite_float_t)path->bounding_box[0], (vg_lite_float_t)path->bounding_box[3], matrix);
+        if (temp.x < point_min.x) point_min.x = temp.x;
+        if (temp.y < point_min.y) point_min.y = temp.y;
+        if (temp.x > point_max.x) point_max.x = temp.x;
+        if (temp.y > point_max.y) point_max.y = temp.y;
+
+        point_min.x = MAX(point_min.x, 0);
+        point_min.y = MAX(point_min.y, 0);
+        point_max.x = MIN(point_max.x, dst_align_width);
+        point_max.y = MIN(point_max.y, target->height);
+
+        if (s_context.scissor_enabled) {
+            point_min.x = MAX(point_min.x, s_context.scissor[0]);
+            point_min.y = MAX(point_min.y, s_context.scissor[1]);
+            point_max.x = MIN(point_max.x, s_context.scissor[0] + s_context.scissor[2]);
+            point_max.y = MIN(point_max.y, s_context.scissor[1] + s_context.scissor[3]);
+        }
+    }
+
+    /* Convert states into hardware values. */
+    blend_mode = convert_blend(blend);
+    format = convert_path_format(path->format);
+    quality = convert_path_quality(path->quality);
+    tiling = (s_context.capabilities.cap.tiled == 2) ? 0x2000000 : 0;
+    fill = (fill_rule == VG_LITE_FILL_EVEN_ODD) ? 0x10 : 0;
+    tessellation_size = (  s_context.tsbuffer.tessellation_buffer_size[2]
+                         ? s_context.tsbuffer.tessellation_buffer_size[2]
+                         : s_context.tsbuffer.tessellation_buffer_size[1]
+                         );
+
+    /* Setup the command buffer. */
+    /* Program color register. */
+    if(!s_context.premultiply_enabled) {
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x12000000 | s_context.capabilities.cap.tiled | 0x00000002 | imageMode | blend_mode | transparency_mode));
+    } else {
+        /* enable pre-multiplied from VG to VGPE */
+        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A00, 0x02000000 | s_context.capabilities.cap.tiled | 0x00000002 | imageMode | blend_mode | transparency_mode));
+    }
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0x01000400 | format | quality | tiling | fill));
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3B, 0x3F800000));      /* Path tessellation SCALE. */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3C, 0x00000000));      /* Path tessellation BIAS.  */
+    /* Program matrix. */
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A40, (void *) &matrix->m[0][0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A41, (void *) &matrix->m[0][1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A42, (void *) &matrix->m[0][2]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A43, (void *) &matrix->m[1][0]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A44, (void *) &matrix->m[1][1]));
+    VG_LITE_RETURN_ERROR(push_state_ptr(&s_context, 0x0A45, (void *) &matrix->m[1][2]));
+
+    if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1)
+    {
+        if (path->path_changed != 0) {
+            if (path->uploaded.handle != NULL) {
+                free_memory.memory_handle = path->uploaded.handle;
+                vg_lite_kernel(VG_LITE_FREE, &free_memory);
+                path->uploaded.address = 0;
+                path->uploaded.memory = NULL;
+                path->uploaded.handle = NULL;
+            }
+            /* Allocate memory for the path data. */
+            memory.bytes = 16 + VG_LITE_ALIGN(path->path_length, 8);
+            return_offset = (8 + VG_LITE_ALIGN(path->path_length, 8)) / 4;
+            memory.contiguous = 1;
+            VG_LITE_RETURN_ERROR(vg_lite_kernel(VG_LITE_ALLOCATE, &memory));
+            ((uint64_t *) memory.memory)[(path->path_length + 7) / 8] = 0;
+            ((uint32_t *) memory.memory)[0] = VG_LITE_DATA((path->path_length + 7) / 8);
+            ((uint32_t *) memory.memory)[1] = 0;
+            memcpy((uint8_t *) memory.memory + 8, path->path, path->path_length);
+            ((uint32_t *) memory.memory)[return_offset] = VG_LITE_RETURN();
+            ((uint32_t *) memory.memory)[return_offset + 1] = 0;
+
+            path->uploaded.handle = memory.memory_handle;
+            path->uploaded.memory = memory.memory;
+            path->uploaded.address = memory.memory_gpu;
+            path->uploaded.bytes  = memory.bytes;
+            path->path_changed = 0;
+        }
+    }
+
+    if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+
+        vglitemDUMP_BUFFER("path", path->uploaded.address, (uint8_t *)(path->uploaded.memory), 0, path->uploaded.bytes);
+    }
+
+    vglitemDUMP("@[memory 0x%08X 0x%08X]", s_context.tsbuffer.tessellation_buffer_gpu[0], s_context.tsbuffer.tessellation_buffer_size[0]);
+
+    /* Setup tessellation loop. */
+    if((path->path_type & 0x1) == VG_LITE_DRAW_FILL_PATH) {
+        for (y = point_min.y; y < point_max.y; y += height) {
+            for (x = point_min.x; x < point_max.x; x += width) {
+                /* Tessellate path. */
+                VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A01, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A39, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3D, tessellation_size / 64));
+
+                if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+                    VG_LITE_RETURN_ERROR(push_call(&s_context, path->uploaded.address, path->uploaded.bytes));
+                } else {
+                        push_data(&s_context, path->path_length, path->path);
+                }
+            }
+        }
+    }
+    /* Setup tessellation loop. */
+    if(path->path_type == VG_LITE_DRAW_STROKE_PATH || path->path_type == VG_LITE_DRAW_FILL_STROKE_PATH) {
+        for (y = point_min.y; y < point_max.y; y += height) {
+            for (x = point_min.x; x < point_max.x; x += width) {
+                /* Tessellate path. */
+                VG_LITE_RETURN_ERROR(push_stall(&s_context, 15));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A1B, 0x00011000));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A01, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A39, x | (y << 16)));
+                VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A3D, tessellation_size / 64));
+
+                if (VLM_PATH_GET_UPLOAD_BIT(*path) == 1) {
+                    VG_LITE_RETURN_ERROR(push_call(&s_context, path->uploaded.address, path->uploaded.bytes));
+                } else {
+                        format = convert_path_format(VG_LITE_FP32);
+                        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0x01000200 | format | quality | tiling | 0x0));
+                        VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A02, path->stroke_color));
+                        push_data(&s_context, path->stroke_path_size, path->stroke_path_data);
+                }
+            }
+        }
+    }
+
+    /* Finialize command buffer. */
+    VG_LITE_RETURN_ERROR(push_state(&s_context, 0x0A34, 0));
+
+    vglitemDUMP_BUFFER("image", source->address, source->memory, 0, (source->stride)*(source->height));
+#if DUMP_IMAGE
+    dump_img(source->memory, source->width, source->height, source->format);
+#endif
+    return error;
+}
+#else
 vg_lite_error_t vg_lite_set_CLUT(uint32_t count,
                                  uint32_t * colors)
 {
@@ -7957,6 +10757,17 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t * target,
     else
     {
         return VG_LITE_INVALID_ARGUMENT;
+    }
+
+    if(tls->t_context.ts_dirty){
+        memcpy(CMDBUF_BUFFER(tls->t_context) + CMDBUF_OFFSET(tls->t_context), tls->t_context.ts_record, 80);
+        CMDBUF_OFFSET(tls->t_context) += 80;
+        tls->t_context.ts_dirty = 0;
+        tls->t_context.ts_init_used = 1;
+    }
+    else
+    {
+        tls->t_context.ts_init_use = 1;
     }
 
     /* Setup the command buffer. */
@@ -8234,6 +11045,8 @@ vg_lite_error_t vg_lite_draw_pattern(vg_lite_buffer_t * target,
 #if DUMP_IMAGE
     dump_img(source->memory, src_align_width, source->height, source->format);
 #endif
+
+    tls->t_context.ts_init = 1;
     return error;
 }
 
@@ -8251,9 +11064,9 @@ vg_lite_error_t vg_lite_draw_linear_gradient(vg_lite_buffer_t * target,
     uint32_t blend_mode;
     uint32_t conversion = 0;
     uint32_t tiled_source;
-    int32_t src_align_width;
     int32_t dst_align_width;
     uint32_t mul, div, align;
+    vg_lite_matrix_t inverse_matrix;
     vg_lite_buffer_t * source = &grad->image;
     vg_lite_matrix_t * matrix = &grad->matrix;
     uint32_t linear_tile = 0;
@@ -8330,7 +11143,20 @@ vg_lite_error_t vg_lite_draw_linear_gradient(vg_lite_buffer_t * target,
         (grad->spread_mode == VG_LITE_RADIAL_GRADIENT_SPREAD_PAD) ? 0x1000 :
         (grad->spread_mode == VG_LITE_RADIAL_GRADIENT_SPREAD_REPEAT) ? 0x2000 : 0x3000;
 
+    if (grad->spread_mode == VG_LITE_RADIAL_GRADIENT_SPREAD_FILL)
+    {
+        uint8_t a,r,g,b;
+        a = paint_color >> 24;
+        r = paint_color >> 16;
+        g = paint_color >> 8;
+        b = paint_color;
+        paint_color = (a << 24) | (b << 16) | (g << 8) | r;
+    }
+
     /* compute radial gradient paremeters */
+
+    if (!inverse(&inverse_matrix, matrix))
+        return VG_LITE_INVALID_ARGUMENT;
 
     dx = grad->linear_gradient.X1 - grad->linear_gradient.X0;
     dy = grad->linear_gradient.Y1 - grad->linear_gradient.Y0;
@@ -8362,28 +11188,39 @@ vg_lite_error_t vg_lite_draw_linear_gradient(vg_lite_buffer_t * target,
     */
 
     lg_step_x_lin
-        = (dx * MAT(matrix, 0, 0) + dy * MAT(matrix, 1, 0))
+        = (dx * MAT(&inverse_matrix, 0, 0) + dy * MAT(&inverse_matrix, 1, 0))
         / dxdx_dydy;
 
     lg_step_y_lin
-        = (dx * MAT(matrix, 0, 1) + dy * MAT(matrix, 1, 1))
+        = (dx * MAT(&inverse_matrix, 0, 1) + dy * MAT(&inverse_matrix, 1, 1))
         / dxdx_dydy;
 
     lg_constant_lin =
         (
             (
-                0.5f * ( MAT(matrix, 0, 0) + MAT(matrix, 0, 1) )
-                + MAT(matrix, 0, 2) - grad->linear_gradient.X0
+                0.5f * ( MAT(&inverse_matrix, 0, 0) + MAT(&inverse_matrix, 0, 1) )
+                + MAT(&inverse_matrix, 0, 2) - grad->linear_gradient.X0
             ) * dx
 
             +
 
             (
-                0.5f * ( MAT(matrix, 1, 0) + MAT(matrix, 1, 1) )
-                + MAT(matrix, 1, 2) - grad->linear_gradient.Y0
+                0.5f * ( MAT(&inverse_matrix, 1, 0) + MAT(&inverse_matrix, 1, 1) )
+                + MAT(&inverse_matrix, 1, 2) - grad->linear_gradient.Y0
             ) * dy
         )
         / dxdx_dydy;
+
+    if(tls->t_context.ts_dirty){
+        memcpy(CMDBUF_BUFFER(tls->t_context) + CMDBUF_OFFSET(tls->t_context), tls->t_context.ts_record, 80);
+        CMDBUF_OFFSET(tls->t_context) += 80;
+        tls->t_context.ts_dirty = 0;
+        tls->t_context.ts_init_used = 1;
+    }
+    else
+    {
+        tls->t_context.ts_init_use = 1;
+    }
 
     /* Setup the command buffer. */
 
@@ -8395,9 +11232,7 @@ vg_lite_error_t vg_lite_draw_linear_gradient(vg_lite_buffer_t * target,
     data = &lg_step_y_lin;
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A08,*(uint32_t*) data));
 
-    get_format_bytes(source->format, &mul, &div, &align);
-    src_align_width = source->stride * div / mul;
-    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, src_align_width, source->height, matrix));
+    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, source->width, source->height, matrix));
 
     if(!tls->t_context.premultiply_enabled) {
         if(source->transparency_mode == VG_LITE_IMAGE_OPAQUE){
@@ -8417,7 +11252,7 @@ vg_lite_error_t vg_lite_draw_linear_gradient(vg_lite_buffer_t * target,
 
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A2A, tiled_source));
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A2C, 0));
-    VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A2E, src_align_width));
+    VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A2E, source->width));
 
     /* Work on path states. */
     matrix = path_matrix;
@@ -8649,6 +11484,8 @@ vg_lite_error_t vg_lite_draw_linear_gradient(vg_lite_buffer_t * target,
 #if DUMP_IMAGE
     dump_img(source->memory, source->width, source->height, source->format);
 #endif
+
+    tls->t_context.ts_init = 1;
     return error;
 }
 
@@ -8666,9 +11503,9 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
     uint32_t blend_mode;
     uint32_t conversion = 0;
     uint32_t tiled_source;
-    int32_t src_align_width;
     int32_t dst_align_width;
     uint32_t mul, div, align;
+    vg_lite_matrix_t inverse_matrix;
     vg_lite_buffer_t * source = &grad->image;
     vg_lite_matrix_t * matrix = &grad->matrix;
     uint32_t rad_tile = 0;
@@ -8763,7 +11600,21 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
         (grad->SpreadMode == VG_LITE_RADIAL_GRADIENT_SPREAD_PAD) ? 0x1000 :
         (grad->SpreadMode == VG_LITE_RADIAL_GRADIENT_SPREAD_REPEAT) ? 0x2000 : 0x3000;
 
+    if (grad->SpreadMode == VG_LITE_RADIAL_GRADIENT_SPREAD_FILL)
+    {
+        uint8_t a,r,g,b;
+        a = paint_color >> 24;
+        r = paint_color >> 16;
+        g = paint_color >> 8;
+        b = paint_color;
+        paint_color = (a << 24) | (b << 16) | (g << 8) | r;
+    }
+
     /* compute radial gradient paremeters */
+
+    /* Compute inverse matrix. */
+    if (!inverse(&inverse_matrix, matrix))
+        return VG_LITE_INVALID_ARGUMENT;
 
     /* Make shortcuts to the gradient information. */
     centerX = grad->radialGradient.cx;
@@ -8852,13 +11703,13 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
     */
 
     cx
-        = 0.5f * ( MAT(matrix, 0, 0) + MAT(matrix, 0, 1) )
-        + MAT(matrix, 0, 2)
+        = 0.5f * ( MAT(&inverse_matrix, 0, 0) + MAT(&inverse_matrix, 0, 1) )
+        + MAT(&inverse_matrix, 0, 2)
         - focalX;
 
     cy
-        = 0.5f * ( MAT(matrix, 1, 0) + MAT(matrix, 1, 1) )
-        + MAT(matrix, 1, 2)
+        = 0.5f * ( MAT(&inverse_matrix, 1, 0) + MAT(&inverse_matrix, 1, 1) )
+        + MAT(&inverse_matrix, 1, 2)
         - focalY;
 
     /*
@@ -8876,11 +11727,11 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
     */
 
     rgStepXLin
-        = ( MAT(matrix, 0, 0) * fx + MAT(matrix, 1, 0) * fy )
+        = ( MAT(&inverse_matrix, 0, 0) * fx + MAT(&inverse_matrix, 1, 0) * fy )
         / r2_fx2_fy2;
 
     rgStepYLin
-        = ( MAT(matrix, 0, 1) * fx + MAT(matrix, 1, 1) * fy )
+        = ( MAT(&inverse_matrix, 0, 1) * fx + MAT(&inverse_matrix, 1, 1) * fy )
         / r2_fx2_fy2;
 
     rgConstantLin = ( cx * fx  + cy * fy ) / r2_fx2_fy2;
@@ -8972,27 +11823,27 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
 
     rgStepXXRad =
         (
-                MAT(matrix, 0, 0) * MAT(matrix, 0, 0) * r2_fy2
-            + MAT(matrix, 1, 0) * MAT(matrix, 1, 0) * r2_fx2
-            + MAT(matrix, 0, 0) * MAT(matrix, 1, 0) * fxfy_2
+                MAT(&inverse_matrix, 0, 0) * MAT(&inverse_matrix, 0, 0) * r2_fy2
+            + MAT(&inverse_matrix, 1, 0) * MAT(&inverse_matrix, 1, 0) * r2_fx2
+            + MAT(&inverse_matrix, 0, 0) * MAT(&inverse_matrix, 1, 0) * fxfy_2
         )
         / r2_fx2_fy2sq;
 
     rgStepYYRad =
         (
-                MAT(matrix, 0, 1) * MAT(matrix, 0, 1) * r2_fy2
-            + MAT(matrix, 1, 1) * MAT(matrix, 1, 1) * r2_fx2
-            + MAT(matrix, 0, 1) * MAT(matrix, 1, 1) * fxfy_2
+                MAT(&inverse_matrix, 0, 1) * MAT(&inverse_matrix, 0, 1) * r2_fy2
+            + MAT(&inverse_matrix, 1, 1) * MAT(&inverse_matrix, 1, 1) * r2_fx2
+            + MAT(&inverse_matrix, 0, 1) * MAT(&inverse_matrix, 1, 1) * fxfy_2
         )
         / r2_fx2_fy2sq;
 
     rgStepXYRad =
         (
-                MAT(matrix, 0, 0) * MAT(matrix, 0, 1) * r2_fy2_2
-            + MAT(matrix, 1, 0) * MAT(matrix, 1, 1) * r2_fx2_2
+                MAT(&inverse_matrix, 0, 0) * MAT(&inverse_matrix, 0, 1) * r2_fy2_2
+            + MAT(&inverse_matrix, 1, 0) * MAT(&inverse_matrix, 1, 1) * r2_fx2_2
             + (
-                    MAT(matrix, 0, 0) * MAT(matrix, 1, 1)
-                + MAT(matrix, 0, 1) * MAT(matrix, 1, 0)
+                    MAT(&inverse_matrix, 0, 0) * MAT(&inverse_matrix, 1, 1)
+                + MAT(&inverse_matrix, 0, 1) * MAT(&inverse_matrix, 1, 0)
                 )
                 * fxfy_2
         )
@@ -9000,11 +11851,11 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
 
     rgStepXRad =
         (
-                MAT(matrix, 0, 0) * cx * r2_fy2_2
-            + MAT(matrix, 1, 0) * cy * r2_fx2_2
+                MAT(&inverse_matrix, 0, 0) * cx * r2_fy2_2
+            + MAT(&inverse_matrix, 1, 0) * cy * r2_fx2_2
             + (
-                    MAT(matrix, 0, 0) * cy
-                + MAT(matrix, 1, 0) * cx
+                    MAT(&inverse_matrix, 0, 0) * cy
+                + MAT(&inverse_matrix, 1, 0) * cx
                 )
                 * fxfy_2
         )
@@ -9012,11 +11863,11 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
 
     rgStepYRad =
         (
-                MAT(matrix, 0, 1) * cx * r2_fy2_2
-            + MAT(matrix, 1, 1) * cy * r2_fx2_2
+                MAT(&inverse_matrix, 0, 1) * cx * r2_fy2_2
+            + MAT(&inverse_matrix, 1, 1) * cy * r2_fx2_2
             + (
-                    MAT(matrix, 0, 1) * cy
-                + MAT(matrix, 1, 1) * cx
+                    MAT(&inverse_matrix, 0, 1) * cy
+                + MAT(&inverse_matrix, 1, 1) * cx
                 )
                 * fxfy_2
         )
@@ -9029,6 +11880,17 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
             + cx * cy * fxfy_2
         )
         / r2_fx2_fy2sq;
+
+    if(tls->t_context.ts_dirty){
+        memcpy(CMDBUF_BUFFER(tls->t_context) + CMDBUF_OFFSET(tls->t_context), tls->t_context.ts_record, 80);
+        CMDBUF_OFFSET(tls->t_context) += 80;
+        tls->t_context.ts_dirty = 0;
+        tls->t_context.ts_init_used = 1;
+    }
+    else
+    {
+        tls->t_context.ts_init_use = 1;
+    }
 
     /* Setup the command buffer. */
 
@@ -9051,9 +11913,7 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A0A,*(uint32_t*) data));
     data = &rgStepXYRad;
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A0B,*(uint32_t*) data));
-    get_format_bytes(source->format, &mul, &div, &align);
-    src_align_width = source->stride * div / mul;
-    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, src_align_width, source->height, matrix));
+    VG_LITE_RETURN_ERROR(set_interpolation_steps(target, source->width, source->height, matrix));
 
     if(!tls->t_context.premultiply_enabled) {
         if(source->transparency_mode == VG_LITE_IMAGE_OPAQUE){
@@ -9073,7 +11933,7 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
 
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A2A, tiled_source));
     VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A2C, 0));
-    VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A2E, src_align_width));
+    VG_LITE_RETURN_ERROR(push_state(&tls->t_context, 0x0A2E, source->width));
 
     /* Work on path states. */
     matrix = path_matrix;
@@ -9305,8 +12165,11 @@ vg_lite_error_t vg_lite_draw_radial_gradient(vg_lite_buffer_t * target,
 #if DUMP_IMAGE
     dump_img(source->memory, src_align_width, source->height, source->format);
 #endif
+
+    tls->t_context.ts_init = 1;
     return error;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 vg_lite_error_t vg_lite_init_grad(vg_lite_linear_gradient_t *grad)
 {
@@ -9515,6 +12378,7 @@ vg_lite_error_t vg_lite_update_linear_grad(vg_lite_linear_gradient_ext_t *grad)
     width = common + 1;
 
     /* Allocate the color ramp surface. */
+    memset(&grad->image, 0, sizeof(grad->image));
     grad->image.width = width;
     grad->image.height = 1;
     grad->image.stride = 0;
@@ -9524,7 +12388,7 @@ vg_lite_error_t vg_lite_update_linear_grad(vg_lite_linear_gradient_ext_t *grad)
     /* Allocate the image for gradient. */
     VG_LITE_RETURN_ERROR(vg_lite_allocate(&grad->image));
 
-    width = grad->image.width;
+    grad->image.width = width;
 
     /* Set pointer to color array. */
     bits = (uint8_t *)grad->image.memory;
@@ -9797,6 +12661,7 @@ vg_lite_error_t vg_lite_update_rad_grad(vg_lite_radial_gradient_t *grad)
     width = common + 1;
 
     /* Allocate the color ramp surface. */
+    memset(&grad->image, 0, sizeof(grad->image));
     grad->image.width = width;
     grad->image.height = 1;
     grad->image.stride = 0;
@@ -9806,7 +12671,7 @@ vg_lite_error_t vg_lite_update_rad_grad(vg_lite_radial_gradient_t *grad)
     /* Allocate the image for gradient. */
     VG_LITE_RETURN_ERROR(vg_lite_allocate(&grad->image));
 
-    width = grad->image.width;
+    grad->image.width = width;
 
     /* Set pointer to color array. */
     bits = (uint8_t *)grad->image.memory;
@@ -10059,6 +12924,63 @@ vg_lite_error_t vg_lite_draw_gradient(vg_lite_buffer_t * target,
         &grad->image, &grad->matrix, blend, VG_LITE_PATTERN_PAD, 0, VG_LITE_FILTER_LINEAR);
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+vg_lite_error_t vg_lite_set_command_buffer_size(uint32_t size)
+{
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+
+    if(!s_context.init){
+        if(!size)
+            return VG_LITE_INVALID_ARGUMENT;
+        command_buffer_size = size;
+    }
+    else{
+        VG_LITE_RETURN_ERROR(_free_command_buffer());
+        VG_LITE_RETURN_ERROR(_allocate_command_buffer(size));
+        VG_LITE_RETURN_ERROR(program_tessellation(&s_context));
+    }
+
+    return error;
+}
+
+vg_lite_error_t vg_lite_set_scissor(int32_t x, int32_t y, int32_t width, int32_t height)
+{
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+
+    /* Save scissor Box States. */
+    s_context.scissor[0] = x;
+    s_context.scissor[1] = y;
+    s_context.scissor[2] = width;
+    s_context.scissor[3] = height;
+
+    /* Scissor dirty. */
+    s_context.scissor_dirty = 1;
+
+    return error;
+}
+
+vg_lite_error_t vg_lite_enable_scissor(void)
+{
+    /* Enable scissor Mode. */
+    s_context.scissor_enabled = 1;
+
+    /* Scissor dirty. */
+    s_context.scissor_dirty = 1;
+
+    return VG_LITE_SUCCESS;
+}
+
+vg_lite_error_t vg_lite_disable_scissor(void)
+{
+    /* disable scissor Mode. */
+    s_context.scissor_enabled = 0;
+
+    /* Scissor dirty. */
+    s_context.scissor_dirty = 1;
+
+    return VG_LITE_SUCCESS;
+}
+#else
 vg_lite_error_t vg_lite_set_command_buffer_size(uint32_t size)
 {
     vg_lite_tls_t* tls;
@@ -10124,6 +13046,7 @@ vg_lite_error_t vg_lite_disable_scissor(void)
 
     return VG_LITE_SUCCESS;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 vg_lite_error_t vg_lite_mem_avail(uint32_t *size)
 {
@@ -10135,6 +13058,90 @@ vg_lite_error_t vg_lite_mem_avail(uint32_t *size)
     return error;
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+vg_lite_error_t vg_lite_enable_premultiply(void)
+{
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_PE_PREMULTIPLY))
+        return VG_LITE_NOT_SUPPORT;
+
+    /* Enable premultiply Mode. */
+    s_context.premultiply_enabled = 1;
+
+    s_context.premultiply_dirty = 1;
+
+    return  VG_LITE_SUCCESS;
+}
+
+vg_lite_error_t vg_lite_disable_premultiply(void)
+{
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_PE_PREMULTIPLY))
+        return VG_LITE_NOT_SUPPORT;
+
+    /* disable premultiply Mode. */
+    s_context.premultiply_enabled = 0;
+
+    s_context.premultiply_dirty = 1;
+
+    return VG_LITE_SUCCESS;
+}
+
+vg_lite_error_t vg_lite_set_dither(int enable)
+{
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+    vg_lite_context_t *context = GET_CONTEXT();
+    uint32_t table_low = 0x7B48F3C0;
+    uint32_t table_high = 0x596AD1E2;
+    int dither_enable = enable;
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_DITHER)) {
+        return VG_LITE_NOT_SUPPORT;
+    }
+    if(dither_enable) {
+        VG_LITE_RETURN_ERROR(push_state(context, 0x0A5A, table_low));
+        VG_LITE_RETURN_ERROR(push_state(context, 0x0A5B, table_high));
+    }
+    else {
+        VG_LITE_RETURN_ERROR(push_state(context, 0x0A5A, 0xFFFFFFFF));
+        VG_LITE_RETURN_ERROR(push_state(context, 0x0A5B, 0xFFFFFFFF));
+    }
+
+    return error;
+}
+
+vg_lite_error_t vg_lite_set_color_key(vg_lite_color_key4_t colorkey)
+{
+    uint8_t i;
+    uint32_t value_low = 0;
+    uint32_t value_high = 0;
+    uint8_t r, g, b, a, e;
+    vg_lite_error_t error = VG_LITE_SUCCESS;
+    vg_lite_context_t *context = GET_CONTEXT();
+    if(!vg_lite_query_feature(gcFEATURE_BIT_VG_COLOR_KEY))
+        return VG_LITE_NOT_SUPPORT;
+
+    /* Set color key states. */
+    for (i = 0; i < 4; i++)
+    {
+        /* Set gcregVGPEColorKeyLow. Layout "E/R/G/B". */
+        r = colorkey[i].low_r;
+        g = colorkey[i].low_g;
+        b = colorkey[i].low_b;
+        e = colorkey[i].enable;
+        value_low = (e << 24) | (r << 16) | (g << 8) | b;
+        VG_LITE_RETURN_ERROR(push_state(context, 0x0A90 + i , value_low));
+
+        /* Set gcregVGPEColorKeyHigh. Layout "A/R/G/B". */
+        r = colorkey[i].hign_r;
+        g = colorkey[i].hign_g;
+        b = colorkey[i].hign_b;
+        a = colorkey[i].alpha;
+        value_high = (a << 24) | (r << 16) | (g << 8) | b;
+        VG_LITE_RETURN_ERROR(push_state(context, 0x0A94 + i , value_high));
+    }
+
+    return error;
+}
+
+#else
 vg_lite_error_t vg_lite_enable_premultiply(void)
 {
     vg_lite_tls_t* tls;
@@ -10232,3 +13239,4 @@ vg_lite_error_t vg_lite_set_color_key(vg_lite_color_key4_t colorkey)
 
     return error;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */

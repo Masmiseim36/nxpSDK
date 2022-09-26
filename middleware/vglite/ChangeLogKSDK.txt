@@ -2,7 +2,22 @@
 @page middleware_log Middleware Change Log
 
 @section vglite VGLite GPU Driver
-  The current version of the VGLite GPU Driver is 3.0.15_rev2.
+  The current version of the VGLite GPU Driver is 3.0.15_rev4.
+  - version 3.0.15_rev4
+    - Changed:
+      - (IMX-2900) Renamed build switch for disabling driver multithread support
+  - version 3.0.15_rev3
+    - Fixed:
+      - Relocated centerX/Y definitions in vg_lite.c
+      - (IMX-2918) Reduced vg_lite_finish() delay when it has nothing to do
+      - (IMX-2901) Fixed reversed red and blue channels in colour gradients fill colour
+      - (IMX-2901) Fixed linear gradient matrix transformation error
+      - (IMX-2901) Fixed radial gradient render error
+    - Changed:
+      - (IMX-2799) Enabled GPU auto clock gating by default
+      - (IMX-2799) Added build switch to disable GPU auto clock gating
+    - Added:
+      - (IMX-2900) Added initial support for single thread mode
   - version 3.0.15_rev2
     - Fixed:
       - (IMX-2881) Fixed memory leaks in vector path stroking implementation

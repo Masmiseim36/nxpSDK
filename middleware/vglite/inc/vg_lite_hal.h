@@ -35,7 +35,9 @@
 #include "vg_lite_kernel.h"
 
 #define VGLITE_MEM_ALIGNMENT    128
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 #define TASK_LENGTH             8
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 #ifdef __cplusplus
 extern "C" {
@@ -64,7 +66,11 @@ void vg_lite_hal_delay(uint32_t milliseconds);
  The implementer should make sure that on exit of this function the power and clock to the VGLite graphics hardware is
  turned on and stable.
  */
+#if defined(VG_DRIVER_SINGLE_THREAD)
+void vg_lite_hal_initialize(void);
+#else
 vg_lite_error_t vg_lite_hal_initialize(void);
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 /*!
  @brief Uninitialize the hardware.
@@ -232,6 +238,7 @@ vg_lite_error_t vg_lite_hal_query_mem(vg_lite_kernel_mem_t *mem);
  */
 int32_t vg_lite_hal_wait_interrupt(uint32_t timeout, uint32_t mask, uint32_t * value);
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 /*!
  @brief Submit the current command buffer to the command queue.
 
@@ -263,6 +270,7 @@ vg_lite_error_t vg_lite_hal_submit(uint32_t context,uint32_t physical, uint32_t 
  buffer has been executed.
  */
 vg_lite_error_t vg_lite_hal_wait(uint32_t timeout, vg_lite_os_async_event_t *event);
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 #ifdef __cplusplus
 }

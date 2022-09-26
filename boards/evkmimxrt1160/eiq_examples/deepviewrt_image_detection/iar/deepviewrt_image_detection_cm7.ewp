@@ -155,7 +155,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -237,8 +237,8 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -367,11 +367,11 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -1258,7 +1258,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -1340,8 +1340,8 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>MCUXPRESSO_SDK</state>
         </option>
         <option>
@@ -1470,11 +1470,11 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Core/Include</state>
         </option>
         <option>
@@ -2372,6 +2372,18 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</name>
     </file>
     <file>
@@ -2387,18 +2399,6 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_lpi2c.c</name>
     </file>
     <file>
@@ -2409,27 +2409,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</name>
     </file>
   </group>
   <group>
@@ -2469,6 +2448,27 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1160_flexspi_nor_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
   </group>
   <group>

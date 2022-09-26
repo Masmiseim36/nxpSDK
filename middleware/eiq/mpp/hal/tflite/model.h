@@ -19,7 +19,7 @@ extern "C" {
 
 status_t MODEL_Init(const void *model_data, int model_size);
 uint8_t* MODEL_GetInputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* type);
-uint8_t* MODEL_GetOutputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* type);
+uint8_t* MODEL_GetOutputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* type, int idx);
 void MODEL_ConvertInput(uint8_t* data, mpp_tensor_dims_t* dims, mpp_tensor_type_t type, float mean, float std);
 status_t MODEL_RunInference(void);
 

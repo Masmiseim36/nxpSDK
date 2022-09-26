@@ -79,6 +79,8 @@ typedef struct _camera_dev_operator
     hal_camera_status_t (*deinit)(camera_dev_t *dev);
     /* start the dev */
     hal_camera_status_t (*start)(const camera_dev_t *dev);
+    /* stop the dev */
+    hal_camera_status_t (*stop)(const camera_dev_t *dev);
     /* enqueue a buffer to the dev */
     hal_camera_status_t (*enqueue)(const camera_dev_t *dev, void *data);
     /* dequeue a buffer from the dev */

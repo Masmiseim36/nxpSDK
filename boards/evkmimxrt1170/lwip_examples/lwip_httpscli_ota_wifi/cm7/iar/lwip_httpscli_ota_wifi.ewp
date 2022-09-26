@@ -3491,9 +3491,6 @@
         <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sd8801_wlan.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduart8977_wlan_bt.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/wifi_nxp/wifi_bt_firmware/sduartIW416_wlan_bt.h</name>
       </file>
       <file>

@@ -60,6 +60,7 @@ var searchData=
   ['lpadc_5fdosoftwaretrigger',['LPADC_DoSoftwareTrigger',['../a00053.html#gacaef94ac48a3e0a34f9235f88767b7a3',1,'fsl_lpadc.h']]],
   ['lpadc_5fenable',['LPADC_Enable',['../a00053.html#gaf76592d9f392cd30b738f599b2e71344',1,'fsl_lpadc.h']]],
   ['lpadc_5fenablefifowatermarkdma',['LPADC_EnableFIFOWatermarkDMA',['../a00053.html#gacaaa33bc4d9cfd8fad4fac8f1475d97c',1,'fsl_lpadc.h']]],
+  ['lpadc_5fenablehardwaretriggercommandselection',['LPADC_EnableHardwareTriggerCommandSelection',['../a00053.html#ga4224ecb1a5bc073aeb37e462674734fe',1,'fsl_lpadc.h']]],
   ['lpadc_5fenableinterrupts',['LPADC_EnableInterrupts',['../a00053.html#ga2c147558843514556795fd52f86aca56',1,'fsl_lpadc.h']]],
   ['lpadc_5fgetconvresult',['LPADC_GetConvResult',['../a00053.html#ga1862883b3c4ce8365ad1f1a6c64043cc',1,'fsl_lpadc.h']]],
   ['lpadc_5fgetconvresultcount',['LPADC_GetConvResultCount',['../a00053.html#ga51b39db4ab530f900aa3a88a3047daf3',1,'fsl_lpadc.h']]],

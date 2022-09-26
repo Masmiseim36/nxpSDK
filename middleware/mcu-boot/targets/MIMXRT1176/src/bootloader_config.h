@@ -211,6 +211,9 @@
 #endif // BL_FEATURE_SPI_NOR_EEPROM_MODULE
 
 #define BL_FEATURE_OCOTP_MODULE (1)
+#if BL_FEATURE_OCOTP_MODULE
+#define BL_FEATURE_OCOTP_MODULE_FUSE_LOCKED (1)
+#endif // BL_FEATURE_OCOTP_MODULE
 
 ////////////////////////////////////////////////////////////////////////////////
 // Protocal Configurations

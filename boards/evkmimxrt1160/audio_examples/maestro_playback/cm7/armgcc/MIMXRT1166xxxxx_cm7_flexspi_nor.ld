@@ -200,7 +200,6 @@ SECTIONS
     *(m_usb_dma_init_data)
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
-    *(DataQuickAccess)       /* quick access data section */
     KEEP(*(.jcr*))
     . = ALIGN(4);
     __data_end__ = .;        /* define a global symbol at data end */
@@ -222,6 +221,7 @@ SECTIONS
   {
     __noncachedata_start__ = .;   /* create a global symbol at ncache data start */
     *(NonCacheable.init)
+    *(DataQuickAccess)       /* quick access data section */
     . = ALIGN(4);
     __noncachedata_init_end__ = .;   /* create a global symbol at initialized ncache data end */
   } > m_ncache

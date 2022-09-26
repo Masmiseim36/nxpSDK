@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b220216
+**     Build:               b220802
 **
 **     Abstract:
 **         Chip specific module features.
@@ -95,6 +95,8 @@
 #define FSL_FEATURE_SOC_LPUART_COUNT (12)
 /* @brief MCM availability on the SoC. */
 #define FSL_FEATURE_SOC_MCM_COUNT (1)
+/* @brief MPU availability on the SoC. */
+#define FSL_FEATURE_SOC_MPU_COUNT (1)
 /* @brief MU availability on the SoC. */
 #define FSL_FEATURE_SOC_MU_COUNT (1)
 /* @brief OCOTP availability on the SoC. */
@@ -217,6 +219,8 @@
 #define FSL_FEATURE_FLEXCAN_HAS_ENHANCED_BIT_TIMING_REG (0)
 /* @brief Has Pretended Networking mode support. */
 #define FSL_FEATURE_FLEXCAN_HAS_PN_MODE (0)
+/* @brief Does not support Supervisor Mode (bitfield MCR[SUPV]. */
+#define FSL_FEATURE_FLEXCAN_HAS_NO_SUPV_SUPPORT (0)
 
 /* CCM module features */
 
@@ -435,6 +439,12 @@
 #define FSL_FEATURE_FLEXSPI_HAS_INTEN_AHBBUSERROREN (1)
 /* @brief There is CLRAHBTX_RXBUF bit in AHBCR register. */
 #define FSL_FEATURE_FLEXSPI_HAS_AHBCR_CLRAHBTX_RXBUF (0)
+/* @brief FLEXSPI has no IP parallel mode. */
+#define FSL_FEATURE_FLEXSPI_HAS_NO_IP_PARALLEL_MODE (0)
+/* @brief FLEXSPI has no AHB parallel mode. */
+#define FSL_FEATURE_FLEXSPI_HAS_NO_AHB_PARALLEL_MODE (0)
+/* @brief FLEXSPI support address shift. */
+#define FSL_FEATURE_FLEXSPI_SUPPORT_ADDRESS_SHIFT (0)
 
 /* GPC_CPU_CTRL module features */
 
@@ -517,6 +527,8 @@
 #define FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE (0)
 /* @brief Conversion averaged bitfiled width. */
 #define FSL_FEATURE_LPADC_CONVERSIONS_AVERAGED_BITFIELD_WIDTH (3)
+/* @brief Enable hardware trigger command selection */
+#define FSL_FEATURE_LPADC_HAS_TCTRL_CMD_SEL (1)
 
 /* LPI2C module features */
 
@@ -671,6 +683,8 @@
 #define FSL_FEATURE_PDM_HIGH_QUALITY_CLKDIV_FACTOR (93)
 /* @brief CLKDIV factor in Very Low Quality modes */
 #define FSL_FEATURE_PDM_VERY_LOW_QUALITY_CLKDIV_FACTOR (43)
+/* @brief PDM Has No VADEF Bitfield In PDM VAD0_STAT Register */
+#define FSL_FEATURE_PDM_HAS_NO_VADEF (0)
 
 /* PIT module features */
 
@@ -791,6 +805,8 @@
 #define FSL_FEATURE_SEMC_SDRAM_SUPPORT_COLUMN_ADDRESS_8BIT (1)
 /* @brief If SEMC has register DBICR2 (register DBICR2). */
 #define FSL_FEATURE_SEMC_HAS_DBICR2 (1)
+/* @brief SEMC supports hardware ECC on NAND flash interface. */
+#define FSL_FEATURE_SEMC_HAS_NAND_HW_ECC (0)
 
 /* SNVS module features */
 

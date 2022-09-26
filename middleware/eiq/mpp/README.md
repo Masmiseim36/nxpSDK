@@ -18,7 +18,9 @@ The basic pipeline structure - the _mpp_ in the API context - has a chain/queue 
 The pipeline continues with multiple **processing elements** having a single input and a single output:
 - Image format conversion
 - Labeled rectangle drawing
-- Machine learning inference
+- Machine learning inference with two frameworks:
+   - Tensorflow Lite Micro 
+   - GLOW
 
 The pipeline can be closed by adding a **sink element**:
 - Display panel
@@ -35,6 +37,10 @@ After the construction is complete, each _mpp_ must be started for all hardware 
 required to run the pipeline to initialize. Pipeline processing begins as soon as the the last start
 call is flagged.
 
+Each pipeline branch can be stopped individually. This involves stopping the execution and the hardware 
+peripherals of the branch. After being stopped, each branch can be started again. 
+To stop the whole pipeline you need to stop each of its branches separately.
+
 At runtime the application receives events from the pipeline processing and may use these events
 to update elements parameters. For example, in object detection when the label of a bounding
 box must be updated whenever a new object is detected.
@@ -45,6 +51,7 @@ Summarizing, the application controls:
 - Connection of elements to each other
 - Reception of callbacks based on specific events
 - Updation of specific elements (not all elements can be updated)
+- Stop of the pipeline (includes stop of the hardware peripherals).
 
 Application does not control:
 - Memory management

@@ -78,10 +78,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1176
     ${ProjDirPath}/../../../../../devices/MIMXRT1176/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../devices/MIMXRT1176/utilities
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
     ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis
 )
@@ -139,8 +139,6 @@ include(component_serial_manager_uart_MIMXRT1176_cm7)
 
 include(driver_lpuart_MIMXRT1176_cm7)
 
-include(utility_debug_console_MIMXRT1176_cm7)
-
 include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
 
 include(device_MIMXRT1176_startup_MIMXRT1176_cm7)
@@ -156,6 +154,8 @@ include(driver_xip_device_MIMXRT1176_cm7)
 include(driver_xip_board_evkmimxrt1170_MIMXRT1176_cm7)
 
 include(utility_assert_MIMXRT1176_cm7)
+
+include(utility_debug_console_MIMXRT1176_cm7)
 
 include(driver_pmu_1_MIMXRT1176_cm7)
 
@@ -181,9 +181,9 @@ include(middleware_eiq_tensorflow_lite_micro_third_party_ruy_MIMXRT1176_cm7)
 
 include(middleware_eiq_tensorflow_lite_micro_third_party_cmsis_nn_MIMXRT1176_cm7)
 
-include(device_MIMXRT1176_system_MIMXRT1176_cm7)
-
 include(utilities_misc_utilities_MIMXRT1176_cm7)
+
+include(device_MIMXRT1176_system_MIMXRT1176_cm7)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

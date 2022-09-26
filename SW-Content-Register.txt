@@ -669,7 +669,7 @@ libjpeg                    Name: LIBJPEG
                            Origin: IJG (IJG) - http://www.ijg.org            
 
 vglite                     Name: vglite                                      
-                           Version: 3.0.15_rev2                              
+                           Version: 3.0.15_rev4                              
                            Outgoing License: MIT                             
                            License File: middleware/vglite/LICENSE.txt       
                            Format: source code                               
@@ -1334,7 +1334,7 @@ library                    Version: 1.0.0
                            Origin: NXP (BSD-3-Clause)                        
 
 mpp                        Name: Multimedia Processing Pipelines (MPP)       
-                           Version: 0.9.0                                    
+                           Version: 0.9.1                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            v35 May 2022 - Additional distribution license    
                            granted - License in Section 2.3 applies          

@@ -230,11 +230,15 @@
           <state>STREAMER_ENABLE_ENCODER</state>
           <state>STREAMER_ENABLE_CEI_OPUS</state>
           <state>PLATFORM_RT1160</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>OSA_USED</state>
+          <state>SHELL_TASK_STACK_SIZE=4000</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
           <state>DISABLEFLOAT16</state>
+          <state>SAI_XFER_QUEUE_SIZE=2</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>HAVE_CONFIG_H</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
@@ -1375,11 +1379,15 @@
           <state>STREAMER_ENABLE_ENCODER</state>
           <state>STREAMER_ENABLE_CEI_OPUS</state>
           <state>PLATFORM_RT1160</state>
+          <state>DEBUG_CONSOLE_TRANSFER_NON_BLOCKING</state>
+          <state>OSA_USED</state>
+          <state>SHELL_TASK_STACK_SIZE=4000</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
           <state>SD_ENABLED</state>
           <state>DISABLEFLOAT16</state>
+          <state>SAI_XFER_QUEUE_SIZE=2</state>
           <state>DEBUG_CONSOLE_RX_ENABLE=0</state>
           <state>HAVE_CONFIG_H</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>

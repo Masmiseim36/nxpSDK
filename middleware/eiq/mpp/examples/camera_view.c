@@ -32,10 +32,9 @@
 #include "stopwatch168_208_vuyx.h"
 #else
 /* camera */
-#define IMAGE_WIDTH  1280
-#define IMAGE_HEIGHT 720
+#define SRC_WIDTH  1280
+#define SRC_HEIGHT 720
 #endif
-#define IMAGE_FORMAT MPP_PIXEL_YUV1P444
 /* display dimensions */
 #define DISPLAY_WIDTH  720
 #define DISPLAY_HEIGHT 1280
@@ -87,11 +86,12 @@ int main(int argc, char *argv[])
         PRINTF("Failed to get input buffer\n");
         goto err;
     }
+    args->src_format = SRC_IMAGE_FORMAT;
 #else
     strcpy(args->camera_name, "MipiOv5640");
+    args->src_format = MPP_PIXEL_YUV1P444;
 #endif
     args->display_format = MPP_PIXEL_RGB565;
-    args->src_format = IMAGE_FORMAT;
 
     /* Create application task */
     ret = xTaskCreate(
@@ -142,8 +142,8 @@ static void app_task(void *params) {
     mpp_img_params_t img_params;
     memset(&img_params, 0, sizeof (mpp_img_params_t));
     img_params.format = args->src_format;
-    img_params.width = INPUT_IMAGE_WIDTH;
-    img_params.height = INPUT_IMAGE_HEIGHT;
+    img_params.width  = SRC_IMAGE_WIDTH;
+    img_params.height = SRC_IMAGE_HEIGHT;
     mpp_static_img_add(mp, &img_params, image_data);
 
     /* add convert element for color conversion and scaling */
@@ -151,7 +151,7 @@ static void app_task(void *params) {
     memset(&elem_params, 0, sizeof(elem_params));
     elem_params.convert.pixel_format = args->display_format;
     elem_params.convert.width = DISPLAY_WIDTH;
-    elem_params.convert.height = DISPLAY_WIDTH * INPUT_IMAGE_HEIGHT / INPUT_IMAGE_WIDTH;
+    elem_params.convert.height = DISPLAY_WIDTH * SRC_IMAGE_HEIGHT / SRC_IMAGE_WIDTH;
     elem_params.convert.ops = MPP_CONVERT_COLOR | MPP_CONVERT_SCALE;
      ret = mpp_element_add(mp, MPP_ELEMENT_CONVERT, &elem_params, NULL);
     if (ret) {
@@ -162,8 +162,8 @@ static void app_task(void *params) {
     /* add camera */
     mpp_camera_params_t cam_params;
     memset(&cam_params, 0 , sizeof(cam_params));
-    cam_params.height = IMAGE_HEIGHT;
-    cam_params.width =  IMAGE_WIDTH;
+    cam_params.height = SRC_HEIGHT;
+    cam_params.width  = SRC_WIDTH;
     cam_params.format = args->src_format;
     cam_params.fps    = 30;
     ret = mpp_camera_add(mp, args->camera_name, &cam_params, false);
@@ -177,6 +177,7 @@ static void app_task(void *params) {
     mpp_element_params_t elem_params;
     memset(&elem_params, 0, sizeof(elem_params));
     elem_params.convert.angle = ROTATE_90;
+    elem_params.convert.flip = FLIP_HORIZONTAL;
     elem_params.convert.pixel_format = args->display_format;
     elem_params.convert.ops = MPP_CONVERT_COLOR | MPP_CONVERT_ROTATE;
     ret = mpp_element_add(mp, MPP_ELEMENT_CONVERT, &elem_params, NULL);

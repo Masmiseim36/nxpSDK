@@ -41,10 +41,10 @@
     <definition extID="platform.drivers.memory.MIMXRT1166"/>
     <definition extID="platform.utilities.misc_utilities.MIMXRT1166"/>
     <definition extID="platform.devices.MIMXRT1166_system.MIMXRT1166"/>
+    <definition extID="mcuxpresso"/>
     <definition extID="iar"/>
     <definition extID="armgcc"/>
     <definition extID="mdk"/>
-    <definition extID="mcuxpresso"/>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
     <definition extID="com.crt.advproject.config.exe.release"/>
@@ -64,24 +64,8 @@
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
-        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>DATA_SECTION_IS_CACHEABLE=0</value>
-          <value>_DEBUG=1</value>
-          <value>CPU_MIMXRT1166DVM6A_cm7</value>
-          <value>SDK_DEBUGCONSOLE=1</value>
-          <value>XIP_EXTERNAL_FLASH=1</value>
-          <value>XIP_BOOT_HEADER_ENABLE=1</value>
-          <value>HAL_AUDIO_ISR_PRIORITY=0</value>
-          <value>USB_STACK_BM</value>
-          <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
-          <value>BOARD_USE_CODEC=1</value>
-          <value>CODEC_WM8960_ENABLE</value>
-          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
-          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
-          <value>MCUXPRESSO_SDK</value>
-        </option>
-        <option id="com.crt.advproject.gas.fpu" type="enum">
-          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.optimize</value>
         </option>
         <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
@@ -100,6 +84,25 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
           <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>DATA_SECTION_IS_CACHEABLE=0</value>
+          <value>_DEBUG=1</value>
+          <value>CPU_MIMXRT1166DVM6A_cm7</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>HAL_AUDIO_ISR_PRIORITY=0</value>
+          <value>USB_STACK_BM</value>
+          <value>SDK_I2C_BASED_COMPONENT_USED=1</value>
+          <value>BOARD_USE_CODEC=1</value>
+          <value>CODEC_WM8960_ENABLE</value>
+          <value>FSL_OSA_BM_TASK_ENABLE=0</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=0</value>
+          <value>MCUXPRESSO_SDK</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
         </option>
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>

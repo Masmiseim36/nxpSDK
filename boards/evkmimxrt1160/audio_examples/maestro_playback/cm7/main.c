@@ -28,9 +28,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SHELL_TASK_STACK_SIZE  (512)
-#define SDCARD_TASK_STACK_SIZE (512)
-#define APP_TASK_STACK_SIZE    (512)
+#define APP_SHELL_TASK_STACK_SIZE (512)
+#define SDCARD_TASK_STACK_SIZE    (512)
+#define APP_TASK_STACK_SIZE       (512)
 
 /*******************************************************************************
  * Prototypes
@@ -241,7 +241,10 @@ status_t list_files(bool autoInput)
         {
             /* Check file for supported audio extension */
             dot = strrchr(fileInformation.fname, '.');
-            if ((dot && strncmp(dot + 1, "opus", 4) == 0) || (dot && strncmp(dot + 1, "ogg", 3) == 0) ||
+            if (
+#if (OGG_OPUS_DEC == 1)
+                (dot && strncmp(dot + 1, "opus", 4) == 0) || (dot && strncmp(dot + 1, "ogg", 3) == 0) ||
+#endif
                 (dot && strncmp(dot + 1, "mp3", 3) == 0))
             {
                 if (count < MAX_FILES_LIST)
@@ -344,7 +347,6 @@ void APP_Shell_Task(void *param)
     /* Handle shell commands. */
     shellCmd();
     vTaskSuspend(NULL);
-
     while (1)
         ;
 }
@@ -417,7 +419,7 @@ int main(void)
             ;
     }
 
-    if (xTaskCreate(APP_Shell_Task, "Shell Task", SHELL_TASK_STACK_SIZE, &app, configMAX_PRIORITIES - 4,
+    if (xTaskCreate(APP_Shell_Task, "Shell Task", APP_SHELL_TASK_STACK_SIZE, &app, configMAX_PRIORITIES - 4,
                     &app.shell_task_handle) != pdPASS)
     {
         PRINTF("\r\nFailed to create Shell observer task. Please, fix issue and restart board.\r\n");

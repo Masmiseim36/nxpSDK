@@ -814,21 +814,6 @@
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dcdc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
@@ -847,6 +832,21 @@
               <FileName>fsl_pmu.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpi2c.c</FileName>
@@ -2003,21 +2003,6 @@
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_iomuxc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dcdc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
@@ -2036,6 +2021,21 @@
               <FileName>fsl_pmu.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_iomuxc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
               <FileName>fsl_lpi2c.c</FileName>

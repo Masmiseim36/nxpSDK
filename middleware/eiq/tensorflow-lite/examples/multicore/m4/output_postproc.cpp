@@ -1,13 +1,13 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include <stdio.h>
 #include <string.h>
 
+#include "fsl_debug_console.h"
 #include "output_postproc.h"
 #include "get_top_n.h"
 #include "demo_config.h"
@@ -49,10 +49,10 @@ status_t MODEL_ProcessOutput(const uint8_t* data, const tensor_dims_t* dims,
         label = index >= 0 ? labels[index] : "No word detected";
         int score = (int)(result.score * 100);
 
-        printf("----------------CM4 CORE----------------" EOL);
-        printf("     Inference time: %d ms" EOL, inferenceTime / 1000);
-        printf("     Detected: %-10s (%d%%)\r\n", label, score);
-        printf("----------------------------------------" EOL EOL);
+        PRINTF("----------------CM4 CORE----------------" EOL);
+        PRINTF("     Inference time: %d ms" EOL, inferenceTime / 1000);
+        PRINTF("     Detected: %s (%d%%)" EOL, label, score);
+        PRINTF("----------------------------------------" EOL EOL);
 
         lastPrintTime = time;
     }

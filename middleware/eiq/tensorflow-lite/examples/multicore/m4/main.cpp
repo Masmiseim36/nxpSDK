@@ -1,12 +1,11 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <audio/audio.h>
-#include <stdio.h>
 
 #include "board_init.h"
 #include "demo_config.h"
@@ -30,13 +29,13 @@ int main(void)
 
     /* Send flag to Core 0 to indicate Core 1 has startup */
     MU_SetFlags(MU_BASE, BOOT_FLAG);
-    printf("This is the secondary core: core1" EOL);
+    PRINTF("This is the secondary core: core1" EOL);
 
     DEMO_PrintInfo();
 
     if (MODEL_Init() != kStatus_Success)
     {
-        printf("Failed initializing model" EOL);
+        PRINTF("Failed initializing model" EOL);
         for (;;) {}
     }
 
@@ -61,7 +60,7 @@ int main(void)
         if (MODEL_ProcessOutput(outputData, &outputDims, outputType, \
                 endTime - startTime) == kStatus_Success)
         {
-            printf("Core1: send message to wake up core0\r\n");
+            PRINTF("Core1: send message to wake up core0\r\n");
             MU_SendMsg(MU_BASE, 0, 0);
         }
     }

@@ -26,6 +26,7 @@ limitations under the License.
 #include "tensorflow/lite/schema/schema_generated.h"
 
 #include "model.h"
+#include "limits.h"
 
 /* TODO replace by dynamic object construction to allow multiple instances to run concurrently */
 static tflite::ErrorReporter* s_errorReporter = nullptr;
@@ -37,7 +38,7 @@ extern tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* erro
 
 // An area of memory to use for input, output, and intermediate arrays.
 // (Can be adjusted based on the model needs.)
-constexpr int kTensorArenaSize = 512 * 1024;
+constexpr int kTensorArenaSize = HAL_TFLM_TENSOR_ARENA_SIZE_KB * 1024;
 static uint8_t s_tensorArena[kTensorArenaSize] __ALIGNED(16);
 
 status_t MODEL_Init(const void *model_data, int model_size)
@@ -132,9 +133,10 @@ uint8_t* MODEL_GetInputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* ty
     return GetTensorData(inputTensor, dims, type);
 }
 
-uint8_t* MODEL_GetOutputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* type)
+uint8_t* MODEL_GetOutputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* type, int idx)
 {
-    TfLiteTensor* outputTensor = s_interpreter->output(0);
+    /* handles multiple outputs */
+    TfLiteTensor* outputTensor = s_interpreter->output(idx);
 
     return GetTensorData(outputTensor, dims, type);
 }
@@ -143,6 +145,7 @@ uint8_t* MODEL_GetOutputTensorData(mpp_tensor_dims_t* dims, mpp_tensor_type_t* t
 void MODEL_ConvertInput(uint8_t* data, mpp_tensor_dims_t* dims, mpp_tensor_type_t type, float mean, float std)
 {
     int size = dims->data[2] * dims->data[1] * dims->data[3];
+    float tmp;
     switch (type)
     {
         case MPP_TENSOR_TYPE_UINT8:
@@ -150,8 +153,8 @@ void MODEL_ConvertInput(uint8_t* data, mpp_tensor_dims_t* dims, mpp_tensor_type_
         case MPP_TENSOR_TYPE_INT8:
             for (int i = size - 1; i >= 0; i--)
             {
-                reinterpret_cast<int8_t*>(data)[i] =
-                    static_cast<int>(data[i]) - 127;
+                tmp = (data[i] / std) - mean;
+                reinterpret_cast<int8_t*>(data)[i] = (int8_t)tmp;
             }
             break;
         case MPP_TENSOR_TYPE_FLOAT32:

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,7 +23,7 @@
 #define STREAMER_TASK_NAME         "Streamer"
 #define STREAMER_MESSAGE_TASK_NAME "StreamerMessage"
 
-#define STREAMER_TASK_STACK_SIZE         16 * 1024
+#define STREAMER_TASK_STACK_SIZE         20 * 1024
 #define STREAMER_MESSAGE_TASK_STACK_SIZE 1024
 
 static STREAMER_T *streamer;
@@ -297,6 +297,36 @@ eap_att_code_t pause()
     return kEapAttCodeStreamControlFailure;
 }
 
+eap_att_code_t seek(int32_t seek_time)
+{
+    StreamData query1;
+
+    if (streamer_query_info(streamer, 0, INFO_DURATION, &query1, true) != 0)
+    {
+        return kEapAttCodeStreamControlFailure;
+    }
+
+    if (query1.value32u > 0U)
+    {
+        if ((uint32_t)seek_time > query1.value32u)
+        {
+            PRINTF(
+                "[SEEK STREAMER] No seek was performed because the seek time is longer than the duration of the audio "
+                "track.\r\n");
+            return kEapAttCodeOk;
+        }
+
+        if (streamer_seek_pipeline(streamer, 0, seek_time, true) == 0)
+        {
+            PRINTF("[SEEK STREAMER] The seek audio track to %u milliseconds was performed successfully.\r\n",
+                   seek_time);
+            return kEapAttCodeOk;
+        }
+    }
+
+    return kEapAttCodeStreamControlFailure;
+}
+
 eap_att_code_t set_volume(int volume)
 {
     ELEMENT_PROPERTY_T prop;
@@ -412,6 +442,7 @@ void STREAMER_Init(void)
     att_control->pause      = &pause;
     att_control->reset      = &reset;
     att_control->stop       = &stop;
+    att_control->seek       = &seek;
     att_control->destroy    = &destroy;
     att_control->resume     = &resume;
     att_control->set_volume = &set_volume;

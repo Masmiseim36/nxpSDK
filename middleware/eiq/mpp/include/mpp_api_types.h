@@ -21,6 +21,9 @@
  *
  * @{
  */
+/** Maximum number of inference inputs and outputs **/
+#define MPP_INFERENCE_MAX_OUTPUTS 4 /*!< Maximum number of outputs supported by the pipeline */
+#define MPP_INFERENCE_MAX_INPUTS 1 /*!< Maximum number of inputs supported by the pipeline */
 
 /** Pipeline handle type */
 typedef void* mpp_t ;
@@ -85,7 +88,7 @@ typedef enum {
 /** The convert operations selector flags */
 typedef enum {
     MPP_CONVERT_NONE = 0,           /*!< no frame conversion */
-    MPP_CONVERT_ROTATE = 1,         /*!< frame rotation */
+    MPP_CONVERT_ROTATE = 1,         /*!< frame rotation and flip */
     MPP_CONVERT_SCALE = (1 << 1),   /*!< frame scaling */
     MPP_CONVERT_COLOR = (1 << 2),   /*!< frame color conversion */
     MPP_CONVERT_CROP = (1 << 3),    /*!< frame crop */
@@ -172,18 +175,32 @@ typedef enum {
     MPP_TENSOR_TYPE_INT8 = 2    /*!< signed integer 8 bits */
 } mpp_tensor_type_t;
 
-/** Inference type */
+/** Inference input tensor order */
 typedef enum {
+    MPP_TENSOR_ORDER_UNKNOWN = 0,  /*!< order not set */
+    MPP_TENSOR_ORDER_NHWC = 1,  /*!< order: Batch, Height, Width, Channels */
+    MPP_TENSOR_ORDER_NCHW = 2  /*!< order: Batch, Channels, Height, Width */
+} mpp_tensor_order_t;
+
+/** Inference type */
+typedef enum
+{
     MPP_INFERENCE_TYPE_TFLITE = 0,      /*!< TensorFlow-Lite */
-    MPP_INFERENCE_TYPE_DEEPVIEWRT = 1   /*!< DeepViewRT */
+    MPP_INFERENCE_TYPE_DEEPVIEWRT = 1, /*!< DeepViewRT */
+    MPP_INFERENCE_TYPE_GLOW = 2       /*!< GLOW */
 } mpp_inference_type_t;
+
+/** tensor parameters */
+typedef struct{
+    const uint8_t* data;  /*!< output data */
+    mpp_tensor_dims_t dims; /*!< tensor data dimensions */
+    mpp_tensor_type_t type; /*!< tensor data type */
+} mpp_inference_out_tensor_params_t;
 
 /** Inference callback parameters */
 typedef struct {
     void *user_data;        /*!< callback will pass this pointer */
-    const uint8_t* tensor;  /*!< output tensor data */
-    mpp_tensor_dims_t dims; /*!< tensor data dimensions */
-    mpp_tensor_type_t type; /*!< tensor data type */
+    mpp_inference_out_tensor_params_t *out_tensors[MPP_INFERENCE_MAX_OUTPUTS]; /*!< output tensors parameters */
     int inference_time_ms;  /*!< inference run time measurement - output to user */
 } mpp_inference_cb_param_t;
 
@@ -198,6 +215,9 @@ typedef union {
         uint8_t pad;    /*!< padding byte */
     } rgb;  /*!< RGB color */
 } mpp_color_t;
+
+/** Bundle inference function type */
+typedef int (*inference_entry_point_t)(uint8_t * , uint8_t * , uint8_t *);
 
 /** mpp labeled rectangle element structure */
 typedef struct {
@@ -221,6 +241,19 @@ typedef struct {
     int right;
 } mpp_area_t;
 
+/** Model parameters */
+typedef struct {
+    uint64_t constant_weight_MemSize;  /*!< model constant weights memory size */
+    uint64_t mutable_weight_MemSize;   /*!< Defines the amount of memory required both input & output data buffers */
+    uint64_t activations_MemSize;      /*!< Size of scratch memory used for intermediate computations needed by the model */
+    int num_inputs ;                   /*!< model's number of inputs */
+    int num_outputs ;                  /*!< model's number of outputs */
+    uint64_t inputs_offsets[MPP_INFERENCE_MAX_INPUTS] ;  /*!< offset of each input */
+    uint64_t outputs_offsets[MPP_INFERENCE_MAX_OUTPUTS]; /*!< offset of each output */
+    inference_entry_point_t model_entry_point;                 /*!< function called to perform the inference */
+    mpp_tensor_type_t model_input_tensors_type; /*!< type of input buffer */
+} mpp_inference_params_t;
+
 /** Processing element parameters */
 typedef union {
     /** Compose element's parameters - NOT IMPLEMENTED YET */
@@ -240,6 +273,7 @@ typedef union {
         unsigned int height;                /*!< output image height */
         mpp_pixel_format_t pixel_format;    /*!< new pixel format */
         mpp_rotate_degree_t angle;          /*!< rotation angle */
+        mpp_flip_mode_t flip;               /*!< flip mode */
         mpp_area_t crop;                    /*!< input crop area */
         mpp_area_t out_area;                /*!< output window area */
         mpp_convert_ops_t ops;              /*!< operation selector mask */
@@ -272,8 +306,9 @@ typedef union {
         int model_size;         /*!< model binary size */
         float model_input_mean; /*!< model 'mean' of input values, used for normalization */
         float model_input_std;  /*!< model 'standard deviation' of input values, used for normalization */
-    } ml_inference;
-
+        mpp_tensor_order_t tensor_order;
+        mpp_inference_params_t inference_params; /*!< model specific parameters used by the inference */
+    } ml_inference; /*!< ML inference */
 } mpp_element_params_t;
 
 /** @}*/

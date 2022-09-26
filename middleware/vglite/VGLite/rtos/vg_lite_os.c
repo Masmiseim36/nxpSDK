@@ -1,6 +1,7 @@
 #include "vg_lite_os.h"
 
 #include "FreeRTOS.h"
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 #include "semphr.h"
 #include "task.h"
 #include "queue.h"
@@ -163,6 +164,7 @@ void * vg_lite_os_get_tls( )
 {
     return pvTaskGetThreadLocalStoragePointer(NULL, 0);
 }
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 void * vg_lite_os_malloc(uint32_t size)
 {
@@ -174,6 +176,7 @@ void vg_lite_os_free(void * memory)
     vPortFree(memory);
 }
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 void vg_lite_os_reset_tls()
 {
     vTaskSetThreadLocalStoragePointer(NULL, 0, NULL);
@@ -417,3 +420,4 @@ int8_t vg_lite_os_query_context_switch(uint32_t context)
         return FALSE;
     return TURE;
 }
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */

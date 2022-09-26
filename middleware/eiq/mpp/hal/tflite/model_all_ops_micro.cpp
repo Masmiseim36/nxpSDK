@@ -5,13 +5,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "mpp_config.h"
+/* Setting TFLITE_ALL_OPS_RESOLVER to 0 implies to provide an implementation of function
+ * tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReporter)
+ * using the tensorflow-lite API.
+ * Setting TFLITE_ALL_OPS_RESOLVER to 1 will automatically compile all available Operations and thus increase code size.
+ **/
 
-#ifndef TFLITE_CUSTOM_OPS_RESOLVER
-#define TFLITE_CUSTOM_OPS_RESOLVER 0
+#ifndef TFLITE_ALL_OPS_RESOLVER
+#define TFLITE_ALL_OPS_RESOLVER 0
+#endif
+#ifndef TFLITE_CUSTOM_OPS_DUMMY_RESOLVER
+#define TFLITE_CUSTOM_OPS_DUMMY_RESOLVER 0
 #endif
 
-#if (TFLITE_CUSTOM_OPS_RESOLVER == 0)
+#if (TFLITE_ALL_OPS_RESOLVER == 1)
 
 #include "tensorflow/lite/micro/all_ops_resolver.h"
 

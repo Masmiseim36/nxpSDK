@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.0</span>
+   &#160;<span id="projectnumber">Rev 2.12.1</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -270,8 +270,8 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gab8a795637177dc9973e0fd2f5b29b6c3">FSL_LPADC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 1))</td></tr>
-<tr class="memdesc:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPADC driver version 2.5.1.  <a href="#gab8a795637177dc9973e0fd2f5b29b6c3">More...</a><br/></td></tr>
+<tr class="memitem:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gab8a795637177dc9973e0fd2f5b29b6c3">FSL_LPADC_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td></tr>
+<tr class="memdesc:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPADC driver version 2.6.0.  <a href="#gab8a795637177dc9973e0fd2f5b29b6c3">More...</a><br/></td></tr>
 <tr class="separator:gab8a795637177dc9973e0fd2f5b29b6c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
@@ -336,6 +336,9 @@ Trigger and conversion with FIFO.</h2></td></tr>
 <tr class="memitem:gacaef94ac48a3e0a34f9235f88767b7a3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#gacaef94ac48a3e0a34f9235f88767b7a3">LPADC_DoSoftwareTrigger</a> (ADC_Type *base, uint32_t triggerIdMask)</td></tr>
 <tr class="memdesc:gacaef94ac48a3e0a34f9235f88767b7a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do software trigger to conversion command.  <a href="#gacaef94ac48a3e0a34f9235f88767b7a3">More...</a><br/></td></tr>
 <tr class="separator:gacaef94ac48a3e0a34f9235f88767b7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4224ecb1a5bc073aeb37e462674734fe"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga4224ecb1a5bc073aeb37e462674734fe">LPADC_EnableHardwareTriggerCommandSelection</a> (ADC_Type *base, uint32_t triggerId, bool enable)</td></tr>
+<tr class="memdesc:ga4224ecb1a5bc073aeb37e462674734fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable hardware trigger command selection.  <a href="#ga4224ecb1a5bc073aeb37e462674734fe">More...</a><br/></td></tr>
+<tr class="separator:ga4224ecb1a5bc073aeb37e462674734fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga500d8b7b0323136353e10fdfad2e40c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00053.html#ga500d8b7b0323136353e10fdfad2e40c7">LPADC_SetConvCommandConfig</a> (ADC_Type *base, uint32_t commandId, const <a class="el" href="a00053.html#a00561">lpadc_conv_command_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga500d8b7b0323136353e10fdfad2e40c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configure conversion command.  <a href="#ga500d8b7b0323136353e10fdfad2e40c7">More...</a><br/></td></tr>
 <tr class="separator:ga500d8b7b0323136353e10fdfad2e40c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -847,7 +850,7 @@ Trigger and conversion with FIFO.</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPADC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 5, 1))</td>
+          <td class="memname">#define FSL_LPADC_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 6, 0))</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1713,6 +1716,55 @@ Trigger and conversion with FIFO.</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
     <tr><td class="paramname">triggerIdMask</td><td>Mask value for software trigger indexes, which count from zero. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga4224ecb1a5bc073aeb37e462674734fe"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void LPADC_EnableHardwareTriggerCommandSelection </td>
+          <td>(</td>
+          <td class="paramtype">ADC_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>triggerId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enable</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function will use the hardware trigger command from ADC_ETC.The trigger command is then defined by ADC hardware trigger command selection field in ADC_ETC- &gt;TRIGx_CHAINy_z_n[CSEL].</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>LPADC peripheral base address. </td></tr>
+    <tr><td class="paramname">triggerId</td><td>ID for each trigger. Typically, the available value range is from 0. </td></tr>
+    <tr><td class="paramname">enable</td><td>True to enable or flase to disable. </td></tr>
   </table>
   </dd>
 </dl>

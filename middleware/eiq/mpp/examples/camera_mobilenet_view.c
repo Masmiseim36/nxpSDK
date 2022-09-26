@@ -7,9 +7,10 @@
 
 /* @brief This example application shows usage of MultiMedia Pipeline to build a simple graph:
  * 2D camera -> split -> image converter -> draw labeled rectangle -> display
- *                   +-> image converter -> TensorFlow Lite model MobileNet v1
+ *                   +-> image converter -> inference engine (model: MobileNet v1)
  * The camera view finder is displayed on screen
- * The model performs classification among a list of 1000 object types (see model_data.h),
+ * The model performs classification among a list of 1000 object types
+ *(see models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenetv1_labels.h),
  * the model output is displayed on UART console by application */
 
 /* FreeRTOS kernel includes. */
@@ -31,9 +32,7 @@
 /* MPP includes */
 #include "mpp_api.h"
 
-/* tflite mobilenet model */
-#include "tflite/mobilenetv1_model_data.h"
-#include "tflite/output_postproc.h"
+#include "examples_common.h"
 
 /*******************************************************************************
  * Definitions
@@ -50,6 +49,14 @@ typedef struct _user_data_t {
  * Variables declaration
  ******************************************************************************/
 
+/* define this flag to enable MPP stop and start */
+#ifndef CONFIG_STOP_MPP
+#define CONFIG_STOP_MPP 0
+#endif
+#if (CONFIG_STOP_MPP == 1)
+#define MPP_STOP_DELAY_MS 2500
+#endif
+
 /* set this flag to 1 in order to replace the camera source by static image of a stopwatch */
 #ifndef SOURCE_STATIC_IMAGE
 #define SOURCE_STATIC_IMAGE 0
@@ -61,14 +68,23 @@ typedef struct _user_data_t {
 #define DISPLAY_WIDTH  720
 #define DISPLAY_HEIGHT 1280
 
-#define IMAGE_WIDTH 168
-#define IMAGE_HEIGHT 208
+/* Model data input (depends on inference engine) */
+#if defined(INFERENCE_ENGINE_TFLM)
+#include "models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenetv1_model_data_tflite.h"
+#elif defined(INFERENCE_ENGINE_GLOW)
+#include "models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenet_v1_weights_glow.h"
+#include "models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenet_v1_glow.h"
+#else
+#error "ERROR: An inference engine must be selected"
+#endif
+
+#include "models/mobilenet_v1_0.25_128_quant_int8_cm7/mobilenetv1_output_postproc.h"
 
 #if (SOURCE_STATIC_IMAGE == 1)
 #include "stopwatch168_208_vuyx.h"
 #define CROP_TOP 0
 #define CROP_LEFT 0
-#define CROP_SIZE IMAGE_WIDTH
+#define CROP_SIZE SRC_IMAGE_WIDTH
 #define RECT_TOP_OFFSET 0
 #else
 #define CROP_TOP 0
@@ -79,8 +95,11 @@ typedef struct _user_data_t {
 
 #define MODEL_WIDTH  128
 #define MODEL_HEIGHT 128
+
 static const char s_display_name[] = "Lcdifv2Rk055ah";
+#if (SOURCE_STATIC_IMAGE != 1)
 static const char s_camera_name[] = "MipiOv5640";
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -133,7 +152,7 @@ int mpp_event_listener(mpp_t mpp, mpp_evt_t evt, void *evt_data, void *user_data
     case MPP_EVENT_INFERENCE_OUTPUT_READY:
         /* cast evt_data pointer to correct structure matching the event */
         inf_output = (const mpp_inference_cb_param_t *) evt_data;
-        ret = MODEL_ProcessOutput(
+        ret = MOBILENETv1_ProcessOutput(
                 inf_output,
                 app_priv->mp,
                 app_priv->elem,
@@ -157,6 +176,13 @@ static void app_task(void *params)
     int ret;
 
     PRINTF("[%s]\n", mpp_get_version());
+#if defined(INFERENCE_ENGINE_TFLM)
+    PRINTF("Inference Engine: TensorFlow-Lite Micro \r\n");
+#elif defined (INFERENCE_ENGINE_GLOW)
+    PRINTF("Inference Engine: Glow \r\n");
+#else
+#error "Please select inference engine"
+#endif
 
     ret = mpp_api_init();
     if (ret)
@@ -180,8 +206,8 @@ static void app_task(void *params)
     mpp_img_params_t img_params;
     memset(&img_params, 0, sizeof (mpp_img_params_t));
     img_params.format = MPP_PIXEL_YUV1P444;
-    img_params.width = IMAGE_WIDTH;
-    img_params.height = IMAGE_HEIGHT;
+    img_params.width  = SRC_IMAGE_WIDTH;
+    img_params.height = SRC_IMAGE_HEIGHT;
     mpp_static_img_add(mp, &img_params, image_data);
 #else
     mpp_camera_params_t cam_params;
@@ -211,7 +237,7 @@ static void app_task(void *params)
     mpp_element_params_t elem_params;
     memset(&elem_params, 0, sizeof(elem_params));
     /* color convert */
-    elem_params.convert.pixel_format = MPP_PIXEL_BGR;
+    elem_params.convert.pixel_format = MPP_PIXEL_RGB;
     elem_params.convert.ops = MPP_CONVERT_COLOR;
     /* resize */
     elem_params.convert.height = MODEL_HEIGHT;
@@ -237,11 +263,31 @@ static void app_task(void *params)
     /* configure TFlite element with model */
     mpp_element_params_t mobilenet_params;
     memset(&mobilenet_params, 0 , sizeof(mpp_element_params_t));
+
+#if defined(INFERENCE_ENGINE_TFLM)
     mobilenet_params.ml_inference.model_data = model_data;
     mobilenet_params.ml_inference.model_size = model_data_len;
     mobilenet_params.ml_inference.model_input_mean = MODEL_INPUT_MEAN;
     mobilenet_params.ml_inference.model_input_std = MODEL_INPUT_STD;
     mobilenet_params.ml_inference.type = MPP_INFERENCE_TYPE_TFLITE;
+#elif defined(INFERENCE_ENGINE_GLOW)
+    mobilenet_params.ml_inference.model_data = mobilenet_v1_weights_bin;
+    mobilenet_params.ml_inference.model_size = MOBILENET_V1_MobilenetV1_Predictions_Reshape_1;
+    mobilenet_params.ml_inference.inference_params.constant_weight_MemSize = MOBILENET_V1_CONSTANT_MEM_SIZE;
+    mobilenet_params.ml_inference.inference_params.mutable_weight_MemSize = MOBILENET_V1_MUTABLE_MEM_SIZE;
+    mobilenet_params.ml_inference.inference_params.activations_MemSize = MOBILENET_V1_ACTIVATIONS_MEM_SIZE;
+    mobilenet_params.ml_inference.inference_params.num_inputs = 1;
+    mobilenet_params.ml_inference.inference_params.inputs_offsets[0] = MOBILENET_V1_input;
+    mobilenet_params.ml_inference.inference_params.outputs_offsets[0] = MOBILENET_V1_MobilenetV1_Predictions_Reshape_1;
+    mobilenet_params.ml_inference.inference_params.model_input_tensors_type = MPP_TENSOR_TYPE_INT8;
+    mobilenet_params.ml_inference.inference_params.model_entry_point = &mobilenet_v1;
+    mobilenet_params.ml_inference.type = MPP_INFERENCE_TYPE_GLOW ;
+#endif
+
+    mobilenet_params.ml_inference.inference_params.num_inputs = 1;
+    mobilenet_params.ml_inference.inference_params.num_outputs = 1;
+    mobilenet_params.ml_inference.tensor_order = MPP_TENSOR_ORDER_NHWC;
+
     ret = mpp_element_add(mp_split, MPP_ELEMENT_INFERENCE, &mobilenet_params, NULL);
     if (ret) {
         PRINTF("Failed to add element VALGO_TFLite");
@@ -260,11 +306,12 @@ static void app_task(void *params)
     elem_params.convert.pixel_format = MPP_PIXEL_RGB565;
 #if (SOURCE_STATIC_IMAGE == 1)
     elem_params.convert.width = DISPLAY_WIDTH;
-    elem_params.convert.height = DISPLAY_WIDTH * IMAGE_HEIGHT / IMAGE_WIDTH;
+    elem_params.convert.height = DISPLAY_WIDTH * SRC_IMAGE_HEIGHT / SRC_IMAGE_WIDTH;
     elem_params.convert.ops = MPP_CONVERT_COLOR | MPP_CONVERT_SCALE;
 #else
     /* rotation is needed because camera is landscape, display RK055 is portrait */
     elem_params.convert.angle = ROTATE_90;
+    elem_params.convert.flip = FLIP_HORIZONTAL;
     elem_params.convert.ops = MPP_CONVERT_COLOR | MPP_CONVERT_ROTATE;
 #endif
     ret = mpp_element_add(mp, MPP_ELEMENT_CONVERT, &elem_params, NULL);
@@ -320,6 +367,30 @@ static void app_task(void *params)
         PRINTF("Failed to start pipeline");
         goto err;
     }
+
+#if (CONFIG_STOP_MPP == 1)
+    const TickType_t xDelay = MPP_STOP_DELAY_MS / portTICK_PERIOD_MS;
+    vTaskDelay(xDelay);
+    PRINTF("MPP STOP main branch\n");
+    mpp_stop(mp);
+    vTaskDelay(xDelay);
+    PRINTF("MPP START\n");
+    ret = mpp_start(mp, 0);
+    if (ret) {
+        PRINTF("Failed to start main branch\n");
+        goto err;
+    }
+    vTaskDelay(xDelay);
+    PRINTF("MPP STOP split branch\n");
+    mpp_stop(mp_split);
+    vTaskDelay(xDelay);
+    PRINTF("MPP START\n");
+    ret = mpp_start(mp_split, 0);
+    if (ret) {
+        PRINTF("Failed to start split branch\n");
+        goto err;
+    }
+#endif
 
     /* pause application task */
     vTaskSuspend(NULL);

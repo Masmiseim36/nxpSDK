@@ -1,11 +1,9 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-#include <stdio.h>
 
 #include "board_init.h"
 #include "demo_config.h"
@@ -161,7 +159,7 @@ int main(void)
 
     /* Boot Secondary core application */
     APP_CopyCore1Image();
-    printf("Starting Secondary core.\r\n");
+    PRINTF("Starting Secondary core.\r\n");
     APP_BootCore1();
 
     /* Wait Core 1 is Boot Up */
@@ -172,7 +170,7 @@ int main(void)
 
     if (MODEL_Init() != kStatus_Success)
     {
-        printf("Failed initializing model" EOL);
+        PRINTF("Failed initializing model" EOL);
         for (;;) {}
     }
 
@@ -192,7 +190,7 @@ int main(void)
         /* Expected tensor dimensions: [batches, height, width, channels] */
         if (IMAGE_GetImage(inputData, inputDims.data[2], inputDims.data[1], inputDims.data[3]) != kStatus_Success)
         {
-            printf("Failed retrieving input image" EOL);
+            PRINTF("Failed retrieving input image" EOL);
             for (;;) {}
         }
         MODEL_ConvertInput(inputData, &inputDims, inputType);
@@ -206,7 +204,7 @@ int main(void)
         if ((endTime - wakeuptime)/1000000 > 10)
         {
             APP_SetWakeupConfig();
-            printf("CPU enter Sleep mode ..." EOL);
+            PRINTF("CPU enter Sleep mode ..." EOL);
             GPIO_PinWrite(BOARD_MIPI_PANEL_BL_GPIO, BOARD_MIPI_PANEL_BL_PIN, 0);
             CpuModeTransition(kGPC_StopMode, false);
             //waked up from sleep

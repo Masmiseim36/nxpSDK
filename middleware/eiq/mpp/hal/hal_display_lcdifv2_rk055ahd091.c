@@ -56,6 +56,7 @@ hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Init(
     display_dev_t *dev, mpp_display_params_t *config, display_dev_callback_t callback, void *param);
 hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Deinit(const display_dev_t *dev);
 hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Start(display_dev_t *dev);
+hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Stop(display_dev_t *dev);
 hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Blit(const display_dev_t *dev, void *frame, int width, int height);
 hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Getbufdesc(const display_dev_t *dev, hw_buf_desc_t *in_buf, mpp_memory_policy_t *policy);
 
@@ -74,6 +75,7 @@ const static display_dev_operator_t s_DisplayDev_LcdifOps = {
     .init        = HAL_DisplayDev_Lcdifv2Rk055ah_Init,
     .deinit      = HAL_DisplayDev_Lcdifv2Rk055ah_Deinit,
     .start       = HAL_DisplayDev_Lcdifv2Rk055ah_Start,
+    .stop        = HAL_DisplayDev_Lcdifv2Rk055ah_Stop,
     .blit        = HAL_DisplayDev_Lcdifv2Rk055ah_Blit,
     .get_buf_desc    = HAL_DisplayDev_Lcdifv2Rk055ah_Getbufdesc,
 };
@@ -107,55 +109,78 @@ static void DISPLAY_BufferSwitchOffCallback(void *param, void *switchOffBuffer)
 static hal_display_status_t DISPLAY_InitDisplay(display_dev_private_capability_t *cap)
 {
     status_t status;
+    do {
+        if (s_newFrameShown) {
+            /*
+             * already initialized but was stopped
+             * re-enable layer is enough
+             */
+            break;
+        }
+        BOARD_PrepareDisplayController();
 
-    BOARD_PrepareDisplayController();
+        status = g_dc.ops->init(&g_dc);
 
-    status = g_dc.ops->init(&g_dc);
+        if (kStatus_Success != status)
+        {
+            HAL_LOGE("Display initialization failed\n");
+            return kStatus_HAL_DisplayError;
+        }
+
+        g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &s_fbInfo);
+        switch(cap->format) {
+            case MPP_PIXEL_RGB565:
+                s_fbInfo.pixelFormat = kVIDEO_PixelFormatRGB565;
+                break;
+            case MPP_PIXEL_ARGB:
+                s_fbInfo.pixelFormat = kVIDEO_PixelFormatXRGB8888;
+                break;
+            default:
+                HAL_LOGE("DISPLAY_InitDisplay: invalid pixel format parameter.\n");
+                return kStatus_HAL_DisplayError;
+        }
+        s_fbInfo.width       = DISPLAY_DEV_Lcdifv2Rk055ah_WIDTH;
+        s_fbInfo.height      = DISPLAY_DEV_Lcdifv2Rk055ah_HEIGHT;
+        s_fbInfo.startX      = DISPLAY_DEV_Lcdifv2Rk055ah_LEFT;
+        s_fbInfo.startY      = DISPLAY_DEV_Lcdifv2Rk055ah_TOP;
+        s_fbInfo.strideBytes = cap->pitch;
+        g_dc.ops->setLayerConfig(&g_dc, 0, &s_fbInfo);
+
+        g_dc.ops->setCallback(&g_dc, 0, DISPLAY_BufferSwitchOffCallback, NULL);
+
+        s_lcdActiveFbIdx = 0;
+        s_newFrameShown  = false;
+        g_dc.ops->setFrameBuffer(&g_dc, 0, s_LcdBuffer[s_lcdActiveFbIdx]);
+
+        /* For the DBI interface display, application must wait for the first
+         * frame buffer sent to the panel.
+         */
+        if ((g_dc.ops->getProperty(&g_dc) & kDC_FB_ReserveFrameBuffer) == 0)
+        {
+            while (s_newFrameShown == false)
+            {
+            }
+        }
+
+        s_newFrameShown = true;
+    } while (false);
+
+    g_dc.ops->enableLayer(&g_dc, 0);
+    return kStatus_HAL_DisplaySuccess;
+}
+
+static hal_display_status_t DISPLAY_DeInitDisplay(void)
+{
+    status_t status;
+
+    status = g_dc.ops->disableLayer(&g_dc, 0);
 
     if (kStatus_Success != status)
     {
-        HAL_LOGE("Display initialization failed\n");
+        HAL_LOGE("Display disableLayer failed\n");
         return kStatus_HAL_DisplayError;
     }
 
-    g_dc.ops->getLayerDefaultConfig(&g_dc, 0, &s_fbInfo);
-    switch(cap->format) {
-    case MPP_PIXEL_RGB565:
-        s_fbInfo.pixelFormat = kVIDEO_PixelFormatRGB565;
-        break;
-    case MPP_PIXEL_ARGB:
-        s_fbInfo.pixelFormat = kVIDEO_PixelFormatXRGB8888;
-        break;
-    default:
-        HAL_LOGE("DISPLAY_InitDisplay: invalid pixel format parameter.\n");
-        return kStatus_HAL_DisplayError;
-    }
-    s_fbInfo.width       = DISPLAY_DEV_Lcdifv2Rk055ah_WIDTH;
-    s_fbInfo.height      = DISPLAY_DEV_Lcdifv2Rk055ah_HEIGHT;
-    s_fbInfo.startX      = DISPLAY_DEV_Lcdifv2Rk055ah_LEFT;
-    s_fbInfo.startY      = DISPLAY_DEV_Lcdifv2Rk055ah_TOP;
-    s_fbInfo.strideBytes = cap->pitch;
-    g_dc.ops->setLayerConfig(&g_dc, 0, &s_fbInfo);
-
-    g_dc.ops->setCallback(&g_dc, 0, DISPLAY_BufferSwitchOffCallback, NULL);
-
-    s_lcdActiveFbIdx = 0;
-    s_newFrameShown  = false;
-    g_dc.ops->setFrameBuffer(&g_dc, 0, s_LcdBuffer[s_lcdActiveFbIdx]);
-
-    /* For the DBI interface display, application must wait for the first
-     * frame buffer sent to the panel.
-     */
-    if ((g_dc.ops->getProperty(&g_dc) & kDC_FB_ReserveFrameBuffer) == 0)
-    {
-        while (s_newFrameShown == false)
-        {
-        }
-    }
-
-    s_newFrameShown = true;
-
-    g_dc.ops->enableLayer(&g_dc, 0);
     return kStatus_HAL_DisplaySuccess;
 }
 
@@ -222,6 +247,15 @@ hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Start(display_dev_t *dev)
     HAL_LOGD("++HAL_DisplayDev_Lcdifv2Rk055ah_Start\n");
     ret = DISPLAY_InitDisplay(&dev->cap);
     HAL_LOGD("--HAL_DisplayDev_Lcdifv2Rk055ah_Start\n");
+    return ret;
+}
+
+hal_display_status_t HAL_DisplayDev_Lcdifv2Rk055ah_Stop(display_dev_t *dev)
+{
+    hal_display_status_t ret = kStatus_HAL_DisplaySuccess;
+    HAL_LOGD("++\n");
+    ret = DISPLAY_DeInitDisplay();
+    HAL_LOGD("--\n");
     return ret;
 }
 

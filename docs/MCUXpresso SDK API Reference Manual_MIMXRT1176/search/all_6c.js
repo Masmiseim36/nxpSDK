@@ -116,6 +116,7 @@ var searchData=
   ['lpadc_5fdosoftwaretrigger',['LPADC_DoSoftwareTrigger',['../a00053.html#gacaef94ac48a3e0a34f9235f88767b7a3',1,'fsl_lpadc.h']]],
   ['lpadc_5fenable',['LPADC_Enable',['../a00053.html#gaf76592d9f392cd30b738f599b2e71344',1,'fsl_lpadc.h']]],
   ['lpadc_5fenablefifowatermarkdma',['LPADC_EnableFIFOWatermarkDMA',['../a00053.html#gacaaa33bc4d9cfd8fad4fac8f1475d97c',1,'fsl_lpadc.h']]],
+  ['lpadc_5fenablehardwaretriggercommandselection',['LPADC_EnableHardwareTriggerCommandSelection',['../a00053.html#ga4224ecb1a5bc073aeb37e462674734fe',1,'fsl_lpadc.h']]],
   ['lpadc_5fenableinterrupts',['LPADC_EnableInterrupts',['../a00053.html#ga2c147558843514556795fd52f86aca56',1,'fsl_lpadc.h']]],
   ['lpadc_5fget_5factive_5fcommand_5fstatus',['LPADC_GET_ACTIVE_COMMAND_STATUS',['../a00053.html#gae305eca1c95975e49ea88d0d39aeb3e0',1,'fsl_lpadc.h']]],
   ['lpadc_5fget_5factive_5ftrigger_5fstatue',['LPADC_GET_ACTIVE_TRIGGER_STATUE',['../a00053.html#ga48a0c8b6bac1e45cc7bdc93ccc288786',1,'fsl_lpadc.h']]],

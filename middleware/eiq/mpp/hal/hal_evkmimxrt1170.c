@@ -50,3 +50,9 @@ int hal_inference_tflite_setup(vision_algo_dev_t *dev)
 {
     return hal_tflite_setup(dev);
 }
+
+int hal_glow_setup(vision_algo_dev_t *dev);
+int hal_inference_glow_setup(vision_algo_dev_t *dev)
+{
+	return hal_glow_setup(dev);
+}

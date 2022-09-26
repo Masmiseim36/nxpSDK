@@ -189,6 +189,16 @@ int mpp_element_update(mpp_t mpp, mpp_elem_handle_t elem_h, mpp_element_params_t
 int mpp_start(mpp_t mpp, int last);
 
 /**
+ * Stop a branch of the pipeline
+ *
+ * This function stops the data processing and peripherals of a pipeline branch.
+ *
+ * @param [in] mpp pipeline branch to stop
+ * @return \ref return_codes
+ */
+int mpp_stop(mpp_t mpp);
+
+/**
  * Get MPP version
  *
  * @return pointer to the MPP version string

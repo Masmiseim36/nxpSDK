@@ -121,6 +121,8 @@
         </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
           <value>isd=KEEP(*(CodeQuickAccess));region=SRAM_ITC_cm7;type=.data</value>
+          <value>isd=*(.data .data*);region=SRAM_DTC_cm7;type=.data</value>
+          <value>isd=*(.bss .bss* COMMON);region=SRAM_DTC_cm7;type=.bss</value>
           <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
           <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
@@ -129,6 +131,9 @@
         </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:SRAM_DTC_cm7;Post Data;0x1000&amp;Stack:SRAM_DTC_cm7;End;0x1000</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
@@ -380,7 +385,7 @@
       <files mask="ToggleButton.png"/>
       <files mask="Track.png"/>
     </source>
-    <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk armgcc">
+    <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>
     <source path="iar" project_relative_path="evkmimxrt1170" type="other" toolchain="iar">

@@ -155,7 +155,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -1276,7 +1276,7 @@
         <option>
           <name>OGPrintfVariant</name>
           <version>0</version>
-          <state>3</state>
+          <state>1</state>
         </option>
         <option>
           <name>OGPrintfMultibyteSupport</name>
@@ -2549,15 +2549,6 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</name>
     </file>
     <file>
@@ -2568,6 +2559,15 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1166/drivers/fsl_lpi2c.c</name>

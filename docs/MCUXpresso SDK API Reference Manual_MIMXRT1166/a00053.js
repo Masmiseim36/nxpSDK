@@ -114,6 +114,7 @@ var a00053 =
     [ "LPADC_SetConvTriggerConfig", "a00053.html#ga67927722ab525eda9e31d1f7554f02a4", null ],
     [ "LPADC_GetDefaultConvTriggerConfig", "a00053.html#ga44e286bc27b1e8fee3f4796ca9196a27", null ],
     [ "LPADC_DoSoftwareTrigger", "a00053.html#gacaef94ac48a3e0a34f9235f88767b7a3", null ],
+    [ "LPADC_EnableHardwareTriggerCommandSelection", "a00053.html#ga4224ecb1a5bc073aeb37e462674734fe", null ],
     [ "LPADC_SetConvCommandConfig", "a00053.html#ga500d8b7b0323136353e10fdfad2e40c7", null ],
     [ "LPADC_GetDefaultConvCommandConfig", "a00053.html#gaa3f7fd90bdbd65fbc4e5b88e904173f9", null ]
 ];

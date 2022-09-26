@@ -9,13 +9,6 @@
 
 /* Set here all the static configuration of the Media Processing Pipeline */
 
-/* Setting TFLITE_CUSTOM_OPS_RESOLVER to 1 implies to provide an implementation of function
- * tflite::MicroOpResolver &MODEL_GetOpsResolver(tflite::ErrorReporter* errorReporter)
- * using the tensorflow-lite API.
- * Setting TFLITE_CUSTOM_OPS_RESOLVER to 0 will automatically compile all available Operations and thus increase code size.
- **/
-#define TFLITE_CUSTOM_OPS_RESOLVER 1
-
 #define ENABLE_CAMERA_DEV_MipiOv5640 1
 #define ENABLE_DISPLAY_DEV_Lcdifv2Rk055ah 1
 #define ENABLE_GFX_DEV_Pxp 1
@@ -38,6 +31,13 @@
 #define MPP_VERSION_COMMIT 0
 #endif
 
+/* Workaround for the PXP bug (iMXRT1170) where BGR888 is output instead
+ * of RGB888 [MPP-97].
+ */
+#ifndef IMXRT1170_PXP_WORKAROUND_OUT_RGB
+#define IMXRT1170_PXP_WORKAROUND_OUT_RGB 1
+#endif
+
 /**
  *  Mutex lock timeout definition
  *  An arbitrary default value is defined to 5 seconds
@@ -53,4 +53,20 @@
 
 #define HAL_MAX_MUTEX_TIME_MS   (MAX_MUTEX_TIME_MS / portTICK_PERIOD_MS)
 
+/* The size of Tensor Arena buffer for TensorFlowLite-Micro */
+#ifndef HAL_TFLM_TENSOR_ARENA_SIZE_KB
+/* minimum required arena size for MobileNetv1 */
+#define HAL_TFLM_TENSOR_ARENA_SIZE_KB 512
+#endif
+/* The memory size used for weights and activations when using glow inference with Mobilenet v1,
+ * these macros should be adjusted when using another model*/
+#ifndef GLOW_CONSTANT_WEIGHTS_MAX_MEMSIZE
+#define GLOW_CONSTANT_WEIGHTS_MAX_MEMSIZE 515328
+#endif
+#ifndef GLOW_MUTABLE_WEIGHTS_MAX_MEMSIZE
+#define GLOW_MUTABLE_WEIGHTS_MAX_MEMSIZE  53184
+#endif
+#ifndef GLOW_ACTIVATIONS_MAX_MEMSIZE
+#define GLOW_ACTIVATIONS_MAX_MEMSIZE      98304
+#endif
 #endif /* _MPP_CONFIG_H */

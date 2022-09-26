@@ -7,13 +7,23 @@
  * applicable license terms, then you may not retain, install, activate or otherwise use the software.
  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
 
+#include "fsl_debug_console.h"
+#include <stdio.h>
+#include <stdarg.h>
+
 /* TODO - fix pixel format definition issue */
 #include "mpp_api_types.h"
 #include "hal_utils.h"
+
+#define LOG_STRING_MAX_SIZE 128
 
 static const char* hal_camera_names[] = {
     "rgb_sim",
@@ -28,6 +38,19 @@ static const char* hal_display_names[] = {
     "Lcdifv2Rk055ah"
 };
 
+void LOG(int cond, const char* module, const char* lvl_str, const char* format, ...)
+{
+    char args_buffer[LOG_STRING_MAX_SIZE];
+    va_list args;
+    va_start(args, format);
+    vsprintf(args_buffer, format, args);
+    if (cond) {
+        PRINTF("\r[%u]", (unsigned int)GET_TICK());
+        PRINTF(":%s:%s:(%s:%u)", module, lvl_str, __func__, __LINE__);
+        PRINTF(":%s", args_buffer);
+    }
+    va_end(args);
+}
 
 typedef int (*display_setup_func_t) (display_dev_t *);
 int display_sim_setup(display_dev_t *);
@@ -127,3 +150,7 @@ mpp_pixel_format_t hal_fsl_to_mpp_pixeltype(video_pixel_format_t fsl_typ)
     }
     return mpp_typ;
 }
+
+#ifdef __cplusplus
+}
+#endif

@@ -11,8 +11,10 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_static_image.c
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_utils.c
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_vision_algo_tflite.c
+    ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/hal_vision_algo_glow.c
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/tflite/model.cpp
     ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/tflite/model_all_ops_micro.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/mpp/hal/glow/model.cpp
 )
 
 

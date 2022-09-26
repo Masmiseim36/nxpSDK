@@ -78,6 +78,8 @@ typedef struct _display_dev_operator
     hal_display_status_t (*deinit)(const display_dev_t *dev);
     /* start the dev */
     hal_display_status_t (*start)(display_dev_t *dev);
+    /* stop the dev */
+    hal_display_status_t (*stop)(display_dev_t *dev);
     /* blit a buffer to the dev */
     hal_display_status_t (*blit)(const display_dev_t *dev, void *frame, int width, int height);
     /* get buffer descriptors and policy */

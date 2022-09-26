@@ -2,6 +2,7 @@
 #define _VG_LITE_OS_H
 
 #include <stdint.h>
+#if !defined(SINGLE_THREAD_DRIVER)
 
 #define vg_lite_os_set_event_state(event, state)      (event)->signal = state
 
@@ -29,6 +30,7 @@ int32_t vg_lite_os_set_tls(void* tls);
 @brief  Get the current task’s thread local storage array.
 */
 void * vg_lite_os_get_tls( );
+#endif /* not defined(SINGLE_THREAD_DRIVER) */
 
 /*!
 @brief  Memory allocate.
@@ -40,6 +42,7 @@ void * vg_lite_os_malloc(uint32_t size);
 */
 void vg_lite_os_free(void * memory);
 
+#if !defined(SINGLE_THREAD_DRIVER)
 /*!
 @brief  Reset the value in a task’s thread local storage array.
 */
@@ -119,3 +122,4 @@ int32_t vg_lite_os_signal_event(vg_lite_os_async_event_t *event);
 int8_t vg_lite_os_query_context_switch(uint32_t context);
 
 #endif
+#endif /* not defined(SINGLE_THREAD_DRIVER) */

@@ -75,10 +75,10 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/lists
     ${ProjDirPath}/../../../../../components/uart
     ${ProjDirPath}/../../../../../components/serial_manager
-    ${ProjDirPath}/../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../devices/MIMXRT1166
     ${ProjDirPath}/../../../../../devices/MIMXRT1166/xip
     ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../devices/MIMXRT1166/utilities
     ${ProjDirPath}/../../../../../CMSIS/Core/Include
 )
 
@@ -131,11 +131,13 @@ include(component_serial_manager_uart_MIMXRT1166_cm7)
 
 include(driver_lpuart_MIMXRT1166_cm7)
 
-include(utility_debug_console_MIMXRT1166_cm7)
-
 include(device_MIMXRT1166_CMSIS_MIMXRT1166_cm7)
 
 include(device_MIMXRT1166_startup_MIMXRT1166_cm7)
+
+include(driver_dcdc_soc_MIMXRT1166_cm7)
+
+include(driver_pmu_1_MIMXRT1166_cm7)
 
 include(driver_clock_MIMXRT1166_cm7)
 
@@ -143,17 +145,15 @@ include(driver_igpio_MIMXRT1166_cm7)
 
 include(driver_iomuxc_MIMXRT1166_cm7)
 
+include(driver_lpi2c_MIMXRT1166_cm7)
+
 include(driver_xip_device_MIMXRT1166_cm7)
 
 include(driver_xip_board_evkmimxrt1160_MIMXRT1166_cm7)
 
-include(driver_dcdc_soc_MIMXRT1166_cm7)
-
-include(driver_pmu_1_MIMXRT1166_cm7)
-
-include(driver_lpi2c_MIMXRT1166_cm7)
-
 include(utility_assert_MIMXRT1166_cm7)
+
+include(utility_debug_console_MIMXRT1166_cm7)
 
 include(middleware_freertos-kernel_extension_MIMXRT1166_cm7)
 
@@ -165,9 +165,9 @@ include(CMSIS_Include_core_cm_MIMXRT1166_cm7)
 
 include(driver_memory_MIMXRT1166_cm7)
 
-include(device_MIMXRT1166_system_MIMXRT1166_cm7)
-
 include(utilities_misc_utilities_MIMXRT1166_cm7)
+
+include(device_MIMXRT1166_system_MIMXRT1166_cm7)
 
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)

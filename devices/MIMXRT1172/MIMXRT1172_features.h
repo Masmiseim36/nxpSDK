@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210910
+**     Build:               b220802
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2021 NXP
+**     Copyright 2016-2022 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -95,6 +95,8 @@
 #define FSL_FEATURE_SOC_LPUART_COUNT (12)
 /* @brief MCM availability on the SoC. */
 #define FSL_FEATURE_SOC_MCM_COUNT (1)
+/* @brief MPU availability on the SoC. */
+#define FSL_FEATURE_SOC_MPU_COUNT (1)
 /* @brief MU availability on the SoC. */
 #define FSL_FEATURE_SOC_MU_COUNT (1)
 /* @brief OCOTP availability on the SoC. */
@@ -217,6 +219,8 @@
 #define FSL_FEATURE_FLEXCAN_HAS_ENHANCED_BIT_TIMING_REG (0)
 /* @brief Has Pretended Networking mode support. */
 #define FSL_FEATURE_FLEXCAN_HAS_PN_MODE (0)
+/* @brief Does not support Supervisor Mode (bitfield MCR[SUPV]. */
+#define FSL_FEATURE_FLEXCAN_HAS_NO_SUPV_SUPPORT (0)
 
 /* CCM module features */
 
@@ -265,6 +269,8 @@
 
 /* @brief Has no ITRM register. */
 #define FSL_FEATURE_DAC12_HAS_NO_ITRM_REGISTER (1)
+/* @brief Has hardware trigger. */
+#define FSL_FEATURE_DAC12_HAS_HW_TRIGGER (0)
 
 /* DCDC module features */
 
@@ -373,6 +379,8 @@
 #define FSL_FEATURE_ENET_HAS_RGMII_RXC_DELAY (0)
 /* @brief PTP Timestamp CAPTURE bit always returns 0 when the capture is not over. */
 #define FSL_FEATURE_ENET_TIMESTAMP_CAPTURE_BIT_INVALID (0)
+/* @brief ENET Has Extra Clock Gate.(RW610). */
+#define FSL_FEATURE_ENET_HAS_EXTRA_CLOCK_GATE (0)
 
 /* ENET_QOS module features */
 
@@ -419,7 +427,7 @@
 /* @brief Has FLEXRAM_MAGIC_ADDR. */
 #define FSL_FEATURE_FLEXRAM_HAS_MAGIC_ADDR (1)
 /* @brief If FLEXRAM has ECC function. */
-#define FSL_FEATURE_FLEXRAM_HAS_ECC (1)
+#define FSL_FEATURE_FLEXRAM_HAS_ECC (0)
 
 /* FLEXSPI module features */
 
@@ -431,6 +439,12 @@
 #define FSL_FEATURE_FLEXSPI_HAS_INTEN_AHBBUSERROREN (1)
 /* @brief There is CLRAHBTX_RXBUF bit in AHBCR register. */
 #define FSL_FEATURE_FLEXSPI_HAS_AHBCR_CLRAHBTX_RXBUF (0)
+/* @brief FLEXSPI has no IP parallel mode. */
+#define FSL_FEATURE_FLEXSPI_HAS_NO_IP_PARALLEL_MODE (0)
+/* @brief FLEXSPI has no AHB parallel mode. */
+#define FSL_FEATURE_FLEXSPI_HAS_NO_AHB_PARALLEL_MODE (0)
+/* @brief FLEXSPI support address shift. */
+#define FSL_FEATURE_FLEXSPI_SUPPORT_ADDRESS_SHIFT (0)
 
 /* GPC_CPU_CTRL module features */
 
@@ -501,6 +515,20 @@
 #define FSL_FEATURE_LPADC_HAS_CFG_CALOFS (0)
 /* @brief Has offset trim (register OFSTRIM). */
 #define FSL_FEATURE_LPADC_HAS_OFSTRIM (0)
+/* @brief Has power select (bitfield CFG[PWRSEL]). */
+#define FSL_FEATURE_LPADC_HAS_CFG_PWRSEL (1)
+/* @brief Has alternate channel B scale (bitfield CMDLn[ALTB_CSCALE]). */
+#define FSL_FEATURE_LPADC_HAS_CMDL_ALTB_CSCALE (0)
+/* @brief Has alternate channel B select enable (bitfield CMDLn[ALTBEN]). */
+#define FSL_FEATURE_LPADC_HAS_CMDL_ALTBEN (0)
+/* @brief Has alternate channel input (bitfield CMDLn[ALTB_ADCH]). */
+#define FSL_FEATURE_LPADC_HAS_CMDL_ALTB_ADCH (0)
+/* @brief Has offset calibration mode (bitfield CTRL[CALOFSMODE]). */
+#define FSL_FEATURE_LPADC_HAS_CTRL_CALOFSMODE (0)
+/* @brief Conversion averaged bitfiled width. */
+#define FSL_FEATURE_LPADC_CONVERSIONS_AVERAGED_BITFIELD_WIDTH (3)
+/* @brief Enable hardware trigger command selection */
+#define FSL_FEATURE_LPADC_HAS_TCTRL_CMD_SEL (1)
 
 /* LPI2C module features */
 
@@ -651,6 +679,12 @@
 #define FSL_FEATURE_PDM_HAS_RANGE_CTRL (1)
 /* @brief PDM Has Low Frequency */
 #define FSL_FEATURE_PDM_HAS_STATUS_LOW_FREQ (1)
+/* @brief CLKDIV factor in Medium, High and Low Quality modes */
+#define FSL_FEATURE_PDM_HIGH_QUALITY_CLKDIV_FACTOR (93)
+/* @brief CLKDIV factor in Very Low Quality modes */
+#define FSL_FEATURE_PDM_VERY_LOW_QUALITY_CLKDIV_FACTOR (43)
+/* @brief PDM Has No VADEF Bitfield In PDM VAD0_STAT Register */
+#define FSL_FEATURE_PDM_HAS_NO_VADEF (0)
 
 /* PIT module features */
 
@@ -771,17 +805,19 @@
 #define FSL_FEATURE_SEMC_SDRAM_SUPPORT_COLUMN_ADDRESS_8BIT (1)
 /* @brief If SEMC has register DBICR2 (register DBICR2). */
 #define FSL_FEATURE_SEMC_HAS_DBICR2 (1)
+/* @brief SEMC supports hardware ECC on NAND flash interface. */
+#define FSL_FEATURE_SEMC_HAS_NAND_HW_ECC (0)
 
 /* SNVS module features */
 
 /* @brief Has Secure Real Time Counter Enabled and Valid (bit field LPCR[SRTC_ENV]). */
 #define FSL_FEATURE_SNVS_HAS_SRTC (1)
 /* @brief Has Passive Tamper Filter (regitser LPTGFCR). */
-#define FSL_FEATURE_SNVS_PASSIVE_TAMPER_FILTER (1)
+#define FSL_FEATURE_SNVS_PASSIVE_TAMPER_FILTER (0)
 /* @brief Has Active Tampers (regitser LPATCTLR, LPATCLKR, LPATRCnR). */
-#define FSL_FEATURE_SNVS_HAS_ACTIVE_TAMPERS (1)
+#define FSL_FEATURE_SNVS_HAS_ACTIVE_TAMPERS (0)
 /* @brief Number of TAMPER. */
-#define FSL_FEATURE_SNVS_HAS_MULTIPLE_TAMPER (10)
+#define FSL_FEATURE_SNVS_HAS_MULTIPLE_TAMPER (0)
 
 /* SSARC_HP module features */
 

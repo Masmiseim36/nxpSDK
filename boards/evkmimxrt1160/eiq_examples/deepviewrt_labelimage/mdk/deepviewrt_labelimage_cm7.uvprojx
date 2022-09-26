@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SERIAL_PORT_TYPE_UART=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1166DVM6A_cm7, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1166/drivers;../../../../../devices/MIMXRT1166/utilities/str;../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../devices/MIMXRT1166;../../../../../devices/MIMXRT1166/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1166/drivers;../../../../../devices/MIMXRT1166;../../../../../devices/MIMXRT1166/xip;../../../xip;../../../../../devices/MIMXRT1166/utilities/str;../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -644,6 +644,26 @@
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_dcdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pmu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pmu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
@@ -669,26 +689,6 @@
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dcdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dcdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pmu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pmu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_lpi2c.c</FilePath>
@@ -707,41 +707,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -807,6 +772,41 @@
               <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1196,9 +1196,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, SERIAL_PORT_TYPE_UART=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, MCUXPRESSO_SDK</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1166DVM6A_cm7, _POSIX_C_SOURCE=200809L, ARM_MATH_CM7, __FPU_PRESENT=1, PRINTF_FLOAT_ENABLE=1, PRINTF_ADVANCED_ENABLE=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, SERIAL_PORT_TYPE_UART=1, MCUXPRESSO_SDK</Define>
               <Undefine/>
-              <IncludePath>../source;..;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1166/drivers;../../../../../devices/MIMXRT1166/utilities/str;../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../devices/MIMXRT1166;../../../../../devices/MIMXRT1166/xip;../../../xip;../../../../../CMSIS/Core/Include</IncludePath>
+              <IncludePath>../source;..;../../../../../middleware/eiq/deepviewrt/include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1166/drivers;../../../../../devices/MIMXRT1166;../../../../../devices/MIMXRT1166/xip;../../../xip;../../../../../devices/MIMXRT1166/utilities/str;../../../../../devices/MIMXRT1166/utilities/debug_console;../../../../../CMSIS/Core/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1508,6 +1508,26 @@
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_dcdc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dcdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pmu.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_pmu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_clock.h</FilePath>
@@ -1533,26 +1553,6 @@
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dcdc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dcdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_dcdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pmu.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_pmu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_pmu.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpi2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_lpi2c.c</FilePath>
@@ -1571,41 +1571,6 @@
               <FileName>fsl_anatop_ai.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MIMXRT1166/drivers/fsl_anatop_ai.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1671,6 +1636,41 @@
               <FileName>evkmimxrt1160_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1160_flexspi_nor_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/fsl_assert.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1166/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
           </Files>
         </Group>

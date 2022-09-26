@@ -28,16 +28,32 @@
 #include "vg_lite_kernel.h"
 #include "vg_lite_hal.h"
 #include "vg_lite_hw.h"
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 #include "vg_lite_os.h"
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 #if !_BAREMETAL
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 #include "queue.h"
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 #else
 #include "xil_cache.h"
+#if defined(VG_DRIVER_SINGLE_THREAD)
+#include "sleep.h"
+#endif /* VG_DRIVER_SINGLE_THREAD */
 #endif
+
+#if defined(VG_DRIVER_SINGLE_THREAD)
+#if !_BAREMETAL
+static void sleep(uint32_t msec)
+{
+    vTaskDelay((configTICK_RATE_HZ * msec + 999)/ 1000);
+}
+#endif
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 #if _BAREMETAL
 /* The followings should be configured by FPGA. */
@@ -46,6 +62,11 @@ static    uint32_t    registerMemBase    = 0x43c80000;
 static    uint32_t    registerMemBase    = 0x40240000;
 #endif
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+/* If bit31 is activated this indicates a bus error */
+#define IS_AXI_BUS_ERR(x) ((x)&(1U << 31))
+#endif /* VG_DRIVER_SINGLE_THREAD */
+
 #define HEAP_NODE_USED  0xABBAF00D
 
 volatile void* contiguousMem = NULL;
@@ -53,6 +74,10 @@ uint32_t gpuMemBase = 0;
 
 /* Default heap size is 16MB. */
 static int heap_size = MAX_CONTIGUOUS_SIZE;
+
+#if defined(VG_DRIVER_SINGLE_THREAD)
+void __attribute__((weak)) vg_lite_bus_error_handler();
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 void vg_lite_init_mem(uint32_t register_mem_base,
           uint32_t gpu_mem_base,
@@ -140,6 +165,18 @@ struct vg_lite_device {
     uint32_t size;
     struct memory_heap heap;
     int irq_enabled;
+
+#if defined(VG_DRIVER_SINGLE_THREAD)
+    volatile uint32_t int_flags;
+#if _BAREMETAL
+        /* wait_queue_head_t int_queue; */
+        xSemaphoreHandle int_queue;
+#else
+        /* wait_queue_head_t int_queue; */
+        SemaphoreHandle_t int_queue;
+#endif
+#endif /* VG_DRIVER_SINGLE_THREAD */
+
     void * device;
     int registered;
     int major;
@@ -155,9 +192,34 @@ struct client_data {
 
 static struct vg_lite_device Device, * device;
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+void * vg_lite_hal_alloc(unsigned long size)
+{
+#if _BAREMETAL
+    /* Alloc is not supported in BAREMETAL / DDRLESS. */
+    return NULL;
+#else
+    /* TODO: Allocate some memory. No more kernel mode in RTOS. */
+    return pvPortMalloc(size);
+#endif
+}
+
+void vg_lite_hal_free(void * memory)
+{
+#if !_BAREMETAL
+    /* TODO: Free some memory. No more kernel mode in RTOS. */
+    vPortFree(memory);
+#endif
+}
+#endif /* VG_DRIVER_SINGLE_THREAD */
+
 void vg_lite_hal_delay(uint32_t ms)
 {
+#if defined(VG_DRIVER_SINGLE_THREAD)
+    sleep(ms);
+#else
     vg_lite_os_sleep(ms);
+#endif /* VG_DRIVER_SINGLE_THREAD */
 }
 
 void vg_lite_hal_barrier(void)
@@ -171,6 +233,14 @@ void vg_lite_hal_barrier(void)
 }
 
 static int vg_lite_init(void);
+#if defined(VG_DRIVER_SINGLE_THREAD)
+void vg_lite_hal_initialize(void)
+{
+    /* TODO: Turn on the power. */
+    vg_lite_init();
+    /* TODO: Turn on the clock. */
+}
+#else
 vg_lite_error_t vg_lite_hal_initialize(void)
 {
     int32_t error = VG_LITE_SUCCESS;
@@ -181,11 +251,16 @@ vg_lite_error_t vg_lite_hal_initialize(void)
 
     return (vg_lite_error_t)error;
 }
+#endif /* VG_DRIVER_SINGLE_THREAD */
 
 void vg_lite_hal_deinitialize(void)
 {
     /* TODO: Remove clock. */
+#if defined(VG_DRIVER_SINGLE_THREAD)
+    vSemaphoreDelete(device->int_queue);
+#else
     vg_lite_os_deinitialize();
+#endif /* VG_DRIVER_SINGLE_THREAD */
     /* TODO: Remove power. */
 }
 
@@ -203,7 +278,12 @@ static int split_node(heap_node_t * node, unsigned long size)
         return 0;
 
     /* Allocate a new node. */
+#if defined(VG_DRIVER_SINGLE_THREAD)
+    split = vg_lite_hal_alloc(sizeof(heap_node_t));
+#else
     split = (heap_node_t *)vg_lite_os_malloc(sizeof(heap_node_t));
+#endif /* VG_DRIVER_SINGLE_THREAD */
+
     if (split == NULL)
         return -1;
 
@@ -292,7 +372,11 @@ void vg_lite_hal_free_contiguous(void * memory_handle)
                 node->offset = pos->offset;
             /* Delete the next node from the list. */
             delete_list(&pos->list);
+#if defined(VG_DRIVER_SINGLE_THREAD)
+            vg_lite_hal_free(pos);
+#else
             vg_lite_os_free(pos);
+#endif /* VG_DRIVER_SINGLE_THREAD */
         }
         break;
     }
@@ -309,14 +393,22 @@ void vg_lite_hal_free_contiguous(void * memory_handle)
                 pos->offset = node->offset;
             /* Delete the current node from the list. */
             delete_list(&node->list);
+#if defined(VG_DRIVER_SINGLE_THREAD)
+            vg_lite_hal_free(node);
+#else
             vg_lite_os_free(node);
+#endif /* VG_DRIVER_SINGLE_THREAD */
         }
         break;
     }
     /* when release command buffer node and ts buffer node to exit,release the linked list*/
     if(device->heap.list.next == device->heap.list.prev) {
         delete_list(&pos->list);
+#if defined(VG_DRIVER_SINGLE_THREAD)
+        vg_lite_hal_free(pos);
+#else
         vg_lite_os_free(pos);
+#endif /* VG_DRIVER_SINGLE_THREAD */
     }
 }
 
@@ -334,7 +426,11 @@ void vg_lite_hal_free_os_heap(void)
                 /* Remove it from the linked list. */
                 delete_list(&pos->list);
                 /* Free up the memory. */
+#if defined(VG_DRIVER_SINGLE_THREAD)
+                vg_lite_hal_free(pos);
+#else
                 vg_lite_os_free(pos);
+#endif /* VG_DRIVER_SINGLE_THREAD */
         }
     }
 }
@@ -364,14 +460,81 @@ vg_lite_error_t vg_lite_hal_query_mem(vg_lite_kernel_mem_t *mem)
     return VG_LITE_NO_CONTEXT;
 }
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+void __attribute__((weak)) vg_lite_bus_error_handler()
+{
+    /*
+     * Default implementation of the bus error handler does nothing. Application
+     * should override this handler if it requires to be notified when a bus
+     * error event occurs.
+     */
+     return;
+}
+#endif /* VG_DRIVER_SINGLE_THREAD */
+
 void vg_lite_IRQHandler(void)
 {
+#if defined(VG_DRIVER_SINGLE_THREAD)
+    uint32_t flags = vg_lite_hal_peek(VG_LITE_INTR_STATUS);
+    portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
+
+    if (flags) {
+        /* Combine with current interrupt flags. */
+        device->int_flags |= flags;
+
+        /* Wake up any waiters. */
+        if(device->int_queue){
+            xSemaphoreGiveFromISR(device->int_queue, &xHigherPriorityTaskWoken);
+            if(xHigherPriorityTaskWoken != pdFALSE )
+            {
+                portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+            }
+        }
+    }
+#else
     vg_lite_os_IRQHandler();
+#endif /* VG_DRIVER_SINGLE_THREAD */
+
 }
 
 int32_t vg_lite_hal_wait_interrupt(uint32_t timeout, uint32_t mask, uint32_t * value)
 {
-    return vg_lite_os_wait_interrupt(timeout,mask,value);
+#if defined(VG_DRIVER_SINGLE_THREAD)
+#if _BAREMETAL
+        uint32_t int_status=0;
+        int_status = vg_lite_hal_peek(VG_LITE_INTR_STATUS);
+        (void)value;
+
+        while (int_status==0){
+            int_status = vg_lite_hal_peek(VG_LITE_INTR_STATUS);
+            usleep(1);
+        }
+
+        if (IS_AXI_BUS_ERR(*value))
+        {
+            vg_lite_bus_error_handler();
+        }
+        return 1;
+#else /*for rt500*/
+        if(device->int_queue) {
+            if (xSemaphoreTake(device->int_queue, timeout / portTICK_PERIOD_MS) == pdTRUE) {
+                if (value != NULL) {
+                   *value = device->int_flags & mask;
+                    if (IS_AXI_BUS_ERR(*value))
+                    {
+                        vg_lite_bus_error_handler();
+                    }
+                }
+                device->int_flags = 0;
+
+                return 1;
+            }
+        }
+        return 0;
+#endif
+#else
+   return vg_lite_os_wait_interrupt(timeout,mask,value);
+#endif /* VG_DRIVER_SINGLE_THREAD */
 }
 
 void * vg_lite_hal_map(unsigned long bytes, void * logical, uint32_t physical, uint32_t * gpu)
@@ -390,6 +553,7 @@ void vg_lite_hal_unmap(void * handle)
     (void) handle;
 }
 
+#if !defined(VG_DRIVER_SINGLE_THREAD)
 vg_lite_error_t vg_lite_hal_submit(uint32_t context,uint32_t physical, uint32_t offset, uint32_t size, vg_lite_os_async_event_t *event)
 {
     return (vg_lite_error_t)vg_lite_os_submit(context,physical,offset,size,event);
@@ -399,6 +563,7 @@ vg_lite_error_t vg_lite_hal_wait(uint32_t timeout, vg_lite_os_async_event_t *eve
 {
     return  (vg_lite_error_t)vg_lite_os_wait(timeout,event);
 }
+#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
 static void vg_lite_exit(void)
 {
@@ -418,11 +583,19 @@ static void vg_lite_exit(void)
             delete_list(&pos->list);
 
             /* Free up the memory. */
+#if defined(VG_DRIVER_SINGLE_THREAD)
+            vg_lite_hal_free(pos);
+#else
             vg_lite_os_free(pos);
+#endif /* VG_DRIVER_SINGLE_THREAD */
         }
 
         /* Free up the device structure. */
+#if defined(VG_DRIVER_SINGLE_THREAD)
+        vg_lite_hal_free(device);
+#else
         vg_lite_os_free(device);
+#endif /* VG_DRIVER_SINGLE_THREAD */
     }
 }
 
@@ -466,7 +639,12 @@ static int vg_lite_init(void)
     INIT_LIST_HEAD(&device->heap.list);
     device->heap.free = device->size;
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+    node = vg_lite_hal_alloc(sizeof(heap_node_t));
+#else
     node = (heap_node_t *)vg_lite_os_malloc(sizeof(heap_node_t));
+#endif /* VG_DRIVER_SINGLE_THREAD */
+
     if (node == NULL) {
         vg_lite_exit();
         return -1;
@@ -475,6 +653,12 @@ static int vg_lite_init(void)
     node->size = device->size;
     node->status = 0;
     add_list(&node->list, &device->heap.list);
+#if defined(VG_DRIVER_SINGLE_THREAD)
+#if !_BAREMETAL /*for rt500*/
+        device->int_queue = xSemaphoreCreateBinary();
+        device->int_flags = 0;
+#endif
+#endif /* VG_DRIVER_SINGLE_THREAD */
     /* Success. */
     return 0;
 }

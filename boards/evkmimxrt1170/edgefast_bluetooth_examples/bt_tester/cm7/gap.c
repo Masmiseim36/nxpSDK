@@ -71,7 +71,8 @@ static void passkey_confirm(const uint8_t *data, uint16_t len);
 static void conn_param_update(const uint8_t *data, uint16_t len);
 static void set_mitm(const uint8_t *data, uint16_t len);
 static void set_oob_legacy_data(const uint8_t *data, uint16_t len);
-#if !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)
+#if ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+     (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U)))
 static void get_oob_sc_local_data(void);
 static void set_oob_sc_remote_data(const uint8_t *data, uint16_t len);
 #endif
@@ -116,10 +117,12 @@ static atomic_t current_settings;
 struct bt_conn_auth_cb cb;
 static uint8_t oob_legacy_tk[16] = { 0 };
 
-#if !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)
+#if ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+     (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U)))
 static struct bt_le_oob oob_sc_local = { 0 };
 static struct bt_le_oob oob_sc_remote = { 0 };
-#endif /* !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) */
+#endif /* ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) ||
+           ((defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U))))) */
 
 /* Advertising flags */
 static uint8_t ad_flags = BT_LE_AD_NO_BREDR;
@@ -323,7 +326,8 @@ void tester_handle_gap
             set_oob_legacy_data(data, len);
         break;
 
-#if !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)
+#if ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+     (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U)))
         case GAP_OOB_SC_GET_LOCAL_DATA:
             get_oob_sc_local_data();
         break;
@@ -332,7 +336,8 @@ void tester_handle_gap
             set_oob_sc_remote_data(data, len);
         break;
 
-#endif /* !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) */
+#endif /* ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+           (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U))) */
         default:
             tester_rsp(BTP_SERVICE_ID_GAP, opcode, index,
                    BTP_STATUS_UNKNOWN_CMD);
@@ -381,7 +386,8 @@ static void supported_commands(uint8_t *data, uint16_t len)
     tester_set_bit(cmds, GAP_CONN_PARAM_UPDATE);
     tester_set_bit(cmds, GAP_SET_MITM);
     tester_set_bit(cmds, GAP_OOB_LEGACY_SET_DATA);
-#if !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)
+#if ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+     (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U)))
     tester_set_bit(cmds, GAP_OOB_SC_GET_LOCAL_DATA);
     tester_set_bit(cmds, GAP_OOB_SC_SET_REMOTE_DATA);
 #endif
@@ -425,9 +431,11 @@ static void controller_info(uint8_t *data, uint16_t len)
 
 #if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0U))
     /* Re-use the oob data read here in get_oob_sc_local_data() */
-#if !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)
+#if ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+     (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U)))
     oob_sc_local = oob_local;
-#endif /* !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) */
+#endif /* ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+           (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U))) */
 #endif
 
     /* If privacy is used, the device uses random type address, otherwise
@@ -1171,8 +1179,35 @@ static void le_security_changed(struct bt_conn *conn, bt_security_t level,
         case BT_SECURITY_ERR_SUCCESS:
             memcpy(sec_ev.address, addr->a.val, sizeof(sec_ev.address));
             sec_ev.address_type = addr->type;
-            /* enum matches BTP values */
-            sec_ev.sec_level = level;
+            /* BTP spec values for Security Level:
+              Possible values for the Security Level parameter map to those
+              defined in Core Specification in LE security mode 1:
+                                      1 = Unauthenticated pairing with encryption
+                                      2 = Authenticated pairing with encryption
+                                      3 = Authenticated LE Secure Connections pairing
+                                      with encryption using a 128-bit strength encryption key
+              We will send 0 for anything else.
+            */
+            switch (level)
+            {
+                case BT_SECURITY_L2:
+                    sec_ev.sec_level = 1;
+                break;
+
+                case BT_SECURITY_L3:
+                    sec_ev.sec_level = 2;
+                break;
+
+                case BT_SECURITY_L4:
+                    sec_ev.sec_level = 3;
+                break;
+
+                default:
+                case BT_SECURITY_L0:
+                case BT_SECURITY_L1:
+                    sec_ev.sec_level = 0;
+                break;
+            }
 
             tester_send(BTP_SERVICE_ID_GAP, GAP_EV_SEC_LEVEL_CHANGED,
                         CONTROLLER_INDEX, (uint8_t *) &sec_ev, sizeof(sec_ev));
@@ -1487,7 +1522,8 @@ static void oob_data_request(struct bt_conn *conn,
 
     switch (oob_info->type)
     {
-#if !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)
+#if ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+     (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U)))
     case BT_CONN_OOB_LE_SC:
     {
         struct bt_le_oob_sc_data *oobd_local =
@@ -1519,7 +1555,8 @@ static void oob_data_request(struct bt_conn *conn,
 #endif
         break;
     }
-#endif /* !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) */
+#endif /* ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+           (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U))) */
 
 #if (defined(CONFIG_BT_SMP) && (CONFIG_BT_SMP > 0U))
 #if !defined(CONFIG_BT_SMP_SC_PAIR_ONLY)
@@ -1534,7 +1571,8 @@ static void oob_data_request(struct bt_conn *conn,
     }
 }
 
-#if !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)
+#if ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+     (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U)))
 static void get_oob_sc_local_data(void)
 {
 	cb.oob_data_request = oob_data_request;
@@ -1564,4 +1602,5 @@ static void set_oob_sc_remote_data(const uint8_t *data, uint16_t len)
 	tester_rsp(BTP_SERVICE_ID_GAP, GAP_OOB_SC_SET_REMOTE_DATA,
 		   CONTROLLER_INDEX, BTP_STATUS_SUCCESS);
 }
-#endif /* !defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) */
+#endif /* ((!defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY)) || \
+           (defined(CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY) && (CONFIG_BT_SMP_OOB_LEGACY_PAIR_ONLY == 0U))) */

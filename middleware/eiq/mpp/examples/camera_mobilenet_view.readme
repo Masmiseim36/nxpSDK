@@ -5,7 +5,7 @@ This example shows how to use the library to create two image classification use
 - image classification using camera as source
 - image classification using a file as source
 
-The machine learning framework used is TensorFlow Lite Micro
+The machine learning frameworks used are TensorFlow Lite Micro or GLOW
 The image classification model used is quantized Mobilenet
 convolutional neural network model [1] that classifies the input image into
 one of 1000 output classes.
@@ -19,6 +19,10 @@ Use-cases Description
 
 1- Image classification using camera as source
    --------------------------------------------
+
+HOW TO USE THE APPLICATION:
+To classify an image, place an image in front of camera so that it fits in the blue rectangle in the middle of the display.
+Some images will work better than others.
 
 1-a) High-level description
      ----------------------
@@ -40,10 +44,10 @@ Pipeline 1                         +---> |  2D convert | -->  | ML Inference | -
                                          +-------------+      +--------------+      +-------------+           |
                                                                        |                                      |
                                                                        |                                      |
-	+-----------------+                                            |                                      |
+        +-----------------+                                            |                                      |
 	|  Main app:      |                                            |                                      |
 	| ML output       |   <----- ML Inference output callback -----+                                      |
-	| post processing |                                                                                   |
+        | post processing |                                                                                   |
 	|                 |   ------ labeled rectangle update ------------------------------------------------+
 	+-----------------+
 
@@ -98,3 +102,33 @@ In order to build the image preview pipeline instead, please set up the followin
 beginning of the camera_mobilenet_view.c file:
 
 #define SOURCE_STATIC_IMAGE 1
+
+EXPECTED OUTPUTS:
+The expected outputs of the example are:
+- Detected label should be displayed on the screen
+- Logs below should be displayed on the debug console
+
+Logs for camera_mobilenet_view example using Glow and stopwatch image as source:
+
+[MPP_VERSION_0.9.bc93070]
+Inference Engine: Glow
+mpp_event_listener: START!
+----------------------------------------
+     Inference time: 145 ms
+     Detected: stopwatch (87%)
+----------------------------------------
+mpp_event_listener: START!
+----------------------------------------
+     Inference time: 152 ms
+     Detected: stopwatch (87%)
+----------------------------------------
+mpp_event_listener: START!
+----------------------------------------
+     Inference time: 145 ms
+     Detected: stopwatch (87%)
+----------------------------------------
+mpp_event_listener: START!
+----------------------------------------
+     Inference time: 144 ms
+     Detected: stopwatch (87%)
+----------------------------------------

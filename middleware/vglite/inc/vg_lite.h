@@ -451,9 +451,6 @@ extern "C" {
         /* Pointer to previous point node. */
         vg_lite_path_point_ptr               prev;
 
-#define centerX                 tangentX
-#define centerY                 tangentY
-
     }vg_lite_path_point_t;
 
     typedef struct vg_lite_sub_path *    vg_lite_sub_path_ptr;

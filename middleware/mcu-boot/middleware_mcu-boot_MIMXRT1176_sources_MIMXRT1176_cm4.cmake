@@ -9,6 +9,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1176/src/flexspi_nand_config_MIMXRT1176.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1176/src/hardware_init_MIMXRT1176.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1176/src/memory_map_MIMXRT1176.c
+    ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1176/src/ocotp_MIMXRT1176.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1176/src/periph_MIMXRT1176.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1176/src/sdmmc_config_MIMXRT1176.c
     ${CMAKE_CURRENT_LIST_DIR}/targets/MIMXRT1176/src/sdmmc_convert_MIMXRT1176.c

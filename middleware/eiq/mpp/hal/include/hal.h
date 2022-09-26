@@ -18,7 +18,6 @@
 #include "hal_graphics_dev.h"
 #include "hal_os.h"
 #include "hal_valgo_dev.h"
-
 #include "hal_debug.h"
 
 
@@ -29,5 +28,5 @@ int hal_img_convert_setup(gfx_dev_t *dev);
 
 int hal_inference_tflite_setup(vision_algo_dev_t *dev);
 
-
+int hal_inference_glow_setup(vision_algo_dev_t *dev);
 #endif /* _HAL_H */

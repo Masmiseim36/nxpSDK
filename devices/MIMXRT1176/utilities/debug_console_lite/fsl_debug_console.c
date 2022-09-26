@@ -91,14 +91,14 @@ enum _debugconsole_scanf_flag
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#if SDK_DEBUGCONSOLE
+#if ((SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK) || defined(SDK_DEBUGCONSOLE_UART))
 /*! @brief Debug UART state information. */
 static debug_console_state_t s_debugConsole;
 #endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-#if SDK_DEBUGCONSOLE
+#if (defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK))
 static int DbgConsole_PrintfFormattedData(PUTCHAR_FUNC func_ptr, const char *fmt, va_list ap);
 static int DbgConsole_ScanfFormattedData(const char *line_ptr, char *format, va_list args_ptr);
 #endif /* SDK_DEBUGCONSOLE */
@@ -161,7 +161,7 @@ status_t DbgConsole_Deinit(void)
 }
 #endif /* DEBUGCONSOLE_REDIRECT_TO_SDK */
 
-#if SDK_DEBUGCONSOLE
+#if (defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK))
 /* See fsl_debug_console.h for documentation of this function. */
 int DbgConsole_Printf(const char *fmt_s, ...)
 {

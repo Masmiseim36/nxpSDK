@@ -224,7 +224,7 @@ usb_status_t USB_HostKeypadEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration_ptr;
     uint8_t interface_index;
     usb_host_interface_t *interface_ptr;
-    uint32_t info_value;
+    uint32_t info_value = 0U;
     usb_status_t status = kStatus_USB_Success;
 
     switch (eventCode)

@@ -20,6 +20,7 @@ var searchData=
   ['maxmbnum',['maxMbNum',['../a00026.html#a1f78425cda4ca2be4ffca627aac9db05',1,'flexcan_config_t']]],
   ['maxtransspeed',['maxTransSpeed',['../a00052.html#a086313cec08ed58f9ab1a076757c8a54',1,'sdio_common_cis_t']]],
   ['maxwriteblocklength',['maxWriteBlockLength',['../a00052.html#a62b70fce4ba118b7cf8249f5d4df9879',1,'mmc_csd_t']]],
+  ['mbfdframebuf',['mbFDFrameBuf',['../a00026.html#a78b9af446abe849f58bd62469ea5033b',1,'_flexcan_handle']]],
   ['mbframebuf',['mbFrameBuf',['../a00026.html#ad7693cd6966ea1e887a60c39a7a0c029',1,'_flexcan_handle']]],
   ['mbidx',['mbIdx',['../a00026.html#a35b306312bcc47c5569f770f3341543d',1,'flexcan_mb_transfer_t']]],
   ['mbstate',['mbState',['../a00026.html#a3820f2ca76a985e46b733b4eedcaddcb',1,'_flexcan_handle']]],

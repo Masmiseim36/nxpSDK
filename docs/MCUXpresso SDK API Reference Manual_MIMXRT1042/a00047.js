@@ -1,6 +1,6 @@
 var a00047 =
 [
-    [ "lpspi_master_config_t", "a00047.html#a00434", [
+    [ "lpspi_master_config_t", "a00047.html#a00435", [
       [ "baudRate", "a00047.html#a01254e88cf6feef124ab50f204f65c0f", null ],
       [ "bitsPerFrame", "a00047.html#afc83880a5e4d763e80cd757514c96167", null ],
       [ "cpol", "a00047.html#a3c540678d6c2cce2664ba89cc998a1e2", null ],
@@ -14,7 +14,7 @@ var a00047 =
       [ "pinCfg", "a00047.html#a52fed669c402348f070df8322e4bc8b1", null ],
       [ "dataOutConfig", "a00047.html#acc0422bcb70e685bb66f3a216aa66088", null ]
     ] ],
-    [ "lpspi_slave_config_t", "a00047.html#a00435", [
+    [ "lpspi_slave_config_t", "a00047.html#a00436", [
       [ "bitsPerFrame", "a00047.html#a0f74a7ed1b4226f612a3785b07d09c86", null ],
       [ "cpol", "a00047.html#aea9800ee270ac89ec3deb4f2399a92a9", null ],
       [ "cpha", "a00047.html#ac5063bcaacbddbd5753ffe6a2df2a7df", null ],
@@ -24,7 +24,7 @@ var a00047 =
       [ "pinCfg", "a00047.html#ab1b812e03a9b2785efd4e9481c20730c", null ],
       [ "dataOutConfig", "a00047.html#af8879b89ada464a0d8b16c33639e87cf", null ]
     ] ],
-    [ "lpspi_transfer_t", "a00047.html#a00436", [
+    [ "lpspi_transfer_t", "a00047.html#a00437", [
       [ "txData", "a00047.html#ad05c41e2213388411ba65b74b2e296e8", null ],
       [ "rxData", "a00047.html#adcb9063db0070da8c7b2be3aad07a901", null ],
       [ "dataSize", "a00047.html#a00cc53b0e0d0013871c255e17a8fe9b0", null ],
@@ -79,11 +79,11 @@ var a00047 =
     [ "LPSPI_SLAVE_PCS_MASK", "a00047.html#gac143084740a5ba788e1ac73fefc6f5e4", null ],
     [ "lpspi_master_transfer_callback_t", "a00047.html#gaeecf1622c161a2d202eace4a4699dc3a", null ],
     [ "lpspi_slave_transfer_callback_t", "a00047.html#ga4bf812d09749691f41bf7cbcb62c05a8", [
-      [ "kStatus_LPSPI_Busy", "a00047.html#ggac205be2172292384dd687b5471a87edda7f12633826bd7df839619b14c0ca28cc", null ],
-      [ "kStatus_LPSPI_Error", "a00047.html#ggac205be2172292384dd687b5471a87edda3faf60052aef160c9e665b923f6560f0", null ],
-      [ "kStatus_LPSPI_Idle", "a00047.html#ggac205be2172292384dd687b5471a87edda44467ff9577a1be6b13121e8f075d92a", null ],
-      [ "kStatus_LPSPI_OutOfRange", "a00047.html#ggac205be2172292384dd687b5471a87edda2f2d2fc26087dd6282b229e1c7471758", null ],
-      [ "kStatus_LPSPI_Timeout", "a00047.html#ggac205be2172292384dd687b5471a87edda121095b6580099f086f494d25186a45d", null ]
+      [ "kStatus_LPSPI_Busy", "a00047.html#ggaedcf2109f459315e1a7f2af73ec9b603a7f12633826bd7df839619b14c0ca28cc", null ],
+      [ "kStatus_LPSPI_Error", "a00047.html#ggaedcf2109f459315e1a7f2af73ec9b603a3faf60052aef160c9e665b923f6560f0", null ],
+      [ "kStatus_LPSPI_Idle", "a00047.html#ggaedcf2109f459315e1a7f2af73ec9b603a44467ff9577a1be6b13121e8f075d92a", null ],
+      [ "kStatus_LPSPI_OutOfRange", "a00047.html#ggaedcf2109f459315e1a7f2af73ec9b603a2f2d2fc26087dd6282b229e1c7471758", null ],
+      [ "kStatus_LPSPI_Timeout", "a00047.html#ggaedcf2109f459315e1a7f2af73ec9b603a121095b6580099f086f494d25186a45d", null ]
     ] ],
     [ "_lpspi_flags", "a00047.html#gad97e399bf4883a243d83fc7cffb19655", [
       [ "kLPSPI_TxDataRequestFlag", "a00047.html#ggad97e399bf4883a243d83fc7cffb19655a3947665fd37fb039123f594df926cff1", null ],

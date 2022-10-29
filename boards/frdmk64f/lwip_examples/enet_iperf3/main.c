@@ -28,11 +28,15 @@
  * Definitions
  ******************************************************************************/
 
+/* @TEST_ANCHOR */
+
 /* MAC address configuration. */
+#ifndef configMAC_ADDR
 #define configMAC_ADDR                     \
     {                                      \
         0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
     }
+#endif
 
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
@@ -343,15 +347,23 @@ static int iperfc_create_streams(struct iperf_ctx *ctx)
     if (ctx->socket_type == TCP)
     {
         result = iperf_connect(ctx->data_sock, ctx->addr, ctx->addr_len);
-        assert(0 == result);
+        if (result != 0)
+        {
+            PRINTF("Failed to connect socket!\r\n");
+            __BKPT(0);
+        }
         strcpy(ctx->ctrl_buf, MAGIC_COOKIE);
         result = iperf_send(ctx->data_sock, ctx->ctrl_buf, 37, 0);
-        assert(37 == result);
+        if (result != strlen(MAGIC_COOKIE) + 1)
+        {
+            PRINTF("Error while sending cookie to the server!\r\n");
+            __BKPT(0);
+        }
         ctx->state = IPERF_NOP;
     }
     else
     {
-        /* Send "hello" to server - tells server to start countin */
+        /* Send "hello" to server - tells server to start counting */
         strcpy(ctx->send_buf, "hello");
         result = iperf_send_to(ctx->data_sock, ctx->send_buf, IPERF_BUFFER_MAX, 0, ctx->addr, ctx->addr_len);
         if (ctx->mode != IPERF_CLIENT_TX_UDP)
@@ -510,19 +522,31 @@ static void iperf_exchange_results(struct iperf_ctx *ctx)
     json_buf = json_results;
     tmp_len  = strlen(json_buf);
 
-    assert(tmp_len + 1 + 4 < IPERF_BUFFER_MAX);
+    if (tmp_len + 1 + 4 >= IPERF_BUFFER_MAX)
+    {
+        PRINTF("Buffer overflow!\r\n");
+        __BKPT(0);
+    }
     strncpy(&ctx->ctrl_buf[4], json_buf, tmp_len);
 
     *((uint32_t *)&ctx->ctrl_buf[0]) = iperf_bswap32(strlen(json_buf));
     result                           = iperf_send(ctx->ctrl_sock, ctx->ctrl_buf, tmp_len + 4, 0);
 
     result = iperf_recv_blocked(ctx->ctrl_sock, ctx->recv_buf, 4, 0);
-    assert(result == 4);
+    if (result != 4)
+    {
+        PRINTF("Wrong number of bytes were received\r\n");
+        __BKPT(0);
+    }
 
     bytes_to_recv = *(uint32_t *)(ctx->recv_buf);
     bytes_to_recv = iperf_bswap32(bytes_to_recv);
     result        = iperf_recv_blocked(ctx->ctrl_sock, ctx->recv_buf, bytes_to_recv, 0);
-    assert(result == bytes_to_recv);
+    if (result != bytes_to_recv)
+    {
+        PRINTF("Wrong number of bytes were received\r\n");
+        __BKPT(0);
+    }
     separator();
     PRINTF("Server Results\r\n");
     for (int i = 0; i < result; i++)
@@ -618,7 +642,11 @@ static void iperf_switch_state(struct iperf_ctx *ctx)
         case DISPLAY_RESULTS: // 14 0xE
             ctx->ctrl_buf[0] = IPERF_DONE;
             xStatus          = iperf_send(ctx->ctrl_sock, ctx->ctrl_buf, CTRL_IPERF_MSG_LEN, 0);
-            assert(xStatus != 0);
+            if (xStatus <= 0)
+            {
+                PRINTF("Failed to send control socket!\r\n");
+                __BKPT(0);
+            }
             ctx->iperf_done = 1;
             break;
 
@@ -713,7 +741,7 @@ static void iperf_run(struct iperf_ctx *ctx)
     /* Cookie */
     PRINTF("Sending cookie!!...\r\n");
     strcpy(ctx->ctrl_buf, MAGIC_COOKIE);
-    xStatus    = iperf_send(ctx->ctrl_sock, ctx->ctrl_buf, 37, 0);
+    xStatus    = iperf_send(ctx->ctrl_sock, ctx->ctrl_buf, strlen(MAGIC_COOKIE) + 1, 0);
     ctx->state = IPERF_START;
 
     do
@@ -871,8 +899,11 @@ int main(void)
     }
 
     result = xTaskCreate(task_main, "main", TASK_MAIN_STACK_SIZE, &iperf_test, TASK_MAIN_PRIO, &task_main_task_handler);
-
-    assert(pdPASS == result);
+    if (result != pdPASS)
+    {
+        PRINTF("Failed to create a main task!\r\n");
+        __BKPT(0);
+    }
     vTaskStartScheduler();
     for (;;)
         ;

@@ -8,8 +8,8 @@
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
-**     Copyright (c) 2015 Freescale Semiconductor, Inc.
-**     Copyright 2019 NXP
+**     Copyright (c) 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -21,18 +21,18 @@
 */
 
 /* Entry Point */
-ENTRY(__isr_vector)
+ENTRY(Reset_Handler)
 
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0;
-STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x400;
-M_VECTOR_RAM_SIZE = DEFINED(__ram_vector_table__) ? 0x0400 : 0x0;
+STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 
 /* Specify the memory areas */
 MEMORY
 {
-  m_interrupts          (RX)  : ORIGIN = 0x00000000, LENGTH = 0x00000400
+  m_interrupts          (RX)  : ORIGIN = 0x00000000, LENGTH = 0x000003C0
+  m_bootloader_config   (RX)  : ORIGIN = 0x000003C0, LENGTH = 0x00000040  
   m_flash_config        (RX)  : ORIGIN = 0x00000400, LENGTH = 0x00000010
-  m_text                (RX)  : ORIGIN = 0x00000410, LENGTH = 0x000FBF0
+  m_text                (RX)  : ORIGIN = 0x00000410, LENGTH = 0x0000FBF0
   m_data                (RW)  : ORIGIN = 0x1FFFF800, LENGTH = 0x00002000
 }
 
@@ -51,11 +51,19 @@ SECTIONS
   .interrupts :
   {
     __VECTOR_TABLE = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
   } > m_interrupts
 
+  .bootloader_config :
+  {
+    . = ALIGN(4);
+    KEEP(*(.BootloaderConfig)) /* Bootloader Configuration Area (BCA) */
+    . = ALIGN(4);
+  } > m_bootloader_config
+  
   .flash_config :
   {
     . = ALIGN(4);
@@ -89,19 +97,17 @@ SECTIONS
   __etext = .;    /* define a global symbol at end of code */
   __DATA_ROM = .; /* Symbol is used by startup for data initialization */
 
-  .interrupts_ram :
+  /* reserve MTB memory at the beginning of m_data */
+  .mtb : /* MTB buffer address as defined by the hardware */
   {
-    . = ALIGN(4);
-    __VECTOR_RAM__ = .;
-    __interrupts_ram_start__ = .; /* Create a global symbol at data start */
-    *(.m_interrupts_ram)     /* This is a user defined section */
-    . += M_VECTOR_RAM_SIZE;
-    . = ALIGN(4);
-    __interrupts_ram_end__ = .; /* Define a global symbol at data end */
+    . = ALIGN(8);
+    _mtb_start = .;
+    KEEP(*(.mtb_buf)) /* need to KEEP Micro Trace Buffer as not referenced by application */
+    . = ALIGN(8);
+    _mtb_end = .;
   } > m_data
 
-  __VECTOR_RAM = DEFINED(__ram_vector_table__) ? __VECTOR_RAM__ : ORIGIN(m_interrupts);
-  __RAM_VECTOR_TABLE_SIZE_BYTES = DEFINED(__ram_vector_table__) ? (__interrupts_ram_end__ - __interrupts_ram_start__) : 0x0;
+
 
   .data : AT(__DATA_ROM)
   {
@@ -115,6 +121,7 @@ SECTIONS
   } > m_data
 
   __DATA_END = __DATA_ROM + (__data_end__ - __data_start__);
+  __VECTOR_RAM = __DATA_RAM;
 
   /* Uninitialized data section */
   .bss :
@@ -130,24 +137,7 @@ SECTIONS
     __bss_end__ = .;
     __END_BSS = .;
   } > m_data
-  
-/**************************
-** m_usb_bdt : 
-** {
-**   . = ALIGN(512);
-**   __START_USBGLOBAL = .;
-**   *(m_usb_bdt)
-**   KEEP(*(m_usb_bdt))
-** } > m_data
-** 
-** m_usb_global : 
-** {
-**   . = ALIGN(512);
-**   *(m_usb_global)
-**   KEEP(*(m_usb_global))
-**   __END_USBGLOBAL = .;
-** } > m_data
-*************************/
+
   .heap :
   {
     . = ALIGN(8);
@@ -171,5 +161,6 @@ SECTIONS
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
 
-  ASSERT(__StackLimit >= __HeapLimit, "region m_data_2 overflowed with stack and heap")
+  ASSERT(__StackLimit >= __HeapLimit, "region m_data overflowed with stack and heap")
 }
+

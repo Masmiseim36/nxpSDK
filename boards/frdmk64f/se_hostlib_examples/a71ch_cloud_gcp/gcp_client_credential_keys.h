@@ -24,7 +24,7 @@
 *
 */
 
-#if SSS_HAVE_ALT
+#if SSS_HAVE_MBEDTLS_ALT
 static const char keyCLIENT_CERTIFICATE_PEM[] = {0};
 static const char keyCLIENT_PRIVATE_KEY_PEM[] = {0};
 

@@ -82,8 +82,7 @@ int main(void)
     lpi2c_slave_config_t slaveConfig;
 
     flexio_i2c_master_transfer_t masterXfer;
-    IRQn_Type flexio_irqs[] = FLEXIO_IRQS;
-    uint32_t timeout        = UINT32_MAX;
+    uint32_t timeout = UINT32_MAX;
 
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
@@ -94,22 +93,6 @@ int main(void)
     CLOCK_SetIpSrc(MASTER_FLEXIO_CLOCK_NAME, MASTER_FLEXIO_CLOCK_SOURCE);
 
     PRINTF("\r\nFlexIO I2C interrupt - LPI2C interrupt\r\n");
-
-    /* Set i2c slave interrupt priority higher. */
-#if defined(__CORTEX_M) && (__CORTEX_M == 0U) && defined(FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS) && \
-    (FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS > 0)
-    if (BOARD_LPI2C_SLAVE_IRQn < FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS)
-    {
-        NVIC_SetPriority(BOARD_LPI2C_SLAVE_IRQn, 0U);
-    }
-    if (flexio_irqs[FLEXIO_GetInstance(BOARD_FLEXIO_BASE)] < FSL_FEATURE_NUMBER_OF_LEVEL1_INT_VECTORS)
-    {
-        NVIC_SetPriority(flexio_irqs[FLEXIO_GetInstance(BOARD_FLEXIO_BASE)], 1U);
-    }
-#else
-    NVIC_SetPriority(BOARD_LPI2C_SLAVE_IRQn, 0U);
-    NVIC_SetPriority(flexio_irqs[FLEXIO_GetInstance(BOARD_FLEXIO_BASE)], 1U);
-#endif
 
     /*1.Set up i2c slave first*/
     /*

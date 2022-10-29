@@ -14,6 +14,11 @@
 #include <nxEnsure.h>
 #include <nxLog_App.h>
 
+#ifndef SIMW_DEMO_ENABLE__DEMO_EX_ECC
+#include "UWBIOT_APP_BUILD.h"
+#endif
+
+#if defined(SIMW_DEMO_ENABLE__DEMO_EX_ECC)
 /* ************************************************************************** */
 /* Local Defines                                                              */
 /* ************************************************************************** */
@@ -25,7 +30,6 @@
 /* ************************************************************************** */
 /* Global Variables                                                           */
 /* ************************************************************************** */
-
 /* clang-format off */
 const uint8_t keyPairData[] = { 0x30, 0x81, 0x87, 0x02, 0x01, 0x00, 0x30, 0x13,
     0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02,
@@ -167,9 +171,13 @@ cleanup:
     else {
         LOG_E("ex_sss_ecc Example Failed !!!...");
     }
-    if (ctx_asymm.session != NULL)
+    if (ctx_asymm.session != NULL) {
         sss_asymmetric_context_free(&ctx_asymm);
-    if (ctx_verify.session != NULL)
+    }
+    if (ctx_verify.session != NULL) {
         sss_asymmetric_context_free(&ctx_verify);
+    }
     return status;
 }
+
+#endif // SIMW_DEMO_ENABLE__DEMO_EX_ECC

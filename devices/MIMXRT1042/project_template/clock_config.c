@@ -249,8 +249,10 @@ void BOARD_BootClockRUN(void)
     /* Disable CAN clock gate. */
     CLOCK_DisableClock(kCLOCK_Can1);
     CLOCK_DisableClock(kCLOCK_Can2);
+    CLOCK_DisableClock(kCLOCK_Can3);
     CLOCK_DisableClock(kCLOCK_Can1S);
     CLOCK_DisableClock(kCLOCK_Can2S);
+    CLOCK_DisableClock(kCLOCK_Can3S);
     /* Set CAN_CLK_PODF. */
     CLOCK_SetDiv(kCLOCK_CanDiv, 1);
     /* Set Can clock source. */

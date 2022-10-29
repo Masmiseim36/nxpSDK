@@ -35,11 +35,15 @@
  * Definitions
  ******************************************************************************/
 
+/* @TEST_ANCHOR */
+
 /* MAC address configuration. */
+#ifndef configMAC_ADDR
 #define configMAC_ADDR                     \
     {                                      \
         0x02, 0x12, 0x13, 0x10, 0x15, 0x11 \
     }
+#endif
 
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS

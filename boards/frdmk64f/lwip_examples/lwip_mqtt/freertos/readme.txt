@@ -12,7 +12,7 @@ Meanwhile it continues to receive messages published to the subscribed topics fr
 Toolchain supported
 ===================
 - GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 - IAR embedded Workbench  9.10.2
 - Keil MDK  5.34
 

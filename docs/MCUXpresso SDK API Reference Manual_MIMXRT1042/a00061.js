@@ -1,12 +1,12 @@
 var a00061 =
 [
-    [ "sai_config_t", "a00061.html#a00470", [
+    [ "sai_config_t", "a00061.html#a00471", [
       [ "protocol", "a00061.html#ae6b6e06a6051825c0797e1ab7fce5f92", null ],
       [ "syncMode", "a00061.html#a1c625b880a5721c9bf58ab081c08fea5", null ],
       [ "bclkSource", "a00061.html#a156dc7868da25bfc262bfac4bd4499a1", null ],
       [ "masterSlave", "a00061.html#a2c16d7b69db892ed087ced965280be77", null ]
     ] ],
-    [ "sai_transfer_format_t", "a00061.html#a00476", [
+    [ "sai_transfer_format_t", "a00061.html#a00477", [
       [ "sampleRate_Hz", "a00061.html#a629aeb07579875fda77e38851c683ae0", null ],
       [ "bitWidth", "a00061.html#ad4f8f19e4e01850841127ca7d0920302", null ],
       [ "stereo", "a00061.html#a1398f0cd36eabc05f7bc448db6355562", null ],
@@ -18,25 +18,25 @@ var a00061 =
       [ "protocol", "a00061.html#a2df4853c14ae76c214bddc23787e2327", null ],
       [ "isFrameSyncCompact", "a00061.html#ada875cc5c68938e26714e01ac909cc25", null ]
     ] ],
-    [ "sai_fifo_t", "a00061.html#a00472", [
+    [ "sai_fifo_t", "a00061.html#a00473", [
       [ "fifoContinueOneError", "a00061.html#ac914c718157b8e739d84dcdca12ac4dd", null ],
       [ "fifoCombine", "a00061.html#a149927ef6832b9115ae40fe0c5931bdb", null ],
       [ "fifoPacking", "a00061.html#a4e5b8949998b3072a76efc1c118131b4", null ],
       [ "fifoWatermark", "a00061.html#a592b24b0ef9dfb5c4a1eb1aac1056cc3", null ]
     ] ],
-    [ "sai_bit_clock_t", "a00061.html#a00469", [
+    [ "sai_bit_clock_t", "a00061.html#a00470", [
       [ "bclkSrcSwap", "a00061.html#ab4f8c0bd4eb48623a7804caecf4f3985", null ],
       [ "bclkInputDelay", "a00061.html#a6b6f07959f9178be8a812d3cf0c2b5aa", null ],
       [ "bclkPolarity", "a00061.html#a42d3debf179fb3168f945ba53c8f4ed9", null ],
       [ "bclkSource", "a00061.html#a3734e8fb8f5c15d3e3769db3740474d6", null ]
     ] ],
-    [ "sai_frame_sync_t", "a00061.html#a00473", [
+    [ "sai_frame_sync_t", "a00061.html#a00474", [
       [ "frameSyncWidth", "a00061.html#a220329ad330217786663fee4457a7281", null ],
       [ "frameSyncEarly", "a00061.html#af23c63fada62140420230a61abe37d4e", null ],
       [ "frameSyncGenerateOnDemand", "a00061.html#adcc4ee55d055827215038e2cc4ea8b1b", null ],
       [ "frameSyncPolarity", "a00061.html#a6fbff9ec23d1ba0bb54ca7d91b7f40d9", null ]
     ] ],
-    [ "sai_serial_data_t", "a00061.html#a00474", [
+    [ "sai_serial_data_t", "a00061.html#a00475", [
       [ "dataMode", "a00061.html#a3b2bf9ccec21dde86dda8ad3e43db654", null ],
       [ "dataOrder", "a00061.html#a0d695a6e8766dae568984b61cd14f402", null ],
       [ "dataWord0Length", "a00061.html#a51fdf10f1675981b4ac23478610daac3", null ],
@@ -46,7 +46,7 @@ var a00061 =
       [ "dataWordNum", "a00061.html#ac9610cfcf7625775b74eff890e1d8471", null ],
       [ "dataMaskedWord", "a00061.html#ac8224253c6c3ed58f1a5219f6f97f231", null ]
     ] ],
-    [ "sai_transceiver_t", "a00061.html#a00475", [
+    [ "sai_transceiver_t", "a00061.html#a00476", [
       [ "serialData", "a00061.html#acccc152bf9df33f9c63951fd36716a27", null ],
       [ "frameSync", "a00061.html#a46ce7801a6ba02d5dd8f56e431d681f1", null ],
       [ "bitClock", "a00061.html#ae054379f5d808df31dd9413d589aeba6", null ],
@@ -58,7 +58,7 @@ var a00061 =
       [ "endChannel", "a00061.html#a5beee2fa239e1099dbe9a792128f3292", null ],
       [ "channelNums", "a00061.html#a34eab3bb191b22d6c2622fd5fc8cb6a5", null ]
     ] ],
-    [ "sai_transfer_t", "a00061.html#a00477", [
+    [ "sai_transfer_t", "a00061.html#a00478", [
       [ "data", "a00061.html#a5a8e66b73932caa8eaf99df59127e389", null ],
       [ "dataSize", "a00061.html#a9518c75eb06dadc3b73f44ee49f4e0ff", null ]
     ] ],
@@ -82,21 +82,21 @@ var a00061 =
     [ "SAI_XFER_QUEUE_SIZE", "a00061.html#ga580bf35fe1f08d7bb054bee399f8b085", null ],
     [ "FSL_SAI_HAS_FIFO_EXTEND_FEATURE", "a00061.html#ga362e2c5241bb726dd02530407ab5e26f", null ],
     [ "sai_transfer_callback_t", "a00061.html#gacda077e13dd34cd0fa1e865354591fe2", [
-      [ "kStatus_SAI_TxBusy", "a00061.html#ggaedcf2109f459315e1a7f2af73ec9b603ae095b9b1a3ec7b998d722b1e1d73ca44", null ],
-      [ "kStatus_SAI_RxBusy", "a00061.html#ggaedcf2109f459315e1a7f2af73ec9b603a8e432517b16b5784a72a95e0caf7bb4a", null ],
-      [ "kStatus_SAI_TxError", "a00061.html#ggaedcf2109f459315e1a7f2af73ec9b603a5f17818e41e2fb07e35e43e1a03bfeb9", null ],
-      [ "kStatus_SAI_RxError", "a00061.html#ggaedcf2109f459315e1a7f2af73ec9b603a0d8c8cec03abcd722d2ec4358451461c", null ],
-      [ "kStatus_SAI_QueueFull", "a00061.html#ggaedcf2109f459315e1a7f2af73ec9b603a19680647d09a7437afd6b6ae7013095e", null ],
-      [ "kStatus_SAI_TxIdle", "a00061.html#ggaedcf2109f459315e1a7f2af73ec9b603a2a58fb377508baa31df58beb5f406761", null ],
-      [ "kStatus_SAI_RxIdle", "a00061.html#ggaedcf2109f459315e1a7f2af73ec9b603a0f398d330abd6df4255be13d39968e1d", null ],
-      [ "kSAI_Channel0Mask", "a00061.html#gga900dca9b26de42491763226e12dcd47baa21f6e0475cce1ba88f8105ab4f692c7", null ],
-      [ "kSAI_Channel1Mask", "a00061.html#gga900dca9b26de42491763226e12dcd47ba4f8ec142406d199623daa8671b62285b", null ],
-      [ "kSAI_Channel2Mask", "a00061.html#gga900dca9b26de42491763226e12dcd47ba4d28325c4e3225b6bc90a3e6da72943b", null ],
-      [ "kSAI_Channel3Mask", "a00061.html#gga900dca9b26de42491763226e12dcd47baebd450167bf4da5b7825b633a76b50f7", null ],
-      [ "kSAI_Channel4Mask", "a00061.html#gga900dca9b26de42491763226e12dcd47ba028b3c77f8f6d83b5f53d889751b41fb", null ],
-      [ "kSAI_Channel5Mask", "a00061.html#gga900dca9b26de42491763226e12dcd47ba2e64fd8c9b0cb2ae5366f03129f65553", null ],
-      [ "kSAI_Channel6Mask", "a00061.html#gga900dca9b26de42491763226e12dcd47ba15f0e04bf2f22b27d472d09730bb1290", null ],
-      [ "kSAI_Channel7Mask", "a00061.html#gga900dca9b26de42491763226e12dcd47baed34fb3a4004a734740d463a3544ef1d", null ]
+      [ "kStatus_SAI_TxBusy", "a00061.html#gga531c35e38ede3ea4e5ba5afb24b29493ae095b9b1a3ec7b998d722b1e1d73ca44", null ],
+      [ "kStatus_SAI_RxBusy", "a00061.html#gga531c35e38ede3ea4e5ba5afb24b29493a8e432517b16b5784a72a95e0caf7bb4a", null ],
+      [ "kStatus_SAI_TxError", "a00061.html#gga531c35e38ede3ea4e5ba5afb24b29493a5f17818e41e2fb07e35e43e1a03bfeb9", null ],
+      [ "kStatus_SAI_RxError", "a00061.html#gga531c35e38ede3ea4e5ba5afb24b29493a0d8c8cec03abcd722d2ec4358451461c", null ],
+      [ "kStatus_SAI_QueueFull", "a00061.html#gga531c35e38ede3ea4e5ba5afb24b29493a19680647d09a7437afd6b6ae7013095e", null ],
+      [ "kStatus_SAI_TxIdle", "a00061.html#gga531c35e38ede3ea4e5ba5afb24b29493a2a58fb377508baa31df58beb5f406761", null ],
+      [ "kStatus_SAI_RxIdle", "a00061.html#gga531c35e38ede3ea4e5ba5afb24b29493a0f398d330abd6df4255be13d39968e1d", null ],
+      [ "kSAI_Channel0Mask", "a00061.html#gga9334a5b9057f32da96db9b5c6a045d67aa21f6e0475cce1ba88f8105ab4f692c7", null ],
+      [ "kSAI_Channel1Mask", "a00061.html#gga9334a5b9057f32da96db9b5c6a045d67a4f8ec142406d199623daa8671b62285b", null ],
+      [ "kSAI_Channel2Mask", "a00061.html#gga9334a5b9057f32da96db9b5c6a045d67a4d28325c4e3225b6bc90a3e6da72943b", null ],
+      [ "kSAI_Channel3Mask", "a00061.html#gga9334a5b9057f32da96db9b5c6a045d67aebd450167bf4da5b7825b633a76b50f7", null ],
+      [ "kSAI_Channel4Mask", "a00061.html#gga9334a5b9057f32da96db9b5c6a045d67a028b3c77f8f6d83b5f53d889751b41fb", null ],
+      [ "kSAI_Channel5Mask", "a00061.html#gga9334a5b9057f32da96db9b5c6a045d67a2e64fd8c9b0cb2ae5366f03129f65553", null ],
+      [ "kSAI_Channel6Mask", "a00061.html#gga9334a5b9057f32da96db9b5c6a045d67a15f0e04bf2f22b27d472d09730bb1290", null ],
+      [ "kSAI_Channel7Mask", "a00061.html#gga9334a5b9057f32da96db9b5c6a045d67aed34fb3a4004a734740d463a3544ef1d", null ]
     ] ],
     [ "sai_protocol_t", "a00061.html#gad13dff47e2ed5ce5d8eae47df8ac8e0f", [
       [ "kSAI_BusLeftJustified", "a00061.html#ggad13dff47e2ed5ce5d8eae47df8ac8e0fa5c6ddb713e2ebd5e243d5d8156869baf", null ],
@@ -138,18 +138,18 @@ var a00061 =
       [ "kSAI_BclkSourceMclkDiv", "a00061.html#gga4922f5f6332e7cb0715b6ebf70a4bf87ab4c297bd65ee5ef56c49808b8ac0d94d", null ],
       [ "kSAI_BclkSourceOtherSai0", "a00061.html#gga4922f5f6332e7cb0715b6ebf70a4bf87ab812a4070f7960ee602e14c9af93873f", null ],
       [ "kSAI_BclkSourceOtherSai1", "a00061.html#gga4922f5f6332e7cb0715b6ebf70a4bf87a4174df66b1e3f83cd8456564517c25b6", null ],
-      [ "kSAI_WordStartInterruptEnable", "a00061.html#gga1be3860693af99a6c1da72580097294ca544d76157d9e4e99a322e31b03f2de99", null ],
-      [ "kSAI_SyncErrorInterruptEnable", "a00061.html#gga1be3860693af99a6c1da72580097294ca3adb555d2455aa86878f78a0c0ef6566", null ],
-      [ "kSAI_FIFOWarningInterruptEnable", "a00061.html#gga1be3860693af99a6c1da72580097294ca0557da436cdad3e9551e4c2ab3319526", null ],
-      [ "kSAI_FIFOErrorInterruptEnable", "a00061.html#gga1be3860693af99a6c1da72580097294ca1eb2783c3d30845f08cb7b613d92d84b", null ],
-      [ "kSAI_FIFORequestInterruptEnable", "a00061.html#gga1be3860693af99a6c1da72580097294caba8ca41b00b881e5d7507e3d20974831", null ],
-      [ "kSAI_FIFOWarningDMAEnable", "a00061.html#ggac9420823bfeba78fce625fc105e3b01daa6bcd82f3ff9e711f85f1c05ff288eab", null ],
-      [ "kSAI_FIFORequestDMAEnable", "a00061.html#ggac9420823bfeba78fce625fc105e3b01da8d208db72a30ce3625803ba11f292086", null ],
-      [ "kSAI_WordStartFlag", "a00061.html#ggafa9be5679ab03d785820f2474c5ccc6ea8856ff23f0703c9a170163edcee534ea", null ],
-      [ "kSAI_SyncErrorFlag", "a00061.html#ggafa9be5679ab03d785820f2474c5ccc6ead35f8fa189ca7adc41905dc692aea237", null ],
-      [ "kSAI_FIFOErrorFlag", "a00061.html#ggafa9be5679ab03d785820f2474c5ccc6ea66affbcb587814dc0df6f12733ea3f5c", null ],
-      [ "kSAI_FIFORequestFlag", "a00061.html#ggafa9be5679ab03d785820f2474c5ccc6eaf90c6aca78ac96fb694157d3a8dc6388", null ],
-      [ "kSAI_FIFOWarningFlag", "a00061.html#ggafa9be5679ab03d785820f2474c5ccc6ea41f8ba146a17136cebefb1ef142c4563", null ]
+      [ "kSAI_WordStartInterruptEnable", "a00061.html#gga8628933cde20921c453a6d2607bdad62a544d76157d9e4e99a322e31b03f2de99", null ],
+      [ "kSAI_SyncErrorInterruptEnable", "a00061.html#gga8628933cde20921c453a6d2607bdad62a3adb555d2455aa86878f78a0c0ef6566", null ],
+      [ "kSAI_FIFOWarningInterruptEnable", "a00061.html#gga8628933cde20921c453a6d2607bdad62a0557da436cdad3e9551e4c2ab3319526", null ],
+      [ "kSAI_FIFOErrorInterruptEnable", "a00061.html#gga8628933cde20921c453a6d2607bdad62a1eb2783c3d30845f08cb7b613d92d84b", null ],
+      [ "kSAI_FIFORequestInterruptEnable", "a00061.html#gga8628933cde20921c453a6d2607bdad62aba8ca41b00b881e5d7507e3d20974831", null ],
+      [ "kSAI_FIFOWarningDMAEnable", "a00061.html#ggade9ca5088d171ad20b4c237f1c2d6260aa6bcd82f3ff9e711f85f1c05ff288eab", null ],
+      [ "kSAI_FIFORequestDMAEnable", "a00061.html#ggade9ca5088d171ad20b4c237f1c2d6260a8d208db72a30ce3625803ba11f292086", null ],
+      [ "kSAI_WordStartFlag", "a00061.html#gga9e93d8eae633734dfeb29e24a1f3a7c0a8856ff23f0703c9a170163edcee534ea", null ],
+      [ "kSAI_SyncErrorFlag", "a00061.html#gga9e93d8eae633734dfeb29e24a1f3a7c0ad35f8fa189ca7adc41905dc692aea237", null ],
+      [ "kSAI_FIFOErrorFlag", "a00061.html#gga9e93d8eae633734dfeb29e24a1f3a7c0a66affbcb587814dc0df6f12733ea3f5c", null ],
+      [ "kSAI_FIFORequestFlag", "a00061.html#gga9e93d8eae633734dfeb29e24a1f3a7c0af90c6aca78ac96fb694157d3a8dc6388", null ],
+      [ "kSAI_FIFOWarningFlag", "a00061.html#gga9e93d8eae633734dfeb29e24a1f3a7c0a41f8ba146a17136cebefb1ef142c4563", null ]
     ] ],
     [ "sai_reset_type_t", "a00061.html#gae33638b9b4e26245e21faa2ed10bbf7f", [
       [ "kSAI_ResetTypeSoftware", "a00061.html#ggae33638b9b4e26245e21faa2ed10bbf7fa67ca93a283d762ba72176ef609bc4134", null ],

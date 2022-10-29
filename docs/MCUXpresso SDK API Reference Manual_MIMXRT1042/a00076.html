@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.2</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -109,9 +109,9 @@ $(document).ready(function(){initNavTree('a00076.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00520"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a00520">spdif_edma_transfer_t</a></td></tr>
-<tr class="memdesc:a00520"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF transfer structure.  <a href="a00076.html#a00520">More...</a><br/></td></tr>
-<tr class="separator:a00520"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00521"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a00521">spdif_edma_transfer_t</a></td></tr>
+<tr class="memdesc:a00521"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF transfer structure.  <a href="a00076.html#a00521">More...</a><br/></td></tr>
+<tr class="separator:a00521"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00331"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a00331">spdif_edma_handle_t</a></td></tr>
 <tr class="memdesc:a00331"><td class="mdescLeft">&#160;</td><td class="mdescRight">SPDIF DMA transfer handle, users should not touch the content of the handle.  <a href="a00076.html#a00331">More...</a><br/></td></tr>
 <tr class="separator:a00331"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,10 +138,10 @@ eDMA Transactional</h2></td></tr>
 <tr class="memitem:ga997c6e8067aabb31c06d62dda8e18201"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#ga997c6e8067aabb31c06d62dda8e18201">SPDIF_TransferRxCreateHandleEDMA</a> (SPDIF_Type *base, spdif_edma_handle_t *handle, <a class="el" href="a00076.html#ga301f2d0b9a199636f3c105f26ebe0f57">spdif_edma_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00371">edma_handle_t</a> *dmaLeftHandle, <a class="el" href="a00021.html#a00371">edma_handle_t</a> *dmaRightHandle)</td></tr>
 <tr class="memdesc:ga997c6e8067aabb31c06d62dda8e18201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the SPDIF Rx eDMA handle.  <a href="#ga997c6e8067aabb31c06d62dda8e18201">More...</a><br/></td></tr>
 <tr class="separator:ga997c6e8067aabb31c06d62dda8e18201"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8f6d1ca1ea0d14799cc268bc0d403b52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#ga8f6d1ca1ea0d14799cc268bc0d403b52">SPDIF_TransferSendEDMA</a> (SPDIF_Type *base, spdif_edma_handle_t *handle, <a class="el" href="a00076.html#a00520">spdif_edma_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga8f6d1ca1ea0d14799cc268bc0d403b52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#ga8f6d1ca1ea0d14799cc268bc0d403b52">SPDIF_TransferSendEDMA</a> (SPDIF_Type *base, spdif_edma_handle_t *handle, <a class="el" href="a00076.html#a00521">spdif_edma_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga8f6d1ca1ea0d14799cc268bc0d403b52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SPDIF transfer using DMA.  <a href="#ga8f6d1ca1ea0d14799cc268bc0d403b52">More...</a><br/></td></tr>
 <tr class="separator:ga8f6d1ca1ea0d14799cc268bc0d403b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6a9055e2562ac1a740005a235add28d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#ga6a9055e2562ac1a740005a235add28d2">SPDIF_TransferReceiveEDMA</a> (SPDIF_Type *base, spdif_edma_handle_t *handle, <a class="el" href="a00076.html#a00520">spdif_edma_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga6a9055e2562ac1a740005a235add28d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#ga6a9055e2562ac1a740005a235add28d2">SPDIF_TransferReceiveEDMA</a> (SPDIF_Type *base, spdif_edma_handle_t *handle, <a class="el" href="a00076.html#a00521">spdif_edma_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga6a9055e2562ac1a740005a235add28d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a non-blocking SPDIF receive using eDMA.  <a href="#ga6a9055e2562ac1a740005a235add28d2">More...</a><br/></td></tr>
 <tr class="separator:ga6a9055e2562ac1a740005a235add28d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga427c4b16d4f1fdea087e2ee2bb515565"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#ga427c4b16d4f1fdea087e2ee2bb515565">SPDIF_TransferAbortSendEDMA</a> (SPDIF_Type *base, spdif_edma_handle_t *handle)</td></tr>
@@ -158,7 +158,7 @@ eDMA Transactional</h2></td></tr>
 <tr class="separator:ga2372914f14224175a5d10130ce56b779"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00520" id="a00520"></a>
+<a name="a00521" id="a00521"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -263,7 +263,7 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a0
 <tr class="memitem:a3ea754fe27bc481382b2af29b50d3dd7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00021.html#a00373">edma_tcd_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#a3ea754fe27bc481382b2af29b50d3dd7">rightTcd</a> [<a class="el" href="a00075.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>+1U]</td></tr>
 <tr class="memdesc:a3ea754fe27bc481382b2af29b50d3dd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">TCD pool for eDMA transfer.  <a href="#a3ea754fe27bc481382b2af29b50d3dd7">More...</a><br/></td></tr>
 <tr class="separator:a3ea754fe27bc481382b2af29b50d3dd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa396de6181b67e4dd2320b3779d07371"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00076.html#a00520">spdif_edma_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#aa396de6181b67e4dd2320b3779d07371">spdifQueue</a> [<a class="el" href="a00075.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td></tr>
+<tr class="memitem:aa396de6181b67e4dd2320b3779d07371"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00076.html#a00521">spdif_edma_transfer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00076.html#aa396de6181b67e4dd2320b3779d07371">spdifQueue</a> [<a class="el" href="a00075.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td></tr>
 <tr class="memdesc:aa396de6181b67e4dd2320b3779d07371"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer queue storing queued transfer.  <a href="#aa396de6181b67e4dd2320b3779d07371">More...</a><br/></td></tr>
 <tr class="separator:aa396de6181b67e4dd2320b3779d07371"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a45d44b5687f7c3c9c8e7e53ebfb2b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a45d44b5687f7c3c9c8e7e53ebfb2b1"></a>
@@ -320,7 +320,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00076.html#a00520">spdif_edma_transfer_t</a> spdif_edma_handle_t::spdifQueue[<a class="el" href="a00075.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td>
+          <td class="memname"><a class="el" href="a00076.html#a00521">spdif_edma_transfer_t</a> spdif_edma_handle_t::spdifQueue[<a class="el" href="a00075.html#ga3e78a3155b1291a9fa00d0461d6e490c">SPDIF_XFER_QUEUE_SIZE</a>]</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -488,7 +488,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00076.html#a00520">spdif_edma_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00076.html#a00521">spdif_edma_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -537,7 +537,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00076.html#a00520">spdif_edma_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00076.html#a00521">spdif_edma_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>

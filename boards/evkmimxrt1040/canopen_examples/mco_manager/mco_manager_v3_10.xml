@@ -133,10 +133,10 @@
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
     <source path="../../../../middleware/canopen/mcolibs/imxrt/mco_manager" project_relative_path="mcolibs" method="copy" type="lib" toolchain="iar mcuxpresso armgcc">
-      <files mask="libMCO_MGR_IMXRT10xx_SDK_2.a"/>
+      <files mask="libMCO_MGR_IMXRT10xx_SDK_3.a"/>
     </source>
     <source path="../../../../middleware/canopen/mcolibs/imxrt/mco_manager" project_relative_path="mcolibs" method="copy" type="lib" toolchain="mdk">
-      <files mask="libMCO_MGR_IMXRT10xx_KSDK_2.a"/>
+      <files mask="libMCO_MGR_IMXRT10xx_KSDK_3.a"/>
     </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="main.c"/>

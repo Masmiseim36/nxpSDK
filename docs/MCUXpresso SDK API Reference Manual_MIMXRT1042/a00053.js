@@ -1,11 +1,11 @@
 var a00053 =
 [
-    [ "mmc_usr_param_t", "a00053.html#a00446", [
+    [ "mmc_usr_param_t", "a00053.html#a00447", [
       [ "ioStrength", "a00053.html#a8f74c9dd9fd1f4d4982010c9c8f81d1a", null ],
       [ "maxFreq", "a00053.html#a4329e1d007e30129bb4544a58bd84f13", null ],
       [ "capability", "a00053.html#ae3d0401fb63d202b3d1d1cbb7c741468", null ]
     ] ],
-    [ "mmc_card_t", "a00053.html#a00441", [
+    [ "mmc_card_t", "a00053.html#a00442", [
       [ "host", "a00053.html#a12ab48f6985e78ef81d34ab22b8fc878", null ],
       [ "usrParam", "a00053.html#ad1054b9eecc0633e8ca70ba164918b2a", null ],
       [ "isHostReady", "a00053.html#ab14a00fcc66890836622884227bd1873", null ],
@@ -32,19 +32,19 @@ var a00053 =
     ] ],
     [ "FSL_MMC_DRIVER_VERSION", "a00053.html#gaa853e6ed145fdde29cb8277c789ab5cb", null ],
     [ "mmc_io_strength_t", "a00053.html#ga5615d27683e82898b6d4526eff8efcd8", [
-      [ "kMMC_SupportHighSpeed26MHZFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567a0f2e16ba804bfabd3c81fee5fa780c95", null ],
-      [ "kMMC_SupportHighSpeed52MHZFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567adb778db370818747d81df90b23298bf1", null ],
-      [ "kMMC_SupportHighSpeedDDR52MHZ180V300VFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567af873861eb6356bd1a236d4741d3bd382", null ],
-      [ "kMMC_SupportHighSpeedDDR52MHZ120VFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567ab26ad5455afddab2dd5909435243d8de", null ],
-      [ "kMMC_SupportHS200200MHZ180VFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567a39b3765119b6f0134b9c3d00e78ccdc3", null ],
-      [ "kMMC_SupportHS200200MHZ120VFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567a7875676a63cb3e3f3bce09d60b12cf88", null ],
-      [ "kMMC_SupportHS400DDR200MHZ180VFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567a5b1fc45cb6e3fee016907e5d13f1ad83", null ],
-      [ "kMMC_SupportHS400DDR200MHZ120VFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567af2976472059a8701c26ed30e0f28c5fa", null ],
-      [ "kMMC_SupportHighCapacityFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567a067279b27baf58ed3266df38e848b128", null ],
-      [ "kMMC_SupportAlternateBootFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567ac18882ad0cc699401c3e3483633ed77b", null ],
-      [ "kMMC_SupportDDRBootFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567af9baef828e6536d54f64295e1ce57548", null ],
-      [ "kMMC_SupportHighSpeedBootFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567a57438a043537958e8324400ce3788ed0", null ],
-      [ "kMMC_SupportEnhanceHS400StrobeFlag", "a00053.html#gga098384b0034af0daa7c9c5c82b563567a39d546b05b2c725a822419330606bba5", null ]
+      [ "kMMC_SupportHighSpeed26MHZFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa0f2e16ba804bfabd3c81fee5fa780c95", null ],
+      [ "kMMC_SupportHighSpeed52MHZFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffadb778db370818747d81df90b23298bf1", null ],
+      [ "kMMC_SupportHighSpeedDDR52MHZ180V300VFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaf873861eb6356bd1a236d4741d3bd382", null ],
+      [ "kMMC_SupportHighSpeedDDR52MHZ120VFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffab26ad5455afddab2dd5909435243d8de", null ],
+      [ "kMMC_SupportHS200200MHZ180VFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa39b3765119b6f0134b9c3d00e78ccdc3", null ],
+      [ "kMMC_SupportHS200200MHZ120VFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa7875676a63cb3e3f3bce09d60b12cf88", null ],
+      [ "kMMC_SupportHS400DDR200MHZ180VFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa5b1fc45cb6e3fee016907e5d13f1ad83", null ],
+      [ "kMMC_SupportHS400DDR200MHZ120VFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaf2976472059a8701c26ed30e0f28c5fa", null ],
+      [ "kMMC_SupportHighCapacityFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa067279b27baf58ed3266df38e848b128", null ],
+      [ "kMMC_SupportAlternateBootFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffac18882ad0cc699401c3e3483633ed77b", null ],
+      [ "kMMC_SupportDDRBootFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffaf9baef828e6536d54f64295e1ce57548", null ],
+      [ "kMMC_SupportHighSpeedBootFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa57438a043537958e8324400ce3788ed0", null ],
+      [ "kMMC_SupportEnhanceHS400StrobeFlag", "a00053.html#ggaa94c5fdcac6a4b26211b612c3edc04ffa39d546b05b2c725a822419330606bba5", null ]
     ] ],
     [ "mmc_sleep_awake_t", "a00053.html#gab89d4d12909a44eb53f0f366ea542cf4", [
       [ "kMMC_Sleep", "a00053.html#ggab89d4d12909a44eb53f0f366ea542cf4a766aba45b5704265a1dfdf8d8d1ef5b2", null ],

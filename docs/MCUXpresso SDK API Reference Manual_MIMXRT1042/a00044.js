@@ -1,6 +1,6 @@
 var a00044 =
 [
-    [ "lpi2c_master_config_t", "a00044.html#a00431", [
+    [ "lpi2c_master_config_t", "a00044.html#a00432", [
       [ "enableMaster", "a00044.html#a36f58debd82d2fe56bffc3d8d8748e22", null ],
       [ "enableDoze", "a00044.html#a4f75d18b353af3668e0c3a8dc2c65133", null ],
       [ "debugEnable", "a00044.html#a73c9f8dca26ed429fb5df6eebbb757b1", null ],
@@ -14,9 +14,9 @@ var a00044 =
       [ "enable", "a00044.html#adf43f53aece30b66a9dc29a6fe2bb02d", null ],
       [ "source", "a00044.html#a2c56d9865a4d122894a4918b21540151", null ],
       [ "polarity", "a00044.html#acb38f33f1c5f33595cae1133882c4d24", null ],
-      [ "hostRequest", "a00044.html#a4f95bd3d758edaa4a83ac712a3b63ece", null ]
+      [ "hostRequest", "a00044.html#add14d26175c4627888df8bf80ceb2706", null ]
     ] ],
-    [ "lpi2c_data_match_config_t", "a00044.html#a00430", [
+    [ "lpi2c_data_match_config_t", "a00044.html#a00431", [
       [ "matchMode", "a00044.html#a1ee7d6261dcde31818b381f189569d80", null ],
       [ "rxDataMatchOnly", "a00044.html#a2d2eed3e5f6fb4a94b653f416818ae30", null ],
       [ "match0", "a00044.html#ad28aaeb70cf478b4564cc05da64ce062", null ],

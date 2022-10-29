@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2019-2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,7 +7,7 @@
 
 //file auto-generated from fmstr_logo.png by bin2h.exe
 size_t fmstrlogo_png_len = 2050;
-const unsigned char fmstrlogo_png[2050]=
+FMSTR_DEMO_CONTENT unsigned char fmstrlogo_png[2050]=
 {
 	0x89,0x50,0x4E,0x47,0x0D,0x0A,0x1A,0x0A,0x00,0x00,0x00,
 	0x0D,0x49,0x48,0x44,0x52,0x00,0x00,0x00,0x3C,0x00,0x00,

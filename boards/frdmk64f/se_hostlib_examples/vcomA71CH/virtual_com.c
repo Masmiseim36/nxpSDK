@@ -5,41 +5,39 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "fsl_sss_ftr.h"
-#include "fsl_device_registers.h"
-#include "clock_config.h"
-#include "pin_mux.h"
-
 #include <stdio.h>
 #include <stdlib.h>
+/*${standard_header_anchor}*/
+#include "clock_config.h"
+#include "fsl_debug_console.h"
+#include "fsl_device_registers.h"
+#include "pin_mux.h"
+#include "board.h"
 
-#include "usb_device_config.h"
 #include "usb.h"
+#include "usb_device_config.h"
 #include "usb_device.h"
 
 #include "usb_device_class.h"
 #include "usb_device_cdc_acm.h"
 #include "usb_device_ch9.h"
-#include "fsl_debug_console.h"
-#include "board.h"
 
 #include "usb_device_descriptor.h"
 #include "virtual_com.h"
+#include "fsl_sss_ftr.h"
 #include <PlugAndTrust_Pkg_Ver.h>
 
-
-/*VV-IMP
-KSDK has recently add implementation for
-USB_OTG1_IRQHandler
-USB_OTG2_IRQHandler
-USB0_IRQHandler
-As the implemetation of those ISRs are already here and has to be used from this file,
-we rename those ISRs using a define to its name and undefine here
+/* VV-IMP
+    KSDK has recently add implementation for
+    USB_OTG1_IRQHandler
+    USB_OTG2_IRQHandler
+    USB0_IRQHandler
+    As the implemetation of those ISRs are already here and has to be used from this file,
+    we rename those ISRs using a define to its name and undefine here
 */
 #undef USB_OTG1_IRQHandler
 #undef USB_OTG2_IRQHandler
 #undef USB0_IRQHandler
-
 
 #if defined(LPC_55x)
 #include "fsl_power.h"
@@ -120,7 +118,8 @@ static uint8_t s_countryCode[COMM_FEATURE_DATA_SIZE] = {
     (COUNTRY_SETTING >> 0U) & 0x00FFU, (COUNTRY_SETTING >> 8U) & 0x00FFU};
 
 /* CDC ACM information */
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static usb_cdc_acm_info_t s_usbCdcAcmInfo;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static usb_cdc_acm_info_t s_usbCdcAcmInfo;
 /* Data buffer for receiving and sending*/
 #if defined(CPU_MIMXRT1062DVL6A)
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[DATA_BUFF_SIZE];
@@ -130,8 +129,8 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[204
 // USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currSendBuf[DATA_BUFF_SIZE]; //- A71CH I2C
 
 #endif
-volatile static uint32_t s_recvSize = 0;
-volatile static uint32_t s_sendSize = 0;
+static volatile uint32_t s_recvSize = 0;
+static volatile uint32_t s_sendSize = 0;
 
 /* USB device class information */
 static usb_device_class_config_struct_t s_cdcAcmConfig[1] = {{
@@ -142,16 +141,16 @@ static usb_device_class_config_struct_t s_cdcAcmConfig[1] = {{
 
 /* USB device class configuration information */
 static usb_device_class_config_list_struct_t s_cdcAcmConfigList = {
-    &s_cdcAcmConfig[0],
-    &USB_DeviceCallback,
+    s_cdcAcmConfig,
+    USB_DeviceCallback,
     1,
 };
 
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
     defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
     defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
-volatile static uint8_t s_waitForDataReceive = 0;
-volatile static uint8_t s_comOpen = 0;
+static volatile uint8_t s_waitForDataReceive = 0;
+static volatile uint8_t s_comOpen            = 0;
 #endif
 /*******************************************************************************
 * Code
@@ -224,10 +223,10 @@ void USB0_IRQHandler(void)
 #if (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U))
 void USB0_IRQHandler(void)
 {
-   USB_DeviceKhciIsrFunction(s_cdcVcom.deviceHandle);
-   /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+    USB_DeviceKhciIsrFunction(s_cdcVcom.deviceHandle);
+    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
    exception return operation might vector to incorrect interrupt */
-   __DSB();
+    __DSB();
 }
 #endif
 
@@ -246,15 +245,20 @@ void USB_DeviceClockInit(void)
         BOARD_USB_PHY_TXCAL45DP,
         BOARD_USB_PHY_TXCAL45DM,
     };
+#if defined(CPU_MIMXRT1176DVMAA_cm7)
+    uint32_t usbClockFreq = 24000000;
+#else
+    uint32_t usbClockFreq = 48000000;
+#endif
 #endif
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
     if (CONTROLLER_ID == kUSB_ControllerEhci0) {
-        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
+        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, usbClockFreq);
+        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, usbClockFreq);
     }
     else {
-        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
+        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, usbClockFreq);
+        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, usbClockFreq);
     }
     USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
 #endif
@@ -305,19 +309,19 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
     uint8_t usbDeviceEhciIrq[] = USBHS_IRQS;
-    irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
+    irqNumber                  = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
     uint8_t usbDeviceIP3511Irq[] = USB_IRQS;
-    irqNumber = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Fs0];
+    irqNumber                    = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Fs0];
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
     uint8_t usbDeviceIP3511Irq[] = USBHSD_IRQS;
-    irqNumber = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Hs0];
+    irqNumber                    = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Hs0];
 #endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -357,19 +361,24 @@ void USB_DeviceTaskFn(void *deviceHandle)
  */
 usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, void *param)
 {
+#if ((defined USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE) && (USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE > 0U))
+#else
     uint32_t len;
+#endif
     uint8_t *uartBitmap;
     usb_device_cdc_acm_request_param_struct_t *acmReqParam;
     usb_device_endpoint_callback_message_struct_t *epCbParam;
-    usb_status_t error = kStatus_USB_InvalidRequest;
+    usb_status_t error          = kStatus_USB_InvalidRequest;
     usb_cdc_acm_info_t *acmInfo = &s_usbCdcAcmInfo;
-    acmReqParam = (usb_device_cdc_acm_request_param_struct_t *)param;
-    epCbParam = (usb_device_endpoint_callback_message_struct_t *)param;
+    acmReqParam                 = (usb_device_cdc_acm_request_param_struct_t *)param;
+    epCbParam                   = (usb_device_endpoint_callback_message_struct_t *)param;
     switch (event) {
     case kUSB_DeviceCdcEventSendResponse: {
         if ((epCbParam->length != 0) && (!(epCbParam->length % g_UsbDeviceCdcVcomDicEndpoints[0].maxPacketSize))) {
-            /* If the last packet is the size of endpoint, then send also zero-ended packet,
-                 ** meaning that we want to inform the host that we do not have any additional
+            /* If the last packet is the size of endpoint, then send also zero-ended
+       *packet,
+       ** meaning that we want to inform the host that we do not have any
+       *additional
                  ** data, so it can flush the output.
                  */
             error = USB_DeviceCdcAcmSend(handle, USB_CDC_VCOM_BULK_IN_ENDPOINT, NULL, 0);
@@ -420,7 +429,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
     } break;
     case kUSB_DeviceCdcEventSerialStateNotif:
         ((usb_device_cdc_acm_struct_t *)handle)->hasSentState = 0;
-        error = kStatus_USB_Success;
+        error                                                 = kStatus_USB_Success;
         break;
     case kUSB_DeviceCdcEventSendEncapsulatedCommand:
         break;
@@ -448,20 +457,22 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             error = kStatus_USB_Success;
         }
         else {
+            /* no action, return kStatus_USB_InvalidRequest */
         }
         break;
     case kUSB_DeviceCdcEventGetCommFeature:
         if (USB_DEVICE_CDC_FEATURE_ABSTRACT_STATE == acmReqParam->setupValue) {
             *(acmReqParam->buffer) = s_abstractState;
             *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
-            error = kStatus_USB_Success;
+            error                  = kStatus_USB_Success;
         }
         else if (USB_DEVICE_CDC_FEATURE_COUNTRY_SETTING == acmReqParam->setupValue) {
             *(acmReqParam->buffer) = s_countryCode;
             *(acmReqParam->length) = COMM_FEATURE_DATA_SIZE;
-            error = kStatus_USB_Success;
+            error                  = kStatus_USB_Success;
         }
         else {
+            /* no action, return kStatus_USB_InvalidRequest */
         }
         break;
     case kUSB_DeviceCdcEventClearCommFeature:
@@ -469,7 +480,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
     case kUSB_DeviceCdcEventGetLineCoding:
         *(acmReqParam->buffer) = s_lineCoding;
         *(acmReqParam->length) = LINE_CODING_SIZE;
-        error = kStatus_USB_Success;
+        error                  = kStatus_USB_Success;
         break;
     case kUSB_DeviceCdcEventSetLineCoding: {
         if (1 == acmReqParam->isSetup) {
@@ -479,11 +490,9 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
         else {
             /* no action, data phase, s_lineCoding has been assigned */
         }
-    }
         error = kStatus_USB_Success;
-        break;
+    } break;
     case kUSB_DeviceCdcEventSetControlLineState: {
-        error = kStatus_USB_Success;
         s_usbCdcAcmInfo.dteStatus = acmReqParam->setupValue;
         /* activate/deactivate Tx carrier */
         if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION) {
@@ -493,7 +502,8 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             acmInfo->uartState &= (uint16_t)~USB_DEVICE_CDC_UART_STATE_TX_CARRIER;
         }
 
-        /* activate carrier and DTE. Com port of terminal tool running on PC is open now */
+        /* activate carrier and DTE. Com port of terminal tool running on PC is open
+     * now */
         if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE) {
             acmInfo->uartState |= USB_DEVICE_CDC_UART_STATE_RX_CARRIER;
         }
@@ -503,7 +513,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
         }
 
         /* Indicates to DCE if DTE is present or not */
-        acmInfo->dtePresent = (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE) ? true : false;
+        acmInfo->dtePresent = (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE) ? 1 : 0;
 
         /* Initialize the serial state buffer */
         acmInfo->serialStateBuf[0] = NOTIF_REQUEST_TYPE;                /* bmRequestType */
@@ -517,9 +527,11 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
         /* Notify to host the line state */
         acmInfo->serialStateBuf[4] = acmReqParam->interfaceIndex;
         /* Lower byte of UART BITMAP */
-        uartBitmap = (uint8_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];
+        uartBitmap    = (uint8_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];
         uartBitmap[0] = acmInfo->uartState & 0xFFu;
         uartBitmap[1] = (acmInfo->uartState >> 8) & 0xFFu;
+#if ((defined USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE) && (USB_DEVICE_CONFIG_CDC_CIC_EP_DISABLE > 0U))
+#else
         len = (uint32_t)(NOTIF_PACKET_SIZE + UART_BITMAP_SIZE);
         if (0 == ((usb_device_cdc_acm_struct_t *)handle)->hasSentState) {
             error = USB_DeviceCdcAcmSend(handle, USB_CDC_VCOM_INTERRUPT_IN_ENDPOINT, acmInfo->serialStateBuf, len);
@@ -528,7 +540,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
             }
             ((usb_device_cdc_acm_struct_t *)handle)->hasSentState = 1;
         }
-
+#endif
         /* Update status */
         if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION) {
             /*  To do: CARRIER_ACTIVATED */
@@ -556,6 +568,7 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
                 s_cdcVcom.startTransactions = 0;
             }
         }
+        error = kStatus_USB_Success;
     } break;
     case kUSB_DeviceCdcEventSendBreak:
         break;
@@ -580,48 +593,87 @@ usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t event, vo
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
-    uint16_t *temp16 = (uint16_t *)param;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint16_t *temp16   = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event) {
     case kUSB_DeviceEventBusReset: {
-        s_cdcVcom.attach = 0;
-        error            = kStatus_USB_Success;
+        s_cdcVcom.attach               = 0;
+        s_cdcVcom.currentConfiguration = 0U;
+        error                          = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
-        /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
+        /* Get USB speed to configure the device, including max packet size and
+     * interval of the endpoints. */
         if (kStatus_USB_Success == USB_DeviceClassGetSpeed(CONTROLLER_ID, &s_cdcVcom.speed)) {
             USB_DeviceSetSpeed(handle, s_cdcVcom.speed);
         }
 #endif
     } break;
     case kUSB_DeviceEventSetConfiguration:
-        if (param) {
-            s_cdcVcom.attach = 1;
+        if (0U == (*temp8)) {
+            s_cdcVcom.attach               = 0;
+            s_cdcVcom.currentConfiguration = 0U;
+            error                          = kStatus_USB_Success;
+        }
+        else if (USB_CDC_VCOM_CONFIGURE_INDEX == (*temp8)) {
+            s_cdcVcom.attach               = 1;
             s_cdcVcom.currentConfiguration = *temp8;
-            if (USB_CDC_VCOM_CONFIGURE_INDEX == (*temp8)) {
-                error = kStatus_USB_Success;
-                /* Schedule buffer for receive */
-                USB_DeviceCdcAcmRecv(s_cdcVcom.cdcAcmHandle,
-                    USB_CDC_VCOM_BULK_OUT_ENDPOINT,
-                    s_currRecvBuf,
-                    g_UsbDeviceCdcVcomDicEndpoints[0].maxPacketSize);
-            }
+            error                          = kStatus_USB_Success;
+            /* Schedule buffer for receive */
+            USB_DeviceCdcAcmRecv(s_cdcVcom.cdcAcmHandle,
+                USB_CDC_VCOM_BULK_OUT_ENDPOINT,
+                s_currRecvBuf,
+                g_UsbDeviceCdcVcomDicEndpoints[1].maxPacketSize);
+        }
+        else {
+            /* no action, return kStatus_USB_InvalidRequest */
         }
         break;
     case kUSB_DeviceEventSetInterface:
         if (s_cdcVcom.attach) {
-            uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+            uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
             uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
+#if defined(CPU_MIMXRT1176DVMAA_cm7)
+            if (interface == USB_CDC_VCOM_COMM_INTERFACE_INDEX) {
+                if (alternateSetting < USB_CDC_VCOM_COMM_INTERFACE_ALTERNATE_COUNT) {
+                    s_cdcVcom.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                    error                                                 = kStatus_USB_Success;
+                }
+            }
+            else if (interface == USB_CDC_VCOM_DATA_INTERFACE_INDEX) {
+                if (alternateSetting < USB_CDC_VCOM_DATA_INTERFACE_ALTERNATE_COUNT) {
+                    s_cdcVcom.currentInterfaceAlternateSetting[interface] = alternateSetting;
+                    error                                                 = kStatus_USB_Success;
+                }
+            }
+            else {
+                /* no action, return kStatus_USB_InvalidRequest */
+            }
+#else
             if (interface < USB_CDC_VCOM_INTERFACE_COUNT) {
                 s_cdcVcom.currentInterfaceAlternateSetting[interface] = alternateSetting;
                 error                                                 = kStatus_USB_Success;
             }
+#endif
         }
         break;
     case kUSB_DeviceEventGetConfiguration:
+        if (param) {
+            /* Get current configuration request */
+            *temp8 = s_cdcVcom.currentConfiguration;
+            error  = kStatus_USB_Success;
+        }
         break;
     case kUSB_DeviceEventGetInterface:
+        if (param) {
+            /* Get current alternate setting of the interface request */
+            uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+            if (interface < USB_CDC_VCOM_INTERFACE_COUNT) {
+                *temp16 = (*temp16 & 0xFF00U) | s_cdcVcom.currentInterfaceAlternateSetting[interface];
+                error   = kStatus_USB_Success;
+            }
+        }
         break;
     case kUSB_DeviceEventGetDeviceDescriptor:
         if (param) {
@@ -641,6 +693,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
     default:
+        /* no action, return kStatus_USB_InvalidRequest */
         break;
     }
 
@@ -661,8 +714,8 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    s_cdcVcom.speed = USB_SPEED_HIGH;
-    s_cdcVcom.attach = 0;
+    s_cdcVcom.speed        = USB_SPEED_FULL; //RT1170; HIGH otherwise
+    s_cdcVcom.attach       = 0;
     s_cdcVcom.cdcAcmHandle = (class_handle_t)NULL;
     s_cdcVcom.deviceHandle = NULL;
 
@@ -680,13 +733,13 @@ void APPInit(void)
         LOG_W("smCom : Unknown");
 #endif
 
-#if defined(SSS_HAVE_A71CH) && (SSS_HAVE_A71CH == 1)
+#if defined(SSS_HAVE_APPLET_A71CH) && (SSS_HAVE_APPLET_A71CH == 1)
         LOG_I("Secure Element : A71CH");
-#elif defined(SSS_HAVE_A71CL) && (SSS_HAVE_A71CL == 1)
+#elif defined(SSS_HAVE_APPLET_A71CL) && (SSS_HAVE_APPLET_A71CL == 1)
         LOG_I("Secure Element : A71CL");
-#elif defined(SSS_HAVE_SE05X) && (SSS_HAVE_SE05X == 1)
+#elif defined(SSS_HAVE_APPLET_SE05X_IOT) && (SSS_HAVE_APPLET_SE05X_IOT == 1)
         LOG_I("Secure Element : SE050");
-#elif defined(SSS_HAVE_A71CH_SIM) && (SSS_HAVE_A71CH_SIM == 1)
+#elif defined(SSS_HAVE_APPLET_A71CH_SIM) && (SSS_HAVE_APPLET_A71CH_SIM == 1)
         LOG_I("NXP Internal : SE050_CH");
 #elif defined(SSS_HAVE_SE050_L) && (SSS_HAVE_SE050_L == 1)
         LOG_I("Secure Element : SE050_L");
@@ -746,7 +799,7 @@ void state_vcom_usbLowPower()
 #endif
 }
 
-#if defined(__CC_ARM) || defined(__GNUC__)
+#if defined(__CC_ARM) || (defined(__ARMCC_VERSION)) || defined(__GNUC__)
 int main(void)
 #else
 void main(void)
@@ -889,6 +942,16 @@ void main(void)
     axReset_HostConfigure();
     axReset_PowerUp();
 #endif
+#if defined(CPU_MIMXRT1176DVMAA_cm7)
+    BOARD_ConfigMPU();
+    BOARD_InitBootPins();
+    BOARD_BootClockRUN();
+    BOARD_InitDebugConsole();
+
+    axReset_HostConfigure();
+    axReset_PowerUp();
+
+#endif // CPU_MIMXRT1176DVMAA_cm7
     sm_initSleep();
     APPInit();
 

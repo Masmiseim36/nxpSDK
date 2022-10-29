@@ -532,7 +532,7 @@ usb_status_t USB_HostPrinterAppEvent(usb_device_handle deviceHandle,
     usb_status_t status = kStatus_USB_Success;
     usb_host_configuration_t *configuration;
     usb_host_interface_t *interface;
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
     usb_descriptor_interface_t *interfaceDesc;
     uint32_t endPos;
     usb_descriptor_union_t *unionDes;

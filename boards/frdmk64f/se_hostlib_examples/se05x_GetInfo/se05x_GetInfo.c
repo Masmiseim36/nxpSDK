@@ -13,10 +13,17 @@
 #include <se05x_tlv.h>
 #include <string.h>
 #include <nxEnsure.h>
+#include <sm_const.h>
 
 #include "ex_sss_auth.h"
 #include "global_platf.h"
 #include "smCom.h"
+
+#ifndef SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO
+#include "UWBIOT_APP_BUILD.h"
+#endif
+
+#if defined(SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO)
 
 static ex_sss_boot_ctx_t gex_sss_get_info_ctx;
 
@@ -79,12 +86,14 @@ sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx)
     }
 
     status = JCOP4_GetDataIdentify(pSession->s_ctx.conn_ctx);
-    if (status != kStatus_SSS_Success)
+    if (status != kStatus_SSS_Success) {
         goto cleanup;
+    }
 
     status = JCOP4_GetCPLCData(pSession->s_ctx.conn_ctx);
-    if (status != kStatus_SSS_Success)
+    if (status != kStatus_SSS_Success) {
         goto cleanup;
+    }
 
     status = kStatus_SSS_Success;
 cleanup:
@@ -256,17 +265,17 @@ static sss_status_t Iot_Applet_Identify(sss_se05x_session_t *pSession, int getUi
         sw_status = Se05x_API_CheckObjectExists(&pSession->s_ctx, kSE05x_AppletResID_UNIQUE_ID, &result);
         if (SM_OK != sw_status) {
             LOG_E("Failed Se05x_API_CheckObjectExists");
-            goto cleanup;
         }
-
-        sw_status =
-            Se05x_API_ReadObject(&pSession->s_ctx, kSE05x_AppletResID_UNIQUE_ID, 0, (uint16_t)uidLen, uid, &uidLen);
-        if (SM_OK != sw_status) {
-            LOG_E("Failed Se05x_API_CheckObjectExists");
-            goto cleanup;
+        else {
+            sw_status =
+                Se05x_API_ReadObject(&pSession->s_ctx, kSE05x_AppletResID_UNIQUE_ID, 0, (uint16_t)uidLen, uid, &uidLen);
+            if (SM_OK != sw_status) {
+                LOG_E("Failed Se05x_API_CheckObjectExists");
+                goto cleanup;
+            }
+            LOG_W("#####################################################");
+            LOG_AU8_I(uid, uidLen);
         }
-        LOG_W("#####################################################");
-        LOG_AU8_I(uid, uidLen);
     }
 
     // VersionInfo is a 7 - byte value consisting of :
@@ -279,7 +288,25 @@ static sss_status_t Iot_Applet_Identify(sss_se05x_session_t *pSession, int getUi
     sw_status = Se05x_API_GetVersion(&pSession->s_ctx, applet_version, &applet_versionLen);
     if (SM_OK != sw_status) {
         LOG_E("Failed Se05x_API_GetVersion");
-        goto cleanup;
+        {
+            /* In case of FIPS, if the example is not built for PlatSCP, try getting version by applet select again */
+            unsigned char appletName[] = APPLET_NAME;
+            U8 selectResponseData[32]  = {0};
+            U16 selectResponseDataLen  = sizeof(selectResponseData);
+            sw_status                  = GP_Select(pSession->s_ctx.conn_ctx,
+                (U8 *)&appletName,
+                APPLET_NAME_LEN,
+                selectResponseData,
+                &selectResponseDataLen);
+            if (sw_status != SM_OK) {
+                LOG_E("Could not select applet.");
+                goto cleanup;
+            }
+            if (selectResponseDataLen != applet_versionLen) {
+                goto cleanup;
+            }
+            memcpy(applet_version, selectResponseData, selectResponseDataLen);
+        }
     }
     LOG_W("#####################################################");
     LOG_I("Applet Major = %d", applet_version[0]);
@@ -534,3 +561,5 @@ static sss_status_t JCOP4_GetCPLCData(void *conn_ctx)
 cleanup:
     return status;
 }
+
+#endif // SIMW_DEMO_ENABLE__DEMO_SE05X_GETINFO

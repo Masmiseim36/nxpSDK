@@ -93,19 +93,19 @@ static void InitPWM(void)
      * However, the output pins are still driven as GPIO since the
      * channel mode is set to FTM channel disabled after RESET */
     /* channel output is masked */
-    M1_PWM_TIMER->OUTMASK = (FTM_OUTMASK_CH0OM_MASK | FTM_OUTMASK_CH1OM_MASK | FTM_OUTMASK_CH2OM_MASK | FTM_OUTMASK_CH3OM_MASK |
-                     FTM_OUTMASK_CH4OM_MASK | FTM_OUTMASK_CH5OM_MASK);
+    M1_PWM_TIMER->OUTMASK = (FTM_OUTMASK_CH0OM_MASK | FTM_OUTMASK_CH1OM_MASK | FTM_OUTMASK_CH2OM_MASK |
+                             FTM_OUTMASK_CH3OM_MASK | FTM_OUTMASK_CH4OM_MASK | FTM_OUTMASK_CH5OM_MASK);
 
     /* disable write protection for certain registers
      * free running counter and synchronization are different from TPM
-     * Enable the counter
+     * Enable FTM features
      * Fault Control Mode - Fault control is enabled for all channels,
      * and the selected mode is the automatic fault clearing
      * Initialize The Channels Output */
     M1_PWM_TIMER->MODE = FTM_MODE_WPDIS_MASK | FTM_MODE_FTMEN_MASK | FTM_MODE_FAULTM(3) | FTM_MODE_INIT_MASK;
 
     /* Counter running in BDM mode */
-    M1_PWM_TIMER->CONF = FTM_CONF_BDMMODE(3);
+    M1_PWM_TIMER->CONF = FTM_CONF_BDMMODE(1);
 
     /* initial value of the FTM counter */
     M1_PWM_TIMER->CNTIN = (uint32_t)(-M1_PWM_MODULO / 2);
@@ -131,14 +131,15 @@ static void InitPWM(void)
     M1_PWM_TIMER->COMBINE |= FTM_COMBINE_DTEN0_MASK | FTM_COMBINE_DTEN1_MASK | FTM_COMBINE_DTEN2_MASK;
 
     /* Dead time length */
-    M1_PWM_TIMER->DEADTIME = FTM_DEADTIME_DTPS(M1_PWM_DEADTIME_LENGTH_DTPS) | FTM_DEADTIME_DTVAL(M1_PWM_DEADTIME_LENGTH_DTVAL);
+    M1_PWM_TIMER->DEADTIME =
+        FTM_DEADTIME_DTPS(M1_PWM_DEADTIME_LENGTH_DTPS) | FTM_DEADTIME_DTVAL(M1_PWM_DEADTIME_LENGTH_DTVAL);
 #endif /* M1_PWM_DEADTIME_ENABLE */
 
 #if M1_FAULT_ENABLE
     /* Enable deatime */
     M1_PWM_TIMER->COMBINE |= FTM_COMBINE_FAULTEN0_MASK | FTM_COMBINE_FAULTEN1_MASK | FTM_COMBINE_FAULTEN2_MASK;
 
-    #if M1_FAULT_NUM == 0U
+#if M1_FAULT_NUM == 0U
     /* Enable Fault 0 */
     M1_PWM_TIMER->FLTCTRL |= FTM_FLTCTRL_FAULT0EN_MASK;
     /* Polarity Fault 0 */
@@ -211,9 +212,9 @@ static void InitPWM(void)
     /* ---------------------------------------- */
     /* Initialization FTM 3-phase PWM mc driver */
     g_sM1Pwm3ph.pui32PwmBase = (FTM_Type *)(M1_PWM_TIMER); /* FTM base address */
-    g_sM1Pwm3ph.ui16ChanPhA  = M1_PWM_PAIR_PHA;    /* PWM phase A top&bottom channel pair number */
-    g_sM1Pwm3ph.ui16ChanPhB  = M1_PWM_PAIR_PHB;    /* PWM phase B top&bottom channel pair number */
-    g_sM1Pwm3ph.ui16ChanPhC  = M1_PWM_PAIR_PHC;    /* PWM phase C top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhA  = M1_PWM_PAIR_PHA;            /* PWM phase A top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhB  = M1_PWM_PAIR_PHB;            /* PWM phase B top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhC  = M1_PWM_PAIR_PHC;            /* PWM phase C top&bottom channel pair number */
 
     /* FTM Fault number for over current fault detection */
     g_sM1Pwm3ph.ui16FaultFixNum = M1_FAULT_NUM;
@@ -252,7 +253,7 @@ static void InitSlowLoop(void)
 
     /* Configuration of FTM module */
     /* Disable write protection for certain registers */
-    /* Enable the counter */
+    /* Enable FTM features */
     M1_SLOW_LOOP_TIMER->MODE = FTM_MODE_WPDIS_MASK | FTM_MODE_FTMEN_MASK;
 
     /* Settings up FTM SC register for clock setup */
@@ -296,7 +297,9 @@ static void InitADC(void)
 
     /* ------- ADC self calibration procedure start ----- */
     /* Divide actual bus clock by 2 for ADC calibration */
-    SIM->CLKDIV1 = ((SIM->CLKDIV1 & ~(SIM_CLKDIV1_OUTDIV2_MASK)) | SIM_CLKDIV1_OUTDIV2((((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> SIM_CLKDIV1_OUTDIV2_SHIFT) << 1U) + 1U));
+    SIM->CLKDIV1 =
+        ((SIM->CLKDIV1 & ~(SIM_CLKDIV1_OUTDIV2_MASK)) |
+         SIM_CLKDIV1_OUTDIV2((((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> SIM_CLKDIV1_OUTDIV2_SHIFT) << 1U) + 1U));
 
     /* single-ended 12-bit conversion */
     /* set divide ratio to 8 */
@@ -379,7 +382,9 @@ static void InitADC(void)
     ADC1->SC3 = 0;
 
     /* Multiply bus clock by 2 */
-    SIM->CLKDIV1 = ((SIM->CLKDIV1 & ~(SIM_CLKDIV1_OUTDIV2_MASK)) | SIM_CLKDIV1_OUTDIV2((((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> SIM_CLKDIV1_OUTDIV2_SHIFT) - 1U) >> 1U));
+    SIM->CLKDIV1 =
+        ((SIM->CLKDIV1 & ~(SIM_CLKDIV1_OUTDIV2_MASK)) |
+         SIM_CLKDIV1_OUTDIV2((((SIM->CLKDIV1 & SIM_CLKDIV1_OUTDIV2_MASK) >> SIM_CLKDIV1_OUTDIV2_SHIFT) - 1U) >> 1U));
 
     /* setting the clock to 15 MHz (ADIV - div bus clock (60 MHz) by 4 */
     ADC0->CFG1 = (ADC_CFG1_MODE(1) | ADC_CFG1_ADIV(2));
@@ -507,7 +512,6 @@ static void InitPDB(void)
 #if M1_FAULT_CMP_ENABLE
 static void InitCMP(void)
 {
-
     /* Enable clock for CMP module */
     SIM->SCGC4 |= SIM_SCGC4_CMP_MASK;
 
@@ -517,7 +521,8 @@ static void InitCMP(void)
     /* DAC output set to M1_FAULT_CMP_THRESHOLD */
     /* Reference voltage will be VDD */
     /* Enable DAC */
-    M1_FAULT_CMP_INSTANCE->DACCR = CMP_DACCR_VOSEL(M1_FAULT_CMP_THRESHOLD) | CMP_DACCR_VRSEL_MASK | CMP_DACCR_DACEN_MASK;
+    M1_FAULT_CMP_INSTANCE->DACCR =
+        CMP_DACCR_VOSEL(M1_FAULT_CMP_THRESHOLD) | CMP_DACCR_VRSEL_MASK | CMP_DACCR_DACEN_MASK;
 
     /* Plus is CMP1_IN5 ~ overcurrent pin */
     /* Minus is CMP1_IN7 ~ 6bit reference */

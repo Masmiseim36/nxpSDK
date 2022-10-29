@@ -76,6 +76,7 @@ var searchData=
   ['srcpicbaseaddr',['srcPicBaseAddr',['../a00058.html#af4b9022ffd77436071fc1e20d0947bee',1,'pxp_pic_copy_config_t']]],
   ['srcpitchbytes',['srcPitchBytes',['../a00058.html#a80c7f497f0437dc6b956c33a377ec662',1,'pxp_pic_copy_config_t']]],
   ['srctransfersize',['srcTransferSize',['../a00021.html#ae5f96bb8d80f6f7a6c8a687e8a42a77e',1,'edma_transfer_config_t']]],
+  ['srr',['srr',['../a00026.html#a84daf6cec1f93e335d22919d704ea9b3',1,'flexcan_fd_frame_t']]],
   ['srtccalenable',['srtcCalEnable',['../a00074.html#a876e4c24fd02f7b939354f625e81b0a3',1,'snvs_lp_srtc_config_t']]],
   ['srtccalvalue',['srtcCalValue',['../a00074.html#a86c9d09f47c6c6fa4dd60c24088f2d4f',1,'snvs_lp_srtc_config_t']]],
   ['ss_5fenable',['ss_enable',['../a00011.html#afe868491567d3a6a492548fc89ffee1c',1,'clock_sys_pll_config_t']]],

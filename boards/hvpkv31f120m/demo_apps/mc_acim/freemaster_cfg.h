@@ -19,6 +19,10 @@
 #define __FREEMASTER_CFG_H
 
 
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
@@ -87,6 +91,10 @@
 // Or you can connect the FreeMASTER tool and run the connection wizard to listen for the
 // dummy frames.
 #define FMSTR_DEBUG_TX          0
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */
 
 #endif /* __FREEMASTER_CFG_H */
 

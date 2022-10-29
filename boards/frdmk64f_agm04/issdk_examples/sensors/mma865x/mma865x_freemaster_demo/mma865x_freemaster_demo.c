@@ -12,9 +12,9 @@
  */
 
 /*  SDK Includes */
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_debug_console.h"
 #include "math.h"
 #include "fsl_uart.h"
@@ -401,7 +401,7 @@ int main(void)
     registers.trigger_accel_offnoise=0;
     registers.dataready_cntr = 0;
 
-    for(int i = 0; i <= MMA865x_NUM_REGISTERS; i++)
+    for(int i = 0; i < MMA865x_NUM_REGISTERS; i++)
     {
     	registers.readall_value[i] = 0;
     }
@@ -555,7 +555,7 @@ int main(void)
             }
         }
         /*! Check for Vector Magnitude change interrupt */
-        else if((regdata & MMA865x_INT_SOURCE_SRC_FF_MT_MASK) == 0x02)
+        else if((regdata & MMA865x_INT_SOURCE_SRC_FF_MT_MASK) == 0x04)
         {
             vecm_incr++;
             if (vecm_incr == 1)

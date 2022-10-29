@@ -14,11 +14,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v10.0
+product: Peripherals v11.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 0.10.6
+processor_version: 0.12.4
 board: HVP-KV31F120M
 functionalGroups:
 - name: BOARD_InitPeripherals
@@ -41,6 +41,14 @@ component:
 - type: 'uart_cmsis_common'
 - type_id: 'uart_cmsis_common_9cb8e302497aa696fdbb5a4fd622c2a8'
 - global_USART_CMSIS_common:
+  - quick_selection: 'default'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+component:
+- type: 'gpio_adapter_common'
+- type_id: 'gpio_adapter_common_57579b9ac814fe26bf95df0a384c36b6'
+- global_gpio_adapter_common:
   - quick_selection: 'default'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -91,7 +99,7 @@ const uart_config_t UART0_config = {
 };
 
 static void UART0_init(void) {
-  assert(UART_Init(UART0_PERIPHERAL, &UART0_config, UART0_CLOCK_SOURCE) == kStatus_Success);
+  UART_Init(UART0_PERIPHERAL, &UART0_config, UART0_CLOCK_SOURCE);
 }
 
 /***********************************************************************************************************************
@@ -142,10 +150,33 @@ instance:
         - peripheralUART: 'UART0'
         - clockSource: 'genericUartClockSource'
         - clockSourceFreq: 'BOARD_BootClockRUN'
+        - baudRate_Bps: '1'
+        - parityMode_uart: 'kUART_ParityDisabled'
         - enableUserInit: 'false'
         - user_init:
           - initFunctionID: 'SERIAL_communication_init'
+        - enable_rx_tx_irq: 'false'
+        - interrupt_rx_tx:
+          - IRQn: 'UART0_RX_TX_IRQn'
+          - enable_interrrupt: 'enabled'
+          - enable_priority: 'false'
+          - priority: '0'
+          - useDefaultISR: 'false'
+          - enable_custom_name: 'false'
+          - handler_custom_name: ''
+        - enable_err_irq: 'false'
+        - interrupt_error:
+          - IRQn: 'UART0_ERR_IRQn'
+          - enable_interrrupt: 'enabled'
+          - enable_priority: 'false'
+          - priority: '0'
+          - useDefaultISR: 'false'
+          - enable_custom_name: 'false'
+          - handler_custom_name: ''
         - quick_selection: 'QuickSelection1'
+      - pdbdmConfig:
+        - FMSTR_PDBDM_USER_BUFFER: 'false'
+        - pdbdmBuffer: 'default'
       - FMSTR_COMM_BUFFER_SIZE: 'autoSize'
       - FMSTR_COMM_RQUEUE_SIZE: '32'
       - FMSTR_USE_SCOPE: '2'
@@ -158,6 +189,8 @@ instance:
           - nameRec: 'Description of recorder 0'
           - recBuff:
             - customBuffer: 'false'
+            - bufferAddress: ''
+            - bufferExternDef: ''
             - bufferSize: '4096'
           - basePeriod_ns: '100000'
           - recInit: 'true'
@@ -168,6 +201,8 @@ instance:
       - tsaBufferInit: 'false'
       - tsaBuff:
         - customBuffer: 'false'
+        - bufferAddress: ''
+        - bufferExternDef: ''
         - bufferSize: '(5 * sizeof(FMSTR_TSA_ENTRY))'
       - pipes:
         - 0:
@@ -179,9 +214,13 @@ instance:
           - callbackFunction: 'Pipe1_Handler'
           - rxBuffer:
             - customBuffer: 'false'
+            - bufferAddress: ''
+            - bufferExternDef: ''
             - bufferSize: '32'
           - txBuffer:
             - customBuffer: 'false'
+            - bufferAddress: ''
+            - bufferExternDef: ''
             - bufferSize: '32'
           - pipeInit: 'false'
         - 1:
@@ -193,9 +232,13 @@ instance:
           - callbackFunction: 'Pipe2_Handler'
           - rxBuffer:
             - customBuffer: 'false'
+            - bufferAddress: ''
+            - bufferExternDef: ''
             - bufferSize: '32'
           - txBuffer:
             - customBuffer: 'false'
+            - bufferAddress: ''
+            - bufferExternDef: ''
             - bufferSize: '32'
           - pipeInit: 'false'
         - 2:
@@ -207,9 +250,13 @@ instance:
           - callbackFunction: 'Pipe3_Handler'
           - rxBuffer:
             - customBuffer: 'false'
+            - bufferAddress: ''
+            - bufferExternDef: ''
             - bufferSize: '32'
           - txBuffer:
             - customBuffer: 'false'
+            - bufferAddress: ''
+            - bufferExternDef: ''
             - bufferSize: '32'
           - pipeInit: 'false'
       - FMSTR_USE_READMEM: 'true'

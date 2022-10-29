@@ -1,14 +1,14 @@
 var a00038 =
 [
     [ "FlexIO eDMA UART Driver", "a00039.html", "a00039" ],
-    [ "FLEXIO_UART_Type", "a00038.html#a00423", [
+    [ "FLEXIO_UART_Type", "a00038.html#a00424", [
       [ "flexioBase", "a00038.html#ad80f1e208b704cc3719933e2448826c4", null ],
       [ "TxPinIndex", "a00038.html#ab6df247340eafe9076c6ac3a20f0d81c", null ],
       [ "RxPinIndex", "a00038.html#a21879d73921f1cd42601b0a80d029a6a", null ],
       [ "shifterIndex", "a00038.html#a36f31f0641373f903d2371aafe42ee67", null ],
       [ "timerIndex", "a00038.html#a69c6696d06f94527af4280dc2921022b", null ]
     ] ],
-    [ "flexio_uart_config_t", "a00038.html#a00421", [
+    [ "flexio_uart_config_t", "a00038.html#a00422", [
       [ "enableUart", "a00038.html#aa2daf1e1468130631b21f73e9dcc2e95", null ],
       [ "enableInDoze", "a00038.html#ad2752bcddb3b5e9d987eb9d74f3e034b", null ],
       [ "enableInDebug", "a00038.html#ac5bf2792d85a76b3652dee457e580218", null ],
@@ -16,7 +16,7 @@ var a00038 =
       [ "baudRate_Bps", "a00038.html#a082e38cf0edf524602d1d7a578949fd6", null ],
       [ "bitCountPerChar", "a00038.html#a31835537405f9f15cd37a10b17211990", null ]
     ] ],
-    [ "flexio_uart_transfer_t", "a00038.html#a00422", [
+    [ "flexio_uart_transfer_t", "a00038.html#a00423", [
       [ "data", "a00038.html#a38416ca93058d1875ae13843c6a63827", null ],
       [ "rxData", "a00038.html#a0bd75aa05139bc278313efc2871c9d2e", null ],
       [ "txData", "a00038.html#abe751737642b273833ad3abdd4f2fc81", null ],
@@ -41,15 +41,15 @@ var a00038 =
     [ "FSL_FLEXIO_UART_DRIVER_VERSION", "a00038.html#gaa668f10e7e0820c4d504f124ef506b59", null ],
     [ "UART_RETRY_TIMES", "a00038.html#gac0f88b67f77fd05f186a5ec940c340bd", null ],
     [ "flexio_uart_transfer_callback_t", "a00038.html#ga47ba0f819db72b1dc4c043205ba7cb18", [
-      [ "kStatus_FLEXIO_UART_TxBusy", "a00038.html#gga0944a4353780132eeab7b06e3e42291da741e184e1ca8ef870d70da2be537a6ab", null ],
-      [ "kStatus_FLEXIO_UART_RxBusy", "a00038.html#gga0944a4353780132eeab7b06e3e42291da8dcfa64158a113e9ed598ac23c9df021", null ],
-      [ "kStatus_FLEXIO_UART_TxIdle", "a00038.html#gga0944a4353780132eeab7b06e3e42291da828da21609507716299bfc8640c57ec3", null ],
-      [ "kStatus_FLEXIO_UART_RxIdle", "a00038.html#gga0944a4353780132eeab7b06e3e42291da451ebbdc82bffc6c0205c7c9bd539046", null ],
-      [ "kStatus_FLEXIO_UART_ERROR", "a00038.html#gga0944a4353780132eeab7b06e3e42291da3b7dca7a2a8364d24c686bbfc22aa2bc", null ],
-      [ "kStatus_FLEXIO_UART_RxRingBufferOverrun", "a00038.html#gga0944a4353780132eeab7b06e3e42291da565cdecf3ec56df0f889e2e49d31b34f", null ],
-      [ "kStatus_FLEXIO_UART_RxHardwareOverrun", "a00038.html#gga0944a4353780132eeab7b06e3e42291dab892c50df6c586138fe1b37fde07e4ca", null ],
-      [ "kStatus_FLEXIO_UART_Timeout", "a00038.html#gga0944a4353780132eeab7b06e3e42291da71d490f8194635bf02969343de023a71", null ],
-      [ "kStatus_FLEXIO_UART_BaudrateNotSupport", "a00038.html#gga0944a4353780132eeab7b06e3e42291da0b5de1470583ff444473745f1888fa14", null ]
+      [ "kStatus_FLEXIO_UART_TxBusy", "a00038.html#ggafa231099d07583c3ed0981e0bb665f55a741e184e1ca8ef870d70da2be537a6ab", null ],
+      [ "kStatus_FLEXIO_UART_RxBusy", "a00038.html#ggafa231099d07583c3ed0981e0bb665f55a8dcfa64158a113e9ed598ac23c9df021", null ],
+      [ "kStatus_FLEXIO_UART_TxIdle", "a00038.html#ggafa231099d07583c3ed0981e0bb665f55a828da21609507716299bfc8640c57ec3", null ],
+      [ "kStatus_FLEXIO_UART_RxIdle", "a00038.html#ggafa231099d07583c3ed0981e0bb665f55a451ebbdc82bffc6c0205c7c9bd539046", null ],
+      [ "kStatus_FLEXIO_UART_ERROR", "a00038.html#ggafa231099d07583c3ed0981e0bb665f55a3b7dca7a2a8364d24c686bbfc22aa2bc", null ],
+      [ "kStatus_FLEXIO_UART_RxRingBufferOverrun", "a00038.html#ggafa231099d07583c3ed0981e0bb665f55a565cdecf3ec56df0f889e2e49d31b34f", null ],
+      [ "kStatus_FLEXIO_UART_RxHardwareOverrun", "a00038.html#ggafa231099d07583c3ed0981e0bb665f55ab892c50df6c586138fe1b37fde07e4ca", null ],
+      [ "kStatus_FLEXIO_UART_Timeout", "a00038.html#ggafa231099d07583c3ed0981e0bb665f55a71d490f8194635bf02969343de023a71", null ],
+      [ "kStatus_FLEXIO_UART_BaudrateNotSupport", "a00038.html#ggafa231099d07583c3ed0981e0bb665f55a0b5de1470583ff444473745f1888fa14", null ]
     ] ],
     [ "flexio_uart_bit_count_per_char_t", "a00038.html#ga3298baaedfdeb4df8ad44ce716abca7e", [
       [ "kFLEXIO_UART_7BitsPerChar", "a00038.html#gga3298baaedfdeb4df8ad44ce716abca7ead9818673f2a8abacdb73e6f323fa4c42", null ],

@@ -3,7 +3,7 @@
   <vendor>nxp.com</vendor>
   <name>MKE12Z7</name>
   <version>1.0</version>
-  <description>MKE12Z128VLH7,MKE12Z128VLL7,MKE12Z256VLH7,MKE12Z256VLL7</description>
+  <description>MKE12Z128VLF7,MKE12Z128VLH7,MKE12Z128VLL7,MKE12Z256VLF7,MKE12Z256VLH7,MKE12Z256VLL7</description>
   <licenseText>
 Copyright 2016-2021 NXP
 All rights reserved.

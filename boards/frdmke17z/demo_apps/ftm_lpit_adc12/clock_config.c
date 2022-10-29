@@ -29,11 +29,12 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v9.0
+product: Clocks v7.0
 processor: MKE17Z256xxx7
 package_id: MKE17Z256VLL7
 mcu_data: ksdk2_0
-processor_version: 0.7.1
+processor_version: 0.10.3
+board: FRDM-KE17Z
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -67,9 +68,8 @@ extern uint32_t SystemCoreClock;
 static void CLOCK_CONFIG_FircSafeConfig(const scg_firc_config_t *fircConfig)
 {
     scg_sys_clk_config_t curConfig;
-    const scg_sirc_config_t scgSircConfig       = {.enableMode = kSCG_SircEnable,
-                                                   .div2       = kSCG_AsyncClkDivBy2,
-                                                   .range      = kSCG_SircRangeHigh};
+    const scg_sirc_config_t scgSircConfig = {
+        .enableMode = kSCG_SircEnable, .div2 = kSCG_AsyncClkDivBy2, .range = kSCG_SircRangeHigh};
     scg_sys_clk_config_t sysClkSafeConfigSource = {
         .divSlow = kSCG_SysClkDivBy4, /* Slow clock divider */
         .divCore = kSCG_SysClkDivBy1, /* Core clock divider */
@@ -114,26 +114,24 @@ void BOARD_InitBootClocks(void)
 name: BOARD_BootClockRUN
 called_from_default_init: true
 outputs:
-- {id: Bus_clock.outFreq, value: 24 MHz}
-- {id: Core_clock.outFreq, value: 72 MHz}
+- {id: Bus_clock.outFreq, value: 16 MHz}
+- {id: Core_clock.outFreq, value: 48 MHz}
 - {id: FIRCDIV2_CLK.outFreq, value: 48 MHz}
-- {id: FLLDIV2_CLK.outFreq, value: 36 MHz}
-- {id: Flash_clock.outFreq, value: 24 MHz}
-- {id: LPO1KCLK.outFreq, value: 1 kHz}
+- {id: FLLDIV2_CLK.outFreq, value: 24 MHz}
+- {id: Flash_clock.outFreq, value: 16 MHz}
 - {id: LPO_clock.outFreq, value: 128 kHz}
 - {id: SIRCDIV2_CLK.outFreq, value: 4 MHz}
 - {id: SIRC_CLK.outFreq, value: 8 MHz}
 - {id: SOSCDIV2_CLK.outFreq, value: 8 MHz}
 - {id: SOSC_CLK.outFreq, value: 8 MHz}
-- {id: System_clock.outFreq, value: 72 MHz}
+- {id: System_clock.outFreq, value: 48 MHz}
 settings:
 - {id: SCGMode, value: LPFLL}
-- {id: OSC32_CR_ROSCE_CFG, value: Enabled}
 - {id: SCG.DIVCORE.scale, value: '1', locked: true}
 - {id: SCG.DIVSLOW.scale, value: '3', locked: true}
 - {id: SCG.FIRCDIV2.scale, value: '1'}
 - {id: SCG.LPFLLDIV2.scale, value: '2'}
-- {id: SCG.LPFLL_mul.scale, value: '36', locked: true}
+- {id: SCG.LPFLL_mul.scale, value: '24', locked: true}
 - {id: SCG.SCSSEL.sel, value: SCG.LPFLL}
 - {id: SCG.SIRCDIV2.scale, value: '2'}
 - {id: SCG.SOSCDIV2.scale, value: '1'}
@@ -179,7 +177,7 @@ const scg_firc_config_t g_scgFircConfig_BOARD_BootClockRUN = {
 const scg_lpfll_config_t g_scgLpFllConfig_BOARD_BootClockRUN = {
     .enableMode = kSCG_LpFllEnable,    /* Enable LPFLL clock */
     .div2       = kSCG_AsyncClkDivBy2, /* Low Power FLL Clock Divider 2: divided by 2 */
-    .range      = kSCG_LpFllRange72M,  /* LPFLL is trimmed to 72MHz */
+    .range      = kSCG_LpFllRange48M,  /* LPFLL is trimmed to 48MHz */
     .trimConfig = NULL,
 };
 /*******************************************************************************
@@ -221,7 +219,6 @@ outputs:
 - {id: Bus_clock.outFreq, value: 1 MHz}
 - {id: Core_clock.outFreq, value: 4 MHz}
 - {id: Flash_clock.outFreq, value: 1 MHz}
-- {id: LPO1KCLK.outFreq, value: 1 kHz}
 - {id: LPO_clock.outFreq, value: 128 kHz}
 - {id: SOSCDIV2_CLK.outFreq, value: 8 MHz}
 - {id: SOSC_CLK.outFreq, value: 8 MHz}
@@ -229,7 +226,6 @@ outputs:
 settings:
 - {id: SCGMode, value: SOSC}
 - {id: powerMode, value: VLPR}
-- {id: OSC32_CR_ROSCE_CFG, value: Enabled}
 - {id: SCG.DIVCORE.scale, value: '2', locked: true}
 - {id: SCG.DIVSLOW.scale, value: '4', locked: true}
 - {id: SCG.FIRCDIV2.scale, value: '1'}

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.2</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -110,12 +110,12 @@ $(document).ready(function(){initNavTree('a00044.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00431"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00431">lpi2c_master_config_t</a></td></tr>
-<tr class="memdesc:a00431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the LPI2C master module.  <a href="a00044.html#a00431">More...</a><br/></td></tr>
+<tr class="memitem:a00432"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00432">lpi2c_master_config_t</a></td></tr>
+<tr class="memdesc:a00432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure with settings to initialize the LPI2C master module.  <a href="a00044.html#a00432">More...</a><br/></td></tr>
+<tr class="separator:a00432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00431"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00431">lpi2c_data_match_config_t</a></td></tr>
+<tr class="memdesc:a00431"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C master data match configuration structure.  <a href="a00044.html#a00431">More...</a><br/></td></tr>
 <tr class="separator:a00431"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00430"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00430">lpi2c_data_match_config_t</a></td></tr>
-<tr class="memdesc:a00430"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C master data match configuration structure.  <a href="a00044.html#a00430">More...</a><br/></td></tr>
-<tr class="separator:a00430"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00321"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a00321">lpi2c_master_transfer_t</a></td></tr>
 <tr class="memdesc:a00321"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-blocking transfer descriptor structure.  <a href="a00044.html#a00321">More...</a><br/></td></tr>
 <tr class="separator:a00321"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -244,16 +244,16 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:gaf1753f02b6a39bb4391250c646236eae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#gaf1753f02b6a39bb4391250c646236eae">LPI2C_MasterGetDefaultConfig</a> (<a class="el" href="a00044.html#a00431">lpi2c_master_config_t</a> *masterConfig)</td></tr>
+<tr class="memitem:gaf1753f02b6a39bb4391250c646236eae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#gaf1753f02b6a39bb4391250c646236eae">LPI2C_MasterGetDefaultConfig</a> (<a class="el" href="a00044.html#a00432">lpi2c_master_config_t</a> *masterConfig)</td></tr>
 <tr class="memdesc:gaf1753f02b6a39bb4391250c646236eae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a default configuration for the LPI2C master peripheral.  <a href="#gaf1753f02b6a39bb4391250c646236eae">More...</a><br/></td></tr>
 <tr class="separator:gaf1753f02b6a39bb4391250c646236eae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31c7e21bae74602cb831109e7de33ade"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga31c7e21bae74602cb831109e7de33ade">LPI2C_MasterInit</a> (LPI2C_Type *base, const <a class="el" href="a00044.html#a00431">lpi2c_master_config_t</a> *masterConfig, uint32_t sourceClock_Hz)</td></tr>
+<tr class="memitem:ga31c7e21bae74602cb831109e7de33ade"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga31c7e21bae74602cb831109e7de33ade">LPI2C_MasterInit</a> (LPI2C_Type *base, const <a class="el" href="a00044.html#a00432">lpi2c_master_config_t</a> *masterConfig, uint32_t sourceClock_Hz)</td></tr>
 <tr class="memdesc:ga31c7e21bae74602cb831109e7de33ade"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPI2C master peripheral.  <a href="#ga31c7e21bae74602cb831109e7de33ade">More...</a><br/></td></tr>
 <tr class="separator:ga31c7e21bae74602cb831109e7de33ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1e5ac26414d36018ac33f31332026b82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga1e5ac26414d36018ac33f31332026b82">LPI2C_MasterDeinit</a> (LPI2C_Type *base)</td></tr>
 <tr class="memdesc:ga1e5ac26414d36018ac33f31332026b82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the LPI2C master peripheral.  <a href="#ga1e5ac26414d36018ac33f31332026b82">More...</a><br/></td></tr>
 <tr class="separator:ga1e5ac26414d36018ac33f31332026b82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga050bfe41a14a866968dbf8e88d4a7159"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga050bfe41a14a866968dbf8e88d4a7159">LPI2C_MasterConfigureDataMatch</a> (LPI2C_Type *base, const <a class="el" href="a00044.html#a00430">lpi2c_data_match_config_t</a> *matchConfig)</td></tr>
+<tr class="memitem:ga050bfe41a14a866968dbf8e88d4a7159"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#ga050bfe41a14a866968dbf8e88d4a7159">LPI2C_MasterConfigureDataMatch</a> (LPI2C_Type *base, const <a class="el" href="a00044.html#a00431">lpi2c_data_match_config_t</a> *matchConfig)</td></tr>
 <tr class="memdesc:ga050bfe41a14a866968dbf8e88d4a7159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures LPI2C master data match feature.  <a href="#ga050bfe41a14a866968dbf8e88d4a7159">More...</a><br/></td></tr>
 <tr class="separator:ga050bfe41a14a866968dbf8e88d4a7159"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3f45d7022fbebbf34ca852e2b61ddb14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3f45d7022fbebbf34ca852e2b61ddb14"></a>
@@ -360,7 +360,7 @@ IRQ handler</h2></td></tr>
 <tr class="separator:ga25d1c6f8210d300bbedfa3f8a5575c16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00431" id="a00431"></a>
+<a name="a00432" id="a00432"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -403,19 +403,19 @@ IRQ handler</h2></td></tr>
 <tr class="memitem:abec5caf29a17c3cd3480e5b1b07f742a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#abec5caf29a17c3cd3480e5b1b07f742a">sclGlitchFilterWidth_ns</a></td></tr>
 <tr class="memdesc:abec5caf29a17c3cd3480e5b1b07f742a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Width in nanoseconds of glitch filter on SCL pin.  <a href="#abec5caf29a17c3cd3480e5b1b07f742a">More...</a><br/></td></tr>
 <tr class="separator:abec5caf29a17c3cd3480e5b1b07f742a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f95bd3d758edaa4a83ac712a3b63ece"><td class="memItemLeft" >struct {</td></tr>
-<tr class="memitem:ab84d4ccabb32813cf9c85a60fee2a75c"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00044.html#adf43f53aece30b66a9dc29a6fe2bb02d">enable</a></td></tr>
-<tr class="memdesc:ab84d4ccabb32813cf9c85a60fee2a75c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable host request.  <a href="#ab84d4ccabb32813cf9c85a60fee2a75c">More...</a><br/></td></tr>
-<tr class="separator:ab84d4ccabb32813cf9c85a60fee2a75c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c176231dc28f82b48a77c2459ee1c10"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00044.html#gac9a07c4c7370019ccabc914bd26ea1c8">lpi2c_host_request_source_t</a>&#160;&#160;&#160;<a class="el" href="a00044.html#a2c56d9865a4d122894a4918b21540151">source</a></td></tr>
-<tr class="memdesc:a6c176231dc28f82b48a77c2459ee1c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host request source.  <a href="#a6c176231dc28f82b48a77c2459ee1c10">More...</a><br/></td></tr>
-<tr class="separator:a6c176231dc28f82b48a77c2459ee1c10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae865952d64d9c65c9b43318b6d926d4d"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00044.html#ga78edbfb2d1e9213e7ebfabe32423f5d2">lpi2c_host_request_polarity_t</a>&#160;&#160;&#160;<a class="el" href="a00044.html#acb38f33f1c5f33595cae1133882c4d24">polarity</a></td></tr>
-<tr class="memdesc:ae865952d64d9c65c9b43318b6d926d4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host request pin polarity.  <a href="#ae865952d64d9c65c9b43318b6d926d4d">More...</a><br/></td></tr>
-<tr class="separator:ae865952d64d9c65c9b43318b6d926d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f95bd3d758edaa4a83ac712a3b63ece"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#a4f95bd3d758edaa4a83ac712a3b63ece">hostRequest</a></td></tr>
-<tr class="memdesc:a4f95bd3d758edaa4a83ac712a3b63ece"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host request options.  <a href="#a4f95bd3d758edaa4a83ac712a3b63ece">More...</a><br/></td></tr>
-<tr class="separator:a4f95bd3d758edaa4a83ac712a3b63ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add14d26175c4627888df8bf80ceb2706"><td class="memItemLeft" >struct {</td></tr>
+<tr class="memitem:aa49fe7fff9a39da20e5ed6f8ef1bcb4e"><td class="memItemLeft" >&#160;&#160;&#160;bool&#160;&#160;&#160;<a class="el" href="a00044.html#adf43f53aece30b66a9dc29a6fe2bb02d">enable</a></td></tr>
+<tr class="memdesc:aa49fe7fff9a39da20e5ed6f8ef1bcb4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable host request.  <a href="#aa49fe7fff9a39da20e5ed6f8ef1bcb4e">More...</a><br/></td></tr>
+<tr class="separator:aa49fe7fff9a39da20e5ed6f8ef1bcb4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd9e6d82bfe3440a8af63a12d34ca0d3"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00044.html#gac9a07c4c7370019ccabc914bd26ea1c8">lpi2c_host_request_source_t</a>&#160;&#160;&#160;<a class="el" href="a00044.html#a2c56d9865a4d122894a4918b21540151">source</a></td></tr>
+<tr class="memdesc:acd9e6d82bfe3440a8af63a12d34ca0d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host request source.  <a href="#acd9e6d82bfe3440a8af63a12d34ca0d3">More...</a><br/></td></tr>
+<tr class="separator:acd9e6d82bfe3440a8af63a12d34ca0d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a456389028f81a744baa413687bfb3acb"><td class="memItemLeft" >&#160;&#160;&#160;<a class="el" href="a00044.html#ga78edbfb2d1e9213e7ebfabe32423f5d2">lpi2c_host_request_polarity_t</a>&#160;&#160;&#160;<a class="el" href="a00044.html#acb38f33f1c5f33595cae1133882c4d24">polarity</a></td></tr>
+<tr class="memdesc:a456389028f81a744baa413687bfb3acb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host request pin polarity.  <a href="#a456389028f81a744baa413687bfb3acb">More...</a><br/></td></tr>
+<tr class="separator:a456389028f81a744baa413687bfb3acb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add14d26175c4627888df8bf80ceb2706"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00044.html#add14d26175c4627888df8bf80ceb2706">hostRequest</a></td></tr>
+<tr class="memdesc:add14d26175c4627888df8bf80ceb2706"><td class="mdescLeft">&#160;</td><td class="mdescRight">Host request options.  <a href="#add14d26175c4627888df8bf80ceb2706">More...</a><br/></td></tr>
+<tr class="separator:add14d26175c4627888df8bf80ceb2706"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h4 class="groupheader">Field Documentation</h4>
 <a class="anchor" id="a36f58debd82d2fe56bffc3d8d8748e22"></a>
@@ -578,7 +578,7 @@ IRQ handler</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4f95bd3d758edaa4a83ac712a3b63ece"></a>
+<a class="anchor" id="add14d26175c4627888df8bf80ceb2706"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -593,7 +593,7 @@ IRQ handler</h2></td></tr>
 
 </div>
 </div>
-<a name="a00430" id="a00430"></a>
+<a name="a00431" id="a00431"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1176,7 +1176,7 @@ IRQ handler</h2></td></tr>
         <tr>
           <td class="memname">void LPI2C_MasterGetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00044.html#a00431">lpi2c_master_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00044.html#a00432">lpi2c_master_config_t</a> *&#160;</td>
           <td class="paramname"><em>masterConfig</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1199,7 +1199,7 @@ IRQ handler</h2></td></tr>
 </div><!-- fragment --><p>After calling this function, you can override any settings in order to customize the configuration, prior to initializing the master driver with <a class="el" href="a00044.html#ga31c7e21bae74602cb831109e7de33ade" title="Initializes the LPI2C master peripheral. ">LPI2C_MasterInit()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">masterConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00044.html#a00431" title="Structure with settings to initialize the LPI2C master module. ">lpi2c_master_config_t</a>. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">masterConfig</td><td>User provided configuration structure for default values. Refer to <a class="el" href="a00044.html#a00432" title="Structure with settings to initialize the LPI2C master module. ">lpi2c_master_config_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1219,7 +1219,7 @@ IRQ handler</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00044.html#a00431">lpi2c_master_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00044.html#a00432">lpi2c_master_config_t</a> *&#160;</td>
           <td class="paramname"><em>masterConfig</em>, </td>
         </tr>
         <tr>
@@ -1283,7 +1283,7 @@ IRQ handler</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00044.html#a00430">lpi2c_data_match_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00044.html#a00431">lpi2c_data_match_config_t</a> *&#160;</td>
           <td class="paramname"><em>matchConfig</em>&#160;</td>
         </tr>
         <tr>
@@ -1907,7 +1907,7 @@ IRQ handler</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>START signal and address were successfully enqueued in the transmit FIFO. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daf52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1964,7 +1964,7 @@ IRQ handler</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>Repeated START signal and address were successfully enqueued in the transmit FIFO. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daf52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2000,7 +2000,7 @@ IRQ handler</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sends up to <em>txSize</em> number of bytes to the previously addressed slave device. The slave may reply with a NAK to any byte in order to terminate the transfer early. If this happens, this function returns <a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a>.</p>
+<p>Sends up to <em>txSize</em> number of bytes to the previously addressed slave device. The slave may reply with a NAK to any byte in order to terminate the transfer early. If this happens, this function returns <a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>The LPI2C peripheral base address. </td></tr>
@@ -2012,11 +2012,11 @@ IRQ handler</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>Data was sent successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daf52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da5b3634e1fedb0ad8cc38476aac29477e" title="FIFO under run or overrun. ">kStatus_LPI2C_FifoError</a></td><td>FIFO under run or over run. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da5169d7e655df8bde3b4fc6d49ae8777a" title="Arbitration lost error. ">kStatus_LPI2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daa8c558fc024cbde751d7861ea6efca78" title="SCL or SDA were held low longer than the timeout. ">kStatus_LPI2C_PinLowTimeout</a></td><td>SCL or SDA were held low longer than the timeout. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a5b3634e1fedb0ad8cc38476aac29477e" title="FIFO under run or overrun. ">kStatus_LPI2C_FifoError</a></td><td>FIFO under run or over run. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a5169d7e655df8bde3b4fc6d49ae8777a" title="Arbitration lost error. ">kStatus_LPI2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39aa8c558fc024cbde751d7861ea6efca78" title="SCL or SDA were held low longer than the timeout. ">kStatus_LPI2C_PinLowTimeout</a></td><td>SCL or SDA were held low longer than the timeout. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2063,11 +2063,11 @@ IRQ handler</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>Data was received successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daf52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da5b3634e1fedb0ad8cc38476aac29477e" title="FIFO under run or overrun. ">kStatus_LPI2C_FifoError</a></td><td>FIFO under run or overrun. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da5169d7e655df8bde3b4fc6d49ae8777a" title="Arbitration lost error. ">kStatus_LPI2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daa8c558fc024cbde751d7861ea6efca78" title="SCL or SDA were held low longer than the timeout. ">kStatus_LPI2C_PinLowTimeout</a></td><td>SCL or SDA were held low longer than the timeout. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a5b3634e1fedb0ad8cc38476aac29477e" title="FIFO under run or overrun. ">kStatus_LPI2C_FifoError</a></td><td>FIFO under run or overrun. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a5169d7e655df8bde3b4fc6d49ae8777a" title="Arbitration lost error. ">kStatus_LPI2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39aa8c558fc024cbde751d7861ea6efca78" title="SCL or SDA were held low longer than the timeout. ">kStatus_LPI2C_PinLowTimeout</a></td><td>SCL or SDA were held low longer than the timeout. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2097,11 +2097,11 @@ IRQ handler</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>The STOP signal was successfully sent on the bus and the transaction terminated. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daf52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da5b3634e1fedb0ad8cc38476aac29477e" title="FIFO under run or overrun. ">kStatus_LPI2C_FifoError</a></td><td>FIFO under run or overrun. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da5169d7e655df8bde3b4fc6d49ae8777a" title="Arbitration lost error. ">kStatus_LPI2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daa8c558fc024cbde751d7861ea6efca78" title="SCL or SDA were held low longer than the timeout. ">kStatus_LPI2C_PinLowTimeout</a></td><td>SCL or SDA were held low longer than the timeout. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a5b3634e1fedb0ad8cc38476aac29477e" title="FIFO under run or overrun. ">kStatus_LPI2C_FifoError</a></td><td>FIFO under run or overrun. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a5169d7e655df8bde3b4fc6d49ae8777a" title="Arbitration lost error. ">kStatus_LPI2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39aa8c558fc024cbde751d7861ea6efca78" title="SCL or SDA were held low longer than the timeout. ">kStatus_LPI2C_PinLowTimeout</a></td><td>SCL or SDA were held low longer than the timeout. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2142,11 +2142,11 @@ IRQ handler</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>Data was received successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daf52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da5b3634e1fedb0ad8cc38476aac29477e" title="FIFO under run or overrun. ">kStatus_LPI2C_FifoError</a></td><td>FIFO under run or overrun. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da5169d7e655df8bde3b4fc6d49ae8777a" title="Arbitration lost error. ">kStatus_LPI2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daa8c558fc024cbde751d7861ea6efca78" title="SCL or SDA were held low longer than the timeout. ">kStatus_LPI2C_PinLowTimeout</a></td><td>SCL or SDA were held low longer than the timeout. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Another master is currently utilizing the bus. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a75dbc01ed590c24e787fadb97ba2f684" title="The slave device sent a NAK in response to a byte. ">kStatus_LPI2C_Nak</a></td><td>The slave device sent a NAK in response to a byte. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a5b3634e1fedb0ad8cc38476aac29477e" title="FIFO under run or overrun. ">kStatus_LPI2C_FifoError</a></td><td>FIFO under run or overrun. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a5169d7e655df8bde3b4fc6d49ae8777a" title="Arbitration lost error. ">kStatus_LPI2C_ArbitrationLost</a></td><td>Arbitration lost error. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39aa8c558fc024cbde751d7861ea6efca78" title="SCL or SDA were held low longer than the timeout. ">kStatus_LPI2C_PinLowTimeout</a></td><td>SCL or SDA were held low longer than the timeout. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2242,7 +2242,7 @@ IRQ handler</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>The transaction was started successfully. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89daf52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Either another master is currently utilizing the bus, or a non-blocking transaction is already in progress. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39af52a270e301641b8855edf3fcc843814" title="The master is already performing a transfer. ">kStatus_LPI2C_Busy</a></td><td>Either another master is currently utilizing the bus, or a non-blocking transaction is already in progress. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2330,7 +2330,7 @@ IRQ handler</h2></td></tr>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">kStatus_Success</td><td>A transaction was successfully aborted. </td></tr>
-    <tr><td class="paramname"><a class="el" href="a00274.html#gga2970898e8a43ce21e1cc510d49f1b89da6603ec1135f58532c9d4accc3661bc27" title="The slave driver is idle. ">kStatus_LPI2C_Idle</a></td><td>There is not a non-blocking transaction currently in progress. </td></tr>
+    <tr><td class="paramname"><a class="el" href="a00274.html#ggafb730582952b7ceec73d7dc9bf7bef39a6603ec1135f58532c9d4accc3661bc27" title="The slave driver is idle. ">kStatus_LPI2C_Idle</a></td><td>There is not a non-blocking transaction currently in progress. </td></tr>
   </table>
   </dd>
 </dl>

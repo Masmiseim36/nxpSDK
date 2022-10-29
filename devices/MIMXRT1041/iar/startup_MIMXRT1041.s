@@ -4,7 +4,7 @@
 ;            MIMXRT1041
 ;  @version: 0.1
 ;  @date:    2021-7-20
-;  @build:   b220831
+;  @build:   b220927
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
@@ -223,7 +223,7 @@ __vector_table_0x1c
         DCD     PWM4_FAULT_IRQHandler                         ;PWM4 fault or reload error interrupt
         DCD     Reserved168_IRQHandler                        ;Reserved interrupt
         DCD     Reserved169_IRQHandler                        ;Reserved interrupt
-        DCD     Reserved170_IRQHandler                        ;Reserved interrupt
+        DCD     CAN3_IRQHandler                               ;CAN3 interrupt
         DCD     Reserved171_IRQHandler                        ;Reserved interrupt
         DCD     FLEXIO3_IRQHandler                            ;FLEXIO3 interrupt
         DCD     GPIO6_7_8_9_IRQHandler                        ;GPIO6, GPIO7, GPIO8, GPIO9 interrupt
@@ -817,7 +817,13 @@ ENET_1588_Timer_IRQHandler
         PUBWEAK PWM4_FAULT_IRQHandler
         PUBWEAK Reserved168_IRQHandler
         PUBWEAK Reserved169_IRQHandler
-        PUBWEAK Reserved170_IRQHandler
+        PUBWEAK CAN3_IRQHandler
+        PUBWEAK CAN3_DriverIRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(2)
+CAN3_IRQHandler
+        LDR     R0, =CAN3_DriverIRQHandler
+        BX      R0
+
         PUBWEAK Reserved171_IRQHandler
         PUBWEAK FLEXIO3_IRQHandler
         PUBWEAK FLEXIO3_DriverIRQHandler
@@ -983,7 +989,7 @@ PWM4_3_IRQHandler
 PWM4_FAULT_IRQHandler
 Reserved168_IRQHandler
 Reserved169_IRQHandler
-Reserved170_IRQHandler
+CAN3_DriverIRQHandler
 Reserved171_IRQHandler
 FLEXIO3_DriverIRQHandler
 GPIO6_7_8_9_IRQHandler

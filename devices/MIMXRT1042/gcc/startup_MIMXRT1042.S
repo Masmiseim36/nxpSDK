@@ -4,7 +4,7 @@
 /*            MIMXRT1042                                                     */
 /*  @version: 0.1                                                            */
 /*  @date:    2021-7-20                                                      */
-/*  @build:   b220831                                                        */
+/*  @build:   b220927                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
@@ -194,7 +194,7 @@ __isr_vector:
     .long   PWM4_FAULT_IRQHandler                           /* PWM4 fault or reload error interrupt*/
     .long   Reserved168_IRQHandler                          /* Reserved interrupt*/
     .long   Reserved169_IRQHandler                          /* Reserved interrupt*/
-    .long   Reserved170_IRQHandler                          /* Reserved interrupt*/
+    .long   CAN3_IRQHandler                                 /* CAN3 interrupt*/
     .long   Reserved171_IRQHandler                          /* Reserved interrupt*/
     .long   FLEXIO3_IRQHandler                              /* FLEXIO3 interrupt*/
     .long   GPIO6_7_8_9_IRQHandler                          /* GPIO6, GPIO7, GPIO8, GPIO9 interrupt*/
@@ -909,6 +909,15 @@ ENET_1588_Timer_IRQHandler:
 
     .align 1
     .thumb_func
+    .weak CAN3_IRQHandler
+    .type CAN3_IRQHandler, %function
+CAN3_IRQHandler:
+    ldr   r0,=CAN3_DriverIRQHandler
+    bx    r0
+    .size CAN3_IRQHandler, . - CAN3_IRQHandler
+
+    .align 1
+    .thumb_func
     .weak FLEXIO3_IRQHandler
     .type FLEXIO3_IRQHandler, %function
 FLEXIO3_IRQHandler:
@@ -1083,7 +1092,7 @@ FLEXIO3_IRQHandler:
     def_irq_handler    PWM4_FAULT_IRQHandler
     def_irq_handler    Reserved168_IRQHandler
     def_irq_handler    Reserved169_IRQHandler
-    def_irq_handler    Reserved170_IRQHandler
+    def_irq_handler    CAN3_DriverIRQHandler
     def_irq_handler    Reserved171_IRQHandler
     def_irq_handler    FLEXIO3_DriverIRQHandler
     def_irq_handler    GPIO6_7_8_9_IRQHandler

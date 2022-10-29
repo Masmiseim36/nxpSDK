@@ -1,6 +1,6 @@
 var a00031 =
 [
-    [ "FLEXIO_I2C_Type", "a00031.html#a00407", [
+    [ "FLEXIO_I2C_Type", "a00031.html#a00408", [
       [ "flexioBase", "a00031.html#a85065e51da3c0158d4b1d9254d691d26", null ],
       [ "SDAPinIndex", "a00031.html#acf0bab2399a7d7013f3708feb4d74ff6", null ],
       [ "SCLPinIndex", "a00031.html#a8ffb4cb7eac22b561f34ebcf4c309db9", null ],
@@ -8,14 +8,14 @@ var a00031 =
       [ "timerIndex", "a00031.html#ab468253ce0595401dac6cbe2ede4c82a", null ],
       [ "baudrate", "a00031.html#a34f7664f9c39134c78a668c718040c54", null ]
     ] ],
-    [ "flexio_i2c_master_config_t", "a00031.html#a00405", [
+    [ "flexio_i2c_master_config_t", "a00031.html#a00406", [
       [ "enableMaster", "a00031.html#a4dcbed2930b467df1978f9bf2b71c128", null ],
       [ "enableInDoze", "a00031.html#ad73b88c0700d82721ccbf0744d1b6780", null ],
       [ "enableInDebug", "a00031.html#acf98ed2c52a014d2ed825a38293001d4", null ],
       [ "enableFastAccess", "a00031.html#a89a0daa456c7d99a7144d5245f422bbe", null ],
       [ "baudRate_Bps", "a00031.html#a446dee2e270776aa6d462710e85b7454", null ]
     ] ],
-    [ "flexio_i2c_master_transfer_t", "a00031.html#a00406", [
+    [ "flexio_i2c_master_transfer_t", "a00031.html#a00407", [
       [ "flags", "a00031.html#a2695cc7566c8a4cbbcf837d1f7209b6a", null ],
       [ "slaveAddress", "a00031.html#ad9a4b7694d338eaa4d7b6b2e8ebcf6c5", null ],
       [ "direction", "a00031.html#a756cb7ae9db1832fcffcd736a7039369", null ],
@@ -34,10 +34,10 @@ var a00031 =
     ] ],
     [ "I2C_RETRY_TIMES", "a00031.html#gaac288786aaa7d0cb947c91591baf42d7", null ],
     [ "flexio_i2c_master_transfer_callback_t", "a00031.html#ga4a92b2aafd0ea1e7746dc23a7b0f0691", [
-      [ "kStatus_FLEXIO_I2C_Busy", "a00031.html#ggae4d5251432e1a9e6803c0240cc492e18a8ab8145bc386f3630f13b87c38496331", null ],
-      [ "kStatus_FLEXIO_I2C_Idle", "a00031.html#ggae4d5251432e1a9e6803c0240cc492e18a2f105638fc06422cc54cf5337d507873", null ],
-      [ "kStatus_FLEXIO_I2C_Nak", "a00031.html#ggae4d5251432e1a9e6803c0240cc492e18af5e4a932f6f9e6ae30a42dc31fab8bd5", null ],
-      [ "kStatus_FLEXIO_I2C_Timeout", "a00031.html#ggae4d5251432e1a9e6803c0240cc492e18a3d8bcc4ffd332948cb8b28f7982ac4d1", null ]
+      [ "kStatus_FLEXIO_I2C_Busy", "a00031.html#ggab48899087cc647f0f791ed0c459adc53a8ab8145bc386f3630f13b87c38496331", null ],
+      [ "kStatus_FLEXIO_I2C_Idle", "a00031.html#ggab48899087cc647f0f791ed0c459adc53a2f105638fc06422cc54cf5337d507873", null ],
+      [ "kStatus_FLEXIO_I2C_Nak", "a00031.html#ggab48899087cc647f0f791ed0c459adc53af5e4a932f6f9e6ae30a42dc31fab8bd5", null ],
+      [ "kStatus_FLEXIO_I2C_Timeout", "a00031.html#ggab48899087cc647f0f791ed0c459adc53a3d8bcc4ffd332948cb8b28f7982ac4d1", null ]
     ] ],
     [ "_flexio_i2c_master_interrupt", "a00031.html#gaa4597b532bb2a564c329076dc5da8155", [
       [ "kFLEXIO_I2C_TxEmptyInterruptEnable", "a00031.html#ggaa4597b532bb2a564c329076dc5da8155ac34fefcbb2d45dd7bfd385586439923b", null ],

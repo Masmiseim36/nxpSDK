@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 2.0, 2021-06-25
-**     Build:               b210707
+**     Build:               b211108
 **
 **     Abstract:
 **         Chip specific module features.
@@ -191,7 +191,7 @@
 
 /* FLASH module features */
 
-#if defined(CPU_MKE17Z128VLH7) || defined(CPU_MKE17Z128VLL7)
+#if defined(CPU_MKE17Z128VLF7) || defined(CPU_MKE17Z128VLH7) || defined(CPU_MKE17Z128VLL7)
     /* @brief Is of type FTFA. */
     #define FSL_FEATURE_FLASH_IS_FTFA (1)
     /* @brief Is of type FTFE. */
@@ -384,7 +384,7 @@
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1110 (0xFFFF)
     /* @brief Emulated eeprom size code 1111 mapping to emulated eeprom size in bytes (0xFFFF = reserved). */
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1111 (0xFFFF)
-#elif defined(CPU_MKE17Z256VLH7) || defined(CPU_MKE17Z256VLL7)
+#elif defined(CPU_MKE17Z256VLF7) || defined(CPU_MKE17Z256VLH7) || defined(CPU_MKE17Z256VLL7)
     /* @brief Is of type FTFA. */
     #define FSL_FEATURE_FLASH_IS_FTFA (1)
     /* @brief Is of type FTFE. */
@@ -577,7 +577,7 @@
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1110 (0xFFFF)
     /* @brief Emulated eeprom size code 1111 mapping to emulated eeprom size in bytes (0xFFFF = reserved). */
     #define FSL_FEATURE_FLASH_FLEX_NVM_EEPROM_SIZE_FOR_EEESIZE_1111 (0xFFFF)
-#endif /* defined(CPU_MKE17Z128VLH7) || defined(CPU_MKE17Z128VLL7) */
+#endif /* defined(CPU_MKE17Z128VLF7) || defined(CPU_MKE17Z128VLH7) || defined(CPU_MKE17Z128VLL7) */
 
 /* FTM module features */
 

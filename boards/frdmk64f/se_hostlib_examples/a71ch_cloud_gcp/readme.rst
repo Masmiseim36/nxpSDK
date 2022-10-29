@@ -16,11 +16,12 @@ using MQTT.
 
 Prerequisites
 =======================================================================
-- Active azure account
-- MCUXpresso  installed (for running azure demo on k64)
+- Active gcp account
+- MCUXpresso  installed (for running gcp demo on K64F)
 - Any Serial communicator
-- Flash VCOM binary on the device. VCOM binary can found under :file:`<PROJECT>\binaries` folder.
+- Flash VCOM binary on the device. VCOM binary can found under :file:`<PROJECT>\binaries\MCU` folder.
 - Refer to :ref:`cli-tool` for ssscli tool setup
+- Build Plug & Trust middleware stack. (Refer :ref:`building`)
 
 
 Using WiFi with LPC55S
@@ -43,6 +44,10 @@ Creating and updating device keys and certificates to SE
         cd Provisioning
         python GenerateGCPCredentials.py <COM_PORT>
         python ResetAndUpdate_GCP.py <COM_PORT>
+
+    .. note::
+        Provisioning of the keys is done with default policies.
+        Refer - :numref:`cli-object-policy` to change the scripts to add required policies.
 
 #) Certificates and Keys are generated at ``simw-top/pycli/Provisioning/gcp``
 
@@ -97,12 +102,21 @@ Preparing the Cloud
       web-dialogue box.
 
 
+Building the Demo
+=======================================================================
+1) Open cmake project found under :file:`<SIMW-TOP>\projects` in MCUXPRESSO IDE
+
+#) Update cmake options::
+    - ``RTOS=FreeRTOS``
+    - ``mbedTLS_ALT=SSS``
+
+#) Update the build target in make file
+    - Project:``cloud_gcp``
+
 
 Running the Demo
 =======================================================================
-1) Open frdmk64f_mbedtls_sss_azure_demo project found under :file:`<PROJECT>\projects` in MCUXPRESSO IDE
-
-#) Build the project and flash the binary on FRDM-K64F board
+1) Build the project and flash the binary on FRDM-K64F board
 
 #) Connect your board to open network
 

@@ -6,10 +6,10 @@ a message a printed on the UART terminal and an LED is toggled on the board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  9.10.2
-- Keil MDK  5.34
-- GCC ARM Embedded  10.2.1
-- MCUXpresso  11.4.0
+- IAR embedded Workbench  9.30.1
+- Keil MDK  5.37
+- GCC ARM Embedded  10.3.1
+- MCUXpresso  11.6.0
 
 Hardware requirements
 =====================

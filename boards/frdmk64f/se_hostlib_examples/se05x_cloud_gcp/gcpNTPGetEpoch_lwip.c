@@ -20,14 +20,12 @@
 #if AX_EMBEDDED
 
 #include "fsl_device_registers.h"
-//#include "lwipopts.h"
 #if defined(LPC_ENET)
 #include "lwip/api.h"
 #include "lwip/ip.h"
 #include "lwip/netdb.h"
 #elif defined(LPC_WIFI)
-#include "qcom_api.h"
-#include "custom_stack_offload.h"
+#include "serial_mwm.h"
 #endif
 #include "httpsclient.h"
 #include "sm_demo_utils.h"
@@ -39,6 +37,7 @@
 
 #define NTP_SERVER_NAME "time.google.com"
 #define NTP_SERVER_PORT "123"
+#define NTP_SERVER_PORT_INT 123
 /* Used to avoid warnings in case of unused parameters in function pointers */
 #define IOT_UNUSED(x) (void)(x)
 /* *****************************************************************************************************************
@@ -78,12 +77,6 @@ union NTP_Buffer {
     (((uint32_t)(a0)&0xFF) << 24) | (((uint32_t)(a1)&0xFF) << 16) | (((uint32_t)(a2)&0xFF) << 8) | ((uint32_t)(a3)&0xFF)
 #define UINT32_IPADDR_TO_CSV_BYTES(a) \
     ((uint8_t)((a) >> 24) & 0xFF), (uint8_t)(((a) >> 16) & 0xFF), (uint8_t)(((a) >> 8) & 0xFF), (uint8_t)((a)&0xFF)
-struct udp_tx_buffer
-{
-    TX_PACKET txPacket;
-    union NTP_Buffer ntp_buffer;
-};
-extern QCA_CONTEXT_STRUCT *wlan_get_context(void);
 extern uint8_t Wifi_IP[4];
 #endif
 
@@ -109,17 +102,7 @@ static unsigned long gcpNTPGetEpochEnet(void);
 static int _traceQcomApi = 0;
 static unsigned long gcpNTPGetEpochWifi(void);
 
-static int isQcomError(A_STATUS status, const char *funcName)
-{
-    if (status != A_OK) {
-        LOG_E("ERROR: %s() returned %d\r\n", funcName, status);
-    }
-    else if (_traceQcomApi) {
-        LOG_I("%s() OK\r\n", funcName);
-    }
-    return (status != A_OK);
-}
-static int isValueFailed(int32_t value, int32_t failValue, const char *funcName)
+int isValueFailed(int32_t value, int32_t failValue, const char *funcName)
 {
     if (value == failValue) {
         LOG_E("ERROR: %s() returned %d\r\n", funcName, value);
@@ -128,16 +111,6 @@ static int isValueFailed(int32_t value, int32_t failValue, const char *funcName)
         LOG_I("%s() OK\r\n", funcName);
     }
     return (value == failValue);
-}
-uint32_t resolveHostname(const char *hostname)
-{
-    uint32_t addr = 0;
-    A_STATUS status = qcom_dnsc_get_host_by_name((char *)hostname, &addr);
-    isQcomError(status, "qcom_dnsc_get_host_by_name");
-    if (status == 0) {
-        LOG_I("Looked up %s as %d.%d.%d.%d\r\n", hostname, UINT32_IPADDR_TO_CSV_BYTES(addr));
-    }
-    return addr;
 }
 #ifndef ntohl
 uint32_t ntohl(uint32_t input)
@@ -247,10 +220,12 @@ unsigned long gcpNTPGetEpochEnet()
     RefTs_Seconds -= (((70ul * 365ul) + 17ul) * 24ul * 60ul * 60ul);
     closesocket(fd);
 
-    if (RefTs_Seconds < MIN_EPOCH)
+    if (RefTs_Seconds < MIN_EPOCH) {
         goto exit;
-    if (RefTs_Seconds > MAX_EPOCH)
+    }
+    if (RefTs_Seconds > MAX_EPOCH) {
         goto exit;
+    }
     LOG_I("Current EPOCH = %d", RefTs_Seconds);
     return RefTs_Seconds;
 
@@ -261,83 +236,90 @@ exit:
     return 0;
 }
 #elif defined(LPC_WIFI)
+int wlan_get_state()
+{
+    int ret = mwm_wlan_status();
+    if (ret < 0)
+    {
+        LOG_E("Failed to get WLAN status, error: %d", ret);
+    }
+
+    return ret;
+}
+
 unsigned long gcpNTPGetEpochWifi(void)
 {
-    int nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
-    int fd = -1;
-    int ret;
+    int s = 0;
+    int ret = 0;
     unsigned long RefTs_Seconds;
-    SOCKADDR_T addr;
-    A_STATUS status;
-    memset(&addr, 0, sizeof(addr));
-    addr.sin_family = ATH_AF_INET;
-    addr.sin_port = 123; //HTONS(123);
-    addr.sin_addr.s_addr = resolveHostname(NTP_SERVER_NAME);
-    if (addr.sin_addr.s_addr == 0) {
-        nwstatus = NETWORK_ERR_NET_UNKNOWN_HOST;
-        goto exit;
-    }
-
-    fd = qcom_socket(ATH_AF_INET, SOCK_DGRAM_TYPE, 0); //ATH_IPPROTO_UDP);
-    if (isValueFailed(fd, -1, "qcom_socket")) {
-        nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
-        goto exit;
-    }
-
-    status = (A_STATUS)qcom_connect(fd, (struct sockaddr *)&addr, sizeof(addr));
-    if (isQcomError(status, "qcom_connect")) {
-        nwstatus = NETWORK_ERR_NET_CONNECT_FAILED;
-        goto exit;
-    }
-
+    mwm_sockaddr_t http_srv_addr = {.host = NTP_SERVER_NAME, .port = NTP_SERVER_PORT_INT};
     union NTP_Buffer ntp_buffer = {0};
+
+    ret = wlan_get_state();
+    if (ret != MWM_CONNECTED)
+    {
+        LOG_E("WLAN must be in connected state");
+        return 0;
+    }
+
+    s = mwm_socket(MWM_UDP);
+    if (s < 0)
+    {
+        LOG_E("Could not create socket");
+        goto exit;
+    }
+
+    ret = mwm_connect(s, &http_srv_addr, sizeof(http_srv_addr));
+    if (ret != 0)
+    {
+        LOG_E("Could not connect to server, error: %d", ret);
+        goto exit;
+    }
+
     ntp_buffer.cmd_rsp.LI_VN_Mode = 0x1b; //(NTP_leap << 6 | NTP_version << 3 | NTP_mode);
 
-    char *sendBuf = NULL;
-    sendBuf = custom_alloc(sizeof(ntp_buffer));
-    if (sendBuf == NULL) {
-        return -1;
-    }
-    memcpy(sendBuf, ntp_buffer.buffer, sizeof(ntp_buffer));
-    ret = qcom_sendto(fd, sendBuf, sizeof(ntp_buffer), 0, (struct sockaddr *)&addr, sizeof(struct sockaddr));
-    if (ret < 0) {
-        LOG_W(" failed\n  ! qcom_sendto returned %d\n\n", ret);
-        nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
+    /* Send HTTP GET request */
+    ret      = mwm_send(s, (void *) &ntp_buffer.buffer[0], sizeof(ntp_buffer));
+    if (ret <= 0)
+    {
+        LOG_E("Could not send data, error: %d", ret);
         goto exit;
     }
-    custom_free(sendBuf);
-    sendBuf = NULL;
 
-    QCA_CONTEXT_STRUCT *enetCtx = wlan_get_context();
-    status = t_select(enetCtx, fd, 2000);
-    if (status == -1) {
-        nwstatus = NETWORK_ERR_NET_UNKNOWN_HOST;
+    ret      = mwm_recv_timeout(s, (void *) &ntp_buffer.buffer[0], sizeof(ntp_buffer), 0);
+    if (ret <= 0)
+    {
+        LOG_E("Could not receive data, error: %d", ret);
         goto exit;
     }
-    socklen_t len = sizeof(struct sockaddr);
-    ret = qcom_recvfrom(fd, &sendBuf, sizeof(ntp_buffer), 0, (struct sockaddr *)&addr, &len);
-    if (ret < 0) {
-        LOG_W(" failed\n  ! qcom_recvfrom returned %d\n\n", ret);
-        nwstatus = NETWORK_ERR_NET_SOCKET_FAILED;
-        goto exit;
+
+    ret = mwm_close(s);
+    if (ret < 0)
+    {
+        LOG_E("Could not close socket, error: %d", ret);
+        return 0;
     }
-    qcom_socket_close(fd);
-    memcpy(ntp_buffer.buffer, sendBuf, sizeof(ntp_buffer));
 
     RefTs_Seconds = (ntohl(ntp_buffer.cmd_rsp.RefTs_Seconds));
     RefTs_Seconds -= (((70ul * 365ul) + 17ul) * 24ul * 60ul * 60ul);
 
-    if (RefTs_Seconds < MIN_EPOCH)
+    if (RefTs_Seconds < MIN_EPOCH) {
         goto exit;
-    if (RefTs_Seconds > MAX_EPOCH)
+    }
+    if (RefTs_Seconds > MAX_EPOCH) {
         goto exit;
+    }
     LOG_I("Current EPOCH = %ld", RefTs_Seconds);
     return RefTs_Seconds;
 
 exit:
-    LOG_W("ERROR Getting EPOCH %d\r\n", nwstatus);
-    IOT_UNUSED(nwstatus);
-    qcom_socket_close(fd);
+    LOG_E("ERROR Getting EPOCH %d", ret);
+
+    ret = mwm_close(s);
+    if (ret < 0)
+    {
+        LOG_E("Could not close socket, error: %d", ret);
+    }
     return 0;
 }
 #endif

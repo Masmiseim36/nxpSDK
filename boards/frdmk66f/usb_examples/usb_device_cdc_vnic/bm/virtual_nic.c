@@ -32,9 +32,17 @@
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
 #include "usb_phy.h"
+#include "fsl_enet_mdio.h"
+#include "fsl_phyksz8081.h"
+#include "fsl_phy.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyksz8081_ops
 /* Base unit for ENIT layer is 1Mbps while for RNDIS its 100bps*/
 #define ENET_CONVERT_FACTOR (10000)
 
@@ -59,6 +67,11 @@ usb_status_t VNIC_EnetTxDone(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+/*! @brief Enet PHY and MDIO interface handler. */
+mdio_handle_t mdioHandle = {.resource.base = ENET, .ops = &EXAMPLE_MDIO_OPS};
+phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
+extern usb_cdc_vnic_t g_cdcVnic;
 extern usb_device_endpoint_struct_t g_cdcVnicDicEp[];
 extern usb_device_class_struct_t g_cdcVnicClass;
 extern queue_t g_enetRxServiceQueue;

@@ -30,9 +30,9 @@
 #define GCP_LOCATION_NAME "us-central1"
 #define GCP_REGISTRY_NAME "nxp-se-demo-reg"
 
-#if (SSS_HAVE_SE050_C || SSS_HAVE_SE050_A)
+#if (SSS_HAVE_APPLET_SE05X_C || SSS_HAVE_APPLET_SE05X_A)
 #define GCP_DEVICE_NAME "nxp-ecc-dev-01"
-#elif SSS_HAVE_SE050_B
+#elif SSS_HAVE_APPLET_SE05X_B
 #define GCP_DEVICE_NAME "nxp-rsa-dev-01"
 #else
 #define GCP_DEVICE_NAME "a71ch-dev-04"
@@ -42,7 +42,7 @@
 #define GCP_IOT_MQTT_HOST "mqtt.googleapis.com" ///< Customer specific MQTT HOST. The same will be used for Thing Shadow
 #define GCP_IOT_MQTT_PORT 8883                  ///< default port for MQTT/S
 #define GCP_IOT_MQTT_CLIENT_ID                                                                               \
-    (uint8_t *)"projects/" GCP_PROJECT_NAME "/locations/" GCP_LOCATION_NAME "/registries/" GCP_REGISTRY_NAME \
+    (char *)"projects/" GCP_PROJECT_NAME "/locations/" GCP_LOCATION_NAME "/registries/" GCP_REGISTRY_NAME \
                "/devices/" GCP_DEVICE_NAME ///< MQTT client ID should be unique for every device
 #define GCP_IOT_MQTT_PUB_TOPIC "/devices/" GCP_DEVICE_NAME "/events"
 #define GCP_IOT_MQTT_SUB_TOPIC "/devices/" GCP_DEVICE_NAME "/config"

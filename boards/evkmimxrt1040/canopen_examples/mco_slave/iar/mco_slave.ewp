@@ -819,7 +819,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1906,7 +1906,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2993,7 +2993,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -4078,7 +4078,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -5165,7 +5165,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -6252,7 +6252,7 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>

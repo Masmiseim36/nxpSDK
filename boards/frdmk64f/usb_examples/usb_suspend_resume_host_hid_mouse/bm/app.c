@@ -309,7 +309,7 @@ usb_status_t USB_HostControlRemoteWakeup(usb_host_handle hostHandle,
                                          uint8_t enable)
 {
     usb_host_transfer_t *transfer;
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
 
     if (hostHandle == NULL)
     {

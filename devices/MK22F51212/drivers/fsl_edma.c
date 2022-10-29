@@ -1,13 +1,15 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_edma.h"
-
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+#include "fsl_memory.h"
+#endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -229,6 +231,10 @@ void EDMA_SetTransferConfig(DMA_Type *base, uint32_t channel, const edma_transfe
     assert(config != NULL);
     assert(((uint32_t)nextTcd & 0x1FU) == 0U);
 
+/* If there is address offset, convert the address */
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+    nextTcd = (edma_tcd_t *)(MEMORY_ConvertMemoryMapAddress((uint32_t)nextTcd, kMEMORY_Local2DMA));
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
     EDMA_TcdSetTransferConfig((edma_tcd_t *)(uint32_t)&base->TCD[channel], config, nextTcd);
 }
 
@@ -308,19 +314,19 @@ void EDMA_SetChannelPreemptionConfig(DMA_Type *base, uint32_t channel, const edm
  *
  * param base eDMA peripheral base address.
  * param channel eDMA channel number.
- * param type A channel link type, which can be one of the following:
+ * param linkType A channel link type, which can be one of the following:
  *   arg kEDMA_LinkNone
  *   arg kEDMA_MinorLink
  *   arg kEDMA_MajorLink
  * param linkedChannel The linked channel number.
  * note Users should ensure that DONE flag is cleared before calling this interface, or the configuration is invalid.
  */
-void EDMA_SetChannelLink(DMA_Type *base, uint32_t channel, edma_channel_link_type_t type, uint32_t linkedChannel)
+void EDMA_SetChannelLink(DMA_Type *base, uint32_t channel, edma_channel_link_type_t linkType, uint32_t linkedChannel)
 {
     assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
     assert(linkedChannel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
-    EDMA_TcdSetChannelLink((edma_tcd_t *)(uint32_t)&base->TCD[channel], type, linkedChannel);
+    EDMA_TcdSetChannelLink((edma_tcd_t *)(uint32_t)&base->TCD[channel], linkType, linkedChannel);
 }
 
 /*!
@@ -452,7 +458,7 @@ void EDMA_TcdReset(edma_tcd_t *tcd)
     tcd->CITER     = 0U;
     tcd->DLAST_SGA = 0U;
     /* Enable auto disable request feature */
-    tcd->CSR   = DMA_CSR_DREQ(true);
+    tcd->CSR   = DMA_CSR_DREQ(1U);
     tcd->BITER = 0U;
 }
 
@@ -460,7 +466,7 @@ void EDMA_TcdReset(edma_tcd_t *tcd)
  * brief Configures the eDMA TCD transfer attribute.
  *
  * The TCD is a transfer control descriptor. The content of the TCD is the same as the hardware TCD registers.
- * The STCD is used in the scatter-gather mode.
+ * The TCD is used in the scatter-gather mode.
  * This function configures the TCD transfer attribute, including source address, destination address,
  * transfer size, address offset, and so on. It also configures the scatter gather feature if the
  * user supplies the next TCD address.
@@ -493,9 +499,15 @@ void EDMA_TcdSetTransferConfig(edma_tcd_t *tcd, const edma_transfer_config_t *co
     assert((config->destAddr % (1UL << (uint32_t)config->destTransferSize)) == 0U);
 
     /* source address */
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+    tcd->SADDR = MEMORY_ConvertMemoryMapAddress(config->srcAddr, kMEMORY_Local2DMA);
+    /* destination address */
+    tcd->DADDR = MEMORY_ConvertMemoryMapAddress(config->destAddr, kMEMORY_Local2DMA);
+#else
     tcd->SADDR = config->srcAddr;
     /* destination address */
     tcd->DADDR = config->destAddr;
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
     /* Source data and destination data transfer size */
     tcd->ATTR = DMA_ATTR_SSIZE(config->srcTransferSize) | DMA_ATTR_DSIZE(config->destTransferSize);
     /* Source address signed offset */
@@ -511,7 +523,11 @@ void EDMA_TcdSetTransferConfig(edma_tcd_t *tcd, const edma_transfer_config_t *co
     /* Enable scatter/gather processing */
     if (nextTcd != NULL)
     {
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+        tcd->DLAST_SGA = MEMORY_ConvertMemoryMapAddress((uint32_t)nextTcd, kMEMORY_Local2DMA);
+#else
         tcd->DLAST_SGA = (uint32_t)nextTcd;
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
         /*
             Before call EDMA_TcdSetTransferConfig or EDMA_SetTransferConfig,
             user must call EDMA_TcdReset or EDMA_ResetChannel which will set
@@ -576,19 +592,19 @@ void EDMA_TcdSetMajorOffsetConfig(edma_tcd_t *tcd, int32_t sourceOffset, int32_t
  *
  * note Users should ensure that DONE flag is cleared before calling this interface, or the configuration is invalid.
  * param tcd Point to the TCD structure.
- * param type Channel link type, it can be one of:
+ * param linkType Channel link type, it can be one of:
  *   arg kEDMA_LinkNone
  *   arg kEDMA_MinorLink
  *   arg kEDMA_MajorLink
  * param linkedChannel The linked channel number.
  */
-void EDMA_TcdSetChannelLink(edma_tcd_t *tcd, edma_channel_link_type_t type, uint32_t linkedChannel)
+void EDMA_TcdSetChannelLink(edma_tcd_t *tcd, edma_channel_link_type_t linkType, uint32_t linkedChannel)
 {
     assert(tcd != NULL);
     assert(((uint32_t)tcd & 0x1FU) == 0U);
     assert(linkedChannel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
-    if (type == kEDMA_MinorLink) /* Minor link config */
+    if (linkType == kEDMA_MinorLink) /* Minor link config */
     {
         uint16_t tmpreg;
 
@@ -603,7 +619,7 @@ void EDMA_TcdSetChannelLink(edma_tcd_t *tcd, edma_channel_link_type_t type, uint
         tmpreg |= DMA_BITER_ELINKYES_LINKCH(linkedChannel);
         tcd->BITER = tmpreg;
     }
-    else if (type == kEDMA_MajorLink) /* Major link config */
+    else if (linkType == kEDMA_MajorLink) /* Major link config */
     {
         uint16_t tmpreg;
 
@@ -1001,8 +1017,13 @@ void EDMA_PrepareTransferConfig(edma_transfer_config_t *config,
     /* Initializes the configure structure to zero. */
     (void)memset(config, 0, sizeof(*config));
 
-    config->destAddr         = (uint32_t)(uint32_t *)destAddr;
-    config->srcAddr          = (uint32_t)(uint32_t *)srcAddr;
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+    config->srcAddr  = MEMORY_ConvertMemoryMapAddress((uint32_t)(uint32_t *)srcAddr, kMEMORY_Local2DMA);
+    config->destAddr = MEMORY_ConvertMemoryMapAddress((uint32_t)(uint32_t *)destAddr, kMEMORY_Local2DMA);
+#else
+    config->destAddr = (uint32_t)(uint32_t *)destAddr;
+    config->srcAddr  = (uint32_t)(uint32_t *)srcAddr;
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
     config->minorLoopBytes   = bytesEachRequest;
     config->majorLoopCounts  = transferBytes / bytesEachRequest;
     config->srcTransferSize  = EDMA_TransferWidthMapping(srcWidth);
@@ -1023,7 +1044,7 @@ void EDMA_PrepareTransferConfig(edma_transfer_config_t *config,
  * param destWidth eDMA transfer destination address width(bytes).
  * param bytesEachRequest eDMA transfer bytes per channel request.
  * param transferBytes eDMA transfer bytes to be transferred.
- * param type eDMA transfer type.
+ * param transferType eDMA transfer type.
  * note The data address and the data width must be consistent. For example, if the SRC
  *       is 4 bytes, the source address must be 4 bytes aligned, or it results in
  *       source address error (SAE).
@@ -1035,13 +1056,13 @@ void EDMA_PrepareTransfer(edma_transfer_config_t *config,
                           uint32_t destWidth,
                           uint32_t bytesEachRequest,
                           uint32_t transferBytes,
-                          edma_transfer_type_t type)
+                          edma_transfer_type_t transferType)
 {
     assert(config != NULL);
 
     int16_t srcOffset = 0, destOffset = 0;
 
-    switch (type)
+    switch (transferType)
     {
         case kEDMA_MemoryToMemory:
             destOffset = (int16_t)destWidth;
@@ -1159,7 +1180,12 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
         /* Enable major interrupt */
         handle->tcdPool[currentTcd].CSR |= DMA_CSR_INTMAJOR_MASK;
         /* Link current TCD with next TCD for identification of current TCD */
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+        handle->tcdPool[currentTcd].DLAST_SGA =
+            MEMORY_ConvertMemoryMapAddress((uint32_t)&handle->tcdPool[nextTcd], kMEMORY_Local2DMA);
+#else
         handle->tcdPool[currentTcd].DLAST_SGA = (uint32_t)&handle->tcdPool[nextTcd];
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
         /* Chain from previous descriptor unless tcd pool size is 1(this descriptor is its own predecessor). */
         if (currentTcd != previousTcd)
         {
@@ -1173,7 +1199,12 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
                 link the TCD register in case link the current TCD with the dead chain when TCD loading occurs
                 before link the previous TCD block.
             */
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+            if (tcdRegs->DLAST_SGA ==
+                MEMORY_ConvertMemoryMapAddress((uint32_t)&handle->tcdPool[currentTcd], kMEMORY_Local2DMA))
+#else
             if (tcdRegs->DLAST_SGA == (uint32_t)&handle->tcdPool[currentTcd])
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
             {
                 /* Clear the DREQ bits for the dynamic scatter gather */
                 tcdRegs->CSR |= DMA_CSR_DREQ_MASK;
@@ -1201,7 +1232,12 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
                     condition when ESG bit is not set: it means the dynamic TCD link succeed and the current
                     TCD block has been loaded into TCD registers.
                 */
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+                if (tcdRegs->DLAST_SGA ==
+                    MEMORY_ConvertMemoryMapAddress((uint32_t)&handle->tcdPool[nextTcd], kMEMORY_Local2DMA))
+#else
                 if (tcdRegs->DLAST_SGA == (uint32_t)&handle->tcdPool[nextTcd])
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
                 {
                     return kStatus_Success;
                 }
@@ -1383,9 +1419,14 @@ void EDMA_HandleIRQ(edma_handle_t *handle)
         uint32_t sga_index;
         int32_t tcds_done;
         uint8_t new_header;
+        bool esg = ((handle->base->TCD[handle->channel].CSR & DMA_CSR_ESG_MASK) != 0U);
 
         /* Get the offset of the next transfer TCD blocks to be loaded into the eDMA engine. */
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+        sga -= MEMORY_ConvertMemoryMapAddress((uint32_t)handle->tcdPool, kMEMORY_Local2DMA);
+#else
         sga -= (uint32_t)handle->tcdPool;
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
         /* Get the index of the next transfer TCD blocks to be loaded into the eDMA engine. */
         sga_index = sga / sizeof(edma_tcd_t);
         /* Adjust header positions. */
@@ -1405,7 +1446,12 @@ void EDMA_HandleIRQ(edma_handle_t *handle)
             int8_t tmpTcdUsed = handle->tcdUsed;
             int8_t tmpTcdSize = handle->tcdSize;
 
-            if (tmpTcdUsed == tmpTcdSize)
+            /* check esg here for the case that application submit only one request, once the request complete:
+             * new_header(1) = handle->header(1)
+             * tcdUsed(1) != tcdSize(>1)
+             * As the application submit only once, so scatter gather must not enabled, then tcds_done should be 1
+             */
+            if ((tmpTcdUsed == tmpTcdSize) || (!esg))
             {
                 tcds_done = handle->tcdUsed;
             }
@@ -1421,6 +1467,15 @@ void EDMA_HandleIRQ(edma_handle_t *handle)
             if (tcds_done < 0)
             {
                 tcds_done += handle->tcdSize;
+            }
+            /*
+             * While code run to here, it means a TCD transfer Done and a new TCD has loaded to the hardware
+             * so clear DONE here to allow submit scatter gather transfer request in the callback to avoid TCD
+             * overwritten.
+             */
+            if (transfer_done)
+            {
+                handle->base->CDNE = handle->channel;
             }
         }
         /* Advance header which points to the TCD to be loaded into the eDMA engine from memory. */

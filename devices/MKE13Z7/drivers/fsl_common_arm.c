@@ -168,7 +168,10 @@ static void DelayLoop(uint32_t count)
 #endif
         "    CMP    R0, #0              \n"
 
-        "    BNE    loop                \n");
+        "    BNE    loop                \n"
+        :
+        :
+        : "r0");
 }
 #endif /* defined(__CC_ARM) */
 #endif /* defined(SDK_DELAY_USE_DWT) && defined(DWT) */

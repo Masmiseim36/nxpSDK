@@ -101,7 +101,7 @@ void InitFTM0(void)
 
     /* disable write protection for certain registers
      * free running counter and synchronization are different from TPM
-     * Enable the counter
+     * Enable FTM features
      * Fault Control Mode - Fault control is enabled for all channels,
      * and the selected mode is the automatic fault clearing
      * Initialize The Channels Output */
@@ -202,7 +202,7 @@ void InitFTM2(void)
 
     /* Configuration of FTM module */
     /* Disable write protection for certain registers */
-    /* Enable the counter */
+    /* Enable FTM features */
     FTM2->MODE = FTM_MODE_WPDIS_MASK | FTM_MODE_FTMEN_MASK;
 
     /* Settings up FTM SC register for clock setup */

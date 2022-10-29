@@ -1,20 +1,22 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+ 
+/* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
-PinsProfile:
-- !!product 'Pins v2.0'
-- !!processor 'MKM34Z256xxx7'
-- !!package 'MKM34Z256VLQ7'
-- !!mcu_data 'ksdk2_0'
-- !!processor_version '1.1.0'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE PINS TOOL ***
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Pins v9.0
+processor: MKM34Z256xxx7
+package_id: MKM34Z256VLQ7
+mcu_data: ksdk2_0
+processor_version: 9.0.0
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
+/* clang-format on */
 
 #include "fsl_common.h"
 #include "fsl_port.h"
@@ -24,22 +26,35 @@ PinsProfile:
 #define PIN6_IDX                         6u   /*!< Pin number for pin 6 in a port */
 #define PIN7_IDX                         7u   /*!< Pin number for pin 7 in a port */
 
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitBootPins
+ * Description   : Calls initialization functions.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitBootPins(void)
+{
+    BOARD_InitPins();
+}
+
+/* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {coreID: singlecore, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '6', peripheral: UART2, signal: RX, pin_signal: LCD_P46/PTI6/UART2_RX}
   - {pin_num: '7', peripheral: UART2, signal: TX, pin_signal: LCD_P47/PTI7/UART2_TX}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE PINS TOOL ***
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
+/* clang-format on */
 
-/*FUNCTION**********************************************************************
+/* FUNCTION ************************************************************************************************************
  *
  * Function Name : BOARD_InitPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
- *END**************************************************************************/
+ * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_PortI);                           /* PCTLI Clock Gate Control: Clock enabled */
 
@@ -50,7 +65,6 @@ void BOARD_InitPins(void) {
       | SIM_MISC_CTL_UART2IRSEL(MISC_CTL_UART2IRSEL_NONE)    /* UART2 IrDA Select: Pad RX input PTI[6] or PTE[6] selected for RX input of UART2 and UART2 TX signal is not used for modulation */
     );
 }
-
-/*******************************************************************************
+/***********************************************************************************************************************
  * EOF
- ******************************************************************************/
+ **********************************************************************************************************************/

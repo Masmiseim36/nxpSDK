@@ -26,7 +26,7 @@
 
 /* For LPIT. */
 #define DEMO_LPIT_BASE   LPIT0
-#define LPIT_SOURCECLOCK CLOCK_GetFreq(kCLOCK_ScgSircAsyncDiv2Clk)
+#define LPIT_SOURCECLOCK CLOCK_GetFreq(kCLOCK_ScgFircAsyncDiv2Clk)
 
 /* For FTM. */
 #define DEMO_FTM_BASE                 FTM0
@@ -163,10 +163,10 @@ int main(void)
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
+    /* Set the source for the ADC0 module */
     CLOCK_SetIpSrc(kCLOCK_Adc0, kCLOCK_IpSrcFircAsync);
-    CLOCK_SetIpSrc(kCLOCK_Ftm0, kCLOCK_IpSrcFircAsync);
     /* Set the source for the LPIT module */
-    CLOCK_SetIpSrc(kCLOCK_Lpit0, kCLOCK_IpSrcSircAsync);
+    CLOCK_SetIpSrc(kCLOCK_Lpit0, kCLOCK_IpSrcFircAsync);
     /* LPIT Channel 0 trigger input source: FTM0 */
     TRGMUX_SetTriggerSource(TRGMUX0, kTRGMUX_Lpit, kTRGMUX_TriggerInput0, kTRGMUX_SourceFtm0);
     /* ADC0 Channel A trigger input source: LPIT0CH0  */
@@ -174,6 +174,10 @@ int main(void)
     /* Select TRGMUX output as ADC0 trigger source and pre-trigger source  */
     SIM->ADCOPT |= SIM_ADCOPT_ADC0PRETRGSEL(1);
     SIM->ADCOPT |= SIM_ADCOPT_ADC0TRGSEL(1);
+
+    /* Due to FTM output trigger period width is 1 ~ 3 system clock cycles and LPIT trigger detected logic use its
+     * function clock, we must make LPIT function large enough, otherwise LPIT may be miss FTM trigger output */
+    assert(SystemCoreClock <= LPIT_SOURCECLOCK);
 
     PRINTF("\r\nftm_lpit_adc12 demo.\r\n");
 
@@ -191,9 +195,10 @@ int main(void)
     {
         GETCHAR();
         /*
-         * Start the FTM counter and finally trigger the ADC12's conversion.
+         * Reset FTM counter value and start the FTM counter, finally trigger the ADC12's conversion.
          * FTM_StartTimer() -> lpit channel 0 PreTrigger -> ADC conversion done interrupt -> FTM_StopTimer().
          */
+        FTM_ClearQuadDecoderCounterValue(DEMO_FTM_BASE);
         FTM_StartTimer(DEMO_FTM_BASE, DEMO_FTM_COUNTER_CLOCK_SOURCE);
         while (false == g_adc12InterruptFlag)
         {

@@ -337,6 +337,21 @@ void ecp_clear_precomputed( mbedtls_ecp_group *grp )
     unsigned char buf[BUFSIZE];    
 #endif /* DCACHE */
 
+#if defined(MBEDTLS_ECP_C)
+static int set_ecp_curve( const char *string, mbedtls_ecp_curve_info *curve )
+{
+    const mbedtls_ecp_curve_info *found =
+        mbedtls_ecp_curve_info_from_name( string );
+    if( found != NULL )
+    {
+        *curve = *found;
+        return( 1 );
+    }
+    else
+        return( 0 );
+}
+#endif
+
 typedef struct {
     char md4, md5, ripemd160, sha1, sha256, sha512,
          arc4, des3, des,
@@ -498,6 +513,17 @@ int main( int argc, char *argv[] )
 #if defined(MBEDTLS_MEMORY_BUFFER_ALLOC_C)
     unsigned char alloc_buf[HEAP_SIZE] = { 0 };
 #endif
+#if defined(MBEDTLS_ECP_C)
+    mbedtls_ecp_curve_info single_curve[2] = {
+        { MBEDTLS_ECP_DP_NONE, 0, 0, NULL },
+        { MBEDTLS_ECP_DP_NONE, 0, 0, NULL },
+    };
+    const mbedtls_ecp_curve_info *curve_list = mbedtls_ecp_curve_list( );
+#endif
+    
+#if defined(MBEDTLS_ECP_C)
+    (void) curve_list; /* Unused in some configurations where no benchmark uses ECC */
+#endif    
 
 #if defined(FREESCALE_KSDK_BM)
     /* HW init */
@@ -582,6 +608,10 @@ int main( int argc, char *argv[] )
                 todo.ecdsa = 1;
             else if( strcmp( argv[i], "ecdh" ) == 0 )
                 todo.ecdh = 1;
+#if defined(MBEDTLS_ECP_C)
+            else if( set_ecp_curve( argv[i], single_curve ) )
+                curve_list = single_curve;
+#endif
             else
             {
                 mbedtls_printf( "Unrecognized option: %s\n", argv[i] );
@@ -1124,7 +1154,7 @@ int main( int argc, char *argv[] )
 
         memset( buf, 0x2A, sizeof( buf ) );
 
-        for( curve_info = mbedtls_ecp_curve_list();
+        for( curve_info = curve_list;
              curve_info->grp_id != MBEDTLS_ECP_DP_NONE;
              curve_info++ )
         {
@@ -1146,7 +1176,7 @@ int main( int argc, char *argv[] )
             mbedtls_ecdsa_free( &ecdsa );
         }
 
-        for( curve_info = mbedtls_ecp_curve_list();
+        for( curve_info = curve_list;
              curve_info->grp_id != MBEDTLS_ECP_DP_NONE;
              curve_info++ )
         {
@@ -1190,11 +1220,29 @@ int main( int argc, char *argv[] )
         };
         const mbedtls_ecp_curve_info *curve_info;
         size_t olen;
+        const mbedtls_ecp_curve_info *selected_montgomery_curve_list =
+            montgomery_curve_list;
 
-        for( curve_info = mbedtls_ecp_curve_list();
+        if( curve_list == (const mbedtls_ecp_curve_info*) &single_curve )
+        {
+            mbedtls_ecp_group grp;
+            mbedtls_ecp_group_init( &grp );
+            if( mbedtls_ecp_group_load( &grp, curve_list->grp_id ) != 0 )
+                mbedtls_exit( 1 );
+            if( mbedtls_ecp_get_type( &grp ) == MBEDTLS_ECP_TYPE_MONTGOMERY )
+                selected_montgomery_curve_list = single_curve;
+            else /* empty list */
+                selected_montgomery_curve_list = single_curve + 1;
+            mbedtls_ecp_group_free( &grp );
+        }
+
+        for( curve_info = curve_list;
              curve_info->grp_id != MBEDTLS_ECP_DP_NONE;
              curve_info++ )
         {
+            if( ! mbedtls_ecdh_can_do( curve_info->grp_id ) )
+                continue;
+
             mbedtls_ecdh_init( &ecdh );
 
             CHECK_AND_CONTINUE( mbedtls_ecp_group_load( &ecdh.grp, curve_info->grp_id ) );
@@ -1214,7 +1262,7 @@ int main( int argc, char *argv[] )
         }
 
         /* Montgomery curves need to be handled separately */
-        for ( curve_info = montgomery_curve_list;
+        for ( curve_info = selected_montgomery_curve_list;
               curve_info->grp_id != MBEDTLS_ECP_DP_NONE;
               curve_info++ )
         {
@@ -1236,7 +1284,7 @@ int main( int argc, char *argv[] )
             mbedtls_mpi_free( &z );
         }
 
-        for( curve_info = mbedtls_ecp_curve_list();
+        for( curve_info = curve_list;
              curve_info->grp_id != MBEDTLS_ECP_DP_NONE;
              curve_info++ )
         {
@@ -1262,7 +1310,7 @@ int main( int argc, char *argv[] )
         }
 
         /* Montgomery curves need to be handled separately */
-        for ( curve_info = montgomery_curve_list;
+        for ( curve_info = selected_montgomery_curve_list;
               curve_info->grp_id != MBEDTLS_ECP_DP_NONE;
               curve_info++)
         {
@@ -1286,12 +1334,11 @@ int main( int argc, char *argv[] )
     }
 #endif
 
-#if defined(MBEDTLS_ECDH_C)
+#if defined(MBEDTLS_ECDH_C) && !defined(MBEDTLS_NXP_SSSAPI)
     if( todo.ecdh )
     {
         mbedtls_ecdh_context ecdh_srv, ecdh_cli;
         unsigned char buf_srv[BUFSIZE], buf_cli[BUFSIZE];
-        const mbedtls_ecp_curve_info * curve_list = mbedtls_ecp_curve_list();
         const mbedtls_ecp_curve_info *curve_info;
         size_t olen;
 

@@ -79,7 +79,7 @@ instance:
           - useDefaultISR: 'true'
       - canConfig:
         - peripheralCAN: 'MSCAN'
-        - generic_can_driver_version: 'custom:2.0.0'
+        - generic_can_driver_version: '2.0.7'
         - clockSource: 'kMSCAN_ClkSrcBus'
         - clockSourceFreq: 'BOARD_BootClockRUN'
         - mscanConfig:
@@ -179,6 +179,11 @@ instance:
       - FMSTR_USE_APPCMD: 'true'
       - FMSTR_APPCMD_BUFF_SIZE: '32'
       - FMSTR_MAX_APPCMD_CALLS: '4'
+      - FMSTR_DEBUG_LEVEL: '0'
+      - FMSTR_DEBUG_PRINTF: 'debug_console'
+      - FMSTR_DEBUG_TX: 'false'
+      - FMSTR_CUSTOM_INCLUDES: ''
+      - FMSTR_CUSTOM_OPTIONS: ''
     - freemaster_codegenerator: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */

@@ -423,8 +423,8 @@ void USB_DeviceMtpProcessCommand(usb_device_mtp_struct_t *mtpHandle, usb_device_
         if (USB_DEVICE_MTP_STATE_RESPONSE == mtpHandle->mtpState) /* C */
         {
             /* Command-Response or Command-Data-Response transaction, prime response block here. */
-            (void)USB_DeviceMtpPrimeResponse(mtpHandle, dataInfo->code, (uint32_t *)&dataInfo->param[0],
-                                             dataInfo->curSize);
+            status = USB_DeviceMtpPrimeResponse(mtpHandle, dataInfo->code, (uint32_t *)&dataInfo->param[0],
+                                                dataInfo->curSize);
         }
         else
         {

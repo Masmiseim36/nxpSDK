@@ -456,7 +456,7 @@ usb_status_t USB_HostHidKeyboardEvent(usb_device_handle deviceHandle,
 {
     usb_host_configuration_t *configuration;
     usb_host_interface_t *interface;
-    uint32_t infoValue;
+    uint32_t infoValue  = 0U;
     usb_status_t status = kStatus_USB_Success;
     uint8_t interfaceIndex;
     uint8_t id;

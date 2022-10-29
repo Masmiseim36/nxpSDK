@@ -113,7 +113,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
  * @param param           The parameter of the class specific event.
  * @return kStatus_USB_Success or error.
  */
-usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *param)
+static usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Success;
     usb_device_lba_information_struct_t *lbaInformationStructure;
@@ -197,7 +197,7 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
  * @param param           The parameter of the device specific request.
  * @return kStatus_USB_Success or error.
  */
-usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
+static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_InvalidRequest;
     uint16_t *temp16   = (uint16_t *)param;
@@ -324,7 +324,7 @@ usb_device_class_config_list_struct_t msc_config_list = {
  *
  * @return None.
  */
-void USB_DeviceApplicationInit(void)
+static void USB_DeviceApplicationInit(void)
 {
     USB_DeviceClockInit();
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))

@@ -1,6 +1,6 @@
 var a00049 =
 [
-    [ "lpuart_config_t", "a00049.html#a00437", [
+    [ "lpuart_config_t", "a00049.html#a00438", [
       [ "baudRate_Bps", "a00049.html#a09d359de28dc114424b2d702df014d1c", null ],
       [ "parityMode", "a00049.html#ae7ce86796f025a059c973c540d5a94ad", null ],
       [ "dataBitsCount", "a00049.html#a58ce25b71bde98b9c09875481637d120", null ],
@@ -17,7 +17,7 @@ var a00049 =
       [ "enableTx", "a00049.html#a0d677467cd14ee90f544d688f3dc9b9a", null ],
       [ "enableRx", "a00049.html#a48d3f37a9364c0093083ef843d5d062e", null ]
     ] ],
-    [ "lpuart_transfer_t", "a00049.html#a00439", [
+    [ "lpuart_transfer_t", "a00049.html#a00440", [
       [ "data", "a00049.html#a7c49cf389dea8ad6f674bff6cedd8e37", null ],
       [ "rxData", "a00049.html#a5c7fe6c7d0575874728260e0ee2439df", null ],
       [ "txData", "a00049.html#a6403edb37a03ed860ac5c2cda4d314be", null ],
@@ -43,22 +43,22 @@ var a00049 =
     [ "FSL_LPUART_DRIVER_VERSION", "a00049.html#ga0870fb824ece32739bd35f819f8c408e", null ],
     [ "UART_RETRY_TIMES", "a00049.html#gac0f88b67f77fd05f186a5ec940c340bd", null ],
     [ "lpuart_transfer_callback_t", "a00049.html#ga7ab1637091d166aa8b69517350fb05c8", [
-      [ "kStatus_LPUART_TxBusy", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77dabddb317db7dfffa95856604bfac2a17f", null ],
-      [ "kStatus_LPUART_RxBusy", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77da98dfeab0a23c81f6b7f2c18acff8cc30", null ],
-      [ "kStatus_LPUART_TxIdle", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77da079c6d0957d121ce7cd95cf97487dfbb", null ],
-      [ "kStatus_LPUART_RxIdle", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77da02b8fe84bbfd8c52856b5d48865f7088", null ],
-      [ "kStatus_LPUART_TxWatermarkTooLarge", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77dabbee969cb0f7b4c49b44b10c4eb583cc", null ],
-      [ "kStatus_LPUART_RxWatermarkTooLarge", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77daca81b4d6e2e792c6d841b95ec25daad9", null ],
-      [ "kStatus_LPUART_FlagCannotClearManually", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77da07d5a5092ded158fe53ea4df940f8bdb", null ],
-      [ "kStatus_LPUART_Error", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77daf069a1997c3d25588d834ccb33dd35f4", null ],
-      [ "kStatus_LPUART_RxRingBufferOverrun", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77da45a7ed684f4c31aec8999b3da68d3b5e", null ],
-      [ "kStatus_LPUART_RxHardwareOverrun", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77daf8ada3eacff87751ec865b4fc584bac1", null ],
-      [ "kStatus_LPUART_NoiseError", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77da6ccebae2eb859fde044f15f1dd18cba1", null ],
-      [ "kStatus_LPUART_FramingError", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77da1528dc2aacb3a792a1ecbfbbc7941bc9", null ],
-      [ "kStatus_LPUART_ParityError", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77dad42bcd27cb6e04725768c6b98d4cbe0d", null ],
-      [ "kStatus_LPUART_BaudrateNotSupport", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77daaa020183f56b7d7f63e22fd5fd8d3df2", null ],
-      [ "kStatus_LPUART_IdleLineDetected", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77da29540bf056281514eb42c8885f7e2e10", null ],
-      [ "kStatus_LPUART_Timeout", "a00049.html#gga157d5577a5b2f5986037d0d09c7dc77da0a6368e75ae51755bbd3f451c276c822", null ]
+      [ "kStatus_LPUART_TxBusy", "a00049.html#gga900dca9b26de42491763226e12dcd47babddb317db7dfffa95856604bfac2a17f", null ],
+      [ "kStatus_LPUART_RxBusy", "a00049.html#gga900dca9b26de42491763226e12dcd47ba98dfeab0a23c81f6b7f2c18acff8cc30", null ],
+      [ "kStatus_LPUART_TxIdle", "a00049.html#gga900dca9b26de42491763226e12dcd47ba079c6d0957d121ce7cd95cf97487dfbb", null ],
+      [ "kStatus_LPUART_RxIdle", "a00049.html#gga900dca9b26de42491763226e12dcd47ba02b8fe84bbfd8c52856b5d48865f7088", null ],
+      [ "kStatus_LPUART_TxWatermarkTooLarge", "a00049.html#gga900dca9b26de42491763226e12dcd47babbee969cb0f7b4c49b44b10c4eb583cc", null ],
+      [ "kStatus_LPUART_RxWatermarkTooLarge", "a00049.html#gga900dca9b26de42491763226e12dcd47baca81b4d6e2e792c6d841b95ec25daad9", null ],
+      [ "kStatus_LPUART_FlagCannotClearManually", "a00049.html#gga900dca9b26de42491763226e12dcd47ba07d5a5092ded158fe53ea4df940f8bdb", null ],
+      [ "kStatus_LPUART_Error", "a00049.html#gga900dca9b26de42491763226e12dcd47baf069a1997c3d25588d834ccb33dd35f4", null ],
+      [ "kStatus_LPUART_RxRingBufferOverrun", "a00049.html#gga900dca9b26de42491763226e12dcd47ba45a7ed684f4c31aec8999b3da68d3b5e", null ],
+      [ "kStatus_LPUART_RxHardwareOverrun", "a00049.html#gga900dca9b26de42491763226e12dcd47baf8ada3eacff87751ec865b4fc584bac1", null ],
+      [ "kStatus_LPUART_NoiseError", "a00049.html#gga900dca9b26de42491763226e12dcd47ba6ccebae2eb859fde044f15f1dd18cba1", null ],
+      [ "kStatus_LPUART_FramingError", "a00049.html#gga900dca9b26de42491763226e12dcd47ba1528dc2aacb3a792a1ecbfbbc7941bc9", null ],
+      [ "kStatus_LPUART_ParityError", "a00049.html#gga900dca9b26de42491763226e12dcd47bad42bcd27cb6e04725768c6b98d4cbe0d", null ],
+      [ "kStatus_LPUART_BaudrateNotSupport", "a00049.html#gga900dca9b26de42491763226e12dcd47baaa020183f56b7d7f63e22fd5fd8d3df2", null ],
+      [ "kStatus_LPUART_IdleLineDetected", "a00049.html#gga900dca9b26de42491763226e12dcd47ba29540bf056281514eb42c8885f7e2e10", null ],
+      [ "kStatus_LPUART_Timeout", "a00049.html#gga900dca9b26de42491763226e12dcd47ba0a6368e75ae51755bbd3f451c276c822", null ]
     ] ],
     [ "lpuart_parity_mode_t", "a00049.html#ga6fcd73abf900b8a17dab1f2b1f3f53c7", [
       [ "kLPUART_ParityDisabled", "a00049.html#gga6fcd73abf900b8a17dab1f2b1f3f53c7a0e5bdb8fc4e1010930d05e1490a75b1a", null ],

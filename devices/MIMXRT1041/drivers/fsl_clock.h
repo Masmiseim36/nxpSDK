@@ -202,15 +202,15 @@ extern volatile uint32_t g_rtcXtalFreq;
     }
 
 /*! @brief Clock ip name array for FLEXCAN. */
-#define FLEXCAN_CLOCKS                             \
-    {                                              \
-        kCLOCK_IpInvalid, kCLOCK_Can1, kCLOCK_Can2 \
+#define FLEXCAN_CLOCKS                                          \
+    {                                                           \
+        kCLOCK_IpInvalid, kCLOCK_Can1, kCLOCK_Can2, kCLOCK_Can3 \
     }
 
 /*! @brief Clock ip name array for FLEXCAN Peripheral clock. */
-#define FLEXCAN_PERIPH_CLOCKS                        \
-    {                                                \
-        kCLOCK_IpInvalid, kCLOCK_Can1S, kCLOCK_Can2S \
+#define FLEXCAN_PERIPH_CLOCKS                                      \
+    {                                                              \
+        kCLOCK_IpInvalid, kCLOCK_Can1S, kCLOCK_Can2S, kCLOCK_Can3S \
     }
 
 /*! @brief Clock ip name array for FLEXIO. */
@@ -624,6 +624,8 @@ typedef enum _clock_ip_name
     /* CCM CCGR7 */
     kCLOCK_FlexSpi2  = (7U << 8U) | CCM_CCGR7_CG1_SHIFT, /*!< CCGR7, CG1   */
     kCLOCK_Axbs_l    = (7U << 8U) | CCM_CCGR7_CG2_SHIFT, /*!< CCGR7, CG2   */
+    kCLOCK_Can3      = (7U << 8U) | CCM_CCGR7_CG3_SHIFT, /*!< CCGR7, CG3   */
+    kCLOCK_Can3S     = (7U << 8U) | CCM_CCGR7_CG4_SHIFT, /*!< CCGR7, CG4   */
     kCLOCK_Aips_lite = (7U << 8U) | CCM_CCGR7_CG5_SHIFT, /*!< CCGR7, CG5   */
     kCLOCK_Flexio3   = (7U << 8U) | CCM_CCGR7_CG6_SHIFT, /*!< CCGR7, CG6   */
 

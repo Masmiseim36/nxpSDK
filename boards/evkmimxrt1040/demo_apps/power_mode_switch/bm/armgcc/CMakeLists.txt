@@ -31,6 +31,10 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../power_mode_switch.c"
 "${ProjDirPath}/../power_mode_switch.h"
 "${ProjDirPath}/../lpm.c"
@@ -41,10 +45,6 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../peripherals.c"
 "${ProjDirPath}/../peripherals.h"
-"${ProjDirPath}/../board.c"
-"${ProjDirPath}/../board.h"
-"${ProjDirPath}/../clock_config.c"
-"${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
 )

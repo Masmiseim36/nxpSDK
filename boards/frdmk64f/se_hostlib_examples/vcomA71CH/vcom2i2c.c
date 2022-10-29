@@ -156,7 +156,7 @@ void state_vcom_read_write(
                         time_ms |= (s_RecvBuff[7] << 16);
                         time_ms |= (s_RecvBuff[8] << 8);
                         time_ms |= s_RecvBuff[9];
-#if SSS_HAVE_SE05X || SSS_HAVE_LOOPBACK
+#if SSS_HAVE_APPLET_SE05X_IOT || SSS_HAVE_APPLET_LOOPBACK
 #if FSL_FEATURE_SOC_PIT_COUNT > 0
                         LOG_W("Starting the %d usec Timer to reset the IC", time_ms);
                         se_pit_SetTimer(time_ms);
@@ -335,8 +335,9 @@ U16 SM_SendAPDUVcom(
     U32 respLenLocal = *respLen;
 
     status = smCom_TransceiveRaw(NULL, cmd, cmdLen, resp, &respLenLocal);
-    if(status != SMCOM_OK)
+    if(status != SMCOM_OK) {
         LOG_E("Failed to communicate with IC");
+    }
     *respLen = (U16) respLenLocal;
 
     return (U16) status;

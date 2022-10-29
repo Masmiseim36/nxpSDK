@@ -160,7 +160,7 @@ int main(void)
         }
 
         /*! Process the sample and convert the raw sensor data. */
-        rawData.pressure = ((int16_t)(data[1]) << 8) | data[0];
+        rawData.pressure = ((uint16_t)(data[1]) << 8) | data[0];
         pressureKPa = (rawData.pressure - PABSOffLSB ) / PABSSENS;
 
         rawData.temperature = (int8_t)(data[2]);

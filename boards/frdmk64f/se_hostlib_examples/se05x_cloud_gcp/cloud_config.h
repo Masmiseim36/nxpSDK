@@ -1,0 +1,19 @@
+/*
+ * Copyright 2018,2019 NXP
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#ifndef __CLOUD_CONFIG_H__
+#define __CLOUD_CONFIG_H__
+
+#include "gcp_iot_config.h"
+#include "gcp_default_root_certificates.h"
+
+#define CLOUD_DEMO_HOSTNAME GCP_IOT_MQTT_HOST
+#define CLOUD_DEMO_PORT GCP_IOT_MQTT_PORT
+#define CLOUD_DEMO_PUB_TOPIC GCP_IOT_MQTT_PUB_TOPIC
+#define CLOUD_DEMO_SUB_TOPIC GCP_IOT_MQTT_SUB_TOPIC
+#define CLOUD_ROOT_CERTIFICATE_PEM tlsVERISIGN_ROOT_CERTIFICATE_PEM
+#define CLOUD_ROOT_CERTIFICATE_PEM_LEN tlsVERISIGN_ROOT_CERTIFICATE_LENGTH
+
+#endif // __CLOUD_CONFIG_H__

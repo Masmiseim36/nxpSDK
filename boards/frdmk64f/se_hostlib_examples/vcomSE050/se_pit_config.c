@@ -8,7 +8,7 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
-#if SSS_HAVE_SE05X || SSS_HAVE_LOOPBACK
+#if SSS_HAVE_APPLET_SE05X_IOT || SSS_HAVE_APPLET_LOOPBACK
 
 #include <board.h>
 #include "ax_reset.h"
@@ -70,4 +70,4 @@ void se_pit_SetTimer(uint32_t time_ms)
 }
 #endif
 
-#endif /* #if SSS_HAVE_SE05X || SSS_HAVE_LOOPBACK */
+#endif /* #if SSS_HAVE_APPLET_SE05X_IOT || SSS_HAVE_APPLET_LOOPBACK */

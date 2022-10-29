@@ -3,6 +3,7 @@ var searchData=
   ['flexcan_5fclock_5fsource_5ft',['flexcan_clock_source_t',['../a00026.html#gaa0b3ac1e2e7416950b82014d2a2b40ee',1,'fsl_flexcan.h']]],
   ['flexcan_5fframe_5fformat_5ft',['flexcan_frame_format_t',['../a00026.html#ga89e76f77a571693c1adeec47796c97df',1,'fsl_flexcan.h']]],
   ['flexcan_5fframe_5ftype_5ft',['flexcan_frame_type_t',['../a00026.html#gacec96742e2b0b51a5bf3246bfc57a455',1,'fsl_flexcan.h']]],
+  ['flexcan_5fmb_5fsize_5ft',['flexcan_mb_size_t',['../a00026.html#ga0b38e6955526ad8cbb5b3408db793edd',1,'fsl_flexcan.h']]],
   ['flexcan_5frx_5ffifo_5ffilter_5ftype_5ft',['flexcan_rx_fifo_filter_type_t',['../a00026.html#ga1b8c38cce54aff2f24b6cd45da80f353',1,'fsl_flexcan.h']]],
   ['flexcan_5frx_5ffifo_5fpriority_5ft',['flexcan_rx_fifo_priority_t',['../a00026.html#ga5d139af23e8c1094b39d1cf26d85271b',1,'fsl_flexcan.h']]],
   ['flexcan_5fwake_5fup_5fsource_5ft',['flexcan_wake_up_source_t',['../a00026.html#ga5ca4fd15317c08e08c9e163defc60d05',1,'fsl_flexcan.h']]],

@@ -17,7 +17,7 @@
 #include "usb_device_audio.h"
 #include "usb_device_ch9.h"
 #include "usb_device_descriptor.h"
-
+#include "fsl_adapter_audio.h"
 #include "composite.h"
 
 #include "fsl_device_registers.h"
@@ -45,31 +45,14 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SAI_BITWIDTH     (kSAI_WordWidth16bits)
-#define SAI_TxIRQHandler      I2S0_Tx_IRQHandler
-#define SAI_RxIRQHandler      I2S0_Rx_IRQHandler
-#define SAI_IRQ_CHANNEL       (0U)
-#define SAI_UserTxIRQHandler  I2S0_Tx_IRQHandler
-#define SAI_UserRxIRQHandler  I2S0_Rx_IRQHandler
-#define DEMO_SAI_IRQ_TX       I2S0_Tx_IRQn
-#define DEMO_SAI_IRQ_RX       I2S0_Rx_IRQn
-#define BOARD_DEMO_SAI        I2S0
-#define BOARD_DEMO_SAI_CLKSRC kCLOCK_CoreSysClk
-#define BOARD_DEMO_I2C_CLKSRC kCLOCK_BusClk
-#define EXAMPLE_DMA           DMA0
-#define EXAMPLE_DMAMUX        DMAMUX
-#define EXAMPLE_TX_CHANNEL    (0U)
-#define EXAMPLE_RX_CHANNEL    (1U)
-#define EXAMPLE_SAI_TX_SOURCE kDmaRequestMux0I2S0Tx
-#define EXAMPLE_SAI_RX_SOURCE kDmaRequestMux0I2S0Rx
-
-#define I2C_RELEASE_SDA_PORT  PORTC
-#define I2C_RELEASE_SCL_PORT  PORTC
-#define I2C_RELEASE_SDA_GPIO  GPIOC
-#define I2C_RELEASE_SDA_PIN   11U
-#define I2C_RELEASE_SCL_GPIO  GPIOC
-#define I2C_RELEASE_SCL_PIN   10U
-#define I2C_RELEASE_BUS_COUNT 100U
+#define DEMO_SAI_INSTANCE_INDEX (0U)
+#define DEMO_DMA_INDEX          (0U)
+#define DEMO_DMA_TX_CHANNEL     (0U)
+#define DEMO_DMA_RX_CHANNEL     (1U)
+#define DEMO_DMAMUX_INDEX       (0U)
+#define DEMO_SAI_TX_SOURCE      kDmaRequestMux0I2S0Tx
+#define DEMO_SAI_RX_SOURCE      kDmaRequestMux0I2S0Rx
+#define BOARD_DEMO_SAI          I2S0
 
 #define BOARD_SW_GPIO        BOARD_SW3_GPIO
 #define BOARD_SW_PORT        BOARD_SW3_PORT
@@ -78,20 +61,12 @@
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
 #define BOARD_SW_NAME        BOARD_SW3_NAME
 
-#define AUDIO_DMA_EDMA_MODE (1U)
-
-/* demo audio data channel */
-#define DEMO_AUDIO_DATA_CHANNEL (2U)
-/* demo audio bit width */
-#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
-
 #define OVER_SAMPLE_RATE            (256U)
 #define DEMO_AUDIO_SAMPLE_RATE      (kSAI_SampleRate48KHz)
 #define DEMO_AUDIO_SAI_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-void BOARD_I2C_ReleaseBus(void);
 void BOARD_InitHardware(void);
 void USB_DeviceClockInit(void);
 void USB_DeviceIsrEnable(void);
@@ -100,35 +75,34 @@ void USB_DeviceTaskFn(void *deviceHandle);
 #endif
 
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param);
-extern void Init_Board_Audio(void);
 extern usb_status_t USB_DeviceHidKeyboardAction(void);
 extern char *SW_GetName(void);
 extern void USB_AudioCodecTask(void);
 extern void USB_AudioSpeakerResetTask(void);
 extern void USB_DeviceAudioSpeakerStatusReset(void);
+extern void AUDIO_DMA_EDMA_Start();
+extern void BOARD_Codec_Init();
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 extern usb_device_composite_struct_t g_composite;
 extern uint8_t audioPlayDataBuff[AUDIO_SPEAKER_DATA_WHOLE_BUFFER_COUNT_NORMAL * AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME];
 extern uint8_t audioRecDataBuff[AUDIO_RECORDER_DATA_WHOLE_BUFFER_COUNT_NORMAL * FS_ISO_IN_ENDP_PACKET_SIZE];
-extern sai_transfer_format_t audioFormat;
 volatile bool g_ButtonPress = false;
-
-sai_config_t saiTxConfig;
-sai_config_t saiRxConfig;
-sai_transfer_format_t audioFormat;
-
-#if AUDIO_DMA_EDMA_MODE
-sai_edma_handle_t txHandle = {0};
-edma_handle_t dmaTxHandle  = {0};
-sai_edma_handle_t rxHandle = {0};
-edma_handle_t dmaRxHandle  = {0};
+HAL_AUDIO_HANDLE_DEFINE(audioTxHandle);
+hal_audio_config_t audioTxConfig;
+hal_audio_dma_config_t dmaTxConfig;
+HAL_AUDIO_HANDLE_DEFINE(audioRxHandle);
+hal_audio_config_t audioRxConfig;
+hal_audio_dma_config_t dmaRxConfig;
+hal_audio_ip_config_t ipTxConfig;
+hal_audio_ip_config_t ipRxConfig;
+hal_audio_dma_mux_config_t dmaMuxTxConfig;
+hal_audio_dma_mux_config_t dmaMuxRxConfig;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioPlayDMATempBuff[AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint8_t audioRecDMATempBuff[FS_ISO_IN_ENDP_PACKET_SIZE];
-#endif
 codec_handle_t codecHandle;
 #if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
     (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
@@ -160,6 +134,10 @@ extern volatile bool g_ButtonPress;
 extern usb_device_composite_struct_t *g_UsbDeviceComposite;
 extern usb_device_composite_struct_t *g_deviceAudioComposite;
 extern uint8_t audioFeedBackBuffer[4];
+extern hal_audio_config_t audioTxConfig;
+extern hal_audio_config_t audioRxConfig;
+extern HAL_AUDIO_HANDLE_DEFINE(audioTxHandle);
+extern HAL_AUDIO_HANDLE_DEFINE(audioRxHandle);
 /* USB device class information */
 static usb_device_class_config_struct_t g_CompositeClassConfig[3] = {{
                                                                          USB_DeviceHidKeyboardCallback,
@@ -248,10 +226,11 @@ void BOARD_SetCodecMuteUnmute(bool mute)
     }
 }
 
-#if AUDIO_DMA_EDMA_MODE
-static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
+static void txCallback(hal_audio_handle_t handle, hal_audio_status_t completionStatus, void *callbackParam)
 {
-    sai_transfer_t xfer = {0};
+    uint32_t audioSpeakerPreReadDataCount = 0U;
+    uint32_t preAudioSendCount            = 0U;
+    hal_audio_transfer_t xfer             = {0};
     if ((USB_AudioSpeakerBufferSpaceUsed() < (g_composite.audioUnified.audioPlayTransferSize)) &&
         (g_composite.audioUnified.startPlayFlag == 1U))
     {
@@ -264,14 +243,25 @@ static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
 #else
         USB_DeviceCalculateFeedback();
 #endif
-        xfer.dataSize = g_composite.audioUnified.audioPlayTransferSize;
-        xfer.data     = audioPlayDataBuff + g_composite.audioUnified.tdReadNumberPlay;
-        g_composite.audioUnified.audioSendCount += g_composite.audioUnified.audioPlayTransferSize;
+        xfer.dataSize     = g_composite.audioUnified.audioPlayTransferSize;
+        xfer.data         = audioPlayDataBuff + g_composite.audioUnified.tdReadNumberPlay;
+        preAudioSendCount = g_composite.audioUnified.audioSendCount[0];
+        g_composite.audioUnified.audioSendCount[0] += g_composite.audioUnified.audioPlayTransferSize;
+        if (preAudioSendCount > g_composite.audioUnified.audioSendCount[0])
+        {
+            g_composite.audioUnified.audioSendCount[1] += 1U;
+        }
         g_composite.audioUnified.audioSendTimes++;
         g_composite.audioUnified.tdReadNumberPlay += g_composite.audioUnified.audioPlayTransferSize;
         if (g_composite.audioUnified.tdReadNumberPlay >= g_composite.audioUnified.audioPlayBufferSize)
         {
             g_composite.audioUnified.tdReadNumberPlay = 0;
+        }
+        audioSpeakerPreReadDataCount = g_composite.audioUnified.audioSpeakerReadDataCount[0];
+        g_composite.audioUnified.audioSpeakerReadDataCount[0] += g_composite.audioUnified.audioPlayTransferSize;
+        if (audioSpeakerPreReadDataCount > g_composite.audioUnified.audioSpeakerReadDataCount[0])
+        {
+            g_composite.audioUnified.audioSpeakerReadDataCount[1] += 1U;
         }
     }
     else
@@ -286,12 +276,12 @@ static void txCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
         }
         xfer.data = audioPlayDMATempBuff;
     }
-    SAI_TransferSendEDMA(base, handle, &xfer);
+    HAL_AudioTransferSendNonBlocking((hal_audio_handle_t)&audioTxHandle[0], &xfer);
 }
 
-static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
+static void rxCallback(hal_audio_handle_t handle, hal_audio_status_t completionStatus, void *callbackParam)
 {
-    sai_transfer_t xfer = {0};
+    hal_audio_transfer_t xfer = {0};
 
     if (g_composite.audioUnified.startRec)
     {
@@ -309,26 +299,13 @@ static void rxCallback(I2S_Type *base, sai_edma_handle_t *handle, status_t statu
         xfer.dataSize = FS_ISO_IN_ENDP_PACKET_SIZE;
         xfer.data     = audioRecDMATempBuff;
     }
-    SAI_TransferReceiveEDMA(base, handle, &xfer);
+    HAL_AudioTransferReceiveNonBlocking(handle, &xfer);
 }
-void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
+
+void AUDIO_DMA_EDMA_Start()
 {
-    sai_transceiver_t config;
-    SAI_Init(BOARD_DEMO_SAI);
-    SAI_TransferTxCreateHandleEDMA(BOARD_DEMO_SAI, &txHandle, txCallback, NULL, &dmaTxHandle);
-    SAI_TransferRxCreateHandleEDMA(BOARD_DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
-    /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
-    SAI_TransferTxSetConfigEDMA(BOARD_DEMO_SAI, &txHandle, &config);
-    config.syncMode = kSAI_ModeSync;
-    SAI_TransferRxSetConfigEDMA(BOARD_DEMO_SAI, &rxHandle, &config);
-
-    /* set bit clock divider */
-    SAI_TxSetBitClockRate(BOARD_DEMO_SAI, DEMO_AUDIO_SAI_MASTER_CLOCK, samplingRate, DEMO_AUDIO_BIT_WIDTH,
-                          DEMO_AUDIO_DATA_CHANNEL);
-    SAI_RxSetBitClockRate(BOARD_DEMO_SAI, DEMO_AUDIO_SAI_MASTER_CLOCK, samplingRate, DEMO_AUDIO_BIT_WIDTH,
-                          DEMO_AUDIO_DATA_CHANNEL);
-
+    usb_echo("Init Audio SAI and CODEC\r\n");
+    hal_audio_transfer_t xfer = {0};
 /* master clock configurations */
 #if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
     (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
@@ -338,75 +315,17 @@ void BOARD_USB_Audio_TxRxInit(uint32_t samplingRate)
 #endif
     SAI_SetMasterClockConfig(BOARD_DEMO_SAI, &mclkConfig);
 #endif
-}
-void BOARD_DMA_EDMA_Config()
-{
-    edma_config_t dmaConfig = {0};
-    EDMA_GetDefaultConfig(&dmaConfig);
-    EDMA_Init(EXAMPLE_DMA, &dmaConfig);
-    EDMA_CreateHandle(&dmaTxHandle, EXAMPLE_DMA, EXAMPLE_TX_CHANNEL);
-    EDMA_CreateHandle(&dmaRxHandle, EXAMPLE_DMA, EXAMPLE_RX_CHANNEL);
-
-    DMAMUX_Init(EXAMPLE_DMAMUX);
-    DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_TX_CHANNEL, (uint8_t)EXAMPLE_SAI_TX_SOURCE);
-    DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_TX_CHANNEL);
-    DMAMUX_SetSource(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL, (uint8_t)EXAMPLE_SAI_RX_SOURCE);
-    DMAMUX_EnableChannel(EXAMPLE_DMAMUX, EXAMPLE_RX_CHANNEL);
-}
-
-void BOARD_DMA_EDMA_Enable_Audio_Interrupts()
-{
-    /* Enable interrupt to handle FIFO error */
-    SAI_TxEnableInterrupts(BOARD_DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
-    SAI_RxEnableInterrupts(BOARD_DEMO_SAI, kSAI_FIFOErrorInterruptEnable);
-    EnableIRQ(DEMO_SAI_IRQ_TX);
-    EnableIRQ(DEMO_SAI_IRQ_RX);
-}
-
-void BOARD_DMA_EDMA_Start()
-{
-    sai_transfer_t xfer = {0};
     memset(audioPlayDMATempBuff, 0, AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME);
     memset(audioRecDMATempBuff, 0, FS_ISO_IN_ENDP_PACKET_SIZE);
     xfer.dataSize = AUDIO_PLAY_BUFFER_SIZE_ONE_FRAME / 8U;
     xfer.data     = audioPlayDMATempBuff;
-    SAI_TransferSendEDMA(BOARD_DEMO_SAI, &txHandle, &xfer);
+    HAL_AudioTxInstallCallback((hal_audio_handle_t)&audioTxHandle[0], txCallback, NULL);
+    HAL_AudioTransferSendNonBlocking((hal_audio_handle_t)&audioTxHandle[0], &xfer);
     xfer.dataSize = FS_ISO_IN_ENDP_PACKET_SIZE;
     xfer.data     = audioRecDMATempBuff;
-    SAI_TransferReceiveEDMA(BOARD_DEMO_SAI, &rxHandle, &xfer);
+    HAL_AudioRxInstallCallback((hal_audio_handle_t)&audioRxHandle[0], rxCallback, NULL);
+    HAL_AudioTransferReceiveNonBlocking((hal_audio_handle_t)&audioRxHandle[0], &xfer);
 }
-
-/*Initialize audio interface and codec.*/
-void Init_Board_Audio(void)
-{
-    usb_echo("Init Audio SAI and CODEC\r\n");
-
-    BOARD_USB_AUDIO_KEYBOARD_Init();
-    BOARD_DMA_EDMA_Config();
-    BOARD_USB_Audio_TxRxInit(AUDIO_SAMPLING_RATE);
-    BOARD_Codec_Init();
-    BOARD_DMA_EDMA_Enable_Audio_Interrupts();
-    BOARD_DMA_EDMA_Start();
-}
-void SAI_UserTxIRQHandler(void)
-{
-    /* Clear the FEF flag */
-    SAI_TxClearStatusFlags(BOARD_DEMO_SAI, kSAI_FIFOErrorFlag);
-    SAI_TxSoftwareReset(BOARD_DEMO_SAI, kSAI_ResetTypeFIFO);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-        exception return operation might vector to incorrect interrupt */
-    __DSB();
-}
-
-void SAI_UserRxIRQHandler(void)
-{
-    SAI_RxClearStatusFlags(BOARD_DEMO_SAI, kSAI_FIFOErrorFlag);
-    SAI_RxSoftwareReset(BOARD_DEMO_SAI, kSAI_ResetTypeFIFO);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-        exception return operation might vector to incorrect interrupt */
-    __DSB();
-}
-#endif
 
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
 void USBHS_IRQHandler(void)
@@ -792,7 +711,11 @@ void APPInit(void)
         USB_DeviceHidKeyboardInit(&g_composite);
     }
 
-    Init_Board_Audio();
+    /*Initialize audio interface and codec.*/
+    HAL_AudioTxInit((hal_audio_handle_t)audioTxHandle, &audioTxConfig);
+    HAL_AudioRxInit((hal_audio_handle_t)audioRxHandle, &audioRxConfig);
+    BOARD_Codec_Init();
+    AUDIO_DMA_EDMA_Start();
 
     USB_DeviceIsrEnable();
 
@@ -865,6 +788,54 @@ void main(void)
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
+
+    BOARD_USB_AUDIO_KEYBOARD_Init();
+
+    dmaMuxTxConfig.dmaMuxConfig.dmaMuxInstance   = DEMO_DMAMUX_INDEX;
+    dmaMuxTxConfig.dmaMuxConfig.dmaRequestSource = DEMO_SAI_TX_SOURCE;
+    dmaTxConfig.dmaMuxConfig                     = &dmaMuxTxConfig;
+    dmaTxConfig.instance                         = DEMO_DMA_INDEX;
+    dmaTxConfig.channel                          = DEMO_DMA_TX_CHANNEL;
+    dmaTxConfig.priority                         = kHAL_AudioDmaChannelPriorityDefault;
+    dmaTxConfig.dmaChannelMuxConfig              = NULL;
+    ipTxConfig.sai.lineMask                      = 1U << 0U;
+    ipTxConfig.sai.syncMode                      = kHAL_AudioSaiModeAsync;
+    audioTxConfig.dmaConfig                      = &dmaTxConfig;
+    audioTxConfig.ipConfig                       = &ipTxConfig;
+    audioTxConfig.instance                       = DEMO_SAI_INSTANCE_INDEX;
+    audioTxConfig.srcClock_Hz                    = DEMO_AUDIO_SAI_MASTER_CLOCK;
+    audioTxConfig.sampleRate_Hz                  = (uint32_t)kHAL_AudioSampleRate48KHz;
+    audioTxConfig.msaterSlave                    = kHAL_AudioMaster;
+    audioTxConfig.bclkPolarity                   = kHAL_AudioSampleOnRisingEdge;
+    audioTxConfig.frameSyncWidth                 = kHAL_AudioFrameSyncWidthHalfFrame;
+    audioTxConfig.frameSyncPolarity              = kHAL_AudioBeginAtFallingEdge;
+    audioTxConfig.dataFormat                     = kHAL_AudioDataFormatI2sClassic;
+    audioTxConfig.fifoWatermark                  = (uint8_t)((uint32_t)FSL_FEATURE_SAI_FIFO_COUNT / 2U);
+    audioTxConfig.bitWidth                       = (uint8_t)kHAL_AudioWordWidth16bits;
+    audioTxConfig.lineChannels                   = kHAL_AudioStereo;
+
+    dmaMuxRxConfig.dmaMuxConfig.dmaMuxInstance   = DEMO_DMAMUX_INDEX;
+    dmaMuxRxConfig.dmaMuxConfig.dmaRequestSource = DEMO_SAI_RX_SOURCE;
+    dmaRxConfig.dmaMuxConfig                     = &dmaMuxRxConfig;
+    dmaRxConfig.instance                         = DEMO_DMA_INDEX;
+    dmaRxConfig.channel                          = DEMO_DMA_RX_CHANNEL;
+    dmaRxConfig.priority                         = kHAL_AudioDmaChannelPriorityDefault;
+    dmaRxConfig.dmaChannelMuxConfig              = NULL;
+    ipRxConfig.sai.lineMask                      = 1U << 0U;
+    ipRxConfig.sai.syncMode                      = kHAL_AudioSaiModeSync;
+    audioRxConfig.dmaConfig                      = &dmaRxConfig;
+    audioRxConfig.ipConfig                       = &ipRxConfig;
+    audioRxConfig.instance                       = DEMO_SAI_INSTANCE_INDEX;
+    audioRxConfig.srcClock_Hz                    = DEMO_AUDIO_SAI_MASTER_CLOCK;
+    audioRxConfig.sampleRate_Hz                  = (uint32_t)kHAL_AudioSampleRate48KHz;
+    audioRxConfig.msaterSlave                    = kHAL_AudioMaster;
+    audioRxConfig.bclkPolarity                   = kHAL_AudioSampleOnRisingEdge;
+    audioRxConfig.frameSyncWidth                 = kHAL_AudioFrameSyncWidthHalfFrame;
+    audioRxConfig.frameSyncPolarity              = kHAL_AudioBeginAtFallingEdge;
+    audioRxConfig.dataFormat                     = kHAL_AudioDataFormatI2sClassic;
+    audioRxConfig.fifoWatermark                  = (uint8_t)((uint32_t)FSL_FEATURE_SAI_FIFO_COUNT / 2U);
+    audioRxConfig.bitWidth                       = (uint8_t)kHAL_AudioWordWidth16bits;
+    audioRxConfig.lineChannels                   = kHAL_AudioStereo;
 
     if (xTaskCreate(APPTask,                           /* pointer to the task */
                     (char const *)"usb device task",   /* task name for kernel awareness debugging */

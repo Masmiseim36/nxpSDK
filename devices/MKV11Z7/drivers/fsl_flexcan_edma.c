@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -34,9 +34,11 @@ enum _flexcan_edma_tansfer_state
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+/* Array of FlexCAN peripheral base address. */
+static CAN_Type *const s_flexcanBases[] = CAN_BASE_PTRS;
 
-/*<! Private handle only used for internally. */
-static flexcan_edma_private_handle_t s_flexcanEdmaPrivateHandle[FSL_FEATURE_SOC_FLEXCAN_COUNT];
+/* Private handle only used for internally. */
+static flexcan_edma_private_handle_t s_flexcanEdmaPrivateHandle[ARRAY_SIZE(s_flexcanBases)];
 
 /*******************************************************************************
  * Prototypes
@@ -77,9 +79,9 @@ static void FLEXCAN_ReceiveFifoEDMACallback(edma_handle_t *handle, void *param, 
             idHitIndex     = (DLC_LENGTH_DECODE(framefd->length) + 3U) / 4U;
             framefd->idhit = framefd->dataWord[idHitIndex];
             /* Clear the unused frame data. */
-            for (uint32_t i = idHitIndex; i < 16U; i++)
+            for (uint32_t j = idHitIndex; j < 16U; j++)
             {
-                framefd->dataWord[i] = 0x0U;
+                framefd->dataWord[j] = 0x0U;
             }
             framefd++;
         }
@@ -302,7 +304,8 @@ status_t FLEXCAN_TransferReceiveEnhancedFifoEDMA(CAN_Type *base,
                          sizeof(uint32_t), sizeof(uint32_t) * perReadWords,  /* minor loop bytes : 4* perReadWords */
                          sizeof(uint32_t) * perReadWords * handle->frameNum, /* major loop counts : handle->frameNum */
                          kEDMA_MemoryToMemory);
-    EDMA_SubmitTransfer(handle->rxFifoEdmaHandle, &dmaXferConfig);
+    /* Submit configuration. */
+    (void)EDMA_SubmitTransfer(handle->rxFifoEdmaHandle, &dmaXferConfig);
     handle->rxFifoEdmaHandle->base->CH[handle->rxFifoEdmaHandle->channel].TCD_NBYTES_MLOFFYES &=
         ~DMA_TCD_NBYTES_MLOFFYES_MLOFF_MASK;
     handle->rxFifoEdmaHandle->base->CH[handle->rxFifoEdmaHandle->channel].TCD_NBYTES_MLOFFYES |=

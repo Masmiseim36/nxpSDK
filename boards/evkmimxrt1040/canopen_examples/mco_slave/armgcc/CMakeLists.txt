@@ -128,27 +128,27 @@ target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
 target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
 
 if(CMAKE_BUILD_TYPE STREQUAL debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a)
 endif(CMAKE_BUILD_TYPE STREQUAL debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a)
 endif(CMAKE_BUILD_TYPE STREQUAL release)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL sdram_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a)
 endif(CMAKE_BUILD_TYPE STREQUAL sdram_release)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_debug)
 
 if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
-    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_2.a)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/canopen/mcolibs/imxrt/mco_slave/libMCO_IMXRT10xx_SDK_3.a)
 endif(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_release)
 
 TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)

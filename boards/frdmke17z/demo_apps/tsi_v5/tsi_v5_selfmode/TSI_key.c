@@ -56,7 +56,7 @@ void TSI_Init_SelfMode(TSI_Type *base)
     config.commonConfig.mode        = kTSI_SensingModeSlection_Self;
     config.commonConfig.mainClock   = kTSI_MainClockSlection_1;   // 16.65MHz
     config.commonConfig.dvolt       = kTSI_DvoltOption_0;         /* DVOLT option value  */
-    config.commonConfig.cutoff      = kTSI_SincCutoffDiv_0;       /* Cutoff divider  */
+    config.commonConfig.cutoff      = kTSI_SincCutoffDiv_1;       /* Cutoff divider  */
     config.commonConfig.order       = kTSI_SincFilterOrder_2;     /* SINC filter order */
     config.commonConfig.decimation  = kTSI_SincDecimationValue_8; /* SINC decimation value */
     config.commonConfig.chargeNum   = kTSI_SscChargeNumValue_7;   /* SSC output bit0's period setting */
@@ -98,7 +98,7 @@ void TSI_Init_MutualMode(TSI_Type *base)
     config.commonConfig.mode        = kTSI_SensingModeSlection_Mutual;
     config.commonConfig.mainClock   = kTSI_MainClockSlection_1;
     config.commonConfig.dvolt       = kTSI_DvoltOption_0;         /* DVOLT option value  */
-    config.commonConfig.cutoff      = kTSI_SincCutoffDiv_0;       /* Cutoff divider  */
+    config.commonConfig.cutoff      = kTSI_SincCutoffDiv_1;       /* Cutoff divider  */
     config.commonConfig.order       = kTSI_SincFilterOrder_1;     /* SINC filter order */
     config.commonConfig.decimation  = kTSI_SincDecimationValue_8; /* SINC decimation value */
     config.commonConfig.chargeNum   = kTSI_SscChargeNumValue_4;   /* SSC output bit0's period setting */

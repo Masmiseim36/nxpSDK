@@ -15,7 +15,7 @@ var searchData=
   ['host',['host',['../a00053.html#a12ab48f6985e78ef81d34ab22b8fc878',1,'mmc_card_t::host()'],['../a00063.html#ae1d68ff4edbc243d840cae5614d31a68',1,'sd_card_t::host()'],['../a00064.html#aff91723723609dbd00d027e7e6cee4e8',1,'_sdio_card::host()']]],
   ['hostcontroller',['hostController',['../a00066.html#a71c2bc521cd1b46bb9702a438694fd0f',1,'sdmmchost_t']]],
   ['hostevent',['hostEvent',['../a00066.html#a11341f23f4880014e3434831ecfcbfc5',1,'sdmmchost_t']]],
-  ['hostrequest',['hostRequest',['../a00044.html#a4f95bd3d758edaa4a83ac712a3b63ece',1,'lpi2c_master_config_t']]],
+  ['hostrequest',['hostRequest',['../a00044.html#add14d26175c4627888df8bf80ceb2706',1,'lpi2c_master_config_t']]],
   ['hostvoltagewindowvcc',['hostVoltageWindowVCC',['../a00053.html#ac9c494f7476052a7eff992d03abdd0d5',1,'mmc_card_t']]],
   ['hostvoltagewindowvccq',['hostVoltageWindowVCCQ',['../a00053.html#ae9a7cc5d13cc3cb5b7921f4d4073e681',1,'mmc_card_t']]],
   ['hour',['hour',['../a00073.html#a424370e8df7047b5dcab236e52a396f2',1,'snvs_hp_rtc_datetime_t::hour()'],['../a00074.html#a4a70a512ba988adb1fb1e4e62ba11f29',1,'snvs_lp_srtc_datetime_t::hour()']]],

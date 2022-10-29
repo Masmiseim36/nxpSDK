@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['r_5fteide',['R_TEIDE',['../a00015.html#a19ec33b415e58359a1c2d14081e193e2',1,'MSCAN_IDR1Type']]],
+  ['r_5ftsrr',['R_TSRR',['../a00015.html#a9a6a901c9a52d053e4c77f02f9f6ee0f',1,'MSCAN_IDR1Type']]],
+  ['rdiv',['rDiv',['../a00014.html#a4b8533b3c033ff4659b60c17d0ca546e',1,'ics_config_t']]],
+  ['referencevoltagesource',['referenceVoltageSource',['../a00008.html#a73470b7b736972106db5945cdf5ef345',1,'acmp_dac_config_t::referenceVoltageSource()'],['../a00009.html#a796b7bfba0959eb808b843832dcf0279',1,'adc_config_t::referenceVoltageSource()']]],
+  ['reloadpoints',['reloadPoints',['../a00011.html#ae3d22bc1968d71633cd26d31105d79de',1,'ftm_config_t']]],
+  ['reserved0',['Reserved0',['../a00010.html#aeddf4272cd7b01a7a7ddace96acb95e1',1,'flash_config_t']]],
+  ['reserved1',['Reserved1',['../a00010.html#a626e96ffad5694a9eea974e4bed70726',1,'flash_config_t']]],
+  ['resolutionmode',['ResolutionMode',['../a00009.html#aa82b0f02bcd724dc9eb5ce54023cb955',1,'adc_config_t']]],
+  ['ringbuffer',['ringBuffer',['../a00022.html#a73403169ff2d3c8d8897059435fe7e01',1,'serial_manager_config_t']]],
+  ['ringbuffersize',['ringBufferSize',['../a00022.html#a3cdd8d8501bb64e720345207310de89b',1,'serial_manager_config_t']]],
+  ['runcmdfuncaddr',['runCmdFuncAddr',['../a00010.html#af4feeaf04a8ab1f3f14211f4b7f30192',1,'flash_execute_in_ram_function_config_t']]],
+  ['rxdata',['rxData',['../a00024.html#a28b878b99d5ec790b5c8f3bafe140da0',1,'spi_transfer_t::rxData()'],['../a00024.html#a69f260bde2e1728233f835a148b2f51b',1,'_spi_master_handle::rxData()'],['../a00026.html#a6a01cecc49085fd54225618e4aa7d9df',1,'uart_transfer_t::rxData()'],['../a00026.html#a5c87354702502998d3ccca9d9bfd3069',1,'_uart_handle::rxData()']]],
+  ['rxdatasize',['rxDataSize',['../a00026.html#a46bd84d885004806f89744ad79edd81e',1,'_uart_handle']]],
+  ['rxdatasizeall',['rxDataSizeAll',['../a00026.html#a800a05d5ea3c6240daad46f466a8fea4',1,'_uart_handle']]],
+  ['rxremainingbytes',['rxRemainingBytes',['../a00024.html#a23b2531ea36b53e42cd6b2a3780d3017',1,'_spi_master_handle']]],
+  ['rxringbuffer',['rxRingBuffer',['../a00026.html#afeba8b549facc329937046e734681963',1,'_uart_handle']]],
+  ['rxringbufferhead',['rxRingBufferHead',['../a00026.html#a85d061606b31401fb4a9d0e22e77056c',1,'_uart_handle']]],
+  ['rxringbuffersize',['rxRingBufferSize',['../a00026.html#a8d6afed4b64233c959a180b66686c14c',1,'_uart_handle']]],
+  ['rxringbuffertail',['rxRingBufferTail',['../a00026.html#a9f4482059188bea2603b1c07cf9cc084',1,'_uart_handle']]],
+  ['rxstate',['rxState',['../a00026.html#a5aa95f3d2cb81a8bb01a11ab2cf66234',1,'_uart_handle']]]
+];

@@ -1,7 +1,7 @@
 //*****************************************************************************
 // MIMXRT1041 startup code for use with MCUXpresso IDE
 //
-// Version : 310822
+// Version : 270922
 //*****************************************************************************
 //
 // Copyright 2016-2022 NXP
@@ -231,7 +231,7 @@ WEAK void PWM4_3_IRQHandler(void);
 WEAK void PWM4_FAULT_IRQHandler(void);
 WEAK void Reserved168_IRQHandler(void);
 WEAK void Reserved169_IRQHandler(void);
-WEAK void Reserved170_IRQHandler(void);
+WEAK void CAN3_IRQHandler(void);
 WEAK void Reserved171_IRQHandler(void);
 WEAK void FLEXIO3_IRQHandler(void);
 WEAK void GPIO6_7_8_9_IRQHandler(void);
@@ -396,7 +396,7 @@ void PWM4_3_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void PWM4_FAULT_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void Reserved168_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void Reserved169_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void Reserved170_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void CAN3_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void Reserved171_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void FLEXIO3_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void GPIO6_7_8_9_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
@@ -602,7 +602,7 @@ void (* const g_pfnVectors[])(void) = {
     PWM4_FAULT_IRQHandler,            // 167: PWM4 fault or reload error interrupt
     Reserved168_IRQHandler,           // 168: Reserved interrupt
     Reserved169_IRQHandler,           // 169: Reserved interrupt
-    Reserved170_IRQHandler,           // 170: Reserved interrupt
+    CAN3_IRQHandler,                  // 170: CAN3 interrupt
     Reserved171_IRQHandler,           // 171: Reserved interrupt
     FLEXIO3_IRQHandler,               // 172: FLEXIO3 interrupt
     GPIO6_7_8_9_IRQHandler,           // 173: GPIO6, GPIO7, GPIO8, GPIO9 interrupt
@@ -1406,8 +1406,8 @@ WEAK void Reserved169_IRQHandler(void)
 {   Reserved169_DriverIRQHandler();
 }
 
-WEAK void Reserved170_IRQHandler(void)
-{   Reserved170_DriverIRQHandler();
+WEAK void CAN3_IRQHandler(void)
+{   CAN3_DriverIRQHandler();
 }
 
 WEAK void Reserved171_IRQHandler(void)

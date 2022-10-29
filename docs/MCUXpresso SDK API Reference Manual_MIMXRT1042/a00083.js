@@ -1,15 +1,15 @@
 var a00083 =
 [
-    [ "wm8960_audio_format_t", "a00083.html#a00545", [
+    [ "wm8960_audio_format_t", "a00083.html#a00546", [
       [ "mclk_HZ", "a00083.html#afb1efbb406e368e6fd5393da2543bb8a", null ],
       [ "sampleRate", "a00083.html#ae96a0158b6a005c24d4713578b9f493a", null ],
       [ "bitWidth", "a00083.html#abd1d53b78beb2d929a1d1200c2a18227", null ]
     ] ],
-    [ "wm8960_master_sysclk_config_t", "a00083.html#a00548", [
+    [ "wm8960_master_sysclk_config_t", "a00083.html#a00549", [
       [ "sysclkSource", "a00083.html#a9d65bbccb784d7bd1850e0c4bd505469", null ],
       [ "sysclkFreq", "a00083.html#a351c89e7074a75ea90e4a69b70721a7a", null ]
     ] ],
-    [ "wm8960_config_t", "a00083.html#a00546", [
+    [ "wm8960_config_t", "a00083.html#a00547", [
       [ "route", "a00083.html#aecb1d7a00e01dca75ed9008045fea7c9", null ],
       [ "bus", "a00083.html#a2aa9a1534286c670f9cccc121dfc2427", null ],
       [ "format", "a00083.html#a1f604d76836bba22c48628d1790abbf1", null ],
@@ -22,7 +22,7 @@ var a00083 =
       [ "slaveAddress", "a00083.html#a3789a7dad901df8d576de42d76b47b41", null ],
       [ "i2cConfig", "a00083.html#a223e757e0c4efc169f0b45385d99dbd5", null ]
     ] ],
-    [ "wm8960_handle_t", "a00083.html#a00547", [
+    [ "wm8960_handle_t", "a00083.html#a00548", [
       [ "config", "a00083.html#a1445b9b877b692662e5fb0f8ce3224c9", null ],
       [ "i2cHandle", "a00083.html#ae6d5faabcff6b852ebb460da190c9811", null ]
     ] ],
@@ -54,10 +54,10 @@ var a00083 =
       [ "kWM8960_ModuleLineOut", "a00083.html#ggad71999d652d6d29485aea6dacf371fc7afee92d11ea3a0fc6f9345eac1c648215", null ],
       [ "kWM8960_ModuleSpeaker", "a00083.html#ggad71999d652d6d29485aea6dacf371fc7ab2927284f295d943ba601829f5c85d25", null ],
       [ "kWM8960_ModuleOMIX", "a00083.html#ggad71999d652d6d29485aea6dacf371fc7a0bedf71e89a9a96bf649200db84f77be", null ],
-      [ "kWM8960_HeadphoneLeft", "a00083.html#gga9b29769343da78881f442e657eb62b6ea5cb5a5fd1015f7957c198a440d406e96", null ],
-      [ "kWM8960_HeadphoneRight", "a00083.html#gga9b29769343da78881f442e657eb62b6ea0721220fe5946056318d7e0ec3cbb682", null ],
-      [ "kWM8960_SpeakerLeft", "a00083.html#gga9b29769343da78881f442e657eb62b6ea38ea4c658535deb51658ce2e00aa4c3e", null ],
-      [ "kWM8960_SpeakerRight", "a00083.html#gga9b29769343da78881f442e657eb62b6ea12ce651420aecbccd5be4512ab204523", null ]
+      [ "kWM8960_HeadphoneLeft", "a00083.html#gga52864abcf6ebd8d120995b36fe6ce06ea5cb5a5fd1015f7957c198a440d406e96", null ],
+      [ "kWM8960_HeadphoneRight", "a00083.html#gga52864abcf6ebd8d120995b36fe6ce06ea0721220fe5946056318d7e0ec3cbb682", null ],
+      [ "kWM8960_SpeakerLeft", "a00083.html#gga52864abcf6ebd8d120995b36fe6ce06ea38ea4c658535deb51658ce2e00aa4c3e", null ],
+      [ "kWM8960_SpeakerRight", "a00083.html#gga52864abcf6ebd8d120995b36fe6ce06ea12ce651420aecbccd5be4512ab204523", null ]
     ] ],
     [ "wm8960_play_source_t", "a00083.html#gac536addc1967c512191ce08e3452e84a", [
       [ "kWM8960_PlaySourcePGA", "a00083.html#ggac536addc1967c512191ce08e3452e84aa861dc114e341d3245bed939058c16183", null ],
@@ -84,22 +84,22 @@ var a00083 =
       [ "kWM8960_InputDifferentialMicInput3", "a00083.html#gga53d7560a3c263de4bdaddb7ff6b91a8aa26c5d1f279052c5b3991a563af490ae0", null ],
       [ "kWM8960_InputLineINPUT2", "a00083.html#gga53d7560a3c263de4bdaddb7ff6b91a8aafb03754cff21d67de95242a285a3fc13", null ],
       [ "kWM8960_InputLineINPUT3", "a00083.html#gga53d7560a3c263de4bdaddb7ff6b91a8aae011db846215196ebcecb8cbbb17e5e3", null ],
-      [ "kWM8960_AudioSampleRate8KHz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1ada50961d3980d3e37dd41e3d8c62c3a870", null ],
-      [ "kWM8960_AudioSampleRate11025Hz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1ada509786e8390518009b7349ee35290f02", null ],
-      [ "kWM8960_AudioSampleRate12KHz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1adafc081d6675dcc61766d1db7b7a6e57ba", null ],
-      [ "kWM8960_AudioSampleRate16KHz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1ada37f98eb4cc147382a0001729bfcffd98", null ],
-      [ "kWM8960_AudioSampleRate22050Hz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1ada0a285edc0cb7ce46f6844fca3f8f3689", null ],
-      [ "kWM8960_AudioSampleRate24KHz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1adacc8ce4cd6fa286f26a8850093f2aa696", null ],
-      [ "kWM8960_AudioSampleRate32KHz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1ada59a22bfdc17d3ce83eb4d78507565700", null ],
-      [ "kWM8960_AudioSampleRate44100Hz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1adaf44c5c0712d53f88943e56d8ccd466a4", null ],
-      [ "kWM8960_AudioSampleRate48KHz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1adae09e315fe927817900e50edd8f5dc29c", null ],
-      [ "kWM8960_AudioSampleRate96KHz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1ada07ce8a1ae26763623e24caed8f9c42e3", null ],
-      [ "kWM8960_AudioSampleRate192KHz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1adae9007085de5c77817b93a8d5ef16e227", null ],
-      [ "kWM8960_AudioSampleRate384KHz", "a00083.html#gga1e8054db89feba236b2235d16d0bd1adabdd1e457644ed2ba495ab7c010876e9e", null ],
-      [ "kWM8960_AudioBitWidth16bit", "a00083.html#gga4f79453548dc20926be4b5a000ecbd66a1e3149fabb02a0cc14413352945cabef", null ],
-      [ "kWM8960_AudioBitWidth20bit", "a00083.html#gga4f79453548dc20926be4b5a000ecbd66ab67c78216a745b5cd0c6b2bc348a6d85", null ],
-      [ "kWM8960_AudioBitWidth24bit", "a00083.html#gga4f79453548dc20926be4b5a000ecbd66a32e10ddc499b7b6c91af8a4b515fb9b3", null ],
-      [ "kWM8960_AudioBitWidth32bit", "a00083.html#gga4f79453548dc20926be4b5a000ecbd66abd1253b6f3fa57dd356d1280add31a66", null ]
+      [ "kWM8960_AudioSampleRate8KHz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aa50961d3980d3e37dd41e3d8c62c3a870", null ],
+      [ "kWM8960_AudioSampleRate11025Hz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aa509786e8390518009b7349ee35290f02", null ],
+      [ "kWM8960_AudioSampleRate12KHz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aafc081d6675dcc61766d1db7b7a6e57ba", null ],
+      [ "kWM8960_AudioSampleRate16KHz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aa37f98eb4cc147382a0001729bfcffd98", null ],
+      [ "kWM8960_AudioSampleRate22050Hz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aa0a285edc0cb7ce46f6844fca3f8f3689", null ],
+      [ "kWM8960_AudioSampleRate24KHz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aacc8ce4cd6fa286f26a8850093f2aa696", null ],
+      [ "kWM8960_AudioSampleRate32KHz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aa59a22bfdc17d3ce83eb4d78507565700", null ],
+      [ "kWM8960_AudioSampleRate44100Hz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aaf44c5c0712d53f88943e56d8ccd466a4", null ],
+      [ "kWM8960_AudioSampleRate48KHz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aae09e315fe927817900e50edd8f5dc29c", null ],
+      [ "kWM8960_AudioSampleRate96KHz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aa07ce8a1ae26763623e24caed8f9c42e3", null ],
+      [ "kWM8960_AudioSampleRate192KHz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aae9007085de5c77817b93a8d5ef16e227", null ],
+      [ "kWM8960_AudioSampleRate384KHz", "a00083.html#gga4d29ca5db06e2ae647d1ec22548a9d2aabdd1e457644ed2ba495ab7c010876e9e", null ],
+      [ "kWM8960_AudioBitWidth16bit", "a00083.html#gga592aba11ab30da4dbf57e9736c8387a1a1e3149fabb02a0cc14413352945cabef", null ],
+      [ "kWM8960_AudioBitWidth20bit", "a00083.html#gga592aba11ab30da4dbf57e9736c8387a1ab67c78216a745b5cd0c6b2bc348a6d85", null ],
+      [ "kWM8960_AudioBitWidth24bit", "a00083.html#gga592aba11ab30da4dbf57e9736c8387a1a32e10ddc499b7b6c91af8a4b515fb9b3", null ],
+      [ "kWM8960_AudioBitWidth32bit", "a00083.html#gga592aba11ab30da4dbf57e9736c8387a1abd1253b6f3fa57dd356d1280add31a66", null ]
     ] ],
     [ "wm8960_sysclk_source_t", "a00083.html#gabc038c44fbcf4f341d6a56168b091671", [
       [ "kWM8960_SysClkSourceMclk", "a00083.html#ggabc038c44fbcf4f341d6a56168b091671a2f693bb4ba26726b322414de913c7952", null ],

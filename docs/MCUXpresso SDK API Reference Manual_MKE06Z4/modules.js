@@ -1,0 +1,26 @@
+var modules =
+[
+    [ "ACMP: Analog Comparator Driver", "a00008.html", "a00008" ],
+    [ "ADC: 12-bit Analog to Digital Converter Driver", "a00009.html", "a00009" ],
+    [ "Clock Driver", "a00014.html", "a00014" ],
+    [ "Common Driver", "a00090.html", "a00090" ],
+    [ "Debug Console", "a00102.html", "a00102" ],
+    [ "FTM: FlexTimer Driver", "a00011.html", "a00011" ],
+    [ "FTMRx Flash Driver", "a00010.html", "a00010" ],
+    [ "GPIO: General-Purpose Input/Output Driver", "a00012.html", "a00012" ],
+    [ "I2C: Inter-Integrated Circuit Driver", "a00093.html", "a00093" ],
+    [ "Irq", "a00016.html", "a00016" ],
+    [ "KBI: Keyboard interrupt Driver", "a00017.html", "a00017" ],
+    [ "MSCAN: Scalable Controller Area Network", "a00096.html", "a00096" ],
+    [ "Notification Framework", "a00018.html", "a00018" ],
+    [ "PIT: Periodic Interrupt Timer", "a00019.html", "a00019" ],
+    [ "PORT Driver", "a00089.html", "a00089" ],
+    [ "PWT: Pulse Width Timer", "a00020.html", "a00020" ],
+    [ "RTC: Real Time Clock", "a00021.html", "a00021" ],
+    [ "SPI: Serial Peripheral Interface Driver", "a00097.html", "a00097" ],
+    [ "Serial Manager", "a00022.html", "a00022" ],
+    [ "Shell", "a00023.html", "a00023" ],
+    [ "TPM: Timer PWM Module", "a00025.html", "a00025" ],
+    [ "UART: Universal Asynchronous Receiver/Transmitter Driver", "a00099.html", "a00099" ],
+    [ "WDOG8: 8-bit Watchdog Timer", "a00101.html", "a00101" ]
+];

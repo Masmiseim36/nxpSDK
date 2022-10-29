@@ -1,135 +1,155 @@
 /*
- * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
- * All rights reserved.
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-/**********************************************************************/
-// File Name: {FM_project_loc}/m1_pmsm_appconfig.h 
-//
-// Date:  June 17, 2021, 13:0:41
-//
-// Automatically generated file for static configuration of the PMSM FOC application
-/**********************************************************************/
+	* Copyright 2021 NXP
+	*
+	* SPDX-License-Identifier: BSD-3-Clause
+*/
 
-#ifndef __M1_PMSM_APPCONFIG_H
-#define __M1_PMSM_APPCONFIG_H
+/*
+    * FILE NAME: ../../source/m1_pmsm_appconfig.h
+    * DATE: Wed Jun 22 2022, 07:43:57
+*/
 
+/*
+{
+    "parameters": {
+        "parametersPP": 4,
+        "parametersRs": 1.45,
+        "parametersLd": 0.00606,
+        "parametersLq": 0.005762,
+        "parametersKe": 0.1135,
+        "parametersJ": 0.0000016,
+        "parametersIphNom": 2,
+        "parametersUphNom": 200,
+        "parametersNnom": 4000,
+        "parametersImax": 8,
+        "parametersUdcbMax": 433,
+        "parametersUdcbTrip": 346.3,
+        "parametersUdcbUnder": 173.2,
+        "parametersUdcbOver": 346.4,
+        "parametersNover": 4180,
+        "parametersNmin": 400,
+        "parametersEblock": 7,
+        "parametersEblockPer": 2000,
+        "parametersNmax": 4400,
+        "parametersUdcbIIRf0": 100,
+        "parametersCalibDuration": 0.2,
+        "parametersFaultDuration": 6,
+        "parametersFreewheelDuration": 1.5,
+        "parametersScalarUqMin": 4,
+        "parametersAlignVoltage": 6,
+        "parametersAlignDuration": 0.8
+    },
+    "currentLoop": {
+        "currentLoopSampleTime": 0.0001,
+        "currentLoopF0": 280,
+        "currentLoopKsi": 1,
+        "currentLoopOutputLimit": 90
+    },
+    "speedLoop": {
+        "speedLoopSampleTime": 0.001,
+        "speedLoopF0": 28,
+        "speedLoopKsi": 1,
+        "speedLoopIncUp": 4000,
+        "speedLoopIncDown": 4000,
+        "speedLoopCutOffFreq": 100,
+        "speedLoopUpperLimit": 2,
+        "speedLoopLowerLimit": -2,
+        "speedLoopSLKp": 0.00035,
+        "speedLoopSLKi": 0.000001,
+        "speedLoopManualConstantTunning": true,
+        "speedLoopPLKp": 0.12
+    },
+    "sensorless": {
+        "sensorlessBemfObsrvF0": 280,
+        "sensorlessBemfObsrvKsi": 1,
+        "sensorlessTrackObsrvF0": 25,
+        "sensorlessTrackObsrvKsi": 1,
+        "sensorlessStartupRamp": 1500,
+        "sensorlessStartupCurrent": 0.2,
+        "sensorlessMergingSpeed": 500,
+        "sensorlessMergingCoeff": 100
+    }
+}
+*/
 
-//Motor Parameters                      
-//----------------------------------------------------------------------
-//Pole-pair number                      = 4 [-]
-//Stator resistance                     = 1.45 [Ohms]
-//Direct axis inductance                = 0.00606 [H]
-//Quadrature axis inductance            = 0.005762 [H]
-//Back-EMF constant                     = 0.1135 [V.sec/rad]
-//Drive inertia                         = 0.0000016 [kg.m2]
-//Nominal current                       = 2 [A]
+/*
+{
+    "motorName": "Mige 60CST",
+    "motorDescription": "Default config for Mige motor."
+}
+*/
 
-#define M1_MOTOR_PP                        (4)
-//----------------------------------------------------------------------
+#ifndef __M1_PMSM_APPCONFIG_H 
+#define __M1_PMSM_APPCONFIG_H 
 
-//Application scales                    
-//----------------------------------------------------------------------
-#define M1_I_MAX                           (8.0F)
-#define M1_U_DCB_MAX                       (433.0F)
-#define M1_U_MAX                           (250.0F)
-#define M1_N_MAX                           (1843.0F)
-#define M1_FREQ_MAX                        (293.0F)
-#define M1_U_DCB_TRIP                      (346.4F)
-#define M1_U_DCB_UNDERVOLTAGE              (173.2F)
-#define M1_U_DCB_OVERVOLTAGE               (346.4F)
-#define M1_N_OVERSPEED                     (1750.9F)
-#define M1_N_MIN                           (167.6F)
-#define M1_N_NOM                           (1675.5F)
-#define M1_I_PH_NOM                        (2.0F)
-#define M1_SCALAR_UQ_MIN                   (4.0F)
-//DCB Voltage Filter                    
-#define M1_UDCB_IIR_B0                     (0.030459027951F)
-#define M1_UDCB_IIR_B1                     (0.030459027951F)
-#define M1_UDCB_IIR_A1                     (0.939081944097F)
-//Mechanical Alignment                  
-#define M1_ALIGN_VOLTAGE                   (6.0F)
-#define M1_ALIGN_DURATION                  (8000)
-//Application counters                  
-#define M1_CALIB_DURATION                  (200)
-#define M1_FAULT_DURATION                  (3000)
-#define M1_FREEWHEEL_DURATION              (1000)
-//Miscellaneous                         
-#define M1_E_BLOCK_TRH                     (7.0F)
-#define M1_E_BLOCK_PER                     (2000)
-
-//Current Loop Control                  
-//----------------------------------------------------------------------
-//Loop bandwidth                        = 280 [Hz]
-//Loop attenuation                      = 1 [-]
-//Loop sample time                      = 0.0001 [sec]
-//----------------------------------------------------------------------
-//Current Controller Output Limit       
-#define M1_CLOOP_LIMIT                     (0.519615484541F)
-//D-axis Controller - Parallel type     
-#define M1_D_KP_GAIN                       (19.872617658445F)
-#define M1_D_KI_GAIN                       (1.87563541175F)
-//Q-axis Controller - Parallel type     
-#define M1_Q_KP_GAIN                       (18.824079694383F)
-#define M1_Q_KI_GAIN                       (1.783401195133F)
-
-//Speed Loop Control                    
-//----------------------------------------------------------------------
-//Loop bandwidth                        = 10 [Hz]
-//Loop attenuation                      = 1 [-]
-//Loop sample time                      = 0.001 [sec]
-//----------------------------------------------------------------------
-//Speed Controller - Parallel type      
-#define M1_SPEED_PI_PROP_GAIN              (0.0008F)
-#define M1_SPEED_PI_INTEG_GAIN             (9e-7F)
-#define M1_SPEED_LOOP_HIGH_LIMIT           (2.0F)
-#define M1_SPEED_LOOP_LOW_LIMIT            (-2.0F)
-
-#define M1_SPEED_RAMP_UP                   (2.094395102393F)
-#define M1_SPEED_RAMP_DOWN                 (2.094395102393F)
-
-#define M1_SPEED_IIR_B0                    (0.030459027951F)
-#define M1_SPEED_IIR_B1                    (0.030459027951F)
-#define M1_SPEED_IIR_A1                    (0.939081944097F)
-
-//Sensorless BEMF DQ and Tracking Observer
-//----------------------------------------------------------------------
-//Loop bandwidth                        = 280 [Hz]
-//Loop attenuation                      = 1 [-]
-//Loop sample time                      = 0.0001 [sec]
-//----------------------------------------------------------------------
-//Bemf DQ Observer                      
-#define M1_I_SCALE                         (0.97663174859F)
-#define M1_U_SCALE                         (0.016116035456F)
-#define M1_E_SCALE                         (0.016116035456F)
-#define M1_WI_SCALE                        (0.000092860597F)
-#define M1_BEMF_DQ_KP_GAIN                 (19.872617658445F)
-#define M1_BEMF_DQ_KI_GAIN                 (1.875635411751F)
-
-//Bemf DQ Observer                      
-#define M1_TO_KP_GAIN                      (314.15926535898F)
-#define M1_TO_KI_GAIN                      (2.467401100273F)
-#define M1_TO_THETA_GAIN                   (0.000031830989F)
-//Observer speed output filter          
-#define M1_TO_SPEED_IIR_B0                 (0.111635211705F)
-#define M1_TO_SPEED_IIR_B1                 (0.111635211705F)
-#define M1_TO_SPEED_IIR_A1                 (0.776729576591F)
-//Open loop start-up                    
-#define M1_OL_START_RAMP_INC               (0.062831853072F)
-#define M1_OL_START_I                      (0.2F)
-#define M1_MERG_SPEED_TRH                  (209.43951023932F)
-#define M1_MERG_COEFF                      FRAC16(0.004577636719)
-
-//Control Structure Module - Scalar Control
-//----------------------------------------------------------------------
-#define M1_SCALAR_VHZ_FACTOR_GAIN          (0.75F)
-#define M1_SCALAR_INTEG_GAIN               ACC32(0.058666666667)
-#define M1_SCALAR_RAMP_UP                  (0.033333333333F)
-#define M1_SCALAR_RAMP_DOWN                (0.033333333333F)
-
-#endif
-
-//End of generated file                 
-/**********************************************************************/
+/* PARAMETERS*/
+#define M1_MOTOR_PP (4)
+#define M1_I_PH_NOM (2.0F)
+#define M1_N_NOM (1675.52F)
+#define M1_I_MAX (8.0F)
+#define M1_U_DCB_MAX (433.0F)
+#define M1_U_DCB_TRIP (346.3F)
+#define M1_U_DCB_UNDERVOLTAGE (173.2F)
+#define M1_U_DCB_OVERVOLTAGE (346.4F)
+#define M1_N_OVERSPEED (1750.91F)
+#define M1_N_MIN (167.552F)
+#define M1_E_BLOCK_TRH (7.0F)
+#define M1_E_BLOCK_PER (2000)
+#define M1_N_MAX (1843.07F)
+#define M1_CALIB_DURATION (200)
+#define M1_FAULT_DURATION (6000)
+#define M1_FREEWHEEL_DURATION (1500)
+#define M1_SCALAR_UQ_MIN (4.0F)
+#define M1_ALIGN_VOLTAGE (6.0F)
+#define M1_ALIGN_DURATION (800)
+#define M1_U_MAX (249.993F)
+#define M1_FREQ_MAX (293.333F)
+#define M1_N_ANGULAR_MAX (2.38732F)
+#define M1_UDCB_IIR_B0 (0.0304590F)
+#define M1_UDCB_IIR_B1 (0.0304590F)
+#define M1_UDCB_IIR_A1 (0.939082F)
+#define M1_SCALAR_VHZ_FACTOR_GAIN (0.75F)
+#define M1_SCALAR_INTEG_GAIN ACC32(0.0586667)
+#define M1_SCALAR_RAMP_UP (0.0266667F)
+#define M1_SCALAR_RAMP_DOWN (0.0266667F)
+/* CURRENTLOOP*/
+#define M1_D_KP_GAIN (19.8726F)
+#define M1_D_KI_GAIN (1.87564F)
+#define M1_Q_KP_GAIN (18.8241F)
+#define M1_Q_KI_GAIN (1.78340F)
+#define M1_CLOOP_LIMIT (0.519615F)
+/* SPEEDLOOP*/
+#define M1_SPEED_RAMP_UP (1.67552F)
+#define M1_SPEED_RAMP_DOWN (1.67552F)
+#define M1_SPEED_LOOP_HIGH_LIMIT (2.0F)
+#define M1_SPEED_LOOP_LOW_LIMIT (-2.0F)
+#define M1_SPEED_PI_PROP_GAIN (0.00035F)
+#define M1_SPEED_PI_INTEG_GAIN (0.00000100000F)
+#define M1_POS_P_PROP_GAIN FRAC16(0.12)
+#define M1_SPEED_IIR_B0 (0.0304590F)
+#define M1_SPEED_IIR_B1 (0.0304590F)
+#define M1_SPEED_IIR_A1 (0.939082F)
+/* SENSORLESS*/
+#define M1_OL_START_RAMP_INC (0.0628319F)
+#define M1_OL_START_I (0.2F)
+#define M1_MERG_SPEED_TRH (209.440F)
+#define M1_MERG_COEFF FRAC16(0.00457764)
+#define M1_I_SCALE (0.976632F)
+#define M1_U_SCALE (0.0161160F)
+#define M1_E_SCALE (0.0161160F)
+#define M1_WI_SCALE (0.0000928606F)
+#define M1_BEMF_DQ_KP_GAIN (19.8726F)
+#define M1_BEMF_DQ_KI_GAIN (1.87564F)
+#define M1_TO_KP_GAIN (314.159F)
+#define M1_TO_KI_GAIN (2.46740F)
+#define M1_TO_THETA_GAIN (0.0000318310F)
+#define M1_TO_SPEED_IIR_B0 (0.111635F)
+#define M1_TO_SPEED_IIR_B1 (0.111635F)
+#define M1_TO_SPEED_IIR_A1 (0.776730F)
+/* USER INPUT START */
+#define AA 1
+#define BB 3
+#define CC 4
+#define DD 2
+/* USER INPUT END */
+#endif /* __M1_PMSM_APPCONFIG_H */

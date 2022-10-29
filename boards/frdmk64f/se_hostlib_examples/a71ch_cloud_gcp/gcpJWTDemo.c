@@ -85,12 +85,15 @@ void getECDSASign_RandS(unsigned char *outSign,
     }
     /* This is in DER Format. We only need R || S */
     *oLen = 0;
-    if (signature[rdIndex++] != 0x30)
+    if (signature[rdIndex++] != 0x30) {
         goto exit;
-    if (signature[rdIndex++] != (sig_len - 2))
+    }
+    if (signature[rdIndex++] != (sig_len - 2)) {
         goto exit;
-    if (signature[rdIndex++] != 0x02)
+    }
+    if (signature[rdIndex++] != 0x02) {
         goto exit;
+    }
     rdLength = signature[rdIndex++];
     if (rdLength & 01) {
         rdIndex++;
@@ -99,8 +102,9 @@ void getECDSASign_RandS(unsigned char *outSign,
     for (; wrIndex < rdLength;) {
         outSign[wrIndex++] = signature[rdIndex++];
     }
-    if (signature[rdIndex++] != 0x02)
+    if (signature[rdIndex++] != 0x02) {
         goto exit;
+    }
     rdLength = rdLength + signature[rdIndex++];
     if (rdLength & 01) {
         rdIndex++;

@@ -10,9 +10,9 @@
 **                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
-**     Reference manual:    IMXRT1040RM Rev.A, 09/2021
+**     Reference manual:    IMXRT1040RM Rev.1, 09/2022
 **     Version:             rev. 0.1, 2021-07-20
-**     Build:               b220420
+**     Build:               b221011
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that

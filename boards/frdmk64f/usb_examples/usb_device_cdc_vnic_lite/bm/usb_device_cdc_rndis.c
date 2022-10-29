@@ -669,7 +669,7 @@ usb_status_t USB_DeviceCdcRndisQueryCommand(usb_device_cdc_rndis_struct_t *handl
         case NDIS_OID_GEN_MEDIA_CONNECT_STATUS:
             /* Whether the NIC is connected to the network - Query Mandatory - General Operational Characteristic*/
             {
-                uint32_t mediaConnected;
+                uint32_t mediaConnected = 0u;
                 /* Whether the NIC is connected to the network - Query Mandatory - General Operational Characteristic*/
                 infoBufLen      = sizeof(uint32_t);
                 reqParam.buffer = (uint8_t *)&mediaConnected;

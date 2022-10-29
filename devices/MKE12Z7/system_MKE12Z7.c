@@ -1,7 +1,9 @@
 /*
 ** ###################################################################
-**     Processors:          MKE12Z128VLH7
+**     Processors:          MKE12Z128VLF7
+**                          MKE12Z128VLH7
 **                          MKE12Z128VLL7
+**                          MKE12Z256VLF7
 **                          MKE12Z256VLH7
 **                          MKE12Z256VLL7
 **
@@ -12,8 +14,8 @@
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    KE1xZP100M72SF1RM, Rev. 1, Jun. 2021
-**     Version:             rev. 2.0, 2021-06-25
-**     Build:               b210707
+**     Version:             rev. 3.0, 2021-10-08
+**     Build:               b211108
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -34,14 +36,16 @@
 **         Initial version.
 **     - rev. 2.0 (2021-06-25)
 **         Based on Rev.1 RM.
+**     - rev. 3.0 (2021-10-08)
+**         Add 48LQFP parts.
 **
 ** ###################################################################
 */
 
 /*!
  * @file MKE12Z7
- * @version 2.0
- * @date 2021-06-25
+ * @version 3.0
+ * @date 2021-10-08
  * @brief Device specific configuration file for MKE12Z7 (implementation file)
  *
  * Provides a system configuration function and a global variable that contains
@@ -115,7 +119,6 @@ void SystemCoreClockUpdate (void) {
       break;
   }
   SystemCoreClock = (SCGOUTClock / Divider);
-
 }
 
 /* ----------------------------------------------------------------------------

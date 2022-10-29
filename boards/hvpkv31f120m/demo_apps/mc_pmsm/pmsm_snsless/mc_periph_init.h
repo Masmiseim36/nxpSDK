@@ -22,6 +22,10 @@
 #include "mcdrv_pwm3ph_ftm.h"
 #include "mcdrv_adc_adc16.h"
 
+#if defined(__cplusplus)
+extern "C" {
+#endif /* __cplusplus */
+
 /******************************************************************************
  * Timing
  ******************************************************************************/
@@ -74,7 +78,7 @@
 /* Over-current Fault detection use CMP */
 #define M1_FAULT_CMP_ENABLE     (0U)
 
-/* DCbus braking resistor control */
+/* DC bus braking resistor control */
 #define M1_BRAKE_SET()          GPIOC->PSOR |= GPIO_PSOR_PTSO(1 << 0)
 #define M1_BRAKE_CLEAR()        GPIOC->PCOR |= GPIO_PCOR_PTCO(1 << 0)
 
@@ -116,7 +120,7 @@
 #define M1_SEC45_PH_A_CHANNEL   (8U)
 #define M1_SEC45_PH_B_BASE      (ADC0)
 #define M1_SEC45_PH_B_CHANNEL   (3U)
-/* DCbus voltage channels assingnment */
+/* DC bus voltage channels assingnment */
 #define M1_UDCB_BASE            (ADC0)
 #define M1_UDCB_CHANNEL         (12U)
 /* Auxiliary channel assingnment */
@@ -177,12 +181,11 @@ extern mcdrv_adc16_t g_sM1AdcSensor;
 /*******************************************************************************
  * API
  ******************************************************************************/
-#ifdef __cplusplus
-extern "C" {
-#endif
+
 void MCDRV_Init_M1(void);
 
-#ifdef __cplusplus
+#if defined(__cplusplus)
 }
-#endif
+#endif /* __cplusplus */
+
 #endif /* _MC_PERIPH_INIT_H_  */

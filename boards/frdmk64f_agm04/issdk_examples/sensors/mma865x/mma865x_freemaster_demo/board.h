@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  *
@@ -12,6 +12,7 @@
 
 #include "clock_config.h"
 #include "fsl_gpio.h"
+#include "fsl_port.h"
 
 /*******************************************************************************
  * Definitions
@@ -120,35 +121,20 @@
 #define LED_BLUE_INIT(output)                                            \
     GPIO_PinWrite(BOARD_LED_BLUE_GPIO, BOARD_LED_BLUE_GPIO_PIN, output); \
     BOARD_LED_BLUE_GPIO->PDDR |= (1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Enable target LED_BLUE */
-#define LED_BLUE_ON()                                                                               \
-    GPIO_PortClear(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn on target LED_BLUE \
+#define LED_BLUE_ON()                                                                                 \
+    GPIO_PortClear(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn on target LED_BLUE \ \
                                                                         */
-#define LED_BLUE_OFF()                                                                             \
-    GPIO_PortSet(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn off target LED_BLUE \
+#define LED_BLUE_OFF()                                                                               \
+    GPIO_PortSet(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn off target LED_BLUE \ \
                                                                       */
 #define LED_BLUE_TOGGLE() \
     GPIO_PortToggle(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Toggle on target LED_BLUE */
 
-/* The SDHC instance/channel used for board */
-#define BOARD_SDHC_CD_GPIO_IRQ_HANDLER PORTB_IRQHandler
-
-/* SDHC base address, clock and card detection pin */
-#define BOARD_SDHC_BASEADDR     SDHC
-#define BOARD_SDHC_CLKSRC       kCLOCK_CoreSysClk
-#define BOARD_SDHC_CLK_FREQ     CLOCK_GetFreq(kCLOCK_CoreSysClk)
-#define BOARD_SDHC_IRQ          SDHC_IRQn
-#define BOARD_SDHC_CD_GPIO_BASE GPIOE
-#ifndef BOARD_SDHC_CD_GPIO_PIN
-#define BOARD_SDHC_CD_GPIO_PIN 6U
-#endif
-#define BOARD_SDHC_CD_PORT_BASE         PORTE
-#define BOARD_SDHC_CD_PORT_IRQ          PORTE_IRQn
-#define BOARD_SDHC_CD_PORT_IRQ_HANDLER  PORTE_IRQHandler
-#define BOARD_SDHC_CARD_INSERT_CD_LEVEL (1U)
-
-#define BOARD_ACCEL_I2C_BASEADDR I2C0
+#define BOARD_ACCEL_I2C_BASEADDR   I2C0
+#define BOARD_ACCEL_I2C_CLOCK_FREQ CLOCK_GetFreq(I2C0_CLK_SRC)
 
 /* ERPC DSPI configuration */
+#define ERPC_BOARD_SPI_SLAVE_READY_USE_GPIO (1)
 #define ERPC_BOARD_DSPI_BASEADDR            SPI0
 #define ERPC_BOARD_DSPI_BAUDRATE            500000U
 #define ERPC_BOARD_DSPI_CLKSRC              DSPI0_CLK_SRC
@@ -173,7 +159,25 @@ extern "C" {
  * API
  ******************************************************************************/
 void BOARD_InitDebugConsole(void);
-
+#if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
+void BOARD_I2C_Init(I2C_Type *base, uint32_t clkSrc_Hz);
+status_t BOARD_I2C_Send(I2C_Type *base,
+                        uint8_t deviceAddress,
+                        uint32_t subAddress,
+                        uint8_t subaddressSize,
+                        uint8_t *txBuff,
+                        uint8_t txBuffSize);
+status_t BOARD_I2C_Receive(I2C_Type *base,
+                           uint8_t deviceAddress,
+                           uint32_t subAddress,
+                           uint8_t subaddressSize,
+                           uint8_t *rxBuff,
+                           uint8_t rxBuffSize);
+void BOARD_Accel_I2C_Init(void);
+status_t BOARD_Accel_I2C_Send(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint32_t txBuff);
+status_t BOARD_Accel_I2C_Receive(
+    uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize, uint8_t *rxBuff, uint8_t rxBuffSize);
+#endif /* SDK_I2C_BASED_COMPONENT_USED */
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */

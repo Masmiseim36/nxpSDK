@@ -7,9 +7,9 @@ mechanism.
 
 More information
 ================
-- Release note is in SDK install folder\docs\MC\Release_notes.pdf
-- Application User's guide is in SDK install folder\docs\MC\ACIMDEMOUG.pdf.
-- Application page: http://www.nxp.com/motorcontrol_acim.
+- Release note is in SDK install folder\docs\MC\Release_notes.pdf.
+- Application User's guide is in SDK install folder\docs\MC\*.pdf.
+- Application web page: http://www.nxp.com/sdkmotorcontrol.
 
 Running the demo
 ================

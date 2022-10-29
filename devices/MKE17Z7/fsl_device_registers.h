@@ -15,8 +15,8 @@
  *
  * The CPU macro should be declared in the project or makefile.
  */
-#if (defined(CPU_MKE17Z128VLH7) || defined(CPU_MKE17Z128VLL7) || defined(CPU_MKE17Z256VLH7) || \
-    defined(CPU_MKE17Z256VLL7))
+#if (defined(CPU_MKE17Z128VLF7) || defined(CPU_MKE17Z128VLH7) || defined(CPU_MKE17Z128VLL7) || \
+    defined(CPU_MKE17Z256VLF7) || defined(CPU_MKE17Z256VLH7) || defined(CPU_MKE17Z256VLL7))
 
 #define KE17Z7_SERIES
 

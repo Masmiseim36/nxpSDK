@@ -12,11 +12,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
+#endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerKhci0
+#endif
 #endif
 
 #define USB_DEVICE_INTERRUPT_PRIORITY                                                                    \

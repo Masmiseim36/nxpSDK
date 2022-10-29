@@ -66,11 +66,11 @@ usb_host_mouse_instance_t g_HostHidMouse;
  * by specific order. */
 static void USB_HostMouseProcessBuffer(uint8_t *buffer)
 {
-    static uint8_t left_move_count = 0;
+    static uint8_t left_move_count  = 0;
     static uint8_t right_move_count = 0;
-    static uint8_t up_move_count = 0;
-    static uint8_t down_move_count = 0;
-                
+    static uint8_t up_move_count    = 0;
+    static uint8_t down_move_count  = 0;
+
     DbgConsole_Flush();
     /* 1. Left key action */
     if (buffer[0] & 0x01)
@@ -386,7 +386,7 @@ usb_status_t USB_HostHidMouseEvent(usb_device_handle deviceHandle,
     usb_host_configuration_t *configuration;
     uint8_t interfaceIndex;
     usb_host_interface_t *interface;
-    uint32_t infoValue;
+    uint32_t infoValue = 0U;
 
     switch (eventCode)
     {

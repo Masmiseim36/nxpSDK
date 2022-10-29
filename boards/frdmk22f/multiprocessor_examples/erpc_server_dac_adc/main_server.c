@@ -240,7 +240,7 @@ void DAC_ADC_Init(void)
     /*
      * adc16ConfigStruct.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
      * adc16ConfigStruct.clockSource = kADC16_ClockSourceAsynchronousClock;
-     * adc16ConfigStruct.enableAsynchronousClock = true;
+     * adc16ConfigStruct.enableAsynchronousClock = false;
      * adc16ConfigStruct.clockDivider = kADC16_ClockDivider8;
      * adc16ConfigStruct.resolution = kADC16_ResolutionSE12Bit;
      * adc16ConfigStruct.longSampleMode = kADC16_LongSampleDisabled;
@@ -356,7 +356,7 @@ int main(void)
 
             /* removing the service from the server */
             erpc_remove_service_from_server(service);
-            destroy_dac_adc_service();
+            destroy_dac_adc_service(service);
 
             /* stop erpc server */
             erpc_server_stop();

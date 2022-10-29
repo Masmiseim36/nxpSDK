@@ -37,7 +37,7 @@ To run PC side as a client with a board connected as a server to COM3 execute:
 Toolchain supported
 ===================
 - IAR embedded Workbench  9.10.2
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 

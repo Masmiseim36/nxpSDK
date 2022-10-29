@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -55,6 +55,11 @@
 #endif
 #ifndef FMSTR_DEMO_SUPPORT_DBL
 #define FMSTR_DEMO_SUPPORT_DBL 1 /* support for double type */
+#endif
+
+/* User may re-declare this to put the TSA Active Content to a specific section. */
+#ifndef FMSTR_DEMO_CONTENT 
+#define FMSTR_DEMO_CONTENT const  /* By default, it is just const. */
 #endif
 
 /****************************************************************************

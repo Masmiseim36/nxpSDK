@@ -92,6 +92,11 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
 
             if (masterTxCount == TRANSFER_SIZE)
             {
+                /* Operation on the TCR register also occupies the tx FIFO,
+                   make sure there is still room */
+                while ((uint32_t)g_masterFifoSize == LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_MASTER_BASEADDR))
+                {
+                }
                 /* Set the PCS back to uncontinuous to finish the transfer. */
                 LPSPI_SetPCSContinous(EXAMPLE_LPSPI_MASTER_BASEADDR, false);
                 break;

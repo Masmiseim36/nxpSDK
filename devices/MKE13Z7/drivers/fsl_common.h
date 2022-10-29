@@ -40,15 +40,26 @@
  ******************************************************************************/
 
 /*! @brief Construct a status code value from a group and code number. */
-#define MAKE_STATUS(group, code) ((((group)*100) + (code)))
+#define MAKE_STATUS(group, code) ((((group)*100L) + (code)))
 
-/*! @brief Construct the version number for drivers. */
-#define MAKE_VERSION(major, minor, bugfix) (((major) << 16) | ((minor) << 8) | (bugfix))
+/*! @brief Construct the version number for drivers.
+ *
+ * The driver version is a 32-bit number, for both 32-bit platforms(such as Cortex M)
+ * and 16-bit platforms(such as DSC).
+ *
+ * @verbatim
+
+   | Unused    || Major Version || Minor Version ||  Bug Fix    |
+   31        25  24           17  16            9  8            0
+
+   @endverbatim
+ */
+#define MAKE_VERSION(major, minor, bugfix) (((major) * 65536L) + ((minor) * 256L) + (bugfix))
 
 /*! @name Driver version */
 /*@{*/
 /*! @brief common driver version. */
-#define FSL_COMMON_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
+#define FSL_COMMON_DRIVER_VERSION (MAKE_VERSION(2, 3, 2))
 /*@}*/
 
 /* Debug console type definition. */
@@ -153,6 +164,7 @@ enum _status_groups
     kStatusGroup_HAL_FLASH      = 126, /*!< Group number for HAL FLASH status codes. */
     kStatusGroup_HAL_PWM        = 127, /*!< Group number for HAL PWM status codes. */
     kStatusGroup_HAL_RNG        = 128, /*!< Group number for HAL RNG status codes. */
+    kStatusGroup_HAL_I2S        = 129, /*!< Group number for HAL I2S status codes. */
     kStatusGroup_TIMERMANAGER   = 135, /*!< Group number for TiMER MANAGER status codes. */
     kStatusGroup_SERIALMANAGER  = 136, /*!< Group number for SERIAL MANAGER status codes. */
     kStatusGroup_LED            = 137, /*!< Group number for LED status codes. */
@@ -177,6 +189,12 @@ enum _status_groups
     kStatusGroup_QSCI           = 156, /*!< Group number for QSCI status codes. */
     kStatusGroup_SNT            = 157, /*!< Group number for SNT status codes. */
     kStatusGroup_QUEUEDSPI      = 158, /*!< Group number for QSPI status codes. */
+    kStatusGroup_POWER_MANAGER  = 159, /*!< Group number for POWER_MANAGER status codes. */
+    kStatusGroup_IPED = 160,                  /*!< Group number for IPED status codes. */
+    kStatusGroup_CSS_PKC = 161,               /*!< Group number for CSS PKC status codes. */
+    kStatusGroup_HOSTIF      = 162, /*!< Group number for HOSTIF status codes. */
+    kStatusGroup_CLIF           = 163, /*!< Group number for CLIF status codes. */
+    kStatusGroup_BMA            = 164, /*!< Group number for BMA status codes. */
 };
 
 /*! \public
@@ -251,6 +269,7 @@ typedef int32_t status_t;
 extern "C" {
 #endif
 
+#if !((defined(__DSC__) && defined(__CW__)))
 /*!
  * @brief Allocate memory with given alignment and aligned size.
  *
@@ -268,6 +287,7 @@ void *SDK_Malloc(size_t size, size_t alignbytes);
  * @param ptr The memory to be release.
  */
 void SDK_Free(void *ptr);
+#endif
 
 /*!
  * @brief Delay at least for some time.

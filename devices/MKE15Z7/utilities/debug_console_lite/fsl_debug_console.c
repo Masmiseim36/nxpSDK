@@ -43,7 +43,7 @@ typedef struct DebugConsoleState
     hal_uart_status_t (*getChar)(hal_uart_handle_t handle,
                                  uint8_t *data,
                                  size_t length); /*!< get char function pointer */
-    serial_port_type_t type;                     /*!< The initialized port of the debug console. */
+    serial_port_type_t serial_port_type;         /*!< The initialized port of the debug console. */
 } debug_console_state_t;
 
 /*! @brief Type of KSDK printf function pointer. */
@@ -91,9 +91,10 @@ enum _debugconsole_scanf_flag
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+#if SDK_DEBUGCONSOLE
 /*! @brief Debug UART state information. */
 static debug_console_state_t s_debugConsole;
-
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -120,7 +121,7 @@ status_t DbgConsole_Init(uint8_t instance, uint32_t baudRate, serial_port_type_t
     }
 
     /* Set debug console to initialized to avoid duplicated initialized operation. */
-    s_debugConsole.type = device;
+    s_debugConsole.serial_port_type = device;
 
     usrtConfig.srcClock_Hz  = clkSrcFreq;
     usrtConfig.baudRate_Bps = baudRate;
@@ -147,14 +148,14 @@ status_t DbgConsole_Init(uint8_t instance, uint32_t baudRate, serial_port_type_t
 /* See fsl_debug_console.h for documentation of this function. */
 status_t DbgConsole_Deinit(void)
 {
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return kStatus_Success;
     }
 
     (void)HAL_UartDeinit((hal_uart_handle_t)&s_debugConsole.uartHandleBuffer[0]);
 
-    s_debugConsole.type = kSerialPort_None;
+    s_debugConsole.serial_port_type = kSerialPort_None;
 
     return kStatus_Success;
 }
@@ -165,16 +166,27 @@ status_t DbgConsole_Deinit(void)
 int DbgConsole_Printf(const char *fmt_s, ...)
 {
     va_list ap;
-    int result;
+    int result = 0;
+
+    va_start(ap, fmt_s);
+    result = DbgConsole_Vprintf(fmt_s, ap);
+    va_end(ap);
+
+    return result;
+}
+
+/* See fsl_debug_console.h for documentation of this function. */
+int DbgConsole_Vprintf(const char *fmt_s, va_list formatStringArg)
+{
+    int result = 0;
 
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
-    va_start(ap, fmt_s);
-    result = DbgConsole_PrintfFormattedData(DbgConsole_Putchar, fmt_s, ap);
-    va_end(ap);
+
+    result = DbgConsole_PrintfFormattedData(DbgConsole_Putchar, fmt_s, formatStringArg);
 
     return result;
 }
@@ -183,7 +195,7 @@ int DbgConsole_Printf(const char *fmt_s, ...)
 int DbgConsole_Putchar(int ch)
 {
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
@@ -193,7 +205,7 @@ int DbgConsole_Putchar(int ch)
 }
 
 /* See fsl_debug_console.h for documentation of this function. */
-int DbgConsole_Scanf(char *fmt_ptr, ...)
+int DbgConsole_Scanf(char *fmt_s, ...)
 {
     /* Plus one to store end of string char */
     char temp_buf[IO_MAXLINE + 1];
@@ -202,11 +214,11 @@ int DbgConsole_Scanf(char *fmt_ptr, ...)
     char result;
 
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
-    va_start(ap, fmt_ptr);
+    va_start(ap, fmt_s);
     temp_buf[0] = '\0';
 
     i = 0;
@@ -245,7 +257,7 @@ int DbgConsole_Scanf(char *fmt_ptr, ...)
     {
         temp_buf[i + 1] = '\0';
     }
-    result = (char)DbgConsole_ScanfFormattedData(temp_buf, fmt_ptr, ap);
+    result = (char)DbgConsole_ScanfFormattedData(temp_buf, fmt_s, ap);
     va_end(ap);
 
     return (int)result;
@@ -256,7 +268,7 @@ int DbgConsole_Getchar(void)
 {
     char ch;
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
@@ -326,21 +338,23 @@ static void DbgConsole_PrintfPaddingCharacter(
 static int32_t DbgConsole_ConvertRadixNumToString(char *numstr, void *nump, int32_t neg, int32_t radix, bool use_caps)
 {
 #if PRINTF_ADVANCED_ENABLE
-    int64_t a;
-    int64_t b;
-    int64_t c;
+    long long int a;
+    long long int b;
+    long long int c;
 
-    uint64_t ua;
-    uint64_t ub;
-    uint64_t uc;
+    unsigned long long int ua;
+    unsigned long long int ub;
+    unsigned long long int uc;
+    unsigned long long int uc_param;
 #else
-    int32_t a;
-    int32_t b;
-    int32_t c;
+    int a;
+    int b;
+    int c;
 
-    uint32_t ua;
-    uint32_t ub;
-    uint32_t uc;
+    unsigned int ua;
+    unsigned int ub;
+    unsigned int uc;
+    unsigned int uc_param;
 #endif /* PRINTF_ADVANCED_ENABLE */
 
     int32_t nlen;
@@ -354,12 +368,43 @@ static int32_t DbgConsole_ConvertRadixNumToString(char *numstr, void *nump, int3
     neg = 0;
 #endif
 
+#if PRINTF_ADVANCED_ENABLE
+    a        = 0;
+    b        = 0;
+    c        = 0;
+    ua       = 0ULL;
+    ub       = 0ULL;
+    uc       = 0ULL;
+    uc_param = 0ULL;
+#else
+    a        = 0;
+    b        = 0;
+    c        = 0;
+    ua       = 0U;
+    ub       = 0U;
+    uc       = 0U;
+    uc_param = 0U;
+#endif /* PRINTF_ADVANCED_ENABLE */
+
+    (void)a;
+    (void)b;
+    (void)c;
+    (void)ua;
+    (void)ub;
+    (void)uc;
+    (void)uc_param;
+    (void)neg;
+    /*
+     * Fix MISRA issue: CID 15985711 (#15 of 15): MISRA C-2012 Control Flow Expressions (MISRA C-2012 Rule 14.3)
+     * misra_c_2012_rule_14_3_violation: Execution cannot reach this statement: a = *((int *)nump);
+     */
+#if PRINTF_ADVANCED_ENABLE
     if (0 != neg)
     {
 #if PRINTF_ADVANCED_ENABLE
-        a = *(int64_t *)nump;
+        a = *(long long int *)nump;
 #else
-        a = *(int32_t *)nump;
+        a = *(int *)nump;
 #endif /* PRINTF_ADVANCED_ENABLE */
         if (a == 0)
         {
@@ -370,23 +415,27 @@ static int32_t DbgConsole_ConvertRadixNumToString(char *numstr, void *nump, int3
         while (a != 0)
         {
 #if PRINTF_ADVANCED_ENABLE
-            b = (int64_t)a / (int64_t)radix;
-            c = (int64_t)a - ((int64_t)b * (int64_t)radix);
+            b = (long long int)a / (long long int)radix;
+            c = (long long int)a - ((long long int)b * (long long int)radix);
             if (c < 0)
             {
-                c = (int64_t)'0' - c;
+                uc       = (unsigned long long int)c;
+                uc_param = ~uc;
+                c        = (long long int)uc_param + 1 + (long long int)'0';
             }
 #else
-            b = a / radix;
-            c = a - (b * radix);
+            b = (int)a / (int)radix;
+            c = (int)a - ((int)b * (int)radix);
             if (c < 0)
             {
-                c = (int32_t)'0' - c;
+                uc       = (unsigned int)c;
+                uc_param = ~uc;
+                c        = (int)uc_param + 1 + (int)'0';
             }
 #endif /* PRINTF_ADVANCED_ENABLE */
             else
             {
-                c = c + '0';
+                c = c + (int)'0';
             }
             a        = b;
             *nstrp++ = (char)c;
@@ -394,11 +443,12 @@ static int32_t DbgConsole_ConvertRadixNumToString(char *numstr, void *nump, int3
         }
     }
     else
+#endif /* PRINTF_ADVANCED_ENABLE */
     {
 #if PRINTF_ADVANCED_ENABLE
-        ua = *(uint64_t *)nump;
+        ua = *(unsigned long long int *)nump;
 #else
-        ua = *(uint32_t *)nump;
+        ua = *(unsigned int *)nump;
 #endif /* PRINTF_ADVANCED_ENABLE */
         if (ua == 0U)
         {
@@ -409,20 +459,20 @@ static int32_t DbgConsole_ConvertRadixNumToString(char *numstr, void *nump, int3
         while (ua != 0U)
         {
 #if PRINTF_ADVANCED_ENABLE
-            ub = (uint64_t)ua / (uint64_t)radix;
-            uc = (uint64_t)ua - ((uint64_t)ub * (uint64_t)radix);
+            ub = (unsigned long long int)ua / (unsigned long long int)radix;
+            uc = (unsigned long long int)ua - ((unsigned long long int)ub * (unsigned long long int)radix);
 #else
-            ub = ua / (uint32_t)radix;
-            uc = ua - (ub * (uint32_t)radix);
+            ub = ua / (unsigned int)radix;
+            uc = ua - (ub * (unsigned int)radix);
 #endif /* PRINTF_ADVANCED_ENABLE */
 
             if (uc < 10U)
             {
-                uc = uc + '0';
+                uc = uc + (unsigned int)'0';
             }
             else
             {
-                uc = uc - 10U + (use_caps ? 'A' : 'a');
+                uc = uc - 10U + (unsigned int)(use_caps ? 'A' : 'a');
             }
             ua       = ub;
             *nstrp++ = (char)uc;
@@ -496,7 +546,7 @@ static int32_t DbgConsole_ConvertFloatRadixNumToString(char *numstr,
     for (i = 0; i < precision_width; i++)
     {
         fb = fa / (double)radix;
-        dc = (fa - (double)(int64_t)fb * (double)radix);
+        dc = (fa - (double)(long long int)fb * (double)radix);
         c  = (int32_t)dc;
         if (c < 0)
         {
@@ -548,8 +598,8 @@ static int32_t DbgConsole_ConvertFloatRadixNumToString(char *numstr,
  * (*func_ptr)(c);
  *
  * @param[in] func_ptr  Function to put character out.
- * @param[in] fmt_ptr   Format string for printf.
- * @param[in] args_ptr  Arguments to printf.
+ * @param[in] fmt       Format string for printf.
+ * @param[in] ap        Arguments to printf.
  *
  * @return Number of characters
  */
@@ -577,12 +627,12 @@ static int DbgConsole_PrintfFormattedData(PUTCHAR_FUNC func_ptr, const char *fmt
     uint32_t flags_used;
     char schar;
     bool dschar;
-    int64_t ival;
-    uint64_t uval = 0;
+    long long int ival;
+    unsigned long long int uval = 0;
     bool valid_precision_width;
 #else
-    int32_t ival;
-    uint32_t uval = 0;
+    int ival;
+    unsigned int uval = 0;
 #endif /* PRINTF_ADVANCED_ENABLE */
 
 #if PRINTF_FLOAT_ENABLE
@@ -660,7 +710,7 @@ static int DbgConsole_PrintfFormattedData(PUTCHAR_FUNC func_ptr, const char *fmt
 #if PRINTF_ADVANCED_ENABLE
             else if (c == '*')
             {
-                field_width = (uint32_t)va_arg(ap, uint32_t);
+                field_width = (uint32_t)va_arg(ap, unsigned int);
             }
 #endif /* PRINTF_ADVANCED_ENABLE */
             else
@@ -695,7 +745,7 @@ static int DbgConsole_PrintfFormattedData(PUTCHAR_FUNC func_ptr, const char *fmt
 #if PRINTF_ADVANCED_ENABLE
                 else if (c == '*')
                 {
-                    precision_width       = (uint32_t)va_arg(ap, uint32_t);
+                    precision_width       = (uint32_t)va_arg(ap, unsigned int);
                     valid_precision_width = true;
                 }
 #endif /* PRINTF_ADVANCED_ENABLE */
@@ -757,12 +807,16 @@ static int DbgConsole_PrintfFormattedData(PUTCHAR_FUNC func_ptr, const char *fmt
 #if PRINTF_ADVANCED_ENABLE
                     if (0U != (flags_used & (uint32_t)kPRINTF_LengthLongLongInt))
                     {
-                        ival = (int64_t)va_arg(ap, int64_t);
+                        ival = (long long int)va_arg(ap, long long int);
+                    }
+                    else if (0U != (flags_used & (uint32_t)kPRINTF_LengthLongInt))
+                    {
+                        ival = (long int)va_arg(ap, long int);
                     }
                     else
 #endif /* PRINTF_ADVANCED_ENABLE */
                     {
-                        ival = (int32_t)va_arg(ap, int32_t);
+                        ival = (int)va_arg(ap, int);
                     }
                     vlen  = DbgConsole_ConvertRadixNumToString(vstr, &ival, 1, 10, use_caps);
                     vstrp = &vstr[vlen];
@@ -903,12 +957,16 @@ static int DbgConsole_PrintfFormattedData(PUTCHAR_FUNC func_ptr, const char *fmt
 #if PRINTF_ADVANCED_ENABLE
                     if (0U != (flags_used & (uint32_t)kPRINTF_LengthLongLongInt))
                     {
-                        uval = (uint64_t)va_arg(ap, uint64_t);
+                        uval = (unsigned long long int)va_arg(ap, unsigned long long int);
+                    }
+                    else if (0U != (flags_used & (uint32_t)kPRINTF_LengthLongInt))
+                    {
+                        uval = (unsigned long int)va_arg(ap, unsigned long int);
                     }
                     else
 #endif /* PRINTF_ADVANCED_ENABLE */
                     {
-                        uval = (uint32_t)va_arg(ap, uint32_t);
+                        uval = (unsigned int)va_arg(ap, unsigned int);
                     }
                     vlen  = DbgConsole_ConvertRadixNumToString(vstr, &uval, 0, 16, use_caps);
                     vstrp = &vstr[vlen];
@@ -959,15 +1017,36 @@ static int DbgConsole_PrintfFormattedData(PUTCHAR_FUNC func_ptr, const char *fmt
                 }
                 if ((c == 'o') || (c == 'b') || (c == 'p') || (c == 'u'))
                 {
-#if PRINTF_ADVANCED_ENABLE
-                    if (0U != (flags_used & (uint32_t)kPRINTF_LengthLongLongInt))
+                    if ('p' == c)
                     {
-                        uval = (uint64_t)va_arg(ap, uint64_t);
+                        /*
+                         * Fix MISRA issue: CID 16209727 (#15 of 15): MISRA C-2012 Pointer Type Conversions (MISRA
+                         * C-2012 Rule 11.6)
+                         * 1. misra_c_2012_rule_11_6_violation: The expression va_arg (ap, void *) of type void * is
+                         * cast to type unsigned int.
+                         *
+                         * Orignal code: uval = (unsigned int)va_arg(ap, void *);
+                         */
+                        void *pval;
+                        pval = (void *)va_arg(ap, void *);
+                        (void)memcpy((void *)&uval, (void *)&pval, sizeof(void *));
                     }
                     else
-#endif /* PRINTF_ADVANCED_ENABLE */
                     {
-                        uval = (uint32_t)va_arg(ap, uint32_t);
+#if PRINTF_ADVANCED_ENABLE
+                        if (0U != (flags_used & (uint32_t)kPRINTF_LengthLongLongInt))
+                        {
+                            uval = (unsigned long long int)va_arg(ap, unsigned long long int);
+                        }
+                        else if (0U != (flags_used & (uint32_t)kPRINTF_LengthLongInt))
+                        {
+                            uval = (unsigned long int)va_arg(ap, unsigned long int);
+                        }
+                        else
+#endif /* PRINTF_ADVANCED_ENABLE */
+                        {
+                            uval = (unsigned int)va_arg(ap, unsigned int);
+                        }
                     }
                     switch (c)
                     {
@@ -1024,7 +1103,7 @@ static int DbgConsole_PrintfFormattedData(PUTCHAR_FUNC func_ptr, const char *fmt
             }
             else if (c == 'c')
             {
-                cval = (int32_t)va_arg(ap, uint32_t);
+                cval = (int32_t)va_arg(ap, unsigned int);
                 (void)func_ptr(cval);
                 count++;
             }
@@ -1092,7 +1171,7 @@ static int DbgConsole_PrintfFormattedData(PUTCHAR_FUNC func_ptr, const char *fmt
         }
         p++;
     }
-    return count;
+    return (int)count;
 }
 
 /*!
@@ -1607,7 +1686,7 @@ size_t __write(int handle, const unsigned char *buffer, size_t size)
          */
         ret = (size_t)-1;
     }
-    else if (kSerialPort_None == s_debugConsole.type)
+    else if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         /* Do nothing if the debug UART is not initialized. */
         ret = (size_t)-1;
@@ -1631,7 +1710,7 @@ size_t __read(int handle, unsigned char *buffer, size_t size)
     {
         ret = ((size_t)-1);
     }
-    else if (kSerialPort_None == s_debugConsole.type)
+    else if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         /* Do nothing if the debug UART is not initialized. */
         ret = ((size_t)-1);
@@ -1665,7 +1744,7 @@ int __attribute__((weak)) __sys_write(int handle, char *buffer, int size)
     }
 
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
@@ -1680,7 +1759,7 @@ int __attribute__((weak)) __sys_readc(void)
 {
     char tmp;
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
@@ -1716,7 +1795,7 @@ FILE __stdin;
 int fputc(int ch, FILE *f)
 {
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
@@ -1731,7 +1810,7 @@ int fgetc(FILE *f)
 {
     char ch;
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
@@ -1789,7 +1868,7 @@ int __attribute__((weak)) _write_r(void *ptr, int handle, char *buffer, int size
     }
 
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
@@ -1810,7 +1889,7 @@ int __attribute__((weak)) _read_r(void *ptr, int handle, char *buffer, int size)
     }
 
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
@@ -1842,7 +1921,7 @@ int __attribute__((weak)) _write(int handle, char *buffer, int size)
     }
 
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }
@@ -1863,7 +1942,7 @@ int __attribute__((weak)) _read(int handle, char *buffer, int size)
     }
 
     /* Do nothing if the debug UART is not initialized. */
-    if (kSerialPort_None == s_debugConsole.type)
+    if (kSerialPort_None == s_debugConsole.serial_port_type)
     {
         return -1;
     }

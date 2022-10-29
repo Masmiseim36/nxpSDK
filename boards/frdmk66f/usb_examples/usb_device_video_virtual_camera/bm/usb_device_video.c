@@ -1143,8 +1143,16 @@ usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *param)
             /* De-initialize the endpoints when current configuration is none zero. */
             if (0U != videoHandle->configuration)
             {
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if ((kStatus_USB_Success != USB_DeviceVideoControlEndpointsDeinit(videoHandle)) ||
+                    (kStatus_USB_Success != USB_DeviceVideoStreamEndpointsDeinit(videoHandle)))
+                {
+                    return kStatus_USB_Error;
+                }
+#else
                 (void)USB_DeviceVideoControlEndpointsDeinit(videoHandle);
                 (void)USB_DeviceVideoStreamEndpointsDeinit(videoHandle);
+#endif
             }
             /* Save new configuration. */
             videoHandle->configuration = *temp8;
@@ -1187,7 +1195,14 @@ usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *param)
                     break;
                 }
                 /* De-initialize old endpoints */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+                if (kStatus_USB_Success != USB_DeviceVideoControlEndpointsDeinit(videoHandle))
+                {
+                    return kStatus_USB_Error;
+                }
+#else
                 (void)USB_DeviceVideoControlEndpointsDeinit(videoHandle);
+#endif
                 videoHandle->controlAlternate = alternate;
                 /* Initialize new endpoints */
                 error = USB_DeviceVideoControlEndpointsInit(videoHandle);
@@ -1303,12 +1318,14 @@ usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *param)
                         if (0U != controlRequest->isSetup)
                         {
                             /* Get the buffer to receive the data sent from the host. */
-                            if ((NULL != videoHandle->configStruct) && (NULL != videoHandle->configStruct->classCallback))
+                            if ((NULL != videoHandle->configStruct) &&
+                                (NULL != videoHandle->configStruct->classCallback))
                             {
                                 /*ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
                                                   it is from the second parameter of classInit*/
                                 error = videoHandle->configStruct->classCallback(
-                                    (class_handle_t)videoHandle, kUSB_DeviceVideoEventClassRequestBuffer, controlRequest);
+                                    (class_handle_t)videoHandle, kUSB_DeviceVideoEventClassRequestBuffer,
+                                    controlRequest);
                             }
                         }
                         else
@@ -1439,7 +1456,14 @@ usb_status_t USB_DeviceVideoDeinit(class_handle_t handle)
 #endif
     }
     /* De-initialzie the control endpoints. */
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+    if (kStatus_USB_Success != USB_DeviceVideoControlEndpointsDeinit(videoHandle))
+    {
+        return kStatus_USB_Error;
+    }
+#else
     (void)USB_DeviceVideoControlEndpointsDeinit(videoHandle);
+#endif
     /* Free the video class handle. */
     error = USB_DeviceVideoFreeHandle(videoHandle);
     return error;

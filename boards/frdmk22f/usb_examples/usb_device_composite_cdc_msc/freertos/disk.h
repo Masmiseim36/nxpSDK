@@ -12,11 +12,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* @TEST_ANCHOR */
+
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
+#endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0)
+#ifndef CONTROLLER_ID
 #define CONTROLLER_ID kUSB_ControllerKhci0
+#endif
 #endif
 
 #if defined(__GIC_PRIO_BITS)
@@ -48,6 +55,7 @@ typedef struct _usb_msc_struct
     uint8_t currentConfiguration;
     uint8_t speed;
     uint8_t attach;
+    uint8_t stop; /* indicates this media keeps stop or not, 1: stop, 0: start */
 } usb_msc_struct_t;
 
 #endif /* _USB_MSC_DISK_H_ */

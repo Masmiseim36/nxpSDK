@@ -1,6 +1,6 @@
 var a00046 =
 [
-    [ "lpi2c_slave_config_t", "a00046.html#a00432", [
+    [ "lpi2c_slave_config_t", "a00046.html#a00433", [
       [ "enableSlave", "a00046.html#ad220cfa81b4117fd1d952b43ff0d5511", null ],
       [ "address0", "a00046.html#a16f171990f815872142d3fe73eb74ff4", null ],
       [ "address1", "a00046.html#afb3035cd87a9746bdbe5c6618a492034", null ],
@@ -19,7 +19,7 @@ var a00046 =
       [ "dataValidDelay_ns", "a00046.html#a920288e7667b3b363f019384ebc58606", null ],
       [ "clockHoldTime_ns", "a00046.html#a2e672f5446e7d86eb9d74bdc785df0fb", null ]
     ] ],
-    [ "lpi2c_slave_transfer_t", "a00046.html#a00433", [
+    [ "lpi2c_slave_transfer_t", "a00046.html#a00434", [
       [ "event", "a00046.html#a19df3bc5c35ed8ae03a927dcc89daa48", null ],
       [ "receivedAddress", "a00046.html#a336e15a483043ed7ace990517fff6686", null ],
       [ "data", "a00046.html#a54436075594000b4d56471b29dd6734f", null ],

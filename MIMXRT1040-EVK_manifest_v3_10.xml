@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1040-EVK" name="MIMXRT1040-EVK" brief="This is SDK version 2.12.1 manifest file. It describes the content of the MIMXRT1040-EVK and additional settings for tools that support SDK version 2.12.1" format_version="3.10" api_version="2.0.0" configuration="68044f400b23e814f3f9ffa7a88c6612" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
-  <!--Timestamp (UTC): 2022-09-26 15:28:55.115804-->
-  <!--This manifest is generated based on sdk repo commit: 1d365316a284b27ce39c372d5a46d49869664ba1-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1040-EVK" name="MIMXRT1040-EVK" brief="This is SDK version 2.12.2 manifest file. It describes the content of the MIMXRT1040-EVK and additional settings for tools that support SDK version 2.12.2" format_version="3.10" api_version="2.0.0" configuration="9df377931f058e316cf0f9c9d1600848" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.10.xsd">
+  <!--Timestamp (UTC): 2022-10-20 08:30:28.942731-->
+  <!--This manifest is generated based on sdk repo commit: 91310da21577a3ceea426c5eb082c61912e43a82-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso2121" name="MCUXpresso2121" version="2.12.1" revision="632 2022-09-26"/>
+  <ksdk id="MCUXpresso2122" name="MCUXpresso2122" version="2.12.2" revision="639 2022-10-20"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -191,6 +191,26 @@ ${load}</script>
         <example id="evkmimxrt1040_cache" name="cache" brief="The cache example shows how to use memory cache driver.In this example, many memory (such as SDRAM, etc) and DMA will be used to show the example.Those memory is both accessible for cpu and DMA. For the memory data alignment, cache driver should be used rightly. For cache enabled case, the cache invalidate operation should be done before cpu access the memory. The cache clean opeartion should be done after CPU verify the memorymemory and before DMA access the memory." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/cache" path="boards/evkmimxrt1040/driver_examples/cache">
           <external path="boards/evkmimxrt1040/driver_examples/cache" type="xml">
             <files mask="cache_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1040_canfd_interrupt_transfer" name="canfd_interrupt_transfer" brief="The canfd_interrupt example shows how to use FlexCAN driver in none-blocking interrupt way:In this example, 2 boards are connected through CAN bus. Endpoint A(board A) send a CAN Message toEndpoint B(board B) when user press space key in terminal. Endpoint B receive the message, printthe message content to terminal and echo back the message. Endpoint A will increase the receivedmessage and waiting for the next transmission of the user initiated." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/canfd" path="boards/evkmimxrt1040/driver_examples/canfd/interrupt_transfer">
+          <external path="boards/evkmimxrt1040/driver_examples/canfd/interrupt_transfer" type="xml">
+            <files mask="canfd_interrupt_transfer_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1040_canfd_loopback" name="canfd_loopback" brief="The canfd_loopback_functional example shows how to use the loopback test mode to debug your CAN Bus design:To demonstrates this example, only one board is needed. The example will config one FlexCAN MessageBuffer to Rx Message Buffer and the other FlexCAN Message Buffer to Tx Message Buffer with same ID.After that, the example will send a CAN Message from the Tx Message Buffer to the Rx Message Bufferthrouth internal loopback interconnect and print out the Message payload to terminal." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/canfd" path="boards/evkmimxrt1040/driver_examples/canfd/loopback">
+          <external path="boards/evkmimxrt1040/driver_examples/canfd/loopback" type="xml">
+            <files mask="canfd_loopback_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1040_canfd_loopback_transfer" name="canfd_loopback_transfer" brief="The canfd_loopback example shows how to use the loopback test mode to debug your CAN Bus design:To demonstrates this example, only one board is needed. The example will config one FlexCAN MessageBuffer to Rx Message Buffer and the other FlexCAN Message Buffer to Tx Message Buffer with same ID.After that, the example will send a CAN Message from the Tx Message Buffer to the Rx Message Bufferthrough internal loopback interconnect and print out the Message payload to terminal." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/canfd" path="boards/evkmimxrt1040/driver_examples/canfd/loopback_transfer">
+          <external path="boards/evkmimxrt1040/driver_examples/canfd/loopback_transfer" type="xml">
+            <files mask="canfd_loopback_transfer_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1040_canfd_ping_pong_buffer_transfer" name="canfd_ping_pong_buffer_transfer" brief="The canfd_ping_pong_buffer_transfer example shows how to use the FlexCAN queue feature to create 2 simulate FIFOs that can receive CANFD frames:In this example, 2 boards are connected through CAN bus. Endpoint A(board A) send CANFD messages to Endpoint B(board B) when user input the number of CAN messages to be send in terminal. Endpoint B uses two receiving queues to receive messages in turn, and prints the message content and the receiving queue number to the terminal after any queue is full." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/canfd" path="boards/evkmimxrt1040/driver_examples/canfd/ping_pong_buffer_transfer">
+          <external path="boards/evkmimxrt1040/driver_examples/canfd/ping_pong_buffer_transfer" type="xml">
+            <files mask="canfd_ping_pong_buffer_transfer_v3_10.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1040_ccm_clockout" name="ccm_clockout" brief="The ccm_clockout driver example shows how to output the internal clock signal. In this driver example, users can choose the clock signal to be outputted, and the divider of the output clock signal. By probing the output pin, users can observe the selected internal clock signal." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/ccm" path="boards/evkmimxrt1040/driver_examples/clockout">
@@ -1501,6 +1521,16 @@ ${load}</script>
         <example id="evkmimxrt1040_mco_slave" name="mco_slave" brief="Example slave application using MicroCANopen Plus library" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="canopen_examples" path="boards/evkmimxrt1040/canopen_examples/mco_slave">
           <external path="boards/evkmimxrt1040/canopen_examples/mco_slave" type="xml">
             <files mask="mco_slave_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1040_mcofd_manager" name="mcofd_manager" brief="Example manager application using MicroCANopen Plus FD library" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="canopen_examples" path="boards/evkmimxrt1040/canopen_examples/mcofd_manager">
+          <external path="boards/evkmimxrt1040/canopen_examples/mcofd_manager" type="xml">
+            <files mask="mcofd_manager_v3_10.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1040_mcofd_slave" name="mcofd_slave" brief="Example slave application using MicroCANopen Plus FD library" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="canopen_examples" path="boards/evkmimxrt1040/canopen_examples/mcofd_slave">
+          <external path="boards/evkmimxrt1040/canopen_examples/mcofd_slave" type="xml">
+            <files mask="mcofd_slave_v3_10.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1040_mcuboot_opensource" name="mcuboot_opensource" brief="MCUboot bootloader" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="bootloader" path="boards/evkmimxrt1040/mcuboot_opensource">

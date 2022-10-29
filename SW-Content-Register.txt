@@ -1,5 +1,5 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.12.1
+Release Version: 2.12.2
 Package License: LA_OPT_NXP_Software_License.txt v35 May 2022- Additional Distribution License granted, license in Section 2.3 applies
 
 SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
@@ -1315,7 +1315,6 @@ library                    Version: 1.0.0
                            middleware/motor_control/pmsm/pmsm_float/mc_algori
                            thms/mcaa_lib                                     
                            Origin: NXP (BSD-3-Clause)                        
-
 mpp                        Name: Multimedia Processing Pipelines (MPP)       
                            Version: 0.9.1                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 

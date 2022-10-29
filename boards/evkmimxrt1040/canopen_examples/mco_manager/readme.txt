@@ -50,13 +50,13 @@ Toolchain supported
 Hardware requirements
 =====================
 - Two mini/micro USB cables
-- Two EVKB-IMXRT1040 boards with J11 pin header connector populated
+- Two EVKB-IMXRT1040 boards with J42 pin header connector populated
 - CAN cabling with pin header female connectors 
 - Personal Computer
 
 Board settings
 ==============
-The example requires 2 sets of boards, each of them with the J11 header pin connector populated.
+The example requires 2 sets of boards, each of them with the J42 header pin connector populated.
 Using dupont wires, connect all 3 pins of both boards with each other.
 Pin 1 to pin 1 (CAN_Hi), pin 2 to pin 2 (GND) and pin 3 to pin 3 (CAN_Lo).
 

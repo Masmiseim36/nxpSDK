@@ -12,10 +12,9 @@
 /* These options are used in freemaster_example.c to configure features of FreeMASTER example application */
 
 #define FMSTR_DEMO_ENOUGH_ROM 1 /* Platform has enough ROM to show most of the FreeMASTER features */
-#define FMSTR_DEMO_LARGE_ROM \
-    1 /* Platform has large ROM enough to store the extended data structures used in FreeMASTER demo */
+#define FMSTR_DEMO_LARGE_ROM  1 /* Platform has large ROM enough to store the extended data structures used in demo */
 #define FMSTR_DEMO_SUPPORT_I64 1 /* Support for long long type */
 #define FMSTR_DEMO_SUPPORT_FLT 1 /* Support for float type */
-#define FMSTR_DEMO_SUPPORT_DBL 1 /* Support for double type */
+#define FMSTR_DEMO_SUPPORT_DBL 0 /* Support for double type */
 
 #endif /* __FREEMASTER_DEMO_H */

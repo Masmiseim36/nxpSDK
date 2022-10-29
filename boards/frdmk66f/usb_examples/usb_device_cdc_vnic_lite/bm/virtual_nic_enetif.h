@@ -42,13 +42,27 @@
 #define ENET_ALIGN(x, align) ((unsigned int)((x) + ((align)-1)) & (unsigned int)(~(unsigned int)((align)-1)))
 #define APP_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
 
+/* @TEST_ANCHOR */
+
 /* MAC address configuration. */
+#ifndef configMAC_ADDR0
 #define configMAC_ADDR0 0x00
+#endif
+#ifndef configMAC_ADDR1
 #define configMAC_ADDR1 0x12
+#endif
+#ifndef configMAC_ADDR2
 #define configMAC_ADDR2 0x13
+#endif
+#ifndef configMAC_ADDR3
 #define configMAC_ADDR3 0x10
+#endif
+#ifndef configMAC_ADDR4
 #define configMAC_ADDR4 0x15
+#endif
+#ifndef configMAC_ADDR5
 #define configMAC_ADDR5 0x11
+#endif
 
 /* Error type */
 typedef signed char enet_err_t;

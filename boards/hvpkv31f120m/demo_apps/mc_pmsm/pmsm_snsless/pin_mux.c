@@ -15,11 +15,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v9.0
+product: Pins v11.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 0.10.4
+processor_version: 11.0.1
 pin_labels:
 - {pin_num: '85', pin_signal: PTC13/FB_AD26, label: RELAY, identifier: RELAY}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********

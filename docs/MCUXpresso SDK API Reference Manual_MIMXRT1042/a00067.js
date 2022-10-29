@@ -1,6 +1,6 @@
 var a00067 =
 [
-    [ "semc_sdram_config_t", "a00067.html#a00504", [
+    [ "semc_sdram_config_t", "a00067.html#a00505", [
       [ "csxPinMux", "a00067.html#a2d5aca72eb96b8cc24ae1e311a3b8b04", null ],
       [ "address", "a00067.html#a5ec8500c84d6ce9d42155f6c53241109", null ],
       [ "memsize_kbytes", "a00067.html#a04d6a6238baf0812a60f87a7223ac033", null ],
@@ -23,7 +23,7 @@ var a00067 =
       [ "refreshUrgThreshold", "a00067.html#ad2620016a22a74f7a078c99a4ac87206", null ],
       [ "refreshBurstLen", "a00067.html#aadd156b3af85bb6af2adae0576953f03", null ]
     ] ],
-    [ "semc_nand_timing_config_t", "a00067.html#a00498", [
+    [ "semc_nand_timing_config_t", "a00067.html#a00499", [
       [ "tCeSetup_Ns", "a00067.html#a43488e8f58378eb3df070f959f99e6f9", null ],
       [ "tCeHold_Ns", "a00067.html#aff124680a66815c3a7cf1f23c4ad895c", null ],
       [ "tCeInterval_Ns", "a00067.html#aeb9f6319e3c3c836b2aa0f39ffe0b199", null ],
@@ -38,7 +38,7 @@ var a00067 =
       [ "tReady2Relow_Ns", "a00067.html#a7154c9f3d193f4738e96ffe54ec2083b", null ],
       [ "tWehigh2Busy_Ns", "a00067.html#a35931851a747c8a1caf05cd434ea3e1c", null ]
     ] ],
-    [ "semc_nand_config_t", "a00067.html#a00497", [
+    [ "semc_nand_config_t", "a00067.html#a00498", [
       [ "cePinMux", "a00067.html#a64d1eda3de7bd7ed57ebd7efb7d20648", null ],
       [ "axiAddress", "a00067.html#a7021d8697aaffcf93a31ffc779128f42", null ],
       [ "axiMemsize_kbytes", "a00067.html#a948ff588277af99bf4ec894c6e616443", null ],
@@ -52,7 +52,7 @@ var a00067 =
       [ "portSize", "a00067.html#a591507bf3b418686e99df4bf6cbb8ea8", null ],
       [ "timingConfig", "a00067.html#ad4af2b5540ff0e7f3da18597132d513c", null ]
     ] ],
-    [ "semc_nor_config_t", "a00067.html#a00499", [
+    [ "semc_nor_config_t", "a00067.html#a00500", [
       [ "cePinMux", "a00067.html#a804d354d6b5c9b0b54e1bf64eeeb94e0", null ],
       [ "addr27", "a00067.html#a4e19090680d163d7c08b7d78c347d4cd", null ],
       [ "address", "a00067.html#a998a6d27682aab407a76746374e5921a", null ],
@@ -78,7 +78,7 @@ var a00067 =
       [ "latencyCount", "a00067.html#ab1c90bb3f97a4a4d4af13be5c863eb5e", null ],
       [ "readCycle", "a00067.html#a057f608008d781f4f8701f1f5c5b1e66", null ]
     ] ],
-    [ "semc_sram_config_t", "a00067.html#a00505", [
+    [ "semc_sram_config_t", "a00067.html#a00506", [
       [ "cePinMux", "a00067.html#a3239ed4c24d1f82e878754474c8df4cb", null ],
       [ "addr27", "a00067.html#ae316e6e66331292ef317f0fb5ba43253", null ],
       [ "address", "a00067.html#afdd65f6869375842dc0e7f11b0110026", null ],
@@ -104,7 +104,7 @@ var a00067 =
       [ "latencyCount", "a00067.html#af7fe484fd5e235b7ccda8ead6336dc21", null ],
       [ "readCycle", "a00067.html#ac52d9cd8381a83782539d0fdadc608e2", null ]
     ] ],
-    [ "semc_dbi_config_t", "a00067.html#a00496", [
+    [ "semc_dbi_config_t", "a00067.html#a00497", [
       [ "csxPinMux", "a00067.html#a97eeb06a428f77cc89496e4bdfc92579", null ],
       [ "address", "a00067.html#a619160a685ef70dc9e2baf5afe3175dc", null ],
       [ "memsize_kbytes", "a00067.html#aca16a35e3a81d7c99c589aaa7a8136df", null ],
@@ -119,52 +119,52 @@ var a00067 =
       [ "tRdxHigh_Ns", "a00067.html#a4074c6ab10f1acd901ef30975ea0d78e", null ],
       [ "tCsxInterval_Ns", "a00067.html#aeda30a1c3fd5fb6b1e52df023bd098a7", null ]
     ] ],
-    [ "semc_queuea_weight_struct_t", "a00067.html#a00500", [
+    [ "semc_queuea_weight_struct_t", "a00067.html#a00501", [
       [ "qos", "a00067.html#afab9f70a86a33b9c8da1ef36f2f1d02e", null ],
       [ "aging", "a00067.html#a6e55fb61226793aa0acbe0f58355898b", null ],
       [ "slaveHitSwith", "a00067.html#ace09bab95f07944ff34cf6319b6024cd", null ],
       [ "slaveHitNoswitch", "a00067.html#ad9bd44c36bc646f495f98af2066300c0", null ]
     ] ],
-    [ "semc_queuea_weight_t", "a00067.html#a00501", [
+    [ "semc_queuea_weight_t", "a00067.html#a00502", [
       [ "queueaConfig", "a00067.html#aefaa2eabd4ac4ea524b7d0126a02b20c", null ],
       [ "queueaValue", "a00067.html#ab509ce2fb0182fb358984b9301f4cdfd", null ]
     ] ],
-    [ "semc_queueb_weight_struct_t", "a00067.html#a00502", [
+    [ "semc_queueb_weight_struct_t", "a00067.html#a00503", [
       [ "qos", "a00067.html#a3186aa8a6b5d6697e416d5fbc57da495", null ],
       [ "aging", "a00067.html#a12e5e110c5ec9dd743ecdbf3ba7fa763", null ],
       [ "slaveHitSwith", "a00067.html#a834c4706478a75f2314684b65385e12e", null ],
       [ "weightPagehit", "a00067.html#a39bb3d43377f36d0a42e299043cd5396", null ],
       [ "bankRotation", "a00067.html#ac5871fe54766b23536af91dc8bd67381", null ]
     ] ],
-    [ "semc_queueb_weight_t", "a00067.html#a00503", [
+    [ "semc_queueb_weight_t", "a00067.html#a00504", [
       [ "queuebConfig", "a00067.html#a970901c06ba269d5629155625c3bffb0", null ],
       [ "queuebValue", "a00067.html#af6b7c849489b32c6cdec7d2abaf86691", null ]
     ] ],
-    [ "semc_axi_queueweight_t", "a00067.html#a00494", [
+    [ "semc_axi_queueweight_t", "a00067.html#a00495", [
       [ "queueaEnable", "a00067.html#a9a37ee71421c8fd72e449125a3f75cf1", null ],
       [ "queueaWeight", "a00067.html#abf61231ae8b60ac7986225f004c76e3b", null ],
       [ "queuebEnable", "a00067.html#abe1dd146b7b4e5a58d039c092012d54a", null ],
       [ "queuebWeight", "a00067.html#a093aa4c6138b637c68cf68003e208dca", null ]
     ] ],
-    [ "semc_config_t", "a00067.html#a00495", [
+    [ "semc_config_t", "a00067.html#a00496", [
       [ "dqsMode", "a00067.html#a944d6bcd47438973e8b39e30d21f156e", null ],
       [ "cmdTimeoutCycles", "a00067.html#a9411ce8d6b6935552dae7c1b5776c1e5", null ],
       [ "busTimeoutCycles", "a00067.html#aa461ba9894391d92617b62431c6b58e7", null ],
       [ "queueWeight", "a00067.html#a1dec5fdf83b6824de3bb64e3abfa45e3", null ]
     ] ],
     [ "FSL_SEMC_DRIVER_VERSION", "a00067.html#ga4c00c905a9849fed0957c80dee8fbf4c", [
-      [ "kStatus_SEMC_InvalidDeviceType", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a8134de36c04549cdcf55cf4c858da55d", null ],
-      [ "kStatus_SEMC_IpCommandExecutionError", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a154172d85ea51bd17983f44960634e24", null ],
-      [ "kStatus_SEMC_AxiCommandExecutionError", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6aeafb2cc4d329f963237f889ae8d92161", null ],
-      [ "kStatus_SEMC_InvalidMemorySize", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a9ca39c9c2ee56033cc51bbc988ba4eb3", null ],
-      [ "kStatus_SEMC_InvalidIpcmdDataSize", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ac7476fe2d7320c0bedcce9ca3722556d", null ],
-      [ "kStatus_SEMC_InvalidAddressPortWidth", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6adb5d3e2d66281dbbe9d7fe13b6f75f6b", null ],
-      [ "kStatus_SEMC_InvalidDataPortWidth", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a826916a280050f1cc7fb0eccfd5e117b", null ],
-      [ "kStatus_SEMC_InvalidSwPinmuxSelection", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a42c5fe91301fdce767039c864ce204f8", null ],
-      [ "kStatus_SEMC_InvalidBurstLength", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a498b180ed5c5f24389640413536f1dc4", null ],
-      [ "kStatus_SEMC_InvalidColumnAddressBitWidth", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a44022201115d6fdcd1826f2f62a7778c", null ],
-      [ "kStatus_SEMC_InvalidBaseAddress", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a13b40032b7ad5b8f81b4fddd54daf550", null ],
-      [ "kStatus_SEMC_InvalidTimerSetting", "a00067.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a43e530f523749e75a6c309fb6a344454", null ]
+      [ "kStatus_SEMC_InvalidDeviceType", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6a8134de36c04549cdcf55cf4c858da55d", null ],
+      [ "kStatus_SEMC_IpCommandExecutionError", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6a154172d85ea51bd17983f44960634e24", null ],
+      [ "kStatus_SEMC_AxiCommandExecutionError", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6aeafb2cc4d329f963237f889ae8d92161", null ],
+      [ "kStatus_SEMC_InvalidMemorySize", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6a9ca39c9c2ee56033cc51bbc988ba4eb3", null ],
+      [ "kStatus_SEMC_InvalidIpcmdDataSize", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6ac7476fe2d7320c0bedcce9ca3722556d", null ],
+      [ "kStatus_SEMC_InvalidAddressPortWidth", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6adb5d3e2d66281dbbe9d7fe13b6f75f6b", null ],
+      [ "kStatus_SEMC_InvalidDataPortWidth", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6a826916a280050f1cc7fb0eccfd5e117b", null ],
+      [ "kStatus_SEMC_InvalidSwPinmuxSelection", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6a42c5fe91301fdce767039c864ce204f8", null ],
+      [ "kStatus_SEMC_InvalidBurstLength", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6a498b180ed5c5f24389640413536f1dc4", null ],
+      [ "kStatus_SEMC_InvalidColumnAddressBitWidth", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6a44022201115d6fdcd1826f2f62a7778c", null ],
+      [ "kStatus_SEMC_InvalidBaseAddress", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6a13b40032b7ad5b8f81b4fddd54daf550", null ],
+      [ "kStatus_SEMC_InvalidTimerSetting", "a00067.html#ggaeb8e1c282570d629a6b603a94a4650d6a43e530f523749e75a6c309fb6a344454", null ]
     ] ],
     [ "semc_mem_type_t", "a00067.html#ga08735245d3d4ede425f932fa71b0e0d4", [
       [ "kSEMC_MemType_SDRAM", "a00067.html#gga08735245d3d4ede425f932fa71b0e0d4a6279414422020cd1c99949b6dbfb9507", null ],

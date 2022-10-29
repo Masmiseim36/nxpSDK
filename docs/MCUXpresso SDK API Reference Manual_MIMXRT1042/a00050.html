@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.2</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -130,10 +130,10 @@ eDMA transactional</h2></td></tr>
 <tr class="memitem:ga4891d980e0e489932e8d3b5c52588c2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00050.html#ga4891d980e0e489932e8d3b5c52588c2e">LPUART_TransferCreateHandleEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00050.html#gaed2bf1ac041ea4526ccf5ab0eba4da73">lpuart_edma_transfer_callback_t</a> callback, void *userData, <a class="el" href="a00021.html#a00371">edma_handle_t</a> *txEdmaHandle, <a class="el" href="a00021.html#a00371">edma_handle_t</a> *rxEdmaHandle)</td></tr>
 <tr class="memdesc:ga4891d980e0e489932e8d3b5c52588c2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the LPUART handle which is used in transactional functions.  <a href="#ga4891d980e0e489932e8d3b5c52588c2e">More...</a><br/></td></tr>
 <tr class="separator:ga4891d980e0e489932e8d3b5c52588c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga24c9dff9f142243ed5ffb3112a356386"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00050.html#ga24c9dff9f142243ed5ffb3112a356386">LPUART_SendEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00049.html#a00439">lpuart_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga24c9dff9f142243ed5ffb3112a356386"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00050.html#ga24c9dff9f142243ed5ffb3112a356386">LPUART_SendEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00049.html#a00440">lpuart_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga24c9dff9f142243ed5ffb3112a356386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using eDMA.  <a href="#ga24c9dff9f142243ed5ffb3112a356386">More...</a><br/></td></tr>
 <tr class="separator:ga24c9dff9f142243ed5ffb3112a356386"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00050.html#ga57b356ccc56276a557b3ddf53f6a7c0f">LPUART_ReceiveEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00049.html#a00439">lpuart_transfer_t</a> *xfer)</td></tr>
+<tr class="memitem:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00265.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00050.html#ga57b356ccc56276a557b3ddf53f6a7c0f">LPUART_ReceiveEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle, <a class="el" href="a00049.html#a00440">lpuart_transfer_t</a> *xfer)</td></tr>
 <tr class="memdesc:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using eDMA.  <a href="#ga57b356ccc56276a557b3ddf53f6a7c0f">More...</a><br/></td></tr>
 <tr class="separator:ga57b356ccc56276a557b3ddf53f6a7c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga48033a0651d1e68133bbb73ded3d9309"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00050.html#ga48033a0651d1e68133bbb73ded3d9309">LPUART_TransferAbortSendEDMA</a> (LPUART_Type *base, lpuart_edma_handle_t *handle)</td></tr>
@@ -401,7 +401,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#a00439">lpuart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00049.html#a00440">lpuart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -416,7 +416,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <table class="params">
     <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>LPUART handle pointer. </td></tr>
-    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure. See <a class="el" href="a00049.html#a00439" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure. See <a class="el" href="a00049.html#a00440" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -450,7 +450,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00049.html#a00439">lpuart_transfer_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00049.html#a00440">lpuart_transfer_t</a> *&#160;</td>
           <td class="paramname"><em>xfer</em>&#160;</td>
         </tr>
         <tr>
@@ -465,7 +465,7 @@ volatile uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <table class="params">
     <tr><td class="paramname">base</td><td>LPUART peripheral base address. </td></tr>
     <tr><td class="paramname">handle</td><td>Pointer to lpuart_edma_handle_t structure. </td></tr>
-    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure, see <a class="el" href="a00049.html#a00439" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
+    <tr><td class="paramname">xfer</td><td>LPUART eDMA transfer structure, see <a class="el" href="a00049.html#a00440" title="LPUART transfer structure. ">lpuart_transfer_t</a>. </td></tr>
   </table>
   </dd>
 </dl>

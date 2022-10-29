@@ -30,7 +30,7 @@ and run in each of them: python setup.py install
 Toolchain supported
 ===================
 - IAR embedded Workbench  9.10.2
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 

@@ -1,12 +1,12 @@
 var a00282 =
 [
     [ "FSL_PMU_DRIVER_VERSION", "a00282.html#ga0dc3464cb828e0c8195cf6f4fd9fc9a8", [
-      [ "kPMU_1P1RegulatorOutputOK", "a00282.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a394fea19008801a519d8739020709a19", null ],
-      [ "kPMU_1P1BrownoutOnOutput", "a00282.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0ac52322dd21cce9696c3dd7291f01808e", null ],
-      [ "kPMU_3P0RegulatorOutputOK", "a00282.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a5d2df2491523287e130b1e36ff457d42", null ],
-      [ "kPMU_3P0BrownoutOnOutput", "a00282.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a76b4070aa90b7471b8f95481f96d20f7", null ],
-      [ "kPMU_2P5RegulatorOutputOK", "a00282.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a536d44e80cffab2c47b9144628dac099", null ],
-      [ "kPMU_2P5BrownoutOnOutput", "a00282.html#ggae8a3b6a5d0d3244ed73924ab2421a0d0a74380ff6243784a0a997d9d69420b351", null ]
+      [ "kPMU_1P1RegulatorOutputOK", "a00282.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a394fea19008801a519d8739020709a19", null ],
+      [ "kPMU_1P1BrownoutOnOutput", "a00282.html#ggae6dceca96ec2c7a1b4aa211264a87ef6ac52322dd21cce9696c3dd7291f01808e", null ],
+      [ "kPMU_3P0RegulatorOutputOK", "a00282.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a5d2df2491523287e130b1e36ff457d42", null ],
+      [ "kPMU_3P0BrownoutOnOutput", "a00282.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a76b4070aa90b7471b8f95481f96d20f7", null ],
+      [ "kPMU_2P5RegulatorOutputOK", "a00282.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a536d44e80cffab2c47b9144628dac099", null ],
+      [ "kPMU_2P5BrownoutOnOutput", "a00282.html#ggae6dceca96ec2c7a1b4aa211264a87ef6a74380ff6243784a0a997d9d69420b351", null ]
     ] ],
     [ "pmu_1p1_weak_reference_source_t", "a00282.html#ga6b47a2e7d1775049cdcfb744b37ecadb", [
       [ "kPMU_1P1WeakReferenceSourceAlt0", "a00282.html#gga6b47a2e7d1775049cdcfb744b37ecadba66d71c9d447ecdb90b6b2b1bd025168e", null ],

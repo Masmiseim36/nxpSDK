@@ -269,6 +269,11 @@ usb_status_t USB_DeviceMscProcessUfiCommand(usb_device_msc_struct_t *mscHandle)
             error = USB_DeviceMscUfiRequestSenseCommand(mscHandle);
             break;
         case USB_DEVICE_MSC_TEST_UNIT_READY_COMMAND: /*operation code : 0x00 */
+            if (1U == g_msc.stop)
+            {
+                ufi->requestSense->senseKey            = USB_DEVICE_MSC_UFI_NOT_READY;
+                ufi->requestSense->additionalSenseCode = USB_DEVICE_MSC_UFI_ASC_MEDIUM_NOT_PRESENT;
+            }
             error = USB_DeviceMscUfiTestUnitReadyCommand(mscHandle);
             break;
         case USB_DEVICE_MSC_WRITE_10_COMMAND: /*operation code : 0x2A */
@@ -302,7 +307,11 @@ usb_status_t USB_DeviceMscProcessUfiCommand(usb_device_msc_struct_t *mscHandle)
         case USB_DEVICE_MSC_VERIFY_COMMAND: /*operation code : 0x2F*/
             error = USB_DeviceMscUfiVerifyCommand(mscHandle);
             break;
-        case USB_DEVICE_MSC_START_STOP_UNIT_COMMAND: /*operation code : 0x1B*/
+        case USB_DEVICE_MSC_START_STOP_UNIT_COMMAND:            /*operation code : 0x1B*/
+            if (0x00U == (mscHandle->mscCbw->cbwcb[4] & 0x01U)) /* check start bit */
+            {
+                g_msc.stop = 1U; /* stop command */
+            }
             error = USB_DeviceMscUfiStartStopUnitCommand(mscHandle);
             break;
         default:
@@ -351,8 +360,17 @@ usb_status_t USB_DeviceMscBulkIn(usb_device_handle deviceHandle,
             mscHandle->inEndpointCswCancelFlag = 0;
             /*cancel the transfer and wait for the calcel to be complete in bulk in callback*/
             /*send csw*/
-            USB_DeviceSendRequest(mscHandle->handle, mscHandle->bulkInEndpoint, (uint8_t *)mscHandle->mscCsw,
-                                  USB_DEVICE_MSC_CSW_LENGTH);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            if (kStatus_USB_Success != USB_DeviceSendRequest(mscHandle->handle, mscHandle->bulkInEndpoint,
+                                                             (uint8_t *)mscHandle->mscCsw, USB_DEVICE_MSC_CSW_LENGTH))
+            {
+                return kStatus_USB_Error;
+            }
+#else
+            (void)USB_DeviceSendRequest(mscHandle->handle, mscHandle->bulkInEndpoint, (uint8_t *)mscHandle->mscCsw,
+                                        USB_DEVICE_MSC_CSW_LENGTH);
+#endif
+
             mscHandle->cswPrimeFlag = 1;
             mscHandle->stallStatus  = 0;
         }
@@ -389,16 +407,26 @@ usb_status_t USB_DeviceMscBulkIn(usb_device_handle deviceHandle,
 
             /*data transfer has been done, send the csw to host */
             mscHandle->cswPrimeFlag = 1;
-            USB_DeviceSendRequest(g_msc.deviceHandle, mscHandle->bulkInEndpoint, (uint8_t *)mscHandle->mscCsw,
-                                  USB_DEVICE_MSC_CSW_LENGTH);
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+            error = USB_DeviceSendRequest(g_msc.deviceHandle, mscHandle->bulkInEndpoint, (uint8_t *)mscHandle->mscCsw,
+                                          USB_DEVICE_MSC_CSW_LENGTH);
+#else
+            (void)USB_DeviceSendRequest(g_msc.deviceHandle, mscHandle->bulkInEndpoint, (uint8_t *)mscHandle->mscCsw,
+                                        USB_DEVICE_MSC_CSW_LENGTH);
+#endif
         }
     }
     else if ((event->length == USB_DEVICE_MSC_CSW_LENGTH) && (csw->signature == USB_DEVICE_MSC_DCSWSIGNATURE))
     {
         mscHandle->cbwValidFlag = 1;
         mscHandle->cswPrimeFlag = 0;
+#if (defined(USB_DEVICE_CONFIG_RETURN_VALUE_CHECK) && (USB_DEVICE_CONFIG_RETURN_VALUE_CHECK > 0U))
+        error = USB_DeviceRecvRequest(g_msc.deviceHandle, mscHandle->bulkOutEndpoint, (uint8_t *)mscHandle->mscCbw,
+                                      USB_DEVICE_MSC_CBW_LENGTH);
+#else
         (void)USB_DeviceRecvRequest(g_msc.deviceHandle, mscHandle->bulkOutEndpoint, (uint8_t *)mscHandle->mscCbw,
                                     USB_DEVICE_MSC_CBW_LENGTH);
+#endif
         mscHandle->cbwPrimeFlag = 1;
     }
     else
@@ -651,6 +679,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
             g_mscHandle->configuration = 0;
             USB_DeviceControlPipeInit(g_msc.deviceHandle);
             g_msc.attach = 0;
+            g_msc.stop   = 0U;
             error        = kStatus_USB_Success;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))

@@ -14,7 +14,7 @@ eRPC documentation can be also found in: http://embeddedrpc.github.io
 Toolchain supported
 ===================
 - IAR embedded Workbench  9.10.2
-- MCUXpresso  11.4.0
+- MCUXpresso  11.5.0
 - Keil MDK  5.34
 - GCC ARM Embedded  10.2.1
 

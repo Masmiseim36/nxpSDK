@@ -41,11 +41,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v7.0
+product: Clocks v9.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 0.10.4
+processor_version: 11.0.1
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 

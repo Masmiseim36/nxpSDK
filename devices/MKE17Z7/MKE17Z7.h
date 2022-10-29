@@ -1,7 +1,9 @@
 /*
 ** ###################################################################
-**     Processors:          MKE17Z128VLH7
+**     Processors:          MKE17Z128VLF7
+**                          MKE17Z128VLH7
 **                          MKE17Z128VLL7
+**                          MKE17Z256VLF7
 **                          MKE17Z256VLH7
 **                          MKE17Z256VLL7
 **
@@ -12,8 +14,8 @@
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    KE1xZP100M72SF1RM, Rev. 1, Jun. 2021
-**     Version:             rev. 2.0, 2021-06-25
-**     Build:               b210707
+**     Version:             rev. 3.0, 2021-10-08
+**     Build:               b211108
 **
 **     Abstract:
 **         CMSIS Peripheral Access Layer for MKE17Z7
@@ -32,14 +34,16 @@
 **         Initial version.
 **     - rev. 2.0 (2021-06-25)
 **         Based on Rev.1 RM.
+**     - rev. 3.0 (2021-10-08)
+**         Add 48LQFP parts.
 **
 ** ###################################################################
 */
 
 /*!
  * @file MKE17Z7.h
- * @version 2.0
- * @date 2021-06-25
+ * @version 3.0
+ * @date 2021-10-08
  * @brief CMSIS Peripheral Access Layer for MKE17Z7
  *
  * CMSIS Peripheral Access Layer for MKE17Z7
@@ -50,7 +54,7 @@
 
 /** Memory map major version (memory maps with equal major version number are
  * compatible) */
-#define MCU_MEM_MAP_VERSION 0x0200U
+#define MCU_MEM_MAP_VERSION 0x0300U
 /** Memory map minor version */
 #define MCU_MEM_MAP_VERSION_MINOR 0x0000U
 

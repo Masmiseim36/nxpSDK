@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.2</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -579,6 +579,10 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da775bbdc635a58072646332f5b610fa20">kCLOCK_FlexSpi2</a> = (7U &lt;&lt; 8U) | CCM_CCGR7_CG1_SHIFT, 
 <br/>
 &#160;&#160;<a class="el" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da2ca62b78be448d5f7bd1e195c8f27e00">kCLOCK_Axbs_l</a> = (7U &lt;&lt; 8U) | CCM_CCGR7_CG2_SHIFT, 
+<br/>
+&#160;&#160;<a class="el" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da4798dbd7d2b5a1caf4526726fb22029c">kCLOCK_Can3</a> = (7U &lt;&lt; 8U) | CCM_CCGR7_CG3_SHIFT, 
+<br/>
+&#160;&#160;<a class="el" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da745ba503ec4e66ead6874ca0877205bb">kCLOCK_Can3S</a> = (7U &lt;&lt; 8U) | CCM_CCGR7_CG4_SHIFT, 
 <br/>
 &#160;&#160;<a class="el" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946dae66c713c22138ebba03e6d35a62457f4">kCLOCK_Aips_lite</a> = (7U &lt;&lt; 8U) | CCM_CCGR7_CG5_SHIFT, 
 <br/>
@@ -2048,11 +2052,12 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{                                              \</div>
-<div class="line">        kCLOCK_IpInvalid, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946daf917abde4a5e6dfe3139a033b8474b18">kCLOCK_Can1</a>, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da3bdfbe957bef5ab71f521904541fa9ef">kCLOCK_Can2</a> \</div>
+<b>Value:</b><div class="fragment"><div class="line">{                                                           \</div>
+<div class="line">        kCLOCK_IpInvalid, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946daf917abde4a5e6dfe3139a033b8474b18">kCLOCK_Can1</a>, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da3bdfbe957bef5ab71f521904541fa9ef">kCLOCK_Can2</a>, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da4798dbd7d2b5a1caf4526726fb22029c">kCLOCK_Can3</a> \</div>
 <div class="line">    }</div>
 <div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946daf917abde4a5e6dfe3139a033b8474b18"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946daf917abde4a5e6dfe3139a033b8474b18">kCLOCK_Can1</a></div><div class="ttdoc">CCGR0, CG7. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:509</div></div>
 <div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946da3bdfbe957bef5ab71f521904541fa9ef"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da3bdfbe957bef5ab71f521904541fa9ef">kCLOCK_Can2</a></div><div class="ttdoc">CCGR0, CG9. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:511</div></div>
+<div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946da4798dbd7d2b5a1caf4526726fb22029c"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da4798dbd7d2b5a1caf4526726fb22029c">kCLOCK_Can3</a></div><div class="ttdoc">CCGR7, CG3. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:627</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2065,10 +2070,11 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">{                                                \</div>
-<div class="line">        kCLOCK_IpInvalid, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946daf561af36c1de310f8067f110bc2d921a">kCLOCK_Can1S</a>, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da3fbb04a45083eed99f068f6102913137">kCLOCK_Can2S</a> \</div>
+<b>Value:</b><div class="fragment"><div class="line">{                                                              \</div>
+<div class="line">        kCLOCK_IpInvalid, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946daf561af36c1de310f8067f110bc2d921a">kCLOCK_Can1S</a>, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da3fbb04a45083eed99f068f6102913137">kCLOCK_Can2S</a>, <a class="code" href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da745ba503ec4e66ead6874ca0877205bb">kCLOCK_Can3S</a> \</div>
 <div class="line">    }</div>
 <div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946daf561af36c1de310f8067f110bc2d921a"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946daf561af36c1de310f8067f110bc2d921a">kCLOCK_Can1S</a></div><div class="ttdoc">CCGR0, CG8. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:510</div></div>
+<div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946da745ba503ec4e66ead6874ca0877205bb"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da745ba503ec4e66ead6874ca0877205bb">kCLOCK_Can3S</a></div><div class="ttdoc">CCGR7, CG4. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:628</div></div>
 <div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946da3fbb04a45083eed99f068f6102913137"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da3fbb04a45083eed99f068f6102913137">kCLOCK_Can2S</a></div><div class="ttdoc">CCGR0, CG10. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:512</div></div>
 </div><!-- fragment -->
 </div>
@@ -2087,7 +2093,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 <div class="line">    }</div>
 <div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946da4932459919f1a066609487a061c9b46b"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da4932459919f1a066609487a061c9b46b">kCLOCK_Flexio1</a></div><div class="ttdoc">CCGR5, CG1. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:591</div></div>
 <div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946da5e84dcfb85f39ded14e72d5886fd4f94"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da5e84dcfb85f39ded14e72d5886fd4f94">kCLOCK_Flexio2</a></div><div class="ttdoc">CCGR3, CG0. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:554</div></div>
-<div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946da1f393d74143f54520ca38bf4bf755854"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da1f393d74143f54520ca38bf4bf755854">kCLOCK_Flexio3</a></div><div class="ttdoc">CCGR7, CG6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:628</div></div>
+<div class="ttc" id="a00011_html_gga23c8b3ae62f7865b2e228408be95946da1f393d74143f54520ca38bf4bf755854"><div class="ttname"><a href="a00011.html#gga23c8b3ae62f7865b2e228408be95946da1f393d74143f54520ca38bf4bf755854">kCLOCK_Flexio3</a></div><div class="ttdoc">CCGR7, CG6. </div><div class="ttdef"><b>Definition:</b> fsl_clock.h:630</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -3025,6 +3031,12 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga23c8b3ae62f7865b2e228408be95946da2ca62b78be448d5f7bd1e195c8f27e00"></a>kCLOCK_Axbs_l</em>&nbsp;</td><td class="fielddoc">
 <p>CCGR7, CG2. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga23c8b3ae62f7865b2e228408be95946da4798dbd7d2b5a1caf4526726fb22029c"></a>kCLOCK_Can3</em>&nbsp;</td><td class="fielddoc">
+<p>CCGR7, CG3. </p>
+</td></tr>
+<tr><td class="fieldname"><em><a class="anchor" id="gga23c8b3ae62f7865b2e228408be95946da745ba503ec4e66ead6874ca0877205bb"></a>kCLOCK_Can3S</em>&nbsp;</td><td class="fielddoc">
+<p>CCGR7, CG4. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga23c8b3ae62f7865b2e228408be95946dae66c713c22138ebba03e6d35a62457f4"></a>kCLOCK_Aips_lite</em>&nbsp;</td><td class="fielddoc">
 <p>CCGR7, CG5. </p>

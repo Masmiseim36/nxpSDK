@@ -1,7 +1,7 @@
 var a00032 =
 [
     [ "FlexIO eDMA I2S Driver", "a00033.html", "a00033" ],
-    [ "FLEXIO_I2S_Type", "a00032.html#a00411", [
+    [ "FLEXIO_I2S_Type", "a00032.html#a00412", [
       [ "flexioBase", "a00032.html#a17b7bf09a1a3f54afaf63e0e190927d2", null ],
       [ "txPinIndex", "a00032.html#a84af0363647425d17fffb8d5555fbdd7", null ],
       [ "rxPinIndex", "a00032.html#adbb4dced07edd10ea2a343e8309c93a7", null ],
@@ -12,7 +12,7 @@ var a00032 =
       [ "bclkTimerIndex", "a00032.html#af86182c86d08dea7625f3e2ecdec44c0", null ],
       [ "fsTimerIndex", "a00032.html#af4ceb6fc780a851051a131dfc7174d25", null ]
     ] ],
-    [ "flexio_i2s_config_t", "a00032.html#a00408", [
+    [ "flexio_i2s_config_t", "a00032.html#a00409", [
       [ "enableI2S", "a00032.html#a65f52d2761d26fc3b38ae8dfd2d85f1b", null ],
       [ "masterSlave", "a00032.html#af23ab88febf5c71ed99eebe478152330", null ],
       [ "txPinPolarity", "a00032.html#a7ae45f854ddc7afdd384abba1b7a1055", null ],
@@ -22,11 +22,11 @@ var a00032 =
       [ "txTimerPolarity", "a00032.html#a5846c5f856bba11228e15d322aed6d06", null ],
       [ "rxTimerPolarity", "a00032.html#a7b293f477331ed1edd7129d074a38b18", null ]
     ] ],
-    [ "flexio_i2s_format_t", "a00032.html#a00409", [
+    [ "flexio_i2s_format_t", "a00032.html#a00410", [
       [ "bitWidth", "a00032.html#adb954eb873cf4622252e9c496531b006", null ],
       [ "sampleRate_Hz", "a00032.html#ab8d21f482920d2db31e60ce6073febc7", null ]
     ] ],
-    [ "flexio_i2s_transfer_t", "a00032.html#a00410", [
+    [ "flexio_i2s_transfer_t", "a00032.html#a00411", [
       [ "data", "a00032.html#a3a1bad13211ca0ffe270d1efaebed0ac", null ],
       [ "dataSize", "a00032.html#a02aca7ffe23c696b0d903d43736eea7c", null ]
     ] ],
@@ -44,20 +44,20 @@ var a00032 =
     [ "I2S_RETRY_TIMES", "a00032.html#ga7ea2ecb47ec7c253f394013b3d5b680f", null ],
     [ "FLEXIO_I2S_XFER_QUEUE_SIZE", "a00032.html#ga16823ec3547c940091b4eccc87fb5847", null ],
     [ "flexio_i2s_callback_t", "a00032.html#ga5ab500341d34539faaea54f985950046", [
-      [ "kStatus_FLEXIO_I2S_Idle", "a00032.html#gga7ff5f2dff38e7639981794c43dc9167ba78e5217077552655a4fbd4990ec5c311", null ],
-      [ "kStatus_FLEXIO_I2S_TxBusy", "a00032.html#gga7ff5f2dff38e7639981794c43dc9167ba48d8c97ea4e46f6631429992f1814a7a", null ],
-      [ "kStatus_FLEXIO_I2S_RxBusy", "a00032.html#gga7ff5f2dff38e7639981794c43dc9167bafc24c81bf7a6c092dc2ac0131739fb33", null ],
-      [ "kStatus_FLEXIO_I2S_Error", "a00032.html#gga7ff5f2dff38e7639981794c43dc9167ba73c78f01390e990b4cc75cca203780a5", null ],
-      [ "kStatus_FLEXIO_I2S_QueueFull", "a00032.html#gga7ff5f2dff38e7639981794c43dc9167bae38ee4495779398804472d81dac37c3e", null ],
-      [ "kStatus_FLEXIO_I2S_Timeout", "a00032.html#gga7ff5f2dff38e7639981794c43dc9167ba1857c052202d7abc210a4f1defb2332c", null ]
+      [ "kStatus_FLEXIO_I2S_Idle", "a00032.html#gga458e651af6690959efa2afb96be7d609a78e5217077552655a4fbd4990ec5c311", null ],
+      [ "kStatus_FLEXIO_I2S_TxBusy", "a00032.html#gga458e651af6690959efa2afb96be7d609a48d8c97ea4e46f6631429992f1814a7a", null ],
+      [ "kStatus_FLEXIO_I2S_RxBusy", "a00032.html#gga458e651af6690959efa2afb96be7d609afc24c81bf7a6c092dc2ac0131739fb33", null ],
+      [ "kStatus_FLEXIO_I2S_Error", "a00032.html#gga458e651af6690959efa2afb96be7d609a73c78f01390e990b4cc75cca203780a5", null ],
+      [ "kStatus_FLEXIO_I2S_QueueFull", "a00032.html#gga458e651af6690959efa2afb96be7d609ae38ee4495779398804472d81dac37c3e", null ],
+      [ "kStatus_FLEXIO_I2S_Timeout", "a00032.html#gga458e651af6690959efa2afb96be7d609a1857c052202d7abc210a4f1defb2332c", null ]
     ] ],
     [ "flexio_i2s_master_slave_t", "a00032.html#ga4251f1ee8699baaef1c7fd11b7f76782", [
       [ "kFLEXIO_I2S_Master", "a00032.html#gga4251f1ee8699baaef1c7fd11b7f76782a07afd29192b090e4721733409c076924", null ],
       [ "kFLEXIO_I2S_Slave", "a00032.html#gga4251f1ee8699baaef1c7fd11b7f76782a97fd81b843abe473a98104592b07573c", null ],
-      [ "kFLEXIO_I2S_TxDataRegEmptyInterruptEnable", "a00032.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8a1ef2aba36fa79d0d6c3137cbc396703f", null ],
-      [ "kFLEXIO_I2S_RxDataRegFullInterruptEnable", "a00032.html#ggaabfcbcb5ac86a1edac4035264bc7d2b8ac5723570f50576ab3f106a8391e0836e", null ],
-      [ "kFLEXIO_I2S_TxDataRegEmptyFlag", "a00032.html#gga5d76b81b0ad4c19007a781d4edb8181fa19e09f8fa7b55c47396e2b1766675f35", null ],
-      [ "kFLEXIO_I2S_RxDataRegFullFlag", "a00032.html#gga5d76b81b0ad4c19007a781d4edb8181fa33dfc99c1e90d0e6b0e09964625405e2", null ]
+      [ "kFLEXIO_I2S_TxDataRegEmptyInterruptEnable", "a00032.html#gga1f9aebf1de3ebbf4283a4dcf73308562a1ef2aba36fa79d0d6c3137cbc396703f", null ],
+      [ "kFLEXIO_I2S_RxDataRegFullInterruptEnable", "a00032.html#gga1f9aebf1de3ebbf4283a4dcf73308562ac5723570f50576ab3f106a8391e0836e", null ],
+      [ "kFLEXIO_I2S_TxDataRegEmptyFlag", "a00032.html#gga77867ab4129f63159b37bca3b652a798a19e09f8fa7b55c47396e2b1766675f35", null ],
+      [ "kFLEXIO_I2S_RxDataRegFullFlag", "a00032.html#gga77867ab4129f63159b37bca3b652a798a33dfc99c1e90d0e6b0e09964625405e2", null ]
     ] ],
     [ "flexio_i2s_sample_rate_t", "a00032.html#ga068da57c1c28f1630de3c6f98217af43", [
       [ "kFLEXIO_I2S_SampleRate8KHz", "a00032.html#gga068da57c1c28f1630de3c6f98217af43abdbb06784965d0befa972cf261bfe4e7", null ],

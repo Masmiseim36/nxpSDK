@@ -100,8 +100,8 @@
       </debug_configuration>
     </debug_configurations>
     <include_paths>
-      <include_path path="." project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="board" type="c_include"/>
+      <include_path path="." project_relative_path="source" type="c_include"/>
       <include_path path="." project_relative_path="evkmimxrt1040/demo_apps/power_mode_switch/bm" type="c_include"/>
     </include_paths>
     <source path="iar" project_relative_path="./" type="workspace" toolchain="iar">
@@ -131,6 +131,24 @@
       <files mask="build_release.bat"/>
       <files mask="build_release.sh"/>
     </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="dcd.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="dcd.h"/>
+    </source>
+    <source path="." project_relative_path="board" type="src">
+      <files mask="clock_config.c"/>
+      <files mask="pin_mux.c"/>
+      <files mask="peripherals.c"/>
+    </source>
+    <source path="." project_relative_path="board" type="c_include">
+      <files mask="clock_config.h"/>
+      <files mask="pin_mux.h"/>
+      <files mask="peripherals.h"/>
+    </source>
     <source path="." project_relative_path="source" type="src">
       <files mask="power_mode_switch.c"/>
       <files mask="lpm.c"/>
@@ -145,29 +163,11 @@
     <source path="." project_relative_path="source" type="c_include">
       <files mask="specific.h"/>
     </source>
-    <source path="." project_relative_path="board" type="src">
-      <files mask="pin_mux.c"/>
-      <files mask="peripherals.c"/>
-    </source>
-    <source path="." project_relative_path="board" type="c_include">
-      <files mask="pin_mux.h"/>
-      <files mask="peripherals.h"/>
-    </source>
     <source path="." project_relative_path="." type="other">
       <files mask="power_mode_switch.mex" hidden="true"/>
     </source>
     <source path="." project_relative_path="evkmimxrt1040/demo_apps/power_mode_switch/bm" type="binary">
       <files mask="power_mode_switch_bm.bin" hidden="true"/>
-    </source>
-    <source path="." project_relative_path="board" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
-      <files mask="dcd.c"/>
-    </source>
-    <source path="." project_relative_path="board" type="c_include">
-      <files mask="board.h"/>
-      <files mask="clock_config.h"/>
-      <files mask="dcd.h"/>
     </source>
     <source path="." project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>

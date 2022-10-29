@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2021 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief LPUART driver version. */
-#define FSL_LPUART_DRIVER_VERSION (MAKE_VERSION(2, 5, 1))
+#define FSL_LPUART_DRIVER_VERSION (MAKE_VERSION(2, 5, 3))
 /*@}*/
 
 /*! @brief Retry times for waiting flag. */
@@ -515,6 +515,7 @@ static inline void LPUART_EnableMatchAddress(LPUART_Type *base, bool match1, boo
  */
 static inline void LPUART_SetRxFifoWatermark(LPUART_Type *base, uint8_t water)
 {
+    assert((uint8_t)FSL_FEATURE_LPUART_FIFO_SIZEn(base) > water);
     base->WATER = (base->WATER & ~LPUART_WATER_RXWATER_MASK) | LPUART_WATER_RXWATER(water);
 }
 
@@ -526,6 +527,7 @@ static inline void LPUART_SetRxFifoWatermark(LPUART_Type *base, uint8_t water)
  */
 static inline void LPUART_SetTxFifoWatermark(LPUART_Type *base, uint8_t water)
 {
+    assert((uint8_t)FSL_FEATURE_LPUART_FIFO_SIZEn(base) > water);
     base->WATER = (base->WATER & ~LPUART_WATER_TXWATER_MASK) | LPUART_WATER_TXWATER(water);
 }
 #endif
@@ -562,7 +564,7 @@ uint32_t LPUART_GetStatusFlags(LPUART_Type *base);
  * can't be cleared by this function.
  * Flags that can only cleared or set by hardware are:
  *    kLPUART_TxDataRegEmptyFlag, kLPUART_TransmissionCompleteFlag, kLPUART_RxDataRegFullFlag,
- *    kLPUART_RxActiveFlag, kLPUART_NoiseErrorInRxDataRegFlag, kLPUART_ParityErrorInRxDataRegFlag,
+ *    kLPUART_RxActiveFlag, kLPUART_NoiseErrorFlag, kLPUART_ParityErrorFlag,
  *    kLPUART_TxFifoEmptyFlag,kLPUART_RxFifoEmptyFlag
  * Note: This API should be called when the Tx/Rx is idle, otherwise it takes no effects.
  *
@@ -593,7 +595,7 @@ status_t LPUART_ClearStatusFlags(LPUART_Type *base, uint32_t mask);
  * @endcode
  *
  * @param base LPUART peripheral base address.
- * @param mask The interrupts to enable. Logical OR of the enumeration _uart_interrupt_enable.
+ * @param mask The interrupts to enable. Logical OR of @ref _lpuart_interrupt_enable.
  */
 void LPUART_EnableInterrupts(LPUART_Type *base, uint32_t mask);
 

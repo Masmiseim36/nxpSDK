@@ -21,10 +21,10 @@
 #include "event_groups.h"
 
 // KSDK and ISSDK Headers
-#include "fsl_debug_console.h" // KSDK header file for the debug interface
-#include "board.h"             // KSDK header file to define board configuration
 #include "pin_mux.h"           // KSDK header file for pin mux initialization functions
 #include "clock_config.h"      // KSDK header file for clock configuration
+#include "board.h"             // KSDK header file to define board configuration
+#include "fsl_debug_console.h" // KSDK header file for the debug interface
 #include "fsl_port.h"          // KSDK header file for Port I/O control
 #include "fsl_i2c.h"           // KSDK header file for I2C interfaces
 #include "fxas21002.h"         // register address and bit field definitions

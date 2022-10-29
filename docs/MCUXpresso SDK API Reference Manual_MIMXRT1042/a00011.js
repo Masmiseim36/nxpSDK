@@ -228,6 +228,8 @@ var a00011 =
       [ "kCLOCK_Timer3", "a00011.html#gga23c8b3ae62f7865b2e228408be95946da1cc0817d74a9a4768005a209ad497a1b", null ],
       [ "kCLOCK_FlexSpi2", "a00011.html#gga23c8b3ae62f7865b2e228408be95946da775bbdc635a58072646332f5b610fa20", null ],
       [ "kCLOCK_Axbs_l", "a00011.html#gga23c8b3ae62f7865b2e228408be95946da2ca62b78be448d5f7bd1e195c8f27e00", null ],
+      [ "kCLOCK_Can3", "a00011.html#gga23c8b3ae62f7865b2e228408be95946da4798dbd7d2b5a1caf4526726fb22029c", null ],
+      [ "kCLOCK_Can3S", "a00011.html#gga23c8b3ae62f7865b2e228408be95946da745ba503ec4e66ead6874ca0877205bb", null ],
       [ "kCLOCK_Aips_lite", "a00011.html#gga23c8b3ae62f7865b2e228408be95946dae66c713c22138ebba03e6d35a62457f4", null ],
       [ "kCLOCK_Flexio3", "a00011.html#gga23c8b3ae62f7865b2e228408be95946da1f393d74143f54520ca38bf4bf755854", null ]
     ] ],

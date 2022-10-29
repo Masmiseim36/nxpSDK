@@ -11,13 +11,25 @@
 #include "peripherals.h"
 #include "fsl_port.h"
 #include "board.h"
+#include "mid_sm_states.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* Version info */
 #define MCRSP_VER "2.0.0" /* motor control package version */
 
-#define HVP_BOARD 1
+/* Example's feature set in form of bits inside ui16featureSet.
+   This feature set is expected to be growing over time.
+   ... | FEATURE_S_RAMP | FEATURE_FIELD_WEAKENING | FEATURE_ENC
+*/
+#define FEATURE_ENC (0)               /* Encoder feature flag */
+#define FEATURE_FIELD_WEAKENING (0)   /* Field weakening feature flag */
+#define FEATURE_S_RAMP (0)            /* S-ramp feature flag */
+
+#define FEATURE_SET (FEATURE_ENC << (0) | \
+                     FEATURE_FIELD_WEAKENING << (1) | \
+                     FEATURE_S_RAMP << (2))
 
 /* Macro for correct Cortex CM0 / CM4 end of interrupt */
 #define M1_END_OF_ISR \
@@ -40,6 +52,7 @@ static void BOARD_Init(void);
 static void BOARD_InitGPIO(void);
 static void BOARD_InitSysTick(void);
 
+static void Application_Control_BL(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -57,19 +70,16 @@ static uint32_t ui32SpeedStimulatorCnt    = 0U;
 /* Counter for button pressing */
 static uint32_t ui32ButtonFilter = 0U;
 
-/* Application and board ID  */
-app_ver_t g_sAppId = {
-    "hvp-kv31", /* board id */
-    "pmsm",     /* motor type */
-    MCRSP_VER,  /* sw version */
-};
-
 /* Structure used in FM to get required ID's */
 app_ver_t g_sAppIdFM = {
-	"",
-	"",
-	MCRSP_VER,
+    "hvpkv31f120m", /* board id */
+    "pmsm_snsless", /* example id */
+    MCRSP_VER,      /* sw version */
+    FEATURE_SET,    /* example's feature-set */
 };
+
+mid_app_cmd_t g_eMidCmd;                  /* Start/Stop MID command */
+ctrl_m1_mid_t g_sSpinMidSwitch;           /* Control Spin/MID switching */
 
 /*******************************************************************************
  * Prototypes
@@ -89,12 +99,17 @@ app_ver_t g_sAppIdFM = {
  */
 int main(void)
 {
+    /*Accessing ID structure to prevent optimization*/
+    g_sAppIdFM.ui16FeatureSet = FEATURE_SET;
+
+    uint32_t ui32PrimaskReg;
+
+    /* Disable all interrupts before peripherals are initialized */
+    ui32PrimaskReg = DisableGlobalIRQ();
+
     /* Disable demo mode after reset */
     bDemoModeSpeed         = FALSE;
     ui32SpeedStimulatorCnt = 0U;
-
-    /* Pass actual demo id and board info to FM */
-    g_sAppIdFM = g_sAppId;
 
     /* Init board hardware. */
     BOARD_Init();
@@ -105,9 +120,25 @@ int main(void)
     /* Turn off application */
     M1_SetAppSwitch(FALSE);
 
+    /* Init MID state machine - call before the spin state machine */
+    g_sSpinMidSwitch.eAppState = kAppStateMID;
+
+    if(g_sSpinMidSwitch.eAppState == kAppStateMID)
+    {
+      MID_Init_AR();
+    }
+
+    /* Spin state machine is default */
+    g_sSpinMidSwitch.eAppState = kAppStateSpin;
+
+    /* Enable interrupts  */
+    EnableGlobalIRQ(ui32PrimaskReg);
+
     /* Infinite loop */
     while (1)
     {
+        Application_Control_BL();
+
         /* FreeMASTER Polling function */
         FMSTR_Poll();
     }
@@ -126,8 +157,17 @@ void FAST_LOOP_IRQHANDLER(void) {
     /* Start CPU tick number couting */
     SYSTICK_START_COUNT();
 
-    /* State machine */
-    SM_StateMachineFast(&g_sM1Ctrl);
+    switch(g_sSpinMidSwitch.eAppState)
+    {
+    case kAppStateSpin:
+        /* M1 state machine */
+        SM_StateMachineFast(&g_sM1Ctrl);
+      break;
+    default:
+        /* MID state machine */
+        MID_ProcessFast_FL();
+      break;
+    }
 
     /* stop CPU tick number couting and store actual and maximum ticks */
     SYSTICK_STOP_COUNT(g_ui32NumberOfCycles);
@@ -233,6 +273,62 @@ static void DemoSpeedStimulator(void)
                 break;
         }
     }
+}
+
+/*!
+ * @brief   Application_Control_BL
+ *           - Control switching between Spin and MID
+ *
+ * @param   void
+ *
+ * @return  none
+ */
+static void Application_Control_BL(void)
+{
+  switch(g_sSpinMidSwitch.eAppState)
+  {
+    case kAppStateSpin:
+        /* M1 state machine */
+        if(g_sSpinMidSwitch.bCmdRunMid == TRUE)
+        {
+          if((kSM_AppStop == M1_GetAppState()) && (FALSE == M1_GetAppSwitch()) )
+          {
+            MID_Init_AR();
+            g_sSpinMidSwitch.sFaultCtrlM1_Mid &= ~(FAULT_APP_SPIN);
+            g_eMidCmd = kMID_Cmd_Stop;                          /* Reset MID control command */
+            g_sSpinMidSwitch.eAppState = kAppStateMID;          /* MID routines will be processed */
+          }
+          else
+            g_sSpinMidSwitch.sFaultCtrlM1_Mid |= FAULT_APP_SPIN;
+
+          g_sSpinMidSwitch.bCmdRunMid = FALSE;                  /* Always clear request */
+        }
+
+        g_sSpinMidSwitch.bCmdRunM1 = FALSE;
+        break;
+    default:
+        /* MID state machine */
+        if(g_sSpinMidSwitch.bCmdRunM1 == TRUE)
+        {
+          if((g_eMidCmd == kMID_Cmd_Stop) && (kMID_Stop == MID_GetActualState()))
+          {
+            g_sSpinMidSwitch.sFaultCtrlM1_Mid &= ~(FAULT_APP_MID);
+            g_sM1Ctrl.eState = kSM_AppInit;                      /* Set Init state for M1 state machine */
+            g_sSpinMidSwitch.eAppState = kAppStateSpin;          /* Switch application state to Spin */
+          }
+          else
+            g_sSpinMidSwitch.sFaultCtrlM1_Mid |= FAULT_APP_MID;
+
+           /* Always clear request */
+          g_sSpinMidSwitch.bCmdRunM1 = FALSE;
+          g_sSpinMidSwitch.bCmdRunMid = FALSE;
+          break;
+        }
+
+        g_sSpinMidSwitch.bCmdRunMid = FALSE;
+        MID_Process_BL(&g_eMidCmd);
+        break;
+  }
 }
 
 /*!

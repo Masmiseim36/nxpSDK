@@ -23,18 +23,18 @@
 #include "iot_logging_task.h"
 
 #include "ax_api.h"
-#if SSS_HAVE_ALT_A71CH
+#if SSS_HAVE_MBEDTLS_ALT_A71CH
 #include "ax_mbedtls.h"
 #include <fsl_sscp_a71ch.h>
 #endif
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
 #include "sss_mbedtls.h"
 #include "ex_sss.h"
 #endif
 
 #include <fsl_sss_api.h>
 
-#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
+#if SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM
 #endif
 #include "gcp_iot_config.h"
 #include "mbedtls/platform.h"
@@ -119,9 +119,9 @@ void gcp_jwt_task(void *ctx)
         LOG_E(" sss_key_object_get_handle  for keyPair Failed...\n");
         return;
     }
-#if SSS_HAVE_ALT_SSS
+#if SSS_HAVE_MBEDTLS_ALT_SSS
     ret = sss_mbedtls_associate_keypair(&pk, &pex_sss_demo_tls_ctx->obj);
-#elif SSS_HAVE_ALT_A71CH
+#elif SSS_HAVE_MBEDTLS_ALT_A71CH
     ret = ax_mbedtls_associate_keypair(0, &pk);
 #endif
     if (ret != 0) {

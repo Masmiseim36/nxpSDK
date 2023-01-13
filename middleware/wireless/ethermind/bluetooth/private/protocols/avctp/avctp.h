@@ -24,6 +24,9 @@ void em_avctp_init ( void );
 void avctp_bt_init ( void );
 
 /* AVCTP Shutdown API */
+#ifdef BT_HAVE_SHUTDOWN
+void em_avctp_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 void avctp_bt_shutdown ( void );
 
 #endif /* _H_AVCTP_ */

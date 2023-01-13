@@ -33,6 +33,11 @@
 /* --------------------------------------------- API Declarations */
 /** Initialization/Shutdown of BNEP */
 void em_bnep_init ( void );
+
+#ifdef BT_HAVE_SHUTDOWN
+void em_bnep_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
+
 void bnep_bt_init ( void );
 void bnep_bt_shutdown ( void );
 

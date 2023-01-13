@@ -10,6 +10,13 @@
 #ifndef ZEPHYR_INCLUDE_BLUETOOTH_ATT_H_
 #define ZEPHYR_INCLUDE_BLUETOOTH_ATT_H_
 
+/**
+ * @brief Attribute Protocol (ATT)
+ * @defgroup bt_att Attribute Protocol (ATT)
+ * @ingroup bluetooth
+ * @{
+ */
+
 #include <sys/slist.h>
 
 #ifdef __cplusplus
@@ -54,12 +61,63 @@ extern "C" {
 #define BT_ATT_LAST_ATTRIBUTE_HANDLE            0xffff
 #define BT_ATT_LAST_ATTTRIBUTE_HANDLE __DEPRECATED_MACRO BT_ATT_LAST_ATTRIBUTE_HANDLE
 
-#if defined(CONFIG_BT_TESTING)
+#if (defined(CONFIG_BT_EATT) && (CONFIG_BT_EATT > 0U))
+#if (defined(CONFIG_BT_TESTING) && (CONFIG_BT_TESTING > 0))
+
 int bt_eatt_disconnect_one(struct bt_conn *conn);
+
+/* Reconfigure all EATT channels on connection */
+int bt_eatt_reconfigure(struct bt_conn *conn, uint16_t mtu);
+
 #endif /* CONFIG_BT_TESTING */
+
+/** @brief Connect Enhanced ATT channels
+ *
+ * Sends a series of Credit Based Connection Requests to connect @p num_channels
+ * Enhanced ATT channels. The peer may have limited resources and fewer channels
+ * may be created.
+ *
+ * @param conn The connection to send the request on
+ * @param num_channels The number of Enhanced ATT beares to request.
+ * Must be in the range 1 - @kconfig{CONFIG_BT_EATT_MAX}, inclusive.
+ *
+ * @return 0 in case of success or negative value in case of error.
+ * @retval -EINVAL if @p num_channels is not in the allowed range or @p conn is NULL.
+ * @retval -ENOMEM if less than @p num_channels are allocated.
+ * @retval 0 in case of success
+ */
+int bt_eatt_connect(struct bt_conn *conn, size_t num_channels);
+
+/** @brief Get number of EATT channels connected.
+ *
+ * @param conn The connection to get the number of EATT channels for.
+ *
+ * @return The number of EATT channels connected.
+ * Returns 0 if @p conn is NULL or not connected.
+ */
+size_t bt_eatt_count(struct bt_conn *conn);
+
+#endif /* CONFIG_BT_EATT */
+
+/** @brief ATT channel option bit field values.
+ * @note @ref BT_ATT_CHAN_OPT_UNENHANCED_ONLY and @ref BT_ATT_CHAN_OPT_ENHANCED_ONLY are mutually
+ * exclusive and both bits may not be set.
+ */
+enum bt_att_chan_opt {
+	/** Both Enhanced and Unenhanced channels can be used  */
+	BT_ATT_CHAN_OPT_NONE = 0x0,
+	/** Only Unenhanced channels will be used  */
+	BT_ATT_CHAN_OPT_UNENHANCED_ONLY = BIT(0),
+	/** Only Enhanced channels will be used  */
+	BT_ATT_CHAN_OPT_ENHANCED_ONLY = BIT(1),
+};
 
 #ifdef __cplusplus
 }
 #endif
+
+/**
+ * @}
+ */
 
 #endif /* ZEPHYR_INCLUDE_BLUETOOTH_ATT_H_ */

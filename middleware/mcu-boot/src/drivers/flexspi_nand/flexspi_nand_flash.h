@@ -144,6 +144,18 @@ enum
     kSerialNandOption_Tag = 0x0C,
 };
 
+enum
+{
+    kSerialNandConnection_PortA = 0,
+    kSerialNandConnection_PortB = 2,
+};
+
+enum
+{
+    kSerialNandCfgOption_DeviceType_Quad = 0,
+    kSerialNandCfgOption_DeviceType_Octal = 1
+};
+
 typedef struct
 {
     union {
@@ -154,7 +166,7 @@ typedef struct
             uint32_t pages_per_block : 4; //!< 0 - 64, 1 - 128, 2 - 256, 3 - 32
             uint32_t has_multiplanes : 4; //!< 0 - no , 1 - yes
             uint32_t flash_size : 4;      //!< 0 - 512Mbit, 1 - 1Gbit, 2 - 2Gbit, 4 - 4Gbit, 8 - 8Gbit
-            uint32_t reserved : 4;        //!< Reserved for future use
+            uint32_t device_type : 4;     //!< Device type, 0 - Quad, 1 - Octal
             uint32_t option_size : 4;     //!< Option size : (option_size + 1) * 4 bytes
             uint32_t tag : 4;             //!< Fixed to 0x0E
         } B;
@@ -164,10 +176,12 @@ typedef struct
     union {
         struct
         {
-            uint32_t manufacturer_id : 8; //!< Manufacturer ID
-            uint32_t eccFailureMask : 8;  //!< Ecc Failure Mask
-            uint32_t eccCheckMask : 8;    //!< Ecc Check Mask
-            uint32_t reserved : 8;        //!< Reserved for future use.
+            uint32_t manufacturer_id : 8;  //!< Manufacturer ID
+            uint32_t eccFailureMask : 8;   //!< Ecc Failure Mask
+            uint32_t eccCheckMask : 8;     //!< Ecc Check Mask
+            uint32_t pinmux_group : 4;     //!< The pinmux group selection
+            uint32_t flash_connection : 4; //!< Flash connection option: 0 - Single Flash connected to port A, 2 -
+            //! Single Flash connected to Port B
         } B;
         uint32_t U;
     } option1;
@@ -253,6 +267,18 @@ extern "C"
     status_t flexspi_nand_get_config(uint32_t instance,
                                      flexspi_nand_config_t *config,
                                      serial_nand_config_option_t *option);
+    /*
+     * !@brief Restore device to initial state
+     *
+     * This function force the serial NAND device to default state
+     *
+     * @param instance FlexSPI instance
+     * @param config Serial NAND configuration paramters via FlexSPI
+     * @param option Serial NAND configuration option words.
+     */
+    status_t flexspi_nand_software_reset(uint32_t instance,
+                                        flexspi_nand_config_t *config,
+                                        serial_nand_config_option_t *option);
 
 #ifdef __cplusplus
 }

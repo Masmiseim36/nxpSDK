@@ -43,7 +43,7 @@ var pad_8h =
     [ "PAD_PULLFUNC", "pad_8h.html#afcae466d3a5a143206eb69fd073cb59b", null ],
     [ "PAD_CHAINFUNC", "pad_8h.html#a5b35023ca28714f5ea0b7db0523f7bbc", null ],
     [ "PadActivateFunc", "pad_8h.html#a815526223e37110430dcc45d8839ff98", null ],
-    [ "PadPullFunc", "pad_8h.html#af7094f558c41a2600cbc5b5b6c5f242c", null ],
+    [ "PadPullFunc", "pad_8h.html#a5162630c9c84580d5eabcb3287894f42", null ],
     [ "PadChainFunc", "pad_8h.html#a6d3f725e9504a9e741bd3db894e90291", null ],
     [ "PadEventFunc", "pad_8h.html#afa6b90e51d10a035f3b3076f44cd8014", null ],
     [ "PadQueryFunc", "pad_8h.html#a0b8b9d09c6d35b5cd86becc94ab680bf", null ],
@@ -73,7 +73,6 @@ var pad_8h =
       [ "TYPE_PAD_LAST", "pad_8h.html#a2fe4f951cef265f7e54d2584c24e61b2a0f57b4a25d1ff8801a5c669d67f4b158", null ]
     ] ],
     [ "FlowReturn", "pad_8h.html#a02291801821c51de06e39c5136db8905", [
-      [ "FLOW_RESEND", "pad_8h.html#a02291801821c51de06e39c5136db8905aa2c24650f3f34665fae9660a26ae6efa", null ],
       [ "FLOW_OK", "pad_8h.html#a02291801821c51de06e39c5136db8905acb2bb2550b43cf67dfc26d921d2ceed4", null ],
       [ "FLOW_NOT_LINKED", "pad_8h.html#a02291801821c51de06e39c5136db8905ad322abb6ab18131dcb793af65e56ef36", null ],
       [ "FLOW_WRONG_STATE", "pad_8h.html#a02291801821c51de06e39c5136db8905a39356bc4ee25ab49f836b3af2380fc7e", null ],
@@ -81,21 +80,11 @@ var pad_8h =
       [ "FLOW_ERROR", "pad_8h.html#a02291801821c51de06e39c5136db8905a422d08f1dbf77563de329aa7b97483c6", null ],
       [ "FLOW_NOT_SUPPORTED", "pad_8h.html#a02291801821c51de06e39c5136db8905ac8fca3c3396a5b86933f6b2632eaabd8", null ],
       [ "FLOW_BAD_PARAMETER", "pad_8h.html#a02291801821c51de06e39c5136db8905a5d9401254985810aa474168e033d8dbf", null ],
-      [ "FLOW_NO_RESOURCE", "pad_8h.html#a02291801821c51de06e39c5136db8905a2aefacfbae92ae9956a367693dc929f9", null ],
-      [ "FLOW_TERMINATED", "pad_8h.html#a02291801821c51de06e39c5136db8905a260155802ec0683140fe27dbcf8e6c54", null ],
-      [ "FLOW_NO_MEMORY", "pad_8h.html#a02291801821c51de06e39c5136db8905a2fed78f13c95e051f5716958c8ae6553", null ]
+      [ "FLOW_TIME_OUT", "pad_8h.html#a02291801821c51de06e39c5136db8905a1c1cb697f2315c265d9ff4ee0e6771c6", null ],
+      [ "FLOW_EOS", "pad_8h.html#a02291801821c51de06e39c5136db8905aebad261a2b86b1b8fd42cf3aa8ac36c6", null ]
     ] ],
-    [ "PadReturn", "pad_8h.html#a664eb343766e4abf8baf1de2b277eafe", [
-      [ "PAD_OK", "pad_8h.html#a664eb343766e4abf8baf1de2b277eafeabd62d025a7fb540e2607bd8eb1ae0b6b", null ],
-      [ "PAD_STREAM_ERR_INVALID_ARGS", "pad_8h.html#a664eb343766e4abf8baf1de2b277eafeab1d8191774e4c38eeebd691dfade0f9d", null ],
-      [ "PAD_STREAM_ERR_NO_MEM", "pad_8h.html#a664eb343766e4abf8baf1de2b277eafeac18474b4112726170aaba90f567bac9d", null ],
-      [ "PAD_STREAM_ERR_GENERAL", "pad_8h.html#a664eb343766e4abf8baf1de2b277eafea579649796142ea189ac3195a27030fb4", null ],
-      [ "PAD_STREAM_ERR_UNEXPECTED", "pad_8h.html#a664eb343766e4abf8baf1de2b277eafea1056680a578e775f5bc43e1fcc8c80df", null ],
-      [ "PAD_STREAM_ERR_DEVICE_READ_TIME_OUT", "pad_8h.html#a664eb343766e4abf8baf1de2b277eafeafd6e5149a806bbf7332319b26ebc660f", null ],
-      [ "PAD_STREAM_ERR_EOS", "pad_8h.html#a664eb343766e4abf8baf1de2b277eafeadcabc53c6da93841b6cd21247a9b9370", null ]
-    ] ],
-    [ "init_pad", "pad_8h.html#a29ac26d0b0d7b43d00663819841a278e", null ],
-    [ "deinit_pad", "pad_8h.html#aea6144e7bd90a3a7bd95d8e609d20e6e", null ],
+    [ "init_pad", "pad_8h.html#a61865f4e82d7c1f5b2e0614b0aa8e75b", null ],
+    [ "deinit_pad", "pad_8h.html#a5f40059f9a4bffdb9e939395ade42c8b", null ],
     [ "pad_push", "pad_8h.html#a82a7214418489f587607e71c957ff341", null ],
     [ "pad_pull_range", "pad_8h.html#a6236612e05f8b966c7efb37e277bb8b0", null ],
     [ "pad_push_event", "pad_8h.html#a5e29b7e7772d223fc7a6749364a4c365", null ],
@@ -103,11 +92,11 @@ var pad_8h =
     [ "activate_pad", "pad_8h.html#adff5fd975cbfca05e65ea3357e409ed0", null ],
     [ "pad_activate_pull", "pad_8h.html#aef914606189b928528974ff1a01a801b", null ],
     [ "pad_activate_push", "pad_8h.html#a0557c37b7b3093294af1c6794979cca0", null ],
-    [ "event_create_flush_start", "pad_8h.html#a374309ee373875c6d0f6229ff3dd963f", null ],
-    [ "event_create_flush_stop", "pad_8h.html#a4024a5ebddbfa7681165472c79f4ad7b", null ],
-    [ "event_create_eos", "pad_8h.html#a35864fe5af492fb8a9ff74f8a6e10902", null ],
-    [ "event_create_new_segment", "pad_8h.html#a8c6d0dcd913fd22e5c0d76290676c465", null ],
-    [ "event_create_seek", "pad_8h.html#acc98281bb0531081339090e08d96d7a4", null ],
+    [ "event_create_flush_start", "pad_8h.html#a1193bfc8aa0166bc7eee5074582a1fd5", null ],
+    [ "event_create_flush_stop", "pad_8h.html#ac57e3efbae1a05b65bae697866c4a2ae", null ],
+    [ "event_create_eos", "pad_8h.html#abcb6f5555ff8b6fcaf55d65e183cca87", null ],
+    [ "event_create_new_segment", "pad_8h.html#aa8428911c8d8d911f8c9d9280b089aeb", null ],
+    [ "event_create_seek", "pad_8h.html#abcb3d3fa34a94e349ae06425b55e9aa0", null ],
     [ "pad_query", "pad_8h.html#a282b4c96955837daa1702aa54a2ab35b", null ],
-    [ "query_create", "pad_8h.html#a6c4e6066029a4693f723b3dec5065436", null ]
+    [ "query_create", "pad_8h.html#a0608408d5bc110ba5d63c0d8596c6e52", null ]
 ];

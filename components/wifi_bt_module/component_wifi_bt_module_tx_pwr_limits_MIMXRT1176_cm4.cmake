@@ -1,4 +1,4 @@
-include_guard(GLOBAL)
+include_guard()
 message("component_wifi_bt_module_tx_pwr_limits component is included.")
 
 

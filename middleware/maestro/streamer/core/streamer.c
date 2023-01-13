@@ -345,7 +345,7 @@ void streamer_task(void *args)
 
             streamer_process_pipelines(streamer);
 
-            if (streamer->pipeline_type == STREAM_PIPELINE_TEST_EAPFILE2FILE)
+            if (streamer->pipeline_type == STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE)
             {
                 // Due to forcing a context switch
                 OSA_TimeDelay(1);
@@ -466,7 +466,7 @@ int streamer_msg_handler(STREAMER_T *task_data, STREAMER_MSG_T *msg)
 int streamer_process_pipelines(STREAMER_T *task_data)
 {
     unsigned int loop_count;
-    int ret = PAD_OK;
+    int ret = 0;
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
@@ -474,9 +474,9 @@ int streamer_process_pipelines(STREAMER_T *task_data)
     {
         if (STATE_PLAYING == get_state_pipeline(task_data->pipes[loop_count]))
         {
-            ret = process_pipeline(task_data->pipes[loop_count]);
+            ret = (int)process_pipeline(task_data->pipes[loop_count]);
 
-            if (PAD_OK != ret)
+            if (0 != ret)
             {
                 STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL,
                                  "STREAMER - Process Pipeline Error!\
@@ -485,16 +485,19 @@ int streamer_process_pipelines(STREAMER_T *task_data)
 
                 set_state_pipeline(task_data->pipes[loop_count], STATE_NULL);
 
-                STREAMER_MSG_T msg = {0};
-
-                msg.id         = STREAM_MSG_ERROR;
-                msg.errorcode  = ret;
-                msg.event_data = ret;
-                msg.state      = STATE_NULL;
-
-                if (ERRCODE_NO_ERROR != OSA_MsgQPut(&task_data->mq_out, (char *)&msg))
+                if (task_data->mq_out != 0)
                 {
-                    STREAMER_LOG_ERR(DBG_CORE, ERRCODE_MSG_FAILURE, "STREAMER : Send MSG failed\n");
+                    STREAMER_MSG_T msg = {0};
+
+                    msg.id         = STREAM_MSG_ERROR;
+                    msg.errorcode  = ret;
+                    msg.event_data = ret;
+                    msg.state      = STATE_NULL;
+
+                    if (ERRCODE_NO_ERROR != OSA_MsgQPut(&task_data->mq_out, (char *)&msg))
+                    {
+                        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_MSG_FAILURE, "STREAMER : Send MSG failed\n");
+                    }
                 }
             }
         }

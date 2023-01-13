@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_message_buffer_1_1_curso
 <p><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html" title="Cursor within a MessageBuffer. ">Cursor</a> within a <a class="el" href="classerpc_1_1_message_buffer.html" title="Represents a memory buffer containing a message. ">MessageBuffer</a>.  
  <a href="classerpc_1_1_message_buffer_1_1_cursor.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="erpc__message__buffer_8h_source.html">erpc_message_buffer.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__message__buffer_8hpp_source.html">erpc_message_buffer.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -142,6 +142,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6f3dff599ef13d4ffca7e5d559a50afa"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a6f3dff599ef13d4ffca7e5d559a50afa">getRemaining</a> (void) const </td></tr>
 <tr class="memdesc:a6f3dff599ef13d4ffca7e5d559a50afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return remaining free space in current buffer.  <a href="#a6f3dff599ef13d4ffca7e5d559a50afa">More...</a><br /></td></tr>
 <tr class="separator:a6f3dff599ef13d4ffca7e5d559a50afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af00cc3be42e41c2a1b01ee3707f59b95"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#af00cc3be42e41c2a1b01ee3707f59b95">getRemainingUsed</a> (void) const </td></tr>
+<tr class="memdesc:af00cc3be42e41c2a1b01ee3707f59b95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return remaining space from used of current buffer.  <a href="#af00cc3be42e41c2a1b01ee3707f59b95">More...</a><br /></td></tr>
+<tr class="separator:af00cc3be42e41c2a1b01ee3707f59b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a13613fadb3bb88585f5802ff845259a4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a13613fadb3bb88585f5802ff845259a4">read</a> (void *data, uint32_t length)</td></tr>
 <tr class="memdesc:a13613fadb3bb88585f5802ff845259a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read data from current buffer.  <a href="#a13613fadb3bb88585f5802ff845259a4">More...</a><br /></td></tr>
 <tr class="separator:a13613fadb3bb88585f5802ff845259a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,24 +159,24 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#ae4f90eaa930d92cc411272df9f038218">operator const uint8_t *</a> (void) const </td></tr>
 <tr class="memdesc:ae4f90eaa930d92cc411272df9f038218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casting operator return local buffer. <br /></td></tr>
 <tr class="separator:ae4f90eaa930d92cc411272df9f038218"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a721666b1b9f1460e103a4b69fabf063d"><td class="memItemLeft" align="right" valign="top">uint8_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a721666b1b9f1460e103a4b69fabf063d">operator[]</a> (int index)</td></tr>
-<tr class="memdesc:a721666b1b9f1460e103a4b69fabf063d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array operator return value of buffer at given index.  <a href="#a721666b1b9f1460e103a4b69fabf063d">More...</a><br /></td></tr>
-<tr class="separator:a721666b1b9f1460e103a4b69fabf063d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a419699bfaa21427f8b34c95222479e54"><td class="memItemLeft" align="right" valign="top">const uint8_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a419699bfaa21427f8b34c95222479e54">operator[]</a> (int index) const </td></tr>
-<tr class="memdesc:a419699bfaa21427f8b34c95222479e54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array operator return value of buffer at given index.  <a href="#a419699bfaa21427f8b34c95222479e54">More...</a><br /></td></tr>
-<tr class="separator:a419699bfaa21427f8b34c95222479e54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3ea93264bdf3679f3d77e53f1f85552"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#ab3ea93264bdf3679f3d77e53f1f85552">operator+=</a> (uint16_t n)</td></tr>
-<tr class="memdesc:ab3ea93264bdf3679f3d77e53f1f85552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sum operator return local buffer.  <a href="#ab3ea93264bdf3679f3d77e53f1f85552">More...</a><br /></td></tr>
-<tr class="separator:ab3ea93264bdf3679f3d77e53f1f85552"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02907775cbd61bd0637398a3ea62c335"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a02907775cbd61bd0637398a3ea62c335">operator-=</a> (uint16_t n)</td></tr>
-<tr class="memdesc:a02907775cbd61bd0637398a3ea62c335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Substract operator return local buffer.  <a href="#a02907775cbd61bd0637398a3ea62c335">More...</a><br /></td></tr>
-<tr class="separator:a02907775cbd61bd0637398a3ea62c335"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6689aa97195019a55f3364a6806579c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a6689aa97195019a55f3364a6806579c4">operator++</a> (void)</td></tr>
-<tr class="memdesc:a6689aa97195019a55f3364a6806579c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sum +1 operator.  <a href="#a6689aa97195019a55f3364a6806579c4">More...</a><br /></td></tr>
-<tr class="separator:a6689aa97195019a55f3364a6806579c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b2df653c9676b9ccab457f80f8c70e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a1b2df653c9676b9ccab457f80f8c70e7">operator--</a> (void)</td></tr>
-<tr class="memdesc:a1b2df653c9676b9ccab457f80f8c70e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Substract -1 operator.  <a href="#a1b2df653c9676b9ccab457f80f8c70e7">More...</a><br /></td></tr>
-<tr class="separator:a1b2df653c9676b9ccab457f80f8c70e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f1e17f17825f09461f56251f490da86"><td class="memItemLeft" align="right" valign="top">uint8_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a2f1e17f17825f09461f56251f490da86">operator[]</a> (int index)</td></tr>
+<tr class="memdesc:a2f1e17f17825f09461f56251f490da86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array operator return value of buffer at given index.  <a href="#a2f1e17f17825f09461f56251f490da86">More...</a><br /></td></tr>
+<tr class="separator:a2f1e17f17825f09461f56251f490da86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8674068997bbabb7290c1ea98222cd77"><td class="memItemLeft" align="right" valign="top">const uint8_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a8674068997bbabb7290c1ea98222cd77">operator[]</a> (int index) const </td></tr>
+<tr class="memdesc:a8674068997bbabb7290c1ea98222cd77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array operator return value of buffer at given index.  <a href="#a8674068997bbabb7290c1ea98222cd77">More...</a><br /></td></tr>
+<tr class="separator:a8674068997bbabb7290c1ea98222cd77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0959f4badd1e460843e27796d6a617d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a0959f4badd1e460843e27796d6a617d7">operator+=</a> (uint16_t n)</td></tr>
+<tr class="memdesc:a0959f4badd1e460843e27796d6a617d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sum operator return local buffer.  <a href="#a0959f4badd1e460843e27796d6a617d7">More...</a><br /></td></tr>
+<tr class="separator:a0959f4badd1e460843e27796d6a617d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5afd2d6fde5886c56e829e2764cb31cf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a5afd2d6fde5886c56e829e2764cb31cf">operator-=</a> (uint16_t n)</td></tr>
+<tr class="memdesc:a5afd2d6fde5886c56e829e2764cb31cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Substract operator return local buffer.  <a href="#a5afd2d6fde5886c56e829e2764cb31cf">More...</a><br /></td></tr>
+<tr class="separator:a5afd2d6fde5886c56e829e2764cb31cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cea25fd89b923762142d28a2b29ec5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a7cea25fd89b923762142d28a2b29ec5c">operator++</a> (void)</td></tr>
+<tr class="memdesc:a7cea25fd89b923762142d28a2b29ec5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sum +1 operator.  <a href="#a7cea25fd89b923762142d28a2b29ec5c">More...</a><br /></td></tr>
+<tr class="separator:a7cea25fd89b923762142d28a2b29ec5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07bcd96a371c9abc96be26866b436e37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html#a07bcd96a371c9abc96be26866b436e37">operator--</a> (void)</td></tr>
+<tr class="memdesc:a07bcd96a371c9abc96be26866b436e37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Substract -1 operator.  <a href="#a07bcd96a371c9abc96be26866b436e37">More...</a><br /></td></tr>
+<tr class="separator:a07bcd96a371c9abc96be26866b436e37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html" title="Cursor within a MessageBuffer. ">Cursor</a> within a <a class="el" href="classerpc_1_1_message_buffer.html" title="Represents a memory buffer containing a message. ">MessageBuffer</a>. </p>
@@ -222,7 +225,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -346,6 +349,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="af00cc3be42e41c2a1b01ee3707f59b95"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t erpc::MessageBuffer::Cursor::getRemainingUsed </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return remaining space from used of current buffer. </p>
+<dl class="section return"><dt>Returns</dt><dd>Remaining space from used of current buffer. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a13613fadb3bb88585f5802ff845259a4"></a>
 <div class="memitem">
 <div class="memproto">
@@ -430,26 +460,18 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a721666b1b9f1460e103a4b69fabf063d"></a>
+<a class="anchor" id="a2f1e17f17825f09461f56251f490da86"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t&amp; erpc::MessageBuffer::Cursor::operator[] </td>
+          <td class="memname">uint8_t &amp; MessageBuffer::Cursor::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>index</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Array operator return value of buffer at given index. </p>
@@ -462,26 +484,18 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a419699bfaa21427f8b34c95222479e54"></a>
+<a class="anchor" id="a8674068997bbabb7290c1ea98222cd77"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const uint8_t&amp; erpc::MessageBuffer::Cursor::operator[] </td>
+          <td class="memname">const uint8_t &amp; MessageBuffer::Cursor::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>index</em></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Array operator return value of buffer at given index. </p>
@@ -494,26 +508,18 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab3ea93264bdf3679f3d77e53f1f85552"></a>
+<a class="anchor" id="a0959f4badd1e460843e27796d6a617d7"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a>&amp; erpc::MessageBuffer::Cursor::operator+= </td>
+          <td class="memname"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">MessageBuffer::Cursor</a> &amp; MessageBuffer::Cursor::operator+= </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>n</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Sum operator return local buffer. </p>
@@ -527,26 +533,18 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a02907775cbd61bd0637398a3ea62c335"></a>
+<a class="anchor" id="a5afd2d6fde5886c56e829e2764cb31cf"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a>&amp; erpc::MessageBuffer::Cursor::operator-= </td>
+          <td class="memname"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">MessageBuffer::Cursor</a> &amp; MessageBuffer::Cursor::operator-= </td>
           <td>(</td>
           <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>n</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Substract operator return local buffer. </p>
@@ -560,26 +558,18 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6689aa97195019a55f3364a6806579c4"></a>
+<a class="anchor" id="a7cea25fd89b923762142d28a2b29ec5c"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a>&amp; erpc::MessageBuffer::Cursor::operator++ </td>
+          <td class="memname"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">MessageBuffer::Cursor</a> &amp; MessageBuffer::Cursor::operator++ </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Sum +1 operator. </p>
@@ -587,26 +577,18 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1b2df653c9676b9ccab457f80f8c70e7"></a>
+<a class="anchor" id="a07bcd96a371c9abc96be26866b436e37"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">Cursor</a>&amp; erpc::MessageBuffer::Cursor::operator-- </td>
+          <td class="memname"><a class="el" href="classerpc_1_1_message_buffer_1_1_cursor.html">MessageBuffer::Cursor</a> &amp; MessageBuffer::Cursor::operator-- </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Substract -1 operator. </p>
@@ -615,7 +597,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="erpc__message__buffer_8h_source.html">erpc_message_buffer.h</a></li>
+<li><a class="el" href="erpc__message__buffer_8hpp_source.html">erpc_message_buffer.hpp</a></li>
 <li>erpc_message_buffer.cpp</li>
 </ul>
 </div><!-- contents -->

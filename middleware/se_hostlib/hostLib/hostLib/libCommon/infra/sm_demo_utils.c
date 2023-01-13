@@ -4,7 +4,7 @@
  * @version 1.0
  * @par License
  *
- * Copyright 2017,2018,2020 NXP
+ * Copyright 2017,2018,2020,2022 NXP
  * SPDX-License-Identifier: Apache-2.0
  *
  * @par Description
@@ -35,9 +35,12 @@
 #endif
 #include "nxLog_App.h"
 
+#if !defined(NORDIC_MCU)
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "fsl_debug_console.h"
+#endif // !defined(NORDIC_MCU)
 
 //#include "aws_clientcredential.h"
 
@@ -52,14 +55,13 @@
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
 #include "netif/ethernet.h"
-#include "enet_ethernetif.h"
+#include "ethernetif.h"
 #include "lwip/netifapi.h"
 #ifdef EXAMPLE_USE_100M_ENET_PORT
 #include "fsl_phyksz8081.h"
 #else
 #include "fsl_phyrtl8211f.h"
 #endif
-#include "fsl_enet_mdio.h"
 #endif
 
 #if defined(LPC_ENET)
@@ -77,8 +79,10 @@
 #ifdef EXAMPLE_USE_100M_ENET_PORT
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
+extern phy_ksz8081_resource_t g_phy_resource;
 /* PHY operations. */
-#define EXAMPLE_PHY_OPS phyksz8081_ops
+#define EXAMPLE_PHY_OPS &phyksz8081_ops
+#define EXAMPLE_PHY_RESOURCE &g_phy_resource
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #else
@@ -95,7 +99,7 @@
 
 #include "HLSEAPI.h"
 #include "sm_demo_utils.h"
-#include "fsl_debug_console.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -117,8 +121,7 @@
  * Static variables
  ******************************************************************************/
 static struct netif fsl_netif;
-static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
-static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+static phy_handle_t phyHandle;
 
 #endif // LPC_ENET
 
@@ -182,41 +185,27 @@ void BOARD_InitNetwork_MAC(const unsigned char buffer[18])
 #elif defined(LPC_ENET)
 #if FSL_FEATURE_SOC_ENET_COUNT > 0 || FSL_FEATURE_SOC_LPC_ENET_COUNT > 0
 
-    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
-    ethernetif_config_t enet_config = {
-        .phyHandle      = &phyHandle,
-        .macAddress     = configMAC_ADDR,
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-        .non_dma_memory = non_dma_memory,
-#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
+ethernetif_config_t fsl_enet_config0 = {.phyHandle   = &phyHandle,
+                                        .phyAddr     = EXAMPLE_PHY_ADDRESS,
+                                        .phyOps      = EXAMPLE_PHY_OPS,
+                                        .phyResource = EXAMPLE_PHY_RESOURCE,
+                                        .srcClockHz  = EXAMPLE_CLOCK_FREQ,
+                                        .macAddress = configMAC_ADDR
     };
-    if (buffer != NULL) {
-        MAC_HASH(1);
-        MAC_HASH(2);
-        MAC_HASH(3);
-        MAC_HASH(4);
-        MAC_HASH(5);
-    }
 
-    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
-
-    IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&netif_gw, 0U, 0U, 0U, 0U);
-
-    LOG_I("Connecting to network\r\n");
     tcpip_init(NULL, NULL);
 
-    netif_add(&fsl_netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN, tcpip_input);
-    netif_set_default(&fsl_netif);
-    netif_set_up(&fsl_netif);
-    //    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
-    //                       ethernetif0_init, tcpip_input);
-    //    netifapi_netif_set_default(&fsl_netif0);
-    //    netifapi_netif_set_up(&fsl_netif0);
+    netifapi_netif_add(&fsl_netif, NULL, NULL, NULL, &fsl_enet_config0, EXAMPLE_NETIF_INIT_FN, tcpip_input);
+    netifapi_netif_set_default(&fsl_netif);
+    netifapi_netif_set_up(&fsl_netif);
+
+    while (ethernetif_wait_linkup(&fsl_netif, 5000) != ERR_OK)
+    {
+        PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
+    }
 
     LOG_I("Getting IP address from DHCP ...\n");
-    dhcp_start(&fsl_netif);
+    netifapi_dhcp_start(&fsl_netif);
 
     struct dhcp *dhcp;
     dhcp = (struct dhcp *)netif_get_client_data(&fsl_netif, LWIP_NETIF_CLIENT_DATA_INDEX_DHCP);

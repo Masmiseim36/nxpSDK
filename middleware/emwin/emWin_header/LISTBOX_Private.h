@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.24 - Graphical user interface for embedded applications **
+** emWin V6.28 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2022-09-02
+SUA period:               2011-08-19 - 2023-09-03
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : LISTBOX_Private.h
@@ -59,8 +59,14 @@ Purpose     : Private LISTBOX include
 *
 **********************************************************************
 */
-#define LISTBOX_ITEM_SELECTED (1 << 0)
-#define LISTBOX_ITEM_DISABLED (1 << 1)
+#define LISTBOX_ITEM_SELECTED         (1 << 0)
+#define LISTBOX_ITEM_DISABLED         (1 << 1)
+//
+// Private flags
+//
+#define LISTBOX_MOTION_STARTED        (1 << 0)   // Set while motion is running.
+#define LISTBOX_MOTION_PID_PRESSED    (1 << 1)   // Set if PID is pressed during motion.
+#define LISTBOX_TIMER_SNAPPING        (1 << 2)   // Set at the start of a manual snapping operation (_SnapToNearestItem). Cleared when it is done.
 
 /*********************************************************************
 *
@@ -93,14 +99,18 @@ typedef struct {
   WM_SCROLL_STATE         ScrollStateH;
   LISTBOX_PROPS           Props;
   WM_HWIN                 hOwner;
-  I16                     Sel;                        /* current selection */
-  U8                      Flags;
-  U8                      ScrollbarWidth;
   int                     MotionPosY;
+  int                     TotalRowHeight;            // Cached value
+  int                     yOffset;                   // Cached value
+  WM_HMEM                 hContext;                  // Motion context.
+  GUI_TIMER_HANDLE        hTimer;                    // Timer for motion snapping.
+  I16                     Sel;                       /* current selection */
   U16                     ItemSpacing;
   U16                     ContentSizeX;
   U16                     FixedScrollPos;
-  U8                      MotionStarted;             // Internal flag to check if motion swiping has been started
+  U8                      Flags;
+  U8                      ScrollbarWidth;
+  U8                      FlagsIntern;               // Internal flags, see above.
 } LISTBOX_Obj;
 
 /*********************************************************************
@@ -110,7 +120,7 @@ typedef struct {
 **********************************************************************
 */
 #if GUI_DEBUG_LEVEL >= GUI_DEBUG_LEVEL_CHECK_ALL
-  #define LISTBOX_INIT_ID(p) p->Widget.DebugId = LISTBOX_ID
+  #define LISTBOX_INIT_ID(p) p->Widget.DebugId = WIDGET_TYPE_LISTBOX
 #else
   #define LISTBOX_INIT_ID(p)
 #endif
@@ -121,6 +131,8 @@ typedef struct {
 #else
   #define LISTBOX_LOCK_H(h)   (LISTBOX_Obj *)WM_LOCK_H(h)
 #endif
+
+#define LISTBOX_H2P(h)       ((LISTBOX_Obj *)WM_H2P(h))
 
 /*********************************************************************
 *
@@ -151,8 +163,6 @@ void         LISTBOX__AddSize               (LISTBOX_Obj * pObj, int Index);
 
 #endif /* GUI_WINSUPPORT */
 
-#else                            /* Avoid problems with empty object modules */
-  void LISTBOX_C(void) {}
-#endif
+#endif /* LISTBOX_PRIVATE_H */
 
 /*************************** End of file ****************************/

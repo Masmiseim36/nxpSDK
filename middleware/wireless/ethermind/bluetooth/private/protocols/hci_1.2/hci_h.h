@@ -20,26 +20,37 @@
 /* ------------------------------------------------- Global Definitions */
 
 /** Packet Boundary Flag in the ACL Data Header */
-#define HCI_START_OF_L2CAP_PACKET                   0x02
-#define HCI_CONTINUATION_OF_L2CAP_PACKET            0x01
+#define HCI_START_OF_L2CAP_PACKET                   0x02U
+#define HCI_CONTINUATION_OF_L2CAP_PACKET            0x01U
 
 /**
  * Non - Automatically - Flushable Packet Boundary Flag
  * introduced with 2.1+EDR Specification
  */
-#define HCI_START_OF_NON_FLUSHABLE_L2CAP_PACKET     0x00
-#define HCI_START_OF_FLUSHABLE_L2CAP_PACKET         0x02
+#define HCI_START_OF_NON_FLUSHABLE_L2CAP_PACKET     0x00U
+#define HCI_START_OF_FLUSHABLE_L2CAP_PACKET         0x02U
+
+#ifdef HCI_ISO_DATA
+/** Packet Boundary Flag in the ISO Data Header */
+#define HCI_START_OF_ISO_PACKET                     0x00U
+#define HCI_CONTINUATION_OF_ISO_PACKET              0x01U
+#define HCI_COMPLETE_ISO_PACKET                     0x02U
+#define HCI_END_OF_ISO_PACKET                       0x03U
+#endif /* HCI_ISO_DATA */
 
 /* Broadcast flag in the ACL Data Header */
-#define HCI_NO_BROADCAST                            0x00
-#define HCI_ACTIVE_BROADCAST                        0x01
-#define HCI_PICONET_BROADCAST                       0x02
+#define HCI_NO_BROADCAST                            0x00U
+#define HCI_ACTIVE_BROADCAST                        0x01U
+#define HCI_PICONET_BROADCAST                       0x02U
 
 /* ------------------------------------------------- Function Declarations */
 
 /* ------------------------------------------------ API Declarations */
 /** Initialisation & shutdown routines of the HCI Layer */
 void em_hci_init( void );
+#ifdef BT_HAVE_SHUTDOWN
+void em_hci_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 API_RESULT hci_bt_init ( void );
 void hci_bt_shutdown ( void );
 

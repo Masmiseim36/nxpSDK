@@ -1,12 +1,12 @@
 /*
-	* Copyright 2021 NXP
+	* Copyright 2022 NXP
 	*
 	* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /*
-    * FILE NAME: ../../../boards/hvpkv31f120m/demo_apps/mc_pmsm/pmsm_snsless/m1_pmsm_appconfig.h
-    * DATE: Wed Dec 15 2021, 12:45:43
+    * FILE NAME: ../boards/lpcxpresso55s36/mc_pmsm/pmsm_enc/m1_pmsm_appconfig.h
+    * DATE: Wed Oct 12 2022, 12:08:34
 */
 
 /*
@@ -37,7 +37,7 @@
         "parametersFreewheelDuration": 1.5,
         "parametersScalarUqMin": 1,
         "parametersAlignVoltage": 1.2,
-        "parametersAlignDuration": 1
+        "parametersAlignDuration": 0.4
     },
     "currentLoop": {
         "currentLoopSampleTime": 0.0001,
@@ -49,15 +49,14 @@
         "speedLoopSampleTime": 0.001,
         "speedLoopF0": 28,
         "speedLoopKsi": 1,
-        "speedLoopIncUp": 10000,
-        "speedLoopIncDown": 10000,
+        "speedLoopIncUp": 5000,
+        "speedLoopIncDown": 5000,
         "speedLoopCutOffFreq": 100,
         "speedLoopUpperLimit": 2,
         "speedLoopLowerLimit": -2,
         "speedLoopSLKp": 0.009202212,
         "speedLoopSLKi": 0.00008095,
-        "speedLoopManualConstantTunning": false,
-        "speedLoopPLKp": 0.12
+        "speedLoopManualConstantTunning": false
     },
     "sensors": {
         "sensorEncPulseNumber": 1000,
@@ -65,13 +64,15 @@
         "sensorEncNmin": 0,
         "sensorObsrvParSampleTime": 0.0001,
         "sensorObsrvParF0": 100,
-        "sensorObsrvParKsi": 1
+        "sensorObsrvParKsi": 1,
+        "positionLoopPLKp": 0.12
     },
     "sensorless": {
         "sensorlessBemfObsrvF0": 300,
         "sensorlessBemfObsrvKsi": 1,
         "sensorlessTrackObsrvF0": 70,
         "sensorlessTrackObsrvKsi": 1,
+        "sensorlessTrackObsrvIIRSpeedCutOff": 400,
         "sensorlessStartupRamp": 3000,
         "sensorlessStartupCurrent": 0.65,
         "sensorlessMergingSpeed": 500,
@@ -82,8 +83,8 @@
 
 /*
 {
-    "motorName": "teknic",
-    "motorDescription": "Configuration for Teknic motor."
+    "motorName": "Teknic",
+    "motorDescription": "Configuration for the Teknic motor."
 }
 */
 
@@ -109,7 +110,7 @@
 #define M1_FREEWHEEL_DURATION (1500)
 #define M1_SCALAR_UQ_MIN (1.0F)
 #define M1_ALIGN_VOLTAGE (1.2F)
-#define M1_ALIGN_DURATION (1000)
+#define M1_ALIGN_DURATION (4000)
 #define M1_U_MAX (35.1029F)
 #define M1_FREQ_MAX (293.333F)
 #define M1_N_ANGULAR_MAX (2.38732F)
@@ -118,8 +119,8 @@
 #define M1_UDCB_IIR_A1 (0.939082F)
 #define M1_SCALAR_VHZ_FACTOR_GAIN (0.0562500F)
 #define M1_SCALAR_INTEG_GAIN ACC32(0.0586667)
-#define M1_SCALAR_RAMP_UP (0.0666667F)
-#define M1_SCALAR_RAMP_DOWN (0.0666667F)
+#define M1_SCALAR_RAMP_UP (0.0333333F)
+#define M1_SCALAR_RAMP_DOWN (0.0333333F)
 /* CURRENTLOOP*/
 #define M1_D_KP_GAIN (0.459831F)
 #define M1_D_KI_GAIN (0.106749F)
@@ -127,25 +128,25 @@
 #define M1_Q_KI_GAIN (0.0962702F)
 #define M1_CLOOP_LIMIT (0.519615F)
 /* SPEEDLOOP*/
-#define M1_SPEED_RAMP_UP (4.18879F)
-#define M1_SPEED_RAMP_DOWN (4.18879F)
+#define M1_SPEED_RAMP_UP (2.09440F)
+#define M1_SPEED_RAMP_DOWN (2.09440F)
 #define M1_SPEED_LOOP_HIGH_LIMIT (2.0F)
 #define M1_SPEED_LOOP_LOW_LIMIT (-2.0F)
 #define M1_SPEED_PI_PROP_GAIN (0.00920221F)
 #define M1_SPEED_PI_INTEG_GAIN (0.0000809469F)
-#define M1_POS_P_PROP_GAIN FRAC16(0.12)
 #define M1_SPEED_IIR_B0 (0.0304590F)
 #define M1_SPEED_IIR_B1 (0.0304590F)
 #define M1_SPEED_IIR_A1 (0.939082F)
-/* SENSORS */
+/* SENSORS*/
 #define M1_POSPE_ENC_PULSES (1000)
 #define M1_POSPE_ENC_DIRECTION (0)
 #define M1_POSPE_ENC_N_MIN (0.0F)
 #define M1_POSPE_MECH_POS_GAIN ACC32(16.384)
+#define M1_POS_P_PROP_GAIN FRAC16(0.12)
 #define M1_POSPE_KP_GAIN (1256.64F)
 #define M1_POSPE_KI_GAIN (39.4784F)
 #define M1_POSPE_INTEG_GAIN (0.0000318310F)
-/* SENSORLESS */
+/* SENSORLESS*/
 #define M1_OL_START_RAMP_INC (0.125664F)
 #define M1_OL_START_I (0.65F)
 #define M1_MERG_SPEED_TRH (209.440F)
@@ -163,6 +164,9 @@
 #define M1_TO_SPEED_IIR_B1 (0.111635F)
 #define M1_TO_SPEED_IIR_A1 (0.776730F)
 /* USER INPUT START */
+
+
+
 #define AA 1
 #define BB 3
 #define CC 4

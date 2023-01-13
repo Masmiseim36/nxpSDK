@@ -12,11 +12,15 @@
 /*
  * @brief vision algorithm GLOW HAL driver implementation.
  */
+#include "mpp_config.h"
+#include "hal_valgo_dev.h"
+#include "hal_debug.h"
+#include "hal.h"
+
+#if (HAL_ENABLE_INFERENCE_GLOW == 1)
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "hal.h"
-#include "hal_valgo_dev.h"
 #include "mpp_api_types.h"
 #include "glow/model.h"
 
@@ -67,6 +71,7 @@ static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Init(vision_algo_dev_t *dev, va
 {
 	hal_valgo_status_t ret = kStatus_HAL_ValgoSuccess;
 	glow_model_param_t *glow_model_param;
+	int img_bytes, comp_bytes;
 	HAL_LOGD("++HAL_VisionAlgoDev_Glow_Init\n");
 
 	if (param->inference_params.constant_weight_MemSize > GLOW_CONSTANT_WEIGHTS_MAX_MEMSIZE)
@@ -121,9 +126,32 @@ static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Init(vision_algo_dev_t *dev, va
        {
            HAL_LOGE("PIXEL FORMAT IS NOT SUPPORTED\n");
            MPP_FREE(dev->priv_data);
-           ret = kStatus_HAL_ValgoInitError ;
+           return kStatus_HAL_ValgoInitError ;
        }
        break;
+    }
+    /* check input image resolution fits in input tensor (mutable) buffer */
+    switch(param->inference_params.model_input_tensors_type)
+    {
+    case MPP_TENSOR_TYPE_FLOAT32:
+        comp_bytes = 4;
+        break;
+    case MPP_TENSOR_TYPE_INT8:
+    case MPP_TENSOR_TYPE_UINT8:
+        comp_bytes = 1;
+        break;
+    default:
+        comp_bytes = 0;
+        HAL_LOGE("TENSOR TYPE IS NOT SUPPORTED\n");
+        MPP_FREE(dev->priv_data);
+        return kStatus_HAL_ValgoInitError ;
+    }
+    img_bytes = param->width * param->height * glow_model_param->inputParams.num_channels * comp_bytes;
+    if (img_bytes > param->inference_params.mutable_weight_MemSize)
+    {
+            HAL_LOGE("IMAGE IS LARGER THAN GLOW MUTABLE BUFFER\n");
+            MPP_FREE(dev->priv_data);
+            return kStatus_HAL_ValgoInitError ;
     }
     /* get parameters from user passed to HAL */
     glow_model_param->inputParams.type = param->inference_params.model_input_tensors_type;
@@ -147,6 +175,7 @@ static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Init(vision_algo_dev_t *dev, va
 	    glow_model_param->out_param.out_tensors[i] = MPP_MALLOC(sizeof(mpp_inference_out_tensor_params_t));
 	    if(glow_model_param->out_param.out_tensors[i] == NULL){
 	        HAL_LOGE("NULL pointer\n");
+            MPP_FREE(dev->priv_data);
 	        return kStatus_HAL_ValgoMallocError ;
 	    }
 	    memset(glow_model_param->out_param.out_tensors[i], 0, sizeof(mpp_inference_out_tensor_params_t));
@@ -177,13 +206,14 @@ static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Run(const vision_algo_dev_t *de
 
 	hal_valgo_status_t ret = kStatus_HAL_ValgoSuccess;
 	glow_model_param_t *glow_model_param ;
-	int start_time, stop_time;
+	int start_time, stop_time, imgnumval;
 
 	HAL_LOGD("++HAL_VisionAlgoDev_GLOW_Run\n");
 
 	glow_model_param = (glow_model_param_t *)dev->priv_data;
+	imgnumval = glow_model_param->inputParams.width * glow_model_param->inputParams.height * glow_model_param->inputParams.num_channels;
 
-	ret = GLOW_ConvertInput(glow_model_param->inputAddr, glow_model_param->inputParams.type, glow_model_param->model_size);
+	ret = GLOW_ConvertInput(glow_model_param->inputAddr, glow_model_param->inputParams.type, imgnumval);
 	if(ret){
 		HAL_LOGE("ERROR: Failed to convert input buffer\n");
 	}
@@ -200,6 +230,8 @@ static hal_valgo_status_t HAL_VisionAlgoDev_Glow_Run(const vision_algo_dev_t *de
         glow_model_param->out_param.out_tensors[i]->data = glow_model_param->outputsAddrs[i] ;
     }
 	glow_model_param->out_param.inference_time_ms = stop_time - start_time;
+	glow_model_param->out_param.inference_type = MPP_INFERENCE_TYPE_GLOW;
+
 	glow_model_param->out_cb(NULL, MPP_EVENT_INFERENCE_OUTPUT_READY,
 			(void *)&glow_model_param->out_param , glow_model_param->userdata);
 
@@ -242,9 +274,16 @@ const static vision_algo_dev_operator_t s_VisionAlgoDev_GLOWOps = {
 		.get_buf_desc    = HAL_VisionAlgoDev_Glow_getBufDesc,
 };
 
-int hal_glow_setup(vision_algo_dev_t *dev)
+int hal_inference_glow_setup(vision_algo_dev_t *dev)
 {
 	dev ->id = 1;
 	dev->ops = (vision_algo_dev_operator_t *)&s_VisionAlgoDev_GLOWOps ;
 	return 0;
 };
+#else  /* (HAL_ENABLE_INFERENCE_GLOW != 1) */
+int hal_inference_glow_setup(vision_algo_dev_t *dev)
+{
+    HAL_LOGE("Inference Glow not enabled\n");
+    return -1;
+}
+#endif /* (HAL_ENABLE_INFERENCE_GLOW == 1) */

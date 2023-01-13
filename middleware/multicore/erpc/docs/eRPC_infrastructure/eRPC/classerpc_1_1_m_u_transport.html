@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -123,7 +123,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_m_u_transport.html','');
 <p><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> that uses Messaging Unit (MU) for interprocessor messaging.  
  <a href="classerpc_1_1_m_u_transport.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="erpc__mu__transport_8h_source.html">erpc_mu_transport.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__mu__transport_8hpp_source.html">erpc_mu_transport.hpp</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for erpc::MUTransport:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -174,6 +174,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#a077e72c8afa8caa483220faf45df62c6">setCrc16</a> (<a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *crcImpl)</td></tr>
 <tr class="memdesc:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions sets the CRC-16 implementation.  <a href="#a077e72c8afa8caa483220faf45df62c6">More...</a><br /></td></tr>
 <tr class="separator:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f3107c5d8d7c89fe074d4433761b924 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#a8f3107c5d8d7c89fe074d4433761b924">getCrc16</a> (void)</td></tr>
+<tr class="memdesc:a8f3107c5d8d7c89fe074d4433761b924 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions gets the CRC-16 object.  <a href="#a8f3107c5d8d7c89fe074d4433761b924">More...</a><br /></td></tr>
+<tr class="separator:a8f3107c5d8d7c89fe074d4433761b924 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -194,14 +197,14 @@ Protected Member Functions</h2></td></tr>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:ae65cfdb4ea497279cc38b33be217f64a"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_m_u_transport.html#ae65cfdb4ea497279cc38b33be217f64a">m_newMessage</a></td></tr>
 <tr class="separator:ae65cfdb4ea497279cc38b33be217f64a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9182588c461613f207a84519c7db7c29"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_m_u_transport.html#a9182588c461613f207a84519c7db7c29">m_rxMsgSize</a></td></tr>
-<tr class="separator:a9182588c461613f207a84519c7db7c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a662a98a6d90a5b8b1d056ef3253dab45"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_m_u_transport.html#a662a98a6d90a5b8b1d056ef3253dab45">m_rxMsgSize</a></td></tr>
+<tr class="separator:a662a98a6d90a5b8b1d056ef3253dab45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd76d3636483884dd51bf0177daccc7f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_m_u_transport.html#abd76d3636483884dd51bf0177daccc7f">m_rxCntBytes</a></td></tr>
 <tr class="separator:abd76d3636483884dd51bf0177daccc7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a166d8f35868a7312a1ad270e0173c460"><td class="memItemLeft" align="right" valign="top">uint32_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_m_u_transport.html#a166d8f35868a7312a1ad270e0173c460">m_rxBuffer</a></td></tr>
 <tr class="separator:a166d8f35868a7312a1ad270e0173c460"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2eaee7fe745989f7da8d598c034491a6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_m_u_transport.html#a2eaee7fe745989f7da8d598c034491a6">m_txMsgSize</a></td></tr>
-<tr class="separator:a2eaee7fe745989f7da8d598c034491a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad04057f33dbf90804f508f917fee4161"><td class="memItemLeft" align="right" valign="top">volatile uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_m_u_transport.html#ad04057f33dbf90804f508f917fee4161">m_txMsgSize</a></td></tr>
+<tr class="separator:ad04057f33dbf90804f508f917fee4161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d22cd6bde64352bf835d6407905fcce"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_m_u_transport.html#a9d22cd6bde64352bf835d6407905fcce">m_txCntBytes</a></td></tr>
 <tr class="separator:a9d22cd6bde64352bf835d6407905fcce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab144cee591ebc9ce1ffe3d351a962ad4"><td class="memItemLeft" align="right" valign="top">uint32_t *volatile&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_m_u_transport.html#ab144cee591ebc9ce1ffe3d351a962ad4">m_txBuffer</a></td></tr>
@@ -491,7 +494,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9182588c461613f207a84519c7db7c29"></a>
+<a class="anchor" id="a662a98a6d90a5b8b1d056ef3253dab45"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -499,7 +502,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t erpc::MUTransport::m_rxMsgSize</td>
+          <td class="memname">volatile uint32_t erpc::MUTransport::m_rxMsgSize</td>
         </tr>
       </table>
   </td>
@@ -554,7 +557,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2eaee7fe745989f7da8d598c034491a6"></a>
+<a class="anchor" id="ad04057f33dbf90804f508f917fee4161"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -562,7 +565,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t erpc::MUTransport::m_txMsgSize</td>
+          <td class="memname">volatile uint32_t erpc::MUTransport::m_txMsgSize</td>
         </tr>
       </table>
   </td>
@@ -723,7 +726,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="erpc__mu__transport_8h_source.html">erpc_mu_transport.h</a></li>
+<li><a class="el" href="erpc__mu__transport_8hpp_source.html">erpc_mu_transport.hpp</a></li>
 <li>erpc_mu_transport.cpp</li>
 </ul>
 </div><!-- contents -->

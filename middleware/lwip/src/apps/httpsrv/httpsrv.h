@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  *
@@ -24,60 +24,60 @@
 /*
 ** HTTP server return codes
 */
-#define HTTPSRV_OK 0
-#define HTTPSRV_ERR -1
-#define HTTPSRV_BIND_FAIL -2
-#define HTTPSRV_LISTEN_FAIL -3
-#define HTTPSRV_CREATE_FAIL -5
-#define HTTPSRV_BAD_FAMILY -6
+#define HTTPSRV_OK           0
+#define HTTPSRV_ERR          -1
+#define HTTPSRV_BIND_FAIL    -2
+#define HTTPSRV_LISTEN_FAIL  -3
+#define HTTPSRV_CREATE_FAIL  -5
+#define HTTPSRV_BAD_FAMILY   -6
 #define HTTPSRV_SOCKOPT_FAIL -7
-#define HTTPSRV_SES_INVALID -8
-#define HTTPSRV_FAIL -9
+#define HTTPSRV_SES_INVALID  -8
+#define HTTPSRV_FAIL         -9
 
 /*
 ** HTTP server status codes
 */
-#define HTTPSRV_CODE_CONTINUE (100)              /* Continue */
-#define HTTPSRV_CODE_UPGRADE (101)               /* Switching Protocols */
-#define HTTPSRV_CODE_OK (200)                    /* OK */
-#define HTTPSRV_CODE_CREATED (201)               /* Created */
-#define HTTPSRV_CODE_ACCEPTED (202)              /* Accepted */
-#define HTTPSRV_CODE_NON_AUTHORITATIVE (203)     /* Non-Authoritative Information */
-#define HTTPSRV_CODE_NO_CONTENT (204)            /* No Content */
-#define HTTPSRV_CODE_RESET_CONTENT (205)         /* Reset Content */
-#define HTTPSRV_CODE_PARTIAL_CONTENT (206)       /* Partial Content */
-#define HTTPSRV_CODE_MULTIPLE_CHOICES (300)      /* Multiple Choices */
-#define HTTPSRV_CODE_MOVED_PERMANENTLY (301)     /* Moved Permanently */
-#define HTTPSRV_CODE_FOUND (302)                 /* Found */
-#define HTTPSRV_CODE_SEE_OTHER (303)             /* See Other */
-#define HTTPSRV_CODE_NOT_MODIFIED (304)          /* Not Modified */
-#define HTTPSRV_CODE_USE_PROXY (305)             /* Use Proxy */
-#define HTTPSRV_CODE_TEMPORARY_REDIRECT (307)    /* Temporary Redirect */
-#define HTTPSRV_CODE_BAD_REQ (400)               /* Bad Request */
-#define HTTPSRV_CODE_UNAUTHORIZED (401)          /* Unauthorized */
-#define HTTPSRV_CODE_PAYMENT_REQUIRED (402)      /* Payment Required */
-#define HTTPSRV_CODE_FORBIDDEN (403)             /* Forbidden */
-#define HTTPSRV_CODE_NOT_FOUND (404)             /* Not Found */
-#define HTTPSRV_CODE_METHOD_NOT_ALLOWED (405)    /* Method Not Allowed */
-#define HTTPSRV_CODE_NOT_ACCEPTABLE (406)        /* Not Acceptable */
-#define HTTPSRV_CODE_PROXY_AUTH_REQUIRED (407)   /* Proxy Authentication Required */
-#define HTTPSRV_CODE_REQUEST_TIMEOUT (408)       /* Request Time-out */
-#define HTTPSRV_CODE_CONFLICT (409)              /* Conflict */
-#define HTTPSRV_CODE_GONE (410)                  /* Gone */
-#define HTTPSRV_CODE_NO_LENGTH (411)             /* Length Required */
-#define HTTPSRV_CODE_PRECONDITION_FAILED (412)   /* Precondition Failed */
-#define HTTPSRV_CODE_ENTITY_TOO_LARGE (413)      /* Request Entity Too Large */
-#define HTTPSRV_CODE_URI_TOO_LONG (414)          /* Request-URI Too Large */
-#define HTTPSRV_CODE_UNSUPPORTED_MEDIA (415)     /* Unsupported Media Type */
+#define HTTPSRV_CODE_CONTINUE              (100) /* Continue */
+#define HTTPSRV_CODE_UPGRADE               (101) /* Switching Protocols */
+#define HTTPSRV_CODE_OK                    (200) /* OK */
+#define HTTPSRV_CODE_CREATED               (201) /* Created */
+#define HTTPSRV_CODE_ACCEPTED              (202) /* Accepted */
+#define HTTPSRV_CODE_NON_AUTHORITATIVE     (203) /* Non-Authoritative Information */
+#define HTTPSRV_CODE_NO_CONTENT            (204) /* No Content */
+#define HTTPSRV_CODE_RESET_CONTENT         (205) /* Reset Content */
+#define HTTPSRV_CODE_PARTIAL_CONTENT       (206) /* Partial Content */
+#define HTTPSRV_CODE_MULTIPLE_CHOICES      (300) /* Multiple Choices */
+#define HTTPSRV_CODE_MOVED_PERMANENTLY     (301) /* Moved Permanently */
+#define HTTPSRV_CODE_FOUND                 (302) /* Found */
+#define HTTPSRV_CODE_SEE_OTHER             (303) /* See Other */
+#define HTTPSRV_CODE_NOT_MODIFIED          (304) /* Not Modified */
+#define HTTPSRV_CODE_USE_PROXY             (305) /* Use Proxy */
+#define HTTPSRV_CODE_TEMPORARY_REDIRECT    (307) /* Temporary Redirect */
+#define HTTPSRV_CODE_BAD_REQ               (400) /* Bad Request */
+#define HTTPSRV_CODE_UNAUTHORIZED          (401) /* Unauthorized */
+#define HTTPSRV_CODE_PAYMENT_REQUIRED      (402) /* Payment Required */
+#define HTTPSRV_CODE_FORBIDDEN             (403) /* Forbidden */
+#define HTTPSRV_CODE_NOT_FOUND             (404) /* Not Found */
+#define HTTPSRV_CODE_METHOD_NOT_ALLOWED    (405) /* Method Not Allowed */
+#define HTTPSRV_CODE_NOT_ACCEPTABLE        (406) /* Not Acceptable */
+#define HTTPSRV_CODE_PROXY_AUTH_REQUIRED   (407) /* Proxy Authentication Required */
+#define HTTPSRV_CODE_REQUEST_TIMEOUT       (408) /* Request Time-out */
+#define HTTPSRV_CODE_CONFLICT              (409) /* Conflict */
+#define HTTPSRV_CODE_GONE                  (410) /* Gone */
+#define HTTPSRV_CODE_NO_LENGTH             (411) /* Length Required */
+#define HTTPSRV_CODE_PRECONDITION_FAILED   (412) /* Precondition Failed */
+#define HTTPSRV_CODE_ENTITY_TOO_LARGE      (413) /* Request Entity Too Large */
+#define HTTPSRV_CODE_URI_TOO_LONG          (414) /* Request-URI Too Large */
+#define HTTPSRV_CODE_UNSUPPORTED_MEDIA     (415) /* Unsupported Media Type */
 #define HTTPSRV_CODE_RANGE_NOT_SATISFIABLE (416) /* Requested range not satisfiable */
-#define HTTPSRV_CODE_EXPECTATION_FAILED (417)    /* Expectation Failed */
-#define HTTPSRV_CODE_UPGRADE_REQUIRED (426)      /* Upgrade Required */
-#define HTTPSRV_CODE_FIELD_TOO_LARGE (431)       /* Request Header Fields Too Large */
-#define HTTPSRV_CODE_INTERNAL_ERROR (500)        /* Internal Server Error */
-#define HTTPSRV_CODE_NOT_IMPLEMENTED (501)       /* Not Implemented */
-#define HTTPSRV_CODE_BAD_GATEWAY (502)           /* Bad Gateway */
-#define HTTPSRV_CODE_SERVICE_UNAVAILABLE (503)   /* Service Unavailable */
-#define HTTPSRV_CODE_GATEWAY_TIMEOUT (504)       /* Gateway Time-out */
+#define HTTPSRV_CODE_EXPECTATION_FAILED    (417) /* Expectation Failed */
+#define HTTPSRV_CODE_UPGRADE_REQUIRED      (426) /* Upgrade Required */
+#define HTTPSRV_CODE_FIELD_TOO_LARGE       (431) /* Request Header Fields Too Large */
+#define HTTPSRV_CODE_INTERNAL_ERROR        (500) /* Internal Server Error */
+#define HTTPSRV_CODE_NOT_IMPLEMENTED       (501) /* Not Implemented */
+#define HTTPSRV_CODE_BAD_GATEWAY           (502) /* Bad Gateway */
+#define HTTPSRV_CODE_SERVICE_UNAVAILABLE   (503) /* Service Unavailable */
+#define HTTPSRV_CODE_GATEWAY_TIMEOUT       (504) /* Gateway Time-out */
 #define HTTPSRV_CODE_VERSION_NOT_SUPPORTED (505) /* HTTP Version not supported */
 
 /*
@@ -102,8 +102,8 @@ typedef enum httpsrv_req_method
 } HTTPSRV_REQ_METHOD;
 
 /*
-* HTTP content type
-*/
+ * HTTP content type
+ */
 typedef enum httpsrv_content_type
 {
     HTTPSRV_CONTENT_TYPE_OCTETSTREAM = 1,
@@ -150,9 +150,9 @@ typedef struct httpsrv_cgi_request_struct
 {
     uint32_t ses_handle;               /* Session handle required for various read/write operations*/
                                        /*
-                                       *  Following is subset of variables from RFC3875.
-                                       ** Please see http://tools.ietf.org/html/rfc3875#section-4.1 for details
-                                       */
+                                        *  Following is subset of variables from RFC3875.
+                                        ** Please see http://tools.ietf.org/html/rfc3875#section-4.1 for details
+                                        */
     HTTPSRV_REQ_METHOD request_method; /* Request method (GET, POST, HEAD) see HTTPSRV_REQ_METHOD enum */
     HTTPSRV_CONTENT_TYPE content_type; /* Content type */
     uint32_t content_length;           /* Content length */
@@ -225,9 +225,9 @@ typedef struct httpsrv_cgi_link_struct
 */
 typedef struct httpsrv_tls_param_struct
 {
-    const unsigned char* certificate_buffer;
+    const unsigned char *certificate_buffer;
     unsigned long certificate_buffer_size;
-    const unsigned char* private_key_buffer;
+    const unsigned char *private_key_buffer;
     unsigned long private_key_buffer_size;
 } HTTPSRV_TLS_PARAM_STRUCT;
 #endif
@@ -247,10 +247,10 @@ typedef struct httpsrv_param_struct
     const HTTPSRV_SSI_LINK_STRUCT *ssi_lnk_tbl;  /* function callback table (dynamic web pages). It is optional. */
     const HTTPSRV_AUTH_REALM_STRUCT *auth_table; /* Table of authentication realms. It is optional. */
 #if HTTPSRV_CFG_WEBSOCKET_ENABLED
-    const WS_PLUGIN_STRUCT *ws_tbl;              /* Table of WS plugins. It is optional. */
+    const WS_PLUGIN_STRUCT *ws_tbl; /* Table of WS plugins. It is optional. */
 #endif
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
-    const HTTPSRV_TLS_PARAM_STRUCT *tls_param;   /* TLS parameters. It is optional. */
+    const HTTPSRV_TLS_PARAM_STRUCT *tls_param; /* TLS parameters. It is optional. */
 #endif
 } HTTPSRV_PARAM_STRUCT;
 

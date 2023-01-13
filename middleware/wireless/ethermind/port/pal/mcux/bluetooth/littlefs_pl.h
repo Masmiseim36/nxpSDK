@@ -22,5 +22,4 @@ lfs_t * lfs_pl_init(void);
 #endif
 
 #endif /* CONFIG_BT_SETTINGS */
-
 #endif /* __EDGEFAST_LITTLEFS_PL_H__ */

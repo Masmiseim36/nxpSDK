@@ -1,0 +1,174 @@
+/*
+** ###################################################################
+**     Processors:          MIMXRT1176AVM8A_cm7
+**                          MIMXRT1176CVM8A_cm7
+**                          MIMXRT1176DVMAA_cm7
+**
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Reference manual:    IMXRT1170RM, Rev 0, 12/2020
+**     Version:             rev. 1.0, 2020-12-29
+**     Build:               b210202
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2021 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+define symbol m_itcm_start             = 0x00000000;
+define symbol m_itcm_end               = 0x0003FFFF;
+
+define symbol m_dtcm_start             = 0x20000000;
+define symbol m_dtcm_end               = 0x2003FFFF;
+
+define symbol m_interrupts_start       = 0x30002000;
+define symbol m_interrupts_end         = 0x300023FF;
+
+define symbol m_text_start             = 0x30002400;
+define symbol m_text_end               = 0x30FFFFFF;
+
+
+define symbol m_ocram_start            = 0x202C0000;
+define symbol m_ocram_end              = 0x2033FFFF;
+
+define symbol m_data_start             = 0x80000000;
+define symbol m_data_end               = 0x82FFFFFF;
+
+define symbol m_ncache_start           = 0x83000000;
+define symbol m_ncache_end             = 0x83FFFFFF;
+
+define exported symbol __NCACHE_REGION_START   = m_ncache_start;
+define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
+
+define exported symbol m_boot_hdr_conf_start = 0x30000400;
+define symbol m_boot_hdr_ivt_start           = 0x30001000;
+define symbol m_boot_hdr_boot_data_start     = 0x30001020;
+define symbol m_boot_hdr_dcd_data_start      = 0x30001030;
+
+/* Sizes */
+if (isdefinedsymbol(__stack_size__)) {
+  define symbol __size_cstack__        = __stack_size__;
+} else {
+  define symbol __size_cstack__        = 0x1000;
+}
+
+if (isdefinedsymbol(__heap_size__)) {
+  define symbol __size_heap__          = __heap_size__;
+} else {
+  define symbol __size_heap__          = 0x1800000;
+}
+
+define exported symbol __VECTOR_TABLE          = m_interrupts_start;
+
+define memory mem with size = 4G;
+define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
+                          | mem:[from m_text_start to m_text_end];
+define region ITCM_region = mem:[from m_itcm_start to m_itcm_end];
+define region DTCM_region = mem:[from m_dtcm_start to m_dtcm_end];
+define region OCRAM_region = mem:[from m_ocram_start to m_ocram_end];
+define region DATA_region  = mem:[from m_data_start to m_data_end-__size_cstack__];
+define region CSTACK_region = mem:[from m_data_end-__size_cstack__+1 to m_data_end];
+define region NCACHE_region = mem:[from m_ncache_start to m_ncache_end];
+
+define block CSTACK    with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
+define block RW        { first readwrite, section m_usb_dma_init_data };
+define block ZI         with alignment = 32  { first zi, section m_usb_dma_noninit_data };
+define block NCACHE_VAR { section NonCacheable , section NonCacheable.init };
+
+define block H264CODE {
+                           readwrite code object decoder.o,
+                           readwrite code object decoder_core.o,
+                           readwrite code object deblocking.o,
+                           readwrite code object deblocking_common.o,
+                           readwrite code object memory_align.o,
+                           readwrite code object welsDecoderExt.o,
+                           readwrite code object cabac_decoder.o,
+                           readwrite code object mc.o,
+                           readwrite code object mv_pred.o,
+                           readwrite code object bit_stream.o,
+                           readwrite code object copy_mb.o,
+                           readwrite code object utils.o,
+                           readwrite code object decode_slice.o,
+                           readwrite code object get_intra_predictor.o,
+                           readwrite code object cpu.o,
+                           readwrite code object decode_mb_aux.o,
+                           readwrite code object decoder_data_tables.o,
+                           readwrite code object common_tables.o
+};
+
+define block H264CODE_INIT {
+                               readonly code section *_init object decoder.o,
+                               readonly code section *_init object decoder_core.o,
+                               readonly code section *_init object deblocking.o,
+                               readonly code section *_init object deblocking_common.o,
+                               readonly code section *_init object memory_align.o,
+                               readonly code section *_init object welsDecoderExt.o,
+                               readonly code section *_init object cabac_decoder.o,
+                               readonly code section *_init object mc.o,
+                               readonly code section *_init object mv_pred.o,
+                               readonly code section *_init object bit_stream.o,
+                               readonly code section *_init object copy_mb.o,
+                               readonly code section *_init object utils.o,
+                               readonly code section *_init object decode_slice.o,
+                               readonly code section *_init object get_intra_predictor.o,
+                               readonly code section *_init object cpu.o,
+                               readonly code section *_init object decode_mb_aux.o,
+                               readonly code section *_init object decoder_data_tables.o,
+                               readonly code section *_init object common_tables.o
+};
+
+initialize by copy { readwrite, section .textrw,
+                     readonly object decoder.o,
+                     readonly object decoder_core.o,
+                     readonly object deblocking.o,
+                     readonly object deblocking_common.o,
+                     readonly object memory_align.o,
+                     readonly object welsDecoderExt.o,
+                     readonly object cabac_decoder.o,
+                     readonly object mc.o,
+                     readonly object mv_pred.o,
+                     readonly object bit_stream.o,
+                     readonly object copy_mb.o,
+                     readonly object utils.o,
+                     readonly object decode_slice.o,
+                     readonly object get_intra_predictor.o,
+                     readonly object cpu.o,
+                     readonly object decode_mb_aux.o,
+                     readonly object decoder_data_tables.o,
+                     readonly object common_tables.o
+};
+
+do not initialize  { section .noinit };
+
+place at address mem: m_interrupts_start    { readonly section .intvec };
+
+place at address mem:m_boot_hdr_conf_start { section .boot_hdr.conf };
+place at address mem:m_boot_hdr_ivt_start { section .boot_hdr.ivt };
+place at address mem:m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
+place at address mem:m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
+
+keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
+
+place in TEXT_region                        { readonly };
+place in TEXT_region                        { block H264CODE_INIT };
+place in ITCM_region                        { block H264CODE };
+place in DTCM_region                        { section decode_buf };
+place in DATA_region                        { block RW };
+place in DATA_region                        { block ZI };
+if (isdefinedsymbol(__heap_noncacheable__)) {
+  place in NCACHE_region                    { last block HEAP };
+} else {
+  place in DATA_region                      { last block HEAP };
+}
+place in CSTACK_region                      { block CSTACK };
+place in NCACHE_region                      { block NCACHE_VAR };

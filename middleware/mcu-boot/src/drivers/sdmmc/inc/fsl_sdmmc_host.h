@@ -527,9 +527,6 @@ enum _host_capability
     (USDHC_EnableInterruptSignal(base, kUSDHC_CardInsertionFlag))
 #define SDMMCHOST_CARD_DETECT_REMOVE_INTERRUPT_ENABLE(base) (USDHC_EnableInterruptSignal(base, kUSDHC_CardRemovalFlag))
 #define SDMMCHOST_CARD_DETECT_DATA3_ENABLE(base, flag) (USDHC_CardDetectByData3(base, flag))
-/* card detect function for ROM */
-#define SDMMCHOST_BL_CARD_DETECT_INIT(base, cdType) BOARD_USDHC_CD_INIT(base, cdType)
-#define SDMMCHOST_BL_CARD_DETECT_GPIO_STATUS(base) BOARD_USDHC_CD_GPIO_STATUS(base)
 /* define card detect pin voltage level when card inserted */
 #if defined BOARD_USDHC_CARD_INSERT_CD_LEVEL
 #define SDMMCHOST_CARD_INSERT_CD_LEVEL BOARD_USDHC_CARD_INSERT_CD_LEVEL

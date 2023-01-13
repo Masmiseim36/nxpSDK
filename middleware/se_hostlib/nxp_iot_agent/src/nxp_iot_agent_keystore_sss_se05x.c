@@ -68,6 +68,7 @@ exit:
 
 iot_agent_status_t iot_agent_keystore_sss_se05x_destroy(void *context)
 {
+	AX_UNUSED_ARG(context);
 	return IOT_AGENT_SUCCESS;
 }
 
@@ -100,6 +101,7 @@ void iot_agent_keystore_sss_se05x_close_session(void *context)
 bool iot_agent_keystore_sss_se05x_get_endpoint_info(
 	void *context, void* endpoint_information)
 {
+	AX_UNUSED_ARG(context);
 	nxp_iot_EndpointInformation* info = (nxp_iot_EndpointInformation*)endpoint_information;
 	info->has_version = true;
 	info->version = IOT_AGENT_KEYSTORE_SSS_SE05x_VERSION;

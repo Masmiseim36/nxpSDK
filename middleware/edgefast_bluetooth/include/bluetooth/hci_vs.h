@@ -234,10 +234,38 @@ struct bt_hci_evt_vs {
 } STRUCT_PACKED_POST;
 
 #define BT_HCI_EVT_VS_FATAL_ERROR              0x02
+
+#define BT_HCI_EVT_VS_ERROR_DATA_TYPE_STACK_FRAME   0x01
+#define BT_HCI_EVT_VS_ERROR_DATA_TYPE_CTRL_ASSERT   0x02
+#define BT_HCI_EVT_VS_ERROR_DATA_TYPE_TRACE         0x03
+STRUCT_PACKED_PRE
+struct bt_hci_vs_fata_error_cpu_data_cortex_m {
+	uint32_t a1;
+	uint32_t a2;
+	uint32_t a3;
+	uint32_t a4;
+	uint32_t ip;
+	uint32_t lr;
+	uint32_t xpsr;
+} STRUCT_PACKED_POST;
+#define BT_HCI_EVT_VS_ERROR_CPU_TYPE_CORTEX_M  0x01
+STRUCT_PACKED_PRE
+struct bt_hci_vs_fatal_error_stack_frame {
+	uint32_t reason;
+	uint8_t cpu_type;
+	uint8_t cpu_data[0];
+} STRUCT_PACKED_POST;
+
+STRUCT_PACKED_PRE
+struct bt_hci_evt_vs_fatal_error_trace_data {
+	uint64_t pc;
+	uint8_t err_info[0];
+} STRUCT_PACKED_POST;
+
 STRUCT_PACKED_PRE
 struct bt_hci_evt_vs_fatal_error {
-	uint64_t pc;
-	uint8_t  err_info[0];
+	uint8_t type;
+	uint8_t data[0];
 } STRUCT_PACKED_POST;
 
 #define BT_HCI_VS_TRACE_LMP_TX                 0x01
@@ -259,11 +287,56 @@ struct bt_hci_evt_vs_scan_req_rx {
 	int8_t         rssi;
 } STRUCT_PACKED_POST;
 
+STRUCT_PACKED_PRE
+struct bt_hci_le_iq_sample16 {
+	int16_t i;
+	int16_t q;
+} STRUCT_PACKED_POST;
+
+#define BT_HCI_EVT_VS_LE_CONNECTIONLESS_IQ_REPORT 0x5
+#define BT_HCI_VS_LE_CTE_REPORT_NO_VALID_SAMPLE   0x8000
+STRUCT_PACKED_PRE
+struct bt_hci_evt_vs_le_connectionless_iq_report {
+	uint16_t sync_handle;
+	uint8_t chan_idx;
+	int16_t rssi;
+	uint8_t rssi_ant_id;
+	uint8_t cte_type;
+	uint8_t slot_durations;
+	uint8_t packet_status;
+	uint16_t per_evt_counter;
+	uint8_t sample_count;
+	struct bt_hci_le_iq_sample16 sample[0];
+} STRUCT_PACKED_POST;
+
+#define BT_HCI_EVT_VS_LE_CONNECTION_IQ_REPORT 0x6
+STRUCT_PACKED_PRE
+struct bt_hci_evt_vs_le_connection_iq_report {
+	uint16_t conn_handle;
+	uint8_t rx_phy;
+	uint8_t data_chan_idx;
+	int16_t rssi;
+	uint8_t rssi_ant_id;
+	uint8_t cte_type;
+	uint8_t slot_durations;
+	uint8_t packet_status;
+	uint16_t conn_evt_counter;
+	uint8_t sample_count;
+	struct bt_hci_le_iq_sample16 sample[0];
+} STRUCT_PACKED_POST;
+
 /* Event mask bits */
 
 #define BT_EVT_MASK_VS_FATAL_ERROR             BT_EVT_BIT(1)
 #define BT_EVT_MASK_VS_TRACE_INFO              BT_EVT_BIT(2)
 #define BT_EVT_MASK_VS_SCAN_REQ_RX             BT_EVT_BIT(3)
+#define BT_EVT_MASK_VS_LE_CONNECTIONLESS_IQ_REPORT BT_EVT_BIT(4)
+#define BT_EVT_MASK_VS_LE_CONNECTION_IQ_REPORT	   BT_EVT_BIT(5)
+
+#define DEFAULT_VS_EVT_MASK                                                                        \
+	BT_EVT_MASK_VS_FATAL_ERROR | BT_EVT_MASK_VS_TRACE_INFO | BT_EVT_MASK_VS_SCAN_REQ_RX |      \
+		BT_EVT_MASK_VS_LE_CONNECTIONLESS_IQ_REPORT |                                       \
+		BT_EVT_MASK_VS_LE_CONNECTION_IQ_REPORT
 
 /* Mesh HCI commands */
 #define BT_HCI_MESH_REVISION                   0x01

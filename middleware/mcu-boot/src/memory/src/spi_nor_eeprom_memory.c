@@ -6,18 +6,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "fsl_device_registers.h"
-#include "bootloader_common.h"
+#include <string.h>
+
+#include "bl_context.h"
 #include "bootloader.h"
+#include "bootloader_common.h"
+#include "crc32.h"
+#include "fsl_assert.h"
+#include "fsl_device_registers.h"
+#include "fsl_lpspi.h"
+#include "fsl_rtos_abstraction.h"
+#include "fusemap.h"
 #include "memory.h"
 #include "spi_nor_eeprom_memory.h"
-#include "crc32.h"
-#include "fsl_lpspi.h"
-#include "bl_context.h"
-#include "fsl_rtos_abstraction.h"
-#include "fsl_assert.h"
-#include "fusemap.h"
-#include <string.h>
 
 #if BL_FEATURE_GEN_KEYBLOB
 #include "bl_keyblob.h"
@@ -93,7 +94,8 @@ const external_memory_region_interface_t g_spiNorEepromMemoryInterface = {
 
 /* SPI NOR/EEPROM context */
 static spi_nor_eeprom_context_t s_spiNorEepromContext = {
-    .isConfigured = false, .callback = lpspi_data_transfer,
+    .isConfigured = false,
+    .callback = lpspi_data_transfer,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -707,6 +709,9 @@ static void spi_nor_eeprom_get_config(spi_nor_eeprom_config_t *config, spi_nor_e
             break;
         case kSpiModuleInstance_Spi4:
             config->spiConfig.spiIndex = 4u;
+            break;
+        case kSpiModuleInstance_Spi5:
+            config->spiConfig.spiIndex = 5u;
             break;
         case kSpiModuleInstance_Spi0:
         default:

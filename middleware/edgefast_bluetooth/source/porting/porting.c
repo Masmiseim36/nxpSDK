@@ -35,7 +35,7 @@ int errno = 0;
 #if (defined(CONFIG_BT_DEBUG) && (CONFIG_BT_DEBUG > 0))
 
 #ifndef CONFIG_PORTING_LOG_PRIO
-#define CONFIG_PORTING_LOG_PRIO (configMAX_PRIORITIES - 2)
+#define CONFIG_PORTING_LOG_PRIO OSA_TASK_PRIORITY_MIN
 #endif
 
 #ifndef CONFIG_PORTING_LOG_STACK_SIZE
@@ -127,6 +127,23 @@ void k_fifo_deinit(k_fifo_t *fifo)
     {
         (void)OSA_MsgQDestroy((osa_msgq_handle_t)fifo->queue_handle);
         fifo->queue = NULL;
+    }
+}
+
+int k_fifo_is_empty(k_fifo_t *fifo)
+{
+    if ((NULL != fifo) && (NULL != fifo->queue))
+    {
+        return OSA_MsgQAvailableMsgs((osa_msgq_handle_t)fifo->queue_handle) == 0u ? 1 : 0;
+    }
+    return 1;
+}
+
+void k_fifo_put_head(k_fifo_t *fifo, void *data)
+{
+    if ((NULL != fifo) && (NULL != fifo->queue))
+    {
+        OSA_MsgQPut((osa_msgq_handle_t)fifo->queue_handle, data);
     }
 }
 

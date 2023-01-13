@@ -97,6 +97,12 @@ status_t semc_wait_for_idle(void)
     // IDLE bit indicates whether SEMC is in IDLE state.
     while (!(base->STS0 & SEMC_STS0_IDLE_MASK))
     {
+#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))        
+        if (base->INTR & SEMC_INTR_NDECCFAIL_MASK )
+        {
+            return kStatus_SEMC_NANDEECCFAIL;
+        }    
+#endif //  FSL_FEATURE_SEMC_HAS_NAND_HW_ECC      
         // Check whether AXI command execution is timeout
         if (base->INTR & SEMC_INTR_AXICMDERR_MASK)
         {
@@ -269,7 +275,7 @@ status_t semc_ipg_command_device_read(uint32_t slaveAddress,
 
 //!@brief Read memory data via SEMC IPG commmand
 status_t semc_ipg_memory_read(semc_mem_config_t *config, uint8_t *readoutData, uint32_t lengthInBytes, uint8_t readType)
-{
+{ 
     status_t status = kStatus_Fail;
 
     if (config->deviceMemType == kSemcDeviceMemType_NAND)
@@ -313,18 +319,20 @@ status_t semc_ipg_memory_read(semc_mem_config_t *config, uint8_t *readoutData, u
         semc_set_macthed_ipg_command_data_size(config->nandMemConfig.ioPortWidth);
     }
 
-    return status;
+    return status;   
 }
 
 //!@brief Write memory data via SEMC IPG commmand
 status_t semc_ipg_memory_write(semc_mem_config_t *config, uint8_t *writeData, uint32_t lengthInBytes, uint8_t writeType)
 {
     status_t status = kStatus_Fail;
+    uint16_t commandCode = 0;
 
     if (config->deviceMemType == kSemcDeviceMemType_NAND)
     {
-        // Only commandMode is necessary for Write only Command
-        uint16_t commandCode = semc_ipg_command_get_nand_code(0, 0, SEMC_IPCMD_NAND_CM_IPG_WRITE_ONLY); // Write Only
+        // SEMC ECC is not enabled. Only commandMode is necessary for Write only Command
+        commandCode = semc_ipg_command_get_nand_code(0, 0, SEMC_IPCMD_NAND_CM_IPG_WRITE_ONLY); // Write Only
+
         uint8_t offset = (writeType && (config->nandMemConfig.ioPortWidth == 16)) ? 16 : 8;
 
         // Configure data size if necessary
@@ -371,13 +379,63 @@ status_t semc_ipg_memory_write(semc_mem_config_t *config, uint8_t *writeData, ui
     return status;
 }
 
+#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))
+//!@brief Write memory data via SEMC IPG commmand
+status_t semc_ipg_memory_write_buffer(semc_mem_config_t *config, uint8_t *writeData, uint32_t lengthInBytes, uint8_t writeType)
+{
+    status_t status = kStatus_Success;
+    SEMC_Type *base = SEMC;
+    uint32_t writeDataWord;
+
+    /*
+     * read data from NDBD register, the read pointer of buffer address
+     * will increases 4 bytes automatically after read action each time
+     */
+    while (lengthInBytes >= 4)
+    {
+        writeDataWord = *((uint32_t*)writeData);
+        base->NDBD = writeDataWord;
+        lengthInBytes -= 4;
+        writeData += 4;
+    }
+
+    return status;
+}
+
+status_t semc_ipg_memory_read_buffer(semc_mem_config_t *config, uint8_t *readoutData, uint32_t lengthInBytes)
+{
+    status_t status = kStatus_Success;
+    SEMC_Type *base = SEMC;
+    uint32_t rxdat;
+
+    /*
+     * read data from NDBD register, the read pointer of buffer address
+     * will increases 4 bytes automatically after read action each time
+     */
+    while (lengthInBytes >= 4)
+    {
+        rxdat = base->NDBD;
+        for (uint32_t i = 0; i < 4; i++)
+        {
+            *readoutData = (uint8_t)(rxdat & 0xFFu);
+            rxdat >>= 8;
+            readoutData++;
+        }
+
+        lengthInBytes -= 4;
+    }
+
+    return status;
+}
+#endif // FSL_FEATURE_SEMC_HAS_NAND_HW_ECC
+
 //!@brief Read memory data via SEMC AXI commmand
 status_t semc_axi_memory_read(uint32_t axiAddress, uint8_t *readoutData, uint32_t lengthInBytes)
 {
     status_t status = kStatus_Success;
 
     memcpy(readoutData, (uint8_t *)axiAddress, lengthInBytes);
-    // status = semc_wait_for_idle();
+    status = semc_wait_for_idle();
 
     return status;
 }
@@ -388,6 +446,16 @@ status_t semc_axi_memory_write(uint32_t axiAddress, uint8_t *writeData, uint32_t
     status_t status = kStatus_Success;
 
     memcpy((uint8_t *)axiAddress, writeData, lengthInBytes);
+#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))    
+    uint32_t dummyData = 0;
+    uint16_t  commandCode = semc_ipg_command_get_nand_code(0, 0, SEMC_IPCMD_NAND_CM_IPG_BUFFER_WRITE); // Buffer Write
+    
+    status = semc_ipg_command_nand_access(axiAddress, commandCode, 0, &dummyData);
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+#endif // FSL_FEATURE_SEMC_HAS_NAND_HW_ECC    
     status = semc_wait_for_idle();
 
     return status;
@@ -470,11 +538,13 @@ status_t semc_ipg_command_nand_access(uint32_t slaveAddress,
     cmdMode = (commandCode & kSemcMiscProperty_NAND_CommandModeBitMask) >> kSemcMiscProperty_NAND_CommandModeBitShift;
     isReadCmd = (cmdMode == SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR_READ) || (cmdMode == SEMC_IPCMD_NAND_CM_IPG_READ_ONLY) ||
                 (cmdMode == SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_CMD_READ) ||
-                (cmdMode == SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_WRITE) || (cmdMode == SEMC_IPCMD_NAND_CM_IPG_CMD_READ);
+                (cmdMode == SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_WRITE) || (cmdMode == SEMC_IPCMD_NAND_CM_IPG_CMD_READ) ||
+                (cmdMode == SEMC_IPCMD_NAND_CM_IPG_BUFFER_READ);
 
     isWriteCmd = (cmdMode == SEMC_IPCMD_NAND_CM_IPG_CMD_ADDR_WRITE) || (cmdMode == SEMC_IPCMD_NAND_CM_IPG_WRITE_ONLY) ||
                  (cmdMode == SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_CMD_READ) ||
-                 (cmdMode == SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_WRITE) || (cmdMode == SEMC_IPCMD_NAND_CM_IPG_CMD_WRITE);
+                 (cmdMode == SEMC_IPCMD_NAND_CM_AXI_CMD_ADDR_WRITE) || (cmdMode == SEMC_IPCMD_NAND_CM_IPG_CMD_WRITE) ||
+                 (cmdMode == SEMC_IPCMD_NAND_CM_IPG_BUFFER_WRITE);
 
     // Set slave address
     base->IPCR0 = slaveAddress;
@@ -748,11 +818,10 @@ static status_t semc_config_nor_flash_control_registers(semc_mem_config_t *confi
                    SEMC_NORCR2_LC(config->norMemConfig.syncLatencyCount) |
                    SEMC_NORCR2_AWDH(config->norMemConfig.asyncAddressTocsHoldTime) |
                    SEMC_NORCR2_TA(config->norMemConfig.asyncTurnaroundTime);
-#elif defined (MIMXRT1052_SERIES)
-     base->NORCR2 =
-        SEMC_NORCR2_CEITV(config->norMemConfig.ceMinIntervalTime) |
-        SEMC_NORCR2_AWDH(config->norMemConfig.asyncAddressTocsHoldTime) |
-        SEMC_NORCR2_TA(config->norMemConfig.asyncTurnaroundTime);
+#elif defined(MIMXRT1052_SERIES)
+    base->NORCR2 = SEMC_NORCR2_CEITV(config->norMemConfig.ceMinIntervalTime) |
+                   SEMC_NORCR2_AWDH(config->norMemConfig.asyncAddressTocsHoldTime) |
+                   SEMC_NORCR2_TA(config->norMemConfig.asyncTurnaroundTime);
 #else
     base->NORCR2 =
         SEMC_NORCR2_CEITV(config->norMemConfig.ceMinIntervalTime) |
@@ -847,11 +916,23 @@ static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *conf
 
     /////////////////////////////////////////////
     // 4. Set NANDCR0 register: Data port size, Burst Length
+#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))       
+    base->NANDCR0 &= ((uint32_t) ~(SEMC_NANDCR0_EDO_MASK | SEMC_NANDCR0_BL_MASK | SEMC_NANDCR0_PS_MASK | SEMC_NANDCR0_COL_MASK | 
+                                   SEMC_NANDCR0_BUFEN_MASK | SEMC_NANDCR0_SECTOR_NUM_MASK | SEMC_NANDCR0_SECTOR_SIZE_MASK | SEMC_NANDCR0_ECC_MODE_MASK));
+#else
     base->NANDCR0 &=
-        ((uint32_t) ~(SEMC_NANDCR0_EDO_MASK | SEMC_NANDCR0_BL_MASK | SEMC_NANDCR0_PS_MASK | SEMC_NANDCR0_COL_MASK));
-
+        ((uint32_t) ~(SEMC_NANDCR0_EDO_MASK | SEMC_NANDCR0_BL_MASK | SEMC_NANDCR0_PS_MASK | SEMC_NANDCR0_COL_MASK));    
+#endif // FSL_FEATURE_SEMC_HAS_NAND_HW_ECC
+    
     // Set EDO mode
-    base->NANDCR0 |= SEMC_NANDCR0_EDO(config->nandMemConfig.edoMode);
+    base->NANDCR0 |= SEMC_NANDCR0_EDO(config->nandMemConfig.edoMode);  
+
+#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))     
+    uint32_t sectorNumber = config->nandMemConfig.semcBchSectorNumber >> 1;
+    base->NANDCR0 |= SEMC_NANDCR0_SECTOR_NUM(sectorNumber);
+    base->NANDCR0 |= SEMC_NANDCR0_SECTOR_SIZE(config->nandMemConfig.semcBchSectorSize);
+    base->NANDCR0 |= SEMC_NANDCR0_ECC_MODE(config->nandMemConfig.semcBchMode);    
+#endif // FSL_FEATURE_SEMC_HAS_NAND_HW_ECC    
     // Set NAND flash burst data length
     status = semc_convert_burst_length_to_bl(config->nandMemConfig.burstLengthInBytes, &bl);
     if (status == kStatus_Success)
@@ -942,10 +1023,10 @@ status_t semc_init(semc_mem_config_t *config)
     // Check config block tag
     if (config->tag != kSemcConfigBlockTag)
     {
-        return kStatus_InvalidArgument;
+        //return kStatus_InvalidArgument;
     }
 
-    semc_clock_gate_disable();
+    CLOCK_DisableClock(kCLOCK_Semc);
 
     // Configure SEMC HW pin mux
     semc_iomux_config(config);
@@ -961,7 +1042,7 @@ status_t semc_init(semc_mem_config_t *config)
         return kStatus_SEMC_InvalidIpClockConfiguration;
     }
 
-    semc_clock_gate_enable();
+    CLOCK_EnableClock(kCLOCK_Semc);
 
     // Enable and reset SEMC module
     base->MCR &= ~SEMC_MCR_MDIS_MASK;
@@ -1017,6 +1098,90 @@ status_t semc_init(semc_mem_config_t *config)
     return status;
 }
 
+#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U)) 
+void semc_nand_configure_nandcr0_for_buffer_write(semc_mem_config_t *config)
+{
+    SEMC_Type *base = SEMC;
+
+    /* enable nand buffer read */
+    config->nandMemConfig.bufferEn = 1;
+
+    /* configure NANDCR0 register for bufen. ECC mode, sector number and size have been configured in init */
+    base->NANDCR0 |= SEMC_NANDCR0_BUFEN(config->nandMemConfig.bufferEn);
+
+    /*
+     * Configure IPCR0/1/2, IPCR1/2 have been configured, so just need to configure data size
+     * currently design only support 4 bytes data size
+     */
+    base->IPCR1 = 0;
+}
+
+status_t semc_nand_issue_buffer_read_cmd(uint32_t address)
+{
+        status_t status = kStatus_Success;
+
+    uint16_t commandCode = semc_ipg_command_get_nand_code(0, 0, SEMC_IPCMD_NAND_CM_IPG_BUFFER_READ); /* buffer read */
+    status = semc_nand_issue_command_code(address, commandCode);
+
+    return status;
+}
+
+status_t semc_nand_issue_buffer_write_cmd(uint32_t address)
+{
+        status_t status = kStatus_Success;
+
+    uint16_t commandCode = semc_ipg_command_get_nand_code(0, 0, SEMC_IPCMD_NAND_CM_IPG_BUFFER_WRITE); /* buffer write */
+    status = semc_nand_issue_command_code(address, commandCode);
+
+    return status;
+}
+
+void semc_nand_configure_ndba_for_buffer_write(void)
+{
+    SEMC_Type *base = SEMC;
+
+    /* In general, the address of NDBA is configured to 0 for ROM, it means it is usual for users to get the data from
+     * address 0 If users have special requests to read the data from other address, they could set the specified
+     * address here.
+     */
+    base->NDBA = 0;
+}
+
+void semc_nand_configure_ndba_for_buffer_read(void)
+{
+    SEMC_Type *base = SEMC;
+
+    /* In general, the address of NDBA is configured to 0 for ROM, it means it is usual for users to get the data from
+     * address 0 If users have special requests to read the data from other address, they could set the specified
+     * address here.
+     */
+    base->NDBA = 0;
+}
+
+status_t semc_nand_issue_command_code(uint32_t slaveAddress, uint16_t commandCode)
+{
+    status_t status;
+    SEMC_Type *base = SEMC;
+
+    // Clear status bit
+    base->INTR |= SEMC_INTR_IPCMDDONE_MASK;
+
+    // Set slave address
+    base->IPCR0 = slaveAddress;
+
+    // Set command code
+    base->IPCMD = ((uint32_t)kSemcIpCommandMagicKey << 16) + commandCode;
+
+    // Command execution
+    status = semc_ipg_command_wait_for_done();
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
+
+    return kStatus_Success;
+}
+#endif // FSL_FEATURE_SEMC_HAS_NAND_HW_ECC
 ////////////////////////////////////////////////////////////////////////////////
 // EOF
 ////////////////////////////////////////////////////////////////////////////////

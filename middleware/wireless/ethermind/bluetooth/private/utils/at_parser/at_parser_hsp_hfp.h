@@ -265,10 +265,10 @@ extern "C" {
 /** To parse incoming AT Response from Audio Gateway */
 API_RESULT BT_at_parse_hsp_hfp_data
            (
-               /* INOUT */ AT_PARSER_INTERFACE_PARAM *    inf_params,
-               /* IN */    UCHAR *                        in_buffer,
-               /* IN */    UINT16                         len,
-               /* OUT */   AT_PARSER_RESULT *             inf_result
+               /* INOUT */ AT_PARSER_INTERFACE_PARAM *    params,
+               /* IN */    UCHAR *                        input_buf,
+               /* IN */    UINT16                         input_buf_len,
+               /* OUT */   AT_PARSER_RESULT *             result
            );
 
 #ifdef __cplusplus

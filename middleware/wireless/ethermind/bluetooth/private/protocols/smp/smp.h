@@ -33,7 +33,9 @@
 /** ============================================= API Declarations */
 
 void em_smp_init (void);
-
+#ifdef BT_HAVE_SHUTDOWN
+void em_smp_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 void smp_bt_init (void);
 
 void smp_bt_shutdown (void);

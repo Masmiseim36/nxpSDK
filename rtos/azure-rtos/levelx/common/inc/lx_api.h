@@ -26,7 +26,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    lx_api.h                                            PORTABLE C      */
-/*                                                           6.1.10       */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -66,6 +66,15 @@
 /*                                            updated include order for   */
 /*                                            standalone mode,            */
 /*                                            resulting in version 6.1.10 */
+/*  04-25-2022     William E. Lamie         Modified comment(s), and      */
+/*                                            updated product constants,  */
+/*                                            resulting in version 6.1.11 */
+/*  07-29-2022     William E. Lamie         Modified comment(s), and      */
+/*                                            updated product constants,  */
+/*                                            resulting in version 6.1.12 */
+/*  10-31-2022     Xiuwen Cai               Modified comment(s), and      */
+/*                                            updated product constants,  */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -169,8 +178,8 @@ typedef unsigned long long                      ULONG64;
 /* Define basic constants for the LevelX Stack.  */
 #define AZURE_RTOS_LEVELX
 #define LEVELX_MAJOR_VERSION                        6
-#define LEVELX_MINOR_VERSION                        1
-#define LEVELX_PATCH_VERSION                        10
+#define LEVELX_MINOR_VERSION                        2
+#define LEVELX_PATCH_VERSION                        0
 
 
 /* Define general LevelX Constants.  */

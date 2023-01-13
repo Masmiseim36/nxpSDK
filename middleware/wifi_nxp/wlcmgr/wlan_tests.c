@@ -614,6 +614,10 @@ static int __scan_cb(unsigned int count)
         {
             (void)PRINTF("WPA/WPA2 Mixed ");
         }
+        else if ((res.wpa2 != 0U) && (res.wpa3_sae != 0U))
+        {
+            (void)PRINTF("WPA2/WPA3 SAE Mixed ");
+        }
         else
         {
             if (res.wpa != 0U)

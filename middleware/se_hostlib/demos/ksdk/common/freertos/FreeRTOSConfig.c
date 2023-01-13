@@ -7,11 +7,11 @@
 
 #define WEAK __attribute__ ((weak))
 
-void vApplicationStackOverflowHook(void) {
+WEAK void vApplicationStackOverflowHook(void) {
     assert(0);
 }
 
-void vApplicationMallocFailedHook(void) {
+WEAK void vApplicationMallocFailedHook(void) {
     assert(0);
 }
 

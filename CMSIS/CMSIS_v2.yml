@@ -11,12 +11,19 @@ CMSIS_Include_core_cm:
       - repo_relative_path: "./"
     files:
       - source: cmsis_armcc.h
+        compilers: armcc
       - source: cmsis_armclang.h
+        compilers: armclang
       - source: cmsis_armclang_ltm.h
+        compilers: armclang
       - source: cmsis_compiler.h
+        compilers: armclang armcc gcc iar
       - source: cmsis_gcc.h
+        compilers: gcc
       - source: cmsis_iccarm.h
+        compilers: iar
       - source: cmsis_version.h
+        compilers: armclang armcc gcc iar
       - source: core_cm0.h
         cores: cm0
       - source: core_cm0plus.h

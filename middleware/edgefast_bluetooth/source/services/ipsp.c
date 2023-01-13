@@ -36,7 +36,7 @@ static BT_GATT_SERVICE_DEFINE(ipss_svc,
 
 /** Server structure */
 static struct bt_l2cap_server ipsp_l2cap = {
-    .psm = LE_PSM_IPSP,
+    .psm = IPSP_LE_PSM,
     .sec_level = BT_SECURITY_L1,
     .accept = ipsp_accept
 };
@@ -95,13 +95,13 @@ int ipsp_init(ipsp_rx_cb_t pf_rx_cb)
 int ipsp_connect(struct bt_conn *conn)
 {
     int result = -1;
-    if (l2cap_chan.chan.state == BT_L2CAP_DISCONNECTED)
+    if (l2cap_chan.state == BT_L2CAP_DISCONNECTED)
     {
         l2cap_chan.chan.ops = &l2cap_ops;
         l2cap_chan.rx.mtu = IPSP_MTU;
         l2cap_chan.rx.init_credits = INIT_CREDITS;
 
-        result = bt_l2cap_chan_connect(conn, &l2cap_chan.chan, LE_PSM_IPSP);
+        result = bt_l2cap_chan_connect(conn, &l2cap_chan.chan, IPSP_LE_PSM);
     }
     return result;
 }

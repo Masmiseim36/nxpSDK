@@ -1,6 +1,6 @@
 var group__dspi__master__transport =
 [
-    [ "erpc_dspi_master_transport.h", "erpc__dspi__master__transport_8h.html", null ],
+    [ "erpc_dspi_master_transport.hpp", "erpc__dspi__master__transport_8hpp.html", null ],
     [ "DspiMasterTransport", "classerpc_1_1_dspi_master_transport.html", [
       [ "DspiMasterTransport", "classerpc_1_1_dspi_master_transport.html#ab174e66b6d9df4d5a5bc6337d3e1fc86", null ],
       [ "~DspiMasterTransport", "classerpc_1_1_dspi_master_transport.html#adc0f1cb4f01892057a35faee37e904bb", null ],

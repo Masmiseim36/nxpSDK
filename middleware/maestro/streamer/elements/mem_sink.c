@@ -128,7 +128,7 @@ static FlowReturn memsink_sink_pad_chain_handler(StreamPad *pad, StreamBuffer *b
                 if (mem_sink_element->current_index + pkt_hdr_size > mem_sink_element->size)
                 {
                     STREAMER_LOG_ERR(DBG_MEM_SINK, ERRCODE_INTERNAL, "memory sink no more source1\n");
-                    ret = FLOW_NO_RESOURCE;
+                    ret = FLOW_ERROR;
                     goto Error;
                 }
                 else
@@ -161,7 +161,7 @@ static FlowReturn memsink_sink_pad_chain_handler(StreamPad *pad, StreamBuffer *b
             if (mem_sink_element->current_index + raw_data_size > mem_sink_element->size)
             {
                 STREAMER_LOG_ERR(DBG_MEM_SINK, ERRCODE_INTERNAL, "memory sink no more resource!\n");
-                ret = FLOW_NO_RESOURCE;
+                ret = FLOW_ERROR;
                 goto Error;
             }
             else

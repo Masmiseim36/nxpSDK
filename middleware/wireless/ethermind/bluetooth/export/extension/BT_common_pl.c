@@ -12,7 +12,54 @@
 
 /* ------------------------------------------- Header File Inclusion */
 #include "BT_common.h"
+
+/* It means that edgefast is using ethermind if CONFIG_BT_BREDR is defined */
+#if (defined (CONFIG_BT_BREDR) && (CONFIG_BT_BREDR))
+#ifdef BT_BCSP
+#undef BT_BCSP
+#endif
+
+#ifdef BNEP
+#undef BNEP
+#endif
+
+#if !(defined (CONFIG_BT_A2DP) && (CONFIG_BT_A2DP))
+#ifdef AVDTP
+#undef AVDTP
+#endif
+#endif
+
+#if !(defined (CONFIG_BT_AVRCP) && (CONFIG_BT_AVRCP))
+#ifdef AVCTP
+#undef AVCTP
+#endif
+#endif
+
+#ifdef MCAP
+#undef MCAP
+#endif
+
+#if !(defined (CONFIG_BT_AVRCP) && (CONFIG_BT_AVRCP))
+#ifdef OBEX
+#undef OBEX
+#endif
+#endif
+
+#ifdef HCRP
+#undef HCRP
+#endif
+#endif
+
+/* It means that edgefast is using ethermind if CONFIG_BT_BLE_DISABLE is defined */
+#if (defined (CONFIG_BT_BLE_DISABLE) && (CONFIG_BT_BLE_DISABLE))
+#ifdef ATT
+#undef ATT
+#endif
+#endif
+
+#ifdef CLASSIC_SEC_MANAGER
 #include "sm.h"
+#endif /* CLASSIC_SEC_MANAGER */
 
 #ifdef BT_UART
     #include "hci_uart.h"
@@ -29,6 +76,10 @@
 #ifdef BT_SOCKET
     #include "hci_socket.h"
 #endif /* BT_SOCKET */
+
+#ifdef BT_PLATFORM
+    #include "hci_platform.h"
+#endif /* BT_PLATFORM */
 
 #ifdef SDP
     #include "sdp.h"
@@ -104,14 +155,21 @@ void ethermind_init_lower_pl (void)
     /* Socket Initialization */
     hci_socket_init();
 #endif /* BT_SOCKET */
+
+#ifdef BT_PLATFORM
+    /* PLATFORM Initialization */
+    hci_platform_init();
+#endif /* BT_PLATFORM */
 }
 
 
 /* EtherMind-Init: Platform Upper Handler */
 void ethermind_init_upper_pl (void)
 {
+#ifdef CLASSIC_SEC_MANAGER
     /* Security Manager Initialization */
     em_sm_init();
+#endif /* CLASSIC_SEC_MANAGER */
 
 #ifdef SDP
     /* SDP Initialization */
@@ -173,6 +231,92 @@ void ethermind_init_upper_pl (void)
 #endif /* BT_COMMON_PL_SUPPORT_UL_CB */
 }
 
+#ifdef BT_HAVE_SHUTDOWN
+/* EtherMind-De-Init: Platform Lower Handler */
+void ethermind_shutdown_lower_pl(void)
+{
+#ifdef BT_UART
+    /* UART De-Initialization */
+    hci_uart_shutdown();
+#endif /* BT_UART */
+
+#ifdef BT_USB
+    /* USB De-Initialization */
+    hci_usb_shutdown();
+#endif /* BT_USB */
+
+#ifdef BT_BCSP
+    /* BCSP De-Initialization */
+    bcsp_shutdown();
+#endif /* BT_BCSP */
+
+#ifdef BT_SOCKET
+    /* Socket De-Initialization */
+    hci_socket_shutdown();
+#endif /* BT_SOCKET */
+}
+
+/* EtherMind-De-Init: Platform Upper Handler */
+void ethermind_shutdown_upper_pl(void)
+{
+    /* Security Manager De-Initialization */
+    em_sm_shutdown();
+
+#ifdef SDP
+    /* SDP De-Initialization */
+    em_sdp_shutdown();
+
+#ifdef SDP_SERVER
+    /* SDDB SDP Interface Layer De-Initialization */
+    em_db_sdp_shutdown();
+#endif /* SDP_SERVER */
+
+#endif /* SDP */
+
+#ifdef RFCOMM
+    /* RFCOMM De-Initialization */
+    em_rfcomm_shutdown();
+#endif /* RFCOMM */
+
+#ifdef BNEP
+    /* BNEP Initialization */
+    em_bnep_shutdown();
+#endif /* BNEP */
+
+#ifdef AVDTP
+    /* AVDTP De-Initialization */
+    em_avdtp_shutdown();
+#endif /* AVDTP */
+
+#ifdef AVCTP
+    /* AVCTP De-Initialization */
+    em_avctp_shutdown();
+#endif /* AVCTP */
+
+#ifdef MCAP
+    /* MCAP Initialization */
+    em_mcap_shutdown();
+#endif /* MCAP */
+
+#ifdef OBEX
+    /* OBEX De-Initialization */
+    em_obex_shutdown();
+#endif /* OBEX */
+
+#ifdef HCRP
+    /* HCRP Initialization */
+    em_hcrp_shutdown();
+#endif /* HCRP */
+
+#ifdef SMP
+    em_smp_shutdown();
+#endif /* SMP */
+
+#ifdef ATT
+    em_att_shutdown();
+#endif /* ATT */
+}
+#endif /* BT_HAVE_SHUTDOWN */
 
 /* Bluetooth-ON: Platform Lower Handler */
 void bluetooth_on_lower_pl (void)
@@ -196,14 +340,21 @@ void bluetooth_on_lower_pl (void)
     /* Socket BT Init */
     hci_socket_bt_init();
 #endif /* BT_SOCKET */
+
+#ifdef BT_PLATFORM
+    /* PLATFORM BT Init */
+    hci_platform_bt_init();
+#endif /* BT_PLATFORM */
 }
 
 
 /* Bluetooth-ON: Platform Upper Handler */
 void bluetooth_on_upper_pl (void)
 {
+#ifdef CLASSIC_SEC_MANAGER
     /* Security Manager BT Init */
     sm_bt_init();
+#endif /* CLASSIC_SEC_MANAGER */
 
 #ifdef SDP
     /* SDP BT Init */
@@ -267,6 +418,11 @@ void bluetooth_on_upper_pl (void)
 /* Bluetooth-OFF: Platform Lower Handler */
 void bluetooth_off_lower_pl (void)
 {
+#ifdef BT_PLATFORM
+    /* BT_PLATFORM BT Shutdown */
+    hci_platform_bt_shutdown();
+#endif /* BT_PLATFORM */
+
 #ifdef BT_SOCKET
     /* SOCKET BT Shutdown */
     hci_socket_bt_shutdown();
@@ -343,8 +499,10 @@ void bluetooth_off_upper_pl (void)
     sdp_bt_shutdown();
 #endif /* SDP */
 
+#ifdef CLASSIC_SEC_MANAGER
     /* Security Manager BT Shutdown */
     sm_bt_shutdown();
+#endif /* CLASSIC_SEC_MANAGER */
 }
 
 #endif /* BT_NO_BLUETOOTH_OFF */

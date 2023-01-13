@@ -43,7 +43,8 @@ static mcmgr_status_t MCMGR_TriggerEventCommon(mcmgr_event_type_t type, uint16_t
         remoteData = (((uint32_t)type) << 16) | eventData;
         return mcmgr_trigger_event_internal(remoteData, forcedWrite);
     }
-    return kStatus_MCMGR_Error;
+    return kStatus_MCMGR_Error; /* coco validated: line never reached, MCMGR_GetCurrentCore() returns coreNum from
+                                   register and g_mcmgrSystem is defined as const */
 }
 
 mcmgr_status_t MCMGR_TriggerEvent(mcmgr_event_type_t type, uint16_t eventData)
@@ -73,11 +74,12 @@ static void MCMGR_StartupDataEventHandler(uint16_t startupDataChunk, void *conte
             coreContext->state = kMCMGR_RunningCoreState;
             (void)MCMGR_TriggerEvent(kMCMGR_FeedStartupDataEvent, (uint16_t)kMCMGR_RunningCoreState);
             break;
-
+        /* coco begin validated: not possible to get into this default case */
         default:
             /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
+    /* coco end */
 }
 
 static void MCMGR_FeedStartupDataEventHandler(uint16_t startupDataChunk, void *context)
@@ -100,10 +102,12 @@ static void MCMGR_FeedStartupDataEventHandler(uint16_t startupDataChunk, void *c
             coreContext->state = (mcmgr_core_state_t)startupDataChunk;
             break;
 
+        /* coco begin validated: not possible to get into this default case */
         default:
             /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
+    /* coco end */
 }
 
 mcmgr_status_t MCMGR_EarlyInit(void)
@@ -113,7 +117,8 @@ mcmgr_status_t MCMGR_EarlyInit(void)
     {
         return mcmgr_early_init_internal(coreNum);
     }
-    return kStatus_MCMGR_Error;
+    return kStatus_MCMGR_Error; /* coco validated: line never reached, MCMGR_GetCurrentCore() returns coreNum from
+                                   register and g_mcmgrSystem is defined as const */
 }
 
 mcmgr_status_t MCMGR_Init(void)
@@ -125,17 +130,20 @@ mcmgr_status_t MCMGR_Init(void)
         if (kStatus_MCMGR_Success != MCMGR_RegisterEvent(kMCMGR_StartupDataEvent, MCMGR_StartupDataEventHandler,
                                                          (void *)&s_mcmgrCoresContext[coreNum]))
         {
-            return kStatus_MCMGR_Error;
+            return kStatus_MCMGR_Error; /* coco validated: line never reached, MCMGR_RegisterEvent() params are always
+                                           correct here */
         }
         if (kStatus_MCMGR_Success !=
             MCMGR_RegisterEvent(kMCMGR_FeedStartupDataEvent, MCMGR_FeedStartupDataEventHandler,
                                 (void *)&s_mcmgrCoresContext[(coreNum == kMCMGR_Core0) ? kMCMGR_Core1 : kMCMGR_Core0]))
         {
-            return kStatus_MCMGR_Error;
+            return kStatus_MCMGR_Error; /* coco validated: line never reached, MCMGR_RegisterEvent() params are always
+                                           correct here */
         }
         return mcmgr_late_init_internal(coreNum);
     }
-    return kStatus_MCMGR_Error;
+    return kStatus_MCMGR_Error; /* coco validated: line never reached, MCMGR_GetCurrentCore() returns coreNum from
+                                   register and g_mcmgrSystem is defined as const */
 }
 
 mcmgr_status_t MCMGR_StartCore(mcmgr_core_t coreNum, void *bootAddress, uint32_t startupData, mcmgr_start_mode_t mode)
@@ -175,12 +183,14 @@ mcmgr_status_t MCMGR_GetStartupData(uint32_t *startupData)
             if (kStatus_MCMGR_Success !=
                 MCMGR_TriggerEvent(kMCMGR_FeedStartupDataEvent, (uint16_t)kMCMGR_StartupGettingLowCoreState))
             {
-                return kStatus_MCMGR_Error;
+                return kStatus_MCMGR_Error; /* coco validated: line never reached, MCMGR_TriggerEvent() params are
+                                               always correct here */
             }
         }
         return mcmgr_get_startup_data_internal(coreNum, startupData);
     }
-    return kStatus_MCMGR_Error;
+    return kStatus_MCMGR_Error; /* coco validated: line never reached, MCMGR_GetCurrentCore() returns coreNum from
+                                   register and g_mcmgrSystem is defined as const */
 }
 
 mcmgr_status_t MCMGR_StopCore(mcmgr_core_t coreNum)

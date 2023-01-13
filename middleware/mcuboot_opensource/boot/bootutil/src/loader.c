@@ -1143,7 +1143,7 @@ boot_copy_image(struct boot_loader_state *state, struct boot_status *bs)
     }
 #endif
 
-    BOOT_LOG_INF("Copying the secondary slot to the primary slot: 0x%zx bytes",
+    BOOT_LOG_INF("Copying the secondary slot to the primary slot: 0x%x bytes",
                  size);
     rc = boot_copy_region(state, fap_secondary_slot, fap_primary_slot, 0, 0, size);
     if (rc != 0) {
@@ -2987,8 +2987,10 @@ boot_load_and_validate_images(struct boot_loader_state *state)
                 /* A slot is already active, go to next image. */
                 break;
             }
-
-            active_slot = find_slot_with_highest_version(state);
+            rc = BOOT_HOOK_CALL(boot_find_active_slot_hook, BOOT_HOOK_REGULAR, state, &active_slot);
+            if (rc == BOOT_HOOK_REGULAR){
+                active_slot = find_slot_with_highest_version(state);
+            }
             if (active_slot == NO_ACTIVE_SLOT) {
                 BOOT_LOG_INF("No slot to load for image %d",
                              BOOT_CURR_IMG(state));

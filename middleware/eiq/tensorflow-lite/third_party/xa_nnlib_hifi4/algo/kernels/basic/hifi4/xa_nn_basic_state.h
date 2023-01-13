@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2018-2021 Cadence Design Systems, Inc.
+* Copyright (c) 2018-2022 Cadence Design Systems, Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -30,43 +30,6 @@
 
 #define LIMIT(input, min, max) \
     input = XT_MAX(min, XT_MIN(max, input));
-
-#define MULTIPLYBYQUANTIZEDMULTIPLIER_X2(out, inp, multiplier, left_shift, right_shift) \
-    inp = AE_SLAA32S(inp, left_shift); \
-    out = AE_MULFP32X2RAS(inp, AE_MOVDA32(multiplier)); \
-    out = AE_ROUND32X2F64SSYM(AE_SRAA64(AE_CVT64F32_H(out), right_shift), AE_SRAA64(AE_CVT64F32_L(out), right_shift));
-
-#if XCHAL_HAVE_HIFI1
-#define MultiplyByQuantizedMultiplierSmallerThanOneExp(prod, val, multiplier, lsh) {\
-    ae_int64 temp64_h, temp64_l;\
-    prod = AE_MULFP32X2RAS(val, multiplier);\
-    temp64_h = AE_CVT64F32_H(prod);\
-    temp64_l = AE_CVT64F32_L(prod);\
-    temp64_h = AE_SLAA64S(temp64_h, lsh);\
-    temp64_l = AE_SLAA64S(temp64_l, lsh);\
-    prod = AE_ROUND32X2F64SSYM(temp64_h, temp64_l);\
-}
-#else
-#define MultiplyByQuantizedMultiplierSmallerThanOneExp(prod, val, multiplier, lsh) {\
-    ae_int64 temp64_h, temp64_l;\
-    prod = AE_MULFP32X2RAS(val, multiplier);\
-    temp64_h = AE_MOVINT64_FROMINT32X2(AE_SEL32_HH((ae_int32x2)prod, ZERO));\
-    temp64_l = AE_MOVINT64_FROMINT32X2(AE_SEL32_LL((ae_int32x2)prod, ZERO));\
-    temp64_h = AE_SLAA64S(temp64_h, lsh);\
-    temp64_l = AE_SLAA64S(temp64_l, lsh);\
-    prod = AE_ROUND32X2F64SSYM(temp64_h, temp64_l);\
-}
-#endif
-
-// This is the another implementation (32x32--> 64 --> shift --> symm rounding
-#define MultiplyByQuantizedMultiplierSmallerThanOneExp_NEW(prod, val, multiplier, lsh) {\
-    ae_int64 temp64_h, temp64_l;\
-    temp64_h = AE_MULF32S_HH(val, multiplier);\
-    temp64_l = AE_MULF32S_LL(val, multiplier);\
-    temp64_h = AE_SLAA64S(temp64_h, lsh);\
-    temp64_l = AE_SLAA64S(temp64_l, lsh);\
-    prod = AE_ROUND32X2F64SSYM(temp64_h, temp64_l);\
-}
 
 #define CLAMP_VAL(out, val, min, max){\
     ae_f32x2 temp_max;\

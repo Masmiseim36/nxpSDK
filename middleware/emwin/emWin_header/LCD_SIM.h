@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.24 - Graphical user interface for embedded applications **
+** emWin V6.28 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2022-09-02
+SUA period:               2011-08-19 - 2023-09-03
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : LCD_SIM.h
@@ -94,6 +94,12 @@ int  LCDSIM_GetModifyCnt(int LayerIndex);
 int  LCDSIM_GetModifyCntInfo(int LayerIndex);
 int  LCDSIM_GetPixelColor(int x, int y, int LayerIndex);
 int  LCDSIM_GetPixelIndex(int x, int y, int LayerIndex);
+int  LCDSIM_GetXSizeEx(int LayerIndex);
+int  LCDSIM_GetYSizeEx(int LayerIndex);
+int  LCDSIM_GetXSizeMax(void);
+int  LCDSIM_GetYSizeMax(void);
+int  LCDSIM_GetVXSizeEx(int LayerIndex);
+int  LCDSIM_GetVYSizeEx(int LayerIndex);
 int  LCDSIM_Index2Color(int Index, int LayerIndex);
 int  LCDSIM_RLUT_GetPixelIndex(int x, int y, int LayerIndex);
 void LCDSIM_RLUT_SetPixelIndex(int x, int y, int Index, int LayerIndex);

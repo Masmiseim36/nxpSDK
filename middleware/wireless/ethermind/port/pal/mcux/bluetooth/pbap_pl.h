@@ -207,7 +207,7 @@ API_RESULT BT_pbap_build_xml_vcard_listing_pl
                /* IN */  UCHAR   *dir_entry,
                /* IN */  UCHAR   *listingfile,
                /* IN */  PBAP_VCARD_LIST   * vcards,
-               /* IN */  UINT16  num_vcards,
+               /* IN */  UINT16  vcard_count,
                /* IN */  PBAP_APPL_PARAMS *appl_params,
                /* OUT */ UINT16   *filtered_vcard_cnt
            );
@@ -221,7 +221,7 @@ API_RESULT BT_pbap_get_vcard_list_pl
 
 API_RESULT BT_pbap_build_vcard_pl
            (
-                /* IN */    PBAP_VCARD_OBJECT   * vcard_info,
+                /* IN */    PBAP_VCARD_OBJECT   * vcard,
                 /* IN */    UINT32 vcard_prop_filter,
                 /* IN */    UCHAR  * in_vcard_data,
                 /* IN */    UINT16   in_vcard_data_len,

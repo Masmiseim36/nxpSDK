@@ -41,6 +41,10 @@
 #ifndef __CC_H__
 #define __CC_H__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // FSL
 #ifdef __REDLIB__
 #define LWIP_NO_INTTYPES_H 1
@@ -130,5 +134,9 @@ typedef u32_t mem_ptr_t;
 
 // fatal, print message and abandon execution.
 #define LWIP_PLATFORM_ASSERT(x) sys_assert(x)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __CC_H__ */

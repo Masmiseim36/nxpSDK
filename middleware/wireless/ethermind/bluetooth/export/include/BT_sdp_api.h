@@ -175,7 +175,7 @@ typedef void (* SDP_CB)
  *  For each SDP connection, SDP assigns a handle to be used while calling
  *  the SDP Request APIs later on.
  */
-typedef struct sdp_handle
+typedef struct _SDP_HANDLE
 {
     /** Application callback */
     SDP_CB fn_ptr;
@@ -1223,7 +1223,7 @@ API_RESULT BT_sdp_get_gatt_handle_range
  *
  *  \param [in,out] attribute_len
  *         This parameter provides the size of the UCHAR Array, allocated by
- *         the caller, to store the attribute value. 
+ *         the caller, to store the attribute value.
  *         The actual attribute length will be available on return.
  *
  *  \return
@@ -1277,7 +1277,7 @@ API_RESULT BT_sdp_get_data_element
  *
  *  \par Description:
  *       This API can be used to get the pointer to the attribute value
- *       of the next record. Use this API to extract the portion of 
+ *       of the next record. Use this API to extract the portion of
  *       Attribute list for the next record and it is relevent only to the
  *       attribute list return by the SDP_servicesearchattributerequest API.
 

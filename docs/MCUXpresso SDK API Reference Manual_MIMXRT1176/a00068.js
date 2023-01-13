@@ -1,11 +1,11 @@
 var a00068 =
 [
-    [ "pgmc_bpc_cpu_power_mode_option_t", "a00068.html#a00596", [
+    [ "pgmc_bpc_cpu_power_mode_option_t", "a00068.html#a00598", [
       [ "assignDomain", "a00068.html#aeac9fabf33190ab73e3446eb41e24c2a", null ],
       [ "stateSave", "a00068.html#aa6b9843d111682c768b2cee9e8b90e31", null ],
       [ "powerOff", "a00068.html#a6f211b59ce70e7c28c1d9d0230552c72", null ]
     ] ],
-    [ "pgmc_bpc_setpoint_mode_option_t", "a00068.html#a00597", [
+    [ "pgmc_bpc_setpoint_mode_option_t", "a00068.html#a00599", [
       [ "stateSave", "a00068.html#afc413efe2347382623bbe1f52e76b61c", null ],
       [ "powerOff", "a00068.html#a9b65a815c350025265ae80c2c141c542", null ]
     ] ],

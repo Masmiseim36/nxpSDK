@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_r_p_msg_r_t_o_s_transpor
 <p><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> that uses RPMsg zero copy RTOS API for interprocessor messaging.  
  <a href="classerpc_1_1_r_p_msg_r_t_o_s_transport.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="erpc__rpmsg__lite__rtos__transport_8h_source.html">erpc_rpmsg_lite_rtos_transport.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__rpmsg__lite__rtos__transport_8hpp_source.html">erpc_rpmsg_lite_rtos_transport.hpp</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for erpc::RPMsgRTOSTransport:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -135,7 +135,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_r_p_msg_r_t_o_s_transpor
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classerpc_1_1_r_p_msg_r_t_o_s_transport__coll__graph.svg" width="198" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classerpc_1_1_r_p_msg_r_t_o_s_transport__coll__graph.svg" width="316" height="203"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -160,6 +160,12 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:aed718fd7667298a5132504109f656616"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_r_t_o_s_transport.html#aed718fd7667298a5132504109f656616">send</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message)</td></tr>
 <tr class="memdesc:aed718fd7667298a5132504109f656616"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to send prepared message.  <a href="#aed718fd7667298a5132504109f656616">More...</a><br /></td></tr>
 <tr class="separator:aed718fd7667298a5132504109f656616"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb7fecc89530eb60a139d8e695428ff3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_r_t_o_s_transport.html#abb7fecc89530eb60a139d8e695428ff3">setCrc16</a> (<a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *crcImpl)</td></tr>
+<tr class="memdesc:abb7fecc89530eb60a139d8e695428ff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions sets the CRC-16 implementation.  <a href="#abb7fecc89530eb60a139d8e695428ff3">More...</a><br /></td></tr>
+<tr class="separator:abb7fecc89530eb60a139d8e695428ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd40ad76e33f86d99d6be67b18a49d1b"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_r_t_o_s_transport.html#acd40ad76e33f86d99d6be67b18a49d1b">getCrc16</a> (void)</td></tr>
+<tr class="memdesc:acd40ad76e33f86d99d6be67b18a49d1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions gets the CRC-16 object.  <a href="#acd40ad76e33f86d99d6be67b18a49d1b">More...</a><br /></td></tr>
+<tr class="separator:acd40ad76e33f86d99d6be67b18a49d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f68756cf6eb065eaa94b3f20b6df112"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a4f68756cf6eb065eaa94b3f20b6df112">hasMessage</a> (void)</td></tr>
 <tr class="memdesc:a4f68756cf6eb065eaa94b3f20b6df112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to check if is message in receive queue and wait for processing.  <a href="#a4f68756cf6eb065eaa94b3f20b6df112">More...</a><br /></td></tr>
 <tr class="separator:a4f68756cf6eb065eaa94b3f20b6df112"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,9 +182,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#a0cb1c4441873bce62f2ef455a6136888">~Transport</a> (void)</td></tr>
 <tr class="memdesc:a0cb1c4441873bce62f2ef455a6136888 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> destructor. <br /></td></tr>
 <tr class="separator:a0cb1c4441873bce62f2ef455a6136888 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport.html#a077e72c8afa8caa483220faf45df62c6">setCrc16</a> (<a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *crcImpl)</td></tr>
-<tr class="memdesc:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions sets the CRC-16 implementation.  <a href="#a077e72c8afa8caa483220faf45df62c6">More...</a><br /></td></tr>
-<tr class="separator:a077e72c8afa8caa483220faf45df62c6 inherit pub_methods_classerpc_1_1_transport"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -192,6 +195,10 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:aed2f34dbdc3c07f08e48b32a00e22e17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ac7c896e66631661255f7bd2d61d49e"><td class="memItemLeft" align="right" valign="top">struct rpmsg_lite_endpoint *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_r_t_o_s_transport.html#a6ac7c896e66631661255f7bd2d61d49e">m_rpmsg_ept</a></td></tr>
 <tr class="separator:a6ac7c896e66631661255f7bd2d61d49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae94c3eaa5262f141cb56bfac21cb7bcc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae94c3eaa5262f141cb56bfac21cb7bcc"></a>
+<a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_r_p_msg_r_t_o_s_transport.html#ae94c3eaa5262f141cb56bfac21cb7bcc">m_crcImpl</a></td></tr>
+<tr class="memdesc:ae94c3eaa5262f141cb56bfac21cb7bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">CRC object. <br /></td></tr>
+<tr class="separator:ae94c3eaa5262f141cb56bfac21cb7bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -456,6 +463,69 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="abb7fecc89530eb60a139d8e695428ff3"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RPMsgRTOSTransport::setCrc16 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *&#160;</td>
+          <td class="paramname"><em>crcImpl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This functions sets the CRC-16 implementation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">crcImpl</td><td>Object containing crc-16 compute function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Reimplemented from <a class="el" href="classerpc_1_1_transport.html#a077e72c8afa8caa483220faf45df62c6">erpc::Transport</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acd40ad76e33f86d99d6be67b18a49d1b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classerpc_1_1_crc16.html">Crc16</a> * RPMsgRTOSTransport::getCrc16 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This functions gets the CRC-16 object. </p>
+<dl class="section return"><dt>Returns</dt><dd>Crc16* Pointer to CRC-16 object containing crc-16 compute function. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classerpc_1_1_transport.html#a8f3107c5d8d7c89fe074d4433761b924">erpc::Transport</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a4f68756cf6eb065eaa94b3f20b6df112"></a>
 <div class="memitem">
 <div class="memproto">
@@ -593,7 +663,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="erpc__rpmsg__lite__rtos__transport_8h_source.html">erpc_rpmsg_lite_rtos_transport.h</a></li>
+<li><a class="el" href="erpc__rpmsg__lite__rtos__transport_8hpp_source.html">erpc_rpmsg_lite_rtos_transport.hpp</a></li>
 <li>erpc_rpmsg_lite_rtos_transport.cpp</li>
 </ul>
 </div><!-- contents -->

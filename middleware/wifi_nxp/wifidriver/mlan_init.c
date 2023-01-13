@@ -98,7 +98,7 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->bss_mode    = MLAN_BSS_MODE_INFRA;
 
     priv->data_rate         = 0; /* Initially indicate the rate as auto */
-    priv->data_rate_index   = -1;
+    priv->data_rate_index   = (t_s8)-1;
     priv->is_data_rate_auto = MTRUE;
     priv->bcn_avg_factor    = DEFAULT_BCN_AVG_FACTOR;
     priv->data_avg_factor   = DEFAULT_DATA_AVG_FACTOR;
@@ -141,7 +141,7 @@ mlan_status wlan_init_priv(pmlan_private priv)
 
     priv->scan_block = MFALSE;
 
-    if (GET_BSS_ROLE(priv) == MLAN_BSS_ROLE_STA)
+    if (GET_BSS_ROLE(priv) == (unsigned)MLAN_BSS_ROLE_STA)
     {
         priv->port_ctrl_mode = MTRUE;
     }

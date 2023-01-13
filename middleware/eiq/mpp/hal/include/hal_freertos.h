@@ -28,7 +28,6 @@ typedef SemaphoreHandle_t hal_mutex_t;
 
 #define MPP_MALLOC                  pvPortMalloc
 #define MPP_FREE                    vPortFree
-#define MPP_DEVICE_NAME_MAX_LENGTH  (64)
 #define MPP_ATOMIC_ENTER()          ATOMIC_ENTER_CRITICAL()
 #define MPP_ATOMIC_EXIT()           ATOMIC_EXIT_CRITICAL()
 

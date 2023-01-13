@@ -1779,7 +1779,7 @@ API_RESULT BT_map_mse_transport_close
  *         indicate that the response being sent is response to the request for
  *         which the application was notified.
  *
- *  \param [in] response
+ *  \param [in] event_result
  *         This is the OBEX Response Code.
  *
  *  \param [in] map_headers
@@ -1793,7 +1793,7 @@ API_RESULT BT_map_mse_send_response
            (
                 /* IN */ MAP_HANDLE           * map_handle,
                 /* IN */ UINT8                  event_type,
-                /* IN */ UCHAR                  response,
+                /* IN */ UCHAR                  event_result,
                 /* IN */ MAP_HEADERS          * map_headers
            );
 
@@ -1964,7 +1964,7 @@ API_RESULT BT_map_mse_ns_send_request
                /* IN  */ MAP_HANDLE   * map_handle,
                /* IN  */ UINT8          event_type,
                /* IN  */ UINT16         event_result,
-               /* IN  */ MAP_HEADERS  * MAP_headers,
+               /* IN  */ MAP_HEADERS  * map_headers,
                /* IN  */ UCHAR          more,
                /* OUT */ UINT16       * actual
            );

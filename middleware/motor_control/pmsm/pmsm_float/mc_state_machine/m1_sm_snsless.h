@@ -19,14 +19,6 @@
 
 #define MCAT_SENSORLESS_CTRL 0U /* Sensorless control flag */
 
-/* Application info */
-typedef struct _app_ver
-{
-    char cBoardID[15];
-    char cExampleID[30];
-    char cAppVer[5];
-    uint16_t ui16FeatureSet;
-} app_ver_t;
 /*******************************************************************************
  * Variables
  ******************************************************************************/

@@ -10,6 +10,7 @@
 #define _HAL_STATIC_IMAGE_H_
 
 #include "mpp_api_types.h"
+#include "hal_types.h"
 
 typedef struct _static_image static_image_t;
 
@@ -26,7 +27,7 @@ typedef struct _static_image_operator
     /* initialize the elt */
     hal_image_status_t (*init)(static_image_t *elt, mpp_img_params_t *config, void *param);
     /* dequeue a buffer from the elt */
-    hal_image_status_t (*dequeue)(const static_image_t *elt, void **data, mpp_pixel_format_t *format);
+    hal_image_status_t (*dequeue)(const static_image_t *elt, hw_buf_desc_t *out_buf, mpp_pixel_format_t *format);
 } static_image_operator_t;
 
 /*! @brief Structure that characterize the image element. */

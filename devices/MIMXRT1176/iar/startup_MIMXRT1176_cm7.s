@@ -4,11 +4,11 @@
 ;            MIMXRT1176_cm7
 ;  @version: 1.0
 ;  @date:    2020-12-29
-;  @build:   b211122
+;  @build:   b220909
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2021 NXP
+; Copyright 2016-2022 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -212,8 +212,8 @@ __vector_table_0x1c
         DCD     ENET_1G_MAC0_Tx_Rx_2_IRQHandler               ;ENET 1G MAC0 transmit/receive 2
         DCD     ENET_1G_IRQHandler                            ;ENET 1G interrupt
         DCD     ENET_1G_1588_Timer_IRQHandler                 ;ENET_1G_1588_Timer interrupt
-        DCD     XBAR1_IRQ_0_1_IRQHandler                      ;XBAR1 interrupt
-        DCD     XBAR1_IRQ_2_3_IRQHandler                      ;XBAR1 interrupt
+        DCD     XBAR1_IRQ_0_1_IRQHandler                      ;XBARA1 output signal 0, 1 interrupt
+        DCD     XBAR1_IRQ_2_3_IRQHandler                      ;XBARA1 output signal 2, 3 interrupt
         DCD     ADC_ETC_IRQ0_IRQHandler                       ;ADCETC IRQ0 interrupt
         DCD     ADC_ETC_IRQ1_IRQHandler                       ;ADCETC IRQ1 interrupt
         DCD     ADC_ETC_IRQ2_IRQHandler                       ;ADCETC IRQ2 interrupt
@@ -722,7 +722,19 @@ CAN3_ERROR_IRQHandler
         PUBWEAK CSI_IRQHandler
         PUBWEAK PXP_IRQHandler
         PUBWEAK MIPI_CSI_IRQHandler
+        PUBWEAK MIPI_CSI_DriverIRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(2)
+MIPI_CSI_IRQHandler
+        LDR     R0, =MIPI_CSI_DriverIRQHandler
+        BX      R0
+
         PUBWEAK MIPI_DSI_IRQHandler
+        PUBWEAK MIPI_DSI_DriverIRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(2)
+MIPI_DSI_IRQHandler
+        LDR     R0, =MIPI_DSI_DriverIRQHandler
+        BX      R0
+
         PUBWEAK GPU2D_IRQHandler
         PUBWEAK GPIO6_Combined_0_15_IRQHandler
         PUBWEAK GPIO6_Combined_16_31_IRQHandler
@@ -1127,8 +1139,8 @@ eLCDIF_IRQHandler
 LCDIFv2_IRQHandler
 CSI_IRQHandler
 PXP_IRQHandler
-MIPI_CSI_IRQHandler
-MIPI_DSI_IRQHandler
+MIPI_CSI_DriverIRQHandler
+MIPI_DSI_DriverIRQHandler
 GPU2D_IRQHandler
 GPIO6_Combined_0_15_IRQHandler
 GPIO6_Combined_16_31_IRQHandler

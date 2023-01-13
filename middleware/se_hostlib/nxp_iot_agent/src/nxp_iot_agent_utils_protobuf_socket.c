@@ -8,7 +8,7 @@
 #include <nxp_iot_agent_utils_protobuf.h>
 #include <network.h>
 
-#if ENABLE_IOT_AGENT_PROTOBUF_DEBUG
+#if defined(ENABLE_IOT_AGENT_PROTOBUF_DEBUG) && (ENABLE_IOT_AGENT_PROTOBUF_DEBUG == 1)
 void print_binary_data(const char* info, const uint8_t* buf, size_t len) {
 	size_t i;
 	printf("%-20s length: %d\n        ", info, len);
@@ -28,7 +28,7 @@ bool write_callback(pb_ostream_t *stream, const pb_byte_t *buf, size_t count)
 {
 	void* network_context = stream->state;
 
-#if ENABLE_IOT_AGENT_PROTOBUF_DEBUG
+#if defined(ENABLE_IOT_AGENT_PROTOBUF_DEBUG) && (ENABLE_IOT_AGENT_PROTOBUF_DEBUG == 1)
 	print_binary_data("write", buf, count);
 #endif
 
@@ -39,7 +39,7 @@ bool write_callback(pb_ostream_t *stream, const pb_byte_t *buf, size_t count)
 bool read_callback(pb_istream_t *stream, uint8_t *buf, size_t count)
 {
 	void* network_context = stream->state;
-#if ENABLE_IOT_AGENT_PROTOBUF_DEBUG
+#if defined(ENABLE_IOT_AGENT_PROTOBUF_DEBUG) && (ENABLE_IOT_AGENT_PROTOBUF_DEBUG == 1)
 	uint8_t* start = buf;
 	int total = 0;
 #endif
@@ -53,12 +53,12 @@ bool read_callback(pb_istream_t *stream, uint8_t *buf, size_t count)
 		}
 		buf += read;
 		count -= (size_t)read;
-#if ENABLE_IOT_AGENT_PROTOBUF_DEBUG
+#if defined(ENABLE_IOT_AGENT_PROTOBUF_DEBUG) && (ENABLE_IOT_AGENT_PROTOBUF_DEBUG == 1)
 		total += read;
 #endif
 	}
 
-#if ENABLE_IOT_AGENT_PROTOBUF_DEBUG
+#if defined(ENABLE_IOT_AGENT_PROTOBUF_DEBUG) && (ENABLE_IOT_AGENT_PROTOBUF_DEBUG == 1)
 	if (total > 0)
 		print_binary_data("read", start, total);
 #endif

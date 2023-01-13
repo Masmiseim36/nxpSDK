@@ -1764,4 +1764,3 @@ static void fops_idle(osa_task_param_t arg)
 }
 #endif
 
-

@@ -12,8 +12,11 @@
  */
 
 #include "mpp_config.h"
+#include "board_config.h"
+#include "hal_camera_dev.h"
+#include "hal_debug.h"
 
-#ifdef ENABLE_CAMERA_DEV_MipiOv5640
+#if (defined HAL_ENABLE_CAMERA) && (HAL_ENABLE_CAMERA_DEV_MipiOv5640 == 1)
 #include <FreeRTOS.h>
 #include <task.h>
 #include <stdlib.h>
@@ -31,7 +34,6 @@
 #include "camera_support.h"
 #include "display_support.h"
 #include "fsl_common.h"
-#include "hal_camera_dev.h"
 #include "hal.h"
 #include "hal_utils.h"
 
@@ -474,11 +476,16 @@ hal_camera_status_t HAL_CameraDev_MipiOv5640_Enqueue(const camera_dev_t *dev, vo
     return error;
 }
 
-int camera_sim_setup(const char *name, camera_dev_t *dev, _Bool defconfig)
+int HAL_CameraDev_MipiOv5640_setup(const char *name, camera_dev_t *dev, _Bool defconfig)
 {
     dev->ops = &camera_dev_mipi_ov5640_ops;
 
     return 0;
 }
-
-#endif /* ENABLE_CAMERA_DEV_MipiOv5640 */
+#else /* (defined HAL_ENABLE_CAMERA) && (HAL_ENABLE_CAMERA_DEV_MipiOv5640 == 1) */
+int HAL_CameraDev_MipiOv5640_setup(const char *name, camera_dev_t *dev, _Bool defconfig)
+{
+    HAL_LOGE("Camera MipiOv5640 not enabled\n");
+    return -1;
+}
+#endif /* (defined HAL_ENABLE_CAMERA) && (HAL_ENABLE_CAMERA_DEV_MipiOv5640 == 1) */

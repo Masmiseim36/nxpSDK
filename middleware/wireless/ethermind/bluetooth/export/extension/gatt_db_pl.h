@@ -22,8 +22,8 @@
  * GATT DB PL extension, GATT DB Handler Callback.
  * The GATT DB PL extension calls the registered callback
  * to indicate any ongoing GATT DB Operation.
- * The Upper Layer can implement specific handling for any Characterisitc
- * or Characteritistic Descriptor depending on its requirement.
+ * The Upper Layer can implement specific handling for any Characteristic
+ * or Characteristic Descriptor depending on its requirement.
  *
  * \param [in] handle Pointer to GATT DB identifier \ref GATT_DB_HANDLE
  * \param [in] param  Pointer to GATT DB Parameters \ref GATT_DB_PARAMS

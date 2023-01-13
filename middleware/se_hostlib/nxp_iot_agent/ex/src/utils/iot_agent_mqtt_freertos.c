@@ -569,8 +569,8 @@ iot_agent_status_t awsPubMqttMessage(const nxp_iot_ServiceDescriptor* service_de
     mqttAgentContext.prvUserCallback = mqttUserCallback;
     mqttAgentContext.pHostName = service_descriptor->hostname;
     mqttAgentContext.port = service_descriptor->port;
-    mqttAgentContext.pRootCa = tlsCombi_ROOT_CERTIFICATE_PEM;
-    mqttAgentContext.rootCaSize = tlsCombi_ROOT_CERTIFICATE_LENGTH;
+    mqttAgentContext.pRootCa = tlsATS1_ROOT_CERTIFICATE_PEM;
+    mqttAgentContext.rootCaSize = tlsATS1_ROOT_CERTIFICATE_LENGTH;
     mqttAgentContext.pClientId = service_descriptor->client_id;
     mqttAgentContext.pUserName = NULL;
 

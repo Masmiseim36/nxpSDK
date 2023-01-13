@@ -188,12 +188,12 @@ static void M1_StateFaultFast(void)
     g_sM1Drive.sFocPMSM.fltUDcBusFilt =
         GDFLIB_FilterIIR1_FLT(g_sM1Drive.sFocPMSM.fltUDcBus, &g_sM1Drive.sFocPMSM.sUDcBusFilter);
 
-    /* Braking resistor control */
-    if (g_sM1Drive.sFocPMSM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusTrip)
+    /* Braking resistor control with hysteresis */
+    if (g_sM1Drive.sFocPMSM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusTrip * (1.0F + M1_U_DCB_HYSTERESIS))
     {
     	M1_BRAKE_SET();
     }
-    else
+    else if (g_sM1Drive.sFocPMSM.fltUDcBusFilt < g_sM1Drive.sFaultThresholds.fltUDcBusTrip * (1.0F - M1_U_DCB_HYSTERESIS))
     {
     	M1_BRAKE_CLEAR();
     }
@@ -385,6 +385,14 @@ static void M1_StateInitFast(void)
 
     /* INIT_DONE command */
     g_sM1Ctrl.uiCtrl |= SM_CTRL_INIT_DONE;
+    
+    /* Enable all MC faults */
+    FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_I_DCBUS_OVER);
+    FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_U_DCBUS_UNDER);
+    FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_U_DCBUS_OVER);
+    FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_LOAD_OVER);
+    FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_SPEED_OVER);
+    FAULT_SET(g_sM1Drive.sFaultIdEnable, FAULT_ROTOR_BLOCKED);
 }
 
 /*!
@@ -418,12 +426,12 @@ static void M1_StateStopFast(void)
         g_sM1Ctrl.uiCtrl |= SM_CTRL_START;
     }
 
-    /* Braking resistor control */
-    if (g_sM1Drive.sFocPMSM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusTrip)
+    /* Braking resistor control with hysteresis */
+    if (g_sM1Drive.sFocPMSM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusTrip * (1.0F + M1_U_DCB_HYSTERESIS))
     {
     	M1_BRAKE_SET();
     }
-    else
+    else if (g_sM1Drive.sFocPMSM.fltUDcBusFilt < g_sM1Drive.sFaultThresholds.fltUDcBusTrip * (1.0F - M1_U_DCB_HYSTERESIS))
     {
     	M1_BRAKE_CLEAR();
     }
@@ -483,12 +491,12 @@ static void M1_StateRunFast(void)
     g_sM1Drive.sFocPMSM.fltUDcBusFilt =
         GDFLIB_FilterIIR1_FLT(g_sM1Drive.sFocPMSM.fltUDcBus, &g_sM1Drive.sFocPMSM.sUDcBusFilter);
 
-    /* Braking resistor control */
-    if (g_sM1Drive.sFocPMSM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusTrip)
+    /* Braking resistor control with hysteresis */
+    if (g_sM1Drive.sFocPMSM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusTrip * (1.0F + M1_U_DCB_HYSTERESIS))
     {
     	M1_BRAKE_SET();
     }
-    else
+    else if (g_sM1Drive.sFocPMSM.fltUDcBusFilt < g_sM1Drive.sFaultThresholds.fltUDcBusTrip * (1.0F - M1_U_DCB_HYSTERESIS))
     {
     	M1_BRAKE_CLEAR();
     }
@@ -688,8 +696,6 @@ static void M1_TransRunFault(void)
     g_sM1Drive.sSpeed.fltSpeedCmd         = 0.0F;
     g_sM1Drive.sScalarCtrl.fltFreqCmd     = 0.0F;
     g_sM1Drive.sScalarCtrl.sUDQReq.fltQ   = 0.0F;
-    g_sM1Drive.sOpenloop.fltFreqReq		  = 0.0F;
-    GFLIB_IntegratorInit_F16(FRAC16(0.0F), &g_sM1Drive.sOpenloop.sFreqIntegrator);
     g_sM1Drive.sMCATctrl.sUDQReqMCAT.fltQ = 0.0F;
     g_sM1Drive.sMCATctrl.sUDQReqMCAT.fltD = 0.0F;
     g_sM1Drive.sMCATctrl.sIDQReqMCAT.fltQ = 0.0F;
@@ -718,8 +724,6 @@ static void M1_TransRunStop(void)
     g_sM1Drive.sSpeed.fltSpeedCmd         = 0.0F;
     g_sM1Drive.sScalarCtrl.fltFreqCmd     = 0.0F;
     g_sM1Drive.sScalarCtrl.sUDQReq.fltQ   = 0.0F;
-    g_sM1Drive.sOpenloop.fltFreqReq		  = 0.0F;
-    GFLIB_IntegratorInit_F16(FRAC16(0.0F), &g_sM1Drive.sOpenloop.sFreqIntegrator);
     g_sM1Drive.sMCATctrl.sUDQReqMCAT.fltQ = 0.0F;
     g_sM1Drive.sMCATctrl.sUDQReqMCAT.fltD = 0.0F;
     g_sM1Drive.sMCATctrl.sIDQReqMCAT.fltQ = 0.0F;
@@ -1293,10 +1297,7 @@ static void M1_TransRunReadyAlign(void)
 RAM_FUNC_LIB
 static void M1_TransRunReadySpin(void)
 {
-
-	g_sM1Drive.sOpenloop.sFreqIntegrator.a32Gain = g_sM1Drive.sScalarCtrl.sFreqIntegrator.a32Gain;
-	g_sM1Drive.sOpenloop.fltFreqMax = g_sM1Drive.sScalarCtrl.fltFreqMax;
-
+    M1_ClearFOCVariables();
 	g_sM1Drive.sFocPMSM.bCurrentLoopOn = g_sM1Drive.sOpenloop.bCurrentControl;
 	g_sM1Drive.sFocPMSM.bPosExtOn = TRUE;
 	g_sM1Drive.sFocPMSM.bOpenLoop = TRUE;
@@ -1533,7 +1534,14 @@ static void M1_ClearFOCVariables(void)
     g_sM1Drive.sScalarCtrl.sFreqRampParams.fltState    = 0.0F;
 
     /* Clear Open Loop control variables */
+    GFLIB_IntegratorInit_F16(FRAC16(0.0F), &g_sM1Drive.sOpenloop.sFreqIntegrator);
     g_sM1Drive.sOpenloop.f16PosElExt				   = FRAC16(0.0);
+    g_sM1Drive.sOpenloop.f16Theta                      = FRAC16(0);
+    g_sM1Drive.sOpenloop.sUDQReq.fltD                  = 0.0F;
+    g_sM1Drive.sOpenloop.sUDQReq.fltQ                  = 0.0F;
+    g_sM1Drive.sOpenloop.sIDQReq.fltD                  = 0.0F;
+    g_sM1Drive.sOpenloop.sIDQReq.fltQ                  = 0.0F;
+    g_sM1Drive.sOpenloop.fltFreqReq                    = 0.0F;
 
     /* Clear Startup variables */
     g_sM1Drive.sStartUp.f16PosMerged                      = 0;
@@ -1635,6 +1643,10 @@ static void M1_FaultDetection(void)
             g_sM1Drive.ui16BlockRotorCnt = 0U;
         }
     }
+    
+    /* Mask pending faults by enable structure */
+    g_sM1Drive.sFaultIdPending &= g_sM1Drive.sFaultIdEnable;
+    
     /* Pass fault to Fault ID Captured */
     g_sM1Drive.sFaultIdCaptured |= g_sM1Drive.sFaultIdPending;
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016,2019 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  *
@@ -36,7 +36,7 @@ uint32_t HTTPSRV_init(HTTPSRV_PARAM_STRUCT *params)
     server = httpsrv_create_server(params);
     if (server)
     {
-        server->valid = HTTPSRV_VALID;
+        server->valid      = HTTPSRV_VALID;
         server->server_tid = sys_thread_new(HTTPSRV_SERVER_TASK_NAME, httpsrv_server_task, server,
                                             HTTPSRV_CFG_SERVER_STACK_SIZE, server->params.task_prio);
         if (server->server_tid == NULL)
@@ -101,7 +101,7 @@ void HTTPSRV_release(uint32_t server_h)
 uint32_t HTTPSRV_cgi_write(HTTPSRV_CGI_RES_STRUCT *response)
 {
     HTTPSRV_SESSION_STRUCT *session = (HTTPSRV_SESSION_STRUCT *)response->ses_handle;
-    uint32_t retval = 0;
+    uint32_t retval                 = 0;
     int32_t wrote;
 
     if (session == NULL)
@@ -111,9 +111,9 @@ uint32_t HTTPSRV_cgi_write(HTTPSRV_CGI_RES_STRUCT *response)
 
     if (!(session->flags & HTTPSRV_FLAG_HEADER_SENT))
     {
-        session->response.status_code = response->status_code;
+        session->response.status_code  = response->status_code;
         session->response.content_type = response->content_type;
-        session->response.length = response->content_length;
+        session->response.length       = response->content_length;
 
         if (response->content_length < 0)
         {
@@ -241,7 +241,7 @@ uint32_t HTTPSRV_cgi_read(uint32_t ses_handle, char *buffer, uint32_t length)
 uint32_t HTTPSRV_ssi_write(uint32_t ses_handle, char *data, uint32_t length)
 {
     HTTPSRV_SESSION_STRUCT *session = (HTTPSRV_SESSION_STRUCT *)ses_handle;
-    uint32_t retval = 0;
+    uint32_t retval                 = 0;
 
     if ((session != NULL) && (data != NULL) && (length))
     {

@@ -739,7 +739,7 @@ API_RESULT BT_bip_initiator_shutdown(void);
  *         - BIP_REMOTE_CAMERA
  *         - BIP_REMOTE_DISPLAY
  *
- *  \param [in] bip_session_type
+ *  \param [in] session_type
  *         To identify BIP (primary/secondary) session to be started.
  *
  *  \return
@@ -754,7 +754,7 @@ API_RESULT BT_bip_initiator_start
                /* OUT */ BIP_HANDLE       * bip_handle,
                /* IN */  BIP_EVENT_NTF_CB   bip_initiator_cb,
                /* IN */  UCHAR              bip_feature_id,
-               /* IN */  UCHAR              bip_session_type
+               /* IN */  UCHAR              session_type
            );
 
 /**
@@ -940,8 +940,8 @@ API_RESULT BT_bip_initiator_get_status
  *  \param [in] more
  *         It indicates if application has remaining file still to be sent or
  *         it is the complete file content
- *         1 –> File part remaining
- *         0 –> No more file part remaining
+ *         1 -> File part remaining
+ *         0 -> No more file part remaining
  *
  *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included in
@@ -979,8 +979,8 @@ API_RESULT BT_bip_initiator_get_status
  *  \param [in] more
  *         It indicates if application has remaining file still to be sent or
  *         it is the complete file content
- *         1 –> File part remaining
- *         0 –> No more file part remaining
+ *         1 -> File part remaining
+ *         0 -> No more file part remaining
  *
  *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included in
@@ -1018,8 +1018,8 @@ API_RESULT BT_bip_initiator_get_status
  *  \param [in] more
  *         It indicates if application has remaining file still to be sent or
  *         it is the complete file content
- *         1 –> File part remaining
- *         0 –> No more file part remaining
+ *         1 -> File part remaining
+ *         0 -> No more file part remaining
  *
  *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included in
@@ -1305,8 +1305,8 @@ API_RESULT BT_bip_initiator_remote_display
  *  \param [in] more
  *         It indicates if application has remaining file still to be sent or
  *         it is the complete file content
- *          1 – File part remaining
- *          0 – No more file part remaining
+ *          1 - File part remaining
+ *          0 - No more file part remaining
  *
  *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included in the
@@ -1376,8 +1376,8 @@ API_RESULT BT_bip_initiator_start_archive
  *
  *  \param [in] more
  *         Indicates if application has remaining of object body still to be sent or object complete.
- *         1 – Object part remaining
- *         0 – No more object part remaining.
+ *         1 - Object part remaining
+ *         0 - No more object part remaining.
  *
  *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included in the request,
@@ -1513,7 +1513,7 @@ API_RESULT BT_bip_responder_shutdown(void);
  *         - BIP_REMOTE_CAMERA
  *         - BIP_REMOTE_DISPLAY
  *
- *  \param [in] bip_session_type
+ *  \param [in] session_type
  *         To identify BIP (primary/secondary) session to be started.
  *
  *  \return
@@ -1528,7 +1528,7 @@ API_RESULT BT_bip_responder_start
                /* OUT */ BIP_HANDLE        *bip_handle,
                /* IN */  BIP_EVENT_NTF_CB   bip_responder_cb,
                /* IN */  UCHAR              bip_feature_id,
-               /* IN */  UCHAR              bip_session_type
+               /* IN */  UCHAR              session_type
            );
 
 /**
@@ -1903,8 +1903,8 @@ API_RESULT BT_bip_responder_delete_image
  *
  *  \param [in] more
  *         Indicates if application has remaining of object body still to be sent or object complete.
- *         1 – Object part remaining
- *         0 – No more object part remaining.
+ *         1 - Object part remaining
+ *         0 - No more object part remaining.
  *
  *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included in the request,

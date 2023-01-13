@@ -30,7 +30,7 @@
  * LOCAL FUNCTION PROTOTYPES
  */
 static int32_t audiosrc_src_process(StreamPad *pad);
-static PadReturn audiosrc_src_pull_handler(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
+static FlowReturn audiosrc_src_pull_handler(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
 static int32_t audiosrc_change_state(StreamElement *element, PipelineState state);
 static uint8_t audiosrc_handle_src_event(StreamPad *pad, StreamEvent *event);
 static uint8_t audiosrc_handle_src_query(StreamPad *pad, StreamQuery *event);
@@ -165,7 +165,7 @@ int32_t audiosrc_init(StreamElement *element)
     }
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
-    return PAD_OK;
+    return FLOW_OK;
 }
 
 /*!
@@ -390,6 +390,7 @@ static int32_t audiosrc_set_bits_per_sample(ElementHandle element, uint32_t bits
     CHK_ARGS(src == NULL || bits_per_sample == 0 || (bits_per_sample % 8 != 0), STREAM_ERR_INVALID_ARGS);
 
     src->pkt_hdr.bits_per_sample = bits_per_sample;
+    src->pkt_hdr.format          = AUDIO_SET_FORMAT(false, AF_LITTLE_ENDIAN, true, bits_per_sample);
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
     return ret;
@@ -550,10 +551,10 @@ static uint8_t audiosrc_src_activate(StreamPad *pad, uint8_t active)
  * NOTE: Function may or may not be able to read the required
  * length of data.
  *
- * Returns PAD_OK or PAD_STREAM_ERR_GENERAL when read fails.
+ * Returns FLOW_OK or FLOW_ERROR when read fails.
  *
  */
-static PadReturn audiosrc_read(ElementAudioSrc *audiosrc, uint32_t offset, uint32_t length, StreamBuffer *buf)
+static FlowReturn audiosrc_read(ElementAudioSrc *audiosrc, uint32_t offset, uint32_t length, StreamBuffer *buf)
 {
     AudioSrcStreamErrorType ret = AUDIOSRC_SUCCESS;
 
@@ -566,7 +567,7 @@ static PadReturn audiosrc_read(ElementAudioSrc *audiosrc, uint32_t offset, uint3
     if (ret == AUDIOSRC_ERROR_READ_TIME_OUT)
     {
         STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
-        return PAD_STREAM_ERR_DEVICE_READ_TIME_OUT;
+        return FLOW_TIME_OUT;
     }
     if (ret != AUDIOSRC_SUCCESS)
     {
@@ -574,11 +575,11 @@ static PadReturn audiosrc_read(ElementAudioSrc *audiosrc, uint32_t offset, uint3
     }
 
     STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
-    return PAD_OK;
+    return FLOW_OK;
 
 read_failed:
     STREAMER_FUNC_EXIT(DBG_AUDIO_SRC);
-    return PAD_STREAM_ERR_GENERAL;
+    return FLOW_ERROR;
 }
 
 /*!
@@ -593,8 +594,7 @@ read_failed:
 static int32_t audiosrc_src_process(StreamPad *pad)
 {
     ElementAudioSrc *audiosrc = (ElementAudioSrc *)pad->parent;
-    PadReturn ret             = PAD_OK;
-    FlowReturn flow_ret       = FLOW_OK;
+    FlowReturn ret            = FLOW_OK;
     uint32_t length = 0, offset = 0;
     StreamBuffer buf;
     StreamEvent event;
@@ -616,7 +616,7 @@ static int32_t audiosrc_src_process(StreamPad *pad)
         /* read chunk_size of data */
         ret = audiosrc_read(audiosrc, offset, length, &buf);
 
-        if (ret == PAD_STREAM_ERR_DEVICE_READ_TIME_OUT)
+        if (ret == FLOW_TIME_OUT)
         {
             if (audiosrc->state == STATE_PLAYING)
             {
@@ -626,9 +626,7 @@ static int32_t audiosrc_src_process(StreamPad *pad)
 
             if (buf.size > sizeof(AudioPacketHeader))
             {
-                flow_ret = pad_push(pad, &buf);
-
-                if (flow_ret != FLOW_OK)
+                if (pad_push(pad, &buf) != FLOW_OK)
                 {
                     STREAMER_LOG_ERR(DBG_AUDIO_SRC, ERRCODE_GENERAL_ERROR, "[AudioSRC]Flow not ok2\n");
                     goto pause;
@@ -636,7 +634,7 @@ static int32_t audiosrc_src_process(StreamPad *pad)
             }
             goto pause;
         }
-        else if (ret != PAD_STREAM_ERR_GENERAL)
+        else if (ret != FLOW_ERROR)
         {
             /* No error then forward the data */
             /* push data to peer sink pad */
@@ -645,8 +643,7 @@ static int32_t audiosrc_src_process(StreamPad *pad)
                 audiosrc->retries = 0;
             }
 
-            flow_ret = pad_push(pad, &buf);
-            if (flow_ret != FLOW_OK)
+            if (pad_push(pad, &buf) != FLOW_OK)
             {
                 STREAMER_LOG_ERR(DBG_AUDIO_SRC, ERRCODE_GENERAL_ERROR, "[AudioSRC]Flow not ok3\n");
                 goto pause;
@@ -691,12 +688,12 @@ pause:
  * @param buffer Buffer pointer
  * @param size   Data size
  * @param offset Offset to be read
- * @return PadReturn
+ * @return FlowReturn
  */
-static PadReturn audiosrc_src_pull_handler(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset)
+static FlowReturn audiosrc_src_pull_handler(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset)
 {
     ElementAudioSrc *audiosrc = (ElementAudioSrc *)pad->parent;
-    PadReturn ret             = PAD_OK;
+    FlowReturn ret            = FLOW_OK;
     uint32_t length           = 0;
 
     STREAMER_FUNC_ENTER(DBG_AUDIO_SRC);
@@ -716,7 +713,7 @@ static PadReturn audiosrc_src_pull_handler(StreamPad *pad, StreamBuffer *buffer,
         /* read chunk_size of data */
         ret = audiosrc_read(audiosrc, offset, length, buffer);
 
-        if (ret == PAD_STREAM_ERR_DEVICE_READ_TIME_OUT)
+        if (ret == FLOW_TIME_OUT)
         {
             if (audiosrc->state == STATE_PLAYING)
             {
@@ -726,13 +723,13 @@ static PadReturn audiosrc_src_pull_handler(StreamPad *pad, StreamBuffer *buffer,
 
             goto pause;
         }
-        else if (ret == PAD_STREAM_ERR_GENERAL)
+        else if (ret == FLOW_ERROR)
         {
         audio_data_end:
             STREAMER_LOG_ERR(DBG_AUDIO_SRC, ERRCODE_GENERAL_ERROR, "[AudioSRC]Unexpected error\n");
 
             /* send eos to pulling pad */
-            ret                     = PAD_STREAM_ERR_EOS;
+            ret                     = FLOW_EOS;
             audiosrc->end_of_stream = true;
 
             goto pause;

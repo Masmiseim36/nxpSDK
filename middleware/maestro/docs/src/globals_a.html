@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.5</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -91,8 +91,8 @@ $(document).ready(function(){initNavTree('globals_a.html',''); initResizable(); 
 <li>activate_pad()&#160;:&#160;<a class="el" href="pad_8c.html#adff5fd975cbfca05e65ea3357e409ed0">pad.c</a>, <a class="el" href="pad_8h.html#adff5fd975cbfca05e65ea3357e409ed0">pad.h</a></li>
 <li>activate_pads_element()&#160;:&#160;<a class="el" href="streamer__element_8c.html#af920b7528b75d3fb9313f1ff45881ae0">streamer_element.c</a>, <a class="el" href="streamer__element_8h.html#af920b7528b75d3fb9313f1ff45881ae0">streamer_element.h</a></li>
 <li>add_element_pipeline()&#160;:&#160;<a class="el" href="pipeline_8c.html#a629cf90e929b9dff38dbd6a68e50a6be">pipeline.c</a>, <a class="el" href="pipeline_8h.html#a629cf90e929b9dff38dbd6a68e50a6be">pipeline.h</a></li>
-<li>add_error_name()&#160;:&#160;<a class="el" href="logging_8h.html#a2c76f9ba686ab8f83175ba24dd253140">logging.h</a></li>
-<li>add_module_name()&#160;:&#160;<a class="el" href="logging_8h.html#ace86d4331a5d49f737501c71cafa191e">logging.h</a></li>
+<li>add_error_name()&#160;:&#160;<a class="el" href="maestro__logging_8h.html#a2c76f9ba686ab8f83175ba24dd253140">maestro_logging.h</a></li>
+<li>add_module_name()&#160;:&#160;<a class="el" href="maestro__logging_8h.html#ace86d4331a5d49f737501c71cafa191e">maestro_logging.h</a></li>
 <li>AF_BIG_ENDIAN&#160;:&#160;<a class="el" href="streamer_8h.html#a10bb96e3e42859111013e1eec363f06e">streamer.h</a></li>
 <li>AF_LITTLE_ENDIAN&#160;:&#160;<a class="el" href="streamer_8h.html#a7d84bdee09d6bfddd9e7fdd18ba9dbfb">streamer.h</a></li>
 <li>AF_MESSAGE_SECTION&#160;:&#160;<a class="el" href="streamer__api_8h.html#a6f251974fbcf31c9df41a48f5699b62d">streamer_api.h</a></li>
@@ -109,14 +109,27 @@ $(document).ready(function(){initNavTree('globals_a.html',''); initResizable(); 
 <li>AUDIO_BITS_PER_SAMPLE&#160;:&#160;<a class="el" href="audio__sink_8h.html#a92deaac27201b3b004c39463581e88fe">audio_sink.h</a></li>
 <li>AUDIO_BUFFER&#160;:&#160;<a class="el" href="audio__sink_8h.html#a20f84ef08215095cb1147195f05f0f20">audio_sink.h</a></li>
 <li>audio_callback_t&#160;:&#160;<a class="el" href="netbuf__src_8h.html#ab22b304323ca240258ca2717e5f25bc9">netbuf_src.h</a></li>
-<li>AUDIO_CHUNK_SIZE&#160;:&#160;<a class="el" href="audio__sink_8h.html#ac4df53e1922f73d884de7fd8bb00e845">audio_sink.h</a>, <a class="el" href="eap_8h.html#ac4df53e1922f73d884de7fd8bb00e845">eap.h</a>, <a class="el" href="vit__sink_8h.html#ac4df53e1922f73d884de7fd8bb00e845">vit_sink.h</a></li>
+<li>AUDIO_CHUNK_SIZE&#160;:&#160;<a class="el" href="audio__proc_8h.html#ac4df53e1922f73d884de7fd8bb00e845">audio_proc.h</a>, <a class="el" href="audio__sink_8h.html#ac4df53e1922f73d884de7fd8bb00e845">audio_sink.h</a>, <a class="el" href="vit__sink_8h.html#ac4df53e1922f73d884de7fd8bb00e845">vit_sink.h</a></li>
 <li>AUDIO_DATA&#160;:&#160;<a class="el" href="streamer_8h.html#ac139bede02cf10a641fa8a11fcb5b120">streamer.h</a></li>
 <li>AUDIO_ENDIANNESS&#160;:&#160;<a class="el" href="audio__sink_8h.html#a8bed14e4a7d6826f25038a9d63b40f41">audio_sink.h</a></li>
 <li>AUDIO_FORMAT&#160;:&#160;<a class="el" href="audio__sink_8h.html#a1a64e75e8cbd36347ec7626866558181">audio_sink.h</a></li>
 <li>AUDIO_ID&#160;:&#160;<a class="el" href="audio__sink_8h.html#a09926c9fabb9396c00ff62e3fa1f2b13">audio_sink.h</a></li>
 <li>AUDIO_INTERLEAVED&#160;:&#160;<a class="el" href="audio__sink_8h.html#a4660f52dab19621e83787d4ef83deb50">audio_sink.h</a></li>
-<li>AUDIO_NUM_CHANNELS&#160;:&#160;<a class="el" href="audio__sink_8h.html#a731008ecdac82b0e22fed14e4cf2a0e3">audio_sink.h</a>, <a class="el" href="eap_8h.html#a731008ecdac82b0e22fed14e4cf2a0e3">eap.h</a></li>
-<li>AUDIO_SAMPLE_RATE&#160;:&#160;<a class="el" href="audio__sink_8h.html#a8dfd566b01ffbb8782ce3f818df9f1c6">audio_sink.h</a>, <a class="el" href="eap_8h.html#a8dfd566b01ffbb8782ce3f818df9f1c6">eap.h</a></li>
+<li>AUDIO_NUM_CHANNELS&#160;:&#160;<a class="el" href="audio__proc_8h.html#a731008ecdac82b0e22fed14e4cf2a0e3">audio_proc.h</a>, <a class="el" href="audio__sink_8h.html#a731008ecdac82b0e22fed14e4cf2a0e3">audio_sink.h</a></li>
+<li>audio_proc_change_state()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a5853038432a2f613762d4754fa50e1e0">audio_proc.c</a></li>
+<li>audio_proc_get_property()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a783ef868f6036f9c36203c59d5d63408">audio_proc.c</a></li>
+<li>audio_proc_init_element()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a47814cf120ff316d23fc46100844ee8b">audio_proc.c</a>, <a class="el" href="audio__proc_8h.html#a47814cf120ff316d23fc46100844ee8b">audio_proc.h</a></li>
+<li>audio_proc_register_ext_processing()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a7f7f4342118671fa354c3746c4555aeb">audio_proc.c</a>, <a class="el" href="audio__proc_8h.html#a7f7f4342118671fa354c3746c4555aeb">audio_proc.h</a></li>
+<li>audio_proc_set_buffer()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a54f4da9906bfbc3bef8762477a4f2ba8">audio_proc.c</a>, <a class="el" href="audio__proc_8h.html#a54f4da9906bfbc3bef8762477a4f2ba8">audio_proc.h</a></li>
+<li>audio_proc_set_property()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a3b3b76d9cda2eda6ff4805ee1e752df4">audio_proc.c</a></li>
+<li>audio_proc_sink_pad_activation_handler()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a91aae79712c2f85601c6f7c853e95e2d">audio_proc.c</a></li>
+<li>audio_proc_sink_pad_chain_handler()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a45ae88cef2424da539d70364b532fe24">audio_proc.c</a></li>
+<li>audio_proc_sink_pad_event_handler()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a09b319134ecff4976c241e86fd2c3893">audio_proc.c</a></li>
+<li>audio_proc_sink_pad_query_handler()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a3b02b1ac843210e3e6f17c6f8b01ae69">audio_proc.c</a></li>
+<li>audio_proc_src_pad_event_handler()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a1f463a3f3b8dae4c61860df9a58d4fe0">audio_proc.c</a></li>
+<li>audio_proc_src_pad_query_handler()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a93f8ba693355a38cf14e4895275fece6">audio_proc.c</a></li>
+<li>audio_proc_src_pull_handler()&#160;:&#160;<a class="el" href="audio__proc_8c.html#a1cb21ed7616050e21ee6d2773379936a">audio_proc.c</a></li>
+<li>AUDIO_SAMPLE_RATE&#160;:&#160;<a class="el" href="audio__proc_8h.html#a8dfd566b01ffbb8782ce3f818df9f1c6">audio_proc.h</a>, <a class="el" href="audio__sink_8h.html#a8dfd566b01ffbb8782ce3f818df9f1c6">audio_sink.h</a></li>
 <li>AUDIO_SET_FORMAT&#160;:&#160;<a class="el" href="streamer__element_8h.html#aa776fdacb139dc668cea488668bcb1b3">streamer_element.h</a></li>
 <li>AUDIO_SIGNED&#160;:&#160;<a class="el" href="audio__sink_8h.html#a1e3a5cef77d673769ee888e459b61d87">audio_sink.h</a></li>
 <li>AUDIO_SINK_BUFFER_NUM&#160;:&#160;<a class="el" href="audio__sink__pcmrtos_8h.html#a373dd256dae50452c1fe361ae375af07">audio_sink_pcmrtos.h</a></li>
@@ -154,6 +167,9 @@ $(document).ready(function(){initNavTree('globals_a.html',''); initResizable(); 
 <li>audio_stream_type_t&#160;:&#160;<a class="el" href="codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5c">codec_interface_public_api.h</a></li>
 <li>AUDIO_VOLUME&#160;:&#160;<a class="el" href="audio__sink_8h.html#a90644bbd7f81aee93b30c4fbf091855f">audio_sink.h</a></li>
 <li>AUDIO_WORD_LENGTH&#160;:&#160;<a class="el" href="audio__sink_8h.html#ae18646c07cfd2a7f4915e65d4d93ad32">audio_sink.h</a></li>
+<li>AudioProcDeinitFunc&#160;:&#160;<a class="el" href="audio__proc_8h.html#afcc88e9ad5d475a4d2ae7fe0ee8ca4eb">audio_proc.h</a></li>
+<li>AudioProcInitFunc&#160;:&#160;<a class="el" href="audio__proc_8h.html#a290a6712a68f4d5600ca88db477cfa52">audio_proc.h</a></li>
+<li>AudioProcPostProcFunc&#160;:&#160;<a class="el" href="audio__proc_8h.html#abd8287d9a9bfbc372b5d44f7ae3f7ab5">audio_proc.h</a></li>
 <li>audiosink_change_state()&#160;:&#160;<a class="el" href="audio__sink_8c.html#aeb35118b4b5491e51f680208d0ced596">audio_sink.c</a></li>
 <li>audiosink_get_property()&#160;:&#160;<a class="el" href="audio__sink_8c.html#aba06217d5f3b7d4cfe721c9f0a686100">audio_sink.c</a></li>
 <li>audiosink_init_element()&#160;:&#160;<a class="el" href="audio__sink_8c.html#a14c4ad306893a50972e84c7c038c869a">audio_sink.c</a>, <a class="el" href="audio__sink_8h.html#a14c4ad306893a50972e84c7c038c869a">audio_sink.h</a></li>
@@ -201,7 +217,7 @@ $(document).ready(function(){initNavTree('globals_a.html',''); initResizable(); 
 <li>audiosrc_init()&#160;:&#160;<a class="el" href="audio__src_8c.html#a0a93cb4915b9f75f9d06ddd28cb8d66c">audio_src.c</a>, <a class="el" href="audio__src_8h.html#a0a93cb4915b9f75f9d06ddd28cb8d66c">audio_src.h</a></li>
 <li>AUDIOSRC_PCMRTOS&#160;:&#160;<a class="el" href="streamer__api_8h.html#ae5dcd38e8148989fa09363a3b9779baca568b1f38786076bac003834d2d34aee9">streamer_api.h</a></li>
 <li>audiosrc_pcmrtos_init_params()&#160;:&#160;<a class="el" href="audio__src__pcmrtos_8c.html#a9c013a440c7c08e9834790241c34f3ca">audio_src_pcmrtos.c</a></li>
-<li>audiosrc_read()&#160;:&#160;<a class="el" href="audio__src_8c.html#a1421a762bdeae27e7c5ddea7d92aabb2">audio_src.c</a></li>
+<li>audiosrc_read()&#160;:&#160;<a class="el" href="audio__src_8c.html#aa42949137ade8a226fdd2c48a12a3b04">audio_src.c</a></li>
 <li>audiosrc_set_bits_per_sample()&#160;:&#160;<a class="el" href="audio__src_8c.html#ae5d7931c70f559d849b8362ab0b1b245">audio_src.c</a></li>
 <li>audiosrc_set_continuous_read()&#160;:&#160;<a class="el" href="audio__src_8c.html#aae597921f22f48424801c8a77490cfe9">audio_src.c</a></li>
 <li>audiosrc_set_device_name()&#160;:&#160;<a class="el" href="audio__src_8c.html#a0ba821eace4e114874d9edf1b30021de">audio_src.c</a></li>
@@ -216,7 +232,7 @@ $(document).ready(function(){initNavTree('globals_a.html',''); initResizable(); 
 <li>audiosrc_src_activate_pull()&#160;:&#160;<a class="el" href="audio__src_8c.html#a6923ab59ae78ea0300a5f5dc15ee46ff">audio_src.c</a></li>
 <li>audiosrc_src_activate_push()&#160;:&#160;<a class="el" href="audio__src_8c.html#ae7757b686a5240604780b429bb4e6718">audio_src.c</a></li>
 <li>audiosrc_src_process()&#160;:&#160;<a class="el" href="audio__src_8c.html#aa07d4d9104141fe28711628147054dcc">audio_src.c</a></li>
-<li>audiosrc_src_pull_handler()&#160;:&#160;<a class="el" href="audio__src_8c.html#a06370eb241121eb88dd968dcc6a41d7f">audio_src.c</a></li>
+<li>audiosrc_src_pull_handler()&#160;:&#160;<a class="el" href="audio__src_8c.html#a751a9ce0455fd9acbbdff940b94393c9">audio_src.c</a></li>
 <li>AudioSrcCloseDevice&#160;:&#160;<a class="el" href="audio__src_8c.html#acc20fb3792dd87ce3e283effdac97e32">audio_src.c</a></li>
 <li>AudioSrcDeviceDriverType&#160;:&#160;<a class="el" href="streamer__api_8h.html#ae5dcd38e8148989fa09363a3b9779bac">streamer_api.h</a></li>
 <li>AudioSrcDeviceStateType&#160;:&#160;<a class="el" href="audio__src_8h.html#a728df54057304e65e7eda525b1ff5815">audio_src.h</a></li>

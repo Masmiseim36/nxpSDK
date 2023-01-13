@@ -87,11 +87,16 @@ iot_agent_status_t iot_agent_datastore_fs_read(
 iot_agent_status_t iot_agent_datastore_fs_commit(
 	void* context);
 
+iot_agent_status_t iot_agent_datastore_fs_open_file(FILE** fp,
+    const char* basename, size_t index, const char* mode);
+
 bool iot_agent_datastore_fs_get_endpoint_info(
 	void *context, void* endpoint_information);
 
 bool iot_agent_datastore_fs_handle_request(pb_istream_t *istream,
 	pb_ostream_t *ostream, const pb_field_t* message_type, void *context);
+
+bool iot_agent_datastore_fs_handle_write_data(pb_istream_t *stream, const pb_field_t *field, void **arg);
 
 extern const iot_agent_datastore_interface_t iot_agent_datastore_fs_interface;
 

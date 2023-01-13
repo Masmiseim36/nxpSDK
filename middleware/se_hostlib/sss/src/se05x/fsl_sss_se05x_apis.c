@@ -33,8 +33,27 @@ extern "C" {
 #if defined(SMCOM_JRCP_V1_AM)
 #include "sm_timer.h"
 #endif
+#if defined(USE_THREADX_RTOS)
+#include "tx_api.h"
+#endif
 
-#if (USE_RTOS)
+#if defined(USE_THREADX_RTOS)
+
+#define LOCK_TXN(lock)                                           \
+	LOG_D("Trying to Acquire Lock");                             \
+	if (tx_mutex_get(&lock,TX_WAIT_FOREVER) == TX_SUCCESS)       \
+		LOG_D("LOCK Acquired");                                  \
+	else                                                         \
+		LOG_D("LOCK Acquisition failed");
+
+#define UNLOCK_TXN(lock)                                         \
+    LOG_D("Trying to Released Lock");                            \
+    if (tx_mutex_put(&lock ) == TX_SUCCESS)                      \
+        LOG_D("LOCK Released");                                  \
+    else                                                         \
+        LOG_D("LOCK Releasing failed");
+
+#elif (defined(USE_RTOS) && (USE_RTOS == 1))
 #define LOCK_TXN(lock)                                   \
     LOG_D("Trying to Acquire Lock");                     \
     if (xSemaphoreTake(lock, portMAX_DELAY) == pdTRUE) { \
@@ -63,11 +82,14 @@ extern "C" {
     LOG_D("LOCK Released by thread: %ld", pthread_self());
 #endif
 
-#if (__GNUC__ && !AX_EMBEDDED) || (USE_RTOS)
+#if (__GNUC__ && !AX_EMBEDDED) || (USE_RTOS) || defined(USE_THREADX_RTOS)
 #define USE_LOCK 1
 #else
 #define USE_LOCK 0
 #endif
+
+smStatus_t sss_se05x_create_curve_if_needed(Se05xSession_t *pSession, uint32_t curve_id);
+void add_ecc_header(uint8_t *key, size_t *keylen, uint8_t **key_buf, size_t *key_buflen, uint32_t curve_id);
 
 static SE05x_ECSignatureAlgo_t se05x_get_ec_sign_hash_mode(sss_algorithm_t algorithm);
 
@@ -294,6 +316,12 @@ static sss_status_t sss_se05x_get_ecdaa_random_key_id(Se05xSession_t *context, u
 #endif // SSS_HAVE_TPM_BN
 
 #endif // SSS_HAVE_SE05X_VER_GTE_07_02
+
+sss_status_t nxECKey_ReadEckaPublicKey(pSe05xSession_t se05xSession,
+    sss_key_store_t *pHostKeyStore,
+    uint8_t *pSePubEcka,
+    size_t *pSePubEckaLen,
+    uint32_t eckaObjId);
 /* ************************************************************************** */
 /* Defines                                                                    */
 /* ************************************************************************** */
@@ -308,6 +336,11 @@ sss_status_t sss_se05x_session_create(sss_se05x_session_t *session,
     sss_connection_type_t connection_type,
     void *connectionData)
 {
+    AX_UNUSED_ARG(session);
+    AX_UNUSED_ARG(subsystem);
+    AX_UNUSED_ARG(application_id);
+    AX_UNUSED_ARG(connection_type);
+    AX_UNUSED_ARG(connectionData);
     sss_status_t retval = kStatus_SSS_Success;
     /* Nothing special to be handled */
     return retval;
@@ -322,7 +355,7 @@ sss_status_t sss_se05x_session_create(sss_se05x_session_t *session,
         (APPLET_SE050_VER_DEV_PATCH1) << (8 * 1))
 #endif
 
-#define ENABLE_APPLET_VERSION_CHECK    1
+#define ENABLE_APPLET_VERSION_CHECK 1
 
 sss_status_t sss_se05x_session_open(sss_se05x_session_t *session,
     sss_type_t subsystem,
@@ -379,8 +412,8 @@ sss_status_t sss_se05x_session_open(sss_se05x_session_t *session,
         if (atrLen != 0) {
             LOG_AU8_I(atr, atrLen);
         }
-#elif defined (SMCOM_PN7150)
-        lReturn =  SM_Connect(&(se05xSession->conn_ctx), &CommState, atr, &atrLen);
+#elif defined(SMCOM_PN7150)
+        lReturn = SM_Connect(&(se05xSession->conn_ctx), &CommState, atr, &atrLen);
         if (lReturn != SW_OK) {
             LOG_E("SM_Connect Failed for NFC Interface. Status %04X", lReturn);
             retval = kStatus_SSS_Fail;
@@ -435,13 +468,14 @@ sss_status_t sss_se05x_session_open(sss_se05x_session_t *session,
             }
 #else
             LOG_I("Compiled for 0x%X. Connected applet Ver 0x%X",
-                                (HEX_EXPECTED_APPLET_VERSION) >> 8,
-                                (CommState.appletVersion) >> 8);
+                (HEX_EXPECTED_APPLET_VERSION) >> 8,
+                (CommState.appletVersion) >> 8);
 #endif
         }
     }
 
     if (pAuthCtx->auth.authType == kSSS_AuthType_ECKey) {
+        ENSURE_OR_GO_EXIT(pAuthCtx->auth.ctx.eckey.pDyn_ctx);
         if (CommState.appletVersion == 0) {
             /*Get Applet version from previously opened session*/
             uint8_t appletVersion[32]          = {0};
@@ -497,10 +531,10 @@ sss_status_t sss_se05x_session_open(sss_se05x_session_t *session,
             /* There is a differnet behaviour of Platform SCP between SE050 and future applet.
              * Here we switch make it clear. */
             if (CommState.appletVersion >= 0x04030000) {
-                pAuthCtx->auth.ctx.scp03.pDyn_ctx->authType = (uint8_t)kSSS_AuthType_AESKey;
+                pAuthCtx->auth.ctx.scp03.pDyn_ctx->authType = (SE_AuthType_t)kSSS_AuthType_AESKey;
             }
             else {
-                pAuthCtx->auth.ctx.scp03.pDyn_ctx->authType = (uint8_t)kSSS_AuthType_SCP03;
+                pAuthCtx->auth.ctx.scp03.pDyn_ctx->authType = (SE_AuthType_t)kSSS_AuthType_SCP03;
             }
             /*Auth type to Platform SCP03 again as channel authentication will modify it
             to auth type None*/
@@ -773,6 +807,7 @@ exit:
 
 sss_status_t sss_se05x_session_prop_get_u32(sss_se05x_session_t *session, uint32_t property, uint32_t *pValue)
 {
+    AX_UNUSED_ARG(session);
     sss_status_t retval                   = kStatus_SSS_Success;
     sss_session_prop_u32_t prop           = (sss_session_prop_u32_t)property;
     sss_s05x_sesion_prop_u32_t se050xprop = (sss_s05x_sesion_prop_u32_t)property;
@@ -875,6 +910,8 @@ sss_status_t sss_se05x_session_prop_get_au8(
             }
         }
         break;
+    default:
+        LOG_E("Invalid property");
     }
 
 cleanup:
@@ -895,7 +932,7 @@ void sss_se05x_session_close(sss_se05x_session_t *session)
 
 void sss_se05x_session_delete(sss_se05x_session_t *session)
 {
-    ;
+    AX_UNUSED_ARG(session);
 }
 
 /* End: se05x_session */
@@ -920,6 +957,7 @@ sss_status_t sss_se05x_key_object_allocate_handle(sss_se05x_object_t *keyObject,
     size_t keyByteLenMax,
     uint32_t options)
 {
+    AX_UNUSED_ARG(keyByteLenMax);
     sss_status_t retval = kStatus_SSS_Success;
     smStatus_t status;
     SE05x_Result_t exists = kSE05x_Result_NA;
@@ -967,6 +1005,8 @@ sss_status_t sss_se05x_key_object_get_handle(sss_se05x_object_t *keyObject, uint
         LOG_U32_D(keyId);
         return retval;
     }
+
+    keyObject->keyId = keyId;
 
     apiRetval = Se05x_API_ReadType(
         &keyObject->keyStore->session->s_ctx, keyId, &retObjectType, &retTransientType, attestationType);
@@ -1169,12 +1209,12 @@ sss_status_t sss_se05x_key_object_get_handle(sss_se05x_object_t *keyObject, uint
         }
     }
     else {
-        LOG_E("error in Se05x_API_ReadType");
+        LOG_W("Error in Se05x_API_ReadType. Further use of object may fail");
+        retval = kStatus_SSS_Success;
         return retval;
     }
 
-    keyObject->keyId = keyId;
-    retval           = kStatus_SSS_Success;
+    retval = kStatus_SSS_Success;
 #endif // SSSFTR_SE05X_KEY_GET
     return retval;
 }
@@ -1182,6 +1222,9 @@ sss_status_t sss_se05x_key_object_get_handle(sss_se05x_object_t *keyObject, uint
 // LCOV_EXCL_START
 sss_status_t sss_se05x_key_object_set_user(sss_se05x_object_t *keyObject, uint32_t user, uint32_t options)
 {
+    AX_UNUSED_ARG(keyObject);
+    AX_UNUSED_ARG(user);
+    AX_UNUSED_ARG(options);
     sss_status_t retval = kStatus_SSS_Fail;
     /* Purpose / Policy is set during creation time and hence can not
      * enforced in SE050 later on */
@@ -1191,6 +1234,9 @@ sss_status_t sss_se05x_key_object_set_user(sss_se05x_object_t *keyObject, uint32
 
 sss_status_t sss_se05x_key_object_set_purpose(sss_se05x_object_t *keyObject, sss_mode_t purpose, uint32_t options)
 {
+    AX_UNUSED_ARG(keyObject);
+    AX_UNUSED_ARG(purpose);
+    AX_UNUSED_ARG(options);
     sss_status_t retval = kStatus_SSS_Fail;
     /* Purpose / Policy is set during creation time and hence can not
      * enforced in SE050 later on */
@@ -1200,6 +1246,9 @@ sss_status_t sss_se05x_key_object_set_purpose(sss_se05x_object_t *keyObject, sss
 
 sss_status_t sss_se05x_key_object_set_access(sss_se05x_object_t *keyObject, uint32_t access, uint32_t options)
 {
+    AX_UNUSED_ARG(keyObject);
+    AX_UNUSED_ARG(access);
+    AX_UNUSED_ARG(options);
     sss_status_t retval = kStatus_SSS_Fail;
     LOG_W("Not supported in SE05X");
     return retval;
@@ -1207,6 +1256,8 @@ sss_status_t sss_se05x_key_object_set_access(sss_se05x_object_t *keyObject, uint
 
 sss_status_t sss_se05x_key_object_set_eccgfp_group(sss_se05x_object_t *keyObject, sss_eccgfp_group_t *group)
 {
+    AX_UNUSED_ARG(keyObject);
+    AX_UNUSED_ARG(group);
     sss_status_t retval = kStatus_SSS_Fail;
     LOG_W("Not supported in SE05X");
     return retval;
@@ -1214,6 +1265,8 @@ sss_status_t sss_se05x_key_object_set_eccgfp_group(sss_se05x_object_t *keyObject
 
 sss_status_t sss_se05x_key_object_get_user(sss_se05x_object_t *keyObject, uint32_t *user)
 {
+    AX_UNUSED_ARG(keyObject);
+    AX_UNUSED_ARG(user);
     sss_status_t retval = kStatus_SSS_Fail;
     LOG_W("Not supported in SE05X");
     return retval;
@@ -1221,6 +1274,8 @@ sss_status_t sss_se05x_key_object_get_user(sss_se05x_object_t *keyObject, uint32
 
 sss_status_t sss_se05x_key_object_get_purpose(sss_se05x_object_t *keyObject, sss_mode_t *purpose)
 {
+    AX_UNUSED_ARG(keyObject);
+    AX_UNUSED_ARG(purpose);
     sss_status_t retval = kStatus_SSS_Fail;
     LOG_W("Not supported in SE05X");
     return retval;
@@ -1228,6 +1283,8 @@ sss_status_t sss_se05x_key_object_get_purpose(sss_se05x_object_t *keyObject, sss
 
 sss_status_t sss_se05x_key_object_get_access(sss_se05x_object_t *keyObject, uint32_t *access)
 {
+    AX_UNUSED_ARG(keyObject);
+    AX_UNUSED_ARG(access);
     sss_status_t retval = kStatus_SSS_Fail;
     LOG_W("Not supported in SE05X");
     return retval;
@@ -1271,6 +1328,8 @@ sss_status_t sss_se05x_derive_key_go(sss_se05x_derive_key_t *context,
     uint8_t *hkdfOutput,
     size_t *hkdfOutputLen)
 {
+    AX_UNUSED_ARG(hkdfOutput);
+    AX_UNUSED_ARG(hkdfOutputLen);
     sss_status_t retval                     = kStatus_SSS_Fail;
     smStatus_t status                       = SM_NOT_OK;
     uint8_t hkdfKey[SE05X_MAX_BUF_SIZE_CMD] = {
@@ -1583,7 +1642,7 @@ exit:
 
 void sss_se05x_derive_key_context_free(sss_se05x_derive_key_t *context)
 {
-    ;
+    AX_UNUSED_ARG(context);
 }
 
 /* End: se05x_keyderive */
@@ -1602,16 +1661,20 @@ sss_status_t sss_se05x_key_store_context_init(sss_se05x_key_store_t *keyStore, s
 
 sss_status_t sss_se05x_key_store_allocate(sss_se05x_key_store_t *keyStore, uint32_t keyStoreId)
 {
+    AX_UNUSED_ARG(keyStore);
+    AX_UNUSED_ARG(keyStoreId);
     return kStatus_SSS_Success;
 }
 
 sss_status_t sss_se05x_key_store_save(sss_se05x_key_store_t *keyStore)
 {
+    AX_UNUSED_ARG(keyStore);
     return kStatus_SSS_Success;
 }
 
 sss_status_t sss_se05x_key_store_load(sss_se05x_key_store_t *keyStore)
 {
+    AX_UNUSED_ARG(keyStore);
     return kStatus_SSS_Success;
 }
 
@@ -2562,8 +2625,8 @@ smStatus_t sss_se05x_create_curve_if_needed(Se05xSession_t *pSession, uint32_t c
     }
 
     ENSURE_OR_GO_EXIT(status != SM_NOT_OK);
-    if (status == SM_ERR_CONDITIONS_OF_USE_NOT_SATISFIED) {
-        LOG_W("Allowing SM_ERR_CONDITIONS_OF_USE_NOT_SATISFIED for CreateCurve");
+    if (status == SM_ERR_CONDITIONS_NOT_SATISFIED) {
+        LOG_W("Allowing SM_ERR_CONDITIONS_NOT_SATISFIED for CreateCurve");
     }
 exit:
     return status;
@@ -2642,8 +2705,8 @@ static sss_status_t sss_se05x_key_store_set_ecc_key(sss_se05x_key_store_t *keySt
     if (status == SM_NOT_OK) {
         goto exit;
     }
-    else if (status == SM_ERR_CONDITIONS_OF_USE_NOT_SATISFIED) {
-        LOG_W("Allowing SM_ERR_CONDITIONS_OF_USE_NOT_SATISFIED for CreateCurve");
+    else if (status == SM_ERR_CONDITIONS_NOT_SATISFIED) {
+        LOG_W("Allowing SM_ERR_CONDITIONS_NOT_SATISFIED for CreateCurve");
     }
     status = Se05x_API_CheckObjectExists(&keyStore->session->s_ctx, keyObject->keyId, &exists);
     ENSURE_OR_GO_EXIT(status == SM_OK);
@@ -3047,6 +3110,7 @@ static sss_status_t sss_se05x_key_store_set_des_key(sss_se05x_key_store_t *keySt
     void *policy_buff,
     size_t policy_buff_len)
 {
+    AX_UNUSED_ARG(keyBitLen);
     sss_status_t retval = kStatus_SSS_Fail;
     smStatus_t status   = SM_NOT_OK;
     Se05xPolicy_t se05x_policy;
@@ -3138,6 +3202,7 @@ static sss_status_t sss_se05x_key_store_set_cert(sss_se05x_key_store_t *keyStore
     void *policy_buff,
     size_t policy_buff_len)
 {
+    AX_UNUSED_ARG(keyBitLen);
     sss_status_t retval = kStatus_SSS_Fail;
     smStatus_t status   = SM_NOT_OK;
     Se05xPolicy_t se05x_policy;
@@ -3191,13 +3256,8 @@ static sss_status_t sss_se05x_key_store_set_cert(sss_se05x_key_store_t *keyStore
 
 #else
         /* Call APIs For SE050 */
-        status = Se05x_API_WriteBinary(&keyStore->session->s_ctx,
-            ppolicy,
-            keyObject->keyId,
-            offset,
-            (uint16_t)fileSize,
-            (key + offset),
-            chunk);
+        status = Se05x_API_WriteBinary(
+            &keyStore->session->s_ctx, ppolicy, keyObject->keyId, offset, (uint16_t)fileSize, (key + offset), chunk);
         ppolicy = NULL;
 #endif
         ENSURE_OR_GO_EXIT(status == SM_OK);
@@ -3279,6 +3339,7 @@ sss_status_t sss_se05x_key_store_set_key(sss_se05x_key_store_t *keyStore,
     void *options,
     size_t optionsLen)
 {
+    AX_UNUSED_ARG(optionsLen);
     sss_status_t retval = kStatus_SSS_Fail;
 
 #if SSSFTR_SE05X_KEY_SET
@@ -4006,6 +4067,7 @@ sss_status_t sss_se05x_key_store_get_key_attst(sss_se05x_key_store_t *keyStore,
     size_t randomLen_attst,
     sss_se05x_attst_data_t *attst_data)
 {
+    AX_UNUSED_ARG(pKeyBitLen);
     sss_status_t retval           = kStatus_SSS_Fail;
     sss_cipher_type_t cipher_type = (sss_cipher_type_t)keyObject->cipherType;
     smStatus_t status             = SM_NOT_OK;
@@ -4659,6 +4721,8 @@ sss_status_t sss_se05x_key_store_open_key(sss_se05x_key_store_t *keyStore, sss_s
 
 sss_status_t sss_se05x_key_store_freeze_key(sss_se05x_key_store_t *keyStore, sss_se05x_object_t *keyObject)
 {
+    AX_UNUSED_ARG(keyStore);
+    AX_UNUSED_ARG(keyObject);
     sss_status_t retval = kStatus_SSS_Fail;
     /* Purpose / Policy is set during creation time and hence can not
      * enforced in SE050 later on */
@@ -5056,7 +5120,7 @@ sss_status_t sss_se05x_asymmetric_sign_digest(
     if (status == SM_OK) {
         retval = kStatus_SSS_Success;
 
-#if 0  // SSS_HAVE_HOSTCRYPTO_MBEDTLS && SSSFTR_SE05X_ECC
+#if 0 // SSS_HAVE_HOSTCRYPTO_MBEDTLS && SSSFTR_SE05X_ECC
         if (context->keyObject->cipherType >= kSSS_CipherType_EC_NIST_P &&
             context->keyObject->cipherType <
                 kSSS_CipherType_EC_BARRETO_NAEHRIG) {
@@ -5704,8 +5768,8 @@ sss_status_t sss_se05x_cipher_update(
     size_t inputData_len   = 0;
     size_t src_offset      = 0;
     size_t output_offset   = 0;
-    size_t outBuffSize     = *destLen;
     size_t blockoutLen     = 0;
+    size_t outBuffSize     = 0;
     size_t cipherBlockSize = CIPHER_BLOCK_SIZE;
 
     if (context->algorithm == kAlgorithm_SSS_DES_ECB || context->algorithm == kAlgorithm_SSS_DES_CBC ||
@@ -5717,6 +5781,8 @@ sss_status_t sss_se05x_cipher_update(
     ENSURE_OR_GO_EXIT(destData != NULL);
     ENSURE_OR_GO_EXIT(destLen != NULL);
     ENSURE_OR_GO_EXIT(srcLen > 0);
+
+    outBuffSize = *destLen;
 
     /* Check overflow */
     ENSURE_OR_GO_EXIT((context->cache_data_len + srcLen) >= context->cache_data_len);
@@ -5788,7 +5854,9 @@ sss_status_t sss_se05x_cipher_update(
     retval = kStatus_SSS_Success;
 exit:
     if (retval == kStatus_SSS_Fail) {
-        *destLen = 0;
+        if (destLen) {
+            *destLen = 0;
+        }
     }
     return retval;
 }
@@ -5855,6 +5923,8 @@ sss_status_t sss_se05x_cipher_crypt_ctr(sss_se05x_symmetric_t *context,
     uint8_t *lastEncryptedCounter,
     size_t *szLeft)
 {
+    AX_UNUSED_ARG(lastEncryptedCounter);
+    AX_UNUSED_ARG(szLeft);
     sss_status_t retval           = kStatus_SSS_Fail;
     smStatus_t status             = SM_NOT_OK;
     size_t outputDataLen          = size;
@@ -6068,7 +6138,7 @@ sss_status_t sss_se05x_aead_init(
     if ((context->algorithm == (kAlgorithm_SSS_AES_GCM)) || (context->algorithm == (kAlgorithm_SSS_AES_GCM_INT_IV))) {
         cipherMode = (context->algorithm == kAlgorithm_SSS_AES_GCM) ? kSE05x_CipherMode_AES_GCM :
                                                                       kSE05x_CipherMode_AES_GCM_INT_IV;
-        status = Se05x_API_AeadInit(&context->session->s_ctx,
+        status     = Se05x_API_AeadInit(&context->session->s_ctx,
             context->keyObject->keyId,
             cipherMode,
             context->cryptoObjectId,
@@ -6079,7 +6149,7 @@ sss_status_t sss_se05x_aead_init(
     else {
         cipherMode = (context->algorithm == kAlgorithm_SSS_AES_CCM) ? kSE05x_CipherMode_AES_CCM :
                                                                       kSE05x_CipherMode_AES_CCM_INT_IV;
-        status = Se05x_API_AeadCCMInit(&context->session->s_ctx,
+        status     = Se05x_API_AeadCCMInit(&context->session->s_ctx,
             context->keyObject->keyId,
             cipherMode,
             context->cryptoObjectId,
@@ -6138,13 +6208,15 @@ sss_status_t sss_se05x_aead_update(
     size_t inputData_len = 0;
     size_t src_offset    = 0;
     size_t output_offset = 0;
-    size_t outBuffSize   = *destLen;
+    size_t outBuffSize   = 0;
     size_t blockoutLen   = 0;
 
     ENSURE_OR_GO_EXIT(srcData != NULL);
     ENSURE_OR_GO_EXIT(destData != NULL);
     ENSURE_OR_GO_EXIT(destLen != NULL);
     ENSURE_OR_GO_EXIT(srcLen > 0);
+
+    outBuffSize = *destLen;
 
     /* Check overflow */
     ENSURE_OR_GO_EXIT((context->cache_data_len + srcLen) >= context->cache_data_len);
@@ -6216,7 +6288,9 @@ sss_status_t sss_se05x_aead_update(
     retval = kStatus_SSS_Success;
 exit:
     if (retval == kStatus_SSS_Fail) {
-        *destLen = 0;
+        if (destLen) {
+            *destLen = 0;
+        }
     }
 #endif
     return retval;
@@ -6844,7 +6918,7 @@ sss_status_t sss_se05x_tunnel_context_init(sss_se05x_tunnel_context_t *context, 
 {
     context->se05x_session = session;
     sss_status_t retval    = kStatus_SSS_Success;
-#if USE_RTOS
+#if defined(USE_RTOS) && (USE_RTOS == 1)
     context->channelLock = xSemaphoreCreateMutex();
     if (context->channelLock == NULL) {
         LOG_E("xSemaphoreCreateMutex failed");
@@ -6869,13 +6943,19 @@ sss_status_t sss_se05x_tunnel(sss_se05x_tunnel_context_t *context,
     uint32_t keyObjectCount,
     uint32_t tunnelType)
 {
+    AX_UNUSED_ARG(context);
+    AX_UNUSED_ARG(data);
+    AX_UNUSED_ARG(dataLen);
+    AX_UNUSED_ARG(keyObjects);
+    AX_UNUSED_ARG(keyObjectCount);
+    AX_UNUSED_ARG(tunnelType);
     sss_status_t retval = kStatus_SSS_Fail;
     return retval;
 }
 
 void sss_se05x_tunnel_context_free(sss_se05x_tunnel_context_t *context)
 {
-#if USE_RTOS
+#if defined(USE_RTOS) && (USE_RTOS == 1)
     vSemaphoreDelete(context->channelLock);
 #elif (__GNUC__ && !AX_EMBEDDED)
     pthread_mutex_destroy(&context->channelLock);
@@ -7370,6 +7450,7 @@ sss_status_t nxECKey_ReadEckaPublicKey(pSe05xSession_t se05xSession,
     att_data.data[0].outrandomLen = sizeof(att_data.data[0].outrandom);
 #endif // SSS_HAVE_SE05X_VER_GTE_07_02
 
+    status = kStatus_SSS_Fail;
 #if SSS_HAVE_SE05X_VER_GTE_07_02
     sm_status = Se05x_API_ReadObject_W_Attst_V2(se05xSession,
         eckaObjId,
@@ -8078,8 +8159,26 @@ static sss_status_t sss_se05x_generate_ecdaa_random_key(Se05xSession_t *context,
 
     if (IdExists == kSE05x_Result_FAILURE) {
         // Reserved random key does not exist. Generate ECC keypair.
-        status = sss_se05x_create_curve_if_needed(context, kSE05x_ECCurve_TPM_ECC_BN_P256);
+
+        uint8_t curveList[kSE05x_ECCurve_Total_Weierstrass_Curves] = {
+            0,
+        };
+        size_t curveListLen = sizeof(curveList);
+
+        status = Se05x_API_ReadECCurveList(context, curveList, &curveListLen);
         ENSURE_OR_GO_EXIT(status == SM_OK);
+
+        if (curveList[kSE05x_ECCurve_TPM_ECC_BN_P256 - 1] == kSE05x_SetIndicator_SET) {
+            // Curve already created. Pass
+        }
+        else {
+            status = Se05x_API_CreateCurve_tpm_bm_p256(context, kSE05x_ECCurve_TPM_ECC_BN_P256);
+
+            ENSURE_OR_GO_EXIT(status != SM_NOT_OK);
+            if (status == SM_ERR_CONDITIONS_NOT_SATISFIED) {
+                LOG_W("Allowing SM_ERR_CONDITIONS_NOT_SATISFIED for CreateCurve");
+            }
+        }
 
         LOG_D("Create Key 0x%x as random keypair", *random_keyId);
         status = Se05x_API_WriteECKey(context,

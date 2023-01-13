@@ -50,7 +50,7 @@ extern "C" {
 /** @brief Maximum Transmission Unit for an unsegmented outgoing L2CAP SDU.
  *
  *  The Maximum Transmission Unit for an outgoing L2CAP SDU when sent without
- *  segmentation, i.e a single L2CAP SDU will fit inside a single L2CAP PDU.
+ *  segmentation, i.e. a single L2CAP SDU will fit inside a single L2CAP PDU.
  *
  *  The MTU for outgoing L2CAP SDUs with segmentation is defined by the
  *  size of the application buffer pool.
@@ -60,7 +60,7 @@ extern "C" {
 /** @brief Maximum Transmission Unit for an unsegmented incoming L2CAP SDU.
  *
  *  The Maximum Transmission Unit for an incoming L2CAP SDU when sent without
- *  segmentation, i.e a single L2CAP SDU will fit inside a single L2CAP PDU.
+ *  segmentation, i.e. a single L2CAP SDU will fit inside a single L2CAP PDU.
  *
  *  The MTU for incoming L2CAP SDUs with segmentation is defined by the
  *  size of the application buffer pool. The application will have to define
@@ -69,7 +69,7 @@ extern "C" {
  */
 #define BT_L2CAP_SDU_RX_MTU (BT_L2CAP_RX_MTU - BT_L2CAP_SDU_HDR_SIZE)
 
-/** @def BT_L2CAP_SDU_BUF_SIZE
+/**
  *
  *  @brief Helper to calculate needed buffer size for L2CAP SDUs.
  *         Useful for creating buffer pools.
@@ -99,13 +99,13 @@ enum bt_l2cap_chan_state {
 	/** Channel disconnected */
 	BT_L2CAP_DISCONNECTED,
 	/** Channel in connecting state */
-	BT_L2CAP_CONNECT,
+	BT_L2CAP_CONNECTING,
 	/** Channel in config state, BR/EDR specific */
 	BT_L2CAP_CONFIG,
 	/** Channel ready for upper layer traffic on it */
 	BT_L2CAP_CONNECTED,
 	/** Channel in disconnecting state */
-	BT_L2CAP_DISCONNECT,
+	BT_L2CAP_DISCONNECTING,
 } ENUM_PACKED_POST;
 typedef enum bt_l2cap_chan_state bt_l2cap_chan_state_t;
 
@@ -138,18 +138,8 @@ struct bt_l2cap_chan {
 	const struct bt_l2cap_chan_ops	*ops;
 	sys_snode_t			node;
 	bt_l2cap_chan_destroy_t		destroy;
-	/* Response Timeout eXpired (RTX) timer */
-	struct k_work_delayable		rtx_work;
-	ATOMIC_DEFINE(status, BT_L2CAP_NUM_STATUS);
 
-#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0U))
-	bt_l2cap_chan_state_t		state;
-	/** Remote PSM to be connected */
-	uint16_t				psm;
-	/** Helps match request context during CoC */
-	uint8_t				ident;
-	bt_security_t			required_sec_level;
-#endif /* CONFIG_BT_L2CAP_DYNAMIC_CHANNEL */
+	ATOMIC_DEFINE(status, BT_L2CAP_NUM_STATUS);
 };
 
 /** @brief LE L2CAP Endpoint structure. */
@@ -197,9 +187,22 @@ struct bt_l2cap_le_chan {
 
 	struct k_work			rx_work;
 	struct k_fifo			rx_queue;
+
+#if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
+	bt_l2cap_chan_state_t		state;
+	/** Remote PSM to be connected */
+	uint16_t			psm;
+	/** Helps match request context during CoC */
+	uint8_t				ident;
+	bt_security_t			required_sec_level;
+
+	/* Response Timeout eXpired (RTX) timer */
+	struct k_work_delayable		rtx_work;
+	//struct k_work_sync		rtx_sync;
+#endif
 };
 
-/** @def BT_L2CAP_LE_CHAN(_ch)
+/**
  *  @brief Helper macro getting container object of type bt_l2cap_le_chan
  *  address having the same container chan member address as object in question.
  *
@@ -228,6 +231,19 @@ struct bt_l2cap_br_chan {
 	struct bt_l2cap_br_endpoint	tx;
 	/* For internal use only */
 	atomic_t			flags[1];
+
+	bt_l2cap_chan_state_t		state;
+	/** Remote PSM to be connected */
+	uint16_t			psm;
+	/** Helps match request context during CoC */
+	uint8_t				ident;
+	bt_security_t			required_sec_level;
+
+	/* Response Timeout eXpired (RTX) timer */
+	struct k_work_delayable		rtx_work;
+#if 0
+	struct k_work_sync		rtx_sync;
+#endif
 };
 
 /** configuration parameter options type */
@@ -338,6 +354,19 @@ struct bt_l2cap_chan_ops {
 	 */
 	void (*encrypt_change)(struct bt_l2cap_chan *chan, uint8_t hci_status);
 
+	/** @brief Channel alloc_seg callback
+	 *
+	 *  If this callback is provided the channel will use it to allocate
+	 *  buffers to store segments. This avoids wasting big SDU buffers with
+	 *  potentially much smaller PDUs. If this callback is supplied, it must
+	 *  return a valid buffer.
+	 *
+	 *  @param chan The channel requesting a buffer.
+	 *
+	 *  @return Allocated buffer.
+	 */
+	struct net_buf *(*alloc_seg)(struct bt_l2cap_chan *chan);
+
 	/** @brief Channel alloc_buf callback
 	 *
 	 *  If this callback is provided the channel will use it to allocate
@@ -437,12 +466,12 @@ struct bt_l2cap_chan_ops {
 #endif
 };
 
-/** @def BT_L2CAP_CHAN_SEND_RESERVE
+/**
  *  @brief Headroom needed for outgoing L2CAP PDUs.
  */
 #define BT_L2CAP_CHAN_SEND_RESERVE (BT_L2CAP_BUF_SIZE(0))
 
-/** @def BT_L2CAP_SDU_CHAN_SEND_RESERVE
+/**
  * @brief Headroom needed for outgoing L2CAP SDUs.
  */
 #define BT_L2CAP_SDU_CHAN_SEND_RESERVE (BT_L2CAP_SDU_BUF_SIZE(0))
@@ -597,7 +626,7 @@ int bt_l2cap_chan_disconnect(struct bt_l2cap_chan *chan);
  *  The application should use the BT_L2CAP_BUF_SIZE() helper to correctly
  *  size the buffers for the for the outgoing buffer pool.
  *
- *  When sending L2CAP data over an LE connection the applicatios is sending
+ *  When sending L2CAP data over an LE connection the application is sending
  *  L2CAP SDUs. The application can optionally reserve
  *  @ref BT_L2CAP_SDU_CHAN_SEND_RESERVE bytes in the buffer before sending.
  *  By reserving bytes in the buffer the stack can use this buffer as a segment

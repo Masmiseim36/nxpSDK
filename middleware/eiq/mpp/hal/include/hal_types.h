@@ -38,4 +38,6 @@ typedef struct {
     unsigned char *addr;    /* the buffer address */
 } hw_buf_desc_t;
 
+#define HAL_DEVICE_NAME_MAX_LENGTH  (64)
+
 #endif /* _HAL_TYPES_H */

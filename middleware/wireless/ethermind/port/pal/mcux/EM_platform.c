@@ -35,14 +35,14 @@ int EM_str_to_num_pl
         /* IN */  int    len
     )
 {
-    int num = 0;
+    int num = 0U;
     int index;
 
-    for(index = 0; index < len; index++)
+    for(index = 0U; index < len; index++)
     {
         if(str[index] >= '0' && str[index] <= '9')
         {
-            num = (num * 10) + (str[index] - '0');
+            num = (num * 10U) + (str[index] - '0');
         }
         else
         {
@@ -59,14 +59,14 @@ int EM_str_to_hexnum_pl
         /* IN */ int    len
     )
 {
-    int num = 0;
+    int num = 0U;
     int index;
     unsigned char val;
 
-    if (len > 8)
+    if (len > 8U)
     {
         printf ("Invalid string length for str to hex num conversion \n");
-        return 0;
+        return 0U;
     }
 
     val = 0U;
@@ -132,20 +132,20 @@ void EM_num_to_str_pl
 
     do
     {
-        ch = num % 10;
+        ch = num % 10U;
         ch = ch + '0';
-        num = num / 10;
+        num = num / 10U;
 
         str[length] = ch;
         length++;
 
-    }while(num > 0);
+    }while(num > 0U);
 
-    for (index = 0; index < (length >> 1); index++)
+    for (index = 0U; index < (length >> 1U); index++)
     {
         ch = str[index];
-        str[index] = str[length - 1 - index];
-        str[length - 1 - index] = ch;
+        str[index] = str[length - 1U - index];
+        str[length - 1U - index] = ch;
     }
 
     str[length] = '\0';

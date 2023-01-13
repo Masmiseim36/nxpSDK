@@ -1,0 +1,105 @@
+/*
+** ###################################################################
+**     Processors:          MIMXRT1176AVM8A_cm7
+**                          MIMXRT1176CVM8A_cm7
+**                          MIMXRT1176DVMAA_cm7
+**
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Reference manual:    IMXRT1170RM, Rev E, 12/2019
+**     Version:             rev. 0.1, 2018-03-05
+**     Build:               b200211
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2016-2020 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+// length: 0x400
+define symbol m_interrupts_start       = 0x80000000;
+define symbol m_interrupts_end         = 0x800003FF;
+
+// length: 0x001F_FC00
+define symbol m_text_start             = 0x80000400;
+define symbol m_text_end               = 0x801FFFFF;
+
+// length: 0x0004_0000
+define symbol m_ram1_start             = 0x20000000;
+define symbol m_ram1_end               = 0x2003FFFF;
+
+// length: 0x0008_0000
+define symbol m_ram2_start            = 0x202C0000;
+define symbol m_ram2_end              = 0x2033FFFF;
+
+// length: 0x02E0_0000
+define symbol m_ram3_start            = 0x80200000;
+define symbol m_ram3_end              = 0x82FFFFFF;
+
+// length: 0x0100_0000
+define symbol m_ncache_start           = 0x83000000;
+define symbol m_ncache_end             = 0x83FFFFFF;
+
+
+// this is for malloc()
+define symbol __size_heap__            = 0x120000;
+define symbol __size_cstack__          = 0x0F00;
+
+define exported symbol __NCACHE_REGION_START   = m_ncache_start;
+define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
+
+define exported symbol __VECTOR_TABLE          = m_interrupts_start;
+define exported symbol __VECTOR_RAM            = m_interrupts_start;
+
+define exported symbol __RAM_VECTOR_TABLE_SIZE = 0x0;
+
+define exported symbol __exidx_start     = m_ram1_start;
+define exported symbol __exidx_end       = m_ram1_end - __size_cstack__;
+
+define memory mem with size = 4G;
+
+define region region_TEXT    = mem:[from m_interrupts_start to m_interrupts_end]
+                             | mem:[from m_text_start to m_text_end];
+
+define region region_RAM1    = mem:[from m_ram1_start to m_ram1_end - __size_cstack__];
+define region region_CSTACK1 = mem:[from m_ram1_end - __size_cstack__ + 1 to m_ram1_end];
+
+define region region_RAM2    = mem:[from m_ram2_start to m_ram2_end];
+
+define region region_RAM3    = mem:[from m_ram3_start to m_ram3_end];
+
+define region region_NCACHE  = mem:[from m_ncache_start to m_ncache_end];
+
+define block  CSTACK     with alignment = 8, size = __size_cstack__   { };
+define block  HEAP       with alignment = 8, size = __size_heap__     { };
+define block  RW         { readwrite, section m_usb_dma_init_data };
+define block  ZI         with alignment = 0x20  { zeroinit, section m_usb_dma_noninit_data };
+define block  NCACHE_VAR { section NonCacheable , section NonCacheable.init };
+keep { section .ARM.exidx };
+define block EXIDX { section .ARM.exidx };
+
+do not initialize  { section .noinit };
+initialize by copy { readwrite, section .textrw };
+
+
+if (isdefinedsymbol(__use_shmem__)) {
+    do not initialize  { section rpmsg_sh_mem_section };
+}
+
+place at address mem: m_interrupts_start    { readonly section .intvec };
+place in region_TEXT                        { readonly };
+place in region_CSTACK1                     { block CSTACK };
+place in region_RAM2                        { last block ZI };
+place in region_RAM3                        { block RW };
+place in region_RAM3                        { last block HEAP };
+place in region_NCACHE                      { block NCACHE_VAR };
+place in region_RAM1                        { first block EXIDX };
+

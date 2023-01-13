@@ -704,8 +704,10 @@ void SDMMCHOST_Reset(sdmmchost_t *host)
 
     (void)SDMMC_OSAMutexLock(&host->lock, osaWaitForever_c);
 
+#if SDMMCHOST_SUPPORT_VOLTAGE_CONTROL
     /* voltage switch to normal but not 1.8V */
     UDSHC_SelectVoltage(base, false);
+#endif
     /* Disable DDR mode */
     USDHC_EnableDDRMode(base, false, 0U);
     /* disable tuning */
@@ -740,6 +742,7 @@ void SDMMCHOST_Deinit(sdmmchost_t *host)
 
 void SDMMCHOST_SwitchToVoltage(sdmmchost_t *host, uint32_t voltage)
 {
+#if !(defined(FSL_FEATURE_USDHC_HAS_NO_VOLTAGE_SELECT) && (FSL_FEATURE_USDHC_HAS_NO_VOLTAGE_SELECT))
     if (voltage == (uint32_t)kSDMMC_OperationVoltage180V)
     {
         UDSHC_SelectVoltage(host->hostController.base, true);
@@ -748,6 +751,7 @@ void SDMMCHOST_SwitchToVoltage(sdmmchost_t *host, uint32_t voltage)
     {
         UDSHC_SelectVoltage(host->hostController.base, false);
     }
+#endif
 }
 
 #if SDMMCHOST_SUPPORT_SDR104 || SDMMCHOST_SUPPORT_SDR50 || SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400

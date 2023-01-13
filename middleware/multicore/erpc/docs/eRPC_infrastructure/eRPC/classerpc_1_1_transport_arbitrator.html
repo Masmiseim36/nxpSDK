@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -124,7 +124,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_transport_arbitrator.htm
 <p>Interposer to share transport between client and server.  
  <a href="classerpc_1_1_transport_arbitrator.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="erpc__transport__arbitrator_8h_source.html">erpc_transport_arbitrator.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__transport__arbitrator_8hpp_source.html">erpc_transport_arbitrator.hpp</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for erpc::TransportArbitrator:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -168,9 +168,15 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a70264ee3caa115ea56ec5333a0132394"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport_arbitrator.html#a70264ee3caa115ea56ec5333a0132394">setSharedTransport</a> (<a class="el" href="classerpc_1_1_transport.html">Transport</a> *shared)</td></tr>
 <tr class="memdesc:a70264ee3caa115ea56ec5333a0132394"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set shared client/server transport.  <a href="#a70264ee3caa115ea56ec5333a0132394">More...</a><br /></td></tr>
 <tr class="separator:a70264ee3caa115ea56ec5333a0132394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04c4955bf1b4c4732f61fb9cc25d40c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_transport.html">Transport</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport_arbitrator.html#a04c4955bf1b4c4732f61fb9cc25d40c5">getSharedTransport</a> (void)</td></tr>
+<tr class="memdesc:a04c4955bf1b4c4732f61fb9cc25d40c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns shared client/server transport.  <a href="#a04c4955bf1b4c4732f61fb9cc25d40c5">More...</a><br /></td></tr>
+<tr class="separator:a04c4955bf1b4c4732f61fb9cc25d40c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af16c7af785a26649dc822a025b8bdd27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport_arbitrator.html#af16c7af785a26649dc822a025b8bdd27">setCodec</a> (<a class="el" href="classerpc_1_1_codec.html">Codec</a> *codec)</td></tr>
 <tr class="memdesc:af16c7af785a26649dc822a025b8bdd27"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set codec.  <a href="#af16c7af785a26649dc822a025b8bdd27">More...</a><br /></td></tr>
 <tr class="separator:af16c7af785a26649dc822a025b8bdd27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaed62c292dfa4204e6b5c2fb4c4a432"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpc_1_1_codec.html">Codec</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport_arbitrator.html#abaed62c292dfa4204e6b5c2fb4c4a432">getCodec</a> (void)</td></tr>
+<tr class="memdesc:abaed62c292dfa4204e6b5c2fb4c4a432"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function get codec.  <a href="#abaed62c292dfa4204e6b5c2fb4c4a432">More...</a><br /></td></tr>
+<tr class="separator:abaed62c292dfa4204e6b5c2fb4c4a432"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a429fdc3fd0e8647a1875cc672cbaf3d5"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport_arbitrator.html#a429fdc3fd0e8647a1875cc672cbaf3d5">receive</a> (<a class="el" href="classerpc_1_1_message_buffer.html">MessageBuffer</a> *message) override</td></tr>
 <tr class="memdesc:a429fdc3fd0e8647a1875cc672cbaf3d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for receiving message.  <a href="#a429fdc3fd0e8647a1875cc672cbaf3d5">More...</a><br /></td></tr>
 <tr class="separator:a429fdc3fd0e8647a1875cc672cbaf3d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,6 +192,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a1f8677af45f5637f6714c5f10593ca8d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport_arbitrator.html#a1f8677af45f5637f6714c5f10593ca8d">setCrc16</a> (<a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *crcImpl) override</td></tr>
 <tr class="memdesc:a1f8677af45f5637f6714c5f10593ca8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions sets the CRC-16 implementation.  <a href="#a1f8677af45f5637f6714c5f10593ca8d">More...</a><br /></td></tr>
 <tr class="separator:a1f8677af45f5637f6714c5f10593ca8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acee58ae1179ad04da75bdf446548caa4"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classerpc_1_1_crc16.html">Crc16</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport_arbitrator.html#acee58ae1179ad04da75bdf446548caa4">getCrc16</a> (void) override</td></tr>
+<tr class="memdesc:acee58ae1179ad04da75bdf446548caa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This functions gets the CRC-16 object.  <a href="#acee58ae1179ad04da75bdf446548caa4">More...</a><br /></td></tr>
+<tr class="separator:acee58ae1179ad04da75bdf446548caa4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8e0873216bf60c047e0c7bbb8df4cfd"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_transport_arbitrator.html#ac8e0873216bf60c047e0c7bbb8df4cfd">hasMessage</a> (void) override</td></tr>
 <tr class="memdesc:ac8e0873216bf60c047e0c7bbb8df4cfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the underlying shared transport has a message.  <a href="#ac8e0873216bf60c047e0c7bbb8df4cfd">More...</a><br /></td></tr>
 <tr class="separator:ac8e0873216bf60c047e0c7bbb8df4cfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -273,6 +282,33 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a04c4955bf1b4c4732f61fb9cc25d40c5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classerpc_1_1_transport.html">Transport</a>* erpc::TransportArbitrator::getSharedTransport </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function returns shared client/server transport. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classerpc_1_1_transport.html" title="Abstract interface for transport layer. ">Transport</a> * Returns shared client/server transport. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="af16c7af785a26649dc822a025b8bdd27"></a>
 <div class="memitem">
 <div class="memproto">
@@ -302,6 +338,33 @@ Protected Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a class="anchor" id="abaed62c292dfa4204e6b5c2fb4c4a432"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classerpc_1_1_codec.html">Codec</a>* erpc::TransportArbitrator::getCodec </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function get codec. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classerpc_1_1_codec.html" title="Abstract serialization encoder/decoder interface. ">Codec</a> * Pointer to codec used within transport. </dd></dl>
 
 </div>
 </div>
@@ -463,6 +526,35 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="acee58ae1179ad04da75bdf446548caa4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classerpc_1_1_crc16.html">Crc16</a> * TransportArbitrator::getCrc16 </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This functions gets the CRC-16 object. </p>
+<dl class="section return"><dt>Returns</dt><dd>Crc16* Pointer to CRC-16 object containing crc-16 compute function. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classerpc_1_1_transport.html#a8f3107c5d8d7c89fe074d4433761b924">erpc::Transport</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="ac8e0873216bf60c047e0c7bbb8df4cfd"></a>
 <div class="memitem">
 <div class="memproto">
@@ -616,7 +708,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="erpc__transport__arbitrator_8h_source.html">erpc_transport_arbitrator.h</a></li>
+<li><a class="el" href="erpc__transport__arbitrator_8hpp_source.html">erpc_transport_arbitrator.hpp</a></li>
 <li>erpc_transport_arbitrator.cpp</li>
 </ul>
 </div><!-- contents -->

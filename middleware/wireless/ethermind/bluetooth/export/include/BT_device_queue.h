@@ -81,6 +81,11 @@ extern "C" {
  */
 void em_device_queue_init ( void );
 
+#ifdef BT_HAVE_SHUTDOWN
+/** De-init routine */
+void em_device_queue_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
+
 /** Activating routine */
 /**
  *  \brief To perform Bluetooth specific initializations for EtherMind Device Queue module

@@ -140,7 +140,7 @@ static int get_bugfix_inc_ver(void)
 {
 #ifdef BUGFIX_INC_VER_RETRIEVER
     static const uint32_t retriever[] = BUGFIX_INC_VER_RETRIEVER;
-    return ((int (*)())(((size_t)retriever) | 0x1))()+1;
+    return ((int (*)())(((size_t)retriever) | 0x1))() + 1;
 #else
     return 0;
 #endif
@@ -208,7 +208,8 @@ status_t bootloader_property_init(void)
 #if defined(K32H844P_SERIES)
     propertyStore->UniqueDeviceId.uid[0] = OCOTP->CFG[0].CFG;
     propertyStore->UniqueDeviceId.uid[1] = OCOTP->CFG[1].CFG;
-#elif defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1166_cm4_SERIES) || defined(MIMXRT1166_cm7_SERIES)
+#elif defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1166_cm4_SERIES) || \
+    defined(MIMXRT1166_cm7_SERIES)
     propertyStore->UniqueDeviceId.uid[0] = OCOTP->FUSEN[16].FUSE;
     propertyStore->UniqueDeviceId.uid[1] = OCOTP->FUSEN[17].FUSE;
 #else

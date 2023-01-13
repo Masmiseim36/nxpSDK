@@ -54,6 +54,7 @@ FMSTR_TSA_RW_VAR(g_sM1Drive.fltSpeedEnc, FMSTR_TSA_FLOAT) /* M1 Speed from encod
 #endif
 
 /* gsM1Drive structure definition */
+FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdEnable, FMSTR_TSA_UINT16)       /* M1 Fault Enable */
 FMSTR_TSA_RW_VAR(g_sM1Drive.bFaultClearMan, FMSTR_TSA_UINT16)       /* M1 Fault Clear */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdCaptured, FMSTR_TSA_UINT16)     /* M1 Captured Fault */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdPending, FMSTR_TSA_UINT16)      /* M1 Pending Fault */
@@ -65,14 +66,15 @@ FMSTR_TSA_RW_VAR(g_sM1Drive.ui16FastCtrlLoopFreq, FMSTR_TSA_UINT16) /* M1 Fast C
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui32CpuFrequency, FMSTR_TSA_UINT32) /* M1 Speed from encoder */
 #endif
 
-#ifndef PMSM_SNSLESS_ENC
 /* gsM1Drive.sOpenloop structure definition */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sOpenloop.fltFreqReq, FMSTR_TSA_FLOAT)
+FMSTR_TSA_RW_VAR(g_sM1Drive.sOpenloop.sUDQReq.fltQ, FMSTR_TSA_FLOAT)
 FMSTR_TSA_RW_VAR(g_sM1Drive.sOpenloop.sUDQReq.fltD, FMSTR_TSA_FLOAT)
+FMSTR_TSA_RW_VAR(g_sM1Drive.sOpenloop.sIDQReq.fltQ, FMSTR_TSA_FLOAT)
 FMSTR_TSA_RW_VAR(g_sM1Drive.sOpenloop.sIDQReq.fltD, FMSTR_TSA_FLOAT)
 FMSTR_TSA_RW_VAR(g_sM1Drive.sOpenloop.bCurrentControl, FMSTR_TSA_UINT16)
-FMSTR_TSA_RW_VAR(g_sM1Drive.sOpenloop.f16Theta, FMSTR_TSA_UINT16)
-#endif
+FMSTR_TSA_RW_VAR(g_sM1Drive.sOpenloop.f16Theta, FMSTR_TSA_FRAC16)
+
 
 /* gsM1Drive.sSpeed structure definition */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.fltSpeedFilt, FMSTR_TSA_FLOAT) /* M1 Speed filtered */
@@ -242,6 +244,7 @@ FMSTR_TSA_RW_VAR(g_sM2Drive.fltSpeedEnc, FMSTR_TSA_FLOAT) /* M2 Speed from encod
 #endif
 
 /* gsM2Drive structure definition */
+FMSTR_TSA_RW_VAR(g_sM2Drive.sFaultIdEnable, FMSTR_TSA_UINT16)       /* M2 Fault Enable */
 FMSTR_TSA_RW_VAR(g_sM2Drive.bFaultClearMan, FMSTR_TSA_UINT16)       /* M2 Fault Clear */
 FMSTR_TSA_RW_VAR(g_sM2Drive.sFaultIdCaptured, FMSTR_TSA_UINT16)     /* M2 Captured Fault */
 FMSTR_TSA_RW_VAR(g_sM2Drive.sFaultIdPending, FMSTR_TSA_UINT16)      /* M2 Pending Fault */

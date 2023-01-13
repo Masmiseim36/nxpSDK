@@ -1,13 +1,15 @@
 /*
- * Copyright 2018-2021 NXP
+ * Copyright 2017 The TensorFlow Authors
+ * Copyright 2022 NXP
  * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Apache 2.0 License
  */
 
-// This is a standard TensorFlow Lite mobilenet_v1_0.25_128_quant_int8.tflite
-// model file that has been converted into a C data array, so it can be easily
-// compiled into a binary for devices that don't have a file system.
+// This is the TensorFlow Lite model file mobilenet_v1_0.25_128_quant_int8.tflite
+// from https://tfhub.dev/google/imagenet/mobilenet_v1_025_128/classification/5
+// that has been converted into a C data array,
+// so it can be easily compiled into a binary for devices that don't have a file system.
 // It was created using the command
 // (with additional modification for alignment specification):
 // xxd -i mobilenet_v1_0.25_128_quant_int8.tflite > model_data.h

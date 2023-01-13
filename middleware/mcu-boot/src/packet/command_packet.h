@@ -85,6 +85,7 @@ enum _command_tags
     kCommandTag_GenerateKeyBlobResponse = 0xb3,
     kCommandTag_KeyProvisioning = 0x15,
     kCommandTag_KeyProvisioningResponse = 0xb5,
+    kCommandTag_LifeCycleUpdate = 0x18U,
 
     kCommandTag_ConfigureI2c = 0xc1, //! Reserved command tag for Bus Pal
     kCommandTag_ConfigureSpi = 0xc2, //! Reserved command tag for Bus Pal
@@ -93,7 +94,7 @@ enum _command_tags
     kFirstCommandTag = kCommandTag_FlashEraseAll,
 
     //! Maximum linearly incrementing command tag value, excluding the response commands and bus pal commands.
-    kLastCommandTag = kCommandTag_KeyProvisioning,
+    kLastCommandTag = kCommandTag_LifeCycleUpdate,
 
     kResponseCommandHighNibbleMask =
         0xa0 //!< Mask for the high nibble of a command tag that identifies it as a response command.
@@ -281,6 +282,13 @@ typedef struct KeyProvisioningPacket
     uint32_t type;                  //!< Key type.
     uint32_t size;                  //!< Key size.
 } key_provisioning_packet_t;
+
+//! @brief LifeCycleUpdate packet format
+typedef struct LifeCycleUpdatePacket
+{
+    command_packet_t commandPacket; //!< header
+    uint32_t lifecycle;             //!< LifeCycle.
+} lifecycle_update_packet_t;
 
 //@}
 

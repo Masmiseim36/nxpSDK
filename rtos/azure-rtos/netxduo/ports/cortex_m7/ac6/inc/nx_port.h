@@ -25,12 +25,12 @@
 /*                                                                        */ 
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */ 
 /*                                                                        */ 
-/*    nx_port.h                                         Cortex-M7/MDK     */ 
-/*                                                           6.1          */
+/*    nx_port.h                                         Cortex-M7/AC6     */ 
+/*                                                           6.2.0        */
 /*                                                                        */
 /*  AUTHOR                                                                */
 /*                                                                        */
-/*    Yuxin Zhou, Microsoft Corporation                                   */
+/*    Tiejun Zhou, Microsoft Corporation                                  */
 /*                                                                        */
 /*  DESCRIPTION                                                           */ 
 /*                                                                        */ 
@@ -42,11 +42,7 @@
 /*                                                                        */ 
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
-/*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
-/*  09-30-2020     Yuxin Zhou               Modified comment(s),  and     */
-/*                                            corrected the code of       */
-/*                                            getting system state,       */
-/*                                            resulting in version 6.1    */
+/*  10-31-2022     Tiejun Zhou              Initial Version 6.2.0         */
 /*                                                                        */
 /**************************************************************************/
 
@@ -70,16 +66,6 @@
 #define NX_LITTLE_ENDIAN    1
 
 
-/* By default IPv6 is enabled. */
-
-#ifndef FEATURE_NX_IPV6
-#define FEATURE_NX_IPV6
-#endif /* FEATURE_NX_IPV6 */
-
-#ifdef NX_DISABLE_IPV6
-#undef FEATURE_NX_IPV6
-#endif /* !NX_DISABLE_IPV6 */
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -97,7 +83,6 @@
 
 
 /* Define macros that swap the endian for little endian ports.  */
-
 #ifdef NX_LITTLE_ENDIAN
 #define NX_CHANGE_ULONG_ENDIAN(arg)       (arg) = __builtin_bswap32(arg)
 #define NX_CHANGE_USHORT_ENDIAN(arg)      (arg) = __builtin_bswap16(arg)
@@ -195,7 +180,7 @@
 
 #ifdef NX_SYSTEM_INIT
 CHAR                            _nx_version_id[] = 
-                                    "Copyright (c) Microsoft Corporation. All rights reserved.  *  NetX Duo Cortex-M7/MDK Version 6.1.10 *";
+                                    "Copyright (c) Microsoft Corporation. All rights reserved.  *  NetX Duo Cortex-M7/AC6 Version 6.2.0 *";
 #else
 extern  CHAR                    _nx_version_id[];
 #endif

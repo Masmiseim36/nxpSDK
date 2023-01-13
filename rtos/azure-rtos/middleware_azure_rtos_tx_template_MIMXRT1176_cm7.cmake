@@ -2,6 +2,7 @@ include_guard()
 message("middleware_azure_rtos_tx_template component is included.")
 
 target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${CMAKE_CURRENT_LIST_DIR}/threadx/ports/cortex_m7/gnu/src/tx_misra.S
     ${CMAKE_CURRENT_LIST_DIR}/threadx/ports/cortex_m7/gnu/src/tx_thread_context_restore.S
     ${CMAKE_CURRENT_LIST_DIR}/threadx/ports/cortex_m7/gnu/src/tx_thread_context_save.S
     ${CMAKE_CURRENT_LIST_DIR}/threadx/ports/cortex_m7/gnu/src/tx_thread_interrupt_control.S

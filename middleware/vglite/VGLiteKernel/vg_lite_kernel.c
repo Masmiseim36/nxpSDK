@@ -41,6 +41,18 @@ static vg_lite_kernel_initialize_t ts_initialize = {0};
 static uint8_t ts_init = 0;
 #endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 
+#if defined(VG_DRIVER_SINGLE_THREAD)
+
+#define VG_LITE_OS_LOCK() VG_LITE_SUCCESS
+#define VG_LITE_OS_UNLOCK()
+
+#else
+
+#define VG_LITE_OS_LOCK() vg_lite_os_lock()
+#define VG_LITE_OS_UNLOCK() vg_lite_os_unlock()
+
+#endif /* VG_DRIVER_SINGLE_THREAD */
+
 static vg_lite_error_t do_terminate(vg_lite_kernel_terminate_t * data);
 
 static void soft_reset(void);
@@ -49,9 +61,9 @@ static void gpu(int enable)
 {
     vg_lite_hw_clock_control_t value;
     uint32_t          reset_timer = 2;
-#ifndef VGLITE_DISABLE_AUTO_CLOCK_GATING
+#ifdef VG_GPU_AUTO_CLOCK_GATING
     uint32_t          temp;
-#endif
+#endif /* VG_GPU_AUTO_CLOCK_GATING */
     const uint32_t    reset_timer_limit = 1000;
 
     if (enable) {
@@ -76,12 +88,12 @@ static void gpu(int enable)
             vg_lite_hal_delay(reset_timer);
             reset_timer *= 2;   // If reset failed, try again with a longer wait. Need to check why if dead lopp happens here.
         } while (!VG_LITE_KERNEL_IS_GPU_IDLE());
-#ifndef VGLITE_DISABLE_AUTO_CLOCK_GATING
+#ifdef VG_GPU_AUTO_CLOCK_GATING
         temp = vg_lite_hal_peek(VG_LITE_HW_POWER_CONTROL);
         temp |= 0x1;
         vg_lite_hal_poke(VG_LITE_HW_POWER_CONTROL, temp);
         vg_lite_hal_delay(1);
-#endif
+#endif /* VG_GPU_AUTO_CLOCK_GATING */
     }
     else
     {
@@ -354,7 +366,7 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
         }
     }
 
-    if((error = (vg_lite_error_t)vg_lite_os_lock()) == VG_LITE_SUCCESS){
+    if((error = (vg_lite_error_t)VG_LITE_OS_LOCK()) == VG_LITE_SUCCESS){
         ++task_num;
         for(semaphore_id = 0; semaphore_id < TASK_LENGTH ; semaphore_id++)
         {
@@ -371,7 +383,7 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
                 break;
             }
         }
-        vg_lite_os_unlock();
+        VG_LITE_OS_UNLOCK();
     }
     else
         return error;
@@ -392,12 +404,12 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
         for (i = 0; i < CMDBUF_COUNT; i ++)
         {
             /* Allocate the memory. */
-            vg_lite_os_lock();
+            VG_LITE_OS_LOCK();
             error = vg_lite_hal_allocate_contiguous(data->command_buffer_size,
                                                                          &context->command_buffer_logical[i],
                                                                          &context->command_buffer_physical[i],
                                                                          &context->command_buffer[i]);
-            vg_lite_os_unlock();
+            VG_LITE_OS_UNLOCK();
 
             if (error != VG_LITE_SUCCESS) {
                 /* Free any allocated memory. */
@@ -420,12 +432,12 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
         for (i = 0; i < CMDBUF_COUNT; i ++)
         {
             /* Allocate the memory. */
-            vg_lite_os_lock();
+            VG_LITE_OS_LOCK();
             error = vg_lite_hal_allocate_contiguous(data->context_buffer_size,
                                                                          &context->context_buffer_logical[i],
                                                                          &context->context_buffer_physical[i],
                                                                          &context->context_buffer[i]);
-            vg_lite_os_unlock();
+            VG_LITE_OS_UNLOCK();
 
             if (error != VG_LITE_SUCCESS) {
                 /* Free any allocated memory. */
@@ -473,12 +485,12 @@ static vg_lite_error_t init_vglite(vg_lite_kernel_initialize_t * data)
             l2_size = data->capabilities.cap.l2_cache ? VG_LITE_ALIGN(VG_LITE_ALIGN(l1_size / 32, 64) / 8, 64) : 0;
 
             /* Allocate the memory. */
-            vg_lite_os_lock();
+            VG_LITE_OS_LOCK();
             error = vg_lite_hal_allocate_contiguous(buffer_size + l1_size + l2_size,
                                                                            &context->tessellation_buffer_logical,
                                                                            &context->tessellation_buffer_physical,
                                                                            &context->tessellation_buffer);
-            vg_lite_os_unlock();
+            VG_LITE_OS_UNLOCK();
 
             if (error != VG_LITE_SUCCESS) {
                 /* Free any allocated memory. */
@@ -646,10 +658,10 @@ static vg_lite_error_t terminate_vglite(vg_lite_kernel_terminate_t * data)
         context->context_buffer[1] = NULL;
     }
 
-    if((error = (vg_lite_error_t)vg_lite_os_lock()) == VG_LITE_SUCCESS){
+    if((error = (vg_lite_error_t)VG_LITE_OS_LOCK()) == VG_LITE_SUCCESS){
         --task_num;
         --s_reference;
-        vg_lite_os_unlock();
+        VG_LITE_OS_UNLOCK();
     }
     else
         return error;
@@ -703,15 +715,11 @@ static vg_lite_error_t do_allocate(vg_lite_kernel_allocate_t * data)
 {
     vg_lite_error_t error;
 
-#if defined(VG_DRIVER_SINGLE_THREAD)
-    error = vg_lite_hal_allocate_contiguous(data->bytes, &data->memory, &data->memory_gpu, &data->memory_handle);
-#else
-    if((error = (vg_lite_error_t)vg_lite_os_lock()) == VG_LITE_SUCCESS)
+    if((error = (vg_lite_error_t)VG_LITE_OS_LOCK()) == VG_LITE_SUCCESS)
     {
         error = vg_lite_hal_allocate_contiguous(data->bytes, &data->memory, &data->memory_gpu, &data->memory_handle);
-        vg_lite_os_unlock();
+        VG_LITE_OS_UNLOCK();
     }
-#endif /* VG_DRIVER_SINGLE_THREAD */
 
     return error;
 }
@@ -928,12 +936,12 @@ static void soft_reset(void)
 #if !defined(VG_DRIVER_SINGLE_THREAD)
 static vg_lite_error_t do_mutex_lock()
 {
-    return (vg_lite_error_t)vg_lite_os_lock();
+    return (vg_lite_error_t)VG_LITE_OS_LOCK();
 }
 
 static vg_lite_error_t do_mutex_unlock()
 {
-    return (vg_lite_error_t)vg_lite_os_unlock();
+    return (vg_lite_error_t)VG_LITE_OS_UNLOCK();
 }
 #endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 

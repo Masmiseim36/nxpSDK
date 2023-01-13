@@ -46,7 +46,8 @@
  *
  */
 
-#if defined(FRDM_KW41Z) || defined(FRDM_K64F) || defined(IMX_RT) || defined(LPC_55x) || defined(QN9090DK6)
+#if defined(FRDM_KW41Z) || defined(FRDM_K64F) || defined(IMX_RT) || defined(LPC_55x) || defined(QN9090DK6) || \
+    defined(NORDIC_MCU)
 #define HAVE_KSDK
 #endif
 

@@ -29,6 +29,16 @@
  */
 void em_att_init(void);
 
+#ifdef BT_HAVE_SHUTDOWN
+/**
+ *  \brief De-Initializes Module.
+ *
+ *  \Description De-Initializes ATT Module.
+ *
+ *  \return None
+ */
+void em_att_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 
 /**
  *  \fn att_bt_init

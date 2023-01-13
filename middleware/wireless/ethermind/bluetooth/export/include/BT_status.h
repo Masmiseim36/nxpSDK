@@ -107,6 +107,7 @@
 #define STATUS_ATT_INVALID_PEER_RSP             5U
 #define STATUS_ATT_INVALID_PEER_PDU             6U
 #define STATUS_ATT_NO_FREE_INSTANCE             7U
+#define STATUS_BIT_HCI_ISO_DATA_Q_FULL          8U
 /*@}*/
 /* Stack Activity Bit Definitions */
 /**
@@ -155,6 +156,10 @@ extern "C"{
 /** Initialization of EtherMind Status Flag */
 void em_status_init (void);
 void status_bt_init (void);
+
+#ifdef BT_HAVE_SHUTDOWN
+void em_status_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 
 /**
  *  \par Description

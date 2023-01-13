@@ -20,7 +20,7 @@
 #include "file_utils.h"
 
 /**
- * @brief Pull size for the EAP test pipeline with file source and file sink
+ * @brief Pull size for the AUDIO_PROC test pipeline with file source and file sink
  *
  */
 #define FILESINK_PULL_SIZE 1920
@@ -331,16 +331,16 @@ Error:
  */
 static int32_t filesink_sink_pad_process_handler(StreamPad *pad)
 {
-    PadReturn padret;
+    FlowReturn flowret;
     ElementFileSink *element = (ElementFileSink *)PAD_PARENT(pad);
 
     StreamBuffer pullBuf = {.buffer = (int8_t *)element->pullbuf, .size = FILESINK_PULL_SIZE, .offset = 0, .time = 0};
 
     // Pull data
-    padret = (PadReturn)pad_pull_range(pad, 3840, FILESINK_PULL_SIZE, &pullBuf);
-    if (padret != PAD_OK)
+    flowret = pad_pull_range(pad, 3840, FILESINK_PULL_SIZE, &pullBuf);
+    if (flowret != FLOW_OK)
     {
-        return padret;
+        return (int32_t)flowret;
     }
 
     // Process

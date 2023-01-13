@@ -56,6 +56,10 @@ extern "C"{
  */
 void em_snoop_init (void);
 
+#ifdef BT_HAVE_SHUTDOWN
+void em_snoop_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
+
 /**
  *  \brief To perform Bluetooth specific initializations for EtherMind btsnoop module
  *

@@ -21,7 +21,7 @@ var searchData=
   ['m_5fcurrentstruct',['m_currentStruct',['../classerpcgen_1_1_symbol_scanner.html#a0adea2a4721662bb19935a6471a85587',1,'erpcgen::SymbolScanner']]],
   ['m_5fcurrentunion',['m_currentUnion',['../classerpcgen_1_1_symbol_scanner.html#a644fd81c950549868ac71556d5107ff8',1,'erpcgen::SymbolScanner']]],
   ['m_5fcurrentvalue',['m_currentValue',['../classerpcgen_1_1_enum_type.html#a3db07f7a0f619fafaa0f5cbaaa051f6d',1,'erpcgen::EnumType']]],
-  ['m_5fdatatype',['m_dataType',['../classerpcgen_1_1_const_type.html#a5178fbef050ccbb01987703839392907',1,'erpcgen::ConstType::m_dataType()'],['../classerpcgen_1_1_data_type.html#a49a55bec8ce5196abe868e7209347fbe',1,'erpcgen::DataType::m_dataType()'],['../classerpcgen_1_1_struct_member.html#aa1dd550a2edd72b7e13f7421f778c8dd',1,'erpcgen::StructMember::m_dataType()']]],
+  ['m_5fdatatype',['m_dataType',['../classerpcgen_1_1_const_type.html#a5178fbef050ccbb01987703839392907',1,'erpcgen::ConstType::m_dataType()'],['../classerpcgen_1_1_data_type.html#a95a1f55e9f89ba5ee398794ccbe0fb6c',1,'erpcgen::DataType::m_dataType()'],['../classerpcgen_1_1_struct_member.html#aa1dd550a2edd72b7e13f7421f778c8dd',1,'erpcgen::StructMember::m_dataType()']]],
   ['m_5fdef',['m_def',['../classerpcgen_1_1_generator.html#a98fc35e6e8f393aab0bfe69afebf4684',1,'erpcgen::Generator']]],
   ['m_5fdepth',['m_depth',['../classerpcgen_1_1_ast_printer.html#a04849a941fff5f0a56be09cd62cabaee',1,'erpcgen::AstPrinter']]],
   ['m_5fdepthstack',['m_depthStack',['../classerpcgen_1_1_ast_printer.html#af3aaf1115d98aab20242a7ccb82d0312',1,'erpcgen::AstPrinter']]],

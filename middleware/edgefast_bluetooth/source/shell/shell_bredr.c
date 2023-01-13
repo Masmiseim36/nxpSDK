@@ -159,7 +159,7 @@ static void br_device_found(const bt_addr_t *addr, int8_t rssi,
 	shell_print(ctx_shell, "[DEVICE]: %s, RSSI %i %s", br_addr, rssi, name);
 }
 
-static struct bt_br_discovery_result br_discovery_results[5];
+static struct bt_br_discovery_result br_discovery_results[10];
 
 static void br_discovery_complete(struct bt_br_discovery_result *results,
 				  size_t count)
@@ -801,7 +801,7 @@ static shell_status_t cmd_l2cap_connect(shell_handle_t shell, int32_t argc, char
 
 		sec = *argv[2] - '0';
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
-		br_l2cap_channel->ch.chan.required_sec_level = (bt_security_t)sec;
+		br_l2cap_channel->ch.required_sec_level = (bt_security_t)sec;
 #endif
 	}
 #if (defined(CONFIG_BT_L2CAP_IFRAME_SUPPORT) && (CONFIG_BT_L2CAP_IFRAME_SUPPORT > 0U))

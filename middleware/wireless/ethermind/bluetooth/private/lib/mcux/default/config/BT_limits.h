@@ -113,8 +113,8 @@
  */
 #define WT_INTERNAL_QUEUE_SIZE                          50U
 #define WT_USER_API_QUEUE_SIZE                          20U
-#define WT_USER_DATA_QUEUE_SIZE                         100U
-
+#define WT_USER_DATA_QUEUE_SIZE                         50U
+#define WT_USER_MEDIA_QUEUE_SIZE                        50U
 
 /* ----------------------------------------------------------------------- */
 /* =============================  HCI Transport ========================== */
@@ -287,6 +287,18 @@
 #define HCI_COMMAND_QUEUE_SIZE                          20U
 
 /*
+ *  HCI stores the outgoing ISO Data to the Host Controller in a Global
+ *  Data Queue. Transmission of the ISO Data from this queue is
+ *  depended upon the flow control of commands between the Host Controller
+ *  and the Host (HCI). This parameter specifies the size of the HCI
+ *  ISO Data Queue.
+ *
+ *  Minimum Value: 2
+ *  Maximum Value: can be anything.
+ */
+#define HCI_ISO_DATA_QUEUE_SIZE                         40U
+
+/*
  *  Length of the buffer packet used to enqueue HCI Events/Data received
  *  during the process of Private Address Resolution of a peer device
  *  address that has connected. Apart from the HCI payload, packet type
@@ -336,6 +348,27 @@
 #define HCI_MAX_SUPPORTED_EXT_ADV_SETS                  4U
 #endif /* HCI_LE_EXT_ADV_SETS_LOCAL_ADDR_SUPPORT */
 
+#ifdef HCI_LE_CIG_CIS_SUPPORT
+/*
+ *  Maximum number of CIS Connections to be supported by local device.
+ *  This is agreegate of all the CIS connections with multiple Remote Bluetooth Devices.
+ *
+ *  Minimum: 1
+ *  Maximum: Any Number
+ */
+#define HCI_MAX_CIS_CONNECTIONS                         4U
+#endif /* HCI_LE_CIG_CIS_SUPPORT */
+
+#ifdef HCI_LE_BIG_BIS_SUPPORT
+/*
+ *  Maximum number of BIS Streams to be supported by local device.
+ *  This can be a maximum of 31 as per the LL specification.
+ *
+ *  Minimum: 1
+ *  Maximum: 31
+ */
+#define HCI_MAX_BIS_STREAMS                             4U
+#endif /* HCI_LE_BIG_BIS_SUPPORT */
 
 /* ----------------------------------------------------------------------- */
 /* ========================  Device Queue  =============================== */
@@ -515,6 +548,7 @@
  * Minimum Value:   1.
  * Maximum Value: 255.
  */
+/* #define ATT_MAX_CONNECTION_INSTANCES                      (1U + 5U) */
 #define ATT_MAX_CONNECTION_INSTANCES                      16U
 
 /**
@@ -531,6 +565,15 @@
  */
 #define ATT_MAX_MTU                                    1024U
 
+/**
+ * ATT_L2CA_RECV_CREDIT_LWM
+ *
+ * Low Watermark value for the ATT credit given to peer device.
+ *
+ * Minimum Value: 1
+ * Maximum Value: As required
+ */
+#define ATT_L2CA_RECV_CREDIT_LWM                       1
 
 /* ----------------------------------------------------------------------- */
 /* ===================  Generic Attribute Protocol  ====================== */
@@ -798,13 +841,13 @@
  *  The number of Channels here is not inclusive of 3 fixed channels ATT,
  *  L2CAP and SMP.
  *  So, if the use case requires all 3 fixed channels i.e. ATT, L2CAP & SMP
- *  and 2 L2CAP CBFC channels in addition to those then the value of
- *  L2CAP_MAX_CHANNELS should be  2.
+ *  and 2 L2CAP CBFC channels and 3 L2CAP ECBFC channels in addition to those then the value of
+ *  L2CAP_MAX_CHANNELS should be  5 (=2+3).
  *
  *  Minimum Value: 1
  *  Maximum Value: as required.
  */
-#define L2CAP_MAX_CHANNELS                              2U
+#define L2CAP_MAX_CHANNELS                              10U
 
 /*
  *  Maximum number of credit based Flow Control PSM that L2CAP needs
@@ -826,6 +869,27 @@
  *  Maximum Value: Less than allowed maximum value L2CAP_MAX_CREDITS (0xFFFF)
  */
 #define L2CAP_CBFC_RX_CREDITS_LWM                       0x0001U
+
+/*
+ *  Maximum number of enhanced credit based Flow Control PSM that L2CAP needs
+ *  to support.
+ *
+ *  Minimum Value: 1
+ *  Maximum Value: as required.
+ */
+#define L2CAP_MAX_ECBFC_PSM                             2U
+
+ /*
+ *  After receiving L2CAP data/payload from peer device for a ECBFC Channel,
+ *  the available credits are calculated. If the credit count goes below this
+ *  (low water mark) L2CAP_ECBFC_RX_CREDITS_LWM, the application is notified of
+ *  of this condition through the callback registered, so that if application
+ *  wants can send more credits to the peer device.
+ *
+ *  Minimum Value: 0
+ *  Maximum Value: Less than allowed maximum value L2CAP_MAX_CREDITS (0xFFFF)
+ */
+#define L2CAP_ECBFC_RX_CREDITS_LWM                      0x0001U
 
 /*
  *  A L2CAP Channel in 1.2 Stack can either be configured in Basic (1.1)
@@ -1629,7 +1693,7 @@
  *  Minimum Value: 1
  *  Maximum Value: ???
  */
-#define OPP_NUM_SERVER_ENTITIES                                 1U
+#define OPP_NUM_SERVER_ENTITIES                                 3U
 
 
 /* ----------------------------------------------------------------------- */

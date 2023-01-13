@@ -14,4 +14,9 @@
 
 #define snprintk snprintf
 
+#define BT_DBG  LOG_DBG
+#define BT_ERR  LOG_ERR
+#define BT_WARN LOG_WRN
+#define BT_INFO LOG_INF
+
 #endif /* __EDGEFAST_BT_BLE_TYPES_H__ */

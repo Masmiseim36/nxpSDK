@@ -407,7 +407,6 @@ int mbedtls_ecdh_compute_shared(mbedtls_ecp_group *grp,
                 }
                 ret = mbedtls_mpi_read_binary(z, buf, bufByteLen);
             } while (0);
-            
             sss_key_object_free(&otherPartyKeyObject);
             sss_key_object_free(&derivedKeyObject);  
  

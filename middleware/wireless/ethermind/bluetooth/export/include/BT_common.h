@@ -24,11 +24,6 @@
  */
 
 /* -------------------------------------------- Header File Inclusion */
-#ifdef BT_1_2
-    #define BT_HCI_1_2
-    #define BT_L2CAP_1_2
-#endif /* BT_1_2 */
-
 /* The EtherMind OS Abstraction */
 #include "BT_os.h"
 
@@ -62,12 +57,6 @@
 #ifdef BT_STORAGE
 #include "BT_storage.h"
 #endif /* BT_STORAGE */
-
-/* For Memory (leak, corruption) Testing */
-#ifdef MEMWATCH
-    #include "memwatch.h"
-#endif /* MEMWATCH */
-
 
 /* -------------------------------------------- Global Definitions */
 
@@ -414,7 +403,7 @@
         ((0 == BT_mem_cmp((addr_a), (addr_b), BT_BD_ADDR_SIZE))?BT_TRUE:BT_FALSE)
 
 #define BT_INIT_BD_ADDR(bd_addr) \
-        BT_mem_set ((bd_addr)->addr, 0U, BT_BD_ADDR_SIZE); \
+        BT_mem_set ((bd_addr)->addr, 0, BT_BD_ADDR_SIZE); \
         (bd_addr)->type = BT_BD_PUBLIC_ADDRESS_TYPE
 
 #define BT_BD_ADDR(bd_addr) (bd_addr)->addr
@@ -597,6 +586,58 @@
             COMMON_ERR(                                                  \
             BT_MODULE_ID_##MODULE,                                       \
             "FAILED to Unlock Mutex in " #MODULE ".\n");                 \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
+    }
+
+#define BT_MUTEX_DEINIT(mutex, MODULE)                                   \
+    {                                                                    \
+        INT32 ret;                                                       \
+        ret = BT_thread_mutex_deinit(&(mutex));                          \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(\
+                BT_MODULE_ID_##MODULE, \
+            "FAILED to De-Initialize Mutex in " #MODULE ".\n");          \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
+    }
+
+#define BT_MUTEX_DEINIT_VOID(mutex, MODULE)                              \
+    {                                                                    \
+        INT32 ret;                                                       \
+        ret = BT_thread_mutex_deinit(&(mutex));                          \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(\
+                BT_MODULE_ID_##MODULE, \
+            "FAILED to De-Initialize Mutex in " #MODULE ".\n");          \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
+    }
+
+#define BT_COND_DEINIT(mutex, MODULE)                                    \
+    {                                                                    \
+        INT32 ret;                                                       \
+        ret = BT_thread_cond_deinit(&(mutex));                           \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(\
+                BT_MODULE_ID_##MODULE, \
+            "FAILED to De-Initialize CondV in " #MODULE ".\n");          \
+        }                                                                \
+        BT_assert(0 == ret);                                             \
+    }
+
+#define BT_COND_DEINIT_VOID(mutex, MODULE)                               \
+    {                                                                    \
+        INT32 ret;                                                       \
+        ret = BT_thread_cond_deinit(&(mutex));                           \
+        if (0 > ret)                                                     \
+        {                                                                \
+            COMMON_ERR(\
+                BT_MODULE_ID_##MODULE, \
+            "FAILED to De-Initialize CondV in " #MODULE ".\n");          \
         }                                                                \
         BT_assert(0 == ret);                                             \
     }
@@ -813,6 +854,14 @@
 /* Page 2 - GATT based Profile Modules */
 #define BT_MODULE_PAGE_2                      0x20000000U
 
+/* Module - Bit Mask */
+#define BT_MODULE_BIT_MASK_GA                 0x000000001
+#define BT_MODULE_BIT_MASK_OTP                0x000000002
+
+/* Module ID */
+#define BT_MODULE_ID_GA                      (BT_MODULE_PAGE_2 | BT_MODULE_BIT_MASK_GA)
+#define BT_MODULE_ID_OTP                     (BT_MODULE_PAGE_2 | BT_MODULE_BIT_MASK_OTP)
+
 /* Page 3 - Utilities Modules */
 #define BT_MODULE_PAGE_3                      0x30000000U
 
@@ -841,7 +890,8 @@
 #define BT_MODULE_BIT_MASK_MAP_PL             0x00200000U
 #define BT_MODULE_BIT_MASK_HFP_PL             0x00400000U
 #define BT_MODULE_BIT_MASK_GEN_PL             0x00800000U
-
+#define BT_MODULE_BIT_MASK_HPS_PL             0x01000000U
+#define BT_MODULE_BIT_MASK_HTTPS_PL           0x02000000U
 /* Module ID */
 #define BT_MODULE_ID_STORAGE                  (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_STORAGE)
 #define BT_MODULE_ID_STATUS                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_STATUS)
@@ -867,6 +917,16 @@
 #define BT_MODULE_ID_MAP_PL                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_MAP_PL)
 #define BT_MODULE_ID_HFP_PL                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_HFP_PL)
 #define BT_MODULE_ID_GEN_PL                   (BT_MODULE_PAGE_3 | BT_MODULE_BIT_MASK_GEN_PL)
+
+#define BT_MODULE_STATE_INVALID               0x00U
+#define BT_MODULE_STATE_INITIALIZED           0x01U
+
+#define BT_DEFINE_MODULE_STATE(module_name) UINT8 g_bt_##module_name = BT_MODULE_STATE_INVALID;
+#define BT_DECLARE_MODULE_STATE(module_name) extern UINT8 g_bt_##module_name;
+
+/* Set init or deinit */
+#define BT_SET_MODULE_STATE(module_name, s) g_bt_##module_name = BT_MODULE_STATE_##s;
+#define IF_BT_MODULE_STATE(module_name, s) if(g_bt_##module_name == BT_MODULE_STATE_##s)
 
 /* -------------------------------------------- Structures/Data Types */
 
@@ -955,6 +1015,22 @@ void BT_ethermind_init
      (
          void
      );
+
+#ifdef BT_HAVE_SHUTDOWN
+/**
+ * API to de-initialize/shutdown EtherMind Stack. This is the final API that the
+ * application should call for the bluetooth stack. This function
+ * de-initializes all the internal stack modules.
+ *
+ * \note
+ * - After this function, the application should call \ref BT_ethermind_init()
+ * before calling any other stack APIs.
+ */
+void BT_ethermind_shutdown
+     (
+         void
+     );
+#endif /* BT_HAVE_SHUTDOWN */
 
 /**
  * API to initialize the Bluetooth Hardware. This API should be called after

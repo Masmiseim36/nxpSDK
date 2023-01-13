@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -126,7 +126,7 @@ $(document).ready(function(){initNavTree('group__mu__transport.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
 Files</h2></td></tr>
-<tr class="memitem:erpc__mu__transport_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="erpc__mu__transport_8h.html">erpc_mu_transport.h</a></td></tr>
+<tr class="memitem:erpc__mu__transport_8hpp"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="erpc__mu__transport_8hpp.html">erpc_mu_transport.hpp</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -139,6 +139,30 @@ Classes</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:gaa82790221f23bdec962980cdefd23108"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__mu__transport.html#gaa82790221f23bdec962980cdefd23108">MU_REG_COUNT</a></td></tr>
 <tr class="separator:gaa82790221f23bdec962980cdefd23108"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae7119ad264755c30f129c508c8e60438"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gae7119ad264755c30f129c508c8e60438"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_TX_SHIFT</b></td></tr>
+<tr class="separator:gae7119ad264755c30f129c508c8e60438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8171150823b4c1a6f5669afc00b8210d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8171150823b4c1a6f5669afc00b8210d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_RX_SHIFT</b></td></tr>
+<tr class="separator:ga8171150823b4c1a6f5669afc00b8210d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9cfe06b51d7bf29b040cbca25cd94bfb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga9cfe06b51d7bf29b040cbca25cd94bfb"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_RX_INTR_MASK</b></td></tr>
+<tr class="separator:ga9cfe06b51d7bf29b040cbca25cd94bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga55eee67376da7a2d9b829fd57c1145d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55eee67376da7a2d9b829fd57c1145d4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_TX_INTR_MASK</b></td></tr>
+<tr class="separator:ga55eee67376da7a2d9b829fd57c1145d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92d170bb928818217d93059d543b5303"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga92d170bb928818217d93059d543b5303"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_IS_TX_EMPTY_FLAG_SET</b></td></tr>
+<tr class="separator:ga92d170bb928818217d93059d543b5303"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4bb6b3049ee361868310e8bd825b7eaf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4bb6b3049ee361868310e8bd825b7eaf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_IS_RX_FULL_FLAG_SET</b></td></tr>
+<tr class="separator:ga4bb6b3049ee361868310e8bd825b7eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gade151145c6f0798a615f0cefa92cdfcf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gade151145c6f0798a615f0cefa92cdfcf"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_SR_TX_MASK</b></td></tr>
+<tr class="separator:gade151145c6f0798a615f0cefa92cdfcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1ae18a21ee34e20c27521498e2a46a0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1ae18a21ee34e20c27521498e2a46a0e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MU_SR_RX_MASK</b></td></tr>
+<tr class="separator:ga1ae18a21ee34e20c27521498e2a46a0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="gaa82790221f23bdec962980cdefd23108"></a>

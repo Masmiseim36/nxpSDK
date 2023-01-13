@@ -38,6 +38,21 @@
  */
 API_RESULT wt_init_pl (BT_THREAD_START_ROUTINE routine);
 
+#ifdef BT_HAVE_SHUTDOWN
+/**
+ *  \fn wt_shutdown_pl
+ *
+ *  \par Description
+ *  This function is called by Write Task during its shutdown to
+ *  handle platform specific shutdown procedures.
+ *
+ *  \param None
+ *
+ *  \return API_RESULT
+ */
+API_RESULT wt_shutdown_pl(void);
+#endif /* BT_HAVE_SHUTDOWN */
+
 /**
  *  \fn wt_exit_pl
  *

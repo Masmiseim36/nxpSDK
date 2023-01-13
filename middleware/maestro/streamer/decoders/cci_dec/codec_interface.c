@@ -58,9 +58,9 @@ const codec_interface_function_table_t g_codec_function_table[STREAM_TYPE_COUNT]
         NULL,
         NULL,
     },
-
 #endif
-#ifdef CASCFG_ENABLE_WAV_CODEC
+
+#ifdef WAV_DEC // PCM
     {
         &WAVDecoderGetMemorySize,
         &WAVDecoderInit,
@@ -81,6 +81,51 @@ const codec_interface_function_table_t g_codec_function_table[STREAM_TYPE_COUNT]
         NULL,
     },
 #endif
+
+#ifdef WAV_DEC // MSADPCM
+    {
+        &WAVDecoderGetMemorySize,
+        &WAVDecoderInit,
+        &WAVDecoderDecode,
+        NULL,
+        &WAVDecoderReset,
+        &WAVDecoderSeek,
+        &WAVDecoderGetIOFrameSize,
+    },
+#else
+    {
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+    },
+#endif
+
+#ifdef WAV_DEC // IMAADPCM
+    {
+        &WAVDecoderGetMemorySize,
+        &WAVDecoderInit,
+        &WAVDecoderDecode,
+        NULL,
+        &WAVDecoderReset,
+        &WAVDecoderSeek,
+        &WAVDecoderGetIOFrameSize,
+    },
+#else
+    {
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+    },
+#endif
+
 #ifdef OPUS_DEC
     {
         &OPUSDecoderGetMemorySize,
@@ -103,6 +148,7 @@ const codec_interface_function_table_t g_codec_function_table[STREAM_TYPE_COUNT]
     },
 
 #endif /* OPUS_DEC */
+
 #ifdef OGG_OPUS_DEC
     {
         &OggOPUSGetMemorySize,
@@ -126,6 +172,49 @@ const codec_interface_function_table_t g_codec_function_table[STREAM_TYPE_COUNT]
 
 #endif /* OGG_OPUS_DEC */
 
+#ifdef AAC_DEC
+    {
+        &AACDecoderGetMemorySize,
+        &AACDecoderInit,
+        &AACDecoderDecode,
+        NULL,
+        NULL,
+        &AACDecoderSeek,
+        &AACDecoderGetIOFrameSize,
+    },
+#else
+    {
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+    },
+#endif
+
+#ifdef FLAC_DEC
+    {
+        &FLACDecoderGetMemorySize,
+        &FLACDecoderInit,
+        &FLACDecoderDecode,
+        NULL,
+        &FLACDecoderReset,
+        &FLACDecoderSeek,
+        &FLACDecoderGetIOFrameSize,
+    },
+#else
+    {
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+    },
+#endif
 };
 /*
  * Code

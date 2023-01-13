@@ -10,9 +10,6 @@
 
 #include "mid_def.h"
 #include "mid_mc_api_connector.h"
-#include "pmsm_control.h"
-
-
 
 /*******************************************************************************
  * Definitions

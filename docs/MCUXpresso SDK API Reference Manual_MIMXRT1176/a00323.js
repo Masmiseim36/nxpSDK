@@ -1,13 +1,20 @@
 var a00323 =
 [
-    [ "CAAM_AES_BLOCK_SIZE", "a00323.html#gafa336bd271e1dfd0b1f01b71becf36b2", null ],
-    [ "CAAM_AES_EncryptEcb", "a00323.html#ga7e1764cc6554569ea72a8da1d2b4735d", null ],
-    [ "CAAM_AES_DecryptEcb", "a00323.html#ga31c77b10b05c35744cc28dd4e53a9fbb", null ],
-    [ "CAAM_AES_EncryptCbc", "a00323.html#gae41ac7ae54b88d74fb7f46e191929619", null ],
-    [ "CAAM_AES_DecryptCbc", "a00323.html#gab273ce9685be1a0ab0c583967b5d9121", null ],
-    [ "CAAM_AES_CryptCtr", "a00323.html#ga80a221a9a5b6561168ec6d591f9dd9bc", null ],
-    [ "CAAM_AES_EncryptTagCcm", "a00323.html#ga4cab7164d66c52d807e98228cdc8f971", null ],
-    [ "CAAM_AES_DecryptTagCcm", "a00323.html#ga744c4c00bec9db73b9d5ccd39ac72378", null ],
-    [ "CAAM_AES_EncryptTagGcm", "a00323.html#gaf9e28403c0834e0b25aa46cadc48e2ec", null ],
-    [ "CAAM_AES_DecryptTagGcm", "a00323.html#gae0c115dac16bbec838c087bdeda4e1a4", null ]
+    [ "CAAM_SHA_BLOCK_SIZE", "a00323.html#gae69fe1e12dec2eb60e97581fa953256e", null ],
+    [ "CAAM_HASH_BLOCK_SIZE", "a00323.html#gab364342ccd59f81b41f42c0115f756b2", null ],
+    [ "CAAM_HASH_CTX_SIZE", "a00323.html#ga37c8441f67d4b99a31ef9ac7cfa472c9", null ],
+    [ "caam_hash_ctx_t", "a00323.html#gab3d56fc2cb3351cff3d6a05535c72403", null ],
+    [ "caam_hash_algo_t", "a00323.html#ga7fd7e4192d45fffc27544be4037681b3", [
+      [ "kCAAM_XcbcMac", "a00323.html#gga7fd7e4192d45fffc27544be4037681b3ac222c317f70d745d9bf717e208484fa9", null ],
+      [ "kCAAM_Cmac", "a00323.html#gga7fd7e4192d45fffc27544be4037681b3af35e335fde66bdaf770c6389c3cca689", null ],
+      [ "kCAAM_Sha1", "a00323.html#gga7fd7e4192d45fffc27544be4037681b3ab8d5a4a79135ef7a4820afd96e76bcf9", null ],
+      [ "kCAAM_Sha224", "a00323.html#gga7fd7e4192d45fffc27544be4037681b3a60f41ab384dff6c0b8e4d6b1bf27326f", null ],
+      [ "kCAAM_Sha256", "a00323.html#gga7fd7e4192d45fffc27544be4037681b3aaec5a4de97fac0811f3e3c451e5216ed", null ],
+      [ "kCAAM_Sha384", "a00323.html#gga7fd7e4192d45fffc27544be4037681b3a8d077fb9946695a9e1e5234407392277", null ],
+      [ "kCAAM_Sha512", "a00323.html#gga7fd7e4192d45fffc27544be4037681b3a1049f4670c38dc74cbf5ef16f9da6263", null ]
+    ] ],
+    [ "CAAM_HASH_Init", "a00323.html#ga2e73b6881b1dba02f6d83c898ef9791e", null ],
+    [ "CAAM_HASH_Update", "a00323.html#ga77c33d59740a2a8cc884f3f8fedf1172", null ],
+    [ "CAAM_HASH_Finish", "a00323.html#gad4ea7fca91f5a247152070f1e987b69a", null ],
+    [ "CAAM_HASH", "a00323.html#gae1e5fc1252400f2af66d7fec4d87ad97", null ]
 ];

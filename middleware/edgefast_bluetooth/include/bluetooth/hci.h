@@ -180,52 +180,66 @@ struct bt_hci_cmd_hdr {
 #define BT_LE_FEAT_TEST(feat, n)                (feat[(n) >> 3] & \
 						 BIT((n) & 7))
 
-#define BT_FEAT_LE_ENCR(feat)                   BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_ENC)
-#define BT_FEAT_LE_CONN_PARAM_REQ_PROC(feat)    BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_CONN_PARAM_REQ)
-#define BT_FEAT_LE_PER_INIT_FEAT_XCHG(feat)     BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_PER_INIT_FEAT_XCHG)
-#define BT_FEAT_LE_DLE(feat)                    BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_DLE)
-#define BT_FEAT_LE_PHY_2M(feat)                 BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_PHY_2M)
-#define BT_FEAT_LE_PHY_CODED(feat)              BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_PHY_CODED)
-#define BT_FEAT_LE_PRIVACY(feat)                BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_PRIVACY)
-#define BT_FEAT_LE_EXT_ADV(feat)                BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_EXT_ADV)
-#define BT_FEAT_LE_EXT_PER_ADV(feat)            BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_PER_ADV)
-#define BT_FEAT_LE_CONNECTION_CTE_REQ(feat)     BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_CONN_CTE_REQ)
-#define BT_FEAT_LE_CONNECTION_CTE_RESP(feat)    BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_CONN_CTE_RESP)
-#define BT_FEAT_LE_CONNECTIONLESS_CTE_TX(feat)  BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_CONNECTIONLESS_CTE_TX)
-#define BT_FEAT_LE_CONNECTIONLESS_CTE_RX(feat)  BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_CONNECTIONLESS_CTE_RX)
-#define BT_FEAT_LE_ANT_SWITCH_TX_AOD(feat)      BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_ANT_SWITCH_TX_AOD)
-#define BT_FEAT_LE_ANT_SWITCH_RX_AOA(feat)      BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_ANT_SWITCH_RX_AOA)
-#define BT_FEAT_LE_RX_CTE(feat)                 BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_RX_CTE)
-#define BT_FEAT_LE_PAST_SEND(feat)              BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_PAST_SEND)
-#define BT_FEAT_LE_PAST_RECV(feat)              BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_PAST_RECV)
-#define BT_FEAT_LE_CIS_CENTRAL(feat)            BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_CIS_CENTRAL)
-#define BT_FEAT_LE_CIS_PERIPHERAL(feat)         BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_CIS_PERIPHERAL)
-#define BT_FEAT_LE_ISO_BROADCASTER(feat)        BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_ISO_BROADCASTER)
-#define BT_FEAT_LE_SYNC_RECEIVER(feat)          BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_SYNC_RECEIVER)
-#define BT_FEAT_LE_ISO_CHANNELS(feat)           BT_LE_FEAT_TEST(feat, \
-						BT_LE_FEAT_BIT_ISO_CHANNELS)
+#define BT_FEAT_LE_ENCR(feat)                     BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_ENC)
+#define BT_FEAT_LE_CONN_PARAM_REQ_PROC(feat)      BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CONN_PARAM_REQ)
+#define BT_FEAT_LE_PER_INIT_FEAT_XCHG(feat)       BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PER_INIT_FEAT_XCHG)
+#define BT_FEAT_LE_DLE(feat)                      BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_DLE)
+#define BT_FEAT_LE_PHY_2M(feat)                   BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PHY_2M)
+#define BT_FEAT_LE_PHY_CODED(feat)                BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PHY_CODED)
+#define BT_FEAT_LE_PRIVACY(feat)                  BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PRIVACY)
+#define BT_FEAT_LE_EXT_ADV(feat)                  BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_EXT_ADV)
+#define BT_FEAT_LE_EXT_PER_ADV(feat)              BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PER_ADV)
+#define BT_FEAT_LE_CONNECTION_CTE_REQ(feat)       BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CONN_CTE_REQ)
+#define BT_FEAT_LE_CONNECTION_CTE_RESP(feat)      BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CONN_CTE_RESP)
+#define BT_FEAT_LE_CONNECTIONLESS_CTE_TX(feat)    BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CONNECTIONLESS_CTE_TX)
+#define BT_FEAT_LE_CONNECTIONLESS_CTE_RX(feat)    BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CONNECTIONLESS_CTE_RX)
+#define BT_FEAT_LE_ANT_SWITCH_TX_AOD(feat)        BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_ANT_SWITCH_TX_AOD)
+#define BT_FEAT_LE_ANT_SWITCH_RX_AOA(feat)        BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_ANT_SWITCH_RX_AOA)
+#define BT_FEAT_LE_RX_CTE(feat)                   BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_RX_CTE)
+#define BT_FEAT_LE_PAST_SEND(feat)                BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PAST_SEND)
+#define BT_FEAT_LE_PAST_RECV(feat)                BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PAST_RECV)
+#define BT_FEAT_LE_CIS_CENTRAL(feat)              BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CIS_CENTRAL)
+#define BT_FEAT_LE_CIS_PERIPHERAL(feat)           BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CIS_PERIPHERAL)
+#define BT_FEAT_LE_ISO_BROADCASTER(feat)          BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_ISO_BROADCASTER)
+#define BT_FEAT_LE_SYNC_RECEIVER(feat)            BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_SYNC_RECEIVER)
+#define BT_FEAT_LE_ISO_CHANNELS(feat)             BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_ISO_CHANNELS)
+#define BT_FEAT_LE_PWR_CTRL_REQ(feat)             BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PWR_CTRL_REQ)
+#define BT_FEAT_LE_PWR_CHG_IND(feat)              BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PWR_CHG_IND)
+#define BT_FEAT_LE_PATH_LOSS_MONITOR(feat)        BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PATH_LOSS_MONITOR)
+#define BT_FEAT_LE_PER_ADV_ADI_SUPP(feat)         BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_PER_ADV_ADI_SUPP)
+#define BT_FEAT_LE_CONN_SUBRATING(feat)           BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CONN_SUBRATING)
+#define BT_FEAT_LE_CONN_SUBRATING_HOST_SUPP(feat) BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CONN_SUBRATING_HOST_SUPP)
+#define BT_FEAT_LE_CHANNEL_CLASSIFICATION(feat)   BT_LE_FEAT_TEST(feat, \
+						  BT_LE_FEAT_BIT_CHANNEL_CLASSIFICATION)
 
 #define BT_FEAT_LE_CIS(feat)            (BT_FEAT_LE_CIS_CENTRAL(feat) | \
 					BT_FEAT_LE_CIS_PERIPHERAL(feat))
@@ -1156,6 +1170,15 @@ struct bt_hci_cp_le_rx_test {
 	uint8_t  rx_ch;
 } STRUCT_PACKED_POST;
 
+#define BT_HCI_TEST_PKT_PAYLOAD_PRBS9           0x00
+#define BT_HCI_TEST_PKT_PAYLOAD_11110000        0x01
+#define BT_HCI_TEST_PKT_PAYLOAD_10101010        0x02
+#define BT_HCI_TEST_PKT_PAYLOAD_PRBS15          0x03
+#define BT_HCI_TEST_PKT_PAYLOAD_11111111        0x04
+#define BT_HCI_TEST_PKT_PAYLOAD_00000000        0x05
+#define BT_HCI_TEST_PKT_PAYLOAD_00001111        0x06
+#define BT_HCI_TEST_PKT_PAYLOAD_01010101        0x07
+
 #define BT_HCI_OP_LE_TX_TEST                    BT_OP(BT_OGF_LE, 0x001e)
 STRUCT_PACKED_PRE
 struct bt_hci_cp_le_tx_test {
@@ -1367,6 +1390,10 @@ struct bt_hci_cp_le_set_phy {
 #define BT_HCI_LE_MOD_INDEX_STANDARD            0x00
 #define BT_HCI_LE_MOD_INDEX_STABLE              0x01
 
+#define BT_HCI_LE_RX_PHY_1M                     0x01
+#define BT_HCI_LE_RX_PHY_2M                     0x02
+#define BT_HCI_LE_RX_PHY_CODED                  0x03
+
 #define BT_HCI_OP_LE_ENH_RX_TEST                BT_OP(BT_OGF_LE, 0x0033)
 STRUCT_PACKED_PRE
 struct bt_hci_cp_le_enh_rx_test {
@@ -1375,7 +1402,8 @@ struct bt_hci_cp_le_enh_rx_test {
 	uint8_t  mod_index;
 } STRUCT_PACKED_POST;
 
-/* Extends BT_HCI_LE_PHY */
+#define BT_HCI_LE_TX_PHY_1M                     0x01
+#define BT_HCI_LE_TX_PHY_2M                     0x02
 #define BT_HCI_LE_TX_PHY_CODED_S8               0x03
 #define BT_HCI_LE_TX_PHY_CODED_S2               0x04
 
@@ -1402,6 +1430,9 @@ struct bt_hci_cp_le_set_adv_set_random_addr {
 #define BT_HCI_LE_ADV_PROP_LEGACY               BIT(4)
 #define BT_HCI_LE_ADV_PROP_ANON                 BIT(5)
 #define BT_HCI_LE_ADV_PROP_TX_POWER             BIT(6)
+
+#define BT_HCI_LE_PRIM_ADV_INTERVAL_MIN         0x000020
+#define BT_HCI_LE_PRIM_ADV_INTERVAL_MAX         0xFFFFFF
 
 #define BT_HCI_LE_ADV_SCAN_REQ_ENABLE  1
 #define BT_HCI_LE_ADV_SCAN_REQ_DISABLE 0
@@ -1454,7 +1485,7 @@ struct bt_hci_cp_le_set_ext_adv_data {
 	uint8_t  op;
 	uint8_t  frag_pref;
 	uint8_t  len;
-	uint8_t  data[251];
+	uint8_t  data[0];
 } STRUCT_PACKED_POST;
 
 #define BT_HCI_OP_LE_SET_EXT_SCAN_RSP_DATA      BT_OP(BT_OGF_LE, 0x0038)
@@ -1464,7 +1495,7 @@ struct bt_hci_cp_le_set_ext_scan_rsp_data {
 	uint8_t  op;
 	uint8_t  frag_pref;
 	uint8_t  len;
-	uint8_t  data[251];
+	uint8_t  data[0];
 } STRUCT_PACKED_POST;
 
 #define BT_HCI_OP_LE_SET_EXT_ADV_ENABLE         BT_OP(BT_OGF_LE, 0x0039)
@@ -1504,6 +1535,9 @@ struct bt_hci_cp_le_remove_adv_set {
 
 #define BT_HCI_OP_CLEAR_ADV_SETS                BT_OP(BT_OGF_LE, 0x003d)
 
+#define BT_HCI_LE_PER_ADV_INTERVAL_MIN          0x0006
+#define BT_HCI_LE_PER_ADV_INTERVAL_MAX          0xFFFF
+
 #define BT_HCI_OP_LE_SET_PER_ADV_PARAM          BT_OP(BT_OGF_LE, 0x003e)
 STRUCT_PACKED_PRE
 struct bt_hci_cp_le_set_per_adv_param {
@@ -1526,7 +1560,7 @@ struct bt_hci_cp_le_set_per_adv_data {
 	uint8_t  handle;
 	uint8_t  op;
 	uint8_t  len;
-	uint8_t  data[BT_HCI_LE_PER_ADV_FRAG_MAX_LEN];
+	uint8_t  data[0];
 } STRUCT_PACKED_POST;
 
 #define BT_HCI_LE_SET_PER_ADV_ENABLE_ENABLE     BIT(0)
@@ -1683,6 +1717,36 @@ struct bt_hci_cp_le_set_privacy_mode {
 	uint8_t         mode;
 } STRUCT_PACKED_POST;
 
+#define BT_HCI_LE_TEST_CTE_DISABLED             0x00
+#define BT_HCI_LE_TEST_CTE_TYPE_ANY             0x00
+#define BT_HCI_LE_TEST_SLOT_DURATION_ANY        0x00
+#define BT_HCI_LE_TEST_SWITCH_PATTERN_LEN_ANY   0x00
+
+#define BT_HCI_OP_LE_RX_TEST_V3                 BT_OP(BT_OGF_LE, 0x004f)
+STRUCT_PACKED_PRE
+struct bt_hci_cp_le_rx_test_v3 {
+	uint8_t  rx_ch;
+	uint8_t  phy;
+	uint8_t  mod_index;
+	uint8_t  expected_cte_len;
+	uint8_t  expected_cte_type;
+	uint8_t  slot_durations;
+	uint8_t  switch_pattern_len;
+	uint8_t  ant_ids[0];
+} STRUCT_PACKED_POST;
+
+#define BT_HCI_OP_LE_TX_TEST_V3                 BT_OP(BT_OGF_LE, 0x0050)
+STRUCT_PACKED_PRE
+struct bt_hci_cp_le_tx_test_v3 {
+	uint8_t  tx_ch;
+	uint8_t  test_data_len;
+	uint8_t  pkt_payload;
+	uint8_t  phy;
+	uint8_t  cte_len;
+	uint8_t  cte_type;
+	uint8_t  switch_pattern_len;
+	uint8_t  ant_ids[0];
+} STRUCT_PACKED_POST;
 
 /* Min and max Constant Tone Extension length in 8us units */
 #define BT_HCI_LE_CTE_LEN_MIN                  0x2
@@ -2160,6 +2224,10 @@ struct bt_hci_rp_le_remove_iso_path {
 	uint16_t handle;
 } STRUCT_PACKED_POST;
 
+#define BT_HCI_ISO_TEST_ZERO_SIZE_SDU     0
+#define BT_HCI_ISO_TEST_VARIABLE_SIZE_SDU 1
+#define BT_HCI_ISO_TEST_MAX_SIZE_SDU      2
+
 #define BT_HCI_OP_LE_ISO_TRANSMIT_TEST          BT_OP(BT_OGF_LE, 0x0070)
 STRUCT_PACKED_PRE
 struct bt_hci_cp_le_iso_transmit_test {
@@ -2247,6 +2315,33 @@ struct bt_hci_rp_le_read_iso_link_quality {
 	uint32_t duplicate_packets;
 } STRUCT_PACKED_POST;
 
+#define BT_HCI_OP_LE_TX_TEST_V4                 BT_OP(BT_OGF_LE, 0x007B)
+STRUCT_PACKED_PRE
+struct bt_hci_cp_le_tx_test_v4 {
+	uint8_t  tx_ch;
+	uint8_t  test_data_len;
+	uint8_t  pkt_payload;
+	uint8_t  phy;
+	uint8_t  cte_len;
+	uint8_t  cte_type;
+	uint8_t  switch_pattern_len;
+	uint8_t  ant_ids[0];
+} STRUCT_PACKED_POST;
+
+#define BT_HCI_TX_TEST_POWER_MIN -0x7F
+#define BT_HCI_TX_TEST_POWER_MAX 0x14
+
+#define BT_HCI_TX_TEST_POWER_MIN_SET 0x7E
+#define BT_HCI_TX_TEST_POWER_MAX_SET 0x7F
+
+/* Helper structure for Tx power parameter in the HCI Tx Test v4 command.
+ * Previous parameter of this command is variable size so having separated structure
+ * for this parameter helps in command parameters unpacking.
+ */
+ STRUCT_PACKED_PRE
+struct bt_hci_cp_le_tx_test_v4_tx_power {
+	int8_t tx_power;
+} STRUCT_PACKED_POST;
 
 /* Event definitions */
 
@@ -2401,6 +2496,7 @@ struct bt_hci_evt_link_key_notify {
 /* Overflow link types */
 #define BT_OVERFLOW_LINK_SYNCH                  0x00
 #define BT_OVERFLOW_LINK_ACL                    0x01
+#define BT_OVERFLOW_LINK_ISO                    0x02
 
 #define BT_HCI_EVT_DATA_BUF_OVERFLOW            0x1a
 STRUCT_PACKED_PRE
@@ -2791,7 +2887,7 @@ STRUCT_PACKED_PRE
 struct bt_hci_evt_le_cte_req_failed {
 	/* According to BT 5.3 Core Spec the status field may have following
 	 * values:
-	 * - BT_HCI_CTE_REQ_STATUS_RSP_WIHOUT_CTE when received LL_CTE_RSP_PDU without CTE.
+	 * - BT_HCI_CTE_REQ_STATUS_RSP_WITHOUT_CTE when received LL_CTE_RSP_PDU without CTE.
 	 * - Other Controller error code for peer rejected request.
 	 */
 	uint8_t  status;
@@ -3095,6 +3191,22 @@ typedef bool bt_hci_vnd_evt_cb_t(struct net_buf_simple *buf);
   * @return 0 on success or negative error value on failure.
   */
 int bt_hci_register_vnd_evt_cb(bt_hci_vnd_evt_cb_t cb);
+
+/** @brief Get Random bytes from the LE Controller.
+ *
+ * Send the HCI_LE_Rand to the LE Controller as many times as required to
+ * fill the provided @p buffer.
+ *
+ * @note This function is provided as a helper to gather an arbitrary number of
+ * random bytes from an LE Controller using the HCI_LE_Rand command.
+ *
+ * @param buffer Buffer to fill with random bytes.
+ * @param len Length of the buffer in bytes.
+ *
+ * @return 0 on success or negative error value on failure.
+ */
+int bt_hci_le_rand(void *buffer, size_t len);
+
 
 #ifdef __cplusplus
 }

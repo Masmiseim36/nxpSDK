@@ -51,6 +51,9 @@ extern struct bt_conn *default_conn;
 
 void conn_addr_str(struct bt_conn *conn, char *addr, size_t len);
 void shell_hexdump(shell_handle_t shell, const uint8_t *data, size_t len);
+unsigned long shell_strtoul(const char *str, int base, int *err);
+long shell_strtol(const char *str, int base, int *err);
+
 void bt_CommandInit(shell_handle_t shell);
 
 void bt_ShellGattInit(shell_handle_t shell);

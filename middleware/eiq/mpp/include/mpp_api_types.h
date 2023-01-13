@@ -25,6 +25,11 @@
 #define MPP_INFERENCE_MAX_OUTPUTS 4 /*!< Maximum number of outputs supported by the pipeline */
 #define MPP_INFERENCE_MAX_INPUTS 1 /*!< Maximum number of inputs supported by the pipeline */
 
+/**Maximum priority for application tasks
+   Tasks created by the application should have a maximum priority otherwise
+   scheduling of pipeline processing tasks may be impacted */
+#define MPP_APP_MAX_PRIO    1
+
 /** Pipeline handle type */
 typedef void* mpp_t ;
 /** Element handle type */
@@ -36,11 +41,13 @@ typedef uintptr_t mpp_elem_handle_t ;
 typedef enum {
     MPP_EVENT_INVALID,  /*!< invalid event */
     MPP_EVENT_INFERENCE_OUTPUT_READY,   /*!< inference out is ready */
+    MPP_EVENT_INTERNAL_TEST_RESERVED,   /*!< INTERNAL: DO NOT USE */
     MPP_EVENT_NUM   /*!< DO NOT USE */
 } mpp_evt_t;
 
 /** Event mask for pipeline creation */
 typedef unsigned int mpp_evt_mask_t;
+/** Bit mask to receive all Events */
 #define MPP_EVENT_ALL 0xffffffff
 
 /**
@@ -61,12 +68,43 @@ typedef enum {
     MPP_EXEC_PREEMPT       /*!< preemptable */
 } mpp_exec_flag_t;
 
+typedef enum {
+    MPP_STATS_GRP_API = 0,  /*!< API (global) stats*/
+    MPP_STATS_GRP_MPP,      /*!< mpp_t stats*/
+    MPP_STATS_GRP_ELEMENT,  /*!< element stats */
+    MPP_STATS_GRP_NUM       /*!< number of groups */
+} mpp_stats_grp_t;
+
+typedef union {
+    struct {
+        unsigned int rc_cycle;      /*!< run-to-completion (RC) cycle duration (ms) */
+        unsigned int rc_cycle_max;  /*!< run-to-completion work deadline (ms) */
+        unsigned int pr_slot;       /*!< available slot for preemptable (PR) work (ms) */
+        unsigned int pr_rounds;     /*!< number of RC cycles required to complete one PR cycle (ms) */
+        unsigned int app_slot;      /*!< remaining time for application (ms) */
+    } api; /*!< Global execution performance counters */
+    struct {
+        mpp_t mpp;
+        unsigned int mpp_exec_time; /*!< pipeline execution time (ms) */
+    } mpp; /*!< Pipeline execution performance counters */
+    struct {
+        mpp_elem_handle_t hnd;
+        unsigned int elem_exec_time; /*!< element execution time (ms) */
+    } elem; /*!< Element execution performance counters */
+} mpp_stats_t;
+
+
+typedef struct {
+    mpp_stats_t *stats; /*!< API stats */
+} mpp_api_params_t;
+
 /** Pipeline creation parameters */
 typedef struct {
         int (*evt_callback_f)(mpp_t mpp, mpp_evt_t evt, void *evt_data, void *user_data);
         mpp_evt_mask_t mask ;
         mpp_exec_flag_t exec_flag;
         void *cb_userdata;
+        mpp_stats_t *stats;
 } mpp_params_t;
 
 /** Rotation value */
@@ -159,6 +197,7 @@ typedef enum {
 } mpp_element_id_t;
 
 /* Inference parameter types */
+/** Maximum number of dimensions for tensors */
 #define MAX_TENSOR_DIMS 4
 
 /** Inference tensor dimensions */
@@ -202,6 +241,7 @@ typedef struct {
     void *user_data;        /*!< callback will pass this pointer */
     mpp_inference_out_tensor_params_t *out_tensors[MPP_INFERENCE_MAX_OUTPUTS]; /*!< output tensors parameters */
     int inference_time_ms;  /*!< inference run time measurement - output to user */
+    mpp_inference_type_t inference_type; /*!< type of the inference */
 } mpp_inference_cb_param_t;
 
 /** mpp color encoding */
@@ -255,7 +295,8 @@ typedef struct {
 } mpp_inference_params_t;
 
 /** Processing element parameters */
-typedef union {
+typedef struct {
+union {
     /** Compose element's parameters - NOT IMPLEMENTED YET */
     struct {
         float a;
@@ -303,12 +344,14 @@ typedef union {
     struct {
         const void *model_data; /*!< pointer to model binary */
         mpp_inference_type_t type; /*!< inference type */
-        int model_size;         /*!< model binary size */
+        int model_size;         /*!< model binary size (unused by Glow) */
         float model_input_mean; /*!< model 'mean' of input values, used for normalization */
         float model_input_std;  /*!< model 'standard deviation' of input values, used for normalization */
-        mpp_tensor_order_t tensor_order;
+        mpp_tensor_order_t tensor_order; /*!< model input tensor component order */
         mpp_inference_params_t inference_params; /*!< model specific parameters used by the inference */
-    } ml_inference; /*!< ML inference */
+    } ml_inference;
+};
+    mpp_stats_t *stats;
 } mpp_element_params_t;
 
 /** @}*/

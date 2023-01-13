@@ -85,6 +85,8 @@ typedef uint16_t UINT16;
 typedef int32_t INT32;
 /* 'unsigned' datatype of size '4 octet' */
 typedef uint32_t UINT32;
+/* 'signed' datatype of size '8 octet' */
+typedef int64_t INT64;
 /* 'unsigned' datatype of size '8 octet' */
 typedef uint64_t UINT64;
 
@@ -103,8 +105,8 @@ typedef osa_task_handle_t EM_thread_type;
 typedef struct EM_thread_attr_type_struct
 {
     DECL_CONST CHAR  * thread_name;
-	UINT32             thread_stack_size;
-	UINT32             thread_priority;
+    UINT32             thread_stack_size;
+    UINT32             thread_priority;
 } EM_thread_attr_type;
 
 /* Datatype to represent Mutex object */
@@ -142,6 +144,8 @@ typedef UINT16 EM_RESULT;
 #define EM_str_cat(d, s)              (void)strcat((char *)(d), (char *)(s))
 #define EM_str_n_cat(d, s, sz)        (void)strncat((char *)(d), (char *)(s), (sz))
 #define EM_str_str(s, ss)             strstr((char *)(s), (char *)(ss))
+#define EM_str_chr(s, ch)             strchr((char *)(s), (ch))
+#define EM_str_rchr(s, ch)            strrchr((char *)(s), (ch))
 #define EM_str_n_casecmp(s1, s2, n)   _strnicmp ((char *)(s1), (char *)(s2), n)
 #define EM_str_print(...)             (void)sprintf(__VA_ARGS__)
 
@@ -179,14 +183,19 @@ void EM_os_init(void);
 INT32 EM_thread_create
       (
           /* OUT */ EM_thread_type *         thread,
-          /* IN */  EM_thread_attr_type *    thread_attr,
+          /* IN */  EM_thread_attr_type *    attr,
           /* IN */  EM_THREAD_START_ROUTINE  start_routine,
           /* IN */  EM_THREAD_ARGS           thread_args
       );
 
+INT32 EM_thread_delete
+      (
+          /* IN */ EM_thread_type thread
+      );
+
 INT32 EM_thread_attr_init
       (
-          /* OUT */ EM_thread_attr_type *    thread_attr
+          /* OUT */ EM_thread_attr_type *    attr
       );
 
 /* Task/Thread Synchronization Primitives */
@@ -194,6 +203,11 @@ INT32 EM_thread_mutex_init
       (
           /* OUT */ EM_thread_mutex_type *         mutex,
           /* IN */  EM_thread_mutex_attr_type *    mutex_attr
+      );
+
+INT32 EM_thread_mutex_deinit
+      (
+          /* IN */ EM_thread_mutex_type *         mutex
       );
 
 INT32 EM_thread_mutex_lock
@@ -210,6 +224,11 @@ INT32 EM_thread_cond_init
       (
           /* OUT */ EM_thread_cond_type *         cond,
           /* IN */  EM_thread_cond_attr_type *    cond_attr
+      );
+
+INT32 EM_thread_cond_deinit
+      (
+          /* IN */ EM_thread_cond_type *         cond
       );
 
 INT32 EM_thread_cond_wait
@@ -244,6 +263,9 @@ UINT64 EM_get_us_timestamp(void);
 
 /* Process termination handling */
 void EM_process_term_notify(void(*handler)(void));
+
+void EM_register_sof_handler (void(*handler)(void * task_name));
+UINT32 EM_thread_get_stack_unused (void);
 
 #ifdef __cplusplus
 };

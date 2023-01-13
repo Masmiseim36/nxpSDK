@@ -65,7 +65,8 @@ typedef unsigned char bool; // C++ and GCC has bool.
 #endif
 
 /** @define AX_EMBEDDED Plaform is embedded like Kinetis / LPC / i.MX RT / Freedom Series */
-#if defined(FREEDOM) || defined(IMX_RT) || defined(CPU_LPC54018) || defined(LPC_55x) || defined(QN9090DK6)
+#if defined(FREEDOM) || defined(IMX_RT) || defined(CPU_LPC54018) || defined(LPC_55x) || defined(QN9090DK6) || \
+    defined(NORDIC_MCU)
 #define AX_EMBEDDED 1
 #elif defined(AX_EMBEDDED)
 /* OK */

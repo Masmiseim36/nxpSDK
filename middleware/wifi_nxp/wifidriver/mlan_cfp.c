@@ -1221,7 +1221,7 @@ const chan_freq_power_t *wlan_find_cfp_by_band_and_freq(mlan_adapter *pmadapter,
  *
  *  @return                     MTRUE or MFALSE
  */
-t_u8 wlan_is_rate_auto(mlan_private *pmpriv)
+bool wlan_is_rate_auto(mlan_private *pmpriv)
 {
     t_u32 i;
     int rate_num = 0;

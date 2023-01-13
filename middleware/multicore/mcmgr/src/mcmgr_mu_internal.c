@@ -43,12 +43,22 @@ __attribute__((weak)) void MU_GenInt2FlagISR(void){};
 __attribute__((weak)) void MU_GenInt1FlagISR(void){};
 __attribute__((weak)) void MU_GenInt0FlagISR(void){};
 
+#if (defined(CPU_MIMXRT1189AVM8A_cm7) || defined(CPU_MIMXRT1189CVM8A_cm7) || defined(CPU_MIMXRT1189CVM8A_cm7) || \
+     defined(CPU_MIMXRT1189AVM8A_cm33) || defined(CPU_MIMXRT1189CVM8A_cm33) || defined(CPU_MIMXRT1189CVM8A_cm33))
+/* MU ISR table */
+static void (*const MU_interrupts[MU_ISR_COUNT])(void) = {
+    MU_Tx0EmptyFlagISR, MU_Tx1EmptyFlagISR, MU_Tx2EmptyFlagISR, MU_Tx3EmptyFlagISR,
+    MU_Rx0FullFlagISR,  MU_Rx1FullFlagISR,  MU_Rx2FullFlagISR,  MU_Rx3FullFlagISR,
+    MU_GenInt0FlagISR,  MU_GenInt1FlagISR,  MU_GenInt2FlagISR,  MU_GenInt3FlagISR,
+};
+#else
 /* MU ISR table */
 static void (*const MU_interrupts[MU_ISR_COUNT])(void) = {
     MU_Tx3EmptyFlagISR, MU_Tx2EmptyFlagISR, MU_Tx1EmptyFlagISR, MU_Tx0EmptyFlagISR,
     MU_Rx3FullFlagISR,  MU_Rx2FullFlagISR,  MU_Rx1FullFlagISR,  MU_Rx0FullFlagISR,
     MU_GenInt3FlagISR,  MU_GenInt2FlagISR,  MU_GenInt1FlagISR,  MU_GenInt0FlagISR,
 };
+#endif
 
 /* MU ISR router */
 static void mu_isr(MU_Type *base)
@@ -81,6 +91,39 @@ static void mu_isr(MU_Type *base)
     }
 }
 
+#if (defined(CPU_MIMXRT1189AVM8A_cm7) || defined(CPU_MIMXRT1189CVM8A_cm7) || defined(CPU_MIMXRT1189CVM8A_cm7) || \
+     defined(CPU_MIMXRT1189AVM8A_cm33) || defined(CPU_MIMXRT1189CVM8A_cm33) || defined(CPU_MIMXRT1189CVM8A_cm33))
+
+#if defined(FSL_FEATURE_MU_SIDE_A)
+int MU1_IRQHandler(void)
+{
+    mu_isr(MU1_MUA);
+    /* ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+     * exception return operation might vector to incorrect interrupt.
+     * For Cortex-M7, if core speed much faster than peripheral register write speed,
+     * the peripheral interrupt flags may be still set after exiting ISR, this results to
+     * the same error similar with errata 83869 */
+#if (defined __CORTEX_M) && ((__CORTEX_M == 4U) || (__CORTEX_M == 7U))
+    __DSB();
+#endif
+    return 0;
+}
+#elif defined(FSL_FEATURE_MU_SIDE_B)
+int MU1_IRQHandler(void)
+{
+    mu_isr(MU1_MUB);
+    /* ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+     * exception return operation might vector to incorrect interrupt.
+     * For Cortex-M7, if core speed much faster than peripheral register write speed,
+     * the peripheral interrupt flags may be still set after exiting ISR, this results to
+     * the same error similar with errata 83869 */
+#if (defined __CORTEX_M) && ((__CORTEX_M == 4U) || (__CORTEX_M == 7U))
+    __DSB();
+#endif
+    return 0;
+}
+#endif
+#else
 #if defined(FSL_FEATURE_MU_SIDE_A)
 int MUA_IRQHandler(void)
 {
@@ -109,4 +152,5 @@ int MUB_IRQHandler(void)
 #endif
     return 0;
 }
+#endif
 #endif

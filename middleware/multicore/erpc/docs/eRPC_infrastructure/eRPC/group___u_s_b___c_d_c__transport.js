@@ -1,6 +1,6 @@
 var group___u_s_b___c_d_c__transport =
 [
-    [ "erpc_usb_cdc_transport.h", "erpc__usb__cdc__transport_8h.html", null ],
+    [ "erpc_usb_cdc_transport.hpp", "erpc__usb__cdc__transport_8hpp.html", null ],
     [ "UsbCdcTransport", "classerpc_1_1_usb_cdc_transport.html", [
       [ "UsbCdcTransport", "classerpc_1_1_usb_cdc_transport.html#aedb9ac8397a72583c7adc3457a7c1e96", null ],
       [ "~UsbCdcTransport", "classerpc_1_1_usb_cdc_transport.html#aa2986d4c89f285609d24a041116b490b", null ],

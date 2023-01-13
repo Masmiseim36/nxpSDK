@@ -75,7 +75,7 @@ VOID  _ux_hcd_ohci_register_write(UX_HCD_OHCI *hcd_ohci, ULONG ohci_register, UL
 {
     
     /* Write to the register.  */
-    *(hcd_ohci -> ux_hcd_ohci_hcor + ohci_register) =  value;
+    *(volatile ULONG *)(hcd_ohci -> ux_hcd_ohci_hcor + ohci_register) =  value;
 
     /* Return to caller.  */
     return;

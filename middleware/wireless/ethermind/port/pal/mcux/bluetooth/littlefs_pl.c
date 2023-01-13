@@ -143,13 +143,15 @@ static int lfs_mflash_read(const struct lfs_config *lfsc, lfs_block_t block, lfs
     flash_addr = ((uint32_t)EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) + block * lfsc->block_size + off;
 #endif
 
-    (void)OSA_MutexLock((osa_mutex_handle_t)s_flashOpsLock, osaWaitForever_c);
+	(void)OSA_MutexLock((osa_mutex_handle_t)s_flashOpsLock, osaWaitForever_c);
+
+
 #ifdef EDGEFAST_BT_LITTLEFS_MFLASH
     if (mflash_drv_read(flash_addr, buffer, size) != kStatus_Success)
 #else
     if (HAL_FlashRead(flash_addr, size, buffer) != kStatus_HAL_Flash_Success)
 #endif
-    {
+	{
         (void)OSA_MutexUnlock((osa_mutex_handle_t)s_flashOpsLock);
         return LFS_ERR_IO;
     }
@@ -168,6 +170,7 @@ static int lfs_mflash_prog(
 #endif /* LITTLEFS_PL_DEBUG */
 
     assert(lfsc);
+
 #ifdef EDGEFAST_BT_LITTLEFS_MFLASH
     flash_addr = LittleFS_ctx.start_addr + block * lfsc->block_size + off;
 #else
@@ -337,5 +340,3 @@ lfs_t * lfs_pl_init(void)
     }
 }
 #endif /* CONFIG_BT_SETTINGS */
-
-

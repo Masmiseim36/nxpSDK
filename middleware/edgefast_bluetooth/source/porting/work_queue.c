@@ -32,12 +32,23 @@ struct bt_delayed_work *k_delayed_work_queue_remove_tail(struct bt_delayed_work_
 
 static OSA_TASK_DEFINE(work_queue_task, CONFIG_WORK_QUEUE_TASK_PRIORITY, 1, CONFIG_WORK_QUEUE_TASK_STACK_SIZE, 0);
 
+static void work_queue_trigger_delayed_work(void)
+{
+    static struct bt_work work = {NULL, NULL, 0};
+    struct bt_work *work_p = &work;
+    osa_status_t ret;
+
+    ret = OSA_MsgQPut(s_workQueueHead.queue, &work_p);
+    assert(KOSA_StatusSuccess == ret);
+    (void)ret;
+}
+
 static void work_queue_task(void *param)
 {
     struct bt_work_queue *work_queue = (struct bt_work_queue *)param;
     struct bt_work *work;
     bt_work_handler_t handler;
-    int32_t timeout;
+    uint32_t timeout;
     osa_status_t ret;
 
     #define DELAY_WORK_TIMER_TASK_DELAY_FACTOR 0
@@ -73,7 +84,14 @@ static void work_queue_task(void *param)
 
         /* delay queue time schedulier */
         delayed_work_queue_tick_update(&g_DelayedWorkQueueHead);
-
+        if (NULL != g_DelayedWorkQueueHead.pending)
+        {
+            timeout = DELAY_WORK_TIMER_TASK_DELAY_TIME;
+        }
+        else
+        {
+            timeout = osaWaitForever_c;
+        }
         /* Make sure we don't hog up the CPU if the FIFO never (or
          * very rarely) gets empty.
          */
@@ -157,6 +175,7 @@ void bt_delayed_work_queue_insert_head(struct bt_delayed_work_queue *work_queue,
     }
     work->work.next = work_queue->pending;
     work_queue->pending = work;
+    work_queue_trigger_delayed_work();
     OSA_MutexUnlock(work_queue->mutex);
 }
 
@@ -189,6 +208,7 @@ void bt_delayed_work_queue_insert_tail(struct bt_delayed_work_queue *work_queue,
     {
         q->work.next = work;
     }
+    work_queue_trigger_delayed_work();
     OSA_MutexUnlock(work_queue->mutex);
 }
 
@@ -243,6 +263,7 @@ void bt_delayed_work_queue_insert_sort(struct bt_delayed_work_queue *work_queue,
             q->work.next = work;
         }
     }
+    work_queue_trigger_delayed_work();
     OSA_MutexUnlock(work_queue->mutex);
 }
 

@@ -201,14 +201,9 @@ err_t USB_EthernetIfOutPut(struct netif *netif, struct pbuf *p)
         {
             if (p->tot_len < RNDIS_FRAME_MAX_FRAMELEN)
             {
-                struct pbuf *temp;
-                uint8_t *bufferAddr = rndisInstance->outPutBuffer;
-                for (temp = p; temp != NULL; temp = temp->next)
-                {
+                u16_t uCopied = pbuf_copy_partial(p, rndisInstance->outPutBuffer, p->tot_len, 0);
+                LWIP_ASSERT("uCopied != p->tot_len", uCopied == p->tot_len);
 
-                    memcpy(bufferAddr, temp->payload, temp->len);
-                    bufferAddr += temp->len;
-                }
                  rndisInstance->pollingInSending = 1;
                  while(rndisInstance->dataSend)
                  {

@@ -978,7 +978,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  */
 #define AVRCP_INIT_HANDLE(hdl)        \
         ((hdl).profile_inst) = 0xFFU; \
-        BT_mem_set ((hdl).bd_addr, 0x00U, BT_BD_ADDR_SIZE)
+        BT_mem_set ((hdl).bd_addr, 0x00, BT_BD_ADDR_SIZE)
 
 
 /**
@@ -1004,7 +1004,7 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVRCP_RESET_HANDLE_BD_ADDR(hdl) \
-        BT_mem_set ((hdl).bd_addr, 0x00U, BT_BD_ADDR_SIZE)
+        BT_mem_set ((hdl).bd_addr, 0x00, BT_BD_ADDR_SIZE)
 
 
 /**

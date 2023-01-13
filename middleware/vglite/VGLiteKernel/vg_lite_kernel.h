@@ -40,9 +40,7 @@
 #define MAX_CONTIGUOUS_SIZE 0x02000000
 
 #define VG_LITE_INFINITE       0xFFFFFFFF
-#if !defined(VG_DRIVER_SINGLE_THREAD)
 #define VG_LITE_MAX_WAIT_TIME  0x130000
-#endif /* not defined(VG_DRIVER_SINGLE_THREAD) */
 #define CMDBUF_COUNT        2
 
 #define VG_LITE_ALIGN(number, alignment)    \

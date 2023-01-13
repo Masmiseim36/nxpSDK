@@ -10,7 +10,6 @@ var classerpcgen_1_1_struct_type =
     [ "getDescription", "classerpcgen_1_1_struct_type.html#a399c40208f97e0d72d3a4d526596b097", null ],
     [ "getMembers", "classerpcgen_1_1_struct_type.html#a741c0d4973fc315ef82adc4d13dfd9f0", null ],
     [ "getScope", "classerpcgen_1_1_struct_type.html#aefdf672a209ed84db6a7f55fd8d84d9b", null ],
-    [ "isStruct", "classerpcgen_1_1_struct_type.html#a840aa2dea297e8eb3abc15ed453fbb6b", null ],
     [ "m_members", "classerpcgen_1_1_struct_type.html#af928071576f2fe9870e007dc6d5eabe1", null ],
     [ "m_scope", "classerpcgen_1_1_struct_type.html#af4788827ac24b22d7a7499b033d30b11", null ]
 ];

@@ -17,7 +17,6 @@
 #ifndef _HAL_CAMERA_DEV_H_
 #define _HAL_CAMERA_DEV_H_
 
-#include "hal.h"
 #include "mpp_api_types.h"
 #include "fsl_video_common.h"
 #include "hal_types.h"
@@ -125,7 +124,7 @@ struct _camera_dev
     /* unique id which is assigned by camera manager during registration */
     int id;
     /* name of the device */
-    char name[MPP_DEVICE_NAME_MAX_LENGTH];
+    char name[HAL_DEVICE_NAME_MAX_LENGTH];
 
     /* operations */
     const camera_dev_operator_t *ops;

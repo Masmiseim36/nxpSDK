@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.24 - Graphical user interface for embedded applications **
+** emWin V6.28 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2022-09-02
+SUA period:               2011-08-19 - 2023-09-03
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : KEYBOARD.h
@@ -272,6 +272,7 @@ void KEYBOARD_Callback(WM_MESSAGE *pMsg);
 */
 void KEYBOARD_ExportLayout     (GUI_CALLBACK_VOID_U8_P * pfSerialize, void * pVoid, const KEYDEF_KEYBOARD * pKeyboard);
 void KEYBOARD_ExportPatternFile(GUI_CALLBACK_VOID_U8_P * pfSerialize, void * pVoid, const KEYDEF_KEYBOARD * pKeyboard);
+int  KEYBOARD_GetKeyRect       (KEYBOARD_Handle hObj, GUI_RECT * pRect, U32 cKey);
 void KEYBOARD_SetColor         (KEYBOARD_Handle hObj, unsigned Index, GUI_COLOR Color);
 void KEYBOARD_SetFont          (KEYBOARD_Handle hObj, unsigned Index, const GUI_FONT * pFont);
 int  KEYBOARD_SetLayout        (KEYBOARD_Handle hObj, const KEYDEF_KEYBOARD * pKeyboard);

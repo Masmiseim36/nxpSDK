@@ -1,12 +1,12 @@
 var a00087 =
 [
-    [ "Smart Card EMVSIM Driver", "a00359.html", "a00359" ],
-    [ "Smart Card PHY Driver", "a00360.html", "a00360" ],
-    [ "Smart Card PHY EMVSIM Driver", "a00356.html", null ],
-    [ "Smart Card PHY GPIO Driver", "a00357.html", null ],
-    [ "Smart Card PHY TDA8035 Driver", "a00355.html", null ],
-    [ "Smart Card UART Driver", "a00358.html", null ],
-    [ "smartcard_card_params_t", "a00087.html#a00671", [
+    [ "Smart Card EMVSIM Driver", "a00358.html", "a00358" ],
+    [ "Smart Card PHY Driver", "a00359.html", "a00359" ],
+    [ "Smart Card PHY EMVSIM Driver", "a00355.html", null ],
+    [ "Smart Card PHY GPIO Driver", "a00356.html", null ],
+    [ "Smart Card PHY TDA8035 Driver", "a00354.html", null ],
+    [ "Smart Card UART Driver", "a00357.html", null ],
+    [ "smartcard_card_params_t", "a00087.html#a00673", [
       [ "Fi", "a00087.html#a30310c0980e26d6980e014e096b33940", null ],
       [ "fMax", "a00087.html#aa450d45c6d04135f5460289bd7394b08", null ],
       [ "WI", "a00087.html#a3ca9c07718cbcb7f90b981edd10a8040", null ],
@@ -28,14 +28,14 @@ var a00087 =
       [ "faulty", "a00087.html#a989340f1d18a2e4507335d305d3111a0", null ],
       [ "convention", "a00087.html#a6c4f8664bdf0e0ba361acab3eb028ca8", null ]
     ] ],
-    [ "smartcard_timers_state_t", "a00087.html#a00674", [
+    [ "smartcard_timers_state_t", "a00087.html#a00676", [
       [ "adtExpired", "a00087.html#a78e3d1c7de639c8a1030ab8b4624b1bb", null ],
       [ "wwtExpired", "a00087.html#a449213036ea0934f3f7c4289054563f6", null ],
       [ "cwtExpired", "a00087.html#adbd232c8c41da9d8443637c8ce753364", null ],
       [ "bwtExpired", "a00087.html#a847fd54ca26052f91c0e1f4051f77b1e", null ],
       [ "initCharTimerExpired", "a00087.html#a8a38cb0f038a3bcfb5d6b5839084d1db", null ]
     ] ],
-    [ "smartcard_interface_config_t", "a00087.html#a00673", [
+    [ "smartcard_interface_config_t", "a00087.html#a00675", [
       [ "smartCardClock", "a00087.html#adc30dba2f979029f1942780fe4fb4ed9", null ],
       [ "clockToResetDelay", "a00087.html#a2ade5d2d20a79754f2451a58f34540df", null ],
       [ "clockModule", "a00087.html#a2088af66478915d7ff86c6ccfcc5fdd6", null ],
@@ -57,12 +57,12 @@ var a00087 =
       [ "dataPinMux", "a00087.html#a182b27845f39b982ca74188d530bd9f2", null ],
       [ "tsTimerId", "a00087.html#a8c102f662c6a6f75192d57589e1a8885", null ]
     ] ],
-    [ "smartcard_xfer_t", "a00087.html#a00675", [
+    [ "smartcard_xfer_t", "a00087.html#a00677", [
       [ "direction", "a00087.html#a517f3c6204f3b2be918c93f954fa63d2", null ],
       [ "buff", "a00087.html#a5247d9a46e7caade1b3c7d1b1495be58", null ],
       [ "size", "a00087.html#a588a37c446a56270578b148458c965f0", null ]
     ] ],
-    [ "smartcard_context_t", "a00087.html#a00672", [
+    [ "smartcard_context_t", "a00087.html#a00674", [
       [ "base", "a00087.html#a02bf88378f7d493a3fdda186438f4f9b", null ],
       [ "direction", "a00087.html#a942c03c7f239e362a3b9d199ed7004eb", null ],
       [ "xBuff", "a00087.html#a65eb6eb4b19e8ed945a98ff104b17ee9", null ],

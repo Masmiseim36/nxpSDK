@@ -29,9 +29,13 @@
 #endif
 
 #if AX_EMBEDDED
+#include "board.h"
 #include <ax_reset.h>
 #include <se_reset_config.h>
+#if !defined(NORDIC_MCU)
 #include "fsl_gpio.h"
+#include "pin_mux.h"
+#endif // !defined(NORDIC_MCU)
 #endif
 
 #ifdef CPU_MIMXRT1062DVL6A
@@ -45,8 +49,6 @@
 #include "sm_timer.h"
 
 #if AX_EMBEDDED
-#include "board.h"
-#include "pin_mux.h"
 #if defined(MBEDTLS)
 #include "ksdk_mbedtls.h"
 #endif
@@ -370,7 +372,7 @@ static U16 establishConnnection(SmCommState_t *pCommState, const char *pConnecti
 
 void app_test_status(U8 result)
 {
-#if FREEDOM
+#if defined(FREEDOM) && (FREEDOM == 1)
     LED_BLUE_OFF();
 
     if (result == 0) {

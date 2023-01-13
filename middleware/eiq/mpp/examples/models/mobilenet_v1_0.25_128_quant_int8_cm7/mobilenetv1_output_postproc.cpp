@@ -27,12 +27,11 @@ extern "C" {
 #define MOBILENET_TENSOR_TYPE MPP_TENSOR_TYPE_FLOAT32
 
 int32_t MOBILENETv1_ProcessOutput(const mpp_inference_cb_param_t *inf_out, void *mpp,
-        mpp_elem_handle_t elem, mpp_labeled_rect_t *rects)
+        mpp_elem_handle_t elem, mpp_labeled_rect_t *rects, mobilenet_post_proc_data_t* out_data)
 {
     const float threshold = (float)DETECTION_TRESHOLD / 100;
     result_t topResults[NUM_RESULTS];
     const char* label = "No label detected";
-    int inferenceTime = inf_out->inference_time_ms;
     uint32_t tensor_size;
     mpp_tensor_type_t tensor_type;
     /* Some inference type does not provide model output size and type.
@@ -62,11 +61,11 @@ int32_t MOBILENETv1_ProcessOutput(const mpp_inference_cb_param_t *inf_out, void 
     }
 
     int score = (int)(confidence * 100);
-    PRINTF("----------------------------------------" EOL);
-    PRINTF("     Inference time: %d ms" EOL, inferenceTime);
-    PRINTF("     Detected: %s (%d%%)\r\n", label, score);
-    PRINTF("----------------------------------------" EOL);
-
+    if (out_data)
+    {
+        out_data->score = score;
+        out_data->label = label;
+    }
     if ( (mpp != NULL) && (elem != 0) && (rects != NULL) )
     {
         mpp_element_params_t params;

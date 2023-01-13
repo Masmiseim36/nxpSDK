@@ -97,6 +97,14 @@ typedef struct _spinand_img_option
             uint32_t tag : 4;           //!< tag, fixed to 0x0E
         } B;
         uint32_t U;
+#if defined(BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+        struct
+        {
+            uint32_t cf9_field : 20; //!< CFG data field
+            uint32_t magic : 12;     //!< Magic, must be 0xcf9 (standing for "CFG")
+        } P;                         // Preconfig
+#endif
     } option0;
     uint32_t nand_option_addr;
     struct
@@ -112,6 +120,9 @@ enum
     kNandImgOption_MinSize = ((uint32_t) & (((spinand_img_option_t *)0)->image_info[1])) / sizeof(uint32_t),
     kNandImgOption_MaxSize = sizeof(spinand_img_option_t) / sizeof(uint32_t),
 };
+
+#define MAGIC_NUMBER_SPINAND_PRECFG \
+    (0xcf9 | (kNandImgOption_Tag << 8) & (kNandImgOption_Tag << 8))
 
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes

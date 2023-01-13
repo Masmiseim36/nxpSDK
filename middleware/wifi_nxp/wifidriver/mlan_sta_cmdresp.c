@@ -336,11 +336,11 @@ static mlan_status wlan_ret_tx_power_cfg(IN pmlan_private pmpriv,
                 power->param.power_cfg.power_level = pmpriv->tx_power_level;
                 if (wlan_le32_to_cpu(ptxp_cfg->mode) != 0U)
                 {
-                    power->param.power_cfg.is_power_auto = 0;
+                    power->param.power_cfg.is_power_auto = MFALSE;
                 }
                 else
                 {
-                    power->param.power_cfg.is_power_auto = 1;
+                    power->param.power_cfg.is_power_auto = MTRUE;
                 }
             }
             else

@@ -568,17 +568,6 @@ typedef struct _SDP_RECORD
 
 
 #ifdef SDP_DYNAMIC_DB
-/* TODO: define in BT_limits.h */
-#define DB_MAX_RECORDS     32U
-#define DB_MAX_REC_ATTR    25U
-#define DB_MAX_REC_UUID    10U
-#define DB_MAX_DYN_UUIDS   100U
-#define DB_MAX_ATTR_LEN    400U
-#define DB_SERVICE_CLASS_UUID_INDICES_MAX    100U
-
-#define DB_MAX_PROTOCOL_PARAMS 5U
-#define DB_MAX_LIST_ELEMS      5U
-
 typedef struct _DB_SERVICE_CLASS_UUID_ELEM
 {
     UINT16      uuid_len;
@@ -600,6 +589,17 @@ typedef struct
     UINT16              num_elems;
     DB_PROTOCOL_ELEM    elem[DB_MAX_LIST_ELEMS];
 } DB_PROTO_LIST_ELEM;
+
+typedef struct
+{
+    UINT8     * desc;
+    UINT16      desc_len;
+    UINT16      data_type;
+
+    UINT8       mdep_id;
+    UINT8       role;
+} DB_MDEP_ELEM;
+
 #endif /* SDP_DYNAMIC_DB */
 
 /** \} */
@@ -1056,15 +1056,21 @@ API_RESULT BT_dbase_get_service_class_uuids
 
 #ifdef SDP_DYNAMIC_DB
 /**
- *  \brief
+ *  \brief To create an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function can be used by the upper layer/application to create
+ *       SDP database record at runtime.
  *
  *  \param [in] service_type
+ *         SDP Service Type
  *
  *  \param [in] service_instance
+ *         Instance of SDP Service. Useful when there are multiple SDP records
+ *         for same profiles/services (like say for Hands-free, A2DP etc.)
  *
  *  \param [out] record_handle
+ *         Returns the Service Record Handle associated with created SDP record
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1078,11 +1084,13 @@ API_RESULT BT_dbase_create_record
            );
 
 /**
- *  \brief
+ *  \brief To delete an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function deletes an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to be deleted.
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1091,17 +1099,23 @@ API_RESULT BT_dbase_create_record
 API_RESULT BT_dbase_delete_record(UINT32 record_handle);
 
 /**
- *  \brief
+ *  \brief To add an attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds an SDP attribute to an existing SDP database
+ *       record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
  *  \param [in] attr_id
+ *         SDP attribute ID
  *
  *  \param [in] attr_len
+ *         Length of attribute
  *
  *  \param [in] attr_val
+ *         Pointer to the buffer containing attribute value
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1116,13 +1130,16 @@ API_RESULT BT_dbase_add_attribute
            );
 
 /**
- *  \brief
+ *  \brief To delete an attribute from an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function deletes an existing attribure from an SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record from where the attribute to be deleted.
  *
  *  \param [in] attr_id
+ *         Identifies the attribute to be deleted.
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1135,15 +1152,20 @@ API_RESULT BT_dbase_delete_attribute
            );
 
 /**
- *  \brief
+ *  \brief To add an ServiceClassIdList attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds an ServiceClassIdList attribute to an existing SDP database
+ *       record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
  *  \param [in] num_services
+ *         Number of UUIDs in ServiceClassIdList
  *
  *  \param [in] service_uuids
+ *         List of 16-bit UUIDs in ServiceClassIdList
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1157,15 +1179,20 @@ API_RESULT BT_dbase_add_service_class_id_list
            );
 
 /**
- *  \brief
+ *  \brief To add an ServiceClassIdList attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds an ServiceClassIdList attribute to an existing SDP database
+ *       record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
  *  \param [in] num_services
+ *         Number of UUIDs in ServiceClassIdList
  *
  *  \param [in] service_uuids
+ *         List of 16-bit and/or 128-bit UUIDs in ServiceClassIdList
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1179,38 +1206,104 @@ API_RESULT BT_dbase_add_service_class_id_list_ex
            );
 
 /**
- *  \brief
+ *  \brief To add ProtocolDescriptorList attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds ProtocolDescriptorList attribute to an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
- *  \param [in] version_number
+ *  \param [in] num_elems
+ *         Number of elements in the sequence of ProtocolDescriptorList elements
+ *
+ *  \param [in] elems
+ *         Pointer to sequence of ProtocolDescriptorList elements
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
  *                      describing the cause of failure.
  */
-API_RESULT BT_dbase_add_version_numder
+API_RESULT BT_dbase_add_proto_desc_list
            (
                UINT32 record_handle,
-               UINT16 version_number
+               UINT16 num_elems,
+               DB_PROTOCOL_ELEM * elems
            );
 
 /**
- *  \brief
+ *  \brief To add AdditionalProtocolDescriptorList attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds AdditionalProtocolDescriptorList attribute to an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
+ *
+ *  \param [in] num_elems
+ *         Number of elements in the sequence of ProtocolDescriptorList elements
+ *
+ *  \param [in] elems
+ *         Pointer to sequence of ProtocolDescriptorList elements
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_additional_proto_desc_list
+           (
+               UINT32 record_handle,
+               UINT16 num_elems,
+               DB_PROTO_LIST_ELEM * elems
+           );
+
+/**
+ *  \brief To add BrowseGroupList attibute to an SDP database record at runtime.
+ *
+ *  \par Description:
+ *       This function adds BrowseGroupList attribute to an existing SDP database record.
+ *
+ *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
+ *
+ *  \param [in] num_uuids
+ *         Number of UUIDs representing browse groups
+ *
+ *  \param [in] uuids
+ *         Pointer to sequence of UUIDs representing browse groups
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_browse_group_list
+           (
+               UINT32 record_handle,
+               UINT16 num_uuids,
+               UINT16 * uuids
+           );
+
+/**
+ *  \brief To add LanguageBaseAttributeIDList attibute to an SDP database record at runtime.
+ *
+ *  \par Description:
+ *       This function adds LanguageBaseAttributeIDList attribute to an existing SDP database record.
+ *
+ *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
  *  \param [in] attr_id
+ *         SDP attribute ID
  *
  *  \param [in] language
+ *         Identifier representing the natural language
  *
  *  \param [in] char_enc
+ *         Identifier that specifies a character encoding used for the language
  *
  *  \param [in] base_id
+ *         An attribute ID that serves as the base attribute ID for
+ *         the natural language in the service record
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1225,15 +1318,19 @@ API_RESULT BT_dbase_add_languagebase_attr_id_list
            );
 
 /**
- *  \brief
+ *  \brief To add BluetoothProfileDescriptorList attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds BluetoothProfileDescriptorList attribute to an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
  *  \param [in] profile_uuid
+ *         UUID assigned to the profile
  *
  *  \param [in] version
+ *         16-bit profile version number
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1247,83 +1344,144 @@ API_RESULT BT_dbase_add_profile_descriptor_list
            );
 
 /**
- *  \brief
+ *  \brief To add ServiceName attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds ServiceName attribute to an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
- *  \param [in] num_elems
+ *  \param [in] service_name_length
+ *         Length of Service Name
  *
- *  \param [in] elems
+ *  \param [in] service_name
+ *         Pointer to buffer containing Service Name
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
  *                      describing the cause of failure.
  */
-API_RESULT BT_dbase_add_additional_proto_desc_list
+API_RESULT BT_dbase_add_service_name
            (
                UINT32 record_handle,
-               UINT16 num_elems,
-               DB_PROTO_LIST_ELEM * elems
+               UINT16 service_name_length,
+               UINT8 *service_name
            );
 
 /**
- *  \brief
+ *  \brief To add ServiceDescription attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds ServiceDescription attribute to an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
- *  \param [in] num_elems
+ *  \param [in] service_desc_length
+ *         Length of Service Description
  *
- *  \param [in] elems
+ *  \param [in] service_desc
+ *         Pointer to buffer containing Service Description
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
  *                      describing the cause of failure.
  */
-API_RESULT BT_dbase_add_proto_desc_list
+API_RESULT BT_dbase_add_service_description
            (
                UINT32 record_handle,
-               UINT16 num_elems,
-               DB_PROTOCOL_ELEM * elems
+               UINT16 service_desc_length,
+               UINT8 *service_desc
            );
 
 /**
- *  \brief
+ *  \brief To add ProviderName attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds ProviderName attribute to an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
- *  \param [in] num_uuids
+ *  \param [in] provider_name_length
+ *         Length of Provider Name
  *
- *  \param [in] uuids
+ *  \param [in] provider_name
+ *         Pointer to buffer containing Provider Name
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
  *                      describing the cause of failure.
  */
-API_RESULT BT_dbase_add_browse_group_list
+API_RESULT BT_dbase_add_provider_name
            (
                UINT32 record_handle,
-               UINT16 num_uuids,
-               UINT16 * uuids
+               UINT16 provider_name_length,
+               UINT8 *provider_name
            );
 
 /**
- *  \brief
+ *  \brief To add VersionNumber attibute to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds VersionNumber attribute to an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
+ *
+ *  \param [in] version_number
+ *         Version Number of the profile/service
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_version_numder
+           (
+               UINT32 record_handle,
+               UINT16 version_number
+           );
+
+/**
+ *  \brief To add SupportedFeatures attibute to an SDP database record at runtime.
+ *
+ *  \par Description:
+ *       This function adds SupportedFeatures attribute to an existing SDP database record.
+ *
+ *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
+ *
+ *  \param [in] supported_features
+ *         Supported Features value - typically a bit-mask defined in profile specifications.
+ *
+ *  \return
+ *       API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ */
+API_RESULT BT_dbase_add_supported_features
+           (
+               UINT32 record_handle,
+               UINT16 supported_features
+           );
+
+/**
+ *  \brief To add an attibute of type text to an SDP database record at runtime.
+ *
+ *  \par Description:
+ *       This function adds an attribute of type text to an existing SDP database record.
+ *
+ *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
  *  \param [in] attr_id
+ *         SDP attribute ID
  *
  *  \param [in] length
+ *         Length of the attribute value
  *
  *  \param [in] text
+ *         Pointer to buffer containing attribute type text
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1338,17 +1496,22 @@ API_RESULT BT_dbase_add_attribute_type_text
            );
 
 /**
- *  \brief
+ *  \brief To add an attibute of type URL to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds an attribute of type URL to an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
  *  \param [in] attr_id
+ *         SDP attribute ID
  *
  *  \param [in] length
+ *         Length of the attribute value
  *
- *  \param [in] uri
+ *  \param [in] url
+ *         Pointer to buffer containing attribute type URL
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1363,83 +1526,22 @@ API_RESULT BT_dbase_add_attribute_type_url
            );
 
 /**
- *  \brief
+ *  \brief To add an attibute of type UINT to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds an attribute of type UINT to an existing SDP database record.
  *
  *  \param [in] record_handle
- *
- *  \param [in] service_name_length
- *
- *  \param [in] service_name
- *
- *  \return
- *       API_RESULT: API_SUCCESS on success otherwise an error code
- *                      describing the cause of failure.
- */
-API_RESULT BT_dbase_add_service_name
-           (
-               UINT32 record_handle,
-               UINT16 service_name_length,
-               UINT8 *service_name
-           );
-
-/**
- *  \brief
- *
- *  \par Description:
- *
- *  \param [in] record_handle
- *
- *  \param [in] provider_name_length
- *
- *  \param [in] provider_name
- *
- *  \return
- *       API_RESULT: API_SUCCESS on success otherwise an error code
- *                      describing the cause of failure.
- */
-API_RESULT BT_dbase_add_provider_name
-           (
-               UINT32 record_handle,
-               UINT16 provider_name_length,
-               UINT8 *provider_name
-           );
-
-/**
- *  \brief
- *
- *  \par Description:
- *
- *  \param [in] record_handle
- *
- *  \param [in] service_desc_length
- *
- *  \param [in] service_desc
- *
- *  \return
- *       API_RESULT: API_SUCCESS on success otherwise an error code
- *                      describing the cause of failure.
- */
-API_RESULT BT_dbase_add_service_description
-           (
-               UINT32 record_handle,
-               UINT16 service_desc_length,
-               UINT8 *service_desc
-           );
-
-/**
- *  \brief
- *
- *  \par Description:
- *
- *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
  *  \param [in] attr_id
+ *         SDP attribute ID
  *
  *  \param [in] length
+ *         Length of the attribute value
  *
  *  \param [in] value
+ *         Pointer to buffer containing attribute type UINT
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1454,15 +1556,19 @@ API_RESULT BT_dbase_add_attribute_type_uint
            );
 
 /**
- *  \brief
+ *  \brief To add an attibute of type boolean to an SDP database record at runtime.
  *
  *  \par Description:
+ *       This function adds an attribute of type boolean to an existing SDP database record.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
  *  \param [in] attr_id
+ *         SDP attribute ID
  *
  *  \param [in] value
+ *         Pointer to buffer containing attribute type boolean
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1476,22 +1582,30 @@ API_RESULT BT_dbase_add_attribute_type_boolean
            );
 
 /**
- *  \brief
+ *  \brief To add SupportedFeaturesList attibute to an SDP database record for HDP at runtime.
  *
  *  \par Description:
+ *       This function adds SupportedFeaturesList attribute to an existing SDP database record
+ *       for HDP.
  *
  *  \param [in] record_handle
+ *         Identifies the SDP record to which the attribute to be added
  *
- *  \param [in] supported_features
+ *  \param [in] num_mdeps
+ *         Number of MCAP Data End Points (MDEPs) in corresponding HDP database record
+ *
+ *  \param [in] mdep
+ *         Pointer to sequence of MDEPs
  *
  *  \return
  *       API_RESULT: API_SUCCESS on success otherwise an error code
  *                      describing the cause of failure.
  */
-API_RESULT BT_dbase_add_supported_features
+API_RESULT BT_dbase_add_mdep_supported_features_list
            (
                UINT32 record_handle,
-               UINT16 supported_features
+               UINT16 num_mdeps,
+               DB_MDEP_ELEM * mdep
            );
 #endif /* SDP_DYNAMIC_DB */
 

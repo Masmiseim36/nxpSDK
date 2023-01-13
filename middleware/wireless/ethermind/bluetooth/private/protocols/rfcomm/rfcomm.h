@@ -21,6 +21,10 @@
 
 /* RFCOMM Initialization and Shutdown related APIs */
 void em_rfcomm_init ( void );
+
+#ifdef BT_HAVE_SHUTDOWN
+void em_rfcomm_shutdown (void);
+#endif /* BT_HAVE_SHUTDOWN */
 void rfcomm_bt_init ( void );
 void rfcomm_bt_shutdown ( void );
 

@@ -2,7 +2,47 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.12.0.
+  The current version of Multicore SDK is 2.13.0
+  - 2.13.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.10.0
+      - eRPC generator (erpcgen) v.1.10.0
+      - Multicore Manager (MCMgr) v4.1.3
+      - RPMsg-Lite v5.0.0
+    - New features:
+      - eRPC: MUTransport adaptation to new supported SoCs.
+      - eRPC: Simplifying CI with installing dependencies using shell script, GitHub PR #267.
+      - eRPC: Using event for waiting for sock connection in TCP python server, formatting python code, C specific includes, GitHub PR #269.
+      - eRPC: Endianness agnostic update, GitHub PR #276.
+      - eRPC: Assertion added for functions which are returning status on freeing memory, GitHub PR #277.
+      - eRPC: Fixed closing arbitrator server in unit tests, GitHub PR #293.
+      - eRPC: Makefile updated to reflect the correct header names, GitHub PR #295.
+      - eRPC: Compare value length to used length() in reading data from message buffer, GitHub PR #297.
+      - eRPC: Add TCP_NODELAY option to python, GitHub PR #298.
+      - eRPC: Replace EXPECT_TRUE with EXPECT_EQ in unit tests, GitHub PR #318.
+      - eRPC: Adapt rpmsg_lite based transports to changed rpmsg_lite_wait_for_link_up() API parameters.
+      - eRPC, erpcgen: Better distuingish which file can and cannot by linked by C linker, GitHub PR #266.
+      - eRPC, erpcgen: Stop checking if pointer is NULL before sending it to the erpc_free function, GitHub PR #275.
+      - eRPC, erpcgen: Changed api to count with more interfaces, GitHub PR #304.
+      - erpcgen: Check before reading from heap the buffer boundaries, GitHub PR #287.
+      - erpcgen: Several fixes for tests and CI, GitHub PR #289.
+      - erpcgen: Refactoring erpcgen code, GitHub PR #302.
+      - erpcgen: Fixed assigning const value to enum, GitHub PR #309.
+      - erpcgen: Enable runTesttest_enumErrorCode_allDirection, serialize enums as int32 instead of uint32.
+      - MCMgr: mcmgr_mu_internal.c code adaptation to new supported SoCs.
+      - RPMsg-Lite: Improveed debug check buffers implementation - instead of checking the pointer fits into shared memory check the presence in the VirtIO ring descriptors list.
+      - RPMsg-Lite: Timeout parameter added to rpmsg_lite_wait_for_link_up API function.
+      - RPMsg-Lite: VRING_SIZE is set based on number of used buffers now (as calculated in vring_init) - updated for all platforms that are not communicating to Linux rpmsg counterpart.
+      - RPMsg-Lite: Fixed wrong RL_VRING_OVERHEAD macro comment in platform.h files.
+      - RPMsg-Lite: Misra corrections.
+  - 2.12.0_imx93
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.9.1
+      - eRPC generator (erpcgen) v.1.9.1
+      - Multicore Manager (MCMgr) v4.1.2
+      - RPMsg-Lite v4.0.1
+    - New features:
+      - RPMsg-Lite: Added porting layers for i.mx93 device.
   - 2.12.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.9.1

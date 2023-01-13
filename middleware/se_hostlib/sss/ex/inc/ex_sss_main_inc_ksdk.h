@@ -21,3 +21,7 @@
 #ifdef QN9090DK6
 #include <ex_sss_main_inc_qn9090.h>
 #endif
+
+#ifdef NORDIC_MCU
+#include <ex_sss_main_inc_nrf.h>
+#endif

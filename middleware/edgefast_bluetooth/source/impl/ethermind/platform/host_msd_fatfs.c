@@ -35,6 +35,10 @@ LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
  * Definitions
  ******************************************************************************/
 
+#if defined(configAPPLICATION_ALLOCATED_HEAP) && (configAPPLICATION_ALLOCATED_HEAP)
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t ucHeap[configTOTAL_HEAP_SIZE];
+#endif
+
 #if ((defined MSD_FATFS_THROUGHPUT_TEST_ENABLE) && (MSD_FATFS_THROUGHPUT_TEST_ENABLE))
 #include "fsl_device_registers.h"
 #define THROUGHPUT_BUFFER_SIZE (64U * 1024U) /* throughput test buffer */
@@ -900,6 +904,7 @@ static void USB_HostApplicationTask(void *param)
     }
 }
 
+#if (defined(CONFIG_BT_SNOOP) && (CONFIG_BT_SNOOP > 0U))
 #if (defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 0U))
 #if (defined USBHS_IRQHandler)
 void USBHS_IRQHandler(void)
@@ -931,6 +936,7 @@ void USB0_IRQHandler(void)
     USB_HostIp3516HsIsrFunction(g_HostMsdFatfsHandle);
     SDK_ISR_EXIT_BARRIER;
 }           
+#endif
 #endif
 
 int USB_HostMsdFatfsInit(void)

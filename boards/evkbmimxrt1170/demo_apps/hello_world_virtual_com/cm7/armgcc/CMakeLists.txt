@@ -1,0 +1,150 @@
+# CROSS COMPILER SETTING
+SET(CMAKE_SYSTEM_NAME Generic)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.10.0)
+
+# THE VERSION NUMBER
+SET (Tutorial_VERSION_MAJOR 1)
+SET (Tutorial_VERSION_MINOR 0)
+
+# ENABLE ASM
+ENABLE_LANGUAGE(ASM)
+
+SET(CMAKE_STATIC_LIBRARY_PREFIX)
+SET(CMAKE_STATIC_LIBRARY_SUFFIX)
+
+SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
+SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
+
+# CURRENT DIRECTORY
+SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
+
+SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+
+
+project(hello_world_virtual_com_cm7)
+
+set(MCUX_BUILD_TYPES debug release sdram_debug sdram_release flexspi_nor_debug flexspi_nor_release)
+
+set(MCUX_SDK_PROJECT_NAME hello_world_virtual_com_cm7.elf)
+
+if (NOT DEFINED SdkRootDirPath)
+    SET(SdkRootDirPath ${ProjDirPath}/../../../../../..)
+endif()
+
+include(${ProjDirPath}/flags.cmake)
+
+include(${ProjDirPath}/config.cmake)
+
+add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../hello_world.c"
+"${ProjDirPath}/../board.c"
+"${ProjDirPath}/../board.h"
+"${ProjDirPath}/../clock_config.c"
+"${ProjDirPath}/../clock_config.h"
+"${ProjDirPath}/../dcd.c"
+"${ProjDirPath}/../dcd.h"
+"${ProjDirPath}/../evkbmimxrt1170_connect_cm4_cm7side.jlinkscript"
+"${ProjDirPath}/../usb_device_config.h"
+)
+
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${SdkRootDirPath}/boards/evkbmimxrt1170/demo_apps/hello_world_virtual_com
+    ${ProjDirPath}/..
+)
+
+set(CMAKE_MODULE_PATH
+    ${SdkRootDirPath}/components/serial_manager
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers
+    ${SdkRootDirPath}/components/lists
+    ${SdkRootDirPath}/middleware/usb
+    ${SdkRootDirPath}/components/osa
+    ${SdkRootDirPath}/middleware
+    ${SdkRootDirPath}/devices/MIMXRT1176
+    ${SdkRootDirPath}/devices/MIMXRT1176/utilities
+    ${SdkRootDirPath}/components/uart
+    ${SdkRootDirPath}/devices/MIMXRT1176/xip
+    ${SdkRootDirPath}/boards/evkbmimxrt1170/xip
+    ${SdkRootDirPath}/devices/MIMXRT1176/drivers/cm7
+    ${SdkRootDirPath}/CMSIS/Core/Include
+)
+
+# include modules
+include(component_serial_manager_MIMXRT1176_cm7)
+
+include(driver_common_MIMXRT1176_cm7)
+
+include(component_lists_MIMXRT1176_cm7)
+
+include(component_serial_manager_usb_cdc_MIMXRT1176_cm7)
+
+include(middleware_usb_phy_MIMXRT1176_cm7)
+
+include(middleware_usb_device_controller_driver_MIMXRT1176_cm7)
+
+include(component_osa_MIMXRT1176_cm7)
+
+include(middleware_usb_device_ehci_MIMXRT1176_cm7)
+
+include(middleware_baremetal_MIMXRT1176_cm7)
+
+include(driver_clock_MIMXRT1176_cm7)
+
+include(device_MIMXRT1176_CMSIS_MIMXRT1176_cm7)
+
+include(utility_debug_console_MIMXRT1176_cm7)
+
+include(component_lpuart_adapter_MIMXRT1176_cm7)
+
+include(component_serial_manager_uart_MIMXRT1176_cm7)
+
+include(driver_lpuart_MIMXRT1176_cm7)
+
+include(device_MIMXRT1176_startup_MIMXRT1176_cm7)
+
+include(driver_iomuxc_MIMXRT1176_cm7)
+
+include(utility_assert_MIMXRT1176_cm7)
+
+include(driver_igpio_MIMXRT1176_cm7)
+
+include(driver_xip_device_MIMXRT1176_cm7)
+
+include(driver_xip_board_evkbmimxrt1170_MIMXRT1176_cm7)
+
+include(driver_pmu_1_MIMXRT1176_cm7)
+
+include(driver_dcdc_soc_MIMXRT1176_cm7)
+
+include(driver_cache_armv7_m7_MIMXRT1176_cm7)
+
+include(CMSIS_Include_core_cm_MIMXRT1176_cm7)
+
+include(driver_anatop_ai_MIMXRT1176_cm7)
+
+include(middleware_usb_device_cdc_external_MIMXRT1176_cm7)
+
+include(middleware_usb_device_stack_external_MIMXRT1176_cm7)
+
+include(middleware_usb_common_header_MIMXRT1176_cm7)
+
+include(driver_memory_MIMXRT1176_cm7)
+
+include(middleware_usb_device_common_header_MIMXRT1176_cm7)
+
+include(utilities_misc_utilities_MIMXRT1176_cm7)
+
+include(device_MIMXRT1176_system_MIMXRT1176_cm7)
+
+
+IF(NOT DEFINED TARGET_LINK_SYSTEM_LIBRARIES)  
+    SET(TARGET_LINK_SYSTEM_LIBRARIES "-lm -lc -lgcc -lnosys")  
+ENDIF()  
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${TARGET_LINK_SYSTEM_LIBRARIES})
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
+
+

@@ -260,6 +260,20 @@ extern "C"{
  */
 void em_racp_init (void);
 
+#ifdef BT_HAVE_SHUTDOWN
+/** De-initialization of EtherMind RACP Module */
+/**
+ *  \brief To do power off deinitialization of EtherMind RACP module
+ *
+ *  \par Description:
+ *       This function is the EtherMind-Sutdown handler for the RACP module
+ *       and performs power-off deinitialization.
+ *
+ *  \note This function must be called only once.
+ */
+void em_racp_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
+
 /**
  *  \brief To perform Bluetooth specific initializations for EtherMind RACP module
  *
@@ -321,6 +335,7 @@ API_RESULT BT_racp_req_handler
 #else  /* BT_RACP */
 
 #define em_racp_init()
+#define em_racp_shutdown()
 #define racp_bt_init()
 #define BT_racp_register_module(racp_module, racp_id)                    API_FAILURE
 #define BT_racp_req_handler(racp_id, data, data_length, racp_req_inf)    API_FAILURE

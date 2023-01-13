@@ -1,7 +1,7 @@
 var audio__src_8c =
 [
     [ "audiosrc_src_process", "audio__src_8c.html#aa07d4d9104141fe28711628147054dcc", null ],
-    [ "audiosrc_src_pull_handler", "audio__src_8c.html#a06370eb241121eb88dd968dcc6a41d7f", null ],
+    [ "audiosrc_src_pull_handler", "audio__src_8c.html#a751a9ce0455fd9acbbdff940b94393c9", null ],
     [ "audiosrc_change_state", "audio__src_8c.html#afa9185b2cc197609b111c501b44cc5c1", null ],
     [ "audiosrc_handle_src_event", "audio__src_8c.html#ac3cd6825e8624dd84837a4a8f65dc7e2", null ],
     [ "audiosrc_handle_src_query", "audio__src_8c.html#aca3361bb6f02877a16183987d2d468fe", null ],
@@ -21,7 +21,7 @@ var audio__src_8c =
     [ "audiosrc_init", "audio__src_8c.html#a0a93cb4915b9f75f9d06ddd28cb8d66c", null ],
     [ "audiosrc_set_bits_per_sample", "audio__src_8c.html#ae5d7931c70f559d849b8362ab0b1b245", null ],
     [ "audiosrc_set_frame_ms", "audio__src_8c.html#a6a08fb9718aae2de464067fa4f84554b", null ],
-    [ "audiosrc_read", "audio__src_8c.html#a1421a762bdeae27e7c5ddea7d92aabb2", null ],
+    [ "audiosrc_read", "audio__src_8c.html#aa42949137ade8a226fdd2c48a12a3b04", null ],
     [ "AudioSrcOpenDevice", "audio__src_8c.html#a7468e658d895932e1eea61f106df6136", null ],
     [ "AudioSrcCloseDevice", "audio__src_8c.html#acc20fb3792dd87ce3e283effdac97e32", null ],
     [ "AudioSrcStartDevice", "audio__src_8c.html#a4395f833444086b5ba6e21947ed5e265", null ],

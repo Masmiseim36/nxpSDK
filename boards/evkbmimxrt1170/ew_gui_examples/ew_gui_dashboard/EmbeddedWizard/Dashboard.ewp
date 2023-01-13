@@ -1,0 +1,135 @@
+$version 10.00
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,70,240,110>
+unit Core
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,110,240,150>
+unit Resources
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,150,240,190>
+unit Graphics
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,190,240,230>
+unit Effects
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,230,240,270>
+unit Views
+{
+  attr Directory = $Mosaic;
+}
+
+// The 'default' Language. Each project has to contain at least one language brick \
+// called 'Default'
+$rect <540,70,740,110>
+language Default;
+
+// This unit is intended to contain the application class and other GUI components.
+$rect <40,420,240,460>
+unit Application
+{
+  attr Directory = .\;
+}
+
+// Mosaic Framework
+note group Note1
+{
+  attr Bounds = <20,20,260,370>;
+}
+
+// Profile Configuration
+note group Note2
+{
+  attr Bounds = <270,20,510,130>;
+}
+
+// Languages
+note group Note3
+{
+  attr Bounds = <520,20,760,130>;
+}
+
+// Project Units
+note group Note5
+{
+  attr Bounds = <20,380,260,520>;
+}
+
+$rect <40,460,240,500>
+unit Dashboard
+{
+  attr Directory = .\;
+}
+
+$rect <40,270,240,310>
+unit WidgetSet
+{
+  attr Directory = $Mosaic\;
+}
+
+$rect <40,310,240,350>
+unit Templates
+{
+  attr Directory = $Mosaic\;
+}
+
+// The sample application 'Dashboard' shows the implementation of a car dashboard.
+// 
+// The application demonstrates the usage of vector graphics created from svg path \
+// data and how transitions between two design variations and further ui components \
+// can be achieved.
+// 
+// The application provides the following screens / operation modes:
+// - A start screen with a start engine button which can be activated to perform \
+// the transition to the dashboard.
+// - A dashboard screen handling the presentation and animation of different elements.
+// - Two variations of gauges for speedometer and energy level.
+// - An animated navigation map with track rendering.
+// 
+// You can double-click on the 'Application' or 'Dashboard' bricks to open the unit \
+// within the Composer and to analyze the implementation.
+// 
+// To start the application within the Prototyper, press 'Ctrl'+'F5'.
+// 
+// To start the transition to dashboard the start engine button has to be activated. \
+// Returning to this screen is done by touching the right upper corner at the dashboard \
+// screen. Triggering a transition between the two variants is done by touching the \
+// left upper corner at the dashboard screen.
+note legend Note
+{
+  attr Bounds = <270,140,950,520>;
+}
+
+// This is a profile member for the project. This profile controls the code generation \
+// for the target system.
+$rect <290,70,490,110>
+profile iMX_RT : NXP.iMX_RT_VGLite.RGB565
+{
+  attr ScreenSize = <1280,720>;
+  attr Optimization = High;
+  attr ApplicationClass = Application::Application;
+  attr CleanOutputDirectories = true;
+  attr OutputFileNameExtension = c;
+  attr Verbose = false;
+  attr ScreenOrientation = Rotated_90;
+  attr OutputDirectory = ..\GeneratedCode;
+
+  $rect <10,10,154,50>
+  macro Author = "Dipl. Ing. Paul Banach and Dipl. Ing. Manfred Schweyer, Copyright (C) TARA Systems GmbH";
+}

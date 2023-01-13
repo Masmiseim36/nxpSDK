@@ -74,7 +74,7 @@ __attribute__((weak)) void sco_audio_play_ringtone_pl_ext (void)
 {
 }
 
-__attribute__((weak)) void sco_audio_play_outgoing_ringtone_pl_ext (void)
+__attribute__((weak)) void sco_audio_play_inband_ringtone_pl_ext (void)
 {
 }
 
@@ -216,9 +216,9 @@ void sco_audio_play_ringtone_pl (void)
     sco_audio_play_ringtone_pl_ext();
 }
 
-void sco_audio_play_outgoing_ringtone_pl (void)
+void sco_audio_play_inband_ringtone_pl (void)
 {
-    sco_audio_play_outgoing_ringtone_pl_ext();
+    sco_audio_play_inband_ringtone_pl_ext();
 }
 
 void sco_audio_set_speaker_volume_pl(UCHAR value)

@@ -318,10 +318,7 @@ typedef enum
 typedef enum
 {
     /* core predefined */
-    FLOW_RESEND = 1, /*!< @brief Resend buffer, possibly with new caps
-                                 (not sent yet) (unused/unimplemented).
-                                 */
-    FLOW_OK = 0,     /*!< @brief Data passing was ok. */
+    FLOW_OK = 0, /*!< @brief Data passing was ok. */
 
     /* expected failures */
     FLOW_NOT_LINKED  = -1, /*!< @brief Pad is not linked. */
@@ -335,37 +332,9 @@ typedef enum
                                          error message with more details. */
     FLOW_NOT_SUPPORTED = -5, /*!< @brief This operation is not supported. */
     FLOW_BAD_PARAMETER = -6, /*!< @brief Bad parameter detected. */
-    FLOW_NO_RESOURCE   = -7, /*!< @brief No more resources. */
-    FLOW_TERMINATED    = -8, /*!< @brief Operation is in a terminated state. */
-    FLOW_NO_MEMORY     = -9  /*!< @brief no memory */
+    FLOW_TIME_OUT      = -7, /*!< @brief No more resources. */
+    FLOW_EOS           = -8  /*!< @brief Operation is in a terminated state. */
 } FlowReturn;
-
-/*!
- * PadReturn
- */
-typedef enum
-{
-    /* core predefined */
-    PAD_OK = 0, /*!< @brief Pad function returns
-                            OK. */
-
-    /* expected failures */
-    PAD_STREAM_ERR_INVALID_ARGS = -1, /*!< @brief Pad function invalid
-                                                  arguments. */
-    PAD_STREAM_ERR_NO_MEM = -2,       /*!< @brief Pad function, not
-                                                  enough memory. */
-
-    /* error cases */
-    PAD_STREAM_ERR_GENERAL = -3, /*!< @brief Some (fatal) error
-                                             occured. Element
-                                             generating this error
-                                             should post an error
-                                             message with more
-                                             details. */
-    PAD_STREAM_ERR_UNEXPECTED           = -4,
-    PAD_STREAM_ERR_DEVICE_READ_TIME_OUT = -5,
-    PAD_STREAM_ERR_EOS                  = -6
-} PadReturn;
 
 /*
  * STRUCTURES AND OTHER TYPEDEFS
@@ -396,7 +365,7 @@ typedef uint8_t (*PadActivateFunc)(struct _StreamPad *pad, uint8_t active);
 /*!
  * Pad Pull Function Handler
  */
-typedef PadReturn (*PadPullFunc)(struct _StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
+typedef FlowReturn (*PadPullFunc)(struct _StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
 
 /*!
  * Pad Chain Function Handler
@@ -468,16 +437,16 @@ typedef struct _PadSink PadSink;
  * @param pad pad object
  * @param parent parent element object
  * @param type pad type
- * @return PadReturn
+ * @return FlowReturn
  */
-PadReturn init_pad(StreamPad *pad, void *parent, PadType type);
+FlowReturn init_pad(StreamPad *pad, void *parent, PadType type);
 /**
  * @brief Pad deinitialization function
  *
  * @param pad pad object
- * @return PadReturn
+ * @return FlowReturn
  */
-PadReturn deinit_pad(StreamPad *pad);
+FlowReturn deinit_pad(StreamPad *pad);
 /**
  * @brief Push the data buffer to the peer pad
  *
@@ -543,41 +512,41 @@ uint8_t pad_activate_push(StreamPad *pad, uint8_t active);
  * @brief Create flush start event
  *
  * @param event event object
- * @return PadReturn
+ * @return FlowReturn
  */
-PadReturn event_create_flush_start(StreamEvent *event);
+FlowReturn event_create_flush_start(StreamEvent *event);
 /**
  * @brief Create flush stop event
  *
  * @param event event object
- * @return PadReturn
+ * @return FlowReturn
  */
-PadReturn event_create_flush_stop(StreamEvent *event);
+FlowReturn event_create_flush_stop(StreamEvent *event);
 /**
  * @brief Create end of stream event
  *
  * @param event event object
- * @return PadReturn
+ * @return FlowReturn
  */
-PadReturn event_create_eos(StreamEvent *event);
+FlowReturn event_create_eos(StreamEvent *event);
 /**
  * @brief Create new segment event
  *
  * @param event event object
  * @param format data format
  * @param data data object
- * @return PadReturn
+ * @return FlowReturn
  */
-PadReturn event_create_new_segment(StreamEvent *event, StreamDataFormat format, uint32_t data);
+FlowReturn event_create_new_segment(StreamEvent *event, StreamDataFormat format, uint32_t data);
 /**
  * @brief Create seek event
  *
  * @param event event object
  * @param format data format
  * @param data data object
- * @return PadReturn
+ * @return FlowReturn
  */
-PadReturn event_create_seek(StreamEvent *event, StreamDataFormat format, uint32_t data);
+FlowReturn event_create_seek(StreamEvent *event, StreamDataFormat format, uint32_t data);
 /**
  * @brief Send a query to a pad
  *
@@ -594,9 +563,9 @@ uint8_t pad_query(StreamPad *pad, StreamQuery *query);
  * @param format data format
  * @param data_type data type
  * @param data data object
- * @return PadReturn
+ * @return FlowReturn
  */
-PadReturn query_create(
+FlowReturn query_create(
     StreamQuery *query, StreamInfoType type, StreamDataFormat format, StreamDataType data_type, StreamData *data);
 
 #endif /* PAD_H */

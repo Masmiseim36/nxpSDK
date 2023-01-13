@@ -27,6 +27,9 @@
 /* Application signal notification handler */
 /* static void(*em_process_term_handler)(void); */
 
+/* Task stack overflow handler */
+static void(*em_sof_handler)(void * task_name);
+
 /* -------------------------------------------- Functions */
 
 void EM_os_init (void)
@@ -138,6 +141,38 @@ INT32 EM_thread_create
     return (INT32)retval;
 }
 
+/**
+ *  \fn EM_thread_delete
+ *
+ *  \brief To delete a task/thread
+ *
+ *  \par Description:
+ *  This function implements the OS Wrapper for the Thread Delete call.
+ *
+ *  \param [in] thread
+ *         This parameter indicates the Thread Handle.
+ *
+ *  \return INT32 : 0 on Success. -1 on Failure.
+ */
+INT32 EM_thread_delete
+      (
+          /* IN */ EM_thread_type thread
+      )
+{
+
+    osa_status_t ret;
+
+    ret = OSA_TaskDestroy(thread);
+    if (KOSA_StatusSuccess == ret)
+    {
+        return 0;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
 
 /**
  *  \fn EM_thread_attr_init
@@ -205,6 +240,39 @@ INT32 EM_thread_mutex_init
             {
                 return 0;
             }
+        }
+    }
+
+    return -1;
+}
+
+/**
+ *  \fn EM_thread_mutex_deinit
+ *
+ *  \brief To deinitialize a Mutex object
+ *
+ *  \par Description:
+ *  This function implements the OS Wrapper for the Thread Mutex DeInit Call.
+ *  It destroys or de-initializes the mutex object
+ *
+ *  \param [out] mutex
+ *         The Mutex variable to be De-Initialized
+ *
+ *  \return INT32 : 0 on Success. -1 on Failure.
+ */
+INT32 EM_thread_mutex_deinit
+      (
+          /* IN */ EM_thread_mutex_type      * mutex
+      )
+{
+    osa_status_t ret;
+
+    if (NULL != mutex)
+    {
+        ret = OSA_MutexDestroy((*mutex));
+        if (KOSA_StatusSuccess == ret)
+        {
+            return 0;
         }
     }
 
@@ -328,6 +396,40 @@ INT32 EM_thread_cond_init
             {
                 return 0;
             }
+        }
+    }
+
+    return -1;
+}
+
+/**
+ *  \fn EM_thread_cond_deinit
+ *
+ *  \brief To deinitialize a Condvar object
+ *
+ *  \par Description:
+ *  This function implements the OS Wrapper for the Thread CondVar DeInit Call.
+ *  It destroys or de-initializes the condvar object
+ *
+ *  \param [out] mutex
+ *         The Conditional variable to be De-Initialized
+ *
+ *  \return INT32 : 0 on Success. -1 on Failure.
+ */
+INT32 EM_thread_cond_deinit
+      (
+          /* IN */ EM_thread_cond_type      * cond
+      )
+{
+    osa_status_t ret;
+
+    if (NULL != cond)
+    {
+        ret = OSA_SemaphoreDestroy((*cond));
+
+        if (KOSA_StatusSuccess == ret)
+        {
+            return 0;
         }
     }
 
@@ -685,6 +787,83 @@ void EM_process_term_notify (void(*handler)(void))
     {
         return;
     }
+}
+
+/**
+ *  \fn EM_register_sof_handler
+ *
+ *  \brief To register handler Task Stack Overflow notification
+ *
+ *  \par Description:
+ *  This function registers the handler to be notified on stack overflow.
+ *
+ *  \param handler (IN)
+ *         Handler to be called for notification
+ *
+ *  \return None
+ */
+void EM_register_sof_handler (void(*handler)(void* task_name))
+{
+    /* Save the stack overflow handler */
+    em_sof_handler = handler;
+}
+
+/**
+ *  \fn EM_thread_get_stack_unused
+ *
+ *  \brief To get the stack size unused in the current stack
+ *
+ *  \par Description:
+ *  This function returns the number of unused stack bytes of the current task
+ *  for the entire duration of existence
+ *
+ *  \param
+ *
+ *  \return Unused stack size in number of bytes
+ */
+UINT32 EM_thread_get_stack_unused (void)
+{
+#if (1 == INCLUDE_uxTaskGetStackHighWaterMark)
+    UBaseType_t uxHighWaterMark;
+
+    /**
+     * Get the stack high watermark for the current task
+     */
+    uxHighWaterMark = uxTaskGetStackHighWaterMark(NULL);
+
+    /**
+     * The value returned is the high water mark in words
+     * (for example, on a 32 bit machine a return value of
+     * 1 would indicate that 4 bytes of stack were unused).
+     *
+     * Ref: https://www.freertos.org/uxTaskGetStackHighWaterMark.html
+     */
+    return (uxHighWaterMark * sizeof(int));
+#else /* (1 == INCLUDE_uxTaskGetStackHighWaterMark) */
+
+    return 0U;
+#endif /* (1 == INCLUDE_uxTaskGetStackHighWaterMark) */
+}
+
+/* -------------------------------------------- Static OS Hooks */
+void vApplicationStackOverflowHook
+     (
+         TaskHandle_t pxTask,
+         char *pcTaskName
+     )
+{
+    (void)pxTask;
+
+    /* Disable interuupts to avoid any context switch */
+    taskDISABLE_INTERRUPTS();
+
+    /* Invoke handler if not NULL */
+    if (NULL != em_sof_handler)
+    {
+        em_sof_handler(pcTaskName);
+    }
+
+    for(;;) {}
 }
 
 #endif /* EM_ENABLE_PAL_OS */

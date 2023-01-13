@@ -1,6 +1,6 @@
 var a00099 =
 [
-    [ "xecc_config_t", "a00099.html#a00709", [
+    [ "xecc_config_t", "a00099.html#a00711", [
       [ "enableXECC", "a00099.html#af5cdb3d7afa8ddd6134f94329cd07407", null ],
       [ "enableWriteECC", "a00099.html#a730b714840994ca6bff7647585b75384", null ],
       [ "enableReadECC", "a00099.html#af6798bd6d4bbf37a0e9b82de53a4ef9c", null ],
@@ -14,29 +14,29 @@ var a00099 =
       [ "Region3BaseAddress", "a00099.html#aacec9aa3efca391b25bcb60dbebc5d9a", null ],
       [ "Region3EndAddress", "a00099.html#a7955903ef689e62300fc01157492d466", null ]
     ] ],
-    [ "xecc_single_error_info_t", "a00099.html#a00711", [
+    [ "xecc_single_error_info_t", "a00099.html#a00713", [
       [ "singleErrorAddress", "a00099.html#a7b41aa06671c0bca43a1db5980276ea6", null ],
       [ "singleErrorData", "a00099.html#a02b8cb0f493cb7d96921ea2085fdf2b4", null ],
       [ "singleErrorEccCode", "a00099.html#ac442e263d4069ee1f8aeeb1c33641c24", null ],
       [ "singleErrorBitPos", "a00099.html#a0079773797fc7c63daf5e43634d81ba6", null ],
       [ "singleErrorBitField", "a00099.html#a4330d9b53375d5174bade0ce32ab0a69", null ]
     ] ],
-    [ "xecc_multi_error_info_t", "a00099.html#a00710", [
+    [ "xecc_multi_error_info_t", "a00099.html#a00712", [
       [ "multiErrorAddress", "a00099.html#a83d0d9d720b7dbb036fe7fc5435f882c", null ],
       [ "multiErrorData", "a00099.html#a6e45cb1653531f4c19b09d5087f829a1", null ],
       [ "multiErrorEccCode", "a00099.html#a72c34a2de807dcf83cb9dde85fb189d8", null ],
       [ "multiErrorBitField", "a00099.html#a49e6022e276f12b457c13dbeb39dfc43", null ]
     ] ],
     [ "FSL_XECC_DRIVER_VERSION", "a00099.html#gad325431773b07bfed2a6b1c530529e9c", [
-      [ "kXECC_SingleErrorInterruptEnable", "a00099.html#gga39b4e25c4e8f5fed29720be17a532fa8a53650da26c6dc6b6837c57d45625502f", null ],
-      [ "kXECC_MultiErrorInterruptEnable", "a00099.html#gga39b4e25c4e8f5fed29720be17a532fa8a4f80bb192d6ccff4d622e708ab045e8a", null ],
-      [ "kXECC_AllInterruptsEnable", "a00099.html#gga39b4e25c4e8f5fed29720be17a532fa8a65218ab45b840660134ca314debffd8a", null ],
-      [ "kXECC_SingleErrorInterruptStatusEnable", "a00099.html#gga4efaf4e07364d6302f598569aa7e55dca46b0747d6fc3d389c94e3d32c24ba1d7", null ],
-      [ "kXECC_MultiErrorInterruptStatusEnable", "a00099.html#gga4efaf4e07364d6302f598569aa7e55dca8af35a7daddd2d506a855f448f336ce9", null ],
-      [ "kXECC_AllInterruptsStatusEnable", "a00099.html#gga4efaf4e07364d6302f598569aa7e55dca98c732cf181522f6c578b31df6ab8445", null ],
-      [ "kXECC_SingleErrorInterruptFlag", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9ab611d76edf0b80e66e477265b193fd8a", null ],
-      [ "kXECC_MultiErrorInterruptFlag", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a4e1a8eb52be75ce67b346467020d2b29", null ],
-      [ "kXECC_AllInterruptsFlag", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a5cacabdbef71596e4b2608092bf52d45", null ]
+      [ "kXECC_SingleErrorInterruptEnable", "a00099.html#gga4efaf4e07364d6302f598569aa7e55dca53650da26c6dc6b6837c57d45625502f", null ],
+      [ "kXECC_MultiErrorInterruptEnable", "a00099.html#gga4efaf4e07364d6302f598569aa7e55dca4f80bb192d6ccff4d622e708ab045e8a", null ],
+      [ "kXECC_AllInterruptsEnable", "a00099.html#gga4efaf4e07364d6302f598569aa7e55dca65218ab45b840660134ca314debffd8a", null ],
+      [ "kXECC_SingleErrorInterruptStatusEnable", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a46b0747d6fc3d389c94e3d32c24ba1d7", null ],
+      [ "kXECC_MultiErrorInterruptStatusEnable", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a8af35a7daddd2d506a855f448f336ce9", null ],
+      [ "kXECC_AllInterruptsStatusEnable", "a00099.html#gga34df7cc7f69a8ec535eec8a524dcbaf9a98c732cf181522f6c578b31df6ab8445", null ],
+      [ "kXECC_SingleErrorInterruptFlag", "a00099.html#gga81929fb3d21206b62f55bcb744f71d5dab611d76edf0b80e66e477265b193fd8a", null ],
+      [ "kXECC_MultiErrorInterruptFlag", "a00099.html#gga81929fb3d21206b62f55bcb744f71d5da4e1a8eb52be75ce67b346467020d2b29", null ],
+      [ "kXECC_AllInterruptsFlag", "a00099.html#gga81929fb3d21206b62f55bcb744f71d5da5cacabdbef71596e4b2608092bf52d45", null ]
     ] ],
     [ "XECC_Init", "a00099.html#ga97311aae29bfc510fbb42c624df1031c", null ],
     [ "XECC_Deinit", "a00099.html#ga242c4cc1dcde4ba11079b7d035d043b4", null ],

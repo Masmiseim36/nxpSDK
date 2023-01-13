@@ -71,6 +71,8 @@ SDK_ALIGN(uint8_t outbuf_vo[VO_MAX_BUF][DATA_BUFFER_SIZE], BOARD_DATA_BUFFER_ALI
 SDK_ALIGN(uint8_t outbuf_be[BE_MAX_BUF][DATA_BUFFER_SIZE], BOARD_DATA_BUFFER_ALIGN_SIZE);
 #endif
 
+os_thread_t wifi_scan_thread;
+
 static t_u8 wifi_init_done;
 static t_u8 wifi_core_init_done;
 
@@ -81,6 +83,7 @@ bool sta_ampdu_rx_enable = true;
 int retry_attempts;
 wm_wifi_t wm_wifi;
 static bool xfer_pending;
+bool scan_thread_in_process = false;
 
 typedef enum __mlan_status
 {
@@ -92,6 +95,7 @@ typedef enum __mlan_status
 } __mlan_status;
 
 static os_thread_stack_define(wifi_core_stack, WIFI_CORE_STACK_SIZE * sizeof(portSTACK_TYPE));
+static os_thread_stack_define(wifi_scan_stack, 1024);
 static os_thread_stack_define(wifi_drv_stack, 1024);
 static os_queue_pool_define(g_io_events_queue_data, (int)(sizeof(struct bus_message) * MAX_EVENTS));
 #ifdef CONFIG_WMM
@@ -1361,6 +1365,60 @@ static void wifi_core_input(void *argv)
     } /* for ;; */
 }
 
+void wifi_user_scan_config_cleanup(void)
+{
+    if (wm_wifi.g_user_scan_cfg != NULL)
+    {
+        os_mem_free((void *)wm_wifi.g_user_scan_cfg);
+        wm_wifi.g_user_scan_cfg = NULL;
+    }
+}
+
+void wifi_scan_stop(void)
+{
+    wm_wifi.scan_stop = true;
+    while (scan_thread_in_process)
+    {
+        /* wait for scan task done */
+        os_thread_sleep(os_msec_to_ticks(1000));
+    }
+}
+
+/**
+ * This function should be called when scan command is ready
+ *
+ */
+static void wifi_scan_input(void *argv)
+{
+    mlan_status rv;
+
+    for (;;)
+    {
+        /* Wait till we receive scan command */
+        (void)os_event_notify_get(OS_WAIT_FOREVER);
+
+        if (wm_wifi.scan_stop == true)
+        {
+            wm_wifi.scan_stop = false;
+            wifi_user_scan_config_cleanup();
+            break;
+        }
+
+        scan_thread_in_process = true;
+        if (wm_wifi.g_user_scan_cfg != NULL)
+        {
+            rv = wlan_scan_networks((mlan_private *)mlan_adap->priv[0], NULL, wm_wifi.g_user_scan_cfg);
+            if (rv != MLAN_STATUS_SUCCESS)
+            {
+                wifi_user_scan_config_cleanup();
+                (void)wifi_event_completion(WIFI_EVENT_SCAN_RESULT, WIFI_EVENT_REASON_FAILURE, NULL);
+            }
+        }
+        scan_thread_in_process = false;
+    } /* for ;; */
+    os_thread_self_complete(NULL);
+}
+
 static void wifi_core_deinit(void);
 static int wifi_low_level_input(const uint8_t interface, const uint8_t *buffer, const uint16_t len);
 
@@ -1432,6 +1490,17 @@ static int wifi_core_init(void)
         wifi_e("Register wifi low level input failed");
         goto fail;
     }
+
+    ret =
+        os_thread_create(&wm_wifi.wm_wifi_scan_thread, "wifi_scan", wifi_scan_input, NULL, &wifi_scan_stack, OS_PRIO_3);
+
+    if (ret != WM_SUCCESS)
+    {
+        wifi_e("Create wifi scan thread failed");
+        goto fail;
+    }
+
+    wifi_scan_thread = wm_wifi.wm_wifi_scan_thread;
 
     ret = os_thread_create(&wm_wifi.wm_wifi_core_thread, "stack_dispatcher", wifi_core_input, NULL, &wifi_core_stack,
                            OS_PRIO_1);
@@ -1527,6 +1596,12 @@ static void wifi_core_deinit(void)
         wm_wifi.wm_wifi_core_thread = NULL;
         wifi_core_thread            = NULL;
     }
+    if (wm_wifi.wm_wifi_scan_thread != NULL)
+    {
+        (void)os_thread_delete(&wm_wifi.wm_wifi_scan_thread);
+        wm_wifi.wm_wifi_scan_thread = NULL;
+        wifi_scan_thread            = NULL;
+    }
 #ifdef CONFIG_WMM
     if (wm_wifi.wm_wifi_driver_tx)
     {
@@ -1550,6 +1625,8 @@ int wifi_init(const uint8_t *fw_start_addr, const size_t size)
     {
         return WM_SUCCESS;
     }
+
+    (void)memset(&wm_wifi, 0, sizeof(wm_wifi_t));
 
 #if defined(RW610)
     int ret = (int)imu_wifi_init(WLAN_TYPE_NORMAL, fw_start_addr, size);
@@ -1648,12 +1725,13 @@ void wifi_deinit(void)
 {
     wifi_init_done = 0;
 
+    wifi_core_deinit();
+
 #if defined(RW610)
     imu_wifi_deinit();
 #else
     sd_wifi_deinit();
 #endif
-    wifi_core_deinit();
 }
 
 void wifi_set_packet_retry_count(const int count)

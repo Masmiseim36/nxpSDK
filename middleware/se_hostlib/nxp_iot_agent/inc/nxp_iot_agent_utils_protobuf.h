@@ -42,7 +42,7 @@ typedef struct iot_agent_response_buffer_t {
 } iot_agent_response_buffer_t;
 
 
-#if ENABLE_IOT_AGENT_PROTOBUF_DEBUG
+#if defined(ENABLE_IOT_AGENT_PROTOBUF_DEBUG) && (ENABLE_IOT_AGENT_PROTOBUF_DEBUG == 1)
 void print_binary_data(const char* info, const uint8_t* buf, size_t len);
 #endif
 

@@ -33,6 +33,9 @@
 #include "third_party/cmsis/CMSIS/DSP/Include/dsp/none.h"
 #include "third_party/cmsis/CMSIS/DSP/Include/dsp/utils.h"
 
+#include "third_party/cmsis/CMSIS/DSP/Include/dsp/basic_math_functions.h"
+
+
 #ifdef   __cplusplus
 extern "C"
 {
@@ -309,18 +312,6 @@ arm_status arm_sqrt_q15(
   q15_t in,
   q15_t * pOut);
 
-  /**
-   * @brief  Vector Floating-point square root function.
-   * @param[in]  pIn   input vector.
-   * @param[out] pOut  vector of square roots of input elements.
-   * @param[in]  len   length of input vector.
-   * @return The function returns ARM_MATH_SUCCESS if input value is positive value or ARM_MATH_ARGUMENT_ERROR if
-   * <code>in</code> is negative value and returns zero output for negative values.
-   */
-  void arm_vsqrt_f32(
-  float32_t * pIn,
-  float32_t * pOut,
-  uint16_t len);
 
 
   /**
@@ -361,6 +352,35 @@ arm_status arm_divide_q31(q31_t numerator,
   q31_t *quotient,
   int16_t *shift);
 
+
+
+  /**
+     @brief  Arc tangent in radian of y/x using sign of x and y to determine right quadrant.
+     @param[in]   y  y coordinate
+     @param[in]   x  x coordinate
+     @param[out]  result  Result
+     @return  error status.
+   */
+  arm_status arm_atan2_f32(float32_t y,float32_t x,float32_t *result);
+
+
+  /**
+     @brief  Arc tangent in radian of y/x using sign of x and y to determine right quadrant.
+     @param[in]   y  y coordinate
+     @param[in]   x  x coordinate
+     @param[out]  result  Result in Q2.29
+     @return  error status.
+   */
+  arm_status arm_atan2_q31(q31_t y,q31_t x,q31_t *result);
+
+  /**
+     @brief  Arc tangent in radian of y/x using sign of x and y to determine right quadrant.
+     @param[in]   y  y coordinate
+     @param[in]   x  x coordinate
+     @param[out]  result  Result in Q2.13
+     @return  error status.
+   */
+  arm_status arm_atan2_q15(q15_t y,q15_t x,q15_t *result);
 
 #ifdef   __cplusplus
 }

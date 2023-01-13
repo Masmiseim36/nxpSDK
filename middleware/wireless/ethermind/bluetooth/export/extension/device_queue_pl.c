@@ -14,7 +14,10 @@
 /* -------------------------------------- Header File Inclusion */
 #include "device_queue_pl.h"
 #include "smp_pl.h"
+
+#ifdef CLASSIC_SEC_MANAGER
 #include "sm_pl.h"
+#endif /* CLASSIC_SEC_MANAGER */
 
 /* -------------------------------------- External Global Variables */
 
@@ -48,11 +51,12 @@ void device_queue_free_pl (DEVICE_HANDLE    * hndl)
 
 void device_queue_full_pl(DEVICE_LINK_TYPE    link_type)
 {
-
+#if (defined BT_DUAL_MODE || defined CLASSIC_SEC_MANAGER)
+    UINT32 sm_index;
+#endif
     UCHAR  smp_index;
 
 #ifdef BT_DUAL_MODE
-    UINT32 sm_index;
     API_RESULT retval;
 
     /*

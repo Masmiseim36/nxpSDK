@@ -119,7 +119,7 @@
  *  \sa
  *  AVCTP_EVENT_NTF_CB
  */
-typedef struct avctp_handle
+typedef struct _AVCTP_HANDLE
 {
     /** The Profile Entity Index */
     UCHAR profile_index;
@@ -396,7 +396,7 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
         ((hdl).profile_index) = 0xFFU;                   \
         ((hdl).ctrl_ch_index) = AVCTP_MAX_SIG_CHANNELS;  \
         ((hdl).brow_ch_index) = AVCTP_MAX_SIG_CHANNELS;  \
-        BT_mem_set ((hdl).bd_addr, 0x00U, BT_BD_ADDR_SIZE)
+        BT_mem_set ((hdl).bd_addr, 0x00, BT_BD_ADDR_SIZE)
 
 /**
  *  This utility macro sets BD_ADDR in an AVCTP Handle.
@@ -421,7 +421,7 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *  \hideinitializer
  */
 #define AVCTP_RESET_HANDLE_BD_ADDR(hdl) \
-        BT_mem_set ((hdl).bd_addr, 0x00U, BT_BD_ADDR_SIZE)
+        BT_mem_set ((hdl).bd_addr, 0x00, BT_BD_ADDR_SIZE)
 
 /**
  *  This utility macro gets BD_ADDR from an AVCTP Handle.
@@ -481,7 +481,7 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  */
 #define AVCTP_COMPARE_HANDLE(h1, h2) \
         (((h1)->profile_index == (h2).profile_index) && \
-        (0 == BT_mem_cmp((h1)->bd_addr, (h2).bd_addr, BT_BD_ADDR_SIZE)))
+        (0U == BT_mem_cmp((h1)->bd_addr, (h2).bd_addr, BT_BD_ADDR_SIZE)))
 
 /**
  *  This utility macro is used to copy the AVCTP handle

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.2</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -139,9 +139,9 @@ PIT tick example</h2>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00598"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00598">pit_config_t</a></td></tr>
-<tr class="memdesc:a00598"><td class="mdescLeft">&#160;</td><td class="mdescRight">PIT configuration structure.  <a href="a00069.html#a00598">More...</a><br/></td></tr>
-<tr class="separator:a00598"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00600"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#a00600">pit_config_t</a></td></tr>
+<tr class="memdesc:a00600"><td class="mdescLeft">&#160;</td><td class="mdescRight">PIT configuration structure.  <a href="a00069.html#a00600">More...</a><br/></td></tr>
+<tr class="separator:a00600"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -175,19 +175,19 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
 <tr class="memitem:ga55a6c6a9b7ee34302c636f9496d0ea2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga55a6c6a9b7ee34302c636f9496d0ea2f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga55a6c6a9b7ee34302c636f9496d0ea2f">FSL_PIT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga55a6c6a9b7ee34302c636f9496d0ea2f">FSL_PIT_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 0, 4))</td></tr>
 <tr class="memdesc:ga55a6c6a9b7ee34302c636f9496d0ea2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">PIT Driver Version 2.0.4. <br/></td></tr>
 <tr class="separator:ga55a6c6a9b7ee34302c636f9496d0ea2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Initialization and deinitialization</h2></td></tr>
-<tr class="memitem:ga51eb6396276b3f1ec564bd1879c97c06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga51eb6396276b3f1ec564bd1879c97c06">PIT_Init</a> (PIT_Type *base, const <a class="el" href="a00069.html#a00598">pit_config_t</a> *config)</td></tr>
+<tr class="memitem:ga51eb6396276b3f1ec564bd1879c97c06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga51eb6396276b3f1ec564bd1879c97c06">PIT_Init</a> (PIT_Type *base, const <a class="el" href="a00069.html#a00600">pit_config_t</a> *config)</td></tr>
 <tr class="memdesc:ga51eb6396276b3f1ec564bd1879c97c06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ungates the PIT clock, enables the PIT module, and configures the peripheral for basic operations.  <a href="#ga51eb6396276b3f1ec564bd1879c97c06">More...</a><br/></td></tr>
 <tr class="separator:ga51eb6396276b3f1ec564bd1879c97c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1f9b6d5e9e463844f85e31102458c1fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#ga1f9b6d5e9e463844f85e31102458c1fc">PIT_Deinit</a> (PIT_Type *base)</td></tr>
 <tr class="memdesc:ga1f9b6d5e9e463844f85e31102458c1fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gates the PIT clock and disables the PIT module.  <a href="#ga1f9b6d5e9e463844f85e31102458c1fc">More...</a><br/></td></tr>
 <tr class="separator:ga1f9b6d5e9e463844f85e31102458c1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gae7dc830a1a71ec7597ba78ccc76abfb6">PIT_GetDefaultConfig</a> (<a class="el" href="a00069.html#a00598">pit_config_t</a> *config)</td></tr>
+<tr class="memitem:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gae7dc830a1a71ec7597ba78ccc76abfb6">PIT_GetDefaultConfig</a> (<a class="el" href="a00069.html#a00600">pit_config_t</a> *config)</td></tr>
 <tr class="memdesc:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills in the PIT configuration structure with the default settings.  <a href="#gae7dc830a1a71ec7597ba78ccc76abfb6">More...</a><br/></td></tr>
 <tr class="separator:gae7dc830a1a71ec7597ba78ccc76abfb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabe6831cfb502ca058f15fcf065cd13de"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00069.html#gabe6831cfb502ca058f15fcf065cd13de">PIT_SetTimerChainMode</a> (PIT_Type *base, <a class="el" href="a00069.html#ga7628036278f539e87bd3f76795917737">pit_chnl_t</a> channel, bool enable)</td></tr>
@@ -234,7 +234,7 @@ Timer Start and Stop</h2></td></tr>
 <tr class="separator:ga32f1b8ca9cf0fc82ef192890e97899b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00598" id="a00598"></a>
+<a name="a00600" id="a00600"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -331,7 +331,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00069.html#a00598">pit_config_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00069.html#a00600">pit_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em>&#160;</td>
         </tr>
         <tr>
@@ -384,7 +384,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a000
         <tr>
           <td class="memname">static void PIT_GetDefaultConfig </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="a00069.html#a00598">pit_config_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00069.html#a00600">pit_config_t</a> *&#160;</td>
           <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>

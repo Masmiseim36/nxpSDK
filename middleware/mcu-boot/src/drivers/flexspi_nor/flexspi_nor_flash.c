@@ -2176,7 +2176,7 @@ status_t flexspi_nor_generate_config_block_hyperflash(uint32_t instance, flexspi
     {
         config->memConfig.columnAddressWidth = 3;
         config->memConfig.sflashPadType = kSerialFlash_8Pads;
-        config->memConfig.controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_DdrModeEnable) |
+        config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_DdrModeEnable) |
                                                  FLEXSPI_BITMASK(kFlexSpiMiscOffset_WordAddressableEnable) |
                                                  FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
         config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_ExternalInputFromDqsPad;
@@ -2481,13 +2481,13 @@ status_t flexspi_nor_generate_config_block_mxic_octalflash(uint32_t instance,
             }
 
             config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_LoopbackInternally;
-            config->memConfig.controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
+            config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
             xfer.rxSize = 3;
         }
         else if (query_pads == FLEXSPI_8PAD)
         {
             config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_ExternalInputFromDqsPad;
-            config->memConfig.controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
+            config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
 
             if (option->option0.B.device_type == kSerialNorCfgOption_DeviceType_MacronixOctalDDR)
             {
@@ -2550,20 +2550,31 @@ status_t flexspi_nor_generate_config_block_mxic_octalflash(uint32_t instance,
         }
 
         // Get Flash Size
+        uint32_t flashSize = 0;
         if (query_pads == FLEXSPI_1PAD)
         {
-            config->memConfig.sflashA1Size = ((64UL * 1024UL) << (mfg_id_buffer[2] - 0x30));
+            flashSize = ((64UL * 1024UL) << (mfg_id_buffer[2] - 0x30));
         }
         else
         {
-            config->memConfig.sflashA1Size = ((64UL * 1024UL) << (mfg_id_buffer[5] - 0x30));
+            flashSize = ((64UL * 1024UL) << (mfg_id_buffer[5] - 0x30));
         }
+
+        if (config->memConfig.sflashA1Size)
+        {
+            config->memConfig.sflashA1Size = flashSize;
+        }
+        if (config->memConfig.sflashB1Size)
+        {
+            config->memConfig.sflashB1Size = flashSize;
+        }
+
         config->sectorSize = 4UL * 1024; // 4KB sector size
         config->pageSize = 256U;
         config->blockSize = 64UL * 1024; // 64KB block size
 
         config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_ExternalInputFromDqsPad;
-        config->memConfig.controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
+        config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
 
         bool enableDTR = !is_sdr_mode;
 
@@ -2779,12 +2790,12 @@ status_t flexspi_nor_generate_config_block_micron_octalflash(uint32_t instance,
             }
 
             config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_LoopbackInternally;
-            config->memConfig.controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
+            config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
         }
         else
         {
             config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_ExternalInputFromDqsPad;
-            config->memConfig.controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_DdrModeEnable) |
+            config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_DdrModeEnable) |
                                                      FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
         }
         config->memConfig.sflashPadType = kSerialFlash_8Pads;
@@ -2825,7 +2836,7 @@ status_t flexspi_nor_generate_config_block_micron_octalflash(uint32_t instance,
         if (!is_sdr_mode)
         {
             // Update sample clock source and misc option
-            config->memConfig.controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_DdrModeEnable) |
+            config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_DdrModeEnable) |
                                                      FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
             config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_ExternalInputFromDqsPad;
         }
@@ -3031,7 +3042,7 @@ status_t flexspi_nor_generate_config_block_adesto_octalflash(uint32_t instance,
         uint32_t query_pads = option->option0.B.query_pads;
         uint32_t cmd_pads = option->option0.B.cmd_pads;
 
-        config->memConfig.controllerMiscOption = FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
+        config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_SafeConfigFreqEnable);
         if (query_pads == FLEXSPI_1PAD)
         {
             flash_run_context_t run_ctx;

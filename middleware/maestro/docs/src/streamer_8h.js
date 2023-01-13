@@ -22,7 +22,7 @@ var streamer_8h =
     [ "DBG_NETBUFSRC", "streamer_8h.html#a7296c7367b1065000930a2793936a04f", null ],
     [ "DBG_MEM_SINK", "streamer_8h.html#ac0b13c06eaf6e2d5037af216adecd9ba", null ],
     [ "DBG_VIT_SINK", "streamer_8h.html#a331de0883ff5171e1ef0e6b9e6b9f61b", null ],
-    [ "DBG_EAP", "streamer_8h.html#aefe6bd83dbe119de5d1e46ef84975a81", null ],
+    [ "DBG_AUDIO_PROC", "streamer_8h.html#aa0f3015711b2a230dc3bf46abf201fc2", null ],
     [ "DBG_CCID", "streamer_8h.html#a9b2e3a5eb90502e609eea2a58b536979", null ],
     [ "DBG_THREAD", "streamer_8h.html#a619be1c2c503fda9baaa35aaaf75999b", null ],
     [ "NUM_SINKS", "streamer_8h.html#a2f2baa749ba96db330b35fe76daa534d", null ],

@@ -35,8 +35,6 @@
 /*******************************************************************************
  * Code
  ******************************************************************************/
-#if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0))
-
 
 static void shell_print_response(shell_handle_t shell, const uint8_t *data, size_t len)
 {
@@ -48,67 +46,12 @@ static void shell_print_response(shell_handle_t shell, const uint8_t *data, size
 	shell_dump(shell, "\r\n");
 }
 
-static shell_status_t hci_cmd_interface(shell_handle_t shell, int32_t argc, char **argv)
-{
-    int err;
-    struct net_buf *buf = NULL;
-    struct net_buf *rsp = NULL;
-    struct bt_hci_command command_buffer;
-
-
-    if (argc < 3)
-    {
-    	shell_print(shell, "the parameter count is wrong\r\n");
-        shell_print(shell, "Usage: le_test.set_tx_power tx_power[1]\n");
-        return kStatus_SHELL_Error;
-    }
-
-    command_buffer.ogf = strtol(argv[1],NULL,16);
-    command_buffer.ocf = strtol(argv[2],NULL,16);
-
-    command_buffer.opcode = ( command_buffer.ocf | (command_buffer.ogf << 10 ));
-    command_buffer.param_len = argc - 3 ;
-
-    uint8_t *bt_hci_cmd_params = NULL;
-
-    buf = bt_hci_cmd_create(command_buffer.opcode, command_buffer.param_len);
-    if (buf != NULL)
-    {
-    	bt_hci_cmd_params = net_buf_add(buf, command_buffer.param_len);
-
-        for(int i= 0 ; i < command_buffer.param_len ; i++)
-        {
-        	bt_hci_cmd_params[i] = strtol(argv[i+3],NULL, 16);
-        }
-
-    	err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_TX_POWER, buf, &rsp);
-    }
-    else
-    {
-    	err = -ENOBUFS;
-    	shell_print(shell, "No buffer space available\r\n");
-    }
-
-    if (err)
-    {
-        shell_print(shell, "HCI command failed (err %d)\n", err);
-        net_buf_unref(rsp);
-        return kStatus_SHELL_Error;
-    }
-    else
-    {
-    	shell_print_response(shell,rsp->data,rsp->len);
-    	net_buf_unref(rsp);
-    	return kStatus_SHELL_Success;
-    }
-}
-
-
+#if (defined(CONFIG_BT_BREDR) && (CONFIG_BT_BREDR > 0))
 
 static shell_status_t bt_enter_test_mode(shell_handle_t shell, int32_t argc, char **argv)
 {
     int err;
-    struct net_buf *buf = NULL, *rsp=NULL;
+    struct net_buf *rsp=NULL;
 
     shell_print(shell, "Enable device under test mode \r\n");
 
@@ -126,53 +69,6 @@ static shell_status_t bt_enter_test_mode(shell_handle_t shell, int32_t argc, cha
         return kStatus_SHELL_Success;
     }
 }
-
-
-static shell_status_t le_set_tx_power(shell_handle_t shell, int32_t argc, char **argv)
-{
-    int err;
-    struct net_buf *buf = NULL, *rsp=NULL;
-
-    if (argc < 1)
-    {
-    	shell_print(shell, "the parameter count is wrong\r\n");
-        shell_print(shell, "Usage: le_test.set_tx_power tx_power[1]\n");
-        return kStatus_SHELL_Error;
-    }
-
-    struct bt_hci_le_config *cp;
-    buf = bt_hci_cmd_create(BT_HCI_OP_LE_SET_TX_POWER, sizeof(*cp));
-    if (buf != NULL)
-    {
-    	cp = net_buf_add(buf, sizeof(*cp));
-
-    	cp->tx_power = strtol(argv[1],NULL,16);
-
-    	shell_print(shell, "tx_power= %x\n", cp->tx_power);
-
-    	err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_TX_POWER, buf, &rsp);
-    }
-    else
-    {
-    	err = -ENOBUFS;
-    	shell_print(shell, "No buffer space available\r\n");
-    }
-
-    if (err)
-    {
-        shell_print(shell, "LE Set TX Power command failed (err %d)\n", err);
-        net_buf_unref(rsp);
-        return kStatus_SHELL_Error;
-    }
-    else
-    {
-        shell_print_response(shell,rsp->data,rsp->len);
-        net_buf_unref(rsp);
-        return kStatus_SHELL_Success;
-    }
-}
-
-
 
 static shell_status_t bt_tx_test(shell_handle_t shell, int32_t argc, char **argv)
 {
@@ -386,7 +282,106 @@ static shell_status_t bt_reset(shell_handle_t shell, int32_t argc, char **argv)
     }
 }
 
-#endif
+#endif /* CONFIG_BT_BREDR */
+
+static shell_status_t hci_cmd_interface(shell_handle_t shell, int32_t argc, char **argv)
+{
+    int err;
+    struct net_buf *buf = NULL;
+    struct net_buf *rsp = NULL;
+    struct bt_hci_command command_buffer;
+
+
+    if (argc < 3)
+    {
+    	shell_print(shell, "the parameter count is wrong\r\n");
+        shell_print(shell, "Usage: le_test.set_tx_power tx_power[1]\n");
+        return kStatus_SHELL_Error;
+    }
+
+    command_buffer.ogf = strtol(argv[1],NULL,16);
+    command_buffer.ocf = strtol(argv[2],NULL,16);
+
+    command_buffer.opcode = ( command_buffer.ocf | (command_buffer.ogf << 10 ));
+    command_buffer.param_len = argc - 3 ;
+
+    uint8_t *bt_hci_cmd_params = NULL;
+
+    buf = bt_hci_cmd_create(command_buffer.opcode, command_buffer.param_len);
+    if (buf != NULL)
+    {
+    	bt_hci_cmd_params = net_buf_add(buf, command_buffer.param_len);
+
+        for(int i= 0 ; i < command_buffer.param_len ; i++)
+        {
+        	bt_hci_cmd_params[i] = strtol(argv[i+3],NULL, 16);
+        }
+
+    	err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_TX_POWER, buf, &rsp);
+    }
+    else
+    {
+    	err = -ENOBUFS;
+    	shell_print(shell, "No buffer space available\r\n");
+    }
+
+    if (err)
+    {
+        shell_print(shell, "HCI command failed (err %d)\n", err);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Error;
+    }
+    else
+    {
+    	shell_print_response(shell,rsp->data,rsp->len);
+    	net_buf_unref(rsp);
+    	return kStatus_SHELL_Success;
+    }
+}
+
+static shell_status_t le_set_tx_power(shell_handle_t shell, int32_t argc, char **argv)
+{
+    int err;
+    struct net_buf *buf = NULL, *rsp=NULL;
+
+    if (argc < 1)
+    {
+    	shell_print(shell, "the parameter count is wrong\r\n");
+        shell_print(shell, "Usage: le_test.set_tx_power tx_power[1]\n");
+        return kStatus_SHELL_Error;
+    }
+
+    struct bt_hci_le_config *cp;
+    buf = bt_hci_cmd_create(BT_HCI_OP_LE_SET_TX_POWER, sizeof(*cp));
+    if (buf != NULL)
+    {
+    	cp = net_buf_add(buf, sizeof(*cp));
+
+    	cp->tx_power = strtol(argv[1],NULL,16);
+
+    	shell_print(shell, "tx_power= %x\n", cp->tx_power);
+
+    	err = bt_hci_cmd_send_sync(BT_HCI_OP_LE_SET_TX_POWER, buf, &rsp);
+    }
+    else
+    {
+    	err = -ENOBUFS;
+    	shell_print(shell, "No buffer space available\r\n");
+    }
+
+    if (err)
+    {
+        shell_print(shell, "LE Set TX Power command failed (err %d)\n", err);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Error;
+    }
+    else
+    {
+        shell_print_response(shell,rsp->data,rsp->len);
+        net_buf_unref(rsp);
+        return kStatus_SHELL_Success;
+    }
+}
 
 static shell_status_t le_tx_test(shell_handle_t shell, int32_t argc, char **argv)
 {

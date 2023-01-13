@@ -14,6 +14,15 @@
  * Definitions
  ******************************************************************************/
 
+/* Application info */
+typedef struct _app_ver
+{
+    char cBoardID[15];
+    char cExampleID[30];
+    char cAppVer[5];
+    uint16_t ui16FeatureSet;
+} app_ver_t;
+
 /*! @brief device fault typedef */
 typedef uint16_t mcdef_fault_t;
 
@@ -37,6 +46,7 @@ typedef enum _mcs_ctrl_mode_t
     kControlMode_CurrentFOC  = 2,
     kControlMode_SpeedFOC    = 3,
     kControlMode_PositionFOC = 4,
+    kControlMode_OpenLoop 	 = 5
 } mcs_ctrl_mode_t;
 
 /*! @brief Device fault thresholds */
@@ -56,12 +66,14 @@ typedef struct _mcdef_fault_thresholds_t
 typedef struct _mcdef_pmsm_t
 {
     mcs_pmsm_foc_t sFocPMSM;                   /* Field Oriented Control structure */
-    mcs_speed_t sSpeed;                        /* Speed control loop structure */
+    mcs_speed_t sSpeed;                           /* Speed control loop structure */
+    mcs_openloop_t sOpenloop;                     /* Speed control loop structure */
     mcs_position_t sPosition;                  /* Position control loop structure */
     mcs_pmsm_startup_t sStartUp;               /* Open loop start-up */
     mcs_alignment_t sAlignment;                /* PMSM simple two-step Ud voltage alignment */
     mcs_mcat_ctrl_t sMCATctrl;                 /* Structure containing control variables directly updated from MCAT */
     mcs_pmsm_scalar_ctrl_t sScalarCtrl;        /* Scalar control structure */
+    mcdef_fault_t sFaultIdEnable;              /* Fault enable structure */
     mcdef_fault_t sFaultIdCaptured;            /* Captured faults (must be cleared manually) */
     mcdef_fault_t sFaultIdPending;             /* Fault pending structure */
     mcdef_fault_thresholds_t sFaultThresholds; /* Fault thresholds */

@@ -551,6 +551,29 @@ osa_status_t OSA_TaskDestroy(osa_task_handle_t taskHandle);
 #endif /* FSL_OSA_TASK_ENABLE */
 
 /*!
+ * @brief Pre-creates a semaphore.
+ *
+ * This function pre-creates a semaphore with the task handler.
+ *
+ * Example below shows how to use this API to create the semaphore handle.
+ * @code
+ *   OSA_SEMAPHORE_HANDLE_DEFINE(semaphoreHandle);
+ *   OSA_SemaphoreCreate((osa_semaphore_handle_t)semaphoreHandle, (osa_task_ptr_t)taskHandler);
+ * @endcode
+ *
+ * @param semaphoreHandle Pointer to a memory space of size OSA_SEM_HANDLE_SIZE allocated by the caller.
+ * The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices.
+ * You can define the handle in the following two ways:
+ * #OSA_SEMAPHORE_HANDLE_DEFINE(semaphoreHandle);
+ * or
+ * uint32_t semaphoreHandle[((OSA_SEM_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))];
+ * @param taskHandler taskHandler The task handler this event is used by.
+ *
+ * @retval KOSA_StatusSuccess  the new semaphore if the semaphore is created successfully.
+ */
+osa_status_t OSA_SemaphorePrecreate(osa_semaphore_handle_t semaphoreHandle, osa_task_ptr_t taskHandler);
+
+/*!
  * @brief Creates a semaphore with a given value.
  *
  * This function creates a semaphore and sets the value to the parameter
@@ -704,6 +727,28 @@ osa_status_t OSA_MutexUnlock(osa_mutex_handle_t mutexHandle);
  *
  */
 osa_status_t OSA_MutexDestroy(osa_mutex_handle_t mutexHandle);
+
+/*!
+ * @brief Pre-initializes an event object.
+ *
+ * This function pre-creates an event object and indicates which task this event is used by.
+ *
+ * Example below shows how to use this API to create the event handle.
+ * @code
+ *   OSA_EVENT_HANDLE_DEFINE(eventHandle);
+ *   OSA_EventPrecreate((osa_event_handle_t)eventHandle, (osa_task_ptr_t)taskHandler);
+ * @endcode
+ *
+ * @param eventHandle Pointer to a memory space of size OSA_EVENT_HANDLE_SIZE allocated by the caller.
+ * The handle should be 4 byte aligned, because unaligned access doesn't be supported on some devices.
+ * You can define the handle in the following two ways:
+ * #OSA_EVENT_HANDLE_DEFINE(eventHandle);
+ * or
+ * uint32 eventHandle[((OSA_EVENT_HANDLE_SIZE + sizeof(uint32) - 1U) / sizeof(uint32))];
+ * @param taskHandler The task handler this event is used by.
+ * @retval KOSA_StatusSuccess  the new event if the event is pre-created successfully.
+ */
+osa_status_t OSA_EventPrecreate(osa_event_handle_t eventHandle, osa_task_ptr_t taskHandler);
 
 /*!
  * @brief Initializes an event object with all flags cleared.

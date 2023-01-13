@@ -13,10 +13,10 @@
 #include "pipeline.h"
 #include "streamer_fs.h"
 
-int streamer_build_eapfile2file_pipeline(int8_t pipeline_index,
-                                         StreamPipelineType pipeline_type,
-                                         STREAMER_T *task_data);
+int streamer_build_audio_procfile2file_pipeline(int8_t pipeline_index,
+                                                StreamPipelineType pipeline_type,
+                                                STREAMER_T *task_data);
 
-int streamer_destroy_eapfile2file_pipeline(int8_t pipeline_index, STREAMER_T *task_data);
+int streamer_destroy_audio_procfile2file_pipeline(int8_t pipeline_index, STREAMER_T *task_data);
 
 #endif

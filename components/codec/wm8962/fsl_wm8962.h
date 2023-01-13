@@ -22,8 +22,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.0.0 */
-#define FSL_WM8962_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief CLOCK driver version 2.0.3 */
+#define FSL_WM8962_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
 
 /*! @brief wm8962 handle size */
@@ -338,7 +338,7 @@ typedef enum _wm8962_fllclk_source
 /*! @brief wm8962 sysclk source */
 typedef enum _wm8962_sysclk_source
 {
-    kWM8960_SysClkSourceMclk = 0U, /*!< sysclk source from external MCLK */
+    kWM8962_SysClkSourceMclk = 0U, /*!< sysclk source from external MCLK */
     kWM8962_SysClkSourceFLL  = 1U, /*!< sysclk source from internal FLL */
 } wm8962_sysclk_source_t;
 
@@ -398,7 +398,7 @@ typedef struct wm8962_config
     wm8962_protocol_t bus;        /*!< Audio transfer protocol */
     wm8962_audio_format_t format; /*!< Audio format */
 
-    bool masterSlave;                    /*!< Master or slave. */
+    bool masterSlave;                    /*!< Master or slave. true: master mode, false: slave mode */
     wm8962_sysclk_source_t sysclkSource; /*!< sysclk source */
     wm8962_fll_clk_config_t fllClock;    /*!< FLL clock configurations, shall be configured when masterSlave is true */
 

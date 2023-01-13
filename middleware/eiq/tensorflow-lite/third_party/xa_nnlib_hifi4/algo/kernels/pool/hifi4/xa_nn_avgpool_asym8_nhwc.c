@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2018-2021 Cadence Design Systems, Inc.
+* Copyright (c) 2018-2022 Cadence Design Systems, Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -88,6 +88,7 @@ const UWORD8* __restrict__ p_inp,
       WORD32   *p_den_height,
       WORD32   *p_den_width)
 {
+    /* p_scratch_in is always aligned to ALIGNMENT(8)*/
     WORD16 *p_scratch = (WORD16 *)(p_scratch_in);
 
     int itr_oh, itr_ow;
@@ -225,7 +226,7 @@ const UWORD8* __restrict__ p_inp,
 
                         AE_L16_IP(i1,  (ae_int16 *)p_src1_scratch, 2);
                         i2 = AE_MOVDA16(((UWORD8 *)p_src2_temp)[i] );
-                        i3 = AE_MOVDA16(((UWORD8 *)p_src2_temp)[i] );
+                        i3 = AE_MOVDA16(((UWORD8 *)p_src3_temp)[i] );
 
                         out = AE_ADD16S(i1, i2);
                         out = AE_ADD16S(out, i3);
@@ -265,7 +266,7 @@ const UWORD8* __restrict__ p_inp,
             LIMIT(end_row , 0, input_width);
             pool_width = end_row - start_row;
             p_out_temp = p_out + (itr_oh*out_width*input_channels) + (itr_ow*input_channels);
-            p_dst = (ae_int16x4 *)((WORD16 *)p_scratch + plane_size);
+            p_dst = (ae_int16x4 *)((WORD8 *)p_scratch + ALIGNED_SIZE(sizeof(WORD16)*plane_size, ALIGNMENT));
 
             if(pool_width)
             {
@@ -412,13 +413,20 @@ const UWORD8* __restrict__ p_inp,
 
                 p_out1 = (WORD32 *)p_dst;
 
-                den_h = AE_MOVDA32(p_den_height[itr_oh]);
-                den_w = AE_MOVDA32(p_den_width[itr_ow]);
-                d_tmp = AE_MUL32U_LL(den_h, den_w);
+                if(kernel_height * kernel_width <= 1024)
+                {
+                    d_tmp32hw = AE_MOVDA32(inv_256_tbl[p_den_height[itr_oh] * p_den_width[itr_ow]]);
+                }
+                else
+                {
+                    den_h = AE_MOVDA32(inv_256_tbl[p_den_height[itr_oh]]);
+                    den_w = AE_MOVDA32(inv_256_tbl[p_den_width[itr_ow]]);
+                    d_tmp = AE_MUL32U_LL(den_h, den_w);
 
-                /* Max value of den_h or den_w is 0x80000000
-                   so 1 left shift is possible without overflow */
-                d_tmp32hw = AE_TRUNCI32X2F64S(d_tmp, d_tmp, 1);
+                    /* Max value of den_h or den_w is 0x80000000
+                       so 1 left shift is possible without overflow */
+                    d_tmp32hw = AE_TRUNCI32X2F64S(d_tmp, d_tmp, 1);
+                }
 
                 for(i=0; i<input_channels; i++)
                 {
@@ -463,6 +471,7 @@ const UWORD8* __restrict__ p_inp,
       WORD32   *p_den_height,
       WORD32   *p_den_width)
 {
+    /* p_scratch_in is always aligned to ALIGNMENT(8)*/
     WORD16 *p_scratch = (WORD16 *)(p_scratch_in);
 
     int itr_oh, itr_ow;
@@ -654,7 +663,7 @@ const UWORD8* __restrict__ p_inp,
             LIMIT(end_row , 0, input_width);
             pool_width = end_row - start_row;
             p_out_temp = p_out + (itr_oh*out_width*input_channels) + (itr_ow*input_channels);
-            p_dst = (ae_int32x2 *)((WORD32 *)p_scratch + plane_size);
+            p_dst = (ae_int32x2 *)((WORD8 *)p_scratch + ALIGNED_SIZE(sizeof(WORD32)*plane_size, ALIGNMENT));
 
             if(pool_width)
             {
@@ -734,14 +743,20 @@ const UWORD8* __restrict__ p_inp,
 
                 p_out1 = (WORD32 *)p_dst;
 
-                den_h = AE_MOVDA32(p_den_height[itr_oh]);
-                den_w = AE_MOVDA32(p_den_width[itr_ow]);
-                d_tmp = AE_MUL32U_LL(den_h, den_w);
+                if(kernel_height * kernel_width <= 1024)
+                {
+                    d_tmp32hw = AE_MOVDA32(inv_256_tbl[p_den_height[itr_oh] * p_den_width[itr_ow]]);
+                }
+                else
+                {
+                    den_h = AE_MOVDA32(inv_256_tbl[p_den_height[itr_oh]]);
+                    den_w = AE_MOVDA32(inv_256_tbl[p_den_width[itr_ow]]);
+                    d_tmp = AE_MUL32U_LL(den_h, den_w);
 
-                /* Max value of den_h or den_w is 0x80000000
-                   so 1 left shift is possible without overflow */
-
-                d_tmp32hw = AE_TRUNCI32X2F64S(d_tmp, d_tmp, 1);
+                    /* Max value of den_h or den_w is 0x80000000
+                       so 1 left shift is possible without overflow */
+                    d_tmp32hw = AE_TRUNCI32X2F64S(d_tmp, d_tmp, 1);
+                }
 
                 for(i=0; i<input_channels; i++)
                 {

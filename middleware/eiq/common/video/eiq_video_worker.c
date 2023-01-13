@@ -229,7 +229,7 @@ static status_t setCaptureWindowHeightRate(int heightRate)
     s_pExtract = (uint8_t*) malloc(s_window.width * s_window.height * 3);
     if (s_pExtract == NULL)
     {
-        PRINTF("Unable to allocate internal buffer");
+        PRINTF("Unable to allocate internal buffer\r\n");
         return kStatus_Fail;
     }
 

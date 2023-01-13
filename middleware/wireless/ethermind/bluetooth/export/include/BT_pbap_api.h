@@ -277,7 +277,7 @@
  * To copy the application parameter
  */
 #define PBAP_COPY_APPL_PARAMS(to_params, from_params, search_value_out)     \
-        BT_mem_set((to_params), 0U, sizeof(PBAP_APPL_PARAMS));              \
+        BT_mem_set((to_params), 0, sizeof(PBAP_APPL_PARAMS));              \
         BT_mem_copy((to_params), (from_params), sizeof(PBAP_APPL_PARAMS));  \
         if((from_params)->search_value.length != 0U &&                      \
            (from_params)->search_value.value != NULL)                       \

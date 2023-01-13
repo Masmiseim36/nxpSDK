@@ -133,7 +133,8 @@ typedef struct _serial_nor_config_option
             uint32_t tag : 4;               //!< Tag, must be 0x0E
         } B;
         uint32_t U;
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
         struct
         {
             uint32_t cf9_field : 20; //!< CFG data field
@@ -256,6 +257,12 @@ extern "C"
 
     //!@brief Read FlexSPI persistent content
     extern status_t flexspi_nor_read_persistent(uint32_t *data);
+
+    //! @brief Update memory map of flexspi NOR Flash
+    extern status_t flexspi_nor_update_map(void);
+
+    //! @brief Convert flexspi alias address to amba address.
+    extern uint32_t flexspi_get_map_address(uint32_t aliasAddr);
 
     //!@brief Restore Flash to SPI protocol
     status_t flexspi_nor_restore_spi_protocol(uint32_t instance,

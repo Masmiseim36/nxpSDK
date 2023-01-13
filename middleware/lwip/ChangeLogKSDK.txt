@@ -8,6 +8,32 @@
   The development versions (X.Y.Z.dev) do not refer to a single source code snapshots. To avoid ambiguity,
   change log below contains SHA-1 hashes of GIT commits used when importing the code into the SDK.
 
+  - 2.2.0_rev7
+    - New features:
+      - Ported lwIP 2.2.0.dev (2022-05-09, branch: master, SHA-1: 239918ccc173cb2c2a62f41a40fd893f57faf1d6) to MCUXpresso SDK.
+      - Added function ethernetif_probe_link() which reads actual link, speed and duplex settings from phy and passes them to driver.
+        Stack could be set to call this function periodically by setting ETH_LINK_POLLING_INTERVAL_MS to value higher than zero.
+      - Added helper functions ethernetif_wait_linkup() and ethernetif_wait_ipv4_valid() to allow blocking of RTOS task or 
+        bare metal application until link is up or IPv4 address becomes valid.
+      - Added NETC adaptation layer.
+      - Processing of rx packets under RTOS moved from ISR to a separate task to improve system reaction times.
+        Switch back to old behavior can be done by setting ETH_DO_RX_IN_SEPARATE_TASK macro to 0.
+    - Bug fixes:
+      - port: Fixed copying of pbuf contents. Previous code was using an incorrect end condition and could result
+        in the overrun of the destination buffer if more packets were on the queue.
+      - port: Delegating pbuf_free calls to tcpip_thread via pbuf_free_callback where possible (RTOS),
+        ensured pbuf_free is not called from interrupt context when LWIP_ALLOW_MEM_FREE_FROM_OTHER_CONTEXT is not set (bare metal).
+      - port/enet_ethernetif_qos.c - Fixed ENET_RXBD_NUM which was used instead of ENET_TXBD_NUM.
+      - port/enet_ethernetif_qos.c - Fixed buffer alignment to be at least 64.
+      - src/apps/lwiperf: Fixed IPv6 TCP TX throughput lower than IPv4 by modifying maximum segment size
+        to avoid sending two segments instead of one.
+      - src/apps/lwiperf: Out-of-order datagrams in UDP RX server mode are counted to the throughput.
+      - src/apps/httpsrv: Implemented receive timeouts on sockets.
+      - src/apps/httpsrv: Don't assert on HTTP session task creation failure.
+      - src/apps/httpsrv: Fixed build with IPv6 enabled.
+      - src/apps/httpsrv: Updated endianess macros required for websocket SHA generation.
+      - src/apps/httpsrv: Added missing includes.
+
   - 2.2.0_rev6
     - New features:
       - Ported lwIP 2.2.0.dev (2022-03-25, branch: master, SHA-1: 124dc0a64ef5d7c14a27e3115e5888df6559cb72) to MCUXpresso SDK.
@@ -129,5 +155,3 @@
     - New features:
       - Ported lwIP 1.4.1 to KSDK 2.0.0.
 */
-
-

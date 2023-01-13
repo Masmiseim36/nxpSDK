@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.5</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,7 +98,7 @@ $(document).ready(function(){initNavTree('streamer_8h.html',''); initResizable()
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="error_8h.html">error.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="logging_8h.html">logging.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="maestro__logging_8h.html">maestro_logging.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="streamer__api_8h.html">streamer_api.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -183,10 +183,10 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DBG_VIT_SINK</b>&#160;&#160;&#160;<a class="el" href="streamer_8h.html#a2569aa597ba0374326bd17da29225fa3">DBG_ON</a></td></tr>
 <tr class="memdesc:a331de0883ff5171e1ef0e6b9e6b9f61b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag enable vit sink debug messages. <br /></td></tr>
 <tr class="separator:a331de0883ff5171e1ef0e6b9e6b9f61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefe6bd83dbe119de5d1e46ef84975a81"><td class="memItemLeft" align="right" valign="top"><a id="aefe6bd83dbe119de5d1e46ef84975a81" name="aefe6bd83dbe119de5d1e46ef84975a81"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>DBG_EAP</b>&#160;&#160;&#160;<a class="el" href="streamer_8h.html#a2569aa597ba0374326bd17da29225fa3">DBG_ON</a></td></tr>
-<tr class="memdesc:aefe6bd83dbe119de5d1e46ef84975a81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag enable eap debug messages. <br /></td></tr>
-<tr class="separator:aefe6bd83dbe119de5d1e46ef84975a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0f3015711b2a230dc3bf46abf201fc2"><td class="memItemLeft" align="right" valign="top"><a id="aa0f3015711b2a230dc3bf46abf201fc2" name="aa0f3015711b2a230dc3bf46abf201fc2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DBG_AUDIO_PROC</b>&#160;&#160;&#160;<a class="el" href="streamer_8h.html#a2569aa597ba0374326bd17da29225fa3">DBG_ON</a></td></tr>
+<tr class="memdesc:aa0f3015711b2a230dc3bf46abf201fc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag enable audio_proc debug messages. <br /></td></tr>
+<tr class="separator:aa0f3015711b2a230dc3bf46abf201fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b2e3a5eb90502e609eea2a58b536979"><td class="memItemLeft" align="right" valign="top"><a id="a9b2e3a5eb90502e609eea2a58b536979" name="a9b2e3a5eb90502e609eea2a58b536979"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DBG_CCID</b>&#160;&#160;&#160;<a class="el" href="streamer_8h.html#a2569aa597ba0374326bd17da29225fa3">DBG_ON</a></td></tr>
 <tr class="memdesc:a9b2e3a5eb90502e609eea2a58b536979"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag enable cci decoder debug messages. <br /></td></tr>
@@ -223,7 +223,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:a916731f0e8e9e586195ae2ba85eef07f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log debug message.  <a href="streamer_8h.html#a916731f0e8e9e586195ae2ba85eef07f">More...</a><br /></td></tr>
 <tr class="separator:a916731f0e8e9e586195ae2ba85eef07f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47f9ab96bad8265cd3a6b5f94f6c3da6"><td class="memItemLeft" align="right" valign="top"><a id="a47f9ab96bad8265cd3a6b5f94f6c3da6" name="a47f9ab96bad8265cd3a6b5f94f6c3da6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>STREAMER_LOG_INFO</b>(...)&#160;&#160;&#160;<a class="el" href="logging_8h.html#a511f7efa0b13b123b59cd68c61890c96">ilprintf</a>(<a class="el" href="logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, __VA_ARGS__)</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>STREAMER_LOG_INFO</b>(...)&#160;&#160;&#160;<a class="el" href="maestro__logging_8h.html#a511f7efa0b13b123b59cd68c61890c96">ilprintf</a>(<a class="el" href="maestro__logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, __VA_ARGS__)</td></tr>
 <tr class="memdesc:a47f9ab96bad8265cd3a6b5f94f6c3da6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log information. <br /></td></tr>
 <tr class="separator:a47f9ab96bad8265cd3a6b5f94f6c3da6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab085c763a93800259b887b1c0decfaed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="streamer_8h.html#ab085c763a93800259b887b1c0decfaed">STREAMER_FUNC_ENTER</a>(on)</td></tr>
@@ -391,9 +391,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (on &amp; <a class="code hl_define" href="streamer_8h.html#a2569aa597ba0374326bd17da29225fa3">DBG_ON</a>)                      \</div>
-<div class="line">    lprintf(<a class="code hl_define" href="logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, <a class="code hl_define" href="logging_8h.html#a7e58fc6c0af6889ac1b108d263d71cce">LOGLVL_CATASTROPHIC</a>, error, __VA_ARGS__)</div>
-<div class="ttc" id="alogging_8h_html_a7e58fc6c0af6889ac1b108d263d71cce"><div class="ttname"><a href="logging_8h.html#a7e58fc6c0af6889ac1b108d263d71cce">LOGLVL_CATASTROPHIC</a></div><div class="ttdeci">#define LOGLVL_CATASTROPHIC</div><div class="ttdoc">Serious error. System cannot recover.</div><div class="ttdef"><b>Definition:</b> logging.h:25</div></div>
-<div class="ttc" id="alogging_8h_html_abb00201d47b3aedff0a2105324b3acf0"><div class="ttname"><a href="logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a></div><div class="ttdeci">#define LOGMDL_STREAMER</div><div class="ttdoc">Streamer module.</div><div class="ttdef"><b>Definition:</b> logging.h:67</div></div>
+<div class="line">    lprintf(<a class="code hl_define" href="maestro__logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, <a class="code hl_define" href="maestro__logging_8h.html#a7e58fc6c0af6889ac1b108d263d71cce">LOGLVL_CATASTROPHIC</a>, error, __VA_ARGS__)</div>
+<div class="ttc" id="amaestro__logging_8h_html_a7e58fc6c0af6889ac1b108d263d71cce"><div class="ttname"><a href="maestro__logging_8h.html#a7e58fc6c0af6889ac1b108d263d71cce">LOGLVL_CATASTROPHIC</a></div><div class="ttdeci">#define LOGLVL_CATASTROPHIC</div><div class="ttdoc">Serious error. System cannot recover.</div><div class="ttdef"><b>Definition:</b> maestro_logging.h:25</div></div>
+<div class="ttc" id="amaestro__logging_8h_html_abb00201d47b3aedff0a2105324b3acf0"><div class="ttname"><a href="maestro__logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a></div><div class="ttdeci">#define LOGMDL_STREAMER</div><div class="ttdoc">Streamer module.</div><div class="ttdef"><b>Definition:</b> maestro_logging.h:67</div></div>
 <div class="ttc" id="astreamer_8h_html_a2569aa597ba0374326bd17da29225fa3"><div class="ttname"><a href="streamer_8h.html#a2569aa597ba0374326bd17da29225fa3">DBG_ON</a></div><div class="ttdeci">#define DBG_ON</div><div class="ttdoc">Flag enable debug messages.</div><div class="ttdef"><b>Definition:</b> streamer.h:32</div></div>
 </div><!-- fragment --><p >Debug printf macros. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -437,8 +437,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (on &amp; <a class="code hl_define" href="streamer_8h.html#a2569aa597ba0374326bd17da29225fa3">DBG_ON</a>)                     \</div>
-<div class="line">    lprintf(<a class="code hl_define" href="logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, <a class="code hl_define" href="logging_8h.html#a0bb5287396eca168cf489ffcf757c92a">LOGLVL_ERROR</a>, error, __VA_ARGS__)</div>
-<div class="ttc" id="alogging_8h_html_a0bb5287396eca168cf489ffcf757c92a"><div class="ttname"><a href="logging_8h.html#a0bb5287396eca168cf489ffcf757c92a">LOGLVL_ERROR</a></div><div class="ttdeci">#define LOGLVL_ERROR</div><div class="ttdoc">An error has occurred. The system should \ be able to continue but an individual \ module may not be ...</div><div class="ttdef"><b>Definition:</b> logging.h:26</div></div>
+<div class="line">    lprintf(<a class="code hl_define" href="maestro__logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, <a class="code hl_define" href="maestro__logging_8h.html#a0bb5287396eca168cf489ffcf757c92a">LOGLVL_ERROR</a>, error, __VA_ARGS__)</div>
+<div class="ttc" id="amaestro__logging_8h_html_a0bb5287396eca168cf489ffcf757c92a"><div class="ttname"><a href="maestro__logging_8h.html#a0bb5287396eca168cf489ffcf757c92a">LOGLVL_ERROR</a></div><div class="ttdeci">#define LOGLVL_ERROR</div><div class="ttdoc">An error has occurred. The system should \ be able to continue but an individual \ module may not be ...</div><div class="ttdef"><b>Definition:</b> maestro_logging.h:26</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -474,8 +474,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (on &amp; <a class="code hl_define" href="streamer_8h.html#a2569aa597ba0374326bd17da29225fa3">DBG_ON</a>)                      \</div>
-<div class="line">    lprintf(<a class="code hl_define" href="logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, <a class="code hl_define" href="logging_8h.html#a2dbe014582398091abf6fe811f6d4ef0">LOGLVL_WARNING</a>, error, __VA_ARGS__)</div>
-<div class="ttc" id="alogging_8h_html_a2dbe014582398091abf6fe811f6d4ef0"><div class="ttname"><a href="logging_8h.html#a2dbe014582398091abf6fe811f6d4ef0">LOGLVL_WARNING</a></div><div class="ttdeci">#define LOGLVL_WARNING</div><div class="ttdoc">A warning about a potential problem.</div><div class="ttdef"><b>Definition:</b> logging.h:30</div></div>
+<div class="line">    lprintf(<a class="code hl_define" href="maestro__logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, <a class="code hl_define" href="maestro__logging_8h.html#a2dbe014582398091abf6fe811f6d4ef0">LOGLVL_WARNING</a>, error, __VA_ARGS__)</div>
+<div class="ttc" id="amaestro__logging_8h_html_a2dbe014582398091abf6fe811f6d4ef0"><div class="ttname"><a href="maestro__logging_8h.html#a2dbe014582398091abf6fe811f6d4ef0">LOGLVL_WARNING</a></div><div class="ttdeci">#define LOGLVL_WARNING</div><div class="ttdoc">A warning about a potential problem.</div><div class="ttdef"><b>Definition:</b> maestro_logging.h:30</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -505,7 +505,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (on &amp; <a class="code hl_define" href="streamer_8h.html#a2569aa597ba0374326bd17da29225fa3">DBG_ON</a>)                \</div>
-<div class="line">    dlprintf(<a class="code hl_define" href="logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, __VA_ARGS__)</div>
+<div class="line">    dlprintf(<a class="code hl_define" href="maestro__logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>, __VA_ARGS__)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -525,7 +525,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (on &gt; 0)                 \</div>
-<div class="line">    LOG_ENTER(<a class="code hl_define" href="logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>)</div>
+<div class="line">    LOG_ENTER(<a class="code hl_define" href="maestro__logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -545,7 +545,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    <span class="keywordflow">if</span> (on &gt; 0)                \</div>
-<div class="line">    LOG_EXIT(<a class="code hl_define" href="logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>)</div>
+<div class="line">    LOG_EXIT(<a class="code hl_define" href="maestro__logging_8h.html#abb00201d47b3aedff0a2105324b3acf0">LOGMDL_STREAMER</a>)</div>
 </div><!-- fragment -->
 </div>
 </div>

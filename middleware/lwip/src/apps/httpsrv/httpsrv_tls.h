@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2018,2022 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -17,11 +17,11 @@
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
 #include "httpsrv.h"
 
-#if HTTPSRV_CFG_WOLFSSL_ENABLE 
+#if HTTPSRV_CFG_WOLFSSL_ENABLE
 #include "wolfssl/ssl.h"
 
-typedef WOLFSSL          *httpsrv_tls_sock_t;
-typedef WOLFSSL_CTX      *httpsrv_tls_ctx_t;
+typedef WOLFSSL *httpsrv_tls_sock_t;
+typedef WOLFSSL_CTX *httpsrv_tls_ctx_t;
 #endif
 
 #if HTTPSRV_CFG_MBEDTLS_ENABLE
@@ -33,18 +33,28 @@ typedef WOLFSSL_CTX      *httpsrv_tls_ctx_t;
 #include "mbedtls/ssl_cache.h"
 #include "mbedtls/debug.h"
 
-typedef mbedtls_ssl_context *  httpsrv_tls_sock_t;
+#ifndef MBEDTLS_THREADING_C
+/*
+ * MBEDTLS_THREADING_C must be defined even if there is only one session,
+ * as it can coincidence with the main server thread
+ * which uses mbedTLS when establishing newly accepted connection.
+ */
+#error "MBEDTLS_THREADING_C must be defined to protect mbedTLS operations from concurrent access."
+#endif
 
-typedef struct {
-                    mbedtls_entropy_context entropy;
-                    mbedtls_ctr_drbg_context ctr_drbg;
-                    mbedtls_ssl_config conf;
-                    mbedtls_x509_crt srvcert;
-                    mbedtls_pk_context pkey;
-                #if defined(MBEDTLS_SSL_CACHE_C)
-                    mbedtls_ssl_cache_context cache;
-                #endif
-                } *httpsrv_tls_ctx_t;
+typedef mbedtls_ssl_context *httpsrv_tls_sock_t;
+
+typedef struct
+{
+    mbedtls_entropy_context entropy;
+    mbedtls_ctr_drbg_context ctr_drbg;
+    mbedtls_ssl_config conf;
+    mbedtls_x509_crt srvcert;
+    mbedtls_pk_context pkey;
+#if defined(MBEDTLS_SSL_CACHE_C)
+    mbedtls_ssl_cache_context cache;
+#endif
+} * httpsrv_tls_ctx_t;
 
 #endif
 

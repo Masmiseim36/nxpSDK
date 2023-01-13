@@ -350,6 +350,12 @@ static void M1_StateInitFast(void)
 
     /* INIT_DONE command */
     g_sM1Ctrl.uiCtrl |= SM_CTRL_INIT_DONE;
+    
+    /* Enable all MC faults */
+    M1_FAULT_SET(g_sM1Drive.sFaultIdEnable, M1_FAULT_I_DCBUS_OVER);
+    M1_FAULT_SET(g_sM1Drive.sFaultIdEnable, M1_FAULT_U_DCBUS_UNDER);
+    M1_FAULT_SET(g_sM1Drive.sFaultIdEnable, M1_FAULT_U_DCBUS_OVER);
+    M1_FAULT_SET(g_sM1Drive.sFaultIdEnable, M1_FAULT_SPEED_OVER);
 }
 
 /*!
@@ -1613,6 +1619,9 @@ static void M1_FaultDetection(void)
         M1_FAULT_SET(g_sM1Drive.sFaultIdPending, M1_FAULT_SPEED_OVER);
     }
 
+    /* Mask pending faults by enable structure */
+    g_sM1Drive.sFaultIdPending &= g_sM1Drive.sFaultIdEnable;
+    
     /* pass fault to fault ID */
     g_sM1Drive.sFaultIdCaptured |= g_sM1Drive.sFaultIdPending;
 }

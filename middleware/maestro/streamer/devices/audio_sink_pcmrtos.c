@@ -24,6 +24,9 @@
 AudioSinkStreamErrorType audiosink_pcmrtos_init_params(ElementAudioSink *audio_sink_ptr)
 {
     PCMSinkDeviceInfo *dev_info;
+    uint32_t dev_sample_rate = 0;
+    uint32_t dev_bit_width   = 0;
+    uint8_t dev_num_channels = 0;
     uint8_t sign, endianness, interleaved;
     uint32_t word_length;
     int ret;
@@ -49,7 +52,7 @@ AudioSinkStreamErrorType audiosink_pcmrtos_init_params(ElementAudioSink *audio_s
     /* Set audio/PCM channel. */
     /* Set PCM data format (bits per sample, tx fmt) */
     /* Setup pipeline in/out ports */
-    ret = streamer_pcm_setparams(dev_info->pcm_handle, audio_sink_ptr->sample_rate, word_length,
+    ret = streamer_pcm_setparams(dev_info->pcm_handle, audio_sink_ptr->sample_rate, audio_sink_ptr->bits_per_sample,
                                  audio_sink_ptr->num_channels, true, false, audio_sink_ptr->volume);
     if (ret != 0)
     {
@@ -57,6 +60,19 @@ AudioSinkStreamErrorType audiosink_pcmrtos_init_params(ElementAudioSink *audio_s
         STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
         return AUDIO_SINK_FAILED;
     }
+
+    streamer_pcm_getparams(dev_info->pcm_handle, &dev_sample_rate, &dev_bit_width, &dev_num_channels);
+
+    if ((dev_bit_width < audio_sink_ptr->bits_per_sample) || (dev_num_channels < audio_sink_ptr->num_channels))
+    {
+        STREAMER_LOG_ERR(DBG_AUDIO_SINK, ERRCODE_NOT_SUPPORTED,
+                         "[PCMRTOS Sink] unsupported PCM device parameters: bit width and/or channels number \n");
+        STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
+        return AUDIO_SINK_FAILED;
+    }
+
+    audio_sink_ptr->codec_bits_per_sample = dev_bit_width;
+    audio_sink_ptr->codec_num_channels    = dev_num_channels;
 
     dev_info->resample = false;
 
@@ -140,7 +156,7 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
     {
         audio_sink_ptr->error_element = AUDIO_SINK_FAILED;
         STREAMER_FUNC_EXIT(DBG_AUDIO_SINK);
-        return FLOW_NO_RESOURCE;
+        return FLOW_ERROR;
     }
 
     if (dev_info->device_state == AUDIO_SINK_DEVICE_STATE_CLOSED)
@@ -164,14 +180,15 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
         dev_info->alloc_size < AUDIO_CHUNK_SIZE(data_packet))
     {
         dev_info->init_params_done = false;
-
-        /* XXX clear tx buffer */
-        /* XXX stop playback */
     }
 
     if (!dev_info->init_params_done)
     {
         STREAMER_LOG_DEBUG(DBG_AUDIO_SINK, "[PCMRTOS Sink] Init params\n");
+
+        /* Initialize the HW codec parameters */
+        audio_sink_ptr->codec_bits_per_sample = audio_sink_ptr->bits_per_sample;
+        audio_sink_ptr->codec_num_channels    = audio_sink_ptr->num_channels;
 
         if (audiosink_pcmrtos_init_params(audio_sink_ptr) != AUDIO_SINK_SUCCESS)
         {
@@ -189,15 +206,27 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
                 dev_info->alloc_size       = 0;
             }
 
-            dev_info->alloc_size = (audio_sink_ptr->chunk_size < MIN_AUDIO_BUFFER_SIZE) ? MIN_AUDIO_BUFFER_SIZE :
-                                                                                          audio_sink_ptr->chunk_size;
+            if ((audio_sink_ptr->num_channels != audio_sink_ptr->codec_num_channels) ||
+                (audio_sink_ptr->bits_per_sample != audio_sink_ptr->codec_bits_per_sample))
+            {
+                uint32_t samples =
+                    audio_sink_ptr->chunk_size / audio_sink_ptr->num_channels / (audio_sink_ptr->bits_per_sample >> 3);
+                samples = samples * audio_sink_ptr->codec_num_channels * (audio_sink_ptr->codec_bits_per_sample >> 3);
+                dev_info->alloc_size = (samples < MIN_AUDIO_BUFFER_SIZE) ? MIN_AUDIO_BUFFER_SIZE : samples;
+            }
+            else
+            {
+                dev_info->alloc_size = (audio_sink_ptr->chunk_size < MIN_AUDIO_BUFFER_SIZE) ?
+                                           MIN_AUDIO_BUFFER_SIZE :
+                                           audio_sink_ptr->chunk_size;
+            }
 
             dev_info->unaligned_buf[i] = (char *)OSA_MemoryAllocate((uint32_t)(dev_info->alloc_size + SIZE_ALIGNMENT));
             dev_info->audbuf[i]        = (char *)MEM_ALIGN(dev_info->unaligned_buf[i], SIZE_ALIGNMENT);
             if (dev_info->audbuf[i] == NULL)
             {
                 STREAMER_LOG_ERR(DBG_AUDIO_SINK, ERRCODE_OUT_OF_MEMORY, "[PCMRTOS Sink] Audio buffer malloc failed \n");
-                return FLOW_NO_MEMORY;
+                return FLOW_ERROR;
             }
         }
 
@@ -213,8 +242,59 @@ FlowReturn audiosink_pcmrtos_sink_pad_chain_handler(StreamPad *pad, StreamBuffer
 
     if (buffer_size > 0U)
     {
-        /* Copy data directly into the audio buffer. */
-        memcpy(dev_info->audbuf[dev_info->input_index], buffer_ptr, buffer_size);
+        if ((audio_sink_ptr->num_channels != audio_sink_ptr->codec_num_channels) ||
+            (audio_sink_ptr->bits_per_sample != audio_sink_ptr->codec_bits_per_sample))
+        {
+            int8_t *input_buffer      = buffer_ptr;
+            int8_t *audio_buffer_head = (int8_t *)dev_info->audbuf[dev_info->input_index];
+
+            uint8_t input_buffer_step = audio_sink_ptr->bits_per_sample >> 3;
+            uint8_t audio_buffer_step = audio_sink_ptr->codec_bits_per_sample >> 3;
+            uint32_t i;
+            uint8_t k;
+            int j, o;
+
+            /* Interleave the actual data with zeros  */
+            for (i = 0; i < (buffer_size / input_buffer_step);)
+            {
+                /* Copy bytes from input buffer to audio buffer */
+                for (k = 0; k < audio_sink_ptr->num_channels; k++)
+                {
+                    for (j = (audio_buffer_step - 1), o = (input_buffer_step - 1); j >= 0; j--, o--)
+                    {
+                        audio_buffer_head[j] = o >= 0 ? input_buffer[o] : 0xFF;
+                    }
+
+                    /* Update pointers */
+                    input_buffer      = input_buffer + input_buffer_step;
+                    audio_buffer_head = audio_buffer_head + audio_buffer_step;
+                    i++;
+                }
+
+                /* If the codec need more channels than the input buffer contains, add zeros to the audio buffer */
+                for (k = 0; k < (audio_sink_ptr->codec_num_channels - audio_sink_ptr->num_channels); k++)
+                {
+                    for (j = 0; j < audio_buffer_step; j++)
+                    {
+                        audio_buffer_head[j] = 0x00;
+                    }
+                    /* Update audio buffer head pointer */
+                    audio_buffer_head = audio_buffer_head + audio_buffer_step;
+                }
+            }
+
+            /* Update the buffer size to the actual value */
+            buffer_size =
+                audio_sink_ptr->chunk_size / audio_sink_ptr->num_channels / (audio_sink_ptr->bits_per_sample >> 3);
+            buffer_size =
+                buffer_size * audio_sink_ptr->codec_num_channels * (audio_sink_ptr->codec_bits_per_sample >> 3);
+        }
+        else
+        {
+            /* Copy data directly into the audio buffer. */
+            memcpy(dev_info->audbuf[dev_info->input_index], buffer_ptr, buffer_size);
+        }
+
         dev_info->input_size = buffer_size;
 
         /* Write to PCM output driver. */

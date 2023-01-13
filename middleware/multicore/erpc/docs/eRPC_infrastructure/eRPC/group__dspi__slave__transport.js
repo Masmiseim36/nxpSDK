@@ -1,6 +1,6 @@
 var group__dspi__slave__transport =
 [
-    [ "erpc_dspi_slave_transport.h", "erpc__dspi__slave__transport_8h.html", null ],
+    [ "erpc_dspi_slave_transport.hpp", "erpc__dspi__slave__transport_8hpp.html", null ],
     [ "DspiSlaveTransport", "classerpc_1_1_dspi_slave_transport.html", [
       [ "DspiSlaveTransport", "classerpc_1_1_dspi_slave_transport.html#ac03ad63839cdc04b31fa116f8f721bfa", null ],
       [ "~DspiSlaveTransport", "classerpc_1_1_dspi_slave_transport.html#a18913eddc7da0cc2314ca763ff5b1262", null ],

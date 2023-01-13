@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2018-2021 Cadence Design Systems, Inc.
+* Copyright (c) 2018-2022 Cadence Design Systems, Inc.
 *
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
@@ -309,8 +309,7 @@ WORD32 xa_nn_fully_connected_sym8sxasym8s_asym8s
   XA_NNLIB_ARG_CHK_ALIGN(p_out, sizeof(WORD8), -1);
   XA_NNLIB_ARG_CHK_ALIGN(p_weight, sizeof(WORD8), -1);
   XA_NNLIB_ARG_CHK_ALIGN(p_inp, sizeof(WORD8), -1);
-  if (p_bias != NULL)
-    XA_NNLIB_ARG_CHK_ALIGN(p_bias, sizeof(WORD32), -1);
+  XA_NNLIB_ARG_CHK_ALIGN(p_bias, sizeof(WORD32), -1);
 #endif
   /* Basic Parameter checks */
   XA_NNLIB_ARG_CHK_COND((out_depth <= 0), -1);

@@ -177,6 +177,8 @@ iot_agent_status_t iot_agent_utils_write_certificate_pem_cos_over_rtp(iot_agent_
 */
 iot_agent_status_t iot_agent_utils_write_key_ref_pem_cos_over_rtp(const iot_agent_context_t* ctx,
 	const nxp_iot_ServiceDescriptor* service_descriptor, const char* filename);
+iot_agent_status_t iot_agent_utils_convert_service2key_id(uint64_t service_id, uint32_t *key_id);
+iot_agent_status_t iot_agent_utils_der_to_pem_bio(BIO *bio_in, BIO* bio_out);
 #endif
 
 /*! @brief Gets the common name from the client certificte.
@@ -269,7 +271,9 @@ iot_agent_status_t iot_agent_keystore_file_existence(const char *filename, bool 
  * @retval IOT_AGENT_SUCCESS upon success
  * @retval IOT_AGENT_FAILURE upon failure
  */
-iot_agent_status_t iot_agent_utils_convert_service2key_id(uint64_t service_id, uint32_t *key_id);
+
+iot_agent_status_t iot_agent_get_first_found_object(sss_key_store_t *keystore,
+    uint32_t* object_ids, size_t num_objects, uint32_t* object_id);
 
 #ifdef __cplusplus
 } // extern "C"

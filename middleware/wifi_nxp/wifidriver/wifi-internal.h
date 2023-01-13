@@ -19,7 +19,7 @@
 
 typedef struct
 {
-    int (*wifi_uap_set_params_p)(void);
+    int (*wifi_uap_set_params_p)(int channel);
     int (*wifi_uap_downld_domain_params_p)(MrvlIEtypes_DomainParamSet_t *dp);
     int (*wifi_uap_enable_11d_p)(void);
 } wifi_uap_11d_apis_t;
@@ -43,6 +43,7 @@ typedef struct
 {
     os_thread_t wm_wifi_main_thread;
     os_thread_t wm_wifi_core_thread;
+    os_thread_t wm_wifi_scan_thread;
 #ifdef CONFIG_WMM
     /** Thread handle for sending data */
     os_thread_t wm_wifi_driver_tx;
@@ -171,6 +172,9 @@ typedef struct
      * response buffer provided by application layers
      * structure also stores lengths for usage and validation internally*/
     hostcmd_cfg_t hostcmd_cfg;
+    wlan_user_scan_cfg *g_user_scan_cfg;
+
+    bool scan_stop;
 } wm_wifi_t;
 
 extern wm_wifi_t wm_wifi;
@@ -294,4 +298,17 @@ void wifi_sdio_unlock(void);
 #endif
 
 mlan_status wrapper_wlan_cmd_mgmt_ie(int bss_type, void *buffer, unsigned int len, t_u16 action);
+
+/**
+ * This function should be called when user scan is
+ * finished with success/failure.
+ *
+ */
+void wifi_user_scan_config_cleanup(void);
+
+/**
+ * This function should be called to wait for scan task done before resetting.
+ *
+ */
+void wifi_scan_stop(void);
 #endif /* __WIFI_INTERNAL_H__ */

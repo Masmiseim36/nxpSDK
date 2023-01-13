@@ -18,7 +18,7 @@
 #include "BT_fops.h"
 
 /* ------------------------------------------ Data Structures/Data Types */
-typedef struct attrib_val
+typedef struct _ATTRIB_VAL
 {
     CHAR    attrib[ 25 ];
 

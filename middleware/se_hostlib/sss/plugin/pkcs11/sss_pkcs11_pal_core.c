@@ -1176,7 +1176,7 @@ exit:
 static uint8_t CheckIfKeyIdExists(uint32_t keyId, pSe05xSession_t session_ctx)
 {
     smStatus_t retStatus    = SM_NOT_OK;
-    SE05x_Result_t IdExists = 0;
+    SE05x_Result_t IdExists = kSE05x_Result_NA;
     uint8_t exists          = 0;
 
     LOCK_MUTEX_FOR_RTOS
@@ -1199,39 +1199,6 @@ static uint8_t CheckIfKeyIdExists(uint32_t keyId, pSe05xSession_t session_ctx)
 }
 
 #endif
-
-/**
- * Extend the byte array \p pStore with 0x00 byte(s). This is typically required when
- * a big integer has - previously - been stripped from its (superfluous) sign bits.
- * The caller must ensure \p expectedLength is bigger than \p actualLength
- * @param[in,out]   pStore  Array representation of big number, to be zero sign extended.
- *      Size of corresponding buffer must be at least \p expectedLength
- * @param[in]       actualLength Length of incoming array \p pStore
- * @param[in]       expectedLength Zero sign extend until this length.
- *
- * @retval SW_OK In case of successfull execution
- * @retval ERR_API_ERROR Requested adjustment would result in truncation
- */
-U16 axZeroSignExtend(U8 *pStore, U16 actualLength, U16 expectedLength)
-{
-    U16 sw = SW_OK;
-
-    int numExtraByte = (int)expectedLength - (int)actualLength;
-
-    if (numExtraByte == 0) {
-        // Do nothing
-    }
-    else if (numExtraByte < 0) {
-        // Flag an API error
-        sw = ERR_API_ERROR;
-    }
-    else {
-        memmove(pStore + numExtraByte, pStore, actualLength);
-        memset(pStore, 0x00, numExtraByte);
-    }
-
-    return sw;
-}
 
 /**
  * @brief Query the list of interface function pointers.
@@ -1369,6 +1336,8 @@ CK_DEFINE_FUNCTION(CK_RV, C_Finalize)(CK_VOID_PTR pvReserved)
 CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
 (CK_SLOT_ID xSlotID, CK_FLAGS xFlags, CK_VOID_PTR pvApplication, CK_NOTIFY xNotify, CK_SESSION_HANDLE_PTR pxSession)
 { /*lint !e9072 It's OK to have different parameter name. */
+    AX_UNUSED_ARG(pvApplication);
+    AX_UNUSED_ARG(xNotify);
     CK_RV xResult                = CKR_OK;
     P11SessionPtr_t pxSessionObj = NULL;
     bool foundEmptySessionSlot   = false;
@@ -1492,7 +1461,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
                     goto error;
                 }
 
-#if EX_SSS_BOOT_DO_ERASE
+#if defined(EX_SSS_BOOT_DO_ERASE) && (EX_SSS_BOOT_DO_ERASE == 1)
                 sss_status = ex_sss_boot_factory_reset(pex_sss_demo_boot_ctx);
                 if (sss_status != kStatus_SSS_Success) {
                     LOG_E("Factory Reset failed");
@@ -1768,6 +1737,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_SignInit)
 CK_DEFINE_FUNCTION(CK_RV, C_GetSlotList)
 (CK_BBOOL xTokenPresent, CK_SLOT_ID_PTR pxSlotList, CK_ULONG_PTR pulCount)
 { /*lint !e9072 It's OK to have different parameter name. */
+    AX_UNUSED_ARG(xTokenPresent);
     CK_RV xResult = CKR_OK;
     LOG_D("%s", __FUNCTION__);
 
@@ -1852,6 +1822,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_Decrypt)
 CK_DEFINE_FUNCTION(CK_RV, C_DecryptFinal)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastPart, CK_ULONG_PTR pulLastPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pLastPart);
+    AX_UNUSED_ARG(pulLastPartLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -1906,6 +1879,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_DecryptUpdate)
     CK_BYTE_PTR pPart,
     CK_ULONG_PTR pulPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pEncryptedPart);
+    AX_UNUSED_ARG(ulEncryptedPartLen);
+    AX_UNUSED_ARG(pPart);
+    AX_UNUSED_ARG(pulPartLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -1922,6 +1900,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_DeriveKey)
     CK_ULONG ulAttributeCount,
     CK_OBJECT_HANDLE_PTR phKey)
 {
+    AX_UNUSED_ARG(hSession);
     LOG_D("%s", __FUNCTION__);
     CK_RV xResult = CKR_FUNCTION_NOT_SUPPORTED;
 #if SSS_HAVE_APPLET_SE05X_IOT
@@ -2096,10 +2075,12 @@ CK_DEFINE_FUNCTION(CK_RV, C_DeriveKey)
 
         if (p_ecdh1Params->pPublicData[i] != 0x00) {
             p_ecPoint++;
+            ENSURE_OR_GO_EXIT(len < (sizeof(ecPoint) - 1));
             memcpy(p_ecPoint, &p_ecdh1Params->pPublicData[i], len);
             len++;
         }
         else {
+            ENSURE_OR_GO_EXIT(len < (sizeof(ecPoint)));
             memcpy(p_ecPoint, &p_ecdh1Params->pPublicData[i], len);
         }
 
@@ -2172,7 +2153,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_DeriveKey)
             sss_status = sss_key_object_allocate_handle(&pubKeyObj,
                 publicKeyId,
                 kSSS_KeyPart_Public,
-                privKeyObj.cipherType,
+                (sss_cipher_type_t)privKeyObj.cipherType,
                 keySize * 8,
                 kKeyObject_Mode_Persistent);
             UNLOCK_MUTEX_FOR_RTOS_EXIT_ON_FAIL(sss_status == kStatus_SSS_Success);
@@ -2277,6 +2258,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_Digest)
     }
 #if SSS_HAVE_APPLET
     uint8_t *input = (uint8_t *)SSS_MALLOC(ulDataLen * sizeof(uint8_t));
+    if (!input) {
+        xResult = CKR_HOST_MEMORY;
+        return xResult;
+    }
     memset(input, 0, (ulDataLen * sizeof(uint8_t)));
     sss_status_t status = kStatus_SSS_Fail;
     uint8_t output[64]  = {0};
@@ -2362,6 +2347,8 @@ cleanup:
 CK_DEFINE_FUNCTION(CK_RV, C_DigestKey)
 (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hKey)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(hKey);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2423,6 +2410,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_Encrypt)
 CK_DEFINE_FUNCTION(CK_RV, C_EncryptFinal)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pLastEncryptedPart, CK_ULONG_PTR pulLastEncryptedPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pLastEncryptedPart);
+    AX_UNUSED_ARG(pulLastEncryptedPartLen);
+
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2477,6 +2468,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_EncryptUpdate)
     CK_BYTE_PTR pEncryptedPart,
     CK_ULONG_PTR pulEncryptedPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pPart);
+    AX_UNUSED_ARG(ulPartLen);
+    AX_UNUSED_ARG(pEncryptedPart);
+    AX_UNUSED_ARG(pulEncryptedPartLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2509,6 +2505,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetInfo)(CK_INFO_PTR pInfo)
 CK_DEFINE_FUNCTION(CK_RV, C_GetMechanismInfo)
 (CK_SLOT_ID slotID, CK_MECHANISM_TYPE type, CK_MECHANISM_INFO_PTR pInfo)
 {
+    AX_UNUSED_ARG(slotID);
     LOG_D("%s", __FUNCTION__);
 
     CK_RV xResult = CKR_MECHANISM_INVALID;
@@ -2702,6 +2699,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetMechanismInfo)
 CK_DEFINE_FUNCTION(CK_RV, C_GetMechanismList)
 (CK_SLOT_ID slotID, CK_MECHANISM_TYPE_PTR pMechanismList, CK_ULONG_PTR pulCount)
 {
+    AX_UNUSED_ARG(slotID);
     LOG_D("%s", __FUNCTION__);
 
     CK_RV xResult = CKR_OK;
@@ -2790,6 +2788,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetSlotInfo)
 CK_DEFINE_FUNCTION(CK_RV, C_GetTokenInfo)
 (CK_SLOT_ID slotID, CK_TOKEN_INFO_PTR pInfo)
 {
+    AX_UNUSED_ARG(slotID);
     LOG_D("%s", __FUNCTION__);
 
     CK_TOKEN_INFO tokenInfo      = {0};
@@ -2827,6 +2826,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetTokenInfo)
 CK_DEFINE_FUNCTION(CK_RV, C_Login)
 (CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(userType);
+    AX_UNUSED_ARG(pPin);
+    AX_UNUSED_ARG(ulPinLen);
     LOG_D("%s", __FUNCTION__);
     return CKR_OK;
 }
@@ -2836,6 +2839,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Login)
  */
 CK_DEFINE_FUNCTION(CK_RV, C_Logout)(CK_SESSION_HANDLE hSession)
 {
+    AX_UNUSED_ARG(hSession);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_OK;
@@ -2847,6 +2851,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_Logout)(CK_SESSION_HANDLE hSession)
 CK_DEFINE_FUNCTION(CK_RV, C_SeedRandom)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSeed, CK_ULONG ulSeedLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pSeed);
+    AX_UNUSED_ARG(ulSeedLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_OK;
@@ -2858,6 +2865,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_SeedRandom)
 CK_DEFINE_FUNCTION(CK_RV, C_SetAttributeValue)
 (CK_SESSION_HANDLE hSession, CK_OBJECT_HANDLE hObject, CK_ATTRIBUTE_PTR pTemplate, CK_ULONG ulCount)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(hObject);
+    AX_UNUSED_ARG(pTemplate);
+    AX_UNUSED_ARG(ulCount);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2869,6 +2880,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_SetAttributeValue)
 CK_DEFINE_FUNCTION(CK_RV, C_SignFinal)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG_PTR pulSignatureLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pSignature);
+    AX_UNUSED_ARG(pulSignatureLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2880,6 +2894,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_SignFinal)
 CK_DEFINE_FUNCTION(CK_RV, C_SignUpdate)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pPart);
+    AX_UNUSED_ARG(ulPartLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2898,6 +2915,15 @@ CK_DEFINE_FUNCTION(CK_RV, C_UnwrapKey)
     CK_ULONG ulAttributeCount,
     CK_OBJECT_HANDLE_PTR phKey)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pMechanism);
+    AX_UNUSED_ARG(hUnwrappingKey);
+    AX_UNUSED_ARG(pWrappedKey);
+    AX_UNUSED_ARG(ulWrappedKeyLen);
+    AX_UNUSED_ARG(pTemplate);
+    AX_UNUSED_ARG(ulAttributeCount);
+    AX_UNUSED_ARG(phKey);
+
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2909,6 +2935,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_UnwrapKey)
 CK_DEFINE_FUNCTION(CK_RV, C_VerifyFinal)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pSignature, CK_ULONG ulSignatureLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pSignature);
+    AX_UNUSED_ARG(ulSignatureLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2920,6 +2949,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_VerifyFinal)
 CK_DEFINE_FUNCTION(CK_RV, C_VerifyUpdate)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pPart, CK_ULONG ulPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pPart);
+    AX_UNUSED_ARG(ulPartLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2936,6 +2968,12 @@ CK_DEFINE_FUNCTION(CK_RV, C_WrapKey)
     CK_BYTE_PTR pWrappedKey,
     CK_ULONG_PTR pulWrappedKeyLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pMechanism);
+    AX_UNUSED_ARG(hWrappingKey);
+    AX_UNUSED_ARG(hKey);
+    AX_UNUSED_ARG(pWrappedKey);
+    AX_UNUSED_ARG(pulWrappedKeyLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2947,6 +2985,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_WrapKey)
 CK_DEFINE_FUNCTION(CK_RV, C_InitToken)
 (CK_SLOT_ID slotID, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen, CK_UTF8CHAR_PTR pLabel)
 {
+    AX_UNUSED_ARG(slotID);
+    AX_UNUSED_ARG(pPin);
+    AX_UNUSED_ARG(ulPinLen);
+    AX_UNUSED_ARG(pLabel);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2958,6 +3000,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_InitToken)
 CK_DEFINE_FUNCTION(CK_RV, C_InitPIN)
 (CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pPin, CK_ULONG ulPinLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pPin);
+    AX_UNUSED_ARG(ulPinLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2969,6 +3014,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_InitPIN)
 CK_DEFINE_FUNCTION(CK_RV, C_SetPIN)
 (CK_SESSION_HANDLE hSession, CK_UTF8CHAR_PTR pOldPin, CK_ULONG ulOldLen, CK_UTF8CHAR_PTR pNewPin, CK_ULONG ulNewLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pOldPin);
+    AX_UNUSED_ARG(ulOldLen);
+    AX_UNUSED_ARG(pNewPin);
+    AX_UNUSED_ARG(ulNewLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2979,6 +3029,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_SetPIN)
  */
 CK_DEFINE_FUNCTION(CK_RV, C_CloseAllSessions)(CK_SLOT_ID slotID)
 {
+    AX_UNUSED_ARG(slotID);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -2990,6 +3041,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CloseAllSessions)(CK_SLOT_ID slotID)
 CK_DEFINE_FUNCTION(CK_RV, C_GetSessionInfo)
 (CK_SESSION_HANDLE hSession, CK_SESSION_INFO_PTR pInfo)
 {
+    AX_UNUSED_ARG(hSession);
     LOG_D("%s", __FUNCTION__);
     CK_RV xResult = CKR_SESSION_CLOSED;
 #if (__GNUC__ && !AX_EMBEDDED)
@@ -3027,6 +3079,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetSessionInfo)
 CK_DEFINE_FUNCTION(CK_RV, C_GetOperationState)
 (CK_SESSION_HANDLE hSession, CK_BYTE_PTR pOperationState, CK_ULONG_PTR pulOperationStateLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pOperationState);
+    AX_UNUSED_ARG(pulOperationStateLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3042,6 +3097,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_SetOperationState)
     CK_OBJECT_HANDLE hEncryptionKey,
     CK_OBJECT_HANDLE hAuthenticationKey)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pOperationState);
+    AX_UNUSED_ARG(ulOperationStateLen);
+    AX_UNUSED_ARG(hEncryptionKey);
+    AX_UNUSED_ARG(hAuthenticationKey);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3053,6 +3113,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_SetOperationState)
 CK_DEFINE_FUNCTION(CK_RV, C_SignRecoverInit)
 (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pMechanism);
+    AX_UNUSED_ARG(hKey);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3068,6 +3131,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_SignRecover)
     CK_BYTE_PTR pSignature,
     CK_ULONG_PTR pulSignatureLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pData);
+    AX_UNUSED_ARG(ulDataLen);
+    AX_UNUSED_ARG(pSignature);
+    AX_UNUSED_ARG(pulSignatureLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3079,6 +3147,9 @@ CK_DEFINE_FUNCTION(CK_RV, C_SignRecover)
 CK_DEFINE_FUNCTION(CK_RV, C_VerifyRecoverInit)
 (CK_SESSION_HANDLE hSession, CK_MECHANISM_PTR pMechanism, CK_OBJECT_HANDLE hKey)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pMechanism);
+    AX_UNUSED_ARG(hKey);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3094,6 +3165,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_VerifyRecover)
     CK_BYTE_PTR pData,
     CK_ULONG_PTR pulDataLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pSignature);
+    AX_UNUSED_ARG(ulSignatureLen);
+    AX_UNUSED_ARG(pData);
+    AX_UNUSED_ARG(pulDataLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3109,6 +3185,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_DigestEncryptUpdate)
     CK_BYTE_PTR pEncryptedPart,
     CK_ULONG_PTR pulEncryptedPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pPart);
+    AX_UNUSED_ARG(ulPartLen);
+    AX_UNUSED_ARG(pEncryptedPart);
+    AX_UNUSED_ARG(pulEncryptedPartLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3124,6 +3205,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_DecryptDigestUpdate)
     CK_BYTE_PTR pPart,
     CK_ULONG_PTR pulPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pEncryptedPart);
+    AX_UNUSED_ARG(ulEncryptedPartLen);
+    AX_UNUSED_ARG(pPart);
+    AX_UNUSED_ARG(pulPartLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3139,6 +3225,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_SignEncryptUpdate)
     CK_BYTE_PTR pEncryptedPart,
     CK_ULONG_PTR pulEncryptedPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pPart);
+    AX_UNUSED_ARG(ulPartLen);
+    AX_UNUSED_ARG(pEncryptedPart);
+    AX_UNUSED_ARG(pulEncryptedPartLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3154,6 +3245,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_DecryptVerifyUpdate)
     CK_BYTE_PTR pPart,
     CK_ULONG_PTR pulPartLen)
 {
+    AX_UNUSED_ARG(hSession);
+    AX_UNUSED_ARG(pEncryptedPart);
+    AX_UNUSED_ARG(ulEncryptedPartLen);
+    AX_UNUSED_ARG(pPart);
+    AX_UNUSED_ARG(pulPartLen);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
@@ -3164,6 +3260,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_DecryptVerifyUpdate)
  */
 CK_DEFINE_FUNCTION(CK_RV, C_GetFunctionStatus)(CK_SESSION_HANDLE hSession)
 {
+    AX_UNUSED_ARG(hSession);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_PARALLEL;
@@ -3174,6 +3271,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetFunctionStatus)(CK_SESSION_HANDLE hSession)
  */
 CK_DEFINE_FUNCTION(CK_RV, C_CancelFunction)(CK_SESSION_HANDLE hSession)
 {
+    AX_UNUSED_ARG(hSession);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_PARALLEL;
@@ -3185,96 +3283,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_CancelFunction)(CK_SESSION_HANDLE hSession)
 CK_DEFINE_FUNCTION(CK_RV, C_WaitForSlotEvent)
 (CK_FLAGS flags, CK_SLOT_ID_PTR pSlot, CK_VOID_PTR pReserved)
 {
+    AX_UNUSED_ARG(flags);
+    AX_UNUSED_ARG(pSlot);
+    AX_UNUSED_ARG(pReserved);
     LOG_D("%s", __FUNCTION__);
 
     return CKR_FUNCTION_NOT_SUPPORTED;
 }
-
-/**
- * @brief Writes a file to local storage.
- *
- * Port-specific file write for crytographic information.
- *
- * @param[in] pxLabel       Label of the object to be saved.
- * @param[in] pucData       Data buffer to be written to file
- * @param[in] ulDataSize    Size (in bytes) of data to be saved.
- *
- * @return The file handle of the object that was stored.
- */
-CK_OBJECT_HANDLE PKCS11_PAL_SaveObject(CK_ATTRIBUTE_PTR pxLabel, CK_BYTE_PTR pucData, CK_ULONG ulDataSize)
-{
-    /*Function to be implemented if required*/
-    return 0;
-}
-
-/*-----------------------------------------------------------*/
-
-/**
- * @brief Translates a PKCS #11 label into an object handle.
- *
- * Port-specific object handle retrieval.
- *
- *
- * @param[in] pxLabel         Pointer to the label of the object
- *                           who's handle should be found.
- * @param[in] usLength       The length of the label, in bytes.
- *
- * @return The object handle if operation was successful.
- * Returns eInvalidHandle if unsuccessful.
- */
-CK_OBJECT_HANDLE PKCS11_PAL_FindObject(CK_BYTE_PTR pxLabel, CK_ULONG usLength)
-{
-    /*Function to be implemented if required*/
-    return 0;
-}
-
-CK_RV PKCS11_PAL_Initialize(void)
-{
-    /*Function to be implemented if required*/
-    return 0;
-}
-
-/**
- * @brief Cleanup after PKCS11_GetObjectValue().
- *
- * @param[in] pucData       The buffer to free.
- *                          (*ppucData from PKCS11_PAL_GetObjectValue())
- * @param[in] ulDataSize    The length of the buffer to free.
- *                          (*pulDataSize from PKCS11_PAL_GetObjectValue())
- */
-void PKCS11_PAL_GetObjectValueCleanup(uint8_t *pucData, uint32_t ulDataSize)
-{
-}
-
-/**
- * @brief Gets the value of an object in storage, by handle.
- *
- * Port-specific file access for cryptographic information.
- *
- * This call dynamically allocates the buffer which object value
- * data is copied into.  PKCS11_PAL_GetObjectValueCleanup()
- * should be called after each use to free the dynamically allocated
- * buffer.
- *
- * @sa PKCS11_PAL_GetObjectValueCleanup
- *
- * @param[in] pcFileName    The name of the file to be read.
- * @param[out] ppucData     Pointer to buffer for file data.
- * @param[out] pulDataSize  Size (in bytes) of data located in file.
- * @param[out] pIsPrivate   Boolean indicating if value is private (CK_TRUE)
- *                          or exportable (CK_FALSE)
- *
- * @return CKR_OK if operation was successful.  CKR_KEY_HANDLE_INVALID if
- * no such object handle was found, CKR_DEVICE_MEMORY if memory for
- * buffer could not be allocated, CKR_FUNCTION_FAILED for device driver
- * error.
- */
-CK_RV PKCS11_PAL_GetObjectValue(
-    CK_OBJECT_HANDLE xHandle, uint8_t **ppucData, uint32_t *pulDataSize, CK_BBOOL *pIsPrivate)
-{
-    /*Function to be implemented if required*/
-    CK_RV xReturn = CKR_OK;
-    return xReturn;
-}
-
 #endif /* TGT_A71CH */

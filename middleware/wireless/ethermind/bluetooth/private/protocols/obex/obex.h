@@ -28,6 +28,9 @@
 
 /* -------------------------------------------- Function Declarations */
 void em_obex_init( void );
+#ifdef BT_HAVE_SHUTDOWN
+void em_obex_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 void obex_bt_init( void );
 void obex_bt_shutdown( void );
 

@@ -42,6 +42,8 @@
 #include "sco_audio_pl.h"
 #include "eBT_os.h"
 
+#if (defined (CONFIG_BT_HFP_HF) && (CONFIG_BT_HFP_HF > 0U))
+
 #define LOG_ENABLE      IS_ENABLED(CONFIG_BT_DEBUG_HFP_HF)
 #define LOG_MODULE_NAME bt_hfp_hf
 #include "fsl_component_log.h"
@@ -2213,3 +2215,4 @@ int bt_hfp_hf_get_last_voice_tag_number(struct bt_conn *conn)
 /**
  * @}
  */
+#endif /* CONFIG_BT_HFP_HF */

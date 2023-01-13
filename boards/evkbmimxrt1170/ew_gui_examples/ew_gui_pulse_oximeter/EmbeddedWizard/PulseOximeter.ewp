@@ -1,0 +1,132 @@
+$version 10.00
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,70,240,110>
+unit Core
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,110,240,150>
+unit Resources
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,150,240,190>
+unit Graphics
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,190,240,230>
+unit Effects
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,230,240,270>
+unit Views
+{
+  attr Directory = $Mosaic;
+}
+
+// The 'default' Language. Each project has to contain at least one language brick \
+// called 'Default'
+$rect <540,70,740,110>
+language Default;
+
+// This unit is intended to contain the application class and another GUI components.
+$rect <40,430,240,470>
+unit Application
+{
+  attr Directory = .\;
+}
+
+// Mosaic Framework
+note group Note1
+{
+  attr Bounds = <20,20,260,370>;
+}
+
+$rect <40,470,240,510>
+unit Oximeter
+{
+  attr Directory = .\;
+}
+
+$rect <40,270,240,310>
+unit Templates
+{
+  attr Directory = $Mosaic;
+}
+
+$rect <40,310,240,350>
+unit WidgetSet
+{
+  attr Directory = $Mosaic;
+}
+
+// Profile Configuration
+note group Note2
+{
+  attr Bounds = <270,20,510,130>;
+}
+
+// Languages
+note group Note3
+{
+  attr Bounds = <520,20,760,130>;
+}
+
+// Project Units
+note group Note5
+{
+  attr Bounds = <20,380,260,530>;
+}
+
+// The sample application 'PulseOximeter' shows the implementation of a medical device \
+// for monitoring a person's pulse frequency and peripheral oxygen saturation.
+// 
+// The application demonstrates the usage of vector graphics within graphs and circular \
+// gauges.
+// 
+// The application provides the following screens / operation modes:
+// A main screen shows the current pulse frequency in bpm and the current peripheral \
+// oxygen saturation in %SpO2. The values are shown with a circular gauge, a numerical \
+// display and a small graph.
+// A graph screen presents the history of measured values as graphs with bézier lines \
+// and let the user slide through.
+// A settings screen for oxygen and pulse let the user configure the device. A menu \
+// screen is prepared for additional settings.
+// 
+// You can double-click on the 'Application' or 'Oximeter' bricks to open the unit \
+// within the Composer and to analyze the implementation.
+// 
+// To start the application within the Prototyper, press 'Ctrl'+'F5'.
+note legend Note
+{
+  attr Bounds = <270,140,760,530>;
+}
+
+// This is a profile member for the project. This profile controls the code generation \
+// for the target system.
+$rect <290,70,490,110>
+profile iMX_RT : NXP.iMX_RT_VGLite.RGBA8888
+{
+  attr ScreenSize = <1280,720>;
+  attr Optimization = High;
+  attr ApplicationClass = Application::Application;
+  attr CleanOutputDirectories = true;
+  attr OutputFileNameExtension = c;
+  attr Verbose = false;
+  attr ScreenOrientation = Rotated_90;
+  attr OutputDirectory = ..\GeneratedCode;
+
+  $rect <10,10,154,50>
+  macro Author = "Dipl. Ing. Paul Banach and Dipl. Ing. Manfred Schweyer, Copyright (C) TARA Systems GmbH";
+}

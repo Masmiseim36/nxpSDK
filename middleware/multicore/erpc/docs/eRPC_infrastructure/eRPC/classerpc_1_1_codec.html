@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_codec.html','');});
 <p>Abstract serialization encoder/decoder interface.  
  <a href="classerpc_1_1_codec.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="erpc__codec_8h_source.html">erpc_codec.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__codec_8hpp_source.html">erpc_codec.hpp</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for erpc::Codec:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -167,7 +167,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memdesc:a86556f8f7f972a796766bcaafae3f349"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set current status of eRPC message processing to given value.  <a href="#a86556f8f7f972a796766bcaafae3f349">More...</a><br /></td></tr>
 <tr class="separator:a86556f8f7f972a796766bcaafae3f349"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Encoding</div></td></tr>
-<tr class="memitem:ade36a3e253eb62fb6533aef091625047"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_codec.html#ade36a3e253eb62fb6533aef091625047">startWriteMessage</a> (<a class="el" href="erpc__codec_8h.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> type, uint32_t service, uint32_t request, uint32_t sequence)=0</td></tr>
+<tr class="memitem:ade36a3e253eb62fb6533aef091625047"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_codec.html#ade36a3e253eb62fb6533aef091625047">startWriteMessage</a> (<a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> type, uint32_t service, uint32_t request, uint32_t sequence)=0</td></tr>
 <tr class="memdesc:ade36a3e253eb62fb6533aef091625047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for write header of message.  <a href="#ade36a3e253eb62fb6533aef091625047">More...</a><br /></td></tr>
 <tr class="separator:ade36a3e253eb62fb6533aef091625047"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca48e28afe7669b796418e1d79441a2b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_codec.html#aca48e28afe7669b796418e1d79441a2b">write</a> (bool value)=0</td></tr>
@@ -236,7 +236,7 @@ Decoding</h2></td></tr>
 <tr class="separator:ad9fe5af5136be642e05a9e7335af8ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1f493b99584ed6e75a0e4ea06a1d14a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__infra.html#gadea8a058796ed8b9a73c5f833445a661">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_codec.html#aa1f493b99584ed6e75a0e4ea06a1d14a">m_status</a></td></tr>
 <tr class="separator:aa1f493b99584ed6e75a0e4ea06a1d14a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45c92dc20df6e8ac78336426a076aff3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_codec.html#a45c92dc20df6e8ac78336426a076aff3">startReadMessage</a> (<a class="el" href="erpc__codec_8h.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *type, uint32_t *service, uint32_t *request, uint32_t *sequence)=0</td></tr>
+<tr class="memitem:a45c92dc20df6e8ac78336426a076aff3"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_codec.html#a45c92dc20df6e8ac78336426a076aff3">startReadMessage</a> (<a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *type, uint32_t *service, uint32_t *request, uint32_t *sequence)=0</td></tr>
 <tr class="memdesc:a45c92dc20df6e8ac78336426a076aff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read header of message.  <a href="#a45c92dc20df6e8ac78336426a076aff3">More...</a><br /></td></tr>
 <tr class="separator:a45c92dc20df6e8ac78336426a076aff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ecc6e3071f968c5d6a981d0547bfea9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_codec.html#a7ecc6e3071f968c5d6a981d0547bfea9">read</a> (bool *value)=0</td></tr>
@@ -490,7 +490,7 @@ Decoding</h2></td></tr>
         <tr>
           <td class="memname">virtual void erpc::Codec::startWriteMessage </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="erpc__codec_8h.html#a7116f64fb1351d72417155cfed485478">message_type_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a>&#160;</td>
           <td class="paramname"><em>type</em>, </td>
         </tr>
         <tr>
@@ -1246,7 +1246,7 @@ Decoding</h2></td></tr>
         <tr>
           <td class="memname">virtual void erpc::Codec::startReadMessage </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="erpc__codec_8h.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *&#160;</td>
           <td class="paramname"><em>type</em>, </td>
         </tr>
         <tr>
@@ -2057,7 +2057,7 @@ Decoding</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="erpc__codec_8h_source.html">erpc_codec.h</a></li>
+<li><a class="el" href="erpc__codec_8hpp_source.html">erpc_codec.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

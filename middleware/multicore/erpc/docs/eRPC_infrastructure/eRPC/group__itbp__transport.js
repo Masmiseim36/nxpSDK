@@ -1,6 +1,6 @@
 var group__itbp__transport =
 [
-    [ "erpc_inter_thread_buffer_transport.h", "erpc__inter__thread__buffer__transport_8h.html", null ],
+    [ "erpc_inter_thread_buffer_transport.hpp", "erpc__inter__thread__buffer__transport_8hpp.html", null ],
     [ "InterThreadBufferTransport", "classerpc_1_1_inter_thread_buffer_transport.html", [
       [ "SharedState", "classerpc_1_1_inter_thread_buffer_transport.html#structerpc_1_1_inter_thread_buffer_transport_1_1_shared_state", [
         [ "m_mutex", "classerpc_1_1_inter_thread_buffer_transport.html#a0fe81cb63071c7d696cc2a3d0291df67", null ]

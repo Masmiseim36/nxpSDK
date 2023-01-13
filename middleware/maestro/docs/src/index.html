@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.5</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">Getting started with Maestro framework </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="md_GettingStarted"></a> </p>
+<div class="textblock"><p ><a class="anchor" id="md_C___ddm_mcu_sdk_2_0_middleware_maestro_README"></a> </p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Introduction</h1>
 <p >This document describes the basic usage of the Maestro Audio Framework. This framework intends to enable the chaining of basic audio processing blocks (called "elements"). These blocks then form stream processing objects ("pipeline"). This pipeline can be used for multiple audio processing use cases. The processing blocks can include (but are not limited to) different audio sources (for example file or microphone), decoders or encoders, filters or effects, and audio sinks. For detailed description of the Maestro framework, please refer to the <a class="el" href="md_ProgrammersGuide.html">programmer's guide</a>.</p>
@@ -198,7 +198,7 @@ file</h2>
 <div class="line">prop.<a class="code hl_variable" href="structELEMENT__PROPERTY__T.html#ab1013a8983adf70b4cffba4637ad1df8">val</a>  = 960;</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="streamer__api_8h.html#ae7fedaf363684333ce43f13af66095c8">streamer_set_property</a>(handle-&gt;streamer, prop, <span class="keyword">true</span>);</div>
-<div class="ttc" id="astreamer__api_8h_html_ae7fedaf363684333ce43f13af66095c8"><div class="ttname"><a href="streamer__api_8h.html#ae7fedaf363684333ce43f13af66095c8">streamer_set_property</a></div><div class="ttdeci">int32_t streamer_set_property(STREAMER_T *streamer, ELEMENT_PROPERTY_T prop, bool block)</div><div class="ttdoc">Set element property.</div><div class="ttdef"><b>Definition:</b> streamer.c:756</div></div>
+<div class="ttc" id="astreamer__api_8h_html_ae7fedaf363684333ce43f13af66095c8"><div class="ttname"><a href="streamer__api_8h.html#ae7fedaf363684333ce43f13af66095c8">streamer_set_property</a></div><div class="ttdeci">int32_t streamer_set_property(STREAMER_T *streamer, ELEMENT_PROPERTY_T prop, bool block)</div><div class="ttdoc">Set element property.</div><div class="ttdef"><b>Definition:</b> streamer.c:759</div></div>
 <div class="ttc" id="astructELEMENT__PROPERTY__T_html"><div class="ttname"><a href="structELEMENT__PROPERTY__T.html">ELEMENT_PROPERTY_T</a></div><div class="ttdoc">Element Property structure.</div><div class="ttdef"><b>Definition:</b> streamer_api.h:544</div></div>
 <div class="ttc" id="astructELEMENT__PROPERTY__T_html_a40dc39f13a8d25b45d19d63498082e10"><div class="ttname"><a href="structELEMENT__PROPERTY__T.html#a40dc39f13a8d25b45d19d63498082e10">ELEMENT_PROPERTY_T::prop</a></div><div class="ttdeci">uint16_t prop</div><div class="ttdoc">property type</div><div class="ttdef"><b>Definition:</b> streamer_api.h:545</div></div>
 <div class="ttc" id="astructELEMENT__PROPERTY__T_html_ab1013a8983adf70b4cffba4637ad1df8"><div class="ttname"><a href="structELEMENT__PROPERTY__T.html#ab1013a8983adf70b4cffba4637ad1df8">ELEMENT_PROPERTY_T::val</a></div><div class="ttdeci">uintptr_t val</div><div class="ttdoc">property value</div><div class="ttdef"><b>Definition:</b> streamer_api.h:546</div></div>

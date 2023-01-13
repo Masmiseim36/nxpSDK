@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_python_generator.html
 <p>Code generator for Python.  
  <a href="classerpcgen_1_1_python_generator.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_python_generator_8h_source.html">PythonGenerator.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_python_generator_8hpp_source.html">PythonGenerator.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for erpcgen::PythonGenerator:</div>
 <div class="dyncontent">
@@ -191,10 +191,10 @@ Protected Member Functions</h2></td></tr>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a9eacc3582abb3ecba72ad9acbf3320d3">generateGlobalInitFile</a> ()</td></tr>
 <tr class="memdesc:a9eacc3582abb3ecba72ad9acbf3320d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function generate output crc16 source file. <br /></td></tr>
 <tr class="separator:a9eacc3582abb3ecba72ad9acbf3320d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17c8b058c824888e052cee0476659ef7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a17c8b058c824888e052cee0476659ef7">getFunctionTemplateData</a> (<a class="el" href="classerpcgen_1_1_group.html">Group</a> *group, <a class="el" href="classerpcgen_1_1_function.html">Function</a> *fn)</td></tr>
+<tr class="memitem:a17c8b058c824888e052cee0476659ef7"><td class="memItemLeft" align="right" valign="top">cpptempl::data_map&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a17c8b058c824888e052cee0476659ef7">getFunctionTemplateData</a> (<a class="el" href="classerpcgen_1_1_group.html">Group</a> *group, <a class="el" href="classerpcgen_1_1_function.html">Function</a> *fn)</td></tr>
 <tr class="memdesc:a17c8b058c824888e052cee0476659ef7"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return interface function template data.  <a href="#a17c8b058c824888e052cee0476659ef7">More...</a><br /></td></tr>
 <tr class="separator:a17c8b058c824888e052cee0476659ef7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85fe129c6dcb48f5d09a679da07c63be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a85fe129c6dcb48f5d09a679da07c63be">setTemplateComments</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, <a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> &amp;symbolInfo)</td></tr>
+<tr class="memitem:a85fe129c6dcb48f5d09a679da07c63be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a85fe129c6dcb48f5d09a679da07c63be">setTemplateComments</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, cpptempl::data_map &amp;symbolInfo)</td></tr>
 <tr class="memdesc:a85fe129c6dcb48f5d09a679da07c63be"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will get symbol comments and convert to language specific ones.  <a href="#a85fe129c6dcb48f5d09a679da07c63be">More...</a><br /></td></tr>
 <tr class="separator:a85fe129c6dcb48f5d09a679da07c63be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82835df27d6dce465b6cbd77d97476ae"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a82835df27d6dce465b6cbd77d97476ae">getFunctionPrototype</a> (<a class="el" href="classerpcgen_1_1_function.html">Function</a> *fn)</td></tr>
@@ -206,7 +206,7 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="memitem:a159433bdd4b08321645dde2ab16486eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a159433bdd4b08321645dde2ab16486eb">makeEnumsTemplateData</a> ()</td></tr>
 <tr class="memdesc:a159433bdd4b08321645dde2ab16486eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets enum template data.  <a href="#a159433bdd4b08321645dde2ab16486eb">More...</a><br /></td></tr>
 <tr class="separator:a159433bdd4b08321645dde2ab16486eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff03a8fa95169719ea156c784c748dbb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#aff03a8fa95169719ea156c784c748dbb">makeGroupSymbolsTemplateData</a> (<a class="el" href="classerpcgen_1_1_group.html">Group</a> *group)</td></tr>
+<tr class="memitem:aff03a8fa95169719ea156c784c748dbb"><td class="memItemLeft" align="right" valign="top">cpptempl::data_map&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#aff03a8fa95169719ea156c784c748dbb">makeGroupSymbolsTemplateData</a> (<a class="el" href="classerpcgen_1_1_group.html">Group</a> *group)</td></tr>
 <tr class="memdesc:aff03a8fa95169719ea156c784c748dbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets group symbols template data.  <a href="#aff03a8fa95169719ea156c784c748dbb">More...</a><br /></td></tr>
 <tr class="separator:aff03a8fa95169719ea156c784c748dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2af3aec5e6e3fee1417287f4c12c5cfc"><td class="memItemLeft" align="right" valign="top">cpptempl::data_list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a2af3aec5e6e3fee1417287f4c12c5cfc">getEnumMembersTemplateData</a> (<a class="el" href="classerpcgen_1_1_enum_type.html">EnumType</a> *enumType)</td></tr>
@@ -219,14 +219,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aad265247ed52bc38c3d7762ef2a33db4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#aad265247ed52bc38c3d7762ef2a33db4">makeFunctionsTemplateData</a> ()</td></tr>
 <tr class="memdesc:aad265247ed52bc38c3d7762ef2a33db4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets function type template data.  <a href="#aad265247ed52bc38c3d7762ef2a33db4">More...</a><br /></td></tr>
 <tr class="separator:aad265247ed52bc38c3d7762ef2a33db4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a395a47fda56e74785ec229bf3f58b655"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a395a47fda56e74785ec229bf3f58b655">setStructMembersTemplateData</a> (<a class="el" href="classerpcgen_1_1_struct_type.html">StructType</a> *structType, <a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> &amp;structInfo)</td></tr>
+<tr class="memitem:a395a47fda56e74785ec229bf3f58b655"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a395a47fda56e74785ec229bf3f58b655">setStructMembersTemplateData</a> (<a class="el" href="classerpcgen_1_1_struct_type.html">StructType</a> *structType, cpptempl::data_map &amp;structInfo)</td></tr>
 <tr class="memdesc:a395a47fda56e74785ec229bf3f58b655"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets struct member information to struct data map variable.  <a href="#a395a47fda56e74785ec229bf3f58b655">More...</a><br /></td></tr>
 <tr class="separator:a395a47fda56e74785ec229bf3f58b655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afda1685e2f240fb65bbba975fb686e76"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afda1685e2f240fb65bbba975fb686e76"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#afda1685e2f240fb65bbba975fb686e76">setOneStructMemberTemplateData</a> (<a class="el" href="classerpcgen_1_1_struct_member.html">StructMember</a> *member, <a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> &amp;member_info)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#afda1685e2f240fb65bbba975fb686e76">setOneStructMemberTemplateData</a> (<a class="el" href="classerpcgen_1_1_struct_member.html">StructMember</a> *member, cpptempl::data_map &amp;member_info)</td></tr>
 <tr class="memdesc:afda1685e2f240fb65bbba975fb686e76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill in template data for a single struct member. <br /></td></tr>
 <tr class="separator:afda1685e2f240fb65bbba975fb686e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2c05b210c26321b3c8d3596a6bbb63d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#ab2c05b210c26321b3c8d3596a6bbb63d">getTypeInfo</a> (<a class="el" href="classerpcgen_1_1_data_type.html">DataType</a> *t)</td></tr>
+<tr class="memitem:ab2c05b210c26321b3c8d3596a6bbb63d"><td class="memItemLeft" align="right" valign="top">cpptempl::data_map&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#ab2c05b210c26321b3c8d3596a6bbb63d">getTypeInfo</a> (<a class="el" href="classerpcgen_1_1_data_type.html">DataType</a> *t)</td></tr>
 <tr class="memdesc:ab2c05b210c26321b3c8d3596a6bbb63d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return necessary template data for data type.  <a href="#ab2c05b210c26321b3c8d3596a6bbb63d">More...</a><br /></td></tr>
 <tr class="separator:ab2c05b210c26321b3c8d3596a6bbb63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cc74c4d08efa3629983131b0037f085"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_python_generator.html#a8cc74c4d08efa3629983131b0037f085">getBuiltinTypename</a> (const <a class="el" href="classerpcgen_1_1_builtin_type.html">BuiltinType</a> *t)</td></tr>
@@ -251,7 +251,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr class="memitem:a928e7561c6531c0516317ac9903daec2 inherit pro_methods_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a928e7561c6531c0516317ac9903daec2">openFile</a> (std::ofstream &amp;fileOutputStream, const std::string &amp;fileName)</td></tr>
 <tr class="memdesc:a928e7561c6531c0516317ac9903daec2 inherit pro_methods_classerpcgen_1_1_generator"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function open file.  <a href="#a928e7561c6531c0516317ac9903daec2">More...</a><br /></td></tr>
 <tr class="separator:a928e7561c6531c0516317ac9903daec2 inherit pro_methods_classerpcgen_1_1_generator"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2361005441df20adab606197c72d3ccd inherit pro_methods_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a2361005441df20adab606197c72d3ccd">generateOutputFile</a> (const std::string &amp;fileName, const std::string &amp;templateName, <a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> &amp;templateData, const char *const kParseFile)</td></tr>
+<tr class="memitem:a2361005441df20adab606197c72d3ccd inherit pro_methods_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a2361005441df20adab606197c72d3ccd">generateOutputFile</a> (const std::string &amp;fileName, const std::string &amp;templateName, cpptempl::data_map &amp;templateData, const char *const kParseFile)</td></tr>
 <tr class="memdesc:a2361005441df20adab606197c72d3ccd inherit pro_methods_classerpcgen_1_1_generator"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function open file, generate output into this file and close this file.  <a href="#a2361005441df20adab606197c72d3ccd">More...</a><br /></td></tr>
 <tr class="separator:a2361005441df20adab606197c72d3ccd inherit pro_methods_classerpcgen_1_1_generator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fa9381d8ade2e8b19d076f9ee515b4b inherit pro_methods_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a3fa9381d8ade2e8b19d076f9ee515b4b">stripExtension</a> (const std::string &amp;filename)</td></tr>
@@ -315,6 +315,9 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getOutputName<
 <tr class="memitem:aaada1d3103c40f5273aa99dd8d469df6 inherit pro_methods_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#aaada1d3103c40f5273aa99dd8d469df6">getAnnStringValue</a> (<a class="el" href="classerpcgen_1_1_symbol.html">Symbol</a> *symbol, std::string name)</td></tr>
 <tr class="memdesc:aaada1d3103c40f5273aa99dd8d469df6 inherit pro_methods_classerpcgen_1_1_generator"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function search and returns string for given annotation name.  <a href="#aaada1d3103c40f5273aa99dd8d469df6">More...</a><br /></td></tr>
 <tr class="separator:aaada1d3103c40f5273aa99dd8d469df6 inherit pro_methods_classerpcgen_1_1_generator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91fcb350eab3a0fd1ee8d388452f378d inherit pro_methods_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_generator.html#aac14e41bce876c761f554176a9b00203">datatype_vector_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a91fcb350eab3a0fd1ee8d388452f378d">getDataTypesFromSymbolScope</a> (<a class="el" href="classerpcgen_1_1_symbol_scope.html">SymbolScope</a> *scope, <a class="el" href="classerpcgen_1_1_data_type.html#aaf50f761fa731a9393688363841d983b">DataType::data_type_t</a> datatype)</td></tr>
+<tr class="memdesc:a91fcb350eab3a0fd1ee8d388452f378d inherit pro_methods_classerpcgen_1_1_generator"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns vector of data types from scope.  <a href="#a91fcb350eab3a0fd1ee8d388452f378d">More...</a><br /></td></tr>
+<tr class="separator:a91fcb350eab3a0fd1ee8d388452f378d inherit pro_methods_classerpcgen_1_1_generator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -329,7 +332,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cl
 <tr class="inherit_header pro_attribs_classerpcgen_1_1_generator"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classerpcgen_1_1_generator')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classerpcgen_1_1_generator.html">erpcgen::Generator</a></td></tr>
 <tr class="memitem:ad3c1132eb80ad90d0ec442eacd971375 inherit pro_attribs_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#ad3c1132eb80ad90d0ec442eacd971375">m_idlCrc16</a></td></tr>
 <tr class="separator:ad3c1132eb80ad90d0ec442eacd971375 inherit pro_attribs_classerpcgen_1_1_generator"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4754822cdb3372faaa3a9118d5e4b53c inherit pro_attribs_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a4754822cdb3372faaa3a9118d5e4b53c">m_templateData</a></td></tr>
+<tr class="memitem:a4754822cdb3372faaa3a9118d5e4b53c inherit pro_attribs_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top">cpptempl::data_map&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a4754822cdb3372faaa3a9118d5e4b53c">m_templateData</a></td></tr>
 <tr class="separator:a4754822cdb3372faaa3a9118d5e4b53c inherit pro_attribs_classerpcgen_1_1_generator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98fc35e6e8f393aab0bfe69afebf4684 inherit pro_attribs_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classerpcgen_1_1_interface_definition.html">InterfaceDefinition</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#a98fc35e6e8f393aab0bfe69afebf4684">m_def</a></td></tr>
 <tr class="separator:a98fc35e6e8f393aab0bfe69afebf4684 inherit pro_attribs_classerpcgen_1_1_generator"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -354,6 +357,8 @@ Additional Inherited Members</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:a73e608ae6849a141197d12d73b94e1bf inherit pub_types_classerpcgen_1_1_generator"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac14e41bce876c761f554176a9b00203 inherit pub_types_classerpcgen_1_1_generator"><td class="memItemLeft" align="right" valign="top">typedef std::vector&lt; <a class="el" href="classerpcgen_1_1_data_type.html">DataType</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_generator.html#aac14e41bce876c761f554176a9b00203">datatype_vector_t</a></td></tr>
+<tr class="separator:aac14e41bce876c761f554176a9b00203 inherit pub_types_classerpcgen_1_1_generator"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Code generator for Python. </p>
@@ -847,7 +852,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classcpptempl_1_1data__map.html">data_map</a> PythonGenerator::getFunctionTemplateData </td>
+          <td class="memname">data_map PythonGenerator::getFunctionTemplateData </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classerpcgen_1_1_group.html">Group</a> *&#160;</td>
           <td class="paramname"><em>group</em>, </td>
@@ -895,7 +900,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classcpptempl_1_1data__map.html">data_map</a> PythonGenerator::getTypeInfo </td>
+          <td class="memname">data_map PythonGenerator::getTypeInfo </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classerpcgen_1_1_data_type.html">DataType</a> *&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
@@ -1031,7 +1036,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classcpptempl_1_1data__map.html">data_map</a> PythonGenerator::makeGroupSymbolsTemplateData </td>
+          <td class="memname">data_map PythonGenerator::makeGroupSymbolsTemplateData </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classerpcgen_1_1_group.html">Group</a> *&#160;</td>
           <td class="paramname"><em>group</em></td><td>)</td>
@@ -1101,7 +1106,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> &amp;&#160;</td>
+          <td class="paramtype">cpptempl::data_map &amp;&#160;</td>
           <td class="paramname"><em>structInfo</em>&#160;</td>
         </tr>
         <tr>
@@ -1145,7 +1150,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> &amp;&#160;</td>
+          <td class="paramtype">cpptempl::data_map &amp;&#160;</td>
           <td class="paramname"><em>symbolInfo</em>&#160;</td>
         </tr>
         <tr>
@@ -1207,7 +1212,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="_python_generator_8h_source.html">PythonGenerator.h</a></li>
+<li><a class="el" href="_python_generator_8hpp_source.html">PythonGenerator.hpp</a></li>
 <li>PythonGenerator.cpp</li>
 </ul>
 </div><!-- contents -->

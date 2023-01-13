@@ -35,6 +35,10 @@
 /* For HCI events and error codes */
 #include "BT_hci_api.h"
 
+#ifdef MCAP
+#include "BT_mcap_api.h"
+#endif /* MCAP */
+
 /* For the Write Task & Bottom Halves */
 #include "write_task.h"
 #include "BT_bottom_half.h"
@@ -352,6 +356,13 @@
         ((sm_services[(i)].security_attr & \
          (0x01 << SM_SRV_NO_BONDING_BIT)) > 0)
 
+#ifdef MCAP
+#define SM_MCAP_DEVICE_DELETE_INDICATION(dev_hdl) \
+    (BT_IGNORE_RETURN_VALUE)BT_mcap_delete_device(dev_hdl)
+#else
+#define SM_MCAP_DEVICE_DELETE_INDICATION(dev_hdl)
+#endif /* MCAP */
+
 /* ----------------------------------------- Structures/ Data Types */
 /** The Security Manager Device Database */
 typedef struct
@@ -414,6 +425,13 @@ typedef struct
     /** Encryption key size of encrypted link */
     UCHAR enckey_size;
 #endif /* BTSIG_ERRATA_11838 */
+
+    /**
+     * Encryption Mode of active Encryption
+     * 0x01U - E0
+     * 0x02U - AES
+     */
+    UCHAR encmode;
 } SM_DEVICE_ENTITY;
 
 
@@ -529,12 +547,12 @@ UINT32 sm_search_device_entity
 
 void sm_delete_device_entity
      (
-         /* IN */  UINT32    indx
+         /* IN */  UINT32    di
      );
 
 void sm_set_device_valid_flag
      (
-         /* IN */  UINT32    indx
+         /* IN */  UINT32    di
      );
 
 
@@ -611,5 +629,4 @@ API_RESULT sm_create_device_node (UCHAR * bd_addr, DEVICE_HANDLE * handle);
 void sm_get_device_address (UINT32 di,UCHAR * bd_addr);
 
 #endif /* _H_SM_INTERNAL_ */
-
 

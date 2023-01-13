@@ -52,6 +52,7 @@ API_RESULT sm_access_request_ex
                /* IN */  UINT32           proto_data
            );
 
+#ifndef BT_SSP
 #ifdef SM_HAVE_MODE_2
 API_RESULT sm_access_request_mode_1_3
            (
@@ -61,12 +62,16 @@ API_RESULT sm_access_request_mode_1_3
                /* IN */  UINT32     proto_data
            );
 #endif /* SM_HAVE_MODE_2 */
+#endif /* BT_SSP */
 
 
 /* ----------------------------------------- API Declarations */
 #ifdef CLASSIC_SEC_MANAGER
 /** Initialization & Shutdown of Security Manager */
 void em_sm_init (void);
+#ifdef BT_HAVE_SHUTDOWN
+void em_sm_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 void sm_bt_init (void);
 void sm_bt_shutdown (void);
 

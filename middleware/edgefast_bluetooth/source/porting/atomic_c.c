@@ -68,6 +68,40 @@ int atomic_cas(atomic_t *target, atomic_val_t old_value,
 }
 
 /**
+ * @brief Atomic compare-and-set with pointer values
+ *
+ * This routine performs an atomic compare-and-set on @a target. If the current
+ * value of @a target equals @a old_value, @a target is set to @a new_value.
+ * If the current value of @a target does not equal @a old_value, @a target
+ * is left unchanged.
+ *
+ * @note As for all atomic APIs, includes a
+ * full/sequentially-consistent memory barrier (where applicable).
+ *
+ * @param target Address of atomic variable.
+ * @param old_value Original value to compare against.
+ * @param new_value New value to store.
+ * @return true if @a new_value is written, false otherwise.
+ */
+bool atomic_ptr_cas(atomic_ptr_t *target, atomic_ptr_val_t old_value,
+				  atomic_ptr_val_t new_value)
+{
+    int ret = false;
+
+    OSA_SR_ALLOC();
+    OSA_ENTER_CRITICAL();
+
+    if (*target == old_value) {
+        *target = new_value;
+        ret = true;
+    }
+
+    OSA_EXIT_CRITICAL();
+
+    return ret;
+}
+
+/**
  *
  * @brief Atomic addition primitive
  *
@@ -198,6 +232,24 @@ atomic_val_t atomic_get(const atomic_t *target)
 
 /**
  *
+ * @brief Atomic get a pointer value
+ *
+ * This routine performs an atomic read on @a target.
+ *
+ * @note As for all atomic APIs, includes a
+ * full/sequentially-consistent memory barrier (where applicable).
+ *
+ * @param target Address of pointer variable.
+ *
+ * @return Value of @a target.
+ */
+atomic_ptr_val_t atomic_ptr_get(const atomic_ptr_t *target)
+{
+    return *target;
+}
+
+/**
+ *
  * @brief Atomic get-and-set primitive
  *
  * This routine provides the atomic set operator. The <value> is atomically
@@ -212,6 +264,36 @@ atomic_val_t atomic_set(atomic_t *target, atomic_val_t value)
 {
 
     atomic_val_t ret;
+
+    OSA_SR_ALLOC();
+    OSA_ENTER_CRITICAL();
+
+    ret = *target;
+    *target = value;
+
+    OSA_EXIT_CRITICAL();
+
+    return ret;
+}
+
+/**
+ *
+ * @brief Atomic get-and-set for pointer values
+ *
+ * This routine atomically sets @a target to @a value and returns
+ * the previous value of @a target.
+ *
+ * @note As for all atomic APIs, includes a
+ * full/sequentially-consistent memory barrier (where applicable).
+ *
+ * @param target Address of atomic variable.
+ * @param value Value to write to @a target.
+ *
+ * @return Previous value of @a target.
+ */
+atomic_ptr_val_t atomic_ptr_set(atomic_ptr_t *target, atomic_ptr_val_t value)
+{
+    atomic_ptr_val_t ret;
 
     OSA_SR_ALLOC();
     OSA_ENTER_CRITICAL();

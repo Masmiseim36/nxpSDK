@@ -172,6 +172,16 @@ extern "C" {
 /*******************************************************************************
  * API
  ******************************************************************************/
+
+/*!
+ * @brief PMSM Openloop control.
+ *
+ * This function is used for Openloop control mode.
+ *
+ * @param psOpenloop  The pointer of the Openloop structure
+ *
+ * @return None
+ */
 RAM_FUNC_LIB
 void MCS_PMSMOpenloop(mcs_openloop_t *psOpenloop);
 
@@ -246,8 +256,6 @@ void MCS_PMSMOpenLoopStartUp(mcs_pmsm_startup_t *psStartUp);
  */
 RAM_FUNC_LIB
 void MCS_PMSMScalarCtrl(mcs_pmsm_scalar_ctrl_t *psScalarPMSM);
-
-void MCS_PMSMOpenloop(mcs_openloop_t *psOpenloop);
 
 #ifdef __cplusplus
 }

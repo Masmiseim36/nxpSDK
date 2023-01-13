@@ -9,7 +9,7 @@ var classerpc_1_1_message_buffer =
     [ "getLength", "classerpc_1_1_message_buffer.html#a064fda9eef763265dd9de81142011e33", null ],
     [ "getUsed", "classerpc_1_1_message_buffer.html#aa0aa4b6ee452d083cbaaf0ce5fe6517f", null ],
     [ "getFree", "classerpc_1_1_message_buffer.html#a7432d37f64b91d65a8df06016cec22e1", null ],
-    [ "setUsed", "classerpc_1_1_message_buffer.html#aa0170a6e243e15fc7271d792624b3e96", null ],
+    [ "setUsed", "classerpc_1_1_message_buffer.html#ad8bea76dc6b6eeeaaaa202b73c8eef04", null ],
     [ "read", "classerpc_1_1_message_buffer.html#a046c0aa6baf607d5de23f18cfa13f08e", null ],
     [ "write", "classerpc_1_1_message_buffer.html#a9f47a5776a51c53d4a8516c354d21d19", null ],
     [ "copy", "classerpc_1_1_message_buffer.html#ad37d276294bd8d587a741ce0cee14967", null ],

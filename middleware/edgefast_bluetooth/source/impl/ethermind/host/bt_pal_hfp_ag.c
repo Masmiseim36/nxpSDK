@@ -42,6 +42,7 @@
 #include "sco_audio_pl.h"
 
 #if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
+#if (defined (CONFIG_BT_HFP_AG) && (CONFIG_BT_HFP_AG > 0U))
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_HFP_AG)
 #define LOG_MODULE_NAME bt_hfp_ag
@@ -587,6 +588,10 @@ static API_RESULT hfp_ag_callback(HFP_AG_EVENTS hfp_ag_event, API_RESULT result,
                             bt_hfp_ag_send_at_rsp(HFAG_CIND_READ, NULL);
                             bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
                             break;
+                        case AT_CHLD_TEST:
+                            bt_hfp_ag_send_at_rsp(HFAG_CHLD_TEST, NULL);
+                            bt_hfp_ag_send_at_rsp(HFAG_OK, NULL);
+                            break;
                         case AT_NREC:
                             if (!s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_nrec)
                             {
@@ -1100,7 +1105,7 @@ int bt_hfp_ag_connect(struct bt_conn *conn,
     s_actived_bt_hfp_ag->bt_cind_setting.roam             = 0U;
     s_actived_bt_hfp_ag->bt_cind_setting.batt_lev         = 2U;
 
-    hfp_ag->ag_features = 0U;
+    hfp_ag->ag_features = BT_HFP_AG_SUPPORTED_FEATURES;
     *phfp_ag = hfp_ag;
     return 0;
 }
@@ -1193,6 +1198,7 @@ void bt_hfp_ag_close_audio(struct bt_hfp_ag *hfp_ag)
         {
             BT_ERR("SCO Connection for HFP-Unit not found\n");
         }
+        hfp_ag->bt_so_conn = NULL;
     }
 }
 
@@ -1435,6 +1441,15 @@ int bt_hfp_ag_codec_selector(struct bt_hfp_ag *hfp_ag, uint8_t value)
     {
         return -EINVAL;
     }
+    if (!(s_actived_bt_hfp_ag->hf_features & BT_HFP_HF_FEATURE_CODEC_NEG))
+    {
+        return -ENOTSUP;
+    }
+    if (!(s_actived_bt_hfp_ag->ag_features & BT_HFP_AG_FEATURE_CODEC_NEG))
+    {
+        return -ENOTSUP;
+    }
+
     s_actived_bt_hfp_ag->bt_hfp_ag_config->bt_hfp_ag_codec = value;
     bt_hfp_ag_send_at_rsp(HFAG_BCS, NULL);
     return 0;
@@ -1510,4 +1525,5 @@ int bt_hfp_ag_discover(struct bt_conn *conn, bt_hfp_ag_discover_callback discove
     return -ENOSPC;
 }
 
+#endif /* CONFIG_BT_HFP_AG */
 #endif /* CONFIG_BT_BREDR */

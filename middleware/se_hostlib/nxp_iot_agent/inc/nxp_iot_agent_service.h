@@ -225,8 +225,15 @@ iot_agent_status_t iot_agent_service_get_service_descriptor_of_service(
  */
 void iot_agent_service_free_service_descriptor(
 	 nxp_iot_ServiceDescriptor* service_descriptor);
- 
-
+iot_agent_status_t iot_agent_service_read_buffer(const iot_agent_datastore_t* ctx, size_t offset, void* buffer, size_t expected_len);
+void iot_agent_service_read_header(const iot_agent_datastore_t* ctx, size_t offset, configuration_data_header_t* header);
+#if SSS_HAVE_HOSTCRYPTO_OPENSSL
+iot_agent_status_t iot_agent_service_calculate_cofiguration_checksum(const iot_agent_datastore_t* ctx,
+    const configuration_data_header_t* header, uint8_t calculated_checksum[32]);
+#elif SSS_HAVE_HOSTCRYPTO_MBEDTLS
+iot_agent_status_t iot_agent_service_calculate_cofiguration_checksum(const iot_agent_datastore_t* ctx,
+    const configuration_data_header_t* header, uint8_t calculated_checksum[32]);
+#endif
 /*!
  *@}
  */ /* end of edgelock2go_agent_service */

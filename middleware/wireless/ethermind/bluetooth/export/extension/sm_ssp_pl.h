@@ -99,7 +99,7 @@ API_RESULT BT_sm_set_local_io_cap
  */
 API_RESULT BT_sm_set_device_oob_data
            (
-               /* IN */  SM_OOB_INFO *    oob_data
+               /* IN */  SM_OOB_INFO *    oob_info
            );
 #endif /* BT_SSP_OOB */
 
@@ -128,7 +128,7 @@ API_RESULT BT_sm_get_remote_iocaps_pl
 API_RESULT sm_get_io_capability_pl
            (
                /* IN */  UINT32          di,
-               /* OUT */ SM_IO_CAPS *    io_caps
+               /* OUT */ SM_IO_CAPS *    io_cap
            );
 
 #ifdef BT_SSP_OOB

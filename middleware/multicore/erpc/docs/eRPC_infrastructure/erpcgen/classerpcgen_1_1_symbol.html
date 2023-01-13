@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_symbol.html','');});
 <p>Base class for all named declarations in the IDL.  
  <a href="classerpcgen_1_1_symbol.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_symbol_8h_source.html">Symbol.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_symbol_8hpp_source.html">Symbol.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for erpcgen::Symbol:</div>
 <div class="dyncontent">
@@ -156,23 +156,7 @@ Public Types</h2></td></tr>
 <br />
 &#160;&#160;<b>kTypenameSymbol</b>, 
 <br />
-&#160;&#160;<b>kUnionCaseMemberSymbol</b>, 
-<br />
-&#160;&#160;<b>kAliasTypeSymbol</b>, 
-<br />
-&#160;&#160;<b>kArrayTypeSymbol</b>, 
-<br />
-&#160;&#160;<b>kBuiltinTypeSymbol</b>, 
-<br />
-&#160;&#160;<b>kEnumTypeSymbol</b>, 
-<br />
-&#160;&#160;<b>kFunctionTypeSymbol</b>, 
-<br />
-&#160;&#160;<b>kListTypeSymbol</b>, 
-<br />
-&#160;&#160;<b>kStructTypeSymbol</b>, 
-<br />
-&#160;&#160;<b>kUnionTypeSymbol</b>
+&#160;&#160;<b>kUnionCaseMemberSymbol</b>
 <br />
  }<tr class="memdesc:a41dbbe424222a8e9b4b73c390cf06775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported symbol types. <br /></td></tr>
 </td></tr>
@@ -202,6 +186,30 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:af3a2dbfad1b23fbdfa3ef6e3812ad357"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#af3a2dbfad1b23fbdfa3ef6e3812ad357">setName</a> (const std::string &amp;newName)</td></tr>
 <tr class="memdesc:af3a2dbfad1b23fbdfa3ef6e3812ad357"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function set symbol name.  <a href="#af3a2dbfad1b23fbdfa3ef6e3812ad357">More...</a><br /></td></tr>
 <tr class="separator:af3a2dbfad1b23fbdfa3ef6e3812ad357"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5c12ab34dc686928c28aedba1de20a5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#aa5c12ab34dc686928c28aedba1de20a5">isConstSymbol</a> () const </td></tr>
+<tr class="memdesc:aa5c12ab34dc686928c28aedba1de20a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is testing symbol type.  <a href="#aa5c12ab34dc686928c28aedba1de20a5">More...</a><br /></td></tr>
+<tr class="separator:aa5c12ab34dc686928c28aedba1de20a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee2c69168324ebdd8cfe22385c227475"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#aee2c69168324ebdd8cfe22385c227475">isEnumMemberSymbol</a> () const </td></tr>
+<tr class="memdesc:aee2c69168324ebdd8cfe22385c227475"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is testing symbol type.  <a href="#aee2c69168324ebdd8cfe22385c227475">More...</a><br /></td></tr>
+<tr class="separator:aee2c69168324ebdd8cfe22385c227475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3252df2ee730f2afc3bd8e6252d0b645"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a3252df2ee730f2afc3bd8e6252d0b645">isFunctionSymbol</a> () const </td></tr>
+<tr class="memdesc:a3252df2ee730f2afc3bd8e6252d0b645"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is testing symbol type.  <a href="#a3252df2ee730f2afc3bd8e6252d0b645">More...</a><br /></td></tr>
+<tr class="separator:a3252df2ee730f2afc3bd8e6252d0b645"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa4e089e82ea97c43d55654308696c4d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#aaa4e089e82ea97c43d55654308696c4d">isInterfaceSymbol</a> () const </td></tr>
+<tr class="memdesc:aaa4e089e82ea97c43d55654308696c4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is testing symbol type.  <a href="#aaa4e089e82ea97c43d55654308696c4d">More...</a><br /></td></tr>
+<tr class="separator:aaa4e089e82ea97c43d55654308696c4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6895f9ea81263060808a7cb68dbf82d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#aa6895f9ea81263060808a7cb68dbf82d">isProgramSymbol</a> () const </td></tr>
+<tr class="memdesc:aa6895f9ea81263060808a7cb68dbf82d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is testing symbol type.  <a href="#aa6895f9ea81263060808a7cb68dbf82d">More...</a><br /></td></tr>
+<tr class="separator:aa6895f9ea81263060808a7cb68dbf82d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e6b6b98a45bdd44bbbf499e1b1e83e4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a9e6b6b98a45bdd44bbbf499e1b1e83e4">isStructMemberSymbol</a> () const </td></tr>
+<tr class="memdesc:a9e6b6b98a45bdd44bbbf499e1b1e83e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is testing symbol type.  <a href="#a9e6b6b98a45bdd44bbbf499e1b1e83e4">More...</a><br /></td></tr>
+<tr class="separator:a9e6b6b98a45bdd44bbbf499e1b1e83e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78b469aa29c664096d329888b0e87557"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a78b469aa29c664096d329888b0e87557">isDatatypeSymbol</a> () const </td></tr>
+<tr class="memdesc:a78b469aa29c664096d329888b0e87557"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is testing symbol type.  <a href="#a78b469aa29c664096d329888b0e87557">More...</a><br /></td></tr>
+<tr class="separator:a78b469aa29c664096d329888b0e87557"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68487b20979e906e63f649a36fcfbe03"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a68487b20979e906e63f649a36fcfbe03">isUnionCaseSymbol</a> () const </td></tr>
+<tr class="memdesc:a68487b20979e906e63f649a36fcfbe03"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function is testing symbol type.  <a href="#a68487b20979e906e63f649a36fcfbe03">More...</a><br /></td></tr>
+<tr class="separator:a68487b20979e906e63f649a36fcfbe03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44f21abf207fcdda09415d1eaa32f348"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structerpcgen_1_1token__loc__t.html">token_loc_t</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a44f21abf207fcdda09415d1eaa32f348">getLocation</a> ()</td></tr>
 <tr class="memdesc:a44f21abf207fcdda09415d1eaa32f348"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns location for symbol.  <a href="#a44f21abf207fcdda09415d1eaa32f348">More...</a><br /></td></tr>
 <tr class="separator:a44f21abf207fcdda09415d1eaa32f348"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,9 +222,6 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:a00bb74bbfea291f784e65484bf54664b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a00bb74bbfea291f784e65484bf54664b">getLastLine</a> () const </td></tr>
 <tr class="memdesc:a00bb74bbfea291f784e65484bf54664b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return last line from location of symbol.  <a href="#a00bb74bbfea291f784e65484bf54664b">More...</a><br /></td></tr>
 <tr class="separator:a00bb74bbfea291f784e65484bf54664b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbb57b6bf584ed7c07e86f5316fa4051"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#afbb57b6bf584ed7c07e86f5316fa4051">isBuiltin</a> () const </td></tr>
-<tr class="memdesc:afbb57b6bf584ed7c07e86f5316fa4051"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function return "false" value as default for identify builtin type.  <a href="#afbb57b6bf584ed7c07e86f5316fa4051">More...</a><br /></td></tr>
-<tr class="separator:afbb57b6bf584ed7c07e86f5316fa4051"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84732dc398fd0cbf64d53d45db1cc8c5"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_symbol.html#a84732dc398fd0cbf64d53d45db1cc8c5">getDescription</a> () const </td></tr>
 <tr class="memdesc:a84732dc398fd0cbf64d53d45db1cc8c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns description about the symbol (symbol name).  <a href="#a84732dc398fd0cbf64d53d45db1cc8c5">More...</a><br /></td></tr>
 <tr class="separator:a84732dc398fd0cbf64d53d45db1cc8c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -289,7 +294,7 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -620,7 +625,7 @@ Protected Attributes</h2></td></tr>
 <p>This function returns description about the symbol (symbol name). </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classerpcgen_1_1_symbol.html" title="Base class for all named declarations in the IDL. ">Symbol</a> name. </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classerpcgen_1_1_function.html#ac08e8cc2245d28b872d271f2d0b62bcc">erpcgen::Function</a>, <a class="el" href="classerpcgen_1_1_union_case.html#a2cbe4d615ff794dff0ac49d0f5376f38">erpcgen::UnionCase</a>, <a class="el" href="classerpcgen_1_1_enum_type.html#ab95b28ad62ecb25638468b2ba7783921">erpcgen::EnumType</a>, <a class="el" href="classerpcgen_1_1_struct_member.html#a35caff93a725d1a34e961cafc2a09085">erpcgen::StructMember</a>, <a class="el" href="classerpcgen_1_1_struct_type.html#a399c40208f97e0d72d3a4d526596b097">erpcgen::StructType</a>, <a class="el" href="classerpcgen_1_1_interface.html#ad799dd9e9c759102652c69086467f73b">erpcgen::Interface</a>, <a class="el" href="classerpcgen_1_1_enum_member.html#a64ce4b33dfa9c10635ac2fd64089a4f1">erpcgen::EnumMember</a>, <a class="el" href="classerpcgen_1_1_union_type.html#aeea76b2bae97a5f2c86fb352279a205e">erpcgen::UnionType</a>, <a class="el" href="classerpcgen_1_1_alias_type.html#af67a4592991def524769acb6280a7d92">erpcgen::AliasType</a>, <a class="el" href="classerpcgen_1_1_array_type.html#a2f24b1e2e72bda762761a4bc2f03eaae">erpcgen::ArrayType</a>, <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f48067dbf79b0c9fd71c3">erpcgen::ListType</a>, <a class="el" href="classerpcgen_1_1_function_type.html#a1ba160e75431f90aa118b0306a4c0a5e">erpcgen::FunctionType</a>, and <a class="el" href="classerpcgen_1_1_void_type.html#a329b76a4ef8e30637e7607883772b0e3">erpcgen::VoidType</a>.</p>
+<p>Reimplemented in <a class="el" href="classerpcgen_1_1_function.html#ac08e8cc2245d28b872d271f2d0b62bcc">erpcgen::Function</a>, <a class="el" href="classerpcgen_1_1_union_case.html#a2cbe4d615ff794dff0ac49d0f5376f38">erpcgen::UnionCase</a>, <a class="el" href="classerpcgen_1_1_enum_type.html#ab95b28ad62ecb25638468b2ba7783921">erpcgen::EnumType</a>, <a class="el" href="classerpcgen_1_1_struct_member.html#a35caff93a725d1a34e961cafc2a09085">erpcgen::StructMember</a>, <a class="el" href="classerpcgen_1_1_interface.html#ad799dd9e9c759102652c69086467f73b">erpcgen::Interface</a>, <a class="el" href="classerpcgen_1_1_enum_member.html#a64ce4b33dfa9c10635ac2fd64089a4f1">erpcgen::EnumMember</a>, <a class="el" href="classerpcgen_1_1_union_type.html#aeea76b2bae97a5f2c86fb352279a205e">erpcgen::UnionType</a>, <a class="el" href="classerpcgen_1_1_struct_type.html#a399c40208f97e0d72d3a4d526596b097">erpcgen::StructType</a>, <a class="el" href="classerpcgen_1_1_alias_type.html#af67a4592991def524769acb6280a7d92">erpcgen::AliasType</a>, <a class="el" href="classerpcgen_1_1_array_type.html#a2f24b1e2e72bda762761a4bc2f03eaae">erpcgen::ArrayType</a>, <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f48067dbf79b0c9fd71c3">erpcgen::ListType</a>, <a class="el" href="classerpcgen_1_1_function_type.html#a1ba160e75431f90aa118b0306a4c0a5e">erpcgen::FunctionType</a>, and <a class="el" href="classerpcgen_1_1_void_type.html#a329b76a4ef8e30637e7607883772b0e3">erpcgen::VoidType</a>.</p>
 
 </div>
 </div>
@@ -806,7 +811,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afbb57b6bf584ed7c07e86f5316fa4051"></a>
+<a class="anchor" id="aa5c12ab34dc686928c28aedba1de20a5"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -814,7 +819,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual bool erpcgen::Symbol::isBuiltin </td>
+          <td class="memname">bool erpcgen::Symbol::isConstSymbol </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -822,15 +827,243 @@ Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>This function return "false" value as default for identify builtin type. </p>
-<dl class="section return"><dt>Returns</dt><dd>Always return false. </dd></dl>
+<p>This function is testing symbol type. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When symbol is ConstSymbol. </td></tr>
+    <tr><td class="paramname">false</td><td>When symbol isn't ConstSymbol. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Reimplemented in <a class="el" href="classerpcgen_1_1_data_type.html#a9431e09a25ce91aaa8e8301ced975d92">erpcgen::DataType</a>, and <a class="el" href="classerpcgen_1_1_builtin_type.html#a8007b6e666199f3798fd337c3393a5b3">erpcgen::BuiltinType</a>.</p>
+</div>
+</div>
+<a class="anchor" id="a78b469aa29c664096d329888b0e87557"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool erpcgen::Symbol::isDatatypeSymbol </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is testing symbol type. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When symbol is TypenameSymbol. </td></tr>
+    <tr><td class="paramname">false</td><td>When symbol isn't TypenameSymbol. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aee2c69168324ebdd8cfe22385c227475"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool erpcgen::Symbol::isEnumMemberSymbol </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is testing symbol type. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When symbol is EnumMemberSymbol. </td></tr>
+    <tr><td class="paramname">false</td><td>When symbol isn't EnumMemberSymbol. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a3252df2ee730f2afc3bd8e6252d0b645"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool erpcgen::Symbol::isFunctionSymbol </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is testing symbol type. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When symbol is FunctionSymbol. </td></tr>
+    <tr><td class="paramname">false</td><td>When symbol isn't FunctionSymbol. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aaa4e089e82ea97c43d55654308696c4d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool erpcgen::Symbol::isInterfaceSymbol </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is testing symbol type. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When symbol is InterfaceSymbol. </td></tr>
+    <tr><td class="paramname">false</td><td>When symbol isn't InterfaceSymbol. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aa6895f9ea81263060808a7cb68dbf82d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool erpcgen::Symbol::isProgramSymbol </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is testing symbol type. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When symbol is ProgramSymbol. </td></tr>
+    <tr><td class="paramname">false</td><td>When symbol isn't ProgramSymbol. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a9e6b6b98a45bdd44bbbf499e1b1e83e4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool erpcgen::Symbol::isStructMemberSymbol </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is testing symbol type. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When symbol is StructMemberSymbol. </td></tr>
+    <tr><td class="paramname">false</td><td>When symbol isn't StructMemberSymbol. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a68487b20979e906e63f649a36fcfbe03"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool erpcgen::Symbol::isUnionCaseSymbol </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This function is testing symbol type. </p>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">true</td><td>When symbol is UnionCaseMemberSymbol. </td></tr>
+    <tr><td class="paramname">false</td><td>When symbol isn't UnionCaseMemberSymbol. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1108,7 +1341,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="_symbol_8h_source.html">Symbol.h</a></li>
+<li><a class="el" href="_symbol_8hpp_source.html">Symbol.hpp</a></li>
 <li>Type.cpp</li>
 </ul>
 </div><!-- contents -->

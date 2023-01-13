@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['datatype',['DataType',['../classerpcgen_1_1_data_type.html#a9d4746d1a76e940c16217fe6ccb02e7e',1,'erpcgen::DataType::DataType(_data_type dataType)'],['../classerpcgen_1_1_data_type.html#ab15c1464b00f40e42b81a1bc4369d3e8',1,'erpcgen::DataType::DataType(const std::string &amp;name, _data_type dataType)'],['../classerpcgen_1_1_data_type.html#a7ca5a9bd08f03f89a63a56027bb047ab',1,'erpcgen::DataType::DataType(const std::string &amp;name, _data_type dataType, symbol_type_t symbolType)'],['../classerpcgen_1_1_data_type.html#a0141daa9d2ac3dfc7e0331e44fd293f4',1,'erpcgen::DataType::DataType(const Token &amp;tok, _data_type dataType, symbol_type_t symbolType)']]],
+  ['datatype',['DataType',['../classerpcgen_1_1_data_type.html#aa64ff0a1a01ab14b16bb43b2979eaa03',1,'erpcgen::DataType::DataType(data_type_t dataType)'],['../classerpcgen_1_1_data_type.html#a4edda1d76f5d67c76a4b11a7cb09a94b',1,'erpcgen::DataType::DataType(const std::string &amp;name, data_type_t dataType)'],['../classerpcgen_1_1_data_type.html#a5121533758797d58c01fb34c4b311cb7',1,'erpcgen::DataType::DataType(const Token &amp;tok, data_type_t dataType)']]],
   ['debug',['debug',['../class_log.html#ae93e26f2dc19b74fee253dabc8722a18',1,'Log']]],
   ['debug2',['debug2',['../class_log.html#a9c364c452e1c63d500f82e33f40a0509',1,'Log']]],
   ['declarationexists',['declarationExists',['../classerpcgen_1_1_union_type.html#aa6f52fad4452caf804800c9a01726aca',1,'erpcgen::UnionType']]],

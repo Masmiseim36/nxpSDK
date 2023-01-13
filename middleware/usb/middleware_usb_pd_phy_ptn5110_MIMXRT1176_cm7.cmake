@@ -24,5 +24,5 @@ include(component_lpi2c_adapter_MIMXRT1176_cm7)
 
 include(component_osa_MIMXRT1176_cm7)
 
-include(middleware_usb_common_header_MIMXRT1176_cm7)
+include(middleware_usb_pd_common_header_MIMXRT1176_cm7)
 

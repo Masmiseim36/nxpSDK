@@ -19,6 +19,7 @@
 #include "pin_mux.h"
 #include "se_reset_config.h"
 #include "sm_timer.h"
+#include <board.h>
 
 #if defined(SSS_USE_FTR_FILE)
 #include "fsl_sss_ftr.h"
@@ -39,8 +40,6 @@ extern void nInit_segger_Log(void);
 #endif
 
 #define EX_SSS_BOOT_RTOS_STACK_SIZE 7000
-
-extern void hardware_init(void);
 
 void ex_sss_main_ksdk_bm()
 {

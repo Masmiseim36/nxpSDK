@@ -16,7 +16,6 @@
 #ifndef _HAL_DISPLAY_DEV_H_
 #define _HAL_DISPLAY_DEV_H_
 
-#include "hal.h"
 #include "mpp_api_types.h"
 #include "hal_types.h"
 
@@ -49,15 +48,8 @@ typedef enum _display_event
     kDisplayEvent_Count
 } display_event_t;
 
-/**
- * @brief callback function to notify display manager that an async event took place
- * @param dev Device structure of the display device calling this function
- * @param event id of the event that took place
- * @param param Parameters
- * @param fromISR True if this operation takes place in an irq, 0 otherwise
- * @return 0 if the operation was successfully
- */
-typedef int (*display_dev_callback_t)(const display_dev_t *dev, display_event_t event, void *param, uint8_t fromISR);
+/*! @brief The mpp callback function prototype */
+typedef int (*mpp_callback_t)(mpp_t mpp, mpp_evt_t evt, void *evt_data, void *user_data);
 
 /*! @brief Error codes for display hal devices */
 typedef enum _hal_display_status
@@ -73,7 +65,7 @@ typedef struct _display_dev_operator
 {
     /* initialize the dev */
     hal_display_status_t (*init)(
-        display_dev_t *dev, mpp_display_params_t *config, display_dev_callback_t callback, void *param);
+        display_dev_t *dev, mpp_display_params_t *config, mpp_callback_t callback, void *user_data);
     /* deinitialize the dev */
     hal_display_status_t (*deinit)(const display_dev_t *dev);
     /* start the dev */
@@ -107,9 +99,9 @@ struct _display_dev_private_capability
     /* array of pointers to framebuffer */
     void **frameBuffers;
     /* callback */
-    display_dev_callback_t callback;
+    mpp_callback_t callback;
     /* param for the callback */
-    void *param;
+    void *user_data;
 };
 
 /*! @brief Attributes of a display device. */
@@ -118,7 +110,7 @@ struct _display_dev
     /* unique id which is assigned by display manager during the registration */
     int id;
     /* name of the device */
-    char name[MPP_DEVICE_NAME_MAX_LENGTH];
+    char name[HAL_DEVICE_NAME_MAX_LENGTH];
     /* operations */
     const display_dev_operator_t *ops;
     /* private capability */

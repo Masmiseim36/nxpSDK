@@ -206,7 +206,7 @@ extern int32_t codec_extract_metadata_aac(file_meta_data_t *meta_data, CCI_Ctx *
  * @param Ctx       Pointer to CCI Context structure.
  * @return int32_t
  */
-extern int32_t codec_extract_metadata_flac(file_meta_data_t *meta_data, CCI_Ctx *Ctx);
+extern int32_t codec_extract_metadata_flac(file_meta_data_t *MetaData, CCI_Ctx *Ctx);
 /**
  * @brief Extract the meta data from the wma file.
  *

@@ -956,7 +956,7 @@ static status_t semc_nand_flush_one_page_from_buffer(void)
 #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
     if (semc_nand_flash_verify_erase(&s_semcNandFcb.nandConfig, srcPageIndex, 1) != kStatus_Success)
     {
-        return kStatusMemoryCumulativeWrite;
+        //return kStatusMemoryCumulativeWrite;
     }
 #endif // #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
 

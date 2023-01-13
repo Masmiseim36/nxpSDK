@@ -854,6 +854,38 @@ typedef PACK_START struct
 
 
 
+/** Wifi frame types */
+typedef enum
+{
+    /** Assoc request frame */
+    ASSOC_REQ_FRAME = 0x00,
+    /** Assoc response frame */
+    ASSOC_RESP_FRAME = 0x10,
+    /** ReAssoc request frame */
+    REASSOC_REQ_FRAME = 0x20,
+    /** ReAssoc response frame */
+    REASSOC_RESP_FRAME = 0x30,
+    /** Probe request frame */
+    PROBE_REQ_FRAME = 0x40,
+    /** Probe response frame */
+    PROBE_RESP_FRAME = 0x50,
+    /** BEACON frame */
+    BEACON_FRAME = 0x80,
+    /** Dis assoc frame */
+    DISASSOC_FRAME = 0xA0,
+    /** Auth frame */
+    AUTH_FRAME = 0xB0,
+    /** Deauth frame */
+    DEAUTH_FRAME = 0xC0,
+    /** Action frame */
+    ACTION_FRAME = 0xD0,
+    /** Data frame */
+    DATA_FRAME = 0x08,
+    /** QOS frame */
+    QOS_DATA_FRAME = 0x88,
+} wifi_frame_type_t;
+
+
 typedef struct
 {
     uint8_t mfpc;
@@ -881,6 +913,30 @@ typedef struct
     wifi_chan_scan_param_set_t chan_scan_param[1];
 } wifi_chan_list_param_set_t;
 
+/** 802_11_header packet */
+typedef PACK_START struct _wifi_mgmt_frame_t
+{
+    /** Packet Length */
+    t_u16 frm_len;
+    /** Frame Type */
+    wifi_frame_type_t frame_type;
+    /** Frame Control flags */
+    t_u8 frame_ctrl_flags;
+    /** Duration ID */
+    t_u16 duration_id;
+    /** Address 1 */
+    t_u8 addr1[MLAN_MAC_ADDR_LENGTH];
+    /** Address 2 */
+    t_u8 addr2[MLAN_MAC_ADDR_LENGTH];
+    /** Address 3 */
+    t_u8 addr3[MLAN_MAC_ADDR_LENGTH];
+    /** Sequence Control */
+    t_u16 seq_ctl;
+    /** Address 4 */
+    t_u8 addr4[MLAN_MAC_ADDR_LENGTH];
+    /** Frame payload */
+    t_u8 payload[0];
+} PACK_END wifi_mgmt_frame_t;
 
 /** Calibration Data */
 typedef PACK_START struct _wifi_cal_data_t

@@ -26,6 +26,7 @@
 
 /* --------------------------------------------- Macros */
 #define em_timer_init()
+#define em_timer_shutdown()
 #define timer_bt_init()
 #define timer_bt_shutdown()
 

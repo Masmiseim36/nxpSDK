@@ -234,6 +234,19 @@
  */
 #define BT_5_1
 
+/*
+ *  BT_5_2
+ *
+ *  This flag is used when the EtherMind stack is being compiled for
+ *  Bluetooth specification version 5.2.
+ *
+ *  Dependency
+ *  ----------
+ *  BT_1_2, BT_2_0_EDR, BT_2_1_EDR, BT_3_0, BT_4_0, BT_4_1, BT_4_2,
+ *  BT_5_0 & BT_5_1 must be defined.
+ */
+#define BT_5_2
+
 /* ----------------------------------------------------------------------- */
 /* ==== Bluetooth v4.0 Feature Flags ===================================== */
 /* ----------------------------------------------------------------------- */
@@ -304,6 +317,22 @@
 #endif /* BT_DUAL_MODE */
 
 #endif /* BT_4_0 */
+
+/* ----------------------------------------------------------------------- */
+/* ==== Bluetooth v5.2 Feature Flags ==================================== */
+/* ----------------------------------------------------------------------- */
+
+#ifdef BT_5_2
+/*
+ *  BT_EATT
+ *
+ *  This flag is used to enable support for EATT
+ *  feature of Bluetooth v5.2 Specification.
+ *
+ *  Dependency: BT_5_2 must be defined.
+ */
+#define BT_EATT
+#endif /* BT_5_2 */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Bluetooth v4.1 Feature Flags ===================================== */
@@ -492,9 +521,9 @@
  *
  *  Dependency: BT_2_1_EDR must be defined.
  */
-#ifdef BT_2_1_EDR
+#ifdef BT_DUAL_MODE
 #define CLASSIC_SEC_MANAGER
-#endif /* BT_2_1_EDR */
+#endif /* BT_DUAL_MODE */
 
 #ifdef BT_SSP
 
@@ -668,11 +697,15 @@
  *
  *  Dependency: None.
  */
-#define BT_UART
-/* #define BT_USB */
-/* #define BT_BCSP */
-/* #define BT_SOCKET */
-/* #define BT_SW_TXP */
+
+#if defined BT_PLATFORM
+#elif defined BT_USB
+#elif defined BT_BCSP
+#elif defined BT_SOCKET
+#elif defined BT_SW_TXP
+#else
+  #define BT_UART
+#endif
 
 /*
  *  HCI_LIBUSB_SUPPORT
@@ -780,6 +813,20 @@
 #ifdef BT_BCSP
 #define HCI_CHECK_TARNSPORT_READINESS
 #endif /* BT_BCSP */
+
+/*
+ *  HT_ENABLE_PARSE_UTIL
+ *
+ *  This flag when enabled, exposes interfaces to parse partially received
+ *  HCI packets from the transport. This helps in finding out the remaining
+ *  lengths to be read from the transport, before a complete packet
+ *  can be enqueued to the host stack.
+ *  This is required for systems where the transport driver blocks to read
+ *  a specified number of octets. This is not to be enabled by default,
+ *  as EtherMind HCI transport layer is capable of identifying partial
+ *  and complete HCI packets for further processing.
+ */
+#define HT_ENABLE_PARSE_UTIL
 
 /* ----------------------------------------------------------------------- */
 /* ==== Stack Feature Flags ============================================== */
@@ -962,7 +1009,7 @@
  *
  *  This flag enables hooks to simulate security vulnerabilities.
  */
-/* #define BT_SECURITY_VU_VALIDATION */
+#define BT_SECURITY_VU_VALIDATION
 
 /* ----------------------------------------------------------------------- */
 /* ==== Generic Access Profile Specific Flags ============================ */
@@ -1118,6 +1165,18 @@
  */
 #define BT_FSM
 
+/*
+ *  BT_HAVE_SHUTDOWN
+ *
+ *  enables stack shutdown API and protocol/profile interfaces.
+ *
+ *  Use this feature flag to enable the shutdown APIs in the protocol
+ *  and profile modules.
+ *
+ *  Dependency: None.
+ */
+/* #define BT_HAVE_SHUTDOWN */
+
 #ifdef BT_LE
 /*
  *  BT_RACP
@@ -1163,8 +1222,20 @@
  *
  *  Dependency: None.
  */
-/* #define WT_SERVICE_Q_ON_PRIORITY */
+#define WT_SERVICE_Q_ON_PRIORITY
 
+/*
+ *  WT_HAVE_USER_MEDIA_QUEUE
+ *
+ *  If this feature flag is defined, Write Task exposes support for an
+ *  additional media queue, and this would be used by the AVDTP layer
+ *  during media write scheduling over the Write Task. This could be
+ *  enabled when the application supports other data intensive profiles
+ *  like SPP, MAP, PBAP transmission along with A2DP Source streaming.
+ *
+ *  Dependency: None.
+ */
+#define WT_HAVE_USER_MEDIA_QUEUE
 
 /* ----------------------------------------------------------------------- */
 /* ==== HCI Module Specific Flags ======================================== */
@@ -1268,6 +1339,41 @@
 #define HCI_ENH_SCO
 #endif /* BT_4_1 */
 #endif /* BR_EDR_HCI */
+
+
+/*
+ *  HCI_SUPPORT_LE_CONN_FAILURE_EVENT_WITH_NO_ADDR
+ *
+ *  This flag enables support for bluetooth controller which does not
+ *  provide peer bluetooth device address in case of failure with
+ *  LE Connection complete or LE Enhanced Connection complete event.
+ *
+ *  Dependency: None.
+ */
+#define HCI_SUPPORT_LE_CONN_FAILURE_EVENT_WITH_NO_ADDR
+
+#ifdef BT_5_2
+/*
+ *  HCI_ISO_DATA
+ *
+ *  This flag enables HCI ISO data packet handling.
+ *
+ *  Dependency: BT_5_2 must be defined.
+ */
+#define HCI_ISO_DATA
+
+/*
+ *  HCI_SUPPORT_ISO_WRITE_PDU
+ *
+ *  This flag enables appliation to write framed ISO PDUs.
+ *  The stack does not do any packet framing with the controllers
+ *  supported ISO buffer size, and is expected to be done by the
+ *  application and sent as correct fragments.
+ *
+ *  Dependency: BT_5_2 must be defined.
+ */
+#define HCI_SUPPORT_ISO_WRITE_PDU
+#endif /* BT_5_2 */
 
 /*
  *  HCI_HAVE_INIT_COMMAND_MASK
@@ -1589,6 +1695,23 @@
 /* Read Local Simple Pairing Options */
 /* #define HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_SUPPORT */
 #endif /* BT_5_1 */
+
+#ifdef BT_5_2
+/* Set Ecosystem Base Interval */
+#define HCI_SET_ECOSYSTEM_BASE_INTERVAL_SUPPORT
+
+/* Configure Data Path */
+#define HCI_CONFIGURE_DATA_PATH_SUPPORT
+
+/* Read Local Supported Codecs V2 */
+#define HCI_READ_LOCAL_SUPPORTED_CODECS_V2_SUPPORT
+
+/* Read Local Supported Codec Capabilities */
+#define HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES_SUPPORT
+
+/* Read Local Supported Controller Delay */
+#define HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY_SUPPORT
+#endif /* BT_5_2 */
 #endif /* BR_EDR_HCI */
 
 /*
@@ -2117,6 +2240,134 @@
 #endif /* BT_5_1 */
 
 
+#ifdef BT_5_2
+#ifdef BT_LE
+/* LE Read Buffer Size (v2) Command */
+#define HCI_LE_READ_BUFFER_SIZE_V2_SUPPORT
+
+/* LE Read ISO TX Sync */
+#define HCI_LE_READ_ISO_TX_SYNC_SUPPORT
+
+/*
+ *  HCI_LE_CIG_CIS_SUPPORT
+ *
+ *  This flag enables HCI LE CIG and CIS handling.
+ *  Dependency: HCI_ISO_DATA
+ */
+#ifdef HCI_ISO_DATA
+#define HCI_LE_CIG_CIS_SUPPORT
+#endif /* HCI_ISO_DATA */
+
+#ifdef HCI_LE_CIG_CIS_SUPPORT
+
+/*
+ *  HCI_LE_HAVE_ACL_TO_CIS_MAPPING
+ *
+ *  This flag shall be enabled, if the underlying controller does not give
+ *  CIS Disconnection Events, when the underlying ACL is disconnected.
+ *
+ *  By default, this flag shall be disabled.
+ *
+ *  Dependency: HCI_LE_CIG_CIS_SUPPORT
+ */
+/* #define HCI_LE_HAVE_ACL_TO_CIS_MAPPING */
+
+/* LE Set CIG Parameters */
+#define HCI_LE_SET_CIG_PARAMETERS_SUPPORT
+
+/* LE Set CIG Parameters Test */
+#define HCI_LE_SET_CIG_PARAMETERS_TEST_SUPPORT
+
+/* LE Create CIS */
+#define HCI_LE_CREATE_CIS_SUPPORT
+
+/* LE Remove CIG */
+#define HCI_LE_REMOVE_CIG_SUPPORT
+
+/* LE Accept CIS Request */
+#define HCI_LE_ACCEPT_CIS_REQUEST_SUPPORT
+
+/* LE Reject CIS Request */
+#define HCI_LE_REJECT_CIS_REQUEST_SUPPORT
+#endif  /* HCI_LE_CIG_CIS_SUPPORT */
+
+/*
+ *  HCI_LE_BIG_BIS_SUPPORT
+ *
+ *  This flag enables HCI LE BIG and BIS handling.
+ *  Dependency: HCI_ISO_DATA.
+ */
+#ifdef HCI_ISO_DATA
+#define HCI_LE_BIG_BIS_SUPPORT
+#endif /* HCI_ISO_DATA */
+
+#ifdef HCI_LE_BIG_BIS_SUPPORT
+/* LE Create BIG */
+#define HCI_LE_CREATE_BIG_SUPPORT
+
+/* LE Create BIG Test */
+#define HCI_LE_CREATE_BIG_TEST_SUPPORT
+
+/* LE Terminate BIG */
+#define HCI_LE_TERMINATE_BIG_SUPPORT
+
+/* LE BIG Create Sync */
+#define HCI_LE_BIG_CREATE_SYNC_SUPPORT
+
+/* LE BIG Terminate Sync */
+#define HCI_LE_BIG_TERMINATE_SYNC_SUPPORT
+#endif /* HCI_LE_BIG_BIS_SUPPORT */
+
+#if (defined HCI_ISO_DATA && !defined HCI_LE_CIG_CIS_SUPPORT && !defined HCI_LE_BIG_BIS_SUPPORT)
+#error "Dependency: HCI_ISO_DATA defined but CIS or BIS Support Undefined"
+#endif /* (defined HCI_ISO_DATA && !defined HCI_LE_CIG_CIS_SUPPORT && !defined HCI_LE_BIG_BIS_SUPPORT) */
+
+/* LE Request Peer SCA */
+#define HCI_LE_REQUEST_PEER_SCA_SUPPORT
+
+/* LE Setup ISO Data Path */
+#define HCI_LE_SETUP_ISO_DATA_PATH_SUPPORT
+
+/* LE Remove ISO Data Path */
+#define HCI_LE_REMOVE_ISO_DATA_PATH_SUPPORT
+
+/* LE ISO Transmit Test */
+#define HCI_LE_ISO_TRANSMIT_TEST_SUPPORT
+
+/* LE ISO Receive Test */
+#define HCI_LE_ISO_RECEIVE_TEST_SUPPORT
+
+/* LE ISO Read Test Counters */
+#define HCI_LE_ISO_READ_TEST_COUNTERS_SUPPORT
+
+/* LE ISO Test End */
+#define HCI_LE_ISO_TEST_END_SUPPORT
+
+/* LE Set Host Feature */
+#define HCI_LE_SET_HOST_FEATURE_SUPPORT
+
+/* LE Read ISO Link Quality */
+#define HCI_LE_READ_ISO_LINK_QUALITY_SUPPORT
+
+/* LE Enhanced Read Transmit Power Level */
+#define HCI_LE_ENHANCED_READ_TRANSMIT_POWER_LEVEL_SUPPORT
+
+/* LE Read Remote Transmit Power Level */
+#define HCI_LE_READ_REMOTE_TRANSMIT_POWER_LEVEL_SUPPORT
+
+/* LE Set Path Loss Reporting Parameters */
+#define HCI_LE_SET_PATH_LOSS_REPORTING_PARAMETERS_SUPPORT
+
+/* LE Set Path Loss Reporting Enable */
+#define HCI_LE_SET_PATH_LOSS_REPORTING_ENABLE_SUPPORT
+
+/* LE Set Transmit Power Reporting Enable */
+#define HCI_LE_SET_TRANSMIT_POWER_REPORTING_ENABLE_SUPPORT
+#endif /* BT_LE */
+#endif /* BT_5_2 */
+
+
+
 /* ----------------------------------------------------------------------- */
 /* ==== L2CAP Module Specific Flags ====================================== */
 /* ----------------------------------------------------------------------- */
@@ -2355,6 +2606,51 @@
 #ifdef L2CAP_SUPPORT_CBFC_MODE
 #define L2CAP_ALLOC_FOR_CBFC_SDU
 #endif /* L2CAP_SUPPORT_CBFC_MODE */
+
+/*
+ *  L2CAP_SUPPORT_ECBFC_MODE
+ *
+ *  This flag enables the L2CAP Enhanced Credit Based Flow Control mode defined in
+ *  Bluetooth Specification v5.2
+ *
+ *  Dependency: BT_EATT
+ */
+#ifdef BT_EATT
+#define L2CAP_SUPPORT_ECBFC_MODE
+#endif /* BT_EATT */
+
+
+/*
+ *  L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM
+ *
+ *  For L2CAP ECBFC, this flag enables the Upper Layer(UL) to define Low Water Mark
+ *  for receive credits in the L2CAP_PSM_ECBFC structure, while registering
+ *  L2CAP LE_PSM.
+ *
+ *  In ECBFC mode, L2CAP will inform application/UL about receive credits
+ *  reached low water mark once credits is less than or equal to
+ *  the Low Water Mark defined by the application/UL.
+ *
+ *  Dependency: L2CAP_SUPPORT_ECBFC_MODE
+ */
+#ifdef L2CAP_SUPPORT_ECBFC_MODE
+#define L2CAP_ECBFC_SUPPORT_UL_CREDIT_LWM
+#endif /* L2CAP_SUPPORT_ECBFC_MODE */
+
+/*
+ *  L2CAP_ALLOC_FOR_ECBFC_SDU
+ *
+ *  For L2CAP ECBFC, this flag enables allocation of memory to frame
+ *  complete L2CAP SDU, which includes Information Payload, along with the
+ *  associated L2CAP Header in the l2ca_channel_data_write() interface.
+ *
+ *  See the description of 'l2ca_channel_data_write()', for more details.
+ *
+ *  Dependency: L2CAP_SUPPORT_ECBFC_MODE
+ */
+#ifdef L2CAP_SUPPORT_ECBFC_MODE
+#define L2CAP_ALLOC_FOR_ECBFC_SDU
+#endif /* L2CAP_SUPPORT_ECBFC_MODE */
 
 #endif /* L2CAP */
 
@@ -2722,16 +3018,31 @@
 /* #define HAVE_AVDTP_TEST_MODE */
 
 /*
- *  HAVE_AVDTP_FRAGMENTED_SIG_MSG_IN_TEST_MODE
+ *  HAVE_AVDTP_SET_GET_SIG_CH_OUTMTU
  *
- *  This flag enables Fragmentation of AVDTP signalling messages in EtherMind AVDTP module.
- *  Enable this flag to validate few test cases with PTS.
+ *  This flag enables to get/set the Out MTU of a given AVDTP signalling channel.
+ *
+ *  Typically this is used to set the outmtu to a smaller value to enable sending
+ *  AVDTP signalling messages in fragments, required for some of the qualification
+ *  test cases
  *
  *  By default it shall be disabled.
  *
- *  Dependency: AVDTP_HAVE_CONTENT_PROTECTION.
+ *  Dependency: None.
  */
-/* #define HAVE_AVDTP_FRAGMENTED_SIG_MSG_IN_TEST_MODE */
+#define HAVE_AVDTP_SET_GET_SIG_CH_OUTMTU
+
+/*
+ *  HAVE_AVDTP_SEND_FRAGMENTED_SIG_MSG
+ *
+ *  This flag enables to send the AVDTP signalling messages in fragments
+ *  when message length is greater than the Out MTU of Signalling Channel.
+ *
+ *  By default it shall be enabled.
+ *
+ *  Dependency: None.
+ */
+#define HAVE_AVDTP_SEND_FRAGMENTED_SIG_MSG
 
 /*
  *  HAVE_AVDTP_MEDIA_PKT_FLUSHABLE
@@ -2752,6 +3063,10 @@
  *
  *  This flag enable the AVCTP 1.3 specific features in the
  *  EtherMind AVCTP module.
+ *
+ *  AVCTP 1.4 Changes includes Editorial aspects. The Errata 733 and 2689
+ *  refer to editorial changes i.e. Appending of text and Typo Correction
+ *  in the specification.
  */
 #define AVCTP_1_3
 
@@ -3866,14 +4181,16 @@
  */
 /* #define SMP_TBX_TEST_LESC_FUNCTIONS */
 
+#if (defined CLASSIC_SEC_MANAGER && defined SMP && defined SMP_LESC)
 /*
  *  SMP_LESC_CROSS_TXP_KEY_GEN
  *
  *  This flag enables Cross Transport Key Derivation SMP LESC PL functions
  *
- *  Dependency: SMP_LESC
+ *  Dependency: CLASSIC_SEC_MANAGER, SMP, SMP_LESC
  */
 #define SMP_LESC_CROSS_TXP_KEY_GEN
+#endif /* (defined CLASSIC_SEC_MANAGER && defined SMP && defined SMP_LESC) */
 
 /*
  *  SMP_HAVE_REMOTE_PUBLIC_KEY_VALIDATION
@@ -4015,6 +4332,18 @@
 #ifndef BT_SINGLE_MODE
 #define ATT_ON_BR_EDR_SUPPORT
 #endif /* BT_SINGLE_MODE */
+
+/*
+ *  ATT_ON_ECBFC_SUPPORT
+ *  This flag is defined to enable support for ATT over L2CAP
+ *  Enhanced Credit Based Flow Control mode connection.
+ *
+ *  Dependency: ATT, BT_5_2 and BT_EATT
+ *
+ */
+#ifdef BT_EATT
+#define ATT_ON_ECBFC_SUPPORT
+#endif /* BT_EATT */
 
 /*
  *  ATT_NO_PARAM_CHECK
@@ -4180,6 +4509,17 @@
  */
 #define ATT_QUEUED_WRITE_SUPPORT
 
+#ifdef BT_EATT
+/**
+ *  ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT
+ *
+ *  Enables Support for Read Multiple Variable Length Procedure.
+ *
+ *  Dependency: BT_EATT
+ */
+#define ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT
+#endif /* BT_EATT */
+
 /**
  *  ATT_HNDL_VAL_NOTIFICATION_SUPPORT
  *
@@ -4197,6 +4537,17 @@
  *  Dependency: None.
  */
 #define ATT_HNDL_VAL_INDICATION_SUPPORT
+
+#ifdef BT_EATT
+/**
+ *  ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT
+ *
+ *  Enables Support for Handle Value Multiple Notifcation Procedure.
+ *
+ *  Dependency: BT_EATT
+ */
+#define ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT
+#endif /* BT_EATT */
 
 /**
  *  ATT_SUPPORT_128_BIT_UUID
@@ -4270,7 +4621,7 @@
  */
 #define GATT_DB_HAVE_DB_SIGNATURE
 #if ((defined GATT_DB_HAVE_DB_SIGNATURE) && !(defined GATT_DB_HAVE_REGISTERATION_SUPPORT))
-#error Please Enable GATT_DB_HAVE_REGISTERATION_SUPPORT if you need GATT_DB_HAVE_DB_SIGNATURE
+#error "Please Enable GATT_DB_HAVE_REGISTERATION_SUPPORT if you need GATT_DB_HAVE_DB_SIGNATURE"
 #endif /* GATT_DB_HAVE_DB_SIGNATURE && ! GATT_DB_HAVE_REGISTERATION_SUPPORT */
 
 /*
@@ -4284,7 +4635,7 @@
 #define GATT_DB_DYNAMIC
 
 #if ((defined GATT_DB_DYNAMIC) && !(defined GATT_DB_HAVE_REGISTERATION_SUPPORT))
-#error Please Enable GATT_DB_HAVE_REGISTERATION_SUPPORT if you need GATT_DB_DYNAMIC
+#error "Please Enable GATT_DB_HAVE_REGISTERATION_SUPPORT if you need GATT_DB_DYNAMIC"
 #endif /* GATT_DB_DYNAMIC && ! GATT_DB_HAVE_REGISTERATION_SUPPORT */
 
 /*
@@ -4312,7 +4663,7 @@
 #define GATT_DB_SUPPORT_128_BIT_UUID
 
 #if ((defined GATT_DB_SUPPORT_128_BIT_UUID) && !(defined ATT_SUPPORT_128_BIT_UUID))
-#error Please Enable ATT_SUPPORT_128_BIT_UUID if you need GATT_DB_SUPPORT_128_BIT_UUID
+#error "Please Enable ATT_SUPPORT_128_BIT_UUID if you need GATT_DB_SUPPORT_128_BIT_UUID"
 #endif /* GATT_DB_SUPPORT_128_BIT_UUID && ! ATT_SUPPORT_128_BIT_UUID */
 
 /**
@@ -4434,6 +4785,15 @@
  *  Dependency: None
  */
 #define BT_LOG_TIMESTAMP
+
+/*
+ * By Default SPP_MAX_ENTITY will be 2. 1 SPP instance is created having SERIALPORT_UUID with default server_channel number 2.
+ * and 1 SPP_VS instance having CustomUUID_0 or default SERIALPORT_UUID on server_channel number 3.
+ *
+ * With SPP_ENABLE_MAX_CONN_RANGE enabled 20 SPP instances are created having SERIALPORT_UUID with 20 different server_channels
+ * and 1 SPP_VS instance created having CustomUUID_0 or with default SERIALPORT_UUID on another server_channel.
+ */
+#define SPP_ENABLE_MAX_CONN_RANGE
 
 /*
  * By Default SPP_MAX_ENTITY will be 2. 1 SPP instance is created having SERIALPORT_UUID with default server_channel number 2.

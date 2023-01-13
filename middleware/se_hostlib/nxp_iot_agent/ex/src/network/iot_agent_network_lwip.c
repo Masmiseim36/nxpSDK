@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019, 2020, 2021 NXP
+ * Copyright 2018, 2019, 2020, 2021, 2022 NXP
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -28,14 +28,13 @@
 #include "lwip/dhcp.h"
 #include "lwip/prot/dhcp.h"
 #include "netif/ethernet.h"
-#include "enet_ethernetif.h"
+#include "ethernetif.h"
 #include "lwip/netifapi.h"
 #ifdef EXAMPLE_USE_100M_ENET_PORT
 #include "fsl_phyksz8081.h"
 #else
 #include "fsl_phyrtl8211f.h"
 #endif
-#include "fsl_enet_mdio.h"
 #include <nxp_iot_agent_status.h>
 
 #if defined (LPC_ENET)
@@ -51,11 +50,21 @@
 /* MDIO operations. */
 #define EXAMPLE_MDIO_OPS enet_ops
 
+#if defined(CPU_MIMXRT1062DVL6A)
+#include "fsl_enet.h"
+#include "fsl_phyksz8081.h"
+phy_ksz8081_resource_t g_phy_resource;
+#endif
+
 #ifdef EXAMPLE_USE_100M_ENET_PORT
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
+
+extern phy_ksz8081_resource_t g_phy_resource;
 /* PHY operations. */
-#define EXAMPLE_PHY_OPS phyksz8081_ops
+#define EXAMPLE_PHY_OPS &phyksz8081_ops
+#define EXAMPLE_PHY_RESOURCE &g_phy_resource
+
 /* ENET instance select. */
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #else
@@ -79,12 +88,7 @@
  * Static variables
  ******************************************************************************/
 static struct netif fsl_netif0;
-static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
-static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
-
-
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CoreSysClk
+static phy_handle_t phyHandle;
 
 /* Facilitate a simple hash for unique MAC Address based on an input 18 byte UID */
 #define MAC_HASH(N)  \
@@ -115,33 +119,50 @@ static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle =
  ******************************************************************************/
 static struct netif fsl_netif0;
 
+#if defined(CPU_MIMXRT1062DVL6A)
+static void MDIO_Init(void)
+{
+    (void)CLOCK_EnableClock(s_enetClock[ENET_GetInstance(ENET)]);
+    ENET_SetSMI(ENET, CLOCK_GetFreq(kCLOCK_IpgClk), false);
+}
+
+static status_t MDIO_Write(uint8_t phyAddr, uint8_t regAddr, uint16_t data)
+{
+    return ENET_MDIOWrite(ENET, phyAddr, regAddr, data);
+}
+
+static status_t MDIO_Read(uint8_t phyAddr, uint8_t regAddr, uint16_t *pData)
+{
+    return ENET_MDIORead(ENET, phyAddr, regAddr, pData);
+}
+#endif
+
 iot_agent_status_t network_init(void)
 {
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
-            .phyHandle  = &phyHandle,
-            .macAddress = configMAC_ADDR,
-    #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-            .non_dma_memory = non_dma_memory,
-    #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
+    ethernetif_config_t fsl_enet_config0 = {.phyHandle   = &phyHandle,
+                                            .phyAddr     = EXAMPLE_PHY_ADDRESS,
+                                            .phyOps      = EXAMPLE_PHY_OPS,
+                                            .phyResource = EXAMPLE_PHY_RESOURCE,
+                                            .srcClockHz  = EXAMPLE_CLOCK_FREQ,
+                                            .macAddress = configMAC_ADDR
     };
-
-	mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
-
+#if defined(CPU_MIMXRT1062DVL6A)
+    MDIO_Init();
+    g_phy_resource.read  = MDIO_Read;
+    g_phy_resource.write = MDIO_Write;
+#endif 
     tcpip_init(NULL, NULL);
 
-    IP4_ADDR(&fsl_netif0_ipaddr, configIP_ADDR0, configIP_ADDR1, configIP_ADDR2, configIP_ADDR3);
-    IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
-    IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
+    netifapi_netif_add(&fsl_netif0, NULL, NULL, NULL, &fsl_enet_config0, EXAMPLE_NETIF_INIT_FN, tcpip_input);
+    netifapi_netif_set_default(&fsl_netif0);
+    netifapi_netif_set_up(&fsl_netif0);
 
-    if (netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0, EXAMPLE_NETIF_INIT_FN,
-        tcpip_input) == NULL) {
-        return IOT_AGENT_FAILURE;
+    while (ethernetif_wait_linkup(&fsl_netif0, 5000) != ERR_OK)
+    {
+        PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
     }
-    netif_set_default(&fsl_netif0);
-    netif_set_up(&fsl_netif0);
 #if STATIC_IP_ADDRESS == 0
-    if (dhcp_start(&fsl_netif0) != ERR_OK) {
+    if (netifapi_dhcp_start(&fsl_netif0) != ERR_OK) {
         return IOT_AGENT_FAILURE;
     }
 

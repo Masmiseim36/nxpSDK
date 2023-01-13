@@ -281,7 +281,7 @@ typedef UINT16    API_RESULT;
 #define HC_COMMAND_DISALLOWED                   (0x000CU | HC_ERR_ID)
 #define HC_HOST_REJECTED_LIMITED_RESOURCES      (0x000DU | HC_ERR_ID)
 #define HC_HOST_REJECTED_SECURITY_REASONS       (0x000EU | HC_ERR_ID)
-#define HC_HOST_REJECTED_PERSONAL_DEVICE        (0x000FU | HC_ERR_ID)
+#define HC_HOST_REJECTED_UNACCEPTABLE_BD_ADDR   (0x000FU | HC_ERR_ID)
 #define HC_HOST_TIMEOUT                         (0x0010U | HC_ERR_ID)
 #define HC_UNSUPPORTED_FEATURE_OR_PARAMETER     (0x0011U | HC_ERR_ID)
 #define HC_INVALID_HCI_COMMAND_PARAMETERS       (0x0012U | HC_ERR_ID)
@@ -356,6 +356,8 @@ typedef UINT16    API_RESULT;
 #define AVDTP_BAD_MULTIPLEXING_FORMAT           (0x0028U | AV_ERR_ID)
 #define AVDTP_UNSUPPORTED_CONFIGURATION         (0x0029U | AV_ERR_ID)
 #define AVDTP_BAD_STATE                         (0x0031U | AV_ERR_ID)
+
+#define AVDTP_BAD_REPORT_FORMAT                 (0x0065U | AV_ERR_ID)
 
 #define A2DP_INVALID_CODEC_TYPE                 (0x00C1U | AV_ERR_ID)
 #define A2DP_NOT_SUPPORTED_CODEC_TYPE           (0x00C2U | AV_ERR_ID)
@@ -437,6 +439,7 @@ typedef UINT16    API_RESULT;
 
 #define WT_NOT_RUNNING                          (0x0011U | WT_ERR_ID)
 #define WT_QUEUE_FULL                           (0x0012U | WT_ERR_ID)
+#define WT_QUEUE_INVALID                        (0x0013U | WT_ERR_ID)
 
 /** \} */
 
@@ -543,6 +546,9 @@ typedef UINT16    API_RESULT;
                                                 (0x0026U | HCI_ERR_ID)
 #define HCI_ESCO_REQ_RETURN_NO_AUTO_RESPONSE    (0x0027U | HCI_ERR_ID)
 #define HCI_RX_INVALID_PKT_TYPE                 (0x0028U | HCI_ERR_ID)
+#define HCI_ISO_DATA_QUEUE_FULL                 (0x0029U | HCI_ERR_ID)
+#define HCI_LE_CONNECTION_IN_PROGRESS           (0x002AU | HCI_ERR_ID)
+#define HCI_INVALID_CONNECTION_ADDR             (0x002BU | HCI_ERR_ID)
 
 #define HCI_API_NOT_SUPPORTED                   (0x00FFU | HCI_ERR_ID)
 
@@ -696,7 +702,9 @@ typedef UINT16    API_RESULT;
 #define L2CAP_CBFC_PSM_NOT_IN_RANGE             (0x0082U | L2CAP_ERR_ID)
 #define L2CAP_TX_QUEUE_NOT_EMPTY                (0x0083U | L2CAP_ERR_ID)
 #define L2CAP_CBFC_TX_ALREADY_IN_PROGRESS       (0x0084U | L2CAP_ERR_ID)
-#define L2CAP_CBFC_COMMAND_REJECTED             (0x0085U | L2CAP_ERR_ID)
+#define L2CAP_ECBFC_PSM_NOT_IN_RANGE             (0x0085U | L2CAP_ERR_ID)
+#define L2CAP_CBFC_COMMAND_REJECTED            (0x0086U | L2CAP_ERR_ID)
+
 #define L2CAP_API_NOT_SUPPORTED                 (0x00F0U | L2CAP_ERR_ID)
 
 /** \} */
@@ -1485,6 +1493,7 @@ typedef UINT16    API_RESULT;
 #define HFP_UNIT_ERR_AG_NOANSWER                (0x001CU | HFP_UNIT_ERR_ID)
 #define HFP_UNIT_ERR_NO_CARRIER                 (0x001DU | HFP_UNIT_ERR_ID)
 #define HFP_UNIT_ERR_TIMER_EXPIRED              (0x001EU | HFP_UNIT_ERR_ID)
+#define HFP_UNIT_ALREADY_INITIALIZED            (0x001FU | HFP_UNIT_ERR_ID)
 #define HFP_UNIT_ERR_NOPROCESSING_DONE          AT_PARSER_ERR_NOPROCESSING_DONE
 
 

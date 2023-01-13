@@ -24,7 +24,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    gx_api.h                                            PORTABLE C      */
-/*                                                           6.1.10       */
+/*                                                           6.2.0        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -86,6 +86,21 @@
 /*                                            vertical and horizontal     */
 /*                                            list control blocks,        */
 /*                                            resulting in version 6.1.10 */
+/*  04-25-2022     Ting Zhu                 Modified comment(s),          */
+/*                                            added new member to struct  */
+/*                                            GX_DISPLAY_LAYER_SERVICES,  */
+/*                                            added new animation flag    */
+/*                                            GX_ANIMATION_BLOCK_MOVE,    */
+/*                                            resulting in version 6.1.11 */
+/*  07-29-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added new style             */
+/*                                            GX_STYLE_REPEAT_SELECT,     */
+/*                                            resulting in version 6.1.12 */
+/*  10-31-2022     Kenneth Maxwell          Modified comment(s),          */
+/*                                            removed unused style flag   */
+/*                                            GX_SCROLLBAR_BACKGROUND_    */
+/*                                            TILE,                       */
+/*                                            resulting in version 6.2.0  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -108,8 +123,8 @@ extern   "C" {
 
 #define AZURE_RTOS_GUIX
 #define GUIX_MAJOR_VERSION 6
-#define GUIX_MINOR_VERSION 1
-#define GUIX_PATCH_VERSION 10
+#define GUIX_MINOR_VERSION 2
+#define GUIX_PATCH_VERSION 0
 
 /* The following symbols are defined for backward compatibility reasons.*/
 #define __PRODUCT_GUIX__
@@ -793,6 +808,7 @@ typedef struct GX_STRING_STRUCT
 #define GX_STYLE_CENTER_SELECTED            0x00000010UL
 #define GX_STYLE_WRAP                       0x00000020UL
 #define GX_STYLE_FLICKABLE                  0x00000040UL
+#define GX_STYLE_REPEAT_SELECT              0x00000080UL
 
 
 /* Define Icon, Pixelmap button and Icon button alignment flags.  */
@@ -861,7 +877,6 @@ typedef struct GX_STRING_STRUCT
 
 /* Define Scroll Bar styles.  */
 
-#define GX_SCROLLBAR_BACKGROUND_TILE        0x00010000UL
 #define GX_SCROLLBAR_RELATIVE_THUMB         0x00020000UL
 #define GX_SCROLLBAR_END_BUTTONS            0x00040000UL
 #define GX_SCROLLBAR_VERTICAL               0x01000000UL
@@ -882,6 +897,7 @@ typedef struct GX_STRING_STRUCT
 #define GX_ANIMATION_NONE                   0x0000U
 #define GX_ANIMATION_TRANSLATE              0x0001U
 #define GX_ANIMATION_SCREEN_DRAG            0x0002U
+#define GX_ANIMATION_BLOCK_MOVE             0x0004U
 
 /* flags that can be used in combination with screen drag animation */
 #define GX_ANIMATION_WRAP                   0x0100U
@@ -1525,6 +1541,7 @@ typedef struct GX_DISPLAY_LAYER_SERVICES_STRUCT
     VOID (*gx_display_layer_hide)(INT layer);
     VOID (*gx_display_layer_alpha_set)(INT layer, GX_UBYTE alpha);
     VOID (*gx_display_layer_offset_set)(INT layer, GX_VALUE xoffset, GX_VALUE yoffset);
+    VOID (*gx_display_layer_active_display_area_set)(INT layer, GX_RECTANGLE *size);
 } GX_DISPLAY_LAYER_SERVICES;
 
 #if defined(GX_MOUSE_SUPPORT)
@@ -3028,6 +3045,7 @@ typedef struct GX_FIXED_POINT_STRUCT
 #define gx_canvas_rotated_text_draw_ext                          _gx_canvas_rotated_text_draw_ext
 #define gx_canvas_shift                                          _gx_canvas_shift
 #define gx_canvas_show                                           _gx_canvas_show
+#define gx_canvas_aligned_text_draw                              _gx_canvas_aligned_text_draw
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 #define gx_canvas_text_draw                                      _gx_canvas_text_draw
 #endif
@@ -3694,6 +3712,7 @@ UINT _gx_canvas_rotated_text_draw_ext(GX_CONST GX_STRING *text, GX_VALUE xcenter
 UINT _gx_canvas_shift(GX_CANVAS *canvas, GX_VALUE x, GX_VALUE y);
 UINT _gx_canvas_show(GX_CANVAS *canvas);
 
+UINT _gx_canvas_aligned_text_draw(GX_CONST GX_STRING *string, GX_RECTANGLE *rectangle, ULONG alignment);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gx_canvas_text_draw(GX_VALUE x_start, GX_VALUE y_start, GX_CONST GX_CHAR *string, INT length);
 #endif
@@ -4508,6 +4527,7 @@ UINT _gx_window_wallpaper_set(GX_WINDOW *window, GX_RESOURCE_ID wallpaper_id, GX
 #define gx_canvas_rotated_text_draw_ext                          _gxe_canvas_rotated_text_draw_ext
 #define gx_canvas_shift                                          _gxe_canvas_shift
 #define gx_canvas_show                                           _gxe_canvas_show
+#define gx_canvas_aligned_text_draw                              _gxe_canvas_aligned_text_draw
 #if defined (GX_ENABLE_DEPRECATED_STRING_API)
 #define gx_canvas_text_draw                                      _gxe_canvas_text_draw
 #endif
@@ -5171,6 +5191,7 @@ UINT _gxe_canvas_rotated_text_draw_ext(GX_CONST GX_STRING *text, GX_VALUE xcente
 UINT _gxe_canvas_shift(GX_CANVAS *canvas, GX_VALUE x, GX_VALUE y);
 UINT _gxe_canvas_show(GX_CANVAS *canvas);
 
+UINT _gxe_canvas_aligned_text_draw(GX_CONST GX_STRING *string, GX_RECTANGLE *rectangle, ULONG alignment);
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
 UINT _gxe_canvas_text_draw(GX_VALUE x_start, GX_VALUE y_start, GX_CONST GX_CHAR *string, INT length);
 #endif

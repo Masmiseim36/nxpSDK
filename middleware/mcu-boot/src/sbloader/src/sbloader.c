@@ -9,10 +9,11 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
-#include "sbloader.h"
+
 #include "bl_context.h"
-#include "bootloader.h"
 #include "bl_shutdown_cleanup.h"
+#include "bootloader.h"
+#include "sbloader.h"
 #if BL_FEATURE_ENCRYPTION
 #include "aes_security.h"
 #include "cbc_mac.h"
@@ -284,8 +285,8 @@ status_t ldr_DoHeader2(ldr_Context_t *context)
         // abort the transfer
         // Note: Both Main and Secondary flash share the same security state
         //  So it doesn't matter what index of allFlashState[] we use for this FLASH API.
-        g_bootloaderContext.flashDriverInterface->flash_get_security_state(
-            g_bootloaderContext.allFlashState, &securityState);
+        g_bootloaderContext.flashDriverInterface->flash_get_security_state(g_bootloaderContext.allFlashState,
+                                                                           &securityState);
 
         if (securityState != kFTFx_SecurityStateNotSecure)
         {
@@ -293,7 +294,7 @@ status_t ldr_DoHeader2(ldr_Context_t *context)
         }
 #endif // !BL_DEVICE_IS_LPC_SERIES
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-        // Skip the rest of the header
+       // Skip the rest of the header
         return ldr_GoToNextSection(context);
     }
 }
@@ -665,7 +666,7 @@ status_t ldr_DoProgramCmd(ldr_Context_t *context)
 
     // Context is already setup to get the next boot command
     return kStatus_Success;
-#elif defined(BL_FEATURE_OCOTP_MODULE)
+#elif BL_FEATURE_OCOTP_MODULE
     if (memoryId != kMemoryIFR0_Fuse)
     {
         return kStatus_InvalidArgument;
@@ -823,12 +824,12 @@ status_t ldr_DoEraseCmd(ldr_Context_t *context)
     {
 #if BL_FEATURE_ERASEALL_UNSECURE
         status = flash_mem_erase_all_unsecure();
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
         if (g_bootloaderContext.dflashDriverInterface != NULL)
         {
-            status += flexNVM_mem_erase_all_unsecure();   
+            status += flexNVM_mem_erase_all_unsecure();
         }
-#endif // BL_FEATURE_SUPPORT_DFLASH         
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #else
         status = kStatus_InvalidArgument;
 #endif // BL_FEATURE_ERASEALL_UNSECURE
@@ -843,20 +844,20 @@ status_t ldr_DoEraseCmd(ldr_Context_t *context)
             case kMemoryInternal:
 #if BL_FEATURE_FAC_ERASE
                 status = flash_mem_erase_all(kFlashEraseAllOption_Blocks);
-#if BL_FEATURE_SUPPORT_DFLASH 
+#if BL_FEATURE_SUPPORT_DFLASH
                 if (g_bootloaderContext.dflashDriverInterface != NULL)
                 {
-                    status += flexNVM_mem_erase_all();  
+                    status += flexNVM_mem_erase_all();
                 }
-#endif // BL_FEATURE_SUPPORT_DFLASH                 
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #else
-                status = flash_mem_erase_all();  
-#if BL_FEATURE_SUPPORT_DFLASH 
+                status = flash_mem_erase_all();
+#if BL_FEATURE_SUPPORT_DFLASH
                 if (g_bootloaderContext.dflashDriverInterface != NULL)
                 {
-                    status += flexNVM_mem_erase_all(); 
+                    status += flexNVM_mem_erase_all();
                 }
-#endif // BL_FEATURE_SUPPORT_DFLASH                 
+#endif // BL_FEATURE_SUPPORT_DFLASH
 #endif // BL_FEATURE_FAC_ERASE
                 break;
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
@@ -944,12 +945,12 @@ status_t ldr_DoMemEnableCmd(ldr_Context_t *context)
 #if BL_FEATURE_SPIFI_NOR_MODULE
     if (memoryId == kMemorySpifiNor)
     {
-        status = spifi_nor_mem_config((uint32_t*)context->bootCmd.address);
+        status = spifi_nor_mem_config((uint32_t *)context->bootCmd.address);
     }
     else
-#endif //BL_FEATURE_SPIFI_NOR_MODULE
+#endif // BL_FEATURE_SPIFI_NOR_MODULE
 #if BL_FEATURE_QSPI_MODULE
-    if (memoryId == kMemoryQuadSpi0)
+        if (memoryId == kMemoryQuadSpi0)
     {
         status = configure_qspi(context->bootCmd.address);
     }
@@ -963,7 +964,7 @@ status_t ldr_DoMemEnableCmd(ldr_Context_t *context)
     else
 #endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE
 #if BL_FEATURE_SEMC_NOR_MODULE
-    if (memoryId == kMemorySemcNor)
+        if (memoryId == kMemorySemcNor)
     {
         status = semc_nor_mem_config((uint32_t *)context->bootCmd.address);
     }
@@ -1217,9 +1218,21 @@ status_t sbloader_finalize()
     if (s_loaderContext.bootCmd.tag == ROM_JUMP_CMD)
     {
         pJumpFnc_t entry_fun = (pJumpFnc_t)s_loaderContext.bootCmd.address;
+        static uint32_t s_stackPointer = 0;
 
         // Jump to the entry point with the specified parameter
         bool isValid = is_valid_application_location((uint32_t)entry_fun);
+        if (isValid && (s_loaderContext.bootCmd.flags & ROM_JUMP_SP_MASK))
+        {
+            s_stackPointer = s_loaderContext.bootCmd.count;
+            isValid = is_valid_stackpointer_location(s_stackPointer);
+        }
+
+        if (!isValid)
+        {
+            return kStatus_InvalidArgument;
+        }
+
 #if BL_FEATURE_OTFAD_MODULE
         if (isValid && is_qspi_present())
         {
@@ -1241,28 +1254,11 @@ status_t sbloader_finalize()
             // Clean up prior to calling user code.
             shutdown_cleanup(kShutdownType_Shutdown);
 
-            // Set initial SP if requested in by flag
-            if (s_loaderContext.bootCmd.flags & ROM_JUMP_SP_MASK)
+            if (s_stackPointer)
             {
-                static uint32_t s_addr = 0;
-                s_addr = s_loaderContext.bootCmd.count;
-
-                // Get RAM address ranges
-                const memory_map_entry_t *map = &g_bootloaderContext.memoryMap[kIndexSRAM];
-
-                // Validate stack pointer address. It must either be 0 or within the RAM range.
-                if (!((s_addr == 0) || ((s_addr >= map->startAddress) && (s_addr <= map->endAddress + 1))))
-                {
-                    // Invalid stack pointer value, respond with kStatus_InvalidArgument.
-                    return kStatus_InvalidArgument;
-                }
-
-                if (s_addr)
-                {
-                    // Set main stack pointer and process stack pointer
-                    __set_MSP(s_addr);
-                    __set_PSP(s_addr);
-                }
+                // Set main stack pointer and process stack pointer
+                __set_MSP(s_stackPointer);
+                __set_PSP(s_stackPointer);
             }
 
             entry_fun(s_loaderContext.bootCmd.data);

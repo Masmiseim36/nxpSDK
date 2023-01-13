@@ -1,0 +1,157 @@
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m7 -E -x c
+
+/*
+ * Copyright 2021 NXP.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+ /*     
+  *     Device:              MIMXRT1170
+  */
+
+/**********************************************************************************/
+/****************************        MEMORY MAP        ****************************/
+/**********************************************************************************/
+/********************        FLASH        ********************/
+//     __________________
+//    |                  | --> m_boot_hdr_conf_start
+//    |  XIP boot header |
+//    |__________________|
+//    |                  | --> ROM_interrupts_start
+//    |       IVT        |
+//    |__________________|
+//    |                  | --> __FlashCRC_start__
+//    |       CRC        |
+//    |__________________|
+//    |                  | --> __PC_test_start__
+//    |   PC_object.o    |
+//    |__________________|
+//    |                  | --> ROM_start
+//    |     readonly     |
+//    |   .textrw_init   |
+//    |   .data_init     |
+//    |__________________| --> ROM_end
+//
+//
+/********************        SRAM        ********************/
+//     __________________
+//    |                  | --> SRAM_ITC_start
+//    |//// NOT USED ////|
+//    |__________________| --> SRAM_ITC_end 
+//    |                  |
+//    |//// RESERVED ////|
+//    |__________________|
+//    |                  | --> SRAM_DTC_start
+//    |     RW (.data)   | --> copying in startup_iar.c
+//    |     ZI (.bss)    | --> copying in startup_iar.c
+//    | SAFETY_RAM_BLOCK | 
+//    |__________________| --> SRAM_DTC_end_edited
+//    |                  | --> m_stack_test_p_1
+//    |                  |
+//    |__________________| --> m_stack_test_p_2
+//    |                  |
+//    |                  |
+//    |      STACK       |
+//    |                  |
+//    |__________________| --> __BOOT_STACK_ADDRESS
+//    |                  | --> m_stack_test_p_3
+//    |                  |
+//    |__________________| --> m_stack_test_p_4
+//    |__________________| --> m_safety_error_code
+//    |__________________| --> m_pc_test_flag
+//    |                  | --> m_wd_test_backup
+//    |__________________|
+//    |                  |
+//    |                  | --> m_ram_test_backup
+//    |__________________|
+//    |__________________| --> SRAM_DTC_end
+//    |                  |
+//    |//// RESERVED ////|
+//    |__________________|
+//    |                  | --> SRAM_OC_start
+//    |//// NOT USED ////|
+//    |__________________| --> SRAM_OC_end
+//
+//
+/********************        SDRAM        ********************/
+//     __________________
+//    |                  | --> SDRAM_start
+//    |//// NOT USED ////|
+//    |__________________| --> SDRAM_end
+//
+
+; *************************************************************
+; *** Scatter-Loading Description File                      ***
+; *************************************************************
+#include "linker_config.h"
+
+/************ IVT ************/
+LR_IROM1_IVT ROM_interrupts_start __vector_table_size__ {   ; load region size_region
+	ROM_VECTOR_TABLE ROM_interrupts_start NOCOMPRESS __vector_table_size__ { ; load address = execution address
+        * (section_ivt)
+    }
+}
+
+/************ RO, RW, ZI, safety ram, stack ************/
+LR_IROM1 ROM_start ROM_end - ROM_start + 1 {
+	ER_IROM1 ROM_start NOCOMPRESS { ; load address = execution address
+		* (InRoot$$Sections)
+		.ANY (+RO)
+	}
+
+	SafetyRam_region m_safety_ram_start SAFETY_RAM_SIZE {
+		main_imxrt.o (.safety_ram)
+		safety_test_items.o (.data)
+	}
+
+    SafetyRamCRC_region m_safety_ram_crc_start SAFETY_RAM_CRC_SIZE {
+		main_imxrt.o (.safety_ram_crc)
+	}
+
+	RW_IRAM1 SRAM_DTC_start SRAM_DTC_end - SRAM_DTC_start + 1  {  ; RW data
+		.ANY (+RW +ZI)
+	}
+
+    ARM_LIB_HEAP +0 EMPTY 0x0 {    ; Heap region growing up
+    }
+
+	ARM_LIB_STACK __BOOT_STACK_ADDRESS EMPTY -__size_cstack__{ ; Stack region growing down
+	} 
+    
+    RW_m_ncache +0 EMPTY 0x0 { ; Empty region added for MPU configuration
+    }
+    
+    RW_m_ncache_unused +0 EMPTY 0x0 { ; Empty region added for MPU configuration
+    }
+}
+
+/************ PC test object ************/
+LR_PC_OBJECT __PC_test_start__ __PC_test_end__ - __PC_test_start__ + 1 {
+	ER_PCTEST __PC_test_start__ __PC_test_end__ - __PC_test_start__ + 1 {
+		iec60730b_cm4_cm7_pc_object.o 
+	}
+}
+
+/************ XIP boot header ************/
+LR_m_rom_config m_flash_config_start m_flash_config_size {   ; load region size_region
+	RW_m_config_text m_flash_config_start m_flash_config_size { ; load address = execution address
+	* (.boot_hdr.conf, +FIRST)
+	}
+}
+LR_m_rom_ivt 0x30001000 0x1000 {   ; load region size_region
+	RW_m_ivt_text 0x30001000 0x1000 { ; load address = execution address
+	* (.boot_hdr.ivt, +FIRST)
+	* (.boot_hdr.boot_data)
+	* (.boot_hdr.dcd_data)
+	}
+}
+
+/************ Safety-flash CRC region ************/
+LR_IROM2 ROM_end __size_flash_crc__ {
+    ER_CRC ROM_end __size_flash_crc__
+    {
+        *(.flshcrc)
+    }
+}

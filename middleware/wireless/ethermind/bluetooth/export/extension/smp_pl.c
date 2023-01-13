@@ -98,10 +98,10 @@ DECL_STATIC SMP_DEVICE_PL smp_pl_device_list[SMP_PL_DEVICE_LIST_SIZE];
 
 #ifdef SMP_LESC
 /* LESC OOB Data */
-SMP_LESC_OOB_DATA_PL smp_lesc_oob_data;
+DECL_STATIC SMP_LESC_OOB_DATA_PL smp_lesc_oob_data;
 
 /* LESC OOB data generation complete handler */
-SMP_LESC_OOB_GEN_COMPLETE_CB smp_lesc_oob_gen_handler;
+DECL_STATIC SMP_LESC_OOB_GEN_COMPLETE_CB smp_lesc_oob_gen_handler;
 #endif /* SMP_LESC */
 #endif /* SMP_HAVE_OOB_SUPPORT */
 
@@ -199,15 +199,15 @@ DECL_CONST DECL_STATIC UCHAR smp_ecdh_oob_pub_key_pl[] =
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
 /* LESC LK LTK generation Data struct */
-SMP_LESC_LK_LTK_GEN_PL smp_lesc_txp_keys;
+DECL_STATIC SMP_LESC_LK_LTK_GEN_PL smp_lesc_txp_keys;
 
 /* LESC LK LTK key generation complete handler */
-SMP_LESC_LK_LTK_GEN_COMPLETE_CB smp_lesc_lk_ltk_gen_handler;
+DECL_STATIC SMP_LESC_LK_LTK_GEN_COMPLETE_CB smp_lesc_lk_ltk_gen_handler;
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 #endif /* SMP_LESC */
 
 /** Platform mode for Generated Passkey Updation */
-UCHAR smp_passkey_revamp_mode_pl;
+DECL_STATIC UCHAR smp_passkey_revamp_mode_pl;
 
 /* ----------------------------------------- Functions */
 

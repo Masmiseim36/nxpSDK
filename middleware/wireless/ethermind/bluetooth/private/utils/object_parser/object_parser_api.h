@@ -104,7 +104,7 @@
 #define ENCODING                (AT_START_TOKEN_ID + 0x1F)
 #define CHARSET                 (AT_START_TOKEN_ID + 0x20)
 #define LANGUAGE                (AT_START_TOKEN_ID + 0x21)
-#define INLINE                  (AT_START_TOKEN_ID + 0x22)
+#define IN_LINE                 (AT_START_TOKEN_ID + 0x22)
 #define CONTENT_ID              (AT_START_TOKEN_ID + 0x23)
 #define CID                     (AT_START_TOKEN_ID + 0x24)
 #define BIT_7                   (AT_START_TOKEN_ID + 0x25)
@@ -154,12 +154,6 @@
 #define X_BT_UID                (AT_START_TOKEN_ID + 0x51)
 #define N                       (AT_START_TOKEN_ID + 0x52)
 #define MPEG                    (AT_START_TOKEN_ID + 0x53)
-
-#if 0
-/* Status Codes */
-#define API_SUCCESS    0x0000
-#define API_FAILURE    0xFFFF
-#endif /* 0 */
 
 /* Error Redirection */
 #ifndef OBJECT_PARSER_NO_DEBUG

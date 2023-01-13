@@ -27,6 +27,7 @@ bool copy_bytes_to_buffer(pb_istream_t *stream, buffer_t *read_buffer)
 
 bool decode_byte_field(pb_istream_t *stream, const pb_field_t *field, void **arg)
 {
+    AX_UNUSED_ARG(field);
     buffer_t* read_buffer = (buffer_t*)(*arg);
     return copy_bytes_to_buffer(stream, read_buffer);
 }
@@ -51,6 +52,7 @@ bool encode_byte_field(pb_ostream_t *stream, const pb_field_t *field, void *cons
 
 bool decode_expect_field(pb_istream_t *stream, const pb_field_t *field, void **arg)
 {
+    AX_UNUSED_ARG(field);
     expectation_t * expectation = (expectation_t*)(*arg);
 
     uint64_t value;

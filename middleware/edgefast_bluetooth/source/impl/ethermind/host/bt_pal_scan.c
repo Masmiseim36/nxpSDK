@@ -14,6 +14,9 @@
 #include <bluetooth/buf.h>
 #include <bluetooth/direction.h>
 
+#include <bluetooth/hci.h>
+#include <bluetooth/hci_vs.h>
+
 #if (defined(CONFIG_BT_OBSERVER) && (CONFIG_BT_OBSERVER > 0U))
 
 #include "bt_pal_hci_core.h"
@@ -333,14 +336,14 @@ int bt_le_scan_update(bool fast_scan)
 
 		/* don't restart scan if we have pending connection */
 		conn = bt_conn_lookup_state_le(BT_ID_DEFAULT, NULL,
-					       BT_CONN_CONNECT);
+					       BT_CONN_CONNECTING);
 		if (conn) {
 			bt_conn_unref(conn);
 			return 0;
 		}
 
 		conn = bt_conn_lookup_state_le(BT_ID_DEFAULT, NULL,
-					       BT_CONN_CONNECT_SCAN);
+					       BT_CONN_CONNECTING_SCAN);
 		if (conn) {
 			atomic_set_bit(bt_dev.flags, BT_DEV_SCAN_FILTER_DUP);
 
@@ -376,7 +379,7 @@ static void check_pending_conn(const bt_addr_le_t *id_addr,
 	}
 
 	conn = bt_conn_lookup_state_le(BT_ID_DEFAULT, id_addr,
-				       BT_CONN_CONNECT_SCAN);
+				       BT_CONN_CONNECTING_SCAN);
 	if (!conn) {
 		return;
 	}
@@ -391,7 +394,7 @@ static void check_pending_conn(const bt_addr_le_t *id_addr,
 		goto failed;
 	}
 
-	bt_conn_set_state(conn, BT_CONN_CONNECT);
+	bt_conn_set_state(conn, BT_CONN_CONNECTING);
 	bt_conn_unref(conn);
 	return;
 
@@ -463,8 +466,6 @@ static void le_adv_recv(bt_addr_le_t *addr, struct bt_le_scan_recv_info *info,
 				bt_lookup_id_addr(BT_ID_DEFAULT, addr));
 	}
 
-	info->addr = &id_addr;
-
 	if (scan_dev_found_cb) {
 		net_buf_simple_save(buf, &state);
 
@@ -473,6 +474,8 @@ static void le_adv_recv(bt_addr_le_t *addr, struct bt_le_scan_recv_info *info,
 
 		net_buf_simple_restore(buf, &state);
 	}
+
+	info->addr = &id_addr;
 
 	SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&scan_cbs, listener, next, node, struct bt_le_scan_cb) {
 		if (listener->recv) {
@@ -484,6 +487,9 @@ static void le_adv_recv(bt_addr_le_t *addr, struct bt_le_scan_recv_info *info,
 			net_buf_simple_restore(buf, &state);
 		}
 	}
+
+	/* Clear pointer to this stack frame before returning to calling function */
+	info->addr = NULL;
 
 #if (defined(CONFIG_BT_CENTRAL) && ((CONFIG_BT_CENTRAL) > 0U))
 	check_pending_conn(&id_addr, addr, info->adv_props);
@@ -726,6 +732,13 @@ static struct bt_le_per_adv_sync *get_pending_per_adv_sync(void)
 	return NULL;
 }
 
+void bt_periodic_sync_disable(void)
+{
+	for (size_t i = 0; i < ARRAY_SIZE(per_adv_sync_pool); i++) {
+		per_adv_sync_delete(&per_adv_sync_pool[i]);
+	}
+}
+
 struct bt_le_per_adv_sync *bt_hci_get_per_adv_sync(uint16_t handle)
 {
 	for (int i = 0; i < ARRAY_SIZE(per_adv_sync_pool); i++) {
@@ -746,7 +759,7 @@ void bt_hci_le_per_adv_report_recv(struct bt_le_per_adv_sync *per_adv_sync,
 	struct net_buf_simple_state state;
 	struct bt_le_per_adv_sync_cb *listener;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&pa_sync_cbs, listener, node) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&pa_sync_cbs, listener, node, struct bt_le_per_adv_sync_cb) {
 		if (listener->recv) {
 			net_buf_simple_save(buf, &state);
 			listener->recv(per_adv_sync, info, buf);
@@ -898,8 +911,8 @@ void bt_hci_le_per_adv_sync_established(struct net_buf *buf)
 			struct bt_le_per_adv_sync_term_info term_info;
 
 			/* Terminate the pending PA sync and notify app */
-			term_info.addr = &pending_per_adv_sync->addr;
-			term_info.sid = pending_per_adv_sync->sid;
+			term_info.addr = &evt->adv_addr;
+			term_info.sid = evt->sid;
 			term_info.reason = unexpected_evt ? BT_HCI_ERR_UNSPECIFIED : evt->status;
 
 			/* Deleting before callback, so the caller will be able
@@ -945,6 +958,12 @@ void bt_hci_le_per_adv_sync_established(struct net_buf *buf)
 		/* Now we know which address and SID we synchronized to. */
 		bt_addr_le_copy(&pending_per_adv_sync->addr, &evt->adv_addr);
 		pending_per_adv_sync->sid = evt->sid;
+
+		/* Translate "enhanced" identity address type to normal one */
+		if (pending_per_adv_sync->addr.type == BT_ADDR_LE_PUBLIC_ID ||
+		    pending_per_adv_sync->addr.type == BT_ADDR_LE_RANDOM_ID) {
+			pending_per_adv_sync->addr.type -= BT_ADDR_LE_PUBLIC_ID;
+		}
 	}
 
 	sync_info.addr = &pending_per_adv_sync->addr;
@@ -1082,7 +1101,7 @@ void bt_hci_le_biginfo_adv_report(struct net_buf *buf)
 	biginfo.framing = evt->framing;
 	biginfo.encryption = evt->encryption ? true : false;
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&pa_sync_cbs, listener, node) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&pa_sync_cbs, listener, node, struct bt_le_per_adv_sync_cb) {
 		if (listener->biginfo) {
 			listener->biginfo(per_adv_sync, &biginfo);
 		}
@@ -1090,7 +1109,7 @@ void bt_hci_le_biginfo_adv_report(struct net_buf *buf)
 }
 #endif /* CONFIG_BT_ISO_BROADCAST */
 #if (defined(CONFIG_BT_DF_CONNECTIONLESS_CTE_RX) && (CONFIG_BT_DF_CONNECTIONLESS_CTE_RX > 0U))
-void bt_hci_le_df_connectionless_iq_report(struct net_buf *buf)
+static void bt_hci_le_df_connectionless_iq_report_common(uint8_t event, struct net_buf *buf)
 {
 	int err;
 
@@ -1098,18 +1117,43 @@ void bt_hci_le_df_connectionless_iq_report(struct net_buf *buf)
 	struct bt_le_per_adv_sync *per_adv_sync;
 	struct bt_le_per_adv_sync_cb *listener;
 
-	err = hci_df_prepare_connectionless_iq_report(buf, &cte_report, &per_adv_sync);
-	if (err) {
-		BT_ERR("Prepare CTE conn IQ report failed %d", err);
+	if (event == BT_HCI_EVT_LE_CONNECTIONLESS_IQ_REPORT) {
+		err = hci_df_prepare_connectionless_iq_report(buf, &cte_report, &per_adv_sync);
+		if (err) {
+			BT_ERR("Prepare CTE conn IQ report failed %d", err);
+			return;
+		}
+	} else if (IS_ENABLED(CONFIG_BT_DF_VS_CL_IQ_REPORT_16_BITS_IQ_SAMPLES) &&
+		   event == BT_HCI_EVT_VS_LE_CONNECTIONLESS_IQ_REPORT) {
+		err = hci_df_vs_prepare_connectionless_iq_report(buf, &cte_report, &per_adv_sync);
+		if (err) {
+			BT_ERR("Prepare CTE conn IQ report failed %d", err);
+			return;
+		}
+	} else {
+		BT_ERR("Unhandled VS connectionless IQ report");
 		return;
 	}
 
-	SYS_SLIST_FOR_EACH_CONTAINER(&pa_sync_cbs, listener, node) {
+	SYS_SLIST_FOR_EACH_CONTAINER(&pa_sync_cbs, listener, node, struct bt_le_per_adv_sync_cb) {
 		if (listener->cte_report_cb) {
 			listener->cte_report_cb(per_adv_sync, &cte_report);
 		}
 	}
 }
+
+void bt_hci_le_df_connectionless_iq_report(struct net_buf *buf)
+{
+	bt_hci_le_df_connectionless_iq_report_common(BT_HCI_EVT_LE_CONNECTIONLESS_IQ_REPORT, buf);
+}
+
+#if (defined(CONFIG_BT_DF_VS_CL_IQ_REPORT_16_BITS_IQ_SAMPLES) && (CONFIG_BT_DF_VS_CL_IQ_REPORT_16_BITS_IQ_SAMPLES > 0))
+void bt_hci_le_vs_df_connectionless_iq_report(struct net_buf *buf)
+{
+	bt_hci_le_df_connectionless_iq_report_common(BT_HCI_EVT_VS_LE_CONNECTIONLESS_IQ_REPORT,
+						     buf);
+}
+#endif /* CONFIG_BT_DF_VS_CL_IQ_REPORT_16_BITS_IQ_SAMPLES */
 #endif /* CONFIG_BT_DF_CONNECTIONLESS_CTE_RX */
 #endif /* defined(CONFIG_BT_PER_ADV_SYNC) */
 #endif /* defined(CONFIG_BT_EXT_ADV) */
@@ -1377,14 +1421,19 @@ int bt_le_per_adv_sync_create(const struct bt_le_per_adv_sync_param *param,
 	cp = net_buf_add(buf, sizeof(*cp));
 	(void)memset(cp, 0, sizeof(*cp));
 
-
-	bt_addr_le_copy(&cp->addr, &param->addr);
-
 	if (param->options & BT_LE_PER_ADV_SYNC_OPT_USE_PER_ADV_LIST) {
 		atomic_set_bit(per_adv_sync->flags,
 			       BT_PER_ADV_SYNC_SYNCING_USE_LIST);
 
 		cp->options |= BT_HCI_LE_PER_ADV_CREATE_SYNC_FP_USE_LIST;
+	} else {
+		/* If BT_LE_PER_ADV_SYNC_OPT_USE_PER_ADV_LIST is set, then the
+		 * address and SID are ignored by the controller, so we only
+		 * copy/assign them in case that the periodic advertising list
+		 * is not used.
+		 */
+		bt_addr_le_copy(&cp->addr, &param->addr);
+		cp->sid = param->sid;
 	}
 
 	if (param->options &
@@ -1419,7 +1468,6 @@ int bt_le_per_adv_sync_create(const struct bt_le_per_adv_sync_param *param,
 		cp->cte_type |= BT_HCI_LE_PER_ADV_CREATE_SYNC_CTE_TYPE_ONLY_CTE;
 	}
 
-	cp->sid = param->sid;
 	cp->skip = sys_cpu_to_le16(param->skip);
 	cp->sync_timeout = sys_cpu_to_le16(param->timeout);
 

@@ -2,7 +2,7 @@
 @page middleware_log Middleware Change Log
 
 @section fmstr FreeMASTER Communication Driver
-  Current version is 3.0.4. Visit https://www.nxp.com/freemaster for more information.
+  Current version is 3.0.6. Visit https://www.nxp.com/freemaster for more information.
   Reach out for a support at https://community.nxp.com/community/freemaster.
   
   - 3.0.0
@@ -41,4 +41,10 @@
     - Add fmstr_net and fmstr_wifi examples for selected i.MX-RT platforms
     - Add fmstr_rtt example for selected platforms
     - Fixed negative recorder threshold trigger processing
+
+  - 3.0.6
+    - General update for SDK 2.13
+    - Use of new Ethernet MDIO driver concept.
+    - Support of ENET and NETC Ethernet modules in the fmstr_net example application.
+
 */

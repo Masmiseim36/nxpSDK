@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.24 - Graphical user interface for embedded applications **
+** emWin V6.28 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2022-09-02
+SUA period:               2011-08-19 - 2023-09-03
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : GUIDRV_Lin_Private.h
@@ -149,6 +149,11 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #define OFF2PTR32(VRAMAddr, Off)     (U32 *)((U8 *)VRAMAddr + (Off << 2))
 
 //
+// Macro to add a proper value as alpha channel if LIN24 is used
+//
+#define GUIDRV_LIN_24_ADD_ALPHA(x) ( x^= (*GUI_pContext->LCD_pColorIndex & 0xFF000000))
+
+//
 // Use unique context identified
 //
 #define DRIVER_CONTEXT DRIVER_CONTEXT_LIN
@@ -230,6 +235,8 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
     return (void (*)(void))_SetVis;                                                 \
   case LCD_DEVFUNC_INIT:                                                            \
     return (void (*)(void))_Init;                                                   \
+  case LCD_DEVFUNC_EXIT:                                                            \
+    return (void (*)(void))_OnExit;                                                 \
   case LCD_DEVFUNC_ON:                                                              \
     return (void (*)(void))_On;                                                     \
   case LCD_DEVFUNC_OFF:                                                             \
@@ -532,6 +539,26 @@ static int  _Init(GUI_DEVICE * pDevice) {
 
 /*********************************************************************
 *
+*       _OnExit
+*
+* Purpose:
+*   Called during the deinitialization of the driver.
+*/
+static int  _OnExit(GUI_DEVICE * pDevice) {
+  DRIVER_CONTEXT * pContext;
+
+  pContext = (DRIVER_CONTEXT *)pDevice->u.pContext;
+  if (pContext) {
+    if (pDevice->u.pContext) {
+      GUI_ALLOC_FreeFixedBlock(pDevice->u.pContext);
+      pDevice->u.pContext = NULL;
+    }
+  }
+  return 0;
+}
+
+/*********************************************************************
+*
 *       _On
 *
 * Purpose:
@@ -611,7 +638,6 @@ static void _SetChroma(GUI_DEVICE * pDevice, LCD_COLOR ChromaMin, LCD_COLOR Chro
 static void _CopyBuffer(GUI_DEVICE * pDevice, int IndexSrc, int IndexDst) {
   DRIVER_CONTEXT * pContext;
   #if (!defined(WIN32))
-    //U32 AddrSrc, AddrDst;
     void * pSrc;
     void * pDst;
     I32 BufferSize;
@@ -628,13 +654,9 @@ static void _CopyBuffer(GUI_DEVICE * pDevice, int IndexSrc, int IndexDst) {
         BitsPerPixel = pDevice->pDeviceAPI->pfGetDevProp(pDevice, LCD_DEVCAP_BITSPERPIXEL);
         BufferSize = (((U32)pContext->vxSize * pContext->ySize * BitsPerPixel) >> 3);
         if (pContext->aBufferPTR) {
-          //AddrSrc = *(pContext->aBufferPTR + IndexSrc);
-          //AddrDst = *(pContext->aBufferPTR + IndexDst);
           pSrc = pContext->aBufferPTR[IndexSrc];
           pDst = pContext->aBufferPTR[IndexDst];
         } else {
-          //AddrSrc = pContext->BaseAddr + BufferSize * IndexSrc;
-          //AddrDst = pContext->BaseAddr + BufferSize * IndexDst;
           pSrc = (U8 *)pContext->BaseAddr + BufferSize * IndexSrc;
           pDst = (U8 *)pContext->BaseAddr + BufferSize * IndexDst;
         }

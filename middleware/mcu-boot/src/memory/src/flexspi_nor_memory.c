@@ -24,7 +24,8 @@
 #if BL_FEATURE_FLEXSPI_NOR_MODULE
 
 #ifndef FLEXSPI_NOR_INSTANCE
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
 #define FLEXSPI_NOR_INSTANCE flexspi_nor_get_instance()
 #else
 #define FLEXSPI_NOR_INSTANCE BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE
@@ -42,7 +43,8 @@
 #include "bl_keyblob.h"
 #endif // BL_FEATURE_GEN_KEYBLOB
 
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
 #define FLASH_AMBA_BASE flexspi_nor_get_amba_addr()
 #else
 #define FLASH_AMBA_BASE BL_FLEXSPI_AMBA_BASE
@@ -101,7 +103,8 @@ typedef struct _flexspi_nor_mem_context
     bool has_keyblob;
     uint32_t keyblob_offset;
 #endif // BL_FEATURE_GEN_KEYBLOB
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
     uint32_t instance;
 #endif // BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
 } flexspi_nor_mem_context_t;
@@ -109,10 +112,6 @@ typedef struct _flexspi_nor_mem_context
 ////////////////////////////////////////////////////////////////////////////////
 // Prototypes
 ////////////////////////////////////////////////////////////////////////////////
-//! @brief Update memory map of flexspi NOR Flash
-static status_t flexspi_nor_update_map(void);
-//! @brief Convert flexspi alias address to amba address.
-static uint32_t flexspi_get_map_address(uint32_t aliasAddr);
 //! @brief Convert flexspi amba address to physical address
 static uint32_t flexspi_get_phy_address(uint32_t mapAddr);
 //! @brief Init function for flexspi nor module driver
@@ -145,7 +144,8 @@ static flexspi_nor_config_t s_flexspiNorConfigBlock; //!< Configuration block fo
 static flexspi_nor_mem_context_t s_flexspiNorContext = {
     .isConfigured = false,
     .isAddingToBuffer = false,
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
     .instance = BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE,
 #endif // BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
 };
@@ -184,7 +184,8 @@ const memory_region_interface_t g_flexspiAliasAreaInterface = {
 //! @brief Get the instance of current flexspi nor
 static uint32_t flexspi_nor_get_instance()
 {
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
     return s_flexspiNorContext.instance;
 #else
     return FLEXSPI_NOR_INSTANCE;
@@ -194,23 +195,51 @@ static uint32_t flexspi_nor_get_instance()
 //! @brief Get the amba of current flexspi nor
 uint32_t flexspi_nor_get_amba_addr()
 {
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
     switch (flexspi_nor_get_instance())
     {
 #ifdef FlexSPI0_AMBA_BASE
-    case 0:
-        return FlexSPI0_AMBA_BASE;
+        case 0:
+            return FlexSPI0_AMBA_BASE;
 #endif
 #ifdef FlexSPI1_AMBA_BASE
-    case 1:
-        return FlexSPI1_AMBA_BASE;
+        case 1:
+            return FlexSPI1_AMBA_BASE;
 #endif
 #ifdef FlexSPI2_AMBA_BASE
-    case 2:
-        return FlexSPI2_AMBA_BASE;
+        case 2:
+            return FlexSPI2_AMBA_BASE;
 #endif
-    default:
-        return 0; // do not rely on this for validity check
+        default:
+            return 0; // do not rely on this for validity check
+    }
+#else
+    return FLASH_AMBA_BASE;
+#endif // BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+}
+
+//! @brief Get the amba of current flexspi nor
+uint32_t flexspi_nor_get_alias_addr()
+{
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+    switch (flexspi_nor_get_instance())
+    {
+#ifdef FlexSPI0_ALIAS_BASE
+        case 0:
+            return FlexSPI0_ALIAS_BASE;
+#endif
+#ifdef FlexSPI1_ALIAS_BASE
+        case 1:
+            return FlexSPI1_ALIAS_BASE;
+#endif
+#ifdef FlexSPI2_ALIAS_BASE
+        case 2:
+            return FlexSPI2_ALIAS_BASE;
+#endif
+        default:
+            return 0; // do not rely on this for validity check
     }
 #else
     return FLASH_AMBA_BASE;
@@ -367,25 +396,26 @@ status_t flexspi_nor_mem_init(void)
 #endif
 }
 
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
 static bool flexspi_nor_instance_available(uint32_t inst)
 {
     switch (inst)
     {
 #if defined(FlexSPI0_AMBA_BASE)
-    case 0:
-        return true;
+        case 0:
+            return true;
 #endif
 #if defined(FlexSPI1_AMBA_BASE)
-    case 1:
-        return true;
+        case 1:
+            return true;
 #endif
 #if defined(FlexSPI2_AMBA_BASE)
-    case 2:
-        return true;
+        case 2:
+            return true;
 #endif
-    default:
-        return false;
+        default:
+            return false;
     }
 }
 #endif // BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
@@ -422,7 +452,8 @@ status_t flexspi_nor_mem_config(uint32_t *config)
         nor_encrypt_option_t *norEncryptOption = (nor_encrypt_option_t *)config;
 #endif
 
-#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
         if (MAGIC_NUMBER_FLEXSPI_NOR_PRECFG == option->option0.P.magic)
         {
             if (!flexspi_nor_instance_available(option->option0.P.cf9_field))
@@ -1109,44 +1140,11 @@ status_t flexspi_nor_get_property(uint32_t whichProperty, uint32_t *value)
     return kStatus_Success;
 }
 
-//! @brief Update memory map of flexspi NOR Flash
-static status_t flexspi_nor_update_map(void)
-{
-    status_t status;
-    uint32_t totalFlashSize;
-
-    status = flexspi_nor_get_property(kFlexspiNorProperty_TotalFlashSize, &totalFlashSize);
-    if (status != kStatus_Success)
-    {
-        return status;
-    }
-
-    g_memoryMap[kIndexFlexSpiNor].memoryProperty = (kMemoryIsExecutable | kMemoryType_FLASH);
-
-    g_memoryMap[kIndexFlexSpiNor].startAddress = FLASH_AMBA_BASE;
-    g_memoryMap[kIndexFlexSpiNor].endAddress = g_memoryMap[kIndexFlexSpiNor].startAddress + totalFlashSize - 1;
-#if BL_FEATURE_FLEXSPI_ALIAS_AREA
-    g_memoryMap[kIndexFlexSpiNorAlias].memoryProperty = kMemoryIsExecutable | kMemoryType_FLASH;
-    g_memoryMap[kIndexFlexSpiNorAlias].endAddress =
-        g_memoryMap[kIndexFlexSpiNorAlias].startAddress + MIN(totalFlashSize, kFlexSpiNorAliasAreaMaxSize) - 1;
-#endif // #if BL_FEATURE_FLEXSPI_ALIAS_AREA
-    return kStatus_Success;
-}
-
 //! @brief Get the status of flexspi configuration
 bool is_flexspi_nor_configured()
 {
     return s_flexspiNorContext.isConfigured;
 }
-
-#if BL_FEATURE_FLEXSPI_ALIAS_AREA
-//! @brief Convert flexspi alias address to amba address.
-static uint32_t flexspi_get_map_address(uint32_t aliasAddr)
-{
-    // Currently for RT1170/RT1160 only
-    return aliasAddr + (g_memoryMap[kIndexFlexSpiNor].startAddress - g_memoryMap[kIndexFlexSpiNorAlias].startAddress);
-}
-#endif
 
 //! @brief Convert flexspi amba address to physical address
 static uint32_t flexspi_get_phy_address(uint32_t mapAddr)

@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2018-2021 Cadence Design Systems, Inc.
+# Copyright (c) 2018-2022 Cadence Design Systems, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -20,29 +20,137 @@
 #
 
 ======================================================================
-Cadence HiFi4 Neural Network (NN) Library
+Cadence HiFi 4 Neural Network (NN) Library
 ======================================================================
 
 ======================================================================
 Revision History
 ======================================================================
 
-Version 2.4.1 API 1.0: Jul 27, 2021
+Version 2.7.0 API 1.2: May 11, 2022
 
-+ Patch Release of HiFi 4 NN Library
-+ Tested using RI.5 tools, xt-xcc/xt-xc++ and xt-clang/xt-clang++ compiler
-+ [J2938]: Fixed the issue related to special case handling.
-    Moved the special cases handling for vec_length=8/32 to the start 
-    of the function in xa_nn_dot_prod_16x16_asym8s.
-+ [J2976]: Removed legacy condition checks for depthwise_conv.
-+ [J2994]: Fixed the issue related to xa_nn_conv2d_std_per_chan_sym8sxasym8s.
-    updated to select correct vec values in case of vec_align_val is 1 and 3.
++ Intermediate Release of HiFi4 NN Library
++ Tested using RI.6 tools, xt-clang/xt-clang++ compiler.
++ Single Step Rounding support is added for all applicable quantize kernels.
+  (Except newly added SEANet kernels)
++ Added sigmoid/tanh TIE based optimizations for asym8s and 16-bit precisions.
++ Improved performance of conv2d_depth, conv1d_std, broadcast_8_8 and reduce_max_asym8s 
+  kernels through memcpy optimization.
++ Membank confict reduction in all variants of matXvec 8x8, 8x16 and 16x16 precisions.
++ Added support for SEANet kernels. This includes ->
+  conv2d_std_sym8sxsym16s
+  conv2d_pointwise_sym8sxsym16s
+  transpose_conv_sym8sxsym16s
+  leaky_relu_asym16s
+  elm_add_asym16s
+  strided_slice_int16
+  elm_sub_broadcast_asym16s
+  pad_16
 
-Limitations
-> The ANN test bench, TFLite Micro example application and the supporting libraries
-  need support for C++11 standard. This is supported only with Xtensa C library. 
-> For configurations without VFPU, the floating point  variants of the kernels 
-  are not supported and should not be used. 
+Note
+> Processor Configuration must be built with SP-VFP option in order to compile 
+  floating point variants of the kernels.
+> The ANN test bench and the supporting libraries need support for C++11 standard. 
+  This is supported only with Xtensa C library. 
+
+Known issues
+> Compiler optimizations are disabled for ANN C++ source files
+> 3 failures seen in ANN testcases because  of differences in reference 
+  code implementations:
+    DEPTHWISE_CONV2D_FLOAT_LARGE_2_WEIGHTS_AS_INPUTS
+    LOCAL_RESPONSE_NORM_FLOAT_4
+    LOCAL_RESPONSE_NORM_FLOAT_4_RELAXED
+
+----------------------------------------------------------------------
+
+Version 2.6.0, API 1.1: February 1, 2022
+
++ GA Release of HiFi4 NN Library
++ Tested using RI.6 tools, xt-clang/xt-clang++ compiler.
++ Fixed following issues:
+  Fixes hang in matXvec sample testbench.(TENA-3062)
+  Fixes sigmoid_asym8, sigmoid_asym8s and tanh_asym8s bit-exactness issue (TENA-2918)
+  Adds -Wsign-compare flag in build set up. (TENA-2953)
+  Allows null bias for fully connected (sym8sxasym8s) kernel. (TENA-3091)
+
+Note
+> Processor Configuration must be built with SP-VFP option in order to compile 
+  floating point variants of the kernels.
+> The ANN test bench and the supporting libraries need support for C++11 standard. 
+  This is supported only with Xtensa C library. 
+
+Known issues
+> Compiler optimizations are disabled for ANN C++ source files
+> 3 failures seen in ANN testcases because  of differences in reference 
+  code implementations:
+    DEPTHWISE_CONV2D_FLOAT_LARGE_2_WEIGHTS_AS_INPUTS
+    LOCAL_RESPONSE_NORM_FLOAT_4
+    LOCAL_RESPONSE_NORM_FLOAT_4_RELAXED
+
+----------------------------------------------------------------------
+
+Version 2.5.0 API 1.1: Novemeber 9, 2021
+
++ Intermediate Release of HiFi4 NN Library
++ Tested using RI.6 tools, xt-clang/xt-clang++ compiler.
++ Adds support for build on HiFi1 core.
++ Adds support for asymmetric quantized 8 bit (int8) variants of following
+  TFLM operators:
+  DEPTH_TO_SPACE, SPACE_TO_DEPTH, PAD, PAD_V2
+  BATCH_TO_SPACE_ND, SPACE_TO_BATCH_ND
+  L2Normalization
+  LogicalAND, LogicalOR, LogicalNOT
+  ReduceMax, ReduceMean
+  Equal, Greater, GreaterEqual
+  Less, LessEqual, NotEqual
+  Logistic, Hardswish,Tanh
+  Maximum, Minimum
+  Prelu, Relu, leaky_relu
+  Sub, Add, Mul
++ Adds support for single precision float (float32) variants of following
+  TFLM operators:
+  SIN, COS, LOG
+  SQRT, RSQRT, SQUARE
+  FILL, CEIL, ROUND
+  ABS, NEG
++ Adds support for Dilated Standard 2D Convolution.
++ Adds 16-bit input/output variants for sigmoid and tanh kernels based on 
+  Tensorflow.
++ Adds matXvec batch kernel with accumulation (8-bit input, sym8s kernel and
+  asym16s output).
++ Adds support for TFLM Dequantize (asymmetric int8 to float32) operators.
++ Adds support for additional data types (int8 to int32, int16 to int32) for 
+  TFLM Quantize operator.
++ Adds broadcast kernel for int8 data type.
++ Adds broadcast variants of elementwise minimum and maximum kernels for int8
+  data type
++ Improves performance for following kernels:
+  xa_nn_conv1d_std_8x8
+  xa_nn_conv1d_std_8x16
+  xa_nn_conv1d_std_f32
+  xa_nn_conv2d_depthwise_8x8
+  xa_nn_conv2d_depthwise_8x16
+  xa_nn_conv2d_depthwise_asym8xasym8
+  xa_nn_conv2d_depthwise_per_chan_sym8sxasym8s
+  xa_nn_conv2d_depthwise_per_chan_nhwc_sym8sxasym8s
+  xa_nn_conv2d_pointwise_nhwc_asym8xasym8
+  xa_nn_conv2d_pointwise_per_chan_nhwc_sym8sxasym8s
+  xa_nn_matXvec_asym8xasym8_asym8
+  fully_connected_asym8xasym8_asym8
+  xa_nn_maxpool_8
++ Improves code-size for following kernels:
+  xa_nn_matXvec_asym8uxasym8u_asym8u
+  xa_nn_matmul_asym8uxasym8u_asym8u
+  xa_nn_conv2d_std_per_chan_sym8sxasym8s
+  xa_nn_conv2d_pointwise_asym8uxasym8u
+  xa_nn_conv2d_depthwise_per_chan_sym8sxasym8s
++ Fixes issues TENA-2938, TENA-2976 and TENA-2994
+
+Note
+> For configurations without VFPU, the floating point  variants of the kernels
+  are not supported and should not be used.
+> The ANN test bench and the supporting libraries need support for C++11 standard. 
+  This is supported only with Xtensa C library. 
 
 Known issues
 > Compiler optimizations are disabled for C++ source files 

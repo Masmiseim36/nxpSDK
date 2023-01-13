@@ -37,6 +37,7 @@ FMSTR_TSA_RW_VAR(g_sM1Drive.eControl, FMSTR_TSA_UINT16)            /* MCAT contr
 FMSTR_TSA_RW_VAR(g_sClockSetup.ui16SlowLoopFreq, FMSTR_TSA_UINT16) /* Slow control loop Frequency */
 FMSTR_TSA_RW_VAR(g_sClockSetup.ui16FastLoopFreq, FMSTR_TSA_UINT16) /* Fast control loop Frequency */
 
+FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdEnable, FMSTR_TSA_UINT16)   /* Fault enable */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdCaptured, FMSTR_TSA_UINT16) /* Captured fault */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdPending, FMSTR_TSA_UINT16)  /* Pending fault */
 FMSTR_TSA_RW_VAR(g_sM1Drive.bFaultClearMan, FMSTR_TSA_UINT16)   /* Manual fault clearing */

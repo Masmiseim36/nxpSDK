@@ -135,7 +135,7 @@ API_RESULT BT_hfp_ag_init
  */
 API_RESULT BT_hfp_ag_start
            (
-               /* IN */  UINT8    server_channel
+               /* IN */  UCHAR    server_channel
            );
 
 /**
@@ -175,7 +175,7 @@ API_RESULT BT_hfp_ag_stop ( void );
  */
 API_RESULT BT_hfp_ag_connect
            (
-               /* IN */  UINT8      server_channel,
+               /* IN */  UCHAR      server_channel,
                /* IN */  UCHAR *    bd_addr
            );
 
@@ -212,14 +212,14 @@ API_RESULT BT_hfp_ag_disconnect
  *       This API allows the application to send result code strings to
  *       currently connected HFP Unit.
  *
- *  \param [in] data
+ *  \param [in] result_code
  *         Contains information of the HDP Event Notification Callback which HDP
  *         should use to report HDP events, the control channel PSM on which HDP
  *         must receive control channel connection requests, the L2CAP configuration
  *         parameters to be used during control channel connection, and the data
  *         channel PSM on which data channel connection shall by HDP be accepted.
  *
- *  \param [in] datalen
+ *  \param [in] result_code_length
  *         Contains information of the HDP Event Notification Callback which HDP
  *         should use to report HDP events, the control channel PSM on which HDP
  *         must receive control channel connection requests, the L2CAP
@@ -235,8 +235,8 @@ API_RESULT BT_hfp_ag_disconnect
  */
 API_RESULT BT_hfp_ag_send_data
            (
-               /* IN */ UCHAR *    data,
-               /* IN */ UINT16     datalen
+               /* IN */ UCHAR *    result_code,
+               /* IN */ UINT16     result_code_length
            );
 
 #ifdef __cplusplus

@@ -55,7 +55,7 @@ int32_t _get_file_data(
     CCIDecInfo *cci_dec = (CCIDecInfo *)context;
     StreamPad *sink;
     ElementDecoder *decoder = (ElementDecoder *)cci_dec->element;
-    PadReturn padret;
+    FlowReturn flowret;
 
     STREAMER_FUNC_ENTER(DBG_CCID);
 
@@ -85,16 +85,9 @@ int32_t _get_file_data(
             buffer.buffer = (int8_t *)cci_dec->filesrc_buffer[stream_num] - sizeof(RawPacketHeader);
             /* Request filesrc element to read file and refill src buffer
              * based on stream using */
-            if (stream_num == 0)
-            {
-                padret = (PadReturn)pad_pull_range(sink, cci_dec->filesrc_offset[stream_num], cci_dec->dec_frame_size,
-                                                   &buffer);
-            }
-            else
-            {
-                padret = (PadReturn)pad_pull_range(sink, cci_dec->filesrc_offset[stream_num], 2048, &buffer);
-            }
-            if (PAD_OK == padret)
+            flowret = pad_pull_range(sink, cci_dec->filesrc_offset[stream_num],
+                                     stream_num == 0 ? (uint32_t)cci_dec->dec_frame_size : 2048U, &buffer);
+            if (FLOW_OK == flowret)
             {
                 if (((PacketHeader *)BUFFER_PTR(&buffer))->id == RAW_DATA)
                 {
@@ -122,7 +115,7 @@ int32_t _get_file_data(
                 }
                 /* a problem occurred during pull from filesrc */
             }
-            else if (PAD_STREAM_ERR_EOS == padret)
+            else if (FLOW_EOS == flowret)
             {
                 /* EOS EVENT only send when Decoder return End Of Decode. */
                 /* In case of AAC Decoder, it may possible that we reach at the end of file during parsing.

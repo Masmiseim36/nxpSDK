@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.5</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -122,9 +122,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac38092f889e1f9f1c0c600038d35755f"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__src_8c.html#ac38092f889e1f9f1c0c600038d35755f">memsrc_src_activate</a> (StreamPad *pad, uint8_t active)</td></tr>
 <tr class="memdesc:ac38092f889e1f9f1c0c600038d35755f"><td class="mdescLeft">&#160;</td><td class="mdescRight">queue src pad activatation handler. Activation is handled by the peer sink pad, this should just handle the deactivation.  <a href="mem__src_8c.html#ac38092f889e1f9f1c0c600038d35755f">More...</a><br /></td></tr>
 <tr class="separator:ac38092f889e1f9f1c0c600038d35755f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4324516bea00282e998754d2a89e0537"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__src_8c.html#a4324516bea00282e998754d2a89e0537">memsrc_pull</a> (StreamPad *pad, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buffer, uint32_t size, uint32_t offset)</td></tr>
-<tr class="memdesc:a4324516bea00282e998754d2a89e0537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the pull function of the memsrc source pad in SCHEDULING_PULL mode. It reads the size of data from the offset to buffer.  <a href="mem__src_8c.html#a4324516bea00282e998754d2a89e0537">More...</a><br /></td></tr>
-<tr class="separator:a4324516bea00282e998754d2a89e0537"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8cf21e78733288fb5f15163d712b181"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__src_8c.html#ac8cf21e78733288fb5f15163d712b181">memsrc_pull</a> (StreamPad *pad, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buffer, uint32_t size, uint32_t offset)</td></tr>
+<tr class="memdesc:ac8cf21e78733288fb5f15163d712b181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the pull function of the memsrc source pad in SCHEDULING_PULL mode. It reads the size of data from the offset to buffer.  <a href="mem__src_8c.html#ac8cf21e78733288fb5f15163d712b181">More...</a><br /></td></tr>
+<tr class="separator:ac8cf21e78733288fb5f15163d712b181"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6683c0b52b993160bcb70f8af4a96188"><td class="memItemLeft" align="right" valign="top">static int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__src_8c.html#a6683c0b52b993160bcb70f8af4a96188">memsrc_get_property</a> (StreamElement *element_ptr, uint16_t prop, uint32_t *val_ptr)</td></tr>
 <tr class="memdesc:a6683c0b52b993160bcb70f8af4a96188"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function get memory source element properties.  <a href="mem__src_8c.html#a6683c0b52b993160bcb70f8af4a96188">More...</a><br /></td></tr>
 <tr class="separator:a6683c0b52b993160bcb70f8af4a96188"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,9 +143,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aea4e10fcf157157f4530bce742af9767"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__src_8c.html#aea4e10fcf157157f4530bce742af9767">memsrc_get_push_chunk_size</a> (<a class="el" href="streamer__api_8h.html#aa38d4845534a71686ee5281c5df9c6cb">ElementHandle</a> element, uint32_t *chunk_size)</td></tr>
 <tr class="memdesc:aea4e10fcf157157f4530bce742af9767"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function gets the chunk size.  <a href="mem__src_8c.html#aea4e10fcf157157f4530bce742af9767">More...</a><br /></td></tr>
 <tr class="separator:aea4e10fcf157157f4530bce742af9767"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaeab38802e063e2a9a632dfff3ca836f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__src_8c.html#aaeab38802e063e2a9a632dfff3ca836f">memsrc_read</a> (ElementMemSrc *memsrc, int32_t offset, int32_t length, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buf)</td></tr>
-<tr class="memdesc:aaeab38802e063e2a9a632dfff3ca836f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the data from the memory array specified by the element. NOTE: Function may or may not be able to read the required length of data. Returns PAD_OK or PAD_STREAM_ERR_EOS when EOF file is encountered.  <a href="mem__src_8c.html#aaeab38802e063e2a9a632dfff3ca836f">More...</a><br /></td></tr>
-<tr class="separator:aaeab38802e063e2a9a632dfff3ca836f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1f005c1b67bf3a078625eeb6636dc55"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mem__src_8c.html#ab1f005c1b67bf3a078625eeb6636dc55">memsrc_read</a> (ElementMemSrc *memsrc, int32_t offset, int32_t length, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buf)</td></tr>
+<tr class="memdesc:ab1f005c1b67bf3a078625eeb6636dc55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the data from the memory array specified by the element. NOTE: Function may or may not be able to read the required length of data. Returns FLOW_OK or FLOW_EOS when EOF file is encountered.  <a href="mem__src_8c.html#ab1f005c1b67bf3a078625eeb6636dc55">More...</a><br /></td></tr>
+<tr class="separator:ab1f005c1b67bf3a078625eeb6636dc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a58f268e84b2f98fefaf05cb668040c28" name="a58f268e84b2f98fefaf05cb668040c28"></a>
@@ -440,8 +440,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4324516bea00282e998754d2a89e0537" name="a4324516bea00282e998754d2a89e0537"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4324516bea00282e998754d2a89e0537">&#9670;&nbsp;</a></span>memsrc_pull()</h2>
+<a id="ac8cf21e78733288fb5f15163d712b181" name="ac8cf21e78733288fb5f15163d712b181"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8cf21e78733288fb5f15163d712b181">&#9670;&nbsp;</a></span>memsrc_pull()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -450,7 +450,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a> memsrc_pull </td>
+          <td class="memname">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a> memsrc_pull </td>
           <td>(</td>
           <td class="paramtype">StreamPad *&#160;</td>
           <td class="paramname"><em>pad</em>, </td>
@@ -767,8 +767,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aaeab38802e063e2a9a632dfff3ca836f" name="aaeab38802e063e2a9a632dfff3ca836f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaeab38802e063e2a9a632dfff3ca836f">&#9670;&nbsp;</a></span>memsrc_read()</h2>
+<a id="ab1f005c1b67bf3a078625eeb6636dc55" name="ab1f005c1b67bf3a078625eeb6636dc55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1f005c1b67bf3a078625eeb6636dc55">&#9670;&nbsp;</a></span>memsrc_read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -777,7 +777,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a> memsrc_read </td>
+          <td class="memname">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a> memsrc_read </td>
           <td>(</td>
           <td class="paramtype">ElementMemSrc *&#160;</td>
           <td class="paramname"><em>memsrc</em>, </td>

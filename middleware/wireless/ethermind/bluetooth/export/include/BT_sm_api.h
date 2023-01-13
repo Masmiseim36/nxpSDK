@@ -250,7 +250,7 @@ API_RESULT sm_device_link_key_and_type
  *
  *  \param [in] op_type
  *         Identifies the kind of operation
- *  \param [in] service_id
+ *  \param [in] si
  *         Identifies a registered Service
  *  \param [in,out] serv_attr
  *         Contains security details of the Service
@@ -260,7 +260,7 @@ API_RESULT sm_device_link_key_and_type
  *
  */
 API_RESULT sm_service_attributes
-           (UCHAR op_type, UCHAR service_id, SM_SERVICE *serv_attr);
+           (UCHAR op_type, UCHAR si, SM_SERVICE *serv_attr);
 #endif /* SM_HAVE_MODE_2 */
 
 /** To reply to SM UI Notification Callback Requests */
@@ -757,7 +757,7 @@ API_RESULT BT_sm_get_device_link_key_and_type
  *         The Bluetooth Device Address of the remote device for which device
  *         attributes to be retrieved.
  *
- *  \param [in] device_attr
+ *  \param [in] dev_attr
  *         This parameter is a bit-field, each bit of which represents a
  *         specific detail about the device in the device database.
  *         The caller must allocate memory for this parameter and pass the
@@ -782,7 +782,7 @@ API_RESULT BT_sm_get_device_link_key_and_type
  *  \return
  *         API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  */
-API_RESULT BT_sm_get_device_attributes (UCHAR *bd_addr, UCHAR *device_attr);
+API_RESULT BT_sm_get_device_attributes (UCHAR *bd_addr, UCHAR *dev_attr);
 
 /* To delete devices from SM Device Database based on Operation Types */
 /**
@@ -895,7 +895,7 @@ API_RESULT BT_sm_add_service
  *       requirements for a service, as identified by its uniquely allocated
  *       Service Identifier.
  *
- *  \param [in] service_id
+ *  \param [in] si
  *         This parameter specifies the unique Service Identifier, identifying
  *         the service, which needs to de-register. This value must have been
  *         obtained using BT_sm_add_service() API.
@@ -905,7 +905,7 @@ API_RESULT BT_sm_add_service
  *
  *
  */
-API_RESULT BT_sm_delete_service (UCHAR service_id);
+API_RESULT BT_sm_delete_service (UCHAR si);
 
 /** To set Security requirements of a Service */
 /**

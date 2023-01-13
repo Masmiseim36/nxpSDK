@@ -70,7 +70,7 @@ struct bt_buf_data {
 
 /** Helper to calculate needed buffer size for HCI ISO packets. */
 #define BT_BUF_ISO_SIZE(size) BT_BUF_SIZE(BT_HCI_ISO_HDR_SIZE + \
-					  BT_HCI_ISO_DATA_HDR_SIZE + \
+					  BT_HCI_ISO_TS_DATA_HDR_SIZE + \
 					  (size))
 
 /** Data size needed for HCI ACL RX buffers */
@@ -104,8 +104,8 @@ struct bt_buf_data {
  *  This will set the buffer type so bt_buf_set_type() does not need to
  *  be explicitly called before bt_recv_prio().
  *
- *  @param type    Type of buffer. Only BT_BUF_EVT and BT_BUF_ACL_IN are
- *                 allowed.
+ *  @param type    Type of buffer. Only BT_BUF_EVT, BT_BUF_ACL_IN and BT_BUF_ISO_IN
+ *                 are allowed.
  *  @param timeout Non-negative waiting period to obtain a buffer or one of the
  *                 special values K_NO_WAIT and K_FOREVER.
  *  @return A new buffer.

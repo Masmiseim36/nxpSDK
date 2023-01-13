@@ -2,7 +2,10 @@
 @page middleware_log Middleware Change Log
 
 @section sd SD Card driver for MCUXpresso SDK
-  The current driver version is 2.4.0.
+  The current driver version is 2.4.1.
+  - 2.4.1
+    - Improvements
+      - Added macro SDMMCHOST_SUPPORT_VOLTAGE_CONTROL for the host which not support voltage control.
 
   - 2.4.0
     - Improvements

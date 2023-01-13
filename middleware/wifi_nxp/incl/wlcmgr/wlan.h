@@ -127,7 +127,7 @@
 #include <wifi.h>
 #include <wlan_11d.h>
 
-#define WLAN_DRV_VERSION "v1.3.r42.p2"
+#define WLAN_DRV_VERSION "v1.3.r42.p3"
 
 /* Configuration */
 
@@ -267,11 +267,12 @@ enum wlan_event_reason
      *  is now in the \ref WLAN_ASSOCIATED state. */
     WLAN_REASON_AUTH_SUCCESS,
     /** The WLAN Connection Manager failed to connect before actual
-     * connection attempt with AP due to incorrect wlan network profile. */
+     * connection attempt with AP due to incorrect wlan network profile.
+     * or The WLAN Connection Manager failed to reconnect to previously connected
+     * network and it is now in the \ref WLAN_DISCONNECTED state.*/
     WLAN_REASON_CONNECT_FAILED,
     /** The WLAN Connection Manager could not find the network that it was
-     *  connecting to (or it has tried all known networks and failed to connect
-     *  to any of them) and it is now in the \ref WLAN_DISCONNECTED state. */
+     *  connecting to and it is now in the \ref WLAN_DISCONNECTED state. */
     WLAN_REASON_NETWORK_NOT_FOUND,
     /** The WLAN Connection Manager failed to authenticate with the network
      *  and is now in the \ref WLAN_DISCONNECTED state. */

@@ -17,7 +17,7 @@
 #if defined(USE_RTOS) && USE_RTOS == 1
 #include "FreeRTOS.h"
 #include "FreeRTOSIPConfig.h"
-#include "iot_crypto.h"
+//#include "iot_crypto.h" /* From older freeRTOS library */
 #include "semphr.h"
 #include "task.h"
 #endif
@@ -39,6 +39,9 @@
 #include "mbedtls/sha256.h"
 #include "mbedtls/x509_crt.h"
 #include "pkcs11_mbedtls_utils.h"
+#if SSS_HAVE_MBEDTLS_ALT
+#include "mbedtls/ssl.h"
+#endif
 #if defined(USE_RTOS) && USE_RTOS == 1
 #include "aws_clientcredential.h"
 #endif
@@ -360,7 +363,7 @@ U16 HLSE_Create_token(
 
 extern ex_sss_boot_ctx_t *pex_sss_demo_boot_ctx;
 extern ex_sss_cloud_ctx_t *pex_sss_demo_tls_ctx;
-
+mbedtls_ecp_group_id EcParametersToGrpId(uint8_t *ecparameters, size_t len);
 #endif // (SSS_HAVE_SSCP || SSS_HAVE_APPLET_SE05X_IOT || SSS_HAVE_APPLET_NONE)
 
 #endif // __SSS_PKCS11_PAL_H__

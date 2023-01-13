@@ -754,6 +754,7 @@ exit:
 
 bool iot_agent_get_endpoint_info(void* context, void* endpoint_information)
 {
+	AX_UNUSED_ARG(context);
 	nxp_iot_EndpointInformation* info = (nxp_iot_EndpointInformation*) endpoint_information;
 	info->has_version = true;
 	info->version = IOT_AGENT_VERSION;

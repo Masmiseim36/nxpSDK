@@ -17,6 +17,9 @@
 #define CASCFG_ENABLE_MP3_CODEC        1
 #define CASCFG_ENABLE_OPUS_CODEC       1
 #define CASCFG_ENABLE_OGG_OPUS         1
+#define CASCFG_ENABLE_AAC_CODEC        1
+#define CASCFG_ENABLE_WAV_CODEC        1
+#define CASCFG_ENABLE_FLAC_CODEC       1
 
 /*
  * Metadata Configuration

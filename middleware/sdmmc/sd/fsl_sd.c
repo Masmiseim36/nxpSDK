@@ -370,10 +370,12 @@ static status_t SD_SwitchIOVoltage(sd_card_t *card, sdmmc_operation_voltage_t vo
             card->usrParam.ioVoltage->func(voltage);
         }
     }
+#if SDMMCHOST_SUPPORT_VOLTAGE_CONTROL
     else if ((card->usrParam.ioVoltage != NULL) && (card->usrParam.ioVoltage->type == kSD_IOVoltageCtrlByHost))
     {
         SDMMCHOST_SwitchToVoltage(card->host, (uint32_t)voltage);
     }
+#endif
     else
     {
         return kStatus_SDMMC_NotSupportYet;

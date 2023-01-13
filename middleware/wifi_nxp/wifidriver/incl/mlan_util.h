@@ -65,7 +65,7 @@ static INLINE t_void util_init_list(pmlan_linked_list phead)
  */
 static INLINE t_void util_init_list_head(t_void *pmoal_handle,
                                          pmlan_list_head phead,
-                                         t_u8 lock_required,
+                                         bool lock_required,
                                          mlan_status (*moal_init_lock)(t_void *handle, t_void **pplock))
 {
     /* Both next and prev point to self */

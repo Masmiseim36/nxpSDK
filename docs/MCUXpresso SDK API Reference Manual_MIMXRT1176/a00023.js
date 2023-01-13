@@ -1,6 +1,6 @@
 var a00023 =
 [
-    [ "domain_slot_config_t", "a00023.html#a00460", [
+    [ "domain_slot_config_t", "a00023.html#a00462", [
       [ "lockControl", "a00023.html#a56c314c3ca899d00e4c772b0bc791607", null ],
       [ "allowUser", "a00023.html#a6af5753c721d39c34e1fa4653bfd79ce", null ],
       [ "allowNonSecure", "a00023.html#a34a4f5e917760f7ab09a402d76aa3cb0", null ],

@@ -18,7 +18,7 @@
 #include "hci_uart.h"
 #endif /* BT_UART */
 
-DECL_CONST UCHAR vs_commands[] =
+DECL_STATIC DECL_CONST UCHAR vs_commands[] =
 {
 #include "vendor_specific_commands.h"
 };

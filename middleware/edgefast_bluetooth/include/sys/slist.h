@@ -44,6 +44,12 @@ void bt_list_insert(bt_list_t *list, bt_list_node_t *prev, bt_list_node_t *node)
         __n, __t)                                              \
         : NULL)
 
+#define BT_LIST_PEEK_HEAD_CONTAINER(__l, __cn, __n, __t)       \
+        ((NULL != (__l)) ?                                     \
+        BT_LIST_CONTAINER( bt_list_peek_head(__l),             \
+        __n, __t)                                              \
+        : NULL)
+
 #define BT_LIST_PEEK_TAIL_CONTAINER(__l, __cn, __n, __t)       \
         ((NULL != (__l)) ?                                     \
         BT_LIST_CONTAINER( bt_list_peek_tail(__l),             \
@@ -78,8 +84,11 @@ typedef bt_list_node_t sys_snode_t;
 #define SYS_SLIST_FOR_EACH_CONTAINER          BT_LIST_FOR_EACH_CONTAINER
 #define SYS_SLIST_FOR_EACH_NODE_SAFE          BT_LIST_FOR_EACH_NODE_SAFE
 #define SYS_SLIST_FOR_EACH_NODE               BT_LIST_FOR_EACH_NODE
+#define SYS_SLIST_PEEK_HEAD_CONTAINER         BT_LIST_PEEK_HEAD_CONTAINER
 #define SYS_SLIST_PEEK_TAIL_CONTAINER         BT_LIST_PEEK_TAIL_CONTAINER
 #define SYS_SLIST_PEEK_NEXT_CONTAINER         BT_LIST_PEEK_NEXT_CONTAINER
+
+#define SYS_SLIST_STATIC_INIT(ptr_to_list) {NULL}
 
 #define sys_slist_init              bt_list_init
 #define sys_slist_append            bt_list_append

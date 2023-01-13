@@ -183,27 +183,27 @@ static FlowReturn audiosink_sink_pad_chain_handler(StreamPad *pad, StreamBuffer 
 
 static int32_t audiosink_sink_pad_process_handler(StreamPad *pad)
 {
-    PadReturn padret;
+    FlowReturn flowret;
     ElementAudioSink *element = (ElementAudioSink *)PAD_PARENT(pad);
     StreamBuffer buffer;
 
-    padret = (PadReturn)element->device_ptr->proc_func(pad);
+    flowret = (FlowReturn)element->device_ptr->proc_func(pad);
 
-    if (PAD_OK == padret)
+    if (FLOW_OK == flowret)
     {
         /* TODO: This call has a dummy size just to pass the check against
          * 0, but in the general case, the size should be dictated by the
          * sink device.
          */
-        padret = (PadReturn)pad_pull_range(pad, 0, 1000, &buffer);
+        flowret = pad_pull_range(pad, 0, 1000, &buffer);
 
-        if (PAD_OK == padret)
+        if (FLOW_OK == flowret)
         {
             (void)audiosink_sink_pad_chain_handler(pad, &buffer);
         }
     }
 
-    return padret;
+    return (int32_t)flowret;
 }
 
 /**

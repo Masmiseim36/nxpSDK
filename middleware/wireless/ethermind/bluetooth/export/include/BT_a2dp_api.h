@@ -1334,59 +1334,59 @@ typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
 #define A2DP_MPEG_2_4_SET_CHANNELS( conf, channels ) \
         (conf).codec_cap.codec_ie[2U] |= (channels);
 
- /**
-  *  This utility macro initializes variable bit rate(VBR) bit in the MPEG-2,4 Codec
-  *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
-  *
-  *  \param [in,out] conf
-  *         Placeholder for SEP Configuration Information.
-  *  \param [in] vbr
-  *         A2DP MPEG-2,4 Variable Bit Rate(VBR).
-  *
-  *  \hideinitializer
-  */
+/**
+ *  This utility macro initializes variable bit rate(VBR) bit in the MPEG-2,4 Codec
+ *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
+ *
+ *  \param [in,out] conf
+ *         Placeholder for SEP Configuration Information.
+ *  \param [in] vbr
+ *         A2DP MPEG-2,4 Variable Bit Rate(VBR).
+ *
+ *  \hideinitializer
+ */
 #define A2DP_MPEG_2_4_SET_VBR(conf, vbr) \
         (conf).codec_cap.codec_ie[3U] |= (vbr);
 
- /**
-  *  This utility macro obtains value of object type field in the MPEG_2_4 Codec
-  *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
-  *
-  *  \param [in] conf
-  *         Placeholder for SEP Configuration Information.
-  *  \param [out] obj_type
-  *         A2DP MPEG_2_4 Obect Type value.
-  *
-  *  \hideinitializer
-  */
+/**
+ *  This utility macro obtains value of object type field in the MPEG_2_4 Codec
+ *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
+ *
+ *  \param [in] conf
+ *         Placeholder for SEP Configuration Information.
+ *  \param [out] obj_type
+ *         A2DP MPEG_2_4 Obect Type value.
+ *
+ *  \hideinitializer
+ */
 #define A2DP_MPEG_2_4_GET_OBJECT_TYPE( conf, obj_type ) \
         (obj_type) = (conf).codec_cap.codec_ie[0U];
 
- /**
-  *  This utility macro obtains value of channels field in the MPEG_2_4 Codec
-  *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
-  *
-  *  \param [in] conf
-  *         Placeholder for SEP Configuration Information.
-  *  \param [out] channels
-  *         A2DP MPEG_2_4 Channels.
-  *
-  *  \hideinitializer
-  */
+/**
+ *  This utility macro obtains value of channels field in the MPEG_2_4 Codec
+ *  specific Information Elements which are stored in AVDTP_SEP_CONF structure.
+ *
+ *  \param [in] conf
+ *         Placeholder for SEP Configuration Information.
+ *  \param [out] channels
+ *         A2DP MPEG_2_4 Channels.
+ *
+ *  \hideinitializer
+ */
 #define A2DP_MPEG_2_4_GET_CHANNELS( conf, channels ) \
         (channels) = ((conf).codec_cap.codec_ie[2U] & 0x0CU);
 
- /**
-  *  This utility macro obtains value of Variable Bit Rate bit in the MPEG_2_4
-  *  Codec specific Information Elements which are stored in AVDTP_SEP_CONF structure.
-  *
-  *  \param [in] conf
-  *         Placeholder for SEP Configuration Information.
-  *  \param [out] vbr
-  *         A2DP MPEG_2_4 Codec VBR support value.
-  *
-  *  \hideinitializer
-  */
+/**
+ *  This utility macro obtains value of Variable Bit Rate bit in the MPEG_2_4
+ *  Codec specific Information Elements which are stored in AVDTP_SEP_CONF structure.
+ *
+ *  \param [in] conf
+ *         Placeholder for SEP Configuration Information.
+ *  \param [out] vbr
+ *         A2DP MPEG_2_4 Codec VBR support value.
+ *
+ *  \hideinitializer
+ */
 #define A2DP_MPEG_2_4_GET_VBR( conf, vbr ) \
         (vbr) = ((conf).codec_cap.codec_ie[3U] & 0x80U);
 
@@ -1496,7 +1496,7 @@ API_RESULT BT_a2dp_shutdown ( void );
  *  On the successful registration, this API returns a Codec Instance
  *  which is an index to the A2DP Codec.
  *
- *  \param [out] codec_instance
+ *  \param [out] inst
  *         Code Instance representing this Codec.
  *  \param [in] sep_cap
  *         Capabilities of the Codec.
@@ -1509,7 +1509,7 @@ API_RESULT BT_a2dp_shutdown ( void );
  */
 API_RESULT BT_a2dp_register_codec
            (
-               /* OUT */  UCHAR  *           codec_instance,
+               /* OUT */  UCHAR  *           inst,
                /* IN */   AVDTP_SEP_CAP  *   sep_cap,
                /* IN */   A2DP_EVENT_NTF_CB  ntf_cb
            );
@@ -1544,13 +1544,13 @@ API_RESULT BT_a2dp_deregister_codec
  *  Discover and Get Capability procedures by setting the remote SEID
  *  to Zero.
  *
- *  \param [in] codec_instance
+ *  \param [in] inst
  *         Code Instance representing this Codec.
  *  \param [in] bd_addr
  *         Bluetooth Device Address of the remote device.
  *  \param [in] remote_seid
  *         SEID of the remote SEP entity.
- *  \param [in] conf
+ *  \param [in] sep_conf
  *         Service configuration parameters for the streaming
  *         connection.
  *
@@ -1572,10 +1572,10 @@ API_RESULT BT_a2dp_deregister_codec
  */
 API_RESULT BT_a2dp_connect
            (
-               /* IN */  UCHAR              codec_instance,
+               /* IN */  UCHAR              inst,
                /* IN */  UCHAR  *           bd_addr,
                /* IN */  UCHAR              remote_seid,
-               /* IN */  AVDTP_SEP_CONF  *  conf
+               /* IN */  AVDTP_SEP_CONF  *  sep_conf
            );
 
 /**
@@ -1585,7 +1585,7 @@ API_RESULT BT_a2dp_connect
  *  This API is used to disconnect a stream connection established with
  *  a remote SEP Entity.
  *
- *  \param [in] codec_instance
+ *  \param [in] inst
  *         Code Instance representing this Codec.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1598,7 +1598,7 @@ API_RESULT BT_a2dp_connect
  */
 API_RESULT BT_a2dp_disconnect
            (
-               /* IN */  UCHAR  codec_instance
+               /* IN */  UCHAR  inst
            );
 
 /**
@@ -1608,7 +1608,7 @@ API_RESULT BT_a2dp_disconnect
  *  This API is used to enable Media Streaming for a connection
  *  with a remote SEP entity.
  *
- *  \param [in] codec_instance
+ *  \param [in] inst
  *         Code Instance representing this Codec.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1624,7 +1624,7 @@ API_RESULT BT_a2dp_disconnect
  */
 API_RESULT BT_a2dp_start
            (
-               /* IN */  UCHAR  codec_instance
+               /* IN */  UCHAR  inst
            );
 
 
@@ -1635,9 +1635,9 @@ API_RESULT BT_a2dp_start
  *  This API is used to reconfigure the Code Capabilities for the
  *  streaming connection with a remote SEP entity.
  *
- *  \param [in] codec_instance
+ *  \param [in] inst
  *         Code Instance representing this Codec.
- *  \param [in] conf
+ *  \param [in] sep_conf
  *         Service configuration parameters for the
  *         re-configured streaming connection.
  *
@@ -1659,8 +1659,8 @@ API_RESULT BT_a2dp_start
  */
 API_RESULT BT_a2dp_reconfigure
            (
-              /* IN */  UCHAR              codec_instance,
-              /* IN */  AVDTP_SEP_CONF  *  conf
+              /* IN */  UCHAR              inst,
+              /* IN */  AVDTP_SEP_CONF  *  sep_conf
            );
 
 
@@ -1670,7 +1670,7 @@ API_RESULT BT_a2dp_reconfigure
  *  \par Description:
  *  This API is used to suspend the streaming with a remote SEP entity.
  *
- *  \param [in] codec_instance
+ *  \param [in] inst
  *         Code Instance representing this Codec.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1683,7 +1683,7 @@ API_RESULT BT_a2dp_reconfigure
  */
 API_RESULT BT_a2dp_suspend
            (
-              /* IN */  UCHAR codec_instance
+              /* IN */  UCHAR inst
            );
 
 /**
@@ -1695,11 +1695,11 @@ API_RESULT BT_a2dp_suspend
  *  for the channel are fragmented to fit the MTU requirement by this
  *  API.
  *
- *  \param [in] codec_instance
+ *  \param [in] inst
  *         Code Instance representing this Codec.
  *  \param [in] data
  *         Buffer containing Media Frames.
- *  \param [in] data_length
+ *  \param [in] datalen
  *         Size of the buffer containing Media Frames.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1714,9 +1714,9 @@ API_RESULT BT_a2dp_suspend
 #ifndef A2DP_SUPPORT_MULTIPLE_MEDIA_FRAME_WRITE
 API_RESULT BT_a2dp_media_write
            (
-               /* IN */  UCHAR     codec_instance,
+               /* IN */  UCHAR     inst,
                /* IN */  UCHAR  *  data,
-               /* IN */  UINT16    data_length
+               /* IN */  UINT16    datalen
            );
 #else
 API_RESULT BT_a2dp_media_write
@@ -1735,7 +1735,7 @@ API_RESULT BT_a2dp_media_write
  *  This API is used to flush Media Frames out of A2DP which were send
  *  earlier.
  *
- *  \param [in] codec_instance
+ *  \param [in] inst
  *         Codec Instance representing this Codec.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1756,7 +1756,7 @@ API_RESULT BT_a2dp_media_write
  */
 API_RESULT BT_a2dp_media_flush
            (
-               /* IN */  UCHAR  codec_instance
+               /* IN */  UCHAR  inst
            );
 
 /**
@@ -1981,7 +1981,7 @@ API_RESULT a2dp_update_sdp_record
  *  This function sets the initial delay report that will be sent from
  *  A2DP sink device during A2DP connection.
  *
- *  \param [in] codec_instance
+ *  \param [in] inst
  *         Codec Instance representing this Codec.
  *
  *  \param [in] delay_report
@@ -1993,7 +1993,7 @@ API_RESULT a2dp_update_sdp_record
  */
 API_RESULT BT_a2dp_set_initial_delay_report
            (
-               /* IN */ UCHAR   codec_instance,
+               /* IN */ UCHAR   inst,
                /* IN */ INT16   delay_report
            );
 
@@ -2004,7 +2004,7 @@ API_RESULT BT_a2dp_set_initial_delay_report
  *  This function enables application to send delay report from A2DP sink device
  *  during streaming.
  *
- *  \param [in] codec_instance
+ *  \param [in] inst
  *         Codec Instance representing this Codec.
  *
  *  \param [in] delay_report
@@ -2018,12 +2018,137 @@ API_RESULT BT_a2dp_set_initial_delay_report
  */
 API_RESULT BT_a2dp_send_delay_report
            (
-              /* IN */ UCHAR    codec_instance,
+              /* IN */ UCHAR    inst,
               /* IN */ INT16   *delay_report
            );
 
 #endif /* A2DP_1_3  */
 
+#ifdef A2DP_HAVE_ABORT_INTERFACE
+/**
+ *  \brief To Abort Streaming establishment.
+ *
+ *  \par Description:
+ *  This API is used to abort streaming establishment with a remote SEP entity.
+ *
+ *  \param [in] inst
+ *         Codec Instance representing this Codec.
+ *
+ *  \return API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ *
+ *  \remarks
+ *   Use this interface only for PTS testing.
+ *   In the normal scenarios, this interface is not required to be used.
+ */
+API_RESULT BT_a2dp_abort
+           (
+               /* IN */ UCHAR  inst
+           );
+#endif /* A2DP_HAVE_ABORT_INTERFACE */
+
+#ifdef AVDTP_STREAM_NO_AUTORSP
+/**
+ *  \brief To respond to Media Streaming Command Start/Suspend.
+ *
+ *  \par Description:
+ *  This API is used to respond to Media Streaming request from a peer SEP entity.
+ *
+ *  \param [in] inst
+ *         Codec Instance representing this Codec.
+ *
+ *  \param [in] rsp_type
+ *         Response type to send.
+ *
+ *  \param [in] rsp_code
+ *         Response code for the operation.
+ *
+ *  \return API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ *
+ *  \remarks
+ */
+API_RESULT BT_a2dp_send_rsp
+           (
+               /* IN */  UCHAR  inst,
+               /* IN */  UCHAR  rsp_type,
+               /* IN */  UCHAR  rsp_code
+           );
+
+/**
+ *  \brief To accept Start Media Streaming.
+ *
+ *  \par Description:
+ *  This API is used to accept Media Streaming Start request from a peer SEP entity.
+ *
+ *  \param [in] inst
+ *         Codec Instance representing this Codec.
+ *
+ *  \return API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ *
+ *  \remarks
+ */
+#define BT_a2dp_start_accept(inst) \
+        BT_a2dp_send_rsp((inst), AVDTP_START_CNF, 0x00)
+
+/**
+ *  \brief To accept Suspend Media Streaming.
+ *
+ *  \par Description:
+ *  This API is used to accept Media Streaming Suspend request from a peer SEP entity.
+ *
+ *  \param [in] inst
+ *         Codec Instance representing this Codec.
+ *
+ *  \return API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ *
+ *  \remarks
+ */
+#define BT_a2dp_suspend_accept(inst) \
+        BT_a2dp_send_rsp((inst), AVDTP_SUSPEND_CNF, 0x00)
+
+/**
+ *  \brief To reject Start Media Streaming.
+ *
+ *  \par Description:
+ *  This API is used to reject Media Streaming Start request from a peer SEP entity.
+ *
+ *  \param [in] inst
+ *         Codec Instance representing this Codec.
+ *
+ *  \param [in] reason
+ *         Reject reason code.
+ *
+ *  \return API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ *
+ *  \remarks
+ */
+#define BT_a2dp_start_reject(inst, reason) \
+        BT_a2dp_send_rsp((inst), AVDTP_START_CNF, (reason))
+
+/**
+ *  \brief To reject Suspend Media Streaming.
+ *
+ *  \par Description:
+ *  This API is used to reject Media Streaming Suspend request from a peer SEP entity.
+ *
+ *  \param [in] inst
+ *         Codec Instance representing this Codec.
+ *
+ *  \param [in] reason
+ *         Reject reason code.
+ *
+ *  \return API_RESULT: API_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ *
+ *  \remarks
+ */
+#define BT_a2dp_suspend_reject(inst, reason) \
+        BT_a2dp_send_rsp((inst), AVDTP_SUSPEND_CNF, (reason))
+#endif /* AVDTP_STREAM_NO_AUTORSP */
 /** \} */
 #ifdef __cplusplus
 };

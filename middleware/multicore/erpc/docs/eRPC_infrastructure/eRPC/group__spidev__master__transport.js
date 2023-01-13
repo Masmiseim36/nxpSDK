@@ -1,6 +1,6 @@
 var group__spidev__master__transport =
 [
-    [ "erpc_spidev_master_transport.h", "erpc__spidev__master__transport_8h.html", null ],
+    [ "erpc_spidev_master_transport.hpp", "erpc__spidev__master__transport_8hpp.html", null ],
     [ "SpidevMasterTransport", "classerpc_1_1_spidev_master_transport.html", [
       [ "SpidevMasterTransport", "classerpc_1_1_spidev_master_transport.html#ad16f67c7eae1ee0b6aafdabb35f61f9e", null ],
       [ "~SpidevMasterTransport", "classerpc_1_1_spidev_master_transport.html#a4839a90687c0dd2b506154e13d818bd0", null ],

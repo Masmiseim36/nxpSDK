@@ -370,6 +370,15 @@ iot_agent_status_t iot_agent_init_dispatcher(
 	nxp_iot_ServiceDescriptor* service_descriptor,
 	nxp_iot_UpdateStatusReport* status_report);
 
+iot_agent_status_t iot_agent_update_device_configuration_from_service_descriptor(
+    iot_agent_context_t* agent_context,
+    nxp_iot_ServiceDescriptor* service_descriptor,
+    nxp_iot_UpdateStatusReport* status_report);
+
+iot_agent_status_t iot_agent_update_device_configuration_from_datastore(
+    iot_agent_context_t* agent_context,
+    iot_agent_datastore_t* datastore,
+    nxp_iot_UpdateStatusReport* status_report);
 /*!
  *@}
  */ /* end of edgelock2go_agent_main */

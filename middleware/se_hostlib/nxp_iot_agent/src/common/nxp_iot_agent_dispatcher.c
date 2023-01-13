@@ -45,6 +45,7 @@ static iot_agent_endpoint_cache_table_entry_t* find_endpoint_in_cache(
 
 bool encode_responses_callback(pb_ostream_t *ostream, const pb_field_t *field, void* const* arg)
 {
+	AX_UNUSED_ARG(field);
 	nxp_iot_ResponsePayload* response = (*arg);
 	bool result = false;
 
@@ -78,6 +79,7 @@ bool encode_responses_from_payload(pb_ostream_t *ostream, nxp_iot_ResponsePayloa
 
 bool handle_request_payload(pb_istream_t *stream, const pb_field_t *field, void **arg)
 {
+	AX_UNUSED_ARG(field);
 	handle_request_payload_args_t* handle_args = (handle_request_payload_args_t*)(*arg);
 	iot_agent_dispatcher_context_t* dispatcher_context = handle_args->dispatcher_context;
 	iot_agent_response_buffer_t* response_buffer = handle_args->response_buffer;
@@ -209,6 +211,7 @@ bool handle_request_payload(pb_istream_t *stream, const pb_field_t *field, void 
 
 bool handle_requests(pb_istream_t *stream, const pb_field_t *field, void **arg)
 {
+	AX_UNUSED_ARG(field);
 	handle_request_payload_args_t* handle_args = (handle_request_payload_args_t*)(*arg);
 	iot_agent_dispatcher_context_t* dispatcher_context = handle_args->dispatcher_context;
 

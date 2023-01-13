@@ -84,7 +84,7 @@ int wifi_uap_enable_11d(void);
 
 int wifi_uap_set_domain_params(wifi_domain_param_t *dp);
 
-int wifi_uap_set_params(void);
+int wifi_uap_set_params(int channel);
 
 void wifi_uap_set_beacon_period(const t_u16 beacon_period);
 #endif /* _MLAN_UAP_H_ */

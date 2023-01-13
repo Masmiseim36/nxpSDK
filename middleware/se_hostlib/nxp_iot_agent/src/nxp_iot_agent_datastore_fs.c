@@ -46,7 +46,7 @@ iot_agent_status_t iot_agent_datastore_fs_open_file(FILE** fp,
 		return IOT_AGENT_ERROR_MEMORY;
 	}
 
-	sprintf(filename, "%s.%u", basename, index);
+	snprintf(filename, filename_size, "%s.%u", basename, index);
 
 	if (*fp != NULL) {
 		fclose(*fp);
@@ -256,6 +256,7 @@ exit:
 bool iot_agent_datastore_fs_get_endpoint_info(
 	void *context, void* endpoint_information)
 {
+	AX_UNUSED_ARG(context);
 	nxp_iot_EndpointInformation* info = (nxp_iot_EndpointInformation*)endpoint_information;
 	info->has_version = true;
 	info->version = IOT_AGENT_DATASTORE_FS_VERSION;
@@ -281,6 +282,7 @@ typedef struct iot_agent_datastore_fs_handle_write_data_t {
 
 bool iot_agent_datastore_fs_handle_write_data(pb_istream_t *stream, const pb_field_t *field, void **arg)
 {
+	AX_UNUSED_ARG(field);
 	iot_agent_datastore_fs_handle_write_data_t* context = (iot_agent_datastore_fs_handle_write_data_t*)(*arg);
 	iot_agent_datastore_fs_context_t* datastore_context = context->datastore_context;
 	nxp_iot_DatastoreRequest* request = context->request;

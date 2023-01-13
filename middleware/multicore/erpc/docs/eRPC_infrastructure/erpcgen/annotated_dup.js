@@ -1,17 +1,5 @@
 var annotated_dup =
 [
-    [ "cpptempl", null, [
-      [ "Data", "classcpptempl_1_1_data.html", "classcpptempl_1_1_data" ],
-      [ "data_map", "classcpptempl_1_1data__map.html", "classcpptempl_1_1data__map" ],
-      [ "data_ptr", "classcpptempl_1_1data__ptr.html", "classcpptempl_1_1data__ptr" ],
-      [ "DataBool", "classcpptempl_1_1_data_bool.html", "classcpptempl_1_1_data_bool" ],
-      [ "DataInt", "classcpptempl_1_1_data_int.html", "classcpptempl_1_1_data_int" ],
-      [ "DataList", "classcpptempl_1_1_data_list.html", "classcpptempl_1_1_data_list" ],
-      [ "DataMap", "classcpptempl_1_1_data_map.html", "classcpptempl_1_1_data_map" ],
-      [ "DataTemplate", "classcpptempl_1_1_data_template.html", "classcpptempl_1_1_data_template" ],
-      [ "DataValue", "classcpptempl_1_1_data_value.html", "classcpptempl_1_1_data_value" ],
-      [ "TemplateException", "classcpptempl_1_1_template_exception.html", "classcpptempl_1_1_template_exception" ]
-    ] ],
     [ "erpcgen", null, [
       [ "AliasType", "classerpcgen_1_1_alias_type.html", "classerpcgen_1_1_alias_type" ],
       [ "Annotation", "classerpcgen_1_1_annotation.html", "classerpcgen_1_1_annotation" ],

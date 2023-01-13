@@ -17,6 +17,10 @@ limitations under the License.
 /* File modified by NXP. Changes are described in file
    /middleware/eiq/tensorflow-lite/readme.txt in section "Release notes" */
 
+#include "mpp_config.h"
+
+#if (HAL_ENABLE_INFERENCE_TFLITE == 1)
+
 #include <stdio.h>
 #include "hal_valgo_dev.h"
 #include "tensorflow/lite/micro/kernels/micro_ops.h"
@@ -168,3 +172,4 @@ void MODEL_ConvertInput(uint8_t* data, mpp_tensor_dims_t* dims, mpp_tensor_type_
             assert("Unknown input tensor data type");
     }
 }
+#endif /* (HAL_ENABLE_INFERENCE_TFLITE == 1) */

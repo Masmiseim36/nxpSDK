@@ -45,9 +45,16 @@
  *  Write Task Queue Types - in the order of decreasing priority
  *  \{
  */
+#ifndef WT_HAVE_USER_MEDIA_QUEUE
 #define WRITE_TASK_INTERNAL_QUEUE       0x00U /**< Queue Type - Internal */
 #define WRITE_TASK_USER_API_QUEUE       0x01U /**< Queue Type - User API */
 #define WRITE_TASK_USER_DATA_QUEUE      0x02U /**< Queue Type - User Data */
+#else /* WT_HAVE_USER_MEDIA_QUEUE */
+#define WRITE_TASK_USER_MEDIA_QUEUE     0x00U /**< Queue Type - User Media */
+#define WRITE_TASK_INTERNAL_QUEUE       0x01U /**< Queue Type - Internal */
+#define WRITE_TASK_USER_API_QUEUE       0x02U /**< Queue Type - User API */
+#define WRITE_TASK_USER_DATA_QUEUE      0x03U /**< Queue Type - User Data */
+#endif /* WT_HAVE_USER_MEDIA_QUEUE */
 /** \} */
 /** \} */
 /** \} */
@@ -73,6 +80,21 @@ extern "C" {
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  */
 API_RESULT em_write_task_init ( void );
+
+#ifdef BT_HAVE_SHUTDOWN
+/**
+ *  \brief To de-initialize globals used in Write Task.
+ *
+ *  \par Description
+ *       This function de-initializes the globals used in Write Task.
+ *
+ *  \param None
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
+API_RESULT em_write_task_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 
 /**
  *  \brief To activate Write Task.

@@ -464,7 +464,7 @@ extern "C" {
  *  control channel and data channel PSM, to facilitate creation of control
  *  channel and subsequently data channels for it.
  *
- *  \param [in] mep_info
+ *  \param [in] mep
  *         MCAP Exchange point info to be provided by the MCAP application or
  *         profile in order to start receiving MCAP events.
  *
@@ -478,7 +478,7 @@ extern "C" {
  */
 API_RESULT BT_mcap_register_mep
            (
-               /* IN */  MCAP_MEP    * mep_info,
+               /* IN */  MCAP_MEP    * mep,
                /* OUT */ UCHAR       * mep_id
            );
 
@@ -487,7 +487,7 @@ API_RESULT BT_mcap_register_mep
 API_RESULT BT_mcap_common_api_handler
            (
                 /* IN */ MCAP_HANDLE    * handle,
-                /* IN */ UCHAR            op_code,
+                /* IN */ UCHAR            mcap_cmd,
                 /* IN */ UINT16           rsp_code,
                 /* IN */ void           * params,
                 /* IN */ UINT16           size
@@ -857,7 +857,7 @@ API_RESULT BT_mcap_md_write
 API_RESULT BT_mcap_sync_common_api_handler
            (
                /* IN */ MCAP_HANDLE    * handle,
-               /* IN */ UCHAR          mcap_csp_event,
+               /* IN */ UCHAR          mcap_csp_cmd,
                /* IN */ UINT16         rsp_code,
                /* IN */ UCHAR          * cmd_params,
                /* IN */ UINT8          param_len
@@ -915,6 +915,24 @@ API_RESULT BT_mcap_sync_common_api_handler
         );
 
 #endif /* MCAP_CLOCK_SYNC */
+
+/**
+ *  \brief To delete peer device information
+ *
+ *  \Description This routine deletes information about peer device.
+ *  This interface can be used in the scenarios like deletion of bonding
+ *  information of a device to also remove associated MCAP information (if any).
+ *
+ *  \param [in] device_handle
+ *         Identifies the peer device for which the inforation to be deleted
+ *
+ *  \return API_SUCCESS in case of success else an error code indicating reason
+ *  for failure.
+ */
+API_RESULT BT_mcap_delete_device
+           (
+               /* IN */ DEVICE_HANDLE  device_handle
+           );
 
 #ifdef MCAP_TEST
 /* TODO: Add Comment */

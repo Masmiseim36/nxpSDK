@@ -34,6 +34,8 @@
 #ifndef H_BOOTUTIL_HOOKS
 #define H_BOOTUTIL_HOOKS
 
+#include "bootutil/bootutil.h"
+
 #ifdef MCUBOOT_IMAGE_ACCESS_HOOKS
 
 #define BOOT_HOOK_CALL(f, ret_default, ...) f(__VA_ARGS__)
@@ -156,5 +158,21 @@ int boot_serial_uploaded_hook(int img_index, const struct flash_area *area,
  */
 int boot_img_install_stat_hook(int image_index, int slot,
                                int *img_install_stat);
+
+/** Hook for implement the alternate way to choose active slot than by examining
+ *  the slots with highest version in direct-xip mode.
+ *
+ * By default the active slot is chosen by the highest version number. This way 
+ * the user can adjust the execution flow for example provide mechanics to 
+ * support downgrade option etc.
+ *
+ * @param state Boot loader status information.
+ * @param candidate_slot Pointer to store found candidate slot
+ *
+ * @retval 0: found candidate slot, skip finding slot by version
+ *         BOOT_HOOK_REGULAR: follow the normal execution path, value of 
+ *         candidate_slot is unchanged
+ */
+int boot_find_active_slot_hook(struct boot_loader_state *state, uint32_t *candidate_slot);
 
 #endif /*H_BOOTUTIL_HOOKS*/

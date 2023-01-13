@@ -74,7 +74,7 @@ INT32 EM_thread_create
           /* OUT */ EM_thread_type *         thread,
           /* IN */  EM_thread_attr_type *    attr,
           /* IN */  EM_THREAD_START_ROUTINE  start_routine,
-          /* IN */  void *                   thread_args
+          /* IN */  EM_THREAD_ARGS           thread_args
       )
 {
     portBASE_TYPE       retval;
@@ -84,13 +84,13 @@ INT32 EM_thread_create
 
     if (NULL == attr)
     {
-    	l_attr.thread_name       = "EtherMind Task";
-    	l_attr.thread_stack_size = EM_OS_TASK_STACKDEPTH;
-    	l_attr.thread_priority   = EM_OS_TASK_PRIORITY;
+        l_attr.thread_name       = "EtherMind Task";
+        l_attr.thread_stack_size = EM_OS_TASK_STACKDEPTH;
+        l_attr.thread_priority   = EM_OS_TASK_PRIORITY;
     }
     else
     {
-    	l_attr = (*attr);
+        l_attr = (*attr);
     }
 
     retval =
@@ -107,7 +107,7 @@ INT32 EM_thread_create
          * The size in bytes of the memory pointed to by the pcStackBuffer pointer.
          * The minimum allowable size for the stack buffer is 136 bytes.
          */
-        (unsigned portLONG)l_attr.thread_stack_size,
+        /* (unsigned portLONG) */ l_attr.thread_stack_size,
         /*
          * Task functions take a void * parameter - the value of which is set by
          * pvParameters when the task is created.
@@ -118,7 +118,7 @@ INT32 EM_thread_create
          * (configMAX_PRIORITIES - 1). The lower the numeric value of the
          * assigned priority, the lower the relative priority of the task.
          */
-		l_attr.thread_priority,
+        l_attr.thread_priority,
         /*
          * Used to pass back a handle by which the created task can be
          * referenced, for example, when changing the priority of the task or
@@ -183,6 +183,36 @@ INT32 EM_thread_mutex_init
     (void) mutex_attr;
 
     (*mutex) = xSemaphoreCreateMutex();
+
+    return 0;
+}
+
+/**
+ *  \fn EM_thread_mutex_deinit
+ *
+ *  \brief To deinitialize a Mutex object
+ *
+ *  \par Description:
+ *  This function implements the OS Wrapper for the Thread Mutex DeInit Call.
+ *  It destroys or de-initializes the mutex object
+ *
+ *  \param [out] mutex
+ *         The Mutex variable to be De-Initialized
+ *
+ *  \return INT32 : 0 on Success. -1 on Failure.
+ */
+INT32 EM_thread_mutex_deinit
+      (
+          /* IN */ EM_thread_mutex_type      * mutex
+      )
+{
+    if (NULL == *mutex)
+    {
+        return -1;
+    }
+
+    vSemaphoreDelete(*mutex);
+    *mutex = NULL;
 
     return 0;
 }
@@ -276,6 +306,36 @@ INT32 EM_thread_cond_init
 {
     (void) cond_attr;
     (*cond) = xSemaphoreCreateBinary ();
+
+    return 0;
+}
+
+/**
+ *  \fn EM_thread_cond_deinit
+ *
+ *  \brief To deinitialize a Condvar object
+ *
+ *  \par Description:
+ *  This function implements the OS Wrapper for the Thread CondVar DeInit Call.
+ *  It destroys or de-initializes the condvar object
+ *
+ *  \param [out] mutex
+ *         The Conditional variable to be De-Initialized
+ *
+ *  \return INT32 : 0 on Success. -1 on Failure.
+ */
+INT32 EM_thread_cond_deinit
+      (
+          /* IN */ EM_thread_cond_type      * cond
+      )
+{
+    if (NULL == *cond)
+    {
+        return -1;
+    }
+
+    vSemaphoreDelete(*cond);
+    *cond = NULL;
 
     return 0;
 }
@@ -481,14 +541,15 @@ void EM_get_current_time (/* OUT */ EM_time_type * curtime)
  *  This function implements the OS Wrapper to get local time
  *  from the system.
  *
- *  \param [out] buf
- *         Local Time and date buffer
- *  \param [out] buflen
- *         Size of buffer provided
+ *  \param [out] local
+ *         Abstracted local time pointer to hold the system local time
  *
  *  \return None
  */
-void EM_get_local_time( /* OUT */ UCHAR *buf, /* IN */ UINT16 buf_len)
+void EM_get_local_time
+     (
+         /* OUT */ EM_LOCAL_TIME * local
+     )
 {
     return;
 }
@@ -506,6 +567,36 @@ void EM_get_local_time( /* OUT */ UCHAR *buf, /* IN */ UINT16 buf_len)
 INT32 EM_get_time_ms(void)
 {
     return xTaskGetTickCount();
+}
+
+/* Microseconds from 01-Jan-0000 till epoch(in ISO 8601: 1970 - 01 - 01T00 : 00 : 00Z). */
+#define EM_uS_TILL_EPOCH           0x00DCDDB30F2F8000ULL
+
+/**
+ *  \fn EM_get_us_timestamp
+ *
+ *  \brief To get the microsecond timestamp
+ *
+ *  \par Description:
+ *  This function implements the OS Wrapper to get system time in microseconds
+ *
+ *  \return System time in microseconds
+ */
+UINT64 EM_get_us_timestamp(void)
+{
+    UINT64 timestamp;
+    /* TODO: Get current timestamp */
+
+    /* FILETIME till epoch in 100 nano seconds */
+#define EM_FILETIME_TILL_EPOCH     0x019DB1DED53E8000ULL
+
+    timestamp -= EM_FILETIME_TILL_EPOCH;
+
+    /* Divide by 10 as the unit is 100 nano second */
+    timestamp = timestamp / 10;
+    timestamp += EM_uS_TILL_EPOCH;
+
+    return timestamp;
 }
 
 /**

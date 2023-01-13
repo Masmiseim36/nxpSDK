@@ -10,7 +10,7 @@ SD8801 WIRELESS FIRMWARE
 
 Here are the details about the SD8801 firmware:
 
-1. Firmware Name:      SD-UAPSTA-8801-U16-MMC-W14.91.36.p177-C4X14693_R0-GPL
+1. Firmware Name:      SD-UAPSTA-8801-U16-MMC-W14.91.36.p178-C4X14693_R0-GPL
 
 SD8801 MANUFACTURING FIRMWARE
 ==============================

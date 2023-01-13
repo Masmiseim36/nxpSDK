@@ -1,6 +1,6 @@
 var a00092 =
 [
-    [ "src_setpoint_authentication_t", "a00092.html#a00685", [
+    [ "src_setpoint_authentication_t", "a00092.html#a00687", [
       [ "enableSetpointTranferReset", "a00092.html#a216d11fab2139cd4ee5539aa90c3489e", null ],
       [ "whiteList", "a00092.html#a1fce63c3e08ce41cfe2dffbef573ec75", null ],
       [ "lockWhiteList", "a00092.html#ab5b9d4cbe464d2f3058b28afa96b0f7a", null ],
@@ -8,7 +8,7 @@ var a00092 =
       [ "allowNonSecureModeAccess", "a00092.html#a727bc8b676cc143e34e733e9ada83de7", null ],
       [ "allowUserModeAccess", "a00092.html#af58111c9997f7c2bdf1f542a7e73b8f5", null ]
     ] ],
-    [ "src_domain_mode_authentication_t", "a00092.html#a00684", [
+    [ "src_domain_mode_authentication_t", "a00092.html#a00686", [
       [ "enableDomainModeTransferReset", "a00092.html#ab1d5e17e363a62a4be95104855de649c", null ],
       [ "assignList", "a00092.html#a97e576d358c0e73715a6e7d424b5403e", null ],
       [ "lockAssignList", "a00092.html#ac02fd07623ea124f6f7423e8d98a83a5", null ]

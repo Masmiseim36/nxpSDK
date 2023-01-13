@@ -1,18 +1,18 @@
 var a00070 =
 [
-    [ "pmu_static_lpsr_ana_ldo_config_t", "a00070.html#a00602", [
+    [ "pmu_static_lpsr_ana_ldo_config_t", "a00070.html#a00604", [
       [ "mode", "a00070.html#a19e82f342645c83aacaaad0f3877c27e", null ],
       [ "enable2mALoad", "a00070.html#af494042d75f0dfbc8b51c0cd7618ffb9", null ],
       [ "enable4mALoad", "a00070.html#a7926047ca9b3553f9d562cc640b4fa35", null ],
       [ "enable20uALoad", "a00070.html#a8471619f0a2aca9fb98723d80e91650e", null ],
       [ "enableStandbyMode", "a00070.html#ae03c4c0a9e7fea4515640a063a217bbe", null ]
     ] ],
-    [ "pmu_static_lpsr_dig_config_t", "a00070.html#a00603", [
+    [ "pmu_static_lpsr_dig_config_t", "a00070.html#a00605", [
       [ "enableStableDetect", "a00070.html#a5959e8236f6a16bc50a26e33981b8ba6", null ],
       [ "voltageStepTime", "a00070.html#a155fc75f7daea3955f23a7c74a7c5e47", null ],
       [ "targetVoltage", "a00070.html#aebe748652164e98158f758a0dd7b526a", null ]
     ] ],
-    [ "pmu_snvs_dig_config_t", "a00070.html#a00600", [
+    [ "pmu_snvs_dig_config_t", "a00070.html#a00602", [
       [ "mode", "a00070.html#aec7c70e116b2d19aff82db755622ded7", null ],
       [ "chargePumpCurrent", "a00070.html#a5a53c0ecdbfd93a0381cb7bde5a727bf", null ],
       [ "dischargeResistorValue", "a00070.html#a77561e826b2361472fc17f5b6dd5f4b8", null ],
@@ -20,13 +20,13 @@ var a00070 =
       [ "enablePullDown", "a00070.html#a5ff70d40b8969ca5161d715bec8dc5e0", null ],
       [ "enableLdoStable", "a00070.html#a6d074f8aba4bfcb9d362c86548f5f47e", null ]
     ] ],
-    [ "pmu_static_bandgap_config_t", "a00070.html#a00601", [
+    [ "pmu_static_bandgap_config_t", "a00070.html#a00603", [
       [ "powerDownOption", "a00070.html#ae8348bb6e3993948796aa1564208deac", null ],
       [ "enableLowPowerMode", "a00070.html#a7838757d27e540993b8ba100eb6f3ff6", null ],
       [ "outputVoltage", "a00070.html#adb29383cd77094d2ec338beb09fb6ad2", null ],
       [ "outputCurrent", "a00070.html#a70fe07dd7f9078db969b05afeae10082", null ]
     ] ],
-    [ "pmu_well_bias_option_t", "a00070.html#a00605", [
+    [ "pmu_well_bias_option_t", "a00070.html#a00607", [
       [ "wellBiasData", "a00070.html#a93f9b29c0294a925aa4fafaa6130dcf3", null ],
       [ "enablePWellOnly", "a00070.html#ae42efc9e1ea0d470d3f69a94c276dbd1", null ],
       [ "reserved1", "a00070.html#a52c94b56a278cbf1ed7d2634a7de8264", null ],
@@ -40,11 +40,11 @@ var a00070 =
       [ "powerSource", "a00070.html#aa2e3b9be1e6da817d664f6c9b25082ee", null ],
       [ "reserved3", "a00070.html#ae869a9064a8f0c69ab97857a9799e897", null ]
     ] ],
-    [ "pmu_well_bias_config_t", "a00070.html#a00604", [
+    [ "pmu_well_bias_config_t", "a00070.html#a00606", [
       [ "wellBiasOption", "a00070.html#a86d75b9a24f2346a4a268afc5e6e2688", null ],
       [ "adjustment", "a00070.html#a67aea908e9baddd5f6862cc92a5765f6", null ]
     ] ],
-    [ "pmu_gpc_body_bias_config_t", "a00070.html#a00599", [
+    [ "pmu_gpc_body_bias_config_t", "a00070.html#a00601", [
       [ "PWELLRegulatorSize", "a00070.html#a2b1afa83f5a7a85d0baa29e17982f0b7", null ],
       [ "NWELLRegulatorSize", "a00070.html#ae042091bf38cb93c515ee0887a057b76", null ],
       [ "oscillatorSize", "a00070.html#a3ffa5a15c51a49a21f26b3b4cbed89a8", null ],

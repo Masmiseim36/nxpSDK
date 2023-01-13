@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['log_5flevel_5ft',['log_level_t',['../class_logger.html#a5209ca5ee1a2a8181287485e950cf381',1,'Logger']]]
+  ['int_5ftype_5ft',['int_type_t',['../class_integer_value.html#acb6f6bfc4690be410499df6fe6b746d4',1,'IntegerValue']]]
 ];

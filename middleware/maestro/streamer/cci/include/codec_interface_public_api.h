@@ -37,9 +37,13 @@ typedef enum _stream_type
 {
     STREAM_TYPE_UNKNOWN = 0, /*!< @brief 0 = stream type is unknown*/
     STREAM_TYPE_MP3,         /*!< @brief 1 = stream type is MP3 */
-    STREAM_TYPE_PCM,         /*!< @brief 3 = stream type is PCM */
-    STREAM_TYPE_OPUS,        /*!< @brief 4 = stream type is OPUS */
-    STREAM_TYPE_OGG_OPUS,    /*!< @brief 5 = stream type is OGG OPUS */
+    STREAM_TYPE_PCM,         /*!< @brief 2 = stream type is PCM */
+    STREAM_TYPE_MSADPCM,     /*!< @brief 3 = stream type is MSADPCM (WAV)*/
+    STREAM_TYPE_IMAADPCM,    /*!< @brief 4 = stream type is IMAADPCM (WAV) */
+    STREAM_TYPE_OPUS,        /*!< @brief 5 = stream type is OPUS */
+    STREAM_TYPE_OGG_OPUS,    /*!< @brief 6 = stream type is OGG OPUS */
+    STREAM_TYPE_AAC,         /*!< @brief 7 = stream type is AAC */
+    STREAM_TYPE_FLAC,        /*!< @brief 8 = stream type is FLAC */
     STREAM_TYPE_COUNT,       /*!< @brief count of stream type */
 } audio_stream_type_t;
 

@@ -570,7 +570,7 @@ API_RESULT BT_avrcp_cai_abort
  *  \param [in] event_result
  *         Status of the request.
  *
- *  \param [in] cover_art_headers
+ *  \param [in] cover_art_hdrs
  *           Structure containing Get request information, in case of Get operation.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -581,7 +581,7 @@ API_RESULT BT_avrcp_cai_send_req
                /* IN */ AVRCP_CA_HANDLE     * ca_handle,
                /* IN */ UINT8                 event_type,
                /* IN */ UINT16                event_result,
-               /* IN */ AVRCP_CA_HEADERS    * cover_art_headers
+               /* IN */ AVRCP_CA_HEADERS    * cover_art_hdrs
            );
 
 /**
@@ -724,7 +724,7 @@ API_RESULT BT_avrcp_car_stop
  *  \param [in] event_result
  *         This is the OBEX response code.
  *
- *  \param [in] cover_art_headers
+ *  \param [in] cover_art_hdrs
  *         Structure containing either the connect information, in case of connect operation
  *         or the response data, in case of Get operation.
  *
@@ -736,7 +736,7 @@ API_RESULT BT_avrcp_car_send_response
                /* IN */ AVRCP_CA_HANDLE     * ca_handle,
                /* IN */ UINT8                 event_type,
                /* IN */ UCHAR                 event_result,
-               /* IN */ AVRCP_CA_HEADERS    * cover_art_headers
+               /* IN */ AVRCP_CA_HEADERS    * cover_art_hdrs
            );
 
 /**

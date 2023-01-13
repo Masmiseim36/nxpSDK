@@ -28,6 +28,14 @@ typedef FIL* EM_fops_file_handle;
 /* Platform type for Object handle */
 typedef DIR EM_fops_object_handle;
 
+/* Below changes required to test LC3 encoding-decoding without overwriting the output file's
+ * initial data with few last samples of the file.
+ * For more detail, please see Bugzilla 974 RCA
+ */
+#ifdef LC3_TEST
+#define EM_FOPS_FILE_SYNC_IN_IDLE 0
+#endif
+
 /* when EM_FOPS_FILE_SYNC_IN_IDLE is enable
  * 1. when one file is written firstly, the file need be closed before reading it.
  * 2.If there is file reading in other tasks that is executing in parallel with file sync idle task, FF_FS_REENTRANT need be enabled.

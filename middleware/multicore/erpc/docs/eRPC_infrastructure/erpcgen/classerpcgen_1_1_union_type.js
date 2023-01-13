@@ -14,7 +14,6 @@ var classerpcgen_1_1_union_type =
     [ "getUnionMembers", "classerpcgen_1_1_union_type.html#a340f03d3a40c18e9d720f3c89e5c0e02", null ],
     [ "getUniqueCases", "classerpcgen_1_1_union_type.html#a5f91fb1760b5014e39f8ed1de5deeb70", null ],
     [ "isNonEncapsulatedUnion", "classerpcgen_1_1_union_type.html#af20afe6693acdd034be5e48404f3b67a", null ],
-    [ "isUnion", "classerpcgen_1_1_union_type.html#a3eac98c19587d456ad2f2f8c596baebb", null ],
     [ "printUnionMembers", "classerpcgen_1_1_union_type.html#a94ec8e87dffb97cb13712c58beb9d635", null ],
     [ "setParentStruct", "classerpcgen_1_1_union_type.html#aa582892d62ea3855f3fb9fabf0e6de0a", null ]
 ];

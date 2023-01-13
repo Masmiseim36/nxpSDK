@@ -854,6 +854,8 @@ psa_status_t psa_driver_wrapper_cipher_encrypt(
             (void)key_buffer;
             (void)key_buffer_size;
             (void)alg;
+            (void)iv;
+            (void)iv_length;
             (void)input;
             (void)input_length;
             (void)output;
@@ -1061,7 +1063,9 @@ psa_status_t psa_driver_wrapper_cipher_decrypt_setup(
 
             return( status );
 #endif /* MBEDTLS_PSA_BUILTIN_CIPHER */
+#if !defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT) && !defined(MBEDTLS_PSA_BUILTIN_CIPHER)
             return( PSA_ERROR_NOT_SUPPORTED );
+#endif
 
         /* Add cases for opaque driver here */
 #if defined(PSA_CRYPTO_ACCELERATOR_DRIVER_PRESENT)

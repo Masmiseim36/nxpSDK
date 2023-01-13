@@ -59,7 +59,8 @@ enum __spi_module_instance
     kSpiModuleInstance_Spi1 = 1u,
     kSpiModuleInstance_Spi2 = 2u,
     kSpiModuleInstance_Spi3 = 3u,
-    kSpiModuleInstance_Spi4 = 4u
+    kSpiModuleInstance_Spi4 = 4u,
+    kSpiModuleInstance_Spi5 = 5u,
 };
 
 //! @brief SPI module instance
@@ -249,49 +250,50 @@ typedef struct _spi_nor_eeprom_page_program_info
 ////////////////////////////////////////////////////////////////////////////////
 
 #if defined(__cplusplus)
-extern "C" {
+extern "C"
+{
 #endif
 
-//! @name Serial NOR/EEPROM memory
-//@{
+    //! @name Serial NOR/EEPROM memory
+    //@{
 
-//! @brief Enable clock gate of SPI
-extern void spi_clock_gate_enable(uint32_t instance);
+    //! @brief Enable clock gate of SPI
+    extern void spi_clock_gate_enable(uint32_t instance);
 
-//! @brief Configure Clock for SPI
-extern void spi_clock_config(uint32_t instance, spi_module_clock_freq_t freq);
+    //! @brief Configure Clock for SPI
+    extern void spi_clock_config(uint32_t instance, spi_module_clock_freq_t freq);
 
-//! @brief Control SPI pcs pin
-extern void spi_pcs_pin_control(uint32_t instance, uint8_t pcsx, bool isSelected);
+    //! @brief Control SPI pcs pin
+    extern void spi_pcs_pin_control(uint32_t instance, uint8_t pcsx, bool isSelected);
 
-//! @brief Configure IOMUX for SPI
-extern void spi_iomux_config(spi_nor_eeprom_peripheral_config_t *config);
+    //! @brief Configure IOMUX for SPI
+    extern void spi_iomux_config(spi_nor_eeprom_peripheral_config_t *config);
 
-//! @brief Initialize Serial NOR/EEPROM memory
-status_t spi_nor_eeprom_mem_init(void);
+    //! @brief Initialize Serial NOR/EEPROM memory
+    status_t spi_nor_eeprom_mem_init(void);
 
-//! @brief Read Serial NOR/EEPROM memory.
-status_t spi_nor_eeprom_mem_read(uint32_t address, uint32_t length, uint8_t *restrict buffer);
+    //! @brief Read Serial NOR/EEPROM memory.
+    status_t spi_nor_eeprom_mem_read(uint32_t address, uint32_t length, uint8_t *restrict buffer);
 
-//! @brief Write Serial NOR/EEPROM memory.
-status_t spi_nor_eeprom_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer);
+    //! @brief Write Serial NOR/EEPROM memory.
+    status_t spi_nor_eeprom_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer);
 
-//! @brief  Erase Serial NOR/EEPROM memory
-status_t spi_nor_eeprom_mem_erase(uint32_t address, uint32_t length);
+    //! @brief  Erase Serial NOR/EEPROM memory
+    status_t spi_nor_eeprom_mem_erase(uint32_t address, uint32_t length);
 
-//! @brief  Erase all Serial NOR/EEPROM memory
-status_t spi_nor_eeprom_mem_erase_all(void);
+    //! @brief  Erase all Serial NOR/EEPROM memory
+    status_t spi_nor_eeprom_mem_erase_all(void);
 
-//! @brief Configure Serial NOR/EEPROM memory
-status_t spi_nor_eeprom_mem_config(uint32_t *config);
+    //! @brief Configure Serial NOR/EEPROM memory
+    status_t spi_nor_eeprom_mem_config(uint32_t *config);
 
-//! @brief flush cached data to Serial NOR/EEPROM memory
-status_t spi_nor_eeprom_mem_flush(void);
+    //! @brief flush cached data to Serial NOR/EEPROM memory
+    status_t spi_nor_eeprom_mem_flush(void);
 
-//! @brief finalize the read/write operation of Serial NOR/EEPROM memory
-status_t spi_nor_eeprom_mem_finalize(void);
+    //! @brief finalize the read/write operation of Serial NOR/EEPROM memory
+    status_t spi_nor_eeprom_mem_finalize(void);
 
-//@}
+    //@}
 
 #if defined(__cplusplus)
 }

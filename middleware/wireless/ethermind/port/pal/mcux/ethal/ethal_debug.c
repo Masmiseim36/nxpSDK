@@ -37,7 +37,9 @@ void EM_debug_init (void)
     /* Initialize runtime debug level */
     em_runtime_debug_level = EM_DEBUG_LEVEL_ALL;
 
+#ifdef EM_DISABLE_ALL_DEBUG
     (void)em_runtime_debug_level;
+#endif /* EM_DISABLE_ALL_DEBUG */    
 
 #ifndef EM_DISABLE_DEBUG_LOG_ON_STARTUP
     /* Enable all module debug log - by default */

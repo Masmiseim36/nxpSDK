@@ -8,11 +8,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "erpc_rpmsg_tty_rtos_transport.h"
+#include "erpc_rpmsg_tty_rtos_transport.hpp"
 #include "erpc_config_internal.h"
-#include "erpc_framed_transport.h"
+#include "erpc_framed_transport.hpp"
 
+extern "C" {
 #include "rpmsg_ns.h"
+}
 
 using namespace erpc;
 using namespace std;
@@ -73,6 +75,11 @@ void RPMsgTTYRTOSTransport::setCrc16(Crc16 *crcImpl)
 {
     erpc_assert(crcImpl != NULL);
     m_crcImpl = crcImpl;
+}
+
+Crc16 *RPMsgTTYRTOSTransport::getCrc16(void)
+{
+    return m_crcImpl;
 }
 
 erpc_status_t RPMsgTTYRTOSTransport::init(uint32_t src_addr, uint32_t dst_addr, void *base_address, uint32_t length,
@@ -171,7 +178,7 @@ erpc_status_t RPMsgTTYRTOSTransport::init(uint32_t src_addr, uint32_t dst_addr, 
                 ready_cb();
             }
 
-            rpmsg_lite_wait_for_link_up(s_rpmsg);
+            (void)rpmsg_lite_wait_for_link_up(s_rpmsg, RL_BLOCK);
 
 #if RL_USE_STATIC_API
             m_rpmsg_queue = rpmsg_queue_create(s_rpmsg, m_queue_stack, &m_queue_context);

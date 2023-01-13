@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2019 NXP
+ * Copyright 2016 - 2022 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -55,7 +55,7 @@
 
 /* Default sessions count */
 #ifndef HTTPSRV_CFG_DEFAULT_SES_CNT
-#define HTTPSRV_CFG_DEFAULT_SES_CNT  (2)
+#define HTTPSRV_CFG_DEFAULT_SES_CNT (2)
 #endif
 
 /* Session buffer size */
@@ -93,12 +93,12 @@
 
 /* Socket OPT_SEND_TIMEOUT option value */
 #ifndef HTTPSRV_CFG_SEND_TIMEOUT
-#define HTTPSRV_CFG_SEND_TIMEOUT (500)
+#define HTTPSRV_CFG_SEND_TIMEOUT (0)
 #endif
 
 /* Socket OPT_RECEIVE_TIMEOUT option value */
 #ifndef HTTPSRV_CFG_RECEIVE_TIMEOUT
-#define HTTPSRV_CFG_RECEIVE_TIMEOUT (50)
+#define HTTPSRV_CFG_RECEIVE_TIMEOUT (1000)
 #endif
 
 /* WebSocket protocol support */
@@ -106,12 +106,12 @@
 #define HTTPSRV_CFG_WEBSOCKET_ENABLED (0)
 #endif
 
-/* WolfSSL support (TBD Under development - not working yet).*/
+/* WolfSSL support*/
 #ifndef HTTPSRV_CFG_WOLFSSL_ENABLE
 #define HTTPSRV_CFG_WOLFSSL_ENABLE (0)
 #endif
 
-/* MbedTLS support (TBD Under development - not working yet).*/
+/* MbedTLS support*/
 #ifndef HTTPSRV_CFG_MBEDTLS_ENABLE
 #define HTTPSRV_CFG_MBEDTLS_ENABLE (0)
 #endif

@@ -20,6 +20,7 @@
  *
  * @return  none
  */
+RAM_FUNC_LIB
 void MID_MC_SetExternalPosEl(frac16_t f16PosExt);
 
 /*!
@@ -29,6 +30,7 @@ void MID_MC_SetExternalPosEl(frac16_t f16PosExt);
  *
  * @return  Actual FOC external electrical position [frac].
  */
+RAM_FUNC_LIB
 frac16_t MID_MC_GetExternalPosEl(void);
 
 /*!
@@ -38,6 +40,7 @@ frac16_t MID_MC_GetExternalPosEl(void);
  *
  * @return  Actual FOC estimated electrical position [frac].
  */
+RAM_FUNC_LIB
 frac16_t MID_MC_GetEstimatedPosEl(void);
 
 /*!
@@ -65,6 +68,7 @@ void MID_MC_GetUDQReq(GMCLIB_2COOR_DQ_T_FLT *sUDQReq);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_MC_GetEDQObsrv(GMCLIB_2COOR_DQ_T_FLT *sEDQObsrv);
 
 /*!
@@ -74,6 +78,7 @@ void MID_MC_GetEDQObsrv(GMCLIB_2COOR_DQ_T_FLT *sEDQObsrv);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_MC_SetIDQReq(GMCLIB_2COOR_DQ_T_FLT sIDQReq);
 
 /*!
@@ -83,6 +88,7 @@ void MID_MC_SetIDQReq(GMCLIB_2COOR_DQ_T_FLT sIDQReq);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_MC_GetIDQfbck(GMCLIB_2COOR_DQ_T_FLT *sIDQfbck);
 
 /*!
@@ -101,6 +107,7 @@ float_t MID_MC_GetUDCbusFilt(void);
  *
  * @return  Actual Estimated Electrical Speed [electrical rad/s]
  */
+RAM_FUNC_LIB
 float_t MID_MC_GetSpeedElEst(void);
 
 /*!
@@ -110,6 +117,7 @@ float_t MID_MC_GetSpeedElEst(void);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_MC_EnableCurrentLoop(bool_t bValue);
 
 /*!
@@ -119,6 +127,7 @@ void MID_MC_EnableCurrentLoop(bool_t bValue);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_MC_UseEstimatedPos(bool_t bValue);
 
 /*!
@@ -133,6 +142,7 @@ void MID_MC_UseEstimatedPos(bool_t bValue);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_MC_UpdateBemfObsrv(float_t fltI_gain,
                         float_t fltU_gain,
                         float_t fltE_gain,
@@ -149,6 +159,7 @@ void MID_MC_UpdateBemfObsrv(float_t fltI_gain,
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_MC_UpdateTrackingObsrv(float_t fltTO_Kpz,
                                 float_t fltTO_Kiz,
                                 float_t fltTO_Theta);
@@ -161,6 +172,7 @@ void MID_MC_UpdateTrackingObsrv(float_t fltTO_Kpz,
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_MC_ReadSignals(void);
 
 /*!
@@ -171,6 +183,7 @@ void MID_MC_ReadSignals(void);
  *
  * @return  None
  */
+RAM_FUNC_LIB
 void MID_MC_ApplySignals(void);
 
 #endif /* _MID_MC_API_CONNECTOR_H_ */

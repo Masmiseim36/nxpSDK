@@ -122,9 +122,27 @@ void lv_vglite_dbg_draw_rectangle(lv_color_t * dest_buf, lv_coord_t dest_width, 
 #endif
 
 /**
- * Clean & invalidate cache.
+ * Premultiplies and swizzles given LVGL 32bit color to obtain vglite color.
+ *
+ * @param[in/out] vg_col32 The obtained vglite color
+ * @param[in] lv_col32 The initial LVGL 32bit color
+ * @param[in] opa The opacity to premultiply with
+ * @param[in] vg_col_format The format of the resulting vglite color
+
  */
-void lv_vglite_invalidate_cache(void);
+lv_res_t lv_vglite_premult_and_swizzle(vg_lite_color_t * vg_col32, lv_color32_t lv_col32, lv_opa_t opa,
+                                       vg_lite_buffer_format_t vg_col_format);
+
+/**
+ * Generates corresponding vglite blend mode based on given LVGL blend mode
+ * @param lv_blend_mode The LVGL blend mode to be converted into vglite blend mode
+ */
+vg_lite_blend_t lv_vglite_get_blend_mode(lv_blend_mode_t lv_blend_mode);
+
+/**
+ * Clear cache and flush command to VG-Lite.
+ */
+lv_res_t lv_vglite_run(void);
 
 /**********************
  *      MACROS
@@ -142,7 +160,8 @@ void lv_vglite_invalidate_cache(void);
 #define VG_LITE_ERR_RETURN_INV(err, fmt, ...) \
     do {                                      \
         if(err != VG_LITE_SUCCESS) {          \
-            LV_LOG_ERROR(fmt, ##__VA_ARGS__); \
+            LV_LOG_ERROR(fmt" (err = %d)",    \
+                         err, ##__VA_ARGS__); \
             return LV_RES_INV;                \
         }                                     \
     } while (0)

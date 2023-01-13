@@ -89,7 +89,7 @@ API_RESULT sco_audio_stop_pl (void);
 void sco_audio_set_wideband_pl (UCHAR enable);
 
 void sco_audio_play_ringtone_pl (void);
-void sco_audio_play_outgoing_ringtone_pl (void);
+void sco_audio_play_inband_ringtone_pl (void);
 void sco_audio_set_speaker_volume_pl (UCHAR value);
 void sco_audio_set_microphone_gain_pl (UCHAR value);
 void sco_audio_play_ringtone_exit_pl (void);

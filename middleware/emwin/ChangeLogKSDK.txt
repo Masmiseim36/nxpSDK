@@ -2,7 +2,9 @@
 @page middleware_log Middleware Change Log
 
 @section emwin emWin library
-  The currently supported version is 6.24
+  The currently supported version is 6.28
+  - v6.28
+    - upgraded to v6.28
   - v6.24_rev1
     - recompiled cm33 library with fpu single precision
     - added cm7_sp library for Cortex M7 with sp fpu for IAR

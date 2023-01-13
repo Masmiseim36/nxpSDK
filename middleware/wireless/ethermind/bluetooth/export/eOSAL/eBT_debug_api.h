@@ -29,10 +29,6 @@
 /* --------------------------------------------- Structures/Data Types */
 
 /* --------------------------------------------- Macros */
-#define BT_Init_Debug_Library()
-#define debug_bt_init()
-#define debug_bt_shutdown()
-
 #define BT_debug_dump_bytes(m, b, l)           EM_debug_dump_bytes((m), (b), (l))
 #define BT_debug_dump_decimal(m, b, l)         EM_debug_dump_decimal((m), (b), (l))
 

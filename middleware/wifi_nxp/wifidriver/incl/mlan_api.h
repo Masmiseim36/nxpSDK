@@ -107,6 +107,8 @@
 
 #define SDIO_DMA_ALIGNMENT 4
 
+extern os_thread_t wifi_scan_thread;
+
 /* Following is allocated in mlan_register */
 extern mlan_adapter *mlan_adap;
 extern country_code_t wifi_11d_country;
@@ -181,6 +183,9 @@ int wifi_set_smart_mode_cfg(char *ssid,
                             int custom_ie_len,
                             uint8_t *custom_ie);
 wifi_sub_band_set_t *get_sub_band_from_country(country_code_t country, t_u8 *nr_sb);
+#ifdef CONFIG_5GHz_SUPPORT
+wifi_sub_band_set_t *get_sub_band_from_country_5ghz(country_code_t country, t_u8 *nr_sb);
+#endif
 int wifi_set_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t id, void *buf, unsigned int buf_len);
 int wifi_clear_mgmt_ie(mlan_bss_type bss_type, IEEEtypes_ElementId_t index);
 #ifdef SD8801

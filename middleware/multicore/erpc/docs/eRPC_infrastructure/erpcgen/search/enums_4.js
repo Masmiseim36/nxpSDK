@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['optctrl',['OptCtrl',['../class_options.html#a455ec724e9fbd8a18cb85284a58774b5',1,'Options']]],
-  ['optrc',['OptRC',['../class_options.html#a39e2cec67d9659ada7fcb8a211223c73',1,'Options']]]
+  ['log_5flevel_5ft',['log_level_t',['../class_logger.html#a5209ca5ee1a2a8181287485e950cf381',1,'Logger']]]
 ];

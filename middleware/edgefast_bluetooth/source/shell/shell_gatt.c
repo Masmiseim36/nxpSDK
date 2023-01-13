@@ -27,19 +27,80 @@
 
 #define CHAR_SIZE_MAX           512
 
+#if (defined(CONFIG_BT_GATT_CLIENT) && (CONFIG_BT_GATT_CLIENT > 0)) || \
+	(defined(CONFIG_BT_GATT_DYNAMIC_DB) && (CONFIG_BT_GATT_DYNAMIC_DB > 0))
 extern uint8_t selected_id;
 
+static struct write_stats {
+	uint32_t count;
+	uint32_t len;
+	uint32_t total;
+	uint32_t rate;
+} write_stats;
+
+static void update_write_stats(uint16_t len)
+{
+	static uint32_t cycle_stamp;
+	uint32_t delta;
+
+	delta = (uint32_t)OSA_TimeGetMsec() - cycle_stamp;
+	delta = (uint32_t)(delta * 1000);
+
+	if (!delta) {
+		delta = 1;
+	}
+
+	write_stats.count++;
+	write_stats.total += len;
+
+	/* if last data rx-ed was greater than 1 second in the past,
+	 * reset the metrics.
+	 */
+	if (delta > 1000000000) {
+		write_stats.len = 0U;
+		write_stats.rate = 0U;
+		cycle_stamp = (uint32_t)OSA_TimeGetMsec();
+	} else {
+		write_stats.len += len;
+		write_stats.rate = ((uint64_t)write_stats.len << 3) *
+			1000000000U / delta;
+	}
+}
+
+#if (defined(CONFIG_BT_EATT) && (CONFIG_BT_EATT > 0))
+#define SET_CHAN_OPT_ANY(params) (params).chan_opt = BT_ATT_CHAN_OPT_NONE
+#else
+#define SET_CHAN_OPT_ANY(params)
+#endif /* CONFIG_BT_EATT */
+
+static void print_write_stats(void)
+{
+	shell_print(ctx_shell, "Write #%u: %u bytes (%u bps)",
+		    write_stats.count, write_stats.total, write_stats.rate);
+}
+#endif /* CONFIG_BT_GATT_CLIENT || CONFIG_BT_GATT_DYNAMIC_DB */
+
 #if (defined(CONFIG_BT_GATT_CLIENT) && (CONFIG_BT_GATT_CLIENT > 0))
+static void reset_write_stats(void)
+{
+	memset(&write_stats, 0, sizeof(write_stats));
+}
+
+/* This variable is write-locked when `(exchange_params.func != NULL)`.
+ * Must be zero-initialized when unlocked.
+ */
+static struct bt_gatt_exchange_params exchange_params;
+
 static void exchange_func(struct bt_conn *conn, uint8_t err,
 			  struct bt_gatt_exchange_params *params)
 {
 	shell_print(ctx_shell, "Exchange %s", err == 0U ? "successful" :
 		    "failed");
 
+	/* Release global `exchange_params`. */
+	__ASSERT_NO_MSG(params == &exchange_params);
 	(void)memset(params, 0, sizeof(*params));
 }
-
-static struct bt_gatt_exchange_params exchange_params;
 
 static shell_status_t cmd_exchange_mtu(shell_handle_t shell,
 			     int32_t argc, char *argv[])
@@ -52,7 +113,7 @@ static shell_status_t cmd_exchange_mtu(shell_handle_t shell,
 	}
 
 	if (exchange_params.func) {
-		shell_print(shell, "MTU Exchange ongoing");
+		shell_print(shell, "Shell command busy. A previous invocation is in progress.");
 		return kStatus_SHELL_Error;
 	}
 
@@ -60,6 +121,13 @@ static shell_status_t cmd_exchange_mtu(shell_handle_t shell,
 
 	err = bt_gatt_exchange_mtu(default_conn, &exchange_params);
 	if (err) {
+		/* Release global `exchange_params`. */
+		exchange_params.func = NULL;
+	}
+
+	if (err == -EALREADY) {
+		shell_print(shell, "Already exchanged");
+	} else if (err) {
 		shell_print(shell, "Exchange failed (err %d)", err);
 	} else {
 		shell_print(shell, "Exchange pending");
@@ -174,8 +242,9 @@ static shell_status_t cmd_discover(shell_handle_t shell, int32_t argc, char *arg
 	}
 
 	discover_params.func = discover_func;
-	discover_params.start_handle = 0x0001;
-	discover_params.end_handle = 0xffff;
+	discover_params.start_handle = BT_ATT_FIRST_ATTRIBUTE_HANDLE;
+	discover_params.end_handle = BT_ATT_LAST_ATTRIBUTE_HANDLE;
+	SET_CHAN_OPT_ANY(discover_params);
 
 	if (argc > 1) {
 		/* Only set the UUID if the value is valid (non zero) */
@@ -228,6 +297,8 @@ static uint8_t read_func(struct bt_conn *conn, uint8_t err,
 	if (!data) {
 		(void)memset(params, 0, sizeof(*params));
 		return BT_GATT_ITER_STOP;
+	} else {
+		shell_hexdump(ctx_shell, data, length);
 	}
 
 	return BT_GATT_ITER_CONTINUE;
@@ -251,6 +322,7 @@ static shell_status_t cmd_read(shell_handle_t shell, int32_t argc, char *argv[])
 	read_params.handle_count = 1;
 	read_params.single.handle = strtoul(argv[1], NULL, 16);
 	read_params.single.offset = 0U;
+	SET_CHAN_OPT_ANY(read_params);
 
 	if (argc > 2) {
 		read_params.single.offset = strtoul(argv[2], NULL, 16);
@@ -296,6 +368,7 @@ static shell_status_t cmd_mread(shell_handle_t shell, int32_t argc, char *argv[]
 	read_params.handle_count = i;
 	read_params.multiple.handles = h;
 	read_params.multiple.variable = true;
+	SET_CHAN_OPT_ANY(read_params);
 
 	err = bt_gatt_read(default_conn, &read_params);
 	if (err) {
@@ -322,8 +395,9 @@ static shell_status_t cmd_read_uuid(shell_handle_t shell, int32_t argc, char *ar
 
 	read_params.func = read_func;
 	read_params.handle_count = 0;
-	read_params.by_uuid.start_handle = 0x0001;
-	read_params.by_uuid.end_handle = 0xffff;
+	read_params.by_uuid.start_handle = BT_ATT_FIRST_ATTRIBUTE_HANDLE;
+	read_params.by_uuid.end_handle = BT_ATT_LAST_ATTRIBUTE_HANDLE;
+	SET_CHAN_OPT_ANY(read_params);
 
 	if (argc > 1) {
 		uuid.val = strtoul(argv[1], NULL, 16);
@@ -383,13 +457,14 @@ static shell_status_t cmd_write(shell_handle_t shell, int32_t argc, char *argv[]
 				      gatt_write_buf, sizeof(gatt_write_buf));
 	if (write_params.length == 0) {
 		shell_error(shell, "No data set");
-		return (shell_status_t)-ENOEXEC;
+		return (shell_status_t)kStatus_SHELL_Error;
 	}
 
 	write_params.data = gatt_write_buf;
 	write_params.handle = handle;
 	write_params.offset = offset;
 	write_params.func = write_func;
+	SET_CHAN_OPT_ANY(write_params);
 
 	err = bt_gatt_write(default_conn, &write_params);
 	if (err) {
@@ -400,53 +475,6 @@ static shell_status_t cmd_write(shell_handle_t shell, int32_t argc, char *argv[]
 	}
 
 	return (shell_status_t)err;
-}
-
-static struct write_stats {
-	uint32_t count;
-	uint32_t len;
-	uint32_t total;
-	uint32_t rate;
-} write_stats;
-
-static void update_write_stats(uint16_t len)
-{
-	static uint32_t cycle_stamp;
-	uint32_t delta;
-
-	delta = (uint32_t)OSA_TimeGetMsec() - cycle_stamp;
-	delta = (uint32_t)(delta * 1000);
-
-	if (!delta) {
-		delta = 1;
-	}
-
-	write_stats.count++;
-	write_stats.total += len;
-
-	/* if last data rx-ed was greater than 1 second in the past,
-	 * reset the metrics.
-	 */
-	if (delta > 1000000000) {
-		write_stats.len = 0U;
-		write_stats.rate = 0U;
-		cycle_stamp = (uint32_t)OSA_TimeGetMsec();
-	} else {
-		write_stats.len += len;
-		write_stats.rate = ((uint64_t)write_stats.len << 3) *
-				   1000000000U / delta;
-	}
-}
-
-static void reset_write_stats(void)
-{
-	memset(&write_stats, 0, sizeof(write_stats));
-}
-
-static void print_write_stats(void)
-{
-	shell_print(ctx_shell, "Write #%u: %u bytes (%u bps)",
-		    write_stats.count, write_stats.total, write_stats.rate);
 }
 
 static void write_without_rsp_cb(struct bt_conn *conn, void *user_data)
@@ -558,6 +586,7 @@ static shell_status_t cmd_subscribe(shell_handle_t shell, int32_t argc, char *ar
 	subscribe_params.value_handle = strtoul(argv[2], NULL, 16);
 	subscribe_params.value = BT_GATT_CCC_NOTIFY;
 	subscribe_params.notify = notify_func;
+	SET_CHAN_OPT_ANY(subscribe_params);
 
 #if (defined(CONFIG_BT_GATT_AUTO_DISCOVER_CCC) && (CONFIG_BT_GATT_AUTO_DISCOVER_CCC > 0))
 	if (subscribe_params.ccc_handle == 0) {
@@ -606,6 +635,7 @@ static shell_status_t cmd_resubscribe(shell_handle_t shell, int32_t argc,
 	subscribe_params.value_handle = strtoul(argv[4], NULL, 16);
 	subscribe_params.value = BT_GATT_CCC_NOTIFY;
 	subscribe_params.notify = notify_func;
+	SET_CHAN_OPT_ANY(subscribe_params);
 
 	if (argc > 5 && !strcmp(argv[5], "ind")) {
 		subscribe_params.value = BT_GATT_CCC_INDICATE;
@@ -929,31 +959,141 @@ static void notify_cb(struct bt_conn *conn, void *user_data)
 
 static shell_status_t cmd_notify(shell_handle_t shell, int32_t argc, char *argv[])
 {
-	struct bt_gatt_notify_params params;
-	uint8_t data = 0;
+	const size_t max_cnt = CONFIG_BT_L2CAP_TX_BUF_COUNT;
+	struct bt_gatt_notify_params params[CONFIG_BT_L2CAP_TX_BUF_COUNT];
+	const size_t min_cnt = 1U;
+	unsigned long data;
+	unsigned long cnt;
+	uint16_t cnt_u16;
+	int err = 0;
 
-	if (!echo_enabled) {
-		shell_error(shell, "Nofication not enabled");
+	if (!default_conn) {
+		shell_error(shell, "Not connected.");
+
 		return kStatus_SHELL_Error;
 	}
 
-	if (argc > 1) {
-		data = strtoul(argv[1], NULL, 16);
+	if (!echo_enabled) {
+		shell_error(shell, "No clients have enabled notifications for the vnd1_echo CCC.");
+		return kStatus_SHELL_Error;
 	}
 
-	memset(&params, 0, sizeof(params));
+	cnt = shell_strtoul(argv[1], 10, &err);
+	if (err != 0) {
+		shell_error(shell, "Invalid count parameter: %s", argv[1]);
 
-	params.uuid = &vnd1_echo_uuid.uuid;
-	params.attr = vnd1_attrs;
-	params.data = &data;
-	params.len = sizeof(data);
-	params.func = notify_cb;
-	params.user_data = (void *)shell;
+		return kStatus_SHELL_Error;
+	}
 
-	bt_gatt_notify_cb(NULL, &params);
+	if (!IN_RANGE(cnt, min_cnt, max_cnt)) {
+		shell_error(shell, "Invalid count value %lu (range %zu to %zu)",
+			    cnt, min_cnt, max_cnt);
 
-	return kStatus_SHELL_Success;
+		return kStatus_SHELL_Error;
+	}
+
+	cnt_u16 = (uint16_t)cnt;
+
+	if (argc > 2) {
+		data = shell_strtoul(argv[2], 16, &err);
+		if (err != 0) {
+			shell_error(shell, "Invalid data parameter: %s", argv[1]);
+
+			return kStatus_SHELL_Error;
+		}
+	}
+
+	(void)memset(params, 0, sizeof(params));
+
+	for (uint16_t i = 0U; i < cnt_u16; i++) {
+		params[i].uuid = 0;
+		params[i].attr = vnd1_attrs;
+		params[i].data = &data;
+		params[i].len = sizeof(data);
+		params[i].func = notify_cb;
+		params[i].user_data = (void *)shell;
+		SET_CHAN_OPT_ANY(params[i]);
+	}
+
+	err = bt_gatt_notify_multiple(default_conn, cnt_u16, params);
+	if (err != 0) {
+		shell_error(shell, "bt_gatt_notify_multiple failed: %d", err);
+	} else {
+		shell_print(shell, "Send %u notifications", cnt_u16);
+	}
+
+	return (shell_status_t)err;
 }
+
+#if (defined(CONFIG_BT_GATT_NOTIFY_MULTIPLE) && (CONFIG_BT_GATT_NOTIFY_MULTIPLE > 0))
+static shell_status_t cmd_notify_mult(shell_handle_t shell, int32_t argc, char *argv[])
+{
+	const size_t max_cnt = CONFIG_BT_L2CAP_TX_BUF_COUNT;
+	struct bt_gatt_notify_params params[CONFIG_BT_L2CAP_TX_BUF_COUNT];
+	const size_t min_cnt = 1U;
+	unsigned long data;
+	unsigned long cnt;
+	uint16_t cnt_u16;
+	int err = 0;
+
+	if (!default_conn) {
+		shell_error(shell, "Not connected.");
+
+		return kStatus_SHELL_Error;
+	}
+
+	if (!echo_enabled) {
+		shell_error(shell, "No clients have enabled notifications for the vnd1_echo CCC.");
+
+		return kStatus_SHELL_Error;
+	}
+
+	cnt = shell_strtoul(argv[1], 10, &err);
+	if (err != 0) {
+		shell_error(shell, "Invalid count parameter: %s", argv[1]);
+
+		return kStatus_SHELL_Error;
+	}
+
+	if (!IN_RANGE(cnt, min_cnt, max_cnt)) {
+		shell_error(shell, "Invalid count value %lu (range %zu to %zu)",
+			    cnt, min_cnt, max_cnt);
+
+		return kStatus_SHELL_Error;
+	}
+
+	cnt_u16 = (uint16_t)cnt;
+
+	if (argc > 2) {
+		data = shell_strtoul(argv[2], 16, &err);
+		if (err != 0) {
+			shell_error(shell, "Invalid data parameter: %s", argv[1]);
+
+			return kStatus_SHELL_Error;
+		}
+	}
+
+	(void)memset(params, 0, sizeof(params));
+
+	for (uint16_t i = 0U; i < cnt_u16; i++) {
+		params[i].uuid = 0;
+		params[i].attr = vnd1_attrs;
+		params[i].data = &data;
+		params[i].len = sizeof(data);
+		params[i].func = notify_cb;
+		params[i].user_data = (void *)shell;
+	}
+
+	err = bt_gatt_notify_multiple(default_conn, cnt_u16, params);
+	if (err != 0) {
+		shell_error(shell, "bt_gatt_notify_multiple failed: %d", err);
+	} else {
+		shell_print(shell, "Send %u notifications", cnt_u16);
+	}
+
+	return (shell_status_t)err;
+}
+#endif /* CONFIG_BT_GATT_NOTIFY_MULTIPLE */
 
 static struct bt_uuid_128 met_svc_uuid = BT_UUID_INIT_128(
 	BT_UUID_128_ENCODE(0x12345678, 0x1234, 0x5678, 0x1234, 0x56789abcde01));
@@ -1198,6 +1338,9 @@ SHELL_STATIC_SUBCMD_SET_CREATE(gatt_cmds,
 		      "unregister pre-predefined test service",
 		      cmd_unregister_test_svc, 1, 0),
 	SHELL_CMD_ARG(notify, NULL, "[data]", cmd_notify, 1, 1),
+#if (defined(CONFIG_BT_GATT_NOTIFY_MULTIPLE) && (CONFIG_BT_GATT_NOTIFY_MULTIPLE > 0))
+	SHELL_CMD_ARG(notify-mult, NULL, "count [data]", cmd_notify_mult, 2, 1),
+#endif /* CONFIG_BT_GATT_NOTIFY_MULTIPLE */
 #endif /* CONFIG_BT_GATT_DYNAMIC_DB */
 	SHELL_SUBCMD_SET_END
 );

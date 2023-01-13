@@ -18,9 +18,6 @@
 
 
 /* ---------------------------------- Global Definitions */
-#if defined BT_UART && !defined BT_BCSP
-    #define hci_transport_write_data    hci_uart_send_data
-#endif /* BT_UART && !BT_BCSP */
 
 #ifdef BT_BCSP
     #define hci_transport_write_data    hci_bcsp_send_data
@@ -36,12 +33,17 @@
 
 /** HCI UART Initialization & Shutdown */
 void hci_uart_init (void);
+#ifdef BT_HAVE_SHUTDOWN
+void hci_uart_shutdown (void);
+#endif /* BT_HAVE_SHUTDOWN */
 void hci_uart_bt_init (void);
 void hci_uart_bt_shutdown (void);
 
 /* HCI UART Send Data */
 API_RESULT hci_uart_send_data (UCHAR type, UCHAR *buf, UINT16 length, UCHAR flag);
+API_RESULT hci_transport_write_data (UCHAR type, UCHAR * buf, UINT16 length, UCHAR flag);
 void hci_uart_write_data(UCHAR *data, UINT16 datalen);
+
 
 void hci_uart_set_serial_settings (CHAR *device, UINT32 baud);
 

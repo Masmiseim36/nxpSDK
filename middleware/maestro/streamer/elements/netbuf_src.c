@@ -24,7 +24,7 @@ static uint8_t netbufsrc_handle_src_event(StreamPad *pad, StreamEvent *event);
 static uint8_t netbufsrc_handle_src_query(StreamPad *pad, StreamQuery *event);
 static uint8_t netbufsrc_src_activate_pull(StreamPad *pad, uint8_t active);
 static uint8_t netbufsrc_src_activation_handler(StreamPad *pad, uint8_t active);
-static PadReturn netbufsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
+static FlowReturn netbufsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
 static int32_t netbufsrc_get_property(StreamElement *element_ptr, uint16_t prop, uint32_t *val_ptr);
 static int32_t netbufsrc_set_property(StreamElement *element_ptr, uint16_t prop, uintptr_t val);
 
@@ -64,7 +64,7 @@ int32_t netbufsrc_init(StreamElement *element)
     }
 
     STREAMER_FUNC_EXIT(DBG_NETBUFSRC);
-    return PAD_OK;
+    return 0;
 }
 
 /*!
@@ -173,11 +173,11 @@ static uint8_t netbufsrc_src_activation_handler(StreamPad *pad, uint8_t active)
  * @brief Reads the data from the memory array specified by the element.
  * NOTE: Function may or may not be able to read the required
  * length of data.
- * @retval PAD_STREAM_ERR_EOS when EOF file is encountered.
- * @retval PAD_STREAM_ERR_GENERAL when read fails.
+ * @retval FLOW_EOS when EOF file is encountered.
+ * @retval FLOW_ERROR when read fails.
  *
  */
-static PadReturn netbufsrc_read(ElementNetbufSrc *netbufsrc, int32_t offset, int32_t length, StreamBuffer *buf)
+static FlowReturn netbufsrc_read(ElementNetbufSrc *netbufsrc, int32_t offset, int32_t length, StreamBuffer *buf)
 {
     int ret;
 
@@ -193,7 +193,8 @@ static PadReturn netbufsrc_read(ElementNetbufSrc *netbufsrc, int32_t offset, int
     buf->size = sizeof(RawPacketHeader) + ret;
 
     STREAMER_FUNC_EXIT(DBG_NETBUFSRC);
-    return PAD_OK;
+
+    return (ret != length) ? FLOW_EOS : FLOW_OK;
 }
 
 /*!
@@ -208,10 +209,10 @@ static PadReturn netbufsrc_read(ElementNetbufSrc *netbufsrc, int32_t offset, int
  * the offset to buffer.
  *
  */
-static PadReturn netbufsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset)
+static FlowReturn netbufsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset)
 {
     ElementNetbufSrc *netbufsrc = (ElementNetbufSrc *)pad->parent;
-    PadReturn ret               = PAD_OK;
+    FlowReturn ret              = FLOW_OK;
 
     STREAMER_FUNC_ENTER(DBG_NETBUFSRC);
 
@@ -220,7 +221,7 @@ static PadReturn netbufsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t s
 
     /* read chunk_size of data */
     ret = netbufsrc_read(netbufsrc, offset, size, buffer);
-    if (ret == PAD_STREAM_ERR_EOS)
+    if (ret == FLOW_EOS)
     {
         /* Its an end of stream */
         if (netbufsrc->end_of_stream != true)

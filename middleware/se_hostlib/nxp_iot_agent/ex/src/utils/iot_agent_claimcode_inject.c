@@ -9,6 +9,7 @@
 
 static uint8_t CheckIfKeyIdExists(sss_object_t* obj, uint32_t keyId, pSe05xSession_t session_ctx)
 {
+
 #if ((SSS_HAVE_SE05X_VER_03_XX) || (SSS_HAVE_SE05X_VER_06_00))
     if (sss_key_object_get_handle(obj, keyId) == (sss_status_t)kStatus_SSS_Success)
     {
@@ -19,6 +20,7 @@ static uint8_t CheckIfKeyIdExists(sss_object_t* obj, uint32_t keyId, pSe05xSessi
         return 0;
     }
 #else
+    AX_UNUSED_ARG(obj);
     smStatus_t retStatus = SM_NOT_OK;
     SE05x_Result_t IdExists = kSE05x_Result_NA;
 

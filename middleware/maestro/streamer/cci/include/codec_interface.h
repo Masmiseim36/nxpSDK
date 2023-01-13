@@ -123,6 +123,29 @@ extern int32_t OggOPUSSeek(int32_t *memory[], int32_t seek_offset);
 extern int32_t OggOPUSGetIOFrameSize(int32_t *in_size, int32_t *out_size);
 #endif
 
+/* AAC */
+#ifdef CASCFG_ENABLE_AAC_CODEC
+extern int32_t AACDecoderGetMemorySize();
+extern int32_t AACDecoderInit(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
+extern int32_t AACDecoderDecode(int32_t *memory[], int32_t *sample_produced, int32_t *buf_out);
+extern int32_t AACDecoderSeek(int32_t *memory[], int32_t seek_offset);
+extern int32_t AACDecoderGetIOFrameSize(int32_t *in_size, int32_t *out_size);
+
+extern int32_t AACDecodergetMetaData(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
+#endif
+
+/* FLAC */
+#ifdef CASCFG_ENABLE_FLAC_CODEC
+extern int32_t FLACDecoderGetMemorySize();
+extern int32_t FLACDecoderInit(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
+extern int32_t FLACDecoderDecode(int32_t *memory[], int32_t *sample_produced, int32_t *buf_out);
+extern int32_t FLACDecoderSeek(int32_t *memory[], int32_t seek_offset);
+extern int32_t FLACDecoderGetIOFrameSize(int32_t *in_size, int32_t *out_size);
+extern int32_t FLACDecoderReset(int32_t *memory[]);
+
+extern int32_t FLACDecodergetMetaData(int32_t *memory[], int32_t *callback_fn[], int32_t *user_data);
+#endif
+
 #if defined(__cplusplus)
 }
 #endif

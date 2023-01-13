@@ -1,0 +1,80 @@
+/*******************************************************************************
+*
+* E M B E D D E D   W I Z A R D   P R O J E C T
+*
+*                                                Copyright (c) TARA Systems GmbH
+*                                    written by Paul Banach and Manfred Schweyer
+*
+********************************************************************************
+*
+* This software is delivered "as is" and shows the usage of other software 
+* components. It is provided as an example software which is intended to be 
+* modified and extended according to particular requirements.
+* 
+* TARA Systems hereby disclaims all warranties and conditions with regard to the
+* software, including all implied warranties and conditions of merchantability 
+* and non-infringement of any third party IPR or other rights which may result 
+* from the use or the inability to use the software.
+*
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
+*
+* Version  : 10.0
+* Date     : 17.02.2021  8:00:50
+* Profile  : iMX_RT
+* Platform : NXP.iMX_RT_VGLite.RGB565
+*
+*******************************************************************************/
+
+/* Bitmap resource : 'Oximeter::Track' */
+EW_DEFINE_BITMAP_RES( OximeterTrack )
+  EW_BITMAP_FRAMES( OximeterTrack, Default, EW_DRIVER_VARIANT_ALPHA8, 60, 45, 0 )
+    EW_BITMAP_FRAME( 0, 0, 0, 0, 0x00000000, 0x00000000 ),
+    EW_BITMAP_FRAME( 0, 0, 0, 0, 0x000001D4, 0x00000000 )
+    EW_BITMAP_MAPPING( OximeterTrack, Default )
+
+  EW_BITMAP_PIXEL_R90( OximeterTrack, Default )                 /* ratio 17.63 % */
+    0x18002900, 0x4120B048, 0x647E2004, 0x10678341, 0x068845A2, 0xC58341E1, 0x06038807,
+    0xA8141233, 0x0980E071, 0x31588E2D, 0xA08F6733, 0x29188A43, 0xCF68243A, 0x8E56331C,
+    0xA03090B0, 0x038EC6E3, 0x4228740E, 0x4A255247, 0x6A391E90, 0x2368A8C4, 0x51208F47,
+    0xCE6934AA, 0x6A070E90, 0xF068E476, 0x803A9163, 0xDA1D1D14, 0xA3516888, 0x4D0D1D5D,
+    0x914EA7F4, 0x52335209, 0xC5209825, 0x213F3F14, 0x974B9D7D, 0x7E4AD2AE, 0xA048A4A6,
+    0x02002D71, 0xB234CE2E, 0xE1B0B754, 0x9D1A96A2, 0x6D404171, 0xDC3C0541, 0xB87B1228,
+    0x8AB15CF2, 0x6050F0DC, 0x1781EA90, 0x6A4D226E, 0xE9B2C8B4, 0x45268D45, 0xE302F372,
+    0xD22B81CD, 0xBA649A28, 0x8A49DCF6, 0x2828ACD2, 0x2A850070, 0xDF0B6D5C, 0x5482253A,
+    0xF88E0B81, 0xB4A8E4B1, 0x1C8BDAF0, 0x6453EA59, 0x0009C0C1, 0xE4A1D03E, 0x4A70F9F5,
+    0x7C0C3E74, 0x1FC86040, 0x53D3DE4A, 0x020423FA, 0xE6210580, 0xDE948A28, 0x7345247B,
+    0x8060005C, 0xFAA39263, 0x493239E9, 0x80840411, 0x01FF2544, 0x95239CF8, 0x0EC1B14C,
+    0xA092505A, 0x4239B682, 0x54361889, 0xDD2446A1, 0x235A6851, 0xC521BC91, 0xD23C771A,
+    0x359587A1, 0x691EC8F2, 0x84C7B1C8, 0x88E69A28, 0xE1D4701F, 0x56318C07, 0x742008E6,
+    0x8E529220, 0x889235B5, 0x69014221, 0x2646575B, 0x4C92E4A9, 0x93E4E936, 0xE5294650,
+    0x69565494, 0x665895E5, 0x576A1E99, 0x94A38222, 0x25723C88, 0x420E5791, 0xA07E959F,
+    0x971EA567, 0x2647795C, 0xE569C26E, 0x21E2579B, 0xD6769567, 0x79952779, 0x9E27D95A,
+    0x27F94E7B, 0x394A819F, 0x4685A0A8, 0x89A1A879, 0x00101942, 0x1C091900, 0xC1A0B048,
+    0x660F0883, 0xA1B093C2, 0x168C87C3, 0x31489C42, 0x188AC322, 0xC8CC4A13, 0x8EC6E0B1,
+    0xE4823F20, 0xC6247228, 0xA2292692, 0x2571094C, 0x5F2E874B, 0x7328BC6A, 0x353BA662,
+    0xD9CCE255, 0x874F2772, 0x7CFCF497, 0x50CFC948, 0x1D069187, 0xD0C8F86D, 0x108F84D2,
+    0x48E8453D, 0x8B83D4EA, 0xCADD6AAE, 0xAFD7ABB5, 0x1D8AC360, 0xD9ACB64B, 0x391F14B3,
+    0x11A8DAEA, 0xDD5C4522, 0x6803921A, 0x7E4756AD, 0x63F1B8EA, 0x3DA3AAF7, 0x79ECCC72,
+    0xA36AE8D4, 0x34D67747, 0xF0A91379, 0xD49146D4, 0x86217954, 0x8EA5DF52, 0x11D96928,
+    0xCBA54A61, 0x42551D47, 0x91400212, 0x3A87A049, 0x0183849A, 0x12721700, 0x491A7A41,
+    0x0B109CD1, 0xF2184400, 0x4A53D287, 0x800C847F, 0x87C00000, 0xFF1C943A, 0xCE89446C,
+    0x8A130007, 0xC7F24033, 0x35ACA392, 0xD4B23917, 0x0A6E48A7, 0xB05807C5, 0xCE6DA8E2,
+    0x4D1C8E46, 0x00003089, 0x5600E2F8, 0x293451A4, 0x694524E7, 0x5F7FC056, 0x370BC0FC,
+    0x08D24C91, 0xD22D2076, 0xB89124C8, 0xFB01C2F1, 0x029C57C1, 0x48A1B83C, 0xA7A5267A,
+    0x283C1B88, 0xF07F20E0, 0x1A42F011, 0x496499DB, 0x40B86723, 0xA1EE8380, 0x2A025C58,
+    0x2547E14C, 0x1156CC94, 0xE2549424, 0x242914C7, 0x0E8722A0, 0x1141300E, 0x08A20075,
+    0x4799E57A, 0x36445B50, 0x751FC892, 0x7B413114, 0xDF08AA3B, 0x507C0800, 0xC0921D04,
+    0xCA5A8908, 0x8D08F7A1, 0xC7324C95, 0x001C1D10, 0x4E529465, 0x470B4139, 0x1CC66158,
+    0x0872087B, 0x221C8A5C, 0x98731EC8, 0x2C11C561, 0x94A67048, 0x0009A63C, 0x50DC1801,
+    0x08761945, 0x8822C882, 0x19476208, 0xC180D854, 0x17EE8289, 0x00000010, 0x00000000
+
+  EW_BITMAP_CLUT_EMPTY( OximeterTrack, Default )
+
+  EW_BITMAPS_TABLE( OximeterTrack )
+    EW_BITMAP( OximeterTrack, Default )
+EW_END_OF_BITMAP_RES( OximeterTrack )
+
+/* Embedded Wizard */

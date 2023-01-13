@@ -29,7 +29,7 @@
 
 /* Buffer pointers to point to command and, command response buffer */
 static uint8_t fw_cmd_buf[WIFI_FW_CMDBUF_SIZE];
-static int seqnum;
+static t_u16 seqnum;
 // static int pm_handle;
 
 /*
@@ -489,7 +489,7 @@ static t_u8 *wlan_read_rcv_packet(t_u32 port, t_u32 rxlen, t_u32 rx_blocks, t_u3
     return inbuf;
 }
 
-static int wlan_get_next_seq_num(void)
+static t_u16 wlan_get_next_seq_num(void)
 {
     seqnum++;
     return seqnum;
@@ -519,7 +519,7 @@ static void _wlan_set_cal_data(void)
 #endif
 }
 
-void wifi_prepare_reconfigure_tx_buf_cmd(HostCmd_DS_COMMAND *cmd, int seq_number);
+void wifi_prepare_reconfigure_tx_buf_cmd(HostCmd_DS_COMMAND *cmd, t_u16 seq_number);
 
 static void _wlan_reconfigure_tx_buffers(void)
 {
@@ -545,9 +545,9 @@ static void _wlan_reconfigure_tx_buffers(void)
 
 void wifi_prepare_get_mac_addr_cmd(HostCmd_DS_COMMAND *cmd, int seq_number);
 #ifdef OTP_CHANINFO
-void wifi_prepare_get_channel_region_cfg_cmd(HostCmd_DS_COMMAND *cmd, int seq_number);
+void wifi_prepare_get_channel_region_cfg_cmd(HostCmd_DS_COMMAND *cmd, t_u16 seq_number);
 #endif
-void wifi_prepare_get_hw_spec_cmd(HostCmd_DS_COMMAND *cmd, int seq_number);
+void wifi_prepare_get_hw_spec_cmd(HostCmd_DS_COMMAND *cmd, t_u16 seq_number);
 
 #ifdef OTP_CHANINFO
 static void wlan_get_channel_region_cfg(void)
@@ -693,7 +693,7 @@ static void wlan_set_11n_cfg(void)
     (void)memset(outbuf, 0, SDIO_OUTBUF_LEN);
     wrapper_wlan_cmd_11n_cfg(&sdiopkt->hostcmd);
     /* sdiopkt = outbuf */
-    sdiopkt->hostcmd.seq_num = (t_u16)wlan_get_next_seq_num();
+    sdiopkt->hostcmd.seq_num = wlan_get_next_seq_num();
     sdiopkt->pkttype         = MLAN_TYPE_CMD;
     last_cmd_sent            = HostCmd_CMD_11N_CFG;
 
@@ -737,7 +737,7 @@ static void wlan_cmd_shutdown(void)
     /* sdiopkt = outbuf */
     sdiopkt->hostcmd.command = HostCmd_CMD_FUNC_SHUTDOWN;
     sdiopkt->hostcmd.size    = (t_u16)S_DS_GEN;
-    sdiopkt->hostcmd.seq_num = (t_u16)wlan_get_next_seq_num();
+    sdiopkt->hostcmd.seq_num = wlan_get_next_seq_num();
     sdiopkt->hostcmd.result  = 0;
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
@@ -748,7 +748,7 @@ static void wlan_cmd_shutdown(void)
     (void)sdio_drv_write(mlan_adap->ioport, 1, tx_blocks, buflen, (t_u8 *)outbuf, &resp);
 }
 
-void wlan_prepare_mac_control_cmd(HostCmd_DS_COMMAND *cmd, int seq_number);
+void wlan_prepare_mac_control_cmd(HostCmd_DS_COMMAND *cmd, t_u16 seq_number);
 static void wlan_set_mac_ctrl(void)
 {
     t_u32 tx_blocks = 1, buflen = MLAN_SDIO_BLOCK_SIZE;
@@ -782,7 +782,7 @@ static void wlan_cmd_init(void)
     /* sdiopkt = outbuf */
     sdiopkt->hostcmd.command = HostCmd_CMD_FUNC_INIT;
     sdiopkt->hostcmd.size    = (t_u16)S_DS_GEN;
-    sdiopkt->hostcmd.seq_num = (t_u16)wlan_get_next_seq_num();
+    sdiopkt->hostcmd.seq_num = wlan_get_next_seq_num();
     sdiopkt->hostcmd.result  = 0;
 
     sdiopkt->pkttype = MLAN_TYPE_CMD;
@@ -798,7 +798,7 @@ static void wlan_cmd_init(void)
 }
 
 #ifdef WLAN_LOW_POWER_ENABLE
-void wifi_prepare_low_power_mode_cmd(HostCmd_DS_COMMAND *cmd, int seq_number);
+void wifi_prepare_low_power_mode_cmd(HostCmd_DS_COMMAND *cmd, t_u16 seq_number);
 static int wlan_set_low_power_mode()
 {
     t_u32 tx_blocks = 1, buflen = MLAN_SDIO_BLOCK_SIZE;

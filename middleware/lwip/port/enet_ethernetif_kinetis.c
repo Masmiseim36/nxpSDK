@@ -56,8 +56,8 @@
 #include "event_groups.h"
 #endif
 
-#include "enet_ethernetif.h"
-#include "enet_ethernetif_priv.h"
+#include "ethernetif.h"
+#include "ethernetif_priv.h"
 
 #include "fsl_enet.h"
 #include "fsl_phy.h"
@@ -137,6 +137,8 @@
 typedef uint8_t rx_buffer_t[SDK_SIZEALIGN(ENET_RXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
 typedef uint8_t tx_buffer_t[SDK_SIZEALIGN(ENET_TXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
 
+#include "enet_sanitychecks.h"
+
 /*!
  * @brief Used to wrap received data in a pbuf to be passed into lwIP
  *        without copying.
@@ -168,6 +170,10 @@ struct ethernetif
     rx_buffer_t *RxDataBuff;
     tx_buffer_t *TxDataBuff;
     rx_pbuf_wrapper_t RxPbufs[ENET_RXBUFF_NUM];
+    phy_handle_t *phyHandle;
+    phy_speed_t last_speed;
+    phy_duplex_t last_duplex;
+    bool last_link_up;
 };
 
 /*******************************************************************************
@@ -175,6 +181,7 @@ struct ethernetif
  ******************************************************************************/
 
 static void ethernetif_rx_release(struct pbuf *p);
+void *ethernetif_get_enet_base(const uint8_t enetIdx);
 
 /*******************************************************************************
  * Code
@@ -196,10 +203,7 @@ static void ethernet_callback(ENET_Type *base,
     switch (event)
     {
         case kENET_RxEvent:
-            /* Disabling RX interrupts required by ENET_GetRxFrame() when called from ISR */
-            ENET_DisableInterrupts(ethernetif->base, (uint32_t)kENET_RxFrameInterrupt);
             ethernetif_input(netif);
-            ENET_EnableInterrupts(ethernetif->base, (uint32_t)kENET_RxFrameInterrupt);
             break;
         case kENET_TxEvent:
         {
@@ -230,12 +234,63 @@ static void ethernet_callback(ENET_Type *base,
 }
 #endif
 
+#if (LWIP_IPV4 && LWIP_IGMP) || (LWIP_IPV6 && LWIP_IPV6_MLD)
+static err_t ethernetif_mcastmacfilter_action(struct netif *netif,
+                                              uint8_t *multicastMacAddr,
+                                              enum netif_mac_filter_action action)
+{
+    struct ethernetif *ethernetif = netif->state;
+
+    /* Get item's index. */
+    int idx = ethernetif_mmac_get_idx(netif, multicastMacAddr);
+    if (idx == -1)
+        return ERR_MEM;
+
+    switch (action)
+    {
+        /* Action - add an address to the filter. */
+        case NETIF_ADD_MAC_FILTER:
+        {
+            if (ethernetif_mmac_is_new(idx))
+            {
+                /* New item - update the hardware filter */
+                ENET_AddMulticastGroup(ethernetif->base, multicastMacAddr);
+            }
+
+            /* Increase the refcounter */
+            ethernetif_mmac_ref_inc(netif, multicastMacAddr, idx);
+            return ERR_OK;
+        }
+
+        /* Action - remove an address from the filter. */
+        case NETIF_DEL_MAC_FILTER:
+        {
+            /* Shouldn't happen - yet nonexistent MAC address */
+            if (ethernetif_mmac_is_new(idx))
+                return ERR_IF;
+
+            if (ethernetif_mmac_is_pending(idx))
+            {
+                /* Address pending removal - update the hardware filter. */
+                ENET_LeaveMulticastGroup(ethernetif->base, multicastMacAddr);
+            }
+
+            /* Decrease the refcounter */
+            ethernetif_mmac_ref_dec(netif, idx);
+            return ERR_OK;
+        }
+
+        /* No other action is supported. */
+        default:
+            return ERR_IF;
+    }
+}
+#endif
+
 #if LWIP_IPV4 && LWIP_IGMP
 err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, enum netif_mac_filter_action action)
 {
-    struct ethernetif *ethernetif = netif->state;
     uint8_t multicastMacAddr[6];
-    err_t result;
 
     multicastMacAddr[0] = 0x01U;
     multicastMacAddr[1] = 0x00U;
@@ -244,43 +299,14 @@ err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group, e
     multicastMacAddr[4] = (group->addr >> 16) & 0xFFU;
     multicastMacAddr[5] = (group->addr >> 24) & 0xFFU;
 
-    switch (action)
-    {
-        case IGMP_ADD_MAC_FILTER:
-            /* Adds the ENET device to a multicast group.*/
-        	if (ethernetif_add_mmac_flt_needed(netif, multicastMacAddr))
-	        {
-				ENET_AddMulticastGroup(ethernetif->base, multicastMacAddr);
-            }
-            result = ERR_OK;
-            break;
-        case IGMP_DEL_MAC_FILTER:
-            /*
-             * Moves the ENET device from a multicast group.
-             * Since the ENET_LeaveMulticastGroup() could filter out also other
-             * group addresses having the same hash, the call is commented out.
-             */
-        	if (ethernetif_rm_mmac_flt_needed(netif, multicastMacAddr))
-	        {
-				ENET_LeaveMulticastGroup(ethernetif->base, multicastMacAddr);
-	        }
-            result = ERR_OK;
-            break;
-        default:
-            result = ERR_IF;
-            break;
-    }
-
-    return result;
+    return ethernetif_mcastmacfilter_action(netif, multicastMacAddr, action);
 }
 #endif
 
 #if LWIP_IPV6 && LWIP_IPV6_MLD
 err_t ethernetif_mld_mac_filter(struct netif *netif, const ip6_addr_t *group, enum netif_mac_filter_action action)
 {
-    struct ethernetif *ethernetif = netif->state;
     uint8_t multicastMacAddr[6];
-    err_t result;
 
     multicastMacAddr[0] = 0x33U;
     multicastMacAddr[1] = 0x33U;
@@ -289,30 +315,7 @@ err_t ethernetif_mld_mac_filter(struct netif *netif, const ip6_addr_t *group, en
     multicastMacAddr[4] = (group->addr[3] >> 16) & 0xFFU;
     multicastMacAddr[5] = (group->addr[3] >> 24) & 0xFFU;
 
-    switch (action)
-    {
-        case NETIF_ADD_MAC_FILTER:
-            /* Adds the ENET device to a multicast group.*/
-        	if (ethernetif_add_mmac_flt_needed(netif, multicastMacAddr))
-            {
-                ENET_AddMulticastGroup(ethernetif->base, multicastMacAddr);
-            }
-            result = ERR_OK;
-            break;
-        case NETIF_DEL_MAC_FILTER:
-            /* Moves the ENET device from a multicast group.*/
-        	if (ethernetif_rm_mmac_flt_needed(netif, multicastMacAddr))
-	        {
-        		ENET_LeaveMulticastGroup(ethernetif->base, multicastMacAddr);
-        	}
-            result = ERR_OK;
-            break;
-        default:
-            result = ERR_IF;
-            break;
-    }
-
-    return result;
+    return ethernetif_mcastmacfilter_action(netif, multicastMacAddr, action);
 }
 #endif
 
@@ -364,15 +367,12 @@ static void ethernetif_rx_free(ENET_Type *base, void *buffer, void *userData, ui
 /**
  * Initializes ENET driver.
  */
-void ethernetif_enet_init(struct netif *netif,
+void ethernetif_plat_init(struct netif *netif,
                           struct ethernetif *ethernetif,
                           const ethernetif_config_t *ethernetifConfig)
 {
     enet_config_t config;
-    uint32_t sysClock;
-    enet_buffer_config_t buffCfg[ENET_RING_NUM];
-    phy_speed_t speed;
-    phy_duplex_t duplex;
+    enet_buffer_config_t buffCfg[ETHERNETIF_RING_NUM];
     int i;
 
     /* prepare the buffer configuration. */
@@ -391,10 +391,8 @@ void ethernetif_enet_init(struct netif *netif,
     buffCfg[0].rxMaintainEnable = true; /* Receive buffer cache maintain. */
     buffCfg[0].txMaintainEnable = true; /* Transmit buffer cache maintain. */
 
-    sysClock = ethernetifConfig->phyHandle->mdioHandle->resource.csrClock_Hz;
-
     ENET_GetDefaultConfig(&config);
-    config.ringNum     = ENET_RING_NUM;
+    config.ringNum     = ETHERNETIF_RING_NUM;
     config.rxBuffAlloc = ethernetif_rx_alloc;
     config.rxBuffFree  = ethernetif_rx_free;
     config.userData    = netif;
@@ -403,9 +401,13 @@ void ethernetif_enet_init(struct netif *netif,
     BOARD_ENETFlexibleConfigure(&config);
 #endif
 
-    ethernetif_phy_init(ethernetif, ethernetifConfig, &speed, &duplex);
-    config.miiSpeed  = (enet_mii_speed_t)speed;
-    config.miiDuplex = (enet_mii_duplex_t)duplex;
+    /* Used for detection of change.
+       Initilize to value different than any possible enum value. */
+    ethernetif->last_speed   = (phy_speed_t)0xa5a5;
+    ethernetif->last_duplex  = (phy_duplex_t)0x5a5a;
+    ethernetif->last_link_up = false;
+
+    ethernetif_phy_init(ethernetif, ethernetifConfig);
 
 #if USE_RTOS && defined(SDK_OS_FREE_RTOS)
     uint32_t instance;
@@ -459,14 +461,39 @@ void ethernetif_enet_init(struct netif *netif,
     }
 
     /* Initialize the ENET module. */
-    ENET_Init(ethernetif->base, &ethernetif->handle, &config, &buffCfg[0], netif->hwaddr, sysClock);
+    ENET_Init(ethernetif->base, &ethernetif->handle, &config, &buffCfg[0], netif->hwaddr, ethernetifConfig->srcClockHz);
 
     ENET_ActiveRead(ethernetif->base);
 }
 
-void **ethernetif_enet_ptr(struct ethernetif *ethernetif)
+void **ethernetif_base_ptr(struct ethernetif *ethernetif)
 {
     return (void **)&(ethernetif->base);
+}
+
+phy_handle_t *ethernetif_get_phy(struct netif *netif_)
+{
+    struct ethernetif *eif = netif_->state;
+    return eif->phyHandle;
+}
+
+void ethernetif_on_link_up(struct netif *netif_, phy_speed_t speed, phy_duplex_t duplex)
+{
+    struct ethernetif *eif = netif_->state;
+
+    if (!eif->last_link_up || (speed != eif->last_speed) || (duplex != eif->last_duplex))
+    {
+        ENET_SetMII(eif->base, (enet_mii_speed_t)speed, (enet_mii_duplex_t)duplex);
+        eif->last_speed   = speed;
+        eif->last_duplex  = duplex;
+        eif->last_link_up = true;
+    }
+}
+
+void ethernetif_on_link_down(struct netif *netif_)
+{
+    struct ethernetif *eif = netif_->state;
+    eif->last_link_up      = false;
 }
 
 /**
@@ -505,7 +532,7 @@ static err_t enet_send_frame(struct ethernetif *ethernetif, unsigned char *data,
     {
         uint32_t counter;
 
-        for (counter = ENET_TIMEOUT; counter != 0U; counter--)
+        for (counter = ETHERNETIF_TIMEOUT; counter != 0U; counter--)
         {
             if (ENET_SendFrame(ethernetif->base, &ethernetif->handle, data, length, 0, false, NULL) !=
                 kStatus_ENET_TxFrameBusy)
@@ -639,9 +666,8 @@ err_t ethernetif_linkoutput(struct netif *netif, struct pbuf *p)
 {
     err_t result;
     struct ethernetif *ethernetif = netif->state;
-    struct pbuf *q;
     unsigned char *pucBuffer;
-    unsigned char *pucChar;
+    u16_t uCopied;
 
     LWIP_ASSERT("Output packet buffer empty", p);
 
@@ -671,17 +697,8 @@ err_t ethernetif_linkoutput(struct netif *netif, struct pbuf *p)
         }
         else
         {
-            pucChar = pucBuffer;
-
-            for (q = p; q != NULL; q = q->next)
-            {
-                /* Send the data from the pbuf to the interface, one pbuf at a
-                time. The size of the data in each pbuf is kept in the ->len
-                variable. */
-                /* send data from(q->payload, q->len); */
-                memcpy(pucChar, q->payload, q->len);
-                pucChar += q->len;
-            }
+            uCopied = pbuf_copy_partial(p, pucBuffer, p->tot_len, 0);
+            LWIP_ASSERT("uCopied != p->tot_len", uCopied == p->tot_len);
         }
     }
 
@@ -730,12 +747,16 @@ err_t ethernetif0_init(struct netif *netif)
     SDK_ALIGN(static rx_buffer_t rxDataBuff_0[ENET_RXBUFF_NUM], FSL_ENET_BUFF_ALIGNMENT);
     SDK_ALIGN(static tx_buffer_t txDataBuff_0[ENET_TXBD_NUM], FSL_ENET_BUFF_ALIGNMENT);
 
+    ethernetif_config_t *cfg = (ethernetif_config_t *)netif->state;
+
     ethernetif_0.RxBuffDescrip = &(rxBuffDescrip_0[0]);
     ethernetif_0.TxBuffDescrip = &(txBuffDescrip_0[0]);
     ethernetif_0.RxDataBuff    = &(rxDataBuff_0[0]);
     ethernetif_0.TxDataBuff    = &(txDataBuff_0[0]);
 
-    return ethernetif_init(netif, &ethernetif_0, ethernetif_get_enet_base(0U), (ethernetif_config_t *)netif->state);
+    ethernetif_0.phyHandle = cfg->phyHandle;
+
+    return ethernetif_init(netif, &ethernetif_0, ethernetif_get_enet_base(0U), cfg);
 }
 
 #if defined(FSL_FEATURE_SOC_ENET_COUNT) && (FSL_FEATURE_SOC_ENET_COUNT > 1)
@@ -759,11 +780,15 @@ err_t ethernetif1_init(struct netif *netif)
     SDK_ALIGN(static rx_buffer_t rxDataBuff_1[ENET_RXBUFF_NUM], FSL_ENET_BUFF_ALIGNMENT);
     SDK_ALIGN(static tx_buffer_t txDataBuff_1[ENET_TXBD_NUM], FSL_ENET_BUFF_ALIGNMENT);
 
+    ethernetif_config_t *cfg = (ethernetif_config_t *)netif->state;
+
     ethernetif_1.RxBuffDescrip = &(rxBuffDescrip_1[0]);
     ethernetif_1.TxBuffDescrip = &(txBuffDescrip_1[0]);
     ethernetif_1.RxDataBuff    = &(rxDataBuff_1[0]);
     ethernetif_1.TxDataBuff    = &(txDataBuff_1[0]);
 
-    return ethernetif_init(netif, &ethernetif_1, ethernetif_get_enet_base(1U), (ethernetif_config_t *)netif->state);
+    ethernetif_1.phyHandle = cfg->phyHandle;
+
+    return ethernetif_init(netif, &ethernetif_1, ethernetif_get_enet_base(1U), cfg);
 }
 #endif /* FSL_FEATURE_SOC_*_ENET_COUNT */

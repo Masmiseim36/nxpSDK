@@ -270,7 +270,7 @@ cleanup:
 int pk_use_ecparams(const mbedtls_asn1_buf *params, mbedtls_ecp_group *grp)
 {
     int ret;
-    mbedtls_ecp_group_id grp_id;
+    mbedtls_ecp_group_id grp_id = MBEDTLS_ECP_DP_NONE;
 
     if (params->tag == MBEDTLS_ASN1_OID) {
         if (mbedtls_oid_get_ec_grp(params, &grp_id) != 0) {

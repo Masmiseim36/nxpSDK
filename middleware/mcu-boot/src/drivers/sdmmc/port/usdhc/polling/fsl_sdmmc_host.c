@@ -150,33 +150,6 @@ static void SDMMCHOST_ErrorRecovery(SDMMCHOST_TYPE *base)
     }
 }
 
-bool SDMMCHOST_BL_IsCardPresent(SDMMCHOST_TYPE *base, const sdmmchost_detect_card_type_t cdType)
-{
-    SDMMCHOST_BL_CARD_DETECT_INIT(base, cdType);
-
-    if (cdType == kSDMMCHOST_DetectCardByGpioCD)
-    {
-        if (SDMMCHOST_BL_CARD_DETECT_GPIO_STATUS(base) != SDMMCHOST_CARD_INSERT_CD_LEVEL)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    else
-    {
-        /* enable card detect through DATA3 */
-        if (cdType == kSDMMCHOST_DetectCardByHostDATA3)
-        {
-            SDMMCHOST_CARD_DETECT_DATA3_ENABLE(base, true);
-        }
-
-        return SDMMCHOST_CARD_DETECT_INSERT_STATUS(base);
-    }
-}
-
 static status_t SDMMCHOST_CardDetectInit(SDMMCHOST_TYPE *base, const sdmmchost_detect_card_t *cd)
 {
     sdmmchost_detect_card_type_t cdType = kSDMMCHOST_DetectCardByGpioCD;

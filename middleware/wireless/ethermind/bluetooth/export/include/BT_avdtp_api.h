@@ -214,7 +214,7 @@
  *  \sa
  *  AVDTP_EVENT_NTF_CB
  */
-typedef struct avdtp_handle
+typedef struct _AVDTP_HANDLE
 {
     /**
      *  The Event Notification Callback which the AVDTP should
@@ -228,7 +228,7 @@ typedef struct avdtp_handle
                 (
                     UCHAR                    event_type,    /* Event Type */
                     UINT16                   event_result,  /* Result/Response */
-                    struct avdtp_handle *    avdtp_handle,  /* AVDTP Handle */
+                    struct _AVDTP_HANDLE *   avdtp_handle,  /* AVDTP Handle */
                     void  *                  event_data,    /* Returned Data */
                     UINT16                   event_datalen  /* Returned Data Length */
                 );
@@ -248,8 +248,11 @@ typedef struct avdtp_handle
 #ifdef AVDTP_ASSISTIVE_MODE
 typedef struct avdtp_media_channel_params
 {
-    /** L2CAP CID for the streaming channel */
+    /** Local L2CAP CID (LCID) for the streaming channel */
     UINT16 lcid;
+
+    /** Remote L2CAP CID (RCID) for the streaming channel */
+    UINT16 rcid;
 
     /** L2CAP MTU configured */
     UINT16 mtu;
@@ -752,8 +755,10 @@ typedef struct
     /** Codec Capability information */
     AVDTP_CODEC_CAP codec_cap;
 
+#ifdef AVDTP_HAVE_CONTENT_PROTECTION
     /** Content Protection Capability information */
     AVDTP_CP_CAP cp_cap [AVDTP_MAX_CP_IE];
+#endif /* AVDTP_HAVE_CONTENT_PROTECTION */
 
     /**
      *  Bitmap containing service requested/configured.
@@ -1497,7 +1502,7 @@ extern "C" {
 API_RESULT avdtp_common_api_handler_set_1
            (
                /* IN */ AVDTP_HANDLE *  handle,
-               /* IN */ UCHAR           event_type,
+               /* IN */ UCHAR           req_type,
                /* IN */ void            (* bh_func)(void *args, UINT16 args_length)
            );
 
@@ -1512,7 +1517,7 @@ API_RESULT avdtp_common_api_handler_set_2
                /* IN */ AVDTP_HANDLE *  handle,
                /* IN */ UCHAR *         data,
                /* IN */ UINT16          datalen,
-               /* IN */ UCHAR           event_type,
+               /* IN */ UCHAR           req_type,
                /* IN */ void            (* bh_func)(void *args, UINT16 args_length)
            );
 
@@ -1525,7 +1530,7 @@ API_RESULT avdtp_common_api_handler_set_3
            (
                /* IN */ AVDTP_HANDLE *      handle,
                /* IN */ AVDTP_SEP_CONF *    sep_conf,
-               /* IN */ UCHAR               event_type,
+               /* IN */ UCHAR               req_type,
                /* IN */ void                (* bh_func)(void *args, UINT16 args_length)
            );
 
@@ -2917,9 +2922,9 @@ API_RESULT BT_avdtp_sep_deregister
  *  \param [in] handle
  *         The AVDTP Handle, from which BD_ADDR, and the local SEID
  *         will be used to identify the Stream Context.
- *  \param [in] media_packet
+ *  \param [in] packet
  *         The Media Packet to transfer over the Streaming Connection.
- *  \param [in] media_packet_len
+ *  \param [in] packet_len
  *         Size of the Media Packet.
  *
  *  \return API_RESULT
@@ -2961,8 +2966,8 @@ API_RESULT BT_avdtp_sep_deregister
 API_RESULT BT_avdtp_media_write
            (
                /* IN */ AVDTP_HANDLE *    handle,
-               /* IN */ UCHAR *           media_packet,
-               /* IN */ UINT16            media_packet_len
+               /* IN */ UCHAR *           packet,
+               /* IN */ UINT16            packet_len
            );
 
 #ifdef AVDTP_ASSISTIVE_MODE
@@ -3204,6 +3209,82 @@ API_RESULT BT_avdtp_set_flushable
 
 #endif /* HAVE_AVDTP_MEDIA_PKT_FLUSHABLE */
 
+#ifdef HAVE_AVDTP_SET_GET_SIG_CH_OUTMTU
+/**
+ *  \brief To set/get Out MTU of AVDTP signalling channel.
+ *
+ *  \par Description:
+ *  This API enables the upper layer to get or set the Out MTU size of AVDTP signaling channel.
+ *
+ *  \param [in] handle
+ *         The AVDTP Handle corresponding to the connection.
+ *
+ *  \param [in] flag
+ *         Flag to indicate out mtu to get or set.
+ *         0 -> Get out mtu.
+ *         1 -> Set out mtu
+ *
+ *  \param [in,out] out_mtu
+ *         Pointer to Out MTU value of the AVDTP signalling channel.
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ *
+ *  \note
+ */
+API_RESULT BT_avdtp_access_sig_channel_out_mtu
+           (
+               /* IN */    AVDTP_HANDLE    * handle,
+               /* IN */    UCHAR             flag,
+               /* INOUT */ UINT16          * out_mtu
+           );
+
+/**
+ *  \brief To get Out MTU of AVDTP signalling channel.
+ *
+ *  \par Description:
+ *  This API enables the upper layer to get the Out MTU size of AVDTP signalling channel.
+ *
+ *  \param [in] handle
+ *         The AVDTP Handle corresponding to the connection.
+ *
+ *  \param [out] mtu
+ *         Pointer to Out MTU value of the AVDTP signalling channel.
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ *
+ *  \note
+ */
+#define BT_avdtp_get_sig_channel_out_mtu(h, mtu)  \
+        BT_avdtp_access_sig_channel_out_mtu((h), 0x00, (mtu))
+
+/**
+ *  \brief To set Out MTU of AVDTP signalling channel.
+ *
+ *  \par Description:
+ *  This API enables the upper layer to set the Out MTU size of AVDTP signalling channel.
+ *  In normal scenario, upper layer need not to change the out mtu.
+ *  Typically this is used to set the outmtu to a smaller value to enable sending
+ *  AVDTP signalling messages in fragments, required for some of the qualification
+ *  test cases
+ *
+ *  \param [in] handle
+ *         The AVDTP Handle corresponding to the connection.
+ *
+ *  \param [in] mtu
+ *         Pointer to Out MTU vallue of the AVDTP signalling channel.
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ *
+ *  \note
+ *   It is application responsibility to set back to original/initial outmtu value after changing.
+ */
+#define BT_avdtp_set_sig_channel_out_mtu(h, mtu)  \
+        BT_avdtp_access_sig_channel_out_mtu((h), 0x01, (mtu))
+
+#endif /* HAVE_AVDTP_SET_GET_SIG_CH_OUTMTU */
 #ifdef __cplusplus
 };
 #endif

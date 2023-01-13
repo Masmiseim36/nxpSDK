@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC Generator (erpcgen)
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('classerpcgen_1_1_group.html','');});
 <p>An interface that contains functions.  
  <a href="classerpcgen_1_1_group.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_group_8h_source.html">Group.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_group_8hpp_source.html">Group.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -154,10 +154,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6b1d2e14f40455a7fa91b406479b2585"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classerpcgen_1_1_group.html#a445d27f77f14b9577850ed5ac2252ced">symbols_list_t</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a6b1d2e14f40455a7fa91b406479b2585">getSymbols</a> () const </td></tr>
 <tr class="memdesc:a6b1d2e14f40455a7fa91b406479b2585"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns vector with symbols.  <a href="#a6b1d2e14f40455a7fa91b406479b2585">More...</a><br /></td></tr>
 <tr class="separator:a6b1d2e14f40455a7fa91b406479b2585"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99bacd4f6dcfb74a0608b7ad8807cbe3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a99bacd4f6dcfb74a0608b7ad8807cbe3">setTemplate</a> (<a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> groupTemplate)</td></tr>
+<tr class="memitem:a99bacd4f6dcfb74a0608b7ad8807cbe3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a99bacd4f6dcfb74a0608b7ad8807cbe3">setTemplate</a> (cpptempl::data_map groupTemplate)</td></tr>
 <tr class="memdesc:a99bacd4f6dcfb74a0608b7ad8807cbe3"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will set group template.  <a href="#a99bacd4f6dcfb74a0608b7ad8807cbe3">More...</a><br /></td></tr>
 <tr class="separator:a99bacd4f6dcfb74a0608b7ad8807cbe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e5bec8a442cc88231eeb81a50b0e568"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a2e5bec8a442cc88231eeb81a50b0e568">getTemplate</a> ()</td></tr>
+<tr class="memitem:a2e5bec8a442cc88231eeb81a50b0e568"><td class="memItemLeft" align="right" valign="top">cpptempl::data_map &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#a2e5bec8a442cc88231eeb81a50b0e568">getTemplate</a> ()</td></tr>
 <tr class="memdesc:a2e5bec8a442cc88231eeb81a50b0e568"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function returns group template.  <a href="#a2e5bec8a442cc88231eeb81a50b0e568">More...</a><br /></td></tr>
 <tr class="separator:a2e5bec8a442cc88231eeb81a50b0e568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae73097061031208b54465344b5454b90"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpcgen_1_1_group.html#ae73097061031208b54465344b5454b90">getDescription</a> () const </td></tr>
@@ -224,7 +224,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -446,7 +446,7 @@ std::string <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f480
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a>&amp; erpcgen::Group::getTemplate </td>
+          <td class="memname">cpptempl::data_map&amp; erpcgen::Group::getTemplate </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -471,7 +471,7 @@ std::string <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f480
         <tr>
           <td class="memname">void Group::setTemplate </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcpptempl_1_1data__map.html">cpptempl::data_map</a>&#160;</td>
+          <td class="paramtype">cpptempl::data_map&#160;</td>
           <td class="paramname"><em>groupTemplate</em></td><td>)</td>
           <td></td>
         </tr>
@@ -489,7 +489,7 @@ std::string <a class="el" href="classerpcgen_1_1_list_type.html#a360f3a198f4f480
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="_group_8h_source.html">Group.h</a></li>
+<li><a class="el" href="_group_8hpp_source.html">Group.hpp</a></li>
 <li>Type.cpp</li>
 </ul>
 </div><!-- contents -->

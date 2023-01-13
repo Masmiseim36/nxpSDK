@@ -2,6 +2,9 @@
 @page middleware_log Middleware Change Log
 @section FatFs FatFs for MCUXpresso SDK
   Current version is FatFs R0.14b_rev0.
+
+  - R0.14b_rev1
+    - Applied patches from http://elm-chan.org/fsw/ff/patches.html
   - R0.14b_rev0
     - Upgraded to version 0.14b
   - R0.14a_rev0

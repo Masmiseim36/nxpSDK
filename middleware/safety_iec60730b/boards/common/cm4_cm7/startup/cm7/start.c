@@ -12,7 +12,7 @@
  ******************************************************************************/
 extern void common_startup(void);
 extern int32_t main(void);
-extern void WatchdogEnable(void);
+extern void WatchdogEnable(uint32_t wd_setup_value);
 extern void WatchdogDisable(void);
 
 /*******************************************************************************
@@ -32,10 +32,10 @@ void start(void)
 {
     /* Update of watchdog configuration */
 #if WATCHDOG_ENABLED
-  
-#if(defined(_MIMXRT1011_H_))  
+
+#if(defined(_MIMXRT1011_H_))
       __asm("cpsid i");
-    uint32_t temp = RTWDOG_CS_EN(1) | RTWDOG_CS_CLK(1) | RTWDOG_CS_UPDATE(1) | RTWDOG_CS_CMD32EN(1);//| RTWDOG_CS_PRES(1);    
+    uint32_t temp = RTWDOG_CS_EN(1) | RTWDOG_CS_CLK(1) | RTWDOG_CS_UPDATE(1) | RTWDOG_CS_CMD32EN(1);//| RTWDOG_CS_PRES(1);
     USED_WDOG->CNT = 0xD928C520; //unlock watchdog
     while ((USED_WDOG->CS & RTWDOG_CS_ULK_MASK) == 0)
     {
@@ -44,10 +44,10 @@ void start(void)
     USED_WDOG->CS |= temp;
     while ((USED_WDOG->CS & RTWDOG_CS_RCS_MASK) == 0)
     {
-    }  
+    }
     __asm("cpsie i");
-#else 
-    WatchdogEnable(); 
+#else
+    WatchdogEnable(WATCHDOG_TIMEOUT_VALUE);
 #endif
 
 #else

@@ -8,21 +8,9 @@ var hierarchy =
     ] ],
     [ "erpcgen::AstWalker::bottom_up", "classerpcgen_1_1_ast_walker.html#structerpcgen_1_1_ast_walker_1_1bottom__up", null ],
     [ "erpcgen::CurrentFileInfo", "classerpcgen_1_1_current_file_info.html", null ],
-    [ "cpptempl::Data", "classcpptempl_1_1_data.html", [
-      [ "cpptempl::DataBool", "classcpptempl_1_1_data_bool.html", null ],
-      [ "cpptempl::DataInt", "classcpptempl_1_1_data_int.html", null ],
-      [ "cpptempl::DataList", "classcpptempl_1_1_data_list.html", null ],
-      [ "cpptempl::DataMap", "classcpptempl_1_1_data_map.html", null ],
-      [ "cpptempl::DataTemplate", "classcpptempl_1_1_data_template.html", null ],
-      [ "cpptempl::DataValue", "classcpptempl_1_1_data_value.html", null ]
-    ] ],
-    [ "cpptempl::data_map", "classcpptempl_1_1data__map.html", null ],
-    [ "cpptempl::data_ptr", "classcpptempl_1_1data__ptr.html", null ],
     [ "erpcgen::erpcgenTool", "classerpcgen_1_1erpcgen_tool.html", null ],
     [ "std::exception", null, [
-      [ "cpptempl::TemplateException", "classcpptempl_1_1_template_exception.html", null ],
       [ "std::runtime_error", null, [
-        [ "cpptempl::data_map::key_error", "classcpptempl_1_1data__map_1_1key__error.html", null ],
         [ "erpcgen::erpc_error", "classerpcgen_1_1erpc__error.html", [
           [ "erpcgen::internal_error", "classerpcgen_1_1internal__error.html", null ],
           [ "erpcgen::lexical_error", "classerpcgen_1_1lexical__error.html", null ],

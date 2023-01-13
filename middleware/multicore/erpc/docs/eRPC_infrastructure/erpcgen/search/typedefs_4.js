@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['member_5fvector_5ft',['member_vector_t',['../classerpcgen_1_1_enum_type.html#a1793ed54d339fc34a338a041142ba268',1,'erpcgen::EnumType::member_vector_t()'],['../classerpcgen_1_1_struct_type.html#ac565a5870035c078ccfa55d8dd245ccc',1,'erpcgen::StructType::member_vector_t()']]]
+  ['idandname_5ft',['idAndName_t',['../classerpcgen_1_1_unique_id_checker.html#a068c83919d76c321c8c29bfc996c211d',1,'erpcgen::UniqueIdChecker']]],
+  ['interface_5flist_5ft',['interface_list_t',['../classerpcgen_1_1_group.html#a6958e110daf1a2f2b67c8495fd93779c',1,'erpcgen::Group']]],
+  ['iterator',['iterator',['../classerpcgen_1_1_ast_node.html#a6a1e32ead902f4832fe77bf0fea9b85d',1,'erpcgen::AstNode']]]
 ];

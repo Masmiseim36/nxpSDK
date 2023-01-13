@@ -31,8 +31,10 @@ int32_t ccidec_extract_meta_data(audio_stream_type_t stream_type, file_meta_data
 
     switch (stream_type)
     {
-#ifdef CASCFG_ENABLE_WAV_CODEC
+#ifdef WAV_DEC
         case STREAM_TYPE_PCM:
+        case STREAM_TYPE_MSADPCM:
+        case STREAM_TYPE_IMAADPCM:
             ret = (uint8_t)codec_extract_metadata_wave(meta_data, ctx);
             break;
 #endif
@@ -52,7 +54,16 @@ int32_t ccidec_extract_meta_data(audio_stream_type_t stream_type, file_meta_data
             ret = codec_extract_metadata_ogg_opus(meta_data, ctx);
             break;
 #endif /* OGG_OPUS_DEC */
-
+#ifdef AAC_DEC
+        case STREAM_TYPE_AAC:
+            ret = (uint8_t)codec_extract_metadata_aac(meta_data, ctx);
+            break;
+#endif
+#ifdef FLAC_DEC
+        case STREAM_TYPE_FLAC:
+            ret = (uint8_t)codec_extract_metadata_flac(meta_data, ctx);
+            break;
+#endif
         default:
             /* Unknown Audio Stream Type (kCodecStreamTypeUnknown) */
             break;

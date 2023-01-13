@@ -297,7 +297,7 @@ API_RESULT BT_jpl_stop ( void );
  */
 API_RESULT BT_jpl_add_frames
            (
-               /* IN */  UINT16     seq_num,
+               /* IN */  UINT16     seq,
                /* IN */  UINT32     timestamp,
                /* IN */  UCHAR *    data,
                /* IN */  UINT16     datalen
@@ -310,12 +310,12 @@ API_RESULT BT_jpl_add_frames
  *  \par Description
  *       To remove PCM data from JPL.
  *
- *  \param [in] old_frame
+ *  \param [in] data 
  *         Pointer to the PCM buffer block that has been played and
  *         can be freed. All buffer blocks till this one will be
  *         freed.
  *
- *  \param [in] old_frame_datalen
+ *  \param [in] datalen
  *         Datalen of PCM buffer to be freed
  *
  *  \return API_RESULT
@@ -323,8 +323,8 @@ API_RESULT BT_jpl_add_frames
  */
 API_RESULT BT_jpl_remove_frames
            (
-               /* IN */  UCHAR *    old_frame,
-               /* IN */  UINT16     old_frame_datalen
+               /* IN */  UCHAR *    data,
+               /* IN */  UINT16     datalen
            );
 
 

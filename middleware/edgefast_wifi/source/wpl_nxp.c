@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2021 NXP
+ * Copyright 2020-2022 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -63,7 +63,7 @@ static char *ssids_json                  = NULL;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static int wlan_event_callback(enum wlan_event_reason reason, void *data);
+int wlan_event_callback(enum wlan_event_reason reason, void *data);
 static int WLP_process_results(unsigned int count);
 
 /*******************************************************************************
@@ -73,10 +73,11 @@ static int WLP_process_results(unsigned int count);
  * gets called when there are WLAN Events that need to be handled by the
  * application.
  */
-static int wlan_event_callback(enum wlan_event_reason reason, void *data)
+int wlan_event_callback(enum wlan_event_reason reason, void *data)
 {
+#ifdef WPL_DEBUG
     PRINTF("-------- wlan_event_callback %d --------\r\n", reason);
-
+#endif
     if (s_wplState >= WPL_INITIALIZED)
     {
         xEventGroupSetBits(s_wplSyncEvent, EVENT_BIT(reason));
@@ -89,6 +90,9 @@ static int wlan_event_callback(enum wlan_event_reason reason, void *data)
             {
                 s_linkLostCb(true);
             }
+            break;
+
+        case WLAN_REASON_AUTH_SUCCESS:
             break;
 
         case WLAN_REASON_CONNECT_FAILED:
@@ -129,14 +133,18 @@ static int wlan_event_callback(enum wlan_event_reason reason, void *data)
             break;
 
         case WLAN_REASON_UAP_CLIENT_ASSOC:
+#ifdef WPL_DEBUG
             PRINTF("Client => ");
             print_mac((const char *)data);
             PRINTF("Associated with Soft AP\r\n");
+#endif
             break;
         case WLAN_REASON_UAP_CLIENT_DISSOC:
+#ifdef WPL_DEBUG
             PRINTF("Client => ");
             print_mac((const char *)data);
             PRINTF("Dis-Associated from Soft AP\r\n");
+#endif
             break;
 
         case WLAN_REASON_UAP_START_FAILED:
@@ -146,7 +154,9 @@ static int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_UAP_STOPPED:
             break;
         default:
+#ifdef WPL_DEBUG
             PRINTF("Unknown Wifi CB Reason %d\r\n", reason);
+#endif
             break;
     }
 

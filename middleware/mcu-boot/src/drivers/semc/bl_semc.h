@@ -76,6 +76,8 @@ enum __semc_config_block_tags
 #define SEMC_IPCMD_NAND_CM_IPG_CMD_WRITE (0x9u)
 #define SEMC_IPCMD_NAND_CM_IPG_READ_ONLY (0xAu)  // Read Only
 #define SEMC_IPCMD_NAND_CM_IPG_WRITE_ONLY (0xBu) // Write Only
+#define SEMC_IPCMD_NAND_CM_IPG_BUFFER_READ (0xCu) // Buffer read Only
+#define SEMC_IPCMD_NAND_CM_IPG_BUFFER_WRITE (0xDu) // BufferWrite Only
 
 #define SMEC_MAX_DEVICE_MEMORY_SIZE_IN_BYTES (0x80000000u)
 
@@ -93,6 +95,7 @@ typedef enum _semc_status
     kStatus_SEMC_InvalidBurstLength = MAKE_STATUS(kStatusGroup_SEMC, 8),
     kStatus_SEMC_InvalidColumnAddressBitWidth = MAKE_STATUS(kStatusGroup_SEMC, 9),
     kStatus_SEMC_InvalidIpClockConfiguration = MAKE_STATUS(kStatusGroup_SEMC, 10),
+    kStatus_SEMC_NANDEECCFAIL = MAKE_STATUS(kStatusGroup_SEMC, 11),
 } semc_status_t;
 
 //! @brief SEMC Misc Property
@@ -276,7 +279,11 @@ typedef struct _semc_nand_mem_config
     uint8_t columnAddressWidth;  //!< [0x013-0x013]
     uint8_t burstLengthInBytes;  //!< [0x014-0x014]
     uint8_t columnAddressOption; //!< [0x015-0x015]
-    uint8_t reserved0[10];       //!< [0x016-0x01f]
+    uint8_t bufferEn;            //!< [0x016-0x016]
+    uint8_t semcBchMode;         //!< [0x017-0x017]
+    uint32_t semcBchSectorSize;  //!< [0x018-0x01b]
+    uint8_t semcBchSectorNumber; //!< [0x01c-0x01c]
+    uint8_t reserved0[3];        //!< [0x01d-0x01f]
     // Port pinmux and polarity
     uint8_t cePortOutputSelection; //!< [0x020-0x020]
     uint8_t rdyPortPolarity;       //!< [0x021-0x021]
@@ -322,80 +329,103 @@ typedef struct _semc_mem_config
 ////////////////////////////////////////////////////////////////////////////////
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-//!@brief Initialize SEMC module
-status_t semc_init(semc_mem_config_t *config);
+    //!@brief Initialize SEMC module
+    status_t semc_init(semc_mem_config_t *config);
 
-//!@brief Wait the SEMC module to be in IDLE state
-status_t semc_wait_for_idle(void);
+    //!@brief Wait the SEMC module to be in IDLE state
+    status_t semc_wait_for_idle(void);
 
-//!@brief Set data size of SEMC IP command
-status_t semc_ipg_command_set_data_size(uint8_t sizeInBytes);
+    //!@brief Set data size of SEMC IP command
+    status_t semc_ipg_command_set_data_size(uint8_t sizeInBytes);
 
-//!@brief Get data size of SEMC IP command
-uint8_t semc_ipg_command_get_data_size(void);
+    //!@brief Get data size of SEMC IP command
+    uint8_t semc_ipg_command_get_data_size(void);
 
-//!@brief Write device data(max 4 bytes) via SEMC IP commmand
-status_t semc_ipg_command_device_write(uint32_t slaveAddress,
-                                       uint16_t commandCode,
-                                       uint32_t writeData,
-                                       uint8_t lengthInBytes);
+    //!@brief Write device data(max 4 bytes) via SEMC IP commmand
+    status_t semc_ipg_command_device_write(uint32_t slaveAddress,
+                                           uint16_t commandCode,
+                                           uint32_t writeData,
+                                           uint8_t lengthInBytes);
 
-//!@brief Read device data(max 4 bytes) via SEMC IP commmand
-status_t semc_ipg_command_device_read(uint32_t slaveAddress,
-                                      uint16_t commandCode,
-                                      uint8_t *readoutData,
-                                      uint8_t lengthInBytes,
-                                      uint8_t ioPort,
-                                      uint8_t readType);
+    //!@brief Read device data(max 4 bytes) via SEMC IP commmand
+    status_t semc_ipg_command_device_read(uint32_t slaveAddress,
+                                          uint16_t commandCode,
+                                          uint8_t *readoutData,
+                                          uint8_t lengthInBytes,
+                                          uint8_t ioPort,
+                                          uint8_t readType);
 
-//!@brief Read memory data via SEMC IPG commmand
-status_t semc_ipg_memory_read(semc_mem_config_t *config, uint8_t *readoutData, uint32_t lengthInBytes, uint8_t readType);
+    //!@brief Read memory data via SEMC IPG commmand
+    status_t semc_ipg_memory_read(semc_mem_config_t *config,
+                                  uint8_t *readoutData,
+                                  uint32_t lengthInBytes,
+                                  uint8_t readType);
 
-//!@brief Write memory data via SEMC IPG commmand
-status_t semc_ipg_memory_write(semc_mem_config_t *config, uint8_t *writeData, uint32_t lengthInBytes, uint8_t writeType);
+    //!@brief Write memory data via SEMC IPG commmand
+    status_t semc_ipg_memory_write(semc_mem_config_t *config,
+                                   uint8_t *writeData,
+                                   uint32_t lengthInBytes,
+                                   uint8_t writeType);
 
-//!@brief Read memory data via SEMC AXI commmand
-status_t semc_axi_memory_read(uint32_t axiAddress, uint8_t *readoutData, uint32_t lengthInBytes);
+    //!@brief Write memory data via SEMC IPG commmand
+    status_t semc_ipg_memory_write_buffer(semc_mem_config_t *config, uint8_t *writeData, uint32_t lengthInBytes, uint8_t writeType);
+    status_t semc_ipg_memory_read_buffer(semc_mem_config_t *config, uint8_t *readoutData, uint32_t lengthInBytes);
+    
+    //!@brief Read memory data via SEMC AXI commmand
+    status_t semc_axi_memory_read(uint32_t axiAddress, uint8_t *readoutData, uint32_t lengthInBytes);
 
-//!@brief Write memory data via SEMC AXI commmand
-status_t semc_axi_memory_write(uint32_t axiAddress, uint8_t *writeData, uint32_t lengthInBytes);
+    //!@brief Write memory data via SEMC AXI commmand
+    status_t semc_axi_memory_write(uint32_t axiAddress, uint8_t *writeData, uint32_t lengthInBytes);    
 
-//!@brief Check ready status of the NAND device
-bool semc_is_nand_ready(void);
+    //!@brief Check ready status of the NAND device
+    bool semc_is_nand_ready(void);
 
-//!@brief Get NAND command code for SEMC IP commmand
-uint16_t semc_ipg_command_get_nand_code(uint8_t userCommandCode, uint8_t addressMode, uint8_t commandMode);
+    //!@brief Get NAND command code for SEMC IP commmand
+    uint16_t semc_ipg_command_get_nand_code(uint8_t userCommandCode, uint8_t addressMode, uint8_t commandMode);
 
-//!@brief Convert NAND salve address for SEMC IP commmand
-uint32_t semc_ipg_command_convert_nand_address(semc_mem_config_t *config, uint32_t slaveAddress);
+    //!@brief Convert NAND salve address for SEMC IP commmand
+    uint32_t semc_ipg_command_convert_nand_address(semc_mem_config_t *config, uint32_t slaveAddress);
 
-//!@brief Access NAND via SEMC IP commmand
-status_t semc_ipg_command_nand_access(uint32_t slaveAddress,
-                                      uint16_t commandCode,
-                                      uint32_t writeData,
-                                      uint32_t *readoutData);
+    //!@brief Access NAND via SEMC IP commmand
+    status_t semc_ipg_command_nand_access(uint32_t slaveAddress,
+                                          uint16_t commandCode,
+                                          uint32_t writeData,
+                                          uint32_t *readoutData);
 
-//!@brief Convert NOR salve address for SEMC IP commmand
-uint32_t semc_ipg_command_convert_nor_address(semc_mem_config_t *config, uint32_t slaveAddress);
+    //!@brief Convert NOR salve address for SEMC IP commmand
+    uint32_t semc_ipg_command_convert_nor_address(semc_mem_config_t *config, uint32_t slaveAddress);
 
-//!@brief Enable clock gate of SEMC
-extern void semc_clock_gate_enable(void);
+    //!@brief Configure IOMUX for SEMC
+    extern void semc_iomux_config(semc_mem_config_t *config);
 
-//!@brief Disable clock gate of SEMC
-extern void semc_clock_gate_disable(void);
+    //!@brief Get SEMC Clock frequency
+    extern status_t semc_get_clock(semc_clock_type_t type, uint32_t *freq);
 
-//!@brief Configure IOMUX for SEMC
-extern void semc_iomux_config(semc_mem_config_t *config);
+    //!@brief Configure AXI Clock for SEMC
+    extern void semc_axi_clock_config(semc_clk_freq_t freq);
+ 
+#if (defined(FSL_FEATURE_SEMC_HAS_NAND_HW_ECC) && (FSL_FEATURE_SEMC_HAS_NAND_HW_ECC > 0U))     
+    //!@brief Configure NANDCR0 register to enable buffer write
+    void semc_nand_configure_nandcr0_for_buffer_write(semc_mem_config_t *config);
+    
+    //!@brief Send IP command "NAND Buffer read"
+    status_t semc_nand_issue_buffer_read_cmd(uint32_t address);   
+    
+    //!@brief Send IP command "NAND Buffer write"
+    status_t semc_nand_issue_buffer_write_cmd(uint32_t address);    
+    
+    //!@brief Access command code
+    status_t semc_nand_issue_command_code(uint32_t slaveAddress, uint16_t commandCode);
 
-//!@brief Get SEMC Clock frequency
-extern status_t semc_get_clock(semc_clock_type_t type, uint32_t *freq);
-
-//!@brief Configure AXI Clock for SEMC
-extern void semc_axi_clock_config(semc_clk_freq_t freq);
-
+    //!@brief Configure NDBA register to write
+    void semc_nand_configure_ndba_for_buffer_write(void);    
+    void semc_nand_configure_ndba_for_buffer_read(void); 
+#endif  // FSL_FEATURE_SEMC_HAS_NAND_HW_ECC
+    
 #ifdef __cplusplus
 }
 #endif

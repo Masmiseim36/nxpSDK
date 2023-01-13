@@ -13,9 +13,10 @@
  *****************************************************************************/
 #ifndef _TST_SM_TIME_H_
 #define _TST_SM_TIME_H_
-
+#include <stdio.h>
 #include <time.h>
 #include "sm_types.h"
+
 
 #ifdef __cplusplus
 extern "C" {

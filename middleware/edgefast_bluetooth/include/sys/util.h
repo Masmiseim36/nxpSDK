@@ -15,6 +15,8 @@
 #ifndef ZEPHYR_INCLUDE_SYS_UTIL_H_
 #define ZEPHYR_INCLUDE_SYS_UTIL_H_
 
+#include <sys/util_macro.h>
+
 #include <stddef.h>
 
 #include <errno/errno.h>
@@ -66,62 +68,47 @@ extern "C" {
 #define __fallthrough
 #endif
 
+/**
+ * @brief Check if a pointer @p ptr lies within @p array.
+ *
+ * In C but not C++, this causes a compile error if @p array is not an array
+ * (e.g. if @p ptr and @p array are mixed up).
+ *
+ * @param ptr a pointer
+ * @param array an array
+ * @return 1 if @p ptr is part of @p array, 0 otherwise
+ */
+#define PART_OF_ARRAY(array, ptr) \
+	((ptr) && ((ptr) >= &array[0] && (ptr) < &array[ARRAY_SIZE(array)]))
+
 #ifndef CONTAINER_OF
 #define CONTAINER_OF(ptr, type, field) \
 	((type *)((void *)(((char *)(ptr)) - offsetof(type, field))))
 #endif
 
 /**
- * @brief Check for macro definition in compiler-visible expressions
+ * @def CLAMP
+ * @brief Clamp a value to a given range.
+ * @note Arguments are evaluated multiple times.
+ */
+#ifndef CLAMP
+/* Use Z_CLAMP for a GCC-only, single evaluation version */
+#define CLAMP(val, low, high) (((val) <= (low)) ? (low) : MIN(val, high))
+#endif
+
+/**
+ * @brief Checks if a value is within range.
  *
- * This trick was pioneered in Linux as the config_enabled() macro.
- * The madness has the effect of taking a macro value that may be
- * defined to "1" (e.g. CONFIG_MYFEATURE), or may not be defined at
- * all and turning it into a literal expression that can be used at
- * "runtime".  That is, it works similarly to
- * "defined(CONFIG_MYFEATURE)" does except that it is an expansion
- * that can exist in a standard expression and be seen by the compiler
- * and optimizer.  Thus much ifdef usage can be replaced with cleaner
- * expressions like:
+ * @note @p val is evaluated twice.
  *
- *     if (IS_ENABLED(CONFIG_MYFEATURE))
- *             myfeature_enable();
+ * @param val Value to be checked.
+ * @param min Lower bound (inclusive).
+ * @param max Upper bound (inclusive).
  *
- * INTERNAL
- * First pass just to expand any existing macros, we need the macro
- * value to be e.g. a literal "1" at expansion time in the next macro,
- * not "(1)", etc...  Standard recursive expansion does not work.
+ * @retval true If value is within range
+ * @retval false If the value is not within range
  */
-#define IS_ENABLED(config_macro) Z_IS_ENABLED1(config_macro)
-
-/* Now stick on a "_XXXX" prefix, it will now be "_XXXX1" if config_macro
- * is "1", or just "_XXXX" if it's undefined.
- *   ENABLED:   Z_IS_ENABLED2(_XXXX1)
- *   DISABLED   Z_IS_ENABLED2(_XXXX)
- */
-#define Z_IS_ENABLED1(config_macro) Z_IS_ENABLED2(_XXXX##config_macro)
-
-/* Here's the core trick, we map "_XXXX1" to "_YYYY," (i.e. a string
- * with a trailing comma), so it has the effect of making this a
- * two-argument tuple to the preprocessor only in the case where the
- * value is defined to "1"
- *   ENABLED:    _YYYY,    <--- note comma!
- *   DISABLED:   _XXXX
- */
-#define _XXXX1 _YYYY,
-
-/* Then we append an extra argument to fool the gcc preprocessor into
- * accepting it as a varargs macro.
- *                         arg1   arg2  arg3
- *   ENABLED:   Z_IS_ENABLED3(_YYYY,    1,    0)
- *   DISABLED   Z_IS_ENABLED3(_XXXX 1,  0)
- */
-#define Z_IS_ENABLED2(one_or_two_args) Z_IS_ENABLED3(one_or_two_args true, false)
-
-/* And our second argument is thus now cooked to be 1 in the case
- * where the value is defined to 1, and 0 if not:
- */
-#define Z_IS_ENABLED3(ignore_this, val, ...) val
+#define IN_RANGE(val, min, max) ((val) >= (min) && (val) <= (max))
 
 /**
  * @brief      Convert a single character into a hexadecimal nibble.
@@ -147,6 +134,47 @@ int char2hex(char c, uint8_t *x);
  *             any), or 0 if an error occurred.
  */
 uint8_t u8_to_dec(char *buf, uint8_t buflen, uint8_t value);
+
+/**
+ * @brief Properly truncate a NULL-terminated UTF-8 string
+ *
+ * Take a NULL-terminated UTF-8 string and ensure that if the string has been
+ * truncated (by setting the NULL terminator) earlier by other means, that
+ * the string ends with a properly formatted UTF-8 character (1-4 bytes).
+ *
+ * @htmlonly
+ * Example:
+ *      char test_str[] = "€€€";
+ *      char trunc_utf8[8];
+ *
+ *      printf("Original : %s\n", test_str); // €€€
+ *      strncpy(trunc_utf8, test_str, sizeof(trunc_utf8));
+ *      trunc_utf8[sizeof(trunc_utf8) - 1] = '\0';
+ *      printf("Bad      : %s\n", trunc_utf8); // €€?
+ *      utf8_trunc(trunc_utf8);
+ *      printf("Truncated: %s\n", trunc_utf8); // €€
+ * @endhtmlonly
+ *
+ * @param utf8_str NULL-terminated string
+ *
+ *  @return Pointer to the @p utf8_str
+ */
+char *utf8_trunc(char *utf8_str);
+
+/**
+ * @brief Copies a UTF-8 encoded string from @p src to @p dst
+ *
+ * The resulting @p dst will always be NULL terminated, and the @p dst string
+ * will always be properly UTF-8 truncated.
+ *
+ * @param dst The destination of the UTF-8 string.
+ * @param src The source string
+ * @param n   The size of the @p dst buffer. Shall not be 0.
+ *
+ * return Pointer to the @p dst
+ */
+char *utf8_lcpy(char *dst, const char *src, size_t n);
+
 /**
  * @}
  */

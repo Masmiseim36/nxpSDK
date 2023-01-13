@@ -70,6 +70,8 @@
 #define BT_str_cat(d, s)                EM_str_cat((d), (s))
 #define BT_str_n_cat(d, s, sz)          EM_str_n_cat((d), (s), (sz))
 #define BT_str_str(s, ss)               EM_str_str((s), (ss))
+#define BT_str_chr(s, ch)               EM_str_chr((s), (ch))
+#define BT_str_rchr(s, ch)              EM_str_rchr((s), (ch))
 #define BT_str_print(...)               EM_str_print(__VA_ARGS__)
 
 /* Abstractions for memory functions */
@@ -81,12 +83,15 @@
 /* Task/Thread Creation Primitives */
 #define BT_thread_create(t, at, r, a)   EM_thread_create((t), (at), (r), (a))
 #define BT_thread_attr_init(a)          EM_thread_attr_init(a)
+#define BT_thread_delete(t)             EM_thread_delete((t))
 
 /* Task/Thread Synchronization Primitives */
 #define BT_thread_mutex_init(m, a)      EM_thread_mutex_init((m), (a))
+#define BT_thread_mutex_deinit(m)       EM_thread_mutex_deinit((m))
 #define BT_thread_mutex_lock(m)         EM_thread_mutex_lock(m)
 #define BT_thread_mutex_unlock(m)       EM_thread_mutex_unlock(m)
 #define BT_thread_cond_init(c, a)       EM_thread_cond_init((c), (a))
+#define BT_thread_cond_deinit(c)        EM_thread_cond_deinit((c))
 #define BT_thread_cond_wait(c, m)       EM_thread_cond_wait((c), (m))
 #define BT_thread_cond_wait_timeout(c, m, t) \
                                         EM_thread_cond_wait_timeout((c), (m), (t))

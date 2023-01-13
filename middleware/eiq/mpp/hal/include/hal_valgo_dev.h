@@ -18,7 +18,6 @@
 #include "hal_os.h"
 #include "mpp_api_types.h"
 #include "hal_types.h"
-#include "mpp_config.h"
 
 /**
  * @brief declare the vision algorithm dev ##name
@@ -137,7 +136,7 @@ struct _vision_algo_dev
     /* unique id which is assigned by algorithm manager during the registration */
     int id;
     /* name to identify */
-    char name[MPP_DEVICE_NAME_MAX_LENGTH];
+    char name[HAL_DEVICE_NAME_MAX_LENGTH];
     /* private capability */
     valgo_dev_private_capability_t cap;
     /* operations */

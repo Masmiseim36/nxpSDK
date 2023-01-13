@@ -15,9 +15,11 @@
 
 /* ---------------------------------------------- Global Definitions */
 #include "BT_common.h"
-
 #include "BT_hci_api.h"
+
+#ifdef CLASSIC_SEC_MANAGER
 #include "BT_sm_api.h"
+#endif /* CLASSIC_SEC_MANAGER */
 
 #ifdef SDP
     #include "BT_sdp_api.h"

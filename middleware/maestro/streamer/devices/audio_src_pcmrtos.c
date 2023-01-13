@@ -188,10 +188,9 @@ AudioSrcStreamErrorType audio_src_pcmrtos_start_device(ElementAudioSrc *audio_sr
       }
     */
 
-    audio_src_element->chunk_size =
-        (audio_src_element->pkt_hdr.sample_rate * audio_src_element->pkt_hdr.bits_per_sample / 8 *
-         audio_src_element->pkt_hdr.num_channels) /
-        (1000 / audio_src_element->frame_ms);
+    audio_src_element->chunk_size = audio_src_element->pkt_hdr.sample_rate *
+                                    audio_src_element->pkt_hdr.bits_per_sample / 8 *
+                                    audio_src_element->pkt_hdr.num_channels * audio_src_element->frame_ms / 1000;
     audio_src_element->pkt_hdr.chunk_size = audio_src_element->chunk_size;
     audio_src_element->first_run          = true;
 

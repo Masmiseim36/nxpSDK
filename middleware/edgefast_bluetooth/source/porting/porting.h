@@ -49,11 +49,6 @@
 #define BT_INFO(fmt, ...) LOG_INF("%s " fmt, __func__, ##__VA_ARGS__)
 #endif /* BT_INFO */
 
-static inline char *log_strdup(const char *str)
-{
-	return (char *)str;
-}
-
 static inline uint32_t k_ticks_to_ms_floor32(uint32_t t)
 {
 	return t;
@@ -118,6 +113,8 @@ typedef struct k_fifo
 
 void k_fifo_init(k_fifo_t *fifo);
 void k_fifo_deinit(k_fifo_t *fifo);
+int k_fifo_is_empty(k_fifo_t *fifo);
+void k_fifo_put_head(k_fifo_t *fifo, void *data);
 
 typedef struct k_sem
 {

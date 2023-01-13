@@ -74,6 +74,6 @@ ULONG  _ux_hcd_ohci_register_read(UX_HCD_OHCI *hcd_ohci, ULONG ohci_register)
 {
     
     /* Return the value.  */
-    return(*(hcd_ohci -> ux_hcd_ohci_hcor + ohci_register));
+    return(*(volatile ULONG *)(hcd_ohci -> ux_hcd_ohci_hcor + ohci_register));
 }
 

@@ -152,6 +152,7 @@ exit:
 bool iot_agent_datastore_plain_get_endpoint_info(
 	void *context, void* endpoint_information)
 {
+	AX_UNUSED_ARG(context);
 	nxp_iot_EndpointInformation* info = (nxp_iot_EndpointInformation*)endpoint_information;
 	info->has_version = true;
 	info->version = IOT_AGENT_DATASTORE_PLAIN_VERSION;
@@ -200,6 +201,7 @@ typedef struct iot_agent_datastore_plain_handle_write_data_t {
 
 bool iot_agent_datastore_plain_handle_write_data(pb_istream_t *stream, const pb_field_t *field, void **arg)
 {
+	AX_UNUSED_ARG(field);
 	iot_agent_datastore_plain_handle_write_data_t* context = (iot_agent_datastore_plain_handle_write_data_t*)(*arg);
 	iot_agent_datastore_plain_context_t* datastore_context = context->datastore_context;
 	nxp_iot_DatastoreRequest* request = context->request;

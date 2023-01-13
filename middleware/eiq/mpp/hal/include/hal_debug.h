@@ -15,8 +15,6 @@
 extern "C" {
 #endif
 
-#include "mpp_config.h"
-
 #ifndef EMULATOR
 #include "fsl_debug_console.h"
 #else
@@ -30,23 +28,21 @@ extern "C" {
 
 #define LOG_DEFAULT_LEVEL LOG_LVL_ERR
 
-#ifndef HAL_LOG_LEVEL
-#define HAL_LOG_LEVEL LOG_DEFAULT_LEVEL
-#endif
-
 /*
  * Implementation of LOG() should be external since
  * this is depending on SDK configuration, especially
  * regarding flag SDK_DEBUGCONSOLE.
  */
-extern void LOG(int cond, const char* module, const char* lvl_str, const char* format, ...);
+extern void LOGE(const char* module, const char* func, int line, const char* format, ...);
+extern void LOGI(const char* module, const char* func, int line, const char* format, ...);
+extern void LOGD(const char* module, const char* func, int line, const char* format, ...);
 
 #define HAL_LOGE(format, ...) \
-    LOG(LOG_LVL_ERR <= HAL_LOG_LEVEL, "HAL", "ERR", format, ##__VA_ARGS__)
+    LOGE("HAL", __func__, __LINE__, format, ##__VA_ARGS__)
 #define HAL_LOGI(format, ...) \
-    LOG(LOG_LVL_INFO <= HAL_LOG_LEVEL, "HAL", "INFO", format, ##__VA_ARGS__)
+    LOGI("HAL", __func__, __LINE__, format, ##__VA_ARGS__)
 #define HAL_LOGD(format, ...) \
-    LOG(LOG_LVL_DEBUG <= HAL_LOG_LEVEL, "HAL", "DBG", format, ##__VA_ARGS__)
+    LOGD("HAL", __func__, __LINE__, format, ##__VA_ARGS__)
 
 #ifdef __cplusplus
 }

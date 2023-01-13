@@ -63,6 +63,12 @@ typedef void (* BT_COMMON_UL_DEINIT_CB_PL)(void);
 void ethermind_init_lower_pl(void);
 void ethermind_init_upper_pl(void);
 
+#ifdef BT_HAVE_SHUTDOWN
+/* EtherMind-Shutdown: Platform Lower and Upper Handler */
+void ethermind_shutdown_lower_pl(void);
+void ethermind_shutdown_upper_pl(void);
+#endif /* BT_HAVE_SHUTDOWN */
+
 /* Bluetooth-ON: Platform Lower & Upper Handler */
 void bluetooth_on_lower_pl(void );
 void bluetooth_on_upper_pl(void);

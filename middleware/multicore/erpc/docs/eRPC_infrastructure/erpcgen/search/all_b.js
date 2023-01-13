@@ -4,7 +4,6 @@ var searchData=
   ['kdebug1',['kDebug1',['../class_logger.html#a5209ca5ee1a2a8181287485e950cf381a894c8bec70d9093570638d698983d86f',1,'Logger']]],
   ['kdebug2',['kDebug2',['../class_logger.html#a5209ca5ee1a2a8181287485e950cf381a7059bc37726a537e725116d79d149cb3',1,'Logger']]],
   ['kerror',['kError',['../class_logger.html#a5209ca5ee1a2a8181287485e950cf381a30bcc9bfa9b1cd8f269c6763287209cc',1,'Logger']]],
-  ['key_5ferror',['key_error',['../classcpptempl_1_1data__map_1_1key__error.html',1,'cpptempl::data_map']]],
   ['kinfo',['kInfo',['../class_logger.html#a5209ca5ee1a2a8181287485e950cf381ae2dae72bbbe478b4ece96ee72ce613ec',1,'Logger']]],
   ['kinfo1',['kInfo1',['../class_logger.html#a5209ca5ee1a2a8181287485e950cf381ade1be3a5625f4037711f67c7064905d2',1,'Logger']]],
   ['kinfo2',['kInfo2',['../class_logger.html#a5209ca5ee1a2a8181287485e950cf381a0e22aade4d30c09d021b81f88e422d59',1,'Logger']]],

@@ -25,7 +25,7 @@
 #include "streamer_testeapfile2file.h"
 #include "streamer_audiosrc.h"
 #include "streamer_element_properties.h"
-#include "streamer_pcm_eap_speaker.h"
+#include "streamer_pcm_speaker.h"
 
 #ifdef STREAMER_ENABLE_MEM_SRC
 #include "mem_src.h"
@@ -80,8 +80,8 @@ static ElementPropertyLookup property_lookup_table[] = {{PROP_AUDIOSRC_MASK, ELE
 #ifdef STREAMER_ENABLE_VIT_SINK
                                                         {PROP_VITSINK_MASK, ELEMENT_VIT_INDEX},
 #endif
-#ifdef STREAMER_ENABLE_EAP
-                                                        {PROP_EAP_MASK, ELEMENT_EAP_INDEX},
+#ifdef STREAMER_ENABLE_AUDIO_PROC
+                                                        {PROP_AUDIO_PROC_MASK, ELEMENT_AUDIO_PROC_INDEX},
 #endif
                                                         {PROP_ENCODER_MASK, ELEMENT_ENCODER_INDEX}};
 
@@ -127,7 +127,7 @@ int streamer_msg_create_pipeline(STREAMER_T *task_data, void *msg_data)
             case STREAM_PIPELINE_FILESYSTEM:
             case STREAM_PIPELINE_MEM:
             case STREAM_PIPELINE_NETBUF:
-            case STREAM_PIPELINE_EAP:
+            case STREAM_PIPELINE_AUDIO_PROC:
                 ret = streamer_build_fs_pipeline(streamer_msg->pipeline_index, streamer_msg->out_dev_name,
                                                  streamer_msg->pipeline_type, task_data);
                 break;
@@ -152,13 +152,13 @@ int streamer_msg_create_pipeline(STREAMER_T *task_data, void *msg_data)
                 break;
 
             case STREAM_PIPELINE_PCM_AUDIO:
-            case STREAM_PIPELINE_PCM_EAP_AUDIO:
+            case STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO:
                 ret = streamer_build_pcm_speaker_pipeline(streamer_msg->pipeline_index, streamer_msg->pipeline_type,
                                                           task_data);
                 break;
-            case STREAM_PIPELINE_TEST_EAPFILE2FILE:
-                ret = streamer_build_eapfile2file_pipeline(streamer_msg->pipeline_index, streamer_msg->pipeline_type,
-                                                           task_data);
+            case STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE:
+                ret = streamer_build_audio_procfile2file_pipeline(streamer_msg->pipeline_index,
+                                                                  streamer_msg->pipeline_type, task_data);
                 break;
 
             default:
@@ -212,7 +212,7 @@ int streamer_msg_destroy_pipeline(STREAMER_T *task_data, void *msg_data)
             case STREAM_PIPELINE_FILESYSTEM:
             case STREAM_PIPELINE_MEM:
             case STREAM_PIPELINE_NETBUF:
-            case STREAM_PIPELINE_EAP:
+            case STREAM_PIPELINE_AUDIO_PROC:
                 ret = streamer_destroy_fs_pipeline(streamer_msg->pipeline_index, task_data);
                 break;
 
@@ -232,12 +232,12 @@ int streamer_msg_destroy_pipeline(STREAMER_T *task_data, void *msg_data)
                 ret = streamer_destroy_vit_pipeline(streamer_msg->pipeline_index, task_data);
                 break;
             case STREAM_PIPELINE_PCM_AUDIO:
-            case STREAM_PIPELINE_PCM_EAP_AUDIO:
+            case STREAM_PIPELINE_PCM_AUDIO_PROC_AUDIO:
                 ret = streamer_destroy_pcm_speaker_pipeline(streamer_msg->pipeline_index, task_data);
                 break;
 
-            case STREAM_PIPELINE_TEST_EAPFILE2FILE:
-                ret = streamer_destroy_eapfile2file_pipeline(streamer_msg->pipeline_index, task_data);
+            case STREAM_PIPELINE_TEST_AUDIO_PROCFILE2FILE:
+                ret = streamer_destroy_audio_procfile2file_pipeline(streamer_msg->pipeline_index, task_data);
                 break;
 
             default:

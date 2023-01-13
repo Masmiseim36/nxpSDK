@@ -37,6 +37,9 @@
 #if defined(BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API)
 #include "otp.h"
 #endif
+#if BL_FEATURE_EDGELOCK_MODULE
+#include "fsl_edgelock.h"
+#endif
 #if BL_FEATURE_RELIABLE_UPDATE
 #include "bl_reliable_update.h"
 #endif
@@ -90,6 +93,7 @@ void handle_key_provisioning(uint8_t *packet, uint32_t packetLength);
 void handle_generate_key_blob(uint8_t *packet, uint32_t packetLength);
 status_t handle_key_blob_data(bool *hasMoreData);
 #endif
+void handle_lifecycle_update(uint8_t *packet, uint32_t packetLength);
 //@}
 
 //! @name Command responses
@@ -166,7 +170,7 @@ const command_handler_entry_t g_commandHandlerTable[] = {
     { 0 }, // kCommandTag_FlashEraseAllUnsecure = 0x0d
 #endif                                         // BL_FEATURE_ERASEALL_UNSECURE
 #if (((!BL_FEATURE_HAS_NO_INTERNAL_FLASH) || BL_FEATURE_OCOTP_MODULE) && (!BL_DEVICE_IS_LPC_SERIES)) || \
-    ((BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API))
+    ((BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API)) || BL_FEATURE_EFUSE_MODULE
     { handle_flash_program_once, NULL }, // kCommandTag_ProgramOnce = 0x0e
     { handle_flash_read_once, NULL },    // kCommandTag_ReadOnce = 0x0f
 #if !BL_FEATURE_HAS_NO_READ_SOURCE
@@ -202,7 +206,14 @@ const command_handler_entry_t g_commandHandlerTable[] = {
     { handle_key_provisioning, handle_data_bidirection }, // kCommandTag_KeyProvisioning = 0x15
 #else
     { 0 },
-#endif // BL_FEATURE_KEY_PROVISIONING
+#endif     // BL_FEATURE_KEY_PROVISIONING
+    { 0 }, // 0x16
+    { 0 }, // 0x17
+#if BL_FEATURE_LIFECYCLE_UPDATE
+    { handle_lifecycle_update, NULL }, // kCommandTag_LifeCycleUpdate = 0x18U
+#else
+    { 0 },
+#endif // BL_FEATURE_LIFECYCLE_UPDATE
 #else  // BL_FEATURE_MIN_PROFILE
     { handle_flash_erase_all, NULL },                     // kCommandTag_FlashEraseAll = 0x01
     { handle_flash_erase_region, NULL },                  // kCommandTag_FlashEraseRegion = 0x02
@@ -249,6 +260,13 @@ const command_handler_entry_t g_commandHandlerTable[] = {
 #else
     { 0 },
 #endif // BL_FEATURE_KEY_PROVISIONING
+    { 0 },                                                // 0x16
+    { 0 },                                                // 0x17
+#if BL_FEATURE_LIFECYCLE_UPDATE
+    { handle_lifecycle_update, NULL },                    // kCommandTag_LifeCycleUpdate = 0x18U
+#else
+    { 0 },
+#endif // BL_FEATURE_LIFECYCLE_UPDATE
 #endif // BL_FEATURE_MIN_PROFILE
 };
 
@@ -1104,7 +1122,7 @@ status_t handle_data_producer(bool *hasMoreData)
         g_bootloaderContext.activePeripheral->packetInterface->getMaxPacketSize(g_bootloaderContext.activePeripheral);
     packetSize = MIN(packetBufferSize, remaining);
 #else
-    uint8_t packet[kMinPacketBufferSize] = {0};
+    uint8_t packet[kMinPacketBufferSize] = { 0 };
     packetSize = MIN(kMinPacketBufferSize, remaining);
 #endif // BL_FEATURE_EXPAND_PACKET_SIZE
 
@@ -1367,6 +1385,9 @@ void handle_flash_program_once(uint8_t *packet, uint32_t length)
     }
 #elif defined(BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API)
     status = ocotp_program_once(command->index, &command->data[0], command->byteCount);
+#elif BL_FEATURE_EDGELOCK_MODULE
+    status = EDGELOCK_WriteFuse(SxMU, command->index * 32 /* word bits */, command->byteCount * 8 /* byte bits */,
+                                false /* Not lock*/, &command->data[0], command->byteCount / sizeof(uint32_t));
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
     lock_release();
 
@@ -1378,7 +1399,11 @@ void handle_flash_read_once(uint8_t *packet, uint32_t length)
 {
     flash_read_once_packet_t *command = (flash_read_once_packet_t *)packet;
 
+#if BL_FEATURE_EDGELOCK_MODULE
+    uint32_t readOnceItemData[READ_COMMON_FUSE_RESPONSE_MAX_WORDS] = { 0 };
+#else
     uint32_t readOnceItemData[2] = { 0 };
+#endif
 
     status_t status = kStatus_Success;
 
@@ -1395,6 +1420,8 @@ void handle_flash_read_once(uint8_t *packet, uint32_t length)
     status = ocotp_read_once(OCOTP, command->index, &readOnceItemData[0], command->byteCount);
 #elif defined(BL_DEVICE_IS_LPC_SERIES) && defined(OTP_API)
     status = ocotp_read_once(command->index, &readOnceItemData[0], command->byteCount);
+#elif BL_FEATURE_EDGELOCK_MODULE
+    status = EDGELOCK_ReadFuse(SxMU, command->index, &readOnceItemData[0], command->byteCount / sizeof(uint32_t));
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
     lock_release();
 
@@ -1774,6 +1801,23 @@ void send_key_provisioning_response(uint32_t commandStatus, uint32_t length)
 }
 #endif // BL_FEATURE_KEY_STORE_PUF
 #endif // BL_FEATURE_KEY_PROVISIONING
+
+#if BL_FEATURE_LIFECYCLE_UPDATE
+void handle_lifecycle_update(uint8_t *packet, uint32_t packetLength)
+{
+    lifecycle_update_packet_t *command = (lifecycle_update_packet_t *)packet;
+
+    status_t status = kStatus_Success;
+
+#if BL_FEATURE_EDGELOCK_MODULE
+    status = EDGELOCK_ForwardLifecycleUpdate(SxMU, command->lifecycle);
+#else
+#error unknown module
+#endif
+
+    send_generic_response(status, command->commandPacket.commandTag);
+}
+#endif // #if BL_FEATURE_LIFECYCLE_UPDATE
 
 //! @}
 

@@ -124,7 +124,7 @@ typedef long                        SLONG;
 #endif
 
 #ifndef UX_MAX_SLAVE_CLASS_DRIVER
-#define UX_MAX_SLAVE_CLASS_DRIVER                           3
+#define UX_MAX_SLAVE_CLASS_DRIVER                           4
 #endif
 
 #ifndef UX_MAX_HCD
@@ -144,7 +144,7 @@ typedef long                        SLONG;
 #endif
 
 #ifndef UX_MAX_ISO_TD
-#define UX_MAX_ISO_TD                                       128
+#define UX_MAX_ISO_TD                                       16
 #endif
 
 #ifndef UX_HOST_ENUM_THREAD_STACK_SIZE
@@ -184,11 +184,11 @@ typedef long                        SLONG;
 #endif
 
 #ifndef UX_MAX_HOST_LUN
-#define UX_MAX_HOST_LUN                                     16
+#define UX_MAX_HOST_LUN                                     2
 #endif
 
 #ifndef UX_HOST_CLASS_STORAGE_MAX_MEDIA
-#define UX_HOST_CLASS_STORAGE_MAX_MEDIA                     1
+#define UX_HOST_CLASS_STORAGE_MAX_MEDIA                     2
 #endif
 
 #ifndef UX_SLAVE_REQUEST_CONTROL_MAX_LENGTH
@@ -238,7 +238,7 @@ VOID    outpl(ULONG,ULONG);
 
 #ifdef  UX_SYSTEM_INIT
 CHAR                            _ux_version_id[] = 
-                                    "Copyright (c) Microsoft Corporation. All rights reserved. * USBX Generic Version 6.1.10 *";
+                                    "Copyright (c) Microsoft Corporation. All rights reserved. * USBX Generic Version 6.1.12 *";
 #else
 extern  CHAR                    _ux_version_id[];
 #endif

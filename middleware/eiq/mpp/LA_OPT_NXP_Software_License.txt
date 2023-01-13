@@ -1,5 +1,5 @@
-LA_OPT_NXP_Software_License v34 February 2022 
-IMPORTANT.  Read the following NXP Software License Agreement ("Agreement") completely. By selecting the "I Accept" button at the end of this page, or by downloading, installing, or using the Licensed Software, you indicate that you accept the terms of the Agreement and you acknowledge that you have the authority, for yourself or on behalf of your company, to bind your company to these terms. You may then download or install the file. In the event of a conflict between the terms of this Agreement and any license terms and conditions for NXP's proprietary software embedded anywhere in the Licensed Software file, the terms of this Agreement shall control.  If a separate license agreement for the Licensed Software has been signed by you and NXP, then that agreement shall govern your use of the Licensed Software and shall supersede this Agreement.
+﻿LA_OPT_NXP_Software_License v39 August 2022 
+IMPORTANT.  Read the following NXP Software License Agreement ("Agreement") completely. By selecting the "I Accept" button at the end of this page, or by downloading, installing, or using the Licensed Software, you indicate that you accept the terms of the Agreement, and you acknowledge that you have the authority, for yourself or on behalf of your company, to bind your company to these terms. You may then download or install the file. In the event of a conflict between the terms of this Agreement and any license terms and conditions for NXP's proprietary software embedded anywhere in the Licensed Software file, the terms of this Agreement shall control.  If a separate license agreement for the Licensed Software has been signed by you and NXP, then that agreement shall govern your use of the Licensed Software and shall supersede this Agreement.
 
 NXP SOFTWARE LICENSE AGREEMENT
 This is a legal agreement between your employer, of which you are an authorized representative, or, if you have no employer, you as an individual ("you" or "Licensee"), and NXP B.V. ("NXP").  It concerns your rights to use the software provided to you in binary or source code form and any accompanying written materials (the "Licensed Software"). The Licensed Software may include any updates or error corrections or documentation relating to the Licensed Software provided to you by NXP under this Agreement. In consideration for NXP allowing you to access the Licensed Software, you are agreeing to be bound by the terms of this Agreement. If you do not agree to all of the terms of this Agreement, do not download or install the Licensed Software. If you change your mind later, stop using the Licensed Software and delete all copies of the Licensed Software in your possession or control. Any copies of the Licensed Software that you have already distributed, where permitted, and do not destroy will continue to be governed by this Agreement. Your prior use will also continue to be governed by this Agreement.
@@ -22,7 +22,7 @@ You may demonstrate the Licensed Software to your direct customers as part of an
 (a) to manufacture (or have manufactured), distribute, and market the Licensed Software (and its Derivative Works prepared under the license in 2.2(b)) in object code (machine readable format) only as part of, or embedded within, Authorized Systems and not on a standalone basis solely for use in combination with a NXP Product.  Notwithstanding the foregoing, those files marked as .h files ("Header files") may be distributed in source or object code form, but only as part of, or embedded within Authorized Systems; and  
 (b) to copy and distribute as needed, solely in connection with an Authorized System and for use in combination with a NXP Product, non-confidential NXP information provided as part of the Licensed Software for the purpose of maintaining and supporting Authorized Systems with which the Licensed Software is integrated. 
 2.4	Separate license grants to Third Party Software, or other terms applicable to the Licensed Software if different from those granted in this Section 2, are contained in Appendix A. The Licensed Software may be accompanied by a Software Content Register which will identify that portion of the Licensed Software, if any, that is subject to the different terms in Appendix A. 
-2.5.         You may use subcontractors on your premises to exercise your rights under Section 2.2 and Section 2.3, if any, so long as you have an agreement in place with the subcontractor containing confidentiality restrictions no less stringent than those contained in this Agreement. You will remain liable for your subcontractors' adherence to the terms of this Agreement and for any and all acts and omissions of such subcontractors with respect to this Agreement and the Licensed Software.
+2.5.         You may use subcontractors to exercise your rights under Section 2.2 and Section 2.3, if any, so long as you have an agreement in place with the subcontractor containing confidentiality restrictions no less stringent than those contained in this Agreement. You will remain liable for your subcontractors' adherence to the terms of this Agreement and for any and all acts and omissions of such subcontractors with respect to this Agreement and the Licensed Software.
 3.       LICENSE LIMITATIONS AND RESTRICTIONS.  
 3.1.         The licenses granted above in Section 2 only extend to NXP Intellectual Property Rights that would be infringed by the unmodified Licensed Software prior to your preparation of any Derivative Work.   
 3.2.         The Licensed Software is licensed to you, not sold. Title to Licensed Software delivered hereunder remains vested in NXP or NXP's licensor and cannot be assigned or transferred. You are expressly forbidden from selling or otherwise distributing the Licensed Software, or any portion thereof, except as expressly permitted herein. This Agreement does not grant to you any implied rights under any NXP or third party Intellectual Property Rights.
@@ -90,6 +90,8 @@ Amazon: Use of the Amazon software constitutes your acceptance of the terms of t
 
 Amazon Web Services, Inc.: AWS is an intended third-party beneficiary to this Agreement with respect to the Greengrass software. If you have an account with AWS that is not in good standing, you may not download, install, use or distribute the Greengrass software. You will comply with all instructions and requirements in any integration documents, guidelines, or other documentation AWS provides. The license to the Greengrass software will immediately terminate without notice if you (a) fail to comply with this Agreement or any other agreement with AWS, (b) fail to make timely payment for any AWS service, (c) fail to implement AWS updates, or (d) bring any action for intellectual property infringement against AWS or any AWS customer utilizing AWS services.  Any dispute or claim relating to your use of the Greengrass software will be resolved by binding arbitration, rather than in court, except that you may assert claims in small claims court if your claims qualify.
 
+Amazon: AWS Fleetwise software must be used consistent with the terms found here: https://github.com/aws/aws-iot-fleetwise-edge/blob/main/LICENSE.
+
 Amphion Semiconductor Ltd.: Distribution of Amphion software must be a part of, or embedded within, Authorized Systems that include an Amphion Video Decoder.  
 
 Apple MFi Software Development Kit: Use of Apple MFi Software and associated documentation is restricted to current Apple MFi licensees in accordance with the terms of their own valid and in-effect license from Apple.
@@ -136,7 +138,7 @@ Future Technology Devices International Ltd.: Future Technology Devices Internat
 
 Global Locate (Broadcom Corporation): Use of Global Locate, Inc. software is limited to evaluation and demonstration only.  Permitted distributions must be similarly limited.  Further rights must be obtained from Global Locate.    
 
-LC3plus: LC3plus short frame audio codec features as defined in ETSI TS 103634 are included in the code. To enable the LC3plus features in a final product, a license has to be obtained from Fraunhofer. More information can be found on the following web page: https://www.iis.fraunhofer.de/en/ff/amm/communication/lc3.html 
+LC3plus: the LC3plus Low Complexity Communication Codec Plus (LC3plus) per ETSI TS 103 634 V1.3.1, is subject to ETSI Intellectual Property Rights Policy, See https://portal.etsi.org/directives/45_directives_jun_2022.pdf. For application in an End Product, Fraunhofer communication applies, see https://www.iis.fraunhofer.de/en/ff/amm/communication/lc3.html
 
 Microsoft: Except for Microsoft PlayReady software, if the Licensed Software includes software owned by Microsoft Corporation ("Microsoft"), it is subject to the terms of your license with Microsoft (the "Microsoft Underlying Licensed Software") and as such, NXP grants no license to you, beyond evaluation and demonstration in connection with NXP processors, in the Microsoft Underlying Licensed Software.  You must separately obtain rights beyond evaluation and demonstration in connection with the Microsoft Underlying Licensed Software from Microsoft. Microsoft does not provide support services for the components provided to you through this Agreement.  If you have any questions or require technical assistance, please contact NXP.  Microsoft Corporation is a third party beneficiary to this Agreement with the right to enforce the terms of this Agreement.  TO THE MAXIMUM EXTENT PERMITTED BY LAW, MICROSOFT AND ITS AFFILIATES DISCLAIM ANY WARRANTIES FOR THE MICROSOFT UNDERLYING LICENSED SOFTWARE.  TO THE MAXIMUM EXTENT PERMITTED BY LAW, NEITHER MICROSOFT NOR ITS AFFILIATES WILL BE LIABLE, WHETHER IN CONTRACT, TORT, OR OTHERWISE, FOR ANY DIRECT, INCIDENTAL, SPECIAL, INDIRECT, CONSEQUENTIAL OR PUNITIVE DAMAGES, INCLUDING, BUT NOT LIMITED TO, DAMAGES FOR ANY LOSS OF USE, LOSS OF TIME, INCONVENIENCE, COMMERCIAL LOSS, OR LOST PROFITS, SAVINGS, OR REVENUES, ARISING FROM THE FROM THE USE OF THE MICROSOFT UNDERLYING LICENSED SOFTWARE.  With respect to the Microsoft PlayReady software, you will have the license rights granted in Section 2, provided that you may not use the Microsoft PlayReady software unless you have entered into a Microsoft PlayReady Master Agreement and license directly with Microsoft. 
 
@@ -147,6 +149,8 @@ MM SOLUTIONS AD:  Use of MM SOLUTIONS AEC (Auto Exposure Control) and AWB (Auto 
 MPEG LA: Use of MPEG LA audio or video codec technology is limited to evaluation and demonstration only. Permitted distributions must be similarly limited. Further rights must be obtained directly from MPEG LA.  
 
 MQX RTOS Code: MQX RTOS source code may not be re-distributed by any NXP Licensee under any circumstance, even by a signed written amendment to this Agreement. 
+
+NXP Voice Software: VoiceSpot, VoiceSeeker (including AEC), and Conversa may be used for evaluation or demonstration purposes only. Any commercial distribution rights are subject to a separate royalty agreement obtained from NXP.
 
 NXP Wireless Charging Library: License to the Software is limited to use in inductive coupling or wireless charging applications 
 
@@ -174,6 +178,10 @@ SEGGER Microcontroller - emWin Software: Your use of SEGGER emWin software and c
 
 SEGGER Microcontroller - J-Link/J-Trace Software: Segger software must be used consistent with the terms found here: http://www.segger.com/jlink-software.html 
 
+Synopsys/BLE Software: Your use of the Synopsys/BLE Software and related documentation is subject to the following:
+(1) Synopsys is third-party beneficiaries of, and thus may enforce against you, the license restrictions and confidentiality obligations in this agreement with respect to their intellectual property and proprietary information.
+(2) Your distribution of the Licensed Software shall subject any recipient to a written agreement at least as protective of the Licensed Software as provided in this Agreement. 
+
 Synopsys/Target Compiler Technologies: Your use of the Synopsys/Target Compiler Technologies Licensed Software and related documentation is subject to the following: 
 (1) Duration of the license for the Licensed Software is limited to 12 months, unless otherwise specified in the license file. 
 (2) The Licensed Software is usable by one user at a time on a single designated computer, unless otherwise agreed by Synopsys.  
@@ -192,40 +200,3 @@ Texas Instruments: Your use of Texas Instruments Inc. WiLink8 Licensed Software 
 TES Electronic Solutions Germany (TES):  TES 3D Surround View software and associated data and documentation may only be used for evaluation purposes and for demonstration to third parties in integrated form on a board package containing an NXP S32V234 device. Licensee may not distribute or sublicense the TES software. Your license to the TES software may be terminated at any time upon notice.
 
 Vivante: Distribution of Vivante software must be a part of, or embedded within, Authorized Systems that include a Vivante Graphics Processing Unit.  
-
-------------------
-Files: examples/
-Files: include/
-
-Copyright (c) 2022, NXP
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted (subject to the limitations in the
-disclaimer below) provided that the following conditions are met:
-
-   * Redistributions of source code must retain the above copyright
-     notice, this list of conditions and the following disclaimer.
-
-   * Redistributions in binary form must reproduce the above
-     copyright notice, this list of conditions and the following
-     disclaimer in the documentation and/or other materials provided
-     with the distribution.
-
-   * Neither the name of The Linux Foundation nor the names of its
-     contributors may be used to endorse or promote products derived
-     from this software without specific prior written permission.
-
-NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
-GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
-IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-

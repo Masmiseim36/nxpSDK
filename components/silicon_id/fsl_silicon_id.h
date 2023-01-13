@@ -20,7 +20,7 @@ extern "C" {
  *
  * @param siliconId[out]  Memory address to store silicon ID, array length depends on specific Soc. The
  * SILICONID_MAX_LENGTH is the maximun length of all supported Socs.
- * @param idLen[out]  Return silicon ID byte length.
+ * @param idLen[in/out]  Silicon ID byte length. Set the length to read, return the length read out.
  * @retval kStatus_Success  Succeed to get silicon ID.
  * @retval kStatus_Fail  Fail to get silicon ID.
  */

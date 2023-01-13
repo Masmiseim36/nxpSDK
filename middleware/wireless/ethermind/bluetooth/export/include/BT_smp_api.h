@@ -511,6 +511,12 @@
 #define SMP_ERROR_CT_KEY_GEN_NOT_ALLOWED            0x0EU
 #endif /* SMP_LESC */
 
+/**
+ * Pairing Failed due to the peer device choosing not to accept a
+ * distributed key
+ */
+#define SMP_ERROR_KEY_REJECTED                      0x0FU
+
 /** \} */
 
 /**
@@ -805,6 +811,49 @@
  *       disconnect the link on receiving this event.
  */
 #define SMP_INVALID_FSM_TRANSITION                    0x0EU
+
+/**
+ * This event indicates a pairing failure reported by the peer device after
+ * successful completion of normal authentication procedure, with the
+ * following values as parameters in the \ref SMP_UI_NOTIFY_CB callback.
+ *
+ * \param [in] bd_handle  Pointer to peer device handle \ref SMP_BD_HANDLE
+ * \param [in] event  \ref SMP_AUTHENTICATION_ERROR
+ * \param [in] result \ref The error code resulting in Authentication Error
+ * \param [in] event_data  NULL
+ * \param [in] event_datalen  0
+ *
+ * \return \ref API_SUCCESS (always)
+ *
+ * \note This event is an informative event about the error indicated by the peer
+ *       even after the authentication procedure and link encryption is completed
+ *       successfully. This could be possible where the peer device has rejected
+ *       the keys distributed as part of the authentication procedure. The
+ *       application at this event can decide to disconnect the device and clear
+ *       the bonding.
+ */
+#define SMP_AUTHENTICATION_ERROR                      0x0FU
+
+/**
+ * This event indicates Authentication Response received from the peer device,
+ * with the following values as parameters in the \ref SMP_UI_NOTIFY_CB
+ * callback.
+ *
+ * \param [in] bd_handle  Pointer to peer device handle \ref SMP_BD_HANDLE
+ * \param [in] event  \ref SMP_AUTHENTICATION_RESPONSE
+ * \param [in] result  \ref API_SUCCESS on successful procedure completion, else
+ * an Error Code
+ * \param [in] event_data  Pointer to object of type \ref SMP_AUTH_INFO,
+ * 'param' member unused
+ * \param [in] event_datalen  size of \ref SMP_AUTH_INFO
+ *
+ * \return \ref API_SUCCESS (always)
+ *
+ * \note This is an informative event to the application as SMP Master to prepare itself
+ * based on the resulting Authentication parameters that is negotiated. This event is not
+ * applicable for SMP Slave application.
+ */
+#define SMP_AUTHENTICATION_RESPONSE                   0x10U
 
 /**
  * This event indicates an invalid event received through
@@ -1392,6 +1441,27 @@ API_RESULT BT_smp_encrypt
 #endif /* SMP_LESC */
 
 /**
+ * \brief To send and authentication error during the pairing process
+ *
+ * \par Description:
+ *      This API can be used to send a pairing failure with the given error
+ *      code during the pairing procedure.
+ *
+ * \param [in] bd_handle  Pointer to peer device handle as in \ref SMP_BD_HANDLE
+ *
+ * \param [in] error_code  Pointer to a one octer variable with the SMP defined errorcode
+ *
+ * \return API_SUCCESS if Successful else and Error code describing
+ * cause of failure.
+ *
+ * \sa smp_events
+ */
+#define BT_smp_authentication_failure(bd_handle, error_code)   \
+        BT_smp_param_request_reply                             \
+        ((bd_handle), SMP_CODE_PAIRING_FAILED,                 \
+        (error_code), sizeof (UCHAR))
+
+/**
  * \brief To generate or verify signature of data with given key
  *
  * \par Description:
@@ -1583,7 +1653,6 @@ API_RESULT BT_smp_get_device_keys
                /* OUT */ SMP_KEY_DIST    * key_info
            );
 
-#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
 /**
  *  \brief To create a bonded device entity in the SMP database
  *
@@ -1616,24 +1685,46 @@ API_RESULT BT_smp_add_device
  *      security strength
  *
  * \param [in] bd_handle  Pointer to peer device handle as in \ref SMP_BD_HANDLE
- *
- * \param [in] ltk  The Long term key derived
- *
- * \param [in] ekey_size  The Key-size of the LTK being updated
- *
  * \param [in] auth_info  Authentication Information of the updated security
+ * \param [in] ekey_size  The Key-size of the LTK being updated
+ * \param [in] local_keys Local keys distributed
+ * \param [in] peer_keys  Peer keys distributed
+ * \param [in] key_dist   Peer key distribution information
  *
  * \return API_SUCCESS if Successful else and Error code describing
  * cause of failure.
  */
-API_RESULT BT_smp_update_ltk
+API_RESULT BT_smp_update_security_info
            (
                /* IN */  SMP_BD_HANDLE   * bd_handle,
-               /* IN */  UCHAR           * ltk,
+               /* IN */  SMP_AUTH_INFO   * auth_info,
                /* IN */  UCHAR             ekey_size,
-               /* IN */  SMP_AUTH_INFO   * auth_info
+               /* IN */  UCHAR             local_keys,
+               /* IN */  UCHAR             peer_keys,
+               /* IN */  SMP_KEY_DIST    * key_dist
            );
-#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
+
+/**
+ * \brief To get the raw unmasked LESC LTK
+ *
+ * \par Description:
+ *      This API enables the application to fetch the raw unmasked LTK
+ *      value of the just completed LESC Authentication session, if
+ *      required for use at the application. An example use case is to
+ *      generate the CTKD LinkKey from this LTK when the actual LTK delivered
+ *      is masked with a key size less than 16
+ *
+ * \param [in] bd_handle  Pointer to peer device handle as in \ref SMP_BD_HANDLE
+ * \param [out] lesc_ltk  Pointer to a 16 byte array to store the LTK
+ *
+ * \return API_SUCCESS if Successful else and Error code describing
+ * cause of failure.
+ */
+API_RESULT BT_smp_get_raw_lesc_ltk
+           (
+               /* IN */  SMP_BD_HANDLE * bd_handle,
+               /* OUT */ UCHAR * lesc_ltk
+           );
 
 #ifdef HOST_RESOLVE_PVT_ADDR
 /**
@@ -1767,11 +1858,11 @@ API_RESULT BT_smp_search_identity_addr
 API_RESULT smp_tbx_test_lesc_funcs
            (
                UCHAR                        * plain_text,
-               UINT16                       plain_text_len,
+               UINT16                         plain_text_len,
                UCHAR                        * key,
                UCHAR                        * enc_out,
-               UCHAR                        aes_op,
-               SMP_APPL_AES_CMAC_UTILITY_CB cb
+               UCHAR                          aes_op,
+               SMP_APPL_AES_CMAC_UTILITY_CB   cb
            );
 #endif /* SMP_TBX_TEST_LESC_FUNCTIONS */
 

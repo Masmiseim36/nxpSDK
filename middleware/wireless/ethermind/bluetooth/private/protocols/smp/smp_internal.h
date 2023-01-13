@@ -24,6 +24,7 @@
 #include "smp_pl.h"
 #include "l2cap.h"
 #include "fsm_engine.h"
+#include "write_task.h"
 
 #include "smp_fsm.h"
 #include "smp_fsm_engine.h"
@@ -614,6 +615,11 @@ typedef struct
     /** Remote Key Info pointer */
     UCHAR * key_info[SMP_NUM_KEY_INFO_EXCHANGE];
 
+#ifdef SMP_LESC_CROSS_TXP_KEY_GEN
+    /** Unmasked LESC LTK for CTKD access */
+    UCHAR lesc_ltk[SMP_LTK_SIZE];
+#endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
+
 } SMP_DEVICE_ENTITY;
 
 /** Security Manager Protocol Context */
@@ -827,7 +833,6 @@ UCHAR smp_get_iocap_assoc_model(UCHAR auth_req, UCHAR i_iocap, UCHAR r_iocap);
 void smp_timer_start (UCHAR ci);
 void smp_timer_stop (UCHAR ci);
 void smp_procedure_timeout_cb (void *data_param, UINT16 data_len);
-void smp_auth_complete_cb(void *data_param, UINT16 data_len);
 
 #define smp_hci_start_encryption BT_hci_le_start_encryption
 
@@ -876,7 +881,7 @@ API_RESULT smp_validate_pubkeys(UCHAR * local, UCHAR * remote);
 #endif /* SMP_LESC */
 
 #ifdef SMP_HAVE_TBX_PL_ENC
-API_RESULT smp_tbx_128B_encrypt (UCHAR * key, UCHAR * data, UCHAR * encout);
+API_RESULT smp_tbx_128B_encrypt(UCHAR * key, UCHAR * data, UCHAR * encout);
 #else /* SMP_HAVE_TBX_PL_ENC */
 #define smp_tbx_128B_encrypt(key, data, count)       BT_hci_le_encrypt((key), (data), (count))
 #endif /* SMP_HAVE_TBX_PL_ENC */
@@ -1012,7 +1017,7 @@ void smp_tbx_aes_cmac_proc_complete ( UCHAR state, UCHAR event_type);
 #define smp_l2cap_write(di, link, data, len) \
             l2cap_fixed_channel_data_write \
             (&smp_devices[(di)].db.bd_handle, \
-            (SMP_LINK_LE == (link))?L2CAP_SMP_CID:L2CAP_SMP_BREDR_CID, \
+            (SMP_LINK_BREDR != (link))?L2CAP_SMP_CID:L2CAP_SMP_BREDR_CID, \
             (data), (len));
 
 #else /* SMP_LESC_CROSS_TXP_KEY_GEN */
@@ -1123,4 +1128,3 @@ void smp_tbx_aes_cmac_128_encryption_complete (UCHAR index, UCHAR status, UCHAR 
 #endif /* ((defined SMP_DATA_SIGNING) || (defined SMP_LESC)) */
 
 #endif /* _H_SMP_INTERNAL_ */
-

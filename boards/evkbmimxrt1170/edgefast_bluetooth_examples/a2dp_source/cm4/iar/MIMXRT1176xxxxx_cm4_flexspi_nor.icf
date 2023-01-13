@@ -1,0 +1,143 @@
+/*
+** ###################################################################
+**     Processors:          MIMXRT1176AVM8A_cm4
+**                          MIMXRT1176CVM8A_cm4
+**                          MIMXRT1176DVMAA_cm4
+**
+**     Compiler:            IAR ANSI C/C++ Compiler for ARM
+**     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
+**     Version:             rev. 1.0, 2022-8-2
+**     Build:               b210414
+**
+**     Abstract:
+**         Linker file for the IAR ANSI C/C++ Compiler for ARM
+**
+**     Copyright 2016 Freescale Semiconductor, Inc.
+**     Copyright 2022 NXP
+**     All rights reserved.
+**
+**     SPDX-License-Identifier: BSD-3-Clause
+**
+**     http:                 www.nxp.com
+**     mail:                 support@nxp.com
+**
+** ###################################################################
+*/
+
+define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000400 : 0;
+define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x000003FF : 0;
+
+define symbol m_interrupts_start       = 0x08002000;
+define symbol m_interrupts_end         = 0x080023FF;
+
+define symbol m_text_start             = 0x08002400;
+
+if (isdefinedsymbol(__use_flash64MB__)) {
+  define symbol _ROM_END_                = 0x0BDBFFFF;
+  /* NOTE: Flash in range 0x0BDFFFFF - 0x0BFFFFFF is reserved for data */
+  define symbol m_text_end               = 0x0BFBFFFF;
+} else{
+  define symbol _ROM_END_                = 0x08DBFFFF;
+  /* NOTE: Flash in range 0x08DBFFFF - 0x08FBFFFF is reserved for data */
+  define symbol m_text_end               = 0x08FBFFFF;
+}
+
+define symbol m_interrupts_ram_start   = 0x20000000;
+define symbol m_interrupts_ram_end     = 0x20000000 + __ram_vector_table_offset__;
+
+define symbol m_data_start             = m_interrupts_ram_start + __ram_vector_table_size__;
+define symbol m_data_end               = 0x2001FFFF;
+
+define symbol m_data2_start            = 0x20240000;
+define symbol m_data2_end              = 0x2027FFFF;
+
+define symbol m_ncache_start           = 0x20280000;
+define symbol m_ncache_end             = 0x202BFFFF;
+
+define exported symbol __NCACHE_REGION_START   = m_ncache_start;
+define exported symbol __NCACHE_REGION_SIZE    = m_ncache_end - m_ncache_start + 1;
+
+define symbol m_qacode_start           = 0x1FFE0000;
+define symbol m_qacode_end             = 0x1FFFFFFF;
+
+define exported symbol m_boot_hdr_conf_start = 0x08000400;
+define symbol m_boot_hdr_ivt_start           = 0x08001000;
+define symbol m_boot_hdr_boot_data_start     = 0x08001020;
+define symbol m_boot_hdr_dcd_data_start      = 0x08001030;
+
+/*** littleFS configuration Start ***/
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS = _ROM_END_ + 1;
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE = 0x1000;  /* 4k flash sector size */
+define exported symbol EDGEFAST_BT_LITTLEFS_STORAGE_MAX_SECTORS = (m_text_end + 1 - EDGEFAST_BT_LITTLEFS_STORAGE_START_ADDRESS) / EDGEFAST_BT_LITTLEFS_STORAGE_SECTOR_SIZE;
+/*** littleFS configuration End ***/
+
+/* Sizes */
+if (isdefinedsymbol(__stack_size__)) {
+  define symbol __size_cstack__        = __stack_size__;
+} else {
+  define symbol __size_cstack__        = 0x0400;
+}
+
+if (isdefinedsymbol(__heap_size__)) {
+  define symbol __size_heap__          = __heap_size__;
+} else {
+  define symbol __size_heap__          = 0x1000;
+}
+
+define exported symbol __VECTOR_TABLE          = m_interrupts_start;
+define exported symbol __VECTOR_RAM            = isdefinedsymbol(__ram_vector_table__) ? m_interrupts_ram_start : m_interrupts_start;
+define exported symbol __RAM_VECTOR_TABLE_SIZE = __ram_vector_table_size__;
+
+define memory mem with size = 4G;
+define region TEXT_region = mem:[from m_interrupts_start to m_interrupts_end]
+                          | mem:[from m_text_start to m_text_end];
+define region QACODE_region = mem:[from m_qacode_start to m_qacode_end];
+define region DATA_region = mem:[from m_data_start to m_data_end-__size_cstack__];
+define region DATA2_region = mem:[from m_data2_start to m_data2_end];
+define region CSTACK_region = mem:[from m_data_end-__size_cstack__+1 to m_data_end];
+define region NCACHE_region = mem:[from m_ncache_start to m_ncache_end];
+define block RW        { readwrite };
+define block ZI        { zi };
+define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
+define block CSTACK    with alignment = 8, size = __size_cstack__   { };
+define block HEAP      with alignment = 8, size = __size_heap__     { };
+define block QACCESS_CODE  { section CodeQuickAccess };
+
+initialize by copy { readwrite, section .textrw, section CodeQuickAccess,
+  object fsl_adapter_flexspi_nor_flash.o,
+  object mflash_drv.o,
+  object fsl_flexspi.o,
+};
+do not initialize  { section .noinit };
+
+place at address mem: m_interrupts_start    { readonly section .intvec };
+
+place at address mem:m_boot_hdr_conf_start { section .boot_hdr.conf };
+place at address mem:m_boot_hdr_ivt_start { section .boot_hdr.ivt };
+place at address mem:m_boot_hdr_boot_data_start { readonly section .boot_hdr.boot_data };
+place at address mem:m_boot_hdr_dcd_data_start { readonly section .boot_hdr.dcd_data };
+
+keep{ section .boot_hdr.conf, section .boot_hdr.ivt, section .boot_hdr.boot_data, section .boot_hdr.dcd_data };
+keep { section .flash_area_list, section ._net_buf_pool*, section ._k_mem_slab*, section ._bt*, section ._settings* };
+
+define block ._bt_gatt_service_static with fixed order { readonly section ._bt_gatt_service_static*};
+define block ._bt_settings_static with fixed order { readonly section ._bt_settings*};
+define block ._bt_conn_cb with fixed order { readonly section ._bt_conn_cb*};
+define block ._bt_l2cap_fixed_chan with fixed order { readonly section ._bt_l2cap_fixed_chan*};
+define block ._bt_l2cap_br_fixed_chan with fixed order { readonly section ._bt_l2cap_br_fixed_chan*};
+define block ._settings_handler_static with fixed order { readonly section ._settings_handler_static*};
+define block ._k_mem_slab with fixed order { readwrite section ._k_mem_slab*};
+define block ._net_buf_pool with fixed order { readwrite section ._net_buf_pool*};
+
+place in TEXT_region                        { readonly,block ._bt_gatt_service_static, block ._bt_settings_static, block ._bt_conn_cb, block ._bt_l2cap_fixed_chan, block ._bt_l2cap_br_fixed_chan, block ._settings_handler_static };
+place in DATA2_region                        { block RW, block ._net_buf_pool, block ._k_mem_slab };
+place in DATA2_region                        { block ZI };
+if (isdefinedsymbol(__heap_noncacheable__)) {
+  place in NCACHE_region                    { last block HEAP };
+} else {
+  place in DATA_region                      { last block HEAP };
+}
+place in NCACHE_region                      { block NCACHE_VAR };
+place in CSTACK_region                      { block CSTACK };
+place in QACODE_region                      { section .textrw};
+place in QACODE_region                      { block QACCESS_CODE };

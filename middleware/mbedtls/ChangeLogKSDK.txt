@@ -2,8 +2,12 @@
 @page middleware_log Middleware Change Log
  
 @section mbedtls mbedTLS for MCUXpresso SDK
-  The current version of mbedTLS is based on mbed TLS 2.28.0 branch released 2021-12-17
+  The current version of mbedTLS is based on mbed TLS 2.28.1 branch released 2021-7-11
   
+  - 2.28.1
+    - New features:
+      - Ported mbedTLS 2.28.1 to SDK.
+	    
   - 2.28.0
     - New features:
       - Ported mbedTLS 2.28.0 to SDK.

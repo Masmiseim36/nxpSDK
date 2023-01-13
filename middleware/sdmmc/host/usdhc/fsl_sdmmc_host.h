@@ -23,7 +23,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware adapter version. */
-#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 6U, 2U)) /*2.6.2*/
+#define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 6U, 3U)) /*2.6.3*/
 
 #if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
 #define SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER 0
@@ -70,6 +70,11 @@ enum
 #define SDMMCHOST_SUPPORT_AUTO_CMD12           (1U)
 #define SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH     (4096U)
 #define SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT      (USDHC_MAX_BLOCK_COUNT)
+#if !(defined(FSL_FEATURE_USDHC_HAS_NO_VOLTAGE_SELECT) && (FSL_FEATURE_USDHC_HAS_NO_VOLTAGE_SELECT))
+#define SDMMCHOST_SUPPORT_VOLTAGE_CONTROL (1)
+#else
+#define SDMMCHOST_SUPPORT_VOLTAGE_CONTROL (0)
+#endif
 /*! @brief sdmmc host sdcard DDR50 mode capability*/
 #define SDMMCHOST_SUPPORT_DDR50 (SDMMCHOST_SUPPORT_DDR_MODE)
 /*! @brief sdmmc host sdcard SDR50 mode capability*/

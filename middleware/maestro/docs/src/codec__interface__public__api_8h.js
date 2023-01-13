@@ -4,8 +4,12 @@ var codec__interface__public__api_8h =
       [ "STREAM_TYPE_UNKNOWN", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5caa45b57def1e0aded08e48b6518e1bddd", null ],
       [ "STREAM_TYPE_MP3", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5cab1eff1f30367217e64bfc028293c9246", null ],
       [ "STREAM_TYPE_PCM", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5caa6a645d1508238f8832030a8cadb6747", null ],
+      [ "STREAM_TYPE_MSADPCM", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5caa5f1ff09ce6cacecd786c97a971a7c85", null ],
+      [ "STREAM_TYPE_IMAADPCM", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5ca56bca57631b70901375dd69717633ef6", null ],
       [ "STREAM_TYPE_OPUS", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5ca00ab4c56e86887aa4fcf5a26c9f06c61", null ],
       [ "STREAM_TYPE_OGG_OPUS", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5ca0369a8a6b8f72c3b095eec4c2e754960", null ],
+      [ "STREAM_TYPE_AAC", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5ca17aff5ffd5018646a276f6248053cfe1", null ],
+      [ "STREAM_TYPE_FLAC", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5ca29073bf621bc8f61ea22d8255b9d6e0d", null ],
       [ "STREAM_TYPE_COUNT", "codec__interface__public__api_8h.html#a617edfb76567ff93543b9ee637a07d5ca013ee54b5460e514f9559a138744f6f1", null ]
     ] ],
     [ "codec_error_code_t", "codec__interface__public__api_8h.html#adf7b0d4eb84c8fac7ebbc740723a9775", [

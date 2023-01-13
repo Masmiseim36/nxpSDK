@@ -351,6 +351,46 @@
 #define HCI_ACL_DATA_PACKET                              0x02U
 #define HCI_SCO_DATA_PACKET                              0x03U
 #define HCI_EVENT_PACKET                                 0x04U
+#define HCI_ISO_DATA_PACKET                              0x05U
+
+#ifdef HCI_LE_SETUP_ISO_DATA_PATH_SUPPORT
+/**
+ * ISO Data Path Direction.
+ */
+
+/* Input: Host to Controller */
+#define HCI_ISO_INPUT                                    0x00U
+/* Output: Controller to Host */
+#define HCI_ISO_OUTPUT                                   0x01U
+
+/**
+ * HCI Data Path ID.
+ */
+
+/* HCI Data Path ID: HCI */
+#define HCI_DATA_PATH_ID_HCI                             0x01U
+#endif /* HCI_LE_SETUP_ISO_DATA_PATH_SUPPORT */
+
+#ifdef HCI_LE_REMOVE_ISO_DATA_PATH_SUPPORT
+/**
+ * ISO Data Path Direction.
+ */
+
+ /* Input: Host to Controller */
+#define HCI_ISO_REMOVE_INPUT                             (0x01U << 0U)
+/* Output: Controller to Host */
+#define HCI_ISO_REMOVE_OUTPUT                            (0x01U << 1U)
+#endif /* HCI_LE_REMOVE_ISO_DATA_PATH_SUPPORT */
+
+/* Packing: Sequential */
+#define HCI_PACKING_SEQUENTIAL                           0x00U
+/* Packing: Interleaved */
+#define HCI_PACKING_INTERLEAVED                          0x01U
+
+/* Framing: Unframed */
+#define HCI_FRAMING_UNFRAMED                             0x00U
+/* Framing: Framed */
+#define HCI_FRAMING_FRAMED                               0x01U
 
 /**
  * \defgroup hci_command_opcodes Command Opcodes
@@ -535,12 +575,16 @@
 
 #ifdef BT_SSP
 #define HCI_IO_CAP_REQUEST_REPLY_OPCODE                         0x042BU
+#define HCI_IO_CAPABILITY_REQUEST_REPLY_OPCODE                  0x042BU
 #define HCI_IO_CAP_REQUEST_NEGATIVE_REPLY_OPCODE                0x0434U
+#define HCI_IO_CAPABILITY_REQUEST_NEGATIVE_REPLY_OPCODE         0x0434U
 #endif /* BT_SSP */
 
 #ifdef BT_SSP_UC
 #define HCI_USER_CONF_REQUEST_REPLY_OPCODE                      0x042CU
+#define HCI_USER_CONFIRMATION_REQUEST_REPLY_OPCODE              0x042CU
 #define HCI_USER_CONF_REQUEST_NEGATIVE_REPLY_OPCODE             0x042DU
+#define HCI_USER_CONFIRMATION_REQUEST_NEGATIVE_REPLY_OPCODE     0x042DU
 #endif /* BT_SSP_UC */
 
 #ifdef BT_SSP_PE
@@ -619,6 +663,7 @@
 #define HCI_WRITE_HOLD_MODE_ACTIVITY_OPCODE                     0x0C2CU
 #define HCI_READ_TRANSMIT_POWER_LEVEL_OPCODE                    0x0C2DU
 #define HCI_READ_SCO_FLOW_CONTROL_ENABLE_OPCODE                 0x0C2EU
+#define HCI_READ_SYNCHRONOUS_FLOW_CONTROL_ENABLE_OPCODE         0x0C2EU
 #define HCI_WRITE_SCO_FLOW_CONTROL_ENABLE_OPCODE                0x0C2FU
 #define HCI_SET_HOST_CONTROLLER_TO_HOST_FLOW_CONTROL_OPCODE     0x0C31U
 #define HCI_HOST_BUFFER_SIZE_OPCODE                             0x0C33U
@@ -649,6 +694,7 @@
 #define HCI_READ_EXTENDED_INQUIRY_RESPONSE_OPCODE               0x0C51U
 #define HCI_WRITE_EXTENDED_INQUIRY_RESPONSE_OPCODE              0x0C52U
 #define HCI_READ_INQUIRY_RESP_TX_POWER_LEVEL_OPCODE             0x0C58U
+#define HCI_READ_INQUIRY_RESPONSE_TRANSMIT_POWER_LEVEL_OPCODE   0x0C58U
 #define HCI_WRITE_INQUIRY_RESP_TX_POWER_LEVEL_OPCODE            0x0C59U
 #endif /* BT_EIR */
 
@@ -668,6 +714,7 @@
 
 #ifdef BT_SSP_PE
 #define HCI_SEND_KEY_PRESS_NOTIFICATION_OPCODE                  0x0C60U
+#define HCI_SEND_KEYPRESS_NOTIFICATION_OPCODE                   0x0C60U
 #endif /* BT_SSP_PE */
 
 #ifdef BT_SSP_OOB
@@ -772,6 +819,8 @@
 #define HCI_LE_SET_RANDOM_ADDRESS_OPCODE                        0x2005U
 #define HCI_LE_SET_ADVERTISING_PARAMETERS_OPCODE                0x2006U
 #define HCI_LE_READ_ADVERTISING_CHANNEL_TX_POWER_OPCODE         0x2007U
+#define HCI_LE_READ_ADVERTISING_PHYSICAL_CHANNEL_TX_POWER_OPCODE \
+                                                                0x2007U
 #define HCI_LE_SET_ADVERTISING_DATA_OPCODE                      0x2008U
 #define HCI_LE_SET_SCAN_RESPONSE_DATA_OPCODE                    0x2009U
 #define HCI_LE_SET_ADVERTISING_ENABLE_OPCODE                    0x200AU
@@ -791,7 +840,9 @@
 #define HCI_LE_RAND_OPCODE                                      0x2018U
 #define HCI_LE_START_ENCRYPTION_OPCODE                          0x2019U
 #define HCI_LE_LONG_TERM_KEY_REQUESTED_REPLY_OPCODE             0x201AU
+#define HCI_LE_LONG_TERM_KEY_REQUEST_REPLY_OPCODE               0x201AU
 #define HCI_LE_LONG_TERM_KEY_REQUESTED_NEGATIVE_REPLY_OPCODE    0x201BU
+#define HCI_LE_LONG_TERM_KEY_REQUEST_NEGATIVE_REPLY_OPCODE      0x201BU
 #define HCI_LE_READ_SUPPORTED_STATES_OPCODE                     0x201CU
 #define HCI_LE_RECEIVER_TEST_COMMAND_OPCODE                     0x201DU
 #define HCI_LE_TRANSMITTER_TEST_COMMAND_OPCODE                  0x201EU
@@ -800,7 +851,10 @@
 
 #ifdef HCI_LL_TOPOLOGY_CONN_UPDATE_SUPPORT
 #define HCI_LE_REMOTE_CONN_PARAM_REQ_RPLY_OPCODE                0x2020U
+#define HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_REPLY_OPCODE 0x2020U
 #define HCI_LE_REMOTE_CONN_PARAM_REQ_NEG_RPLY_OPCODE            0x2021U
+#define HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_NEGATIVE_REPLY_OPCODE \
+                                                                0x2021U
 #endif /* HCI_LL_TOPOLOGY_CONN_UPDATE_SUPPORT */
 
 /* BT 4.1 Specification */
@@ -836,6 +890,7 @@
 #ifdef BT_4_2
 #define HCI_LE_SET_DATA_LENGTH_OPCODE                           0x2022U
 #define HCI_LE_READ_SUGGESTED_DEFAULT_DATA_LEN_OPCODE           0x2023U
+#define HCI_LE_READ_SUGGESTED_DEFAULT_DATA_LENGTH_OPCODE        0x2023U
 #define HCI_LE_WRITE_SUGGESTED_DEFAULT_DATA_LEN_OPCODE          0x2024U
 #define HCI_LE_READ_LOCAL_P_256_PUBLIC_KEY_OPCODE               0x2025U
 #define HCI_LE_GENERATE_DHKEY_OPCODE                            0x2026U
@@ -844,7 +899,9 @@
 #define HCI_LE_CLR_RESOLVING_LIST_OPCODE                        0x2029U
 #define HCI_LE_READ_RESOLVING_LIST_SIZE_OPCODE                  0x202AU
 #define HCI_LE_READ_PEER_RESOLVABLE_ADDR_OPCODE                 0x202BU
+#define HCI_LE_READ_PEER_RESOLVABLE_ADDRESS_OPCODE              0x202BU
 #define HCI_LE_READ_LOCAL_RESOLVABLE_ADDR_OPCODE                0x202CU
+#define HCI_LE_READ_LOCAL_RESOLVABLE_ADDRESS_OPCODE             0x202CU
 #define HCI_LE_SET_ADDR_RESOLUTION_ENABLE_OPCODE                0x202DU
 #define HCI_LE_SET_RESOLVABLE_PRIVATE_ADDR_TIMEOUT_OPCODE       0x202EU
 #define HCI_LE_READ_MAXIMUM_DATA_LENGTH_OPCODE                  0x202FU
@@ -861,11 +918,14 @@
 /* HCI LE Advertising Extension support related defines */
 #define HCI_LE_SET_ADVERTISING_SET_RANDOM_ADDRESS_OPCODE        0x2035U
 #define HCI_LE_SET_EXTENDED_ADV_PARAMS_OPCODE                   0x2036U
+#define HCI_LE_SET_EXTENDED_ADVERTISING_PARAMETERS_OPCODE       0x2036U
 #define HCI_LE_SET_EXTENDED_ADVERTISING_DATA_OPCODE             0x2037U
 #define HCI_LE_SET_EXTENDED_SCAN_RESPONSE_DATA_OPCODE           0x2038U
 #define HCI_LE_SET_EXTENDED_ADVERTISE_ENABLE_OPCODE             0x2039U
 #define HCI_LE_READ_MAX_ADV_DATA_LENGTH_OPCODE                  0x203AU
+#define HCI_LE_READ_MAXIMUM_ADVERTISING_DATA_LENGTH_OPCODE      0x203AU
 #define HCI_LE_READ_NUM_SUPPORTED_ADV_SETS_OPCODE               0x203BU
+#define HCI_LE_READ_NUMBER_OF_SUPPORTED_ADVERTISING_SETS_OPCODE 0x203BU
 #define HCI_LE_REMOVE_ADVERTISING_SET_OPCODE                    0x203CU
 #define HCI_LE_CLEAR_ADVERTISING_SETS_OPCODE                    0x203DU
 #define HCI_LE_SET_PERIODIC_ADV_PARAMS_OPCODE                   0x203EU
@@ -899,7 +959,9 @@
 #define HCI_LE_SET_CONNECTION_CTE_RECEIVE_PARAMETERS_OPCODE             0x2054U
 #define HCI_LE_SET_CONNECTION_CTE_TRANSMIT_PARAMETERS_OPCODE            0x2055U
 #define HCI_LE_SET_CONNECTION_CTE_REQUEST_ENABLE_OPCODE                 0x2056U
+#define HCI_LE_CONNECTION_CTE_REQUEST_ENABLE_OPCODE                     0x2056U
 #define HCI_LE_SET_CONNECTION_CTE_RESPONSE_ENABLE_OPCODE                0x2057U
+#define HCI_LE_CONNECTION_CTE_RESPONSE_ENABLE_OPCODE                    0x2057U
 #define HCI_LE_READ_ANTENNA_INFORMATION_OPCODE                          0x2058U
 
 /* HCI LE Periodic Advertising Sync Transfer related defines */
@@ -912,8 +974,44 @@
 #define HCI_LE_MODIFY_SLEEP_CLOCK_ACCURACY_OPCODE                       0x205FU
 #endif /* BT_5_1 */
 
-/* Vendor Specific Parameters - OGF : 0x3F */
+#ifdef BT_5_2
+#define HCI_SET_ECOSYSTEM_BASE_INTERVAL_OPCODE                          0x0C82U
+#define HCI_CONFIGURE_DATA_PATH_OPCODE                                  0x0C83U
+#define HCI_READ_LOCAL_SUPPORTED_CODECS_V2_OPCODE                       0x100DU
+#define HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES_OPCODE              0x100EU
+#define HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY_OPCODE                0x100FU
+#define HCI_LE_READ_BUFFER_SIZE_V2_OPCODE                               0x2060U
+#define HCI_LE_READ_ISO_TX_SYNC_OPCODE                                  0x2061U
+#define HCI_LE_SET_CIG_PARAMETERS_OPCODE                                0x2062U
+#define HCI_LE_SET_CIG_PARAMETERS_TEST_OPCODE                           0x2063U
+#define HCI_LE_CREATE_CIS_OPCODE                                        0x2064U
+#define HCI_LE_REMOVE_CIG_OPCODE                                        0x2065U
+#define HCI_LE_ACCEPT_CIS_REQUEST_OPCODE                                0x2066U
+#define HCI_LE_REJECT_CIS_REQUEST_OPCODE                                0x2067U
+#define HCI_LE_CREATE_BIG_OPCODE                                        0x2068U
+#define HCI_LE_CREATE_BIG_TEST_OPCODE                                   0x2069U
+#define HCI_LE_TERMINATE_BIG_OPCODE                                     0x206AU
+#define HCI_LE_BIG_CREATE_SYNC_OPCODE                                   0x206BU
+#define HCI_LE_BIG_TERMINATE_SYNC_OPCODE                                0x206CU
+#define HCI_LE_REQUEST_PEER_SCA_OPCODE                                  0x206DU
+#define HCI_LE_SETUP_ISO_DATA_PATH_OPCODE                               0x206EU
+#define HCI_LE_REMOVE_ISO_DATA_PATH_OPCODE                              0x206FU
+#define HCI_LE_ISO_TRANSMIT_TEST_OPCODE                                 0x2070U
+#define HCI_LE_ISO_RECEIVE_TEST_OPCODE                                  0x2071U
+#define HCI_LE_ISO_READ_TEST_COUNTERS_OPCODE                            0x2072U
+#define HCI_LE_ISO_TEST_END_OPCODE                                      0x2073U
+#define HCI_LE_SET_HOST_FEATURE_OPCODE                                  0x2074U
+#define HCI_LE_READ_ISO_LINK_QUALITY_OPCODE                             0x2075U
+#define HCI_LE_ENHANCED_READ_TRANSMIT_POWER_LEVEL_OPCODE                0x2076U
+#define HCI_LE_READ_REMOTE_TRANSMIT_POWER_LEVEL_OPCODE                  0x2077U
+#define HCI_LE_SET_PATH_LOSS_REPORTING_PARAMETERS_OPCODE                0x2078U
+#define HCI_LE_SET_PATH_LOSS_REPORTING_ENABLE_OPCODE                    0x2079U
+#define HCI_LE_SET_TRANSMIT_POWER_REPORTING_ENABLE_OPCODE               0x207AU
+#endif /* BT_5_2 */
 
+/* Vendor Specific Parameters - OGF : 0x3F */
+/* TODO: Move to Vendor specific File */
+#define HCI_VENDOR_READ_VERSION_INFO_OPCODE                             0xFC0F
 /** \} */
 
 /** \} */
@@ -956,13 +1054,14 @@
 #define HCI_READ_CLOCK_OFFSET_COMPLETE_EVENT                    0x1CU
 #define HCI_CONNECTION_PACKET_TYPE_CHANGED_EVENT                0x1DU
 #define HCI_QOS_VIOLATION_EVENT                                 0x1EU
-#define HCI_PAGE_SCAN_MODE_CHANGE_EVENT                         0x1FU
+/* Event 0x1F removed from specification */
+/* #define HCI_PAGE_SCAN_MODE_CHANGE_EVENT                      0x1F */
 #define HCI_PAGE_SCAN_REPETITION_MODE_CHANGE_EVENT              0x20U
 
 #ifdef BT_HCI_1_2
 #define HCI_FLOW_SPECIFICATION_COMPLETE_EVENT                   0x21U
 #define HCI_INQUIRY_RESULT_WITH_RSSI_EVENT                      0x22U
-#define HCI_REMOTE_EXTENDED_FEATURES_COMPLETE_EVENT             0x23U
+#define HCI_READ_REMOTE_EXTENDED_FEATURES_COMPLETE_EVENT        0x23U
 #define HCI_SYNCHRONOUS_CONNECTION_COMPLETE_EVENT               0x2CU
 #define HCI_SYNCHRONOUS_CONNECTION_CHANGED_EVENT                0x2DU
 #endif /* BT_HCI_1_2 */
@@ -987,16 +1086,26 @@
 #define HCI_ENCRYPTION_KEY_REFRESH_COMPLETE_EVENT               0x30U
 #endif /* ((defined BT_2_1_EDR) || (defined BT_4_0)) */
 
+#define HCI_FLOW_SPEC_MODIFY_COMPLETE_EVENT                     0x47U
+#define HCI_NUMBER_OF_COMPLETED_DATA_BLOCKS_EVENT               0x48U
+
 #ifdef BT_4_1
+#define HCI_TRIGGERED_CLOCK_CAPTURE_EVENT                       0x4EU
 #define HCI_SYNCHRONIZATION_TRAIN_COMPLETE_EVENT                0x4FU
 #define HCI_SYNCHRONIZATION_TRAIN_RECEIVED_EVENT                0x50U
 #define HCI_CONNECTIONLESS_SLAVE_BROADCAST_RECEIVE_EVENT        0x51U
 #define HCI_CONNECTIONLESS_SLAVE_BROADCAST_TIMEOUT_EVENT        0x52U
 #define HCI_TRUNCATED_PAGE_COMPLETE_EVENT                       0x53U
+#define HCI_SLAVE_PAGE_RESPONSE_TIMEOUT_EVENT                   0x54U
 #define HCI_CONNECTIONLESS_SLAVE_BROADCAST_CHANNEL_MAP_CHANGE_EVENT \
                                                                 0x55U
+#define HCI_INQUIRY_RESPONSE_NOTIFICATION_EVENT                 0x56U
 #define HCI_AUTHENTICATED_PAYLOAD_TIMEOUT_EXPIRED_EVENT         0x57U
 #endif /* BT_4_1 */
+
+#ifdef BT_5_0
+#define HCI_SAM_STATUS_CHANGE_EVENT                             0x58U
+#endif /* BT_5_0 */
 
 /* HCI Vendor Specific Debug Event */
 #define HCI_VENDOR_SPECIFIC_DEBUG_EVENT                         0xFFU
@@ -1055,6 +1164,7 @@
  *  of the remote Bluetooth device.
  */
 #define HCI_LE_READ_REMOTE_USED_FEATURES_COMPLETE_SUBEVENT      0x04U
+#define HCI_LE_READ_REMOTE_FEATURES_COMPLETE_SUBEVENT           0x04U
 
 /**
  *  The LE Long Term Key Requested subevent indicates that the master device is
@@ -1062,6 +1172,7 @@
  *  key.
  */
 #define HCI_LE_LONG_TERM_KEY_REQUESTED_SUBEVENT                 0x05U
+#define HCI_LE_LONG_TERM_KEY_REQUEST_SUBEVENT                   0x05U
 #endif /* BT_4_0 */
 
 #ifdef HCI_LL_TOPOLOGY_CONN_UPDATE_SUPPORT
@@ -1071,6 +1182,7 @@
  *  request from its peer.
  */
 #define HCI_LE_REMOTE_CONN_PARAM_REQ_SUBEVENT                   0x06U
+#define HCI_LE_REMOTE_CONNECTION_PARAMETER_REQUEST_SUBEVENT     0x06U
 #endif /* HCI_LL_TOPOLOGY_CONN_UPDATE_SUPPORT */
 
 #ifdef BT_4_2
@@ -1106,6 +1218,7 @@
  *  and the Scan_Filter_Policy is equal to 0x02 or 0x03.
  */
 #define HCI_LE_DIRECT_ADVERTISING_REPORT_SUBEVENT               0x0BU
+#define HCI_LE_DIRECTED_ADVERTISING_REPORT_SUBEVENT             0x0BU
 #endif /* BT_4_2 */
 
 #ifdef BT_5_0
@@ -1202,7 +1315,78 @@
  * out while attempting to synchronize.
  */
 #define HCI_LE_PERIODIC_ADV_SYNC_TX_RECEIVED_SUBEVENT           0x18U
+#define HCI_LE_PERIODIC_ADVERTISING_SYNC_TRANSFER_RECEIVED_SUBEVENT \
+                                                                0x18U
 #endif /* BT_5_1 */
+
+#ifdef BT_5_2
+/**
+ * The HCI_LE_CIS_Established event indicates that the CIS with the Connection_Handle
+ * is established. The slave Controller shall set the Connection_Handle to the same
+ * value as that provided in the HCI_LE_CIS_Request event. This event is generated by
+ * the Controller in the master and slave.
+ */
+#define HCI_LE_CIS_ESTABLISHED_SUBEVENT                         0x19U
+
+/**
+ * The HCI_LE_CIS_Request event indicates that a Controller has received a request
+ * to establish a CIS. The Controller shall assign a connection handle for
+ * the requested CIS and send the handle in the CIS_Connection_Handle parameter
+ * of the event.
+ */
+#define HCI_LE_CIS_REQUEST_SUBEVENT                             0x1AU
+
+/**
+ * The HCI_LE_Create_BIG_Complete event indicates that the HCI_LE_Create_BIG command
+ * has completed.
+ */
+#define HCI_LE_CREATE_BIG_COMPLETE_SUBEVENT                     0x1BU
+
+/**
+ * The HCI_LE_Terminate_BIG_Complete event indicates that the transmission
+ * of all the BISes in the BIG are terminated.
+ */
+#define HCI_LE_TERMINATE_BIG_COMPLETE_SUBEVENT                  0x1CU
+
+/**
+ * The HCI_LE_BIG_Sync_Established event indicates that the HCI_LE_BIG_Create_Sync
+ * command has completed.
+ */
+#define HCI_LE_BIG_SYNC_ESTABLISHED_SUBEVENT                    0x1DU
+
+/**
+ * The HCI_LE_BIG_Sync_Lost event indicates that the Controller has either not
+ * received any PDUs on a BIG within the timeout period BIG_Sync_Timeout,
+ * or the BIG has been terminated by the remote device, or the local Host has
+ * terminated synchronization using the HCI_LE_BIG_Terminate_Sync command.
+ */
+#define HCI_LE_BIG_SYNC_LOST_SUBEVENT                           0x1EU
+
+/**
+ * The HCI_LE_Request_Peer_SCA_Complete event indicates that
+ * the HCI_LE_Request_Peer_SCA command has been completed.
+ */
+#define HCI_LE_REQUEST_PEER_SCA_COMPLETE_SUBEVENT               0x1FU
+
+/**
+ * The HCI_LE_Path_Loss_Threshold event is used to report a path loss threshold
+ * crossing on the ACL connection identified by the Connection_Handle parameter.
+ */
+#define HCI_LE_PATH_LOSS_THRESHOLD_SUBEVENT                     0x20U
+
+/**
+ * The HCI_LE_Transmit_Power_Reporting event is used to report the transmit power
+ * level on the ACL connection identified by the Connection_Handle parameter.
+ */
+#define HCI_LE_TX_POWER_REPORTING_SUBEVENT                      0x21U
+#define HCI_LE_TRANSMIT_POWER_REPORTING_SUBEVENT                0x21U
+
+/**
+ * The HCI_LE_BIGInfo_Advertising_Report event indicates that the Controller
+ * has received an Advertising PDU that contained a BIGInfo field.
+ */
+#define HCI_LE_BIGINFO_ADVERTISING_REPORT_SUBEVENT              0x22U
+#endif /* BT_5_2 */
 
 /*
  * Defines for Link status (current mode) returned by
@@ -1246,6 +1430,102 @@
 #define hci_unpack_3_byte_param BT_UNPACK_LE_3_BYTE
 
 #define hci_unpack_4_byte_param BT_UNPACK_LE_4_BYTE
+
+#ifdef HCI_ISO_DATA
+/** Extract ISO Handle from header */
+#define hci_extract_iso_connection_handle(header, conn_handle) \
+    { \
+        hci_unpack_2_byte_param((conn_handle), (header)); \
+        (*conn_handle) &= 0x0FFFU; \
+    }
+
+/** Extract Packet Broadcast flag from header */
+#define hci_extract_iso_pb_flag(header, pb) \
+        { \
+            UINT16 value_2B_pb; \
+            hci_unpack_2_byte_param(&value_2B_pb, header); \
+            *(pb) = (value_2B_pb >> 12U); \
+            *(pb) &= 0x03U; \
+        }
+
+/** Extract Timestamp flag from header */
+#define hci_extract_iso_ts_flag(header, ts) \
+        { \
+            UINT16 value_2B_ts; \
+            hci_unpack_2_byte_param(&value_2B_ts, header); \
+            *(ts) = (value_2B_ts >> 14U); \
+            *(ts) &= 0x01U; \
+        }
+
+/** Extract ISO Data Load length from header */
+#define hci_extract_iso_data_load_len(header, iso_dataload_len) \
+        { \
+            hci_unpack_2_byte_param((iso_dataload_len), &((header)[2U])); \
+            *(iso_dataload_len) &= 0x3FFFU; \
+        }
+
+/** Extract Timestamp flag from header */
+#define hci_extract_timestamp(header, timestamp) \
+        { \
+            hci_unpack_4_byte_param((timestamp), &((header)[4U])); \
+        }
+
+/** Extract Sequence Number from header */
+#define hci_extract_packet_sequence_number(header, seqnum) \
+        { \
+            UINT16 ts; \
+            hci_extract_iso_ts_flag((header), &ts); \
+            if (0U != ts) \
+            { \
+                hci_unpack_2_byte_param((seqnum), &((header)[8U])); \
+            } \
+            else \
+            { \
+                hci_unpack_2_byte_param((seqnum), &((header)[4U])); \
+            } \
+        }
+
+/** Extract ISO SDU length from header */
+#define hci_extract_iso_sdu_length(header, iso_sdulen) \
+        { \
+            UINT16 ts; \
+            hci_extract_iso_ts_flag((header), &ts); \
+            if (0U != ts) \
+            { \
+                hci_unpack_2_byte_param((iso_sdulen), &((header)[10U])); \
+            } \
+            else \
+            { \
+                hci_unpack_2_byte_param((iso_sdulen), &((header)[6U])); \
+            } \
+            *(iso_sdulen) &= 0x0FFFU; \
+        }
+
+/** Extract Packet Status from header */
+#define hci_extract_iso_packet_status_flag(header, ps) \
+        { \
+            UINT16 value_2B_ps; \
+            hci_extract_iso_sdu_length((header), &value_2B_ps); \
+            *(ps) = (value_2B_ps >> 14U); \
+            *(ps) &= 0x03U; \
+        }
+
+/** Extract the ISO header onto the HCI_ISO_HEADER */
+#define HCI_EXTRACT_ISO_HEADER(header, iso_header) \
+        { \
+            hci_extract_iso_connection_handle((header), &((iso_header)->conn_handle)); \
+            hci_extract_iso_pb_flag((header), &((iso_header)->pb_flag)); \
+            hci_extract_iso_ts_flag((header), &((iso_header)->ts_flag)); \
+            hci_extract_iso_data_load_len((header), &((iso_header)->dataload_len)); \
+            if ((iso_header)->ts_flag) \
+            { \
+                hci_extract_timestamp((header), &((iso_header)->ts)); \
+            } \
+            hci_extract_packet_sequence_number((header), &((iso_header)->seqnum)); \
+            hci_extract_iso_sdu_length((header), &((iso_header)->sdulen)); \
+            hci_extract_iso_packet_status_flag((header), &((iso_header)->ps_flag)); \
+        }
+#endif /* HCI_ISO_DATA */
 
 /** \} */
 
@@ -1445,7 +1725,35 @@ typedef struct
 } HCI_EIR_DATA;
 #endif /* BT_EIR */
 
+#ifdef HCI_ISO_DATA
+/** ISO Header information */
+typedef struct _HCI_ISO_HEADER
+{
+    /* ISO connection handle */
+    UINT16 conn_handle;
 
+    /* Packet Broadcast Flag */
+    UINT8  pb_flag;
+
+    /* Timestamp presence flag */
+    UINT8  ts_flag;
+
+    /* ISO Dataload length */
+    UINT16 dataload_len;
+
+    /* Timestamp value */
+    UINT32 ts;
+
+    /* Sequence Number value */
+    UINT16 seqnum;
+
+    /* ISO SDU Length */
+    UINT16 sdulen;
+
+    /* ISO packet status */
+    UINT8  ps_flag;
+} HCI_ISO_HEADER;
+#endif /* HCI_ISO_DATA */
 
 /** \} */
 
@@ -1561,9 +1869,9 @@ API_RESULT BT_hci_register_event_indication_callback
            (
                API_RESULT (* callback_ptr)
                           (
-                              UINT8    event_code,
-                              UINT8 *  event_data,
-                              UINT8    event_datalen
+                              UCHAR    event_type,
+                              UCHAR *  event_data,
+                              UCHAR    event_datalen
                           )
            );
 /**
@@ -1612,6 +1920,27 @@ API_RESULT BT_hci_register_sco_data_handler
            );
 #endif /* HCI_SCO */
 
+#ifdef HCI_ISO_DATA
+/**
+ *  \brief To register the HCI ISO data handler of Application with HCI
+ *
+ *  \par Description:
+ *       This API is for registering the HCI ISO data handler.
+ *       The callback Function Pointer cannot be NULL. Reregistration of the
+ *       event handler is not allowed.
+ *
+ *  \param [in] callback_ptr
+ *         Function Pointer to application HCI ISO data handler
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
+API_RESULT BT_hci_register_iso_data_handler
+           (
+               API_RESULT (* callback_ptr) (UCHAR *header, UCHAR *data, UINT16 datalen)
+           );
+#endif /* HCI_ISO_DATA */
 
 /**
  *  \brief To set the role of the local Device role for all new ACL connections.
@@ -2069,7 +2398,7 @@ API_RESULT BT_hci_set_esco_channel_parameters
  *       eSCO channel parameter using this API from the context of the HCI Event
  *       Indication Callback.
  *
- *  \param [in] sco_params
+ *  \param [in] params
  *         Pointer to caller allocated HCI_ENH_SCO_PARAMS variable containing
  *         the input parameters for negotiating the new or existing synchronous
  *         link.
@@ -2080,7 +2409,7 @@ API_RESULT BT_hci_set_esco_channel_parameters
  */
 API_RESULT BT_hci_set_enh_sco_channel_parameters
            (
-               HCI_ENH_SCO_PARAMS *  enh_sco_params
+               HCI_ENH_SCO_PARAMS *  params
            );
 #endif /* HCI_ENH_SCO */
 #endif /* BT_HCI_1_2 */
@@ -2094,6 +2423,37 @@ API_RESULT BT_hci_sco_write
            );
 #endif /* HCI_SCO */
 
+#ifdef HCI_ISO_DATA
+API_RESULT BT_hci_iso_write
+           (
+               UINT16     connection_handle,
+               UCHAR      ts_flag,
+               UINT32     ts,
+               UINT16     seq_num,
+               UCHAR *    sdu,
+               UINT16     sdu_len
+           );
+
+#ifdef HCI_SUPPORT_ISO_WRITE_PDU
+/**
+ *  API_RESULT BT_hci_iso_write_pdu:
+ *  API to write ISO data PDU, where the application manages the queue.
+ *
+ *  @param: (IN) connection_handle: ISO Connection Handle
+ *  @param: (IN) packet: ISO fragment packet pointer
+ *  @param: (IN) packet_len: ISO fragment length
+ *
+ *  @return: API_RESULT
+ *           API_SUCCESS : On successful registration of the callback pointer.
+ */
+API_RESULT BT_hci_iso_write_pdu
+           (
+               UINT16     connection_handle,
+               UCHAR *    packet,
+               UINT16     packet_len
+           );
+#endif /* HCI_SUPPORT_ISO_WRITE_PDU */
+#endif /* HCI_ISO_DATA */
 
 /* ------------------------------------------------------------------------- */
 
@@ -4381,6 +4741,34 @@ API_RESULT BT_hci_read_transmit_power_level
         (HCI_LE_READ_BUFFER_SIZE_OPCODE)
 #endif /* HCI_LE_READ_BUFFER_SIZE_SUPPORT */
 
+#ifdef HCI_LE_READ_BUFFER_SIZE_V2_SUPPORT
+/**
+ *  \brief To read the maximum size of the data portion of ACL data packets
+ *  and isochronous data packets sent from the Host to the Controller.
+ *
+ *  \par Description:
+ *       This API is used to read the maximum size of the data portion of ACL
+ *       data packets and isochronous data packets sent from the Host to the
+ *       Controller.
+ *       The Host shall segment the data transmitted to the Controller
+ *       according to these values so that the HCI Data packets and isochronous
+ *       data packets will contain data up to this size.
+ *       The HCI_LE_Read_Buffer_Size command also returns the total number of
+ *       HCI LE ACL Data packets and isochronous data packets that can be
+ *       stored in the data buffers of the Controller.
+ *       The HCI_LE_Read_Buffer_Size command shall be issued by the Host before
+ *       it sends any data to an LE Controller. If the Controller supports HCI
+ *       ISO Data packets, it shall return non-zero values for the
+ *       ISO_Data_Packet_Length and Total_Num_ISO_Data_Packets parameters.
+ *
+ *  \return API_RESULT
+ *     API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
+#define BT_hci_le_read_buffer_size_v2()  \
+        hci_common_api_handler_no_params \
+        (HCI_LE_READ_BUFFER_SIZE_V2_OPCODE)
+#endif /* HCI_LE_READ_BUFFER_SIZE_V2_SUPPORT */
+
 #ifdef HCI_LE_READ_LOCAL_SUPPORTED_FEATURES_SUPPORT
 /**
  *  \brief To read supported LE features by local Bluetooth Controller.
@@ -5483,7 +5871,7 @@ API_RESULT BT_hci_le_long_term_key_requested_reply
  *       support Packet_Payload values 0x00, 0x01 and 0x02. An LE Controller
  *       may support other values of Packet_Payload.
  *
- *  \param [in] tx_channel
+ *  \param [in] tx_frequency
  *         Trasmit Channel<br>
  *         tx_channel = (F - 2402) / 2<br>
  *         Value Range: 0x00 to 0x27.<br>
@@ -5507,7 +5895,7 @@ API_RESULT BT_hci_le_long_term_key_requested_reply
  */
 API_RESULT BT_hci_le_transmitter_test_command
            (
-               UCHAR    tx_channel,
+               UCHAR    tx_frequency,
                UCHAR    test_data_length,
                UCHAR    packet_payload
            );
@@ -6104,7 +6492,7 @@ API_RESULT BT_hci_set_afh_host_channel_classification
  *       configuration parameter control whether Bluetooth Inquiry results to be
  *       delivered to host with standard format or with RSSI data.
  *
- *  \param [in] inquiry_mode
+ *  \param [in] inq_mode
  *         The Inquiry Mode to be set.
  *         The valid values are:
  *         0x00 - Standard Inquiry Result Event format
@@ -6116,7 +6504,7 @@ API_RESULT BT_hci_set_afh_host_channel_classification
  */
 API_RESULT BT_hci_write_inquiry_mode
            (
-               UCHAR     inquiry_mode
+               UCHAR     inq_mode
            );
 
 #ifndef HCI_LITE
@@ -6185,7 +6573,7 @@ API_RESULT BT_hci_write_inquiry_mode
  *       configuration parameter controls whether the controller's channel
  *       assessment scheme is enabled or disabled.
  *
- *  \param [in] afh_assessment_mode
+ *  \param [in] afh_mode
  *         The AFH Channel Assessment mode to be written.
  *         The valid values are:
  *         Value 0x00 - Controller's channel assessment disabled
@@ -6197,7 +6585,7 @@ API_RESULT BT_hci_write_inquiry_mode
  */
 API_RESULT BT_hci_write_afh_channel_assessment_mode
            (
-               UCHAR    afh_assessment_mode
+               UCHAR    afh_mode
            );
 /**
  *  \brief To read the AFH Mode and AFH Channel Map for a specified connection handle
@@ -9798,6 +10186,1266 @@ API_RESULT BT_hci_le_modify_sleep_clock_accuracy
         (HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_OPCODE)
 #endif /* HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_SUPPORT */
 
+/* New APIs from Bluetooth Spec 5.2 ---------------------------------------- */
+#ifdef HCI_LE_READ_ISO_TX_SYNC_SUPPORT
+/**
+ *  \brief To read the Time_Stamp and Time_Offset of a transmitted
+ *         ISO_SDU
+ *
+ *  \par Description:
+ *       This command is used to read the Time_Stamp and Time_Offset
+ *       of a transmitted ISO_SDU identified by the
+ *       Packet_Sequence_Number on a CIS or BIS identified by the
+ *       Connection_Handle parameter on the master or slave.
+ *
+ *  \param [in] connection_handle
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_read_iso_tx_sync
+           (
+               UINT16 connection_handle
+           );
+#endif /* HCI_LE_READ_ISO_TX_SYNC_SUPPORT */
+
+#ifdef HCI_LE_SET_CIG_PARAMETERS_SUPPORT
+/**
+ *  \brief To set the parameters of one or more CISes that are
+ *         associated with a CIG in the Controller
+ *
+ *  \par Description:
+ *       The HCI_LE_Set_CIG_Parameters command is used by a master
+ *       Host to set the parameters of one or more CISes that are
+ *       associated with a CIG in the Controller. Provided that none
+ *       of the CISes in that CIG have been established, this command
+ *       may also be used to modify or add CIS(s) to that CIG.
+ *
+ *  \param [in] cig_id
+ *              0x00 to 0xEF: Used to identify a CIG
+ *
+ *  \param [in] sdu_interval_m_to_s
+ *              0x000FF to 0xFFFFF: The interval, in microseconds, of
+ *              periodic SDUs.
+ *
+ *  \param [in] sdu_interval_s_to_m
+ *              0x000FF to 0xFFFFF: The interval, in microseconds, of
+ *              periodic SDUs.
+ *
+ *  \param [in] sca
+ *              0x00: 251 ppm to 500 ppm
+ *              0x01: 151 ppm to 250 ppm
+ *              0x02: 101 ppm to 150 ppm
+ *              0x03: 76 ppm to 100 ppm
+ *              0x04: 51 ppm to 75 ppm
+ *              0x05: 31 ppm to 50 ppm
+ *              0x06: 21 ppm to 30 ppm
+ *              0x07: 0 ppm to 20 ppm
+ *
+ *  \param [in] packing
+ *              0x00: Sequential
+ *              0x01: Interleaved
+ *
+ *  \param [in] framing
+ *              0x00: Unframed
+ *              0x01: Framed
+ *
+ *  \param [in] max_transport_latency_m_to_s
+ *              0x0005 to 0x0FA0: Maximum time, in milliseconds, for an SDU
+ *              to be transported from the master Controller to slave
+ *              Controller.
+ *
+ *  \param [in] max_transport_latency_s_to_m
+ *              0x0005 to 0x0FA0: Maximum time, in milliseconds, for an SDU
+ *              to be transported from the slave Controller to master
+ *              Controller.
+ *
+ *  \param [in] cis_count
+ *              0x00 to 0x10: Total number of CISes in the CIG being added
+ *              or modified.
+ *              The maximum value of the CIS_Count is limited to 16 (due to
+ *              the maximum size of an HCI packet).
+ *
+ *  \param [in] cis_id
+ *              0x00 to 0xEF: Used to identify a CIS
+ *
+ *  \param [in] max_sdu_m_to_s
+ *              0x000 to 0xFFF: Maximum size, in octets, of an SDU from the
+ *              master Host.
+ *
+ *  \param [in] max_sdu_s_to_m
+ *              0x000 to 0xFFF: Maximum size, in octets, of an SDU from the
+ *              slave Host.
+ *
+ *  \param [in] phy_m_to_s
+ *              Bit number
+ *              0: The transmitter PHY of packets from the master is LE 1M
+ *              1: The transmitter PHY of packets from the master is LE 2M
+ *              2: The transmitter PHY of packets from the master is LE
+ *              Coded
+ *
+ *  \param [in] phy_s_to_m
+ *              Bit number
+ *              0: The transmitter PHY of packets from the slave is LE 1M
+ *              1: The transmitter PHY of packets from the slave is LE 2M
+ *              2: The transmitter PHY of packets from the slave is LE Coded
+ *
+ *  \param [in] rtn_m_to_s
+ *              0x00 to 0x0F: Maximum number of times every CIS Data PDU
+ *              should be retransmitted from the master to slave
+ *
+ *  \param [in] rtn_s_to_m
+ *              0x00 to 0x0F: Maximum number of times every CIS Data PDU
+ *              should be retransmitted from the slave to master
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_set_cig_parameters
+           (
+               UCHAR  cig_id,
+               UINT32 sdu_interval_m_to_s,
+               UINT32 sdu_interval_s_to_m,
+               UCHAR  sca,
+               UCHAR  packing,
+               UCHAR  framing,
+               UINT16 max_transport_latency_m_to_s,
+               UINT16 max_transport_latency_s_to_m,
+               UCHAR  cis_count,
+               UCHAR * cis_id,
+               UINT16 * max_sdu_m_to_s,
+               UINT16 * max_sdu_s_to_m,
+               UCHAR * phy_m_to_s,
+               UCHAR * phy_s_to_m,
+               UCHAR * rtn_m_to_s,
+               UCHAR * rtn_s_to_m
+           );
+#endif /* HCI_LE_SET_CIG_PARAMETERS_SUPPORT */
+
+#ifdef HCI_LE_SET_CIG_PARAMETERS_TEST_SUPPORT
+/**
+ *  \brief To set the parameters of CISes associated with a CIG, in the
+ *         ISO Test Mode.
+ *
+ *  \par Description:
+ *       The HCI_LE_Set_CIG_Parameters_Test command should be used in
+ *       the ISO Test mode. The command is used by a master Host to
+ *       set the parameters of CISes associated with a CIG. Provided
+ *       all CISes in a CIG are not established, this command can
+ *       also be used to modify or add additional CIS(s) to that CIG
+ *       that is already stored.
+ *
+ *  \param [in] cig_id
+ *              0x00 to 0xEF: Used to identify a CIG
+ *
+ *  \param [in] sdu_interval_m_to_s
+ *              0x000FF to 0xFFFFF: The interval, in microseconds, of
+ *              periodic SDUs.
+ *
+ *  \param [in] sdu_interval_s_to_m
+ *              0x000FF to 0xFFFFF: The interval, in microseconds, of
+ *              periodic SDUs.
+ *
+ *  \param [in] ft_m_to_s
+ *              0x01 to 0xFF: The flush timeout in multiples of ISO_Interval
+ *              for each payload sent from the master to slave.
+ *
+ *  \param [in] ft_s_to_m
+ *              0x01 to 0xFF: The flush timeout in multiples of ISO_Interval
+ *              for each payload sent from the slave to master.
+ *
+ *  \param [in] iso_interval
+ *              Time duration of the isochronous interval.
+ *              Range: 0x0004 to 0x0C80
+ *              Time = N * 1.25 ms
+ *              Time Range: 5 ms to 4 s
+ *
+ *  \param [in] sca
+ *              0x00: 251 ppm to 500 ppm
+ *              0x01: 151 ppm to 250 ppm
+ *              0x02: 101 ppm to 150 ppm
+ *              0x03: 76 ppm to 100 ppm
+ *              0x04: 51 ppm to 75 ppm
+ *              0x05: 31 ppm to 50 ppm
+ *              0x06: 21 ppm to 30 ppm
+ *              0x07: 0 ppm to 20 ppm
+ *
+ *  \param [in] packing
+ *              0x00: Sequential
+ *              0x01: Interleaved
+ *
+ *  \param [in] framing
+ *              0x00: Unframed
+ *              0x01: Framed
+ *
+ *  \param [in] cis_count
+ *              0x00 to 0x1F: Total number of CISes in the CIG being added
+ *              or modified.
+ *
+ *  \param [in] cis_id
+ *              0x00 to 0xEF: Used to identify a CIS
+ *
+ *  \param [in] nse
+ *              0x01 to 0x1F: Maximum number of subevents in each
+ *              isochronous interval of CIS
+ *
+ *  \param [in] max_sdu_m_to_s
+ *              0x0000 to 0x0FFF: Maximum size, in octets, of an SDU from
+ *              the master Host.
+ *
+ *  \param [in] max_sdu_s_to_m
+ *              0x0000 to 0x0FFF: Maximum size, in octets, of an SDU from
+ *              the slave Host.
+ *
+ *  \param [in] max_pdu_m_to_s
+ *              0x0000 to 0x00FB: Maximum size, in octets, of the payload
+ *              from master Link Layer to slave Link Layer.
+ *
+ *  \param [in] max_pdu_s_to_m
+ *              0x0000 to 0x00FB: Maximum size, in octets, of the payload
+ *              from slave Link Layer to master Link Layer.
+ *
+ *  \param [in] phy_m_to_s
+ *              Bit number
+ *              0: The transmitter PHY of packets from the master is LE 1M
+ *              1: The transmitter PHY of packets from the master is LE 2M
+ *              2: The transmitter PHY of packets from the master is LE
+ *              Coded
+ *
+ *  \param [in] phy_s_to_m
+ *              Bit number
+ *              0: The transmitter PHY of packets from the slave is LE 1M
+ *              1: The transmitter PHY of packets from the slave is LE 2M
+ *              2: The transmitter PHY of packets from the slave is LE Coded
+ *
+ *  \param [in] bn_m_to_s
+ *              0x00: No isochronous data from the master to the slave
+ *              0x01 to 0x0F: The burst number for master to slave
+ *              transmission
+ *
+ *  \param [in] bn_s_to_m
+ *              0x00: No isochronous data from the slave to the master
+ *              0x01 to 0x0F: The burst number for slave to master
+ *              transmission
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_set_cig_parameters_test
+           (
+               UCHAR  cig_id,
+               UINT32 sdu_interval_m_to_s,
+               UINT32 sdu_interval_s_to_m,
+               UCHAR  ft_m_to_s,
+               UCHAR  ft_s_to_m,
+               UINT16 iso_interval,
+               UCHAR  sca,
+               UCHAR  packing,
+               UCHAR  framing,
+               UCHAR  cis_count,
+               UCHAR * cis_id,
+               UCHAR * nse,
+               UINT16 * max_sdu_m_to_s,
+               UINT16 * max_sdu_s_to_m,
+               UINT16 * max_pdu_m_to_s,
+               UINT16 * max_pdu_s_to_m,
+               UCHAR * phy_m_to_s,
+               UCHAR * phy_s_to_m,
+               UCHAR * bn_m_to_s,
+               UCHAR * bn_s_to_m
+           );
+#endif /* HCI_LE_SET_CIG_PARAMETERS_TEST_SUPPORT */
+
+#ifdef HCI_LE_CREATE_CIS_SUPPORT
+/**
+ *  \brief To create one or more CISes.
+ *
+ *  \par Description:
+ *       The HCI_LE_Create_CIS command is used by the master Host to
+ *       create one or more CISes using the connections identified by
+ *       the ACL_Connection_Handle[i] parameter array.
+ *
+ *  \param [in] cis_count
+ *              0x00 to 0x10: Total number of CISes in the CIG being added
+ *              or modified.
+ *              The maximum value of the CIS_Count is limited to 16 (due to
+ *              the maximum size of an HCI packet).
+ *
+ *  \param [in] cis_connection_handle
+ *              List of connection handles of CISes
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] acl_connection_handle
+ *              List of connection handles of ACLs
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_create_cis
+           (
+               UCHAR  cis_count,
+               UINT16 * cis_connection_handle,
+               UINT16 * acl_connection_handle
+           );
+#endif /* HCI_LE_CREATE_CIS_SUPPORT */
+
+#ifdef HCI_LE_REMOVE_CIG_SUPPORT
+/**
+ *  \brief To remove all the CISes associated with the CIG.
+ *
+ *  \par Description:
+ *       The HCI_LE_Remove_CIG command is used by the master Host to
+ *       remove all the CISes associated with the CIG identified by
+ *       CIG_ID. This command shall not be issued when any CIS in the
+ *       CIG has already been established or is pending
+ *       establishment. An established CIS or pending establishment
+ *       of CIS can be terminated using the HCI_Disconnect command.
+ *
+ *  \param [in] cig_id
+ *              0x00 to 0xEF: Used to identify a CIG
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_remove_cig
+           (
+               UCHAR  cig_id
+           );
+#endif /* HCI_LE_REMOVE_CIG_SUPPORT */
+
+#ifdef HCI_LE_ACCEPT_CIS_REQUEST_SUPPORT
+/**
+ *  \brief To accept the request for the CIS.
+ *
+ *  \par Description:
+ *       The HCI_LE_Accept_CIS_Request command is used by the slave
+ *       Host to inform the Controller to accept the request for the
+ *       CIS that is identified by the Connection_Handle.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of the CIS
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_accept_cis_request
+           (
+               UINT16 connection_handle
+           );
+#endif /* HCI_LE_ACCEPT_CIS_REQUEST_SUPPORT */
+
+#ifdef HCI_LE_REJECT_CIS_REQUEST_SUPPORT
+/**
+ *  \brief To reject the request for the CIS.
+ *
+ *  \par Description:
+ *       The HCI_LE_Reject_CIS_Request command is used by the slave
+ *       Host to inform the Controller to reject the request for the
+ *       CIS that is identified by the Connection_Handle.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of the CIS
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] reason
+ *              Reason the CIS request was rejected. See [Vol 2] Part D,
+ *              Error Codes for a list of error codes and descriptions.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_reject_cis_request
+           (
+               UINT16 connection_handle,
+               UCHAR  reason
+           );
+#endif /* HCI_LE_REJECT_CIS_REQUEST_SUPPORT */
+
+#ifdef HCI_LE_CREATE_BIG_SUPPORT
+/**
+ *  \brief To create a BIG with one or more BISes.
+ *
+ *  \par Description:
+ *       The HCI_LE_Create_BIG command is used to create a BIG with
+ *       one or more BISes. All BISes in a BIG have the same value
+ *       for all parameters.
+ *
+ *  \param [in] big_handle
+ *              0x00 to 0xEF: Used to identify the BIG
+ *
+ *  \param [in] advertising_handle
+ *              0x00 to 0xEF: Used to identify the periodic advertising
+ *              train.
+ *
+ *  \param [in] num_bis
+ *              0x01 to 0x1F: Total number of BISes in the BIG
+ *
+ *  \param [in] sdu_interval
+ *              0x000100 to 0xFFFFF: The interval, in microseconds, of
+ *              periodic SDUs
+ *
+ *  \param [in] max_sdu
+ *              0x000 to 0xFFF: Maximum size of an SDU, in octets.
+ *
+ *  \param [in] max_transport_latency
+ *              0x0000 to 0x0FA0: Maximum time, in milliseconds, for
+ *              transmitting an SDU
+ *
+ *  \param [in] rtn
+ *              0x00 to 0x0F: Maximum number of times every BIS Data PDU
+ *              should be retransmitted
+ *
+ *  \param [in] phy
+ *              Bit number
+ *              0: The transmitter PHY of packets is LE 1M
+ *              1: The transmitter PHY of packets is LE 2M
+ *              2: The transmitter PHY of packets is LE Coded
+ *
+ *  \param [in] packing
+ *              0x00: Sequential
+ *              0x01: Interleaved
+ *
+ *  \param [in] framing
+ *              0x00: Unframed
+ *              0x01: Framed
+ *
+ *  \param [in] encryption
+ *              0x00: Unencrypted
+ *              0x01: Encrypted
+ *
+ *  \param [in] broadcast_code
+ *              The code used to derive the session key that is used to
+ *              encrypt and decrypt BIS payloads.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_create_big
+           (
+               UCHAR  big_handle,
+               UCHAR  advertising_handle,
+               UCHAR  num_bis,
+               UINT32 sdu_interval,
+               UINT16 max_sdu,
+               UINT16 max_transport_latency,
+               UCHAR  rtn,
+               UCHAR  phy,
+               UCHAR  packing,
+               UCHAR  framing,
+               UCHAR  encryption,
+               UCHAR * broadcast_code
+           );
+#endif /* HCI_LE_CREATE_BIG_SUPPORT */
+
+#ifdef HCI_LE_CREATE_BIG_TEST_SUPPORT
+/**
+ *  \brief To create one or more BISes of a BIG.
+ *
+ *  \par Description:
+ *       The HCI_LE_Create_BIG_Test command should be used in the ISO
+ *       Test mode. The command is used to create one or more BISes
+ *       of a BIG. All BISes in the BIG have the same values for all
+ *       parameters.
+ *
+ *  \param [in] big_handle
+ *              0x00 to 0xEF: Used to identify the BIG
+ *
+ *  \param [in] advertising_handle
+ *              0x00 to 0xEF: Used to identify the periodic advertising
+ *              train.
+ *
+ *  \param [in] num_bis
+ *              0x01 to 0x1F: Total number of BISes in the BIG
+ *
+ *  \param [in] sdu_interval
+ *              0x000100 to 0xFFFFF: The interval, in microseconds, of
+ *              periodic SDUs
+ *
+ *  \param [in] iso_interval
+ *              The duration of an isochronous interval.
+ *              Range: 0x0004 to 0x0C80
+ *              Time = N * 1.25 ms
+ *              Time Range: 5 ms to 4 s
+ *
+ *  \param [in] nse
+ *              0x01 to 0x1F: The total number of subevents in each interval
+ *              of each BIS in the BIG.
+ *
+ *  \param [in] max_sdu
+ *              0x000 to 0xFFF: Maximum size of an SDU, in octets.
+ *
+ *  \param [in] max_pdu
+ *              0x0001 to 0x00FB: Maximum size, in octets, of payload.
+ *
+ *  \param [in] phy
+ *              Bit number
+ *              0: The transmitter PHY of packets is LE 1M
+ *              1: The transmitter PHY of packets is LE 2M
+ *              2: The transmitter PHY of packets is LE Coded
+ *
+ *  \param [in] packing
+ *              0x00: Sequential
+ *              0x01: Interleaved
+ *
+ *  \param [in] framing
+ *              0x00: Unframed
+ *              0x01: Framed
+ *
+ *  \param [in] bn
+ *              0x01 to 0x07: The number of new payloads in each interval
+ *              for each BIS.
+ *
+ *  \param [in] irc
+ *              0x01 to 0x0F: The number of times the scheduled payload(s)
+ *              are transmitted in a given event.
+ *
+ *  \param [in] pto
+ *              0x00 to 0x0F: Offset used for pre-transmissions.
+ *
+ *  \param [in] encryption
+ *              0x00: Unencrypted
+ *              0x01: Encrypted
+ *
+ *  \param [in] broadcast_code
+ *              The code used to derive the session key that is used to
+ *              encrypt and decrypt BIS payloads.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_create_big_test
+           (
+               UCHAR  big_handle,
+               UCHAR  advertising_handle,
+               UCHAR  num_bis,
+               UINT32 sdu_interval,
+               UINT16 iso_interval,
+               UCHAR  nse,
+               UINT16 max_sdu,
+               UINT16 max_pdu,
+               UCHAR  phy,
+               UCHAR  packing,
+               UCHAR  framing,
+               UCHAR  bn,
+               UCHAR  irc,
+               UCHAR  pto,
+               UCHAR  encryption,
+               UCHAR * broadcast_code
+           );
+#endif /* HCI_LE_CREATE_BIG_TEST_SUPPORT */
+
+#ifdef HCI_LE_TERMINATE_BIG_SUPPORT
+/**
+ *  \brief To terminate a BIG.
+ *
+ *  \par Description:
+ *       The HCI_LE_Terminate_BIG command is used to terminate a BIG
+ *       identified by the BIG_Handle parameter.  The command also
+ *       terminates the transmission of all BISes of the BIG,
+ *       destroys the associated connection handles of the BISes in
+ *       the BIG and removes the data paths for all BISes in the BIG.
+ *
+ *  \param [in] big_handle
+ *              0x00 to 0xEF: Used to identify the BIG
+ *
+ *  \param [in] reason
+ *              Reason. See [Vol 2] Part D, Error Codes for a list of error
+ *              codes and descriptions.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_terminate_big
+           (
+               UCHAR  big_handle,
+               UCHAR  reason
+           );
+#endif /* HCI_LE_TERMINATE_BIG_SUPPORT */
+
+#ifdef HCI_LE_BIG_CREATE_SYNC_SUPPORT
+/**
+ *  \brief To synchronize to a BIG
+ *
+ *  \par Description:
+ *       The HCI_LE_BIG_Create_Sync command is used to synchronize to
+ *       a BIG described in the periodic advertising train specified
+ *       by the Sync_Handle parameter.
+ *
+ *  \param [in] big_handle
+ *              0x00 to 0xEF: Used to identify the BIG
+ *
+ *  \param [in] sync_handle
+ *              Identifier of the periodic advertising train
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] encryption
+ *              0x00: Unencrypted
+ *              0x01: Encrypted
+ *
+ *  \param [in] broadcast_code
+ *              128-bit code used for deriving the session key for
+ *              decrypting payloads of BISes in the BIG.
+ *
+ *  \param [in] mse
+ *              0x00: The Controller can schedule reception of any number of
+ *              subevents up to NSE.
+ *              0x01 to 0x1F: Maximum number of subevents that should be
+ *              used to receive data payloads in each BIS event
+ *
+ *  \param [in] big_sync_timeout
+ *              Synchronization timeout for the BIG
+ *              Range: 0x000A to 0x4000
+ *              Time = N*10 ms
+ *              Time Range: 100 ms to 163.84 s
+ *
+ *  \param [in] num_bis
+ *              0x01 to 0x1F: Total number of BISes to synchronize
+ *
+ *  \param [in] bis
+ *              0x01 to 0x1F: List of indices of BISes
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_big_create_sync
+           (
+               UCHAR  big_handle,
+               UINT16 sync_handle,
+               UCHAR  encryption,
+               UCHAR * broadcast_code,
+               UCHAR  mse,
+               UINT16 big_sync_timeout,
+               UCHAR  num_bis,
+               UCHAR * bis
+           );
+#endif /* HCI_LE_BIG_CREATE_SYNC_SUPPORT */
+
+#ifdef HCI_LE_BIG_TERMINATE_SYNC_SUPPORT
+/**
+ *  \brief To stop synchronizing or cancel the process of synchronizing
+ *         to the BIG
+ *
+ *  \par Description:
+ *       The HCI_LE_BIG_Terminate_Sync command is used to stop
+ *       synchronizing or cancel the process of synchronizing to the
+ *       BIG identified by the BIG_Handle parameter.  The command
+ *       also terminates the reception of BISes in the BIG specified
+ *       in the HCI_LE_BIG_Create_Sync command, destroys the
+ *       associated connection handles of the BISes in the BIG and
+ *       removes the data paths for all BISes in the BIG.
+ *
+ *  \param [in] big_handle
+ *              0x00 to 0xEF: Used to identify the BIG
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_big_terminate_sync
+           (
+               UCHAR  big_handle
+           );
+#endif /* HCI_LE_BIG_TERMINATE_SYNC_SUPPORT */
+
+#ifdef HCI_LE_REQUEST_PEER_SCA_SUPPORT
+/**
+ *  \brief To read the Sleep Clock Accuracy of the peer device.
+ *
+ *  \par Description:
+ *       This command is used to read the Sleep Clock Accuracy of the
+ *       peer device.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of the ACL
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_request_peer_sca
+           (
+               UINT16 connection_handle
+           );
+#endif /* HCI_LE_REQUEST_PEER_SCA_SUPPORT */
+
+#ifdef HCI_LE_SETUP_ISO_DATA_PATH_SUPPORT
+/**
+ *  \brief To identify and create the isochronous data path between the
+ *         Host and the Controller.
+ *
+ *  \par Description:
+ *       The HCI_LE_Setup_ISO_Data_Path command is used to identify
+ *       and create the isochronous data path between the Host and
+ *       the Controller for an established CIS or BIS identified by
+ *       the Connection_Handle parameter.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of the CIS or BIS
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] data_path_direction
+ *              0x00: Input (Host to Controller)
+ *              0x01: Output (Controller to Host)
+ *
+ *  \param [in] data_path_id
+ *              0x00: HCI
+ *              0x01-0xFE: Logical Channel Number. The meaning of the
+ *              logical channel is vendor defined)
+ *
+ *  \param [in] codec_id
+ *              Octet 0: See Assigned Numbers for Coding Format
+ *              Octet 1 to 2: Company ID, see Assigned Numbers for Company
+ *              Identifier. Shall be ignored if octet 0 is not 0xFF.
+ *              Octet 3 to 4: Vendor-defined codec ID. Shall be ignored if
+ *              octet 0 is not 0xFF.
+ *
+ *  \param [in] controller_delay
+ *              Controller delay in microseconds
+ *              Range: 0x000000 to 0x3D0900
+ *              Time range: 0 s to 4 s0x00: HCI
+ *
+ *  \param [in] codec_configuration_length
+ *              Length of codec configuration.
+ *
+ *  \param [in] codec_configuration
+ *              Codec-specific configuration data.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_setup_iso_data_path
+           (
+               UINT16 connection_handle,
+               UCHAR  data_path_direction,
+               UCHAR  data_path_id,
+               UCHAR * codec_id,
+               UINT32 controller_delay,
+               UCHAR  codec_configuration_length,
+               UCHAR * codec_configuration
+           );
+#endif /* HCI_LE_SETUP_ISO_DATA_PATH_SUPPORT */
+
+#ifdef HCI_LE_REMOVE_ISO_DATA_PATH_SUPPORT
+/**
+ *  \brief To remove the input and/or output data path(s) associated
+ *         with a CIS or BIS.
+ *
+ *  \par Description:
+ *       The HCI_LE_Remove_ISO_Data_Path command is used to remove
+ *       the input and/or output data path(s) associated with a CIS
+ *       or BIS identified by the Connection_Handle parameter.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of a CIS or BIS
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] data_path_direction
+ *              Bit-0: Remove input data path
+ *              Bit-1: Remove output data path
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_remove_iso_data_path
+           (
+               UINT16 connection_handle,
+               UCHAR  data_path_direction
+           );
+#endif /* HCI_LE_REMOVE_ISO_DATA_PATH_SUPPORT */
+
+#ifdef HCI_LE_ISO_TRANSMIT_TEST_SUPPORT
+/**
+ *  \brief To configure an established CIS or BIS to transmit payloads.
+ *
+ *  \par Description:
+ *       The HCI_LE_ISO_Transmit_Test command is used to configure an
+ *       established CIS or BIS specified by the Connection_Handle
+ *       parameter, and transmit test payloads which are generated by
+ *       the Controller.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of a CIS or BIS
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] payload_type
+ *              0x00: Maximum length payload
+ *              0x01: Variable length payload
+ *              0x02: Zero length payload
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_iso_transmit_test
+           (
+               UINT16 connection_handle,
+               UCHAR  payload_type
+           );
+#endif /* HCI_LE_ISO_TRANSMIT_TEST_SUPPORT */
+
+#ifdef HCI_LE_ISO_RECEIVE_TEST_SUPPORT
+/**
+ *  \brief To configure an established CIS or BIS to receive payloads.
+ *
+ *  \par Description:
+ *       The HCI_LE_ISO_Receive_Test command is used to configure an
+ *       established CIS or a synchronized BIG specified by the
+ *       Connection_Handle parameter to receive payloads.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of a CIS or BIS
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] payload_type
+ *              0x00: Maximum length SDU
+ *              0x01: Variable length SDU
+ *              0x02: Zero length SDU
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_iso_receive_test
+           (
+               UINT16 connection_handle,
+               UCHAR  payload_type
+           );
+#endif /* HCI_LE_ISO_RECEIVE_TEST_SUPPORT */
+
+#ifdef HCI_LE_ISO_READ_TEST_COUNTERS_SUPPORT
+/**
+ *  \brief To read the test counters.
+ *
+ *  \par Description:
+ *       The HCI_LE_ISO_Read_Test_Counters command is used to read
+ *       the test counters in the Controller which is configured in
+ *       ISO Receive Test mode for a CIS or BIS specified by the
+ *       Connection_Handle.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of a CIS or BIS
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_iso_read_test_counters
+           (
+               UINT16 connection_handle
+           );
+#endif /* HCI_LE_ISO_READ_TEST_COUNTERS_SUPPORT */
+
+#ifdef HCI_LE_ISO_TEST_END_SUPPORT
+/**
+ *  \brief To terminate the ISO Transmit and/or Receive Test mode for a
+ *         CIS or BIS.
+ *
+ *  \par Description:
+ *       The HCI_LE_ISO_Test_End command is used to terminate the ISO
+ *       Transmit and/or Receive Test mode for a CIS or BIS specified
+ *       by the Connection_Handle parameter but does not terminate
+ *       the CIS or BIS.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of a CIS or BIS
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_iso_test_end
+           (
+               UINT16 connection_handle
+           );
+#endif /* HCI_LE_ISO_TEST_END_SUPPORT */
+
+#ifdef HCI_LE_SET_HOST_FEATURE_SUPPORT
+/**
+ *  \brief To set or clear a bit controlled by the Host in the Link
+ *         Layer Feature Set stored in the Controller.
+ *
+ *  \par Description:
+ *       The HCI_LE_Set_Host_Feature command is used by the Host to
+ *       set or clear a bit controlled by the Host in the Link Layer
+ *       FeatureSet stored in the Controller.
+ *
+ *  \param [in] bit_number
+ *              Bit position in the FeatureSet
+ *
+ *  \param [in] bit_value
+ *              0x00: The Host feature is disabled and so the bit in the
+ *              FeatureSet shall be set to 0
+ *              0x01: The Host feature is enabled and so the bit in the
+ *              FeatureSet shall be set to 1
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_set_host_feature
+           (
+               UCHAR  bit_number,
+               UCHAR  bit_value
+           );
+#endif /* HCI_LE_SET_HOST_FEATURE_SUPPORT */
+
+#ifdef HCI_LE_READ_ISO_LINK_QUALITY_SUPPORT
+/**
+ *  \brief To read ISO Link Quality
+ *
+ *  \par Description:
+ *       This command returns the values of various counters related
+ *       to link quality that are associated with the isochronous
+ *       stream specified by the Connection_Handle parameter.
+ *
+ *  \param [in] connection_handle
+ *              Connection handle of a CIS or BIS
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_read_iso_link_quality
+           (
+               UINT16 connection_handle
+           );
+#endif /* HCI_LE_READ_ISO_LINK_QUALITY_SUPPORT */
+
+#ifdef HCI_LE_ENHANCED_READ_TRANSMIT_POWER_LEVEL_SUPPORT
+/**
+ *  \brief To read the current and maximum transmit power levels of the
+ *         local Controller
+ *
+ *  \par Description:
+ *       The HCI_LE_Enhanced_Read_Transmit_Power_Level command is
+ *       used to read the current and maximum transmit power levels
+ *       of the local Controller on the ACL connection identified by
+ *       the Connection_Handle parameter and the PHY indicated by the
+ *       PHY parameter.
+ *
+ *  \param [in] connection_handle
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] phy
+ *              0x01: LE 1M PHY
+ *              0x02: LE 2M PHY
+ *              0x03: LE Coded PHY with S=8 data coding
+ *              0x04: LE Coded PHY with S=2 data coding
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_enhanced_read_transmit_power_level
+           (
+               UINT16 connection_handle,
+               UCHAR  phy
+           );
+#endif /* HCI_LE_ENHANCED_READ_TRANSMIT_POWER_LEVEL_SUPPORT */
+
+#ifdef HCI_LE_READ_REMOTE_TRANSMIT_POWER_LEVEL_SUPPORT
+/**
+ *  \brief To read the transmit power level used by the remote
+ *         Controller
+ *
+ *  \par Description:
+ *       The HCI_LE_Read_Remote_Transmit_Power_Level command is used
+ *       to read the transmit power level used by the remote
+ *       Controller on the ACL connection that is identified by the
+ *       Connection_Handle parameter and the PHY indicated by the PHY
+ *       parameter.
+ *
+ *  \param [in] connection_handle
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] phy
+ *              0x01: LE 1M PHY
+ *              0x02: LE 2M PHY
+ *              0x03: LE Coded PHY with S=8 data coding
+ *              0x04: LE Coded PHY with S=2 data coding
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_read_remote_transmit_power_level
+           (
+               UINT16 connection_handle,
+               UCHAR  phy
+           );
+#endif /* HCI_LE_READ_REMOTE_TRANSMIT_POWER_LEVEL_SUPPORT */
+
+#ifdef HCI_LE_SET_PATH_LOSS_REPORTING_PARAMETERS_SUPPORT
+/**
+ *  \brief To set the path loss threshold reporting parameters
+ *
+ *  \par Description:
+ *       The HCI_LE_Set_Path_Loss_Reporting_Parameters command is
+ *       used to set the path loss threshold reporting parameters for
+ *       the ACL connection identified by the Connection_Handle
+ *       parameter.
+ *
+ *  \param [in] connection_handle
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] high_threshold
+ *              High threshold for the path loss
+ *              Units: dB
+ *              0xFF: High Threshold unused
+ *
+ *  \param [in] high_hysteresis
+ *              Hysteresis value for the high threshold
+ *              Units: dB
+ *
+ *  \param [in] low_threshold
+ *              Low threshold for the path loss
+ *              Units: dB
+ *
+ *  \param [in] low_hysteresis
+ *              Hysteresis value for the low threshold
+ *              Units: dB
+ *
+ *  \param [in] min_time_spent
+ *              Minimum time in number of connection events to be observed
+ *              once the path crosses the threshold before an event is
+ *              generated
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_set_path_loss_reporting_parameters
+           (
+               UINT16 connection_handle,
+               UCHAR  high_threshold,
+               UCHAR  high_hysteresis,
+               UCHAR  low_threshold,
+               UCHAR  low_hysteresis,
+               UINT16 min_time_spent
+           );
+#endif /* HCI_LE_SET_PATH_LOSS_REPORTING_PARAMETERS_SUPPORT */
+
+#ifdef HCI_LE_SET_PATH_LOSS_REPORTING_ENABLE_SUPPORT
+/**
+ *  \brief To enable or disable path loss reporting
+ *
+ *  \par Description:
+ *       The HCI_LE_Set_Path_Loss_Reporting_Enable command is used to
+ *       enable or disable path loss reporting for the ACL connection
+ *       identified by the Connection_Handle parameter. Path loss
+ *       reporting is disabled when the connection is first created.
+ *
+ *  \param [in] connection_handle
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] enable
+ *              0x00: Reporting disabled
+ *              0x01: Reporting enabled
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_set_path_loss_reporting_enable
+           (
+               UINT16 connection_handle,
+               UCHAR  enable
+           );
+#endif /* HCI_LE_SET_PATH_LOSS_REPORTING_ENABLE_SUPPORT */
+
+#ifdef HCI_LE_SET_TRANSMIT_POWER_REPORTING_ENABLE_SUPPORT
+/**
+ *  \brief To enable or disable the reporting to the local Host of
+ *         transmit power level changes in the local and remote
+ *         Controllers
+ *
+ *  \par Description:
+ *       The HCI_LE_Set_Transmit_Power_Reporting_Enable command is
+ *       used to enable or disable the reporting to the local Host of
+ *       transmit power level changes in the local and remote
+ *       Controllers for the ACL connection identified by the
+ *       Connection_Handle parameter. Reporting is disabled when the
+ *       connection is first created.
+ *
+ *  \param [in] connection_handle
+ *              Range: 0x0000 to 0x0EFF
+ *
+ *  \param [in] local_enable
+ *              0x00: Disable local transmit power reports
+ *              0x01: Enable local transmit power reports
+ *
+ *  \param [in] remote_enable
+ *              0x00: Disable remote transmit power reports
+ *              0x01: Enable remote transmit power reports
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_le_set_transmit_power_reporting_enable
+           (
+               UINT16 connection_handle,
+               UCHAR  local_enable,
+               UCHAR  remote_enable
+           );
+#endif /* HCI_LE_SET_TRANSMIT_POWER_REPORTING_ENABLE_SUPPORT */
+
+#ifdef HCI_SET_ECOSYSTEM_BASE_INTERVAL_SUPPORT
+/**
+ *  \brief To give hint to controller about base communication
+ *         interval.
+ *
+ *  \par Description:
+ *       This command provides a hint to the Controller specifying
+ *       the base communication interval the Controller can expect
+ *       current and future communications to use.
+ *
+ *  \param [in] interval
+ *              0x0000: Ignore any previous hint
+ *              N = 0xXXXX: Base interval of the ecosystem
+ *              Range: 0x0002 to 0x7DF0
+ *              Time = N * 1.25 ms
+ *              Time Range: 2.5 ms to 40.9 s.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_set_ecosystem_base_interval
+           (
+               UINT16 interval
+           );
+#endif /* HCI_SET_ECOSYSTEM_BASE_INTERVAL_SUPPORT */
+
+#ifdef HCI_CONFIGURE_DATA_PATH_SUPPORT
+/**
+ *  \brief To request the Controller to configure the data transport
+ *         path.
+ *
+ *  \par Description:
+ *       This command is used to request the Controller to configure
+ *       the data transport path in a given direction between the
+ *       Controller and the Host.
+ *
+ *  \param [in] data_path_direction
+ *              0x00: Input (Host to Controller)
+ *              0x01: Output (Controller to Host)
+ *
+ *  \param [in] data_path_id
+ *              Logical channel number; the meaning is vendor-specific.
+ *
+ *  \param [in] vendor_specific_config_length
+ *              Length of the vendor-specific configuration data
+ *
+ *  \param [in] vendor_specific_config
+ *              Vendor-specific configuration data for the data path being
+ *              configured.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_configure_data_path
+           (
+               UCHAR  data_path_direction,
+               UCHAR  data_path_id,
+               UCHAR  vendor_specific_config_length,
+               UCHAR * vendor_specific_config
+           );
+#endif /* HCI_CONFIGURE_DATA_PATH_SUPPORT */
+
+#ifdef HCI_READ_LOCAL_SUPPORTED_CODECS_V2_SUPPORT
+/**
+ *  \brief To read a list of the Bluetooth SIG defined and vendor
+ *         specific codecs supported by the Controller,
+ *
+ *  \par Description:
+ *       This command reads a list of the Bluetooth SIG approved
+ *       codecs supported by the Controller, as well as vendor
+ *       specific codecs, which are defined by an individual
+ *       manufacturer.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+#define BT_hci_read_local_supported_codecs_v2() \
+        hci_common_api_handler_no_params \
+        (HCI_READ_LOCAL_SUPPORTED_CODECS_V2_OPCODE)
+#endif /* HCI_READ_LOCAL_SUPPORTED_CODECS_V2_SUPPORT */
+
+#ifdef HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES_SUPPORT
+/**
+ *  \brief To read list of codec capabilities for a given codec.
+ *
+ *  \par Description:
+ *       This command is used to read codec capabilities supported by
+ *       the Controller for a given codec.
+ *
+ *  \param [in] codec_id
+ *              Octet 0: See Assigned Numbers for Coding Format
+ *              Octets 1 to 2: Company ID, see Assigned Numbers for Company
+ *              Identifier. Shall be ignored if octet 0 is not 0xFF.
+ *              Octets 3 to 4: Vendor-defined codec ID. Shall be ignored if
+ *              octet 0 is not 0xFF.
+ *
+ *  \param [in] logical_transport_type
+ *              0x01: BR/EDR ACL
+ *              0x02: BR/EDR SCO or eSCO
+ *              0x03: LE CIS
+ *              0x04: LE BIS
+ *
+ *  \param [in] direction
+ *              0x00: Input (Host to Controller)
+ *              0x01: Output (Controller to Host)
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_read_local_supported_codec_capabilities
+           (
+               UCHAR * codec_id,
+               UCHAR  logical_transport_type,
+               UCHAR  direction
+           );
+#endif /* HCI_READ_LOCAL_SUPPORTED_CODEC_CAPABILITIES_SUPPORT */
+
+#ifdef HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY_SUPPORT
+/**
+ *  \brief To read the range of supported Controller delays for a given
+ *         codec.
+ *
+ *  \par Description:
+ *       This command is used to read the range of supported
+ *       Controller delays for a given codec.
+ *
+ *  \param [in] codec_id
+ *              Octet 0: See Assigned Numbers for Coding Format
+ *              Octets 1 to 2: Company ID, see Assigned Numbers for Company
+ *              Identifier. Shall be ignored if octet 0 is not 0xFF.
+ *              Octets 3 to 4: Vendor-defined codec ID. Shall be ignored if
+ *              octet 0 is not 0xFF.
+ *
+ *  \param [in] logical_transport_type
+ *              0x01: BR/EDR ACL
+ *              0x02: BR/EDR SCO or eSCO
+ *              0x03: LE CIS
+ *              0x04: LE BIS
+ *
+ *  \param [in] direction
+ *              0x00: Input (Host to Controller)
+ *              0x01: Output (Controller to Host)
+ *
+ *  \param [in] codec_configuration_length
+ *              Length of codec configuration.
+ *
+ *  \param [in] codec_configuration
+ *              Codec-specific configuration data.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_read_local_supported_controller_delay
+           (
+               UCHAR * codec_id,
+               UCHAR  logical_transport_type,
+               UCHAR  direction,
+               UCHAR  codec_configuration_length,
+               UCHAR * codec_configuration
+           );
+#endif /* HCI_READ_LOCAL_SUPPORTED_CONTROLLER_DELAY_SUPPORT */
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -10253,7 +11901,7 @@ API_RESULT hci_sm_set_pin_type_master_link_key (UINT16 opcode, UCHAR flag);
 API_RESULT hci_sm_user_confirmation_request_reply
            (
                UCHAR *    bd_addr,
-               UCHAR      confirmation_accept
+               UCHAR      accept
            );
 #endif /* BT_SSP_UC */
 

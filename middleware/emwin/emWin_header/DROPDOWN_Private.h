@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.24 - Graphical user interface for embedded applications **
+** emWin V6.28 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2022-09-02
+SUA period:               2011-08-19 - 2023-09-03
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : DROPDOWN_Private.h
@@ -49,6 +49,7 @@ Purpose     : DROPDOWN private header file
 #include "DROPDOWN.h"
 #include "WIDGET.h"
 #include "GUI_ARRAY.h"
+#include "SCROLLER_Private.h"
 
 #if GUI_WINSUPPORT
 
@@ -83,21 +84,23 @@ typedef struct {
 } DROPDOWN_PROPS;
 
 typedef struct {
-  WIDGET              Widget;
-  I16                 Sel;        // Current selection
-  I16                 ySizeLB;    // ySize of assigned LISTBOX in expanded state
-  I16                 TextHeight;
-  GUI_ARRAY           Handles;
-  WM_SCROLL_STATE     ScrollState;
-  DROPDOWN_PROPS      Props;
-  WIDGET_SKIN const * pWidgetSkin;
-  WM_HWIN             hListWin;
-  U8                  Flags;
-  U16                 ItemSpacing;
-  U8                  ScrollbarWidth;
-  char                IsPressed;
-  WM_HMEM             hDisabled;
-  int                 LastMotionPosY;
+  WIDGET                 Widget;
+  I16                    Sel;        // Current selection
+  I16                    ySizeLB;    // ySize of assigned LISTBOX in expanded state
+  I16                    TextHeight;
+  GUI_ARRAY              Handles;
+  WM_SCROLL_STATE        ScrollState;
+  DROPDOWN_PROPS         Props;
+  WIDGET_SKIN const    * pWidgetSkin;
+  WM_HWIN                hListWin;
+  U8                     Flags;
+  U16                    ItemSpacing;
+  U8                     ScrollbarWidth;
+  char                   IsPressed;
+  WM_HMEM                hDisabled;
+  int                    LastMotionPosY;
+  SCROLLER_Handle        hScrollerV;
+  SCROLLER_Handle        hScrollerH;
 } DROPDOWN_Obj;
 
 /*********************************************************************
@@ -107,7 +110,7 @@ typedef struct {
 **********************************************************************
 */
 #if GUI_DEBUG_LEVEL >= GUI_DEBUG_LEVEL_CHECK_ALL
-  #define DROPDOWN_INIT_ID(p) (p->Widget.DebugId = DROPDOWN_ID)
+  #define DROPDOWN_INIT_ID(p) (p->Widget.DebugId = WIDGET_TYPE_DROPDOWN)
 #else
   #define DROPDOWN_INIT_ID(p)
 #endif

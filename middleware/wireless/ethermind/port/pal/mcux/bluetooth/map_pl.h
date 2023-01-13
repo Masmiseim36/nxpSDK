@@ -39,6 +39,9 @@
 /* MAP Rx. Message file name */
 #define APPL_MAPC_EVENT_RPRT_FILE        "map_tx_event.txt"
 
+#define   APPL_MAPS_EVENT_REPORT_FILE_NAME                    "MAP-event_report.xml"
+#define   APPL_MAPS_CONV_LISTING_FILE_NAME                    "MAP-tx_conv_listing_file.xml"
+
 /* Base folder for MAP objects */
 #define MAP_ROOT_FOLDER_BASE \
     BT_FOPS_PATH_JOIN(BT_FOPS_BASE,"data" BT_FOPS_PATH_SEP "map")
@@ -144,6 +147,46 @@ API_RESULT BT_map_set_path_forward_pl
                /* IN */     UCHAR * folder
            );
 #endif /* 0 */
+
+API_RESULT BT_map_build_event_report_file_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *event_file,
+               /* IN */  UCHAR   *folder_type,
+               /* IN */  UCHAR   *event_type,
+               /* IN */  UCHAR   event_ver,
+               /* IN */  UCHAR   *handle,
+               /* IN */  UCHAR   *msg_type
+           );
+
+API_RESULT BT_map_add_participant_to_conversation_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *convlist_file,
+               /* IN */  UCHAR   *conv_id
+           );
+
+API_RESULT BT_map_check_conversation_id_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *convlist_file,
+               /* IN */  UCHAR   *conv_id_str
+           );
+
+#define    BT_map_set_default_converstation_list_pl(d_e, c_f)        \
+           BT_map_add_participant_to_conversation_pl                \
+           (                                                        \
+               (d_e),                                               \
+               (c_f),                                               \
+               NULL                                                 \
+           )
+
+API_RESULT BT_map_update_conversation_participant_fields_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *convlist_file,
+               /* IN */  UCHAR   *conv_id
+           );
 
 #endif /* _H_MAP_PL_ */
 

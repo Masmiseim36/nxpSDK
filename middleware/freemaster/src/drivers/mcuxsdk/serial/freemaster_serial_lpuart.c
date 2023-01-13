@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2022 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -232,6 +232,10 @@ static FMSTR_BOOL _FMSTR_SerialLpuartIsTransmitRegEmpty(void)
 static FMSTR_BOOL _FMSTR_SerialLpuartIsReceiveRegFull(void)
 {
     uint32_t sr = LPUART_GetStatusFlags(fmstr_serialBaseAddr);
+
+   /* Clear the overrun bit for the receiver to continue normal operation. */
+    if((sr & (uint32_t)kLPUART_RxOverrunFlag) != 0U)
+        LPUART_ClearStatusFlags(fmstr_serialBaseAddr, kLPUART_RxOverrunFlag);
 
     return (FMSTR_BOOL)((sr & (uint32_t)kLPUART_RxDataRegFullFlag) != 0U);
 }

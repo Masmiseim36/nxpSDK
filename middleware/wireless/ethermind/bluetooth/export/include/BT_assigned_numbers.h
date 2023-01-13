@@ -565,7 +565,8 @@
  *                   8         Bluetooth Core Specification 4.2
  *                   9         Bluetooth Core Specification 5.0
  *                  10         Bluetooth Core Specification 5.1
- *                  11 - 255   Reserved
+ *                  11         Bluetooth Core Specification 5.2
+ *                  12 - 255   Reserved
  */
 #define BT_LMP_VERSION_1_0_B                       0U
 #define BT_LMP_VERSION_1_1                         1U
@@ -578,6 +579,7 @@
 #define BT_LMP_VERSION_4_2                         8U
 #define BT_LMP_VERSION_5_0                         9U
 #define BT_LMP_VERSION_5_1                         10U
+#define BT_LMP_VERSION_5_2                         11U
 
 
 /* ===============================  HCI Controller Interface Definitions */
@@ -594,8 +596,10 @@
  *                   8         Bluetooth Core Specification 4.2
  *                   9         Bluetooth Core Specification 5.0
  *                  10         Bluetooth Core Specification 5.1
- *                  11 - 255   Reserved
+ *                  11         Bluetooth Core Specification 5.2
+ *                  12 - 255   Reserved
  */
+/* TODO: Check for better protection logic */
 #ifndef BT_HCI_VERSION_1_0_B
 #define BT_HCI_VERSION_1_0_B                        0U
 #endif /*BT_HCI_VERSION_1_0_B*/
@@ -629,6 +633,9 @@
 #ifndef BT_HCI_VERSION_5_1
 #define BT_HCI_VERSION_5_1                          10U
 #endif /*BT_HCI_VERSION_5_1*/
+#ifndef BT_HCI_VERSION_5_2
+#define BT_HCI_VERSION_5_2                          11U
+#endif /*BT_HCI_VERSION_5_2*/
 
 /* ========================  Protocol Adaptation Layer (PAL) Definitions */
 /*
@@ -746,13 +753,32 @@
 /* TX Power Level */
 #define HCI_EIR_DATA_TYPE_TX_POWER_LEVEL              0x0AU
 
-/* Secure Simple Pairing Out of Band (OOB) */
+/* Class of Device */
 #define HCI_EIR_DATA_TYPE_CLASS_OF_DEVICE             0x0DU
+
+/* Secure Simple Pairing Out of Band (OOB) */
 #define HCI_EIR_DATA_TYPE_SIMPLE_PAIRING_HASH_C       0x0EU
+#define HCI_EIR_DATA_TYPE_SIMPLE_PAIRING_HASH_C_192   0x0EU
 #define HCI_EIR_DATA_TYPE_SIMPLE_PAIRING_RANDOMIZER_R 0x0FU
+#define HCI_EIR_DATA_TYPE_SMPL_PAIRNG_RNDMIZER_R_192  0x0FU
 
 /* Device ID */
 #define HCI_EIR_DATA_TYPE_DEVICE_ID                   0x10U
+
+/* Security Manager */
+#define HCI_EIR_DATE_TYPE_SECURITY_MANAGER_TK_VALUE   0x10U
+#define HCI_EIR_DATA_TYPE_SECURITY_MANAGER_OOB_FLAGS  0x11U
+
+/* Slave Connection Interval Range */
+#define HCI_EIR_DATA_TYPE_SL_CONNECTION_INTRVL_RANGE  0x12U
+
+/* Service Solicitation UUIDs */
+#define HCI_EIR_DATA_TYPE_16_BIT_SRVC_SOLICTN_UUIDS   0x14U
+#define HCI_EIR_DATA_TYPE_128_BIT_SRVC_SOLICTN_UUIDS  0x15U
+
+/* Service Data */
+#define HCI_EIR_DATA_TYPE_SERV_DATA                   0x16U
+#define HCI_EIR_DATA_TYPE_SERV_DATA_16_BIT_UUIDS      0x16U
 
 /* Advertising Data Type - Target Address */
 #define HCI_AD_TYPE_PUBLIC_TARGET_ADDRESS             0x17U
@@ -761,11 +787,66 @@
 /* Advertising Data Type - Appearance */
 #define HCI_AD_TYPE_APPEARANCE                        0x19U
 
+/* Advertising Data Type - Advertising Interval */
+#define HCI_AD_TYPE_ADVERTISING_INTERVAL              0x1AU
+
+/* Advertising Data Type - LE  Bluetooth Device Address */
+#define HCI_AD_TYPE_LE_BLUETOOTH_DEVICE_ADDRESS       0x1BU
+
+/* Advertising Data Type - LE ROLE */
+#define HCI_AD_TYPE_LE_ROLE                           0x1CU
+
+/* Advertising Data Type - Simple Pairing */
+#define HCI_AD_TYPE_SIMPLE_PAIRING_HASH_C_256         0x1DU
+#define HCI_AD_TYPE_SIMPLE_PAIRING_RANDOMIZER_R_256   0x1EU
+
+/* Advertising Data Type - Service Solicitation UUIDs */
+#define HCI_AD_TYPE_32_BIT_SERVICE_SOLICITATION_UUIDS 0x1FU
+
+/* Advertising Data Type - Service Data UUIDs */
+#define HCI_AD_TYPE_SERVICE_DATA_32_BIT_UUIDS         0x20U
+#define HCI_AD_TYPE_SERVICE_DATA_128_BIT_UUIDS        0x21U
+
+/* Advertising Data Type - LE Secure Connections Values */
+#define HCI_AD_TYPE_LE_SECURE_CONNECTIONS_CONF_VAL    0x22U
+#define HCI_AD_TYPE_LE_SECURE_CONNECTIONS_RNDM_VAL    0x23U
+
+/* Advertising Data Type - URI */
+#define HCI_AD_TYPE_URI                               0x24U
+
 /* Advertising Data Type - Indoor Positioning */
 #define HCI_AD_TYPE_INDOOR_POSITIONING                0x25U
 
 /* Advertising Data Type - Transport Discovery */
 #define HCI_AD_TYPE_TRANSPORT_DISCOVERY               0x26U
+
+/* Advertising Data Type - LE Supported Features */
+#define HCI_AD_TYPE_LE_SUPPORTED_FEATURES             0x27U
+
+/* Advertising Data Type - Channel Map Update Indication */
+#define HCI_AD_TYPE_CHANNEL_MAP_UPDATE_INDICATION     0x28U
+
+/* Advertising Data Type - PB-ADV */
+#define HCI_AD_TYPE_PB_ADV                            0x29U
+
+/* Advertising Data Type - Mesh*/
+#define HCI_AD_TYPE_MESH_MESSAGE                      0x2AU
+#define HCI_AD_TYPE_MESH_BEACON                       0x2BU
+
+/* Advertising Data Type - BIGInfo */
+#define HCI_AD_TYPE_BIGINFO                           0x2CU
+
+/* Advertising Data Type - Broadcast_Code */
+#define HCI_AD_TYPE_BROADCAST_CODE                    0x2DU
+
+/* Advertising Data Type - Resolvable Set Identifier */
+#define HCI_AD_TYPE_RESOLVABLE_SET_IDENTIFIER         0x2EU
+
+/* Advertising Data Type - Advertising Interval*/
+#define HCI_AD_TYPE_ADVERTISING_INTERVAL_LONG         0x2FU
+
+/* Advertising Data Type - 3D Information Data */
+#define HCI_AD_TYPE_3D_INFORMATION_DATA               0x3DU
 
 /* Manufacturer Specific Data */
 #define HCI_EIR_DATA_TYPE_MANUFACTURER_SPECIFIC_DATA  0xFFU
@@ -814,8 +895,12 @@
 #define L2CAP_SMP_CID                           0x0006U
 #define L2CAP_SMP_BREDR_CID                     0x0007U
 
-/** L2CAP PSM for LE Profiles */
-#define LE_PSM_IPSP                             0x0023U
+/** L2CAP PSM for GATT Profiles */
+#define IPSP_LE_PSM                             0x0023
+#define OTS_PSM                                 0x0025
+
+/** L2CAP PSM for Enhanced ATT Bearer */
+#define EATT_PSM                                0x0027
 
 #endif /* _H_BT_ASSIGNED_NUMBERS_ */
 

@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
-*   HTTPSRV support functions.
-*/
+ *   HTTPSRV support functions.
+ */
 
 #include "httpsrv.h"
 #include "httpsrv_prv.h"
@@ -27,8 +27,8 @@
 #define HTTPSRV_CALLBACK_TASK_NAME "HTTP server callback handler"
 
 /*
-* string table item
-*/
+ * string table item
+ */
 typedef struct httpsrv_table_row
 {
     int id;
@@ -45,8 +45,8 @@ typedef struct httpsrv_content_table_row
 } HTTPSRV_CONTENT_TABLE_ROW;
 
 /*
-* content type
-*/
+ * content type
+ */
 static const HTTPSRV_TABLE_ROW content_type[] = {{HTTPSRV_CONTENT_TYPE_PLAIN, "text/plain"},
                                                  {HTTPSRV_CONTENT_TYPE_HTML, "text/html"},
                                                  {HTTPSRV_CONTENT_TYPE_CSS, "text/css"},
@@ -64,8 +64,8 @@ static const HTTPSRV_TABLE_ROW content_type[] = {{HTTPSRV_CONTENT_TYPE_PLAIN, "t
                                                  {0, 0}};
 
 /*
-* Response status to reason conversion table
-*/
+ * Response status to reason conversion table
+ */
 static const HTTPSRV_TABLE_ROW reason_phrase[] = {
     {HTTPSRV_CODE_CONTINUE, "Continue"},
     {HTTPSRV_CODE_UPGRADE, "Switching Protocols"},
@@ -273,7 +273,7 @@ EXIT:
 void httpsrv_destroy_server(HTTPSRV_STRUCT *server)
 {
     uint32_t n = 0;
-    bool wait = false;
+    bool wait  = false;
 
     if (server)
     {
@@ -287,7 +287,7 @@ void httpsrv_destroy_server(HTTPSRV_STRUCT *server)
             }
         }
 
-        if(server->session)
+        if (server->session)
         {
             /* Invalidate sessions (this is signal for session tasks to end them) */
             for (n = 0; n < server->params.max_ses; n++)
@@ -316,20 +316,20 @@ void httpsrv_destroy_server(HTTPSRV_STRUCT *server)
             server->session = NULL;
         }
 
-        if(server->ses_cnt)
+        if (server->ses_cnt)
         {
             sys_sem_free(&server->ses_cnt);
         }
 
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
-        if(server->tls_ctx)
+        if (server->tls_ctx)
         {
             httpsrv_tls_release(server->tls_ctx);
         }
 #endif
 
         /* Free memory */
-        server->params.root_dir = NULL;
+        server->params.root_dir   = NULL;
         server->params.index_page = NULL;
     }
 }
@@ -351,37 +351,16 @@ static int32_t httpsrv_init_socket(HTTPSRV_STRUCT *server)
 {
     int error;
     int option;
-#if LWIP_SO_SNDTIMEO || LWIP_SO_RCVTIMEO
-    struct timeval timeval_option;
-#endif
 
     if ((server->sock = lwip_socket(server->params.address.sa_family, SOCK_STREAM, 0)) < 0)
     {
         return (HTTPSRV_CREATE_FAIL);
     }
 
-/* Set socket options */
-#if LWIP_SO_SNDTIMEO
-    timeval_option.tv_sec = HTTPSRV_CFG_SEND_TIMEOUT / 1000;  /* seconds */
-    timeval_option.tv_usec = HTTPSRV_CFG_SEND_TIMEOUT % 1000; /* and microseconds */
-    error = lwip_setsockopt(server->sock, SOL_SOCKET, SO_SNDTIMEO, (const void *)&timeval_option, sizeof(timeval_option));
-    if (error)
-    {
-        return (HTTPSRV_SOCKOPT_FAIL);
-    }
-#endif
-#if LWIP_SO_RCVTIMEO
-    timeval_option.tv_sec = HTTPSRV_CFG_RECEIVE_TIMEOUT / 1000;  /* seconds */
-    timeval_option.tv_usec = HTTPSRV_CFG_RECEIVE_TIMEOUT % 1000; /* and microseconds */
-    error = lwip_setsockopt(server->sock, SOL_SOCKET, SO_RCVTIMEO, (const void *)&timeval_option, sizeof(timeval_option));
-    if (error)
-    {
-        return (HTTPSRV_SOCKOPT_FAIL);
-    }
-#endif
+    /* Set socket options */
     /* Disable Nagle algorithm.*/
     option = 1;
-    error = lwip_setsockopt(server->sock, IPPROTO_TCP, TCP_NODELAY, (const void *)&option, sizeof(option));
+    error  = lwip_setsockopt(server->sock, IPPROTO_TCP, TCP_NODELAY, (const void *)&option, sizeof(option));
     if (error)
     {
         return (HTTPSRV_SOCKOPT_FAIL);
@@ -390,7 +369,7 @@ static int32_t httpsrv_init_socket(HTTPSRV_STRUCT *server)
 #if SO_REUSE
     /* set options to reuse local ip addr for socket */
     option = 1;
-    error = lwip_setsockopt(server->sock, SOL_SOCKET, SO_REUSEADDR, (const void *)&option, sizeof(option));
+    error  = lwip_setsockopt(server->sock, SOL_SOCKET, SO_REUSEADDR, (const void *)&option, sizeof(option));
     if (error)
     {
         return (HTTPSRV_SOCKOPT_FAIL);
@@ -432,21 +411,21 @@ static int32_t httpsrv_init_socket(HTTPSRV_STRUCT *server)
 static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *params)
 {
 #if LWIP_IPV4
-    server->params.address.sa_family = AF_INET;
+    server->params.address.sa_family                            = AF_INET;
     ((struct sockaddr_in *)(&server->params.address))->sin_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTP_PORT);
 #elif LWIP_IPV6
-    server->params.address.sa_family = AF_INET6;
+    server->params.address.sa_family                              = AF_INET6;
     ((struct sockaddr_in6 *)(&server->params.address))->sin6_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTP_PORT);
 #endif
 
-    server->params.max_uri = HTTPSRV_CFG_DEFAULT_URL_LEN;
-    server->params.max_ses = HTTPSRV_CFG_DEFAULT_SES_CNT;
-    server->params.root_dir = "";
-    server->params.index_page = HTTPSRV_CFG_DEFAULT_INDEX_PAGE;
+    server->params.max_uri     = HTTPSRV_CFG_DEFAULT_URL_LEN;
+    server->params.max_ses     = HTTPSRV_CFG_DEFAULT_SES_CNT;
+    server->params.root_dir    = "";
+    server->params.index_page  = HTTPSRV_CFG_DEFAULT_INDEX_PAGE;
     server->params.cgi_lnk_tbl = NULL;
     server->params.ssi_lnk_tbl = NULL;
-    server->params.task_prio = HTTPSRV_CFG_DEFAULT_PRIORITY;
-    server->params.auth_table = NULL;
+    server->params.task_prio   = HTTPSRV_CFG_DEFAULT_PRIORITY;
+    server->params.auth_table  = NULL;
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
     server->tls_ctx = NULL;
 #endif
@@ -503,35 +482,38 @@ static int32_t httpsrv_set_params(HTTPSRV_STRUCT *server, HTTPSRV_PARAM_STRUCT *
 #endif
 
 #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
-        if(params->tls_param)
+        if (params->tls_param)
         {
             server->tls_ctx = httpsrv_tls_init(params->tls_param);
-            if(server->tls_ctx  == NULL)
+            if (server->tls_ctx == NULL)
             {
-                return(HTTPSRV_ERR);
+                return (HTTPSRV_ERR);
             }
 
             /* Set default HTTPS port.*/
-        #if LWIP_IPV4
-            if(server->params.address.sa_family == AF_INET)
+#if LWIP_IPV4
+            if (server->params.address.sa_family == AF_INET)
             {
                 /* Set default port.*/
                 if (((struct sockaddr_in *)(&params->address))->sin_port == 0)
                 {
-                    ((struct sockaddr_in *)(&server->params.address))->sin_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTPS_PORT);
+                    ((struct sockaddr_in *)(&server->params.address))->sin_port =
+                        PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTPS_PORT);
                 }
             }
-        #endif
-        #if LWIP_IPV6
-            else if(server->params.address.sa_family == AF_INET6)
+#endif
+#if LWIP_IPV6
+            else if (server->params.address.sa_family == AF_INET6)
             {
-                if (((struct sockaddr_in6 *)(&params->address))->sin_port == 0)
+                if (((struct sockaddr_in6 *)(&params->address))->sin6_port == 0)
 
-                    ((struct sockaddr_in6 *)(&server->params.address))->sin6_port = PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTPS_PORT);
+                    ((struct sockaddr_in6 *)(&server->params.address))->sin6_port =
+                        PP_HTONS(HTTPSRV_CFG_DEFAULT_HTTPS_PORT);
             }
-        #endif
+#endif
             else
-            {}
+            {
+            }
         }
 #endif
         /* Server must run with lower priority than TCP/IP task. */
@@ -745,11 +727,11 @@ void httpsrv_sendhdr(HTTPSRV_SESSION_STRUCT *session, int32_t content_len, bool 
 */
 void httpsrv_send_err_page(HTTPSRV_SESSION_STRUCT *session, const char *title, const char *text)
 {
-    uint32_t    length;
-    char        *page;
+    uint32_t length;
+    char *page;
 
-    length = strlen(title) + strlen(text) + sizeof(ERR_PAGE_FORMAT)+1;
-    page = httpsrv_mem_alloc(length);
+    length = strlen(title) + strlen(text) + sizeof(ERR_PAGE_FORMAT) + 1;
+    page   = httpsrv_mem_alloc(length);
 
     session->response.content_type = HTTPSRV_CONTENT_TYPE_HTML;
 
@@ -782,7 +764,7 @@ void httpsrv_send_err_page(HTTPSRV_SESSION_STRUCT *session, const char *title, c
 static void httpsrv_process_file_type(char *extension, HTTPSRV_SESSION_STRUCT *session)
 {
     const HTTPSRV_CONTENT_TABLE_ROW *row = content_tbl;
-    uint32_t length = 0;
+    uint32_t length                      = 0;
 
     if (extension != NULL)
     {
@@ -930,7 +912,7 @@ static uint32_t httpsrv_sendextstr(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUC
     uint32_t retval;
 
     t_buffer = session->response.script_buffer;
-    src = session->buffer.data + session->buffer.offset;
+    src      = session->buffer.data + session->buffer.offset;
 
     n = strlen(t_buffer);
 
@@ -941,7 +923,7 @@ static uint32_t httpsrv_sendextstr(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUC
         uint32_t i;
         char token[] = "<%";
 
-        i = 0;
+        i   = 0;
         max = length;
 
         for (n_send = 0; (n_send < max) && (token[i]); n_send++)
@@ -954,13 +936,13 @@ static uint32_t httpsrv_sendextstr(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUC
             }
             else
             {
-                i = 0;
-                max = length;
+                i                                  = 0;
+                max                                = length;
                 session->response.script_buffer[0] = 0;
             }
         }
         session->buffer.offset = n_send - i;
-        retval = i;
+        retval                 = i;
     }
     else if (n == 1) /* There was already the less-than sign.*/
     {
@@ -968,7 +950,7 @@ static uint32_t httpsrv_sendextstr(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUC
         {
             /* There is script token spanning over two buffers. */
             t_buffer[n] = *src;
-            retval = 1;
+            retval      = 1;
         }
         else
         {
@@ -1048,7 +1030,7 @@ int32_t httpsrv_write(HTTPSRV_SESSION_STRUCT *session, char *src, int32_t length
     }
 
     /* Now we can save user data to buffer and eventually send them to client */
-    space = HTTPSRV_SES_BUF_SIZE_PRV - session->buffer.offset;
+    space  = HTTPSRV_SES_BUF_SIZE_PRV - session->buffer.offset;
     n_send = (space < length) ? space : length;
     memcpy(session->buffer.data + session->buffer.offset, src, n_send);
     session->buffer.offset += n_send;
@@ -1086,14 +1068,14 @@ int32_t httpsrv_write(HTTPSRV_SESSION_STRUCT *session, char *src, int32_t length
 */
 int32_t httpsrv_read(HTTPSRV_SESSION_STRUCT *session, char *dst, int32_t len)
 {
-    int read = 0;
+    int read           = 0;
     uint32_t data_size = session->buffer.offset;
 
     /* If there are any data in buffer copy them to user buffer */
     if (data_size > 0)
     {
         uint32_t length = (data_size < len) ? data_size : len;
-        uint32_t tail = HTTPSRV_SES_BUF_SIZE_PRV - length;
+        uint32_t tail   = HTTPSRV_SES_BUF_SIZE_PRV - length;
 
         memcpy(dst, session->buffer.data, length);
         memmove(session->buffer.data, session->buffer.data + length, tail);
@@ -1165,10 +1147,10 @@ static void httpsrv_print(HTTPSRV_SESSION_STRUCT *session, char *format, ...)
     char *buffer = session->buffer.data;
     int buffer_space;
 
-#if !defined ( __CC_ARM )	/* Workarounfd for Keil vsnprintf()*/
-	  uint32_t req_space = 0;
+#if !defined(__CC_ARM) /* Workarounfd for Keil vsnprintf()*/
+    uint32_t req_space = 0;
 
-	  buffer_space = HTTPSRV_SES_BUF_SIZE_PRV - session->buffer.offset;
+    buffer_space = HTTPSRV_SES_BUF_SIZE_PRV - session->buffer.offset;
 
     va_start(ap, format);
     /* First we always test if there is enough space in buffer. If there is not,
@@ -1182,7 +1164,7 @@ static void httpsrv_print(HTTPSRV_SESSION_STRUCT *session, char *format, ...)
         httpsrv_ses_flush(session);
         buffer_space = HTTPSRV_SES_BUF_SIZE_PRV;
     }
-		va_start(ap, format);
+    va_start(ap, format);
     session->buffer.offset += vsnprintf(buffer + session->buffer.offset, buffer_space, format, ap);
     va_end(ap);
 }
@@ -1205,9 +1187,9 @@ int32_t httpsrv_ses_flush(HTTPSRV_SESSION_STRUCT *session)
     uint32_t data_length;
     char *data;
 
-    send_total = 0;
+    send_total  = 0;
     data_length = session->buffer.offset;
-    data = session->buffer.data;
+    data        = session->buffer.data;
 
     while (send_total < data_length)
     {
@@ -1243,7 +1225,7 @@ int32_t httpsrv_ses_flush(HTTPSRV_SESSION_STRUCT *session)
 int32_t httpsrv_req_line(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session, char *buffer)
 {
     char *uri_begin = NULL;
-    char *uri_end = NULL;
+    char *uri_end   = NULL;
     uint32_t written;
 
     if (strncmp(buffer, "GET ", 4) == 0)
@@ -1278,7 +1260,7 @@ int32_t httpsrv_req_line(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session
     }
     else
     {
-        session->request.path[0] = '\0';
+        session->request.path[0]      = '\0';
         session->response.status_code = HTTPSRV_CODE_BAD_REQ;
         return (HTTPSRV_ERR);
     }
@@ -1355,7 +1337,7 @@ int32_t httpsrv_req_hdr(HTTPSRV_SESSION_STRUCT *session, char *buffer)
         unsigned long int value;
 
         param_ptr = buffer + 16;
-        value = strtoul(param_ptr, NULL, 10);
+        value     = strtoul(param_ptr, NULL, 10);
         if (value == ULONG_MAX)
         {
             retval = HTTPSRV_ERR;
@@ -1382,7 +1364,7 @@ int32_t httpsrv_req_hdr(HTTPSRV_SESSION_STRUCT *session, char *buffer)
         if (lwip_strnicmp(param_ptr, "websocket", 9) == 0)
         {
             session->request.upgrade_to = HTTPSRV_WS_PROTOCOL;
-            session->ws_handshake = httpsrv_ws_alloc(session);
+            session->ws_handshake       = httpsrv_ws_alloc(session);
             if (session->ws_handshake == NULL)
             {
                 retval = HTTPSRV_ERR;
@@ -1403,7 +1385,7 @@ int32_t httpsrv_req_hdr(HTTPSRV_SESSION_STRUCT *session, char *buffer)
             pass = NULL;
             if (httpsrv_basic_auth(param_ptr + 6, &user, &pass) == HTTPSRV_OK)
             {
-                session->request.auth.user_id = user;
+                session->request.auth.user_id  = user;
                 session->request.auth.password = pass;
             }
         }
@@ -1427,8 +1409,8 @@ int32_t httpsrv_req_hdr(HTTPSRV_SESSION_STRUCT *session, char *buffer)
     {
         char *substring;
 
-        param_ptr = buffer + 24;
-        substring = strtok(param_ptr, ", ;\t");
+        param_ptr             = buffer + 24;
+        substring             = strtok(param_ptr, ", ;\t");
         session->ws_handshake = httpsrv_ws_alloc(session);
         if (session->ws_handshake == NULL)
         {
@@ -1450,7 +1432,7 @@ int32_t httpsrv_req_hdr(HTTPSRV_SESSION_STRUCT *session, char *buffer)
     }
     else if (strncmp(buffer, "Sec-WebSocket-Version: ", 23) == 0)
     {
-        param_ptr = buffer + 23;
+        param_ptr             = buffer + 23;
         session->ws_handshake = httpsrv_ws_alloc(session);
         if (session->ws_handshake == NULL)
         {
@@ -1612,10 +1594,10 @@ void httpsrv_url_decode(char *url)
     {
         if ((*src == '%') && (isxdigit((unsigned char)*(src + 1))) && (isxdigit((unsigned char)*(src + 2))))
         {
-            *src = *(src + 1);
+            *src       = *(src + 1);
             *(src + 1) = *(src + 2);
             *(src + 2) = '\0';
-            *dst++ = strtol(src, NULL, 16);
+            *dst++     = strtol(src, NULL, 16);
             src += 3;
         }
         else
@@ -1660,11 +1642,11 @@ static int httpsrv_basic_auth(char *auth_string, char **user_ptr, char **pass_pt
     char *user;
     char *pass;
 
-    pass = NULL;
-    user = NULL;
-    *user_ptr = NULL;
-    *pass_ptr = NULL;
-    retval = HTTPSRV_OK;
+    pass           = NULL;
+    user           = NULL;
+    *user_ptr      = NULL;
+    *pass_ptr      = NULL;
+    retval         = HTTPSRV_OK;
     decoded_length = 0;
 
     length = strlen(auth_string);
@@ -1680,7 +1662,7 @@ static int httpsrv_basic_auth(char *auth_string, char **user_ptr, char **pass_pt
     }
     /* evaluate number of bytes required for worst case (no padding) */
     decoded_length = (length / 4) * 3 + 1;
-    user = httpsrv_mem_alloc_zero(sizeof(char) * decoded_length);
+    user           = httpsrv_mem_alloc_zero(sizeof(char) * decoded_length);
     if (user != NULL)
     {
         base64_decode(user, auth_string, decoded_length);
@@ -1695,8 +1677,8 @@ static int httpsrv_basic_auth(char *auth_string, char **user_ptr, char **pass_pt
     pass = strchr(user, ':');
     if (pass != NULL)
     {
-        *pass = '\0';
-        pass = pass + 1;
+        *pass     = '\0';
+        pass      = pass + 1;
         *pass_ptr = pass;
     }
 EXIT:
@@ -1714,14 +1696,14 @@ char *httpsrv_path_create(const char *root, char *filename)
     uint32_t filename_length;
     uint32_t path_length;
 
-    root_length = strlen(root);
+    root_length     = strlen(root);
     filename_length = strlen(filename);
     /*
      * Length is worst case - +1 for terminating zero and +1 for potential
      * missing backslash
      */
     path_length = root_length + filename_length + 2;
-    tmp = filename;
+    tmp         = filename;
 
     /* Correct path slashes */
     while (*tmp != '\0')

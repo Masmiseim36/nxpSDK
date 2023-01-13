@@ -1,6 +1,6 @@
 var group__tcp__transport =
 [
-    [ "erpc_tcp_transport.h", "erpc__tcp__transport_8h.html", null ],
+    [ "erpc_tcp_transport.hpp", "erpc__tcp__transport_8hpp.html", null ],
     [ "TCPTransport", "classerpc_1_1_t_c_p_transport.html", [
       [ "TCPTransport", "classerpc_1_1_t_c_p_transport.html#aeb1f592078d519301d3bc0742670ed78", null ],
       [ "TCPTransport", "classerpc_1_1_t_c_p_transport.html#ac2f9d1dc1d6aecf85e6672656c8ad487", null ],

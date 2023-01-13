@@ -8,8 +8,6 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
-#include "../examples_common.h"
-
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus*/

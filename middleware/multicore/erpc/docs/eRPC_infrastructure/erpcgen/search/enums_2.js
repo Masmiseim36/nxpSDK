@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['int_5ftype_5ft',['int_type_t',['../class_integer_value.html#acb6f6bfc4690be410499df6fe6b746d4',1,'IntegerValue']]]
+  ['data_5ftype_5ft',['data_type_t',['../classerpcgen_1_1_data_type.html#aaf50f761fa731a9393688363841d983b',1,'erpcgen::DataType']]]
 ];

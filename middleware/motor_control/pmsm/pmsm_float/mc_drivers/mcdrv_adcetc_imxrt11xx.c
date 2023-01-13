@@ -38,23 +38,23 @@ void MCDRV_Curr3Ph2ShGet(mcdrv_adcetc_t *this)
         case 2:
         case 3:
             /* direct sensing of phase A and C, calculation of B */
-            sIABCtemp.f16A = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*23/10) << 2U) - this->sCurrSec23.ui16OffsetPhaA), 1);
-            sIABCtemp.f16C = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*23/10) << 2U) - this->sCurrSec23.ui16OffsetPhaC), 1);
+            sIABCtemp.f16A = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*64/55) << 3U) - this->sCurrSec23.ui16OffsetPhaA), 1);
+            sIABCtemp.f16C = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*64/55) << 3U) - this->sCurrSec23.ui16OffsetPhaC), 1);
             sIABCtemp.f16B = MLIB_Neg_F16(MLIB_AddSat_F16(sIABCtemp.f16A, sIABCtemp.f16C));
             break;
         case 4:
         case 5:
             /* direct sensing of phase A and B, calculation of C */
-            sIABCtemp.f16A = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*23/10) << 2U) - this->sCurrSec45.ui16OffsetPhaA), 1);
-            sIABCtemp.f16B = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*23/10) << 2U) - this->sCurrSec45.ui16OffsetPhaB), 1);
+            sIABCtemp.f16A = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*64/55) << 3U) - this->sCurrSec45.ui16OffsetPhaA), 1);
+            sIABCtemp.f16B = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*64/55) << 3U) - this->sCurrSec45.ui16OffsetPhaB), 1);
             sIABCtemp.f16C = MLIB_Neg_F16(MLIB_AddSat_F16(sIABCtemp.f16A, sIABCtemp.f16B));
             break;
         case 1:
         case 6:
         default:
             /* direct sensing of phase B and C, calculation of A */
-            sIABCtemp.f16B = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*23/10) << 2U) - this->sCurrSec16.ui16OffsetPhaB), 1);
-            sIABCtemp.f16C = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*23/10) << 2U) - this->sCurrSec16.ui16OffsetPhaC), 1);
+            sIABCtemp.f16B = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*64/55) << 3) - this->sCurrSec16.ui16OffsetPhaB), 1);
+            sIABCtemp.f16C = MLIB_ShLSat_F16(((frac16_t)((int16_t)((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*64/55) << 3) - this->sCurrSec16.ui16OffsetPhaC), 1);
             sIABCtemp.f16A = MLIB_Neg_F16(MLIB_AddSat_F16(sIABCtemp.f16B, sIABCtemp.f16C));
             break;
     }
@@ -188,21 +188,21 @@ void MCDRV_Curr3Ph2ShCalib(mcdrv_adcetc_t *this)
         case 2:
         case 3:
             /* sensing of offset IA -> ADCA and IC -> ADCC */
-            this->sCurrSec23.ui16CalibPhaA = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*23/10) << 2), &this->sCurrSec23.ui16FiltPhaA);
-            this->sCurrSec23.ui16CalibPhaC = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*23/10) << 2), &this->sCurrSec23.ui16FiltPhaC);
+            this->sCurrSec23.ui16CalibPhaA = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*64/55) << 3), &this->sCurrSec23.ui16FiltPhaA);
+            this->sCurrSec23.ui16CalibPhaC = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*64/55) << 3), &this->sCurrSec23.ui16FiltPhaC);
             break;
         case 4:
         case 5:
             /* sensing of offset IA -> ADCA and IB -> ADCC */
-            this->sCurrSec45.ui16CalibPhaA = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*23/10) << 2), &this->sCurrSec45.ui16FiltPhaA);
-            this->sCurrSec45.ui16CalibPhaB = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*23/10) << 2), &this->sCurrSec45.ui16FiltPhaB);
+            this->sCurrSec45.ui16CalibPhaA = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*64/55) << 3), &this->sCurrSec45.ui16FiltPhaA);
+            this->sCurrSec45.ui16CalibPhaB = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*64/55) << 3), &this->sCurrSec45.ui16FiltPhaB);
             break;
         case 1:
         case 6:
         default:
             /* sensing of offset IB -> ADCA and IC -> ADCC */
-            this->sCurrSec16.ui16CalibPhaB = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*23/10) << 2), &this->sCurrSec16.ui16FiltPhaB);
-            this->sCurrSec16.ui16CalibPhaC = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*23/10) << 2), &this->sCurrSec16.ui16FiltPhaC);
+            this->sCurrSec16.ui16CalibPhaB = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0))*64/55) << 3), &this->sCurrSec16.ui16FiltPhaB);
+            this->sCurrSec16.ui16CalibPhaC = GDFLIB_FilterMA_F16((frac16_t)(((ADC_ETC_TRIGn_RESULT_1_0_DATA0_MASK & (ADC_ETC->TRIG[4U].TRIGn_RESULT_1_0))*64/55) << 3), &this->sCurrSec16.ui16FiltPhaC);
             break;
     }
 
@@ -245,8 +245,8 @@ void MCDRV_VoltDcBusGet(mcdrv_adcetc_t *this)
 {
 
     /* read DC-bus voltage sample from defined ADC1 result register */
-    *this->pf16UDcBus = (frac16_t)((((ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0) >> ADC_ETC_TRIGn_RESULT_1_0_DATA1_SHIFT)*23/10) << 2); //ADC_ETC trigger0 (ADC1) chain1 
-
+    *this->pf16UDcBus = (frac16_t)(((ADC_ETC->TRIG[0U].TRIGn_RESULT_1_0) >> 13U) *64/55); //ADC_ETC trigger0 (ADC1) chain1 
+  
 }
 
 /*!

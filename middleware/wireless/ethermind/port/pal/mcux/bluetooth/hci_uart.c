@@ -25,7 +25,7 @@
 #include "task.h"
 #include "fsl_adapter_uart.h"
 
-#include "controller.h"
+#include "controller_hci_uart.h"
 
 #ifdef BT_UART
 
@@ -67,11 +67,12 @@ AT_NONCACHEABLE_SECTION_ALIGN(DECL_STATIC UCHAR hci_uart_wr_buf [HCI_UART_WR_BUF
 #endif /* HCI_UART_COLLECT_AND_WR_COMPLETE_PKT */
 
 /* UART Read Task Synchronization */
-BT_DEFINE_MUTEX (hci_uart_mutex)
-BT_DEFINE_COND (hci_uart_cond)
+BT_DEFINE_MUTEX_TYPE(DECL_STATIC, hci_uart_mutex)
+BT_DEFINE_COND_TYPE(DECL_STATIC, hci_uart_cond)
+
 #if HCI_UART_TX_NONBLOCKING || ((defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U)))
-BT_DEFINE_MUTEX (hci_uart_tx_mutex)
-BT_DEFINE_COND (hci_uart_tx_cond)
+BT_DEFINE_MUTEX_TYPE(DECL_STATIC, hci_uart_tx_mutex)
+BT_DEFINE_COND_TYPE(DECL_STATIC, hci_uart_tx_cond)
 #endif
 
 #ifdef HAVE_HCI_TX_RX_BYTE_COUNT
@@ -97,7 +98,11 @@ DECL_STATIC HT_PARSE ht;
 /* TODO: Check if we need to use any other common define */
 #define HCI_RX_QUEUE_SIZE (1024U)
 
-UART_HANDLE_DEFINE(hci_uart_handle);
+#ifdef BT_SNOOP_WRITE_TRUNCATE
+#define BT_SNOOP_PKTLEN_LIMIT 256U
+#endif /* BT_SNOOP_WRITE_TRUNCATE */
+
+DECL_STATIC UART_HANDLE_DEFINE(hci_uart_handle);
 #if (defined(HAL_UART_DMA_ENABLE) && (HAL_UART_DMA_ENABLE > 0U))
 UART_DMA_HANDLE_DEFINE(hci_uart_DmaHandle);
 #endif
@@ -133,7 +138,7 @@ void hci_uart_init (void)
     hci_uart_task_attr.thread_name       = (DECL_CONST CHAR  *)"EtherMind UART Task";
     hci_uart_task_attr.thread_stack_size = BT_TASK_STACK_DEPTH;
     /* Setting the Priority 1 Higher than the Default EtherMind Tasks */
-    hci_uart_task_attr.thread_priority   = (BT_TASK_PRIORITY - 1U);
+    hci_uart_task_attr.thread_priority   = (BT_TASK_PRIORITY);
 
     /* Create a thread to receive data From Serial PORT and BUFFER it */
     if (0U != BT_thread_create(&tid, &hci_uart_task_attr, hci_uart_read_task, NULL))
@@ -164,7 +169,7 @@ static void hci_uartdma_transmit_cb
            hal_dma_callback_msg_t *msg,
            void *callbackParam)
      {
- 
+
 #ifndef EM_ENABLE_PAL_OS
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     BaseType_t ret;
@@ -266,7 +271,7 @@ static void hci_uartdma_transmit_cb
                 "[HCI-UART] SIGNAL from ISR failed with RET%d\r\n", ret);
             }
 #else
- 
+
 #endif /* HCI_UART_TX_NONBLOCKING */
         }
         else
@@ -279,9 +284,29 @@ static void hci_uartdma_transmit_cb
             portYIELD_FROM_ISR(0U);
         }
 #endif
-    } 
+    }
 }
 #endif
+#ifdef BT_HAVE_SHUTDOWN
+/** HCI-UART Shutdown */
+void hci_uart_shutdown (void)
+{
+    /* Signal UART Read Task */
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_lock (&hci_uart_mutex);
+
+    /* Check for Shutdown state */
+    if (0x00U == hci_uart_state)
+    {
+        hci_uart_state = 0xFFU;
+
+        /* Required to Signal the task */
+        (BT_IGNORE_RETURN_VALUE) BT_thread_cond_signal (&hci_uart_cond);
+    }
+
+    (BT_IGNORE_RETURN_VALUE) BT_thread_mutex_unlock (&hci_uart_mutex);
+}
+#endif /* BT_HAVE_SHUTDOWN */
+
 void hci_uart_transmit_cb
      (
          hal_uart_handle_t handle,
@@ -470,6 +495,14 @@ void hci_uart_bt_init(void)
     dma_mux.dma_dmamux_configure.tx_request = getConfig.tx_request ;
     dmaConfig.dma_mux_configure = &dma_mux;
 #endif
+    
+#if (defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && (FSL_FEATURE_EDMA_HAS_CHANNEL_MUX > 0U))
+    dma_channel_mux_configure_t dmaChannelMux;
+    dmaChannelMux.dma_dmamux_configure.dma_rx_channel_mux = getConfig.rx_request;
+    dmaChannelMux.dma_dmamux_configure.dma_tx_channel_mux = getConfig.tx_request;
+    dmaConfig.dma_channel_mux_configure = &dmaChannelMux;
+#endif /* (defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && (FSL_FEATURE_EDMA_HAS_CHANNEL_MUX > 0U)) */
+
     // Init uart dma
     HAL_UartDMAInit( (hal_uart_handle_t)hci_uart_handle, (hal_uart_dma_handle_t *)hci_uart_DmaHandle, &dmaConfig);
 #endif
@@ -859,8 +892,15 @@ API_RESULT hci_uart_send_data
     /* Write HCI Packet */
     hci_uart_write_data (hci_uart_wr_buf, total_len);
 
+#ifdef BT_SNOOP_WRITE_TRUNCATE
+    if (BT_SNOOP_PKTLEN_LIMIT > total_len)
+    {
+#endif /* BT_SNOOP_WRITE_TRUNCATE */
     /* Transmitted packet logging in btsnoop format */
     BT_snoop_write_packet(hci_uart_wr_buf[0U], 0U, (&hci_uart_wr_buf[1U]), (total_len - 1U));
+#ifdef BT_SNOOP_WRITE_TRUNCATE
+    }
+#endif /* BT_SNOOP_WRITE_TRUNCATE */
 #endif
 
     /* Re-initialize */
@@ -972,6 +1012,12 @@ void hci_uart_write_data (UCHAR * buf, UINT16 length)
     BT_debug_dump_bytes (buf, length);
 #endif /* UART_TEST_MODE */
 }
+
+API_RESULT hci_transport_write_data (UCHAR type, UCHAR * buf, UINT16 length, UCHAR flag)
+{
+       return hci_uart_send_data(type, buf, length, flag);
+}
+
 #endif /* BT_UART */
 
 

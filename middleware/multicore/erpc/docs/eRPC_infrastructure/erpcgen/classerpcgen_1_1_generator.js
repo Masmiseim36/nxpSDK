@@ -1,5 +1,6 @@
 var classerpcgen_1_1_generator =
 [
+    [ "datatype_vector_t", "classerpcgen_1_1_generator.html#aac14e41bce876c761f554176a9b00203", null ],
     [ "generator_type_t", "classerpcgen_1_1_generator.html#a73e608ae6849a141197d12d73b94e1bf", [
       [ "kC", "classerpcgen_1_1_generator.html#a73e608ae6849a141197d12d73b94e1bfa1ac243a744f2be90da38a1ac180461ed", null ],
       [ "kPython", "classerpcgen_1_1_generator.html#a73e608ae6849a141197d12d73b94e1bface5321e211fef91206e95a1b95a372d1", null ]
@@ -20,6 +21,7 @@ var classerpcgen_1_1_generator =
     [ "getAnnotations", "classerpcgen_1_1_generator.html#a3847622cf2e371f720d18f442be9e987", null ],
     [ "getAnnStringValue", "classerpcgen_1_1_generator.html#aaada1d3103c40f5273aa99dd8d469df6", null ],
     [ "getAnnValue", "classerpcgen_1_1_generator.html#a9cfcd2a2294e23a2a318ebd6906cc80a", null ],
+    [ "getDataTypesFromSymbolScope", "classerpcgen_1_1_generator.html#a91fcb350eab3a0fd1ee8d388452f378d", null ],
     [ "getFunctionTemplateData", "classerpcgen_1_1_generator.html#aaea7b9a3157ee0246e97ec78cbd88d23", null ],
     [ "getGroupByName", "classerpcgen_1_1_generator.html#a8f4df36c8ff3bfc8cce766defc3e4b52", null ],
     [ "getOutputName", "classerpcgen_1_1_generator.html#ad9248c9805e956ae0176ad4bcc302bcd", null ],

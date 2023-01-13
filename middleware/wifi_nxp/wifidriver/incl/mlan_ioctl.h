@@ -1771,7 +1771,7 @@ typedef enum _mlan_rate_format
 typedef struct _mlan_rate_cfg_t
 {
     /** Fixed rate: 0, auto rate: 1 */
-    t_u32 is_rate_auto;
+    bool is_rate_auto;
     /** Rate type. 0: index; 1: value; 2: bitmap */
     t_u32 rate_type;
     /** Rate/MCS index or rate value if fixed rate */
@@ -1888,7 +1888,7 @@ typedef struct _mlan_ds_rate
 typedef struct _mlan_power_cfg_t
 {
     /** Is power auto */
-    t_u32 is_power_auto;
+    bool is_power_auto;
     /** Power level in dBm */
     t_u32 power_level;
 } mlan_power_cfg_t;

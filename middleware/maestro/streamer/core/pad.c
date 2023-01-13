@@ -62,15 +62,15 @@ static void post_activate(StreamPad *pad, PadScheduling new_mode);
  * @param type type of event
  * @param format event format
  * @param data event data
- * @return PadReturn
+ * @return FlowReturn
  */
-static PadReturn event_create(StreamEvent *event, EventType type, StreamDataFormat format, uint32_t data);
+static FlowReturn event_create(StreamEvent *event, EventType type, StreamDataFormat format, uint32_t data);
 
 /*
  * GLOBAL FUNCTIONS
  */
 
-PadReturn init_pad(StreamPad *pad, void *parent, PadType type)
+FlowReturn init_pad(StreamPad *pad, void *parent, PadType type)
 {
     STREAMER_FUNC_ENTER(DBG_CORE);
 
@@ -83,10 +83,10 @@ PadReturn init_pad(StreamPad *pad, void *parent, PadType type)
     PAD_PEER(pad)       = NULL;
 
     STREAMER_FUNC_EXIT(DBG_CORE);
-    return PAD_OK;
+    return FLOW_OK;
 }
 
-PadReturn deinit_pad(StreamPad *pad)
+FlowReturn deinit_pad(StreamPad *pad)
 {
     STREAMER_FUNC_ENTER(DBG_CORE);
 
@@ -98,7 +98,7 @@ PadReturn deinit_pad(StreamPad *pad)
     PAD_SCHEDULING(pad) = SCHEDULING_NONE;
 
     STREAMER_FUNC_EXIT(DBG_CORE);
-    return PAD_OK;
+    return FLOW_OK;
 }
 
 FlowReturn pad_push(StreamPad *pad, StreamBuffer *buffer)
@@ -144,7 +144,7 @@ uint8_t pad_push_event(StreamPad *pad, StreamEvent *event)
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
-    CHK_ARGS(pad == NULL || event == NULL || EVENT_TYPE(event) == EVENT_UNKNOWN, PAD_STREAM_ERR_INVALID_ARGS);
+    CHK_ARGS(pad == NULL || event == NULL || EVENT_TYPE(event) == EVENT_UNKNOWN, (uint8_t)FLOW_BAD_PARAMETER);
 
     /* (un)set the FLUSHING flag for flushing events */
     switch (EVENT_TYPE(event))
@@ -426,27 +426,27 @@ Exit:
     return ret;
 }
 
-PadReturn event_create_flush_start(StreamEvent *event)
+FlowReturn event_create_flush_start(StreamEvent *event)
 {
     return event_create(event, EVENT_FLUSH_START, DATA_FORMAT_UNDEFINED, 0);
 }
 
-PadReturn event_create_flush_stop(StreamEvent *event)
+FlowReturn event_create_flush_stop(StreamEvent *event)
 {
     return event_create(event, EVENT_FLUSH_STOP, DATA_FORMAT_UNDEFINED, 0);
 }
 
-PadReturn event_create_eos(StreamEvent *event)
+FlowReturn event_create_eos(StreamEvent *event)
 {
     return event_create(event, EVENT_EOS, DATA_FORMAT_UNDEFINED, 0);
 }
 
-PadReturn event_create_new_segment(StreamEvent *event, StreamDataFormat format, uint32_t data)
+FlowReturn event_create_new_segment(StreamEvent *event, StreamDataFormat format, uint32_t data)
 {
     return event_create(event, EVENT_NEWSEGMENT, format, data);
 }
 
-PadReturn event_create_seek(StreamEvent *event, StreamDataFormat format, uint32_t data)
+FlowReturn event_create_seek(StreamEvent *event, StreamDataFormat format, uint32_t data)
 {
     return event_create(event, EVENT_SEEK, format, data);
 }
@@ -465,10 +465,10 @@ uint8_t pad_query(StreamPad *pad, StreamQuery *query)
     return func(pad, query);
 }
 
-PadReturn query_create(
+FlowReturn query_create(
     StreamQuery *query, StreamInfoType type, StreamDataFormat format, StreamDataType data_type, StreamData *data)
 {
-    PadReturn ret = PAD_STREAM_ERR_INVALID_ARGS;
+    FlowReturn ret = FLOW_BAD_PARAMETER;
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
@@ -480,7 +480,7 @@ PadReturn query_create(
         QUERY_DATATYPE(query) = data_type;
         QUERY_DATA(query)     = data;
 
-        ret = PAD_OK;
+        ret = FLOW_OK;
     }
 
     STREAMER_FUNC_EXIT(DBG_CORE);
@@ -570,9 +570,9 @@ static void post_activate(StreamPad *pad, PadScheduling new_mode)
     STREAMER_FUNC_EXIT(DBG_CORE);
 }
 
-static PadReturn event_create(StreamEvent *event, EventType type, StreamDataFormat format, uint32_t data)
+static FlowReturn event_create(StreamEvent *event, EventType type, StreamDataFormat format, uint32_t data)
 {
-    PadReturn ret = PAD_STREAM_ERR_INVALID_ARGS;
+    FlowReturn ret = FLOW_BAD_PARAMETER;
 
     STREAMER_FUNC_ENTER(DBG_CORE);
 
@@ -583,7 +583,7 @@ static PadReturn event_create(StreamEvent *event, EventType type, StreamDataForm
         EVENT_FORMAT(event) = format;
         EVENT_DATA(event)   = data;
 
-        ret = PAD_OK;
+        ret = FLOW_OK;
     }
 
     STREAMER_FUNC_EXIT(DBG_CORE);

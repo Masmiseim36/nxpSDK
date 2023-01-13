@@ -47,8 +47,9 @@ static void swap_box_pointers(box_data* box_pointers[], int32_t i, int32_t j) {
 /* Inserts boxes in box_pointers then sorts the array by score.
  * Boxes with low scores are filtered out (NULL).
  * Also pre-computes the area of remaining boxes in box->area.
+ * Returns the number of boxes that have a score above score_thr.
  */
-static void sort_boxes(box_data boxes[], box_data* box_pointers[], int32_t num_boxes, float score_thr) {
+static int32_t sort_boxes(box_data boxes[], box_data* box_pointers[], int32_t num_boxes, float score_thr) {
 
 	/* initialize array of pointers to boxes */
 	for(int32_t i = 0; i < num_boxes; i++) {
@@ -67,14 +68,24 @@ static void sort_boxes(box_data boxes[], box_data* box_pointers[], int32_t num_b
 
 	/* filter boxes with low scores */
 	/* and pre-compute area of boxes */
+	int32_t n_selected_boxes = -1;
 	for(int32_t i = 0; i < num_boxes; i++) {
 		if(box_pointers[i]->score < score_thr) {
 			box_pointers[i] = 0;
+
+			// Remember the index of the last box that had a positive score.
+			// Since the boxes are sorted by score, it is the number of selected boxes.
+			if (n_selected_boxes < 0) {
+				n_selected_boxes = i;
+			}
+
 			continue;
 		}
 
 		box_pointers[i]->area = area(box_pointers[i]);
 	}
+
+	return n_selected_boxes;
 }
 /* Filters boxes using NMS threshold on IoU.
  * Boxes that are filtered out are set to NULL.
@@ -116,7 +127,7 @@ void nms(box_data boxes[], box_data* box_pointers[], int32_t num_boxes, float nm
     assert(box_pointers != NULL);
     assert(boxes != NULL);
 	/* sort and filter boxes by score */
-	sort_boxes(boxes, box_pointers, num_boxes, score_thr);
+    int32_t n_selected_boxes = sort_boxes(boxes, box_pointers, num_boxes, score_thr);
 	/* filter boxes by IoU */
-	filter_boxes(box_pointers, num_boxes, nms_thr);
+	filter_boxes(box_pointers, n_selected_boxes, nms_thr);
 }

@@ -1338,13 +1338,13 @@ static void do_connect_failed(enum wlan_event_reason reason)
 
     wlcm_d("connecting to \"%s\" failed", wlan.networks[wlan.cur_network_idx].name);
 
-    CONNECTION_EVENT(reason, NULL);
-    wlan.sta_state = CM_STA_IDLE;
-
     if (wlan.sta_state == CM_STA_SCANNING_USER)
     {
         wlan.sta_return_to = CM_STA_IDLE;
     }
+
+    wlan.sta_state = CM_STA_IDLE;
+    CONNECTION_EVENT(reason, NULL);
 }
 
 static void report_scan_results(void)
@@ -2597,6 +2597,7 @@ static void wlcm_deinit(int action)
         return;
     }
 
+    wifi_scan_stop();
     wifi_deinit();
 
     wlan.status = WLCMGR_INACTIVE;
@@ -2756,6 +2757,8 @@ static void wlcm_request_reconnect(enum cm_sta_state *next, struct wlan_network 
         wlcm_d("Reconnection failed. Giving up.");
         wlan.reassoc_request = false;
         wlan.reassoc_count   = 0;
+
+        CONNECTION_EVENT(WLAN_REASON_CONNECT_FAILED, NULL);
 
         wlcm_d("Disconnecting ... ");
         (void)wlan_disconnect();
@@ -3325,6 +3328,7 @@ int wlan_stop(void)
         return WLAN_ERROR_STATE;
     }
     wlan.running = 0;
+    wlan.scan_cb = NULL;
 
 #ifdef OTP_CHANINFO
     wifi_free_fw_region_and_cfp_tables();
@@ -4028,16 +4032,13 @@ int wlan_get_scan_result(unsigned int index, struct wlan_scan_result *res)
         {
             res->wpa = 1;
         }
-        if (desc->WPA_WPA2_WEP.wpa2 && desc->WPA_WPA2_WEP.wpa3_sae)
+        if (desc->WPA_WPA2_WEP.wpa3_sae)
         {
             res->wpa3_sae = 1;
         }
-        else if (desc->WPA_WPA2_WEP.wpa2 != 0U)
+        if (desc->WPA_WPA2_WEP.wpa2 != 0U)
         {
             res->wpa2 = 1;
-        }
-        else
-        { /* Do nothing */
         }
         if (desc->WPA_WPA2_WEP.wepStatic || desc->WPA_WPA2_WEP.wepDynamic)
         {

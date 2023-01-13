@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2022 NXP
  * All rights reserved.
  *
  * 
@@ -26,11 +26,16 @@ void SHA1_Transform(uint32_t state[5], const uint8_t buffer[64]);
 /* blk0() and blk() perform the initial expand. */
 /* I got the idea of expanding during the round function from SSLeay */
 /* FIXME: can we do this in an endian-proof way? */
-#ifdef BIG_ENDIAN
+#if (defined(BYTE_ORDER) && (BYTE_ORDER == BIG_ENDIAN)) ||\
+(!defined(BYTE_ORDER) && defined(BIG_ENDIAN))
 #define blk0(i) block->l[i]
-#else
+#elif (defined(BYTE_ORDER) && (BYTE_ORDER == LITTLE_ENDIAN)) ||\
+(!defined(BYTE_ORDER) && !defined(BIG_ENDIAN))
 #define blk0(i) (block->l[i] = (rol(block->l[i], 24) & 0xFF00FF00) | (rol(block->l[i], 8) & 0x00FF00FF))
+#else
+#error "Endianity not supported"
 #endif
+
 #define blk(i)          \
     (block->l[i & 15] = \
          rol(block->l[(i + 13) & 15] ^ block->l[(i + 8) & 15] ^ block->l[(i + 2) & 15] ^ block->l[i & 15], 1))

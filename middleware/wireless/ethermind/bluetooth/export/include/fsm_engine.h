@@ -69,6 +69,16 @@ extern "C" {
  */
 void em_fsm_init (void);
 
+#ifdef BT_HAVE_SHUTDOWN
+/**
+ *  \brief To de-initialize FSM module
+ *
+ *  \par Description:
+ *       This function is the EtherMind-de-init handler for the FSM module.
+ */
+void em_fsm_shutdown (void);
+#endif /* BT_HAVE_SHUTDOWN */
+
 /**
  *  \brief To perform Bluetooth specific initializations for FSM module
  *

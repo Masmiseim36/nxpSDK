@@ -7,7 +7,7 @@
 
 #include "fsl_common.h"
 
-#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_BOARD_IW61x) || \
+#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_IW61x_BOARD_RD_USD) || \
      defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM510MA) || \
      defined(WIFI_88W8987_BOARD_AW_CM358_USD) || defined(WIFI_88W8987_BOARD_AW_CM358MA) || \
      defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
@@ -19,7 +19,9 @@
 #elif defined(SD8987)
 #include "sduart8987_wlan_bt.h"
 #elif defined(IW61x)
+#ifndef BT_THIRDPARTY_SUPPORT
 #include "sduart_nw61x.h"
+#endif
 #else
 #error The Wi-Fi module is unsupported
 #endif
@@ -31,13 +33,22 @@
 #include "fsl_os_abstraction.h"
 
 #include "controller.h"
-#include "controller_wifi_nxp.h"
+#include "controller_hci_uart.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define BT_OP(ogf, ocf)                         ((ocf) | ((ogf) << 10))
 #define BT_OGF_VS                               0x3f
+
+/* Weak function. */
+#if defined(__GNUC__)
+#define __WEAK_FUNC __attribute__((weak))
+#elif defined(__ICCARM__)
+#define __WEAK_FUNC __weak
+#elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
+#define __WEAK_FUNC __attribute__((weak))
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -53,8 +64,11 @@ static UART_HANDLE_DEFINE(s_controllerHciUartHandle);
  * Code
  ******************************************************************************/
 
+__WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config);
+
+#ifndef BT_THIRDPARTY_SUPPORT
 /* Initialize the platform */
-void controller_wifi_nxp_init(void)
+void controller_init(void)
 {
 #ifndef CONTROLLER_INIT_ESCAPE
     int result;
@@ -68,6 +82,12 @@ void controller_wifi_nxp_init(void)
     (void)result;
 #endif
     controller_hci_uart_init();
+}
+#endif
+
+__WEAK_FUNC int controller_hci_uart_get_configuration(controller_hci_uart_config_t *config)
+{
+    return -1;
 }
 
 static void controller_hci_uart_init(void)
@@ -84,7 +104,12 @@ static void controller_hci_uart_init(void)
     memset(recvBuffer, 0, sizeof(recvBuffer));
     memset(&hciUartConfig, 0, sizeof(hciUartConfig));
     memset(&config, 0, sizeof(config));
-
+#if (defined(WIFI_IW416_BOARD_AW_AM457_USD) || defined(WIFI_IW416_BOARD_AW_AM510_USD) || defined(WIFI_IW416_BOARD_AW_AM510MA) || \
+     defined(WIFI_IW416_BOARD_MURATA_1XK_USD) || defined(WIFI_IW416_BOARD_MURATA_1XK_M2) || \
+     defined(WIFI_88W8987_BOARD_MURATA_1ZM_USD) || defined (WIFI_88W8987_BOARD_MURATA_1ZM_M2))
+    /*delay to make sure controller is ready to receive command*/
+    OSA_TimeDelay(100);
+#endif
     if (0 != controller_hci_uart_get_configuration(&hciUartConfig))
     {
         return;

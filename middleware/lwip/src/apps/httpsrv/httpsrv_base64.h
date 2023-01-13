@@ -1,18 +1,22 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2022 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
-*  Base64 encode and decode header.
-*/
+ *  Base64 encode and decode header.
+ */
 #ifndef __httpsrv_base64_h__
 #define __httpsrv_base64_h__
 
+#include <stdbool.h>
+#include <stdint.h>
+
 #include "lwip/inet.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif

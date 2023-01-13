@@ -9,6 +9,7 @@ var classerpc_1_1_framed_transport =
     [ "receive", "classerpc_1_1_framed_transport.html#a43385b8a021f7382c1f8673613b969a4", null ],
     [ "send", "classerpc_1_1_framed_transport.html#a19fd4d6148ef66dd916d445a019051f4", null ],
     [ "setCrc16", "classerpc_1_1_framed_transport.html#a27955c9e5872ebfaf6affaa095426372", null ],
+    [ "getCrc16", "classerpc_1_1_framed_transport.html#a422a71461a0448ef39ba2d144e56b077", null ],
     [ "underlyingSend", "classerpc_1_1_framed_transport.html#af5bc7721ee65e9c8230d43a87c47d925", null ],
     [ "underlyingReceive", "classerpc_1_1_framed_transport.html#aad1844c654b1f0dd09f275fafc1b7a7e", null ],
     [ "m_crcImpl", "classerpc_1_1_framed_transport.html#ae29f9f3e6b7c8f41a0825ca25cb08d50", null ],

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.24 - Graphical user interface for embedded applications **
+** emWin V6.28 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2022-09-02
+SUA period:               2011-08-19 - 2023-09-03
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : IMAGE.h
@@ -71,7 +71,7 @@ Purpose     : Image include
 */
 #define IMAGE_CF_MEMDEV   (1 << 0)      // Makes the IMAGE widget use an internal Memory Device for
                                         // drawing. Contrary to the Memory Device which is created
-                                        // by the Window Manager’s automatic use of Memory Devices
+                                        // by the Window Manager's automatic use of Memory Devices
                                         // (WM_CF_MEMDEV), this device stays valid all the time. It has to be
                                         // ensured that the emWin memory pool which is defined by the
                                         // function GUI_ALLOC_AssignMemory() (in \c{GUIConf.c}), is big enough

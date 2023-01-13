@@ -42,8 +42,11 @@ API_RESULT btsnoop_open_pl (void)
     API_RESULT retval;
     UCHAR bt_snoop_file_name[48U];
 
+    /* Reset */
+    BT_mem_set(bt_snoop_file_name, 0, sizeof(bt_snoop_file_name));
+
     /* Add Prefix */
-    BT_str_n_copy(bt_snoop_file_name, BT_SNOOP_FILE_NAME, sizeof(BT_SNOOP_FILE_NAME));
+    BT_str_n_copy(bt_snoop_file_name, BT_SNOOP_FILE_NAME, BT_str_len(BT_SNOOP_FILE_NAME));
 
     retval = BT_fops_file_open
              (

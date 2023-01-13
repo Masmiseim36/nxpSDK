@@ -18,6 +18,8 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/core/lv_refr.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/core/lv_theme.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/lv_draw.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/lv_draw_layer.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/lv_draw_transform.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/lv_draw_arc.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/lv_draw_img.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/lv_draw_label.c
@@ -34,6 +36,7 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/nxp/pxp/lv_gpu_nxp_pxp_osa.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/nxp/vglite/lv_draw_vglite_blend.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/nxp/vglite/lv_draw_vglite_rect.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/nxp/vglite/lv_draw_vglite_line.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/nxp/vglite/lv_gpu_nxp_vglite.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/nxp/vglite/lv_draw_vglite_arc.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sdl/lv_draw_sdl.c
@@ -59,6 +62,8 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sw/lv_draw_sw_line.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sw/lv_draw_sw_polygon.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sw/lv_draw_sw_rect.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sw/lv_draw_sw_transform.c
+    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/draw/sw/lv_draw_sw_layer.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/font/lv_font.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/font/lv_font_dejavu_16_persian_hebrew.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/font/lv_font_fmt_txt.c
@@ -143,7 +148,6 @@ target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/png/lodepng.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/png/lv_png.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/qrcode/lv_qrcode.c
-    ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/qrcode/qrcodegen.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/rlottie/lv_rlottie.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/sjpg/lv_sjpg.c
     ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/extra/libs/sjpg/tjpgd.c

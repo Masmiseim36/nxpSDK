@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.9.1</span>
+   &#160;<span id="projectnumber">Rev. 1.10.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_basic_codec.html','');})
 <p>Simple binary serialization format.  
  <a href="classerpc_1_1_basic_codec.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="erpc__basic__codec_8h_source.html">erpc_basic_codec.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="erpc__basic__codec_8hpp_source.html">erpc_basic_codec.hpp</a>&gt;</code></p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Inheritance diagram for erpc::BasicCodec:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('classerpc_1_1_basic_codec.html','');})
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Encoding</div></td></tr>
-<tr class="memitem:a33d38fa04f8fbbeb6083877e64e38bcc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a33d38fa04f8fbbeb6083877e64e38bcc">startWriteMessage</a> (<a class="el" href="erpc__codec_8h.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> type, uint32_t service, uint32_t request, uint32_t sequence) override</td></tr>
+<tr class="memitem:a33d38fa04f8fbbeb6083877e64e38bcc"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a33d38fa04f8fbbeb6083877e64e38bcc">startWriteMessage</a> (<a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> type, uint32_t service, uint32_t request, uint32_t sequence) override</td></tr>
 <tr class="memdesc:a33d38fa04f8fbbeb6083877e64e38bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for write header of message.  <a href="#a33d38fa04f8fbbeb6083877e64e38bcc">More...</a><br /></td></tr>
 <tr class="separator:a33d38fa04f8fbbeb6083877e64e38bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25e2b6cb85c37518be6148f54cbd01e0"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#a25e2b6cb85c37518be6148f54cbd01e0">writeData</a> (const void *value, uint32_t length)</td></tr>
@@ -205,7 +205,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a186fe55fbe74ea7c2e1e95eaa165ca9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes an order ID of callback function.  <a href="#a186fe55fbe74ea7c2e1e95eaa165ca9b">More...</a><br /></td></tr>
 <tr class="separator:a186fe55fbe74ea7c2e1e95eaa165ca9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Decoding</div></td></tr>
-<tr class="memitem:af0a055559b9bb42c677311fa3f74f412"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#af0a055559b9bb42c677311fa3f74f412">startReadMessage</a> (<a class="el" href="erpc__codec_8h.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *type, uint32_t *service, uint32_t *request, uint32_t *sequence) override</td></tr>
+<tr class="memitem:af0a055559b9bb42c677311fa3f74f412"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#af0a055559b9bb42c677311fa3f74f412">startReadMessage</a> (<a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *type, uint32_t *service, uint32_t *request, uint32_t *sequence) override</td></tr>
 <tr class="memdesc:af0a055559b9bb42c677311fa3f74f412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prototype for read header of message.  <a href="#af0a055559b9bb42c677311fa3f74f412">More...</a><br /></td></tr>
 <tr class="separator:af0a055559b9bb42c677311fa3f74f412"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af12b78761da78e9f140379972ca0cf86"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_basic_codec.html#af12b78761da78e9f140379972ca0cf86">readData</a> (void *value, uint32_t length)</td></tr>
@@ -324,7 +324,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::startWriteMessage </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="erpc__codec_8h.html#a7116f64fb1351d72417155cfed485478">message_type_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a>&#160;</td>
           <td class="paramname"><em>type</em>, </td>
         </tr>
         <tr>
@@ -1123,7 +1123,7 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">void BasicCodec::startReadMessage </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="erpc__codec_8h.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="erpc__codec_8hpp.html#a7116f64fb1351d72417155cfed485478">message_type_t</a> *&#160;</td>
           <td class="paramname"><em>type</em>, </td>
         </tr>
         <tr>
@@ -1935,7 +1935,7 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li><a class="el" href="erpc__basic__codec_8h_source.html">erpc_basic_codec.h</a></li>
+<li><a class="el" href="erpc__basic__codec_8hpp_source.html">erpc_basic_codec.hpp</a></li>
 <li>erpc_basic_codec.cpp</li>
 </ul>
 </div><!-- contents -->

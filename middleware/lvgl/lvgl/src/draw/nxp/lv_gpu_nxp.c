@@ -47,9 +47,11 @@
 #endif
 #if LV_USE_GPU_NXP_VG_LITE
     #include "vglite/lv_draw_vglite_blend.h"
+    #include "vglite/lv_draw_vglite_line.h"
     #include "vglite/lv_draw_vglite_rect.h"
     #include "vglite/lv_draw_vglite_arc.h"
 #endif
+
 #if LV_COLOR_DEPTH != 32
     #include "../../core/lv_refr.h"
 #endif
@@ -66,14 +68,23 @@
  *  STATIC PROTOTYPES
  **********************/
 
+static void lv_draw_nxp_wait_cb(lv_draw_ctx_t * draw_ctx);
+
 static void lv_draw_nxp_img_decoded(lv_draw_ctx_t * draw_ctx, const lv_draw_img_dsc_t * dsc,
                                     const lv_area_t * coords, const uint8_t * map_p, lv_img_cf_t cf);
 
 static void lv_draw_nxp_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend_dsc_t * dsc);
 
+static void lv_draw_nxp_line(lv_draw_ctx_t * draw_ctx, const lv_draw_line_dsc_t * dsc, const lv_point_t * point1,
+                             const lv_point_t * point2);
+
 static void lv_draw_nxp_rect(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t * dsc, const lv_area_t * coords);
 
 static lv_res_t draw_nxp_bg(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t * dsc, const lv_area_t * coords);
+
+static lv_res_t draw_nxp_border(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t * dsc, const lv_area_t * coords);
+
+static lv_res_t draw_nxp_outline(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t * dsc, const lv_area_t * coords);
 
 static void lv_draw_nxp_arc(lv_draw_ctx_t * draw_ctx, const lv_draw_arc_dsc_t * dsc, const lv_point_t * center,
                             uint16_t radius, uint16_t start_angle, uint16_t end_angle);
@@ -95,12 +106,12 @@ void lv_draw_nxp_ctx_init(lv_disp_drv_t * drv, lv_draw_ctx_t * draw_ctx)
     lv_draw_sw_init_ctx(drv, draw_ctx);
 
     lv_draw_nxp_ctx_t * nxp_draw_ctx = (lv_draw_sw_ctx_t *)draw_ctx;
-
+    nxp_draw_ctx->base_draw.draw_line = lv_draw_nxp_line;
     nxp_draw_ctx->base_draw.draw_arc = lv_draw_nxp_arc;
     nxp_draw_ctx->base_draw.draw_rect = lv_draw_nxp_rect;
     nxp_draw_ctx->base_draw.draw_img_decoded = lv_draw_nxp_img_decoded;
     nxp_draw_ctx->blend = lv_draw_nxp_blend;
-    //nxp_draw_ctx->base_draw.wait_for_finish = lv_draw_nxp_wait_cb;
+    nxp_draw_ctx->base_draw.wait_for_finish = lv_draw_nxp_wait_cb;
 }
 
 void lv_draw_nxp_ctx_deinit(lv_disp_drv_t * drv, lv_draw_ctx_t * draw_ctx)
@@ -133,10 +144,26 @@ static inline bool need_argb8565_support()
     return false;
 }
 
+static void lv_draw_nxp_wait_cb(lv_draw_ctx_t * draw_ctx)
+{
+#if LV_USE_GPU_NXP_PXP
+    lv_gpu_nxp_pxp_wait();
+#endif
+#if LV_USE_GPU_NXP_VG_LITE
+    vg_lite_finish();
+#endif
+
+    lv_draw_sw_wait_for_finish(draw_ctx);
+}
+
 static void lv_draw_nxp_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend_dsc_t * dsc)
 {
-    lv_area_t blend_area;
+    if(need_argb8565_support()) {
+        lv_draw_sw_blend_basic(draw_ctx, dsc);
+        return;
+    }
 
+    lv_area_t blend_area;
     /*Let's get the blend area which is the intersection of the area to fill and the clip area.*/
     if(!_lv_area_intersect(&blend_area, dsc->blend_area, draw_ctx->clip_area))
         return; /*Fully clipped, nothing to do*/
@@ -145,9 +172,8 @@ static void lv_draw_nxp_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend_d
     lv_area_move(&blend_area, -draw_ctx->buf_area->x1, -draw_ctx->buf_area->y1);
 
     bool done = false;
-
     /*Fill/Blend only non masked, normal blended*/
-    if(dsc->mask_buf == NULL && dsc->blend_mode == LV_BLEND_MODE_NORMAL && !need_argb8565_support()) {
+    if(dsc->mask_buf == NULL && dsc->blend_mode == LV_BLEND_MODE_NORMAL) {
         lv_color_t * dest_buf = draw_ctx->buf;
         lv_coord_t dest_stride = lv_area_get_width(draw_ctx->buf_area);
 #if LV_USE_GPU_NXP_VG_LITE
@@ -224,6 +250,11 @@ static void lv_draw_nxp_blend(lv_draw_ctx_t * draw_ctx, const lv_draw_sw_blend_d
 static void lv_draw_nxp_img_decoded(lv_draw_ctx_t * draw_ctx, const lv_draw_img_dsc_t * dsc,
                                     const lv_area_t * coords, const uint8_t * map_p, lv_img_cf_t cf)
 {
+    if(need_argb8565_support()) {
+        lv_draw_sw_img_decoded(draw_ctx, dsc, coords, map_p, cf);
+        return;
+    }
+
     /*Use the clip area as draw area*/
     lv_area_t draw_area;
     lv_area_copy(&draw_area, draw_ctx->clip_area);
@@ -234,7 +265,6 @@ static void lv_draw_nxp_img_decoded(lv_draw_ctx_t * draw_ctx, const lv_draw_img_
 #if LV_USE_GPU_NXP_PXP
     bool scale = (dsc->zoom != LV_IMG_ZOOM_NONE);
 #endif
-    bool done = false;
 
     lv_area_t blend_area;
     /*Let's get the blend area which is the intersection of the area to fill and the clip area.*/
@@ -252,9 +282,10 @@ static void lv_draw_nxp_img_decoded(lv_draw_ctx_t * draw_ctx, const lv_draw_img_
 
     lv_color_t * dest_buf = draw_ctx->buf;
     lv_coord_t dest_stride = lv_area_get_width(draw_ctx->buf_area);
+    bool done = false;
 
 #if LV_USE_GPU_NXP_PXP
-    if(!mask_any && !scale && !need_argb8565_support()
+    if(!mask_any && !scale
 #if LV_COLOR_DEPTH!=32
        && !lv_img_cf_has_alpha(cf)
 #endif
@@ -267,7 +298,7 @@ static void lv_draw_nxp_img_decoded(lv_draw_ctx_t * draw_ctx, const lv_draw_img_
 #endif
 
 #if LV_USE_GPU_NXP_VG_LITE
-    if(!done && !mask_any && !need_argb8565_support() &&
+    if(!done && !mask_any &&
        !lv_img_cf_is_chroma_keyed(cf) && !recolor
 #if LV_COLOR_DEPTH!=32
        && !lv_img_cf_has_alpha(cf)
@@ -310,41 +341,100 @@ static void lv_draw_nxp_img_decoded(lv_draw_ctx_t * draw_ctx, const lv_draw_img_
         lv_draw_sw_img_decoded(draw_ctx, dsc, coords, map_p, cf);
 }
 
+static void lv_draw_nxp_line(lv_draw_ctx_t * draw_ctx, const lv_draw_line_dsc_t * dsc, const lv_point_t * point1,
+                             const lv_point_t * point2)
+{
+    if(need_argb8565_support()) {
+        lv_draw_sw_line(draw_ctx, dsc, point1, point2);
+        return;
+    }
+
+    if(dsc->width == 0)
+        return;
+    if(dsc->opa <= (lv_opa_t)LV_OPA_MIN)
+        return;
+    if(point1->x == point2->x && point1->y == point2->y)
+        return;
+
+    lv_area_t clip_line;
+    clip_line.x1 = LV_MIN(point1->x, point2->x) - dsc->width / 2;
+    clip_line.x2 = LV_MAX(point1->x, point2->x) + dsc->width / 2;
+    clip_line.y1 = LV_MIN(point1->y, point2->y) - dsc->width / 2;
+    clip_line.y2 = LV_MAX(point1->y, point2->y) + dsc->width / 2;
+
+    bool is_common;
+    is_common = _lv_area_intersect(&clip_line, &clip_line, draw_ctx->clip_area);
+    if(!is_common)
+        return;
+
+    bool done = false;
+    bool mask_any = lv_draw_mask_is_any(&clip_line);
+
+    if(!mask_any) {
+#if LV_USE_GPU_NXP_VG_LITE
+        done = (lv_gpu_nxp_vglite_draw_line(draw_ctx, dsc, point1, point2, &clip_line) == LV_RES_OK);
+        if(!done)
+            VG_LITE_LOG_TRACE("VG-Lite draw line failed. Fallback.");
+#endif
+    }
+
+    if(!done)
+        lv_draw_sw_line(draw_ctx, dsc, point1, point2);
+}
+
 static void lv_draw_nxp_rect(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t * dsc, const lv_area_t * coords)
 {
-    bool done = false;
+    if(need_argb8565_support()) {
+        lv_draw_sw_rect(draw_ctx, dsc, coords);
+        return;
+    }
+
     lv_draw_rect_dsc_t nxp_dsc;
 
     lv_memcpy(&nxp_dsc, dsc, sizeof(nxp_dsc));
-#if LV_DRAW_COMPLEX
-    /* Draw only the shadow */
     nxp_dsc.bg_opa = 0;
     nxp_dsc.bg_img_opa = 0;
     nxp_dsc.border_opa = 0;
     nxp_dsc.outline_opa = 0;
-
+#if LV_DRAW_COMPLEX
+    /* Draw the shadow with CPU */
     lv_draw_sw_rect(draw_ctx, &nxp_dsc, coords);
-
-    /* Draw the background */
     nxp_dsc.shadow_opa = 0;
-    nxp_dsc.bg_opa = dsc->bg_opa;
-    done = (draw_nxp_bg(draw_ctx, &nxp_dsc, coords) == LV_RES_OK);
 #endif /*LV_DRAW_COMPLEX*/
 
-    /* Draw the remaining parts */
-    nxp_dsc.shadow_opa = 0;
-    if(done)
-        nxp_dsc.bg_opa = 0;
-    nxp_dsc.bg_img_opa = dsc->bg_img_opa;
-    nxp_dsc.border_opa = dsc->border_opa;
-    nxp_dsc.outline_opa = dsc->outline_opa;
+    /* Draw the background */
+    nxp_dsc.bg_opa = dsc->bg_opa;
+    if(draw_nxp_bg(draw_ctx, &nxp_dsc, coords) != LV_RES_OK)
+        lv_draw_sw_rect(draw_ctx, &nxp_dsc, coords);
+    nxp_dsc.bg_opa = 0;
 
+    /* Draw the background image will be done once draw_ctx->draw_img_decoded()
+     * callback gets called from lv_draw_sw_rect().
+     * If both PXP and VG-Lite are enabled, then VG-Lite draw background
+     * might race with PXP draw background image (blit). Wait for completion.
+     */
+#if LV_USE_GPU_NXP_PXP && LV_USE_GPU_NXP_VG_LITE
+    lv_draw_nxp_wait_cb(draw_ctx);
+#endif
+    nxp_dsc.bg_img_opa = dsc->bg_img_opa;
     lv_draw_sw_rect(draw_ctx, &nxp_dsc, coords);
+    nxp_dsc.bg_img_opa = 0;
+
+    /* Draw the border */
+    nxp_dsc.border_opa = dsc->border_opa;
+    if(draw_nxp_border(draw_ctx, &nxp_dsc, coords) != LV_RES_OK)
+        lv_draw_sw_rect(draw_ctx, &nxp_dsc, coords);
+    nxp_dsc.border_opa = 0;
+
+    /* Draw the outline */
+    nxp_dsc.outline_opa = dsc->outline_opa;
+    if(draw_nxp_outline(draw_ctx, &nxp_dsc, coords) != LV_RES_OK)
+        lv_draw_sw_rect(draw_ctx, &nxp_dsc, coords);
 }
 
 static lv_res_t draw_nxp_bg(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t * dsc, const lv_area_t * coords)
 {
-    if(dsc->bg_opa <= LV_OPA_MIN)
+    if(dsc->bg_opa <= (lv_opa_t)LV_OPA_MIN)
         return LV_RES_INV;
 
     lv_area_t bg_coords;
@@ -362,19 +452,20 @@ static lv_res_t draw_nxp_bg(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t *
     if(!_lv_area_intersect(&clipped_coords, &bg_coords, draw_ctx->clip_area))
         return LV_RES_INV;
 
-    lv_grad_dir_t grad_dir = dsc->bg_grad.dir;
-    lv_color_t bg_color    = grad_dir == LV_GRAD_DIR_NONE ? dsc->bg_color : dsc->bg_grad.stops[0].color;
-    if(bg_color.full == dsc->bg_grad.stops[1].color.full) grad_dir = LV_GRAD_DIR_NONE;
-
     bool mask_any = lv_draw_mask_is_any(&bg_coords);
+    lv_grad_dir_t grad_dir = dsc->bg_grad.dir;
+    lv_color_t bg_color = (grad_dir == (lv_grad_dir_t)LV_GRAD_DIR_NONE) ?
+                          dsc->bg_color : dsc->bg_grad.stops[0].color;
+    if(bg_color.full == dsc->bg_grad.stops[1].color.full)
+        grad_dir = LV_GRAD_DIR_NONE;
 
     /*
      * Most simple case: just a plain rectangle (no mask, no radius, no gradient)
-     * shall fallback to lv_draw_sw_blend().
+     * shall be handled by draw_ctx->blend().
      *
      * Complex case: gradient or radius but no mask.
      */
-    if(!mask_any && ((dsc->radius != 0) || (grad_dir != LV_GRAD_DIR_NONE)) && !need_argb8565_support()) {
+    if(!mask_any && ((dsc->radius != 0) || (grad_dir != (lv_grad_dir_t)LV_GRAD_DIR_NONE))) {
 #if LV_USE_GPU_NXP_VG_LITE
         lv_res_t res = lv_gpu_nxp_vglite_draw_bg(draw_ctx, dsc, &bg_coords);
         if(res != LV_RES_OK)
@@ -387,13 +478,76 @@ static lv_res_t draw_nxp_bg(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t *
     return LV_RES_INV;
 }
 
+static lv_res_t draw_nxp_border(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t * dsc, const lv_area_t * coords)
+{
+    if(dsc->border_opa <= (lv_opa_t)LV_OPA_MIN)
+        return LV_RES_INV;
+    if(dsc->border_width == 0)
+        return LV_RES_INV;
+    if(dsc->border_post)
+        return LV_RES_INV;
+    if(dsc->border_side != (lv_border_side_t)LV_BORDER_SIDE_FULL)
+        return LV_RES_INV;
+
+#if LV_USE_GPU_NXP_VG_LITE
+    lv_area_t border_coords;
+    lv_coord_t border_width = dsc->border_width;
+
+    /* Move border inwards to align with software rendered border */
+    border_coords.x1 = coords->x1 + border_width / 2;
+    border_coords.x2 = coords->x2 - border_width / 2;
+    border_coords.y1 = coords->y1 + border_width / 2;
+    border_coords.y2 = coords->y2 - border_width / 2;
+
+    lv_res_t res = lv_gpu_nxp_vglite_draw_border_generic(draw_ctx, dsc, &border_coords, true);
+    if(res != LV_RES_OK)
+        VG_LITE_LOG_TRACE("VG-Lite draw border failed. Fallback.");
+
+    return res;
+#endif
+
+    return LV_RES_INV;
+}
+
+static lv_res_t draw_nxp_outline(lv_draw_ctx_t * draw_ctx, const lv_draw_rect_dsc_t * dsc, const lv_area_t * coords)
+{
+
+    if(dsc->outline_opa <= (lv_opa_t)LV_OPA_MIN)
+        return LV_RES_INV;
+    if(dsc->outline_width == 0)
+        return LV_RES_INV;
+
+#if LV_USE_GPU_NXP_VG_LITE
+    /* Move outline outwards to align with software rendered outline */
+    lv_coord_t outline_pad = dsc->outline_pad - 1 + dsc->outline_width / 2;
+    lv_area_t outline_coords;
+    outline_coords.x1 = coords->x1 - outline_pad;
+    outline_coords.x2 = coords->x2 + outline_pad;
+    outline_coords.y1 = coords->y1 - outline_pad;
+    outline_coords.y2 = coords->y2 + outline_pad;
+
+    lv_res_t res = lv_gpu_nxp_vglite_draw_border_generic(draw_ctx, dsc, &outline_coords, false);
+    if(res != LV_RES_OK)
+        VG_LITE_LOG_TRACE("VG-Lite draw outline failed. Fallback.");
+
+    return res;
+#endif
+
+    return LV_RES_INV;
+}
+
 static void lv_draw_nxp_arc(lv_draw_ctx_t * draw_ctx, const lv_draw_arc_dsc_t * dsc, const lv_point_t * center,
                             uint16_t radius, uint16_t start_angle, uint16_t end_angle)
 {
+    if(need_argb8565_support()) {
+        lv_draw_sw_arc(draw_ctx, dsc, center, radius, start_angle, end_angle);
+        return;
+    }
+
     bool done = false;
 
 #if LV_DRAW_COMPLEX
-    if(dsc->opa <= LV_OPA_MIN)
+    if(dsc->opa <= (lv_opa_t)LV_OPA_MIN)
         return;
     if(dsc->width == 0)
         return;
@@ -401,12 +555,10 @@ static void lv_draw_nxp_arc(lv_draw_ctx_t * draw_ctx, const lv_draw_arc_dsc_t * 
         return;
 
 #if LV_USE_GPU_NXP_VG_LITE
-    if(!need_argb8565_support()) {
-        done = (lv_gpu_nxp_vglite_draw_arc(draw_ctx, dsc, center, (int32_t)radius,
-                                           (int32_t)start_angle, (int32_t)end_angle) == LV_RES_OK);
-        if(!done)
-            VG_LITE_LOG_TRACE("VG-Lite draw arc failed. Fallback.");
-    }
+    done = (lv_gpu_nxp_vglite_draw_arc(draw_ctx, dsc, center, (int32_t)radius,
+                                       (int32_t)start_angle, (int32_t)end_angle) == LV_RES_OK);
+    if(!done)
+        VG_LITE_LOG_TRACE("VG-Lite draw arc failed. Fallback.");
 #endif
 #endif/*LV_DRAW_COMPLEX*/
 

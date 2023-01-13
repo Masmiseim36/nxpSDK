@@ -392,7 +392,7 @@ uint8_t encoder_src_pad_activation_handler(StreamPad *pad, uint8_t active)
 
 int32_t encoder_src_pad_process_handler(StreamPad *pad)
 {
-    int8_t ret              = FLOW_OK;
+    FlowReturn ret          = FLOW_OK;
     ElementEncoder *element = NULL;
     int32_t retCode         = 0;
 
@@ -418,12 +418,11 @@ int32_t encoder_src_pad_process_handler(StreamPad *pad)
         // Construct (get) an input buffer and fill it with data read from
         // source pad's peer (read)
         StreamBuffer inBuf = {.buffer = element->inBuf.ptr, .size = element->inBuf.size, .offset = 0, .time = 0};
-        PadReturn padRet =
-            (PadReturn)pad_pull_range(ELEMENT_SINK_PAD(element, 0), element->offset, element->chunk_size, &inBuf);
+        ret                = pad_pull_range(ELEMENT_SINK_PAD(element, 0), element->offset, element->chunk_size, &inBuf);
 
-        // This is supposed to trigger on PAD_STREAM_ERR_EOS, but netbuf_src and
+        // This is supposed to trigger on FLOW_EOS, but netbuf_src and
         // mem_src return this code instead even for an EOS condition.
-        if (padRet == PAD_STREAM_ERR_EOS)
+        if (ret == FLOW_EOS)
         {
             // EOS condition reached on source pad read (pull) - send an event,
             // set a flag and terminate
@@ -438,7 +437,7 @@ int32_t encoder_src_pad_process_handler(StreamPad *pad)
 
             goto Error;
         }
-        else if (padRet != PAD_OK)
+        else if (ret != FLOW_OK)
         {
             // Read failed
             ret = FLOW_ERROR;
@@ -643,11 +642,9 @@ int32_t encoder_src_pad_process_handler(StreamPad *pad)
             .buffer = (int8_t *)element->outBuf.ptr, .size = retCode + sizeof(RawPacketHeader), .offset = 0, .time = 0};
 
         // Write (push) the data out
-        FlowReturn flow_ret = pad_push((StreamPad *)ELEMENT_SRC_PAD(element, 0), &resultBuf);
-        if (flow_ret != FLOW_OK)
+        ret = pad_push((StreamPad *)ELEMENT_SRC_PAD(element, 0), &resultBuf);
+        if (ret != FLOW_OK)
         {
-            // Push failed
-            ret = flow_ret;
             goto Error;
         }
     }
@@ -661,5 +658,5 @@ int32_t encoder_src_pad_process_handler(StreamPad *pad)
 
 Error:
     STREAMER_FUNC_EXIT(DBG_CCID);
-    return ret;
+    return (int32_t)ret;
 }

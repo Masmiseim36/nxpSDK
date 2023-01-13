@@ -121,7 +121,7 @@ extern "C" {
 /**
  * \brief This API registers the application callback function with the SPP and
  *        initializes the Serial Port Profile.
- * \param [in] notify_cb
+ * \param [in] application_cb_ptr
  *   Application callback function pointer.
  * \return API_RESULT:
  *   API_SUCCESS: Indicates Serial Port  profile initialized successfully
@@ -133,7 +133,7 @@ extern "C" {
  */
 API_RESULT BT_spp_init
            (
-               /* IN */  SPP_APPL_EVENT_NOTIFY_CB    notify_cb
+               /* IN */  SPP_APPL_EVENT_NOTIFY_CB    application_cb_ptr
            );
 
 /**
@@ -197,7 +197,7 @@ API_RESULT BT_spp_connect
            (
                /* IN */  SPP_HANDLE spp_handle,
                /* IN */  UCHAR *    bd_addr,
-               /* IN */  UCHAR      server_channel
+               /* IN */  UINT8      server_channel
            );
 
 /**
@@ -223,7 +223,7 @@ API_RESULT BT_spp_disconnect
  *   Handle associates a SPP connection to a remote SPP device.
  * \param [in] data
  *   Data to be sent to peer over SPP channel.
- * \param [in] data_len
+ * \param [in] data_length
  *   Length of data to be sent to peer over SPP channel.
  * \return API_RESULT:
  *   API_SUCCESS: Indicates successful operation.
@@ -236,7 +236,7 @@ API_RESULT BT_spp_send
            (
                /* IN */  SPP_HANDLE    spp_handle,
                /* IN */  UCHAR *       data,
-               /* IN */  UINT16        data_len
+               /* IN */  UINT16        data_length
            );
 
 #ifdef __cplusplus

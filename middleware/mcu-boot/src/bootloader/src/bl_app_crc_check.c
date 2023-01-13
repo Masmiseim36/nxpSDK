@@ -6,17 +6,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "bl_app_crc_check.h"
 #include <string.h>
+
+#include "bl_app_crc_check.h"
 #include "bl_context.h"
 #include "bootloader_common.h"
 #include "crc32.h"
+#include "fsl_assert.h"
 #include "memory.h"
 #include "property.h"
 #include "target_config.h"
-#include "fsl_assert.h"
 #include "vector_table_info.h"
 
+#if BL_FEATURE_CRC_CHECK
 ////////////////////////////////////////////////////////////////////////////////
 // Declarations
 ////////////////////////////////////////////////////////////////////////////////
@@ -206,6 +208,7 @@ bool is_application_crc_check_pass(void)
     return isCrcCheckPassed;
 }
 
+#endif // #if BL_FEATURE_CRC_CHECK
 ////////////////////////////////////////////////////////////////////////////////
 // EOF
 ////////////////////////////////////////////////////////////////////////////////

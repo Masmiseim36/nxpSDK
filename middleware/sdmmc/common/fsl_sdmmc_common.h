@@ -222,8 +222,10 @@ typedef struct _sd_detect_card
 typedef enum _sd_io_voltage_ctrl_type
 {
     kSD_IOVoltageCtrlNotSupport = 0U, /*!< io voltage control not support */
-    kSD_IOVoltageCtrlByHost     = 1U, /*!< io voltage control by host */
-    kSD_IOVoltageCtrlByGpio     = 2U, /*!< io voltage control by gpio */
+#if SDMMCHOST_SUPPORT_VOLTAGE_CONTROL
+    kSD_IOVoltageCtrlByHost = 1U, /*!< io voltage control by host */
+#endif
+    kSD_IOVoltageCtrlByGpio = 2U, /*!< io voltage control by gpio */
 } sd_io_voltage_ctrl_type_t;
 
 /*! @brief card switch voltage function pointer */

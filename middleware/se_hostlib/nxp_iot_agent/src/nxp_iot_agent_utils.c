@@ -78,7 +78,7 @@ const key_ref_ecc_template_t key_ref_ecc_templates[] = {
 	},
 };
 
-const key_ref_ecc_template_t* find_key_ref_ecc_template(int nid) {
+static const key_ref_ecc_template_t* find_key_ref_ecc_template(int nid) {
 	size_t i;
 	for (i = 0U; i < sizeof(key_ref_ecc_templates) / sizeof(key_ref_ecc_templates[0]); i++)
 	{

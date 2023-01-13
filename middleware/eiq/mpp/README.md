@@ -21,6 +21,7 @@ The pipeline continues with multiple **processing elements** having a single inp
 - Machine learning inference with two frameworks:
    - Tensorflow Lite Micro 
    - GLOW
+   - DeepViewRT
 
 The pipeline can be closed by adding a **sink element**:
 - Display panel

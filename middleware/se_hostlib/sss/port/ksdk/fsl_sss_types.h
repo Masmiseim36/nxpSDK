@@ -6,7 +6,9 @@
 #ifndef FSL_SSS_TYPES_H
 #define FSL_SSS_TYPES_H
 
+#ifndef NORDIC_MCU
 #include <fsl_common.h>
+#endif
 
 /*! @brief Compile time sizeof() check */
 #define SSCP_BUILD_ASSURE(condition, msg) extern int msg[1 - 2 * (!(condition))] __attribute__((unused))
@@ -31,7 +33,25 @@
 #define STRNICMP strncasecmp
 
 /* doc:start:sss-heap_mgmt */
-#if defined(USE_RTOS) && USE_RTOS == 1
+#if defined(USE_THREADX_RTOS)
+
+extern void *threadx_malloc(size_t size);
+extern void *threadx_calloc(size_t size);
+extern void threadx_free(void *ptr);
+
+#ifndef SSS_MALLOC
+#define SSS_MALLOC threadx_malloc
+#endif // SSS_MALLOC
+
+#ifndef SSS_FREE
+#define SSS_FREE threadx_free
+#endif // SSS_FREE
+
+#ifndef SSS_CALLOC
+#define SSS_CALLOC threadx_calloc
+#endif // SSS_CALLOC
+
+#elif (defined(USE_RTOS) && (USE_RTOS == 1))
 #include "FreeRTOS.h"
 
 void *pvPortCalloc(size_t num, size_t size); /*Calloc for Heap3/Heap4.*/
@@ -48,7 +68,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for Heap3/Heap4.*/
 #define SSS_CALLOC pvPortCalloc
 #endif // SSS_CALLOC
 
-#else // !USE_RTOS
+#else // !USE_RTOS & !USE_THREADX_RTOS
 
 #include <stdlib.h>
 
@@ -64,7 +84,7 @@ void *pvPortCalloc(size_t num, size_t size); /*Calloc for Heap3/Heap4.*/
 #define SSS_CALLOC calloc
 #endif // SSS_CALLOC
 
-#endif // USE_RTOS
+#endif // USE_RTOS & USE_THREADX_RTOS
 /* doc:end:sss-heap_mgmt */
 
 #endif /* FSL_SSS_TYPES_H */

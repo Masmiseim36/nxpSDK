@@ -18,6 +18,7 @@
 /* --------------------------------------------- Header File Inclusion */
 #include "BT_common.h"
 #include "BT_device_queue.h"
+#include "l2cap.h"
 
 /* --------------------------------------------- Global Definitions */
 /**
@@ -406,6 +407,22 @@
 
 /** ATT Handle Value Confirmation PDU */
 #define ATT_HANDLE_VALUE_CNF       0x1EU
+
+/** ATT Read Multiple Variable Length Request PDU */
+#define ATT_READ_MULTIPLE_VARIABLE_LENGTH_REQ \
+                                   0x20U
+
+/** ATT Read Multiple Variable Length Response PDU */
+#define ATT_READ_MULTIPLE_VARIABLE_LENGTH_RSP \
+                                   0x21U
+
+/** ATT Handle Value Multiple Notification PDU */
+#define ATT_HANDLE_VALUE_MULTIPLE_NTF \
+                                   0x23U
+
+/** ATT Handle Value Multiple Notification - Transmission Complete - Locally generated event */
+#define ATT_HANDLE_VALUE_MULTIPLE_NTF_TX_COMPLETE \
+                                   0x24U
 
 /** Unknown or Unhandled PDU */
 #define ATT_UNKNOWN_PDU_IND        0xFFU
@@ -1018,6 +1035,20 @@ typedef struct
 /** Currently No Execute Write Response Parameters */
 
 /**
+ * Read Multiple Variable Length Request Parameters
+ *
+ * See \ref BT_att_send_read_multiple_variable_length_req
+ */
+typedef ATT_HANDLE_LIST ATT_READ_MULTIPLE_VARIABLE_LENGTH_REQ_PARAM;
+
+/**
+ * Read Multiple Variable Length Response Parameters
+ *
+ * See \ref BT_att_send_read_multiple_variable_length_rsp
+ */
+typedef ATT_VALUE_LIST ATT_READ_MULTIPLE_VARIABLE_LENGTH_RSP_PARAM;
+
+/**
  * Handle Value Notification Parameters
  *
  * See \ref BT_att_send_hndl_val_ntf
@@ -1033,6 +1064,32 @@ typedef ATT_HANDLE_VALUE_PAIR ATT_HNDL_VAL_IND_PARAM;
 
 /* Handle Value Confirmation Parameters - None currently */
 
+/**
+ * Handle Value Multiple Notification Parameters
+ *
+ * See \ref BT_att_send_hndl_val_multiple_ntf
+ */
+typedef ATT_HANDLE_VALUE_PAIR_LIST ATT_HNDL_VAL_MULTIPLE_NTF_PARAM;
+
+#ifdef ATT_ON_ECBFC_SUPPORT
+/**
+ * Information related to Enhanced ATT channel.
+ *
+ * See \ref BT_att_ecbfc_get_info
+ */
+typedef struct
+{
+    /** Negotiated MTU of the EATT Instance */
+    UINT16   mtu;
+
+    /** Local MPS of the EATT Instance */
+    UINT16   l_mps;
+
+    /** Remote MPS of the EATT Instance */
+    UINT16   r_mps;
+
+}ATT_ECBFC_INFO;
+#endif /* ATT_ON_ECBFC_SUPPORT */
 /** \} */
 
 /** \} */
@@ -1155,6 +1212,103 @@ API_RESULT BT_att_disconnect_req
            );
 
 #endif /* ATT_ON_BR_EDR_SUPPORT */
+
+#ifdef ATT_ON_ECBFC_SUPPORT
+
+/**
+ *  \brief To establish ATT connection for L2CAP Enhanced Credit Based Flow Control mode.
+ *
+ *  \par Description:
+ *  This ATT interface initiates L2CAP channel establishment
+ *  procedure for ECBFC mode, to the specified remote Bluetooth device.
+ *
+ *  \param [in, out] handle
+ *         Identifies the remote ATT entity to which the connection to be
+ *         requested.
+ *  \param [in] ecbfc_connect_param
+ *         Connection parameters for L2CAP ECBFC mode.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure
+ */
+API_RESULT BT_att_ecbfc_connect_req
+           (
+                /* INOUT */ ATT_HANDLE                * handle,
+                /* IN */    L2CAP_ECBFC_CONNECT_PARAM * ecbfc_connect_param
+           );
+
+/**
+ *  \brief To respond to an incoming ATT connection request for
+ *  L2CAP Enhanced Credit Based Flow Control mode.
+ *
+ *  \par Description:
+ *  This ATT interface enables an upper layer to respond
+ *  to ATT connection request for L2CAP Enhanced Credit Based Flow Control mode.
+ *  It is mandatory that the upper layer always responds back by calling
+ *  this interface upon receiving ATT ECBFC Connection Request.
+ *
+ *  \param [in] handle
+ *         This parameter specifies a list of ATT entities to which the connection
+ *         response to be sent.
+ *  \param [in] num_handles
+ *         This parameter specifies the number of ATT entities to which the connection
+ *         response to be sent.
+ *  \param [in] response
+ *         This parameter specifies the response of the upper layer for
+ *         the new ATT connection establishment requests from the peer.
+ *         It must be set to a value as specified in L2CAP Connect Result Codes.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure
+ */
+API_RESULT BT_att_ecbfc_connect_rsp
+           (
+                /* IN */ ATT_HANDLE  * handle,
+                /* IN */ UINT16        num_handles,
+                /* IN */ UCHAR         response
+           );
+
+/**
+ *  \brief To disconnect an established ATT connection.
+ *
+ *  \par Description:
+ *  This ATT interface initiates disconnection of the referred ATT connection.
+ *  Disconnection of the ATT connection always succeeds - either by reception
+ *  of the Disconnect Response message from the peer, or by timeout.
+ *  In any case, ATT will confirm disconnection of the connection,
+ *  by calling the registered ATT callback.
+ *
+ *  \param [in] handle
+ *         Identifies the remote ATT entity which is to be disconnected.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure
+ */
+API_RESULT BT_att_ecbfc_disconnect_req
+           (
+                /* IN */ ATT_HANDLE    * handle
+           );
+
+/**
+ *  \brief Access the Enhanced ATT channel Informations
+ *
+ *  \par Description:
+ *       This routine fetches the EATT channel parameters of the
+ *       requested ATT connection instance.
+ *
+ *  \param [in] handle
+ *         Identifies the ATT EATT entity whose Information is requested.
+ *
+ *  \param info
+ *         Pointer to an ATT_ECBFC_INFO variable allocated by the caller to which
+ *         the EATT Channel related informations are loaded if the requested
+ *         ATT instance belongs to an EATT channel.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure
+ */
+API_RESULT BT_att_ecbfc_get_info
+           (
+               /* IN */  ATT_HANDLE     * handle,
+               /* OUT */ ATT_ECBFC_INFO * info
+           );
+#endif /* ATT_ON_ECBFC_SUPPORT */
 
 /**
  * Note:
@@ -1534,6 +1688,33 @@ API_RESULT BT_att_disconnect_req
 
 #endif /* ATT_QUEUED_WRITE_SUPPORT */
 
+#ifdef ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT
+/**
+ *  \brief API to Send Read Multiple Variable Length Request to Server.
+ *
+ *  \par Description:
+ *  This routine sends Read Multiple Variable Length Request to the peer Server
+*   Device. This API shall be used by ATT Client Applications only.
+ *
+ *  \param [in] handle
+ *         Identifies the remote ATT entity to which Read Multiple Variable Length
+ *         is to be requested.
+ *
+ *  \param [in] param
+ *         Indicates Handle List whose values are to be read.
+ *         See \ref ATT_READ_MULTIPLE_VARIABLE_LENGTH_REQ_PARAM.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure.
+ */
+#define BT_att_send_read_multiple_variable_length_req(handle,param)\
+        BT_att_send_pdu\
+        (\
+            (handle),\
+            ATT_READ_MULTIPLE_VARIABLE_LENGTH_REQ,\
+            (void *)(param)\
+        );
+#endif /* ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT */
+
 #ifdef ATT_HNDL_VAL_INDICATION_SUPPORT
 /**
  *  \brief API to Send Handle Value Confirmation to Server.
@@ -1836,6 +2017,32 @@ API_RESULT BT_att_disconnect_req
 
 #endif /* ATT_QUEUED_WRITE_SUPPORT */
 
+#ifdef ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT
+/**
+ *  \brief API to Send Read Multiple Variable Length Response to Client.
+ *
+ *  \par Description:
+ *  This routine sends Read Multiple Variable Length Response to the peer Client Device.
+ *
+ *  \param [in] handle
+ *         Identifies the remote ATT entity to which Read Multiple Variable Length
+ *         Response is to be sent.
+ *
+ *  \param [in] param
+ *         Indicates Values of the list of handles requested.
+ *         See \ref ATT_READ_MULTIPLE_VARIABLE_LENGTH_RSP_PARAM.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure.
+ */
+#define BT_att_send_read_multiple_variable_length_rsp(handle,param)\
+        BT_att_send_pdu\
+        (\
+            (handle),\
+            ATT_READ_MULTIPLE_VARIABLE_LENGTH_RSP,\
+            (void *)(param)\
+        )
+#endif /* ATT_READ_MULTIPLE_VARIABLE_LENGTH_SUPPORT */
+
 #ifdef ATT_HNDL_VAL_NOTIFICATION_SUPPORT
 /**
  *  \brief API to Send Notification to Client.
@@ -1886,6 +2093,32 @@ API_RESULT BT_att_disconnect_req
             (void *)(param)\
         );
 #endif /* ATT_HNDL_VAL_INDICATION_SUPPORT */
+
+#ifdef ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT
+/**
+ *  \brief API to Send Handle Value Multiple Notification to Client.
+ *
+ *  \par Description:
+ *  This routine sends Handle Value Multiple Notification to the peer Client Device.
+ *
+ *  \param [in] handle
+ *         Identifies the remote ATT entity to which Handle Value Multiple
+ *         Notification is to be sent.
+ *
+ *  \param [in] param
+ *         Indicates Handle, Length and Value Tuple List to be notified.
+ *         See \ref ATT_HNDL_VAL_MULTIPLE_NTF_PARAM.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure.
+ */
+#define BT_att_send_hndl_val_multiple_ntf(handle,param)\
+        BT_att_send_pdu\
+        (\
+            (handle),\
+            ATT_HANDLE_VALUE_MULTIPLE_NTF,\
+            (void *)(param)\
+        );
+#endif /* ATT_HNDL_VAL_MULT_NOTIFICATION_SUPPORT */
 
 /**
  *  \brief Access the last configured MTU

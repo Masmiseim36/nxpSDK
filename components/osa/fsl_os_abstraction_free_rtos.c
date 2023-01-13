@@ -274,13 +274,14 @@ osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, const osa_task_def_t *
     TaskHandle_t pxCreatedTask;
     osa_freertos_task_t *ptask = (osa_freertos_task_t *)taskHandle;
     OSA_InterruptDisable();
-    if (xTaskCreate((TaskFunction_t)thread_def->pthread, /* pointer to the task */
-                    (char const *)thread_def->tname,     /* task name for kernel awareness debugging */
-                    (configSTACK_DEPTH_TYPE)thread_def->stacksize / sizeof(portSTACK_TYPE), /* task stack size */
-                    (task_param_t)task_param,                    /* optional task startup argument */
-                    PRIORITY_OSA_TO_RTOS(thread_def->tpriority), /* initial priority */
-                    &pxCreatedTask                               /* optional task handle to create */
-                    ) == pdPASS)
+    if (xTaskCreate(
+            (TaskFunction_t)thread_def->pthread, /* pointer to the task */
+            (char const *)thread_def->tname,     /* task name for kernel awareness debugging */
+            (configSTACK_DEPTH_TYPE)((uint16_t)thread_def->stacksize / sizeof(portSTACK_TYPE)), /* task stack size */
+            (task_param_t)task_param,                    /* optional task startup argument */
+            PRIORITY_OSA_TO_RTOS(thread_def->tpriority), /* initial priority */
+            &pxCreatedTask                               /* optional task handle to create */
+            ) == pdPASS)
     {
         ptask->taskHandle = pxCreatedTask;
 
@@ -356,6 +357,22 @@ uint32_t OSA_TimeGetMsec(void)
 
     return TICKS_TO_MSEC(ticks);
 }
+
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : OSA_SemaphorePrecreate
+ * Description   : This function is used to pre-create a semaphore.
+ * Return         : KOSA_StatusSuccess
+ *
+ *END**************************************************************************/
+
+osa_status_t OSA_SemaphorePrecreate(osa_semaphore_handle_t semaphoreHandle, osa_task_ptr_t taskHandler)
+{
+    semaphoreHandle = semaphoreHandle;
+    taskHandler     = taskHandler;
+    return KOSA_StatusSuccess;
+}
+
 /*FUNCTION**********************************************************************
  *
  * Function Name : OSA_SemaphoreCreate
@@ -605,6 +622,21 @@ osa_status_t OSA_MutexDestroy(osa_mutex_handle_t mutexHandle)
     QueueHandle_t mutex = (QueueHandle_t)(void *)(uint32_t *)(*(uint32_t *)mutexHandle);
 
     vSemaphoreDelete(mutex);
+    return KOSA_StatusSuccess;
+}
+
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : OSA_EventPrecreate
+ * Description   : This function is used to pre-create a event.
+ * Return         : KOSA_StatusSuccess
+ *
+ *END**************************************************************************/
+
+osa_status_t OSA_EventPrecreate(osa_event_handle_t eventHandle, osa_task_ptr_t taskHandler)
+{
+    eventHandle = eventHandle;
+    taskHandler = taskHandler;
     return KOSA_StatusSuccess;
 }
 

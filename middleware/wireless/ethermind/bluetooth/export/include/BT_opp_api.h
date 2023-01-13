@@ -866,7 +866,7 @@ API_RESULT BT_opp_server_shutdown(void);
 API_RESULT BT_opp_server_start
            (
                /* OUT */ OPP_HANDLE  *opp_handle,
-               /* IN */  OPP_EVENT_NTF_CB opp_client_cb
+               /* IN */  OPP_EVENT_NTF_CB opp_server_cb
            );
 
 /**

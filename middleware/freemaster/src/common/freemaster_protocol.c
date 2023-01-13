@@ -688,7 +688,7 @@ FMSTR_BPTR _FMSTR_AuthenticationStep2(FMSTR_SESSION *session, FMSTR_BPTR msgBuff
 
 #if FMSTR_USE_HASHED_PASSWORDS > 0
         /* Password is already hashed */
-        FMSTR_MemCpyFrom(fmstr_localKey, (FMSTR_ADDR)pass, sizeof(fmstr_localKey));
+        FMSTR_MemCpyFrom(session->restr.localKey, (FMSTR_ADDR)pass, sizeof(session->restr.localKey));
 #else
         /* Password was provided as a string, compute SHA1 hash now */
         FMSTR_MemSet(session->restr.localKey, 0, sizeof(session->restr.localKey));

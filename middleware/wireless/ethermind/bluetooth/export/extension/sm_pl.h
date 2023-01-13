@@ -78,7 +78,7 @@ void sm_set_device_attr_pl
 /** To update SM Platform specific Device Attribute */
 API_RESULT sm_update_device_attr_pl
            (
-               /* IN */  UCHAR    request,
+               /* IN */  UCHAR    event,
                /* IN */  UINT32   di
            );
 

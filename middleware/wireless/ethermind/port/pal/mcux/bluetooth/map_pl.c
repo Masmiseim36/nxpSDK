@@ -23,10 +23,8 @@
 /* XML header for folder & message listing object */
 static UCHAR xml_hdr[] = "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>\n";
 
-/*
 static UCHAR conv_sample_participant_id[] =
 "<participant uci = \"sample@email.de\" display_name = \"Sample\" chat_state = \"2\" last_activity = \"20140801T012900+01:00\" x_bt_uid = \"K1A2A3A4B1B2C1C2D1D2E1E2E3E4F1F2\" />\n";
-*/
 
 static UCHAR msg_readline[512U];
 
@@ -900,7 +898,7 @@ API_RESULT BT_map_set_message_status_pl
     BT_mem_set(file_object, 0, sizeof(file_object));
     BT_mem_set(new_object, 0, sizeof(new_object));
 
-    BT_str_n_copy (fn, "l", sizeof("1"));
+    BT_str_n_copy (fn, "l", (1+1));
     BT_str_n_cat (fn, handle, (sizeof(fn) - BT_str_len(fn) - 1));
     BT_str_n_cat (fn, ".vmg", (sizeof(fn) - BT_str_len(fn) - 1));
 
@@ -1126,8 +1124,10 @@ API_RESULT BT_map_get_message_file_pl
 
     /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
     BT_mem_set(&h, 0, sizeof(BT_fops_object_handle));
+    BT_mem_set(rdir, 0, sizeof(rdir));
+    BT_mem_set(dir, 0, sizeof(dir));
 
-    BT_str_n_copy(rdir, MAP_ROOT_FOLDER_BASE, (sizeof(rdir) - 1));
+    BT_str_n_copy(rdir, MAP_ROOT_FOLDER_BASE, BT_str_len(MAP_ROOT_FOLDER_BASE));
     BT_str_n_cat
     (
         rdir,
@@ -1173,11 +1173,11 @@ API_RESULT BT_map_get_message_file_pl
 
             BT_mem_set (file_object, 0x00, sizeof(file_object));
 
-            BT_str_n_copy(cdir, rdir, sizeof(rdir));
+            BT_str_n_copy(cdir, rdir, sizeof(cdir));
             BT_str_n_cat(cdir, BT_FOPS_PATH_SEP, (sizeof(cdir) - BT_str_len(cdir) - 1));
             BT_str_n_cat(cdir, info.fname, (sizeof(cdir) - BT_str_len(cdir) - 1));
 
-            BT_str_n_copy(fn, "l", sizeof("l"));
+            BT_str_n_copy(fn, "l", sizeof(fn));
             BT_str_n_cat(fn, msg_handle, (sizeof(fn) - BT_str_len(fn) - 1));
             BT_str_n_cat(fn, ".vmg", (sizeof(fn) - BT_str_len(fn) - 1));
 
@@ -1222,4 +1222,512 @@ API_RESULT BT_map_get_message_file_pl
 
     return retval;
 }
+
+API_RESULT BT_map_build_event_report_file_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *event_file,
+               /* IN */  UCHAR   *folder_type,
+               /* IN */  UCHAR   *event_type,
+               /* IN */  UCHAR   event_ver,
+               /* IN */  UCHAR   *handle,
+               /* IN */  UCHAR   *msg_type
+           )
+{
+    API_RESULT retval;
+
+    CHAR    event_file_full_name[MAP_FOLDER_NAME_LEN];
+    UCHAR parent[] = "MAP-event-report";
+    CHAR version_10[] = "version = \"1.0\"";
+    CHAR version_11[] = "version = \"1.1\"";
+    CHAR version_12[] = "version = \"1.2\"";
+
+    CHAR map_default_folder[] = "TELECOM/MSG/INBOX";
+    BT_fops_file_handle  event_fd;
+
+    /* Init */
+    retval = API_SUCCESS;
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    event_fd = NULL;
+
+    /* param check */
+    if ((NULL == dir_entry) ||
+        (NULL == event_file) ||
+        (NULL == event_type) ||
+        (NULL == handle) ||
+        (NULL == msg_type))
+    {
+        BT_debug_error(BT_MODULE_ID_MAP,
+        "[MAP_PL] Invalid Parameters to form Event File\n");
+    }
+    else
+    {
+        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+        (void)BT_vfops_create_object_name
+        (
+            dir_entry,
+            (UCHAR *)event_file,
+            (UCHAR *)event_file_full_name
+        );
+
+        /* open event file */
+        retval = BT_fops_file_open((UCHAR *)event_file_full_name, (UCHAR *)"wb", &event_fd);
+        if (NULL == event_fd)
+        {
+            retval = API_FAILURE;
+        }
+        else
+        {
+            BT_fops_file_print(event_fd, "<%s ", parent);
+            if (0x10U == event_ver)
+            {
+                BT_fops_file_print(event_fd, "%s>\n", version_10);
+            }
+            else if (0x11U == event_ver)
+            {
+                BT_fops_file_print(event_fd, "%s>\n", version_11);
+            }
+            else if (0x12U == event_ver)
+            {
+                BT_fops_file_print(event_fd, "%s>\n", version_12);
+            }
+            else
+            {
+                retval = API_FAILURE;
+            }
+
+            if (API_FAILURE != retval)
+            {
+                BT_fops_file_print(event_fd, "<event type =\"%s\" ", event_type);
+
+                BT_fops_file_print(event_fd, "handle =\"%s\" ", handle);
+
+                /* Folder type */
+                if (NULL == folder_type)
+                {
+                    BT_fops_file_print(event_fd, "folder =\"%s\" ", map_default_folder);
+                }
+                else
+                {
+                    /* TODO: */
+                }
+
+                BT_fops_file_print(event_fd, "msg_type = \"%s\"", msg_type);
+                BT_fops_file_print(event_fd, ">\n");
+
+                BT_fops_file_print(event_fd, "</%s>\n", parent);
+            }
+
+            /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+            (void)BT_fops_file_close(event_fd);
+            event_fd = NULL;
+        }
+    }
+
+    return retval;
+}
+
+API_RESULT BT_map_add_participant_to_conversation_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *convlist_file,
+               /* IN */  UCHAR   *conv_id
+           )
+{
+    API_RESULT retval;
+    BT_fops_file_handle  src_fd;
+    BT_fops_file_handle  dst_fd;
+    UCHAR   src_obj_full_name[MAP_FOLDER_NAME_LEN];
+    UCHAR   dst_obj_full_name[MAP_FOLDER_NAME_LEN];
+    UCHAR    *readstr;
+    CHAR   *tmp_ptr1;
+    UCHAR   flag;
+    UINT16  count;
+    UCHAR   ver_cntr[] = "version_counter=\"";
+
+    retval = API_SUCCESS;
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    src_fd = NULL;
+    dst_fd = NULL;
+
+    /* param check */
+    if ((NULL == dir_entry) ||
+        (NULL == convlist_file))
+    {
+        return API_FAILURE;
+    }
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_vfops_create_object_name
+    (
+        dir_entry,
+        convlist_file,
+        src_obj_full_name
+    );
+
+    /* open src_file, dst file */
+    retval = BT_fops_file_open(src_obj_full_name, (UCHAR *)"rb", &src_fd);
+    if (NULL == src_fd)
+    {
+        return API_FAILURE;
+    }
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_vfops_create_object_name
+    (
+        dir_entry,
+        (UCHAR *)APPL_MAPS_CONV_LISTING_FILE_NAME,
+        dst_obj_full_name
+    );
+
+    retval = BT_fops_file_open(dst_obj_full_name, (UCHAR *)"wb", &dst_fd);
+    if (NULL == dst_fd)
+    {
+        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+        (void)BT_fops_file_close(src_fd);
+
+        return API_FAILURE;
+    }
+
+    readstr = msg_readline;
+
+    flag = 0x00U;
+
+    BT_LOOP_FOREVER()
+    {
+        /* Read one line */
+        count = sizeof(msg_readline) - 1;
+        BT_mem_set(readstr, 0, sizeof(msg_readline));
+        if (API_SUCCESS != (BT_fops_file_get(src_fd, (UCHAR *)readstr, &count)))
+        {
+            break;
+        }
+
+        if (NULL != conv_id)
+        {
+            /* Search for  Version Counter */
+            tmp_ptr1 = BT_str_str(readstr, ver_cntr);
+            if (NULL != tmp_ptr1)
+            {
+                /* Offset till end of ver_cntr */
+                tmp_ptr1 += 17U;
+
+                do
+                {
+                    if ('"' == (*tmp_ptr1))
+                    {
+                        tmp_ptr1--;
+
+                        if (((*tmp_ptr1) >= '0' && (*tmp_ptr1) <= '9') ||
+                            ((*tmp_ptr1) >= 'A' && (*tmp_ptr1) < 'F'))
+                        {
+                            *tmp_ptr1 += 1;
+                        }
+                        else
+                        {
+                            *tmp_ptr1 = '0';
+                        }
+
+                        break;
+                    }
+
+                    tmp_ptr1 += 1;
+                } while (1);
+            }
+
+            if (0x00U == flag)
+            {
+                /* Server for Coversation id */
+                if (NULL != BT_str_str(readstr, conv_id))
+                {
+                    flag = 0x01U;
+                }
+            }
+        }
+
+        count = (UINT16)BT_str_len(readstr);
+        (BT_IGNORE_RETURN_VALUE)BT_fops_file_put(dst_fd, (UCHAR *)readstr, &count);
+
+        if (0x01U == flag)
+        {
+            /* reset */
+            flag = 0x02U;
+
+            count = (UINT16)BT_str_len(readstr);
+            (BT_IGNORE_RETURN_VALUE)BT_fops_file_put(dst_fd, (UCHAR *)conv_sample_participant_id, &count);
+        }
+    }
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_fops_file_close(src_fd);
+    src_fd = NULL;
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_fops_file_close(dst_fd);
+    dst_fd = NULL;
+
+    return retval;
+}
+
+API_RESULT BT_map_check_conversation_id_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *convlist_file,
+               /* IN */  UCHAR   *conv_id_str
+           )
+{
+    API_RESULT retval;
+    BT_fops_file_handle  src_fd;
+    UCHAR   src_obj_full_name[MAP_FOLDER_NAME_LEN];
+    UCHAR    *readstr;
+    CHAR   *tmp_ptr1;
+    UINT16  count;
+    UCHAR   conv_id[] = "conversation id=";
+    retval = API_SUCCESS;
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    src_fd = NULL;
+
+    /* param check */
+    if ((NULL == dir_entry) ||
+        (NULL == convlist_file) ||
+		(NULL == conv_id_str))
+    {
+        return API_FAILURE;
+    }
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_vfops_create_object_name
+    (
+        dir_entry,
+        convlist_file,
+        src_obj_full_name
+    );
+
+    /* open src_file, dst file */
+    retval = BT_fops_file_open(src_obj_full_name, (UCHAR *)"rb", &src_fd);
+    if (NULL == src_fd)
+    {
+        return API_FAILURE;
+    }
+
+    readstr = msg_readline;
+
+    BT_LOOP_FOREVER()
+    {
+        /* Read one line */
+        count = sizeof(msg_readline) - 1;
+        BT_mem_set(readstr, 0, sizeof(msg_readline));
+        if (API_SUCCESS != (BT_fops_file_get(src_fd, (UCHAR *)readstr, &count)))
+        {
+            retval = API_FAILURE;
+            break;
+        }
+
+        /* Search for  Conversation Id */
+        tmp_ptr1 = BT_str_str(readstr, conv_id);
+        if (NULL != tmp_ptr1)
+        {
+            /* Offset till end of conv_id */
+            tmp_ptr1 += 17U;
+            count = 0U;
+
+            do
+            {
+                if ('"' == (*tmp_ptr1))
+                {
+                     *tmp_ptr1 = '\0';
+                     break;
+                }
+                tmp_ptr1 += 1U;
+                count++;
+            } while (1);
+            tmp_ptr1 -= count;
+            /* Search for Conversation id */
+            if (0x00 == BT_str_cmp(tmp_ptr1, conv_id_str))
+            {
+                break;
+            }
+        }
+    }
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_fops_file_close(src_fd);
+    src_fd = NULL;
+
+    return retval;
+}
+
+API_RESULT BT_map_update_conversation_participant_fields_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *convlist_file,
+               /* IN */  UCHAR   *conv_id
+           )
+{
+    API_RESULT retval;
+    BT_fops_file_handle  src_fd;
+    BT_fops_file_handle  dst_fd;
+    UCHAR   src_obj_full_name[MAP_FOLDER_NAME_LEN];
+    UCHAR   dst_obj_full_name[MAP_FOLDER_NAME_LEN];
+    UCHAR    *readstr;
+    CHAR   *tmp_ptr1;
+    UCHAR   flag;
+    UINT16  count;
+    UCHAR   chat_state[] = "chat_state=\"";
+    UCHAR   presence[] = "presence_availability=\"";
+    UCHAR   last_activity[] = "last_activity=\"20";
+    UCHAR   participant_uci[] = "participant uci=";
+
+    retval = API_SUCCESS;
+    /* MISRA C-2012 Rule 9.1 | Coverity UNINIT */
+    src_fd = NULL;
+    dst_fd = NULL;
+
+    /* param check */
+    if ((NULL == dir_entry) ||
+        (NULL == convlist_file))
+    {
+        return API_FAILURE;
+    }
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_vfops_create_object_name
+    (
+        dir_entry,
+        convlist_file,
+        src_obj_full_name
+    );
+
+    /* open src_file, dst file */
+    retval = BT_fops_file_open(src_obj_full_name, (UCHAR *)"rb", &src_fd);
+    if (NULL == src_fd)
+    {
+        return API_FAILURE;
+    }
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_vfops_create_object_name
+    (
+        dir_entry,
+        (UCHAR *)APPL_MAPS_CONV_LISTING_FILE_NAME,
+        dst_obj_full_name
+    );
+
+    retval = BT_fops_file_open(dst_obj_full_name, (UCHAR *)"wb", &dst_fd);
+    if (NULL == dst_fd)
+    {
+        /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+        (void)BT_fops_file_close(src_fd);
+
+        return API_FAILURE;
+    }
+
+    readstr = msg_readline;
+
+    flag = 0x00U;
+
+    BT_LOOP_FOREVER()
+    {
+        /* Read one line */
+        count = sizeof(msg_readline) - 1;
+        BT_mem_set(readstr, 0, sizeof(msg_readline));
+        if (API_SUCCESS != (BT_fops_file_get(src_fd, (UCHAR *)readstr, &count)))
+        {
+            break;
+        }
+
+        if (NULL != conv_id)
+        {
+            if (0x00U == flag)
+            {
+                /* Search for Coversation id */
+                if (NULL != BT_str_str(readstr, conv_id))
+                {
+                    flag = 0x01U;
+                }
+            }
+
+            if (0x01U == flag)
+            {
+                /* Search for participan uci */
+                if (NULL != BT_str_str(readstr, participant_uci))
+                {
+                    flag = 0x02U;
+                }
+            }
+
+            if (0x02U == flag)
+            {
+                /* Search for Chat State */
+                tmp_ptr1 = BT_str_str(readstr, chat_state);
+                if (NULL != tmp_ptr1)
+                {
+                    /* Offset to end of 'chat_state' */
+                    tmp_ptr1 += 12U;
+
+                    if (((*tmp_ptr1) >= '0' && (*tmp_ptr1) <= '9') ||
+                        ((*tmp_ptr1) >= 'A' && (*tmp_ptr1) < 'F'))
+                    {
+                        *tmp_ptr1 += 1;
+                    }
+                    else
+                    {
+                        *tmp_ptr1 = '0';
+                    }
+
+                    flag = 0x03U;
+                }
+
+                /* Search for Presence Field */
+                tmp_ptr1 = BT_str_str(readstr, presence);
+                if (NULL != tmp_ptr1)
+                {
+                    /* Offset to end of 'presence' */
+                    tmp_ptr1 += 23U;
+
+                    if (((*tmp_ptr1) >= '0' && (*tmp_ptr1) <= '9') ||
+                        ((*tmp_ptr1) >= 'A' && (*tmp_ptr1) < 'F'))
+                    {
+                        *tmp_ptr1 += 1;
+                    }
+                    else
+                    {
+                        *tmp_ptr1 = '0';
+                    }
+
+                    flag = 0x03U;
+                }
+
+                /* Search for Last Activity Field */
+                tmp_ptr1 = BT_str_str(readstr, last_activity);
+                if (NULL != tmp_ptr1)
+                {
+                    /* Offset to end of 'last_activity' */
+                    tmp_ptr1 += 17U;
+
+                    *tmp_ptr1 = '2';
+
+                    tmp_ptr1 += 1U;
+
+                    *tmp_ptr1 = '1';
+
+                    flag = 0x03U;
+                }
+            }
+        }
+
+        count = (UINT16)BT_str_len(readstr);
+        (BT_IGNORE_RETURN_VALUE)BT_fops_file_put(dst_fd, (UCHAR *)readstr, &count);
+    }
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_fops_file_close(src_fd);
+    src_fd = NULL;
+
+    /* MISRA C-2012 Rule 17.7 | Coverity CHECKED_RETURN */
+    (void)BT_fops_file_close(dst_fd);
+    dst_fd = NULL;
+
+    return retval;
+}
+
 #endif /* ((defined MAP_MCE) || (defined MAP_MSE)) */

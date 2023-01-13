@@ -29,7 +29,7 @@ static uint8_t filesrc_handle_src_query(StreamPad *pad, StreamQuery *event);
 static uint8_t filesrc_src_activate_push(StreamPad *pad, uint8_t active);
 static uint8_t filesrc_src_activate_pull(StreamPad *pad, uint8_t active);
 static uint8_t filesrc_src_activate(StreamPad *pad, uint8_t active);
-static PadReturn filesrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
+static FlowReturn filesrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
 static int32_t filesrc_get_property(StreamElement *element_ptr, uint16_t prop, uint64_t *val_ptr);
 static int32_t filesrc_set_property(StreamElement *element_ptr, uint16_t prop, uintptr_t val);
 
@@ -81,7 +81,7 @@ int32_t filesrc_init(StreamElement *element)
     }
 
     STREAMER_FUNC_EXIT(DBG_FILESRC);
-    return PAD_OK;
+    return 0;
 }
 
 int32_t filesrc_set_location(ElementHandle element, char *path)
@@ -285,11 +285,11 @@ static uint8_t filesrc_src_activate(StreamPad *pad, uint8_t active)
  * @brief Function reads the data from the file specified by the element.
  * NOTE: Function may or may not be able to read the required
  * length of data.
- * Returns PAD_STREAM_ERR_EOS when EOF file is encountered.
- * or PAD_STREAM_ERR_UNEXPECTED when read fails.
+ * Returns FLOW_EOS when EOF file is encountered.
+ * or FLOW_UNEXPECTED when read fails.
  *
  * */
-static PadReturn filesrc_read(ElementFileSrc *filesrc, uint32_t offset, uint32_t length, StreamBuffer *buf)
+static FlowReturn filesrc_read(ElementFileSrc *filesrc, uint32_t offset, uint32_t length, StreamBuffer *buf)
 {
     int32_t ret = 0;
     int32_t bytesRead;
@@ -341,7 +341,7 @@ static PadReturn filesrc_read(ElementFileSrc *filesrc, uint32_t offset, uint32_t
         if (bytesRead < 0)
         {
             STREAMER_LOG_ERR(DBG_FILESRC, bytesRead, "[FileSRC] f_read failure\n");
-            return PAD_STREAM_ERR_UNEXPECTED;
+            return FLOW_UNEXPECTED;
         }
 
         /* increment read position */
@@ -362,7 +362,7 @@ static PadReturn filesrc_read(ElementFileSrc *filesrc, uint32_t offset, uint32_t
         }
 
         STREAMER_FUNC_EXIT(DBG_FILESRC);
-        return PAD_OK;
+        return FLOW_OK;
     }
 
 eos:
@@ -370,7 +370,7 @@ eos:
     STREAMER_LOG_DEBUG(DBG_FILESRC, "[FileSRC]Read pos: %d, size: %d, offset: %d\n", filesrc->read_position,
                        filesrc->size, offset);
     STREAMER_FUNC_EXIT(DBG_FILESRC);
-    return PAD_STREAM_ERR_EOS;
+    return FLOW_EOS;
 }
 
 /*!
@@ -387,8 +387,7 @@ eos:
 int32_t filesrc_src_pad_process(StreamPad *pad)
 {
     ElementFileSrc *filesrc = (ElementFileSrc *)pad->parent;
-    PadReturn ret           = PAD_OK;
-    FlowReturn pad_push_ret = FLOW_OK;
+    FlowReturn ret          = FLOW_OK;
     uint32_t length = 0, offset = 0;
     StreamBuffer buf;
 
@@ -412,7 +411,7 @@ int32_t filesrc_src_pad_process(StreamPad *pad)
 
         /* read chunk_size of data */
         ret = filesrc_read(filesrc, offset, length, &buf);
-        if (ret == PAD_STREAM_ERR_EOS)
+        if (ret == FLOW_EOS)
         {
             StreamEvent event;
 
@@ -427,7 +426,7 @@ int32_t filesrc_src_pad_process(StreamPad *pad)
             STREAMER_FUNC_EXIT(DBG_FILESRC);
             return STREAM_OK;
         }
-        else if (ret == PAD_STREAM_ERR_UNEXPECTED)
+        else if (ret == FLOW_UNEXPECTED)
         {
             STREAMER_LOG_ERR(DBG_FILESRC, ret, "[FileSRC] Unexpected error %d\n", ret);
             STREAMER_FUNC_EXIT(DBG_FILESRC);
@@ -435,13 +434,25 @@ int32_t filesrc_src_pad_process(StreamPad *pad)
             send_msg_element((StreamElement *)filesrc, MSG_EOS, 0);
             return STREAM_OK;
         }
-        else if (ret != PAD_STREAM_ERR_GENERAL)
+        else if (ret != FLOW_ERROR)
         {
+            /* Update audio packet header values as values may have been changed in the AUDIO_PROC element as part of a
+             * crossover preset */
+            if (filesrc->file_type == AUDIO_DATA)
+            {
+                AudioPacketHeader *pkt_hdr = NULL;
+                /* set data type id */
+                pkt_hdr                  = (AudioPacketHeader *)buf.buffer;
+                pkt_hdr->sample_rate     = filesrc->sample_rate;
+                pkt_hdr->bits_per_sample = filesrc->bit_width;
+                pkt_hdr->num_channels    = filesrc->num_channels;
+                AUDIO_FORMAT(pkt_hdr)    = AUDIO_SET_FORMAT(0, 0, 1, filesrc->bit_width);
+                pkt_hdr->chunk_size      = filesrc->chunk_size;
+            }
+
             /* No error then forward the data */
             /* push data to peer sink pad */
-            pad_push_ret = pad_push(pad, &buf);
-
-            if (pad_push_ret != FLOW_OK)
+            if (pad_push(pad, &buf) != FLOW_OK)
             {
                 STREAMER_LOG_ERR(DBG_FILESRC, ERRCODE_GENERAL_ERROR, "[FileSRC]Flow not ok\n");
                 STREAMER_FUNC_EXIT(DBG_FILESRC);
@@ -477,10 +488,10 @@ int32_t filesrc_src_pad_process(StreamPad *pad)
  * the offset to buffer.
  *
  */
-static PadReturn filesrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset)
+static FlowReturn filesrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset)
 {
     ElementFileSrc *filesrc = (ElementFileSrc *)pad->parent;
-    PadReturn ret           = PAD_OK;
+    FlowReturn ret          = FLOW_OK;
 
     STREAMER_FUNC_ENTER(DBG_FILESRC);
 
@@ -509,7 +520,7 @@ static PadReturn filesrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t siz
 
     /* read chunk_size of data */
     ret = filesrc_read(filesrc, offset, size, buffer);
-    if (ret == PAD_STREAM_ERR_UNEXPECTED || ret == PAD_STREAM_ERR_EOS)
+    if (ret == FLOW_UNEXPECTED || ret == FLOW_EOS)
     {
         /* Its an end of stream */
         if (filesrc->end_of_stream != (uint8_t) true)
@@ -526,9 +537,6 @@ static PadReturn filesrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t siz
     }
 
     filesrc->g_read_position[StreamNo] = filesrc->read_position;
-
-    STREAMER_FUNC_EXIT(DBG_FILESRC);
-    return ret;
 
 pause:
     STREAMER_FUNC_EXIT(DBG_FILESRC);

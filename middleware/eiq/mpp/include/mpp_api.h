@@ -26,10 +26,11 @@
  * This function initializes the library and its data structures. <br>
  * It must be called before any other function of the API is called.
  *
+ * @param [in] params API global parameters
  * @return \ref return_codes
  *
  */
-int mpp_api_init(void);
+int mpp_api_init(mpp_api_params_t *params);
 
 /**
  * Basic pipeline creation
@@ -120,14 +121,14 @@ int mpp_element_add(mpp_t mpp, mpp_element_id_t id, mpp_element_params_t *params
  *
  * @param [in] mpp input pipeline
  * @param [in] num number of output pipeline
- * @param [in] flags selecting the execution type
+ * @param [in] params split mpp parameters
  * @param [out] out_list list of output pipelines
  * @return \ref return_codes
  *
  * @pre
  * - _out_list_ array must contain at least _num_ elements.
  */
-int mpp_split(mpp_t mpp, unsigned int num, mpp_exec_flag_t *flag, mpp_t *out_list);
+int mpp_split(mpp_t mpp, unsigned int num, mpp_params_t *params, mpp_t *out_list);
 
 /**
  * Branching through an element
@@ -197,6 +198,32 @@ int mpp_start(mpp_t mpp, int last);
  * @return \ref return_codes
  */
 int mpp_stop(mpp_t mpp);
+
+/**
+ * Enable statistics collection
+ *
+ * This function enables statistics collection for a given group
+ * Statistics collection is disabled by default after API initialization.
+ * Calling this function when stats are enabled has no effect.
+ *
+ * @param [in]  grp statistics group
+ *
+ * @return
+ */
+void mpp_stats_enable(mpp_stats_grp_t grp);
+
+/**
+ * Disable statistics collection
+ *
+ * This function disables statistics collection for a given group
+ * Calling this function when stats are disabled has no effect.
+ * This function is used to ensure stats are not updated while
+ * application tasks use the stats structures.
+ *
+ * @param [in} grp statistics group
+ */
+void mpp_stats_disable(mpp_stats_grp_t grp);
+
 
 /**
  * Get MPP version

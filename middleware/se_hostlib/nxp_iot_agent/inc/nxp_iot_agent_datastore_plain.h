@@ -78,6 +78,8 @@ bool iot_agent_datastore_plain_handle_request(pb_istream_t *istream,
 
 extern const iot_agent_datastore_interface_t iot_agent_datastore_plain_interface;
 
+bool iot_agent_datastore_plain_handle_write_data(pb_istream_t *stream, const pb_field_t *field, void **arg);
+
 /*!
  *@}
  */ /* end of edgelock2go_agent_datastore_plain */

@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.5</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -116,9 +116,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aab184784c549ee2015f4f9915b1e4e30"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="netbuf__src_8c.html#aab184784c549ee2015f4f9915b1e4e30">netbufsrc_src_activation_handler</a> (StreamPad *pad, uint8_t active)</td></tr>
 <tr class="memdesc:aab184784c549ee2015f4f9915b1e4e30"><td class="mdescLeft">&#160;</td><td class="mdescRight">queue src pad activatation handler. Activation is handled by the peer sink pad, this should just handle the deactivation.  <a href="netbuf__src_8c.html#aab184784c549ee2015f4f9915b1e4e30">More...</a><br /></td></tr>
 <tr class="separator:aab184784c549ee2015f4f9915b1e4e30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5818deb56292b3ffb3f5544c0161ed27"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="netbuf__src_8c.html#a5818deb56292b3ffb3f5544c0161ed27">netbufsrc_pull</a> (StreamPad *pad, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buffer, uint32_t size, uint32_t offset)</td></tr>
-<tr class="memdesc:a5818deb56292b3ffb3f5544c0161ed27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the pull function of the netbufsrc source pad in SCHEDULING_PULL mode. It reads the size of data from the offset to buffer.  <a href="netbuf__src_8c.html#a5818deb56292b3ffb3f5544c0161ed27">More...</a><br /></td></tr>
-<tr class="separator:a5818deb56292b3ffb3f5544c0161ed27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3f0a190dadc77c569f8f6b33e510024"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="netbuf__src_8c.html#ab3f0a190dadc77c569f8f6b33e510024">netbufsrc_pull</a> (StreamPad *pad, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buffer, uint32_t size, uint32_t offset)</td></tr>
+<tr class="memdesc:ab3f0a190dadc77c569f8f6b33e510024"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the pull function of the netbufsrc source pad in SCHEDULING_PULL mode. It reads the size of data from the offset to buffer.  <a href="netbuf__src_8c.html#ab3f0a190dadc77c569f8f6b33e510024">More...</a><br /></td></tr>
+<tr class="separator:ab3f0a190dadc77c569f8f6b33e510024"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af39f74b8a0eb4f8e37f1980356b4b0b2"><td class="memItemLeft" align="right" valign="top">static int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="netbuf__src_8c.html#af39f74b8a0eb4f8e37f1980356b4b0b2">netbufsrc_get_property</a> (StreamElement *element_ptr, uint16_t prop, uint32_t *val_ptr)</td></tr>
 <tr class="memdesc:af39f74b8a0eb4f8e37f1980356b4b0b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function get memory source element properties.  <a href="netbuf__src_8c.html#af39f74b8a0eb4f8e37f1980356b4b0b2">More...</a><br /></td></tr>
 <tr class="separator:af39f74b8a0eb4f8e37f1980356b4b0b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,9 +128,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aaa06397f2d3c6c32ecc2bb6a1d908052"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="netbuf__src_8c.html#aaa06397f2d3c6c32ecc2bb6a1d908052">netbufsrc_init</a> (StreamElement *element)</td></tr>
 <tr class="memdesc:aaa06397f2d3c6c32ecc2bb6a1d908052"><td class="mdescLeft">&#160;</td><td class="mdescRight">this function initializes the netbuf source element and source pad. all the pad's handlers are intialized.  <a href="netbuf__src_8c.html#aaa06397f2d3c6c32ecc2bb6a1d908052">More...</a><br /></td></tr>
 <tr class="separator:aaa06397f2d3c6c32ecc2bb6a1d908052"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecf5d0c0a20780af51571d888ceadc7e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="netbuf__src_8c.html#aecf5d0c0a20780af51571d888ceadc7e">netbufsrc_read</a> (<a class="el" href="structElementNetbufSrc.html">ElementNetbufSrc</a> *netbufsrc, int32_t offset, int32_t length, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buf)</td></tr>
-<tr class="memdesc:aecf5d0c0a20780af51571d888ceadc7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the data from the memory array specified by the element. NOTE: Function may or may not be able to read the required length of data.  <a href="netbuf__src_8c.html#aecf5d0c0a20780af51571d888ceadc7e">More...</a><br /></td></tr>
-<tr class="separator:aecf5d0c0a20780af51571d888ceadc7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a782c72e8cd949c75e539d300d4b41a41"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="netbuf__src_8c.html#a782c72e8cd949c75e539d300d4b41a41">netbufsrc_read</a> (<a class="el" href="structElementNetbufSrc.html">ElementNetbufSrc</a> *netbufsrc, int32_t offset, int32_t length, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buf)</td></tr>
+<tr class="memdesc:a782c72e8cd949c75e539d300d4b41a41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the data from the memory array specified by the element. NOTE: Function may or may not be able to read the required length of data.  <a href="netbuf__src_8c.html#a782c72e8cd949c75e539d300d4b41a41">More...</a><br /></td></tr>
+<tr class="separator:a782c72e8cd949c75e539d300d4b41a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a9d9ae9e038bc04e7fc3f099c2084cd8a" name="a9d9ae9e038bc04e7fc3f099c2084cd8a"></a>
@@ -349,8 +349,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5818deb56292b3ffb3f5544c0161ed27" name="a5818deb56292b3ffb3f5544c0161ed27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5818deb56292b3ffb3f5544c0161ed27">&#9670;&nbsp;</a></span>netbufsrc_pull()</h2>
+<a id="ab3f0a190dadc77c569f8f6b33e510024" name="ab3f0a190dadc77c569f8f6b33e510024"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3f0a190dadc77c569f8f6b33e510024">&#9670;&nbsp;</a></span>netbufsrc_pull()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -359,7 +359,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a> netbufsrc_pull </td>
+          <td class="memname">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a> netbufsrc_pull </td>
           <td>(</td>
           <td class="paramtype">StreamPad *&#160;</td>
           <td class="paramname"><em>pad</em>, </td>
@@ -540,8 +540,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aecf5d0c0a20780af51571d888ceadc7e" name="aecf5d0c0a20780af51571d888ceadc7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecf5d0c0a20780af51571d888ceadc7e">&#9670;&nbsp;</a></span>netbufsrc_read()</h2>
+<a id="a782c72e8cd949c75e539d300d4b41a41" name="a782c72e8cd949c75e539d300d4b41a41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a782c72e8cd949c75e539d300d4b41a41">&#9670;&nbsp;</a></span>netbufsrc_read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -550,7 +550,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a> netbufsrc_read </td>
+          <td class="memname">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a> netbufsrc_read </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structElementNetbufSrc.html">ElementNetbufSrc</a> *&#160;</td>
           <td class="paramname"><em>netbufsrc</em>, </td>
@@ -596,8 +596,8 @@ Functions</h2></td></tr>
 </dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
-    <tr><td class="paramname">PAD_STREAM_ERR_EOS</td><td>when EOF file is encountered. </td></tr>
-    <tr><td class="paramname">PAD_STREAM_ERR_GENERAL</td><td>when read fails. </td></tr>
+    <tr><td class="paramname">FLOW_EOS</td><td>when EOF file is encountered. </td></tr>
+    <tr><td class="paramname">FLOW_ERROR</td><td>when read fails. </td></tr>
   </table>
   </dd>
 </dl>

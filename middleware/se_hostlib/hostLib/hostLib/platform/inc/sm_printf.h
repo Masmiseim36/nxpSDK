@@ -13,10 +13,12 @@
 extern "C" {
 #endif
 
-
-#if AX_EMBEDDED \
-    && (!defined (__MBED__))
+#if AX_EMBEDDED && (!defined(__MBED__))
+#if defined(NORDIC_MCU)
+#include "board.h"
+#else
 #   include "fsl_debug_console.h"
+#endif
 #else
 #   define PRINTF printf
 #   define SCANF scanf

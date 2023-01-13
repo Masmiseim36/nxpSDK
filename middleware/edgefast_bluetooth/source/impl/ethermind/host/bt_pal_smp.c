@@ -173,6 +173,9 @@ struct bt_smp {
 	/* status of auth complete */
 	API_RESULT 					status;
 
+	/* Used Bluetooth authentication callbacks. */
+	atomic_ptr_t			auth_cb;
+
 	/* Commands that remote is allowed to send */
 	ATOMIC_DEFINE(allowed_cmds, BT_SMP_NUM_CMDS);
 
@@ -341,6 +344,11 @@ struct bt_smp_hdr_sumilation
 NET_BUF_POOL_DEFINE(smp_le_rx_pool, BT_SMP_LE_RX_POOL_COUNT, (sizeof(struct bt_smp_hdr_sumilation) + SMP_LE_RX_PDU + CONFIG_BT_HCI_RESERVE),
 		    CONFIG_NET_BUF_USER_DATA_SIZE, NULL);
 
+/* Pointer to internal data is used to mark that callbacks of given SMP channel are not initialized.
+ * Value of NULL represents no authenticaiton capabilities and cannot be used for that purpose.
+ */
+#define BT_SMP_AUTH_CB_UNINITIALIZED	((atomic_ptr_val_t)bt_smp_pool)
+
 static bool le_sc_supported(void)
 {
 	/*
@@ -356,25 +364,34 @@ static bool le_sc_supported(void)
 	       BT_CMD_TEST(bt_dev.supported_commands, 34, 2);
 }
 
-static uint8_t get_io_capa(void)
+static const struct bt_conn_auth_cb *latch_auth_cb(struct bt_smp *smp)
 {
-	if (!bt_auth) {
+	atomic_ptr_cas(&smp->auth_cb, BT_SMP_AUTH_CB_UNINITIALIZED, (atomic_ptr_val_t)bt_auth);
+
+	return atomic_ptr_get(&smp->auth_cb);
+}
+
+static uint8_t get_io_capa(struct bt_smp *smp)
+{
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
+
+	if (!smp_auth_cb) {
 		goto no_callbacks;
 	}
 
 	/* Passkey Confirmation is valid only for LE SC */
-	if (bt_auth->passkey_display && bt_auth->passkey_entry &&
-	    (bt_auth->passkey_confirm || !sc_supported)) {
+	if (smp_auth_cb->passkey_display && smp_auth_cb->passkey_entry &&
+	    (smp_auth_cb->passkey_confirm || !sc_supported)) {
 		return BT_SMP_IO_KEYBOARD_DISPLAY;
 	}
 
 	/* DisplayYesNo is useful only for LE SC */
-	if (sc_supported && bt_auth->passkey_display &&
-	    bt_auth->passkey_confirm) {
+	if (sc_supported && smp_auth_cb->passkey_display &&
+	    smp_auth_cb->passkey_confirm) {
 		return BT_SMP_IO_DISPLAY_YESNO;
 	}
 
-	if (bt_auth->passkey_entry) {
+	if (smp_auth_cb->passkey_entry) {
 		if (IS_ENABLED(CONFIG_BT_FIXED_PASSKEY) &&
 		    fixed_passkey != BT_PASSKEY_INVALID) {
 			return BT_SMP_IO_KEYBOARD_DISPLAY;
@@ -383,7 +400,7 @@ static uint8_t get_io_capa(void)
 		}
 	}
 
-	if (bt_auth->passkey_display) {
+	if (smp_auth_cb->passkey_display) {
 		return BT_SMP_IO_DISPLAY_ONLY;
 	}
 
@@ -423,15 +440,15 @@ static bool smp_keys_check(struct bt_conn *conn)
 		return false;
 	}
 
-	if (conn->required_sec_level > BT_SECURITY_L2 &&
+	if (conn->required_sec_level >= BT_SECURITY_L3 &&
 	    !(conn->le.keys->flags & BT_KEYS_AUTHENTICATED)) {
 		return false;
 	}
 
-	if (conn->required_sec_level > BT_SECURITY_L3 &&
-	    !(conn->le.keys->flags & BT_KEYS_AUTHENTICATED) &&
-	    !(conn->le.keys->keys & BT_KEYS_LTK_P256) &&
-	    !(conn->le.keys->enc_size == BT_SMP_MAX_ENC_KEY_SIZE)) {
+	if (conn->required_sec_level >= BT_SECURITY_L4 &&
+	    !((conn->le.keys->flags & BT_KEYS_AUTHENTICATED) &&
+	      (conn->le.keys->keys & BT_KEYS_LTK_P256) &&
+	      (conn->le.keys->enc_size == BT_SMP_MAX_ENC_KEY_SIZE))) {
 		return false;
 	}
 
@@ -469,7 +486,7 @@ static uint8_t get_pair_method(struct bt_smp *smp, uint8_t remote_io)
 		return JUST_WORKS;
 	}
 
-	return gen_method_sc[remote_io][get_io_capa()];
+	return gen_method_sc[remote_io][get_io_capa(smp)];
 #else
 	return JUST_WORKS;
 #endif
@@ -910,7 +927,9 @@ static void smp_check_complete(struct bt_conn *conn, uint8_t dist_complete)
 #if 0
 static void smp_id_sent(struct bt_conn *conn, void *user_data)
 {
-	smp_check_complete(conn, BT_SMP_DIST_ID_KEY);
+	if (!err) {
+		smp_check_complete(conn, BT_SMP_DIST_ID_KEY);
+	}
 }
 #endif
 #endif /* CONFIG_BT_PRIVACY */
@@ -919,7 +938,9 @@ static void smp_id_sent(struct bt_conn *conn, void *user_data)
 #if 0
 static void smp_sign_info_sent(struct bt_conn *conn, void *user_data)
 {
-	smp_check_complete(conn, BT_SMP_DIST_SIGN);
+	if (!err) {
+		smp_check_complete(conn, BT_SMP_DIST_SIGN);
+	}
 }
 #endif
 #endif /* CONFIG_BT_SIGNING */
@@ -1065,24 +1086,33 @@ static void smp_pairing_br_complete(struct bt_smp_br *smp, uint8_t status)
 	keys = bt_keys_find_addr(conn->id, &addr);
 
 	if (status) {
+		struct bt_conn_auth_info_cb *listener, *next;
+
 		if (keys) {
 			bt_keys_clear(keys);
 		}
 
-		if (bt_auth && bt_auth->pairing_failed) {
-			bt_auth->pairing_failed(smp->chan.chan.conn,
-						security_err_get(status));
+		SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&bt_auth_info_cbs, listener,
+						  next, node) {
+			if (listener->pairing_failed) {
+				listener->pairing_failed(smp->chan.chan.conn,
+							 security_err_get(status));
+			}
 		}
 	} else {
 		bool bond_flag = atomic_test_bit(smp->flags, SMP_FLAG_BOND);
+		struct bt_conn_auth_info_cb *listener, *next;
 
 		if (bond_flag && keys) {
 			bt_keys_store(keys);
 		}
 
-		if (bt_auth && bt_auth->pairing_complete) {
-			bt_auth->pairing_complete(smp->chan.chan.conn,
-						  bond_flag);
+		SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&bt_auth_info_cbs, listener,
+						  next, node) {
+			if (listener->pairing_complete) {
+				listener->pairing_complete(smp->chan.chan.conn,
+							   bond_flag);
+			}
 		}
 	}
 
@@ -1946,6 +1976,7 @@ static void smp_pairing_complete(struct bt_smp *smp, uint8_t status)
 		}
 #endif /* CONFIG_BT_BREDR */
 		bool bond_flag = atomic_test_bit(smp->flags, SMP_FLAG_BOND);
+		struct bt_conn_auth_info_cb *listener, *next;
 
 #if (defined(CONFIG_BT_LOG_SNIFFER_INFO) && ((CONFIG_BT_LOG_SNIFFER_INFO) > 0U))
 		if (IS_ENABLED(CONFIG_BT_LOG_SNIFFER_INFO)) {
@@ -1957,8 +1988,11 @@ static void smp_pairing_complete(struct bt_smp *smp, uint8_t status)
 			bt_keys_store(conn->le.keys);
 		}
 
-		if (bt_auth && bt_auth->pairing_complete) {
-			bt_auth->pairing_complete(conn, bond_flag);
+		SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&bt_auth_info_cbs, listener,
+						  next, node, struct bt_conn_auth_info_cb) {
+			if (listener->pairing_complete) {
+				listener->pairing_complete(conn, bond_flag);
+			}
 		}
 	} else {
 		enum bt_security_err security_err = security_err_get(status);
@@ -1991,9 +2025,16 @@ static void smp_pairing_complete(struct bt_smp *smp, uint8_t status)
 		/* Check SMP_FLAG_PAIRING as bt_conn_security_changed may
 		 * have called the pairing_failed callback already.
 		 */
-		if (atomic_test_bit(smp->flags, SMP_FLAG_PAIRING) &&
-		    bt_auth && bt_auth->pairing_failed) {
-			bt_auth->pairing_failed(conn, security_err);
+		if (atomic_test_bit(smp->flags, SMP_FLAG_PAIRING)) {
+			struct bt_conn_auth_info_cb *listener, *next;
+
+			SYS_SLIST_FOR_EACH_CONTAINER_SAFE(&bt_auth_info_cbs,
+							  listener, next,
+							  node, struct bt_conn_auth_info_cb) {
+				if (listener->pairing_failed) {
+					listener->pairing_failed(conn, security_err);
+				}
+			}
 		}
 	}
 
@@ -2228,7 +2269,9 @@ static uint8_t smp_send_pairing_confirm(struct bt_smp *smp)
 #if 0
 static void smp_ident_sent(struct bt_conn *conn, void *user_data)
 {
-	smp_check_complete(conn, BT_SMP_DIST_ENC_KEY);
+	if (!err) {
+		smp_check_complete(conn, BT_SMP_DIST_ENC_KEY);
+	}
 }
 
 static void legacy_distribute_keys(struct bt_smp *smp)
@@ -2400,11 +2443,13 @@ static uint8_t send_pairing_rsp(struct bt_smp *smp)
 	}
 }
 
-static uint8_t smp_pairing_accept_query(struct bt_conn *conn,
-				    struct bt_smp_pairing *pairing)
+static uint8_t smp_pairing_accept_query(struct bt_smp *smp, struct bt_smp_pairing *pairing)
 {
 #if (defined(CONFIG_BT_SMP_APP_PAIRING_ACCEPT) && ((CONFIG_BT_SMP_APP_PAIRING_ACCEPT) > 0U))
-	if (bt_auth && bt_auth->pairing_accept) {
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
+	struct bt_conn *conn = smp->chan.chan.conn;
+
+	if (smp_auth_cb && smp_auth_cb->pairing_accept) {
 		const struct bt_conn_pairing_feat feat = {
 			.io_capability = pairing->io_capability,
 			.oob_data_flag = pairing->oob_flag,
@@ -2414,7 +2459,7 @@ static uint8_t smp_pairing_accept_query(struct bt_conn *conn,
 			.resp_key_dist = pairing->resp_key_dist
 		};
 
-		return smp_err_get(bt_auth->pairing_accept(conn, &feat));
+		return smp_err_get(smp_auth_cb->pairing_accept(conn, &feat));
 	}
 #endif /* CONFIG_BT_SMP_APP_PAIRING_ACCEPT */
 	return 0;
@@ -2465,7 +2510,7 @@ static uint8_t legacy_get_pair_method(struct bt_smp *smp, uint8_t remote_io)
 		return JUST_WORKS;
 	}
 
-	method = gen_method_legacy[remote_io][get_io_capa()];
+	method = gen_method_legacy[remote_io][get_io_capa(smp)];
 
 	/* if both sides have KeyboardDisplay capabilities, initiator displays
 	 * and responder inputs
@@ -2485,6 +2530,7 @@ static uint8_t legacy_get_pair_method(struct bt_smp *smp, uint8_t remote_io)
 static uint8_t legacy_request_tk(struct bt_smp *smp)
 {
 	struct bt_conn *conn = smp->chan.chan.conn;
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
 	struct bt_keys *keys;
 	uint32_t passkey;
 
@@ -2502,13 +2548,13 @@ static uint8_t legacy_request_tk(struct bt_smp *smp)
 
 	switch (smp->method) {
 	case LEGACY_OOB:
-		if (bt_auth && bt_auth->oob_data_request) {
+		if (smp_auth_cb && smp_auth_cb->oob_data_request) {
 			struct bt_conn_oob_info info = {
 				.type = BT_CONN_OOB_LE_LEGACY,
 			};
 
 			atomic_set_bit(smp->flags, SMP_FLAG_USER);
-			bt_auth->oob_data_request(smp->chan.chan.conn, &info);
+			smp_auth_cb->oob_data_request(smp->chan.chan.conn, &info);
 		} else {
 			return BT_SMP_ERR_OOB_NOT_AVAIL;
 		}
@@ -2530,9 +2576,9 @@ static uint8_t legacy_request_tk(struct bt_smp *smp)
 			BT_INFO("Legacy passkey %u", passkey);
 		}
 
-		if (bt_auth && bt_auth->passkey_display) {
+		if (smp_auth_cb && smp_auth_cb->passkey_display) {
 			atomic_set_bit(smp->flags, SMP_FLAG_DISPLAY);
-			bt_auth->passkey_display(conn, passkey);
+			smp_auth_cb->passkey_display(conn, passkey);
 		}
 
 		sys_put_le32(passkey, smp->tk);
@@ -2540,7 +2586,7 @@ static uint8_t legacy_request_tk(struct bt_smp *smp)
 		break;
 	case PASSKEY_INPUT:
 		atomic_set_bit(smp->flags, SMP_FLAG_USER);
-		bt_auth->passkey_entry(conn);
+		smp_auth_cb->passkey_entry(conn);
 		break;
 	case JUST_WORKS:
 		break;
@@ -2581,6 +2627,7 @@ static uint8_t legacy_send_pairing_confirm(struct bt_smp *smp)
 #if (defined(CONFIG_BT_PERIPHERAL) && ((CONFIG_BT_PERIPHERAL) > 0U))
 static uint8_t legacy_pairing_req(struct bt_smp *smp)
 {
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
 	uint8_t ret;
 
 	BT_DBG("");
@@ -2593,10 +2640,10 @@ static uint8_t legacy_pairing_req(struct bt_smp *smp)
 	/* ask for consent if pairing is not due to sending SecReq*/
 	if ((DISPLAY_FIXED(smp) || smp->method == JUST_WORKS) &&
 	    !atomic_test_bit(smp->flags, SMP_FLAG_SEC_REQ) &&
-	    bt_auth && bt_auth->pairing_confirm) {
+	    smp_auth_cb && smp_auth_cb->pairing_confirm) {
 		smp->confirm_type = CONFIRM_TYPE_PAIRING;
 		atomic_set_bit(smp->flags, SMP_FLAG_USER);
-		bt_auth->pairing_confirm(smp->chan.chan.conn);
+		smp_auth_cb->pairing_confirm(smp->chan.chan.conn);
 		return 0;
 	}
 
@@ -2812,6 +2859,7 @@ static uint8_t smp_central_ident(struct bt_smp *smp, struct net_buf *buf)
 #if 0
 static uint8_t legacy_pairing_rsp(struct bt_smp *smp)
 {
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
 	uint8_t ret;
 
 	BT_DBG("");
@@ -2824,9 +2872,9 @@ static uint8_t legacy_pairing_rsp(struct bt_smp *smp)
 	/* ask for consent if this is due to received SecReq */
 	if ((DISPLAY_FIXED(smp) || smp->method == JUST_WORKS) &&
 	    atomic_test_bit(smp->flags, SMP_FLAG_SEC_REQ) &&
-	    bt_auth && bt_auth->pairing_confirm) {
+	    smp_auth_cb && smp_auth_cb->pairing_confirm) {
 		atomic_set_bit(smp->flags, SMP_FLAG_USER);
-		bt_auth->pairing_confirm(smp->chan.chan.conn);
+		smp_auth_cb->pairing_confirm(smp->chan.chan.conn);
 		return 0;
 	}
 
@@ -2887,15 +2935,17 @@ void bt_set_oob_data_flag(bool enable)
 }
 
 #if (defined(CONFIG_BT_PERIPHERAL) && ((CONFIG_BT_PERIPHERAL) > 0U))
-static uint8_t get_auth(struct bt_conn *conn, uint8_t auth)
+static uint8_t get_auth(struct bt_smp *smp, uint8_t auth)
 {
+	struct bt_conn *conn = smp->chan.chan.conn;
+
 	if (sc_supported) {
 		auth &= BT_SMP_AUTH_MASK_SC;
 	} else {
 		auth &= BT_SMP_AUTH_MASK;
 	}
 
-	if ((get_io_capa() == BT_SMP_IO_NO_INPUT_OUTPUT) ||
+	if ((get_io_capa(smp) == BT_SMP_IO_NO_INPUT_OUTPUT) ||
 	    (!IS_ENABLED(CONFIG_BT_SMP_ENFORCE_MITM) &&
 	    (conn->required_sec_level < BT_SECURITY_L3))) {
 		auth &= ~(BT_SMP_AUTH_MITM);
@@ -2949,18 +2999,20 @@ static uint8_t remote_sec_level_reachable(struct bt_smp *smp)
 	}
 }
 
-static bool sec_level_reachable(struct bt_conn *conn)
+static bool sec_level_reachable(struct bt_smp *smp)
 {
-	switch (conn->required_sec_level) {
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
+
+	switch (smp->chan.chan.conn->required_sec_level) {
 	case BT_SECURITY_L1:
 	case BT_SECURITY_L2:
 		return true;
 	case BT_SECURITY_L3:
-		return get_io_capa() != BT_SMP_IO_NO_INPUT_OUTPUT ||
-		       (bt_auth && bt_auth->oob_data_request);
+		return get_io_capa(smp) != BT_SMP_IO_NO_INPUT_OUTPUT ||
+		       (smp_auth_cb && smp_auth_cb->oob_data_request);
 	case BT_SECURITY_L4:
-		return (get_io_capa() != BT_SMP_IO_NO_INPUT_OUTPUT ||
-			(bt_auth && bt_auth->oob_data_request)) && sc_supported;
+		return (get_io_capa(smp) != BT_SMP_IO_NO_INPUT_OUTPUT ||
+		       (smp_auth_cb && smp_auth_cb->oob_data_request)) && sc_supported;
 	default:
 		return false;
 	}
@@ -3094,7 +3146,7 @@ static int smp_send_security_req(struct bt_conn *conn)
 	}
 
 	/* early verify if required sec level if reachable */
-	if (!(sec_level_reachable(conn) || smp_keys_check(conn))) {
+	if (!(sec_level_reachable(smp) || smp_keys_check(conn))) {
 		return -EINVAL;
 	}
 
@@ -3116,7 +3168,7 @@ static int smp_send_security_req(struct bt_conn *conn)
 	}
 
 	req = net_buf_add(req_buf, sizeof(*req));
-	req->auth_req = get_auth(conn, BT_SMP_AUTH_DEFAULT);
+	req->auth_req = get_auth(smp, BT_SMP_AUTH_DEFAULT);
 
 	/* SMP timer is not restarted for SecRequest so don't use smp_send */
 	err = bt_l2cap_send(conn, BT_L2CAP_CID_SMP, req_buf);
@@ -3134,6 +3186,8 @@ static int smp_send_security_req(struct bt_conn *conn)
 static uint8_t smp_pairing_req(struct bt_smp *smp, struct bt_smp_pairing *req, SMP_AUTH_INFO *auth)
 {
 	struct bt_conn *conn = smp->chan.chan.conn;
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
+
 	struct bt_smp_pairing *rsp;
 	uint8_t err;
 	uint8_t keyDistribution = 0;
@@ -3198,17 +3252,17 @@ static uint8_t smp_pairing_req(struct bt_smp *smp, struct bt_smp_pairing *req, S
 	smp->prsp[0] = BT_SMP_CMD_PAIRING_RSP;
 	rsp = (struct bt_smp_pairing *)&smp->prsp[1];
 
-	rsp->auth_req = get_auth(conn, req->auth_req);
+	rsp->auth_req = get_auth(smp, req->auth_req);
 	/* according to get_auth function, add follow codes to set MITM.
 	 * In Ethermind, when security == SMP_SEC_LEVEL_2, MITM is set.
 	*/
-	if ((get_io_capa() == BT_SMP_IO_NO_INPUT_OUTPUT) ||
+	if ((get_io_capa(smp) == BT_SMP_IO_NO_INPUT_OUTPUT) ||
 	    (!IS_ENABLED(CONFIG_BT_SMP_ENFORCE_MITM) &&
 	    (conn->required_sec_level < BT_SECURITY_L3))) {
 	} else {
 		auth->security = SMP_SEC_LEVEL_2;
 	}
-	rsp->io_capability = get_io_capa();
+	rsp->io_capability = get_io_capa(smp);
 	rsp->oob_flag = oobd_present ? BT_SMP_OOB_PRESENT :
 				       BT_SMP_OOB_NOT_PRESENT;
 	rsp->max_key_size = BT_SMP_MAX_ENC_KEY_SIZE;
@@ -3290,7 +3344,7 @@ static uint8_t smp_pairing_req(struct bt_smp *smp, struct bt_smp_pairing *req, S
 		return BT_SMP_ERR_AUTH_REQUIREMENTS;
 #else
 		if (IS_ENABLED(CONFIG_BT_SMP_APP_PAIRING_ACCEPT)) {
-			err = smp_pairing_accept_query(conn, req);
+			err = smp_pairing_accept_query(smp, req);
 			if (err) {
 				return err;
 			}
@@ -3301,18 +3355,19 @@ static uint8_t smp_pairing_req(struct bt_smp *smp, struct bt_smp_pairing *req, S
 	}
 
 	if (IS_ENABLED(CONFIG_BT_SMP_APP_PAIRING_ACCEPT)) {
-		err = smp_pairing_accept_query(conn, req);
+		err = smp_pairing_accept_query(smp, req);
 		if (err) {
 			return err;
 		}
 	}
 
-	if ((DISPLAY_FIXED(smp) || smp->method == JUST_WORKS) &&
+	if (!IS_ENABLED(CONFIG_BT_SMP_SC_PAIR_ONLY) &&
+	    (DISPLAY_FIXED(smp) || smp->method == JUST_WORKS) &&
 	    !atomic_test_bit(smp->flags, SMP_FLAG_SEC_REQ) &&
-	    bt_auth && bt_auth->pairing_confirm) {
+	    smp_auth_cb && smp_auth_cb->pairing_confirm) {
 		smp->confirm_type = CONFIRM_TYPE_PAIRING;
 		atomic_set_bit(smp->flags, SMP_FLAG_USER);
-		bt_auth->pairing_confirm(conn);
+		smp_auth_cb->pairing_confirm(conn);
 		return 0;
 	}
 
@@ -3386,7 +3441,7 @@ static int smp_send_pairing_req(struct bt_conn *conn)
 	}
 
 	/* early verify if required sec level if reachable */
-	if (!sec_level_reachable(conn)) {
+	if (!sec_level_reachable(smp)) {
 		return -EINVAL;
 	}
 
@@ -3427,8 +3482,8 @@ static int smp_send_pairing_req(struct bt_conn *conn)
 
 	req = net_buf_add(req_buf, sizeof(*req));
 
-	req->auth_req = get_auth(conn, BT_SMP_AUTH_DEFAULT);
-	req->io_capability = get_io_capa();
+	req->auth_req = get_auth(smp, BT_SMP_AUTH_DEFAULT);
+	req->io_capability = get_io_capa(smp);
 	req->oob_flag = oobd_present ? BT_SMP_OOB_PRESENT :
 				       BT_SMP_OOB_NOT_PRESENT;
 	req->max_key_size = BT_SMP_MAX_ENC_KEY_SIZE;
@@ -3465,6 +3520,7 @@ static int smp_send_pairing_req(struct bt_conn *conn)
 static uint8_t smp_pairing_rsp(struct bt_smp *smp, struct net_buf *buf)
 {
 	struct bt_conn *conn = smp->chan.chan.conn;
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
 	struct bt_smp_pairing *rsp = (void *)buf->data;
 	struct bt_smp_pairing *req = (struct bt_smp_pairing *)&smp->preq[1];
 	uint8_t err;
@@ -3518,7 +3574,7 @@ static uint8_t smp_pairing_rsp(struct bt_smp *smp, struct net_buf *buf)
 		return BT_SMP_ERR_AUTH_REQUIREMENTS;
 #else
 		if (IS_ENABLED(CONFIG_BT_SMP_APP_PAIRING_ACCEPT)) {
-			err = smp_pairing_accept_query(conn, rsp);
+			err = smp_pairing_accept_query(smp, rsp);
 			if (err) {
 				return err;
 			}
@@ -3538,11 +3594,12 @@ static uint8_t smp_pairing_rsp(struct bt_smp *smp, struct net_buf *buf)
 		}
 	}
 
-	if ((DISPLAY_FIXED(smp) || smp->method == JUST_WORKS) &&
+	if (!IS_ENABLED(CONFIG_BT_SMP_SC_PAIR_ONLY) &&
+	    (DISPLAY_FIXED(smp) || smp->method == JUST_WORKS) &&
 	    atomic_test_bit(smp->flags, SMP_FLAG_SEC_REQ) &&
-	    bt_auth && bt_auth->pairing_confirm) {
+	    smp_auth_cb && smp_auth_cb->pairing_confirm) {
 		atomic_set_bit(smp->flags, SMP_FLAG_USER);
-		bt_auth->pairing_confirm(conn);
+		smp_auth_cb->pairing_confirm(conn);
 		return 0;
 	}
 
@@ -3938,6 +3995,7 @@ static void le_sc_oob_config_set(struct bt_smp *smp,
 
 static uint8_t smp_pairing_random(struct bt_smp *smp, struct net_buf *buf)
 {
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
 	struct bt_smp_pairing_random *req = (void *)buf->data;
 	uint32_t passkey;
 	uint8_t err;
@@ -3969,7 +4027,7 @@ static uint8_t smp_pairing_random(struct bt_smp *smp, struct net_buf *buf)
 
 			atomic_set_bit(smp->flags, SMP_FLAG_USER);
 			atomic_set_bit(smp->flags, SMP_FLAG_DHKEY_SEND);
-			bt_auth->passkey_confirm(smp->chan.chan.conn, passkey);
+			smp_auth_cb->passkey_confirm(smp->chan.chan.conn, passkey);
 			return 0;
 		case JUST_WORKS:
 			break;
@@ -4013,7 +4071,7 @@ static uint8_t smp_pairing_random(struct bt_smp *smp, struct net_buf *buf)
 		}
 
 		atomic_set_bit(smp->flags, SMP_FLAG_USER);
-		bt_auth->passkey_confirm(smp->chan.chan.conn, passkey);
+		smp_auth_cb->passkey_confirm(smp->chan.chan.conn, passkey);
 		break;
 	case JUST_WORKS:
 		break;
@@ -4049,7 +4107,7 @@ static uint8_t smp_pairing_random(struct bt_smp *smp, struct net_buf *buf)
 			return BT_SMP_ERR_UNSPECIFIED;
 		}
 
-		if (bt_auth && bt_auth->oob_data_request) {
+		if (smp_auth_cb && smp_auth_cb->oob_data_request) {
 			struct bt_conn_oob_info info = {
 				.type = BT_CONN_OOB_LE_SC,
 				.lesc.oob_config = BT_CONN_OOB_NO_DATA,
@@ -4061,7 +4119,7 @@ static uint8_t smp_pairing_random(struct bt_smp *smp, struct net_buf *buf)
 			smp->oobd_remote = NULL;
 
 			atomic_set_bit(smp->flags, SMP_FLAG_OOB_PENDING);
-			bt_auth->oob_data_request(smp->chan.chan.conn, &info);
+			smp_auth_cb->oob_data_request(smp->chan.chan.conn, &info);
 
 			return 0;
 		} else {
@@ -4083,14 +4141,15 @@ static uint8_t smp_pairing_random(struct bt_smp *smp, struct net_buf *buf)
 static uint8_t smp_pairing_failed(struct bt_smp *smp, struct net_buf *buf)
 {
 	struct bt_conn *conn = smp->chan.chan.conn;
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
 	struct bt_smp_pairing_fail *req = (void *)buf->data;
 
 	BT_ERR("reason 0x%x", req->reason);
 
 	if (atomic_test_and_clear_bit(smp->flags, SMP_FLAG_USER) ||
 	    atomic_test_and_clear_bit(smp->flags, SMP_FLAG_DISPLAY)) {
-		if (bt_auth && bt_auth->cancel) {
-			bt_auth->cancel(conn);
+		if (smp_auth_cb && smp_auth_cb->cancel) {
+			smp_auth_cb->cancel(conn);
 		}
 	}
 
@@ -4336,6 +4395,9 @@ static uint8_t generate_dhkey(struct bt_smp *smp)
 
 static uint8_t display_passkey(struct bt_smp *smp)
 {
+	struct bt_conn *conn = smp->chan.chan.conn;
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
+
 	if (IS_ENABLED(CONFIG_BT_FIXED_PASSKEY) &&
 	    fixed_passkey != BT_PASSKEY_INVALID) {
 		smp->passkey = fixed_passkey;
@@ -4349,9 +4411,9 @@ static uint8_t display_passkey(struct bt_smp *smp)
 
 	smp->passkey_round = 0U;
 
-	if (bt_auth && bt_auth->passkey_display) {
+	if (smp_auth_cb && smp_auth_cb->passkey_display) {
 		atomic_set_bit(smp->flags, SMP_FLAG_DISPLAY);
-		bt_auth->passkey_display(smp->chan.chan.conn, smp->passkey);
+		smp_auth_cb->passkey_display(conn, smp->passkey);
 	}
 
 	smp->passkey = sys_cpu_to_le32(smp->passkey);
@@ -4362,6 +4424,7 @@ static uint8_t display_passkey(struct bt_smp *smp)
 #if (defined(CONFIG_BT_PERIPHERAL) && ((CONFIG_BT_PERIPHERAL) > 0U))
 static uint8_t smp_public_key_periph(struct bt_smp *smp)
 {
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
 	uint8_t err;
 
 	if (!atomic_test_bit(smp->flags, SMP_FLAG_SC_DEBUG_KEY) &&
@@ -4401,7 +4464,7 @@ static uint8_t smp_public_key_periph(struct bt_smp *smp)
 		atomic_set_bit(smp->allowed_cmds, BT_SMP_CMD_PAIRING_CONFIRM);
 		atomic_set_bit(smp->allowed_cmds, BT_SMP_KEYPRESS_NOTIFICATION);
 		atomic_set_bit(smp->flags, SMP_FLAG_USER);
-		bt_auth->passkey_entry(smp->chan.chan.conn);
+		smp_auth_cb->passkey_entry(smp->chan.chan.conn);
 		break;
 	case LE_SC_OOB:
 		atomic_set_bit(smp->allowed_cmds, BT_SMP_CMD_PAIRING_RANDOM);
@@ -4417,6 +4480,7 @@ static uint8_t smp_public_key_periph(struct bt_smp *smp)
 
 static uint8_t smp_public_key(struct bt_smp *smp, struct net_buf *buf)
 {
+	const struct bt_conn_auth_cb *smp_auth_cb = latch_auth_cb(smp);
 	struct bt_smp_public_key *req = (void *)buf->data;
 	uint8_t err;
 
@@ -4474,7 +4538,7 @@ static uint8_t smp_public_key(struct bt_smp *smp, struct net_buf *buf)
 			break;
 		case PASSKEY_INPUT:
 			atomic_set_bit(smp->flags, SMP_FLAG_USER);
-			bt_auth->passkey_entry(smp->chan.chan.conn);
+			smp_auth_cb->passkey_entry(smp->chan.chan.conn);
 
 			atomic_set_bit(smp->allowed_cmds,
 				       BT_SMP_KEYPRESS_NOTIFICATION);
@@ -4486,7 +4550,7 @@ static uint8_t smp_public_key(struct bt_smp *smp, struct net_buf *buf)
 				return BT_SMP_ERR_UNSPECIFIED;
 			}
 
-			if (bt_auth && bt_auth->oob_data_request) {
+			if (smp_auth_cb && smp_auth_cb->oob_data_request) {
 				struct bt_conn_oob_info info = {
 					.type = BT_CONN_OOB_LE_SC,
 					.lesc.oob_config = BT_CONN_OOB_NO_DATA,
@@ -4499,8 +4563,7 @@ static uint8_t smp_public_key(struct bt_smp *smp, struct net_buf *buf)
 
 				atomic_set_bit(smp->flags,
 					       SMP_FLAG_OOB_PENDING);
-				bt_auth->oob_data_request(smp->chan.chan.conn,
-							  &info);
+				smp_auth_cb->oob_data_request(smp->chan.chan.conn, &info);
 			} else {
 				return BT_SMP_ERR_OOB_NOT_AVAIL;
 			}
@@ -4778,6 +4841,8 @@ static void bt_smp_connected(struct bt_l2cap_chan *chan)
 	k_work_init_delayable(&smp->auth_complete, smp_auth_complete);
 	k_work_init_delayable(&smp->auth_starting, smp_auth_starting);
 	smp_reset(smp);
+
+	atomic_ptr_set(&smp->auth_cb, BT_SMP_AUTH_CB_UNINITIALIZED);
 }
 
 static void bt_smp_disconnected(struct bt_l2cap_chan *chan)
@@ -5087,7 +5152,7 @@ int bt_smp_irk_get(uint8_t *ir, uint8_t *irk)
 static void smp_selftest_thread(void *param);
 
 static OSA_TASK_HANDLE_DEFINE(smp_selftest_data);
-static OSA_TASK_DEFINE( smp_selftest_thread, (configMAX_PRIORITIES - 2 - 1), 1, (1024 * 2), 0);
+static OSA_TASK_DEFINE( smp_selftest_thread, (OSA_TASK_PRIORITY_MIN - 1), 1, (1024 * 2), 0);
 /* Test vectors are taken from RFC 4493
  * https://tools.ietf.org/html/rfc4493
  * Same mentioned in the Bluetooth Spec.
@@ -5698,6 +5763,22 @@ static inline int smp_self_test(void)
 }
 #endif
 
+int bt_smp_auth_cb_overlay(struct bt_conn *conn, const struct bt_conn_auth_cb *cb)
+{
+	struct bt_smp *smp;
+
+	smp = smp_chan_get(conn);
+	if (!smp) {
+		return -EINVAL;
+	}
+
+	if (atomic_ptr_cas(&smp->auth_cb, BT_SMP_AUTH_CB_UNINITIALIZED, (atomic_ptr_val_t)cb)) {
+		return 0;
+	} else {
+		return -EALREADY;
+	}
+}
+
 int bt_smp_auth_passkey_entry(struct bt_conn *conn, unsigned int passkey)
 {
 	struct bt_smp *smp;
@@ -6215,7 +6296,7 @@ int bt_smp_start_security(struct bt_conn *conn)
 	}
 
 	/* early verify if required sec level if reachable */
-	if (!(sec_level_reachable(conn) || smp_keys_check(conn))) {
+	if (!(sec_level_reachable(smp) || smp_keys_check(conn))) {
 		return -EINVAL;
 	}
 
@@ -6224,7 +6305,15 @@ int bt_smp_start_security(struct bt_conn *conn)
 		return -EINVAL;
 	}
     memset(&auth, 0, sizeof(auth));
-	auth.pair_mode = SMP_LESC_MODE;
+	/* fix GAP/SEC/AUT/BV-21-C */
+	if ((smp_keys_check(conn)) && (!(conn->le.keys->flags & BT_KEYS_SC)))
+	{
+		auth.pair_mode = SMP_LEGACY_MODE;
+	}
+	else
+	{
+	    auth.pair_mode = SMP_LESC_MODE;
+	}
 	auth.security = ((uint8_t)conn->required_sec_level) - 1u;
     if (SMP_SEC_LEVEL_3 == auth.security)
     {
@@ -6233,7 +6322,7 @@ int bt_smp_start_security(struct bt_conn *conn)
     /* according to get_auth function, add follow codes to set MITM.
      * In Ethermind, when security == SMP_SEC_LEVEL_2, MITM is set.
     */
-    if ((get_io_capa() == BT_SMP_IO_NO_INPUT_OUTPUT) ||
+    if ((get_io_capa(smp) == BT_SMP_IO_NO_INPUT_OUTPUT) ||
         (!IS_ENABLED(CONFIG_BT_SMP_ENFORCE_MITM) &&
         (conn->required_sec_level < BT_SECURITY_L3))) {
     } else {
@@ -6327,20 +6416,24 @@ void bt_smp_update_keys(struct bt_conn *conn)
 	 * security level upon encryption
 	 */
 	switch (smp->method) {
+	case LE_SC_OOB:
+	case LEGACY_OOB:
+		conn->le.keys->flags |= BT_KEYS_OOB;
+		/* fallthrough */
 	case PASSKEY_DISPLAY:
 	case PASSKEY_INPUT:
 	case PASSKEY_CONFIRM:
-	case LE_SC_OOB:
-	case LEGACY_OOB:
 		conn->le.keys->flags |= BT_KEYS_AUTHENTICATED;
 		break;
 	case JUST_WORKS:
+	default:
 		/* unauthenticated key, clear it */
+		conn->le.keys->flags &= ~BT_KEYS_OOB;
 		conn->le.keys->flags &= ~BT_KEYS_AUTHENTICATED;
 		break;
-    default:
-        break;
 	}
+
+	conn->le.keys->enc_size = get_encryption_key_size(smp);
 
 	/*
 	 * Store LTK if LE SC is used, this is safe since LE SC is mutually
@@ -6352,6 +6445,18 @@ void bt_smp_update_keys(struct bt_conn *conn)
 
 		if (atomic_test_bit(smp->flags, SMP_FLAG_BOND)) {
 			bt_keys_add_type(conn->le.keys, BT_KEYS_LTK_P256);
+			memcpy(conn->le.keys->ltk.val, smp->tk,
+			       sizeof(conn->le.keys->ltk.val));
+			(void)memset(conn->le.keys->ltk.rand, 0,
+				     sizeof(conn->le.keys->ltk.rand));
+			(void)memset(conn->le.keys->ltk.ediv, 0,
+				     sizeof(conn->le.keys->ltk.ediv));
+		} else if (IS_ENABLED(CONFIG_BT_LOG_SNIFFER_INFO)) {
+			uint8_t ltk[16];
+
+			sys_memcpy_swap(ltk, smp->tk, conn->le.keys->enc_size);
+			BT_INFO("SC LTK: 0x%s (No bonding)",
+				bt_hex(ltk, conn->le.keys->enc_size));
 		}
 	} else {
 		conn->le.keys->flags &= ~BT_KEYS_SC;
@@ -6680,6 +6785,8 @@ static void hci_acl_smp_handler(struct net_buf *buf)
 
     struct bt_smp_hdr_sumilation *hdr;
 
+    const struct bt_conn_auth_cb *smp_auth_cb;
+
     hdr = (struct bt_smp_hdr_sumilation *)buf->data;
 
     event_data = (hdr->hdr.len > sizeof(hdr->pdu)) ? (UCHAR *)&buf->data[sizeof(*hdr)] : NULL;
@@ -6848,6 +6955,44 @@ static void hci_acl_smp_handler(struct net_buf *buf)
         smp->status = hdr->pdu.status;
 		k_work_schedule(&smp->auth_complete, BT_MSEC(1));
         break;
+
+	case SMP_AUTHENTICATION_ERROR:
+		smp_auth_cb = latch_auth_cb(smp);
+		conn = smp->chan.chan.conn;
+		smp->status = hdr->pdu.status;
+
+		if (atomic_test_and_clear_bit(smp->flags, SMP_FLAG_USER) ||
+			atomic_test_and_clear_bit(smp->flags, SMP_FLAG_DISPLAY)) {
+			if (smp_auth_cb && smp_auth_cb->cancel) {
+				smp_auth_cb->cancel(conn);
+			}
+		}
+		smp_pairing_complete(smp, smp->status);
+		break;
+	
+	case SMP_AUTHENTICATION_RESPONSE:
+		auth = (SMP_AUTH_INFO *)event_data;
+		if ((oobd_present > 0U))
+		{
+			if (bt_auth && bt_auth->oob_data_request) {
+				struct bt_conn_oob_info info = {
+					.type = BT_CONN_OOB_LE_SC,
+					.lesc.oob_config = BT_CONN_OOB_BOTH_PEERS,
+				};
+
+				if(SMP_LEGACY_MODE == auth->pair_mode)
+				{
+					info.type = BT_CONN_OOB_LE_LEGACY;
+				}
+
+				smp->oobd_local = NULL;
+				smp->oobd_remote = NULL;
+
+				atomic_set_bit(smp->flags, SMP_FLAG_OOB_PENDING);
+				bt_auth->oob_data_request(conn, &info);
+			}
+		}
+		break;
 
     case SMP_AUTHENTICATION_REQUEST:
         BT_DBG("Recvd SMP_AUTHENTICATION_REQUEST");
@@ -7020,6 +7165,8 @@ static void hci_acl_smp_handler(struct net_buf *buf)
         /* Get platform data of key informations */
         BT_smp_get_key_exchange_info_pl (&key_info);
 
+        /* fix GAP/SEC/AUT/BV-20-C */
+        bt_rand(key_info->enc_info, SMP_LTK_SIZE);
         /* Copy the Local Key Info into a local struct */
         BT_mem_copy(&local_key_info,key_info,sizeof(local_key_info));
 #if (defined(CONFIG_BT_PRIVACY) && ((CONFIG_BT_PRIVACY) > 0U))

@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.2</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('a00014.html','');});
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">CAAM PKHA driver<div class="ingroups"><a class="el" href="a00321.html">CAAM Blocking APIs</a></div></div>  </div>
+<div class="title">CAAM PKHA driver<div class="ingroups"><a class="el" href="a00320.html">CAAM Blocking APIs</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
@@ -111,9 +111,9 @@ $(document).ready(function(){initNavTree('a00014.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
-<tr class="memitem:a00433"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a></td></tr>
-<tr class="memdesc:a00433"><td class="mdescLeft">&#160;</td><td class="mdescRight">PKHA ECC point structure.  <a href="a00014.html#a00433">More...</a><br/></td></tr>
-<tr class="separator:a00433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00435"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a></td></tr>
+<tr class="memdesc:a00435"><td class="mdescLeft">&#160;</td><td class="mdescRight">PKHA ECC point structure.  <a href="a00014.html#a00435">More...</a><br/></td></tr>
+<tr class="separator:a00435"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -144,54 +144,54 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga41287dd762e5d9c6ef73e2a919c4e533"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga41287dd762e5d9c6ef73e2a919c4e533">CAAM_PKHA_NormalToMontgomery</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *N, size_t sizeN, uint8_t *A, size_t *sizeA, uint8_t *B, size_t *sizeB, uint8_t *R2, size_t *sizeR2, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
+<tr class="memitem:ga41287dd762e5d9c6ef73e2a919c4e533"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga41287dd762e5d9c6ef73e2a919c4e533">CAAM_PKHA_NormalToMontgomery</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *N, size_t sizeN, uint8_t *A, size_t *sizeA, uint8_t *B, size_t *sizeB, uint8_t *R2, size_t *sizeR2, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
 <tr class="memdesc:ga41287dd762e5d9c6ef73e2a919c4e533"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from integer to Montgomery format.  <a href="#ga41287dd762e5d9c6ef73e2a919c4e533">More...</a><br/></td></tr>
 <tr class="separator:ga41287dd762e5d9c6ef73e2a919c4e533"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1064589f9edd7393619123114c481584"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga1064589f9edd7393619123114c481584">CAAM_PKHA_MontgomeryToNormal</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *N, size_t sizeN, uint8_t *A, size_t *sizeA, uint8_t *B, size_t *sizeB, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
+<tr class="memitem:ga1064589f9edd7393619123114c481584"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga1064589f9edd7393619123114c481584">CAAM_PKHA_MontgomeryToNormal</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *N, size_t sizeN, uint8_t *A, size_t *sizeA, uint8_t *B, size_t *sizeB, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
 <tr class="memdesc:ga1064589f9edd7393619123114c481584"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts from Montgomery format to int.  <a href="#ga1064589f9edd7393619123114c481584">More...</a><br/></td></tr>
 <tr class="separator:ga1064589f9edd7393619123114c481584"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f293fbecd52eaabf0698c5072db0ea1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga3f293fbecd52eaabf0698c5072db0ea1">CAAM_PKHA_ModAdd</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
+<tr class="memitem:ga3f293fbecd52eaabf0698c5072db0ea1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga3f293fbecd52eaabf0698c5072db0ea1">CAAM_PKHA_ModAdd</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
 <tr class="memdesc:ga3f293fbecd52eaabf0698c5072db0ea1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs modular addition - (A + B) mod N.  <a href="#ga3f293fbecd52eaabf0698c5072db0ea1">More...</a><br/></td></tr>
 <tr class="separator:ga3f293fbecd52eaabf0698c5072db0ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1a02ca6dd33a3ebb44b8ac29884779f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga1a02ca6dd33a3ebb44b8ac29884779f1">CAAM_PKHA_ModSub1</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize)</td></tr>
+<tr class="memitem:ga1a02ca6dd33a3ebb44b8ac29884779f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga1a02ca6dd33a3ebb44b8ac29884779f1">CAAM_PKHA_ModSub1</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize)</td></tr>
 <tr class="memdesc:ga1a02ca6dd33a3ebb44b8ac29884779f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs modular subtraction - (A - B) mod N.  <a href="#ga1a02ca6dd33a3ebb44b8ac29884779f1">More...</a><br/></td></tr>
 <tr class="separator:ga1a02ca6dd33a3ebb44b8ac29884779f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5d85cac811c081e4652379c83f99a11e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga5d85cac811c081e4652379c83f99a11e">CAAM_PKHA_ModSub2</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize)</td></tr>
+<tr class="memitem:ga5d85cac811c081e4652379c83f99a11e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga5d85cac811c081e4652379c83f99a11e">CAAM_PKHA_ModSub2</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize)</td></tr>
 <tr class="memdesc:ga5d85cac811c081e4652379c83f99a11e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs modular subtraction - (B - A) mod N.  <a href="#ga5d85cac811c081e4652379c83f99a11e">More...</a><br/></td></tr>
 <tr class="separator:ga5d85cac811c081e4652379c83f99a11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac41a38bcecf9f9cd9c5b75bd1d616e79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#gac41a38bcecf9f9cd9c5b75bd1d616e79">CAAM_PKHA_ModMul</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#ga5e34d188a11ea30302f6ab4c33f9d4c8">caam_pkha_montgomery_form_t</a> montIn, <a class="el" href="a00014.html#ga5e34d188a11ea30302f6ab4c33f9d4c8">caam_pkha_montgomery_form_t</a> montOut, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime)</td></tr>
+<tr class="memitem:gac41a38bcecf9f9cd9c5b75bd1d616e79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#gac41a38bcecf9f9cd9c5b75bd1d616e79">CAAM_PKHA_ModMul</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#ga5e34d188a11ea30302f6ab4c33f9d4c8">caam_pkha_montgomery_form_t</a> montIn, <a class="el" href="a00014.html#ga5e34d188a11ea30302f6ab4c33f9d4c8">caam_pkha_montgomery_form_t</a> montOut, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime)</td></tr>
 <tr class="memdesc:gac41a38bcecf9f9cd9c5b75bd1d616e79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs modular multiplication - (A x B) mod N.  <a href="#gac41a38bcecf9f9cd9c5b75bd1d616e79">More...</a><br/></td></tr>
 <tr class="separator:gac41a38bcecf9f9cd9c5b75bd1d616e79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0951e1df76b3328d5f9b02cefa33799f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga0951e1df76b3328d5f9b02cefa33799f">CAAM_PKHA_ModExp</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *N, size_t sizeN, const uint8_t *E, size_t sizeE, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#ga5e34d188a11ea30302f6ab4c33f9d4c8">caam_pkha_montgomery_form_t</a> montIn, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime)</td></tr>
+<tr class="memitem:ga0951e1df76b3328d5f9b02cefa33799f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga0951e1df76b3328d5f9b02cefa33799f">CAAM_PKHA_ModExp</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *N, size_t sizeN, const uint8_t *E, size_t sizeE, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#ga5e34d188a11ea30302f6ab4c33f9d4c8">caam_pkha_montgomery_form_t</a> montIn, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime)</td></tr>
 <tr class="memdesc:ga0951e1df76b3328d5f9b02cefa33799f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs modular exponentiation - (A^E) mod N.  <a href="#ga0951e1df76b3328d5f9b02cefa33799f">More...</a><br/></td></tr>
 <tr class="separator:ga0951e1df76b3328d5f9b02cefa33799f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1dc2abd0a58aeb7c4ebefe3b6a84bb05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga1dc2abd0a58aeb7c4ebefe3b6a84bb05">CAAM_PKHA_ModRed</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
+<tr class="memitem:ga1dc2abd0a58aeb7c4ebefe3b6a84bb05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga1dc2abd0a58aeb7c4ebefe3b6a84bb05">CAAM_PKHA_ModRed</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
 <tr class="memdesc:ga1dc2abd0a58aeb7c4ebefe3b6a84bb05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs modular reduction - (A) mod N.  <a href="#ga1dc2abd0a58aeb7c4ebefe3b6a84bb05">More...</a><br/></td></tr>
 <tr class="separator:ga1dc2abd0a58aeb7c4ebefe3b6a84bb05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga47900d3b9c835fe6f448a5239be029d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga47900d3b9c835fe6f448a5239be029d8">CAAM_PKHA_ModInv</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
+<tr class="memitem:ga47900d3b9c835fe6f448a5239be029d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga47900d3b9c835fe6f448a5239be029d8">CAAM_PKHA_ModInv</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
 <tr class="memdesc:ga47900d3b9c835fe6f448a5239be029d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs modular inversion - (A^-1) mod N.  <a href="#ga47900d3b9c835fe6f448a5239be029d8">More...</a><br/></td></tr>
 <tr class="separator:ga47900d3b9c835fe6f448a5239be029d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c0fe999e55faa43e7cf2aa6463d3124"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga0c0fe999e55faa43e7cf2aa6463d3124">CAAM_PKHA_ModR2</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
+<tr class="memitem:ga0c0fe999e55faa43e7cf2aa6463d3124"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga0c0fe999e55faa43e7cf2aa6463d3124">CAAM_PKHA_ModR2</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
 <tr class="memdesc:ga0c0fe999e55faa43e7cf2aa6463d3124"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes integer Montgomery factor R^2 mod N.  <a href="#ga0c0fe999e55faa43e7cf2aa6463d3124">More...</a><br/></td></tr>
 <tr class="separator:ga0c0fe999e55faa43e7cf2aa6463d3124"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafc8f47401e311f248fef90e73055dcf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#gafc8f47401e311f248fef90e73055dcf5">CAAM_PKHA_ModGcd</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
+<tr class="memitem:gafc8f47401e311f248fef90e73055dcf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#gafc8f47401e311f248fef90e73055dcf5">CAAM_PKHA_ModGcd</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *N, size_t sizeN, uint8_t *result, size_t *resultSize, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType)</td></tr>
 <tr class="memdesc:gafc8f47401e311f248fef90e73055dcf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the greatest common divisor - GCD (A, N).  <a href="#gafc8f47401e311f248fef90e73055dcf5">More...</a><br/></td></tr>
 <tr class="separator:gafc8f47401e311f248fef90e73055dcf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48fc44f72481a383e672249928f2e42b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga48fc44f72481a383e672249928f2e42b">CAAM_PKHA_PrimalityTest</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, bool *res)</td></tr>
+<tr class="memitem:ga48fc44f72481a383e672249928f2e42b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga48fc44f72481a383e672249928f2e42b">CAAM_PKHA_PrimalityTest</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const uint8_t *A, size_t sizeA, const uint8_t *B, size_t sizeB, const uint8_t *N, size_t sizeN, bool *res)</td></tr>
 <tr class="memdesc:ga48fc44f72481a383e672249928f2e42b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes Miller-Rabin primality test.  <a href="#ga48fc44f72481a383e672249928f2e42b">More...</a><br/></td></tr>
 <tr class="separator:ga48fc44f72481a383e672249928f2e42b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga41f2377fe515bc7b87a8dd050433c662"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga41f2377fe515bc7b87a8dd050433c662">CAAM_PKHA_ECC_PointAdd</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *A, const <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *B, const uint8_t *N, const uint8_t *R2modN, const uint8_t *aCurveParam, const uint8_t *bCurveParam, size_t size, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *result)</td></tr>
+<tr class="memitem:ga41f2377fe515bc7b87a8dd050433c662"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#ga41f2377fe515bc7b87a8dd050433c662">CAAM_PKHA_ECC_PointAdd</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *A, const <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *B, const uint8_t *N, const uint8_t *R2modN, const uint8_t *aCurveParam, const uint8_t *bCurveParam, size_t size, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *result)</td></tr>
 <tr class="memdesc:ga41f2377fe515bc7b87a8dd050433c662"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds elliptic curve points - A + B.  <a href="#ga41f2377fe515bc7b87a8dd050433c662">More...</a><br/></td></tr>
 <tr class="separator:ga41f2377fe515bc7b87a8dd050433c662"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac07a36cc1e426795e254a50998b1592d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#gac07a36cc1e426795e254a50998b1592d">CAAM_PKHA_ECC_PointDouble</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *B, const uint8_t *N, const uint8_t *aCurveParam, const uint8_t *bCurveParam, size_t size, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *result)</td></tr>
+<tr class="memitem:gac07a36cc1e426795e254a50998b1592d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#gac07a36cc1e426795e254a50998b1592d">CAAM_PKHA_ECC_PointDouble</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *B, const uint8_t *N, const uint8_t *aCurveParam, const uint8_t *bCurveParam, size_t size, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *result)</td></tr>
 <tr class="memdesc:gac07a36cc1e426795e254a50998b1592d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Doubles elliptic curve points - B + B.  <a href="#gac07a36cc1e426795e254a50998b1592d">More...</a><br/></td></tr>
 <tr class="separator:gac07a36cc1e426795e254a50998b1592d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa91d2cae594d192d1e78a60c4f727591"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#gaa91d2cae594d192d1e78a60c4f727591">CAAM_PKHA_ECC_PointMul</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00431">caam_handle_t</a> *handle, const <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *A, const uint8_t *E, size_t sizeE, const uint8_t *N, const uint8_t *R2modN, const uint8_t *aCurveParam, const uint8_t *bCurveParam, size_t size, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *result)</td></tr>
+<tr class="memitem:gaa91d2cae594d192d1e78a60c4f727591"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00014.html#gaa91d2cae594d192d1e78a60c4f727591">CAAM_PKHA_ECC_PointMul</a> (CAAM_Type *base, <a class="el" href="a00013.html#a00433">caam_handle_t</a> *handle, const <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *A, const uint8_t *E, size_t sizeE, const uint8_t *N, const uint8_t *R2modN, const uint8_t *aCurveParam, const uint8_t *bCurveParam, size_t size, <a class="el" href="a00014.html#ga19b9850dc1c123eaa3c33e6ee89f7be0">caam_pkha_timing_t</a> equalTime, <a class="el" href="a00014.html#ga32a72b1b22187f5abd743b1a960002fd">caam_pkha_f2m_t</a> arithType, <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *result)</td></tr>
 <tr class="memdesc:gaa91d2cae594d192d1e78a60c4f727591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies an elliptic curve point by a scalar - E x (A0, A1).  <a href="#gaa91d2cae594d192d1e78a60c4f727591">More...</a><br/></td></tr>
 <tr class="separator:gaa91d2cae594d192d1e78a60c4f727591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/><h2 class="groupheader">Data Structure Documentation</h2>
-<a name="a00433" id="a00433"></a>
+<a name="a00435" id="a00435"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -281,7 +281,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_NormalToMontgomery </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_NormalToMontgomery </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -289,7 +289,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -386,7 +386,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_MontgomeryToNormal </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_MontgomeryToNormal </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -394,7 +394,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -477,7 +477,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModAdd </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModAdd </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -485,7 +485,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -575,7 +575,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModSub1 </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModSub1 </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -583,7 +583,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -666,7 +666,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModSub2 </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModSub2 </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -674,7 +674,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -757,7 +757,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModMul </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModMul </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -765,7 +765,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -876,7 +876,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModExp </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModExp </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -884,7 +884,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -988,7 +988,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModRed </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModRed </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -996,7 +996,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1072,7 +1072,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModInv </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModInv </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1080,7 +1080,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1156,7 +1156,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModR2 </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModR2 </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1164,7 +1164,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1226,7 +1226,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModGcd </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ModGcd </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1234,7 +1234,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1310,7 +1310,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_PrimalityTest </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_PrimalityTest </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1318,7 +1318,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
@@ -1394,7 +1394,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ECC_PointAdd </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ECC_PointAdd </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1402,19 +1402,19 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *&#160;</td>
           <td class="paramname"><em>B</em>, </td>
         </tr>
         <tr>
@@ -1456,7 +1456,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *&#160;</td>
           <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
@@ -1492,7 +1492,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ECC_PointDouble </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ECC_PointDouble </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1500,13 +1500,13 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *&#160;</td>
           <td class="paramname"><em>B</em>, </td>
         </tr>
         <tr>
@@ -1542,7 +1542,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *&#160;</td>
           <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>
@@ -1576,7 +1576,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="a00332.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ECC_PointMul </td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> CAAM_PKHA_ECC_PointMul </td>
           <td>(</td>
           <td class="paramtype">CAAM_Type *&#160;</td>
           <td class="paramname"><em>base</em>, </td>
@@ -1584,13 +1584,13 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00013.html#a00431">caam_handle_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00013.html#a00433">caam_handle_t</a> *&#160;</td>
           <td class="paramname"><em>handle</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *&#160;</td>
+          <td class="paramtype">const <a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *&#160;</td>
           <td class="paramname"><em>A</em>, </td>
         </tr>
         <tr>
@@ -1650,7 +1650,7 @@ uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="a00014.html#a00433">caam_pkha_ecc_point_t</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="a00014.html#a00435">caam_pkha_ecc_point_t</a> *&#160;</td>
           <td class="paramname"><em>result</em>&#160;</td>
         </tr>
         <tr>

@@ -14,5 +14,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
 
 include(middleware_usb_phy_MIMXRT1176_cm4)
 
+include(driver_memory_MIMXRT1176_cm4)
+
 include(middleware_usb_host_common_header_MIMXRT1176_cm4)
 

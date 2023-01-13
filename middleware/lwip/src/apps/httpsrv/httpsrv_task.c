@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016-2022 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
-*   HTTPSRV tasks and session processing.
-*/
+ *   HTTPSRV tasks and session processing.
+ */
 
 #include "httpsrv.h"
 #include "httpsrv_prv.h"
@@ -18,8 +18,10 @@
 
 #define HTTPSRV_SESSION_TASK_NAME "HTTP server session"
 
-#if HTTPSRV_CFG_WEBSOCKET_ENABLED
+#if (defined(HTTPSRV_CFG_WEBSOCKET_ENABLED))
+#if (HTTPSRV_CFG_WEBSOCKET_ENABLED != 0)
 static void httpsrv_plugin_run(void *server_ptr, void *session_ptr);
+#endif
 #endif
 
 static int httpsrv_req_read(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session);
@@ -34,8 +36,8 @@ static int httpsrv_ses_init(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *sess
 static void httpsrv_session_task(void *arg);
 
 /*
-** HTTPSRV main task which creates new task for each new client request
-*/
+ ** HTTPSRV main task which creates new task for each new client request
+ */
 void httpsrv_server_task(void *arg)
 {
     HTTPSRV_STRUCT *server = (HTTPSRV_STRUCT *)arg;
@@ -43,7 +45,7 @@ void httpsrv_server_task(void *arg)
     while (1)
     {
         int i;
-
+        int error;
         int new_sock;
 
         /* limit number of opened sessions */
@@ -71,6 +73,36 @@ void httpsrv_server_task(void *arg)
             }
             else
             {
+#if ((defined(HTTPSRV_CFG_SEND_TIMEOUT) && (HTTPSRV_CFG_SEND_TIMEOUT != 0)) || \
+     (defined(HTTPSRV_CFG_RECEIVE_TIMEOUT) && (HTTPSRV_CFG_RECEIVE_TIMEOUT != 0)))
+                struct timeval timeval_option;
+#endif
+
+                /* Set socket options */
+#if (defined(HTTPSRV_CFG_SEND_TIMEOUT) && (HTTPSRV_CFG_SEND_TIMEOUT != 0))
+                timeval_option.tv_sec  = HTTPSRV_CFG_SEND_TIMEOUT / 1000;          /* seconds */
+                timeval_option.tv_usec = (HTTPSRV_CFG_SEND_TIMEOUT % 1000) * 1000; /* and microseconds */
+                error = lwip_setsockopt(new_sock, SOL_SOCKET, SO_SNDTIMEO, (const void *)&timeval_option,
+                                        sizeof(timeval_option));
+                if (error != 0)
+                {
+                    httpsrv_abort(new_sock);
+                    sys_sem_signal(&server->ses_cnt);
+                    break;
+                }
+#endif
+#if (defined(HTTPSRV_CFG_RECEIVE_TIMEOUT) && (HTTPSRV_CFG_RECEIVE_TIMEOUT != 0))
+                timeval_option.tv_sec  = HTTPSRV_CFG_RECEIVE_TIMEOUT / 1000;          /* seconds */
+                timeval_option.tv_usec = (HTTPSRV_CFG_RECEIVE_TIMEOUT % 1000) * 1000; /* and microseconds */
+                error = lwip_setsockopt(new_sock, SOL_SOCKET, SO_RCVTIMEO, (const void *)&timeval_option,
+                                        sizeof(timeval_option));
+                if (error != 0)
+                {
+                    httpsrv_abort(new_sock);
+                    sys_sem_signal(&server->ses_cnt);
+                    break;
+                }
+#endif
                 /* Find empty session */
                 for (i = 0; i < server->params.max_ses; i++)
                 {
@@ -97,8 +129,8 @@ void httpsrv_server_task(void *arg)
                         {
                             if (ERR_OK == httpsrv_ses_init(server, session, new_sock))
                             {
-                                /* Disable keep-alive for last session so we have at least one session free (not blocked by
-                                 * keep-alive timeout) */
+                                /* Disable keep-alive for last session so we have at least one session free (not blocked
+                                 * by keep-alive timeout) */
                                 if (i == server->params.max_ses - 1)
                                 {
                                     session->flags &= ~HTTPSRV_FLAG_KEEP_ALIVE_ENABLED;
@@ -106,17 +138,19 @@ void httpsrv_server_task(void *arg)
 
                                 server->session[i] = session;
 
-                                ses_param->server = server;
+                                ses_param->server    = server;
                                 ses_param->session_p = &server->session[i];
 
                                 /* Try to create task for session */
-                                if (sys_thread_new(HTTPSRV_SESSION_TASK_NAME, httpsrv_session_task, ses_param,
-                            #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE 
-                                                    (server->tls_ctx != NULL) ? HTTPSRV_CFG_HTTPS_SESSION_STACK_SIZE : HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE, 
-                            #else
-                                                    HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE, 
-                            #endif
-                                                    server->params.task_prio) == NULL)
+                                if (xTaskCreate(httpsrv_session_task, HTTPSRV_SESSION_TASK_NAME,
+#if ((defined(HTTPSRV_CFG_WOLFSSL_ENABLE) && (HTTPSRV_CFG_WOLFSSL_ENABLE != 0)) || \
+     (defined(HTTPSRV_CFG_MBEDTLS_ENABLE) && (HTTPSRV_CFG_MBEDTLS_ENABLE != 0)))
+                                                (server->tls_ctx != NULL) ? HTTPSRV_CFG_HTTPS_SESSION_STACK_SIZE :
+                                                                            HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE,
+#else
+                                                HTTPSRV_CFG_HTTP_SESSION_STACK_SIZE,
+#endif
+                                                ses_param, server->params.task_prio, NULL) != pdPASS)
                                 {
                                     httpsrv_ses_close(session);
                                     httpsrv_ses_free(session);
@@ -163,14 +197,14 @@ void httpsrv_server_task(void *arg)
 }
 
 /*
-** Session task.
-** This task is responsible for session creation, processing and cleanup.
-*/
+ ** Session task.
+ ** This task is responsible for session creation, processing and cleanup.
+ */
 static void httpsrv_session_task(void *arg)
 {
     HTTPSRV_SES_TASK_PARAM *ses_param = (HTTPSRV_SES_TASK_PARAM *)arg;
-    HTTPSRV_STRUCT *server = ses_param->server;
-    HTTPSRV_SESSION_STRUCT *session = *ses_param->session_p;
+    HTTPSRV_STRUCT *server            = ses_param->server;
+    HTTPSRV_SESSION_STRUCT *session   = *ses_param->session_p;
 
     while (session->valid)
     {
@@ -189,17 +223,17 @@ static void httpsrv_session_task(void *arg)
 }
 
 /*
-** Function for session allocation
-**
-** IN:
-**      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
-**
-** OUT:
-**      none
-**
-** Return Value:
-**      HTTPSRV_SESSION_STRUCT* - pointer to allocated session. Non-zero if allocation was OK, NULL otherwise
-*/
+ ** Function for session allocation
+ **
+ ** IN:
+ **      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
+ **
+ ** OUT:
+ **      none
+ **
+ ** Return Value:
+ **      HTTPSRV_SESSION_STRUCT* - pointer to allocated session. Non-zero if allocation was OK, NULL otherwise
+ */
 static HTTPSRV_SESSION_STRUCT *httpsrv_ses_alloc(HTTPSRV_STRUCT *server, int sock)
 {
     HTTPSRV_SESSION_STRUCT *session = NULL;
@@ -224,7 +258,8 @@ static HTTPSRV_SESSION_STRUCT *httpsrv_ses_alloc(HTTPSRV_STRUCT *server, int soc
             {
                 goto ERROR;
             }
-        #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
+#if ((defined(HTTPSRV_CFG_WOLFSSL_ENABLE) && (HTTPSRV_CFG_WOLFSSL_ENABLE != 0)) || \
+     (defined(HTTPSRV_CFG_MBEDTLS_ENABLE) && (HTTPSRV_CFG_MBEDTLS_ENABLE != 0)))
             if (server->tls_ctx != 0)
             {
                 session->tls_sock = httpsrv_tls_socket(server->tls_ctx, sock);
@@ -233,8 +268,7 @@ static HTTPSRV_SESSION_STRUCT *httpsrv_ses_alloc(HTTPSRV_STRUCT *server, int soc
                     goto ERROR;
                 }
             }
-        #endif
-            
+#endif
         }
     }
 
@@ -256,17 +290,17 @@ ERROR:
 }
 
 /*
-** Function used to free session structure
-**
-** IN:
-**      HTTPSRV_SESSION_STRUCT* session - session structure pointer
-**
-** OUT:
-**      none
-**
-** Return Value:
-**      none
-*/
+ ** Function used to free session structure
+ **
+ ** IN:
+ **      HTTPSRV_SESSION_STRUCT* session - session structure pointer
+ **
+ ** OUT:
+ **      none
+ **
+ ** Return Value:
+ **      none
+ */
 static void httpsrv_ses_free(HTTPSRV_SESSION_STRUCT *session)
 {
     if (session)
@@ -283,7 +317,7 @@ static void httpsrv_ses_free(HTTPSRV_SESSION_STRUCT *session)
         {
             httpsrv_mem_free(session->buffer.data);
         }
-#if HTTPSRV_CFG_WEBSOCKET_ENABLED
+#if (defined(HTTPSRV_CFG_WEBSOCKET_ENABLED) && (HTTPSRV_CFG_WEBSOCKET_ENABLED != 0))
         if (session->ws_handshake)
         {
             httpsrv_mem_free(session->ws_handshake);
@@ -294,52 +328,52 @@ static void httpsrv_ses_free(HTTPSRV_SESSION_STRUCT *session)
 }
 
 /*
-** Function used to init session structure
-**
-** IN:
-**      HTTPSRV_SESSION_STRUCT* session - session structure pointer
-**      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters)
-**      const int sock - socket handle used for communication with client
-**
-** OUT:
-**      none
-**
-** Return Value:
-**      error code - ERR_MEM or ERR_OK
-*/
+ ** Function used to init session structure
+ **
+ ** IN:
+ **      HTTPSRV_SESSION_STRUCT* session - session structure pointer
+ **      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters)
+ **      const int sock - socket handle used for communication with client
+ **
+ ** OUT:
+ **      none
+ **
+ ** Return Value:
+ **      error code - ERR_MEM or ERR_OK
+ */
 static int httpsrv_ses_init(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session, int sock)
 {
     int error = ERR_MEM;
     if (server && session)
     {
-        session->state = HTTPSRV_SES_WAIT_REQ;
-        session->sock = sock;
-        session->valid = HTTPSRV_VALID;
+        session->state   = HTTPSRV_SES_WAIT_REQ;
+        session->sock    = sock;
+        session->valid   = HTTPSRV_VALID;
         session->timeout = HTTPSRV_CFG_SES_TIMEOUT;
         session->flags |= HTTPSRV_FLAG_PROCESS_HEADER;
         if (HTTPSRV_CFG_KEEPALIVE_ENABLED)
         {
             session->flags |= HTTPSRV_FLAG_KEEP_ALIVE_ENABLED | HTTPSRV_FLAG_IS_KEEP_ALIVE;
         }
-        session->time = sys_now();
+        session->time         = sys_now();
         session->process_func = httpsrv_http_process;
-        error = sys_sem_new(&session->lock, 1);
+        error                 = sys_sem_new(&session->lock, 1);
     }
     return error;
 }
 
 /*
-** Function used to close session
-**
-** IN:
-**      HTTPSRV_SESSION_STRUCT* session - session structure pointer
-**
-** OUT:
-**      none
-**
-** Return Value:
-**      none
-*/
+ ** Function used to close session
+ **
+ ** IN:
+ **      HTTPSRV_SESSION_STRUCT* session - session structure pointer
+ **
+ ** OUT:
+ **      none
+ **
+ ** Return Value:
+ **      none
+ */
 static void httpsrv_ses_close(HTTPSRV_SESSION_STRUCT *session)
 {
     if (session != NULL)
@@ -349,13 +383,14 @@ static void httpsrv_ses_close(HTTPSRV_SESSION_STRUCT *session)
             HTTPSRV_FS_close(session->response.file);
             session->response.file = NULL;
         }
-    #if HTTPSRV_CFG_WOLFSSL_ENABLE || HTTPSRV_CFG_MBEDTLS_ENABLE
+#if ((defined(HTTPSRV_CFG_WOLFSSL_ENABLE) && (HTTPSRV_CFG_WOLFSSL_ENABLE != 0)) || \
+     (defined(HTTPSRV_CFG_MBEDTLS_ENABLE) && (HTTPSRV_CFG_MBEDTLS_ENABLE != 0)))
         if (session->tls_sock != 0)
         {
             httpsrv_tls_shutdown(session->tls_sock);
             session->tls_sock = 0;
         }
-    #endif
+#endif
         if (session->sock != -1)
         {
             lwip_shutdown(session->sock, SHUT_WR);
@@ -370,24 +405,24 @@ static void httpsrv_ses_close(HTTPSRV_SESSION_STRUCT *session)
 }
 
 /*
-** HTTP session state machine
-**
-** IN:
-**      HTTPSRV_SESSION_STRUCT* session - session structure pointer.
-**      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
-**
-** OUT:
-**      none
-**
-** Return Value:
-**      none
-*/
+ ** HTTP session state machine
+ **
+ ** IN:
+ **      HTTPSRV_SESSION_STRUCT* session - session structure pointer.
+ **      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
+ **
+ ** OUT:
+ **      none
+ **
+ ** Return Value:
+ **      none
+ */
 void httpsrv_http_process(void *server_ptr, void *session_ptr)
 {
     uint32_t time_interval;
     uint32_t time_now;
     int result;
-    HTTPSRV_STRUCT *server = (HTTPSRV_STRUCT *)server_ptr;
+    HTTPSRV_STRUCT *server          = (HTTPSRV_STRUCT *)server_ptr;
     HTTPSRV_SESSION_STRUCT *session = (HTTPSRV_SESSION_STRUCT *)session_ptr;
 
     if (!session->valid)
@@ -397,7 +432,7 @@ void httpsrv_http_process(void *server_ptr, void *session_ptr)
     }
 
     /* check session timeout */
-    time_now = sys_now();
+    time_now      = sys_now();
     time_interval = time_now - session->time;
     if (time_interval > session->timeout)
     {
@@ -463,11 +498,11 @@ void httpsrv_http_process(void *server_ptr, void *session_ptr)
                 {
                     httpsrv_mem_free(session->request.auth.user_id);
                 }
-                session->request.auth.user_id = NULL;
+                session->request.auth.user_id  = NULL;
                 session->request.auth.password = NULL;
-                session->time = sys_now();
-                session->timeout = HTTPSRV_CFG_KEEPALIVE_TIMEOUT;
-                session->flags = HTTPSRV_FLAG_IS_KEEP_ALIVE | HTTPSRV_FLAG_PROCESS_HEADER;
+                session->time                  = sys_now();
+                session->timeout               = HTTPSRV_CFG_KEEPALIVE_TIMEOUT;
+                session->flags                 = HTTPSRV_FLAG_IS_KEEP_ALIVE | HTTPSRV_FLAG_PROCESS_HEADER;
             }
             break;
         case HTTPSRV_SES_CLOSE:
@@ -478,18 +513,18 @@ void httpsrv_http_process(void *server_ptr, void *session_ptr)
 }
 
 /*
-** Function for request parsing
-**
-** IN:
-**      HTTPSRV_SESSION_STRUCT* session - session structure pointer.
-**      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
-**
-** OUT:
-**      none
-**
-** Return Value:
-**      int - zero if request is valid, negative value if invalid.
-*/
+ ** Function for request parsing
+ **
+ ** IN:
+ **      HTTPSRV_SESSION_STRUCT* session - session structure pointer.
+ **      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
+ **
+ ** OUT:
+ **      none
+ **
+ ** Return Value:
+ **      int - zero if request is valid, negative value if invalid.
+ */
 static int httpsrv_req_read(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session)
 {
     char *line_start;
@@ -499,8 +534,8 @@ static int httpsrv_req_read(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *sess
     uint32_t unprocessed_size;
 
     line_start = session->buffer.data;
-    line_end = NULL;
-    retval = HTTPSRV_OK;
+    line_end   = NULL;
+    retval     = HTTPSRV_OK;
 
     /* Read data */
     read = httpsrv_recv(session, session->buffer.data + session->buffer.offset,
@@ -528,7 +563,7 @@ static int httpsrv_req_read(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *sess
         uint32_t max_length;
 
         max_length = (session->buffer.data + HTTPSRV_SES_BUF_SIZE_PRV) - line_start;
-        line_end = memchr(line_start, (int)'\n', max_length);
+        line_end   = memchr(line_start, (int)'\n', max_length);
         if (line_end == NULL)
         {
             break;
@@ -558,7 +593,7 @@ static int httpsrv_req_read(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *sess
             if (httpsrv_req_line(server, session, line_start) != HTTPSRV_OK)
             {
                 session->buffer.offset = 0;
-                retval = HTTPSRV_FAIL;
+                retval                 = HTTPSRV_FAIL;
                 goto EXIT;
             }
         }
@@ -567,7 +602,7 @@ static int httpsrv_req_read(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *sess
             if (httpsrv_req_hdr(session, line_start) != HTTPSRV_OK)
             {
                 session->buffer.offset = 0;
-                retval = HTTPSRV_FAIL;
+                retval                 = HTTPSRV_FAIL;
                 goto EXIT;
             }
         }
@@ -584,8 +619,8 @@ static int httpsrv_req_read(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *sess
     if (session->request.pending >= HTTPSRV_SES_BUF_SIZE_PRV)
     {
         session->response.status_code = HTTPSRV_CODE_FIELD_TOO_LARGE;
-        session->buffer.offset = 0;
-        retval = HTTPSRV_FAIL;
+        session->buffer.offset        = 0;
+        retval                        = HTTPSRV_FAIL;
         goto EXIT;
     }
 
@@ -615,18 +650,18 @@ EXIT:
 }
 
 /*
-** Function for request processing
-**
-** IN:
-**      HTTPSRV_SESSION_STRUCT* session - session structure pointer.
-**      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
-**
-** OUT:
-**      none
-**
-** Return Value:
-**      none
-*/
+ ** Function for request processing
+ **
+ ** IN:
+ **      HTTPSRV_SESSION_STRUCT* session - session structure pointer.
+ **      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
+ **
+ ** OUT:
+ **      none
+ **
+ ** Return Value:
+ **      none
+ */
 
 static HTTPSRV_SES_STATE httpsrv_req_do(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session)
 {
@@ -647,7 +682,7 @@ static HTTPSRV_SES_STATE httpsrv_req_do(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_
             if (session->request.auth.user_id != NULL)
             {
                 httpsrv_mem_free(session->request.auth.user_id);
-                session->request.auth.user_id = NULL;
+                session->request.auth.user_id  = NULL;
                 session->request.auth.password = NULL;
             }
             goto EXIT;
@@ -662,12 +697,12 @@ static HTTPSRV_SES_STATE httpsrv_req_do(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_
     /* Check if requested resource is CGI script */
     if ((suffix = strrchr(session->request.path, '.')) != 0)
     {
-        if (0 == lwip_stricmp(suffix, ".cgi" ))
+        if (0 == lwip_stricmp(suffix, ".cgi"))
         {
             *suffix = '\0';
             httpsrv_process_cgi(server, session, session->request.path + 1); /* +1 because of slash */
             *suffix = '.';
-            retval = HTTPSRV_SES_END_REQ;
+            retval  = HTTPSRV_SES_END_REQ;
             goto EXIT;
         }
     }
@@ -679,12 +714,12 @@ static HTTPSRV_SES_STATE httpsrv_req_do(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_
         goto EXIT;
     }
 
-#if HTTPSRV_CFG_WEBSOCKET_ENABLED
+#if (defined(HTTPSRV_CFG_WEBSOCKET_ENABLED) && (HTTPSRV_CFG_WEBSOCKET_ENABLED != 0))
     /* Check if resource is plugin */
     session->plugin = httpsrv_get_ws_plugin(server->params.ws_tbl, session->request.path);
     if (session->plugin != NULL)
     {
-        retval = HTTPSRV_SES_RESP;
+        retval                        = HTTPSRV_SES_RESP;
         session->response.status_code = HTTPSRV_CODE_UPGRADE;
         goto EXIT;
     }
@@ -695,7 +730,7 @@ static HTTPSRV_SES_STATE httpsrv_req_do(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_
     {
         uint32_t offset;
         uint32_t length;
-        const char *index = server->params.index_page;
+        const char *index   = server->params.index_page;
         uint32_t max_length = server->params.max_uri;
 
         length = strlen(index);
@@ -716,7 +751,7 @@ static HTTPSRV_SES_STATE httpsrv_req_do(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_
         goto EXIT;
     }
 
-    session->response.file = HTTPSRV_FS_open(full_path);
+    session->response.file   = HTTPSRV_FS_open(full_path);
     session->response.length = 0;
     if (!session->response.file)
     {
@@ -729,18 +764,18 @@ EXIT:
 }
 
 /*
-** Function for HTTP sending response, used only if request is not for CGI/SSI
-**
-** IN:
-**      HTTPSRV_SESSION_STRUCT* session - session structure pointer.
-**      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
-**
-** OUT:
-**      none
-**
-** Return Value:
-**      none
-*/
+ ** Function for HTTP sending response, used only if request is not for CGI/SSI
+ **
+ ** IN:
+ **      HTTPSRV_SESSION_STRUCT* session - session structure pointer.
+ **      HTTPSRV_STRUCT *server - pointer to server structure (needed for session parameters).
+ **
+ ** OUT:
+ **      none
+ **
+ ** Return Value:
+ **      none
+ */
 
 static HTTPSRV_SES_STATE httpsrv_response(HTTPSRV_STRUCT *server, HTTPSRV_SESSION_STRUCT *session)
 {
@@ -751,7 +786,7 @@ static HTTPSRV_SES_STATE httpsrv_response(HTTPSRV_STRUCT *server, HTTPSRV_SESSIO
     switch (session->response.status_code)
     {
         case HTTPSRV_CODE_UPGRADE:
-#if HTTPSRV_CFG_WEBSOCKET_ENABLED
+#if (defined(HTTPSRV_CFG_WEBSOCKET_ENABLED) && (HTTPSRV_CFG_WEBSOCKET_ENABLED != 0))
             if (session->request.upgrade_to == HTTPSRV_WS_PROTOCOL)
             {
                 ws_handshake(session->ws_handshake);
@@ -808,19 +843,19 @@ static inline void httpsrv_ses_set_state(HTTPSRV_SESSION_STRUCT *session, HTTPSR
     }
 }
 
-#if HTTPSRV_CFG_WEBSOCKET_ENABLED
+#if (defined(HTTPSRV_CFG_WEBSOCKET_ENABLED) && (HTTPSRV_CFG_WEBSOCKET_ENABLED != 0))
 /*
-** Run plugin - start plugin handler task send message to invoke plugin
-** functions.
-** IN:
-**      HTTPSRV_SESSION_STRUCT* session - session structure pointer
-**
-** OUT:
-**      none
-**
-** Return Value:
-**      none
-*/
+ ** Run plugin - start plugin handler task send message to invoke plugin
+ ** functions.
+ ** IN:
+ **      HTTPSRV_SESSION_STRUCT* session - session structure pointer
+ **
+ ** OUT:
+ **      none
+ **
+ ** Return Value:
+ **      none
+ */
 
 static void httpsrv_plugin_run(void *server_ptr, void *session_ptr)
 {

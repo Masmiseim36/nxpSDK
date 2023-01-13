@@ -199,7 +199,7 @@ static void decode_output_int8(int num_points, const int8_t *cls_predictions, co
     }
 }
 
-#ifdef INFERENCE_ENGINE_GLOW
+// Used for models with float output tensors
 static void convert_float_int(const float *cls_preds, const float *reg_preds, int8_t *cls_preds_int, int8_t *reg_preds_int)
 {
 	// class scores from GLOW are floats between 0 and 1 (sigmoid output).
@@ -219,7 +219,6 @@ static void convert_float_int(const float *cls_preds, const float *reg_preds, in
 		reg_preds_int[i] = (int8_t)(reg_preds[i]*20);
 	}
 }
-#endif /* INFERENCE_ENGINE_GLOW */
 
 int32_t NANODET_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data** final_boxes)
 {
@@ -233,53 +232,59 @@ int32_t NANODET_ProcessOutput(const mpp_inference_cb_param_t *inf_out, box_data*
         PRINTF("ERROR: NANODET_ProcessOutput parameter 'final_boxes' is null pointer" EOL);
         return -1;
     }
-#ifdef INFERENCE_ENGINE_GLOW
-    /* TODO remove this code as soon as Glow can provide int8 tensors */
-    const float *cls_preds = (const float *)(inf_out->out_tensors[0]->data);
-    float *reg_preds = (float *)(inf_out->out_tensors[1]->data);
-    if (cls_preds == NULL)
-    {
-        PRINTF("ERROR: NANODET_ProcessOutput: cls_preds NULL pointer" EOL);
-        return -1;
-    }
-    if (reg_preds == NULL)
-    {
-        PRINTF("ERROR: NANODET_ProcessOutput: reg_preds NULL pointer" EOL);
-        return -1;
-    }
+    int8_t* cls_preds_int;
+    int8_t *reg_preds_int;
 
-    int8_t *cls_preds_int = g_cls_int;
-    int8_t *reg_preds_int = g_reg_int;
+    if(inf_out->inference_type == MPP_INFERENCE_TYPE_GLOW)
+    {
+        /* TODO remove this code as soon as Glow can provide int8 tensors */
+        const float *cls_preds = (const float *)(inf_out->out_tensors[0]->data);
+        float *reg_preds = (float *)(inf_out->out_tensors[1]->data);
+        if (cls_preds == NULL)
+        {
+            PRINTF("ERROR: NANODET_ProcessOutput: cls_preds NULL pointer" EOL);
+            return -1;
+        }
+        if (reg_preds == NULL)
+        {
+            PRINTF("ERROR: NANODET_ProcessOutput: reg_preds NULL pointer" EOL);
+            return -1;
+        }
 
-    convert_float_int(cls_preds, reg_preds, cls_preds_int, reg_preds_int);
-#elif (defined INFERENCE_ENGINE_TFLM)
-    int8_t* cls_preds_int = (int8_t *) inf_out->out_tensors[0]->data; /* [1, 100, 80] matrix */
-    int8_t* reg_preds_int = (int8_t *) inf_out->out_tensors[1]->data; /* [1, 100, 32] matrix */
-    if (cls_preds_int == NULL)
+        cls_preds_int = g_cls_int;
+        reg_preds_int = g_reg_int;
+
+        convert_float_int(cls_preds, reg_preds, cls_preds_int, reg_preds_int);
+    }
+    else if(inf_out->inference_type == MPP_INFERENCE_TYPE_TFLITE)
     {
-        PRINTF("ERROR: NANODET_ProcessOutput: cls_preds_int NULL pointer" EOL);
+        cls_preds_int = (int8_t *) inf_out->out_tensors[0]->data; /* [1, 100, 80] matrix */
+        reg_preds_int = (int8_t *) inf_out->out_tensors[1]->data; /* [1, 100, 32] matrix */
+        if (cls_preds_int == NULL)
+        {
+            PRINTF("ERROR: NANODET_ProcessOutput: cls_preds_int NULL pointer" EOL);
+            return -1;
+        }
+        if (reg_preds_int == NULL)
+        {
+            PRINTF("ERROR: NANODET_ProcessOutput: reg_preds_int NULL pointer" EOL);
+            return -1;
+        }
+    }
+    else
+    {
+        PRINTF("ERROR: NANODET_ProcessOutput: Undefined Inference Engine" EOL);
         return -1;
     }
-    if (reg_preds_int == NULL)
-    {
-        PRINTF("ERROR: NANODET_ProcessOutput: reg_preds_int NULL pointer" EOL);
-        return -1;
-    }
-#else
-#error "Undefined Inference Engine"
-#endif
     center_prior centers[MAX_POINTS];
 
     int num_points = generate_center_priors(NANODET_HEIGHT, NANODET_WIDTH, MODEL_STRIDE, centers, MAX_POINTS);
-    PRINTF("Generated center priors..." EOL);
 
     decode_output_int8(num_points, cls_preds_int, reg_preds_int, (const center_prior *)centers, g_boxes, NANODET_NUM_CLASS);
-    PRINTF("Decoded output..." EOL);
 
     memset(final_boxes, 0, NUM_BOXES_MAX*sizeof(box_data*));
 
     nms(g_boxes, final_boxes, NUM_BOXES_MAX, NMS_THRESH, DETECTION_TRESHOLD/100.0);
-    PRINTF("Performed NMS..." EOL);
 
     return 0;
 }

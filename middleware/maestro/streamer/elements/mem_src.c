@@ -35,7 +35,7 @@ static uint8_t memsrc_handle_src_query(StreamPad *pad, StreamQuery *event);
 static uint8_t memsrc_src_activate_push(StreamPad *pad, uint8_t active);
 static uint8_t memsrc_src_activate_pull(StreamPad *pad, uint8_t active);
 static uint8_t memsrc_src_activate(StreamPad *pad, uint8_t active);
-static PadReturn memsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
+static FlowReturn memsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset);
 static int32_t memsrc_get_property(StreamElement *element_ptr, uint16_t prop, uint32_t *val_ptr);
 static int32_t memsrc_set_property(StreamElement *element_ptr, uint16_t prop, uintptr_t val);
 
@@ -87,7 +87,7 @@ int32_t memsrc_init(StreamElement *element)
     }
 
     STREAMER_FUNC_EXIT(DBG_MEMSRC);
-    return PAD_OK;
+    return 0;
 }
 
 int32_t memsrc_set_buffer(ElementHandle element, int8_t *location, uint32_t size)
@@ -253,10 +253,10 @@ static uint8_t memsrc_src_activate(StreamPad *pad, uint8_t active)
  * @brief Reads the data from the memory array specified by the element.
  * NOTE: Function may or may not be able to read the required
  * length of data.
- * Returns PAD_OK or PAD_STREAM_ERR_EOS when EOF file is encountered.
+ * Returns FLOW_OK or FLOW_EOS when EOF file is encountered.
  *
  */
-static PadReturn memsrc_read(ElementMemSrc *memsrc, int32_t offset, int32_t length, StreamBuffer *buf)
+static FlowReturn memsrc_read(ElementMemSrc *memsrc, int32_t offset, int32_t length, StreamBuffer *buf)
 {
     int32_t bytes_read = length;
     int8_t *data_buf   = NULL;
@@ -323,13 +323,13 @@ static PadReturn memsrc_read(ElementMemSrc *memsrc, int32_t offset, int32_t leng
     }
 
     STREAMER_FUNC_EXIT(DBG_MEMSRC);
-    return PAD_OK;
+    return FLOW_OK;
 
 eos:
     STREAMER_LOG_DEBUG(DBG_MEMSRC, "[MemSRC]Read pos: %d, size: %d, offset: %d\n", memsrc->read_position, memsrc->size,
                        offset);
     STREAMER_FUNC_EXIT(DBG_MEMSRC);
-    return PAD_STREAM_ERR_EOS;
+    return FLOW_EOS;
 }
 
 #if 0
@@ -374,9 +374,8 @@ int32_t memsrc_src_pad_process(StreamPad *pad)
  */
 int32_t memsrc_src_pad_process(StreamPad *pad)
 {
-    ElementMemSrc *memsrc   = (ElementMemSrc *)pad->parent;
-    PadReturn ret           = PAD_OK;
-    FlowReturn pad_push_ret = FLOW_OK;
+    ElementMemSrc *memsrc = (ElementMemSrc *)pad->parent;
+    FlowReturn ret        = FLOW_OK;
     uint32_t length = 0, offset = 0;
     StreamBuffer buf;
 
@@ -400,7 +399,7 @@ int32_t memsrc_src_pad_process(StreamPad *pad)
 
         /* read chunk_size of data */
         ret = memsrc_read(memsrc, offset, length, &buf);
-        if (ret == PAD_STREAM_ERR_EOS)
+        if (ret == FLOW_EOS)
         {
             StreamEvent event;
 
@@ -415,7 +414,7 @@ int32_t memsrc_src_pad_process(StreamPad *pad)
             STREAMER_FUNC_EXIT(DBG_MEMSRC);
             return STREAM_OK;
         }
-        else if (ret == PAD_STREAM_ERR_UNEXPECTED)
+        else if (ret == FLOW_UNEXPECTED)
         {
             STREAMER_LOG_ERR(DBG_MEMSRC, ret, "[MemSRC] Unexpected error %d\n", ret);
             STREAMER_FUNC_EXIT(DBG_MEMSRC);
@@ -423,13 +422,11 @@ int32_t memsrc_src_pad_process(StreamPad *pad)
             send_msg_element((StreamElement *)memsrc, MSG_EOS, 0);
             return STREAM_OK;
         }
-        else if (ret != PAD_STREAM_ERR_GENERAL)
+        else if (ret != FLOW_ERROR)
         {
             /* No error then forward the data */
             /* push data to peer sink pad */
-            pad_push_ret = pad_push(pad, &buf);
-
-            if (pad_push_ret != FLOW_OK)
+            if (pad_push(pad, &buf) != FLOW_OK)
             {
                 STREAMER_LOG_ERR(DBG_MEMSRC, ERRCODE_GENERAL_ERROR, "[MemSRC]Flow not ok\n");
                 STREAMER_FUNC_EXIT(DBG_MEMSRC);
@@ -460,10 +457,10 @@ int32_t memsrc_src_pad_process(StreamPad *pad)
  * the offset to buffer.
  *
  */
-static PadReturn memsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset)
+static FlowReturn memsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size, uint32_t offset)
 {
     ElementMemSrc *memsrc = (ElementMemSrc *)pad->parent;
-    PadReturn ret         = PAD_OK;
+    FlowReturn ret        = FLOW_OK;
 
     STREAMER_FUNC_ENTER(DBG_MEMSRC);
 
@@ -472,7 +469,7 @@ static PadReturn memsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size
 
     /* read chunk_size of data */
     ret = memsrc_read(memsrc, offset, size, buffer);
-    if (ret == PAD_STREAM_ERR_EOS)
+    if (ret == FLOW_EOS)
     {
         /* Its an end of stream */
         if (memsrc->end_of_stream != (uint8_t) true)
@@ -485,13 +482,8 @@ static PadReturn memsrc_pull(StreamPad *pad, StreamBuffer *buffer, uint32_t size
              */
             memsrc->end_of_stream = true;
         }
-        goto pause;
     }
 
-    STREAMER_FUNC_EXIT(DBG_MEMSRC);
-    return ret;
-
-pause:
     STREAMER_FUNC_EXIT(DBG_MEMSRC);
     return ret;
 }

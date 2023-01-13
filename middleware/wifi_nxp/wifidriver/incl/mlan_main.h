@@ -1026,9 +1026,9 @@ struct _mlan_private
     /** Data rate */
     t_u32 data_rate;
     /** Data rate index */
-    t_u8 data_rate_index;
+    t_s8 data_rate_index;
     /** Automatic data rate flag */
-    t_u8 is_data_rate_auto;
+    bool is_data_rate_auto;
     /** Factor for calculating beacon average */
     t_u16 bcn_avg_factor;
     /** Factor for calculating data average */
@@ -1096,7 +1096,7 @@ struct _mlan_private
     /** Current WEP key index */
     t_u16 wep_key_curr_index;
     /** EWPA query 0: disable, 1: enable */
-    t_u8 ewpa_query;
+    bool ewpa_query;
     /** Encryption Key*/
     t_u8 wpa_ie[MLAN_WMSDK_MAX_WPA_IE_LEN];
     /** WPA IE length */
@@ -1106,9 +1106,9 @@ struct _mlan_private
     /** mgmt frame passthru mask */
     t_u32 mgmt_frame_passthru_mask;
     /** Advanced Encryption Standard */
-    t_u8 adhoc_aes_enabled;
+    bool adhoc_aes_enabled;
     /** WMM required */
-    t_u8 wmm_required;
+    bool wmm_required;
     /** WMM enabled */
     bool wmm_enabled;
     /** WMM qos info */
@@ -1143,7 +1143,7 @@ struct _mlan_private
 
 
     /** Port Control mode */
-    t_u8 port_ctrl_mode;
+    bool port_ctrl_mode;
 
     /** Port open flag */
     bool port_open;
@@ -1858,7 +1858,7 @@ t_u32 wlan_get_supported_rates(mlan_private *pmpriv,
                                t_u16 config_bands,
                                WLAN_802_11_RATES rates);
 /** Check if rate is auto */
-t_u8 wlan_is_rate_auto(mlan_private *pmpriv);
+bool wlan_is_rate_auto(mlan_private *pmpriv);
 /** Get rate index */
 int wlan_get_rate_index(pmlan_adapter pmadapter, t_u16 *rate_bitmap, int size);
 

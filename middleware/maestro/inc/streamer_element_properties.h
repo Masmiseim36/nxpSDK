@@ -125,9 +125,9 @@ typedef struct
 #define PROP_VITSINK_MASK   0xb00
 #define PROP_VITSINK_FPOINT 0xb00
 
-/* EAP */
-#define PROP_EAP_MASK   0xc00
-#define PROP_EAP_FPOINT 0xc00
+/* AUDIO_PROC */
+#define PROP_AUDIO_PROC_MASK    0xc00
+#define PROP_AUDIO_PROC_FUNCPTR 0xc00
 
 /* ENCODER */
 #define PROP_ENCODER_MASK          0xd00

@@ -289,12 +289,12 @@ status_t flexspi_nand_read_page(
         }
 
         // Maximum AHB access size is less than kSerialNandMaxAhbReadSize
-        if (baseAddress < kSerialNandMaxAhbReadSize)
+        /* if (baseAddress < kSerialNandMaxAhbReadSize)
         {
             readAddress = baseAddress + kFlexSpiAmbaBase[instance];
             memcpy(buffer, (uint32_t *)readAddress, length);
         }
-        else
+        else */
         {
             flashXfer.baseAddress = baseAddress;
             flashXfer.isParallelModeEnable = false;
@@ -599,7 +599,39 @@ status_t flexspi_nand_get_config(uint32_t instance, flexspi_nand_config_t *confi
         config->memConfig.serialClkFreq = kFlexSpiSerialClk_SafeFreq;
         config->memConfig.sflashA1Size = 128U * 1024 * 1024 * 2; // Default size: 1Gbit
 
+        if (option->option0.B.option_size > 0)
+        {
+            // Switch to second pinmux group
+            if (option->option1.B.pinmux_group == 1)
+            {
+                config->memConfig.controllerMiscOption |= FLEXSPI_BITMASK(kFlexSpiMiscOffset_SecondPinMux);
+            }
+
+            if (option->option1.B.flash_connection)
+            {
+                uint32_t flashConnection = option->option1.B.flash_connection;
+
+                switch (flashConnection)
+                {
+                    default:
+                    case kSerialNandConnection_PortA:
+                        // This is default setting, do nothing here
+                        break;
+                    case kSerialNandConnection_PortB:
+                        config->memConfig.sflashA1Size = 0;
+                        config->memConfig.sflashB1Size = 128U * 1024 * 1024 * 2; // Default size: 1Gbit;
+                        break;
+                }
+            }
+        }
+
         status = flexspi_nand_init(instance, config);
+        if (status != kStatus_Success)
+        {
+            break;
+        }
+
+        status = flexspi_nand_software_reset(instance, config, option);
         if (status != kStatus_Success)
         {
             break;
@@ -652,7 +684,15 @@ status_t flexspi_nand_get_config(uint32_t instance, flexspi_nand_config_t *confi
             break;
         }
         config->pagesPerBlock = pages_per_block;
-        config->blocksPerDevice = config->memConfig.sflashA1Size / config->pageTotalSize / config->pagesPerBlock;
+
+        if (config->memConfig.sflashB1Size > 0)
+        {
+            config->blocksPerDevice = config->memConfig.sflashB1Size / config->pageTotalSize / config->pagesPerBlock;
+        }
+        else
+        {
+            config->blocksPerDevice = config->memConfig.sflashA1Size / config->pageTotalSize / config->pagesPerBlock;
+        }
 
         if (config->pageDataSize == 4096)
         {
@@ -690,90 +730,188 @@ status_t flexspi_nand_get_config(uint32_t instance, flexspi_nand_config_t *confi
             break;
         }
         // The size is the actual size * 2
-        config->memConfig.sflashA1Size = flash_size * 2;
-
-        // Write Enable
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_WRITEENABLE] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x06, STOP, FLEXSPI_1PAD, 0);
-
-        // Read Status
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READSTATUS + 0] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x0F, CMD_SDR, FLEXSPI_1PAD, 0xC0);
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READSTATUS + 1] =
-            FLEXSPI_LUT_SEQ(READ_SDR, FLEXSPI_1PAD, 0x01, STOP, FLEXSPI_1PAD, 0);
-
-        // Read Page
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READPAGE + 0] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x13, RADDR_SDR, FLEXSPI_1PAD, 0x18);
-
-        // Page Program Execute
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMEXECUTE] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x10, RADDR_SDR, FLEXSPI_1PAD, 0x18);
-
-        // Erase Block
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_ERASEBLOCK] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0xD8, RADDR_SDR, FLEXSPI_1PAD, 0x18);
-
-        // Read ECC status
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READECCSTAT] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x0F, CMD_SDR, FLEXSPI_1PAD, 0xC0);
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READECCSTAT + 1] =
-            FLEXSPI_LUT_SEQ(READ_SDR, FLEXSPI_1PAD, 0x01, STOP, FLEXSPI_1PAD, 0);
-
-        // Read cache 4X
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE + 0] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x6B, CADDR_SDR, FLEXSPI_1PAD, 0x10);
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE + 1] =
-            FLEXSPI_LUT_SEQ(DUMMY_SDR, FLEXSPI_4PAD, 0x08, READ_SDR, FLEXSPI_4PAD, 0x80);
-
-        // Page Program Load 4x
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD + 0] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x32, CADDR_SDR, FLEXSPI_1PAD, 0x10);
-        config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD + 1] =
-            FLEXSPI_LUT_SEQ(WRITE_SDR, FLEXSPI_4PAD, 0x40, STOP, FLEXSPI_1PAD, 0);
-
-        config->hasMultiPlanes = false;
-        if (option->option0.B.has_multiplanes)
+        if (config->memConfig.sflashB1Size > 0)
         {
-            // Page Program Load Odd 4x
-            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD_ODD + 0] =
-                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x32, MODE4_SDR, FLEXSPI_1PAD, 0x01);
-            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD_ODD + 1] =
-                FLEXSPI_LUT_SEQ(CADDR_SDR, FLEXSPI_1PAD, 0x0c, WRITE_SDR, FLEXSPI_4PAD, 0x40);
-            // Read cache odd 4X
-            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE_ODD + 0] =
-                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x6B, MODE4_SDR, FLEXSPI_1PAD, 0x01);
-            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE_ODD + 1] =
-                FLEXSPI_LUT_SEQ(CADDR_SDR, FLEXSPI_1PAD, 0x0C, DUMMY_SDR, FLEXSPI_4PAD, 0x08);
-            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE_ODD + 2] =
-                FLEXSPI_LUT_SEQ(READ_SDR, FLEXSPI_4PAD, 0x80, STOP, FLEXSPI_1PAD, 0);
-
-            config->hasMultiPlanes = true;
+            config->memConfig.sflashB1Size = flash_size * 2;
+        }
+        else
+        {
+            config->memConfig.sflashA1Size = flash_size * 2;
         }
 
-        // Enable Command Configuration
-        config->memConfig.configCmdEnable = true;
+        if (option->option0.B.device_type == kSerialNandCfgOption_DeviceType_Octal)
+        {
+            config->memConfig.sflashPadType = kSerialFlash_8Pads;
+            config->memConfig.readSampleClkSrc = kFlexSPIReadSampleClk_ExternalInputFromDqsPad;
 
-        // Disable All protection bits
-        config->memConfig.configCmdSeqs[0].seqId = 2;
-        config->memConfig.configCmdSeqs[0].seqNum = 1;
-        config->memConfig.lookupTable[4 * 2 + 0] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x1F, CMD_SDR, FLEXSPI_1PAD, 0xA0);
-        config->memConfig.lookupTable[4 * 2 + 1] =
-            FLEXSPI_LUT_SEQ(WRITE_SDR, FLEXSPI_1PAD, 0x01, STOP, FLEXSPI_1PAD, 0);
-        config->memConfig.configCmdArgs[0] = 0;
+            // Write Enable
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_WRITEENABLE] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x06, STOP, FLEXSPI_8PAD, 0);
 
-        // Enable ECC, Enable QE, Enable BUF
-        // Note: ECC is bit4, shared by all vendors
-        //       BUF is bit3, only supported by Winbond
-        //       QE  is bit0, only supported by Macronix
-        config->memConfig.configCmdSeqs[1].seqId = 6;
-        config->memConfig.configCmdSeqs[1].seqNum = 1;
-        config->memConfig.lookupTable[4 * 6 + 0] =
-            FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x1F, CMD_SDR, FLEXSPI_1PAD, 0xB0);
-        config->memConfig.lookupTable[4 * 6 + 1] =
-            FLEXSPI_LUT_SEQ(WRITE_SDR, FLEXSPI_1PAD, 0x01, STOP, FLEXSPI_1PAD, 0);
-        config->memConfig.configCmdArgs[1] = 0x19;
+            // Read Status
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READSTATUS + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x0F, CMD_SDR, FLEXSPI_8PAD, 0xC0);
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READSTATUS + 1] =
+                FLEXSPI_LUT_SEQ(DUMMY_DDR, FLEXSPI_8PAD, 0x0E,READ_DDR, FLEXSPI_8PAD, 0x01);
+
+            // Read Page
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READPAGE + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x13, RADDR_DDR, FLEXSPI_8PAD, 0x10);
+
+            // Page Program Execute
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMEXECUTE] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x10, RADDR_DDR, FLEXSPI_8PAD, 0x10);
+
+            // Erase Block
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_ERASEBLOCK] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0xD8, RADDR_DDR, FLEXSPI_8PAD, 0x10);
+
+            // Read ECC status
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READECCSTAT] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x0F, CMD_SDR, FLEXSPI_8PAD, 0xC0);
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READECCSTAT + 1] =
+                FLEXSPI_LUT_SEQ(DUMMY_DDR, FLEXSPI_8PAD, 0x0E,READ_DDR, FLEXSPI_8PAD, 0x01);
+
+            // Read cache 8X
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x9D, CADDR_DDR, FLEXSPI_8PAD, 0x10);
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE + 1] =
+                FLEXSPI_LUT_SEQ(DUMMY_DDR, FLEXSPI_8PAD, 0x10, READ_DDR, FLEXSPI_8PAD, 0x80);
+
+            // Page Program Load 8x
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0xC2, CADDR_DDR, FLEXSPI_8PAD, 0x10);
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD + 1] =
+                FLEXSPI_LUT_SEQ(WRITE_DDR, FLEXSPI_8PAD, 0x40, STOP, FLEXSPI_8PAD, 0);
+
+            // Enable OPI mode
+            config->memConfig.deviceModeCfgEnable = true;
+            config->memConfig.deviceModeType = kDeviceConfigCmdType_Spi2Xpi;
+            config->memConfig.deviceModeArg = 0xE7; // Octal DDR mode
+            config->memConfig.deviceModeSeq.seqId = 7;
+            config->memConfig.deviceModeSeq.seqNum = 2;
+            config->memConfig.waitTimeCfgCommands = 1;
+
+            // Write enable
+            config->memConfig.lookupTable[4 * 7 + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x06, STOP, FLEXSPI_1PAD, 0);
+            // Write Volatile register
+            config->memConfig.lookupTable[4 * 8 + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x81, CMD_SDR, FLEXSPI_1PAD, 0x00);
+            config->memConfig.lookupTable[4 * 8 + 1] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x00, CMD_SDR, FLEXSPI_1PAD, 0x00);
+            config->memConfig.lookupTable[4 * 8 + 2] =
+                FLEXSPI_LUT_SEQ(WRITE_SDR, FLEXSPI_1PAD, 0x1, STOP, FLEXSPI_1PAD, 0);
+
+            // Enable Command Configuration
+            config->memConfig.configCmdEnable = true;
+
+            // Disable All protection bits
+            config->memConfig.configCmdSeqs[0].seqId = 2;
+            config->memConfig.configCmdSeqs[0].seqNum = 1;
+            config->memConfig.lookupTable[4 * 2 + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x1F, CMD_SDR, FLEXSPI_8PAD, 0xA0);
+            config->memConfig.lookupTable[4 * 2 + 1] =
+                FLEXSPI_LUT_SEQ(WRITE_DDR, FLEXSPI_8PAD, 0x01, STOP, FLEXSPI_8PAD, 0);
+            config->memConfig.configCmdArgs[0] = 0;
+
+            // Enable ECC, Enable QE, Enable BUF
+            // Note: ECC is bit4, shared by all vendors
+            //       BUF is bit3, only supported by Winbond
+            //       QE  is bit0, only supported by Macronix
+            config->memConfig.configCmdSeqs[1].seqId = 6;
+            config->memConfig.configCmdSeqs[1].seqNum = 1;
+            config->memConfig.lookupTable[4 * 6 + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x1F, CMD_SDR, FLEXSPI_8PAD, 0xB0);
+            config->memConfig.lookupTable[4 * 6 + 1] =
+                FLEXSPI_LUT_SEQ(WRITE_DDR, FLEXSPI_8PAD, 0x01, STOP, FLEXSPI_8PAD, 0);
+            config->memConfig.configCmdArgs[1] = 0x19;
+        }
+        else
+        {
+            // Write Enable
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_WRITEENABLE] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x06, STOP, FLEXSPI_1PAD, 0);
+
+            // Read Status
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READSTATUS + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x0F, CMD_SDR, FLEXSPI_1PAD, 0xC0);
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READSTATUS + 1] =
+                FLEXSPI_LUT_SEQ(READ_SDR, FLEXSPI_1PAD, 0x01, STOP, FLEXSPI_1PAD, 0);
+
+            // Read Page
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READPAGE + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x13, RADDR_SDR, FLEXSPI_1PAD, 0x18);
+
+            // Page Program Execute
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMEXECUTE] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x10, RADDR_SDR, FLEXSPI_1PAD, 0x18);
+
+            // Erase Block
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_ERASEBLOCK] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0xD8, RADDR_SDR, FLEXSPI_1PAD, 0x18);
+
+            // Read ECC status
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READECCSTAT] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x0F, CMD_SDR, FLEXSPI_1PAD, 0xC0);
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READECCSTAT + 1] =
+                FLEXSPI_LUT_SEQ(READ_SDR, FLEXSPI_1PAD, 0x01, STOP, FLEXSPI_1PAD, 0);
+
+            // Read cache 4X
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x6B, CADDR_SDR, FLEXSPI_1PAD, 0x10);
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE + 1] =
+                FLEXSPI_LUT_SEQ(DUMMY_SDR, FLEXSPI_4PAD, 0x08, READ_SDR, FLEXSPI_4PAD, 0x80);
+
+            // Page Program Load 4x
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x32, CADDR_SDR, FLEXSPI_1PAD, 0x10);
+            config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD + 1] =
+                FLEXSPI_LUT_SEQ(WRITE_SDR, FLEXSPI_4PAD, 0x40, STOP, FLEXSPI_1PAD, 0);
+
+            config->hasMultiPlanes = false;
+            if (option->option0.B.has_multiplanes)
+            {
+                // Page Program Load Odd 4x
+                config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD_ODD + 0] =
+                    FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x32, MODE4_SDR, FLEXSPI_1PAD, 0x01);
+                config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_PROGRAMLOAD_ODD + 1] =
+                    FLEXSPI_LUT_SEQ(CADDR_SDR, FLEXSPI_1PAD, 0x0c, WRITE_SDR, FLEXSPI_4PAD, 0x40);
+                // Read cache odd 4X
+                config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE_ODD + 0] =
+                    FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x6B, MODE4_SDR, FLEXSPI_1PAD, 0x01);
+                config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE_ODD + 1] =
+                    FLEXSPI_LUT_SEQ(CADDR_SDR, FLEXSPI_1PAD, 0x0C, DUMMY_SDR, FLEXSPI_4PAD, 0x08);
+                config->memConfig.lookupTable[4 * NAND_CMD_LUT_SEQ_IDX_READCACHE_ODD + 2] =
+                    FLEXSPI_LUT_SEQ(READ_SDR, FLEXSPI_4PAD, 0x80, STOP, FLEXSPI_1PAD, 0);
+
+                config->hasMultiPlanes = true;
+            }
+
+            // Enable Command Configuration
+            config->memConfig.configCmdEnable = true;
+
+            // Disable All protection bits
+            config->memConfig.configCmdSeqs[0].seqId = 2;
+            config->memConfig.configCmdSeqs[0].seqNum = 1;
+            config->memConfig.lookupTable[4 * 2 + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x1F, CMD_SDR, FLEXSPI_1PAD, 0xA0);
+            config->memConfig.lookupTable[4 * 2 + 1] =
+                FLEXSPI_LUT_SEQ(WRITE_SDR, FLEXSPI_1PAD, 0x01, STOP, FLEXSPI_1PAD, 0);
+            config->memConfig.configCmdArgs[0] = 0;
+
+            // Enable ECC, Enable QE, Enable BUF
+            // Note: ECC is bit4, shared by all vendors
+            //       BUF is bit3, only supported by Winbond
+            //       QE  is bit0, only supported by Macronix
+            config->memConfig.configCmdSeqs[1].seqId = 6;
+            config->memConfig.configCmdSeqs[1].seqNum = 1;
+            config->memConfig.lookupTable[4 * 6 + 0] =
+                FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x1F, CMD_SDR, FLEXSPI_1PAD, 0xB0);
+            config->memConfig.lookupTable[4 * 6 + 1] =
+                FLEXSPI_LUT_SEQ(WRITE_SDR, FLEXSPI_1PAD, 0x01, STOP, FLEXSPI_1PAD, 0);
+            config->memConfig.configCmdArgs[1] = 0x19;
+        }
 
         bool use_default_ecc_parameters = true;
 
@@ -802,6 +940,45 @@ status_t flexspi_nand_get_config(uint32_t instance, flexspi_nand_config_t *confi
     {
         flexspi_set_failsafe_setting(&config->memConfig);
     }
+
+    return status;
+}
+
+status_t flexspi_nand_software_reset(uint32_t instance, flexspi_nand_config_t *config, serial_nand_config_option_t *option)
+{
+    status_t status = kStatus_InvalidArgument;
+    flexspi_xfer_t xfer;
+
+    do
+    {
+        uint32_t lut_seq[8];
+        memset(&lut_seq, 0, sizeof(lut_seq));
+
+        xfer.baseAddress = 0;
+        xfer.isParallelModeEnable = false;
+        xfer.operation = kFlexSpiOperation_Command;
+        xfer.seqId = NAND_CMD_LUT_FOR_IP_CMD;
+
+        if (option->option0.B.device_type == kSerialNandCfgOption_DeviceType_Octal)
+        {
+            // Restore NAND device to the initial state
+            lut_seq[0] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x66, STOP, FLEXSPI_8PAD, 0);
+            lut_seq[4] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_8PAD, 0x99, STOP, FLEXSPI_8PAD, 0);
+            xfer.seqNum = 2;
+        }
+        else
+        {
+            lut_seq[0] = FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0xFF, STOP, FLEXSPI_1PAD, 0);
+            xfer.seqNum = 1;
+        }
+
+        flexspi_update_lut(instance, xfer.seqId, &lut_seq[0], xfer.seqNum);
+        status = flexspi_command_xfer(instance, &xfer);
+
+        // Delay several ms until device is restored to SPI protocol
+        flexspi_sw_delay_us(1000);
+
+    } while (0);
 
     return status;
 }

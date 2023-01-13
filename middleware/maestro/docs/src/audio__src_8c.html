@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.5</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -106,9 +106,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aa07d4d9104141fe28711628147054dcc"><td class="memItemLeft" align="right" valign="top">static int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="audio__src_8c.html#aa07d4d9104141fe28711628147054dcc">audiosrc_src_process</a> (StreamPad *pad)</td></tr>
 <tr class="memdesc:aa07d4d9104141fe28711628147054dcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the loop function of the audiosrc source pad which runs in the task thread. It reads the chunk_size of data and pushes it to peer element sink pad.  <a href="audio__src_8c.html#aa07d4d9104141fe28711628147054dcc">More...</a><br /></td></tr>
 <tr class="separator:aa07d4d9104141fe28711628147054dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06370eb241121eb88dd968dcc6a41d7f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="audio__src_8c.html#a06370eb241121eb88dd968dcc6a41d7f">audiosrc_src_pull_handler</a> (StreamPad *pad, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buffer, uint32_t size, uint32_t offset)</td></tr>
-<tr class="memdesc:a06370eb241121eb88dd968dcc6a41d7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the pull function of the audiosrc source pad in SCHEDULING_PULL mode. It reads the size of data from the offset to buffer.  <a href="audio__src_8c.html#a06370eb241121eb88dd968dcc6a41d7f">More...</a><br /></td></tr>
-<tr class="separator:a06370eb241121eb88dd968dcc6a41d7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a751a9ce0455fd9acbbdff940b94393c9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="audio__src_8c.html#a751a9ce0455fd9acbbdff940b94393c9">audiosrc_src_pull_handler</a> (StreamPad *pad, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buffer, uint32_t size, uint32_t offset)</td></tr>
+<tr class="memdesc:a751a9ce0455fd9acbbdff940b94393c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the pull function of the audiosrc source pad in SCHEDULING_PULL mode. It reads the size of data from the offset to buffer.  <a href="audio__src_8c.html#a751a9ce0455fd9acbbdff940b94393c9">More...</a><br /></td></tr>
+<tr class="separator:a751a9ce0455fd9acbbdff940b94393c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa9185b2cc197609b111c501b44cc5c1"><td class="memItemLeft" align="right" valign="top">static int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="audio__src_8c.html#afa9185b2cc197609b111c501b44cc5c1">audiosrc_change_state</a> (StreamElement *element, <a class="el" href="streamer__api_8h.html#aed3a377d6591a396708fdc3e3cc0b1e1">PipelineState</a> state)</td></tr>
 <tr class="memdesc:afa9185b2cc197609b111c501b44cc5c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function handles the state change of the element in a pipeline.  <a href="audio__src_8c.html#afa9185b2cc197609b111c501b44cc5c1">More...</a><br /></td></tr>
 <tr class="separator:afa9185b2cc197609b111c501b44cc5c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,9 +166,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a6a08fb9718aae2de464067fa4f84554b"><td class="memItemLeft" align="right" valign="top">static int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="audio__src_8c.html#a6a08fb9718aae2de464067fa4f84554b">audiosrc_set_frame_ms</a> (<a class="el" href="streamer__api_8h.html#aa38d4845534a71686ee5281c5df9c6cb">ElementHandle</a> element, uint32_t frame_ms)</td></tr>
 <tr class="memdesc:a6a08fb9718aae2de464067fa4f84554b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function sets the number of frame millisecond in which the audio source sends the data when src pad is activated in push mode.  <a href="audio__src_8c.html#a6a08fb9718aae2de464067fa4f84554b">More...</a><br /></td></tr>
 <tr class="separator:a6a08fb9718aae2de464067fa4f84554b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1421a762bdeae27e7c5ddea7d92aabb2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="audio__src_8c.html#a1421a762bdeae27e7c5ddea7d92aabb2">audiosrc_read</a> (ElementAudioSrc *audiosrc, uint32_t offset, uint32_t length, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buf)</td></tr>
-<tr class="memdesc:a1421a762bdeae27e7c5ddea7d92aabb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function reads the data from the file specified by the element. NOTE: Function may or may not be able to read the required length of data.  <a href="audio__src_8c.html#a1421a762bdeae27e7c5ddea7d92aabb2">More...</a><br /></td></tr>
-<tr class="separator:a1421a762bdeae27e7c5ddea7d92aabb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa42949137ade8a226fdd2c48a12a3b04"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="audio__src_8c.html#aa42949137ade8a226fdd2c48a12a3b04">audiosrc_read</a> (ElementAudioSrc *audiosrc, uint32_t offset, uint32_t length, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buf)</td></tr>
+<tr class="memdesc:aa42949137ade8a226fdd2c48a12a3b04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function reads the data from the file specified by the element. NOTE: Function may or may not be able to read the required length of data.  <a href="audio__src_8c.html#aa42949137ade8a226fdd2c48a12a3b04">More...</a><br /></td></tr>
+<tr class="separator:aa42949137ade8a226fdd2c48a12a3b04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -216,8 +216,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a06370eb241121eb88dd968dcc6a41d7f" name="a06370eb241121eb88dd968dcc6a41d7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06370eb241121eb88dd968dcc6a41d7f">&#9670;&nbsp;</a></span>audiosrc_src_pull_handler()</h2>
+<a id="a751a9ce0455fd9acbbdff940b94393c9" name="a751a9ce0455fd9acbbdff940b94393c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a751a9ce0455fd9acbbdff940b94393c9">&#9670;&nbsp;</a></span>audiosrc_src_pull_handler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -226,7 +226,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a> audiosrc_src_pull_handler </td>
+          <td class="memname">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a> audiosrc_src_pull_handler </td>
           <td>(</td>
           <td class="paramtype">StreamPad *&#160;</td>
           <td class="paramname"><em>pad</em>, </td>
@@ -270,7 +270,7 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>PadReturn </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>FlowReturn </dd></dl>
 
 </div>
 </div>
@@ -1114,8 +1114,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a1421a762bdeae27e7c5ddea7d92aabb2" name="a1421a762bdeae27e7c5ddea7d92aabb2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1421a762bdeae27e7c5ddea7d92aabb2">&#9670;&nbsp;</a></span>audiosrc_read()</h2>
+<a id="aa42949137ade8a226fdd2c48a12a3b04" name="aa42949137ade8a226fdd2c48a12a3b04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa42949137ade8a226fdd2c48a12a3b04">&#9670;&nbsp;</a></span>audiosrc_read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1124,7 +1124,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a> audiosrc_read </td>
+          <td class="memname">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a> audiosrc_read </td>
           <td>(</td>
           <td class="paramtype">ElementAudioSrc *&#160;</td>
           <td class="paramname"><em>audiosrc</em>, </td>
@@ -1168,7 +1168,7 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>Returns PAD_OK or PAD_STREAM_ERR_GENERAL when read fails. </p>
+<p>Returns FLOW_OK or FLOW_ERROR when read fails. </p>
 
 </div>
 </div>

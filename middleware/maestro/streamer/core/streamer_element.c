@@ -56,8 +56,8 @@
 #ifdef STREAMER_ENABLE_VIT_SINK
 #include "vit_sink.h"
 #endif
-#ifdef STREAMER_ENABLE_EAP
-#include "eap.h"
+#ifdef STREAMER_ENABLE_AUDIO_PROC
+#include "audio_proc.h"
 #endif
 
 /*!
@@ -115,9 +115,9 @@ static const ElementInit element_list[TYPE_ELEMENT_LAST] = {
 #else
     {0, NULL},
 #endif
-#ifdef STREAMER_ENABLE_EAP
-    /*! TYPE_ELEMENT_EAP */
-    {sizeof(ElementEap), eap_init_element},
+#ifdef STREAMER_ENABLE_AUDIO_PROC
+    /*! TYPE_ELEMENT_AUDIO_PROC */
+    {sizeof(ElementAudioProc), audio_proc_init_element},
 #else
     {0, NULL},
 #endif

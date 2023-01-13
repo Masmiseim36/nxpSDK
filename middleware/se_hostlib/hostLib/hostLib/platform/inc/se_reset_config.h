@@ -30,6 +30,9 @@
 #elif defined(LPC_55x)
 #define SE05X_ENA_HOST_PORT BOARD_SW2_GPIO_PORT
 #define SE05X_ENA_HOST_PIN BOARD_SW1_GPIO_PIN
+#elif defined(NORDIC_MCU)
+/* To Do se05x ena pin*/
+#define SE05X_ENA_HOST_PIN NRF_GPIO_PIN_MAP(0,20)
 #endif
 
 #endif // _SE_RESET_CONFIG_H

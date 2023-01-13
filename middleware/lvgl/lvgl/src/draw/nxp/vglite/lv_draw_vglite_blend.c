@@ -158,27 +158,22 @@ lv_res_t lv_gpu_nxp_vglite_fill(lv_color_t * dest_buf, lv_coord_t dest_width, lv
                           (const lv_color_t *)dest_buf, false) != LV_RES_OK)
         VG_LITE_RETURN_INV("Init buffer failed.");
 
+
+    vg_lite_buffer_format_t color_format = LV_COLOR_DEPTH == 16 ? VG_LITE_BGRA8888 : VG_LITE_ABGR8888;
+    if(lv_vglite_premult_and_swizzle(&vgcol, col32, opa, color_format) != LV_RES_OK)
+        VG_LITE_RETURN_INV("Premultiplication and swizzle failed.");
+
     if(opa >= (lv_opa_t)LV_OPA_MAX) {   /*Opaque fill*/
         rect.x = fill_area->x1;
         rect.y = fill_area->y1;
         rect.width = area_w;
         rect.height = area_h;
 
-        /*Clean & invalidate cache*/
-        lv_vglite_invalidate_cache();
-
-#if LV_COLOR_DEPTH==16
-        vgcol = col32.full;
-#else /*LV_COLOR_DEPTH==32*/
-        vgcol = ((uint32_t)col32.ch.alpha << 24) | ((uint32_t)col32.ch.blue << 16) | ((uint32_t)col32.ch.green << 8) |
-                (uint32_t)col32.ch.red;
-#endif
-
         err = vg_lite_clear(&vgbuf, &rect, vgcol);
         VG_LITE_ERR_RETURN_INV(err, "Clear failed.");
 
-        err = vg_lite_finish();
-        VG_LITE_ERR_RETURN_INV(err, "Finish failed.");
+        if(lv_vglite_run() != LV_RES_OK)
+            VG_LITE_RETURN_INV("Run failed.");
     }
     else {   /*fill with transparency*/
 
@@ -197,24 +192,6 @@ lv_res_t lv_gpu_nxp_vglite_fill(lv_color_t * dest_buf, lv_coord_t dest_width, lv
                                 ((vg_lite_float_t) fill_area->x2) + 1.0f, ((vg_lite_float_t) fill_area->y2) + 1.0f);
         VG_LITE_ERR_RETURN_INV(err, "Init path failed.");
 
-        /* Only pre-multiply color if hardware pre-multiplication is not present */
-        if(!vg_lite_query_feature(gcFEATURE_BIT_VG_PE_PREMULTIPLY)) {
-            col32.ch.red = (uint8_t)(((uint16_t)col32.ch.red * opa) >> 8);
-            col32.ch.green = (uint8_t)(((uint16_t)col32.ch.green * opa) >> 8);
-            col32.ch.blue = (uint8_t)(((uint16_t)col32.ch.blue * opa) >> 8);
-        }
-        col32.ch.alpha = opa;
-
-#if LV_COLOR_DEPTH==16
-        vgcol = col32.full;
-#else /*LV_COLOR_DEPTH==32*/
-        vgcol = ((uint32_t)col32.ch.alpha << 24) | ((uint32_t)col32.ch.blue << 16) | ((uint32_t)col32.ch.green << 8) |
-                (uint32_t)col32.ch.red;
-#endif
-
-        /*Clean & invalidate cache*/
-        lv_vglite_invalidate_cache();
-
         vg_lite_matrix_t matrix;
         vg_lite_identity(&matrix);
 
@@ -222,8 +199,8 @@ lv_res_t lv_gpu_nxp_vglite_fill(lv_color_t * dest_buf, lv_coord_t dest_width, lv
         err = vg_lite_draw(&vgbuf, &path, VG_LITE_FILL_EVEN_ODD, &matrix, VG_LITE_BLEND_SRC_OVER, vgcol);
         VG_LITE_ERR_RETURN_INV(err, "Draw rectangle failed.");
 
-        err = vg_lite_finish();
-        VG_LITE_ERR_RETURN_INV(err, "Finish failed.");
+        if(lv_vglite_run() != LV_RES_OK)
+            VG_LITE_RETURN_INV("Run failed.");
 
         err = vg_lite_clear_path(&path);
         VG_LITE_ERR_RETURN_INV(err, "Clear path failed.");
@@ -479,9 +456,6 @@ static lv_res_t _lv_gpu_nxp_vglite_blit_single(lv_gpu_nxp_vglite_blit_info_t * b
         vg_lite_translate(0.0f - blit->pivot.x, 0.0f - blit->pivot.y, &matrix);
     }
 
-    /*Clean & invalidate cache*/
-    lv_vglite_invalidate_cache();
-
     uint32_t color;
     vg_lite_blend_t blend;
     if(blit->opa >= (lv_opa_t)LV_OPA_MAX) {
@@ -502,11 +476,30 @@ static lv_res_t _lv_gpu_nxp_vglite_blit_single(lv_gpu_nxp_vglite_blit_info_t * b
         src_vgbuf.transparency_mode = VG_LITE_IMAGE_TRANSPARENT;
     }
 
-    err = vg_lite_blit_rect(&dst_vgbuf, &src_vgbuf, rect, &matrix, blend, color, VG_LITE_FILTER_POINT);
-    VG_LITE_ERR_RETURN_INV(err, "Blit rectangle failed.");
+    bool scissoring = lv_area_get_width(&blit->dst_area) < lv_area_get_width(&blit->src_area) ||
+                      lv_area_get_height(&blit->dst_area) < lv_area_get_height(&blit->src_area);
+    if(scissoring) {
+        vg_lite_enable_scissor();
+        vg_lite_set_scissor((int32_t)blit->dst_area.x1, (int32_t)blit->dst_area.y1,
+                            (int32_t)lv_area_get_width(&blit->dst_area),
+                            (int32_t)lv_area_get_height(&blit->dst_area));
+    }
 
-    err = vg_lite_finish();
-    VG_LITE_ERR_RETURN_INV(err, "Finish failed.");
+    err = vg_lite_blit_rect(&dst_vgbuf, &src_vgbuf, rect, &matrix, blend, color, VG_LITE_FILTER_POINT);
+    if(err != VG_LITE_SUCCESS) {
+        if(scissoring)
+            vg_lite_disable_scissor();
+        VG_LITE_RETURN_INV("Blit rectangle failed.");
+    }
+
+    if(lv_vglite_run() != LV_RES_OK) {
+        if(scissoring)
+            vg_lite_disable_scissor();
+        VG_LITE_RETURN_INV("Run failed.");
+    }
+
+    if(scissoring)
+        vg_lite_disable_scissor();
 
     return LV_RES_OK;
 }
@@ -534,7 +527,7 @@ static void _sw_blit(lv_gpu_nxp_vglite_blit_info_t * blit)
             dst += dstStridePx;
         }
     }
-    else if(blit->opa >= LV_OPA_MIN) {
+    else if(blit->opa >= (lv_opa_t)LV_OPA_MIN) {
         /* alpha blending */
         for(y = 0; y < h; y++) {
             for(x = 0; x < w; x++) {

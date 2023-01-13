@@ -13,12 +13,15 @@
  */
 
 #include "mpp_config.h"
-#ifdef ENABLE_GFX_DEV_Pxp
+#include "board_config.h"
+#include "hal_graphics_dev.h"
+#include "hal_debug.h"
+#if (defined HAL_ENABLE_2D_IMGPROC) && (HAL_ENABLE_GFX_DEV_Pxp == 1)
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "fsl_common.h"
 #include "fsl_pxp.h"
-#include "hal_graphics_dev.h"
+#include "fsl_cache.h"
 #include "hal.h"
 #include "hal_utils.h"
 
@@ -406,7 +409,7 @@ static int set_output_buffer_format(pxp_output_buffer_config_t *pOutputBufferCon
     switch (pDst->format)
     {
     /* TODO support RGB 32 bits unpacked */
-#if (IMXRT1170_PXP_WORKAROUND_OUT_RGB == 1)
+#if (PXP_WORKAROUND_OUT_RGB == 1)
         case MPP_PIXEL_BGR:
 #endif
         case MPP_PIXEL_RGB:
@@ -684,7 +687,7 @@ static int HAL_GfxDev_Pxp_YUYV1P422ToYUV420P(gfx_surface_t *pSrc, gfx_surface_t 
     return 0;
 }
 
-#if (IMXRT1170_PXP_WORKAROUND_OUT_RGB == 1)
+#if (PXP_WORKAROUND_OUT_RGB == 1)
 /*
  * software conversion from BGR24 to RGB24
  */
@@ -693,6 +696,8 @@ static int convertCPU_BGR2RGB(uint8_t *buffer, int pitch, int width, int height)
     int x, y;
     uint8_t pixBlue;
     int srcBPP = 3;
+
+    DCACHE_CleanInvalidateByRange((uint32_t) buffer, pitch*height);
 
     for (y = 0 ; y < height; y++) {
         for (x = 0 ; x < width; x++) {
@@ -888,9 +893,8 @@ int HAL_GfxDev_Pxp_Blit(
 
     _HAL_GfxDev_Pxp_Unlock();
 
-#if (IMXRT1170_PXP_WORKAROUND_OUT_RGB == 1)
-    /* Workaround for the PXP bug (iMXRT1170) where BGR888 is output instead
-     * of RGB888 [MPP-97].
+#if (PXP_WORKAROUND_OUT_RGB == 1)
+    /* Workaround for the PXP bug where BGR888 is output instead of RGB888 [MPP-97].
      * For the output format kPXP_OutputPixelFormatRGB888P, a software conversion
      * applies to invert blue and red pixels.
      */
@@ -1281,4 +1285,10 @@ int hal_pxp_setup(gfx_dev_t *dev)
 
     return 0;
 }
-#endif /* ENABLE_GFX_DEV_Pxp */
+#else  /* (defined HAL_ENABLE_2D_IMGPROC) && (HAL_ENABLE_GFX_DEV_Pxp == 1) */
+int hal_pxp_setup(gfx_dev_t *dev)
+{
+    HAL_LOGE("PXP not enabled\n");
+    return -1;
+}
+#endif /* (defined HAL_ENABLE_2D_IMGPROC) && (HAL_ENABLE_GFX_DEV_Pxp == 1) */

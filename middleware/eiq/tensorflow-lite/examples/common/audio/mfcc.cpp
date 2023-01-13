@@ -44,7 +44,7 @@ MFCC::MFCC(int num_mfcc_features, int frame_len)
   // create window function
   window_func = new float[frame_len];
   for (int i = 0; i < frame_len; i++)
-    window_func[i] = 0.5 - 0.5 * cos(M_2PI * ((float)i) / (frame_len));
+    window_func[i] = 0.5 - 0.5 * cos(M_2PI * ((double)i) / (frame_len));
 
   // create mel filterbank
   fbank_filter_first = new int32_t[NUM_FBANK_BINS];
@@ -84,13 +84,13 @@ float * MFCC::create_dct_matrix(int32_t input_length, int32_t coefficient_count)
   float* M = new float[input_length * coefficient_count];
   float normalizer;
 #ifdef __ARM_ARCH
-  arm_sqrt_f32(2.0 / (float)input_length, &normalizer);
+  arm_sqrt_f32(2.0f / (float)input_length, &normalizer);
 #else
   normalizer = sqrtf(2.0 / (float)input_length);
 #endif
   for (k = 0; k < coefficient_count; k++) {
     for (n = 0; n < input_length; n++) {
-      M[k * input_length + n] = normalizer * cos(((double)M_PI) / input_length * (n + 0.5) * k);
+      M[k * input_length + n] = normalizer * (float)cos(M_PI / input_length * (n + 0.5) * k);
     }
   }
   return M;
@@ -213,7 +213,7 @@ void MFCC::mfcc_compute(const int16_t * audio_data, float* mfcc_out)
     mel_energies[bin] = mel_energy;
 
     // avoid log of zero
-    if (mel_energy == 0.0)
+    if (mel_energy == 0.0f)
       mel_energies[bin] = FLT_MIN;
   }
 

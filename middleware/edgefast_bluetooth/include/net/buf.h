@@ -14,6 +14,7 @@
 #include <stddef.h>
 #include <zephyr/types.h>
 #include <sys/util.h>
+#include <toolchain.h>
 
 #ifndef CONFIG_NET_BUF_USER_DATA_SIZE
 #define CONFIG_NET_BUF_USER_DATA_SIZE 0

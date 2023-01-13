@@ -197,13 +197,13 @@
 /**
  *  The RFCOMM Handle
  */
-typedef struct rfcomm_handle
+typedef struct _RFCOMM_HANDLE
 {
     /** RFCOMM Event Notification Callback (Non-Blocking Mode) */
     API_RESULT (* notify_cb)
                (
                    UCHAR                     event_type,  /* Event Identifier */
-                   struct rfcomm_handle *    handle,      /* RFCOMM Handle */
+                   struct _RFCOMM_HANDLE *    handle,      /* RFCOMM Handle */
                    UINT16                    result,      /* Result/Response */
                    UCHAR *                   data,        /* Returned Data */
                    UINT16                    datalen      /* Returned Data Length */

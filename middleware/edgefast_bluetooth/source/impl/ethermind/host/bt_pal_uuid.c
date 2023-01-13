@@ -122,10 +122,10 @@ void bt_uuid_to_str(const struct bt_uuid *uuid, char *str, size_t len)
 
 	switch (uuid->type) {
 	case BT_UUID_TYPE_16:
-		(void)snprintk(str, len, "%04"PRIx16, BT_UUID_16(uuid)->val);
+		snprintk(str, len, "%04x", BT_UUID_16(uuid)->val);
 		break;
 	case BT_UUID_TYPE_32:
-		(void)snprintk(str, len, "%08"PRIx32, BT_UUID_32(uuid)->val);
+		snprintk(str, len, "%08lx", BT_UUID_32(uuid)->val);
 		break;
 	case BT_UUID_TYPE_128:
 		(void)memcpy((void *)&tmp0, (void *)&BT_UUID_128(uuid)->val[0], sizeof(tmp0));
@@ -135,7 +135,7 @@ void bt_uuid_to_str(const struct bt_uuid *uuid, char *str, size_t len)
 		(void)memcpy((void *)&tmp4, (void *)&BT_UUID_128(uuid)->val[10], sizeof(tmp4));
 		(void)memcpy((void *)&tmp5, (void *)&BT_UUID_128(uuid)->val[12], sizeof(tmp5));
 
-		(void)snprintk(str, len, "%08"PRIx32"-%04"PRIx16"-%04"PRIx16"-%04"PRIx16"-%08"PRIx32"%04"PRIx16,
+		snprintk(str, len, "%08lx-%04x-%04x-%04x-%08lx%04x",
 			 (unsigned long int)sys_le32_to_cpu(tmp5), sys_le16_to_cpu(tmp4),
 			 sys_le16_to_cpu(tmp3), sys_le16_to_cpu(tmp2),
 			 (unsigned long int)sys_le32_to_cpu(tmp1), sys_le16_to_cpu(tmp0));

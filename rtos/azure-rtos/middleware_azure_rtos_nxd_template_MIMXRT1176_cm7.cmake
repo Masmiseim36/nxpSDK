@@ -59,6 +59,7 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/telnet
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/tftp
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/web
+    ${CMAKE_CURRENT_LIST_DIR}/netxduo/addons/websocket
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/common/inc
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/crypto_libraries/inc
     ${CMAKE_CURRENT_LIST_DIR}/netxduo/nx_secure/inc

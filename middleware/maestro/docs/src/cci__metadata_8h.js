@@ -43,7 +43,7 @@ var cci__metadata_8h =
     [ "codec_extract_metadata_mp3", "cci__metadata_8h.html#a24f35bc0301b33ff926d0a54cf09ebfa", null ],
     [ "codec_extract_metadata_wave", "cci__metadata_8h.html#aad97e47c0a3c5381bfc838738b7eb448", null ],
     [ "codec_extract_metadata_aac", "cci__metadata_8h.html#ac0a119f8c5473149ce380e7d6a827509", null ],
-    [ "codec_extract_metadata_flac", "cci__metadata_8h.html#a357e3ebcce0f7ada49a5aeb39f44a57a", null ],
+    [ "codec_extract_metadata_flac", "group__asi__dffi.html#ga82da9b71cd3edf9d0f6d7ee530a6d5fe", null ],
     [ "codec_extract_metadata_wma", "cci__metadata_8h.html#ab1d8faafdd815f9823ef1ea6887608da", null ],
     [ "codec_extract_metadata_ogg", "cci__metadata_8h.html#afa723792e66309693dfb301e9b2b0c47", null ],
     [ "codec_extract_metadata_opus", "cci__metadata_8h.html#a9102cc36f0dce2207b2ded1c0abf6a4c", null ]

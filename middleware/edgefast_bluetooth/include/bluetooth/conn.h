@@ -19,6 +19,8 @@
 
 #include <stdbool.h>
 
+#include <toolchain.h>
+
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/hci_err.h>
 #include <bluetooth/addr.h>
@@ -264,7 +266,7 @@ const bt_addr_t *bt_conn_get_dst_br(const struct bt_conn *conn);
  *  @return Index of the connection object.
  *          The range of the returned value is 0..CONFIG_BT_MAX_CONN-1
  */
-uint8_t bt_conn_index(struct bt_conn *conn);
+uint8_t bt_conn_index(const struct bt_conn *conn);
 
 /** Connection Type */
 enum {
@@ -307,6 +309,9 @@ struct bt_conn_le_info {
 #endif /* defined(CONFIG_BT_USER_DATA_LEN_UPDATE) */
 };
 
+/* Multiply bt 1.25 to get MS */
+#define BT_CONN_INTERVAL_TO_MS(interval) ((interval) * 5 / 4)
+
 /** BR/EDR Connection Info Structure */
 struct bt_conn_br_info {
 	const bt_addr_t *dst; /** Destination (Remote) BR/EDR address */
@@ -315,6 +320,55 @@ struct bt_conn_br_info {
 enum {
 	BT_CONN_ROLE_CENTRAL = 0,
 	BT_CONN_ROLE_PERIPHERAL = 1,
+};
+
+enum bt_conn_state {
+	/** Channel disconnected */
+	BT_CONN_STATE_DISCONNECTED,
+	/** Channel in connecting state */
+	BT_CONN_STATE_CONNECTING,
+	/** Channel connected and ready for upper layer traffic on it */
+	BT_CONN_STATE_CONNECTED,
+	/** Channel in disconnecting state */
+	BT_CONN_STATE_DISCONNECTING,
+};
+
+/** Security level. */
+ENUM_PACKED_PRE
+enum _bt_security {
+	/** Level 0: Only for BR/EDR special cases, like SDP */
+	BT_SECURITY_L0,
+	/** Level 1: No encryption and no authentication. */
+	BT_SECURITY_L1,
+	/** Level 2: Encryption and no authentication (no MITM). */
+	BT_SECURITY_L2,
+	/** Level 3: Encryption and authentication (MITM). */
+	BT_SECURITY_L3,
+	/** Level 4: Authenticated Secure Connections and 128-bit key. */
+	BT_SECURITY_L4,
+	/** Bit to force new pairing procedure, bit-wise OR with requested
+	 *  security level.
+	 */
+	BT_SECURITY_FORCE_PAIR = BIT(7),
+} ENUM_PACKED_POST;
+typedef enum _bt_security bt_security_t;
+
+/** Security Info Flags. */
+enum bt_security_flag {
+	/** Paired with Secure Connections. */
+	BT_SECURITY_FLAG_SC = BIT(0),
+	/** Paired with Out of Band method. */
+	BT_SECURITY_FLAG_OOB = BIT(1),
+};
+
+/** Security Info Structure. */
+struct bt_security_info {
+	/** Security Level. */
+	bt_security_t level;
+	/** Encryption Key Size. */
+	uint8_t enc_key_size;
+	/** Flags. */
+	enum bt_security_flag flags;
 };
 
 /** Connection role (central or peripheral) */
@@ -336,6 +390,10 @@ struct bt_conn_info {
 		/** BR/EDR Connection specific Info. */
 		struct bt_conn_br_info br;
 	};
+	/** Connection state. */
+	enum bt_conn_state state;
+	/** Security specific info. */
+	struct bt_security_info security;
 };
 
 /** LE Connection Remote Info Structure */
@@ -615,6 +673,11 @@ struct bt_conn_le_create_param {
  *  The application must disable explicit scanning before initiating
  *  a new LE connection.
  *
+ *  When @kconfig{CONFIG_BT_PRIVACY} enabled and @p peer is an identity address
+ *  from a local bond, this API will connect to an advertisement with either:
+ *    - the address being an RPA resolved from the IRK obtained during bonding.
+ *    - the passed identity address, if the local identity is not in Network Privacy Mode.
+ *
  *  @param[in]  peer         Remote address.
  *  @param[in]  create_param Create connection parameters.
  *  @param[in]  conn_param   Initial connection parameters.
@@ -668,26 +731,6 @@ int bt_conn_create_auto_stop(void);
 int bt_le_set_auto_conn(const bt_addr_le_t *addr,
 			const struct bt_le_conn_param *param);
 
-/** Security level. */
-ENUM_PACKED_PRE
-enum _bt_security {
-	/** Level 0: Only for BR/EDR special cases, like SDP */
-	BT_SECURITY_L0,
-	/** Level 1: No encryption and no authentication. */
-	BT_SECURITY_L1,
-	/** Level 2: Encryption and no authentication (no MITM). */
-	BT_SECURITY_L2,
-	/** Level 3: Encryption and authentication (MITM). */
-	BT_SECURITY_L3,
-	/** Level 4: Authenticated Secure Connections and 128-bit key. */
-	BT_SECURITY_L4,
-	/** Bit to force new pairing procedure, bit-wise OR with requested
-	 *  security level.
-	 */
-	BT_SECURITY_FORCE_PAIR = BIT(7),
-} ENUM_PACKED_POST;
-typedef enum _bt_security bt_security_t;
-
 /** @brief Set security level for a connection.
  *
  *  This function enable security (encryption) for a connection. If the device
@@ -724,7 +767,7 @@ int bt_conn_set_security(struct bt_conn *conn, bt_security_t sec);
  *
  *  @return Connection security level
  */
-bt_security_t bt_conn_get_security(struct bt_conn *conn);
+bt_security_t bt_conn_get_security(const struct bt_conn *conn);
 
 /** @brief Get encryption key size.
  *
@@ -735,7 +778,7 @@ bt_security_t bt_conn_get_security(struct bt_conn *conn);
  *
  *  @return Encryption key size.
  */
-uint8_t bt_conn_enc_key_size(struct bt_conn *conn);
+uint8_t bt_conn_enc_key_size(const struct bt_conn *conn);
 
 enum bt_security_err {
 	/** Security procedure successful. */
@@ -960,8 +1003,7 @@ struct bt_conn_cb {
  */
 void bt_conn_cb_register(struct bt_conn_cb *cb);
 
-/** @def BT_CONN_CB_DEFINE
- *
+/**
  *  @brief Register a callback structure for connection events.
  *
  *  @param _name Name of callback structure.
@@ -1047,8 +1089,7 @@ int bt_le_oob_get_sc_data(struct bt_conn *conn,
 			  const struct bt_le_oob_sc_data **oobd_local,
 			  const struct bt_le_oob_sc_data **oobd_remote);
 
-/** @def BT_PASSKEY_INVALID
- *
+/**
  *  Special passkey value that can be used to disable a previously
  *  set fixed passkey.
  */
@@ -1060,7 +1101,7 @@ int bt_le_oob_get_sc_data(struct bt_conn *conn,
  *  configuration option has been enabled.
  *
  *  Sets a fixed passkey to be used for pairing. If set, the
- *  pairing_confim() callback will be called for all incoming pairings.
+ *  pairing_confirm() callback will be called for all incoming pairings.
  *
  *  @param passkey A valid passkey (0 - 999999) or BT_PASSKEY_INVALID
  *                 to disable a previously set fixed passkey.
@@ -1304,7 +1345,10 @@ struct bt_conn_auth_cb {
 	 */
 	void (*pincode_entry)(struct bt_conn *conn, bool highsec);
 #endif
+};
 
+/** Authenticated pairing information callback structure */
+struct bt_conn_auth_info_cb {
 	/** @brief notify that pairing procedure was complete.
 	 *
 	 *  This callback notifies the application that the pairing procedure
@@ -1333,6 +1377,9 @@ struct bt_conn_auth_cb {
 	 *  @param peer Remote address.
 	 */
 	void (*bond_deleted)(uint8_t id, const bt_addr_le_t *peer);
+
+	/** Internally used field for list handling */
+	sys_snode_t node;
 };
 
 /** @brief Register authentication callbacks.
@@ -1345,6 +1392,43 @@ struct bt_conn_auth_cb {
  *  @return Zero on success or negative error code otherwise
  */
 int bt_conn_auth_cb_register(const struct bt_conn_auth_cb *cb);
+
+/** @brief Overlay authentication callbacks used for a given connection.
+ *
+ *  This function can be used only for Bluetooth LE connections.
+ *  The @kconfig{CONFIG_BT_SMP} must be enabled for this function.
+ *
+ *  The authentication callbacks for a given connection cannot be overlaid if
+ *  security procedures in the SMP module have already started. This function
+ *  can be called only once per connection.
+ *
+ *  @param conn	Connection object.
+ *  @param cb	Callback struct.
+ *
+ *  @return Zero on success or negative error code otherwise
+ */
+int bt_conn_auth_cb_overlay(struct bt_conn *conn, const struct bt_conn_auth_cb *cb);
+
+/** @brief Register authentication information callbacks.
+ *
+ *  Register callbacks to get authenticated pairing information. Multiple
+ *  registrations can be done.
+ *
+ *  @param cb Callback struct.
+ *
+ *  @return Zero on success or negative error code otherwise
+ */
+int bt_conn_auth_info_cb_register(struct bt_conn_auth_info_cb *cb);
+
+/** @brief Unregister authentication information callbacks.
+ *
+ *  Unregister callbacks to stop getting authenticated pairing information.
+ *
+ *  @param cb Callback struct.
+ *
+ *  @return Zero on success or negative error code otherwise
+ */
+int bt_conn_auth_info_cb_unregister(struct bt_conn_auth_info_cb *cb);
 
 /** @brief Reply with entered passkey.
  *

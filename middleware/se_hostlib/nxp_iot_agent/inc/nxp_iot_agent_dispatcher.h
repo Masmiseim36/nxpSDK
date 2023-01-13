@@ -101,7 +101,7 @@ bool handle_request_payload(pb_istream_t *stream, const pb_field_t *field, void 
 bool handle_requests(pb_istream_t *stream, const pb_field_t *field, void **arg);
 
 bool encode_responses_from_payload(pb_ostream_t *ostream, nxp_iot_ResponsePayload* response_payload);
-
+bool encode_responses_callback(pb_ostream_t *ostream, const pb_field_t *field, void* const* arg);
 /*! @brief Dispatcher
 * @param[in] dispatcher_context Context for the dispatcher
 * @param[in] input Input stream

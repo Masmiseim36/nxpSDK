@@ -14,10 +14,25 @@
 #include "hal_display_dev.h"
 #include "hal_static_image.h"
 
-int setup_display_dev(const char *name, display_dev_t *dev);
-int setup_camera_dev(const char *name, camera_dev_t *dev, _Bool defconfig);
+/* display setup */
+typedef int (*display_setup_func_t) (display_dev_t *);
+typedef struct
+{
+    const char* display_name;
+    display_setup_func_t display_setup_func;
+} hal_display_setup_t;
+
+/* camera setup */
+typedef int (*camera_setup_func_t)(const char *, camera_dev_t *, _Bool);
+typedef struct
+{
+    const char* camera_name;
+    camera_setup_func_t camera_setup_func;
+} hal_camera_setup_t;
+
 int setup_static_image_elt(static_image_t *elt);
 mpp_pixel_format_t hal_fsl_to_mpp_pixeltype(video_pixel_format_t fsl_typ);
+uint32_t calc_checksum(int size_b, void *pbuf);
 
 /* returns the number of bits per pixel per format, unknown format return 0 */
 static inline int get_bitpp(mpp_pixel_format_t type)

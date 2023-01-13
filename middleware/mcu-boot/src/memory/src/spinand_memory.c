@@ -26,7 +26,12 @@
 #if BL_FEATURE_SPINAND_MODULE
 
 #ifndef SPINAND_INSTANCE
+#if defined(BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+#define SPINAND_INSTANCE spinand_get_instance()
+#else
 #define SPINAND_INSTANCE BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE
+#endif // BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
 #endif
 
 #ifndef SPINAND_ERASE_VERIFY
@@ -76,6 +81,10 @@ typedef struct _spinand_mem_context
     bool has_keyblob;
     uint32_t keyblob_offset; //!< Key blob offset in application image
 #endif                       // BL_FEATURE_GEN_KEYBLOB
+#if defined(BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+    uint32_t instance;
+#endif // BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
 } spinand_mem_context_t;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -154,6 +163,10 @@ static spinand_mem_context_t s_spinandContext = {
     .skippedBlockCount = 0,
     .isReadBufferValid = false,
     .isWriteBufferValid = false,
+ #if defined(BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+    .instance = BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE,
+#endif // BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
 };
 
 //! @brief Interface to spi nand memory operations
@@ -170,6 +183,32 @@ const external_memory_region_interface_t g_spiNandMemoryInterface = {
 ////////////////////////////////////////////////////////////////////////////////
 // Code
 ////////////////////////////////////////////////////////////////////////////////
+
+//! @brief Get the instance of current flexspi nand
+static uint32_t spinand_get_instance()
+{
+#if defined(BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+    return s_spinandContext.instance;
+#else
+    return SPINAND_INSTANCE;
+#endif // BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+}
+
+#if defined(BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+static bool spinand_instance_available(uint32_t inst)
+{
+    if ((inst >= 1) && (inst <= BL_FEATURE_SPINAND_MODULE_MAX_PERIPHERAL_INSTANCE))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+#endif // BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
 
 bool is_nand_address_type_valid(uint32_t type)
 {
@@ -498,8 +537,27 @@ status_t spinand_mem_config(uint32_t *config)
 #if BL_FEATURE_GEN_KEYBLOB
         keyblob_info_t *keyblob_info = (keyblob_info_t *)config;
 #endif // BL_FEATURE_GEN_KEYBLOB
+#if defined(BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && \
+    BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+        if (MAGIC_NUMBER_SPINAND_PRECFG == img_option->option0.P.magic)
+        {
+            if (!spinand_instance_available(img_option->option0.P.cf9_field))
+            {
+                status = kStatus_InvalidArgument;
+                break;
+            }
 
+            if (img_option->option0.P.cf9_field != s_spinandContext.instance)
+            {
+                s_spinandContext.instance = img_option->option0.P.cf9_field;
+            }
+            status = kStatus_Success;
+            break;
+        }
+        else if (img_option->option0.B.tag == kNandImgOption_Tag)
+#else
         if (img_option->option0.B.tag == kNandImgOption_Tag)
+#endif // BL_FEATURE_SPINAND_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
         {
             status = nand_generate_fcb(&s_spinandFcb, img_option);
             if (status != kStatus_Success)

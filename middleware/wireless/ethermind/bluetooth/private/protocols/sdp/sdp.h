@@ -30,7 +30,10 @@
  * Stack Initialization modules call this function to initialize
  * the SDP structures before calling any other SDP APIs.
  */
-void em_sdp_init    (void);
+void em_sdp_init (void);
+#ifdef BT_HAVE_SHUTDOWN
+void em_sdp_shutdown (void);
+#endif /* BT_HAVE_SHUTDOWN */
 void sdp_bt_init (void);
 
 /*

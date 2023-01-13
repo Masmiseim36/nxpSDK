@@ -7,7 +7,10 @@
 #include "se_reset_config.h"
 #include <stdio.h>
 
+#ifndef NORDIC_MCU
 #include "fsl_gpio.h"
+#endif
+
 #include "sm_timer.h"
 #include "sm_types.h"
 #include "smComT1oI2C.h"

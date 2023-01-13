@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>MCUXpresso SDK API Reference Manual: LPI2C: Low Power Inter-Integrated Circuit Driver</title>
+<title>MCUXpresso SDK API Reference Manual: LPI2C FreeRTOS Driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td style="padding-left: 0.5em;">
    <div id="projectname">MCUXpresso SDK API Reference Manual
-   &#160;<span id="projectnumber">Rev 2.12.1</span>
+   &#160;<span id="projectnumber">Rev 2.12.2</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -98,135 +98,148 @@ $(document).ready(function(){initNavTree('a00339.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
-<div class="title">LPI2C: Low Power Inter-Integrated Circuit Driver</div>  </div>
+<div class="title">LPI2C FreeRTOS Driver<div class="ingroups"><a class="el" href="a00338.html">LPI2C: Low Power Inter-Integrated Circuit Driver</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Overview</h2>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:a00341"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00341.html">LPI2C CMSIS Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00340"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00340.html">LPI2C FreeRTOS Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00055"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00055.html">LPI2C Master DMA Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00054"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00054.html">LPI2C Master Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a00056"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00056.html">LPI2C Slave Driver</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:gaac288786aaa7d0cb947c91591baf42d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gaac288786aaa7d0cb947c91591baf42d7">I2C_RETRY_TIMES</a>&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td></tr>
-<tr class="memdesc:gaac288786aaa7d0cb947c91591baf42d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retry times for waiting flag.  <a href="#gaac288786aaa7d0cb947c91591baf42d7">More...</a><br/></td></tr>
-<tr class="separator:gaac288786aaa7d0cb947c91591baf42d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaa618c4d8c29ef4efe6f10c741fb1f47a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aaf52a270e301641b8855edf3fcc843814">kStatus_LPI2C_Busy</a> = MAKE_STATUS(kStatusGroup_LPI2C, 0), 
-<br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa6603ec1135f58532c9d4accc3661bc27">kStatus_LPI2C_Idle</a> = MAKE_STATUS(kStatusGroup_LPI2C, 1), 
-<br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa75dbc01ed590c24e787fadb97ba2f684">kStatus_LPI2C_Nak</a> = MAKE_STATUS(kStatusGroup_LPI2C, 2), 
-<br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa5b3634e1fedb0ad8cc38476aac29477e">kStatus_LPI2C_FifoError</a> = MAKE_STATUS(kStatusGroup_LPI2C, 3), 
-<br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aaa08b2b2938831610ff303e2415291be6">kStatus_LPI2C_BitError</a> = MAKE_STATUS(kStatusGroup_LPI2C, 4), 
-<br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa5169d7e655df8bde3b4fc6d49ae8777a">kStatus_LPI2C_ArbitrationLost</a> = MAKE_STATUS(kStatusGroup_LPI2C, 5), 
-<br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aaa8c558fc024cbde751d7861ea6efca78">kStatus_LPI2C_PinLowTimeout</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aaa301f3640e63a3d3d951429b9b7ee866">kStatus_LPI2C_NoTransferInProgress</a>, 
-<br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa14d70db977f150497fd4a9d232dc2cd8">kStatus_LPI2C_DmaRequestFail</a> = MAKE_STATUS(kStatusGroup_LPI2C, 8), 
-<br/>
-&#160;&#160;<a class="el" href="a00339.html#ggaa618c4d8c29ef4efe6f10c741fb1f47aa002394fe77437f41ea82506d69646d66">kStatus_LPI2C_Timeout</a> = MAKE_STATUS(kStatusGroup_LPI2C, 9)
-<br/>
- }</td></tr>
-<tr class="memdesc:gaa618c4d8c29ef4efe6f10c741fb1f47a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C status return codes.  <a href="a00339.html#gaa618c4d8c29ef4efe6f10c741fb1f47a">More...</a><br/></td></tr>
-<tr class="separator:gaa618c4d8c29ef4efe6f10c741fb1f47a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 Driver version</h2></td></tr>
-<tr class="memitem:gad5469acd31ed336234c60b02cf7c424a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gad5469acd31ed336234c60b02cf7c424a">FSL_LPI2C_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td></tr>
-<tr class="memdesc:gad5469acd31ed336234c60b02cf7c424a"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C driver version.  <a href="#gad5469acd31ed336234c60b02cf7c424a">More...</a><br/></td></tr>
-<tr class="separator:gad5469acd31ed336234c60b02cf7c424a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabe1b685d26560cdb8a3eccf81d013a3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gabe1b685d26560cdb8a3eccf81d013a3f">FSL_LPI2C_FREERTOS_DRIVER_VERSION</a>&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td></tr>
+<tr class="memdesc:gabe1b685d26560cdb8a3eccf81d013a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LPI2C FreeRTOS driver version.  <a href="#gabe1b685d26560cdb8a3eccf81d013a3f">More...</a><br/></td></tr>
+<tr class="separator:gabe1b685d26560cdb8a3eccf81d013a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+LPI2C RTOS Operation</h2></td></tr>
+<tr class="memitem:ga537a8859c9c83c8a8ccf6e0188cc8b5c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#ga537a8859c9c83c8a8ccf6e0188cc8b5c">LPI2C_RTOS_Init</a> (lpi2c_rtos_handle_t *handle, LPI2C_Type *base, const <a class="el" href="a00054.html#a00567">lpi2c_master_config_t</a> *masterConfig, uint32_t srcClock_Hz)</td></tr>
+<tr class="memdesc:ga537a8859c9c83c8a8ccf6e0188cc8b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes LPI2C.  <a href="#ga537a8859c9c83c8a8ccf6e0188cc8b5c">More...</a><br/></td></tr>
+<tr class="separator:ga537a8859c9c83c8a8ccf6e0188cc8b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacacb0612bfdcd7913be1cef8ad19fb9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gacacb0612bfdcd7913be1cef8ad19fb9c">LPI2C_RTOS_Deinit</a> (lpi2c_rtos_handle_t *handle)</td></tr>
+<tr class="memdesc:gacacb0612bfdcd7913be1cef8ad19fb9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitializes the LPI2C.  <a href="#gacacb0612bfdcd7913be1cef8ad19fb9c">More...</a><br/></td></tr>
+<tr class="separator:gacacb0612bfdcd7913be1cef8ad19fb9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab5359e4f864d7f21eebcab8d3229e963"><td class="memItemLeft" align="right" valign="top"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00339.html#gab5359e4f864d7f21eebcab8d3229e963">LPI2C_RTOS_Transfer</a> (lpi2c_rtos_handle_t *handle, lpi2c_master_transfer_t *transfer)</td></tr>
+<tr class="memdesc:gab5359e4f864d7f21eebcab8d3229e963"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs I2C transfer.  <a href="#gab5359e4f864d7f21eebcab8d3229e963">More...</a><br/></td></tr>
+<tr class="separator:gab5359e4f864d7f21eebcab8d3229e963"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="gad5469acd31ed336234c60b02cf7c424a"></a>
+<a class="anchor" id="gabe1b685d26560cdb8a3eccf81d013a3f"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define FSL_LPI2C_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00332.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 1))</td>
+          <td class="memname">#define FSL_LPI2C_FREERTOS_DRIVER_VERSION&#160;&#160;&#160;(<a class="el" href="a00331.html#ga812138aa3315b0c6953c1a26130bcc37">MAKE_VERSION</a>(2, 3, 2))</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a class="anchor" id="gaac288786aaa7d0cb947c91591baf42d7"></a>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga537a8859c9c83c8a8ccf6e0188cc8b5c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define I2C_RETRY_TIMES&#160;&#160;&#160;0U /* Define to zero means keep waiting until the flag is assert/deassert. */</td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_RTOS_Init </td>
+          <td>(</td>
+          <td class="paramtype">lpi2c_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">LPI2C_Type *&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="a00054.html#a00567">lpi2c_master_config_t</a> *&#160;</td>
+          <td class="paramname"><em>masterConfig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>srcClock_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function initializes the LPI2C module and related RTOS context.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The RTOS LPI2C handle, the pointer to an allocated space for RTOS context. </td></tr>
+    <tr><td class="paramname">base</td><td>The pointer base address of the LPI2C instance to initialize. </td></tr>
+    <tr><td class="paramname">masterConfig</td><td>Configuration structure to set-up LPI2C in master mode. </td></tr>
+    <tr><td class="paramname">srcClock_Hz</td><td>Frequency of input clock of the LPI2C module. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
 
 </div>
 </div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a class="anchor" id="gaa618c4d8c29ef4efe6f10c741fb1f47a"></a>
+<a class="anchor" id="gacacb0612bfdcd7913be1cef8ad19fb9c"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum</td>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_RTOS_Deinit </td>
+          <td>(</td>
+          <td class="paramtype">lpi2c_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aaf52a270e301641b8855edf3fcc843814"></a>kStatus_LPI2C_Busy</em>&nbsp;</td><td class="fielddoc">
-<p>The master is already performing a transfer. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa6603ec1135f58532c9d4accc3661bc27"></a>kStatus_LPI2C_Idle</em>&nbsp;</td><td class="fielddoc">
-<p>The slave driver is idle. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa75dbc01ed590c24e787fadb97ba2f684"></a>kStatus_LPI2C_Nak</em>&nbsp;</td><td class="fielddoc">
-<p>The slave device sent a NAK in response to a byte. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa5b3634e1fedb0ad8cc38476aac29477e"></a>kStatus_LPI2C_FifoError</em>&nbsp;</td><td class="fielddoc">
-<p>FIFO under run or overrun. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aaa08b2b2938831610ff303e2415291be6"></a>kStatus_LPI2C_BitError</em>&nbsp;</td><td class="fielddoc">
-<p>Transferred bit was not seen on the bus. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa5169d7e655df8bde3b4fc6d49ae8777a"></a>kStatus_LPI2C_ArbitrationLost</em>&nbsp;</td><td class="fielddoc">
-<p>Arbitration lost error. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aaa8c558fc024cbde751d7861ea6efca78"></a>kStatus_LPI2C_PinLowTimeout</em>&nbsp;</td><td class="fielddoc">
-<p>SCL or SDA were held low longer than the timeout. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aaa301f3640e63a3d3d951429b9b7ee866"></a>kStatus_LPI2C_NoTransferInProgress</em>&nbsp;</td><td class="fielddoc">
-<p>Attempt to abort a transfer when one is not in progress. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa14d70db977f150497fd4a9d232dc2cd8"></a>kStatus_LPI2C_DmaRequestFail</em>&nbsp;</td><td class="fielddoc">
-<p>DMA request failed. </p>
-</td></tr>
-<tr><td class="fieldname"><em><a class="anchor" id="ggaa618c4d8c29ef4efe6f10c741fb1f47aa002394fe77437f41ea82506d69646d66"></a>kStatus_LPI2C_Timeout</em>&nbsp;</td><td class="fielddoc">
-<p>Timeout polling status flags. </p>
-</td></tr>
-</table>
+<p>This function deinitializes the LPI2C module and related RTOS context.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The RTOS LPI2C handle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="gab5359e4f864d7f21eebcab8d3229e963"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="a00331.html#gaaabdaf7ee58ca7269bd4bf24efcde092">status_t</a> LPI2C_RTOS_Transfer </td>
+          <td>(</td>
+          <td class="paramtype">lpi2c_rtos_handle_t *&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">lpi2c_master_transfer_t *&#160;</td>
+          <td class="paramname"><em>transfer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function performs an I2C transfer using LPI2C module according to data given in the transfer structure.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">handle</td><td>The RTOS LPI2C handle. </td></tr>
+    <tr><td class="paramname">transfer</td><td>Structure specifying the transfer parameters. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>status of the operation. </dd></dl>
 
 </div>
 </div>

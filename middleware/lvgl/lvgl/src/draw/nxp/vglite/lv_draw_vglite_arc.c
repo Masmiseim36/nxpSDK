@@ -222,32 +222,16 @@ lv_res_t lv_gpu_nxp_vglite_draw_arc(lv_draw_ctx_t * draw_ctx, const lv_draw_arc_
     /* set rotation angle */
     vg_lite_identity(&matrix);
 
-    if(opa <= (lv_opa_t)LV_OPA_MAX) {
-        /* Only pre-multiply color if hardware pre-multiplication is not present */
-        if(!vg_lite_query_feature(gcFEATURE_BIT_VG_PE_PREMULTIPLY)) {
-            col32.ch.red = (uint8_t)(((uint16_t)col32.ch.red * opa) >> 8);
-            col32.ch.green = (uint8_t)(((uint16_t)col32.ch.green * opa) >> 8);
-            col32.ch.blue = (uint8_t)(((uint16_t)col32.ch.blue * opa) >> 8);
-        }
-        col32.ch.alpha = opa;
-    }
-
-#if LV_COLOR_DEPTH==16
-    vgcol = col32.full;
-#else /*LV_COLOR_DEPTH==32*/
-    vgcol = ((uint32_t)col32.ch.alpha << 24) | ((uint32_t)col32.ch.blue << 16) | ((uint32_t)col32.ch.green << 8) |
-            (uint32_t)col32.ch.red;
-#endif
-
-    /*Clean & invalidate cache*/
-    lv_vglite_invalidate_cache();
+    vg_lite_buffer_format_t color_format = LV_COLOR_DEPTH == 16 ? VG_LITE_BGRA8888 : VG_LITE_ABGR8888;
+    if(lv_vglite_premult_and_swizzle(&vgcol, col32, opa, color_format) != LV_RES_OK)
+        VG_LITE_RETURN_INV("Premultiplication and swizzle failed.");
 
     /*** Draw arc ***/
     err = vg_lite_draw(&vgbuf, &path, VG_LITE_FILL_NON_ZERO, &matrix, VG_LITE_BLEND_SRC_OVER, vgcol);
     VG_LITE_ERR_RETURN_INV(err, "Draw arc failed.");
 
-    err = vg_lite_finish();
-    VG_LITE_ERR_RETURN_INV(err, "Finish failed.");
+    if(lv_vglite_run() != LV_RES_OK)
+        VG_LITE_RETURN_INV("Run failed.");
 
     err = vg_lite_clear_path(&path);
     VG_LITE_ERR_RETURN_INV(err, "Clear path failed.");

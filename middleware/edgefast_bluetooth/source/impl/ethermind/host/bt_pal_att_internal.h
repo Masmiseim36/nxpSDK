@@ -158,7 +158,7 @@ struct bt_att_read_mult_req {
 	uint16_t handles[1];
 } STRUCT_PACKED_POST;
 
-/* Read Multiple Respose */
+/* Read Multiple Response */
 #define BT_ATT_OP_READ_MULT_RSP			0x0f
 STRUCT_PACKED_PRE
 struct bt_att_read_mult_rsp {
@@ -260,7 +260,7 @@ struct bt_att_read_mult_vl_req {
 	uint16_t handles[1];
 } STRUCT_PACKED_POST;
 
-/* Read Multiple Respose */
+/* Read Multiple Response */
 #define BT_ATT_OP_READ_MULT_VL_RSP		0x21
 STRUCT_PACKED_PRE
 struct bt_att_read_mult_vl_rsp {
@@ -331,17 +331,13 @@ void bt_att_req_free(struct bt_att_req *req);
 ATT_HANDLE *bt_att_lookup_conn(struct bt_conn *conn);
 
 /* Send ATT PDU over a connection */
-int bt_att_send(struct bt_conn *conn, struct net_buf *buf, bt_conn_tx_cb_t cb,
-		void *user_data);
+int bt_att_send(struct bt_conn *conn, struct net_buf *buf);
 
 /* Send ATT Request over a connection */
 int bt_att_req_send(struct bt_conn *conn, struct bt_att_req *req);
 
 /* Cancel ATT request */
 void bt_att_req_cancel(struct bt_conn *conn, struct bt_att_req *req);
-
-/* Connect EATT channels */
-int bt_eatt_connect(struct bt_conn *conn, uint8_t num_channels);
 
 /* Disconnect EATT channels */
 int bt_eatt_disconnect(struct bt_conn *conn);
@@ -352,5 +348,36 @@ int bt_eatt_disconnect(struct bt_conn *conn);
  *  @return The found request. NULL if not found.
  */
 struct bt_att_req *bt_att_find_req_by_user_data(struct bt_conn *conn, const void *user_data);
+
+/* Checks if only the fixed ATT channel is connected */
+bool bt_att_fixed_chan_only(struct bt_conn *conn);
+
+/* Clear the out of sync flag on all channels */
+void bt_att_clear_out_of_sync_sent(struct bt_conn *conn);
+
+/* Check if BT_ATT_ERR_DB_OUT_OF_SYNC has been sent on the fixed ATT channel */
+bool bt_att_out_of_sync_sent_on_fixed(struct bt_conn *conn);
+
+#if 0 /* Include gatt.h to walkaround bt_gatt_complete_func_t duplicate definiation warning. */
+typedef void (*bt_gatt_complete_func_t) (struct bt_conn *conn, void *user_data);
+#else
+#include "bluetooth/gatt.h"
+#endif
+void bt_att_set_tx_meta_data(struct net_buf *buf, bt_gatt_complete_func_t func, void *user_data,
+			     enum bt_att_chan_opt chan_opt);
+void bt_att_increment_tx_meta_data_attr_count(struct net_buf *buf, uint16_t attr_count);
+
+bool bt_att_tx_meta_data_match(const struct net_buf *buf, bt_gatt_complete_func_t func,
+			       const void *user_data, enum bt_att_chan_opt chan_opt);
+
+void bt_att_free_tx_meta_data(const struct net_buf *buf);
+
+#if (defined(CONFIG_BT_EATT) && (CONFIG_BT_EATT > 0U))
+#define BT_ATT_CHAN_OPT(_params) (_params)->chan_opt
+#else
+#define BT_ATT_CHAN_OPT(_params) BT_ATT_CHAN_OPT_UNENHANCED_ONLY
+#endif /* CONFIG_BT_EATT */
+
+bool bt_att_chan_opt_valid(struct bt_conn *conn, enum bt_att_chan_opt chan_opt);
 
 #endif /* __ATT_INTERNAL_H__ */

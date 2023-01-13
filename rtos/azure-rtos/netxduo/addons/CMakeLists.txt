@@ -35,6 +35,7 @@ set(SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/web/nx_tcpserver.c
 	${CMAKE_CURRENT_LIST_DIR}/web/nx_web_http_client.c
 	${CMAKE_CURRENT_LIST_DIR}/web/nx_web_http_server.c
+	${CMAKE_CURRENT_LIST_DIR}/websocket/nx_websocket_client.c
 
     # {{END_TARGET_SOURCES}}
 )
@@ -103,4 +104,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/telnet
     ${CMAKE_CURRENT_LIST_DIR}/tftp
     ${CMAKE_CURRENT_LIST_DIR}/web
+    ${CMAKE_CURRENT_LIST_DIR}/websocket
 )

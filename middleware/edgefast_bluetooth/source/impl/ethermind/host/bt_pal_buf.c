@@ -12,19 +12,22 @@
 
 #include "bt_pal_hci_core.h"
 #include "bt_pal_conn_internal.h"
+#if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0))
+#include "bt_pal_iso_internal.h"
+#endif
 
 #define LOG_ENABLE IS_ENABLED(CONFIG_BT_DEBUG_HCI_CORE)
 #define LOG_MODULE_NAME bt_buf
 #include "fsl_component_log.h"
 LOG_MODULE_DEFINE(LOG_MODULE_NAME, kLOG_LevelTrace);
 
-#if defined(CONFIG_BT_CONN)
-#if defined(CONFIG_BT_ISO)
+#if (defined(CONFIG_BT_CONN) && (CONFIG_BT_CONN > 0))
+#if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0))
 #define MAX_EVENT_COUNT CONFIG_BT_MAX_CONN + CONFIG_BT_ISO_MAX_CHAN
 #else
 #define MAX_EVENT_COUNT CONFIG_BT_MAX_CONN
 #endif /* CONFIG_BT_ISO */
-#elif defined(CONFIG_BT_ISO)
+#elif (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0))
 #define MAX_EVENT_COUNT CONFIG_BT_ISO_MAX_CHAN
 #endif /* CONFIG_BT_CONN */
 

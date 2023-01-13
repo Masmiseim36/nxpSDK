@@ -13,11 +13,16 @@
  * @brief vision algorithm TFLite HAL driver implementation for the MCU Media Processing Pipeline.
  */
 
+#include "mpp_config.h"
+#include "hal_valgo_dev.h"
+#include "hal_debug.h"
+#include "hal.h"
+
+#if (HAL_ENABLE_INFERENCE_TFLITE == 1)
+
 #include <stdlib.h>
 #include <stdio.h>
-#include "hal.h"
 #include "tflite/model.h"
-#include "hal_valgo_dev.h"
 #include "mpp_api_types.h"
 
 typedef struct _tflite_model_param
@@ -225,6 +230,7 @@ static hal_valgo_status_t HAL_VisionAlgoDev_TFLite_Run(const vision_algo_dev_t *
         return kStatus_HAL_ValgoError;
     }
     tflite_model_param->out_param.inference_time_ms = TICK_TO_MS(GET_TICK()) - startTime;
+    tflite_model_param->out_param.inference_type = MPP_INFERENCE_TYPE_TFLITE;
 
     tflite_model_param->out_cb(
             NULL, /* TODO pass mpp_t object here? */
@@ -271,10 +277,17 @@ const static vision_algo_dev_operator_t s_VisionAlgoDev_TFLiteOps = {
     .get_buf_desc   = HAL_VisionAlgoDev_TFLite_getBufDesc,
 };
 
-int hal_tflite_setup(vision_algo_dev_t *dev)
+int hal_inference_tflite_setup(vision_algo_dev_t *dev)
 {
     dev->id = 0;    /* TODO set unique id */
     dev->ops = &s_VisionAlgoDev_TFLiteOps;
 
     return 0;
 }
+#else  /* (HAL_ENABLE_INFERENCE_TFLITE != 1) */
+int hal_inference_tflite_setup(vision_algo_dev_t *dev)
+{
+    HAL_LOGE("Inference TF-lite not enabled\n");
+    return -1;
+}
+#endif /* (HAL_ENABLE_INFERENCE_TFLITE == 1) */

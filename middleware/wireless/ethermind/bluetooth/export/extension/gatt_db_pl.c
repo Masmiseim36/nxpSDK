@@ -13,14 +13,15 @@
 
 
 /* --------------------------------------------- Header File Inclusion */
+/* Bluetooth Common Header */
 #include "BT_common.h"
 #include "BT_device_queue.h"
 #include "BT_hci_api.h"
-
 #include "BT_smp_api.h"
 #include "BT_att_api.h"
+/* GATT DB Interface API Header */
 #include "BT_gatt_db_api.h"
-
+/* GATT DB Platform Header */
 #include "gatt_db_pl.h"
 
 #ifdef GATT_DB
@@ -30,7 +31,7 @@
 /* --------------------------------------------- Exported Global Variables */
 
 /* --------------------------------------------- Static Global Variables */
-/* GATT DB PL Extenstion Handler Callback */
+/* GATT DB PL Extension Handler Callback */
 GATT_DB_PL_EXT_HANDLER_CB gatt_db_ext_handler_pl;
 
 /* --------------------------------------------- Functions */
@@ -61,7 +62,7 @@ API_RESULT gatt_char_handler
 {
     API_RESULT retval;
 
-    /* Init */
+    /* Initialize */
     retval = API_SUCCESS;
 
     /**

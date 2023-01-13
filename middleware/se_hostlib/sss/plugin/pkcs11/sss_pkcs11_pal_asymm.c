@@ -517,6 +517,14 @@ CK_RV CreateRawPublicKey(CK_ATTRIBUTE_PTR pxTemplate, CK_ULONG ulCount, uint8_t 
 
         uint8_t ecPoint[150] = {0};
         // size_t ecPoint_size = sizeof(ecPoint);
+        if (len > sizeof(ecPoint) - 1) {
+            xResult = CKR_ARGUMENTS_BAD;
+            goto exit;
+        }
+        if (len > sizeof(ecPointInput) - i) {
+            xResult = CKR_ARGUMENTS_BAD;
+            goto exit;
+        }
         memcpy(&ecPoint[1], &ecPointInput[i], len);
 
         // xResult = SetASNTLV(tag, (uint8_t*) pxTemplate[parameterIndex].pValue, parameterLen, key, keyLen);
@@ -780,15 +788,20 @@ exit:
  * @retval #CKR_FUNCTION_FAILED The requested function could not be performed.
  */
 
-CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *dataLen)
+CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *inputLen)
 {
     CK_RV xResult      = CKR_FUNCTION_FAILED;
     size_t index       = 0;
     uint8_t data[1024] = {0};
     int len            = 0;
-    memcpy(&data[0], input, *dataLen);
+    uint8_t tag        = 0;
+    if (sizeof(data) < *inputLen) {
+        xResult = CKR_FUNCTION_FAILED;
+        goto exit;
+    }
+    memcpy(&data[0], input, *inputLen);
 
-    uint8_t tag = data[index++];
+    tag = data[index++];
     if (tag != ASN_TAG_SEQUENCE) {
         xResult = CKR_FUNCTION_FAILED;
         goto exit;
@@ -806,7 +819,7 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *dataLen)
         }
     }
 
-    if (index > *dataLen) {
+    if (index > *inputLen) {
         goto exit;
     }
 
@@ -828,7 +841,7 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *dataLen)
         }
     }
 
-    if (index > *dataLen) {
+    if (index > *inputLen) {
         goto exit;
     }
 
@@ -852,7 +865,7 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *dataLen)
 
     index = index + len;
 
-    if (index > *dataLen) {
+    if (index > *inputLen) {
         goto exit;
     }
 
@@ -877,14 +890,14 @@ CK_RV EcPublickeyGetEcParams(uint8_t *input, size_t *dataLen)
 
     len = len + 2;
 
-    if ((index + len) > *dataLen) {
+    if ((index + len) > *inputLen) {
         xResult = CKR_FUNCTION_FAILED;
         goto exit;
     }
 
     memcpy(&input[0], &data[index], len);
-    *dataLen = len;
-    xResult  = CKR_OK;
+    *inputLen = len;
+    xResult   = CKR_OK;
 
 exit:
     return xResult;

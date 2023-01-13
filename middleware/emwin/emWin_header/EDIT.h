@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.24 - Graphical user interface for embedded applications **
+** emWin V6.28 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2022-09-02
+SUA period:               2011-08-19 - 2023-09-03
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : EDIT.h
@@ -114,6 +114,10 @@ Purpose     : EDIT include
 // Automatic text scrolling
 //
 #define GUI_EDIT_AUTOSCROLL              (1 << 5)
+//
+// Password mode
+//
+#define GUI_EDIT_PASSWORD_MODE           (1 << 6)
 
 //
 // Edit modes
@@ -134,7 +138,7 @@ Purpose     : EDIT include
 **********************************************************************
 */
 typedef WM_HMEM EDIT_Handle;
-typedef void tEDIT_AddKeyEx    (EDIT_Handle hObj, int Key);
+typedef int  tEDIT_AddKeyEx    (EDIT_Handle hObj, int Key);
 typedef void tEDIT_UpdateBuffer(EDIT_Handle hObj);
 
 /*********************************************************************
@@ -166,10 +170,11 @@ void EDIT_SetDefaultBkColor  (unsigned int Index, GUI_COLOR Color);
 void EDIT_SetDefaultFont     (const GUI_FONT * pFont);
 void EDIT_SetDefaultTextAlign(int Align);
 void EDIT_SetDefaultTextColor(unsigned int Index, GUI_COLOR Color);
+U16  EDIT_SetPasswordChar    (U16 PasswordChar);
 
 /*********************************************************************
 *
-*             Individual member functions
+*       Individual member functions
 */
 //
 // Query preferences
@@ -181,53 +186,58 @@ GUI_COLOR        EDIT_GetDefaultTextColor(unsigned int Index);
 //
 // Methods changing properties
 //
-void EDIT_AddKey           (EDIT_Handle hObj, int Key);
-void EDIT_EnableAutoScroll (EDIT_Handle hObj, int OnOff);
-void EDIT_EnableBlink      (EDIT_Handle hObj, int Period, int OnOff);
-GUI_COLOR EDIT_GetBkColor  (EDIT_Handle hObj, unsigned int Index);
-void EDIT_SetBkColor       (EDIT_Handle hObj, unsigned int Index, GUI_COLOR color);
-void EDIT_SetBorderSize    (EDIT_Handle hObj, int Border);
-int  EDIT_GetBorderSize    (EDIT_Handle hObj);
-void EDIT_SetCursorAtChar  (EDIT_Handle hObj, int Pos);
-void EDIT_SetCursorAtPixel (EDIT_Handle hObj, int xPos);
-void EDIT_SetFont          (EDIT_Handle hObj, const GUI_FONT * pFont);
-int  EDIT_SetInsertMode    (EDIT_Handle hObj, int OnOff);
-void EDIT_SetMaxLen        (EDIT_Handle hObj, int MaxLen);
-void EDIT_SetpfAddKeyEx    (EDIT_Handle hObj, tEDIT_AddKeyEx * pfAddKeyEx);
-void EDIT_SetpfUpdateBuffer(EDIT_Handle hObj, tEDIT_UpdateBuffer * pfUpdateBuffer);
-void EDIT_SetText          (EDIT_Handle hObj, const char * s);
-void EDIT_SetTextAlign     (EDIT_Handle hObj, int Align);
-GUI_COLOR EDIT_GetTextColor(EDIT_Handle hObj, unsigned int Index);
-void EDIT_SetTextColor     (EDIT_Handle hObj, unsigned int Index, GUI_COLOR Color);
-void EDIT_SetSel           (EDIT_Handle hObj, int FirstChar, int LastChar);
-int  EDIT_SetUserData      (EDIT_Handle hObj, const void * pSrc, int NumBytes);
-int  EDIT_EnableInversion  (EDIT_Handle hObj, int OnOff);
+void             EDIT_AddKey           (EDIT_Handle hObj, int Key);
+void             EDIT_EnableAutoScroll (EDIT_Handle hObj, int OnOff);
+void             EDIT_EnableBlink      (EDIT_Handle hObj, int Period, int OnOff);
+GUI_COLOR        EDIT_GetBkColor       (EDIT_Handle hObj, unsigned int Index);
+void             EDIT_SetBkColor       (EDIT_Handle hObj, unsigned int Index, GUI_COLOR color);
+void             EDIT_SetBorderSize    (EDIT_Handle hObj, int Border);
+int              EDIT_GetBorderSize    (EDIT_Handle hObj);
+void             EDIT_SetCursorAtChar  (EDIT_Handle hObj, int Pos);
+void             EDIT_SetCursorAtPixel (EDIT_Handle hObj, int xPos);
+void             EDIT_SetFont          (EDIT_Handle hObj, const GUI_FONT * pFont);
+int              EDIT_SetInsertMode    (EDIT_Handle hObj, int OnOff);
+void             EDIT_SetMaxLen        (EDIT_Handle hObj, int MaxLen);
+void             EDIT_SetPasswordMode  (EDIT_Handle hObj, int OnOff);
+void             EDIT_SetpfAddKeyEx    (EDIT_Handle hObj, tEDIT_AddKeyEx * pfAddKeyEx);
+void             EDIT_SetpfUpdateBuffer(EDIT_Handle hObj, tEDIT_UpdateBuffer * pfUpdateBuffer);
+void             EDIT_SetText          (EDIT_Handle hObj, const char * s);
+void             EDIT_SetTextAlign     (EDIT_Handle hObj, int Align);
+GUI_COLOR        EDIT_GetTextColor     (EDIT_Handle hObj, unsigned int Index);
+void             EDIT_SetTextColor     (EDIT_Handle hObj, unsigned int Index, GUI_COLOR Color);
+void             EDIT_SetSel           (EDIT_Handle hObj, int FirstChar, int LastChar);
+int              EDIT_SetUserData      (EDIT_Handle hObj, const void * pSrc, int NumBytes);
+int              EDIT_EnableInversion  (EDIT_Handle hObj, int OnOff);
 //
 // Get/Set user input
 //
-U16   EDIT_GetCharAtPixel    (EDIT_Handle hObj, int x, int y, int * pIndex);
-int   EDIT_GetCursorCharPos  (EDIT_Handle hObj);
-void  EDIT_GetCursorPixelPos (EDIT_Handle hObj, int * pxPos, int * pyPos);
-float EDIT_GetFloatValue     (EDIT_Handle hObj);
-const GUI_FONT * EDIT_GetFont(EDIT_Handle hObj);
-int   EDIT_GetMaxLen         (EDIT_Handle hObj);
-void  EDIT_GetMinMax         (EDIT_Handle hObj, int * pMin, int * pMax);
-int   EDIT_GetNumChars       (EDIT_Handle hObj);
-void  EDIT_GetText           (EDIT_Handle hObj, char * sDest, int MaxLen);
-int   EDIT_GetTextAlign      (EDIT_Handle hObj);
-I32   EDIT_GetValue          (EDIT_Handle hObj);
-void  EDIT_SetFloatValue     (EDIT_Handle hObj, float Value);
-void  EDIT_GetSel            (EDIT_Handle hObj, int * pFirstChar, int * pLastChar);
-void  EDIT_GetSelText        (EDIT_Handle hObj, char * sDest, int MaxLen);
-int   EDIT_GetUserData       (EDIT_Handle hObj, void * pDest, int NumBytes);
-void  EDIT_SetValue          (EDIT_Handle hObj, I32 Value);
+U16              EDIT_GetCharAtPixel   (EDIT_Handle hObj, int x, int y, int * pIndex);
+int              EDIT_GetCursorCharPos (EDIT_Handle hObj);
+void             EDIT_GetCursorPixelPos(EDIT_Handle hObj, int * pxPos, int * pyPos);
+float            EDIT_GetFloatValue    (EDIT_Handle hObj);
+const GUI_FONT * EDIT_GetFont          (EDIT_Handle hObj);
+int              EDIT_GetMaxLen        (EDIT_Handle hObj);
+void             EDIT_GetMinMax        (EDIT_Handle hObj, int * pMin, int * pMax);
+int              EDIT_GetNumChars      (EDIT_Handle hObj);
+void             EDIT_GetText          (EDIT_Handle hObj, char * sDest, int MaxLen);
+int              EDIT_GetTextAlign     (EDIT_Handle hObj);
+I32              EDIT_GetValue         (EDIT_Handle hObj);
+void             EDIT_SetFloatValue    (EDIT_Handle hObj, float Value);
+void             EDIT_GetSel           (EDIT_Handle hObj, int * pFirstChar, int * pLastChar);
+void             EDIT_GetSelText       (EDIT_Handle hObj, char * sDest, int MaxLen);
+int              EDIT_GetUserData      (EDIT_Handle hObj, void * pDest, int NumBytes);
+void             EDIT_SetValue         (EDIT_Handle hObj, I32 Value);
 
+/*********************************************************************
+*
+*       Defines for compatability
+*/
 #define EDIT_SetFocussable EDIT_SetFocusable
 #define EDIT_SetFocusable  WIDGET_SetFocusable
 
 /*********************************************************************
 *
-*             Routines for editing values
+*       Routines for editing values
 *
 **********************************************************************
 */

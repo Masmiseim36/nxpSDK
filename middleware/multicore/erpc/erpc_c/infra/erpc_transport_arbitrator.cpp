@@ -7,9 +7,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "erpc_transport_arbitrator.h"
+#include "erpc_transport_arbitrator.hpp"
 #include "erpc_config_internal.h"
-#include "erpc_manually_constructed.h"
+#include "erpc_manually_constructed.hpp"
 
 #include <cstdio>
 #include <string>
@@ -49,6 +49,12 @@ void TransportArbitrator::setCrc16(Crc16 *crcImpl)
     erpc_assert(crcImpl != NULL);
     erpc_assert(m_sharedTransport != NULL);
     m_sharedTransport->setCrc16(crcImpl);
+}
+
+Crc16 *TransportArbitrator::getCrc16(void)
+{
+    erpc_assert(m_sharedTransport != NULL);
+    return m_sharedTransport->getCrc16();
 }
 
 bool TransportArbitrator::hasMessage(void)

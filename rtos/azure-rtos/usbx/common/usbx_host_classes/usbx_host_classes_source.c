@@ -273,3 +273,18 @@
 #include "src/ux_host_class_video_transfer_request.c"
 #include "src/ux_host_class_video_transfer_request_callback.c"
 #include "src/ux_host_class_video_transfer_request_completed.c"
+
+/* v6.2.0 */
+#include "src/ux_host_class_audio_control_request.c"
+#include "src/ux_host_class_audio_descriptors_parse.c"
+#include "src/ux_host_class_audio_entity_control_get.c"
+#include "src/ux_host_class_audio_entity_control_value_get.c"
+#include "src/ux_host_class_audio_entity_control_value_set.c"
+#include "src/ux_host_class_audio_feedback_get.c"
+#include "src/ux_host_class_audio_feedback_set.c"
+#include "src/ux_host_class_audio_feedback_transfer_completed.c"
+#include "src/ux_host_class_audio_interrupt_notification.c"
+#include "src/ux_host_class_audio_interrupt_start.c"
+#include "src/ux_host_class_audio_raw_sampling_parse.c"
+#include "src/ux_host_class_audio_stop.c"
+#include "src/ux_host_class_hub_tasks_run.c"

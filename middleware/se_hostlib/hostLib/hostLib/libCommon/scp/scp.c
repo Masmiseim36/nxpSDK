@@ -38,6 +38,7 @@ U32 scp_Transceive(void *conn_ctx, apdu_t * pApdu, scp_CommandType_t type)
 {
     U32 rv = ERR_COMM_ERROR;
 
+    AX_UNUSED_ARG(type);
     if (pApdu->hasLe) {
         smApduAdaptLcLe(pApdu, pApdu->lc, pApdu->le);
     }

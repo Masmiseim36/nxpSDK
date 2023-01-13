@@ -84,7 +84,7 @@
 /*! @brief Alignment(up) utility. */
 #if !defined(ALIGN_UP)
 #define ALIGN_UP(x, a) ALIGN_DOWN((uint32_t)(x) + (uint32_t)(a)-1u, a)
-#endif      
+#endif
 //@}
 
 //! @brief Build a 32-bit code from four character values.
@@ -124,6 +124,8 @@ enum _bl_status_groups
     kStatusGroup_OCOTP = 202,           //!< OCOTP status group number.
     kStatusGroup_SemcNOR = 211,         //!< SEMC NOR status group number.
     kStatusGroup_SemcNAND = 212,        //!< SEMC NAND status group number.
+
+    kStatusGroup_Edgelock = 300, //!< Group number for Edgelock status codes.
 };
 
 //! @brief Driver status group numbers.
@@ -180,9 +182,12 @@ typedef enum _bootdevice_option
     kBootDevice_FlexSpiNOR = 0x01,
     kBootDevice_FlexSpiNAND = 0x02,
     kBootDevice_SPIEEPROM = 0x04,
-    kBootDevice_MMC_SD = 0x08,
+    kBootDevice_SD = 0x08,
     kBootDevice_SemcNOR = 0x10,
     kBootDevice_SemcNAND = 0x20,
+    kBootDevice_MMC = 0x40,
+
+    kBootDevice_Invalid = 0xff,
 } bootdevice_option_t;
 
 //! @brief Boot Mode Option
@@ -321,6 +326,25 @@ habstatus_option_t get_hab_status();
 //! @brief Update flash_size and RAM_size based on SIM IFR
 void phantom_update(void);
 #endif // BL_FEATURE_PHANTOM_UPDATE
+
+#if (__ARM_FEATURE_CMSE & 0x2)
+//!@brief Convert an address to non-secure address.
+static inline uint32_t address_to_nonsecure_address(uint32_t addr)
+{
+    /* Clear bit A28 to switch accesses through non-secure alias */
+    return (addr & 0xEFFFFFFFu);
+}
+
+//!@brief Convert an address to non-secure address.
+static inline uint32_t address_to_secure_address(uint32_t addr)
+{
+    /* Set bit A28 to switch accesses through secure alias */
+    return (addr | 0x10000000u);
+}
+#else
+#define address_to_nonsecure_address(addr) (addr)
+#define address_to_secure_address(addr) (addr)
+#endif // #if (__ARM_FEATURE_CMSE & 0x2)
 
 //! @}
 

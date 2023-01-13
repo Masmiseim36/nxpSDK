@@ -1201,17 +1201,16 @@ int wifi_send_scan_cmd(t_u8 bss_mode,
         mlan_adap->active_scan_triggered = MTRUE;
     }
 
-    mlan_status rv = wlan_scan_networks((mlan_private *)mlan_adap->priv[0], NULL, user_scan_cfg);
-    if (rv != MLAN_STATUS_SUCCESS)
+    if (wm_wifi.g_user_scan_cfg != NULL)
     {
-        wifi_e("Scan command failed");
-        os_mem_free(user_scan_cfg);
-        return -WM_FAIL;
+        os_mem_free((void *)user_scan_cfg);
+        return WM_SUCCESS;
     }
 
-    /* fixme: Can we free this immediately after wlan_scan_networks
-       call returns */
-    os_mem_free(user_scan_cfg);
+    wm_wifi.g_user_scan_cfg = user_scan_cfg;
+
+    (void)os_event_notify_put(wifi_scan_thread);
+
     return WM_SUCCESS;
 }
 
@@ -1965,7 +1964,7 @@ static wifi_sub_band_set_t *get_sub_band_from_region_code(int region_code, t_u8 
 }
 
 #ifdef CONFIG_5GHz_SUPPORT
-static wifi_sub_band_set_t *get_sub_band_from_country_5ghz(country_code_t country, t_u8 *nr_sb)
+wifi_sub_band_set_t *get_sub_band_from_country_5ghz(country_code_t country, t_u8 *nr_sb)
 {
     *nr_sb                        = 1;
     wifi_sub_band_set_t *ret_band = NULL;

@@ -46,7 +46,7 @@ DECL_STATIC BT_thread_type wt_tid;
  */
 API_RESULT wt_init_pl (BT_THREAD_START_ROUTINE routine)
 {
-	BT_thread_attr_type wt_task_attr;
+    BT_thread_attr_type wt_task_attr;
 
     /* Initialize Write Task Mutex */
     BT_MUTEX_INIT(wt_mutex, WT);
@@ -77,4 +77,19 @@ API_RESULT wt_init_pl (BT_THREAD_START_ROUTINE routine)
     return API_SUCCESS;
 }
 
+#ifdef BT_HAVE_SHUTDOWN
+API_RESULT wt_shutdown_pl(void)
+{
+    /* De-Initialize Write Task Mutex */
+    BT_MUTEX_DEINIT(wt_mutex, WT);
+
+    /* De-Initialize Write Task CV & Mutex */
+    BT_COND_DEINIT(wt_cv, WT);
+
+    /* wt_tid = NULL; */
+    BT_thread_delete(wt_tid);
+
+    return API_SUCCESS;
+}
+#endif /* BT_HAVE_SHUTDOWN */
 

@@ -17,10 +17,18 @@
 #include "hal_freertos.h"
 #include "hal_debug.h"
 
+void vApplicationStackOverflowHook( TaskHandle_t xTask, char * pcTaskName )
+{
+    HAL_LOGE("Stack overflow detected in task %s\n",pcTaskName);
+    while(true);
+}
+
 /**
  * hal mutex handling:
  *  create, lock, unlock and remove
  */
+
+#define HAL_MAX_MUTEX_TIME_MS (MAX_MUTEX_TIME_MS / portTICK_PERIOD_MS)
 
 int hal_mutex_create (hal_mutex_t *mutex)
 {

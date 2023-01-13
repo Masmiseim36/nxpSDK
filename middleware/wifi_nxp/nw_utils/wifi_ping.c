@@ -45,7 +45,9 @@ static const ip_addr_t *get_src_addr(const ip_addr_t *dst)
     static ip_addr_t ret;
     const ip_addr_t *addr = NULL;
     struct netif *netif   = get_netif_up();
+#ifdef CONFIG_IPV6
     bool is_ip_type_valid = MTRUE;
+#endif
 
     if (netif == NULL)
     {

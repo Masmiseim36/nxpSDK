@@ -1,17 +1,20 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016,2022 NXP
  * All rights reserved.
  *
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 /*
-*   HTTPSRV support functions header.
-*/
+ *   HTTPSRV support functions header.
+ */
 
 #ifndef HTTP_SUPP_H_
 #define HTTP_SUPP_H_
+
+#include <stdbool.h>
+#include <stdint.h>
 
 #define ERR_PAGE_FORMAT "<HTML><HEAD><TITLE>%s</TITLE></HEAD>\n<BODY><H1>%s</H1>\n</BODY></HTML>\n"
 #include "httpsrv_prv.h"

@@ -35,6 +35,7 @@ enum {
 /* bt_dev flags: the flags defined here represent BT controller state */
 enum {
 	BT_DEV_ENABLE,
+	BT_DEV_DISABLE,
 	BT_DEV_READY,
 	BT_DEV_PRESET_ID,
 	BT_DEV_HAS_PUB_KEY,
@@ -49,7 +50,7 @@ enum {
 	BT_DEV_INITIATING,
 
 	BT_DEV_RPA_VALID,
-	BT_DEV_RPA_TIMEOUT_SET,
+	BT_DEV_RPA_TIMEOUT_CHANGED,
 
 	BT_DEV_ID_PENDING,
 	BT_DEV_STORE_ID,
@@ -122,6 +123,8 @@ enum {
 	BT_PER_ADV_ENABLED,
 	/* Periodic Advertising parameters has been set in the controller. */
 	BT_PER_ADV_PARAMS_SET,
+	/* Periodic Advertising to include AdvDataInfo (ADI) */
+	BT_PER_ADV_INCLUDE_ADI,
 	/* Constant Tone Extension parameters for Periodic Advertising
 	 * has been set in the controller.
 	 */
@@ -281,8 +284,8 @@ struct bt_dev_br {
 
 #if (defined(CONFIG_BT_CONN) && ((CONFIG_BT_CONN) > 0U))
 #if (defined(CONFIG_BT_ISO) && ((CONFIG_BT_ISO) > 0U))
-/* command FIFO + conn_change signal + MAX_CONN + MAX_ISO_CONN */
-#define EV_COUNT (2 + CONFIG_BT_MAX_CONN + CONFIG_BT_MAX_ISO_CONN)
+/* command FIFO + conn_change signal + MAX_CONN + CONFIG_BT_ISO_MAX_CHAN */
+#define EV_COUNT (2 + CONFIG_BT_MAX_CONN + CONFIG_BT_ISO_MAX_CHAN * CONFIG_BT_ISO_TX_BUF_COUNT)
 #else
 /* command FIFO + conn_change signal + MAX_CONN */
 #define EV_COUNT (2 + CONFIG_BT_MAX_CONN)
@@ -384,11 +387,17 @@ struct _bt_dev {
 #endif
 	/* New msg availiable */
 #define BT_DEV_SEND_COMMAND BIT(0)
-#define BT_DEV_CONN_CHANGED BIT(1)
+#define BT_DEV_SEND_ISO     BIT(1)
+#define BT_DEV_CONN_CHANGED BIT(2)
+
 	osa_event_handle_t		new_event;
 	OSA_EVENT_HANDLE_DEFINE(new_event_handle);
 	osa_msgq_handle_t		conn_changed;
 	OSA_MSGQ_HANDLE_DEFINE(conn_changed_handle, EV_COUNT, sizeof(void *));
+#if (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0))
+	osa_msgq_handle_t		iso_conn;
+	OSA_MSGQ_HANDLE_DEFINE(iso_conn_handle, EV_COUNT, sizeof(void *));
+#endif /* CONFIG_BT_ISO */
 
 #if (defined(CONFIG_BT_PRIVACY) && ((CONFIG_BT_PRIVACY) > 0U))
 	/* Local Identity Resolving Key */
@@ -396,18 +405,25 @@ struct _bt_dev {
 
 	/* Work used for RPA rotation */
 	struct k_work_delayable rpa_update;
+
+	/* The RPA timeout value. */
+	uint16_t rpa_timeout;
 #endif
 
 	/* Local Name */
 #if (defined(CONFIG_BT_DEVICE_NAME_DYNAMIC) && ((CONFIG_BT_DEVICE_NAME_DYNAMIC) > 0U))
 	char			name[CONFIG_BT_DEVICE_NAME_MAX + 1];
 #endif
+#if (defined(CONFIG_BT_DEVICE_APPEARANCE_DYNAMIC) && (CONFIG_BT_DEVICE_APPEARANCE_DYNAMIC > 0))
+	/* Appearance Value */
+	uint16_t		appearance;
+#endif
 };
 
 extern struct _bt_dev bt_dev;
 #if ((defined(CONFIG_BT_SMP) && ((CONFIG_BT_SMP) > 0U)) || (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U)))
 extern const struct bt_conn_auth_cb *bt_auth;
-
+extern sys_slist_t bt_auth_info_cbs;
 enum bt_security_err bt_security_err_get(uint8_t hci_err);
 #endif /* CONFIG_BT_SMP || CONFIG_BT_BREDR */
 
@@ -431,6 +447,10 @@ void bt_hci_cmd_state_set_init(struct net_buf *buf,
 int bt_hci_disconnect(uint16_t handle, uint8_t reason);
 
 void bt_set_conn_changed(struct bt_conn *conn);
+
+#if (defined(CONFIG_BT_ISO) && (CONFIG_BT_ISO > 0))
+void bt_set_send_iso(struct bt_conn *conn);
+#endif /* CONFIG_BT_ISO */
 
 bool bt_le_conn_params_valid(const struct bt_le_conn_param *param);
 int bt_le_set_data_len(struct bt_conn *conn, uint16_t tx_octets, uint16_t tx_time);
@@ -504,6 +524,7 @@ void bt_hci_le_per_adv_report(struct net_buf *buf);
 void bt_hci_le_per_adv_sync_lost(struct net_buf *buf);
 void bt_hci_le_biginfo_adv_report(struct net_buf *buf);
 void bt_hci_le_df_connectionless_iq_report(struct net_buf *buf);
+void bt_hci_le_vs_df_connectionless_iq_report(struct net_buf *buf);
 void bt_hci_le_past_received(struct net_buf *buf);
 
 /* Adv HCI event handlers */
@@ -526,15 +547,8 @@ void bt_hci_role_change(struct net_buf *buf);
 void bt_hci_synchronous_conn_complete(struct net_buf *buf);
 
 void bt_hci_le_df_connection_iq_report(struct net_buf *buf);
+void bt_hci_le_vs_df_connection_iq_report(struct net_buf *buf);
 void bt_hci_le_df_cte_req_failed(struct net_buf *buf);
-
-/** First thread that called bt_recv. NULL if not yet called.
- *  Updated non-atomically; may be used only to compare to current thread id.
- */
-#if 0
-extern k_tid_t bt_recv_thread_id;
-#endif
-
 /* HCI command complete response of le encrypt handlers */
 struct bt_hci_cmd_le_encrypt_rp_cb
 {

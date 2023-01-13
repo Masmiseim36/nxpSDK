@@ -1,6 +1,6 @@
 var group__i2c__slave__transport =
 [
-    [ "erpc_i2c_slave_transport.h", "erpc__i2c__slave__transport_8h.html", null ],
+    [ "erpc_i2c_slave_transport.hpp", "erpc__i2c__slave__transport_8hpp.html", null ],
     [ "I2cSlaveTransport", "classerpc_1_1_i2c_slave_transport.html", [
       [ "I2cSlaveTransport", "classerpc_1_1_i2c_slave_transport.html#a9f2470f8b36b4e561876a52de4e76e40", null ],
       [ "~I2cSlaveTransport", "classerpc_1_1_i2c_slave_transport.html#a0de48d9a3aec43c99b4fc2c6b57cd1d0", null ],

@@ -109,6 +109,59 @@
 
 #define     MAX_CTN_ATTR_SIZE                           1024U
 
+/* ---- CTN object attribute value length defines -------  */
+
+/**
+ * Max CTN update time attribute length.
+ */
+#define    MAX_CTN_ATTR_UPDATE_TIME_LEN                      24U
+
+/* Max CTN calender type length */
+#define    MAX_CTN_ATTR_CAL_TYPE_LEN                         8U
+
+/**
+ * Max. CTN originator name length.
+ *
+ * Note:
+ * From the CTN spec. this attrbute can be 256 bytes.
+ */
+#define    MAX_CTN_ATTR_ORIGIN_NAME_LEN                      64U
+
+/**
+ * Max. CTN originator address length.
+ *
+ * Note:
+ * From the CTN spec. this attrbute can be 256 bytes.
+ */
+#define    MAX_CTN_ATTR_ORIGIN_ADDR_LEN                      64U
+
+/**
+ * Max. CTN summary length
+ *
+ * Note:
+ * From the CTN spec. this attrbute can be 256 bytes.
+ */
+#define    MAX_CTN_ATTR_SUMMARY_LEN                          256U
+
+/* Max. CTN calender entry propert length */
+#define    MAX_CTN_ATTR_CAL_ENTRY_PRIORITY_LEN               8U
+
+/* Max. CTN calender entry status length */
+#define    MAX_CTN_ATTR_CAL_ENTRY_STATUS_LEN                 24U
+
+/* Max. CTN calender entry alarm status length */
+#define    MAX_CTN_ATTR_CAL_ENTRY_ALARM_STATUS               10U
+
+/* Max. CTN recurrent property length */
+#define    MAX_CTN_ATTR_RECURRENT_PROPRTY_LEN                4U
+
+/* Max CTN send status property length */
+#define    MAX_CTN_ATTR_SEND_STATUS_PROPRTY_LEN              4U
+
+/* Max CTN server time offset length */
+#define    MAX_CTN_ATTR_CSE_TIME_OFFSET                      24U
+
+
 /* --------------------------------------------- Structures/Data Types */
 typedef struct _CTN_OBJ_ATTR_PL
 {
@@ -118,49 +171,49 @@ typedef struct _CTN_OBJ_ATTR_PL
     /**
      * object handle
      */
-    CHAR    handle[34];
+    CHAR    handle[MAX_CTN_OBJ_HANDLE_LEN];
 
     /**
      * latest update timestamp
      */
-    CHAR    update[32];
+    CHAR    update[MAX_CTN_ATTR_UPDATE_TIME_LEN];
 
     /**
      * calendar type
      */
-    CHAR    cal_type[10];
+    CHAR    cal_type[MAX_CTN_ATTR_CAL_TYPE_LEN];
 
     /**
      * Summary
      */
-    CHAR    summary[1024];
+    CHAR    summary[MAX_CTN_ATTR_SUMMARY_LEN];
 
     /* start time */
-    CHAR    start_time[32];
+    CHAR    start_time[MAX_CTN_ATTR_UPDATE_TIME_LEN];
 
     /* end time */
-    CHAR    end_time[32];
+    CHAR    end_time[MAX_CTN_ATTR_UPDATE_TIME_LEN];
 
     /* originator name */
-    CHAR    org_name[64];
+    CHAR    org_name[MAX_CTN_ATTR_ORIGIN_NAME_LEN];
 
     /* originator address */
-    CHAR    org_addr[64];
+    CHAR    org_addr[MAX_CTN_ATTR_ORIGIN_ADDR_LEN];
 
     /* priority */
-    CHAR   priority[8];
+    CHAR   priority[MAX_CTN_ATTR_CAL_ENTRY_PRIORITY_LEN];
 
     /* pstatus property */
-    CHAR   pstaus[32];
+    CHAR   pstaus[MAX_CTN_ATTR_CAL_ENTRY_STATUS_LEN];
 
     /* alarm property */
-    CHAR   alarm_status[8];
+    CHAR   alarm_status[MAX_CTN_ATTR_CAL_ENTRY_ALARM_STATUS];
 
     /* recurrent property */
-    CHAR   recurrent[4];
+    CHAR   recurrent[MAX_CTN_ATTR_RECURRENT_PROPRTY_LEN];
 
     /* send status property */
-    CHAR   sentstatus[4];
+    CHAR   sentstatus[MAX_CTN_ATTR_SEND_STATUS_PROPRTY_LEN];
 
     /* object size in bytes */
     UINT16  size;
@@ -178,7 +231,7 @@ typedef struct _CTN_OBJ_LISTING_INFO_
     UINT16 listing_count;
 
     /* CSE time */
-    UCHAR   cse_time_offset[20];
+    UCHAR   cse_time_offset[MAX_CTN_ATTR_CSE_TIME_OFFSET];
 }CTN_OBJ_LISTING_INFO;
 
 typedef struct _CTN_OBJ_INFO_
@@ -236,7 +289,7 @@ typedef struct _CTN_OBJ_LIST_INFO_
 API_RESULT ctn_get_object_attributes_pl
            (
                /* IN */  UCHAR * idir,
-               /* IN */  CHAR * filename,
+               /* IN */  CHAR * object_name,
                /* OUT */ CTN_OBJ_ATTR_PL * attr
            );
 
@@ -312,7 +365,7 @@ API_RESULT BT_ctn_get_object_list
 API_RESULT BT_ctn_convert_bytes_to_chars
            (
                /* IN */  UCHAR    *byte_stream,
-               /* IN */  UCHAR     byte_stream__len,
+               /* IN */  UCHAR     byte_stream_len,
                /* OUT */ UCHAR    *chrs,
                /* OUT */ UCHAR    *chrs_len
            );

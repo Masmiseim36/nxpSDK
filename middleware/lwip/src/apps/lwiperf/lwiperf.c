@@ -444,9 +444,9 @@ lwiperf_tcp_client_send_more(lwiperf_state_tcp_t *conn)
       /* transmit data */
       /* @todo: every x bytes, transmit the settings again */
       txptr = LWIP_CONST_CAST(void *, &lwiperf_txbuf_const[conn->bytes_transferred % 10]);
-      txlen_max = TCP_MSS;
+      txlen_max = tcp_mss(conn->conn_pcb);
       if (conn->bytes_transferred == 48) { /* @todo: fix this for intermediate settings, too */
-        txlen_max = TCP_MSS - 24;
+        txlen_max = txlen_max - 24;
       }
       apiflags = 0; /* no copying needed */
       send_more = 1;
@@ -457,7 +457,7 @@ lwiperf_tcp_client_send_more(lwiperf_state_tcp_t *conn)
       if (err ==  ERR_MEM) {
         txlen /= 2;
       }
-    } while ((err == ERR_MEM) && (txlen >= (TCP_MSS / 2)));
+    } while ((err == ERR_MEM) && (txlen >= (tcp_mss(conn->conn_pcb) / 2)));
 
     if (err == ERR_OK) {
       conn->bytes_transferred += txlen;
@@ -1376,6 +1376,8 @@ lwiperf_udp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p,
       conn->udp_rx_lost += (uint32_t) datagramID - conn->udp_seq;
       conn->udp_seq = datagramID + 1;
       conn->udp_rx_outorder += 1;
+      conn->bytes_transferred += tot_len;
+      conn->udp_rx_total_pkt += 1;
     } else {
       conn->bytes_transferred += tot_len;
       conn->udp_rx_total_pkt += 1;

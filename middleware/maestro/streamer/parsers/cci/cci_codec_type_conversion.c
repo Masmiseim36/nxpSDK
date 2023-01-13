@@ -40,10 +40,18 @@ const int32_t stream_type_conversion(int32_t stream_type)
     switch (stream_type)
     {
         case STREAM_TYPE_PCM:
+        case STREAM_TYPE_MSADPCM:
+        case STREAM_TYPE_IMAADPCM:
             decoder_type = DECODER_TYPE_WAV;
             break;
         case STREAM_TYPE_MP3:
             decoder_type = DECODER_TYPE_MP3;
+            break;
+        case STREAM_TYPE_AAC:
+            decoder_type = DECODER_TYPE_AAC;
+            break;
+        case STREAM_TYPE_FLAC:
+            decoder_type = DECODER_TYPE_FLAC;
             break;
         default:
             decoder_type = DECODER_TYPE_UNKNOWN;
@@ -77,6 +85,12 @@ const uint8_t cci_decoder_type_conversion(DecoderType decoder_type)
             break;
         case DECODER_TYPE_OGG_OPUS:
             cci_type = STREAM_TYPE_OGG_OPUS;
+            break;
+        case DECODER_TYPE_AAC:
+            cci_type = STREAM_TYPE_AAC;
+            break;
+        case DECODER_TYPE_FLAC:
+            cci_type = STREAM_TYPE_FLAC;
             break;
         default:
             cci_type = STREAM_TYPE_UNKNOWN;

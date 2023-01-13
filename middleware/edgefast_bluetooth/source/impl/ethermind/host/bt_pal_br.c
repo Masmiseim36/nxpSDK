@@ -69,8 +69,8 @@ static int accept_sco_conn(const bt_addr_t *bdaddr, struct bt_conn *sco_conn)
 	cp->pkt_type = sco_conn->sco.pkt_type;
 	cp->tx_bandwidth = 0x00001f40;
 	cp->rx_bandwidth = 0x00001f40;
-	cp->max_latency = 0x0007;
-	cp->retrans_effort = 0x01;
+	cp->max_latency = LMP_ESCO_MAX_LATENCY_DEFAULT;
+	cp->retrans_effort = LMP_ESCO_RETX_EFFORT_DEFAULT;
 	cp->content_format = BT_VOICE_CVSD_16BIT;
 
 	err = bt_hci_cmd_send_sync(BT_HCI_OP_ACCEPT_SYNC_CONN_REQ, buf, NULL);
@@ -123,7 +123,7 @@ static void bt_esco_conn_req(struct bt_hci_evt_conn_request *evt)
 	}
 
 	sco_conn->role = BT_HCI_ROLE_PERIPHERAL;
-	bt_conn_set_state(sco_conn, BT_CONN_CONNECT);
+	bt_conn_set_state(sco_conn, BT_CONN_CONNECTING);
 	bt_conn_unref(sco_conn);
 }
 
@@ -148,7 +148,7 @@ void bt_hci_conn_req(struct net_buf *buf)
 
 	accept_conn(&evt->bdaddr);
 	conn->role = BT_HCI_ROLE_PERIPHERAL;
-	bt_conn_set_state(conn, BT_CONN_CONNECT);
+	bt_conn_set_state(conn, BT_CONN_CONNECTING);
 	bt_conn_unref(conn);
 }
 
@@ -235,6 +235,7 @@ bool bt_br_update_sec_level(struct bt_conn *conn)
 
 static void appl_hci_esco_audio_config(uint8_t coding)
 {
+#if (defined (CONFIG_BT_HFP_HF) && (CONFIG_BT_HFP_HF > 0U)) || (defined (CONFIG_BT_HFP_AG) && (CONFIG_BT_HFP_AG > 0U))
     API_RESULT retval;
     static SCO_AUDIO_EP_INFO  sco_audio_config;
 
@@ -261,7 +262,7 @@ static void appl_hci_esco_audio_config(uint8_t coding)
     {
         printf ("Setup for SCO audio: Success\n");
     }
-
+#endif
 
     return;
 }

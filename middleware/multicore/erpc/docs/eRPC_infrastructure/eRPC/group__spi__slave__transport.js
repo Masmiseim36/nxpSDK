@@ -1,6 +1,6 @@
 var group__spi__slave__transport =
 [
-    [ "erpc_spi_slave_transport.h", "erpc__spi__slave__transport_8h.html", null ],
+    [ "erpc_spi_slave_transport.hpp", "erpc__spi__slave__transport_8hpp.html", null ],
     [ "SpiSlaveTransport", "classerpc_1_1_spi_slave_transport.html", [
       [ "SpiSlaveTransport", "classerpc_1_1_spi_slave_transport.html#aed7f2fb55a4a5f87472c297055cf4b1f", null ],
       [ "~SpiSlaveTransport", "classerpc_1_1_spi_slave_transport.html#a8ef4f9e6c7b8bf6ca67aceea843c7533", null ],

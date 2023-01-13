@@ -345,7 +345,7 @@ typedef enum _mlan_bss_role
 #define BSS_ROLE_BIT_MASK MBIT(0)
 
 /** Get BSS role */
-#define GET_BSS_ROLE(priv) (mlan_bss_role)((priv)->bss_role & (BSS_ROLE_BIT_MASK))
+#define GET_BSS_ROLE(priv) ((unsigned)(priv)->bss_role & (BSS_ROLE_BIT_MASK))
 
 /** mlan_data_frame_type */
 typedef enum _mlan_data_frame_type

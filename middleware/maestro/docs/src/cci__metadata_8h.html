@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.5</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -266,9 +266,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac0a119f8c5473149ce380e7d6a827509"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cci__metadata_8h.html#ac0a119f8c5473149ce380e7d6a827509">codec_extract_metadata_aac</a> (<a class="el" href="structfile__meta__data__t.html">file_meta_data_t</a> *meta_data, <a class="el" href="structCCI__Ctx.html">CCI_Ctx</a> *Ctx)</td></tr>
 <tr class="memdesc:ac0a119f8c5473149ce380e7d6a827509"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the meta data from the aac file.  <a href="cci__metadata_8h.html#ac0a119f8c5473149ce380e7d6a827509">More...</a><br /></td></tr>
 <tr class="separator:ac0a119f8c5473149ce380e7d6a827509"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a357e3ebcce0f7ada49a5aeb39f44a57a"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cci__metadata_8h.html#a357e3ebcce0f7ada49a5aeb39f44a57a">codec_extract_metadata_flac</a> (<a class="el" href="structfile__meta__data__t.html">file_meta_data_t</a> *meta_data, <a class="el" href="structCCI__Ctx.html">CCI_Ctx</a> *Ctx)</td></tr>
-<tr class="memdesc:a357e3ebcce0f7ada49a5aeb39f44a57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the meta data from the flac file.  <a href="cci__metadata_8h.html#a357e3ebcce0f7ada49a5aeb39f44a57a">More...</a><br /></td></tr>
-<tr class="separator:a357e3ebcce0f7ada49a5aeb39f44a57a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga82da9b71cd3edf9d0f6d7ee530a6d5fe"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__asi__dffi.html#ga82da9b71cd3edf9d0f6d7ee530a6d5fe">codec_extract_metadata_flac</a> (<a class="el" href="structfile__meta__data__t.html">file_meta_data_t</a> *MetaData, <a class="el" href="structCCI__Ctx.html">CCI_Ctx</a> *Ctx)</td></tr>
+<tr class="memdesc:ga82da9b71cd3edf9d0f6d7ee530a6d5fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the meta data from the flac file.  <a href="group__asi__dffi.html#ga82da9b71cd3edf9d0f6d7ee530a6d5fe">More...</a><br /></td></tr>
+<tr class="separator:ga82da9b71cd3edf9d0f6d7ee530a6d5fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1d8faafdd815f9823ef1ea6887608da"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cci__metadata_8h.html#ab1d8faafdd815f9823ef1ea6887608da">codec_extract_metadata_wma</a> (<a class="el" href="structfile__meta__data__t.html">file_meta_data_t</a> *meta_data, <a class="el" href="structCCI__Ctx.html">CCI_Ctx</a> *Ctx)</td></tr>
 <tr class="memdesc:ab1d8faafdd815f9823ef1ea6887608da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the meta data from the wma file.  <a href="cci__metadata_8h.html#ab1d8faafdd815f9823ef1ea6887608da">More...</a><br /></td></tr>
 <tr class="separator:ab1d8faafdd815f9823ef1ea6887608da"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -483,13 +483,13 @@ Functions</h2></td></tr>
           <td class="memname">int32_t codec_extract_metadata_aac </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structfile__meta__data__t.html">file_meta_data_t</a> *&#160;</td>
-          <td class="paramname"><em>meta_data</em>, </td>
+          <td class="paramname"><em>MetaData</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="structCCI__Ctx.html">CCI_Ctx</a> *&#160;</td>
-          <td class="paramname"><em>Ctx</em>&#160;</td>
+          <td class="paramname"><em>ctx</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -505,43 +505,25 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int32_t </dd></dl>
-
-</div>
-</div>
-<a id="a357e3ebcce0f7ada49a5aeb39f44a57a" name="a357e3ebcce0f7ada49a5aeb39f44a57a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a357e3ebcce0f7ada49a5aeb39f44a57a">&#9670;&nbsp;</a></span>codec_extract_metadata_flac()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int32_t codec_extract_metadata_flac </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structfile__meta__data__t.html">file_meta_data_t</a> *&#160;</td>
-          <td class="paramname"><em>meta_data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structCCI__Ctx.html">CCI_Ctx</a> *&#160;</td>
-          <td class="paramname"><em>Ctx</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>int32_t</dd></dl>
+<p>Extract the meta data from the file.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">meta_data</td><td>Metadata extracted from the file. </td></tr>
-    <tr><td class="paramname">Ctx</td><td>Pointer to CCI Context structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*MetaData</td><td>this structure will be filled in by the function </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*ctx</td><td>CCI Context Structure </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int32_t </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">SUCCESS</td><td></td></tr>
+    <tr><td class="paramname">CODEC_METADATA_NOT_FOUND</td><td>&ndash; metadata failed </td></tr>
+    <tr><td class="paramname">ERROR_ASI_DFFI_METADATA_NOT_FOUND</td><td>- metadata was not found </td></tr>
+    <tr><td class="paramname">ERROR_OS_FILESYSTEM_FILE_OPEN</td><td>&ndash; the file failed to open </td></tr>
+    <tr><td class="paramname">CODEC_FSEEK_FAILED</td><td>- fseek call failed </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

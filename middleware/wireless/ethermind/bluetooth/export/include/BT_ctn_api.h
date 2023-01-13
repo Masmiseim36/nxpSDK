@@ -1237,7 +1237,7 @@ API_RESULT BT_ctn_cse_transport_close
  *         This is to indicate that the response being sent is response to the
  *         request for which the application was notified
  *
- *  \param [in] response
+ *  \param [in] event_result
  *         This is the OBEX response code.
  *
  *  \param [in] ctn_headers
@@ -1251,7 +1251,7 @@ API_RESULT BT_ctn_cse_send_response
            (
                 /* IN */ CTN_HANDLE           * ctn_handle,
                 /* IN */ UINT8                  event_type,
-                /* IN */ UCHAR                  response,
+                /* IN */ UCHAR                  event_result,
                 /* IN */ CTN_HEADERS          * ctn_headers
            );
 

@@ -27,7 +27,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Logo" src="fs_logo.gif"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.4</span>
+   <div id="projectname">Maestro Audio Framework<span id="projectnumber">&#160;v 1.5</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -125,9 +125,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a12d36f13defa592462ec7135f508f66d"><td class="memItemLeft" align="right" valign="top">static uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a12d36f13defa592462ec7135f508f66d">filesrc_src_activate</a> (StreamPad *pad, uint8_t active)</td></tr>
 <tr class="memdesc:a12d36f13defa592462ec7135f508f66d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the queue src pad activatation handler. Activation is handled by the peer sink pad, this should just handle the deactivation.  <a href="file__src__freertos_8c.html#a12d36f13defa592462ec7135f508f66d">More...</a><br /></td></tr>
 <tr class="separator:a12d36f13defa592462ec7135f508f66d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05e3c221493db01a925f2097ec2d734f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a05e3c221493db01a925f2097ec2d734f">filesrc_pull</a> (StreamPad *pad, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buffer, uint32_t size, uint32_t offset)</td></tr>
-<tr class="memdesc:a05e3c221493db01a925f2097ec2d734f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the pull function of the filesrc source pad in SCHEDULING_PULL mode. It reads the size of data from the offset to buffer.  <a href="file__src__freertos_8c.html#a05e3c221493db01a925f2097ec2d734f">More...</a><br /></td></tr>
-<tr class="separator:a05e3c221493db01a925f2097ec2d734f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac55ec3db1cafe9139bbed3b84a201905"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#ac55ec3db1cafe9139bbed3b84a201905">filesrc_pull</a> (StreamPad *pad, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buffer, uint32_t size, uint32_t offset)</td></tr>
+<tr class="memdesc:ac55ec3db1cafe9139bbed3b84a201905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function is the pull function of the filesrc source pad in SCHEDULING_PULL mode. It reads the size of data from the offset to buffer.  <a href="file__src__freertos_8c.html#ac55ec3db1cafe9139bbed3b84a201905">More...</a><br /></td></tr>
+<tr class="separator:ac55ec3db1cafe9139bbed3b84a201905"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68d45bf05d0b73717a4a7c8a62956467"><td class="memItemLeft" align="right" valign="top">static int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a68d45bf05d0b73717a4a7c8a62956467">filesrc_get_property</a> (StreamElement *element_ptr, uint16_t prop, uint64_t *val_ptr)</td></tr>
 <tr class="memdesc:a68d45bf05d0b73717a4a7c8a62956467"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function get file source element properties.  <a href="file__src__freertos_8c.html#a68d45bf05d0b73717a4a7c8a62956467">More...</a><br /></td></tr>
 <tr class="separator:a68d45bf05d0b73717a4a7c8a62956467"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,9 +149,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a763c2ca3611a6c14f0008a2fd59f2bda"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a763c2ca3611a6c14f0008a2fd59f2bda">filesrc_get_push_chunk_size</a> (<a class="el" href="streamer__api_8h.html#aa38d4845534a71686ee5281c5df9c6cb">ElementHandle</a> element, uint64_t *chunk_size)</td></tr>
 <tr class="memdesc:a763c2ca3611a6c14f0008a2fd59f2bda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the chunk size in which the file source sends the data in push mode.  <a href="file__src__freertos_8c.html#a763c2ca3611a6c14f0008a2fd59f2bda">More...</a><br /></td></tr>
 <tr class="separator:a763c2ca3611a6c14f0008a2fd59f2bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a44c3b4deb4f77833a8adf3d7bec888"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a4a44c3b4deb4f77833a8adf3d7bec888">filesrc_read</a> (ElementFileSrc *filesrc, uint32_t offset, uint32_t length, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buf)</td></tr>
-<tr class="memdesc:a4a44c3b4deb4f77833a8adf3d7bec888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function reads the data from the file specified by the element. NOTE: Function may or may not be able to read the required length of data. Returns PAD_STREAM_ERR_EOS when EOF file is encountered. or PAD_STREAM_ERR_UNEXPECTED when read fails.  <a href="file__src__freertos_8c.html#a4a44c3b4deb4f77833a8adf3d7bec888">More...</a><br /></td></tr>
-<tr class="separator:a4a44c3b4deb4f77833a8adf3d7bec888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4928ae0fbcf3dcb8e0ff19ae32e6e310"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a4928ae0fbcf3dcb8e0ff19ae32e6e310">filesrc_read</a> (ElementFileSrc *filesrc, uint32_t offset, uint32_t length, <a class="el" href="structStreamBuffer.html">StreamBuffer</a> *buf)</td></tr>
+<tr class="memdesc:a4928ae0fbcf3dcb8e0ff19ae32e6e310"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function reads the data from the file specified by the element. NOTE: Function may or may not be able to read the required length of data. Returns FLOW_EOS when EOF file is encountered. or FLOW_UNEXPECTED when read fails.  <a href="file__src__freertos_8c.html#a4928ae0fbcf3dcb8e0ff19ae32e6e310">More...</a><br /></td></tr>
+<tr class="separator:a4928ae0fbcf3dcb8e0ff19ae32e6e310"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c5113c681dd9b5d994d440f03c40ff6"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="file__src__freertos_8c.html#a7c5113c681dd9b5d994d440f03c40ff6">file_query</a> (int32_t fd, <a class="el" href="streamer__api_8h.html#a8e68395db0ce8e45c688b6baf7bef1b5">StreamInfoType</a> info, <a class="el" href="unionStreamData.html">StreamData</a> *data)</td></tr>
 <tr class="memdesc:a7c5113c681dd9b5d994d440f03c40ff6"><td class="mdescLeft">&#160;</td><td class="mdescRight">file_query  <a href="file__src__freertos_8c.html#a7c5113c681dd9b5d994d440f03c40ff6">More...</a><br /></td></tr>
 <tr class="separator:a7c5113c681dd9b5d994d440f03c40ff6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -441,8 +441,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a05e3c221493db01a925f2097ec2d734f" name="a05e3c221493db01a925f2097ec2d734f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05e3c221493db01a925f2097ec2d734f">&#9670;&nbsp;</a></span>filesrc_pull()</h2>
+<a id="ac55ec3db1cafe9139bbed3b84a201905" name="ac55ec3db1cafe9139bbed3b84a201905"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac55ec3db1cafe9139bbed3b84a201905">&#9670;&nbsp;</a></span>filesrc_pull()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -451,7 +451,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a> filesrc_pull </td>
+          <td class="memname">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a> filesrc_pull </td>
           <td>(</td>
           <td class="paramtype">StreamPad *&#160;</td>
           <td class="paramname"><em>pad</em>, </td>
@@ -804,8 +804,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4a44c3b4deb4f77833a8adf3d7bec888" name="a4a44c3b4deb4f77833a8adf3d7bec888"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a44c3b4deb4f77833a8adf3d7bec888">&#9670;&nbsp;</a></span>filesrc_read()</h2>
+<a id="a4928ae0fbcf3dcb8e0ff19ae32e6e310" name="a4928ae0fbcf3dcb8e0ff19ae32e6e310"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4928ae0fbcf3dcb8e0ff19ae32e6e310">&#9670;&nbsp;</a></span>filesrc_read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -814,7 +814,7 @@ Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="pad_8h.html#a664eb343766e4abf8baf1de2b277eafe">PadReturn</a> filesrc_read </td>
+          <td class="memname">static <a class="el" href="pad_8h.html#a02291801821c51de06e39c5136db8905">FlowReturn</a> filesrc_read </td>
           <td>(</td>
           <td class="paramtype">ElementFileSrc *&#160;</td>
           <td class="paramname"><em>filesrc</em>, </td>

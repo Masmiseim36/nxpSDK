@@ -90,6 +90,7 @@ var NAVTREE =
         [ "Following test cases were performed:", "md_wavdec.html#autotoc_md51", null ]
       ] ]
     ] ],
+    [ "Modules", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Fields", "functions.html", [
@@ -116,13 +117,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"codec__interface_8c.html#a4a816264c8760d6f77b85cbdd4d1597e",
-"functions_g.html",
-"mem__src_8c.html#a86bac11f3931eb4b3f028c537059f6ce",
-"streamer_8h.html#a15d4a6007cae295b59e1cee647f51e72",
-"streamer__api_8h.html#ad3e4e6e9194c94d603c7118a159ad1a6",
-"structElementEncoder.html#a923414a7b669c43e540a2940820f8ddd",
-"struct__ElementDecoder.html#ae8a56b4ac964cd98df60e50ef7c4ae2b"
+"ccidec_8h.html#ab2cbfcdf160ad0f203a61af626733234",
+"functions_e.html",
+"mem__src_8c.html",
+"streamer_8h.html#a10bb96e3e42859111013e1eec363f06e",
+"streamer__api_8h.html#ad269d79ba74b567a67e0fac722252652afdae589f641d50d58d0cc39923cdaadd",
+"structElementEncoder.html#a7caae42ad9994fff51173368c0cde65c",
+"struct__ElementDecoder.html#a0b244bcb27fb6e28894dc63de35be883"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -24,6 +24,11 @@
 /* ----------------------------------------- API Declarations */
 /** Initialization & Shutdown of MCAP */
 void em_mcap_init (void);
+
+#ifdef BT_HAVE_SHUTDOWN
+void em_mcap_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
+
 void mcap_bt_init (void);
 void mcap_bt_shutdown (void);
 

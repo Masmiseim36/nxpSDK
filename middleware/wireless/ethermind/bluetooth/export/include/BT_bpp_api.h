@@ -1168,8 +1168,8 @@ API_RESULT BT_bpp_sender_transport_close
  *  \param [in] more
  *         It Indicates if application has remaining body still to be sent or it
  *         is the complete body(request) content
- *         1 – Body part remaining
- *         0 – No more body part remaining
+ *         1 - Body part remaining
+ *         0 - No more body part remaining
  *
  *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included
@@ -1483,8 +1483,8 @@ API_RESULT bpp_sender_get_operation
  *  \param [in] more
  *         Indicates if application has remaining of object body still to be
  *         sent or object complete
- *         1 – Object part remaining
- *         0 – No more object part remaining
+ *         1 - Object part remaining
+ *         0 - No more object part remaining
  *
  *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included
@@ -1614,7 +1614,7 @@ API_RESULT BT_bpp_printer_shutdown(void);
 /**
  *  \brief To start an instance of BPP Printer Service with specified feature as
  *         given by the bpp_service_type parameter on a given channel specified
- *         by ‘bpp_channel_type’.
+ *         by �bpp_channel_type�.
  *
  *  \par Description:
  *       This API starts a BPP Printer instance for a specified feature.
@@ -1697,7 +1697,7 @@ API_RESULT BT_bpp_printer_stop
            );
 /**
  *  \brief To establish the BPP session connection between Printer and Sender on
- *         a given channel specified by ‘bpp_channel_type’ parameter.
+ *         a given channel specified by �bpp_channel_type� parameter.
  *
  *  \par Description:
  *       This API establishes the BPP transport & profile level connection with
@@ -1865,7 +1865,7 @@ API_RESULT bpp_printer_get_operation
 
 /**
  *  \brief To send response to the latest request received over
- *         ‘bpp_channel_type’ channel from the BPP Sender.
+ *         �bpp_channel_type� channel from the BPP Sender.
  *
  *  \par Description:
  *       This API is used to send the response to the requests made by
@@ -1942,8 +1942,8 @@ API_RESULT BT_bpp_printer_send_response
  *  \param [in] more
  *         Indicates if application has remaining of object body still to be
  *         sent or object complete
- *         1 – Object part remaining
- *         0 – No more object part remaining
+ *         1 - Object part remaining
+ *         0 - No more object part remaining
  *
  *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included

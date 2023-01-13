@@ -33,12 +33,12 @@
  *  permissible number, a change resulting in increment in minor version
  *  number will result in increment in major number.
  */
-#define BT_MAJOR_VERSION_NUMBER       16U
+#define BT_MAJOR_VERSION_NUMBER       20U
 
 /**
  *  An increment in the minor number of the stack implies an update to fix
- *  an observed defect or changes resulting from optimzations performed on the
- *  stack or enhancement to accommodate addendums to specifications. Minor
+ *  an observed defect or changes resulting from optimizations performed on the
+ *  stack or enhancement to accommodate specification addendum. Minor
  *  utility functions added may also result in increase in this number, however
  *  none of these changes are categorized as causing an increment in minor
  *  number, cause any change in existing interface. It is possible that an
@@ -51,7 +51,7 @@
  *  number, a change resulting in increment in sub-minor number will result in
  *  increment in minor number.
  */
-#define BT_MINOR_VERSION_NUMBER       5U
+#define BT_MINOR_VERSION_NUMBER       7U
 
 /**
  *  An increment in this number implies a trivial change, changes such as
@@ -59,7 +59,7 @@
  *  internal function/variable names etc are viewed as changes that result in
  *  increment in this number.
  */
-#define BT_SUB_MINOR_VERSION_NUMBER   16U
+#define BT_SUB_MINOR_VERSION_NUMBER   0U
 
 /* -------------------------------------------- Macros */
 

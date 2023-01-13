@@ -658,7 +658,7 @@ API_RESULT BT_hid_device_set_active_host
  *       iii)hid_device_events :Callback function to relay HID Device Profile
  *           Specific events
  *
- *  \param [in] hid_device_cb_stuct
+ *  \param [in] hid_device_cb_struct
  *         Pointer to structure storing the profile callbacks.
  *
  *  \return
@@ -669,7 +669,7 @@ API_RESULT BT_hid_device_set_active_host
  */
 API_RESULT BT_hid_device_register
            (
-               /* IN */ HID_DEVICE_CALLBACK_STRUCT *hid_device_cb_stuct
+               /* IN */ HID_DEVICE_CALLBACK_STRUCT *hid_device_cb_struct
            );
 
 /**
@@ -749,7 +749,7 @@ API_RESULT BT_hid_device_initiate_reconnection(void);
  *  \param [in] response_status
  *         Status of the response - successful/ erroneous.
  *
- *  \param [in] reponse_len
+ *  \param [in] response_len
  *         Size of the response packet buffer.
  *
  *  \param [in] response_data
@@ -764,7 +764,7 @@ API_RESULT BT_hid_device_send_response
            (
                /* IN */ UCHAR response_type,
                /* IN */ UCHAR response_status,
-               /* IN */ UINT16 reponse_len,
+               /* IN */ UINT16 response_len,
                /* IN */ UCHAR *response_data
            );
 

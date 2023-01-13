@@ -141,16 +141,21 @@ BT_BOTTOM_HALF ( bcsp_sequence_ack_bh );
 /* --------------------------------------------- Section 'HCI' */
 BT_BOTTOM_HALF ( hci_command_tx_bh );
 
+#ifdef HCI_ISO_DATA
+BT_BOTTOM_HALF(hci_iso_data_tx_bh);
+#endif /* HCI_ISO_DATA */
+
 /* --------------------------------------------- Section 'L2CAP' */
 BT_BOTTOM_HALF ( l2cap_data_transmitter_bh );
 BT_BOTTOM_HALF ( l2cap_fec_signal_handler_bh );
 BT_BOTTOM_HALF ( l2cap_fec_data_receiver_bh );
 
-#ifdef L2CAP_SUPPORT_CBFC_MODE
+#if ((defined L2CAP_SUPPORT_CBFC_MODE) || (defined L2CAP_SUPPORT_ECBFC_MODE))
 BT_BOTTOM_HALF ( l2ca_channel_data_write_bh );
-#endif /* L2CAP_SUPPORT_CBFC_MODE */
+#endif /* L2CAP_SUPPORT_CBFC_MODE || L2CAP_SUPPORT_ECBFC_MODE */
 
 /* --------------------------------------------- Section 'SMP' */
+BT_BOTTOM_HALF ( smp_auth_complete_bh );
 #ifdef SMP_HAVE_TBX_CMD_WT_BH
 BT_BOTTOM_HALF ( smp_tbx_commands_bh );
 #endif /* SMP_HAVE_TBX_CMD_WT_BH */

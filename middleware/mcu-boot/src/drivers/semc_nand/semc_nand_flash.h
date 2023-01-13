@@ -113,8 +113,16 @@ enum _semc_nand_ecc_check_option
 //! @brief SEMC Parallel NAND Flash ecc check type
 enum _semc_nand_ecc_check_type
 {
-    kSemcNandEccCheckType_DeviceECC = 0U,
+    kSemcNandEccCheckType_DeviceECC = 0U,   
     kSemcNandEccCheckType_SoftwareECC = 1U,
+    kSemcNandEccCheckType_SemcBchECC = 2U, 
+};
+
+/* Fuse: ECC mode */
+enum
+{
+    kFuseSemcNand_EccMode_BCH4 = 0U,
+    kFuseSemcNand_EccMode_BCH8 = 1U,
 };
 
 //! @brief SEMC Parallel NAND Flash device ecc status

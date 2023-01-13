@@ -22,6 +22,7 @@
 #include "src/nx_arp_static_entry_create.c"
 #include "src/nx_arp_static_entry_delete.c"
 #include "src/nx_arp_static_entry_delete_internal.c"
+#include "src/nx_http_proxy_client.c"
 #include "src/nx_icmp_cleanup.c"
 #include "src/nx_icmp_enable.c"
 #include "src/nx_icmp_info_get.c"

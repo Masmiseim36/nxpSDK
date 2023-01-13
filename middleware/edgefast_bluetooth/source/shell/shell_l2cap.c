@@ -23,8 +23,12 @@
 #include <bluetooth/bluetooth.h>
 #include <bluetooth/conn.h>
 #include <bluetooth/l2cap.h>
+#if (defined(CONFIG_BT_RFCOMM) && (CONFIG_BT_RFCOMM > 0))
 #include <bluetooth/rfcomm.h>
+#endif
+#if (defined(CONFIG_BT_BREDR) && ((CONFIG_BT_BREDR) > 0U))
 #include <bluetooth/sdp.h>
+#endif
 
 #include "fsl_shell.h"
 
@@ -316,6 +320,91 @@ static shell_status_t cmd_register(shell_handle_t shell, int32_t argc, char *arg
 	return kStatus_SHELL_Success;
 }
 
+#if (defined(CONFIG_BT_L2CAP_ECRED) && (CONFIG_BT_L2CAP_ECRED> 0))
+static int cmd_ecred_reconfigure(shell_handle_t shell, int32_t argc, char *argv[])
+{
+	struct bt_l2cap_chan *l2cap_ecred_chans[] = { &l2ch_chan.ch.chan, NULL };
+	uint16_t mtu;
+	int err = 0;
+
+	if (!default_conn) {
+		shell_error(shell, "Not connected");
+		return kStatus_SHELL_Error;
+	}
+
+	if (!l2ch_chan.ch.chan.conn) {
+		shell_error(shell, "Channel not connected");
+		return kStatus_SHELL_Error;
+	}
+
+	mtu = shell_strtoul(argv[1], 10, &err);
+	if (err) {
+		shell_error(shell, "Unable to parse MTU (err %d)", err);
+
+		return kStatus_SHELL_Error;
+	}
+
+	err = bt_l2cap_ecred_chan_reconfigure(l2cap_ecred_chans, mtu);
+	if (err < 0) {
+		shell_error(shell, "Unable to reconfigure channel (err %d)", err);
+	} else {
+		shell_print(shell, "L2CAP reconfiguration pending");
+	}
+
+	return err;
+}
+
+static int cmd_ecred_connect(shell_handle_t shell, int32_t argc, char *argv[])
+{
+	struct bt_l2cap_chan *l2cap_ecred_chans[] = { &l2ch_chan.ch.chan, NULL };
+	uint16_t psm;
+	int err = 0;
+
+	if (!default_conn) {
+		shell_error(sh, "Not connected");
+
+		return -ENOEXEC;
+	}
+
+	if (l2ch_chan.ch.chan.conn) {
+		shell_error(sh, "Channel already in use");
+
+		return -ENOEXEC;
+	}
+
+	psm = shell_strtoul(argv[1], 16, &err);
+	if (err) {
+		shell_error(sh, "Unable to parse PSM (err %d)", err);
+
+		return err;
+	}
+
+	if (argc > 2) {
+		int sec;
+
+		sec = shell_strtoul(argv[2], 10, &err);
+		if (err) {
+			shell_error(sh, "Unable to parse security level (err %d)", err);
+
+			return err;
+		}
+
+
+		l2ch_chan.ch.required_sec_level = sec;
+	}
+
+	err = bt_l2cap_ecred_chan_connect(default_conn, l2cap_ecred_chans, psm);
+	if (err < 0) {
+		shell_error(sh, "Unable to connect to psm %u (err %d)", psm,
+			    err);
+	} else {
+		shell_print(sh, "L2CAP connection pending");
+	}
+
+	return err;
+}
+#endif /* CONFIG_BT_L2CAP_ECRED */
+
 static shell_status_t cmd_connect(shell_handle_t shell, int32_t argc, char *argv[])
 {
 	struct l2ch *l2cap_channel;
@@ -340,7 +429,7 @@ static shell_status_t cmd_connect(shell_handle_t shell, int32_t argc, char *argv
 
 		sec = *argv[2] - '0';
 #if (defined(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL) && (CONFIG_BT_L2CAP_DYNAMIC_CHANNEL > 0))
-		l2cap_channel->ch.chan.required_sec_level = (bt_security_t)sec;
+		l2cap_channel->ch.required_sec_level = (bt_security_t)sec;
 #endif
 	}
 
@@ -394,8 +483,19 @@ static shell_status_t cmd_send(shell_handle_t shell, int32_t argc, char *argv[])
 	len = MIN(l2cap_channel->ch.tx.mtu, DATA_MTU - BT_L2CAP_CHAN_SEND_RESERVE);
 
 	while (count--) {
-		buf = net_buf_alloc(&data_tx_pool, osaWaitForever_c);
-		net_buf_reserve(buf, BT_L2CAP_CHAN_SEND_RESERVE);
+		shell_print(shell, "Rem %d", count);
+		buf = net_buf_alloc(&data_tx_pool, BT_SECONDS(2));
+		if (!buf) {
+			if (l2ch_chan[0].ch.state != BT_L2CAP_CONNECTED) {
+				shell_print(shell, "Channel disconnected, stopping TX");
+
+				return kStatus_SHELL_Error;
+			}
+			shell_print(shell, "Allocation timeout, stopping TX");
+
+			return kStatus_SHELL_Error;
+		}
+		net_buf_reserve(buf, BT_L2CAP_SDU_CHAN_SEND_RESERVE);
 
 		net_buf_add_mem(buf, buf_data, len);
 		ret = bt_l2cap_chan_send(&l2cap_channel->ch.chan, buf);
@@ -489,11 +589,17 @@ SHELL_STATIC_SUBCMD_SET_CREATE(l2cap_cmds,
 	SHELL_CMD_ARG(connect, NULL, "<psm> [sec_level]", cmd_connect, 2, 1),
 	SHELL_CMD_ARG(disconnect, NULL, HELP_NONE, cmd_disconnect, 1, 0),
 	SHELL_CMD_ARG(metrics, NULL, "<value on, off>", cmd_metrics, 2, 0),
-	SHELL_CMD_ARG(recv, NULL, "[delay (in miliseconds)", cmd_recv, 1, 1),
+	SHELL_CMD_ARG(recv, NULL, "[delay (in milliseconds)", cmd_recv, 1, 1),
 	SHELL_CMD_ARG(register, NULL, "<psm> [sec_level] "
 		      "[policy: allowlist, 16byte_key]", cmd_register, 2, 2),
 	SHELL_CMD_ARG(send, NULL, "<number of packets>", cmd_send, 2, 0),
 	SHELL_CMD_ARG(allowlist, allowlist_cmds, HELP_NONE, NULL, 1, 0),
+#if (defined(CONFIG_BT_L2CAP_ECRED) && (CONFIG_BT_L2CAP_ECRED> 0))
+	SHELL_CMD_ARG(ecred-connect, NULL, "<psm (hex)> [sec_level (dec)]",
+		cmd_ecred_connect, 2, 1),
+	SHELL_CMD_ARG(ecred-reconfigure, NULL, "<mtu (dec)>",
+		cmd_ecred_reconfigure, 1, 1),
+#endif /* CONFIG_BT_L2CAP_ECRED */
 	SHELL_SUBCMD_SET_END
 );
 

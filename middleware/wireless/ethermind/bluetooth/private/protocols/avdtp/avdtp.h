@@ -33,6 +33,9 @@ void em_avdtp_init ( void );
 void avdtp_bt_init ( void );
 
 /* AVDTP Shutdown API */
+#ifdef BT_HAVE_SHUTDOWN
+void em_avdtp_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 void avdtp_bt_shutdown ( void );
 
 #endif /* _H_AVDTP_ */

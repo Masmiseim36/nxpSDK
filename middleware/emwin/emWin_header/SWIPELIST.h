@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2021  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2022  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.24 - Graphical user interface for embedded applications **
+** emWin V6.28 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -34,7 +34,7 @@ License model:            emWin License Agreement, dated August 20th 2011 and Am
 Licensed platform:        NXP's ARM 7/9, Cortex-M0, M3, M4, M7, A7, M33
 ----------------------------------------------------------------------
 Support and Update Agreement (SUA)
-SUA period:               2011-08-19 - 2022-09-02
+SUA period:               2011-08-19 - 2023-09-03
 Contact to extend SUA:    sales@segger.com
 ----------------------------------------------------------------------
 File        : SWIPELIST.h
@@ -133,17 +133,11 @@ Purpose     : SWIPELIST include
 
 /*********************************************************************
 *
-*       SWIPELIST notification codes
-*
-*  Description
-*    Notifications sent by SWIPELIST widget to its parent widget through
-*    a WM_NOTIFY_PARENT message.
-*
-*    For notifications relating overlap, see SWIPELIST_SetOverlap().
+*       Compatability macros
 */
-#define SWIPELIST_NOTIFICATION_OVERLAP_TOP_ENTERED       (WM_NOTIFICATION_WIDGET + 0)    // Sent when the overlap area was entered at the top of the SWIPELIST.
-#define SWIPELIST_NOTIFICATION_OVERLAP_BOTTOM_ENTERED    (WM_NOTIFICATION_WIDGET + 1)    // Sent when the overlap area was entered at the bottom of the SWIPELIST.
-#define SWIPELIST_NOTIFICATION_OVERLAP_RELEASED          (WM_NOTIFICATION_WIDGET + 2)    // Sent after a dragged overlap area has been released.
+#define SWIPELIST_NOTIFICATION_OVERLAP_TOP_ENTERED       WM_NOTIFICATION_OVERLAP_TOP_ENTERED
+#define SWIPELIST_NOTIFICATION_OVERLAP_BOTTOM_ENTERED    WM_NOTIFICATION_OVERLAP_BOTTOM_ENTERED
+#define SWIPELIST_NOTIFICATION_OVERLAP_RELEASED          WM_NOTIFICATION_OVERLAP_RELEASED
 
 /*********************************************************************
 *
@@ -193,7 +187,7 @@ int                SWIPELIST_GetItemSize             (SWIPELIST_Handle hObj, uns
 U32                SWIPELIST_GetItemUserData         (SWIPELIST_Handle hObj, unsigned ItemIndex);
 int                SWIPELIST_GetNumItems             (SWIPELIST_Handle hObj);
 int                SWIPELIST_GetNumText              (SWIPELIST_Handle hObj, unsigned ItemIndex);
-unsigned           SWIPELIST_GetOverlap              (SWIPELIST_Handle hObj);
+unsigned           SWIPELIST_GetOverlap              (SWIPELIST_Handle hObj, int * pPeriod, U8 * pFlags);
 int                SWIPELIST_GetReleasedItem         (SWIPELIST_Handle hObj);
 int                SWIPELIST_GetScrollPos            (SWIPELIST_Handle hObj);
 int                SWIPELIST_GetSelItem              (SWIPELIST_Handle hObj);
@@ -219,7 +213,7 @@ void               SWIPELIST_SetBorderSize           (SWIPELIST_Handle hObj, uns
 void               SWIPELIST_SetFont                 (SWIPELIST_Handle hObj, unsigned Index, const GUI_FONT * pFont);
 void               SWIPELIST_SetItemSize             (SWIPELIST_Handle hObj, unsigned ItemIndex, unsigned Size);
 void               SWIPELIST_SetItemUserData         (SWIPELIST_Handle hObj, unsigned ItemIndex, U32 UserData);
-void               SWIPELIST_SetOverlap              (SWIPELIST_Handle hObj, unsigned Overlap);
+void               SWIPELIST_SetOverlap              (SWIPELIST_Handle hObj, unsigned Overlap, int Period, U8 Flags);
 void               SWIPELIST_SetOwnerDraw            (SWIPELIST_Handle hObj, WIDGET_DRAW_ITEM_FUNC * pfDrawItem);
 void               SWIPELIST_SetScrollPos            (SWIPELIST_Handle hObj, int Pos);
 void               SWIPELIST_SetScrollPosItem        (SWIPELIST_Handle hObj, unsigned ItemIndex);
@@ -241,7 +235,7 @@ int              SWIPELIST_GetDefaultBitmapSpace     (void);
 GUI_COLOR        SWIPELIST_GetDefaultBkColor         (unsigned Index);
 int              SWIPELIST_GetDefaultBorderSize      (unsigned Index);
 const GUI_FONT * SWIPELIST_GetDefaultFont            (unsigned Index);
-unsigned         SWIPELIST_GetDefaultOverlap         (void);
+unsigned         SWIPELIST_GetDefaultOverlap         (int * pPeriod, U8 * pFlags);
 GUI_COLOR        SWIPELIST_GetDefaultSepColor        (void);
 unsigned         SWIPELIST_GetDefaultSepSize         (void);
 GUI_COLOR        SWIPELIST_GetDefaultTextColor       (unsigned Index);
@@ -252,7 +246,7 @@ void             SWIPELIST_SetDefaultBitmapSpace     (unsigned Size);
 void             SWIPELIST_SetDefaultBkColor         (unsigned Index, GUI_COLOR Color);
 void             SWIPELIST_SetDefaultBorderSize      (unsigned Index, unsigned Size);
 void             SWIPELIST_SetDefaultFont            (unsigned Index, const GUI_FONT * pFont);
-void             SWIPELIST_SetDefaultOverlap         (unsigned Overlap);
+void             SWIPELIST_SetDefaultOverlap         (unsigned Overlap, int Period, U8 Flags);
 void             SWIPELIST_SetDefaultSepColor        (GUI_COLOR Color);
 void             SWIPELIST_SetDefaultSepSize         (unsigned Size);
 void             SWIPELIST_SetDefaultTextColor       (unsigned Index, GUI_COLOR Color);

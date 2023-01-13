@@ -29,7 +29,7 @@
 #if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CH_SIM)
 #include "a71ch_api.h"
 #include "ax_scp.h"
-#elif (SSS_HAVE_APPLET_A71CL || SSS_HAVE_SE050_L)
+#elif (SSS_HAVE_APPLET_A71CL || SSS_HAVE_APPLET_SE05X_L)
 #include "a71cl_api.h"
 #include "ax_scp.h"
 #elif defined TGT_A70CI
@@ -65,7 +65,7 @@ typedef enum SST_Item
 } SST_Item_t;
 /// @endcond
 
-#if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CL || SSS_HAVE_APPLET_A71CH_SIM || SSS_HAVE_SE050_L)
+#if (SSS_HAVE_APPLET_A71CH || SSS_HAVE_APPLET_A71CL || SSS_HAVE_APPLET_A71CH_SIM || SSS_HAVE_APPLET_SE05X_L)
 U16 SM_ResumeConnection(SmCommState_t *commState, Scp03SessionState_t *scp03State);
 #endif
 

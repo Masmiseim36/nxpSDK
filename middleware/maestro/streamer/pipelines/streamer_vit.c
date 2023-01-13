@@ -22,6 +22,7 @@
 #include "pipeline.h"
 #include "streamer_vit.h"
 #include "streamer_element_properties.h"
+#include "audio_proc.h"
 /*Needed for VIT deinit*/
 #include "vit_sink.h"
 
@@ -65,6 +66,15 @@ int streamer_build_vit_pipeline(int8_t pipeline_index,
         goto err_catch;
     }
 
+#ifdef VOICE_SEEKER_PROC
+    ret = create_element(&task_data->elems[ELEMENT_AUDIO_PROC_INDEX], TYPE_ELEMENT_AUDIO_PROC, 0);
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "create element(%d) failed:%d\n", ELEMENT_AUDIO_PROC_INDEX, ret);
+        goto err_catch;
+    }
+#endif
+
     ret = create_element(&task_data->elems[ELEMENT_VIT_INDEX], TYPE_ELEMENT_VIT_SINK, 0);
     if (STREAM_OK != ret)
     {
@@ -83,7 +93,14 @@ int streamer_build_vit_pipeline(int8_t pipeline_index,
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "add element(%d) failed:%d\n", ELEMENT_AUDIO_SRC_INDEX, ret);
         goto err_catch;
     }
-
+#ifdef VOICE_SEEKER_PROC
+    ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_AUDIO_PROC_INDEX], level++);
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "add element(%d) failed:%d\n", ELEMENT_AUDIO_PROC_INDEX, ret);
+        goto err_catch;
+    }
+#endif
     ret = add_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_VIT_INDEX], level++);
     if (STREAM_OK != ret)
     {
@@ -97,6 +114,23 @@ int streamer_build_vit_pipeline(int8_t pipeline_index,
      *   Audiosrc[src]->[sink]Queue[src]->[sink]Audio
      */
 
+#ifdef VOICE_SEEKER_PROC
+    ret = link_elements(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], 0, task_data->elems[ELEMENT_AUDIO_PROC_INDEX], 0);
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element(%d) to element(%d) failed:%d\n",
+                         ELEMENT_AUDIO_SRC_INDEX, ELEMENT_AUDIO_PROC_INDEX, ret);
+        goto err_catch;
+    }
+
+    ret = link_elements(task_data->elems[ELEMENT_AUDIO_PROC_INDEX], 0, task_data->elems[ELEMENT_VIT_INDEX], 0);
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "link element(%d) to element(%d) failed:%d\n",
+                         ELEMENT_AUDIO_PROC_INDEX, ELEMENT_VIT_INDEX, ret);
+        goto err_catch;
+    }
+#else
     ret = link_elements(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], 0, task_data->elems[ELEMENT_VIT_INDEX], 0);
     if (STREAM_OK != ret)
     {
@@ -104,6 +138,7 @@ int streamer_build_vit_pipeline(int8_t pipeline_index,
                          ELEMENT_AUDIO_SRC_INDEX, ELEMENT_VIT_INDEX, ret);
         goto err_catch;
     }
+#endif
 
     /* Set the properties of the audio source */
 
@@ -162,44 +197,6 @@ int streamer_build_vit_pipeline(int8_t pipeline_index,
         goto err_catch;
     }
 
-
-    /* Set the audio sink output device
-     * MQX default PCMMGR
-     * Linux default ALSA
-     */
-    prop.prop = PROP_AUDIOSINK_DEVICE_DRIVER_TYPE;
-    prop.val  = STREAMER_DEFAULT_OUT_DEVICE;
-
-    // not aplicapble for VIT
-    /*    ret = element_set_property(
-                     task_data->elems[ELEMENT_VIT_INDEX],
-                     prop.prop, prop.val);
-
-        if (STREAM_OK != ret) {
-            STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL,
-                 "set element(%d) property(%d) failed:%d\n",
-                 ELEMENT_VIT_INDEX, PROP_AUDIOSINK_DEVICE_DRIVER_TYPE, ret);
-            goto err_catch;
-        }
-    */
-    /* Set the audio sink device name */
-    // not aplicable for VIT
-    /*
-    prop.prop = PROP_AUDIOSINK_DEVICE_DRIVER_STRING_NAME;
-    prop.val  = (uintptr_t) out_dev_name;
-
-    ret = element_set_property(
-                 task_data->elems[ELEMENT_VIT_INDEX],
-                 prop.prop, prop.val);
-
-    if (STREAM_OK != ret) {
-        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL,
-             "set element(%d) property(%d) failed:%d\n",
-             ELEMENT_VIT_INDEX,
-             PROP_AUDIOSINK_DEVICE_DRIVER_STRING_NAME, ret);
-        goto err_catch;
-    }
-*/
 err_catch:
     /* If any of the above steps failed, destroy the pipeline and
        return an error.
@@ -219,13 +216,27 @@ int streamer_destroy_vit_pipeline(int8_t pipeline_index, STREAMER_T *task_data)
     STREAMER_FUNC_ENTER(DBG_CORE);
 
     /* unlink elements in pipeline */
+#ifdef VOICE_SEEKER_PROC
+    ret = unlink_elements(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], 0, task_data->elems[ELEMENT_AUDIO_PROC_INDEX], 0);
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to unlink audio src and audio proc\n");
+        return ret;
+    }
+    ret = unlink_elements(task_data->elems[ELEMENT_AUDIO_PROC_INDEX], 0, task_data->elems[ELEMENT_VIT_INDEX], 0);
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to unlink audio proc and vit sink\n");
+        return ret;
+    }
+#else
     ret = unlink_elements(task_data->elems[ELEMENT_AUDIO_SRC_INDEX], 0, task_data->elems[ELEMENT_VIT_INDEX], 0);
     if (STREAM_OK != ret)
     {
-        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to unlink audio src and audio sink\n");
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to unlink audio proc and vit sink\n");
         return ret;
     }
-
+#endif
     /* remove_elements from pipeline*/
     ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_AUDIO_SRC_INDEX]);
     if (STREAM_OK != ret)
@@ -233,7 +244,14 @@ int streamer_destroy_vit_pipeline(int8_t pipeline_index, STREAMER_T *task_data)
         STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove audio src\n");
         return ret;
     }
-
+#ifdef VOICE_SEEKER_PROC
+    ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_AUDIO_PROC_INDEX]);
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove audio proc\n");
+        return ret;
+    }
+#endif
     ret = remove_element_pipeline(task_data->pipes[pipeline_index], task_data->elems[ELEMENT_VIT_INDEX]);
     if (STREAM_OK != ret)
     {
@@ -249,6 +267,29 @@ int streamer_destroy_vit_pipeline(int8_t pipeline_index, STREAMER_T *task_data)
         return ret;
     }
     task_data->elems[ELEMENT_AUDIO_SRC_INDEX] = (uintptr_t)NULL;
+
+#ifdef VOICE_SEEKER_PROC
+    // AUDIO_PROC also needs to deinit external lib
+    ElementAudioProc *audio_proc_ptr = (ElementAudioProc *)task_data->elems[ELEMENT_AUDIO_PROC_INDEX];
+    if (audio_proc_ptr->deinit_func == NULL)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "External AUDIO_PROC deinit function is not registered");
+        return STREAM_ERR_GENERAL;
+    }
+    ret = audio_proc_ptr->deinit_func();
+    if (ret != 0)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to deinit AUDIO_PROC with error: %d\n", ret);
+        return STREAM_ERR_GENERAL;
+    }
+    ret = destroy_element(task_data->elems[ELEMENT_AUDIO_PROC_INDEX]);
+    if (STREAM_OK != ret)
+    {
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove audio proc\n");
+        return ret;
+    }
+    task_data->elems[ELEMENT_AUDIO_PROC_INDEX] = (uintptr_t)NULL;
+#endif
 
     /* Deinit VIT here
      * it would be better to have some deinit or destroy
@@ -271,7 +312,7 @@ int streamer_destroy_vit_pipeline(int8_t pipeline_index, STREAMER_T *task_data)
     ret = destroy_element(task_data->elems[ELEMENT_VIT_INDEX]);
     if (STREAM_OK != ret)
     {
-        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove audio sink\n");
+        STREAMER_LOG_ERR(DBG_CORE, ERRCODE_INTERNAL, "Failed to remove vit sink\n");
         return ret;
     }
     task_data->elems[ELEMENT_VIT_INDEX] = (uintptr_t)NULL;

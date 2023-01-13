@@ -5,9 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-
 // Bundle API auto-generated header file. Do not edit!
-// Glow Tools version: 2022-02-03 (2e50afe55) ()
+// Glow Tools version: 2022-05-11 (2ee55ec50) (Glow_Release_MCUX_SDK_2.12.0)
 
 #ifndef _GLOW_BUNDLE_MOBILENET_V1_H
 #define _GLOW_BUNDLE_MOBILENET_V1_H
@@ -38,7 +37,7 @@
 //                          Bundle API
 // ---------------------------------------------------------------
 // Model name: "mobilenet_v1"
-// Total data size: 666816 (bytes)
+// Total data size: 630720 (bytes)
 // Activations allocation efficiency: 1.0000
 // Placeholders:
 //
@@ -66,9 +65,9 @@ extern "C" {
 #define MOBILENET_V1_MobilenetV1_Predictions_Reshape_1  49152
 
 // Memory sizes (bytes).
-#define MOBILENET_V1_CONSTANT_MEM_SIZE     515328
+#define MOBILENET_V1_CONSTANT_MEM_SIZE     479168
 #define MOBILENET_V1_MUTABLE_MEM_SIZE      53184
-#define MOBILENET_V1_ACTIVATIONS_MEM_SIZE  98304
+#define MOBILENET_V1_ACTIVATIONS_MEM_SIZE  98368
 
 // Memory alignment (bytes).
 #define MOBILENET_V1_MEM_ALIGN  64

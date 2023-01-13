@@ -20,7 +20,7 @@
 
 #include <stdint.h>
 #include "error.h"
-#include "logging.h"
+#include "maestro_logging.h"
 
 #include "streamer_api.h"
 
@@ -58,8 +58,8 @@
 #define DBG_MEM_SINK DBG_ON
 /** @brief Flag enable vit sink debug messages */
 #define DBG_VIT_SINK DBG_ON
-/** @brief Flag enable eap debug messages */
-#define DBG_EAP DBG_ON
+/** @brief Flag enable audio_proc debug messages */
+#define DBG_AUDIO_PROC DBG_ON
 /** @brief Flag enable cci decoder debug messages */
 #define DBG_CCID DBG_ON
 /** @brief Flag enable thread debug messages */

@@ -80,6 +80,7 @@ typedef struct _mcdef_acim_t
     mcs_scalar_a1_t sScalarCtrl;               /* Scalar control structure */
     mcdef_fault_t sFaultIdCaptured;            /* Captured faults (must be cleared manually) */
     mcdef_fault_t sFaultIdPending;             /* Fault pending structure */
+    mcdef_fault_t sFaultIdEnable;              /* Fault enable structure */
     mcdef_fault_thresholds_t sFaultThresholds; /* Fault thresholds */
     m1_ctrl_mode_t eControl;                   /* MCAT control modes */
     int32_t ui32CounterState;                  /* Main state counter */

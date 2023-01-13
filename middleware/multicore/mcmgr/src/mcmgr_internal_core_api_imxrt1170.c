@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2022 NXP
  * All rights reserved.
  *
  *
@@ -144,16 +144,8 @@ mcmgr_status_t mcmgr_get_startup_data_internal(mcmgr_core_t coreNum, uint32_t *s
 
 mcmgr_status_t mcmgr_stop_core_internal(mcmgr_core_t coreNum)
 {
-    if (coreNum != kMCMGR_Core1)
-    {
-        return kStatus_MCMGR_Error;
-    }
-#if defined(FSL_FEATURE_MU_SIDE_A)
-    SRC->CTRL_M4CORE = 0x2U;
-
-#endif
-    s_mcmgrCoresContext[coreNum].state = kMCMGR_ResetCoreState;
-    return kStatus_MCMGR_Success;
+    /* It is not allowed to stop the secondary core */
+    return kStatus_MCMGR_NotImplemented;
 }
 
 mcmgr_status_t mcmgr_get_core_property_internal(mcmgr_core_t coreNum,

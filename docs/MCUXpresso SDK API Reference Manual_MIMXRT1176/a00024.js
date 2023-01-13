@@ -1,12 +1,12 @@
 var a00024 =
 [
-    [ "MIPI_DSI_Type", "a00024.html#a00577", [
+    [ "MIPI_DSI_Type", "a00024.html#a00579", [
       [ "host", "a00024.html#a6012274780345325eef46fa2ab1a305d", null ],
       [ "apb", "a00024.html#a9f9e9ba7c608984e1b0717f1ad52f4b6", null ],
       [ "dpi", "a00024.html#a2df581c4f66b6192eb26bf7d356eeba2", null ],
       [ "dphy", "a00024.html#a8cc2fb6d8966e355673718e333d338e4", null ]
     ] ],
-    [ "dsi_config_t", "a00024.html#a00461", [
+    [ "dsi_config_t", "a00024.html#a00463", [
       [ "numLanes", "a00024.html#a2bba59ba008f5464da3d5c576c57d98d", null ],
       [ "enableNonContinuousHsClk", "a00024.html#a62bbf694031a8c4b2a747ff4f40d4ff3", null ],
       [ "enableTxUlps", "a00024.html#abbf477125d9597db11dd3c795fb901ba", null ],
@@ -16,7 +16,7 @@ var a00024 =
       [ "lrxHostTo_ByteClk", "a00024.html#a744b8626011d213ff2acd5e773fc46eb", null ],
       [ "btaTo_ByteClk", "a00024.html#a5f2195d5a02a3bac25ef78f90edc7ce9", null ]
     ] ],
-    [ "dsi_dpi_config_t", "a00024.html#a00463", [
+    [ "dsi_dpi_config_t", "a00024.html#a00465", [
       [ "pixelPayloadSize", "a00024.html#a01eeef91185848199699ff1c965856df", null ],
       [ "dpiColorCoding", "a00024.html#aba938947efcb184cbaea7a98191023cc", null ],
       [ "pixelPacket", "a00024.html#aec9718a40680ea0a2fefab3169468112", null ],
@@ -31,7 +31,7 @@ var a00024 =
       [ "panelHeight", "a00024.html#a83b740e37a68bf285ff087e5cf859b25", null ],
       [ "virtualChannel", "a00024.html#aed7f73cea1dd587c4f4bcd47d8e1d988", null ]
     ] ],
-    [ "dsi_dphy_config_t", "a00024.html#a00462", [
+    [ "dsi_dphy_config_t", "a00024.html#a00464", [
       [ "txHsBitClk_Hz", "a00024.html#a18f482bfa12f9174c0739a8ddf6c7d28", null ],
       [ "tClkPre_ByteClk", "a00024.html#a053f6da2559a19124df504003f217ac0", null ],
       [ "tClkPost_ByteClk", "a00024.html#ad20167fa63a0075827030ed4c2453ad3", null ],
@@ -44,7 +44,7 @@ var a00024 =
       [ "tHsTrail_ByteClk", "a00024.html#a34a82100c6ae89ab1a0b7ca82e9d7316", null ],
       [ "tClkTrail_ByteClk", "a00024.html#ac0264aae75bcfa335b45b7fcdf8bd25d", null ]
     ] ],
-    [ "dsi_transfer_t", "a00024.html#a00464", [
+    [ "dsi_transfer_t", "a00024.html#a00466", [
       [ "virtualChannel", "a00024.html#a93aa7b6fa356becffcf5112514d47cf4", null ],
       [ "txDataType", "a00024.html#aaea78d2dcb0fda839c54b9989c8a20b7", null ],
       [ "flags", "a00024.html#a13c558f6312920bee75d6c6cd1da5e8f", null ],
@@ -55,7 +55,7 @@ var a00024 =
       [ "sendDscCmd", "a00024.html#a7f50ba570de872fd9cdab070cff0ac59", null ],
       [ "dscCmd", "a00024.html#a85b91d7639b1a4b8bccbfacc43b8fcfa", null ]
     ] ],
-    [ "dsi_handle_t", "a00024.html#a00380", [
+    [ "dsi_handle_t", "a00024.html#a00382", [
       [ "isBusy", "a00024.html#aefcf841ee14e7b6eb1ede7c2936a9bb9", null ],
       [ "xfer", "a00024.html#a4765b97f201d6886e992236d2fdc6bc7", null ],
       [ "callback", "a00024.html#ab6c862a94cace7c6b66df2246852446e", null ],

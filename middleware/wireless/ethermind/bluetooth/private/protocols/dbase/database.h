@@ -23,6 +23,9 @@
 /* ------------------------ Function Declarations */
 void em_db_sdp_init(void);
 
+#ifdef BT_HAVE_SHUTDOWN
+void em_db_sdp_shutdown(void);
+#endif /* BT_HAVE_SHUTDOWN */
 
 #endif /* _H_DATABASE_ */
 
